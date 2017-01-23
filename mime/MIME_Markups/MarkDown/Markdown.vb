@@ -428,7 +428,24 @@ Namespace MarkDown
             Return _nestedParensPattern
         End Function
 
-        Private Shared _linkDef As New Regex(String.Format(vbCr & vbLf & "                        ^[ ]{{0,{0}}}\[([^\[\]]+)\]:  # id = $1" & vbCr & vbLf & "                          [ ]*" & vbCr & vbLf & "                          \n?                   # maybe *one* newline" & vbCr & vbLf & "                          [ ]*" & vbCr & vbLf & "                        <?(\S+?)>?              # url = $2" & vbCr & vbLf & "                          [ ]*" & vbCr & vbLf & "                          \n?                   # maybe one newline" & vbCr & vbLf & "                          [ ]*" & vbCr & vbLf & "                        (?:" & vbCr & vbLf & "                            (?<=\s)             # lookbehind for whitespace" & vbCr & vbLf & "                            [""(]" & vbCr & vbLf & "                            (.+?)               # title = $3" & vbCr & vbLf & "                            ["")]" & vbCr & vbLf & "                            [ ]*" & vbCr & vbLf & "                        )?                      # title is optional" & vbCr & vbLf & "                        (?:\n+|\Z)", _tabWidth - 1), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Shared ReadOnly _linkDef As New Regex(String.Format("
+
+        ^[ ]{{0,{0}}}\[([^\[\]]+)\]:  # id = $1
+            [ ]*
+                \n?                   # maybe *one* newline
+            [ ]*
+              <?(\S+?)>?              # url = $2
+            [ ]*
+                \n?                   # maybe one newline
+            [ ]*
+                (?:
+                  (?<=\s)             # lookbehind for whitespace
+                  [""(]
+                  (.+?)               # title = $3
+                  ["")]
+            [ ]*
+              )?                      # title is optional
+            (?:\n+|\Z)", _tabWidth - 1), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Strips link definitions from text, stores the URLs and titles in hash references.
@@ -451,9 +468,86 @@ Namespace MarkDown
             Return ""
         End Function
 
-        ' compiling this monster regex results in worse performance. trust me.
+        ''' <summary>
+        ''' compiling this monster regex results in worse performance. trust me.
+        ''' </summary>
         Private Shared _blocksHtml As New Regex(GetBlockPattern(), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
 
+        ''' <summary>
+        ''' First, look for nested blocks, e.g.:
+        '''     
+        '''     &lt;div>
+        ''' 	    &lt;div>
+        ''' 		tags for inner block must be indented.
+        ''' 		&lt;/div>
+        ''' 	&lt;/div>
+        '''
+        ''' The outermost tags must start at the left margin for this to match, and
+        ''' the inner nested divs must be indented.
+        ''' We need to do this before the next, more liberal match, because the next
+        ''' match will start at the first ``&lt;div>`` and stop at the first ``&lt;/div>``.
+        ''' </summary>
+        Const pattern$ = "
+        (?>
+        (?>
+          (?<=\n)     # Starting at the beginning of a line
+          |           # or
+          \A\n?       # the beginning of the doc
+        )
+        (             # save in $1
+
+                      # Match from `\n<tag>` to `</tag>\n`, handling nested tags 
+                      # in between.
+
+           <($block_tags_b_re)   # start tag = $2
+           $attr>                # attributes followed by > and \n
+           $content              # content, support nesting
+           </\2>                 # the matching end tag
+           [ ]*                  # trailing spaces
+           (?=\n+|\Z)            # followed by a newline or end of document
+
+                               | # Special version for tags of group a.
+
+           <($block_tags_a_re)   # start tag = $3
+           $attr>[ ]*\n          # attributes followed by >
+           $content2             # content, support nesting
+           </\3>                 # the matching end tag
+           [ ]*                  # trailing spaces
+           (?=\n+|\Z)            # followed by a newline or end of document
+
+                               | # Special case just for <hr />. It was easier to make a special 
+                                 # case than to make the other regex more complicated.
+
+           [ ]{0,$less_than_tab}
+           <hr
+           $attr                 # attributes
+           /?>                   # the matching end tag
+           [ ]*
+           (?=\n{2,}|\Z)         # followed by a blank line or end of document
+
+                               | # Special case for standalone HTML comments:
+
+           (?<=\n\n|\A)            # preceded by a blank line or start of document
+           [ ]{0,$less_than_tab}
+           (?s:
+              <!--(?:|(?:[^>-]|-[^>])(?:[^-]|-[^-])*)-->
+           )
+           [ ]*
+          (?=\n{2,}|\Z)            # followed by a blank line or end of document
+
+                                 | # PHP and ASP-style processor instructions (<? and <%)
+
+           [ ]{0,$less_than_tab}
+          (?s:
+            <([?%])                # $4
+             .*?
+            \4>
+          )
+           [ ]*
+          (?=\n{2,}|\Z)            # followed by a blank line or end of document
+
+          )
+        )"
 
         ''' <summary>
         ''' derived pretty much verbatim from PHP Markdown
@@ -484,19 +578,7 @@ Namespace MarkDown
             Dim content As String = RepeatString(vbCr & vbLf & "                (?>" & vbCr & vbLf & "                  [^<]+" & vbTab & vbTab & vbTab & "        # content without tag" & vbCr & vbLf & "                |" & vbCr & vbLf & "                  <\2" & vbTab & vbTab & vbTab & "        # nested opening tag" & vbCr & vbLf & "                    " & attr & "       # attributes" & vbCr & vbLf & "                  (?>" & vbCr & vbLf & "                      />" & vbCr & vbLf & "                  |" & vbCr & vbLf & "                      >", _nestDepth) & ".*?" & RepeatString(vbCr & vbLf & "                      </\2\s*>" & vbTab & "        # closing nested tag" & vbCr & vbLf & "                  )" & vbCr & vbLf & "                  |" & vbTab & vbTab & vbTab & vbTab & vbCr & vbLf & "                  <(?!/\2\s*>           # other tags with a different name" & vbCr & vbLf & "                  )" & vbCr & vbLf & "                )*", _nestDepth)
 
             Dim content2 As String = content.Replace("\2", "\3")
-
-            ' First, look for nested blocks, e.g.:
-            ' 	<div>
-            ' 		<div>
-            ' 		tags for inner block must be indented.
-            ' 		</div>
-            ' 	</div>
-            '
-            ' The outermost tags must start at the left margin for this to match, and
-            ' the inner nested divs must be indented.
-            ' We need to do this before the next, more liberal match, because the next
-            ' match will start at the first `<div>` and stop at the first `</div>`.
-            Dim pattern As String = vbCr & vbLf & "            (?>" & vbCr & vbLf & "                  (?>" & vbCr & vbLf & "                    (?<=\n)     # Starting at the beginning of a line" & vbCr & vbLf & "                    |           # or" & vbCr & vbLf & "                    \A\n?       # the beginning of the doc" & vbCr & vbLf & "                  )" & vbCr & vbLf & "                  (             # save in $1" & vbCr & vbLf & vbCr & vbLf & "                    # Match from `\n<tag>` to `</tag>\n`, handling nested tags " & vbCr & vbLf & "                    # in between." & vbCr & vbLf & "                      " & vbCr & vbLf & "                        <($block_tags_b_re)   # start tag = $2" & vbCr & vbLf & "                        $attr>                # attributes followed by > and \n" & vbCr & vbLf & "                        $content              # content, support nesting" & vbCr & vbLf & "                        </\2>                 # the matching end tag" & vbCr & vbLf & "                        [ ]*                  # trailing spaces" & vbCr & vbLf & "                        (?=\n+|\Z)            # followed by a newline or end of document" & vbCr & vbLf & vbCr & vbLf & "                  | # Special version for tags of group a." & vbCr & vbLf & vbCr & vbLf & "                        <($block_tags_a_re)   # start tag = $3" & vbCr & vbLf & "                        $attr>[ ]*\n          # attributes followed by >" & vbCr & vbLf & "                        $content2             # content, support nesting" & vbCr & vbLf & "                        </\3>                 # the matching end tag" & vbCr & vbLf & "                        [ ]*                  # trailing spaces" & vbCr & vbLf & "                        (?=\n+|\Z)            # followed by a newline or end of document" & vbCr & vbLf & "                      " & vbCr & vbLf & "                  | # Special case just for <hr />. It was easier to make a special " & vbCr & vbLf & "                    # case than to make the other regex more complicated." & vbCr & vbLf & "                  " & vbCr & vbLf & "                        [ ]{0,$less_than_tab}" & vbCr & vbLf & "                        <hr" & vbCr & vbLf & "                        $attr                 # attributes" & vbCr & vbLf & "                        /?>                   # the matching end tag" & vbCr & vbLf & "                        [ ]*" & vbCr & vbLf & "                        (?=\n{2,}|\Z)         # followed by a blank line or end of document" & vbCr & vbLf & "                  " & vbCr & vbLf & "                  | # Special case for standalone HTML comments:" & vbCr & vbLf & "                  " & vbCr & vbLf & "                      (?<=\n\n|\A)            # preceded by a blank line or start of document" & vbCr & vbLf & "                      [ ]{0,$less_than_tab}" & vbCr & vbLf & "                      (?s:" & vbCr & vbLf & "                        <!--(?:|(?:[^>-]|-[^>])(?:[^-]|-[^-])*)-->" & vbCr & vbLf & "                      )" & vbCr & vbLf & "                      [ ]*" & vbCr & vbLf & "                      (?=\n{2,}|\Z)            # followed by a blank line or end of document" & vbCr & vbLf & "                  " & vbCr & vbLf & "                  | # PHP and ASP-style processor instructions (<? and <%)" & vbCr & vbLf & "                  " & vbCr & vbLf & "                      [ ]{0,$less_than_tab}" & vbCr & vbLf & "                      (?s:" & vbCr & vbLf & "                        <([?%])                # $4" & vbCr & vbLf & "                        .*?" & vbCr & vbLf & "                        \4>" & vbCr & vbLf & "                      )" & vbCr & vbLf & "                      [ ]*" & vbCr & vbLf & "                      (?=\n{2,}|\Z)            # followed by a blank line or end of document" & vbCr & vbLf & "                      " & vbCr & vbLf & "                  )" & vbCr & vbLf & "            )"
+            Dim pattern$ = MarkdownHTML.pattern
 
             pattern = pattern.Replace("$less_than_tab", (_tabWidth - 1).ToString())
             pattern = pattern.Replace("$block_tags_b_re", blockTagsB)
@@ -524,11 +606,44 @@ Namespace MarkDown
         End Function
 
 
-        Private Shared _anchorRef As New Regex(String.Format(vbCr & vbLf & "            (                               # wrap whole match in $1" & vbCr & vbLf & "                \[" & vbCr & vbLf & "                    ({0})                   # link text = $2" & vbCr & vbLf & "                \]" & vbCr & vbLf & vbCr & vbLf & "                [ ]?                        # one optional space" & vbCr & vbLf & "                (?:\n[ ]*)?                 # one optional newline followed by spaces" & vbCr & vbLf & vbCr & vbLf & "                \[" & vbCr & vbLf & "                    (.*?)                   # id = $3" & vbCr & vbLf & "                \]" & vbCr & vbLf & "            )", GetNestedBracketsPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Private Shared _anchorRef As New Regex(String.Format("
+        (                               # wrap whole match in $1
+            \[
+                ({0})                   # link text = $2
+            \]
 
-        Private Shared _anchorInline As New Regex(String.Format(vbCr & vbLf & "                (                           # wrap whole match in $1" & vbCr & vbLf & "                    \[" & vbCr & vbLf & "                        ({0})               # link text = $2" & vbCr & vbLf & "                    \]" & vbCr & vbLf & "                    \(                      # literal paren" & vbCr & vbLf & "                        [ ]*" & vbCr & vbLf & "                        ({1})               # href = $3" & vbCr & vbLf & "                        [ ]*" & vbCr & vbLf & "                        (                   # $4" & vbCr & vbLf & "                        (['""])           # quote char = $5" & vbCr & vbLf & "                        (.*?)               # title = $6" & vbCr & vbLf & "                        \5                  # matching quote" & vbCr & vbLf & "                        [ ]*                # ignore any spaces between closing quote and )" & vbCr & vbLf & "                        )?                  # title is optional" & vbCr & vbLf & "                    \)" & vbCr & vbLf & "                )", GetNestedBracketsPattern(), GetNestedParensPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+            [ ]?                        # one optional space
+            (?:\n[ ]*)?                 # one optional newline followed by spaces
 
-        Private Shared _anchorRefShortcut As New Regex(vbCr & vbLf & "            (                               # wrap whole match in $1" & vbCr & vbLf & "              \[" & vbCr & vbLf & "                 ([^\[\]]+)                 # link text = $2; can't contain [ or ]" & vbCr & vbLf & "              \]" & vbCr & vbLf & "            )", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+            \[
+                (.*?)                   # id = $3
+            \]
+        )", GetNestedBracketsPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+
+        Private Shared _anchorInline As New Regex(String.Format("
+        (                           # wrap whole match in $1
+            \[
+                ({0})               # link text = $2
+            \]
+            \(                      # literal paren
+                [ ]*
+                ({1})               # href = $3
+                [ ]*
+                (                   # $4
+                  (['""])           # quote char = $5
+                (.*?)               # title = $6
+                \5                  # matching quote
+                [ ]*                # ignore any spaces between closing quote and )
+                )?                  # title is optional
+            \)
+        )", GetNestedBracketsPattern(), GetNestedParensPattern()), RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+
+        Private Shared _anchorRefShortcut As New Regex("
+        (                               # wrap whole match in $1
+             \[
+             ([^\[\]]+)                 # link text = $2; can't contain [ or ]
+             \]
+        )", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown link shortcuts into HTML anchor tags
@@ -938,6 +1053,18 @@ Namespace MarkDown
             Return list
         End Function
 
+#Region "代码预览块的HTML文本处理"
+
+        ''' <summary>
+        ''' 带语言类型说明的代码块
+        ''' </summary>
+        Const SyntaxCodeBloackRegexp$ = "^```\S+\s*$.+?^```\s*$"
+
+        Shared ReadOnly __syntaxCodeBlock As New Regex(SyntaxCodeBloackRegexp, RawCompileOptions)
+
+        ''' <summary>
+        ''' 这里只是解析出4个空格的缩进的代码块
+        ''' </summary>
         Const codeBlockRegexp$ = "
 
             (?:\n\n|\A\n?)
@@ -949,10 +1076,10 @@ Namespace MarkDown
             )
             ((?=^[ ]{{0,{0}}}[^ \t\n])|\Z) # Lookahead for non-space at line-start, or end of doc"
 
-        Private Shared _codeBlock As New Regex(String.Format(codeBlockRegexp, _tabWidth), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Private Shared _codeBlock As New Regex(String.Format(codeBlockRegexp, _tabWidth), RawCompileOptions)
 
         ''' <summary>
-        ''' /// Turn Markdown 4-space indented code into HTML pre code blocks
+        ''' Turn Markdown 4-space indented code into HTML pre code blocks
         ''' </summary>
         Private Function DoCodeBlocks(text As String) As String
             text = _codeBlock.Replace(text, New MatchEvaluator(AddressOf CodeBlockEvaluator))
@@ -1020,6 +1147,7 @@ Namespace MarkDown
             ' to prevent auto-linking. Not necessary in code *blocks*, but in code spans.
             Return String.Concat("<code>", span, "</code>")
         End Function
+#End Region
 
         Private Shared _bold As New Regex("(\*\*|__) (?=\S) (.+?[*_]*) (?<=\S) \1", RegexOptions.IgnorePatternWhitespace Or RegexOptions.Singleline Or RegexOptions.Compiled)
         Private Shared _semiStrictBold As New Regex("(?=.[*_]|[*_])(^|(?=\W__|(?!\*)[\W_]\*\*|\w\*\*\w).)(\*\*|__)(?!\2)(?=\S)((?:|.*?(?!\2).)(?=\S_|\w|\S\*\*(?:[\W_]|$)).)(?=__(?:\W|$)|\*\*(?:[^*]|$))\2", RegexOptions.Singleline Or RegexOptions.Compiled)

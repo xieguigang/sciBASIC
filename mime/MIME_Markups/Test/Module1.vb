@@ -10,9 +10,16 @@ Module Module1
 |-|-|-|
 |a|b|c|
 |x|y|z and ``| test``|
+
+
+```python
+# this is comment, not header
+code here
+```
+
 "
 
-        md = "G:\temp\reports.md".ReadAllText
+        ' md = "G:\temp\reports.md".ReadAllText
 
         Call New MarkdownHTML().Transform(md).SaveTo("x:\test.html", Encoding.UTF8)
 

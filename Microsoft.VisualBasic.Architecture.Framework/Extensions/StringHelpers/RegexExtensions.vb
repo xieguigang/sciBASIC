@@ -34,6 +34,14 @@ Imports Microsoft.VisualBasic.Language
 Public Module RegexExtensions
 
     ''' <summary>
+    ''' 模拟python的raw字符串的正则表达式，多行的
+    ''' </summary>
+    Public Const RawCompileOptions As RegexOptions =
+        RegexOptions.Multiline Or
+        RegexOptions.IgnorePatternWhitespace Or
+        RegexOptions.Compiled
+
+    ''' <summary>
     ''' Name of <see cref="RegexOptions"/>
     ''' </summary>
     Public Structure [NameOf]
