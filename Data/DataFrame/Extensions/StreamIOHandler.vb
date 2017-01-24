@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::774724e2dbab67a1f5d15eb8e532d4a7, ..\sciBASIC#\Data\DataFrame\Extensions\StreamIOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::f8dbf65943d91096cfcad9f36f4e09d5, ..\sciBASIC#\Data\DataFrame\Extensions\StreamIOHandler.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16cca17549a618d6cf2644502c07d096, ..\sciBASIC#\mime\markups\YAML\Syntax\TagPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::16cca17549a618d6cf2644502c07d096, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\TagPrefix.vb"
 
     ' Author:
     ' 

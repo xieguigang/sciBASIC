@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::872958f7a03101df9d617e96c8f78cda, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::e0b4319beaafd4279e24e46e16cc8169, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d6c6ff1989ee8d50023fa16df2da733, ..\sciBASIC#\mime\markups\MarkDown\MarkdownOptions.vb"
+﻿#Region "Microsoft.VisualBasic::6d6c6ff1989ee8d50023fa16df2da733, ..\sciBASIC#\mime\MIME_Markups\MarkDown\MarkdownOptions.vb"
 
     ' Author:
     ' 

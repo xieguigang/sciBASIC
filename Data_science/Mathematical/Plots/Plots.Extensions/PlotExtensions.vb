@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ec7fa628375e7c4e2ec9d4afd783e64, ..\sciBASIC#\Data_science\Mathematical\Plots\Plots.Extensions\PlotExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::bf827e422f9c2cdbc25e574b48e944f2, ..\sciBASIC#\Data_science\Mathematical\Plots\Plots.Extensions\PlotExtensions.vb"
 
     ' Author:
     ' 

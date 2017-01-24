@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e0ad884bd755fc59188bf26fc9cec69, ..\sciBASIC#\mime\markups\YAML\Syntax\ShorthandTag.vb"
+﻿#Region "Microsoft.VisualBasic::1e0ad884bd755fc59188bf26fc9cec69, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\ShorthandTag.vb"
 
     ' Author:
     ' 

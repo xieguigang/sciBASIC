@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e92e4ca4e5dac4adac292ad2add4f318, ..\sciBASIC#\mime\markups\YAML\Syntax\Mapping.vb"
+﻿#Region "Microsoft.VisualBasic::e92e4ca4e5dac4adac292ad2add4f318, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\Mapping.vb"
 
     ' Author:
     ' 
