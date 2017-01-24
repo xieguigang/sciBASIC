@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.Text
 
-Namespace DocumentStream.NetStream
+Namespace IO.NetStream
 
     Module StreamHelper
 

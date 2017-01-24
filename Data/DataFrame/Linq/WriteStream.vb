@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace DocumentStream.Linq
+Namespace IO.Linq
 
     ''' <summary>
     ''' The stream writer for the data set, you can handling the ultra large dataset 
@@ -93,7 +93,7 @@ Namespace DocumentStream.Linq
                 FileAccess.ReadWrite,
                 share:=FileShare.Read)
 
-            _fileIO = New IO.StreamWriter(file) With {
+            _fileIO = New StreamWriter(file) With {
                 .AutoFlush = True,
                 .NewLine = vbLf
             }

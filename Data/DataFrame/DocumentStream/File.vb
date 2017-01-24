@@ -38,7 +38,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Text
 
-Namespace DocumentStream
+Namespace IO
 
     ''' <summary>
     ''' A comma character seperate table file that can be read and write in the EXCEL.(一个能够被Excel程序所读取的表格文件)
@@ -581,7 +581,7 @@ B21,B22,B23,...
             End If
 
             Dim sw = Stopwatch.StartNew
-            Dim lines As String() = IO.File.ReadAllLines(path.MapNetFile, encoding)
+            Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
             Dim cData As File = New File With {
                 .FilePath = path
             }
@@ -633,7 +633,7 @@ B21,B22,B23,...
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         Private Shared Function __loads(path As String, encoding As Encoding, trimBlanks As Boolean) As List(Of RowObject)
-            Dim lines As String() = IO.File.ReadAllLines(path.MapNetFile, encoding)
+            Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
             Return Load(lines, trimBlanks)
         End Function
 

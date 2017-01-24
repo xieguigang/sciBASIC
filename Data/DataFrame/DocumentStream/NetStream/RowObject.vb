@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Streams.Array
 Imports Microsoft.VisualBasic.Text
 
-Namespace DocumentStream.NetStream
+Namespace IO.NetStream
 
     Public Class RowObject : Inherits VarArray(Of String)
 
@@ -61,9 +61,9 @@ Namespace DocumentStream.NetStream
             Return New RowObject(raw, helper)
         End Function
 
-        Public Shared Function Load(raw As Byte(), encoding As Encodings) As DocumentStream.RowObject
+        Public Shared Function Load(raw As Byte(), encoding As Encodings) As IO.RowObject
             Dim source = CreateObject(raw, encoding)
-            Return New DocumentStream.RowObject(source.Values)
+            Return New IO.RowObject(source.Values)
         End Function
     End Class
 End Namespace

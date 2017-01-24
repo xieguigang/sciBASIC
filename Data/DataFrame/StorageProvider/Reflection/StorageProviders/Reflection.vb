@@ -31,7 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DataImports
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -143,7 +143,7 @@ Namespace StorageProvider.Reflection
                 Call "Load data from filestream....".__DEBUG_ECHO
             End If
 
-            Dim reader As DataFrame = DocumentStream.DataFrame.Load(path, encoding, fast)  ' read csv data
+            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast)  ' read csv data
 
             If Not maps Is Nothing Then
                 Call reader.ChangeMapping(maps)  ' 改变列的名称映射以方便进行反序列化数据加载
@@ -284,7 +284,7 @@ Namespace StorageProvider.Reflection
 
             Dim buf As List(Of Dictionary(Of String, String)) =
                 LinqAPI.MakeList(Of Dictionary(Of String, String)) <=
-                    From rowL As DocumentStream.RowObject
+                    From rowL As IO.RowObject
                     In df.Skip(1).AsParallel
                     Select (From p As Integer
                             In __pCache

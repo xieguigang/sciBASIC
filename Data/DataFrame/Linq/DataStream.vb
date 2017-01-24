@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Text
 
-Namespace DocumentStream.Linq
+Namespace IO.Linq
 
     ''' <summary>
     ''' 获取列在当前的数据集之中的编号

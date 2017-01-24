@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Emit.Marshal
 
-Namespace DocumentStream
+Namespace IO
 
     Module Meta
 

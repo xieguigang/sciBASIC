@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace DocumentStream.Linq
+Namespace IO.Linq
 
     Public Class LinqWhere(Of T As Class)
 

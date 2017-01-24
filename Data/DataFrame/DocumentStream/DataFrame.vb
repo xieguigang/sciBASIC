@@ -37,7 +37,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 
-Namespace DocumentStream
+Namespace IO
 
     ''' <summary>
     ''' The dynamics data frame object which its first line is not contains the but using for the title property.
@@ -347,7 +347,7 @@ Namespace DocumentStream
 
         Public Function GetValue(ordinal As Integer) As String
 #If DEBUG Then
-            If Ordinal > Me.__currentLine.Count - 1 Then
+            If ordinal > Me.__currentLine.Count - 1 Then
                 Return ""
             End If
 #End If

@@ -31,7 +31,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Language
 
-Namespace DocumentStream
+Namespace IO
 
     ''' <summary>
     ''' RowObject parsers

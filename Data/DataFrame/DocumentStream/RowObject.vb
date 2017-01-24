@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Language
 
-Namespace DocumentStream
+Namespace IO
 
     ''' <summary>
     ''' A line of data in the csv file.(Csv表格文件之中的一行)

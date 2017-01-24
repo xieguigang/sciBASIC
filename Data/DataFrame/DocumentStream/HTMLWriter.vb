@@ -32,13 +32,13 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace DocumentStream
+Namespace IO
 
     <PackageNamespace("Csv.HTML.Writer")>
     Public Module HTMLWriter
 
         <Extension> Public Function ToHTML(Of T As Class)(source As Generic.IEnumerable(Of T), Optional Title As String = "", Optional describ As String = "", Optional css As String = "") As String
-            Dim Csv As DocumentStream.File = source.ToCsvDoc(False)
+            Dim Csv As IO.File = source.ToCsvDoc(False)
 
             If String.IsNullOrEmpty(describ) Then
                 describ = GetType(T).Description
@@ -51,7 +51,7 @@ Namespace DocumentStream
         End Function
 
         <ExportAPI("ToHTML")>
-        <Extension> Public Function ToHTML(doc As DocumentStream.File, Optional Title As String = "", Optional describ As String = "", Optional css As String = "") As String
+        <Extension> Public Function ToHTML(doc As IO.File, Optional Title As String = "", Optional describ As String = "", Optional css As String = "") As String
             If String.IsNullOrEmpty(css) Then
                 css = My.Resources.foundation
             End If
@@ -69,7 +69,7 @@ Namespace DocumentStream
         End Function
 
         <Extension> Public Function ToHTMLTable(Of T As Class)(source As Generic.IEnumerable(Of T), Optional className As String = "", Optional width As String = "") As String
-            Dim Csv As DocumentStream.File = source.ToCsvDoc(False)
+            Dim Csv As IO.File = source.ToCsvDoc(False)
             Return Csv.ToHTMLTable(className, width)
         End Function
 
@@ -81,7 +81,7 @@ Namespace DocumentStream
         ''' <returns></returns>
         ''' 
         <ExportAPI("ToHTML.Table")>
-        <Extension> Public Function ToHTMLTable(doc As DocumentStream.File, Optional className As String = "", Optional width As String = "") As String
+        <Extension> Public Function ToHTMLTable(doc As IO.File, Optional className As String = "", Optional width As String = "") As String
             Dim innerDoc As New StringBuilder("<table", 4096)
 
             If Not String.IsNullOrEmpty(className) Then

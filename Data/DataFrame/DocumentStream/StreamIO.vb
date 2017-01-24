@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Linq
 
-Namespace DocumentStream
+Namespace IO
 
     Public Module StreamIO
 

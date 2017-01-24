@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
-Namespace DocumentStream
+Namespace IO
 
     ''' <summary>
     ''' The object entity, <see cref="DynamicPropertyBase(Of String)"/>, <see cref="String"/>

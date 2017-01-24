@@ -30,7 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
@@ -67,7 +67,7 @@ Public Module DataImports
             encoding = Encoding.Default
         End If
 
-        Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
+        Dim lines As String() = txtPath.ReadAllLines(encoding)
         Dim csv As New File(ImportsData(Lines, delimiter), txtPath)
         Return csv
     End Function
@@ -81,7 +81,7 @@ Public Module DataImports
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension> Public Function [Imports](Of T As Class)(path$, Optional delimiter$ = ",", Optional encoding As Encoding = Nothing) As T()
-        Dim source As DocumentStream.File = [Imports](path, delimiter, encoding)
+        Dim source As IO.File = [Imports](path, delimiter, encoding)
         If source.RowNumbers = 0 Then
             Return New T() {}
         Else
@@ -91,10 +91,10 @@ Public Module DataImports
 
     <ExportAPI("Data.Imports")>
     Public Function ImportsData(<Parameter("str.Data")> lines As IEnumerable(Of String),
-                                Optional delimiter As String = ",") As DocumentStream.File
+                                Optional delimiter As String = ",") As IO.File
         Dim Expression As String = String.Format(SplitRegxExpression, delimiter)
         Dim LQuery = (From line As String In lines Select RowParsing(line, Expression)).ToArray
-        Return New DocumentStream.File(LQuery)
+        Return New IO.File(LQuery)
     End Function
 
     <Extension>
@@ -122,7 +122,7 @@ Public Module DataImports
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("Row.Parsing", Info:="Row parsing its column tokens")>
-    Public Function RowParsing(Line As String, SplitRegxExpression As String) As DocumentStream.RowObject
+    Public Function RowParsing(Line As String, SplitRegxExpression As String) As IO.RowObject
         Dim Row = Regex.Split(Line, SplitRegxExpression)
         For i As Integer = 0 To Row.Count - 1
             If Not String.IsNullOrEmpty(Row(i)) Then
@@ -145,12 +145,12 @@ Public Module DataImports
     <ExportAPI("Imports.FixLength", Info:="Imports the data in a well formatted text file using the fix length as the data separate method.")>
     Public Function FixLengthImports(txtPath$,
                                      <Parameter("Length", "The string length width of the data row.")> Optional length% = 10,
-                                     Optional encoding As Encoding = Nothing) As DocumentStream.File
+                                     Optional encoding As Encoding = Nothing) As IO.File
         If encoding Is Nothing Then
             encoding = Encoding.Default
         End If
 
-        Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
+        Dim Lines As String() = txtPath.ReadAllLines(encoding)
         Dim LQuery As RowObject() = LinqAPI.Exec(Of RowObject) <=
  _
             From line As String
