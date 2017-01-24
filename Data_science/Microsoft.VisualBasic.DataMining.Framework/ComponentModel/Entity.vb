@@ -29,7 +29,7 @@
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel

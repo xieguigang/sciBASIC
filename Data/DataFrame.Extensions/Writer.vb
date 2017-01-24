@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.IO
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Language
 

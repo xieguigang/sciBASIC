@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 
 Public Module Extensions
@@ -44,7 +44,7 @@ Public Module Extensions
 
         For Each var As NamedValue(Of Double()) In df
             Dim x As New DataSet With {
-                .Identifier = var.Name,
+                .ID = var.Name,
                 .Properties = New Dictionary(Of String, Double)
             }
 
@@ -71,7 +71,7 @@ Public Module Extensions
 
         For Each var As NamedValue(Of Double()) In df
             Dim x As New DataSet With {
-                .Identifier = var.Name,
+                .ID = var.Name,
                 .Properties = New Dictionary(Of String, Double)
             }
 

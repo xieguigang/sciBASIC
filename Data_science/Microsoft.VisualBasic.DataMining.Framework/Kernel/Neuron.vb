@@ -28,7 +28,7 @@
 
 Imports System.Text
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace Kernel.Classifier
 

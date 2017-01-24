@@ -354,7 +354,7 @@ Public Module ProgramPathSearchTool
     <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
     <Extension> Public Function BaseName(fsObj As String) As String
         If fsObj.FileExists Then
-            Return IO.Path.GetFileNameWithoutExtension(fsObj)
+            Return basename(fsObj)
         Else
             If String.IsNullOrEmpty(fsObj) Then
                 Throw New Exception(NameOf(fsObj) & " parameter is null!")
@@ -364,12 +364,12 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' <see cref="IO.Path.GetFileNameWithoutExtension"/> shortcuts extension.
+    ''' <see cref="basename"/> shortcuts extension.
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension> Public Function GetBaseName(path As String) As String
-        Return IO.Path.GetFileNameWithoutExtension(path)
+        Return basename(path)
     End Function
 
     ''' <summary>
@@ -440,7 +440,7 @@ Public Module ProgramPathSearchTool
         Dim Files As IEnumerable(Of String) = ls - l - wildcards(ext) <= DIR
         Dim matches = (From Path As String
                        In Files.AsParallel
-                       Let NameID = IO.Path.GetFileNameWithoutExtension(Path)
+                       Let NameID = basename(Path)
                        Where InStr(NameID, keyword, CompareMethod.Text) > 0
                        Let ExtValue = Path.Split("."c).Last
                        Select Path,
@@ -499,7 +499,7 @@ Public Module ProgramPathSearchTool
 
         Dim LQuery = (From path As String
                       In If(topLevel, ls - l, ls - l - r) - wildcards(ext) <= source
-                      Select ID = IO.Path.GetFileNameWithoutExtension(path),
+                      Select ID = basename(path),
                           path
                       Group By ID Into Group).ToArray
 
@@ -541,7 +541,7 @@ Public Module ProgramPathSearchTool
 
         Dim LQuery = From path As String
                      In FileIO.FileSystem.GetFiles(source, FileIO.SearchOption.SearchAllSubDirectories, ext)
-                     Select ID = IO.Path.GetFileNameWithoutExtension(path),
+                     Select ID = basename(path),
                           path
                      Group By ID Into Group
         Dim dict As Dictionary(Of String, String) =
@@ -572,7 +572,7 @@ Public Module ProgramPathSearchTool
     Public Function LoadSourceEntryList(source As IEnumerable(Of String)) As Dictionary(Of String, String)
         Dim LQuery = From path As String
                      In source
-                     Select ID = IO.Path.GetFileNameWithoutExtension(path),
+                     Select ID = basename(path),
                          path
                      Group By ID Into Group
         Dim res As Dictionary(Of String, String) =
@@ -891,7 +891,7 @@ Public Module ProgramPathSearchTool
         Try
             Dim path$ = file.FixPath.TrimEnd("/"c, "\"c)
             Dim fileInfo = FileIO.FileSystem.GetFileInfo(path$)
-            Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
+            Dim Name As String = basename(fileInfo.FullName)
             Return $"{fileInfo.Directory.FullName}/{Name}"
         Catch ex As Exception
             ex = New Exception($"{NameOf(file)} --> {file}", ex)

@@ -222,17 +222,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DocumentStream\DataFrame.vb" />
-    <Compile Include="DocumentStream\EntityObject.vb" />
-    <Compile Include="DocumentStream\File.vb" />
-    <Compile Include="DocumentStream\HTMLWriter.vb" />
-    <Compile Include="DocumentStream\MetaData\Meta.vb" />
-    <Compile Include="DocumentStream\NetStream\File.vb" />
-    <Compile Include="DocumentStream\NetStream\RowObject.vb" />
-    <Compile Include="DocumentStream\NetStream\StreamHelper.vb" />
-    <Compile Include="DocumentStream\RowObject.vb" />
-    <Compile Include="DocumentStream\StreamIO.vb" />
-    <Compile Include="DocumentStream\Tokenizer.vb" />
+    <Compile Include="IO\DataFrame.vb" />
+    <Compile Include="IO\EntityObject.vb" />
+    <Compile Include="IO\File.vb" />
+    <Compile Include="IO\HTMLWriter.vb" />
+    <Compile Include="IO\MetaData\Meta.vb" />
+    <Compile Include="IO\NetStream\File.vb" />
+    <Compile Include="IO\NetStream\RowObject.vb" />
+    <Compile Include="IO\NetStream\StreamHelper.vb" />
+    <Compile Include="IO\RowObject.vb" />
+    <Compile Include="IO\StreamIO.vb" />
+    <Compile Include="IO\Tokenizer.vb" />
     <Compile Include="Excel\Extensions.vb" />
     <Compile Include="Excel\Coordinates.vb" />
     <Compile Include="Excel\Excel.vb" />

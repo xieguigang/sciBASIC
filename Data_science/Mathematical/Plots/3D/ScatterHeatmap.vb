@@ -31,7 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors

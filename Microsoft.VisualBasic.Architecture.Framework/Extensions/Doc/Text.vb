@@ -249,7 +249,7 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 将目标字符串数据全部写入到文件之中，当所写入的文件位置之上没有父文件夹存在的时候，会自动创建文件夹
+    ''' 将目标字符串集合数据全部写入到文件之中，当所写入的文件位置之上没有父文件夹存在的时候，会自动创建文件夹
     ''' </summary>
     ''' <param name="array"></param>
     ''' <param name="path"></param>

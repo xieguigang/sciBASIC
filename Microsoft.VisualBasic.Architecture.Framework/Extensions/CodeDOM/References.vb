@@ -140,7 +140,7 @@ Namespace Emit.CodeDOM_VBC
                 If strict Then
                     Return True
                 Else
-                    Dim Name As String = IO.Path.GetFileNameWithoutExtension(url)
+                    Dim Name As String = basename(url)
                     If String.Equals(Name, "mscorlib") OrElse String.Equals(Name, "System") OrElse Name.StartsWith("System.") Then
                         Return True
                     End If

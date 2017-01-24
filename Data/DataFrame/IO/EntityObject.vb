@@ -75,7 +75,7 @@ Namespace IO
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
 
-        Public Property Identifier As String Implements INamedValue.Key
+        Public Property ID As String Implements INamedValue.Key
 
         ''' <summary>
         ''' Copy prop[erty value
@@ -83,7 +83,7 @@ Namespace IO
         ''' <returns></returns>
         Public Overloads Function Copy() As DataSet
             Return New DataSet With {
-                .Identifier = Identifier,
+                .ID = ID,
                 .Properties = New Dictionary(Of String, Double)(Properties)
             }
         End Function
@@ -102,7 +102,7 @@ Namespace IO
                 uidMap = first.First
             End If
             Dim map As New Dictionary(Of String, String) From {
-                {uidMap, NameOf(DataSet.Identifier)}
+                {uidMap, NameOf(DataSet.ID)}
             }
             Return path.LoadCsv(Of DataSet)(explicit:=False, maps:=map)
         End Function

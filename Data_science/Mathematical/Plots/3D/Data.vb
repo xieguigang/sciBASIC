@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
@@ -248,7 +248,7 @@ Namespace Plot3D
             For Each row In f.__2DIterates(x, y, xsteps, ysteps, parallel)
                 If Not matrix Is Nothing Then
                     matrix += New DataSet With {
-                        .Identifier = row(Scan0).x,
+                        .ID = row(Scan0).x,
                         .Properties = row _
                         .ToDictionary(
                             Function(pt) CStr(pt.y),

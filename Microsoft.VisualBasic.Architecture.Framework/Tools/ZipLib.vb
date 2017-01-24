@@ -100,7 +100,7 @@ Public Module GZip
 
     Public Function ExtractToSelfDirectory(zip As String, Optional overwriteMethod As Overwrite = Overwrite.IfNewer) As String
         Dim Dir As String = FileIO.FileSystem.GetParentPath(zip)
-        Dim Name As String = IO.Path.GetFileNameWithoutExtension(zip)
+        Dim Name As String = basename(zip)
         Dir = Dir & "/" & Name
         Call ImprovedExtractToDirectory(zip, Dir, overwriteMethod)
 

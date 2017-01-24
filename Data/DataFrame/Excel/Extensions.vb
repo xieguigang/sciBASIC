@@ -108,7 +108,7 @@ Namespace Excel
             End If
 
             Dim maps As New Dictionary(Of String, String) From {
-                {mapName, NameOf(DataSet.Identifier)}
+                {mapName, NameOf(DataSet.ID)}
             }
 
             Call df.ChangeMapping(maps)

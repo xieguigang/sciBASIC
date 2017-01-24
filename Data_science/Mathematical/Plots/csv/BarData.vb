@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.Excel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors

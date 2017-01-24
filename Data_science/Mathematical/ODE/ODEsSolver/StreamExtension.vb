@@ -29,7 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -43,9 +43,9 @@ Public Module StreamExtension
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function DataFrame(df As ODEsOut, Optional xDisp As String = "X", Optional fix% = -1) As DocumentStream.File
+    Public Function DataFrame(df As ODEsOut, Optional xDisp As String = "X", Optional fix% = -1) As IO.File
         Dim ly = df.y.Values.ToArray
-        Dim file As New DocumentStream.File
+        Dim file As New IO.File
         Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.Name))
         Dim round As Func(Of Double, String)
 

@@ -215,7 +215,7 @@ Namespace Emit.CodeDOM_VBC
 
             If Not Reference.IsNullOrEmpty Then
                 Call Options.ReferencedAssemblies.AddRange((From path As String In Reference
-                                                            Where Array.IndexOf(DotNETFramework, IO.Path.GetFileNameWithoutExtension(path)) = -1
+                                                            Where Array.IndexOf(DotNETFramework, basename(path)) = -1
                                                             Select path).ToArray)
             End If
 

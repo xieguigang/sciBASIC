@@ -45,7 +45,7 @@ Namespace Drawing2D
 
         Public ReadOnly Property APIModuleLibrary As String
             Get
-                'Return IO.Path.GetFileNameWithoutExtension(GetType(VectorAPI).Assembly.Location)
+                'Return basename(GetType(VectorAPI).Assembly.Location)
                 Return GetType(VectorAPI).Assembly.Location.ToFileURL
             End Get
         End Property

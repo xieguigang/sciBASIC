@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
@@ -237,7 +237,7 @@ Public Module ScatterHeatmap
                 Return LinqAPI.Exec(Of (x#,y#,z#)) <= 
                     From line As DataSet 
                     In matrix
-                    Let xi = Val(line.Identifier)
+                    Let xi = Val(line.ID)
                     Let data = line.Properties.Select(Function(o) (x:=xi, y:=val(o.Key), z:=o.Value))
                     Select data 
             Else

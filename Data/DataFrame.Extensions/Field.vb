@@ -29,7 +29,7 @@
 Imports System.IO
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
