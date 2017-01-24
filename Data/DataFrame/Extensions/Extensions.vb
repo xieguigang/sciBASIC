@@ -404,10 +404,15 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToCsvDoc(Of T As Class)(source As IEnumerable(Of T),
-                                               Optional explicit As Boolean = False,
-                                               Optional maps As Dictionary(Of String, String) = Nothing,
-                                               Optional metaBlank As String = "") As IO.File
-        Return Reflector.Save(source, explicit, maps:=maps, metaBlank:=metaBlank)
+                                                        Optional explicit As Boolean = False,
+                                                        Optional maps As Dictionary(Of String, String) = Nothing,
+                                                        Optional metaBlank As String = "",
+                                                        Optional reorderKeys As Integer = 0) As IO.File
+        Return Reflector.Save(
+            source, explicit,
+            maps:=maps,
+            metaBlank:=metaBlank,
+            reorderKeys:=reorderKeys)
     End Function
 
     ''' <summary>

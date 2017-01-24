@@ -260,9 +260,17 @@ Namespace StorageProvider.Reflection
                                    Optional metaBlank As String = "",
                                    Optional maps As Dictionary(Of String, String) = Nothing,
                                    Optional parallel As Boolean = True,
-                                   Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing) As File
+                                   Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing,
+                                   Optional reorderKeys As Integer = 0) As File
+
             Dim type As Type = GetType(T)
-            Dim file As New File(__save(source, type, explicit, schemaOut, metaBlank, maps, parallel))
+            Dim file As New File(
+                __save(source, type, explicit,
+                       schemaOut,
+                       metaBlank,
+                       maps,
+                       parallel,
+                       reorderKeys:=reorderKeys))
             Return file
         End Function
 
