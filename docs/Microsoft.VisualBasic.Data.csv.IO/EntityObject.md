@@ -1,5 +1,5 @@
 ﻿# EntityObject
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO](./index.md)_
 
 The object entity, @``T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DynamicPropertyBase`1``, @``T:System.String``
 
@@ -9,12 +9,12 @@ The object entity, @``T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.Dyn
 
 #### Copy
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.EntityObject.Copy
+Microsoft.VisualBasic.Data.csv.IO.EntityObject.Copy
 ```
 Copy prop[erty value
 
 
 ### Properties
 
-#### Identifier
+#### ID
 This object identifier

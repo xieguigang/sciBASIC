@@ -1,5 +1,5 @@
 ﻿# __taskHelper`1
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO.Linq.DataStream](./index.md)_
 
 为了减少Lambda表达式所带来的性能损失而构建的一个任务运行帮助对象
 
@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream](./in
 
 #### #ctor
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream.__taskHelper`1.#ctor(`0[],System.Action{`0[]})
+Microsoft.VisualBasic.Data.csv.IO.Linq.DataStream.__taskHelper`1.#ctor(`0[],System.Action{`0[]})
 ```
 赋值任务和数据源
 
@@ -21,7 +21,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream.__taskHelper`1.#ct
 
 #### RunTask
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream.__taskHelper`1.RunTask
+Microsoft.VisualBasic.Data.csv.IO.Linq.DataStream.__taskHelper`1.RunTask
 ```
 运行当前的这个任务
 

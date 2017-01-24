@@ -1,5 +1,5 @@
 ﻿# DataStream
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream.Linq](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO.Linq](./index.md)_
 
 Buffered large text dataset Table reader
 
@@ -9,15 +9,15 @@ Buffered large text dataset Table reader
 
 #### AsLinq``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream.AsLinq``1(System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.Linq.DataStream.AsLinq``1(System.Boolean)
 ```
 Csv to LINQ
 
 #### BufferProvider
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream.BufferProvider
+Microsoft.VisualBasic.Data.csv.IO.Linq.DataStream.BufferProvider
 ```
-Providers the data buffer for the @``T:Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject``
+Providers the data buffer for the @``T:Microsoft.VisualBasic.Data.csv.IO.RowObject``
 > 
 >  这个函数主要是为了处理第一行数据
 >  因为在构造函数部分已经读取了第一行来解析schema，所以在这里需要对第一个数据块做一些额外的处理
@@ -25,7 +25,7 @@ Providers the data buffer for the @``T:Microsoft.VisualBasic.Data.csv.DocumentSt
 
 #### ForEach``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream.ForEach``1(System.Action{``0})
+Microsoft.VisualBasic.Data.csv.IO.Linq.DataStream.ForEach``1(System.Action{``0})
 ```
 For each item in the source data fram, invoke a specific task
 
@@ -36,7 +36,7 @@ For each item in the source data fram, invoke a specific task
 
 #### ForEachBlock``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream.ForEachBlock``1(System.Action{``0[]},System.Int32)
+Microsoft.VisualBasic.Data.csv.IO.Linq.DataStream.ForEachBlock``1(System.Action{``0[]},System.Int32)
 ```
 Processing large dataset in block partitions.(以分块任务的形式来处理一个非常大的数据集)
 
@@ -51,7 +51,7 @@ Processing large dataset in block partitions.(以分块任务的形式来处理�
 
 #### OpenHandle
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.DataStream.OpenHandle(System.String,System.Text.Encoding,System.Int32)
+Microsoft.VisualBasic.Data.csv.IO.Linq.DataStream.OpenHandle(System.String,System.Text.Encoding,System.Int32)
 ```
 Open the data frame reader for the specific csv document.
 

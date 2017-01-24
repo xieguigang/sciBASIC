@@ -1,5 +1,5 @@
 ﻿# DataFrame
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO](./index.md)_
 
 The dynamics data frame object which its first line is not contains the but using for the title property.
  (第一行总是没有的，即本对象类型适用于第一行为列标题行的数据)
@@ -10,7 +10,7 @@ The dynamics data frame object which its first line is not contains the but usin
 
 #### __createSchemaOridinal
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.__createSchemaOridinal(Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame)
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.__createSchemaOridinal(Microsoft.VisualBasic.Data.csv.IO.DataFrame)
 ```
 Indexing the column headers
 
@@ -21,7 +21,7 @@ Indexing the column headers
 
 #### __reviewColumnHeader
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.__reviewColumnHeader(System.String)
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.__reviewColumnHeader(System.String)
 ```
 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，使用Trim函数之后，反而会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
 
@@ -32,7 +32,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.__reviewColumnHeader(Sys
 
 #### ChangeMapping
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.ChangeMapping(System.Collections.Generic.Dictionary{System.String,System.String})
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.ChangeMapping(System.Collections.Generic.Dictionary{System.String,System.String})
 ```
 ``Csv.Field -> @``P:System.Reflection.MemberInfo.Name````
 
@@ -43,13 +43,13 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.ChangeMapping(System.Col
 
 #### Close
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.Close
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.Close
 ```
-Closes the @``T:System.Data.IDataReader``:@``T:Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame`` Object.
+Closes the @``T:System.Data.IDataReader``:@``T:Microsoft.VisualBasic.Data.csv.IO.DataFrame`` Object.
 
 #### CopyFrom
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.CopyFrom(Microsoft.VisualBasic.Data.csv.DocumentStream.File)
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.CopyFrom(Microsoft.VisualBasic.Data.csv.IO.File)
 ```
 这个方法会清除当前对象之中的原有数据
 
@@ -60,13 +60,13 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.CopyFrom(Microsoft.Visua
 
 #### CreateDataSource
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.CreateDataSource
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.CreateDataSource
 ```
 Get the lines data for the convinent data operation.(为了保持一致的顺序，这个函数是非并行化的)
 
 #### CreateObject
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.CreateObject(Microsoft.VisualBasic.Data.csv.DocumentStream.File)
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.CreateObject(Microsoft.VisualBasic.Data.csv.IO.File)
 ```
 Creates the data frame object from the csv docs.
 
@@ -77,13 +77,13 @@ Creates the data frame object from the csv docs.
 
 #### csv
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.csv
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.csv
 ```
 Convert this dataframe object as a csv document object
 
 #### GetOrdinal
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.GetOrdinal(System.String)
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.GetOrdinal(System.String)
 ```
 Function return -1 when column not found.
 
@@ -94,7 +94,7 @@ Function return -1 when column not found.
 
 #### GetOrdinalSchema
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.GetOrdinalSchema(System.String[])
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.GetOrdinalSchema(System.String[])
 ```
 Gets the order list of the specific column list, -1 value will be returned when it is not exists in the table.
  (获取列集合的位置列表，不存在的列则返回-1)
@@ -107,7 +107,7 @@ Gets the order list of the specific column list, -1 value will be returned when 
 
 #### GetSchemaTable
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.GetSchemaTable
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.GetSchemaTable
 ```
 Returns a System.Data.DataTable that describes the column metadata of the System.Data.IDataReader.
 
@@ -115,7 +115,7 @@ _returns: A System.Data.DataTable that describes the column metadata._
 
 #### Load
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.Load(System.String,System.Text.Encoding,System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.Load(System.String,System.Text.Encoding,System.Boolean)
 ```
 Try loading a excel csv data file as a dynamics data frame object.(尝试加载一个Csv文件为数据框对象，请注意，第一行必须要为标题行)
 
@@ -127,14 +127,14 @@ Try loading a excel csv data file as a dynamics data frame object.(尝试加载�
 
 #### Read
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.Read
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.Read
 ```
 The data frame object start to reading the data in this table, if the current pointer is reach 
  the top of the lines then this function will returns FALSE to stop the reading loop.
 
 #### Reset
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.Reset
+Microsoft.VisualBasic.Data.csv.IO.DataFrame.Reset
 ```
 Reset the reading position in the data frame object.
 
@@ -144,7 +144,7 @@ Reset the reading position in the data frame object.
 #### __columnList
 Using the first line of the csv row as the column headers in this csv file.
 #### __current
-@``F:Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame.__currentLine``在@``F:Microsoft.VisualBasic.Data.csv.DocumentStream.File._innerTable``之中的位置
+@``F:Microsoft.VisualBasic.Data.csv.IO.DataFrame.__currentLine``在@``F:Microsoft.VisualBasic.Data.csv.IO.File._innerTable``之中的位置
 #### DuplicatedKeys
 There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!
 #### EmptyWarning

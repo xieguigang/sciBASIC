@@ -8,7 +8,7 @@ An node entity in the target network.(这个对象里面包含了网络之中的
 
 ### Properties
 
-#### Identifier
+#### ID
 这个节点的标识符
 #### NodeType
 Node data groups identifier.(这个节点的分组类型的定义)

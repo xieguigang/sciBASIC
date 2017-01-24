@@ -1,5 +1,5 @@
 ﻿# BatchQueue
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream.Linq](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO.Linq](./index.md)_
 
 
 
@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream.Linq](./index.md)_
 
 #### IteratesAll``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.BatchQueue.IteratesAll``1(System.Collections.Generic.IEnumerable{System.String},Microsoft.VisualBasic.Text.Encodings)
+Microsoft.VisualBasic.Data.csv.IO.Linq.BatchQueue.IteratesAll``1(System.Collections.Generic.IEnumerable{System.String},Microsoft.VisualBasic.Text.Encodings)
 ```
 Reads all data in the directory as a single data source.
 
@@ -21,7 +21,7 @@ Reads all data in the directory as a single data source.
 
 #### ReadQueue``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.BatchQueue.ReadQueue``1(System.Collections.Generic.IEnumerable{System.String},Microsoft.VisualBasic.Text.Encodings)
+Microsoft.VisualBasic.Data.csv.IO.Linq.BatchQueue.ReadQueue``1(System.Collections.Generic.IEnumerable{System.String},Microsoft.VisualBasic.Text.Encodings)
 ```
 {@``M:System.IO.Path.GetFileNameWithoutExtension(System.String)``, **`T`**()}
 
@@ -35,7 +35,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.BatchQueue.ReadQueue``1(Syste
 
 #### RequestData``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.BatchQueue.RequestData``1(System.String,Microsoft.VisualBasic.Text.Encodings)
+Microsoft.VisualBasic.Data.csv.IO.Linq.BatchQueue.RequestData``1(System.String,Microsoft.VisualBasic.Text.Encodings)
 ```
 函数会自动处理文件或者文件夹的情况
 
@@ -47,7 +47,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.BatchQueue.RequestData``1(Sys
 
 #### RequestFiles``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.BatchQueue.RequestFiles``1(System.String,Microsoft.VisualBasic.Text.Encodings)
+Microsoft.VisualBasic.Data.csv.IO.Linq.BatchQueue.RequestFiles``1(System.String,Microsoft.VisualBasic.Text.Encodings)
 ```
 函数会自动处理文件或者文件夹的情况
 

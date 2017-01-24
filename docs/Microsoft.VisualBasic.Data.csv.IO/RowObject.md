@@ -1,5 +1,5 @@
 ﻿# RowObject
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO](./index.md)_
 
 A line of data in the csv file.(Csv表格文件之中的一行)
 
@@ -9,9 +9,9 @@ A line of data in the csv file.(Csv表格文件之中的一行)
 
 #### #ctor
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.#ctor(System.String)
+Microsoft.VisualBasic.Data.csv.IO.RowObject.#ctor(System.String)
 ```
-这个构造函数会使用@``M:Microsoft.VisualBasic.Data.csv.DocumentStream.Tokenizer.CharsParser(System.String)``解析所输入的字符串为列数据的集合
+这个构造函数会使用@``M:Microsoft.VisualBasic.Data.csv.IO.Tokenizer.CharsParser(System.String)``解析所输入的字符串为列数据的集合
 
 |Parameter Name|Remarks|
 |--------------|-------|
@@ -20,7 +20,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.#ctor(System.String)
 
 #### Contains
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.Contains(Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject)
+Microsoft.VisualBasic.Data.csv.IO.RowObject.Contains(Microsoft.VisualBasic.Data.csv.IO.RowObject)
 ```
 查看目标行是否被包含在本行之中，即是否对应元素相等
 
@@ -31,7 +31,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.Contains(Microsoft.Visua
 
 #### Distinct
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.Distinct(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject})
+Microsoft.VisualBasic.Data.csv.IO.RowObject.Distinct(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.IO.RowObject})
 ```
 去除行集合中的重复的数据行
 
@@ -42,7 +42,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.Distinct(System.Collecti
 
 #### GetColumn
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.GetColumn(System.Int32,System.String@)
+Microsoft.VisualBasic.Data.csv.IO.RowObject.GetColumn(System.Int32,System.String@)
 ```
 返回一个指示：是否为空？
 
@@ -54,7 +54,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.GetColumn(System.Int32,S
 
 #### InsertAt
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.InsertAt(System.String,System.Int32)
+Microsoft.VisualBasic.Data.csv.IO.RowObject.InsertAt(System.String,System.Int32)
 ```
 insert the data into a spercific column
 
@@ -68,7 +68,7 @@ _returns: 仅为LINQ查询使用的一个无意义的值_
 
 #### LocateKeyWord
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.LocateKeyWord(System.String,System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.RowObject.LocateKeyWord(System.String,System.Boolean)
 ```
 查询某一个关键词在本行中的哪一个单元格，返回-1表示没有查询到本关键词
 
@@ -79,7 +79,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.LocateKeyWord(System.Str
 
 #### op_Explicit
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.op_Explicit(Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject)~System.String
+Microsoft.VisualBasic.Data.csv.IO.RowObject.op_Explicit(Microsoft.VisualBasic.Data.csv.IO.RowObject)~System.String
 ```
 Write to file.
 
@@ -90,7 +90,7 @@ Write to file.
 
 #### op_Implicit
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.op_Implicit(System.String)~Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject
+Microsoft.VisualBasic.Data.csv.IO.RowObject.op_Implicit(System.String)~Microsoft.VisualBasic.Data.csv.IO.RowObject
 ```
 Row parsing into column tokens
 
@@ -101,7 +101,7 @@ Row parsing into column tokens
 
 #### Takes
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.Takes(System.Int32[],System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.RowObject.Takes(System.Int32[],System.Boolean)
 ```
 Takes the data in the specific column index collection, if the column is not exists in the row object, then a part of the returned data will be the empty string.
 
@@ -113,7 +113,7 @@ Takes the data in the specific column index collection, if the column is not exi
 
 #### ToString
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.ToString
+Microsoft.VisualBasic.Data.csv.IO.RowObject.ToString
 ```
 Displaying in IDE
 
@@ -128,7 +128,7 @@ Generate a line of the string data in the csv document.(将当前的行对象转
 Get the cell data in a specific column number. if the column is not exists in this row then will return a empty string.
  (获取某一列中的数据，若该列不存在则返回空字符串)
 #### DirectGet
-Unsafety method, @``P:Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject.Column(System.Int32)`` method is safely.
+Unsafety method, @``P:Microsoft.VisualBasic.Data.csv.IO.RowObject.Column(System.Int32)`` method is safely.
  (不做任何处理直接获取数据)
 #### IsNullOrEmpty
 is this row object contains any data?

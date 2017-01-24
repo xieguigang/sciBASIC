@@ -1,5 +1,5 @@
 ﻿# StreamIO
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO](./index.md)_
 
 
 
@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream](./index.md)_
 
 #### GetType
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.StreamIO.GetType(Microsoft.VisualBasic.Data.csv.DocumentStream.File,System.Type[])
+Microsoft.VisualBasic.Data.csv.IO.StreamIO.GetType(Microsoft.VisualBasic.Data.csv.IO.File,System.Type[])
 ```
 根据文件的头部的定义，从**`types`**之中选取得到最合适的类型的定义
 
@@ -21,7 +21,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.StreamIO.GetType(Microsoft.VisualB
 
 #### SaveDataFrame
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.StreamIO.SaveDataFrame(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject},System.String,System.Text.Encoding)
+Microsoft.VisualBasic.Data.csv.IO.StreamIO.SaveDataFrame(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.IO.RowObject},System.String,System.Text.Encoding)
 ```
 Save this csv document into a specific file location **`path`**.
 

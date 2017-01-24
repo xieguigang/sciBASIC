@@ -1,5 +1,5 @@
 ﻿# Tokenizer
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO](./index.md)_
 
 RowObject parsers
 
@@ -9,7 +9,7 @@ RowObject parsers
 
 #### CharsParser
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Tokenizer.CharsParser(System.String)
+Microsoft.VisualBasic.Data.csv.IO.Tokenizer.CharsParser(System.String)
 ```
 通过Chars枚举来解析域
 
@@ -20,7 +20,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.Tokenizer.CharsParser(System.Strin
 
 #### IsEmptyRow
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Tokenizer.IsEmptyRow(System.String,System.Char)
+Microsoft.VisualBasic.Data.csv.IO.Tokenizer.IsEmptyRow(System.String,System.Char)
 ```
 是否等于``,,,,,,,,,``
 
@@ -31,7 +31,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.Tokenizer.IsEmptyRow(System.String
 
 #### RegexTokenizer
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Tokenizer.RegexTokenizer(System.String)
+Microsoft.VisualBasic.Data.csv.IO.Tokenizer.RegexTokenizer(System.String)
 ```
 Parsing the row data from the input string line.(通过正则表达式来解析域)
 

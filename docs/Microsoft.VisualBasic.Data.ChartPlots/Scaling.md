@@ -21,6 +21,19 @@ Microsoft.VisualBasic.Data.ChartPlots.Scaling.#ctor(System.Collections.Generic.I
  |
 
 
+#### __scaling
+```csharp
+Microsoft.VisualBasic.Data.ChartPlots.Scaling.__scaling(System.Single[],System.Single@,System.Boolean)
+```
+返回``max-min``
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|array!|-|
+|min!|-|
+|absoluteScaling|-|
+
+
 #### ForEach
 ```csharp
 Microsoft.VisualBasic.Data.ChartPlots.Scaling.ForEach(System.Drawing.Size,System.Drawing.Size)
@@ -53,3 +66,9 @@ Microsoft.VisualBasic.Data.ChartPlots.Scaling.YScaler(System.Drawing.Size,System
 
 
 
+### Properties
+
+#### dx
+x,y轴分别的最大值和最小值的差值
+#### dy
+x,y轴分别的最大值和最小值的差值

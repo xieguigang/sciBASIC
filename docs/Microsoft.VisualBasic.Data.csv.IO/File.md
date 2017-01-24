@@ -1,5 +1,5 @@
 ﻿# File
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO](./index.md)_
 
 A comma character seperate table file that can be read and write in the EXCEL.(一个能够被Excel程序所读取的表格文件)
 
@@ -9,7 +9,7 @@ A comma character seperate table file that can be read and write in the EXCEL.(�
 
 #### #ctor
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.#ctor(System.String,Microsoft.VisualBasic.Text.Encodings,System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.File.#ctor(System.String,Microsoft.VisualBasic.Text.Encodings,System.Boolean)
 ```
 Load document from path
 
@@ -20,13 +20,13 @@ Load document from path
 
 #### __createTableVector
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.__createTableVector
+Microsoft.VisualBasic.Data.csv.IO.File.__createTableVector
 ```
-这个方法是保存@``M:Microsoft.VisualBasic.Data.csv.Extensions.DataFrame(Microsoft.VisualBasic.Data.csv.DocumentStream.File)``对象之中的数据所需要的
+这个方法是保存@``M:Microsoft.VisualBasic.Data.csv.Extensions.DataFrame(Microsoft.VisualBasic.Data.csv.IO.File)``对象之中的数据所需要的
 
 #### __LINQ_LOAD
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.__LINQ_LOAD(System.String[])
+Microsoft.VisualBasic.Data.csv.IO.File.__LINQ_LOAD(System.String[])
 ```
 
 
@@ -38,7 +38,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.__LINQ_LOAD(System.String[])
 
 #### __loads
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.__loads(System.String,System.Text.Encoding,System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.File.__loads(System.String,System.Text.Encoding,System.Boolean)
 ```
 同时兼容本地文件和网络文件的
 
@@ -50,7 +50,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.__loads(System.String,System.
 
 #### AppendRange
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.AppendRange(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject})
+Microsoft.VisualBasic.Data.csv.IO.File.AppendRange(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.IO.RowObject})
 ```
 Add a data row collection into this Csv file object instance and then return the total row number after the add operation.
  (向CSV文件之中批量添加行记录，之后返回当前所打开的文件在添加纪录之后的总行数)
@@ -62,7 +62,7 @@ Add a data row collection into this Csv file object instance and then return the
 
 #### DeleteCell
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.DeleteCell(System.Func{System.String,System.Boolean},System.Int32)
+Microsoft.VisualBasic.Data.csv.IO.File.DeleteCell(System.Func{System.String,System.Boolean},System.Int32)
 ```
 删除目标列中的单元格中符合条件的内容
 
@@ -74,7 +74,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.DeleteCell(System.Func{System
 
 #### Distinct
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.Distinct(Microsoft.VisualBasic.Data.csv.DocumentStream.File,System.Int32,System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.File.Distinct(Microsoft.VisualBasic.Data.csv.IO.File,System.Int32,System.Boolean)
 ```
 去除Csv文件之中的重复记录
 
@@ -86,10 +86,10 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.Distinct(Microsoft.VisualBasi
 
 #### FastLoad
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.FastLoad(System.String,System.Boolean,System.Text.Encoding)
+Microsoft.VisualBasic.Data.csv.IO.File.FastLoad(System.String,System.Boolean,System.Text.Encoding)
 ```
 If you are sure about your csv data document have no character such like " or, in a cell, then you can try using this fast load method to load your csv data.
- if not, please using the @``M:Microsoft.VisualBasic.Data.csv.DocumentStream.File.Load(System.String,System.Text.Encoding,System.Boolean)`` method to avoid of the data damages.
+ if not, please using the @``M:Microsoft.VisualBasic.Data.csv.IO.File.Load(System.String,System.Text.Encoding,System.Boolean)`` method to avoid of the data damages.
  (假若你确信你的数据文件之中仅含有数字之类的数据，则可以尝试使用本方法进行快速加载，假若文件之中每一个单元格还含有引起歧义的例如双引号或者逗号，则请不要使用本方法进行加载)
 
 |Parameter Name|Remarks|
@@ -100,7 +100,7 @@ If you are sure about your csv data document have no character such like " or, i
 
 #### FindAll
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.FindAll(System.String)
+Microsoft.VisualBasic.Data.csv.IO.File.FindAll(System.String)
 ```
 使用迭代器返回包含有目标关键词的行
 
@@ -111,7 +111,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.FindAll(System.String)
 
 #### FindAtColumn
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.FindAtColumn(System.String,System.Int32)
+Microsoft.VisualBasic.Data.csv.IO.File.FindAtColumn(System.String,System.Int32)
 ```
 Using the content in a specific column as the target for search using a specific keyword, and then return all of the rows that have the query keyword.
  (以指定的列中的内容搜索关键词，并返回检索成功的行的集合)
@@ -124,13 +124,13 @@ Using the content in a specific column as the target for search using a specific
 
 #### Generate
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.Generate
+Microsoft.VisualBasic.Data.csv.IO.File.Generate
 ```
 Generate the csv data file document using the table data.(将表格对象转换为文本文件以进行保存)
 
 #### GenerateDocument
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.GenerateDocument(System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.File.GenerateDocument(System.Boolean)
 ```
 将表对象转换为文本文件之中的文本内容
 
@@ -141,7 +141,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.GenerateDocument(System.Boole
 
 #### GetByLine
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.GetByLine(System.Int32)
+Microsoft.VisualBasic.Data.csv.IO.File.GetByLine(System.Int32)
 ```
 Get a data row in the specific row number, when a row is not exists in current csv file then the function will return a empty row.
  (当目标对象不存在的时候，会返回一个空行对象)
@@ -153,7 +153,7 @@ Get a data row in the specific row number, when a row is not exists in current c
 
 #### Insert
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.Insert(System.Int32,Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject)
+Microsoft.VisualBasic.Data.csv.IO.File.Insert(System.Int32,Microsoft.VisualBasic.Data.csv.IO.RowObject)
 ```
 在所指定的行号下面插入一行数据
 
@@ -165,7 +165,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.Insert(System.Int32,Microsoft
 
 #### InsertAt
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.InsertAt(System.Int32,Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject)
+Microsoft.VisualBasic.Data.csv.IO.File.InsertAt(System.Int32,Microsoft.VisualBasic.Data.csv.IO.RowObject)
 ```
 使用IList接口本身的Insert方法来执行插入
 
@@ -177,7 +177,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.InsertAt(System.Int32,Microso
 
 #### InsertEmptyColumnBefore
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.InsertEmptyColumnBefore(System.Int32)
+Microsoft.VisualBasic.Data.csv.IO.File.InsertEmptyColumnBefore(System.Int32)
 ```
 Insert a new empty line of row data before the specific row number.(在指定列标号的列之前插入一行空列)
 
@@ -188,7 +188,7 @@ Insert a new empty line of row data before the specific row number.(在指定列
 
 #### IsNullOrEmpty
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.IsNullOrEmpty(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject})
+Microsoft.VisualBasic.Data.csv.IO.File.IsNullOrEmpty(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.IO.RowObject})
 ```
 判断目标数据文件是否为空
 
@@ -199,7 +199,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.IsNullOrEmpty(System.Collecti
 
 #### Load
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.Load(System.String[],System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.File.Load(System.String[],System.Boolean)
 ```
 排序操作在这里会不会大幅度的影响性能？
 
@@ -211,7 +211,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.Load(System.String[],System.B
 
 #### Normalization
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.Normalization(System.String,System.String)
+Microsoft.VisualBasic.Data.csv.IO.File.Normalization(System.String,System.String)
 ```
 将一些奇怪的符号去除
 
@@ -222,7 +222,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.Normalization(System.String,S
 
 #### op_Addition
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.op_Addition(Microsoft.VisualBasic.Data.csv.DocumentStream.File,System.Collections.Generic.IEnumerable{System.String})
+Microsoft.VisualBasic.Data.csv.IO.File.op_Addition(Microsoft.VisualBasic.Data.csv.IO.File,System.Collections.Generic.IEnumerable{System.String})
 ```
 Add a row
 
@@ -234,7 +234,7 @@ Add a row
 
 #### op_Implicit
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.op_Implicit(System.String)~Microsoft.VisualBasic.Data.csv.DocumentStream.File
+Microsoft.VisualBasic.Data.csv.IO.File.op_Implicit(System.String)~Microsoft.VisualBasic.Data.csv.IO.File
 ```
 Read a Csv file, default encoding is utf8
 
@@ -245,7 +245,7 @@ Read a Csv file, default encoding is utf8
 
 #### Remove
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.Remove(System.Func{Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject,System.Boolean})
+Microsoft.VisualBasic.Data.csv.IO.File.Remove(System.Func{Microsoft.VisualBasic.Data.csv.IO.RowObject,System.Boolean})
 ```
 Delete all of the row that meet the delete condition.(将所有满足条件的行进行删除)
 
@@ -256,7 +256,7 @@ Delete all of the row that meet the delete condition.(将所有满足条件的�
 
 #### RemoveRange
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.RemoveRange(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject})
+Microsoft.VisualBasic.Data.csv.IO.File.RemoveRange(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.IO.RowObject})
 ```
 Remove the item in a specific row collection.
 
@@ -267,7 +267,7 @@ Remove the item in a specific row collection.
 
 #### Save
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.Save(System.String,System.Text.Encoding)
+Microsoft.VisualBasic.Data.csv.IO.File.Save(System.String,System.Text.Encoding)
 ```
 Save this csv document into a specific file location **`path`**.
 
@@ -279,7 +279,7 @@ Save this csv document into a specific file location **`path`**.
 
 #### TokenCounts
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.TokenCounts(System.Int32,System.Boolean,System.Boolean,System.Boolean)
+Microsoft.VisualBasic.Data.csv.IO.File.TokenCounts(System.Int32,System.Boolean,System.Boolean,System.Boolean)
 ```
 统计某一个指定的列之中的各个项目的出现次数
 
@@ -292,7 +292,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.File.TokenCounts(System.Int32,Syst
 
 #### Transpose
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.File.Transpose
+Microsoft.VisualBasic.Data.csv.IO.File.Transpose
 ```
 对当前的csv矩阵进行转置之后返回新的文件
 

@@ -1,5 +1,5 @@
 ﻿# LinqWhere`1
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream.Linq](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO.Linq](./index.md)_
 
 
 
@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream.Linq](./index.md)_
 
 #### __compile
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.__compile(Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.ExprToken}@,System.Func{`0,System.Boolean})
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.__compile(Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.IO.Linq.ExprToken}@,System.Func{`0,System.Boolean})
 ```
 编译查询条件表达式
 
@@ -21,7 +21,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.__compile(Microso
 
 #### __eq
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.__eq(System.Object,System.String,System.Type)
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.__eq(System.Object,System.String,System.Type)
 ```
 a = b
 
@@ -34,13 +34,13 @@ a = b
 
 #### __gt
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.__gt(System.Object,System.String,System.Type)
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.__gt(System.Object,System.String,System.Type)
 ```
 a > b
 
 #### __instr
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.__instr(System.Object,System.String,System.Type)
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.__instr(System.Object,System.String,System.Type)
 ```
 InStr(a, b) > 0
 
@@ -53,7 +53,7 @@ InStr(a, b) > 0
 
 #### __lt
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.__lt(System.Object,System.String,System.Type)
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.__lt(System.Object,System.String,System.Type)
 ```
 a < b
 
@@ -66,7 +66,7 @@ a < b
 
 #### __neq
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.__neq(System.Object,System.String,System.Type)
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.__neq(System.Object,System.String,System.Type)
 ```
 a != b
 
@@ -79,7 +79,7 @@ a != b
 
 #### __regex
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.__regex(System.Object,System.String,System.Type)
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.__regex(System.Object,System.String,System.Type)
 ```
 Regex.Match(a, b).Success
 
@@ -92,7 +92,7 @@ Regex.Match(a, b).Success
 
 #### Compile
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.Compile
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.Compile
 ```
 编译LINQ数据库查询引擎之中的条件表达式
  OR 运算的级别是最低的
@@ -100,7 +100,7 @@ Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.Compile
 
 #### Test
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.Test(`0)
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.Test(`0)
 ```
 LINQ WHERE TEST(x) = TRUE
 
@@ -111,7 +111,7 @@ LINQ WHERE TEST(x) = TRUE
 
 #### TryParse
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.Linq.LinqWhere`1.TryParse(System.String)
+Microsoft.VisualBasic.Data.csv.IO.Linq.LinqWhere`1.TryParse(System.String)
 ```
 column <opr> value
 

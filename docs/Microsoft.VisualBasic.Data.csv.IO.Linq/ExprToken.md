@@ -1,5 +1,5 @@
 ﻿# ExprToken
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream.Linq](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO.Linq](./index.md)_
 
 
 

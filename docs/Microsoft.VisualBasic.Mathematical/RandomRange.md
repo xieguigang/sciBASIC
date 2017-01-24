@@ -23,16 +23,4 @@ Microsoft.VisualBasic.Mathematical.RandomRange.GetRandom(System.Double,System.Do
  |
 
 
-#### Log
-```csharp
-Microsoft.VisualBasic.Mathematical.RandomRange.Log(System.Double,System.Int32)
-```
-返回零表示比较小的常数
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|x|-|
-|INF|-|
-
-
 

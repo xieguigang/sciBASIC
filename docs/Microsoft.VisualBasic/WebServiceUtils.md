@@ -45,7 +45,7 @@ Download stream data from the http response.
 
 #### DownloadFile
 ```csharp
-Microsoft.VisualBasic.WebServiceUtils.DownloadFile(System.String,System.String,System.String,System.String)
+Microsoft.VisualBasic.WebServiceUtils.DownloadFile(System.String,System.String,System.String,System.String,System.Int32)
 ```
 download the file from **`strUrl`** to ``save``[local file].
 
@@ -162,9 +162,9 @@ Determine that is this uri string is a network location?
 |url|-|
 
 
-#### PostRequest
+#### POST
 ```csharp
-Microsoft.VisualBasic.WebServiceUtils.PostRequest(System.String,System.Collections.Generic.Dictionary{System.String,System.String[]},System.String,System.String,System.String)
+Microsoft.VisualBasic.WebServiceUtils.POST(System.String,System.Collections.Generic.Dictionary{System.String,System.String[]},System.String,System.String,System.String)
 ```
 POST http request for get html
 

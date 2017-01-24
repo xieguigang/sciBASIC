@@ -35,7 +35,7 @@ As query source for the LINQ or PLINQ, this function is much save time for the l
 
 #### DataFrame
 ```csharp
-Microsoft.VisualBasic.Data.csv.Extensions.DataFrame(Microsoft.VisualBasic.Data.csv.DocumentStream.File)
+Microsoft.VisualBasic.Data.csv.Extensions.DataFrame(Microsoft.VisualBasic.Data.csv.IO.File)
 ```
 Create a dynamics data frame object from a csv document object.(从Csv文件之中创建一个数据框容器)
 
@@ -106,7 +106,7 @@ Save the data collection vector as a csv document.
 
 #### SaveTo``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.Extensions.SaveTo``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Boolean,System.Text.Encoding,System.String,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String})
+Microsoft.VisualBasic.Data.csv.Extensions.SaveTo``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Boolean,System.Text.Encoding,System.String,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32)
 ```
 Save the object collection data dump into a csv file.(将一个对象数组之中的对象保存至一个Csv文件之中，请注意，这个方法仅仅会保存简单的基本数据类型的属性值)
 
@@ -124,7 +124,7 @@ Save the object collection data dump into a csv file.(将一个对象数组之�
 
 #### ToCsvDoc``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.Extensions.ToCsvDoc``1(System.Collections.Generic.IEnumerable{``0},System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.String)
+Microsoft.VisualBasic.Data.csv.Extensions.ToCsvDoc``1(System.Collections.Generic.IEnumerable{``0},System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Int32)
 ```
 Generate a csv document from a object collection.(从一个特定类型的数据集合之中生成一个Csv文件，非并行化的以保持数据原有的顺序)
 

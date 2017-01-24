@@ -9,13 +9,13 @@ _namespace: [Microsoft.VisualBasic.Data.ChartPlots](./index.md)_
 
 #### __plotInterval
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.Heatmap.__plotInterval(System.Action{System.Drawing.Graphics,Microsoft.VisualBasic.Imaging.Drawing2D.GraphicsRegion,Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Collections.Generic.Dictionary{System.String,System.Double}}[],Microsoft.VisualBasic.Language.Value{System.Single},System.Drawing.Font,System.Single,System.Collections.Generic.Dictionary{System.Double,System.Int32},Microsoft.VisualBasic.Language.Value{System.Single},System.Drawing.Color[]},Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Collections.Generic.Dictionary{System.String,System.Double}}[],System.Drawing.Color[],System.Int32,System.String,System.Drawing.Size,System.Drawing.Size,System.String,System.String,System.String,System.Drawing.Font,System.Double,System.Double,System.String,System.Drawing.Font)
+Microsoft.VisualBasic.Data.ChartPlots.Heatmap.__plotInterval(System.Action{System.Drawing.Graphics,Microsoft.VisualBasic.Imaging.Drawing2D.GraphicsRegion,Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Collections.Generic.Dictionary{System.String,System.Double}}[],Microsoft.VisualBasic.Language.Value{System.Single},System.Drawing.Font,System.Single,System.Collections.Generic.Dictionary{System.Double,System.Int32},Microsoft.VisualBasic.Language.Value{System.Single},System.Drawing.Color[]},Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Collections.Generic.Dictionary{System.String,System.Double}}[],System.Drawing.Color[],System.Int32,System.String,System.Drawing.Size,System.Drawing.Size,System.String,System.String,System.String,System.Drawing.Font,System.Double,System.Double,System.String,System.Drawing.Font,System.Single,System.Boolean,System.Drawing.Rectangle)
 ```
 一些共同的绘图元素过程
 
 #### CorrelatesNormalized
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.Heatmap.CorrelatesNormalized(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.DocumentStream.DataSet},Microsoft.VisualBasic.Mathematical.Correlations.Correlations.ICorrelation)
+Microsoft.VisualBasic.Data.ChartPlots.Heatmap.CorrelatesNormalized(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.IO.DataSet},Microsoft.VisualBasic.Mathematical.Correlations.Correlations.ICorrelation)
 ```
 相比于@``M:Microsoft.VisualBasic.Data.ChartPlots.Heatmap.LoadDataSet(System.String,System.String,System.Boolean,Microsoft.VisualBasic.Mathematical.Correlations.Correlations.ICorrelation)``函数，这个函数处理的是没有经过归一化处理的原始数据
 
@@ -62,7 +62,7 @@ Microsoft.VisualBasic.Data.ChartPlots.Heatmap.LoadDataSet(System.String,System.S
 
 #### Plot
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.Heatmap.Plot(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Collections.Generic.Dictionary{System.String,System.Double}}},System.Drawing.Color[],System.Int32,System.String,Microsoft.VisualBasic.Data.ChartPlots.Heatmap.ReorderProvider,System.Drawing.Size,System.Drawing.Size,System.String,System.String,System.String,System.Drawing.Font,System.Double,System.Double,System.String,System.Drawing.Font,System.Boolean,System.Boolean,System.Drawing.Font)
+Microsoft.VisualBasic.Data.ChartPlots.Heatmap.Plot(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue{System.Collections.Generic.Dictionary{System.String,System.Double}}},System.Drawing.Color[],System.Int32,System.String,Microsoft.VisualBasic.Data.ChartPlots.Heatmap.ReorderProvider,System.Drawing.Size,System.Drawing.Size,System.String,System.String,System.String,System.String,System.Double,System.Double,System.String,System.Drawing.Font,System.Boolean,System.Boolean,System.Drawing.Font,System.Single,System.Boolean,System.Drawing.Rectangle)
 ```
 可以用来表示任意变量之间的相关度
 

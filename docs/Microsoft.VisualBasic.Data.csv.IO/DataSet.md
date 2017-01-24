@@ -1,5 +1,5 @@
 ﻿# DataSet
-_namespace: [Microsoft.VisualBasic.Data.csv.DocumentStream](./index.md)_
+_namespace: [Microsoft.VisualBasic.Data.csv.IO](./index.md)_
 
 The numeric dataset, @``T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.DynamicPropertyBase`1``, @``T:System.Double``.
  (数值类型的数据集合，每一个数据实体对象都有自己的编号以及数据属性)
@@ -10,13 +10,13 @@ The numeric dataset, @``T:Microsoft.VisualBasic.ComponentModel.DataSourceModel.D
 
 #### Copy
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataSet.Copy
+Microsoft.VisualBasic.Data.csv.IO.DataSet.Copy
 ```
 Copy prop[erty value
 
 #### LoadDataSet
 ```csharp
-Microsoft.VisualBasic.Data.csv.DocumentStream.DataSet.LoadDataSet(System.String,System.String)
+Microsoft.VisualBasic.Data.csv.IO.DataSet.LoadDataSet(System.String,System.String)
 ```
 **`uidMap`**一般情况下会自动进行判断，不需要具体的设置
 

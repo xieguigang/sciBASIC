@@ -1,5 +1,5 @@
 ﻿
-# Microsoft.VisualBasic.Data.csv.DocumentStream
+# Microsoft.VisualBasic.Data.csv.IO
 
 |Type|Summary|
 |----|-------|

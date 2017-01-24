@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3E195DF1-9FEB-44D5-904B-15626BBE74D7}</ProjectGuid>
+    <ProjectGuid>{473522D7-AA6F-4310-AB5E-2F6D13F814C4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Mathematical.Statistics</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Mathematical.Statistics</AssemblyName>
