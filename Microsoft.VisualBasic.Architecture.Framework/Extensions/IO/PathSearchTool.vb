@@ -354,7 +354,7 @@ Public Module ProgramPathSearchTool
     <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
     <Extension> Public Function BaseName(fsObj As String) As String
         If fsObj.FileExists Then
-            Return basename(fsObj)
+            Return Path.GetFileNameWithoutExtension(fsObj)
         Else
             If String.IsNullOrEmpty(fsObj) Then
                 Throw New Exception(NameOf(fsObj) & " parameter is null!")
