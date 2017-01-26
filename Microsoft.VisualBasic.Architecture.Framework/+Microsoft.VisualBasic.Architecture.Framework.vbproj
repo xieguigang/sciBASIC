@@ -394,6 +394,8 @@
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
     <Compile Include="Extensions\Math\ScientificNotation.vb" />
+    <Compile Include="Extensions\Reflection\Parameters\ParamaterLogUtility.vb" />
+    <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
     <Compile Include="Language\C\Vector.vb" />
     <Compile Include="Language\Java\Collections.vb" />
@@ -462,7 +464,7 @@
     <Compile Include="Language\LanguageExtensions.vb" />
     <Compile Include="Language\Python\Array.vb" />
     <Compile Include="Language\Python\Regexp.vb" />
-    <Compile Include="Language\Value.vb" />
+    <Compile Include="Language\Value\Value.vb" />
     <Compile Include="Language\Python\Collection.vb" />
     <Compile Include="Language\Python\NamedTuple.vb" />
     <Compile Include="Parallel\Threads\ThreadPool.vb" />

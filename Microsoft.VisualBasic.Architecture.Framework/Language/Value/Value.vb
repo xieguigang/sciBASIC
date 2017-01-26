@@ -43,28 +43,6 @@ Namespace Language
         End Function
     End Class
 
-    '''' <summary>
-    '''' Language reference pointer
-    '''' </summary>
-    '''' <typeparam name="T"></typeparam>
-    'Public Class Ref(Of T) : Inherits Value(Of T)
-
-    '    Public Overrides Property value As T
-    '        Get
-    '            Return __pointer.Value
-    '        End Get
-    '        Set(value As T)
-    '            __pointer.Value = value
-    '        End Set
-    '    End Property
-
-    '    ReadOnly __pointer As PropertyValue(Of T)
-
-    '    Sub New(ByRef value As T)
-    '        __pointer = New PropertyValue(Of T)(Function() value, Sub(x) value = x)
-    '    End Sub
-    'End Class
-
     ''' <summary>
     ''' You can applying this data type into a dictionary object to makes the mathematics calculation more easily.
     ''' </summary>
