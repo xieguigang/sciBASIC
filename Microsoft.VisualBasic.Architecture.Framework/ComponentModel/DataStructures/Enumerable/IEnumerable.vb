@@ -55,6 +55,9 @@ Namespace ComponentModel.Collection.Generic
     Public Interface INamedValue : Inherits IKeyedEntity(Of String)
     End Interface
 
+    ''' <summary>
+    ''' 与<see cref="iNamedValue"/>所不同的是，这个对象的标识属性是只读的.
+    ''' </summary>
     Public Interface IReadOnlyId
 
         ''' <summary>
