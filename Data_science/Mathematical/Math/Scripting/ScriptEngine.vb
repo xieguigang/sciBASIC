@@ -26,6 +26,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace Scripting
 
     ''' <summary>
@@ -64,17 +66,17 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="statement"></param>
         ''' <returns></returns>
-        Public Function Shell(statement$) As String
+        Public Function Shell(statement$) As Double
             Dim Token As String = statement.Split.First.ToLower
 
-            If InStr(statement, "<-") Then  'This is a value assignment statement
-                Call Expression.Variables.AssignValue(statement)
-                Return String.Empty
+            ' This is a value assignment statement
+            If InStr(statement, "<-") Then
+                Return Expression.Variables.AssignValue(statement)
             End If
 
             If StatementEngine.ContainsKey(Token) Then
                 Call StatementEngine(Token)(Mid(statement, Len(Token) + 1).Trim)
-                Return String.Empty
+                Return 0
             Else
                 ' if the statement input from the user is not appears 
                 ' in the engine dictionary, then maybe is a mathematics expression. 
@@ -85,6 +87,22 @@ Namespace Scripting
                 Expression.Variables.Set("$", Result)
                 Return Result
             End If
+        End Function
+
+        ''' <summary>
+        ''' <see cref="Shell"/> function name alias.
+        ''' </summary>
+        ''' <param name="statement$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Evaluate(statement$, Optional echo As Boolean = True) As Double
+            Dim x# = Shell(statement)
+
+            If echo Then
+                Call statement.__DEBUG_ECHO
+                Call $" = {x}".__DEBUG_ECHO
+            End If
+
+            Return x
         End Function
 
         ''' <summary>
