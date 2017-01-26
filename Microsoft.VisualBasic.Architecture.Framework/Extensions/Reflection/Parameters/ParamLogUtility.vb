@@ -21,6 +21,13 @@ Namespace Emit.Parameters
     ''' </remarks>
     Public Module ParamLogUtility
 
+        Public Function GetMyCaller() As MethodBase
+            ' [2] a()
+            ' [1]  ---> b()  ' my caller is a()
+            ' [0]  ---> GetMyCaller  
+            Return New StackTrace().GetFrame(2).GetMethod()
+        End Function
+
         Public Function Acquire(ParamArray providedParameters As Expression(Of Func(Of Object))()) As Dictionary(Of Value)
             Dim currentMethod As MethodBase = New StackTrace().GetFrame(1).GetMethod()
             Return currentMethod.Acquire(providedParameters)
