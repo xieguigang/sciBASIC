@@ -144,10 +144,10 @@ Namespace Scripting
                             Loop
 
                             meta = New Types.MetaExpression(AddressOf func.Evaluate)
-                            o = If(tokens.EndRead, "+"c, (+tokens).Text.First)
-                            meta.Operator = o
+                            ' o = If(tokens.EndRead, "+"c, (+tokens).Text.First)
+                            ' meta.Operator = o
                             pre = Nothing
-                            Call sep.Add(meta)
+                            ' Call sep.Add(meta)
 
                             ' Continue Do
                         End If
@@ -208,15 +208,15 @@ Namespace Scripting
                                 ' 在这里是因为需要结束括号，进行退栈，所以指针会往回移动
                                 ' 假若在这里是函数调用的结束符号右括号的话，假若这里是表达式的最后一个位置，则可能会出错
                                 ' 现在这个错误已经被修复
-                                If Not tokens.EndRead Then
-                                    e = (-tokens)
-                                End If
+                                'If Not tokens.EndRead Then
+                                '    e = (-tokens)
+                                'End If
                                 stackMeta.Operator = "+"c
                                 funcStack = False  ' 已经是括号的结束了，则退出栈
                                 Call sep.Add(stackMeta)
-                                If Not tokens.EndRead Then
-                                    e = (-tokens)
-                                End If
+                                'If Not tokens.EndRead Then
+                                '    e = (-tokens)
+                                'End If
                                 Return sep
                             ElseIf o = ","c Then
                                 meta.Operator = "+"c
@@ -239,9 +239,10 @@ Namespace Scripting
                     ElseIf IsCloseStack(o) Then
                         meta.Operator = "+"c
                         Call sep.Add(meta)
-                        If funcStack AndAlso Not tokens.EndRead Then
-                            e = (-tokens)
-                        End If
+                        funcStack = False
+                        'If funcStack AndAlso Not tokens.EndRead Then
+                        '    e = (-tokens)
+                        'End If
                         Exit Do ' 退出递归栈
                     ElseIf IsOpenStack(o) Then
                         e = -tokens  ' 指针回退一步
