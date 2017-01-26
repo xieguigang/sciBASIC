@@ -28,7 +28,7 @@
 
 Imports System.Text
 
-Namespace Helpers
+Namespace Scripting.Helpers
 
     Public Class Variable : Inherits MemoryCollection(Of Double)
 

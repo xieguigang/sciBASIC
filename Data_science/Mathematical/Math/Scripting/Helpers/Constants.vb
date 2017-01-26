@@ -29,7 +29,7 @@
 Imports System.Text.RegularExpressions
 Imports System.Text
 
-Namespace Helpers
+Namespace Scripting.Helpers
 
     Public Class Constants : Inherits MemoryCollection(Of Double)
 

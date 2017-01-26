@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
 
-Namespace Logical
+Namespace Scripting.Logical
 
     Public Enum Tokens
         UNDEFINE

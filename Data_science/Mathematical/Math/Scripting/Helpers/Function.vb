@@ -28,7 +28,7 @@
 
 Imports System.Text
 
-Namespace Helpers
+Namespace Scripting.Helpers
 
     ''' <summary>
     ''' Mathematics function calculation engine

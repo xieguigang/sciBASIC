@@ -30,7 +30,7 @@ Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Mathematical.Helpers
 
-Namespace Types
+Namespace Scripting.Types
 
     ''' <summary>
     ''' A class object stand for a very simple mathematic expression that have no bracket or function.

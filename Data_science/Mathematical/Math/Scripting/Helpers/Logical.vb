@@ -29,7 +29,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 
-Namespace Helpers
+Namespace Scripting.Helpers
 
     Public Class Logical
         '=<>~

@@ -30,28 +30,30 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Language
 
-Module TokenIcer
+Namespace Scripting
 
-    Public Function IsOpenStack(c As Char) As Boolean
-        If Not Tokens.ContainsKey(c) Then
-            Return False
-        End If
+    Module TokenIcer
 
-        Return Tokens(c) = Mathematical.Tokens.OpenStack OrElse
+        Public Function IsOpenStack(c As Char) As Boolean
+            If Not Tokens.ContainsKey(c) Then
+                Return False
+            End If
+
+            Return Tokens(c) = Mathematical.Tokens.OpenStack OrElse
             Tokens(c) = Mathematical.Tokens.OpenBracket
-    End Function
+        End Function
 
-    Public Function IsCloseStack(c As Char) As Boolean
-        If Not Tokens.ContainsKey(c) Then
-            Return False
-        End If
+        Public Function IsCloseStack(c As Char) As Boolean
+            If Not Tokens.ContainsKey(c) Then
+                Return False
+            End If
 
-        Return Tokens(c) = Mathematical.Tokens.CloseBracket OrElse
+            Return Tokens(c) = Mathematical.Tokens.CloseBracket OrElse
             Tokens(c) = Mathematical.Tokens.CloseStack
 
-    End Function
+        End Function
 
-    Public ReadOnly Property Tokens As IReadOnlyDictionary(Of Char, Tokens) =
+        Public ReadOnly Property Tokens As IReadOnlyDictionary(Of Char, Tokens) =
         New Dictionary(Of Char, Tokens) From {
  _
         {"0"c, Mathematical.Tokens.Number},  ' Numbers
@@ -88,135 +90,136 @@ Module TokenIcer
         {","c, Mathematical.Tokens.Delimiter}
     }
 
-    ''' <summary>
-    ''' 和VisualBasic的标识符命名规则一样，变量请不要以数字开头，否则会被解析为一个数字从而产生错误的表达式
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    Public Function TryParse(s As String) As List(Of Token(Of Tokens))
-        Dim str As CharEnumerator = s.GetEnumerator
-        Dim tokens As New List(Of Token(Of Tokens))
-        Dim ch As Char
-        Dim token As New List(Of Char)
-        Dim type As Tokens = Mathematical.Tokens.UNDEFINE
-        Dim exitb As Boolean = False
+        ''' <summary>
+        ''' 和VisualBasic的标识符命名规则一样，变量请不要以数字开头，否则会被解析为一个数字从而产生错误的表达式
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        Public Function TryParse(s As String) As List(Of Token(Of Tokens))
+            Dim str As CharEnumerator = s.GetEnumerator
+            Dim tokens As New List(Of Token(Of Tokens))
+            Dim ch As Char
+            Dim token As New List(Of Char)
+            Dim type As Tokens = Mathematical.Tokens.UNDEFINE
+            Dim exitb As Boolean = False
 
-        If Not str.MoveNext() Then  ' Empty expression
-            Return New List(Of Token(Of Tokens))
-        End If
-
-        Do While True
-            ch = str.Current
-            token += ch
-
-            If TokenIcer.Tokens.ContainsKey(ch) Then
-                type = TokenIcer.Tokens(ch)
-
-                Select Case type
-                    Case Mathematical.Tokens.Number
-                        exitb = str.__parseDouble(token)
-                        tokens += New Token(Of Tokens)(type, New String(token))
-                    Case Mathematical.Tokens.WhiteSpace ' Ignore white space
-                        exitb = str.MoveNext
-                    Case Else
-                        tokens += New Token(Of Tokens)(type, CStr(ch))
-                        exitb = str.MoveNext()
-                End Select
-            Else
-                exitb = str.__parseUNDEFINE(token)
-                type = Mathematical.Tokens.UNDEFINE
-                tokens += New Token(Of Tokens)(type, New String(token))
+            If Not str.MoveNext() Then  ' Empty expression
+                Return New List(Of Token(Of Tokens))
             End If
 
-            If Not exitb Then
-                Exit Do
-            Else
-                token.Clear()
-            End If
-        Loop
+            Do While True
+                ch = str.Current
+                token += ch
 
-        Return tokens
-    End Function
+                If TokenIcer.Tokens.ContainsKey(ch) Then
+                    type = TokenIcer.Tokens(ch)
 
-    ''' <summary>
-    ''' 枚举是否已经结束？
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <param name="token"></param>
-    ''' <returns></returns>
-    <Extension> Private Function __parseDouble(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
-        Do While str.MoveNext
-            If Not Tokens.ContainsKey(str.Current) Then
-                Return True
-            ElseIf Not Tokens(str.Current) = Mathematical.Tokens.Number Then
-                Return True
-            Else
-                Call token.Add(str.Current)
-            End If
-        Loop
+                    Select Case type
+                        Case Mathematical.Tokens.Number
+                            exitb = str.__parseDouble(token)
+                            tokens += New Token(Of Tokens)(type, New String(token))
+                        Case Mathematical.Tokens.WhiteSpace ' Ignore white space
+                            exitb = str.MoveNext
+                        Case Else
+                            tokens += New Token(Of Tokens)(type, CStr(ch))
+                            exitb = str.MoveNext()
+                    End Select
+                Else
+                    exitb = str.__parseUNDEFINE(token)
+                    type = Mathematical.Tokens.UNDEFINE
+                    tokens += New Token(Of Tokens)(type, New String(token))
+                End If
 
-        Return False
-    End Function
+                If Not exitb Then
+                    Exit Do
+                Else
+                    token.Clear()
+                End If
+            Loop
 
-    <Extension> Private Function __parseUNDEFINE(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
-        Do While str.MoveNext
-            If Not Tokens.ContainsKey(str.Current) Then
-                Call token.Add(str.Current)
-            Else
-                ' If next is operator or white space then exit parser
-                Select Case Tokens(str.Current)
-                    Case Mathematical.Tokens.WhiteSpace, Mathematical.Tokens.Operator
-                        Return True
-                    Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack,  ' Probably is a function calls
+            Return tokens
+        End Function
+
+        ''' <summary>
+        ''' 枚举是否已经结束？
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="token"></param>
+        ''' <returns></returns>
+        <Extension> Private Function __parseDouble(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
+            Do While str.MoveNext
+                If Not Tokens.ContainsKey(str.Current) Then
+                    Return True
+                ElseIf Not Tokens(str.Current) = Mathematical.Tokens.Number Then
+                    Return True
+                Else
+                    Call token.Add(str.Current)
+                End If
+            Loop
+
+            Return False
+        End Function
+
+        <Extension> Private Function __parseUNDEFINE(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
+            Do While str.MoveNext
+                If Not Tokens.ContainsKey(str.Current) Then
+                    Call token.Add(str.Current)
+                Else
+                    ' If next is operator or white space then exit parser
+                    Select Case Tokens(str.Current)
+                        Case Mathematical.Tokens.WhiteSpace, Mathematical.Tokens.Operator
+                            Return True
+                        Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack,  ' Probably is a function calls
                          Mathematical.Tokens.CloseBracket, Mathematical.Tokens.CloseStack,
                          Mathematical.Tokens.Delimiter
-                        Return True
-                    Case Else
-                        Call token.Add(str.Current)
-                End Select
-            End If
-        Loop
+                            Return True
+                        Case Else
+                            Call token.Add(str.Current)
+                    End Select
+                End If
+            Loop
 
-        Return False
-    End Function
-End Module
+            Return False
+        End Function
+    End Module
 
-Public Enum Tokens
+    Public Enum Tokens
 
-    ''' <summary>
-    ''' Function Name, constant, variable
-    ''' </summary>
-    UNDEFINE
-    ''' <summary>
-    ''' +-*/!^%
-    ''' </summary>
-    [Operator]
-    ''' <summary>
-    ''' <see cref="Double"/>
-    ''' </summary>
-    Number
-    ''' <summary>
-    ''' ,
-    ''' </summary>
-    Delimiter
-    ''' <summary>
-    ''' [ or {
-    ''' </summary>
-    OpenBracket
-    ''' <summary>
-    ''' ] or }
-    ''' </summary>
-    CloseBracket
-    ''' <summary>
-    ''' (
-    ''' </summary>
-    OpenStack
-    ''' <summary>
-    ''' )
-    ''' </summary>
-    CloseStack
-    ''' <summary>
-    ''' Space or Tab
-    ''' </summary>
-    WhiteSpace
-End Enum
+        ''' <summary>
+        ''' Function Name, constant, variable
+        ''' </summary>
+        UNDEFINE
+        ''' <summary>
+        ''' +-*/!^%
+        ''' </summary>
+        [Operator]
+        ''' <summary>
+        ''' <see cref="Double"/>
+        ''' </summary>
+        Number
+        ''' <summary>
+        ''' ,
+        ''' </summary>
+        Delimiter
+        ''' <summary>
+        ''' [ or {
+        ''' </summary>
+        OpenBracket
+        ''' <summary>
+        ''' ] or }
+        ''' </summary>
+        CloseBracket
+        ''' <summary>
+        ''' (
+        ''' </summary>
+        OpenStack
+        ''' <summary>
+        ''' )
+        ''' </summary>
+        CloseStack
+        ''' <summary>
+        ''' Space or Tab
+        ''' </summary>
+        WhiteSpace
+    End Enum
+End Namespace
