@@ -16,7 +16,7 @@ Constructor to create a single node
 |Parameter Name|Remarks|
 |--------------|-------|
 |name|-|
-|d|-|
+|obj|-|
 
 
 #### GetEnumerator

@@ -29,6 +29,22 @@ Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.RowWriter.__build
 |obj|-|
 
 
+#### CacheIndex
+```csharp
+Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.RowWriter.CacheIndex(System.Collections.Generic.IEnumerable{System.Object},System.Int32)
+```
+在这个函数之中生成字典动态属性的表头
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|source|-|
+|reorderKeys|
+ + 0: 不排序
+ + 1: 升序排序
+ +-1: 降序排序
+ |
+
+
 
 ### Properties
 

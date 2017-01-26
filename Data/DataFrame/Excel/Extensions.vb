@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::978cdd8a77d13dec5b40b1864fff70f1, ..\sciBASIC#\Data\DataFrame\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::cd1c912b652b022b7cc038f820bcd3ec, ..\sciBASIC#\Data\DataFrame\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace Excel
 
@@ -108,7 +108,7 @@ Namespace Excel
             End If
 
             Dim maps As New Dictionary(Of String, String) From {
-                {mapName, NameOf(DataSet.Identifier)}
+                {mapName, NameOf(DataSet.ID)}
             }
 
             Call df.ChangeMapping(maps)

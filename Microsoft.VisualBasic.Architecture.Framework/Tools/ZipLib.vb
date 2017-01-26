@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92d87a2614fdc5b03b11943914037166, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::db1db18e387b4231807d4a2ebf107327, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
 
     ' Author:
     ' 
@@ -100,7 +100,7 @@ Public Module GZip
 
     Public Function ExtractToSelfDirectory(zip As String, Optional overwriteMethod As Overwrite = Overwrite.IfNewer) As String
         Dim Dir As String = FileIO.FileSystem.GetParentPath(zip)
-        Dim Name As String = IO.Path.GetFileNameWithoutExtension(zip)
+        Dim Name As String = basename(zip)
         Dir = Dir & "/" & Name
         Call ImprovedExtractToDirectory(zip, Dir, overwriteMethod)
 

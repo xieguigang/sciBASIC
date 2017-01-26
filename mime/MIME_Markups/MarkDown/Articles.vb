@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca1a3957b776b9676702ec94aadc1a87, ..\sciBASIC#\mime\markups\MarkDown\Articles.vb"
+﻿#Region "Microsoft.VisualBasic::0d27d657d491e8dc3adfb31d35ce025f, ..\sciBASIC#\mime\MIME_Markups\MarkDown\Articles.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9c2505dff0a10363d250e75d3d7d6e9, ..\sciBASIC#\Data\DataFrame.Extensions\Field.vb"
+﻿#Region "Microsoft.VisualBasic::0e4f5d7b97ccfa4a7243d74b3ccf6d8d, ..\sciBASIC#\Data\DataFrame.Extensions\Field.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,7 @@
 Imports System.IO
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection

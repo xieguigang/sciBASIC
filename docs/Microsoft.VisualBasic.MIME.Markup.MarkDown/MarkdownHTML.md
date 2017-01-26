@@ -15,6 +15,17 @@ Microsoft.VisualBasic.MIME.Markup.MarkDown.MarkdownHTML.#ctor(Microsoft.VisualBa
 ```
 Create a new Markdown instance and set the options from the MarkdownOptions object.
 
+#### __MarkdownTable
+```csharp
+Microsoft.VisualBasic.MIME.Markup.MarkDown.MarkdownHTML.__MarkdownTable(System.String)
+```
+处理markdown table
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|text$|-|
+
+
 #### AddExtension
 ```csharp
 Microsoft.VisualBasic.MIME.Markup.MarkDown.MarkdownHTML.AddExtension(Microsoft.VisualBasic.MIME.Markup.MarkDown.ExtensionTransform)
@@ -56,7 +67,7 @@ Turn Markdown > quoted blocks into HTML blockquote blocks
 ```csharp
 Microsoft.VisualBasic.MIME.Markup.MarkDown.MarkdownHTML.DoCodeBlocks(System.String)
 ```
-/// Turn Markdown 4-space indented code into HTML pre code blocks
+Turn Markdown 4-space indented code into HTML pre code blocks
 
 #### DoCodeSpans
 ```csharp
@@ -249,6 +260,8 @@ swap back in all the special characters we've hidden
 
 ### Properties
 
+#### _blocksHtml
+compiling this monster regex results in worse performance. trust me.
 #### AsteriskIntraWordEmphasis
 when true, asterisks may be used for intraword emphasis
  this does nothing if StrictBoldItalic is false
@@ -258,19 +271,38 @@ when true, (most) bare plain URLs are auto-hyperlinked
 #### AutoNewLines
 when true, RETURN becomes a literal newline 
  WARNING: this is a significant deviation from the markdown spec
+#### codeBlockRegexp
+这里只是解析出4个空格的缩进的代码块
 #### DisableHeaders
 Disable header parser
 #### DisableHr
 Disable hr parser
 #### DisableImages
 Disable image parser
+#### EMailAddress
+Email addresses: address@domain.foo
 #### EmptyElementSuffix
 use ">" for HTML output, or " />" for XHTML output
 #### LinkEmails
 when false, email addresses will never be auto-linked 
  WARNING: this is a significant deviation from the markdown spec
+#### pattern
+First, look for nested blocks, e.g.:
+ 
+ <div>
+ <div>
+ tags for inner block must be indented.
+ </div>
+ </div>
+
+ The outermost tags must start at the left margin for this to match, and
+ the inner nested divs must be indented.
+ We need to do this before the next, more liberal match, because the next
+ match will start at the first ``<div>`` and stop at the first ``</div>``.
 #### QuoteSingleLine
 Don't grab next lines
 #### StrictBoldItalic
 when true, bold and italic require non-word characters on either side 
  WARNING: this is a significant deviation from the markdown spec
+#### SyntaxCodeBloackRegexp
+带语言类型说明的代码块

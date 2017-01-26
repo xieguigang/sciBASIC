@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::9f836bba510fda2f9d065fe6c6ae455d, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::671ecfbf74e4d2133b65f9e4cee19aac, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,7 +30,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -41,12 +41,12 @@ Public Module DocumentExtensions
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="cols"><see cref="DocumentStream.File.Columns"/> filtering results.</param>
+    ''' <param name="cols"><see cref="io.File.Columns"/> filtering results.</param>
     ''' <returns></returns>
     <Extension>
-    Public Function JoinColumns(cols As IEnumerable(Of String())) As DocumentStream.File
+    Public Function JoinColumns(cols As IEnumerable(Of String())) As IO.File
         Dim array$()() = cols.ToArray
-        Dim out As New DocumentStream.File
+        Dim out As New IO.File
 
         For i As Integer = 0 To array.First.Length - 1
             Dim ind As Integer = i
@@ -104,7 +104,7 @@ Public Module DocumentExtensions
     End Function
 
     <Extension>
-    Public Function SaveTsv(csv As DocumentStream.File, path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+    Public Function SaveTsv(csv As IO.File, path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Using file As StreamWriter = path.OpenWriter(encoding)
             For Each line In csv
                 Call file.WriteLine(line.TsvLine)
@@ -137,8 +137,7 @@ Public Module DocumentExtensions
     ''' <returns></returns>
     <Extension>
     Public Function LoadData(path$, Optional skipFirstColumn As Boolean = False) As NamedValue(Of Double())()
-        Dim data As DocumentStream.File =
-            DocumentStream.File.Load(path)
+        Dim data As IO.File = IO.File.Load(path)
         Dim source As IEnumerable(Of String())
 
         If skipFirstColumn Then
@@ -195,7 +194,7 @@ Public Module DocumentExtensions
     End Function
 
     <Extension>
-    Public Function GetColumnValues(csv As DocumentStream.File, column$) As IEnumerable(Of String)
+    Public Function GetColumnValues(csv As IO.File, column$) As IEnumerable(Of String)
         Dim index As Integer = csv.Headers.IndexOf(column)
         Dim out As New List(Of String)
 
@@ -207,14 +206,14 @@ Public Module DocumentExtensions
     End Function
 
     <Extension>
-    Public Iterator Function GetColumnObjects(Of T)(csv As DocumentStream.File, column$, [ctype] As Func(Of String, T)) As IEnumerable(Of T)
+    Public Iterator Function GetColumnObjects(Of T)(csv As IO.File, column$, [ctype] As Func(Of String, T)) As IEnumerable(Of T)
         For Each row As String In csv.GetColumnValues(column)
             Yield [ctype](row)
         Next
     End Function
 
     <Extension>
-    Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As DocumentStream.File
-        Return DocumentStream.File.Load(path, encoding.GetEncodings)
+    Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As IO.File
+        Return IO.File.Load(path, encoding.GetEncodings)
     End Function
 End Module

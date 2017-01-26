@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::105df218318c5faede3a46d67f0b4099, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\Distributions\MethodOfMoments\Gamma.vb"
+﻿#Region "Microsoft.VisualBasic::74fe6dc4c61692c27d514f7afeb110fb, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\Distributions\MethodOfMoments\Gamma.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaf30633a908dd03a4189cd9fd292120, ..\sciBASIC#\Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::4aca9a90e146be603b6840251a737508, ..\sciBASIC#\Data\DataFrame\Linq\DataStream.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Text
 
-Namespace DocumentStream.Linq
+Namespace IO.Linq
 
     ''' <summary>
     ''' 获取列在当前的数据集之中的编号

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc7a43f30f0de32fe40a1e670c77ec7f, ..\sciBASIC#\mime\markups\YAML\Syntax\TagDirective.vb"
+﻿#Region "Microsoft.VisualBasic::bc7a43f30f0de32fe40a1e670c77ec7f, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\TagDirective.vb"
 
     ' Author:
     ' 

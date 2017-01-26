@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5505ac6c9c7cd99935b92e062025eed5, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5a85772db68b2c3bcfa60b00fee38d5d, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream.Linq
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
@@ -77,7 +77,7 @@ Public Module Extensions
                            path$,
                            Optional encoding As Encodings = Encodings.ASCII,
                            Optional xlabels#() = Nothing) As Boolean
-        Dim out As New DocumentStream.File
+        Dim out As New IO.File
         Dim data As NamedValue(Of Double())() = samples.ToArray
 
         If xlabels.IsNullOrEmpty Then
@@ -117,14 +117,14 @@ Public Module Extensions
     ''' <returns></returns>
     Public Function GetLocusMapName(path As String) As String
         Dim first As String = path.ReadFirstLine
-        Dim tokens = DocumentStream.CharsParser(first)
+        Dim tokens = IO.CharsParser(first)
         Return tokens.FirstOrDefault
     End Function
 
     <Extension>
     Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo As String, Optional noTitle As Boolean = False, Optional encoding As Encodings = Encodings.UTF8) As Boolean
-        Dim doc As DocumentStream.File = StorageProvider.Reflection.Reflector.Save(source, False)
-        Dim lines As DocumentStream.RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
+        Dim doc As IO.File = StorageProvider.Reflection.Reflector.Save(source, False)
+        Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
         Dim slines As String() = lines.ToArray(Function(x) x.AsLine(vbTab))
         Dim sdoc As String = String.Join(vbCrLf, slines)
         Return sdoc.SaveTo(saveTo, encoding.GetEncodings)
@@ -154,7 +154,7 @@ Public Module Extensions
     <ExportAPI(NameOf(DataFrame),
                Info:="Convert a database table into a dynamics dataframe in VisualBasic.")>
     <Extension> Public Function DataFrame(reader As DbDataReader) As DataFrame
-        Dim csv As New DocumentStream.File
+        Dim csv As New IO.File
         Dim fields As Integer() = reader.FieldCount.Sequence.ToArray
 
         csv += From i As Integer
@@ -185,7 +185,7 @@ Public Module Extensions
             In data
             Select New RowObject(From p In headers Select x.GetValue(p.Value))
 
-        Dim csv As New DocumentStream.File
+        Dim csv As New IO.File
 
         Call csv.AppendLine((From p In headers Select p.Key).ToList)
         Call csv.AppendRange(LQuery)
@@ -195,7 +195,7 @@ Public Module Extensions
 
     <ExportAPI("Write.Csv")>
     <Extension> Public Function SaveTo(dat As IEnumerable(Of RowObject), Path As String, Optional encoding As Encoding = Nothing) As Boolean
-        Dim Csv As DocumentStream.File = CType(dat, DocumentStream.File)
+        Dim Csv As IO.File = CType(dat, IO.File)
         Return Csv.Save(Path, Encoding:=encoding)
     End Function
 
@@ -212,7 +212,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI(NameOf(DataFrame), Info:="Create a dynamics data frame object from a csv document object.")>
-    <Extension> Public Function DataFrame(data As DocumentStream.File) As DataFrame
+    <Extension> Public Function DataFrame(data As IO.File) As DataFrame
         Return DataFrame.CreateObject(data)
     End Function
 
@@ -224,10 +224,10 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As DocumentStream.File,
+    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As IO.File,
                                                             Optional explicit As Boolean = False,
                                                             Optional maps As Dictionary(Of String, String) = Nothing) As T()
-        Dim df As DataFrame = DocumentStream.DataFrame.CreateObject(dataSet)
+        Dim df As DataFrame = IO.DataFrame.CreateObject(dataSet)
         Return df.AsDataSource(Of T)(explicit, maps)
     End Function
 
@@ -259,7 +259,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(importsFile$, Optional delimiter$ = ",", Optional explicit As Boolean = True) As T()
-        Dim df As DataFrame = DocumentStream.DataFrame.CreateObject([Imports](importsFile, delimiter))
+        Dim df As DataFrame = IO.DataFrame.CreateObject([Imports](importsFile, delimiter))
         Dim data As T() = Reflector.Convert(Of T)(df, explicit).ToArray
         Return data
     End Function
@@ -278,7 +278,7 @@ Public Module Extensions
     <Extension> Public Function AsDataSource(Of T As Class)(strDataLines As IEnumerable(Of String), Optional Delimiter As String = ",", Optional explicit As Boolean = True) As T()
         Dim Expression As String = String.Format(DataImports.SplitRegxExpression, Delimiter)
         Dim LQuery = (From line As String In strDataLines Select RowParsing(line, Expression)).ToArray
-        Return CType(LQuery, csv.DocumentStream.File).AsDataSource(Of T)(explicit)
+        Return CType(LQuery, csv.IO.File).AsDataSource(Of T)(explicit)
     End Function
 
     ''' <summary>
@@ -314,8 +314,8 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True, Optional trimBlanks As Boolean = False) As T()
-        Dim dataFrame As DocumentStream.File =
-            DocumentStream.File.Load(source.ToArray, trimBlanks)
+        Dim dataFrame As IO.File =
+            IO.File.Load(source.ToArray, trimBlanks)
         Dim buf As T() = dataFrame.AsDataSource(Of T)(explicit)
         Return buf
     End Function
@@ -404,10 +404,15 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToCsvDoc(Of T As Class)(source As IEnumerable(Of T),
-                                               Optional explicit As Boolean = False,
-                                               Optional maps As Dictionary(Of String, String) = Nothing,
-                                               Optional metaBlank As String = "") As DocumentStream.File
-        Return Reflector.Save(source, explicit, maps:=maps, metaBlank:=metaBlank)
+                                                        Optional explicit As Boolean = False,
+                                                        Optional maps As Dictionary(Of String, String) = Nothing,
+                                                        Optional metaBlank As String = "",
+                                                        Optional reorderKeys As Integer = 0) As IO.File
+        Return Reflector.Save(
+            source, explicit,
+            maps:=maps,
+            metaBlank:=metaBlank,
+            reorderKeys:=reorderKeys)
     End Function
 
     ''' <summary>
@@ -424,7 +429,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                             In data
                                             Select s =
                                                 n.ToString
-        Dim buf As New DocumentStream.File({New RowObject(row)})
+        Dim buf As New IO.File({New RowObject(row)})
         Return buf.Save(path, encoding.GetEncodings)
     End Function
 
@@ -437,7 +442,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     '''
     <ExportAPI("DblVector.LoadCsv", Info:="Load the data from the csv document as a double data type vector. ")>
     <Extension> Public Function LoadDblVector(path As String) As Double()
-        Dim buf As DocumentStream.File = DocumentStream.File.Load(path)
+        Dim buf As IO.File = IO.File.Load(path)
         Dim FirstRow As RowObject = buf.First
         Dim data As Double() = FirstRow.ToArray(AddressOf Val)
         Return data

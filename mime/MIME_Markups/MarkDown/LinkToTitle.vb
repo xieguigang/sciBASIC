@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddd0634a41ba1b71be70d04bd77edaf7, ..\sciBASIC#\mime\markups\MarkDown\LinkToTitle.vb"
+﻿#Region "Microsoft.VisualBasic::4557456d67b1fc93c88d1274cf8fb985, ..\sciBASIC#\mime\MIME_Markups\MarkDown\LinkToTitle.vb"
 
     ' Author:
     ' 

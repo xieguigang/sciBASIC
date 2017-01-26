@@ -30,6 +30,17 @@ The enitre string input equals to the pattern's matched.
 |pattern|-|
 
 
+#### RawRegexp
+```csharp
+Microsoft.VisualBasic.RegexExtensions.RawRegexp(System.String)
+```
+模拟python语言之中的从raw string构建正则表达式
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|raw$|-|
+
+
 #### ToArray
 ```csharp
 Microsoft.VisualBasic.RegexExtensions.ToArray(System.Text.RegularExpressions.MatchCollection)
@@ -54,3 +65,7 @@ Converts the regex string match results to the objects.
 
 
 
+### Properties
+
+#### RawCompileOptions
+模拟python的raw字符串的正则表达式，多行的

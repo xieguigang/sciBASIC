@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::182a15ce1e2df5364c74a4609958aa38, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\References.vb"
+﻿#Region "Microsoft.VisualBasic::deff9e489bf4adab17b3389cd7440d0a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\References.vb"
 
     ' Author:
     ' 
@@ -140,7 +140,7 @@ Namespace Emit.CodeDOM_VBC
                 If strict Then
                     Return True
                 Else
-                    Dim Name As String = IO.Path.GetFileNameWithoutExtension(url)
+                    Dim Name As String = basename(url)
                     If String.Equals(Name, "mscorlib") OrElse String.Equals(Name, "System") OrElse Name.StartsWith("System.") Then
                         Return True
                     End If

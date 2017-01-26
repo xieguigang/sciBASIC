@@ -48,7 +48,7 @@ Parsing image source url from the img html tag.
 
 |Parameter Name|Remarks|
 |--------------|-------|
-|str|-|
+|img|-|
 
 
 #### StripHTMLTags

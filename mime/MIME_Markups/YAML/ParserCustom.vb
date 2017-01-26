@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91fe7b90d8b076e6155070f279480c1e, ..\sciBASIC#\mime\markups\YAML\ParserCustom.vb"
+﻿#Region "Microsoft.VisualBasic::997529babcaedb5dc7e45a15ab046df5, ..\sciBASIC#\mime\MIME_Markups\YAML\ParserCustom.vb"
 
     ' Author:
     ' 

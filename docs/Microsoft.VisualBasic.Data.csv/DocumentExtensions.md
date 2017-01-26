@@ -15,7 +15,7 @@ Microsoft.VisualBasic.Data.csv.DocumentExtensions.JoinColumns(System.Collections
 
 |Parameter Name|Remarks|
 |--------------|-------|
-|cols|@``P:Microsoft.VisualBasic.Data.csv.DocumentStream.File.Columns`` filtering results.|
+|cols|@``P:Microsoft.VisualBasic.Data.csv.IO.File.Columns`` filtering results.|
 
 
 #### LoadData

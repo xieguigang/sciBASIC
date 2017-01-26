@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::600103530961a870a1cc1b915b932a13, ..\sciBASIC#\Data\DataFrame\Linq\BatchQueue.vb"
+﻿#Region "Microsoft.VisualBasic::eb79876da6f5d76d6f5b8646db4d6ba2, ..\sciBASIC#\Data\DataFrame\Linq\BatchQueue.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -33,7 +34,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
-Namespace DocumentStream.Linq
+Namespace IO.Linq
 
     Public Module BatchQueue
 
@@ -86,7 +87,7 @@ Namespace DocumentStream.Linq
         End Function
 
         ''' <summary>
-        ''' {<see cref="IO.Path.GetFileNameWithoutExtension(String)"/>, <typeparamref name="T"/>()}
+        ''' {<see cref="Path.GetFileNameWithoutExtension(String)"/>, <typeparamref name="T"/>()}
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="files"></param>

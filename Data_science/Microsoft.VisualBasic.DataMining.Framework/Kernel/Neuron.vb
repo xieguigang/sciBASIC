@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b72795f82041c4014658fc3db76d780, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Kernel\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::cce83c0844ab722134c6732bc9c6f627, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Kernel\Neuron.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports System.Text
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace Kernel.Classifier
 

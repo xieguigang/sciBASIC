@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7070f325061ee657737451f741f11fbf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::544a5bf4ea0f1ea3d296fefb91158a0a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,14 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 
 Public Module RegexExtensions
+
+    ''' <summary>
+    ''' 模拟python的raw字符串的正则表达式，多行的
+    ''' </summary>
+    Public Const RawCompileOptions As RegexOptions =
+        RegexOptions.Multiline Or
+        RegexOptions.IgnorePatternWhitespace Or
+        RegexOptions.Compiled
 
     ''' <summary>
     ''' Name of <see cref="RegexOptions"/>

@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.DataMining.Kernel.Classifier.Neuron](./index.
 
 #### CastTo
 ```csharp
-Microsoft.VisualBasic.DataMining.Kernel.Classifier.Neuron.Entity.CastTo(Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject)
+Microsoft.VisualBasic.DataMining.Kernel.Classifier.Neuron.Entity.CastTo(Microsoft.VisualBasic.Data.csv.IO.RowObject)
 ```
 
 

@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.Data.visualize.Network](./index.md)_
 
 #### FromCorrelations
 ```csharp
-Microsoft.VisualBasic.Data.visualize.Network.NetworkAPI.FromCorrelations(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.DocumentStream.DataSet},System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.Double,System.Boolean)
+Microsoft.VisualBasic.Data.visualize.Network.NetworkAPI.FromCorrelations(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.csv.IO.DataSet},System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.Double,System.Boolean)
 ```
 变量的属性里面必须是包含有相关度的
 
