@@ -357,6 +357,7 @@
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\ExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty%28Of T%29.vb" />
@@ -394,6 +395,8 @@
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
     <Compile Include="Extensions\Math\ScientificNotation.vb" />
+    <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
+    <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
     <Compile Include="Language\C\Vector.vb" />
     <Compile Include="Language\Java\Collections.vb" />
@@ -423,6 +426,9 @@
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
+    <Compile Include="Language\Value\Numeric\int.vb" />
+    <Compile Include="Language\Value\Numeric\float.vb" />
+    <Compile Include="Language\Value\var.vb" />
     <Compile Include="Terminal\InteractiveIODevice\Shell.vb" />
     <Compile Include="Terminal\PipelineCLI.vb" />
     <Compile Include="Terminal\InnerQueue.vb" />
@@ -462,7 +468,7 @@
     <Compile Include="Language\LanguageExtensions.vb" />
     <Compile Include="Language\Python\Array.vb" />
     <Compile Include="Language\Python\Regexp.vb" />
-    <Compile Include="Language\Value.vb" />
+    <Compile Include="Language\Value\Value.vb" />
     <Compile Include="Language\Python\Collection.vb" />
     <Compile Include="Language\Python\NamedTuple.vb" />
     <Compile Include="Parallel\Threads\ThreadPool.vb" />
@@ -472,12 +478,12 @@
     <Compile Include="Serialization\JSON\SchemaProvider\Schema.vb" />
     <Compile Include="Text\ASCII.vb" />
     <Compile Include="Language\Perl\Tools.vb" />
-    <Compile Include="Language\Pointer.vb" />
+    <Compile Include="Language\Value\Pointer.vb" />
     <Compile Include="Language\Java\JavaMath.vb" />
     <Compile Include="Language\Java\LogTricks.vb" />
     <Compile Include="Language\Java\MathUtils.vb" />
     <Compile Include="Language\Java\MersenneTwisterFast.vb" />
-    <Compile Include="Language\Uid.vb" />
+    <Compile Include="Language\Value\Uid.vb" />
     <Compile Include="Language\C\CString.vb" />
     <Compile Include="Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
@@ -599,7 +605,7 @@
     <Compile Include="Language\UnixBash\FileSystem\Searchs.vb" />
     <Compile Include="Language\UnixBash\FileSystem\File.vb" />
     <Compile Include="Language\ClassObject.vb" />
-    <Compile Include="Language\Numeric.vb" />
+    <Compile Include="Language\Value\Numeric\Numeric.vb" />
     <Compile Include="Language\UnixBash\Text\Grep.vb" />
     <Compile Include="Tools\MMFProtocol\WorkFlow.vb" />
     <Compile Include="Parallel\Tasks\CallbackTask.vb" />

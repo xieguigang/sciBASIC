@@ -46,7 +46,7 @@ Namespace Scripting.MetaData
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return value.GetJson
         End Function
     End Class
 End Namespace

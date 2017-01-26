@@ -1,41 +1,75 @@
 ﻿#Region "Microsoft.VisualBasic::fb20ecb6add82e346613c00188012c8e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Uid.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
 
-    Public Class Uid
+    Public Class Uid : Implements INamedValue
 
+        ''' <summary>
+        ''' index collection of array <see cref="__chars"/>
+        ''' </summary>
         Dim chars As List(Of Integer)
 
         ReadOnly __chars As Char() = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         ReadOnly __upbound As Integer = __chars.Length - 1
+
+        ''' <summary>
+        ''' 可以通过这个属性来重设uid的字符串的值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Key As String Implements IKeyedEntity(Of String).Key
+            Get
+                Return ToString()
+            End Get
+            Set(value As String)
+                Call chars.Clear()
+
+                For Each c As Char In value
+                    Dim index% = Array.IndexOf(__chars, c)
+
+                    If index = -1 Then
+                        Call __error(c)
+                    Else
+                        Call chars.Add(index)
+                    End If
+                Next
+            End Set
+        End Property
+
+        Private Sub __error(c As Char)
+            Dim msg$ = $"Char '{c}' is not a valid ASCII char, valids list: " & __chars.GetJson
+            Throw New NotSupportedException(msg)
+        End Sub
 
         ''' <summary>
         ''' 使用自定义顺序的字符序列

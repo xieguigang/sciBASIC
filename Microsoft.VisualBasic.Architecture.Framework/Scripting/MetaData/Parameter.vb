@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::1e061ae130219dec75f2acbb66b4a7cb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Parameter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Scripting.MetaData
 
@@ -37,6 +38,7 @@ Namespace Scripting.MetaData
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Parameter, AllowMultiple:=False, Inherited:=True)>
     Public Class Parameter : Inherits Attribute
+        Implements INamedValue
 
         ''' <summary>
         ''' 请使用这个方法<see cref="Parameter.GetParameterNameAlias"></see>来获取参数信息
@@ -44,9 +46,9 @@ Namespace Scripting.MetaData
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property ParameterInfo As System.Reflection.ParameterInfo
+        Public ReadOnly Property ParameterInfo As ParameterInfo
 
-        Dim _Alias As String
+        Dim _alias As String
 
         ''' <summary>
         ''' The alias name of this function parameter in the scripting.(脚本函数的参数的别名)
@@ -54,14 +56,17 @@ Namespace Scripting.MetaData
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property [Alias] As String
+        Public Property [Alias] As String Implements INamedValue.Key
             Get
-                If String.IsNullOrEmpty([_Alias]) AndAlso Not ParameterInfo Is Nothing Then
-                    [_Alias] = ParameterInfo.Name
+                If String.IsNullOrEmpty(_alias) AndAlso Not ParameterInfo Is Nothing Then
+                    _alias = ParameterInfo.Name
                 End If
 
-                Return _Alias
+                Return _alias
             End Get
+            Protected Set(value As String)
+                _alias = value
+            End Set
         End Property
 
         ''' <summary>
@@ -79,12 +84,12 @@ Namespace Scripting.MetaData
         ''' <param name="MyDescription">The description information in the scripting help system.(这个信息会显示在脚本环境的帮助系统之中)</param>
         ''' <remarks></remarks>
         Sub New([Alias] As String, Optional MyDescription As String = "")
-            _Alias = [Alias]
+            _alias = [Alias]
             _Description = MyDescription
         End Sub
 
         Public Overrides Function ToString() As String
-            Return _Alias
+            Return _alias
         End Function
 
         ''' <summary>

@@ -188,6 +188,20 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
         Return hash
     End Operator
 
+    ''' <summary>
+    ''' 批量移除字典之中的键值对
+    ''' </summary>
+    ''' <param name="hash"></param>
+    ''' <param name="keys">需要移除的键名的列表</param>
+    ''' <returns></returns>
+    Public Shared Operator -(hash As Dictionary(Of V), keys As IEnumerable(Of String)) As Dictionary(Of V)
+        For Each k As String In keys
+            Call hash.Remove(k)
+        Next
+
+        Return hash
+    End Operator
+
     Public Shared Widening Operator CType(source As System.Collections.Generic.List(Of V)) As Dictionary(Of V)
         Return source.ToDictionary
     End Operator
