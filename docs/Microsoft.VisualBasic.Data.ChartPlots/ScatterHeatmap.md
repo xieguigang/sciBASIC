@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.Data.ChartPlots](./index.md)_
 
 #### __getData
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.ScatterHeatmap.__getData(System.Func{System.Double,System.Double,System.Double},System.Drawing.Size,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.Single@,System.Single@,System.Boolean,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.DocumentStream.DataSet}@,System.Int32)
+Microsoft.VisualBasic.Data.ChartPlots.ScatterHeatmap.__getData(System.Func{System.Double,System.Double,System.Double},System.Drawing.Size,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.Single@,System.Single@,System.Boolean,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.IO.DataSet}@,System.Int32)
 ```
 返回去的数据是和**`size`**每一个像素点相对应的
 
@@ -28,7 +28,7 @@ Microsoft.VisualBasic.Data.ChartPlots.ScatterHeatmap.__getData(System.Func{Syste
 
 #### Plot
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.ScatterHeatmap.Plot(System.Func{System.Double,System.Double,System.Double},Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.String,System.Int32,System.String,System.Drawing.Size,System.Int32,System.String,System.Drawing.Font,System.Single,System.Single,System.Boolean,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.DocumentStream.DataSet}@,System.Double,System.Double,System.String,System.String,System.Double,System.Double)
+Microsoft.VisualBasic.Data.ChartPlots.ScatterHeatmap.Plot(System.Func{System.Double,System.Double,System.Double},Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.String,System.Int32,System.String,System.Drawing.Size,System.Int32,System.String,System.Drawing.Font,System.Single,System.Single,System.Boolean,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.IO.DataSet}@,System.Double,System.Double,System.String,System.String,System.Double,System.Double)
 ```
 steps步长值默认值为长度平分到每一个像素点
 

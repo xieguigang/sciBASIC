@@ -9,7 +9,7 @@ Data provider
 
 #### Evaluate
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.Plot3D.DataProvider.Evaluate(System.Func{System.Double,System.Double,System.Double},Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.Single,System.Single,System.Boolean,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.DocumentStream.DataSet})
+Microsoft.VisualBasic.Data.ChartPlots.Plot3D.DataProvider.Evaluate(System.Func{System.Double,System.Double,System.Double},Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.Single,System.Single,System.Boolean,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.IO.DataSet})
 ```
 Data provider base on the two variable.(这个函数可以同时为3D绘图或者ScatterHeatmap提供绘图数据)
 
@@ -43,7 +43,7 @@ Grid generator for function plot
 
 #### Surface
 ```csharp
-Microsoft.VisualBasic.Data.ChartPlots.Plot3D.DataProvider.Surface(System.Func{System.Double,System.Double,System.},Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.Single,System.Single,System.Boolean,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.DocumentStream.EntityObject})
+Microsoft.VisualBasic.Data.ChartPlots.Plot3D.DataProvider.Surface(System.Func{System.Double,System.Double,System.},Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,Microsoft.VisualBasic.ComponentModel.Ranges.DoubleRange,System.Single,System.Single,System.Boolean,Microsoft.VisualBasic.Language.List{Microsoft.VisualBasic.Data.csv.IO.EntityObject})
 ```
 生成函数计算结果的三维表面
 

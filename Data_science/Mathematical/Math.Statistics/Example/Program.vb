@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27bddf899658d64860ad03deea65330e, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\Example\Program.vb"
+﻿#Region "Microsoft.VisualBasic::35601e6b3539dce40d6ff34415d38fb7, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\Example\Program.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Public Module ExampleMonteCarlo
         Call println("Maximum: %s", BPM.Max())
     End Sub
 End Module
-

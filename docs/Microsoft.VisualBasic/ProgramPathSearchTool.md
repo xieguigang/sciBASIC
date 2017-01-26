@@ -131,7 +131,7 @@ Check if the file is opened by other code?(检测文件是否已经被其他程�
 ```csharp
 Microsoft.VisualBasic.ProgramPathSearchTool.GetBaseName(System.String)
 ```
-@``M:System.IO.Path.GetFileNameWithoutExtension(System.String)`` shortcuts extension.
+@``M:Microsoft.VisualBasic.ProgramPathSearchTool.BaseName(System.String)`` shortcuts extension.
 
 |Parameter Name|Remarks|
 |--------------|-------|

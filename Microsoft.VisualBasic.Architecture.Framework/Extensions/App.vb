@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c246197c6019cc1f8a0a650f78342ba5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
+﻿#Region "Microsoft.VisualBasic::6593dd6f84cc3cb84a05df5c81dc0885, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
     ' Author:
     ' 
@@ -189,7 +189,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property AssemblyName As String =
-        IO.Path.GetFileNameWithoutExtension(App.ExecutablePath)
+        basename(App.ExecutablePath)
 
     Public ReadOnly Property ProductName As String =
         If(String.IsNullOrEmpty(Application.ProductName.Trim), AssemblyName, Application.ProductName.Trim)
@@ -348,7 +348,7 @@ Public Module App
         Dim assm As Assembly = type.Assembly
         Dim productName As String = ApplicationDetails.GetProductName(assm)
         If String.IsNullOrEmpty(productName) Then
-            productName = IO.Path.GetFileNameWithoutExtension(assm.Location)
+            productName = basename(assm.Location)
         End If
         Return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{productName}"
     End Function

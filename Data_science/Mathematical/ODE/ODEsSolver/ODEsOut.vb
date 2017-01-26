@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::affe87708da9ac7529d93e13e424e912, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\ODEsOut.vb"
+﻿#Region "Microsoft.VisualBasic::7ec452428f2566c131d7f23c301f8c49, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\ODEsOut.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON

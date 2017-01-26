@@ -9,7 +9,7 @@ _namespace: [Microsoft.VisualBasic.DataMining.ComponentModel](./index.md)_
 
 #### CastTo
 ```csharp
-Microsoft.VisualBasic.DataMining.ComponentModel.Entity.CastTo(Microsoft.VisualBasic.Data.csv.DocumentStream.RowObject)
+Microsoft.VisualBasic.DataMining.ComponentModel.Entity.CastTo(Microsoft.VisualBasic.Data.csv.IO.RowObject)
 ```
 
 

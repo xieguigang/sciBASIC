@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ce7aa507c03603e46c8d0762cd071f6, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::207eed71847a499753f649ed8336050b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -157,9 +157,9 @@ Public Module NetworkAPI
  _
             From v As DataSet
             In array
-            Let type As String = nodeTypes.TryGetValue(v.Identifier, [default]:="variable")
+            Let type As String = nodeTypes.TryGetValue(v.ID, [default]:="variable")
             Select New FileStream.Node With {
-                .ID = v.Identifier,
+                .ID = v.ID,
                 .NodeType = type,
                 .Properties = v.Properties _
                     .ToDictionary(Function(k) k.Key,
@@ -178,10 +178,10 @@ Public Module NetworkAPI
                 End If
 
                 interact = interacts.TryGetValue(
-                    $"{var.Identifier} --> {k}",
+                    $"{var.ID} --> {k}",
                     [default]:="correlates")
                 edges += New FileStream.NetworkEdge With {
-                    .FromNode = var.Identifier,
+                    .FromNode = var.ID,
                     .ToNode = k,
                     .Confidence = c,
                     .InteractionType = interact,

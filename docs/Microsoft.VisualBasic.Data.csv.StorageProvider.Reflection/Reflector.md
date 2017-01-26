@@ -9,7 +9,7 @@ The dynamics reflection operations on Csv data source services.
 
 #### __save
 ```csharp
-Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.__save(System.Collections.IEnumerable,System.Type,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Type},System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean)
+Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.__save(System.Collections.IEnumerable,System.Type,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Type},System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.Int32)
 ```
 Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
 
@@ -23,7 +23,7 @@ Save the specifc type object collection into the csv data file.(将目标对象�
 
 #### Convert``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.Convert``1(Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame,System.Boolean)
+Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.Convert``1(Microsoft.VisualBasic.Data.csv.IO.DataFrame,System.Boolean)
 ```
 从文件之中读取数据并转换为对象数据
 
@@ -60,7 +60,7 @@ Returns the type schema as ``{columnName, type}``, using for the cytoscape softw
 
 #### GetsRowData
 ```csharp
-Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.GetsRowData(System.Collections.Generic.IEnumerable{System.Object},System.Type,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.String)
+Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.GetsRowData(System.Collections.Generic.IEnumerable{System.Object},System.Type,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.String,System.Int32)
 ```
 Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
 
@@ -85,7 +85,7 @@ Method for load a csv data file into a specific type of object collection.
 
 #### LoadDataToObject
 ```csharp
-Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.LoadDataToObject(Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame,System.Type,System.Boolean)
+Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.LoadDataToObject(Microsoft.VisualBasic.Data.csv.IO.DataFrame,System.Type,System.Boolean)
 ```
 将Csv文件加载至一个目标集合之中以完成数据从文件之中的读取操作
 
@@ -98,7 +98,7 @@ Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.LoadDataToOb
 
 #### Save``1
 ```csharp
-Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.Save``1(System.Collections.Generic.IEnumerable{``0},System.Boolean,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Type}@)
+Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector.Save``1(System.Collections.Generic.IEnumerable{``0},System.Boolean,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Type}@,System.Int32)
 ```
 Save the specifc type object collection into the csv data file.
  (将目标对象数据的集合转换为Csv文件已进行数据保存操作，非并行化的以保持数据原有的顺序)

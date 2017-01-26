@@ -5,6 +5,7 @@
 |----|-------|
 |[Annotation](./Annotation.md)||
 |[Axis](./Axis.md)||
+|[AxisScalling](./AxisScalling.md)||
 |[BarDataGroup](./BarDataGroup.md)||
 |[BarDataSample](./BarDataSample.md)||
 |[BarPlot](./BarPlot.md)|这个不像@``T:Microsoft.VisualBasic.Data.ChartPlots.Histogram``用于描述若干组连续的数据，这个是将数据按照标签分组来表述出来的|

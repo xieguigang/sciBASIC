@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed8d1c7cda64319631d9aa5e4dbb2648, ..\sciBASIC#\Data\DataFrame\Excel\Functions\Numerics.vb"
+﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, ..\sciBASIC#\Data\DataFrame\Excel\Functions\Numerics.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,12 @@ Namespace Excel
     Public Module Numerics
 
         <Extension>
-        Public Function SUM(data As DocumentStream.File, ParamArray cells As String()) As Double
+        Public Function SUM(data As IO.File, ParamArray cells As String()) As Double
             Return cells.Select(Function(c) data.CellValue(c).ParseDouble).Sum
         End Function
 
         <Extension>
-        Public Function SUM(data As DocumentStream.File, range As String) As Double
+        Public Function SUM(data As IO.File, range As String) As Double
             Throw New NotImplementedException
         End Function
     End Module

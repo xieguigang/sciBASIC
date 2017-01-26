@@ -64,6 +64,17 @@ Microsoft.VisualBasic.Imaging.ColorExtensions.ToColor(System.String,System.Drawi
 |str|颜色表达式或者名称|
 
 
+#### TranslateColor
+```csharp
+Microsoft.VisualBasic.Imaging.ColorExtensions.TranslateColor(System.String)
+```
+这个函数会尝试用不同的模式来解析颜色表达式
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|exp$|-|
+
+
 
 ### Properties
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2e4cd27c8f539cbef88b9f685244c3e, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::afe2eeae2f500fadab42599a8a0ad27e, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.DataImports
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -143,7 +143,7 @@ Namespace StorageProvider.Reflection
                 Call "Load data from filestream....".__DEBUG_ECHO
             End If
 
-            Dim reader As DataFrame = DocumentStream.DataFrame.Load(path, encoding, fast)  ' read csv data
+            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast)  ' read csv data
 
             If Not maps Is Nothing Then
                 Call reader.ChangeMapping(maps)  ' 改变列的名称映射以方便进行反序列化数据加载
@@ -260,9 +260,17 @@ Namespace StorageProvider.Reflection
                                    Optional metaBlank As String = "",
                                    Optional maps As Dictionary(Of String, String) = Nothing,
                                    Optional parallel As Boolean = True,
-                                   Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing) As File
+                                   Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing,
+                                   Optional reorderKeys As Integer = 0) As File
+
             Dim type As Type = GetType(T)
-            Dim file As New File(__save(source, type, explicit, schemaOut, metaBlank, maps, parallel))
+            Dim file As New File(
+                __save(source, type, explicit,
+                       schemaOut,
+                       metaBlank,
+                       maps,
+                       parallel,
+                       reorderKeys:=reorderKeys))
             Return file
         End Function
 
@@ -284,7 +292,7 @@ Namespace StorageProvider.Reflection
 
             Dim buf As List(Of Dictionary(Of String, String)) =
                 LinqAPI.MakeList(Of Dictionary(Of String, String)) <=
-                    From rowL As DocumentStream.RowObject
+                    From rowL As IO.RowObject
                     In df.Skip(1).AsParallel
                     Select (From p As Integer
                             In __pCache

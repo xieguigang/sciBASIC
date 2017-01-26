@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41574a2d9ca790083c7913f69845eb99, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
+﻿#Region "Microsoft.VisualBasic::f9c56394474665db59560e5cc91b410d, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
     ' Author:
     ' 
@@ -26,12 +26,8 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports System.Text
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream.File
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Language
 
 Namespace StorageProvider.ComponentModels
 
@@ -47,7 +43,7 @@ Namespace StorageProvider.ComponentModels
         Implements IReadOnlyDictionary(Of String, String)
 #End If
 
-        Public Property RowData As DocumentStream.RowObject
+        Public Property RowData As RowObject
         Public Property Schema As Dictionary(Of String, Integer)
         Public Property LineNumber As Long
 
@@ -60,7 +56,7 @@ Namespace StorageProvider.ComponentModels
             Schema = DataFrame.SchemaOridinal
         End Sub
 
-        Sub New(row As DocumentStream.RowObject, schema As Dictionary(Of String, Integer))
+        Sub New(row As RowObject, schema As Dictionary(Of String, Integer))
             Me.RowData = row
             Me.Schema = schema
         End Sub

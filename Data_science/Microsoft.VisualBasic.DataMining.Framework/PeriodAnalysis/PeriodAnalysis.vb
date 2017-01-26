@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f689bf3e3ed27b1105a432505c8a8c8, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::ef8edf99fdb73138d77310baa2a796d0, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
 
     ' Author:
     ' 
@@ -30,7 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.IEnumerations
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -212,9 +212,9 @@ Namespace Serials.PeriodAnalysis
         End Function
 
         <ExportAPI("Data.ConvertToCsv")>
-        Public Function ConvertData(sample As SamplingData) As DocumentStream.File
-            Dim DataFile As New DocumentStream.File
-            Dim Row As New DocumentStream.RowObject From {"Sampling"}
+        Public Function ConvertData(sample As SamplingData) As IO.File
+            Dim DataFile As New IO.File
+            Dim Row As New IO.RowObject From {"Sampling"}
 
             For i As Integer = 0 To sample.TimePoints
                 Dim n = TimePoint.GetData(i, sample.Peaks)
@@ -225,7 +225,7 @@ Namespace Serials.PeriodAnalysis
             Next
 
             Call DataFile.Add(Row)
-            Row = New DocumentStream.RowObject From {"Filted"}
+            Row = New IO.RowObject From {"Filted"}
 
             Dim avg = (From p In sample.FiltedData Select p.Value).Average
             For i As Integer = 0 To sample.TimePoints

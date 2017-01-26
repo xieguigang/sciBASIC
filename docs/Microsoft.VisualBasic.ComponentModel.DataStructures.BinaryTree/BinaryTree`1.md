@@ -135,7 +135,9 @@ _returns: Returns the tree_
 
 ### Properties
 
-#### _Count
+#### _counts
 Points to the root of the tree
 #### Length
 Returns the number of nodes in the tree
+#### Root
+The root of the tree.

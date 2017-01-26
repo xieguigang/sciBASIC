@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2658d47a893d4ff940e5614f1b7d1669, ..\sciBASIC#\mime\markups\YAML\TextInput.vb"
+﻿#Region "Microsoft.VisualBasic::3fbbf42e63f2862a52dcc93f620e1f6a, ..\sciBASIC#\mime\MIME_Markups\YAML\TextInput.vb"
 
     ' Author:
     ' 

@@ -25,7 +25,7 @@ Microsoft.VisualBasic.Imaging.Drawing2D.g.FillBg(System.Drawing.Graphics@,System
 
 #### GraphicsPlots
 ```csharp
-Microsoft.VisualBasic.Imaging.Drawing2D.g.GraphicsPlots(System.Drawing.Size@,System.Drawing.Size@,System.String,System.Action{System.Drawing.Graphics})
+Microsoft.VisualBasic.Imaging.Drawing2D.g.GraphicsPlots(System.Action{System.Drawing.Graphics},System.Drawing.Size@,System.Drawing.Size@,System.String)
 ```
 Data plots graphics engine.
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb9af1cec4e1e0095b15d6bd6d21c603, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::d4e1c0065e5ab1206c285bf2f39923d0, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\Heatmap.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -69,13 +69,13 @@ Public Module Heatmap
             Dim array As Double() = keys.ToArray(Function(o$) x(o))
 
             For Each y As DataSet In dataset
-                out(y.Identifier) = correlation(
+                out(y.ID) = correlation(
                     array,
                     keys.ToArray(Function(o) y(o)))
             Next
 
             Yield New NamedValue(Of Dictionary(Of String, Double)) With {
-                .Name = x.Identifier,
+                .Name = x.ID,
                 .Value = out
             }
         Next
@@ -109,7 +109,7 @@ Public Module Heatmap
                () <= From x As DataSet
                      In ds
                      Select New NamedValue(Of Dictionary(Of String, Double)) With {
-                         .Name = x.Identifier,
+                         .Name = x.ID,
                          .Value = x.Properties
                      }
         End If

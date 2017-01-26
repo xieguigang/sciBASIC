@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b610b4ca014382178f885e04a39aabe0, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\BinaryTree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::74a48bfd98dac8489458e34fc18652cd, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\BinaryTree\Tree.vb"
 
     ' Author:
     ' 

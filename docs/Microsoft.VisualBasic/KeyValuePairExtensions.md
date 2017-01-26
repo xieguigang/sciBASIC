@@ -53,6 +53,17 @@ Microsoft.VisualBasic.KeyValuePairExtensions.ParserDictionary``1
 ```
 请注意，这里的类型约束只允许枚举类型
 
+#### ReverseMaps``2
+```csharp
+Microsoft.VisualBasic.KeyValuePairExtensions.ReverseMaps``2(System.Collections.Generic.Dictionary{``0,``1},System.Boolean)
+```
+使用这个函数应该要确保value是没有重复的
+
+|Parameter Name|Remarks|
+|--------------|-------|
+|d|-|
+
+
 #### ToDictionary``1
 ```csharp
 Microsoft.VisualBasic.KeyValuePairExtensions.ToDictionary``1(System.Collections.Generic.IEnumerable{``0})

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1e905039449dddec899ace141086f3c, ..\sciBASIC#\Data\DataFrame\Excel\Coordinates.vb"
+﻿#Region "Microsoft.VisualBasic::cec6d930ae488206ead5b8daa45913ae, ..\sciBASIC#\Data\DataFrame\Excel\Coordinates.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@ Namespace Excel
     Public Module Coordinates
 
         <Extension>
-        Public Function CellValue(data As DocumentStream.File, c As String) As String
+        Public Function CellValue(data As IO.File, c As String) As String
             Dim y As Integer = CInt(Regex.Match(c, "\d+").Value)
             Dim x As String = Mid(c, 1, c.Length - CStr(y).Length)
             Return data.Cell(XValue(x), y)
@@ -45,7 +45,7 @@ Namespace Excel
         End Function
 
         <Extension>
-        Public Function RangeSelects(data As DocumentStream.File, range As String) As String()
+        Public Function RangeSelects(data As IO.File, range As String) As String()
             Throw New NotImplementedException
         End Function
     End Module

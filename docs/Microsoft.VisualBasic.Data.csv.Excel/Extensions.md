@@ -9,9 +9,9 @@ _namespace: [Microsoft.VisualBasic.Data.csv.Excel](./index.md)_
 
 #### __updateMaps
 ```csharp
-Microsoft.VisualBasic.Data.csv.Excel.Extensions.__updateMaps(Microsoft.VisualBasic.Data.csv.DocumentStream.DataFrame@,System.String)
+Microsoft.VisualBasic.Data.csv.Excel.Extensions.__updateMaps(Microsoft.VisualBasic.Data.csv.IO.DataFrame@,System.String)
 ```
-仅限于 @``T:Microsoft.VisualBasic.Data.csv.DocumentStream.DataSet``和@``T:Microsoft.VisualBasic.Data.csv.DocumentStream.EntityObject``
+仅限于 @``T:Microsoft.VisualBasic.Data.csv.IO.DataSet``和@``T:Microsoft.VisualBasic.Data.csv.IO.EntityObject``
 
 |Parameter Name|Remarks|
 |--------------|-------|
@@ -23,7 +23,7 @@ Microsoft.VisualBasic.Data.csv.Excel.Extensions.__updateMaps(Microsoft.VisualBas
 ```csharp
 Microsoft.VisualBasic.Data.csv.Excel.Extensions.LoadDataSet(System.String,System.String,System.String)
 ```
-@``T:Microsoft.VisualBasic.Data.csv.DocumentStream.DataSet``
+@``T:Microsoft.VisualBasic.Data.csv.IO.DataSet``
 
 |Parameter Name|Remarks|
 |--------------|-------|
@@ -36,7 +36,7 @@ Microsoft.VisualBasic.Data.csv.Excel.Extensions.LoadDataSet(System.String,System
 ```csharp
 Microsoft.VisualBasic.Data.csv.Excel.Extensions.LoadEntitySet(System.String,System.String,System.String)
 ```
-@``T:Microsoft.VisualBasic.Data.csv.DocumentStream.EntityObject``
+@``T:Microsoft.VisualBasic.Data.csv.IO.EntityObject``
 
 |Parameter Name|Remarks|
 |--------------|-------|

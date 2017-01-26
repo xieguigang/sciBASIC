@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e750356c88b0d4cc474b41819fe97c6b, ..\sciBASIC#\Data_science\Mathematical\Plots\csv\BarData.vb"
+﻿#Region "Microsoft.VisualBasic::5687edceb27c873b904e8d73ec5fd139, ..\sciBASIC#\Data_science\Mathematical\Plots\csv\BarData.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.Excel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors

@@ -13,7 +13,7 @@ The names value for edge type @``T:Microsoft.VisualBasic.Data.visualize.Network.
 #### REFLECTION_ID_MAPPING_FROM_NODE
 @``P:Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.FromNode``
 #### REFLECTION_ID_MAPPING_IDENTIFIER
-@``P:Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node.Identifier``
+@``P:Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node.ID``
 #### REFLECTION_ID_MAPPING_INTERACTION_TYPE
 @``P:Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge.InteractionType``
 #### REFLECTION_ID_MAPPING_NODETYPE

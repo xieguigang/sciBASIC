@@ -43,18 +43,6 @@ Microsoft.VisualBasic.StringHelpers.EqualsAny(System.String,System.String[])
 |compareTo|-|
 
 
-#### FormatNumeric
-```csharp
-Microsoft.VisualBasic.StringHelpers.FormatNumeric(System.Double,System.Int32)
-```
-分别处理正常的小数或者科学记数法的小数
-
-|Parameter Name|Remarks|
-|--------------|-------|
-|n#|-|
-|decimal%|-|
-
-
 #### FormatZero``1
 ```csharp
 Microsoft.VisualBasic.StringHelpers.FormatZero``1(``0,System.String)
@@ -281,7 +269,7 @@ _returns: A copy of format in which the format items have been replaced by the s
 
 #### Split
 ```csharp
-Microsoft.VisualBasic.StringHelpers.Split(System.Collections.Generic.IEnumerable{System.String},System.String,System.Boolean)
+Microsoft.VisualBasic.StringHelpers.Split(System.Collections.Generic.IEnumerable{System.String},System.String,System.Boolean,System.Text.RegularExpressions.RegexOptions)
 ```
 String collection tokens by a certain delimiter string element.
 
