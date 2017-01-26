@@ -19,12 +19,12 @@ Namespace Emit.Parameters
     Public Module ParamLogUtility
 
         Public Function Acquire(ParamArray providedParameters As Expression(Of Func(Of Object))()) As Dictionary(Of String, Object)
-            Dim _methodName As [String]
-            Dim _paramaterLog As [String]
+            Dim _methodName As String
+            Dim _paramaterLog As String
 
             Dim _serializer As JavaScriptSerializer
-            Dim _methodParamaters As Dictionary(Of [String], Type)
-            Dim _providedParametars As List(Of Tuple(Of [String], Type, Object))
+            Dim _methodParamaters As Dictionary(Of String, Type)
+            Dim _providedParametars As List(Of Tuple(Of String, Type, Object))
 
             Try
                 _serializer = New JavaScriptSerializer()
@@ -32,7 +32,7 @@ Namespace Emit.Parameters
 
                 'Set class and current method info
 
-                _methodName = [String].Format("Class = {0}, Method = {1}", currentMethod.DeclaringType.FullName, currentMethod.Name)
+                _methodName = String.Format("Class = {0}, Method = {1}", currentMethod.DeclaringType.FullName, currentMethod.Name)
 
                 'Get current methods paramaters
 
@@ -71,7 +71,7 @@ Namespace Emit.Parameters
             Try
                 For Each aMethodParamater In _methodParamaters
                     Dim aParameter = _providedParametars.Where(Function(obj) obj.Item1.Equals(aMethodParamater.Key) AndAlso obj.Item2 = aMethodParamater.Value).[Single]()
-                    _paramaterLog += [String].Format(" ""{0}"":{1},", aParameter.Item1, _serializer.Serialize(aParameter.Item3))
+                    _paramaterLog += String.Format(" ""{0}"":{1},", aParameter.Item1, _serializer.Serialize(aParameter.Item3))
                 Next
 
                 _paramaterLog = If((_paramaterLog IsNot Nothing), _paramaterLog.Trim(" "c, ","c), String.Empty)
@@ -89,8 +89,8 @@ Namespace Emit.Parameters
             _providedParametars.Add(New Tuple(Of String, Type, Object)(name, type, value))
         End Sub
 
-        Public Function GetLog() As [String]
-            Return [String].Format("{0}({1})", _methodName, _paramaterLog)
+        Public Function GetLog() As String
+            Return String.Format("{0}({1})", _methodName, _paramaterLog)
         End Function
     End Module
 End Namespace

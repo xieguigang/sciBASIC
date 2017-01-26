@@ -12,6 +12,11 @@ Namespace Language
 
         Public Property Name As String Implements IKeyedEntity(Of String).Key
         Public Property Type As Type
+        ''' <summary>
+        ''' 这个变量所在的函数的位置记录
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Trace As NamedValue(Of Type)
 
         Public Overrides Function ToString() As String
             If value Is Nothing Then
