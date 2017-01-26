@@ -31,19 +31,6 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Namespace Language
 
     ''' <summary>
-    ''' var in VisualBasic
-    ''' </summary>
-    Public Class Value : Inherits Value(Of Object)
-
-        Public Overrides Function ToString() As String
-            If value Is Nothing Then
-                Return Nothing
-            End If
-            Return value.ToString
-        End Function
-    End Class
-
-    ''' <summary>
     ''' You can applying this data type into a dictionary object to makes the mathematics calculation more easily.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
