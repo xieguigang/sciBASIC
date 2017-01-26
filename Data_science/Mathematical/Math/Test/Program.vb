@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.Mathematical.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Module Module1
+Module Program
 
     Sub Main()
         Call Test(1, 2)
