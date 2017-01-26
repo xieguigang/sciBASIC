@@ -12,9 +12,9 @@ Namespace Emit.Parameters
         ''' <param name="parameters"></param>
         Public Function AcquireOrder(ParamArray parameters As Object()) As Dictionary(Of Value)
             Dim invoke As MethodBase = New StackTrace().GetFrame(1).GetMethod()
-            Dim trace As New NamedValue(Of Type) With {
+            Dim trace As New NamedValue(Of MethodBase) With {
                 .Name = invoke.Name,
-                .Value = invoke.DeclaringType
+                .Value = invoke
             }
             Dim methodParameters = invoke.GetParameters()
             Dim out As New Dictionary(Of Value)

@@ -10,18 +10,14 @@ Namespace Scripting
     ''' 在vb之中由于可选参数的值只能够是常量，假若变量之间还存在关联，则必须要用表达式，
     ''' 但是表达式不是常量，所以使用这个模块之中的代码来模拟R语言之中的可选参数表达式
     ''' </summary>
-    Public Module ParameterCompute
+    Public Module Parameters
 
         Public Function Demo(c#,
                              Optional x$ = "c*33+5!",
                              Optional y$ = "log(x)+sin(9)",
                              Optional title$ = "This is a title string, not numeric expression") As Double()
 
-            Dim parameters As Dictionary(Of String, Double) = New Expression(Of Func(Of Object))() {
-                Function() c,
-                Function() x,
-                Function() y
-            }.Evaluate
+            Dim parameters As Dictionary(Of String, Double) = Evaluate(Function() {c, x, y})
 
             Return {
                 c,
@@ -44,9 +40,9 @@ Namespace Scripting
         ''' <param name="params">假若参数是不需要进行计算的，则在生成字典的时候不放进去就行了</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Evaluate(params As IEnumerable(Of Expression(Of Func(Of Object)))) As Dictionary(Of String, Double)
+        Public Function Evaluate(params As Expression(Of Func(Of Object()))) As Dictionary(Of String, Double)
             Dim caller As MethodBase = GetMyCaller()
-            Return caller.Acquire(params.ToArray).Evaluate(caller)
+            Return caller.InitTable(params).Evaluate(caller)
         End Function
 
         ''' <summary>

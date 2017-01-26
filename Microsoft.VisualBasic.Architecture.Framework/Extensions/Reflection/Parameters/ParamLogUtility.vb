@@ -1,10 +1,6 @@
-Imports System.Collections.Generic
-Imports System.Diagnostics
-Imports System.Linq
 Imports System.Linq.Expressions
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
@@ -44,9 +40,9 @@ Namespace Emit.Parameters
         Public Function Acquire(currentMethod As MethodBase, ParamArray providedParameters As Expression(Of Func(Of Object))()) As Dictionary(Of Value)
             Dim out As New Dictionary(Of Value)
             ' Set class and current method info
-            Dim trace As New NamedValue(Of Type) With {
+            Dim trace As New NamedValue(Of MethodBase) With {
                 .Name = currentMethod.Name,
-                .Value = currentMethod.DeclaringType
+                .Value = currentMethod
             }
 
             ' Get current methods paramaters
@@ -77,7 +73,7 @@ Namespace Emit.Parameters
         End Function
 
         <Extension>
-        Private Sub AddProvidedParamaterDetail(out As Dictionary(Of Value), memberExpression As MemberExpression, trace As NamedValue(Of Type))
+        Private Sub AddProvidedParamaterDetail(out As Dictionary(Of Value), memberExpression As MemberExpression, trace As NamedValue(Of MethodBase))
             Dim constantExpression As ConstantExpression = DirectCast(memberExpression.Expression, ConstantExpression)
             Dim name As String = memberExpression.Member.Name
             Dim value = DirectCast(memberExpression.Member, FieldInfo).GetValue(constantExpression.Value)
@@ -91,5 +87,36 @@ Namespace Emit.Parameters
                 .Trace = trace
             }
         End Sub
+
+        <Extension>
+        Public Function InitTable(caller As MethodBase, array As Expression(Of Func(Of Object()))) As Dictionary(Of Value)
+            Dim unaryExpression As NewArrayExpression = DirectCast(array.Body, NewArrayExpression)
+            Dim arrayData As UnaryExpression() = unaryExpression _
+                .Expressions _
+                .Select(Function(e) DirectCast(e, UnaryExpression)) _
+                .ToArray
+            Dim out As New Dictionary(Of Value)
+            Dim trace As New NamedValue(Of MethodBase) With {
+                .Name = caller.Name,
+                .Value = caller
+            }
+
+            For Each expr As UnaryExpression In arrayData
+                Dim member = DirectCast(expr.Operand, MemberExpression)
+                Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
+                Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
+                Dim value As Object = DirectCast(member.Member, FieldInfo) _
+                    .GetValue(constantExpression.Value)
+
+                out += New Value With {
+                    .Name = name,
+                    .Type = value.GetType,
+                    .value = value,
+                    .Trace = trace
+                }
+            Next
+
+            Return out
+        End Function
     End Module
 End Namespace

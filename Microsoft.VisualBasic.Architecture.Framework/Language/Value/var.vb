@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
@@ -16,7 +17,7 @@ Namespace Language
         ''' 这个变量所在的函数的位置记录
         ''' </summary>
         ''' <returns></returns>
-        Public Property Trace As NamedValue(Of Type)
+        Public Property Trace As NamedValue(Of MethodBase)
 
         ''' <summary>
         ''' Is a numeric type?
