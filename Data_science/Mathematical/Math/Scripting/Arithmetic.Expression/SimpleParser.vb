@@ -29,8 +29,8 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Emit.Marshal
-Imports Microsoft.VisualBasic.Mathematical.Types
-Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Helpers.Arithmetic
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Scripting
@@ -46,7 +46,7 @@ Namespace Scripting
             If tokens.Count = 1 Then
                 Dim token As Token(Of Tokens) = tokens.First
 
-                If token.Type = Mathematical.Tokens.Number Then
+                If token.Type = Mathematical.Scripting.Tokens.Number Then
                     Return New SimpleExpression(Val(token.Text))
                 Else  ' Syntax error
                     Throw New SyntaxErrorException(s)

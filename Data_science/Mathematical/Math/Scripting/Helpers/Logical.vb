@@ -103,9 +103,9 @@ Namespace Scripting.Helpers
 
         Const MATH_EXPRESSION As String = "\S+[=<>~]\S+"
 
-        Friend Shared Function MathematicalExpression(expression As String) As String
-            Dim matches = Regex.Matches(expression, MATH_EXPRESSION)
-            Dim sBuilder As StringBuilder = New StringBuilder(expression)
+        Friend Shared Function MathematicalExpression(exp As String) As String
+            Dim matches = Regex.Matches(exp, MATH_EXPRESSION)
+            Dim sBuilder As New StringBuilder(exp)
 
             For Each Match As RegularExpressions.Match In matches
                 Dim s As String = Match.Value
@@ -113,7 +113,7 @@ Namespace Scripting.Helpers
                 For Each o In "=<>~"
                     If InStr(s, o) Then
                         Dim Tokens = s.Split(o)
-                        Tokens = {Mathematical.Expression.Evaluate(Tokens(0)), Mathematical.Expression.Evaluate(Tokens(1))}
+                        Tokens = {Expression.Evaluate(Tokens(0)), Expression.Evaluate(Tokens(1))}
                         Dim value As String = Logical.NumericRelationships(o)(Tokens(0), Tokens(1))
                         sBuilder.Replace(s, value.ToLower)
                         Exit For
@@ -127,7 +127,7 @@ Namespace Scripting.Helpers
         Public Shared Function Evaluate(expression As String) As Boolean
             expression = MathematicalExpression(expression)
             expression = Convert(expression)
-            Return Not Mathematical.Types.SimpleExpression.Evaluate(expression) = 0
+            Return Not Types.SimpleExpression.Evaluate(expression) = 0
         End Function
 
         ' a = b

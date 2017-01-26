@@ -29,9 +29,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Expression
-Imports Microsoft.VisualBasic.Mathematical.Helpers.Arithmetic
-Imports Microsoft.VisualBasic.Mathematical.Types
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Expression
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Helpers.Arithmetic
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Scripting
@@ -86,7 +86,7 @@ Namespace Scripting
             If tokens.Count = 1 Then
                 Dim token As Token(Of Tokens) = tokens.First
 
-                If token.Type = Mathematical.Tokens.Number Then
+                If token.Type = Mathematical.Scripting.Tokens.Number Then
                     Return New SimpleExpression(Val(token.Text))
                 Else  ' Syntax error
                     Throw New SyntaxErrorException(s)
@@ -119,7 +119,7 @@ Namespace Scripting
                 e = +tokens
 
                 Select Case e.Type
-                    Case Mathematical.Tokens.OpenBracket, Mathematical.Tokens.OpenStack
+                    Case Mathematical.Scripting.Tokens.OpenBracket, Mathematical.Scripting.Tokens.OpenStack
                         If pre Is Nothing Then  ' 前面不是一个未定义的标识符，则在这里是一个括号表达式
                             meta = New MetaExpression(TryParse(tokens, getValue, evaluate, False))
                         Else
@@ -143,11 +143,11 @@ Namespace Scripting
 
                             Continue Do
                         End If
-                    Case Mathematical.Tokens.CloseStack, Mathematical.Tokens.CloseBracket, Mathematical.Tokens.Delimiter
+                    Case Mathematical.Scripting.Tokens.CloseStack, Mathematical.Scripting.Tokens.CloseBracket, Mathematical.Scripting.Tokens.Delimiter
                         Return sep ' 退出递归栈
-                    Case Mathematical.Tokens.Number
+                    Case Mathematical.Scripting.Tokens.Number
                         meta = New Types.MetaExpression(Val(e.Text))
-                    Case Mathematical.Tokens.UNDEFINE
+                    Case Mathematical.Scripting.Tokens.UNDEFINE
 
                         Dim x As String = e.Text
                         meta = New Types.MetaExpression(Function() getValue(x))
@@ -155,18 +155,18 @@ Namespace Scripting
                         If tokens.EndRead Then
                             pre = Nothing
                         Else
-                            If tokens.Current.TokenName = Mathematical.Tokens.Operator Then
+                            If tokens.Current.TokenName = Mathematical.Scripting.Tokens.Operator Then
                                 pre = Nothing
                             Else
                                 pre = e ' probably is a function name
                             End If
                         End If
 
-                    Case Mathematical.Tokens.Operator
+                    Case Mathematical.Scripting.Tokens.Operator
                         If String.Equals(e.Text, "-") Then
 
                             If Not sep.IsNullOrEmpty Then
-                                If tokens.Current.Type = Mathematical.Tokens.Number Then
+                                If tokens.Current.Type = Mathematical.Scripting.Tokens.Number Then
                                     meta = New Types.MetaExpression(-1 * Val((+tokens).Text))
                                 Else
                                     Throw New SyntaxErrorException

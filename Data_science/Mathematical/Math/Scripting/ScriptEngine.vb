@@ -37,8 +37,7 @@ Namespace Scripting
         ''' The default expression engine.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Expression As Expression =
-            Mathematical.Expression.DefaultEngine
+        Public ReadOnly Property Expression As Expression = Expression.DefaultEngine
 
         ''' <summary>
         ''' all of the commands are stored at here
@@ -76,8 +75,9 @@ Namespace Scripting
             If StatementEngine.ContainsKey(Token) Then
                 Call StatementEngine(Token)(Mid(statement, Len(Token) + 1).Trim)
                 Return String.Empty
-            Else ' if the statement input from the user is not appears 
-                '  in the engine dictionary, then maybe is a mathematics expression. 
+            Else
+                ' if the statement input from the user is not appears 
+                ' in the engine dictionary, then maybe is a mathematics expression. 
                 Dim Result As Double = Expression.Evaluate(statement)
                 ' You can treat the variable 'last' as a system variable for return 
                 ' the Result of a multiple function script in the future of this 
