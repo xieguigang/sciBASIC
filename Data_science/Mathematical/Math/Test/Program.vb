@@ -1,15 +1,11 @@
-﻿Imports System.Linq.Expressions
-Imports System.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical.Scripting
+﻿Imports Microsoft.VisualBasic.Mathematical.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Emit.Parameters
 
 Module Program
 
     Sub Main()
-        Call Test(1, 2)
+
+        Call Test(1, 2, 3)
 
         Pause()
 
@@ -22,9 +18,12 @@ Module Program
         Pause()
     End Sub
 
-    Sub Test(a#, b#, Optional x$ = "(A + b)! * 100", Optional y# = 33, Optional z$ = "log(Y) + 9")
-        Dim params As Dictionary(Of String, Double) = Parameters.Evaluate(Function() {a, b, x, y, z})
+    Sub Test(a!, b&, c#, Optional x$ = "(A + b^2)! * 100", Optional y$ = "(cos(x/33)+1)^2 -3", Optional z$ = "log(-Y) + 9")
+        Dim params As Dictionary(Of String, Double) = ParameterExpression.Evaluate(Function() {a, b, x, y, z})
         Dim json$ = params.GetJson(True)
+
+        Call ParameterExpression.Apply(Function() {a, b, x, y, z})
+
         Call json.__DEBUG_ECHO
     End Sub
 End Module

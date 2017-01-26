@@ -10,7 +10,7 @@ Namespace Scripting
     ''' 在vb之中由于可选参数的值只能够是常量，假若变量之间还存在关联，则必须要用表达式，
     ''' 但是表达式不是常量，所以使用这个模块之中的代码来模拟R语言之中的可选参数表达式
     ''' </summary>
-    Public Module Parameters
+    Public Module ParameterExpression
 
         Public Function Demo(c#,
                              Optional x$ = "c*33+5!",
@@ -44,6 +44,47 @@ Namespace Scripting
             Dim caller As MethodBase = GetMyCaller()
             Return caller.InitTable(params).Evaluate(caller)
         End Function
+
+        ''' <summary>
+        ''' 在计算参数表达式的同时，也将计算之后的值更新回原来的参数变量之上
+        ''' </summary>
+        Public Sub Apply(array As Expression(Of Func(Of Object())))
+            Dim caller As MethodBase = GetMyCaller()
+            Dim values As Dictionary(Of String, Double) = caller.InitTable(array).Evaluate(caller)
+            Dim unaryExpression As NewArrayExpression = DirectCast(array.Body, NewArrayExpression)
+            Dim arrayData As UnaryExpression() = unaryExpression _
+                .Expressions _
+                .Select(Function(e) DirectCast(e, UnaryExpression)) _
+                .ToArray
+
+            For Each expr As UnaryExpression In arrayData
+                Dim member = DirectCast(expr.Operand, MemberExpression)
+                Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
+                Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
+                Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
+                Dim value As Object = values(name)
+                Dim target As Object = constantExpression.Value
+
+                Select Case field.FieldType
+                    Case GetType(String)
+                        value = CStr(value)
+                    Case GetType(Integer)
+                        value = CInt(value)
+                    Case GetType(Long)
+                        value = CLng(value)
+                    Case GetType(Byte)
+                        value = CByte(value)
+                    Case GetType(Single)
+                        value = CSng(value)
+                    Case GetType(Decimal)
+                        value = CDec(value)
+                    Case GetType(Short)
+                        value = CShort(value)
+                End Select
+
+                Call field.SetValue(target, value)
+            Next
+        End Sub
 
         ''' <summary>
         ''' 进行参数计算的时候只会接受数值类型以及字符串类型的参数

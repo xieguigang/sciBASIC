@@ -105,8 +105,8 @@ Namespace Emit.Parameters
                 Dim member = DirectCast(expr.Operand, MemberExpression)
                 Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
                 Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
-                Dim value As Object = DirectCast(member.Member, FieldInfo) _
-                    .GetValue(constantExpression.Value)
+                Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
+                Dim value As Object = field.GetValue(constantExpression.Value)
 
                 out += New Value With {
                     .Name = name,
