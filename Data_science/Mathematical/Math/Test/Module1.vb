@@ -5,8 +5,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module Module1
 
     Sub Main()
-
-        Call ParameterCompute.Demo(123).GetJson.__DEBUG_ECHO
         Call Test(1, 2)
 
         Pause()
@@ -20,7 +18,7 @@ Module Module1
         Pause()
     End Sub
 
-    Sub Test(a#, b#, Optional x$ = "(A + b)! * 100", Optional y# = 33, Optional z$ = "Y + 9")
+    Sub Test(a#, b#, Optional x$ = "(A + b)! * 100", Optional y# = 33, Optional z$ = "log(Y) + 9")
         Dim parameters As Dictionary(Of String, Double) =
             New Expression(Of Func(Of Object))() {
                 Function() a,
