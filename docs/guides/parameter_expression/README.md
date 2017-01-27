@@ -32,9 +32,17 @@ heatmap.2 (x,
 
 ## How to implements in VisualBasic?
 
-For implements this new optional parameter expression language feature, a expression evaluation engine is required for the parameter expression string evaluation.
-
 ### The math expression engine
+
+First of all, for implements this new optional parameter expression language feature, an expression evaluation engine is required for the parameter expression string evaluation. Here is my previous job about development a math expression evaluation engine:
+
+> [A complex Mathematics expression evaluation module in Visual Basic](https://www.codeproject.com/Articles/646391/A-complex-Mathematics-expression-evaluation-module)
+
+And here is the rewrite version of this engine:
+
+> [sciBASIC# math scripting](https://github.com/xieguigang/sciBASIC/tree/52285009eebf91ee2f2cd34be999feaf76fa993d/Data_science/Mathematical/Math/Scripting)
+
+Here is the example coe about how to use this math expression engine:
 
 ```vbnet
 Imports Microsoft.VisualBasic.Mathematical.Scripting
@@ -51,7 +59,10 @@ Call "(1+2)! / 5                      ".Evaluate
 
 ### Using Linq Expressions
 
-
+![](./images/1.png)
+![](./images/2.png)
+![](./images/3.png)
+![](./images/4.png)
 
 ## Reference links
 
