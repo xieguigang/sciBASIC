@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb606b10c10866998fcbdd7c77fe46e1, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3b4902fdb6587139b49d650377bf0391, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -39,4 +39,3 @@ Module Module1
         Next
     End Sub
 End Module
-

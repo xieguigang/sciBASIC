@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::e62ea2c2ee0ab74864b0412618c4cb17, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::26e1d73d21ddfd973728ae4707bebdf9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -207,8 +207,24 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     <ExportAPI("Path.Illegal?")>
     <Extension> Public Function PathIllegal(path As String) As Boolean
-        Dim Tokens As String() = path.Replace("\", "/").Split("/"c)
-        Dim fileName As String = Tokens.Last
+        Dim tokens As String() = Strings.Split(path.Replace("\", "/"), ":/")
+
+        If tokens.Length > 2 Then  ' 有多余一个的驱动器符，则肯定是非法的路径格式
+            Return False
+        ElseIf tokens.Length = 2 Then
+            ' 完整路径
+            ' 当有很多个驱动器的时候，这里会不止一个字母
+            If Regex.Match(tokens(0), "[a-Z0-9]+", RegexICSng).Value <> tokens(0) Then
+                ' 开头的驱动器的符号不正确
+                Return False
+            Else
+                ' 驱动器的符号也正确
+            End If
+        Else
+            ' 只有一个，则是相对路径
+        End If
+
+        Dim fileName As String = tokens.Last
 
         For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
             If fileName.IndexOf(ch) > -1 Then
@@ -216,13 +232,13 @@ Public Module ProgramPathSearchTool
             End If
         Next
 
-        For Each DIRBase As String In Tokens.Takes(Tokens.Length - 1)
-            For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
-                If fileName.IndexOf(ch) > -1 Then
-                    Return True
-                End If
-            Next
-        Next
+        'For Each DIRBase As String In tokens.Takes(tokens.Length - 1)
+        '    For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
+        '        If fileName.IndexOf(ch) > -1 Then
+        '            Return True
+        '        End If
+        '    Next
+        'Next
 
         Return False
     End Function
@@ -233,9 +249,9 @@ Public Module ProgramPathSearchTool
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FileLength(path As String) As Integer
+    Public Function FileLength(path As String) As Long
         If Not path.FileExists Then
-            Return -1
+            Return -1&
         Else
             Return FileIO.FileSystem.GetFileInfo(path).Length
         End If
@@ -338,7 +354,7 @@ Public Module ProgramPathSearchTool
     <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
     <Extension> Public Function BaseName(fsObj As String) As String
         If fsObj.FileExists Then
-            Return IO.Path.GetFileNameWithoutExtension(fsObj)
+            Return Path.GetFileNameWithoutExtension(fsObj)
         Else
             If String.IsNullOrEmpty(fsObj) Then
                 Throw New Exception(NameOf(fsObj) & " parameter is null!")
@@ -348,12 +364,12 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' <see cref="IO.Path.GetFileNameWithoutExtension"/> shortcuts extension.
+    ''' <see cref="basename"/> shortcuts extension.
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension> Public Function GetBaseName(path As String) As String
-        Return IO.Path.GetFileNameWithoutExtension(path)
+        Return basename(path)
     End Function
 
     ''' <summary>
@@ -424,7 +440,7 @@ Public Module ProgramPathSearchTool
         Dim Files As IEnumerable(Of String) = ls - l - wildcards(ext) <= DIR
         Dim matches = (From Path As String
                        In Files.AsParallel
-                       Let NameID = IO.Path.GetFileNameWithoutExtension(Path)
+                       Let NameID = basename(Path)
                        Where InStr(NameID, keyword, CompareMethod.Text) > 0
                        Let ExtValue = Path.Split("."c).Last
                        Select Path,
@@ -483,7 +499,7 @@ Public Module ProgramPathSearchTool
 
         Dim LQuery = (From path As String
                       In If(topLevel, ls - l, ls - l - r) - wildcards(ext) <= source
-                      Select ID = IO.Path.GetFileNameWithoutExtension(path),
+                      Select ID = basename(path),
                           path
                       Group By ID Into Group).ToArray
 
@@ -525,7 +541,7 @@ Public Module ProgramPathSearchTool
 
         Dim LQuery = From path As String
                      In FileIO.FileSystem.GetFiles(source, FileIO.SearchOption.SearchAllSubDirectories, ext)
-                     Select ID = IO.Path.GetFileNameWithoutExtension(path),
+                     Select ID = basename(path),
                           path
                      Group By ID Into Group
         Dim dict As Dictionary(Of String, String) =
@@ -556,7 +572,7 @@ Public Module ProgramPathSearchTool
     Public Function LoadSourceEntryList(source As IEnumerable(Of String)) As Dictionary(Of String, String)
         Dim LQuery = From path As String
                      In source
-                     Select ID = IO.Path.GetFileNameWithoutExtension(path),
+                     Select ID = basename(path),
                          path
                      Group By ID Into Group
         Dim res As Dictionary(Of String, String) =
@@ -875,7 +891,7 @@ Public Module ProgramPathSearchTool
         Try
             Dim path$ = file.FixPath.TrimEnd("/"c, "\"c)
             Dim fileInfo = FileIO.FileSystem.GetFileInfo(path$)
-            Dim Name As String = IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)
+            Dim Name As String = basename(fileInfo.FullName)
             Return $"{fileInfo.Directory.FullName}/{Name}"
         Catch ex As Exception
             ex = New Exception($"{NameOf(file)} --> {file}", ex)

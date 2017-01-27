@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80c0bd9710880b595e8fe8c57f36b9e4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::0704fac7763b9a10929b1e62b45e32fa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
 
     ' Author:
     ' 
@@ -37,20 +37,21 @@ Namespace ComponentModel.DataSourceModel
     ''' The value object have a name string.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure NamedValue(Of T) : Implements sIdEnumerable
+    Public Structure NamedValue(Of T) : Implements INamedValue
+        Implements IKeyValuePairObject(Of String, T)
 
         ''' <summary>
         ''' Identifier tag data. you can using this property value as a dictionary key.
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute>
-        Public Property Name As String Implements sIdEnumerable.Identifier
+        Public Property Name As String Implements INamedValue.Key, IKeyValuePairObject(Of String, T).Identifier
 
         ''' <summary>
         ''' Object value
         ''' </summary>
         ''' <returns></returns>
-        <XmlElement> Public Property Value As T
+        <XmlElement> Public Property Value As T Implements IKeyValuePairObject(Of String, T).Value
 
         <XmlAttribute>
         Public Property Description As String
@@ -70,9 +71,10 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="name"></param>
         ''' <param name="value"></param>
-        Sub New(name$, value As T)
+        Sub New(name$, value As T, Optional describ As String = Nothing)
             Me.Name = name
             Me.Value = value
+            Me.Description = describ
         End Sub
 
         ''' <summary>

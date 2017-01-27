@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FAA7DF95-44A9-4BCD-8C02-8D0A740C8638}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>MathApp.Program</StartupObject>
+    <StartupObject>MathApp.DEBUG</StartupObject>
     <RootNamespace>MathApp</RootNamespace>
     <AssemblyName>vbmath</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -276,6 +276,10 @@
     <ProjectReference Include="..\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
       <Name>ODEsSolver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plots\Plots.Extensions\Plots.Extensions.vbproj">
+      <Project>{a3907da5-f72d-497a-84d2-fc09b45ed42f}</Project>
+      <Name>Plots.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plots\Plots.vbproj">
       <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>

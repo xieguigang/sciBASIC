@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80c7eb37c2a629aac0401690addc7077, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\ComponentModel\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::f02e36465aa05b2b66eb75a8256cd0ec, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\ComponentModel\Entity.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,7 @@
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel
@@ -42,6 +42,15 @@ Namespace ComponentModel
 
         <XmlAttribute("T")>
         Public Overridable Property Properties As T()
+
+        Default Public Property Item(i%) As T
+            Get
+                Return Properties(i)
+            End Get
+            Set(value As T)
+                Properties(i) = value
+            End Set
+        End Property
 
         Public Overridable ReadOnly Property Length As Integer
             Get
@@ -79,7 +88,7 @@ Namespace ComponentModel
             }
         End Function
 
-        Default Public ReadOnly Property Item(Index As Integer) As Integer
+        Default Public Overloads ReadOnly Property Item(Index As Integer) As Integer
             Get
                 Return Properties(Index)
             End Get

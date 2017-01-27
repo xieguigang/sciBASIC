@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3f350c3edf9f8840435c9bc794a60c0, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\csv.vb"
+﻿#Region "Microsoft.VisualBasic::ba9e42613f7e44615447b0e6b78a225a, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\csv.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@ Namespace KMeans
     ''' 存储在Csv文件里面的数据模型
     ''' </summary>
     Public Class EntityLDM : Inherits DynamicPropertyBase(Of Double)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property Name As String Implements sIdEnumerable.Identifier
+        Public Property Name As String Implements INamedValue.Key
 
         <Meta(GetType(Double))>
         Public Overrides Property Properties As Dictionary(Of String, Double)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7dfeb8b6b2e5780510ee634d9a0628eb, ..\sciBASIC#\Data_science\Bootstrapping\Normalization.vb"
+﻿#Region "Microsoft.VisualBasic::81efe58e563e9ca5b0d05f9d9059f4d0, ..\sciBASIC#\Data_science\Bootstrapping\Normalization.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
@@ -38,21 +39,6 @@ Imports Microsoft.VisualBasic.Mathematical.Interpolation
 ''' Methods for raw data processing
 ''' </summary>
 Public Module Normalization
-
-    Public Structure TimeValue
-
-        Public Time#, value#
-
-        Public ReadOnly Property Point As PointF
-            Get
-                Return New PointF(Time, value)
-            End Get
-        End Property
-
-        Public Overrides Function ToString() As String
-            Return $"[{Time}]  {value}"
-        End Function
-    End Structure
 
     ''' <summary>
     ''' 
@@ -96,12 +82,12 @@ Public Module Normalization
         Dim times As Dictionary(Of Single, PointF) =
             raw.Value.ToDictionary(
             Function(x) CSng(x.Time),
-            Function(p) New PointF(CSng(p.Time), CSng(p.value)))
+            Function(p) New PointF(CSng(p.Time), CSng(p.Y)))
         Dim i As int = Scan0
         Dim preX As Value(Of Single) = intr.Value(++i).X
 
         Do While ++i < intr.Value.Length - 1
-            If preX > intr.Value(i).X Then ' 出现圈了
+            If +preX > intr.Value(i).X Then ' 出现圈了
 
             End If
         Loop
@@ -120,9 +106,8 @@ Public Module Normalization
                 .Select(Function(x) New NamedValue(Of Double()) With {
                     .Name = x.Name,
                     .Value = x.Value _
-                        .ToArray(Function(o) o.value)
+                        .ToArray(Function(o) o.Y)
                 }).ToDictionary
         }
     End Function
 End Module
-

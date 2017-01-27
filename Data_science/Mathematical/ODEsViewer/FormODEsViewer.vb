@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::76771d1997717a1afa2dba90cd9dffb8, ..\sciBASIC#\Data_science\Mathematical\ODEsViewer\FormODEsViewer.vb"
+﻿#Region "Microsoft.VisualBasic::a3ea239d238695c4706389e0e5498349, ..\sciBASIC#\Data_science\Mathematical\ODEsViewer\FormODEsViewer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -58,6 +59,8 @@ Public Class FormODEsViewer
                 If LoadModel(file.FileName) Then
                     Call config.models.AddFileHistory(file.FileName)
                     Call config.Save()
+
+                    Call TextBox1.AppendText("Load dynamics model: " & file.FileName & vbCrLf)
                 End If
             End If
         End Using
@@ -136,29 +139,22 @@ Public Class FormODEsViewer
         Application.DoEvents()
 
         Dim delta = 80 / result.y.Count
+        Dim plots As New List(Of (String, Image))
+        Dim x = result.x.SeqIterator.ToArray
 
         For Each y As NamedValue(Of Double()) In result.y.Values
-            Dim pts = result.x.SeqIterator.ToArray(Function(i) New PointF(i.obj, y.Value(i.i)))
-
             Try
-
-                If Not ref.IsNullOrEmpty AndAlso ref.ContainsKey(y.Name) Then
-                    Dim refS = Scatter.FromPoints(ref(y.Name).Value, "red", $"ReferenceOf({y.Name})", lineType:=DashStyle.Dash)
-                    Dim cal = Scatter.FromPoints(pts,, $"Plot({y.Name})")
-
-                    vars(y.Name).BackgroundImage = Scatter.Plot({refS, cal})
-                Else
-                    vars(y.Name).BackgroundImage =
-                        Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
-                End If
-
+                Call plots.Add(__plot(x, y))
             Catch ex As Exception
-                Call App.LogException(ex)
-                TextBox1.AppendText(ex.ToString & vbCrLf)
-            Finally
-                ToolStripProgressBar1.Value += delta
-                Application.DoEvents()
+                ex = New Exception(y.Name, ex)
+                Call BeginInvoke(Sub() Call TextBox1.WriteLine(vbCrLf & ex.ToString & vbCrLf))
             End Try
+        Next
+
+        For Each y As (String, Image) In plots
+            vars(y.Item1).BackgroundImage = y.Item2
+            ToolStripProgressBar1.Value += delta
+            Application.DoEvents()
         Next
 
         If Not currentSelect Is Nothing Then
@@ -167,6 +163,29 @@ Public Class FormODEsViewer
 
         ToolStripProgressBar1.Value = 100
     End Sub
+
+    Private Function __plot(x As SeqValue(Of Double)(), y As NamedValue(Of Double())) As (String, Image)
+        Dim pts = x.ToArray(Function(i) New PointF(i.value, y.Value(i.i)))
+        Dim hasRef = Not ref.IsNullOrEmpty AndAlso ref.ContainsKey(y.Name)
+        Dim img As Image
+
+        If hasRef Then
+            Dim refS = Scatter.FromPoints(ref(y.Name).Value, "red", $"ReferenceOf({y.Name})", lineType:=DashStyle.Dash)
+            Dim cal = Scatter.FromPoints(pts,, $"Plot({y.Name})")
+
+            img = Scatter.Plot({refS, cal})
+            Application.DoEvents()
+
+            Call BeginInvoke(Sub() Call TextBox1.WriteLine("---> " & y.Name))
+        Else
+            img = Scatter.Plot(pts, title:=$"Plot({y.Name})", ptSize:=5)
+            Application.DoEvents()
+
+            Call BeginInvoke(Sub() Call TextBox1.WriteLine("---> " & y.Name))
+        End If
+
+        Return (y.Name, img)
+    End Function
 
     Private Sub SaveResultToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveResultToolStripMenuItem.Click
         Using saveFile As New SaveFileDialog With {
@@ -181,7 +200,7 @@ Public Class FormODEsViewer
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         ToolStripProgressBar1.Value = 0
         TextBox1.AppendText($"a:={a}, b:={b}, n:={n}" & vbCrLf)
-        TextBox1.AppendText(defines.GetJson)
+        TextBox1.AppendText(defines.GetJson & vbCrLf)
         Application.DoEvents()
         Call Draw(MonteCarlo.Model.RunTest(model, defines, defines, n, a, b))
     End Sub
@@ -199,6 +218,8 @@ Public Class FormODEsViewer
                     End If
                     Call App.JoinVariable(x.Key, x.Value)
                 Next
+
+                Call TextBox1.AppendText("Load parameter data from file: " & file.FileName & vbCrLf)
             End If
         End Using
     End Sub
@@ -237,6 +258,8 @@ Public Class FormODEsViewer
     End Sub
 
     Public Sub AddReference(path$)
+        Call TextBox1.AppendText($"Using {path} as reference" & vbCrLf)
+
         Try
             With ODEsOut.LoadFromDataFrame(path, noVars:=True)
                 Dim x#() = .x
@@ -246,7 +269,7 @@ Public Class FormODEsViewer
                     Function(y) New NamedValue(Of PointF()) With {
                         .Name = y.Key,
                         .Value = x.SeqIterator.ToArray(
-                            Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
+                            Function(xi) New PointF(xi.value, y.Value.Value(xi)))
                     }).ToDictionary
             End With
         Catch ex As Exception
@@ -258,7 +281,7 @@ Public Class FormODEsViewer
                     Function(y) New NamedValue(Of PointF()) With {
                         .Name = y.Key,
                         .Value = x.SeqIterator.ToArray(
-                            Function(xi) New PointF(xi.obj, y.Value.Value(xi)))
+                            Function(xi) New PointF(xi.value, y.Value.Value(xi)))
                     }).ToDictionary
             End With
 

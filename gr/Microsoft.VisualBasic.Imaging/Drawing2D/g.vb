@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::058a3b64eaaa7b205333407c9a758319, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::596ea97b74cf19d267645a85cc4b92e8, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Drawing2D
@@ -103,10 +104,10 @@ Namespace Drawing2D
             Else
                 Dim res As Image
 
-                If Not bg.FileExists Then
-                    res = Base64Codec.GetImage(bg$)
-                Else
+                If bg.FileExists Then
                     res = LoadImage(path:=bg$)
+                Else
+                    res = Base64Codec.GetImage(bg$)
                 End If
 
                 Call g.DrawImage(res, rect)
@@ -121,8 +122,73 @@ Namespace Drawing2D
         ''' <param name="bg"></param>
         ''' <param name="plot"></param>
         ''' <returns></returns>
-        Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg$, plot As Action(Of Graphics)) As Bitmap
+        ''' 
+        <Extension>
+        Public Function GraphicsPlots(plot As Action(Of Graphics), ByRef size As Size, ByRef margin As Size, bg$) As Bitmap
             Return GraphicsPlots(size, margin, bg, Sub(ByRef g, rect) Call plot(g))
         End Function
+
+        Public Function Allocate(Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg$ = "white") As InternalCanvas
+            Return New InternalCanvas With {
+                .size = size,
+                .bg = bg,
+                .margin = margin
+            }
+        End Function
+
+        ''' <summary>
+        ''' 可以借助这个画布对象创建多图层的绘图操作
+        ''' </summary>
+        Public Class InternalCanvas
+
+            Dim plots As New List(Of IPlot)
+
+            Public Property size As Size
+            Public Property margin As Size
+            Public Property bg As String
+
+            Public Function InvokePlot() As Bitmap
+                Return GraphicsPlots(
+                    size, margin, bg,
+                    Sub(ByRef g, rect)
+
+                        For Each plot As IPlot In plots
+                            Call plot(g, rect)
+                        Next
+                    End Sub)
+            End Function
+
+            Public Shared Operator +(g As InternalCanvas, plot As IPlot) As InternalCanvas
+                g.plots += plot
+                Return g
+            End Operator
+
+            Public Shared Operator +(g As InternalCanvas, plot As IPlot()) As InternalCanvas
+                g.plots += plot
+                Return g
+            End Operator
+
+            Public Shared Narrowing Operator CType(g As InternalCanvas) As Bitmap
+                Return g.InvokePlot
+            End Operator
+
+            ''' <summary>
+            ''' canvas invoke this plot.
+            ''' </summary>
+            ''' <param name="g"></param>
+            ''' <param name="plot"></param>
+            ''' <returns></returns>
+            Public Shared Operator <=(g As InternalCanvas, plot As IPlot) As Bitmap
+                Dim size As Size = g.size
+                Dim margin = g.margin
+                Dim bg As String = g.bg
+
+                Return GraphicsPlots(size, margin, bg, plot)
+            End Operator
+
+            Public Shared Operator >=(g As InternalCanvas, plot As IPlot) As Bitmap
+                Throw New NotSupportedException
+            End Operator
+        End Class
     End Module
 End Namespace

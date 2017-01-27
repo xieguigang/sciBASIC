@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9beb3d2f85159a7b17b4cd43648af627, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb"
+﻿#Region "Microsoft.VisualBasic::7ee8b954122de62ffd70a0e41cce19dc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text.HtmlParser
 
 Namespace SoftwareToolkits.XmlDoc.Serialization
 

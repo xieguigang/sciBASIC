@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::369a84d512400dcf679b75c820859e18, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Data.vb"
+﻿#Region "Microsoft.VisualBasic::42204b9cf89ad6a073e2c5b6f156ddc8, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Data.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class SerialData : Implements sIdEnumerable
+Public Class SerialData : Implements INamedValue
     Implements IEnumerable(Of PointData)
 
     ''' <summary>
@@ -41,7 +41,7 @@ Public Class SerialData : Implements sIdEnumerable
     ''' </summary>
     Public pts As PointData()
     Public lineType As DashStyle = DashStyle.Solid
-    Public Property title As String Implements sIdEnumerable.Identifier
+    Public Property title As String Implements INamedValue.Key
 
     ''' <summary>
     ''' 点的半径大小
@@ -54,7 +54,32 @@ Public Class SerialData : Implements sIdEnumerable
     ''' 对一系列特定的数据点的注释数据
     ''' </summary>
     ''' <returns></returns>
-    Public Property annotations As Annotation()
+    Public Property DataAnnotations As Annotation()
+
+    ''' <summary>
+    ''' 由于在绘图的时候，需要按照标题查找原始数据，所以请确保绘图的曲线的系列数据之中的<see cref="SerialData.title"/>不会重复
+    ''' </summary>
+    ''' <param name="x!"></param>
+    ''' <param name="title$"></param>
+    ''' <param name="color$"></param>
+    ''' <param name="font$"></param>
+    ''' <param name="style"></param>
+    Public Sub AddMarker(x!, title$, color$, Optional font$ = CSSFont.Win10Normal, Optional style As LegendStyles = LegendStyles.Circle)
+        If DataAnnotations Is Nothing Then
+            DataAnnotations = New Annotation(0) {}
+        Else
+            ReDim Preserve DataAnnotations(DataAnnotations.Length)
+        End If
+
+        DataAnnotations(DataAnnotations.Length - 1) =
+            New Annotation With {
+                .X = x,
+                .Text = title,
+                .color = color,
+                .Font = font,
+                .Legend = style
+        }
+    End Sub
 
     Public Function GetPointByX(x As Single) As PointData
         For Each pt As PointData In pts

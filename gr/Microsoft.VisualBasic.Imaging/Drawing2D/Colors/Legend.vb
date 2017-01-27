@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c73382dade84ad443495a312262916e7, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::4a72f378291d49db2b37937db4182461, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
     ' Author:
     ' 
@@ -28,8 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.Colors
 
@@ -55,7 +54,43 @@ Namespace Drawing2D.Colors
                                        Optional haveUnmapped As Boolean = True,
                                        Optional lsize As Size = Nothing,
                                        Optional lmargin As Size = Nothing,
-                                       Optional titleFont As Font = Nothing) As Bitmap
+                                       Optional titleFont As Font = Nothing,
+                                       Optional legendWidth! = -1) As Bitmap
+            Dim br As SolidBrush() =
+                designer.ToArray(Function(c) New SolidBrush(c))
+            Return br.ColorMapLegend(
+                title,
+                min, max,
+                bg,
+                haveUnmapped,
+                lsize, lmargin,
+                titleFont,
+                legendWidth)
+        End Function
+
+        ''' <summary>
+        ''' 输出的图例的大小默认为：``{800, 1000}``
+        ''' </summary>
+        ''' <param name="designer"></param>
+        ''' <param name="title$"></param>
+        ''' <param name="min$"></param>
+        ''' <param name="max$"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="haveUnmapped"></param>
+        ''' <param name="lsize"></param>
+        ''' <param name="lmargin"></param>
+        ''' <param name="titleFont"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ColorMapLegend(designer As SolidBrush(),
+                                       title$,
+                                       min$, max$,
+                                       Optional bg$ = "transparent",
+                                       Optional haveUnmapped As Boolean = True,
+                                       Optional lsize As Size = Nothing,
+                                       Optional lmargin As Size = Nothing,
+                                       Optional titleFont As Font = Nothing,
+                                       Optional legendWidth! = -1) As Bitmap
             If lsize.IsEmpty Then
                 lsize = New Size(800, 1000)
             End If
@@ -77,7 +112,7 @@ Namespace Drawing2D.Colors
                         titleFont)
                     Dim fSize As SizeF
                     Dim pt As Point
-                    Dim rectWidth As Integer = 150
+                    Dim rectWidth As Integer = If(legendWidth <= 0, 150, legendWidth)
                     Dim legendsHeight As Integer = size.Height - (margin.Height * 3) - grayHeight * 3
                     Dim d As Single = legendsHeight / designer.Length
                     Dim left As Integer = margin.Width + 30 + rectWidth
@@ -91,9 +126,9 @@ Namespace Drawing2D.Colors
 
                     For i As Integer = designer.Length - 1 To 0 Step -1
                         Call g.FillRectangle(
-                        New SolidBrush(designer(i)),
+                        designer(i),
                         New RectangleF(New PointF(margin.Width, y),
-                                      New SizeF(rectWidth, d)))
+                                       New SizeF(rectWidth, d)))
                         y += d
                     Next
 
@@ -103,15 +138,15 @@ Namespace Drawing2D.Colors
                     Brushes.Black,
                     New Point(left, If(designer.Length > 100, d, 0) + y - fSize.Height))
 
-                    y = size.Height - margin.Height - grayHeight
-                    fSize = g.MeasureString("Unknown", font)
-                    pt = New Point(
-                    left,
-                    y - (grayHeight - fSize.Height) / 2)
-                    Call g.FillRectangle(Brushes.LightGray,
-                                         New Rectangle(New Point(margin.Width, y),
-                                                       New Size(rectWidth, grayHeight)))
-                    Call g.DrawString("Unknown", font, Brushes.Black, pt)
+                    If haveUnmapped Then
+                        y = size.Height - margin.Height - grayHeight
+                        fSize = g.MeasureString("Unknown", font)
+                        pt = New Point(left, y - (grayHeight - fSize.Height) / 2)
+                        graphicsRegion = New Rectangle(New Point(margin.Width, y), New Size(rectWidth, grayHeight))
+
+                        Call g.DrawString("Unknown", font, Brushes.Black, pt)
+                        Call g.FillRectangle(Brushes.LightGray, graphicsRegion)
+                    End If
                 End Sub)
         End Function
     End Module

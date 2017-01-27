@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b877693f9b732201eda3135bfd66cb6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\Text\Grep.vb"
+﻿#Region "Microsoft.VisualBasic::87b81d38f685ec9bbef37c9f64fa6856, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\Text\Grep.vb"
 
     ' Author:
     ' 
@@ -147,13 +147,13 @@ Namespace Language.UnixBash
             End If
 
             For Each line As SeqValue(Of String) In source.SeqIterator
-                If Regex.Match(__regx, line.obj, options).Success Then
+                If Regex.Match(__regx, line.value, options).Success Then
                     If Not reversed Then
-                        Yield __out(line.obj, i, line.i)
+                        Yield __out(line.value, i, line.i)
                     End If
                 Else
                     If reversed Then
-                        Yield __out(line.obj, i, line.i)
+                        Yield __out(line.value, i, line.i)
                     End If
                 End If
             Next

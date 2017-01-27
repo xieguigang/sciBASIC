@@ -145,6 +145,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="WebAPI\Extensions.vb" />
+    <Compile Include="WebAPI\Repositories.vb" />
+    <Compile Include="WebAPI\Users.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be07339341e5d7de86a94298272bb970, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::8f6bf6ff42af3c7e06d30b3973a8757f, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -128,7 +129,7 @@ Namespace StorageProvider.ComponentModels
             End If
         End Sub
 
-        Public Function FillData(row As DocumentStream.RowObject, obj As Object) As Object
+        Public Function FillData(row As RowObject, obj As Object) As Object
             obj = __tryFill(row, obj)
 
             If HaveMetaAttribute Then
@@ -149,7 +150,7 @@ Namespace StorageProvider.ComponentModels
             Return obj
         End Function
 
-        Private Function __tryFill(row As DocumentStream.RowObject, obj As Object) As Object
+        Private Function __tryFill(row As RowObject, obj As Object) As Object
             Dim i As Integer, column As StorageProvider = Nothing
 
             For i = 0 To IndexedFields.Length - 1

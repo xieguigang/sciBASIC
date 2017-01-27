@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f23770ef2e93298742f271153280c50, ..\sciBASIC#\Data\SearchEngine\SearchEngine\QueryArgument.vb"
+﻿#Region "Microsoft.VisualBasic::79b2798fa052d1d45c811bd4bea65f3b, ..\sciBASIC#\Data\SearchEngine\SearchEngine\QueryArgument.vb"
 
     ' Author:
     ' 
@@ -29,9 +29,9 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class QueryArgument : Implements sIdEnumerable
+Public Class QueryArgument : Implements INamedValue
 
-    Public Property Name As String Implements sIdEnumerable.Identifier
+    Public Property Name As String Implements INamedValue.Key
     ''' <summary>
     ''' 
     ''' </summary>

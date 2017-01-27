@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e64af5e8310ff6083f8b0330648c1fc, ..\sciBASIC#\Data\TestProject\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3b403bdc1733945181976086e0bdcadd, ..\sciBASIC#\Data\TestProject\Module1.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@ Module Module1
 
         Dim obj As New NamedValue(Of String) With {
             .Name = "Hello world! xieguigang",
-            .x = "23333",
+            .Value = "23333",
             .Description = "Test Object"
         }
         Dim def As New IObject(GetType(NamedValue(Of String)))

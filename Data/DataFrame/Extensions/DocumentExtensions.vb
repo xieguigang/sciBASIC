@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8686c99c1559d0ca38c4da673250427, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::671ecfbf74e4d2133b65f9e4cee19aac, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -28,8 +28,9 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -40,12 +41,12 @@ Public Module DocumentExtensions
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="cols"><see cref="DocumentStream.File.Columns"/> filtering results.</param>
+    ''' <param name="cols"><see cref="io.File.Columns"/> filtering results.</param>
     ''' <returns></returns>
     <Extension>
-    Public Function JoinColumns(cols As IEnumerable(Of String())) As DocumentStream.File
+    Public Function JoinColumns(cols As IEnumerable(Of String())) As IO.File
         Dim array$()() = cols.ToArray
-        Dim out As New DocumentStream.File
+        Dim out As New IO.File
 
         For i As Integer = 0 To array.First.Length - 1
             Dim ind As Integer = i
@@ -73,6 +74,24 @@ Public Module DocumentExtensions
     End Class
 
     <Extension>
+    Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, String)), path$) As Boolean
+        Dim table As GenericTable() = d _
+            .Select(Function(x) New GenericTable With {.Data = x}) _
+            .ToArray
+        Return table.SaveTo(path)
+    End Function
+
+    <Extension>
+    Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, Double)), path$) As Boolean
+        Return d _
+            .Select(
+            Function(x) x.ToDictionary(
+            Function(k) k.Key,
+            Function(v) v.Value.ToString)) _
+            .SaveAsDataFrame(path)
+    End Function
+
+    <Extension>
     Public Function MergeTable(EXPORT$, files As IEnumerable(Of String)) As Boolean
         Dim data As New List(Of GenericTable)
 
@@ -85,7 +104,7 @@ Public Module DocumentExtensions
     End Function
 
     <Extension>
-    Public Function SaveTsv(csv As DocumentStream.File, path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+    Public Function SaveTsv(csv As IO.File, path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Using file As StreamWriter = path.OpenWriter(encoding)
             For Each line In csv
                 Call file.WriteLine(line.TsvLine)
@@ -110,15 +129,27 @@ Public Module DocumentExtensions
         Return ls.JoinBy(ASCII.TAB)
     End Function
 
+    ''' <summary>
+    ''' 文件之中的每一列都是数据
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="skipFirstColumn">假若第一列是固定的时间序列的话，是否需要跳过这第一列？？</param>
+    ''' <returns></returns>
     <Extension>
-    Public Function LoadData(path$) As NamedValue(Of Double())()
-        Dim data As DocumentStream.File =
-            DocumentStream.File.Load(path)
-        Dim out As NamedValue(Of Double())() =
-            LinqAPI.Exec(Of NamedValue(Of Double())) <=
+    Public Function LoadData(path$, Optional skipFirstColumn As Boolean = False) As NamedValue(Of Double())()
+        Dim data As IO.File = IO.File.Load(path)
+        Dim source As IEnumerable(Of String())
+
+        If skipFirstColumn Then
+            source = data.Columns.Skip(1)
+        Else
+            source = data.Columns
+        End If
+
+        Dim out = LinqAPI.Exec(Of NamedValue(Of Double())) <=
  _
             From column As String()
-            In data.Columns
+            In source
             Let name As String = column(Scan0)
             Let values As Double() = column.Skip(1).ToArray(AddressOf Val)
             Select New NamedValue(Of Double()) With {
@@ -132,5 +163,57 @@ Public Module DocumentExtensions
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$, Optional encoding As Encodings = Encodings.Default) As T()
         Return [Imports](Of T)(path, delimiter:=ASCII.TAB, encoding:=encoding.GetEncodings)
+    End Function
+
+    <Extension>
+    Public Iterator Function LoadMappings(path$, key$, mapTo$) As IEnumerable(Of Map(Of String, String))
+        Dim header As RowObject = RowObject.TryParse(path.ReadFirstLine)
+        Dim keyIndex% = header.IndexOf(key)
+        Dim mapIndex% = header.IndexOf(mapTo)
+
+        If keyIndex = -1 OrElse mapIndex = -1 Then
+            Dim msg$ =
+                $"Mapping: {key} --> {mapTo} is missing in the target csv file! ({header.ToArray.GetJson})"
+            Throw New KeyNotFoundException(msg)
+        End If
+
+        Dim skip1 As Boolean = True
+
+        For Each line$ In path.IterateAllLines
+            If Not skip1 Then
+                Dim row As RowObject = RowObject.TryParse(line)
+
+                Yield New Map(Of String, String) With {
+                    .key = row(keyIndex),
+                    .Maps = row(mapIndex)
+                }
+            Else
+                skip1 = False
+            End If
+        Next
+    End Function
+
+    <Extension>
+    Public Function GetColumnValues(csv As IO.File, column$) As IEnumerable(Of String)
+        Dim index As Integer = csv.Headers.IndexOf(column)
+        Dim out As New List(Of String)
+
+        For Each r As RowObject In csv.Skip(1)
+            Call out.Add(r(index))
+        Next
+
+        Return out
+    End Function
+
+    <Extension>
+    Public Iterator Function GetColumnObjects(Of T)(csv As IO.File, column$, [ctype] As Func(Of String, T)) As IEnumerable(Of T)
+        For Each row As String In csv.GetColumnValues(column)
+            Yield [ctype](row)
+        Next
+    End Function
+
+    <Extension>
+    Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As IO.File
+        Return IO.File.Load(path, encoding.GetEncodings)
     End Function
 End Module

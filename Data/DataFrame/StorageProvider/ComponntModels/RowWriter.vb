@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bd9f208b30759595aa030e375e4c20f, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::31175fbb7610f46cb46a5ad290952c37, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,7 @@
 Option Strict Off
 
 Imports Microsoft.VisualBasic
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 
@@ -71,13 +71,13 @@ Namespace StorageProvider.ComponentModels
             End If
         End Sub
 
-        Public Function GetRowNames(Optional maps As Dictionary(Of String, String) = Nothing) As DocumentStream.RowObject
+        Public Function GetRowNames(Optional maps As Dictionary(Of String, String) = Nothing) As RowObject
             If maps Is Nothing Then
-                Return New DocumentStream.RowObject(Columns.Select(Function(field) field.Name))
+                Return New RowObject(Columns.Select(Function(field) field.Name))
             Else
                 Dim __get As Func(Of StorageProvider, String) =
                     Function(x) If(maps.ContainsKey(x.Name), maps(x.Name), x.Name)
-                Return New DocumentStream.RowObject(Columns.Select(__get))
+                Return New RowObject(Columns.Select(__get))
             End If
         End Function
 
@@ -87,8 +87,8 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ReadOnly _metaBlank As String
 
-        Public Function ToRow(obj As Object) As DocumentStream.RowObject
-            Dim row As DocumentStream.RowObject = __buildRow(obj)
+        Public Function ToRow(obj As Object) As RowObject
+            Dim row As RowObject = __buildRow(obj)
             Return row
         End Function
 
@@ -136,7 +136,17 @@ Namespace StorageProvider.ComponentModels
             End Get
         End Property
 
-        Public Function CacheIndex(source As IEnumerable(Of Object)) As RowWriter
+        ''' <summary>
+        ''' 在这个函数之中生成字典动态属性的表头
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="reorderKeys">
+        ''' + 0: 不排序
+        ''' + 1: 升序排序
+        ''' +-1: 降序排序
+        ''' </param>
+        ''' <returns></returns>
+        Public Function CacheIndex(source As IEnumerable(Of Object), reorderKeys As Integer) As RowWriter
             If MetaRow Is Nothing Then
                 Return Me
             End If
@@ -147,14 +157,26 @@ Namespace StorageProvider.ComponentModels
                                                 Let x As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
                                                 Where Not x Is Nothing
                                                 Let hash As IDictionary = DirectCast(x, IDictionary)
-                                                Select hash
-
+                                                Select hash  ' 获取每一个实体对象的字典属性的值
+            ' 得到所有的键名Keys
             Dim indexs As IEnumerable(Of String) = (From x As IDictionary
                                                     In hashMetas.AsParallel
                                                     Select From o As Object
                                                            In x.Keys
                                                            Select Scripting.ToString(o)).IteratesALL
-            __cachedIndex = indexs.Distinct.ToArray
+            If reorderKeys > 0 Then
+                __cachedIndex = indexs _
+                    .Distinct _
+                    .OrderBy(Function(name) name) _
+                    .ToArray
+            ElseIf reorderKeys < 0 Then
+                __cachedIndex = indexs _
+                    .Distinct _
+                    .OrderByDescending(Function(name) name) _
+                    .ToArray
+            Else
+                __cachedIndex = indexs.Distinct.ToArray
+            End If
 
             Return Me
         End Function
@@ -164,7 +186,7 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Function __buildRowMeta(obj As Object) As DocumentStream.RowObject
+        Private Function __buildRowMeta(obj As Object) As RowObject
             Dim row As List(Of String) = (From colum As StorageProvider
                                           In Columns
                                           Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
@@ -172,7 +194,7 @@ Namespace StorageProvider.ComponentModels
                                           Select strData).ToList
             Dim metas As String() = __meta(obj)
             Call row.AddRange(metas)
-            Return New DocumentStream.RowObject(row)
+            Return New RowObject(row)
         End Function
 #End Region
 

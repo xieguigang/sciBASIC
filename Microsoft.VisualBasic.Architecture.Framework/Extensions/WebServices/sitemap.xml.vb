@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb29441c29803434d7cce16c1d7b95c0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\sitemap.xml.vb"
+﻿#Region "Microsoft.VisualBasic::0134e693432e7596033f72bc5d1cc795, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\sitemap.xml.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace Net.Http
 

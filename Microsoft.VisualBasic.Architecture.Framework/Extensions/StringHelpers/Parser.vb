@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e37784190c8b984fcc7d76be09a5f701, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::d52559413beecad6a2ccaece8a13109c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Public Module PrimitiveParser
     ''' <returns></returns>
     <Extension>
     Public Function ParseDouble(s As String) As Double
-        Return Val(Trim(s))
+        Return Scripting.ParseNumeric(s)
     End Function
 
     ''' <summary>

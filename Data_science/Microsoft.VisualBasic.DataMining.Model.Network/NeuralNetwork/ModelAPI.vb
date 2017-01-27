@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a95416e10a685c214e7cd7d091681d60, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\NeuralNetwork\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::66325088871437e0ed5ff5f5becf39c4, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\NeuralNetwork\ModelAPI.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,9 @@ Namespace NeuralNetwork.Models
 
         <Extension> Public Function VisualizeModel(net As NeuralNetwork.Network) As FileStream.Network
             Dim network As New FileStream.Network
-            Dim hash = (New List(Of Neuron) + net.HiddenLayer.ToArray + net.InputLayer.ToArray + net.OutputLayer.ToArray).SeqIterator _
-                .ToDictionary(Function(x) x.obj,
+            Dim hash = (New List(Of Neuron) + net.HiddenLayer + net.InputLayer + net.OutputLayer) _
+                .SeqIterator _
+                .ToDictionary(Function(x) x.value,
                               Function(x) x.i)
 
             network += net.HiddenLayer.ToArray(Function(x) x.__node(NameOf(net.HiddenLayer), hash))
@@ -60,7 +61,7 @@ Namespace NeuralNetwork.Models
         Private Function __node(neuron As Neuron, type As String, uidhash As Dictionary(Of Neuron, Integer)) As FileStream.Node
             Dim uid As String = uidhash(neuron).ToString
             Return New FileStream.Node With {
-                .Identifier = uid,
+                .ID = uid,
                 .NodeType = type
             }
         End Function
@@ -71,10 +72,12 @@ Namespace NeuralNetwork.Models
                           In neuron.InputSynapses
                           Where c.Weight <> 0R  ' 忽略掉没有链接强度的神经元链接
                           Let itName As String = $"{type}-{NameOf(neuron.InputSynapses)}"
-                          Select c.__synapse(itName, uidHash)).ToList + (From c As Synapse
-                                                                         In neuron.OutputSynapses
-                                                                         Where c.Weight <> 0R
-                                                                         Select c.__synapse(type & "-" & NameOf(neuron.OutputSynapses), uidHash))
+                          Select c.__synapse(itName, uidHash)).ToList +
+                          (From c As Synapse
+                           In neuron.OutputSynapses
+                           Where c.Weight <> 0R
+                           Select c.__synapse(type & "-" & NameOf(neuron.OutputSynapses), uidHash))
+
             Return LQuery.ToArray
         End Function
 

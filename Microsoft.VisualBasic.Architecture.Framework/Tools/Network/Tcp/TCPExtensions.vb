@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22601ca438937984b1d68a0652ad164f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::584fb44f7765ee40e2ad0e17f1eb82ae, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Namespace Net
         Public Function Ping(invoke As AsynInvoke, Optional timeout As Integer = 3 * 1000) As Double
             Dim sw As Stopwatch = Stopwatch.StartNew
             Dim request As RequestStream = RequestStream.SystemProtocol(RequestStream.Protocols.Ping, PING_REQUEST)
-            Dim response As RequestStream = invoke.SendMessage(request, OperationTimeOut:=timeout)
+            Dim response As RequestStream = invoke.SendMessage(request, timeOut:=timeout)
 
             If HTTP_RFC.RFC_REQUEST_TIMEOUT = response.Protocol Then
                 Return -1

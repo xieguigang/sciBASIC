@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e53b805dccbabcc061415b119f71a5a, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::66319762bcc06551c1cec1e783590412, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -29,11 +29,11 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' Module provides the csv data imports operation of the csv document creates from a text file.
@@ -62,14 +62,14 @@ Public Module DataImports
     <ExportAPI("--Imports", Info:="Imports the data in a well formatted text file using a specific delimiter, default delimiter is comma character.")>
     Public Function [Imports](<Parameter("txt.Path", "The file path for the data imports text file.")> txtPath$,
                               Optional delimiter$ = ",",
-                              Optional encoding As Encoding = Nothing) As DocumentStream.File
+                              Optional encoding As Encoding = Nothing) As File
         If encoding Is Nothing Then
-            encoding = System.Text.Encoding.Default
+            encoding = Encoding.Default
         End If
 
-        Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
-        Dim Csv As DocumentStream.File = New DocumentStream.File(ImportsData(Lines, delimiter), txtPath)
-        Return Csv
+        Dim lines As String() = txtPath.ReadAllLines(encoding)
+        Dim csv As New File(ImportsData(Lines, delimiter), txtPath)
+        Return csv
     End Function
 
     ''' <summary>
@@ -81,7 +81,7 @@ Public Module DataImports
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension> Public Function [Imports](Of T As Class)(path$, Optional delimiter$ = ",", Optional encoding As Encoding = Nothing) As T()
-        Dim source As DocumentStream.File = [Imports](path, delimiter, encoding)
+        Dim source As IO.File = [Imports](path, delimiter, encoding)
         If source.RowNumbers = 0 Then
             Return New T() {}
         Else
@@ -90,18 +90,28 @@ Public Module DataImports
     End Function
 
     <ExportAPI("Data.Imports")>
-    Public Function ImportsData(<Parameter("str.Data")> s_Data As IEnumerable(Of String),
-                                Optional delimiter As String = ",") As DocumentStream.File
+    Public Function ImportsData(<Parameter("str.Data")> lines As IEnumerable(Of String),
+                                Optional delimiter As String = ",") As IO.File
         Dim Expression As String = String.Format(SplitRegxExpression, delimiter)
-        Dim LQuery = (From line As String In s_Data Select RowParsing(line, Expression)).ToArray
-        Return New DocumentStream.File(LQuery)
+        Dim LQuery = (From line As String In lines Select RowParsing(line, Expression)).ToArray
+        Return New IO.File(LQuery)
     End Function
 
     <Extension>
-    Public Function ImportsData(Of T As Class)(sData As String,
-                                               Optional delimiter As String = ",",
-                                               Optional maps As Dictionary(Of String, String) = Nothing) As T()
-        Return ImportsData(sData.lTokens, delimiter).AsDataSource(Of T)(maps:=maps)
+    Public Function ImportsData(Of T As Class)(text$, Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        Return ImportsData(text.lTokens, delimiter) _
+            .AsDataSource(Of T)(maps:=maps)
+    End Function
+
+    <Extension>
+    Public Function ImportsData(Of T As Class)(text As IEnumerable(Of String), Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        Return ImportsData(text, delimiter).AsDataSource(Of T)(maps:=maps)
+    End Function
+
+    <Extension>
+    Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As Dictionary(Of String, String) = Nothing) As T()
+        Return ImportsData(lines, ASCII.TAB) _
+            .AsDataSource(Of T)(maps:=maps)
     End Function
 
     ''' <summary>
@@ -112,7 +122,7 @@ Public Module DataImports
     ''' <remarks></remarks>
     ''' 
     <ExportAPI("Row.Parsing", Info:="Row parsing its column tokens")>
-    Public Function RowParsing(Line As String, SplitRegxExpression As String) As DocumentStream.RowObject
+    Public Function RowParsing(Line As String, SplitRegxExpression As String) As IO.RowObject
         Dim Row = Regex.Split(Line, SplitRegxExpression)
         For i As Integer = 0 To Row.Count - 1
             If Not String.IsNullOrEmpty(Row(i)) Then
@@ -135,24 +145,31 @@ Public Module DataImports
     <ExportAPI("Imports.FixLength", Info:="Imports the data in a well formatted text file using the fix length as the data separate method.")>
     Public Function FixLengthImports(txtPath$,
                                      <Parameter("Length", "The string length width of the data row.")> Optional length% = 10,
-                                     Optional encoding As Encoding = Nothing) As DocumentStream.File
+                                     Optional encoding As Encoding = Nothing) As IO.File
         If encoding Is Nothing Then
             encoding = Encoding.Default
         End If
 
-        Dim Lines As String() = IO.File.ReadAllLines(txtPath, encoding)
-        Dim LQuery As RowObject() = (From line As String In Lines Select RowParsing(line, length:=length)).ToArray
-        Dim Csv As New DocumentStream.File(LQuery, txtPath)
-        Return Csv
+        Dim Lines As String() = txtPath.ReadAllLines(encoding)
+        Dim LQuery As RowObject() = LinqAPI.Exec(Of RowObject) <=
+ _
+            From line As String
+            In Lines
+            Select RowParsing(line, length:=length)
+
+        Dim csv As New File(LQuery, txtPath)
+        Return csv
     End Function
 
     <ExportAPI("Row.Parsing")>
     Public Function RowParsing(line$, length%) As RowObject
         Dim n As Integer = CInt(Len(line) / length) + 1
-        Dim cols As String() = New String(n - 1) {}
+        Dim cols$() = New String(n - 1) {}
+
         For i As Integer = 0 To n - 1 Step length
             cols(i) = Mid(line, i, length)
         Next
+
         Return New RowObject With {
             ._innerColumns = cols.ToList
         }

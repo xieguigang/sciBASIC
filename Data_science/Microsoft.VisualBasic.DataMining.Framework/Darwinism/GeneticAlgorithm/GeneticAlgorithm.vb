@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81e5fb70cc7d0f99edd20cef8970b35f, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::b77e62ef43d22e71bff1ad56e5cc9182, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
     ' Author:
     ' 
@@ -49,25 +49,34 @@ Imports Microsoft.VisualBasic.Mathematical
 
 Namespace Darwinism.GAF
 
-    Public Class GeneticAlgorithm(Of C As Chromosome(Of C), T As IComparable(Of T))
+    Public Class GeneticAlgorithm(Of C As Chromosome(Of C))
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        ReadOnly _chromosomesComparator As ChromosomesComparator(Of C, T)
-        Friend ReadOnly _fitnessFunc As Fitness(Of C, T)
+        ReadOnly _chromosomesComparator As ChromosomesComparator(Of C)
+
+        Public ReadOnly Property Fitness As Fitness(Of C)
 
         ''' <summary>
         ''' listeners of genetic algorithm iterations (handle callback afterwards)
         ''' </summary>
-        ReadOnly iterationListeners As New List(Of IterartionListener(Of C, T))
+        ReadOnly iterationListeners As New List(Of IterartionListener(Of C))
         ReadOnly seeds As IRandomSeeds
 
         Dim _terminate As Boolean = False
 
-        Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C, T), Optional seeds As IRandomSeeds = Nothing)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="population"></param>
+        ''' <param name="fitnessFunc">
+        ''' Calculates the fitness of the mutated chromesome in <paramref name="population"/>
+        ''' </param>
+        ''' <param name="seeds"></param>
+        Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C), Optional seeds As IRandomSeeds = Nothing)
             Me._Population = population
-            Me._fitnessFunc = fitnessFunc
-            Me._chromosomesComparator = New ChromosomesComparator(Of C, T)(Me)
+            Me.Fitness = fitnessFunc
+            Me._chromosomesComparator = New ChromosomesComparator(Of C)(Me)
             Me._Population.SortPopulationByFitness(Me, _chromosomesComparator)
 
             If population.Parallel Then
@@ -82,7 +91,7 @@ Namespace Darwinism.GAF
 
         Public Sub Evolve()
             Dim parentPopulationSize As Integer = Population.Size
-            Dim newPopulation As New Population(Of C)() With {
+            Dim newPopulation As New Population(Of C)(_Population.Pcompute) With {
                 .Parallel = Population.Parallel
             }
             Dim i As Integer = 0
@@ -142,7 +151,7 @@ Namespace Darwinism.GAF
                 Call Evolve()
                 _Iteration = i
 
-                For Each l As IterartionListener(Of C, T) In iterationListeners
+                For Each l As IterartionListener(Of C) In iterationListeners
                     Call l.Update(Me)
                 Next
             Next
@@ -175,15 +184,15 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         Public Property ParentChromosomesSurviveCount As Integer = ALL_PARENTAL_CHROMOSOMES
 
-        Public Sub addIterationListener(listener As IterartionListener(Of C, T))
+        Public Sub addIterationListener(listener As IterartionListener(Of C))
             Me.iterationListeners.Add(listener)
         End Sub
 
-        Public Sub removeIterationListener(listener As IterartionListener(Of C, T))
+        Public Sub removeIterationListener(listener As IterartionListener(Of C))
             iterationListeners.Remove(listener)
         End Sub
 
-        Public Function Fitness(chromosome As C) As T
+        Public Function GetFitness(chromosome As C) As Double
             Return _chromosomesComparator.Fitness(chromosome)
         End Function
 

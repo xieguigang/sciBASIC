@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8edfae2994cabba250f91e341061bdf1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::31815a9ccd3f0157c014464d96f91e63, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@ Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Text
 'Imports Microsoft.VisualBasic.Webservices
 'Imports System.Windows.Forms
 
@@ -57,7 +58,7 @@ Public Module __DEBUG_MAIN
         Call n.__DEBUG_ECHO
 
         ' Assign value to this extension property
-        x.Uid.value = RandomDouble() * 1000000000000L
+        x.Uid.value = Rnd() * 1000000000000L
 
         ' display the extension property value
         Call x.Uid.__DEBUG_ECHO
@@ -66,13 +67,13 @@ Public Module __DEBUG_MAIN
         Call RunApp("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\TestProject\Test2\bin\Debug\Test2.exe", cs:=True)
     End Sub
 
-    Public Function tt() As Tuple
-        Return New Tuple <= New With {
-            .FirstName = 123,
-            .Middle = 222,
-            .LastName = "12313"
-        }
-    End Function
+    'Public Function tt() As Tuple
+    '    Return New Tuple <= New With {
+    '        .FirstName = 123,
+    '        .Middle = 222,
+    '        .LastName = "12313"
+    '    }
+    'End Function
 
 
     '  Public Sub ttttt(p As (x  as integer , y As Integer))
@@ -86,8 +87,39 @@ Public Module __DEBUG_MAIN
         Public Property Extensions As Dictionary(Of String, String) = New Dictionary(Of String, String) From {{"abcd", "999"}, {"gggg", "XXXXXXX"}}
     End Class
 
+
+    'Private Sub testColors()
+    '    Dim c1 = Color.Blue.ColorToDecimal
+    '    Dim c2 = Color.Red.ColorToDecimal
+
+    '    Console.WriteLine(Color.Blue.ToArgb)
+    '    Console.WriteLine(Color.Red.ToArgb)
+
+    '    Pause()
+    'End Sub
+
+    Sub testVariables()
+        Dim a = Rnd(), b = Rnd(), c As Double = Double.MinValue
+        Dim s = "sdfsf"
+        Dim d = Now
+        Dim u As New Uid With {.Key = "12345"}
+
+        Dim result = Emit.Parameters.Acquire(Function() a, Function() b, Function() c, Function() s, Function() d, Function() u)
+
+        Pause()
+    End Sub
+
     Function Main() As Integer
 
+        Call testVariables()
+        '  Call testColors()
+
+
+        Dim testBBBmp As Image = LoadImage("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+        testBBBmp = testBBBmp.Grayscale
+
+        Call testBBBmp.SaveAs("G:\GCModeller\src\runtime\sciBASIC#\etc\lena\lena.grayscale.png")
+        Pause()
         Dim x = {New TestJSON}
 
         ' Interaction.MsgBox(x.GetJson)
@@ -156,10 +188,10 @@ Public Module __DEBUG_MAIN
         End Try
         Pause()
 
-        Dim t As Object = tt()
+        '   Dim t As Object = tt()
         '  Dim vars As Value(Of Object) = New With {.dsada = 4444}
 
-        Call $"{t.FirstName}, ".__DEBUG_ECHO
+        '   Call $"{t.FirstName}, ".__DEBUG_ECHO
 
         '   Dim rss = Google.News.RSS.GetCurrent("zika", "http://127.0.0.1:8087")
 
@@ -210,7 +242,7 @@ Public Module __DEBUG_MAIN
                                                            Select path
 
 
-        Call New ssfsfs With {.dddd = Now.ToString, .dssssddd = RandomDouble(), .xdddd = 345}.WriteClass("~/test.ini")
+        Call New ssfsfs With {.dddd = Now.ToString, .dssssddd = Rnd(), .xdddd = 345}.WriteClass("~/test.ini")
 
         Dim nnndasdasd As dddddFile = IOProvider.LoadProfile(Of dddddFile)
 
@@ -219,7 +251,7 @@ Public Module __DEBUG_MAIN
 
         Do While True
             n.Step()
-            n.SetProgress(i.MoveNext, "Current Processing: " & SecurityString.GetMd5Hash(RandomDouble))
+            n.SetProgress(i.MoveNext, "Current Processing: " & SecurityString.GetMd5Hash(Rnd))
             Threading.Thread.Sleep(1000)
         Loop
 
@@ -323,7 +355,7 @@ Public Module __DEBUG_MAIN
 
         Dim ss As String = IO.File.ReadAllText("0.823528468608856_blast_out_parse_error")
 
-        ss = ss.Replace(NIL, " ")
+        ss = ss.Replace(ASCII.NUL, " ")
 
         Dim Console As InteractiveDevice = New InteractiveDevice With {.PromptText = "#"}
 

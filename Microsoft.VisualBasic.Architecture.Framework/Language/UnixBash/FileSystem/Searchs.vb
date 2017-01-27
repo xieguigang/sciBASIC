@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bfc0afa27bfa0cda4bb2cf630bb56bd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
+﻿#Region "Microsoft.VisualBasic::595cd08f3ce3b2bba5443c8ab4c4a79e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\Searchs.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@ Namespace Language.UnixBash
     Public Module FileSystemAPI
 
         ''' <summary>
-        ''' ls -l -ext("*.xml") &lt;= DIR,  The filesystem search proxy
+        ''' ``ls -l -ext("*.xml") &lt;= DIR``,  The filesystem search proxy
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ls As New Search
@@ -237,6 +237,11 @@ Namespace Language.UnixBash
         ''' <param name="path"></param>
         ''' <returns></returns>
         Public Function IsMatch(path As String) As Boolean
+            If regexp.IsNullOrEmpty Then
+                ' 匹配的规则是空的，则默认是允许所有的路径
+                Return True
+            End If
+
             Dim name As String = path.Replace("\", "/").Split("/"c).Last
 
             For Each r As String In regexp

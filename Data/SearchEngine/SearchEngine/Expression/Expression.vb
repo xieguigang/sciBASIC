@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e190c1ca273188601f57586804bd5318, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::65d758bc125496bf614322f3f6ddcf57, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\Expression.vb"
 
     ' Author:
     ' 
@@ -82,7 +82,7 @@ Public Class Expression
         ' NOT 0 OR NOT 0 -> {undefine, NOT}, {0, OR}, {undefine, NOT}, {0, undefine}
 
         For Each i As SeqValue(Of MetaExpression) In exp.SeqIterator
-            Dim m As MetaExpression = i.obj
+            Dim m As MetaExpression = i.value
 
             If m.Operator = SyntaxParser.Tokens.op_NOT Then
                 notPending = True

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c39bccbee1bc58bafcf76287bb546339, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Transformation.vb"
+﻿#Region "Microsoft.VisualBasic::74b06dcff9ef7a2c285c2b0c1e13a788, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Transformation.vb"
 
     ' Author:
     ' 

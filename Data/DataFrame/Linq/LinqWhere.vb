@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1a322929e41d0e3cf86738688e31b4c, ..\sciBASIC#\Data\DataFrame\Linq\LinqWhere.vb"
+﻿#Region "Microsoft.VisualBasic::d657f2ef47e6080da025508ab50adaa2, ..\sciBASIC#\Data\DataFrame\Linq\LinqWhere.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace DocumentStream.Linq
+Namespace IO.Linq
 
     Public Class LinqWhere(Of T As Class)
 

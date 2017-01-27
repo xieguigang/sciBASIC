@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f877135bd7886ebc29a15d42021b6a0a, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
+﻿#Region "Microsoft.VisualBasic::388403fd21478a94941e1b32c3907241, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
 
     ' Author:
     ' 
@@ -62,14 +62,14 @@ Namespace MonteCarlo
         End Function
 
         <Extension>
-        Public Function Gety0(def As Type) As VariableModel()
+        Public Function Gety0(def As Type) As ValueRange()
             Dim obj As Object = Activator.CreateInstance(def)
             Dim model As Model = DirectCast(obj, Model)
             Return model.yinit
         End Function
 
         <Extension>
-        Public Function GetRandomParameters(def As Type) As VariableModel()
+        Public Function GetRandomParameters(def As Type) As ValueRange()
             Dim obj As Object = Activator.CreateInstance(def)
             Dim model As Model = DirectCast(obj, Model)
             Return model.params
@@ -108,12 +108,12 @@ Namespace MonteCarlo
         Public Function Run(dll As String, k As Long, n As Integer, a As Integer, b As Integer) As IEnumerable(Of ODEsOut)
             Dim model As Type = DllParser(dll).First
             Dim y0 = model.Gety0 _
-                .Select(Function(v) New NamedValue(Of INextRandomNumber) With {
+                .Select(Function(v) New NamedValue(Of IValueProvider) With {
                     .Name = v.Name,
                     .Value = AddressOf v.GetValue
                 })
             Dim parms = model.GetRandomParameters _
-                .Select(Function(v) New NamedValue(Of INextRandomNumber) With {
+                .Select(Function(v) New NamedValue(Of IValueProvider) With {
                     .Name = v.Name,
                     .Value = AddressOf v.GetValue
                 })
@@ -210,10 +210,10 @@ Namespace MonteCarlo
                                    Optional ByRef outIterates As Dictionary(Of String, Dictionary(Of String, Double)()) = Nothing) _
                                                               As Dictionary(Of String, Double)()
 
-            Dim y0 As New Dictionary(Of NamedValue(Of INextRandomNumber))(
+            Dim y0 As New Dictionary(Of NamedValue(Of IValueProvider))(
                 model.Gety0 _
                 .Select(Function(v) v.GetRandomModel))
-            Dim parms As New Dictionary(Of NamedValue(Of INextRandomNumber))(
+            Dim parms As New Dictionary(Of NamedValue(Of IValueProvider))(
                 model.GetRandomParameters _
                 .Select(Function(v) v.GetRandomModel))
             Dim eigenvectors As Dictionary(Of String, Eigenvector) = model.GetEigenvector
@@ -296,14 +296,14 @@ Namespace MonteCarlo
                     ' 调整y0和参数列表
                     For Each y In y0.Keys.ToArray
                         Dim values As Double() = output(y)
-                        Dim range As INextRandomNumber = values.__getRanges
-                        y0(y) = New NamedValue(Of INextRandomNumber)(y, range)
+                        Dim range As IValueProvider = values.__getRanges
+                        y0(y) = New NamedValue(Of IValueProvider)(y, range)
                     Next
                     For Each parm In parms.Keys.ToArray
                         Dim values As Double() = output(parm)
-                        Dim range As INextRandomNumber = values.__getRanges
+                        Dim range As IValueProvider = values.__getRanges
 
-                        parms(parm) = New NamedValue(Of INextRandomNumber) With {
+                        parms(parm) = New NamedValue(Of IValueProvider) With {
                             .Name = parm,
                             .Value = range
                         }
@@ -356,7 +356,7 @@ Namespace MonteCarlo
         End Function
 
         <Extension>
-        Private Function __getRanges(values As Double()) As INextRandomNumber
+        Private Function __getRanges(values As Double()) As IValueProvider
             Dim low As Double = values.Min
             Dim high As Double = values.Max
             Return RandomRange.GetRandom(low, high,, forceInit:=True)

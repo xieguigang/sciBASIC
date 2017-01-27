@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::104788f995df8fb6f052fd13013fd34a, ..\sciBASIC#\Data_science\Bootstrapping\EigenvectorBootstrapping.vb"
+﻿#Region "Microsoft.VisualBasic::a51c959181f100a88882eae91daeca20, ..\sciBASIC#\Data_science\Bootstrapping\EigenvectorBootstrapping.vb"
 
     ' Author:
     ' 
@@ -154,8 +154,8 @@ Public Module EigenvectorBootstrapping
         }
 
         For Each key As SeqValue(Of String) In eig.Keys.SeqIterator
-            out.y(key) = New NamedValue(Of Double()) With {
-                .Name = key,
+            out.y(+key) = New NamedValue(Of Double()) With {
+                .Name = +key,
                 .Value = serials(key.i).Split(2).ToArray(Function(o) o(0))
             }
         Next

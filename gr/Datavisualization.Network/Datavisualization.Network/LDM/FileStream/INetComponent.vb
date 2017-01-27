@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6268706f6cb16ac940a7d4f4bcfd6392, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\INetComponent.vb"
+﻿#Region "Microsoft.VisualBasic::5a61175b21d7642a827a9903678f14ca, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\INetComponent.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,6 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
@@ -41,6 +40,19 @@ Namespace FileStream
             End Get
             Set(value As Dictionary(Of String, String))
                 MyBase.Properties = value
+            End Set
+        End Property
+
+        Default Public Overloads Property Value(name$) As String
+            Get
+                If Properties.ContainsKey(name) Then
+                    Return Properties(name)
+                Else
+                    Return Nothing
+                End If
+            End Get
+            Set(value As String)
+                Properties(name) = value
             End Set
         End Property
 

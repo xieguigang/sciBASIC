@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a61e5ab9d4224f22216f6a87d680f816, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
+﻿#Region "Microsoft.VisualBasic::3bb4e0d076f3b410b94f9a9a2796f96b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,10 @@
 
 #End Region
 
+Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace Win32
 
     ''' <summary>
@@ -44,22 +48,22 @@ Namespace Win32
         ''' </summary>
         ''' <returns>Memory, CPU</returns>
         ''' <remarks></remarks>
-        Public Function ProcessUsageDetails() As List(Of Hashtable)
-            Dim counterList As New List(Of Hashtable)
+        Public Function ProcessUsageDetails() As List(Of TaskInfo)
+            Dim counterList As New List(Of TaskInfo)
 
             Try
-                Dim process As Process() = System.Diagnostics.Process.GetProcesses
+                Dim proc As Process() = Process.GetProcesses
 
-                For Each P As Process In process
-                    Dim Table As New Hashtable
+                For Each P As Process In proc
                     Dim pCounter As New PerformanceCounter("Process", "% Processor Time", P.ProcessName)
 
-                    Call Table.Add("Memory", P.WorkingSet64)
-                    Call Table.Add("CPU", Math.Round(pCounter.NextValue, 2))
-                    Call Table.Add("ProcessName", P.ProcessName)
-                    Call Table.Add("PID", P.Id)
-                    Call Table.Add("CommandLine", P.StartInfo.FileName & " " & P.StartInfo.Arguments)
-                    Call counterList.Add(Table)
+                    counterList += New TaskInfo With {
+                        .Memory = P.WorkingSet64,
+                        .CPU = Math.Round(pCounter.NextValue, 2),
+                        .ProcessName = P.ProcessName,
+                        .PID = P.Id,
+                        .CommandLine = P.StartInfo.FileName & " " & P.StartInfo.Arguments
+                    }
                 Next
             Catch ex As Exception
                 Call App.LogException(ex)
@@ -69,15 +73,53 @@ Namespace Win32
             Return counterList
         End Function
 
+        Public Structure TaskInfo
+
+            <XmlAttribute> Public Property PID As Integer
+            <XmlAttribute> Public Property CommandLine As String
+            <XmlAttribute> Public Property ProcessName As String
+            <XmlAttribute> Public Property CPU As Double
+            <XmlAttribute> Public Property Memory As Long
+
+            Default Public ReadOnly Property GetValue(name$) As Object
+                Get
+                    Select Case name
+                        Case NameOf(PID)
+                            Return PID
+
+                        Case NameOf(CommandLine)
+                            Return CommandLine
+
+                        Case NameOf(ProcessName)
+                            Return ProcessName
+
+                        Case NameOf(CPU)
+                            Return CPU
+
+                        Case NameOf(Memory)
+                            Return Memory
+
+                        Case Else
+                            Throw New Exception($"Unable found key '{name}' in: " & GetJson)
+                    End Select
+                End Get
+            End Property
+
+            Public Overrides Function ToString() As String
+                Return Me.GetJson
+            End Function
+        End Structure
+
         ''' <summary>
         ''' 获取CPU的使用率
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function ProcessUsage() As Double
-            Dim Hash = ProcessUsageDetails()
-            Dim Usage As Double = (From Process In Hash.AsParallel Select CType(Process("CPU"), Double)).Sum
-            Return Usage
+            Dim tasks As List(Of TaskInfo) = ProcessUsageDetails()
+            Dim usage As Double = tasks _
+                .Sum(Function(proc) CType(proc("CPU"), Double))
+            Return usage
         End Function
     End Module
 End Namespace

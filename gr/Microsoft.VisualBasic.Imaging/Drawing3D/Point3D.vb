@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b125b4020cc9b252d3c30fdb1255689c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::ab3c4b873ac23a6c5759e08344271c08, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,11 @@ Namespace Drawing3D
     Public Structure Point3D
         Implements PointF3D
 
+        ''' <summary>
+        ''' Gets the projection 2D point result from this readonly property
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
         Public ReadOnly Property PointXY(Optional rect As Size = Nothing) As Point
             Get
                 If X > Integer.MaxValue OrElse Single.IsPositiveInfinity(X) Then
@@ -130,28 +135,30 @@ Namespace Drawing3D
         ''' <param name="fov">256默认值</param>
         ''' <param name="viewDistance"></param>
         ''' <returns></returns>
-        Public Function Project(viewWidth As Integer,
-                                viewHeight As Integer,
-                                fov As Integer,
-                                viewDistance As Single) As Point3D
-
+        Public Function Project(viewWidth%, viewHeight%, fov%, viewDistance!, Optional offset As PointF = Nothing) As Point3D
             Dim factor As Single, Xn As Single, Yn As Single
+
             factor = fov / (viewDistance + Me.Z)
-            Xn = Me.X * factor + viewWidth / 2
-            Yn = Me.Y * factor + viewHeight / 2
+            Xn = Me.X * factor + viewWidth / 2 + offset.X
+            Yn = Me.Y * factor + viewHeight / 2 + offset.Y
+
             Return New Point3D(Xn, Yn, Me.Z)
         End Function
 
-        Public Shared Sub Project(ByRef x As Single,
-                                  ByRef y As Single,
-                                  ByRef z As Single,
-                                  viewWidth As Integer,
-                                  viewHeight As Integer,
-                                  fov As Integer,
-                                  viewDistance As Integer)
-            Dim factor As Single
+        ''' <summary>
+        ''' Project the 3D point to the 2D screen. 
+        ''' </summary>
+        ''' <param name="x!"></param>
+        ''' <param name="y!"></param>
+        ''' <param name="z!">Using for the painter algorithm.</param>
+        ''' <param name="viewWidth%"></param>
+        ''' <param name="viewHeight%"></param>
+        ''' <param name="fov%"></param>
+        ''' <param name="viewDistance%">View distance to the model from the view window.</param>
+        Public Shared Sub Project(ByRef x!, ByRef y!, z!, viewWidth%, viewHeight%, viewDistance%, Optional fov% = 256)
+            Dim factor! = fov / (viewDistance + z)
 
-            factor = fov / (viewDistance + z)
+            ' 2D point result (x, y)
             x = x * factor + viewWidth / 2
             y = y * factor + viewHeight / 2
         End Sub

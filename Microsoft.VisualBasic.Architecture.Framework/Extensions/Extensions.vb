@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2db0f825bccc6f39aaa79b1a3edf51a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::145c8a742c214ab8874de94669811569, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Similarity
@@ -70,6 +71,50 @@ Imports Microsoft.VisualBasic.Text.Similarity
 ''' <remarks></remarks>
 Public Module Extensions
 #End If
+
+    <Extension>
+    Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Return source.Select(Function(row) $"{row.Name}{ASCII.TAB}{row.Value}").SaveTo(path, encoding.GetEncodings)
+    End Function
+
+    ''' <summary>
+    ''' <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="args"></param>
+    Public Sub println(s$, ParamArray args As Object())
+        Dim out As String = STDIO__.CLangStringFormatProvider.sprintf(s, args)
+        Call Console.WriteLine(out)
+    End Sub
+
+    ''' <summary>
+    ''' ``days, hh:mm:ss.ms``
+    ''' </summary>
+    ''' <param name="t"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function FormatTime(t As TimeSpan) As String
+        With t
+            Return $"{ZeroFill(.Days, 2)}, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ .Milliseconds}"
+        End With
+    End Function
+
+    <Extension>
+    Public Function Average(data As IEnumerable(Of TimeSpan)) As TimeSpan
+        Dim avg# = data.Select(Function(x) x.TotalMilliseconds).Average
+        Return TimeSpan.FromMilliseconds(avg)
+    End Function
+
+    ''' <summary>
+    ''' Returns all of the keys in a dictionary in json format
+    ''' </summary>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="d"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function KeysJson(Of V)(d As Dictionary(Of String, V)) As String
+        Return d.Keys.ToArray.GetJson
+    End Function
 
     ''' <summary>
     ''' Returns the first not nothing object.
@@ -140,14 +185,14 @@ Public Module Extensions
         Return Nothing
     End Function
 
-    <Extension> Public Function Add(Of T As sIdEnumerable)(ByRef hash As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
+    <Extension> Public Function Add(Of T As INamedValue)(ByRef hash As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
         If hash Is Nothing Then
             hash = New Dictionary(Of String, T)
         End If
-        If hash.ContainsKey(obj.Identifier) Then
-            Throw New Exception($"[{obj.Identifier}] was duplicated in the dictionary!")
+        If hash.ContainsKey(obj.Key) Then
+            Throw New Exception($"[{obj.Key}] was duplicated in the dictionary!")
         Else
-            Call hash.Add(obj.Identifier, obj)
+            Call hash.Add(obj.Key, obj)
         End If
 
         Return hash
@@ -833,21 +878,6 @@ Public Module Extensions
         Call Console.Read()
     End Sub
 
-    Public Const RegexFloat As String = "((-?\d\.\d+e[+-]\d+)|(-?\d+\.\d+)|(-?\d+))"
-
-    ''' <summary>
-    ''' Parsing a real number from the expression text by using the regex expression <see cref="RegexFloat"/>.
-    ''' (使用正则表达式解析目标字符串对象之中的一个实数)
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Double.Match")>
-    <Extension> Public Function RegexParseDouble(s As String) As Double
-        Return Val(s.Match(RegexFloat))
-    End Function
-
     ''' <summary>
     ''' All of the number value in the target array offset a integer value.
     ''' </summary>
@@ -1133,7 +1163,7 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Insert data or update the exists data in the dictionary, if the target object with <see cref="sIdEnumerable.Identifier"/> 
+    ''' Insert data or update the exists data in the dictionary, if the target object with <see cref="INamedValue.Key"/> 
     ''' is not exists in the dictionary, then will be insert, else the old value will be replaced with the parameter 
     ''' value <paramref name="item"/>.
     ''' (向字典对象之中更新或者插入新的数据，假若目标字典对象之中已经存在了一个数据的话，则会将原有的数据覆盖，并返回原来的数据)
@@ -1143,19 +1173,19 @@ Public Module Extensions
     ''' <param name="item"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function InsertOrUpdate(Of T As sIdEnumerable)(ByRef dict As Dictionary(Of String, T), item As T) As T
+    <Extension> Public Function InsertOrUpdate(Of T As INamedValue)(ByRef dict As Dictionary(Of String, T), item As T) As T
         Dim pre As T
 
-        If dict.ContainsKey(item.Identifier) Then
-            pre = dict(item.Identifier)
+        If dict.ContainsKey(item.Key) Then
+            pre = dict(item.Key)
 
-            Call dict.Remove(item.Identifier)
-            Call $"data was updated: {Scripting.ToString(pre)} -> {item.Identifier}".__DEBUG_ECHO
+            Call dict.Remove(item.Key)
+            Call $"data was updated: {Scripting.ToString(pre)} -> {item.Key}".__DEBUG_ECHO
         Else
             pre = item
         End If
 
-        Call dict.Add(item.Identifier, item)
+        Call dict.Add(item.Key, item)
 
         Return pre
     End Function
@@ -1167,12 +1197,12 @@ Public Module Extensions
     ''' <param name="dict"></param>
     ''' <param name="item"></param>
     ''' <returns></returns>
-    <Extension> Public Function Remove(Of T As sIdEnumerable)(ByRef dict As Dictionary(Of String, T), item As T) As T
-        Call dict.Remove(item.Identifier)
+    <Extension> Public Function Remove(Of T As INamedValue)(ByRef dict As Dictionary(Of String, T), item As T) As T
+        Call dict.Remove(item.Key)
         Return item
     End Function
 
-    <Extension> Public Function AddRange(Of T As sIdEnumerable)(ByRef dict As Dictionary(Of String, T), data As IEnumerable(Of T)) As Dictionary(Of String, T)
+    <Extension> Public Function AddRange(Of T As INamedValue)(ByRef dict As Dictionary(Of String, T), data As IEnumerable(Of T)) As Dictionary(Of String, T)
         For Each x As T In data
             Call InsertOrUpdate(dict, x)
         Next
@@ -1672,7 +1702,7 @@ Public Module Extensions
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Get a specific item value from the target collction data using its UniqueID property，
-    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="sIdEnumerable">
+    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="INamedValue">
     ''' </see>类型的集合之中的某一个对象，请尽量先转换为字典对象，在使用该字典对象进行查找以提高代码效率，使用本方法的优点是可以选择忽略<paramref name="uid">
     ''' </paramref>参数之中的大小写，以及对集合之中的存在相同的Key的这种情况的容忍)
     ''' </summary>
@@ -1683,7 +1713,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("Get.Item")>
-    <Extension> Public Function GetById(Of T As sIdEnumerable)(
+    <Extension> Public Function GetById(Of T As INamedValue)(
                                       source As IEnumerable(Of T),
                                          uid As String,
                          Optional IgnoreCase As StringComparison = StringComparison.Ordinal) _
@@ -1692,7 +1722,7 @@ Public Module Extensions
         Dim find As T = LinqAPI.DefaultFirst(Of T) <=
             From x As T
             In source
-            Where String.Equals(uid, x.Identifier, IgnoreCase)
+            Where String.Equals(uid, x.Key, IgnoreCase)
             Select x
 
         Return find
@@ -1989,68 +2019,10 @@ Public Module Extensions
         Return array
     End Function
 
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="indexs">所要获取的目标对象的下表的集合</param>
-    ''' <param name="reversedSelect">是否为反向选择</param>
-    ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("takes")>
-    <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T),
-                                            indexs%(),
-                                            Optional offSet% = 0,
-                                            Optional reversedSelect As Boolean = False) As T()
-#Else
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
-    ''' <param name="IndexCollection">所要获取的目标对象的下表的集合</param>
-    ''' <param name="reversedSelect">是否为反向选择</param>
-    ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T), indexs As Integer(), Optional OffSet As Integer = 0, Optional reversedSelect As Boolean = False) As T()
-#End If
-        If reversedSelect Then
-            Return __reversedTakeSelected(source, indexs)
-        End If
-
-        Dim result As T()
-
-        If offSet = 0 Then
-            result = (From idx As Integer In indexs Select source(idx)).ToArray
-        Else
-            result = (From idx As Integer In indexs Select source(idx + offSet)).ToArray
-        End If
-        Return result
-    End Function
-
     <Extension> Public Function Takes(Of T)(source As T(), count As Integer) As T()
         Dim bufs As T() = New T(count - 1) {}
         Call Array.ConstrainedCopy(source, Scan0, bufs, Scan0, count)
         Return bufs
-    End Function
-
-    ''' <summary>
-    ''' 反选，即将所有不出现在<paramref name="indexs"></paramref>之中的元素都选取出来
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="coll"></param>
-    ''' <param name="indexs"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Private Function __reversedTakeSelected(Of T)(coll As IEnumerable(Of T), indexs As Integer()) As T()
-        Dim result As T() = (From i As Integer In coll.Sequence Where Array.IndexOf(indexs, i) = -1 Select coll(i)).ToArray
-        Return result
     End Function
 
     ''' <summary>

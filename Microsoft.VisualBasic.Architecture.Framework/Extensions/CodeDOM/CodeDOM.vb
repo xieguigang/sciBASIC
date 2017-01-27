@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd26509d3507b8d3d70a48f9271426a6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOM.vb"
+﻿#Region "Microsoft.VisualBasic::b2a097df510f15931257216d97bca47b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOM.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,13 @@ Imports Microsoft.VisualBasic.Language
 Namespace Emit.CodeDOM_VBC
 
     <Extension> Public Module CodeDOMExtension
+
+        ''' <summary>
+        ''' ```
+        ''' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\
+        ''' ```
+        ''' </summary>
+        Public Const net46Default As String = "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\"
 
         ''' <summary>
         ''' 设置所编译的应用程序的图标
@@ -208,7 +215,7 @@ Namespace Emit.CodeDOM_VBC
 
             If Not Reference.IsNullOrEmpty Then
                 Call Options.ReferencedAssemblies.AddRange((From path As String In Reference
-                                                            Where Array.IndexOf(DotNETFramework, IO.Path.GetFileNameWithoutExtension(path)) = -1
+                                                            Where Array.IndexOf(DotNETFramework, basename(path)) = -1
                                                             Select path).ToArray)
             End If
 

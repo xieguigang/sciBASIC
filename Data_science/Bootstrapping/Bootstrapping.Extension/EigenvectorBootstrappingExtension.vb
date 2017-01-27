@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50e56c924020ec222e574985238b7b61, ..\sciBASIC#\Data_science\Bootstrapping\Bootstrapping.Extension\EigenvectorBootstrappingExtension.vb"
+﻿#Region "Microsoft.VisualBasic::7e53caadf437a657ab393d445c2376c5, ..\sciBASIC#\Data_science\Bootstrapping\Bootstrapping.Extension\EigenvectorBootstrappingExtension.vb"
 
     ' Author:
     ' 
@@ -28,15 +28,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
-Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.DataMining.KMeans.Tree
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module EigenvectorBootstrappingExtension
@@ -67,7 +63,7 @@ Public Module EigenvectorBootstrappingExtension
                 .Properties = x.Value.Tag _
                     .SeqIterator _
                     .ToDictionary(Function(o) CStr(o.i),
-                                  Function(o) o.obj)   ' 在这里使用特征向量作为属性来进行聚类操作
+                                  Function(o) o.value)   ' 在这里使用特征向量作为属性来进行聚类操作
         })
 
         Call "Creates dataset complete!".__DEBUG_ECHO
@@ -102,4 +98,3 @@ Public Module EigenvectorBootstrappingExtension
         Return out
     End Function
 End Module
-

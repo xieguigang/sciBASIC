@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5808e4c31d43064932ac97b02bda35b, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Dump.vb"
+﻿#Region "Microsoft.VisualBasic::0e687f7b839c14a3050b59eb5ad4bc31, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Dump.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.Calculus
@@ -35,7 +34,7 @@ Imports Microsoft.VisualBasic.Text
 Namespace Darwinism.GAF
 
     Public Class Dump
-        Implements IterartionListener(Of ParameterVector, Double)
+        Implements IterartionListener(Of ParameterVector)
 
         Public model As Type
         Public n%, a%, b%
@@ -43,7 +42,7 @@ Namespace Darwinism.GAF
 
         Dim i As New Uid(caseSensitive:=False)
 
-        Public Sub Update(environment As GeneticAlgorithm(Of ParameterVector, Double)) Implements IterartionListener(Of ParameterVector, Double).Update
+        Public Sub Update(environment As GeneticAlgorithm(Of ParameterVector)) Implements IterartionListener(Of ParameterVector).Update
             Dim best As ParameterVector = environment.Best
             Dim vars As Dictionary(Of String, Double) =
                 best _

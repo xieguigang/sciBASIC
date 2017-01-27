@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7b27f5716a2ba7c9d489fc31e6e477d, ..\sciBASIC#\Data_science\Mathematical\ODE\RefODEs.vb"
+﻿#Region "Microsoft.VisualBasic::723bbb4ae79d8e9d3cad0f9381b75f75, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\RefODEs.vb"
 
     ' Author:
     ' 
@@ -56,4 +56,3 @@ Public MustInherit Class RefODEs : Inherits ODEs
     Protected MustOverride Overloads Sub func(dx#, ByRef dy As Vector, Y As ValueVector)
 
 End Class
-

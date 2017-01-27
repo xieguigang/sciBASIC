@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cb8c23933aa484124d4f23a40d65cba, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\FuzzyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::b751cc81fe0b8c6eb395329ebb199c1a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\FuzzyGroup.vb"
 
     ' Author:
     ' 
@@ -45,19 +45,19 @@ Namespace ComponentModel.Collection
     Public Module FuzzyGroup
 
         ''' <summary>
-        ''' Grouping objects in a collection based on their <see cref="sIdEnumerable.Identifier"/> string Fuzzy equals to others'.
+        ''' Grouping objects in a collection based on their <see cref="INamedValue.Key"/> string Fuzzy equals to others'.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <param name="cut">字符串相似度的阈值</param>
         ''' <returns></returns>
         <Extension>
-        Public Function FuzzyGroups(Of T As sIdEnumerable)(
+        Public Function FuzzyGroups(Of T As INamedValue)(
                         source As IEnumerable(Of T),
                Optional cut As Double = 0.6,
                Optional parallel As Boolean = False) As GroupResult(Of T, String)()
 
-            Return source.FuzzyGroups(Function(x) x.Identifier, cut, parallel).ToArray
+            Return source.FuzzyGroups(Function(x) x.Key, cut, parallel).ToArray
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86e475da038ee7b177acec82e1dbae4e, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\HTTP\WebExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2ef4c34b628013fa0caa5a4449ac5d05, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\HTTP\WebCrawling.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.Text.HtmlParser
 
 Namespace HTTP
 
@@ -46,7 +47,7 @@ Namespace HTTP
             Dim len As Integer
 
             For Each c As SeqValue(Of Char) In url.SeqIterator
-                If c.obj = "/"c Then
+                If c.value = "/"c Then
                     len = c.i
                 End If
             Next

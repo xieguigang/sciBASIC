@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a75bbf09c38e01b90d73f2f1976c638, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEs.vb"
+﻿#Region "Microsoft.VisualBasic::c8cbf2bc2bb0ccbf08b17c78279c5adf, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\ODEs.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,7 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
@@ -83,12 +83,12 @@ Public MustInherit Class ODEs
 
         For Each f As SeqValue(Of FieldInfo) In fields.SeqIterator
             Dim x As New var() With {
-                .Name = f.obj.Name,
+                .Name = f.value.Name,
                 .Index = f.i
             }
             vars(f.i) = x
 
-            Call f.obj.SetValue(Me, x)
+            Call f.value.SetValue(Me, x)
         Next
 
         __vars = New Dictionary(Of var)(vars)
@@ -136,6 +136,23 @@ Public MustInherit Class ODEs
             .OrderBy(Function(o) o.Index) _
             .Select(Function(o) o.value) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' Populates the data of <see cref="ODEsOut.x"/>
+    ''' </summary>
+    ''' <param name="n%"></param>
+    ''' <param name="a#"></param>
+    ''' <param name="b#"></param>
+    ''' <returns></returns>
+    Public Shared Iterator Function TimePopulator(n%, a#, b#) As IEnumerable(Of Double)
+        Dim dh As Double = (b - a) / n  ' 步长
+        Dim dx As Double = a
+
+        For i As Integer = 0 To n
+            Yield dx
+            dx += dh
+        Next
     End Function
 
     ''' <summary>

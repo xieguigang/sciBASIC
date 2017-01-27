@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28550f06b09e2dfcc692aeb6cc5e43bd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::082ffba1927d6dd9d41e16e97a1f41f6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
 
     ' Author:
     ' 
@@ -26,11 +26,12 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Web
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Mathematical.Correlations
 
@@ -69,6 +70,153 @@ Namespace Mathematical.Correlations
             Dim value As Double = Xa * Math.Log(Xa / Ya)  ' 0 * n = 0
             Return value
         End Function
+
+#Region "https://en.wikipedia.org/wiki/Kendall_tau_distance"
+
+        ''' <summary>
+        ''' Provides rank correlation coefficient metrics Kendall tau
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' https://github.com/felipebravom/RankCorrelation
+        ''' </remarks>
+        Public Function rankKendallTauBeta(ByVal x As Double(), ByVal y As Double()) As Double
+            Debug.Assert(x.Length = y.Length)
+            Dim x_n As Integer = x.Length
+            Dim y_n As Integer = y.Length
+            Dim x_rank As Double() = New Double(x_n - 1) {}
+            Dim y_rank As Double() = New Double(y_n - 1) {}
+            Dim sorted As New SortedDictionary(Of Double?, HashSet(Of Integer?))()
+
+            For i As Integer = 0 To x_n - 1
+                Dim v As Double = x(i)
+                If sorted.ContainsKey(v) = False Then
+                    sorted(v) = New HashSet(Of Integer?)()
+                End If
+                sorted(v).Add(i)
+            Next
+
+            Dim c As Integer = 1
+            For Each v As Double In sorted.Keys.OrderByDescending(Function(k) k)
+                Dim r As Double = 0
+                For Each i As Integer In sorted(v)
+                    r += c
+                    c += 1
+                Next
+
+                r /= sorted(v).Count
+
+                For Each i As Integer In sorted(v)
+                    x_rank(i) = r
+                Next
+            Next
+
+            sorted.Clear()
+            For i As Integer = 0 To y_n - 1
+                Dim v As Double = y(i)
+                If sorted.ContainsKey(v) = False Then
+                    sorted(v) = New HashSet(Of Integer?)()
+                End If
+                sorted(v).Add(i)
+            Next
+
+            c = 1
+            For Each v As Double In sorted.Keys.OrderByDescending(Function(k) k)
+                Dim r As Double = 0
+                For Each i As Integer In sorted(v)
+                    r += c
+                    c += 1
+                Next
+
+                r /= (sorted(v).Count)
+
+                For Each i As Integer In sorted(v)
+                    y_rank(i) = r
+                Next
+            Next
+
+            Return kendallTauBeta(x_rank, y_rank)
+        End Function
+
+        ''' <summary>
+        ''' Provides rank correlation coefficient metrics Kendall tau
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' https://github.com/felipebravom/RankCorrelation
+        ''' </remarks>
+        Public Function kendallTauBeta(ByVal x As Double(), ByVal y As Double()) As Double
+            Debug.Assert(x.Length = y.Length)
+
+            Dim c As Integer = 0
+            Dim d As Integer = 0
+            Dim xTies As New Dictionary(Of Double?, HashSet(Of Integer?))()
+            Dim yTies As New Dictionary(Of Double?, HashSet(Of Integer?))()
+
+            For i As Integer = 0 To x.Length - 2
+                For j As Integer = i + 1 To x.Length - 1
+                    If x(i) > x(j) AndAlso y(i) > y(j) Then
+                        c += 1
+                    ElseIf x(i) < x(j) AndAlso y(i) < y(j) Then
+                        c += 1
+                    ElseIf x(i) > x(j) AndAlso y(i) < y(j) Then
+                        d += 1
+                    ElseIf x(i) < x(j) AndAlso y(i) > y(j) Then
+                        d += 1
+                    Else
+                        If x(i) = x(j) Then
+                            If xTies.ContainsKey(x(i)) = False Then
+                                xTies(x(i)) = New HashSet(Of Integer?)()
+                            End If
+                            xTies(x(i)).Add(i)
+                            xTies(x(i)).Add(j)
+                        End If
+
+                        If y(i) = y(j) Then
+                            If yTies.ContainsKey(y(i)) = False Then
+                                yTies(y(i)) = New HashSet(Of Integer?)()
+                            End If
+                            yTies(y(i)).Add(i)
+                            yTies(y(i)).Add(j)
+                        End If
+                    End If
+                Next
+            Next
+
+            Dim diff As Integer = c - d
+            Dim denom As Double = 0
+
+            Dim n0 As Double = (x.Length * (x.Length - 1)) / 2.0
+            Dim n1 As Double = 0
+            Dim n2 As Double = 0
+
+            For Each t As Double In xTies.Keys
+                Dim s As Double = xTies(t).Count
+                n1 += (s * (s - 1)) / 2
+            Next
+
+            For Each t As Double In yTies.Keys
+                Dim s As Double = yTies(t).Count
+                n2 += (s * (s - 1)) / 2
+            Next
+
+            denom = Math.Sqrt((n0 - n1) * (n0 - n2))
+
+            If denom = 0 Then
+                denom += 0.000000001
+            End If
+
+            Dim td As Double = diff / (denom) ' 0.000..1 added on 11/02/2013 fixing NaN error
+
+            Debug.Assert(td >= -1 AndAlso td <= 1, td)
+
+            Return td
+        End Function
+#End Region
 
         ''' <summary>
         ''' will regularize the unusual case of complete correlation
@@ -241,6 +389,31 @@ Namespace Mathematical.Correlations
                 Public val As Double
             End Structure
         End Structure
+
+        <Extension>
+        Public Function CorrelationMatrix(data As IEnumerable(Of NamedValue(Of Double())), Optional compute As ICorrelation = Nothing) As NamedValue(Of Dictionary(Of String, Double))()
+            If compute Is Nothing Then
+                compute = AddressOf GetPearson
+            End If
+
+            Dim array = data.ToArray
+            Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
+
+            For Each a In array
+                Dim ca As New Dictionary(Of String, Double)
+
+                For Each b In array
+                    ca(b.Name) = compute(a.Value, b.Value)
+                Next
+
+                out += New NamedValue(Of Dictionary(Of String, Double)) With {
+                    .Name = a.Name,
+                    .Value = ca
+                }
+            Next
+
+            Return out
+        End Function
     End Module
 
     Public Module Beta

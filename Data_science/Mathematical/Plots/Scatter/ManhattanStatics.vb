@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fa9f3370ca58cca5decace1caf60740, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\ManhattanStatics.vb"
+﻿#Region "Microsoft.VisualBasic::8828cc6c19f48d66435eb5a603df45cf, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\ManhattanStatics.vb"
 
     ' Author:
     ' 
@@ -28,21 +28,10 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.Calculus
-Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module ManhattanStatics
 
@@ -163,4 +152,3 @@ Public Module ManhattanStatics
             End Sub)
     End Function
 End Module
-

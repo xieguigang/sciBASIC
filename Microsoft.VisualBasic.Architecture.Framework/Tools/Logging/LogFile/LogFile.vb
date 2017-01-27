@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19134ca0e48de197b3e744db29f06405, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::0d1304b649890642b584336377f8bf07, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 
@@ -122,7 +122,12 @@ Namespace Logging
                 Call __printLogs(Msg, Type)
             End If
 
-            Dim LogEntry As New LogEntry With {.Msg = Msg, .Object = [Object], .Time = Now, .Type = Type}
+            Dim LogEntry As New LogEntry With {
+                .Msg = Msg,
+                .Object = [Object],
+                .Time = Now,
+                .Type = Type
+            }
 
             If Me._autoFlush Then  '实时写入文件的，则不在内存之中记录数据了
                 Call __pending(LogEntry)
@@ -272,7 +277,7 @@ Namespace Logging
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function SystemInfo() As String
-            Dim sBuilder As StringBuilder = New StringBuilder(1024)
+            Dim sBuilder As New StringBuilder(1024)
 
             Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.BuildVersion)}:={OSVersionInfo.BuildVersion}")
             Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.Edition)}:={OSVersionInfo.Edition}")

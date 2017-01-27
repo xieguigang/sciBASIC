@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db3a996b5813b0ed8793bcdbaa42e064, ..\sciBASIC#\Data_science\Mathematical\Plots\BarPlot\BarPlot2.vb"
+﻿#Region "Microsoft.VisualBasic::8024414a82e1efa4d0907fc4a948da72, ..\sciBASIC#\Data_science\Mathematical\Plots\BarPlot\BarPlot2.vb"
 
     ' Author:
     ' 
@@ -27,16 +27,13 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Partial Module BarPlot
 
@@ -86,22 +83,22 @@ Partial Module BarPlot
 
                     If stacked Then ' 改变Y
                         Dim bottom! = y + dy
-                        Dim right = sx(sample.obj.StackedSum)
+                        Dim right = sx(sample.value.StackedSum)
                         Dim canvasWidth = size.Height - (margin.Height * 2)
 
-                        For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                        For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                             Dim rect As Rectangle = Rectangle(y, lefts, right, bottom)
 
                             Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
 
-                            top += ((val.obj - mapper.xmin) / mapper.dx) * canvasWidth
+                            top += ((val.value - mapper.xmin) / mapper.dx) * canvasWidth
                         Next
 
                         top += dy
                     Else ' 改变X
-                        For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                        For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                             Dim bottom! = y
-                            Dim right = sx(val.obj)
+                            Dim right = sx(val.value)
                             Dim rect As Rectangle = Rectangle(bottom, lefts, right, bottom + dy)
 
                             Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbc2c09f8d6bbcac3ee203f94e74a1ac, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
+﻿#Region "Microsoft.VisualBasic::e39c71cd872e64e9f3eb30861ce7c53e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
 
     ' Author:
     ' 
@@ -28,10 +28,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Mathematical
 
@@ -71,12 +71,14 @@ Namespace Mathematical
         End Function
 
         <ExportAPI("Ranks.Mapping")>
-        <Extension> Public Function GenerateMapping(Of T As sIdEnumerable)(data As IEnumerable(Of T),
-                                                                       getSample As Func(Of T, Double),
-                                                                       Optional Level As Integer = 10) As Dictionary(Of String, Integer)
+        <Extension> Public Function GenerateMapping(Of T As INamedValue)(
+                                                    data As IEnumerable(Of T),
+                                               getSample As Func(Of T, Double),
+                                          Optional Level As Integer = 10) As Dictionary(Of String, Integer)
+
             Dim samples As Double() = data.ToArray(Function(x) getSample(x))
             Dim levels As Integer() = samples.GenerateMapping(Level)
-            Dim hash = data.ToArray(Function(x, i) New KeyValuePair(Of String, Integer)(x.Identifier, levels(i)))
+            Dim hash = data.ToArray(Function(x, i) New KeyValuePair(Of String, Integer)(x.Key, levels(i)))
             Return hash.ToDictionary
         End Function
 
@@ -122,29 +124,25 @@ Namespace Mathematical
             Return chunkBuf
         End Function
 
-        <ExportAPI("Ranks.Log2")>
-        <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Double), Optional Level As Integer = 100) As Long()
-            Dim priMaps As Double() = data.GenerateMapping(Level).ToArray(Function(d) d / Level)
-            Dim log2Data As Double() = Level.ToArray(Function(n) Math.Log(n + 1, 2))
-            ' 将等级映射到log2的y轴上面
-            Dim lgMax As Double = log2Data.Max
-            priMaps = priMaps.ToArray(Function(d) lgMax * d) ' lgMax * %
-            '  Dim Maps As Long() = priMaps.ToArray(Function(d) CLng(2 ^ d))  ' 找到x坐标的位置 0-100
-            Return priMaps.ToArray(Function(x) CLng(x))
+        <Extension>
+        Public Function LogLevels(data As IEnumerable(Of Double), base%, Optional level As Integer = 100) As Integer()
+            Dim logvalues = data.ToArray(Function(x) Math.Log(x, base))
+            Return logvalues.GenerateMapping(level)
         End Function
 
-        'Public Function SquareMaps(data As Generic.IEnumerable(Of Double), Optional level As Integer = 100) As Integer()
-        '    Dim priMaps As Double() = data.GenerateMapping(level)  ' 得到y轴的数据
-
-        'End Function
+        <ExportAPI("Ranks.Log2")>
+        <Extension> Public Function Log2Ranks(data As IEnumerable(Of Double), Optional Level As Integer = 100) As Integer()
+            Dim log2Value = data.ToArray(Function(x) Math.Log(x, 2))
+            Return log2Value.GenerateMapping(Level)
+        End Function
 
         <ExportAPI("Ranks.Log2")>
-        <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Integer), Optional Level As Integer = 10) As Long()
+        <Extension> Public Function Log2Ranks(data As IEnumerable(Of Integer), Optional Level As Integer = 10) As Integer()
             Return data.Select(Function(d) CDbl(d)).Log2Ranks
         End Function
 
         <ExportAPI("Ranks.Log2")>
-        <Extension> Public Function Log2Ranks(data As Generic.IEnumerable(Of Long), Optional Level As Integer = 10) As Long()
+        <Extension> Public Function Log2Ranks(data As IEnumerable(Of Long), Optional Level As Integer = 10) As Integer()
             Return data.Select(Function(d) CDbl(d)).Log2Ranks
         End Function
 
@@ -173,11 +171,12 @@ Namespace Mathematical
         ''' <param name="isScale">either a logical value or a numeric vector of length equal to the number of columns of x</param>
         ''' <returns></returns>
         <ExportAPI("Scale", Info:="function centers and/or scales the columns of a numeric matrix.")>
-        Public Function Scale(<Parameter("x", "numeric matrix")> data As Generic.IEnumerable(Of Double),
-                          <Parameter("center", "either a logical value or a numeric vector of length equal to the number of columns of x")>
-                          Optional center As Boolean = True,
-                          <Parameter("scale", "either a logical value or a numeric vector of length equal to the number of columns of x")>
-                          Optional isScale As Boolean = True) As Double()
+        Public Function Scale(<Parameter("x", "numeric matrix")> data As IEnumerable(Of Double),
+                              <Parameter("center", "either a logical value or a numeric vector of length equal to the number of columns of x")>
+                              Optional center As Boolean = True,
+                              <Parameter("scale", "either a logical value or a numeric vector of length equal to the number of columns of x")>
+                              Optional isScale As Boolean = True) As Double()
+
             Dim avg As Double = data.Average
             Dim rms As Double = VBMathExtensions.RMS(data)
 

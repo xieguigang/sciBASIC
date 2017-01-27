@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e0fdc1f8b8b0e0d4e4fef18bcb0346f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::db1db18e387b4231807d4a2ebf107327, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
 
     ' Author:
     ' 
@@ -26,13 +26,11 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 #If NET_40 = 0 Then
 
@@ -102,7 +100,7 @@ Public Module GZip
 
     Public Function ExtractToSelfDirectory(zip As String, Optional overwriteMethod As Overwrite = Overwrite.IfNewer) As String
         Dim Dir As String = FileIO.FileSystem.GetParentPath(zip)
-        Dim Name As String = IO.Path.GetFileNameWithoutExtension(zip)
+        Dim Name As String = basename(zip)
         Dir = Dir & "/" & Name
         Call ImprovedExtractToDirectory(zip, Dir, overwriteMethod)
 

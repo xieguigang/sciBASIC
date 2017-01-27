@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3e324cc82ebb66c47332aea54ccb54f, ..\sciBASIC#\Data\TestProject\IOExample.vb"
+﻿#Region "Microsoft.VisualBasic::7cd73844c9ba630213af8bf18d31811e, ..\sciBASIC#\Data\TestProject\IOExample.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Public Module IOExample
 
         Public Function TryParse(cell As String) As Object Implements IParser.TryParse
             Dim tagValue = cell.GetTagValue(":")
-            Return New KeyValuePair(Of String, Integer)(tagValue.Name.GetString, CInt(Val(tagValue.x.Trim)))
+            Return New KeyValuePair(Of String, Integer)(tagValue.Name.GetString, CInt(Val(tagValue.Value.Trim)))
         End Function
     End Structure
 

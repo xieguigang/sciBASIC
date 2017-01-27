@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::c751ae51b0639936534235af0619bcdb, ..\sciBASIC#\Data_science\Mathematical\MathApp\Modules\DEBUG.vb"
+﻿#Region "Microsoft.VisualBasic::504af027306159e2f50ccfe6ea3de640, ..\sciBASIC#\Data_science\Mathematical\MathApp\Modules\DEBUG.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -134,7 +134,7 @@ Module DEBUG
             .title = "223 - legend",
             .width = 3,
             .pts = {New PointData With {.pt = New PointF(-10.1, 32)}, New PointData With {.pt = New PointF(0.1, 2)}, New PointData With {.pt = New PointF(2, 20)}, New PointData With {.pt = New PointF(5, 12)}},
-            .annotations = {New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Pentacle, .Text = "就是这2", .X = 2, .color = "yellow"}, New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Diamond, .Text = "就是这", .X = 5}}
+            .DataAnnotations = {New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Pentacle, .Text = "就是这2", .X = 2, .color = "yellow"}, New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Diamond, .Text = "就是这", .X = 5}}
         }
 
         Call Scatter.Plot({s}).SaveAs("x:\ffff.png")
@@ -179,8 +179,26 @@ Module DEBUG
         Return llll
     End Function
 
-    Public Function Main() As Integer
 
+    Sub pieChartTest()
+        Call {
+            New NamedValue(Of Integer)("s1", 123),
+            New NamedValue(Of Integer)("s2", 235),
+            New NamedValue(Of Integer)("s3", 99),
+            New NamedValue(Of Integer)("s4", 499),
+            New NamedValue(Of Integer)("s5", 123),
+            New NamedValue(Of Integer)("s6", 235),
+            New NamedValue(Of Integer)("s7", 99),
+            New NamedValue(Of Integer)("s8", 499)
+        }.FromData(schema:="Set1:c8") _
+         .Plot(reorder:=0, size:=New Size(1500, 1000)) _
+         .SaveAs("./pie_chart.png")
+
+        Pause()
+    End Sub
+
+    Public Function Main() As Integer
+        Call pieChartTest()
 
         Dim bdata As BarDataGroup = csv.LoadBarData(
             "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Excels\FigurePlot-Reference-Unigenes.absolute.level1.csv",
@@ -231,19 +249,7 @@ Module DEBUG
             }.FromData(schema:="office2010")) _
              .SaveAs("./treemap.png")
 
-        Call {
-            New NamedValue(Of Integer)("s1", 123),
-            New NamedValue(Of Integer)("s2", 235),
-            New NamedValue(Of Integer)("s3", 99),
-            New NamedValue(Of Integer)("s4", 499),
-            New NamedValue(Of Integer)("s5", 123),
-            New NamedValue(Of Integer)("s6", 235),
-            New NamedValue(Of Integer)("s7", 99),
-            New NamedValue(Of Integer)("s8", 499)
-        }.FromData(schema:="marquee") _
-         .Plot(reorder:=1,
-               size:=New Size(1500, 1000)) _
-         .SaveAs("./pie_chart.png")
+
 
 
 
@@ -263,11 +269,11 @@ Module DEBUG
         Dim serials = {ode.FromODE("red"), ode2.FromODE("lime", DashStyle.Solid)}
 
         Call Scatter.Plot(serials).SaveAs("./cos.png")
-        Call Histogram.Plot(
-            Histogram.FromODE({ode2, ode}, {"green", "yellow"}), alpha:=210) _
-            .SaveAs("./cos.hist.png")
+        'Call Histogram.Plot(
+        '    FromODE({ode2, ode}, {"green", "yellow"}), alpha:=210) _
+        '    .SaveAs("./cos.hist.png")
 
-        Pause()
+        'Pause()
         '    Call PDFTest.betaTest()
 
 

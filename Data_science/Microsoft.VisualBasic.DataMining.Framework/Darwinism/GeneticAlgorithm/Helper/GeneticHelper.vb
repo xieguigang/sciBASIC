@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6f25a8d5536dbeb8807000a28e279a4, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
+﻿#Region "Microsoft.VisualBasic::1b65683a0d57164d6346c9ca0d86d56e, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
     ' Author:
     ' 
@@ -90,14 +90,16 @@ Namespace Darwinism.GAF.Helper
         ''' in real life it could be more complex
         ''' </summary>
         <Extension>
-        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize As Integer) As Population(Of T)
-            Dim population As New Population(Of T)()
+        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize As Integer, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)
+            Dim population As New Population(Of T)(parallel) With {
+                .Parallel = True
+            }
 
             For i As Integer = 0 To populationSize - 1
                 ' each member of initial population
                 ' is mutated clone of base chromosome
                 Dim chr As T = base.Mutate()
-                population.Add(chr)
+                Call population.Add(chr)
             Next
             Return population
         End Function

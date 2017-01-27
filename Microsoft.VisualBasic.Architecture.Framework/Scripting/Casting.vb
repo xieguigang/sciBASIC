@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f283fa779b7d780e9d5dd7ea25b47efd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::136f896b009f03384ebbb76465a2373a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,8 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
 
@@ -40,6 +42,30 @@ Namespace Scripting
     ''' Methods for convert the <see cref="System.String"/> to some .NET data types.
     ''' </summary>
     Public Module Casting
+
+        Public Function PointParser(pt$) As Point
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New Point(x, y)
+        End Function
+
+        Public Function FloatPointParser(pt$) As PointF
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New PointF(x, y)
+        End Function
+
+        Public Function SizeParser(pt$) As Size
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New Size(x, y)
+        End Function
+
+        Public Function FloatSizeParser(pt$) As SizeF
+            Dim x, y As Double
+            Call Ranges.Parser(pt, x, y)
+            Return New SizeF(x, y)
+        End Function
 
         ''' <summary>
         ''' DirectCast(obj, T)
@@ -55,24 +81,64 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' Will processing value NaN automatically and strip for the comma.
+        ''' 用于解析出任意实数的正则表达式
+        ''' </summary>
+        Public Const RegexpDouble As String = "-?\d+(\.\d+)?"
+        Public Const ScientificNotation$ = RegexpDouble & "[Ee][+-]\d+"
+        Public Const RegexpFloat$ = RegexpDouble & "([Ee][+-]\d+)?"
+
+        ''' <summary>
+        ''' Parsing a real number from the expression text by using the regex expression <see cref="RegexpFloat"/>.
+        ''' (使用正则表达式解析目标字符串对象之中的一个实数)
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
+        ''' <remarks></remarks>
+        '''
+        <ExportAPI("Double.Match")>
+        <Extension> Public Function RegexParseDouble(s As String) As Double
+            Return Val(s.Match(RegexpFloat))
+        End Function
+
+        ''' <summary>
+        ''' Will processing value NaN automatically and strip for the comma, percentage expression.
+        ''' </summary>
+        ''' <param name="s">
+        ''' + numeric
+        ''' + NaN
+        ''' + p%
+        ''' + a/b
+        ''' </param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function ParseNumeric(s As String) As Double
             If String.IsNullOrEmpty(s) Then
                 Return 0R
             ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) Then
                 Return Double.NaN
+            Else
+                s = s.Replace(",", "")
             End If
-            s = s.Replace(",", "")
+
             If s.Last = "%"c Then
                 Return Conversion.Val(Mid(s, 1, s.Length - 1)) / 100  ' 百分比
+            ElseIf InStr(s, "/") > 0 Then
+                Dim t$() = s.Split("/"c) ' 处理分数
+                Return Val(t(0)) / Val(t(1))
+            ElseIf InStr(s, "e", CompareMethod.Text) > 0 Then
+                Dim t = s.ToLower.Split("e"c)
+                Return Val(t(0)) * (10 ^ Val(t(1)))
             Else
                 Return Conversion.Val(s)
             End If
         End Function
 
+        ''' <summary>
+        ''' 字符串是空值会返回空字符
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function CastChar(obj As String) As Char
             Return If(String.IsNullOrEmpty(obj), ASCII.NUL, obj.First)
         End Function

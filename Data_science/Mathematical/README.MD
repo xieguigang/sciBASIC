@@ -76,6 +76,30 @@ Call Bubble _
 
 ##### Heatmap
 
+###### 3D surface heatmap
+
+```vbnet
+Dim func As Func(Of Double, Double, (Z#, Color#)) =
+_
+    Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)
+
+Call Plot3D.ScatterHeatmap.Plot(
+    func, "-3,3", "-3,3",
+    New Camera With {
+        .screen = New Size(3600, 2500),
+        .ViewDistance = -3.3,
+        .angleZ = 30,
+        .angleX = 30,
+        .angleY = -30,
+        .offset = New Point(-100, -100)
+    }) _
+    .SaveAs("./3d-heatmap.png")
+```
+
+![](./images/3d-heatmap.png)
+
+###### Normal heatmap
+
 ![](./images/heatmap.png)
 
 Using colorbrewer theme:
@@ -93,6 +117,39 @@ Call data.CorrelatesNormalized() _
 ![](./images/heatmap-colorbrewer-PRGn-c6.png)
 
 ##### Scatter & Histogram Plot
+
+###### Scatter Heatmap
+
+You can using a lambda expression as the plot data source:
+
+```vbnet
+Dim f As Func(Of Double, Double, Double) =
+    Function(x, y) x ^ 2 + y ^ 3
+
+Call ScatterHeatmap _
+    .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
+    .SaveAs("./scatter-heatmap.png")
+```
+
+![](./images/scatter-heatmap.png)
+
+Or directly evaluate a math expression string and using another colorbrewer schema:
+
+```vbnet
+Call ScatterHeatmap _
+    .Plot("x ^ 2 + y ^ 3", "(-1,1)", "(-1,1)",
+          colorMap:="PRGn:c10",
+          legendTitle:="z = x ^ 2 + y ^ 3") _
+    .SaveAs("./scatter-heatmap-exp.png")
+```
+
+![](./images/scatter-heatmap-exp.png)
+
+###### Scatter plot of CMeans
+
+![](../algorithms/CMeans/CMeans.png)
+
+###### Scatter plots of ODEs result
 
 ```vbnet
 Imports Microsoft.VisualBasic.Imaging

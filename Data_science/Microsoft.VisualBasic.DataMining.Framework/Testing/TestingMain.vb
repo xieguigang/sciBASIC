@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fd90d238b00409076b08bb31bb22be9, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Testing\TestingMain.vb"
+﻿#Region "Microsoft.VisualBasic::7ddbf26d638398a7fcc6757dfda1e0ad, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Testing\TestingMain.vb"
 
     ' Author:
     ' 
@@ -26,20 +26,17 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.visualize.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.DataMining
-Imports Microsoft.VisualBasic.DataMining.QLearning
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.DataVisualization.Network
-Imports Microsoft.VisualBasic.DataVisualization.Network.FileStream
-Imports Microsoft.VisualBasic.DocumentFormat.Csv
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.DataMining.MathGamma
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.DataMining.NeuralNetwork
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module TestingMain
 
@@ -57,6 +54,32 @@ Module TestingMain
     End Class
 
     Sub Main()
+
+        Dim ea As New KMeans.Entity With {.uid = NameOf(ea), .Properties = {1, 2}}
+        Dim eb As New KMeans.Entity With {.uid = NameOf(eb), .Properties = {1, 2}}
+        Dim ec As New KMeans.Entity With {.uid = NameOf(ec), .Properties = {140, 5}}
+        Dim ed As New KMeans.Entity With {.uid = NameOf(ed), .Properties = {10, 260}}
+        Dim ee As New KMeans.Entity With {.uid = NameOf(ee), .Properties = {10, 250}}
+        Dim ef As New KMeans.Entity With {.uid = NameOf(ef), .Properties = {10, 240}}
+        Dim eg As New KMeans.Entity With {.uid = NameOf(eg), .Properties = {10, 250}}
+        Dim eh As New KMeans.Entity With {.uid = NameOf(eh), .Properties = {10, 250}}
+        Dim ei As New KMeans.Entity With {.uid = NameOf(ei), .Properties = {10, 255}}
+        Dim ej As New KMeans.Entity With {.uid = NameOf(ej), .Properties = {10, 250}}
+
+        Dim trace As New Dictionary(Of Integer, List(Of KMeans.Entity))
+        Dim cccc = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.FuzzyCMeans(3, 0.5, trace:=trace)
+
+        Dim g = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.GroupBy(Function(n) n.Fill).ToArray
+
+        For Each x In cccc
+            Call $"centra {x.uid} =>  {x.Properties.GetJson}".PrintException
+        Next
+
+        For Each x In {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}
+            Call ($"{x.uid}: {x.Properties.GetJson} => " & x.ReadProperty(Of Dictionary(Of String, Double))("tooltip").value.GetJson).__DEBUG_ECHO
+        Next
+
+        Pause()
 
         Dim ann As New NeuralNetwork.Network(5, 50, 1, 0.01, , New IFuncs.SigmoidFunction)
         Dim learn As New NeuralNetwork.TrainingUtils(ann)
@@ -93,8 +116,8 @@ Module TestingMain
 
         Pause()
 
-        Call 5.0R.Γ.__DEBUG_ECHO
-        Call 1.6R.Γ.__DEBUG_ECHO
+        '  Call 5.0R.Γ.__DEBUG_ECHO
+        '   Call 1.6R.Γ.__DEBUG_ECHO
 
         Pause()
 
@@ -126,7 +149,7 @@ Module TestingMain
 
         Dim parts = TreeAPI.ClusterParts(nnnnet)
 
-        Dim ssssst = (From x In parts Select x.Value).MatrixAsIterator.Distinct.ToArray.Length
+        Dim ssssst = (From x In parts Select x.Value).IteratesALL.Distinct.ToArray.Length
         Call ssssst.__DEBUG_ECHO
 
 
@@ -154,9 +177,13 @@ Module TestingMain
 
         Dim distances = KMeans.ManhattanDistance(StudentA.Properties, StudentB.Properties)
 
-        Dim cluster = {{15, 32, 35.6}, {19, 54, 65.1}}
-        Dim centroid = KMeans.ClusterMean(cluster)
-        Console.Write("<br/>Cluster mean Calc: " + centroid.ToString())
+        Dim cluster#(,) = {
+            {15, 32, 35.6},
+            {19, 54, 65.1}
+        }
+        Dim centroid#() = KMeans.ClusterMean(cluster)
+
+        Call $"<br/>Cluster mean Calc: {centroid}".__DEBUG_ECHO
 
 
 
@@ -174,10 +201,10 @@ Module TestingMain
 
         nnn = (-1).Sequence
 
-        Dim Data0 = Microsoft.VisualBasic.DocumentFormat.Csv.DocumentStream.File.FastLoad("E:\xcb_vcell\xcb_model\Result\MAT_OUT.csv")
+        Dim Data0 = Microsoft.VisualBasic.Data.csv.DocumentStream.File.FastLoad("E:\xcb_vcell\xcb_model\Result\MAT_OUT.csv")
         Dim MAT = Microsoft.VisualBasic.DataMining.Serials.PeriodAnalysis.SerialsVarialble.Load(Data0)
 
-        Dim datad = Microsoft.VisualBasic.DataMining.BezierCurve.BezierSmoothInterpolation(MAT(1).SerialsData, 100)
+        Dim datad = Microsoft.VisualBasic.Mathematical.Interpolation.BezierCurve.BezierSmoothInterpolation(MAT(1).SerialsData, 100)
 
         Call datad.SaveTo("./Bezier.csv")
 

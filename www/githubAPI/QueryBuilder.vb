@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffde8e92c1b5203ce5d050710520132a, ..\sciBASIC#\www\githubAPI\QueryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::a059539724ad9ef2a724864844f56d5d, ..\sciBASIC#\www\githubAPI\QueryBuilder.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Public Module QueryBuilder
     <Extension>
     Public Function GetTerm(type As Type) As PropertyInfo
         Dim props As IEnumerable(Of PropertyInfo) =
-            type.GetProperties(BindingFlags.Public + BindingFlags.Instance)
+            type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
         Dim term As Type = GetType(Term)
         Dim LQuery As PropertyInfo =
             LinqAPI.DefaultFirst(Of PropertyInfo) <= From p As PropertyInfo

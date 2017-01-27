@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c551bda99698f4bb2bc7e6c4a07cf778, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDIPlusExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f7f7f7e7c23e0109e8b962d4cb18714c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDIPlusExtensions.vb"
 
     ' Author:
     ' 
@@ -26,17 +26,12 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports System.Drawing
-Imports System.Text.RegularExpressions
-Imports System.Text
-Imports System
-Imports System.Reflection
-Imports System.IO
 Imports System.Drawing.Imaging
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Imaging
 
@@ -49,6 +44,28 @@ Namespace Imaging
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GDIPlusExtensions
+
+        <Extension>
+        Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As SolidBrush)
+            Dim d = r * 2
+
+            With centra
+                Call g.FillPie(color, .X - r, .Y - r, d, d, 0, 360)
+            End With
+        End Sub
+
+        <Extension>
+        Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As Color, Optional fill As Boolean = True)
+            Dim d = r * 2
+
+            With centra
+                If fill Then
+                    Call g.FillPie(New SolidBrush(color), .X - r, .Y - r, d, d, 0, 360)
+                Else
+                    Call g.DrawPie(New Pen(color), .X - r, .Y - r, d, d, 0, 360)
+                End If
+            End With
+        End Sub
 
         ''' <summary>
         ''' 这个方形区域的面积

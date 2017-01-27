@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfbf1f92b359151281dd0634e2e72402, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::7d3eb5725cb8e1843667861ec37b2a6b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+
 Namespace ComponentModel.Collection.Generic
 
     Public Interface IPairItem(Of TItem1, TItem2)
@@ -46,20 +48,16 @@ Namespace ComponentModel.Collection.Generic
     End Interface
 
     ''' <summary>
-    ''' This type of object have a <see cref="sIdEnumerable.Identifier"></see> property to unique identified itself in a collection.
+    ''' This type of object have a <see cref="INamedValue.Key"></see> property to unique identified itself in a collection.
+    ''' This interface was inherits from type <see cref="IKeyedEntity(Of String)"/>
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface sIdEnumerable
-
-        ''' <summary>
-        ''' The unique identifer in the object collection. Unique-Id of the target implements object
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Property Identifier As String
+    Public Interface INamedValue : Inherits IKeyedEntity(Of String)
     End Interface
 
+    ''' <summary>
+    ''' 与<see cref="iNamedValue"/>所不同的是，这个对象的标识属性是只读的.
+    ''' </summary>
     Public Interface IReadOnlyId
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e692dcb478fa60a78b4bed623061efc8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::3605d39e024fad5bcd8e37a22f81e021, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq.vb"
 
     ' Author:
     ' 
@@ -88,8 +88,8 @@ Namespace Language
             Return New BuildHashHelper(Of T, [In], [In])(keys, Function(x) x)
         End Function
 
-        Public Shared Function BuildHash(Of T As sIdEnumerable)() As BuildHashHelper(Of String, T, T)
-            Return New BuildHashHelper(Of String, T, T)(Function(x) x.Identifier, Function(x) x)
+        Public Shared Function BuildHash(Of T As INamedValue)() As BuildHashHelper(Of String, T, T)
+            Return New BuildHashHelper(Of String, T, T)(Function(x) x.Key, Function(x) x)
         End Function
 
         Public Shared Function Takes(Of T)(n As Integer) As TakeHelper(Of T)
@@ -382,7 +382,7 @@ Namespace Language
             Public Shared Operator <=(cls As ToArrayHelper(Of T, V), linq As Func(Of T, Integer, V)) As V()
                 Return (From x As SeqValue(Of T)
                     In cls.__source.SeqIterator
-                        Select linq(x.obj, x.i)).ToArray
+                        Select linq(x.value, x.i)).ToArray
             End Operator
 
             Public Shared Operator >=(cls As ToArrayHelper(Of T, V), linq As Func(Of T, Integer, V)) As V()

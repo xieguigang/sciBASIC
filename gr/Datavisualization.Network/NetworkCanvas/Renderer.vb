@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e331df5f634aa778d41c7a66391cf65e, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::8466f7b939c46471b00451ed70950251, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 
@@ -97,7 +97,7 @@ Public Class Renderer : Inherits AbstractRenderer
         forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
     End Sub
 
-    Private Sub __invokeEdgeDraw(edge As Edge, spring As Spring)
+    Protected Sub __invokeEdgeDraw(edge As Edge, spring As Spring)
         If ZeroFilter Then
             If (edge.Source.Data.radius < 0.6 OrElse edge.Target.Data.radius < 0.6) Then
                 Return

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f4deb4100b7cd06d0da557eafe041de, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::40695c422fa6278690cddead5d410403, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace ComponentModel
 
@@ -46,5 +46,20 @@ Namespace ComponentModel
                 Return __default
             End If
         End Function
+    End Structure
+
+    Public Structure Map(Of T1, V)
+        Implements IMap
+
+        Public Property Key As T1 Implements IMap.Key
+        Public Property Maps As V Implements IMap.Maps
+
+        ''' <summary>
+        ''' 与<see cref="IKeyValuePairObject(Of TKey, TValue)"/>相比，这个类型更加倾向于特定化的描述两个对象之间的一一对应关系
+        ''' </summary>
+        Public Interface IMap
+            Property Key As T1
+            Property Maps As V
+        End Interface
     End Structure
 End Namespace

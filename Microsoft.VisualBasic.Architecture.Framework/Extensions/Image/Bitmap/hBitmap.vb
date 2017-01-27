@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9db4496c54d7a56ac01516f0dc171af4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::0f4d7632ce61e2cb36ac5c0f065d2e94, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hBitmap.vb"
 
     ' Author:
     ' 
@@ -43,9 +43,10 @@ Namespace Imaging
         ReadOnly __handle As BitmapData
 
         Protected Sub New(ptr As IntPtr,
-                      byts As Integer,
-                      raw As Bitmap,
-                      handle As BitmapData)
+                          byts%,
+                          raw As Bitmap,
+                          handle As BitmapData)
+
             Call MyBase.New(ptr, byts)
 
             __source = raw
@@ -78,6 +79,10 @@ Namespace Imaging
             y = y * (Width * 4)
             x = x * 4
             Return x + y
+        End Function
+
+        Public Function OutOfRange(x%, y%) As Boolean
+            Return x < 0 OrElse x >= Width OrElse y < 0 OrElse y >= Height
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fa0f8a2249a65fbc1e1c6aebbaadee0, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::207eed71847a499753f649ed8336050b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -131,12 +131,14 @@ Public Module NetworkAPI
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="cut"><see cref="Math.Abs(Double)"/></param>
+    ''' <param name="trim">Removes the duplicated edges and self loops?</param>
     ''' <returns></returns>
     <Extension>
     Public Function FromCorrelations(data As IEnumerable(Of DataSet),
                                      Optional nodeTypes As Dictionary(Of String, String) = Nothing,
                                      Optional interacts As Dictionary(Of String, String) = Nothing,
-                                     Optional cut# = 0R) As FileStream.Network
+                                     Optional cut# = 0R,
+                                     Optional trim As Boolean = False) As FileStream.Network
 
         Dim array As DataSet() = data.ToArray
 
@@ -147,15 +149,17 @@ Public Module NetworkAPI
             interacts = New Dictionary(Of String, String)
         End If
 
+        VBDebugger.Mute = True
+
         Dim nodes As FileStream.Node() =
  _
             LinqAPI.Exec(Of FileStream.Node) <=
  _
             From v As DataSet
             In array
-            Let type As String = nodeTypes.TryGetValue(v.Identifier, [default]:="variable")
+            Let type As String = nodeTypes.TryGetValue(v.ID, [default]:="variable")
             Select New FileStream.Node With {
-                .Identifier = v.Identifier,
+                .ID = v.ID,
                 .NodeType = type,
                 .Properties = v.Properties _
                     .ToDictionary(Function(k) k.Key,
@@ -174,10 +178,10 @@ Public Module NetworkAPI
                 End If
 
                 interact = interacts.TryGetValue(
-                    $"{var.Identifier} --> {k}",
+                    $"{var.ID} --> {k}",
                     [default]:="correlates")
                 edges += New FileStream.NetworkEdge With {
-                    .FromNode = var.Identifier,
+                    .FromNode = var.ID,
                     .ToNode = k,
                     .Confidence = c,
                     .InteractionType = interact,
@@ -189,9 +193,18 @@ Public Module NetworkAPI
             Next
         Next
 
-        Return New FileStream.Network With {
+        VBDebugger.Mute = False
+
+        Dim out As New FileStream.Network With {
             .Edges = edges,
             .Nodes = nodes
         }
+
+        If trim Then
+            Call out.RemoveSelfLoop()
+            Call out.RemoveDuplicated()
+        End If
+
+        Return out
     End Function
 End Module

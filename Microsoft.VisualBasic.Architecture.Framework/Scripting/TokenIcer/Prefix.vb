@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62c387fb0cbc1cc4bcb2a21a0222fa58, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
+﻿#Region "Microsoft.VisualBasic::6062ba82650746ccf2249c7827e7131e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
 
     ' Author:
     ' 
@@ -25,6 +25,9 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 
 Namespace Scripting.TokenIcer
 
@@ -122,6 +125,18 @@ Namespace Scripting.TokenIcer
             tokens.Add(MathTokens.constRef, "[&][a-zA-Z0-9_]*")
 
             Return tokens
+        End Function
+
+        ''' <summary>
+        ''' 这个字符串表达式是否是科学记数法的数字？
+        ''' </summary>
+        ''' <param name="s$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function IsScientificNotation(s$) As Boolean
+            Dim n$ = Regex.Match(s, ScientificNotation, RegexOptions.IgnoreCase).Value
+            Dim yes As Boolean = (n = s)
+            Return yes
         End Function
     End Module
 End Namespace

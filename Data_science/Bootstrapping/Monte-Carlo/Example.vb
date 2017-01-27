@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61b992e6943a1b9e221f5ac90831e13a, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Example.vb"
+﻿#Region "Microsoft.VisualBasic::1791b9b2225adec796c60726e880baab, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Example.vb"
 
     ' Author:
     ' 
@@ -50,16 +50,16 @@ Namespace MonteCarlo.Example
             dy(sin) = a * Math.Sin(dx) + f
         End Sub
 
-        Public Overrides Function params() As VariableModel()
+        Public Overrides Function params() As ValueRange()
             Return {
-                New VariableModel(-1000, 1000) With {.Name = NameOf(a)},
-                New VariableModel(-1000, 1000) With {.Name = NameOf(f)}
+                New ValueRange(-1000, 1000) With {.Name = NameOf(a)},
+                New ValueRange(-1000, 1000) With {.Name = NameOf(f)}
             }
         End Function
 
-        Public Overrides Function yinit() As VariableModel()
+        Public Overrides Function yinit() As ValueRange()
             Return {
-                New VariableModel(-1000, 1000) With {.Name = NameOf(sin)}
+                New ValueRange(-1000, 1000) With {.Name = NameOf(sin)}
             }
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e5a0af547a19456f69327306ba48086, ..\sciBASIC#\Data_science\Mathematical\DataFittings\FitResult.vb"
+﻿#Region "Microsoft.VisualBasic::f2cf4b423f069796a0df3d21ee8e8beb, ..\sciBASIC#\Data_science\Mathematical\DataFittings\FitResult.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Public Class FittedResult
         Return Me.GetJson
     End Function
 End Class
-

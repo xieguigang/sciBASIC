@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30a01b4abbdec39735a81190b3579948, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Scaling.vb"
+﻿#Region "Microsoft.VisualBasic::8588d23352809a2ca59be5ac4769a1c6, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Scaling.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,9 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -37,7 +39,10 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Class Scaling
 
-    Public ReadOnly dx!, dy!
+    ''' <summary>
+    ''' x,y轴分别的最大值和最小值的差值
+    ''' </summary>
+    Public ReadOnly dx#, dy#
     Public ReadOnly xmin, ymin As Single
 
     ReadOnly serials As SerialData()
@@ -45,6 +50,23 @@ Public Class Scaling
 
     Public ReadOnly type As Type
 
+    Public ReadOnly Property xrange As DoubleRange
+        Get
+            Return New DoubleRange(xmin, xmin + dx)
+        End Get
+    End Property
+
+    Public ReadOnly Property yrange As DoubleRange
+        Get
+            Return New DoubleRange(ymin, ymin + dy)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 线条
+    ''' </summary>
+    ''' <param name="array"></param>
+    ''' <param name="absoluteScaling"></param>
     Sub New(array As SerialData(), absoluteScaling As Boolean)
         dx = Scaling(array, Function(p) p.pt.X, absoluteScaling, xmin)
         dy = Scaling(array, Function(p) p.pt.Y, absoluteScaling, ymin)
@@ -52,6 +74,23 @@ Public Class Scaling
         type = GetType(Scatter)
     End Sub
 
+    Sub New(data As (Double, Double)())
+        dx = ScalingTuple(data, Function(p) p.X, False, xmin)
+        dy = ScalingTuple(data, Function(p) p.y, False, ymin)
+        type = GetType(ScatterHeatmap)
+    End Sub
+
+    Sub New(data As (X#, y#, z#)())
+        dx = ScalingTuple(data, Function(p) p.X, False, xmin)
+        dy = ScalingTuple(data, Function(p) p.y, False, ymin)
+        type = GetType(ScatterHeatmap)
+    End Sub
+
+    ''' <summary>
+    ''' 连续的条型数据
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="absoluteScaling"></param>
     Sub New(data As HistogramGroup, absoluteScaling As Boolean)
         dx = Scaling(data, Function(x) {x.x1, x.x2}, xmin, absoluteScaling)
         dy = Scaling(data, Function(x) {x.y}, ymin, absoluteScaling)
@@ -59,11 +98,37 @@ Public Class Scaling
         type = GetType(Histogram)
     End Sub
 
+    ''' <summary>
+    ''' 分类的条型数据
+    ''' </summary>
+    ''' <param name="hist"></param>
+    ''' <param name="stacked"></param>
+    ''' <param name="horizontal"></param>
     Sub New(hist As BarDataGroup, stacked As Boolean, horizontal As Boolean)
-        Dim h As List(Of Double) = If(
-            stacked,
-            New List(Of Double)(hist.Samples.Select(Function(s) s.StackedSum)),
-            hist.Samples.Select(Function(s) s.data).Unlist)
+        Call Me.New(__barDataProvider(hist, stacked), horizontal)
+    End Sub
+
+    Private Shared Function __barDataProvider(hist As BarDataGroup, stacked As Boolean) As IEnumerable(Of Double)
+        If stacked Then
+            Return hist _
+                .Samples _
+                .Select(Function(s) s.StackedSum)
+        Else
+            Return hist _
+                .Samples _
+                .Select(Function(s) s.data).Unlist
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="horizontal">
+    ''' 所进行绘制的条形图是否是水平的？
+    ''' </param>
+    Sub New(data As IEnumerable(Of Double), horizontal As Boolean)
+        Dim h#() = data.ToArray
 
         If Not horizontal Then
             ymin! = h.Min
@@ -85,6 +150,10 @@ Public Class Scaling
 
         type = GetType(BarPlot)
     End Sub
+
+    Public Function ScallingWidth(x As Double, width%) As Single
+        Return width * (x - xmin) / dx
+    End Function
 
     ''' <summary>
     ''' 返回的系列是已经被转换过的，直接使用来进行画图
@@ -118,7 +187,7 @@ Public Class Scaling
                 .pts = pts,
                 .title = s.title,
                 .width = s.width,
-                .annotations = s.annotations
+                .DataAnnotations = s.DataAnnotations
             }
         Next
     End Function
@@ -164,6 +233,15 @@ Public Class Scaling
 
                    Return New PointF(px, py)
                End Function
+    End Function
+
+    Public Function PointScaler(rect As GraphicsRegion) As Func(Of PointF, PointF)
+        Return PointScaler(rect.Size, rect.Margin)
+    End Function
+
+    Public Function TupleScaler(rect As GraphicsRegion) As Func(Of (x#, y#), PointF)
+        Dim point = PointScaler(rect.Size, rect.Margin)
+        Return Function(pt) point(New PointF(pt.x, pt.y))
     End Function
 
     Public Function PointScaler(r As GraphicsRegion, pt As PointF) As PointF
@@ -231,6 +309,28 @@ Public Class Scaling
         Return __scaling(array!, min!, absoluteScaling)
     End Function
 
+    Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#, z#)), [get] As Func(Of (X#, y#, z#), Single), absoluteScaling As Boolean, ByRef min!) As Single
+        Dim array!() = data.ToArray([get])
+        Return __scaling(array!, min!, absoluteScaling)
+    End Function
+
+    Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#)), [get] As Func(Of (X#, y#), Single), absoluteScaling As Boolean, ByRef min!) As Single
+        Dim array!() = data.ToArray([get])
+        Return __scaling(array!, min!, absoluteScaling)
+    End Function
+
+    Public Shared Function Scaling(data As IEnumerable(Of Point3D), [get] As Func(Of Point3D, Single), absoluteScaling As Boolean, ByRef min!) As Single
+        Dim array!() = data.ToArray([get])
+        Return __scaling(array!, min!, absoluteScaling)
+    End Function
+
+    ''' <summary>
+    ''' 返回``max-min``
+    ''' </summary>
+    ''' <param name="array!"></param>
+    ''' <param name="min!"></param>
+    ''' <param name="absoluteScaling"></param>
+    ''' <returns></returns>
     Private Shared Function __scaling(array!(), ByRef min!, absoluteScaling As Boolean) As Single
         Dim max! = array.Max : min! = array.Min
 

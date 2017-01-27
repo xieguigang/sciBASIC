@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f43959dec62584aacc561405dd6549d3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::8a4a9a7d54908ccf4d7e2b8cd44a9b3a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     ''' <typeparam name="T"></typeparam>
     Public Structure BindProperty(Of T As Attribute)
         Implements IReadOnlyId
-        Implements sIdEnumerable
+        Implements INamedValue
         Implements IProperty
 
         ''' <summary>
@@ -63,7 +63,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' The map name or the <see cref="PropertyInfo.Name"/>
         ''' </summary>
         ''' <returns></returns>
-        Public Property Identity As String Implements IReadOnlyId.Identity, sIdEnumerable.Identifier
+        Public Property Identity As String Implements IReadOnlyId.Identity, INamedValue.Key
             Get
                 Return [Property].Name
             End Get

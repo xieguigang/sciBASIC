@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2e05cbc20a13cd2a4a4f64c4b67199f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\TreeNode(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::8a3c74afcfd3be1eaf426fa047e045db, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BinaryTree\TreeNode(Of T).vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.DataStructures.BinaryTree
 
@@ -36,10 +36,11 @@ Namespace ComponentModel.DataStructures.BinaryTree
     ''' Define tree nodes
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class TreeNode(Of T) : Implements sIdEnumerable
+    Public Class TreeNode(Of T) : Implements INamedValue
+        Implements Value(Of T).IValueOf
 
-        Public Property Name As String Implements sIdEnumerable.Identifier
-        Public Property Value As T
+        Public Property Name As String Implements INamedValue.Key
+        Public Property Value As T Implements Value(Of T).IValueOf.value
         Public Property Left As TreeNode(Of T)
         Public Property Right As TreeNode(Of T)
 
@@ -47,10 +48,12 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' Constructor  to create a single node 
         ''' </summary>
         ''' <param name="name"></param>
-        ''' <param name="d"></param>
-        Public Sub New(name As String, d As T)
-            Me.Name = name
-            Me.Value = d
+        ''' <param name="obj"></param>
+        Public Sub New(name As String, obj As T)
+            With Me
+                .Name = name
+                .Value = obj
+            End With
         End Sub
 
         Sub New()

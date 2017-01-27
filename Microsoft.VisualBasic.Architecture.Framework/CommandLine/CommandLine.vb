@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79e7545a30a9f7f3a9534d71a4e72af7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::97f184119e8e3b210f8d6fe94aa96740, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Namespace CommandLine
     '''
     Public Class CommandLine : Inherits ClassObject
         Implements ICollection(Of NamedValue(Of String))
-        Implements sIdEnumerable
+        Implements INamedValue
 
         Friend __lstParameter As New List(Of NamedValue(Of String))
         ''' <summary>
@@ -68,7 +68,7 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Name As String Implements sIdEnumerable.Identifier
+        Public Property Name As String Implements INamedValue.Key
             Get
                 Return _name
             End Get

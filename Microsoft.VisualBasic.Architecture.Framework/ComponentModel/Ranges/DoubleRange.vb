@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ee6e84e2e7392f72edce0afed2d4099, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::877379416b55b165ff06468c08060df8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 '
 
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
@@ -133,6 +133,23 @@ Namespace ComponentModel.Ranges
 
         Public Function IsOverlapping(range As IRanges(Of Double)) As Boolean Implements IRanges(Of Double).IsOverlapping
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
+        End Function
+
+        Public Shared Widening Operator CType(exp$) As DoubleRange
+            Dim r As New DoubleRange
+            Call exp.Parser(r.Min, r.Max)
+            Return r
+        End Operator
+
+        Public Function Enumerate(n%) As Double()
+            Dim delta# = Length / n
+            Dim out As New List(Of Double)
+
+            For x As Double = Min To Max Step delta
+                out += x
+            Next
+
+            Return out
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c63251626f4b99d23e5d187dfbc8013, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
+﻿#Region "Microsoft.VisualBasic::6593dd6f84cc3cb84a05df5c81dc0885, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
     ' Author:
     ' 
@@ -33,15 +33,15 @@ Imports System.Security
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.CommandLine.Interpreter
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Debugging
+Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
@@ -99,8 +99,22 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
+    ''' <summary>
+    ''' 判断当前运行的程序是否为Console类型的应用和程序，由于在执行初始化的时候，
+    ''' 最先被初始化的是这个模块，所以没有任何代码能够先执行<see cref="Console.IsErrorRedirected"/>了，
+    ''' 在这里使用<see cref="Console.IsErrorRedirected"/>这个来进行判断是可靠的
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property IsConsoleApp As Boolean = Not Console.IsErrorRedirected
+    ''' <summary>
+    ''' 获取得到当前的这个所运行的应用程序所引用的dll文件列表
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property References As New Lazy(Of String())(Function() ReferenceSolver.ExecutingReferences)
 
     Sub New()
+        On Error Resume Next
+
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
         Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
 
@@ -175,7 +189,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property AssemblyName As String =
-        IO.Path.GetFileNameWithoutExtension(App.ExecutablePath)
+        basename(App.ExecutablePath)
 
     Public ReadOnly Property ProductName As String =
         If(String.IsNullOrEmpty(Application.ProductName.Trim), AssemblyName, Application.ProductName.Trim)
@@ -334,7 +348,7 @@ Public Module App
         Dim assm As Assembly = type.Assembly
         Dim productName As String = ApplicationDetails.GetProductName(assm)
         If String.IsNullOrEmpty(productName) Then
-            productName = IO.Path.GetFileNameWithoutExtension(assm.Location)
+            productName = basename(assm.Location)
         End If
         Return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{productName}"
     End Function

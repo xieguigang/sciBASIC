@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f260eefd2e0ad94a403509a0d0313235, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ArgumentCollection.vb"
+﻿#Region "Microsoft.VisualBasic::3f85af5995c68cfd72b54cdd3cff8dea, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ArgumentCollection.vb"
 
     ' Author:
     ' 

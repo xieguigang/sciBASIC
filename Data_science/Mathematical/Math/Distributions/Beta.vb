@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b986f98a35f424b763cf1041825d38d5, ..\sciBASIC#\Data_science\Mathematical\Math\Distributions\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::94a3781aea2eba176b5bcd5b20338046, ..\sciBASIC#\Data_science\Mathematical\Math\Distributions\Beta.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,18 @@ Namespace Distributions
             Return Pow(x, alpha - 1) * Pow((1 - x), _beta - 1) *
                 Exp(lgamma(alpha + _beta) - lgamma(alpha) - lgamma(_beta))
         End Function
+
+        '''' <summary>
+        '''' ###### beta function
+        '''' 
+        '''' https://en.wikipedia.org/wiki/Beta_function
+        '''' </summary>
+        '''' <param name="x#"></param>
+        '''' <param name="y#"></param>
+        '''' <returns></returns>
+        'Public Function beta(x#, y#) As Double
+        '    Return gamma(x) * gamma(y) / gamma(x + y)
+        'End Function
 
         <Extension>
         Public Function beta(x As IEnumerable(Of Double), alpha#, _beta#) As Vector

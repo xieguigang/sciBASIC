@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d38a146d8e262bd017d73fbb437d7159, ..\sciBASIC#\Data_science\Darwinism\GAF_test2\Kinetics_of_influenza_A_virus_infection_in_humans.vb"
+﻿#Region "Microsoft.VisualBasic::b8ef6ef550ec131a6b5f7d63ec19611a, ..\sciBASIC#\Data_science\Darwinism\GAF_test2\Kinetics_of_influenza_A_virus_infection_in_humans.vb"
 
     ' Author:
     ' 
@@ -26,15 +26,9 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.Bootstrapping
-Imports Microsoft.VisualBasic.Data.Bootstrapping.Analysis
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism
-Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.BasicR
 Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 ''' <summary>
 ''' ##### Kinetics of influenza A virus infection in humans

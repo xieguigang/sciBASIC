@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10179385b51dddd7a81967876c18c865, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\NameOf.vb"
+﻿#Region "Microsoft.VisualBasic::d2699ac12a1c319767d9cd649ba94852, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\NameOf.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Namespace FileStream
         Public Const REFLECTION_ID_MAPPING_INTERACTION_TYPE As String = "InteractionType"
 
         ''' <summary>
-        ''' <see cref="Node.Identifier"/>
+        ''' <see cref="Node.ID"/>
         ''' </summary>
         Public Const REFLECTION_ID_MAPPING_IDENTIFIER As String = "Identifier"
         ''' <summary>

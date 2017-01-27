@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::c6df515455e00f01c2b6213873a45d28, ..\sciBASIC#\Data_science\Mathematical\Plots\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::9c7cc02d87cac814baff1dacd03b5df6, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\PieChart.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module PieChart
@@ -62,79 +63,103 @@ Public Module PieChart
     Public Function Plot(data As IEnumerable(Of Fractions),
                          Optional size As Size = Nothing,
                          Optional margin As Size = Nothing,
-                         Optional bg As String = "white",
+                         Optional bg$ = "white",
+                         Optional valueLabel As Fractions.ValueLabels = Fractions.ValueLabels.Percentage,
+                         Optional valueLabelStyle$ = CSSFont.Win7Bold,
                          Optional legend As Boolean = True,
+                         Optional legendFont$ = CSSFont.Win7LargeBold,
                          Optional legendBorder As Border = Nothing,
                          Optional minRadius As Single = -1,
                          Optional reorder% = 0) As Bitmap
 #Const DEBUG = 0
         If reorder <> 0 Then
             If reorder > 0 Then
-                data = data.OrderBy(Function(x) x.Percentage)
+                data = data.OrderBy(
+                    Function(x) x.Percentage)
             Else
-                data = data.OrderByDescending(Function(x) x.Percentage)
+                data = data.OrderByDescending(
+                    Function(x) x.Percentage)
             End If
         End If
 
-        Return GraphicsPlots(size, margin, bg,
-                 Sub(g)
-                     Dim r# = (Math.Min(size.Width, size.Height) - Math.Max(margin.Width, margin.Height)) / 2  ' 最大的半径值
-                     Dim topLeft As New Point(size.Width / 2 - r, size.Height / 2 - r)
+        Dim __plot As Action(Of Graphics) =
+            Sub(g As Graphics)
+                Dim r# = (Math.Min(size.Width, size.Height) - Math.Max(margin.Width, margin.Height)) / 2  ' 最大的半径值
+                Dim topLeft As New Point(size.Width / 2 - r, size.Height / 2 - r)
+                Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
 
-                     If minRadius <= 0 OrElse CDbl(minRadius) >= r Then
-                         Dim rect As New Rectangle(topLeft, New Size(r * 2, r * 2))
-                         Dim a As New Value(Of Single)
-                         Dim sweep As New Value(Of Single)
+                If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
+                    Dim rect As New Rectangle(topLeft, New Size(r * 2, r * 2))
+                    Dim start As New Value(Of Single)
+                    Dim sweep As New Value(Of Single)
+                    Dim alpha As Double, pt As PointF
+                    Dim centra As Point = rect.Centre
+                    Dim labelSize As SizeF
+                    Dim label$
 
-                         Call g.FillPie(Brushes.LightGray, rect, 0, 360)
+                    Call g.FillPie(Brushes.LightGray, rect, 0, 360)
 
-                         For Each x As Fractions In data
-                             Call g.FillPie(New SolidBrush(x.Color), rect, (a = (a.value + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
-                         Next
-                     Else  ' 半径也会有变化
-                         Dim a As New Value(Of Single)
-                         Dim sweep! = 360 / data.Count
-                         Dim maxp# = data.Max(Function(x) x.Percentage)
+                    For Each x As Fractions In data
+                        Call g.FillPie(New SolidBrush(x.Color), rect, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
+
+                        alpha = (+start) - (+sweep / 2)
+                        pt = (r / 1.5).ToPoint(alpha)
+                        pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
+                        label = x.GetValueLabel(valueLabel)
+                        labelSize = g.MeasureString(label, valueLabelFont)
+
+                        '   If alpha > 90 AndAlso alpha < 270 Then
+                        pt = New Point(pt.X - labelSize.Width / 2, pt.Y)
+                        '  End If
+
+                        Call g.DrawString(label, valueLabelFont, Brushes.White, pt)
+                    Next
+                Else  ' 半径也会有变化
+                    Dim a As New Value(Of Single)
+                    Dim sweep! = 360 / data.Count
+                    Dim maxp# = data.Max(Function(x) x.Percentage)
 #If DEBUG Then
                          Dim list As New List(Of Rectangle)
 #End If
-                         For Each x As Fractions In data
-                             Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
-                             Dim vTopleft As New Point(size.Width / 2 - r2, size.Height / 2 - r2)
-                             Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
-                             Dim br As New SolidBrush(x.Color)
+                    For Each x As Fractions In data
+                        Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
+                        Dim vTopleft As New Point(size.Width / 2 - r2, size.Height / 2 - r2)
+                        Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
+                        Dim br As New SolidBrush(x.Color)
 
-                             Call g.FillPie(br, rect, (a = (a.value + sweep)), sweep)
+                        Call g.FillPie(br, rect, (a = (a.value + sweep)), sweep)
 #If DEBUG Then
                              list += rect
 #End If
-                         Next
+                    Next
 #If DEBUG Then
                          For Each rect In list
                              Call g.DrawRectangle(Pens.Red, rect)
                          Next
 #End If
-                     End If
+                End If
 
-                     If legend Then
-                         Dim font As New Font(FontFace.MicrosoftYaHei, 20)
-                         Dim maxL = data.Select(Function(x) g.MeasureString(x.Name, font).Width).Max
-                         Dim left = size.Width - (margin.Width * 2) - maxL
-                         Dim top = margin.Height
-                         Dim legends As New List(Of Legend)
+                If legend Then
+                    Dim font As Font = CSSFont.TryParse(legendFont)
+                    Dim maxL = data.Select(Function(x) g.MeasureString(x.Name, font).Width).Max
+                    Dim left = size.Width - (margin.Width * 2) - maxL
+                    Dim top = margin.Height
+                    Dim legends As New List(Of Legend)
 
-                         For Each x As Fractions In data
-                             legends += New Legend With {
+                    For Each x As Fractions In data
+                        legends += New Legend With {
                                 .color = x.Color.RGBExpression,
-                                .style = LegendStyles.Rectangle,
+                                .style = LegendStyles.Square,
                                 .title = x.Name,
-                                .fontstyle = CSSFont.GetFontStyle(font.Name, font.Style, font.Size)
+                                .fontstyle = legendFont
                              }
-                         Next
+                    Next
 
-                         Call g.DrawLegends(New Point(left, top), legends, ,, legendBorder)
-                     End If
-                 End Sub)
+                    Call g.DrawLegends(New Point(left, top), legends, ,, legendBorder)
+                End If
+            End Sub
+
+        Return __plot.GraphicsPlots(size, margin, bg)
     End Function
 
     ''' <summary>
@@ -151,7 +176,8 @@ Public Module PieChart
                 In array
                 Select New NamedValue(Of Double) With {
                     .Name = x.Name,
-                    .Value = x.Value / all
+                    .Value = x.Value / all,
+                    .Description = x.Value
                 }
         Return s.FromPercentages(colors.FromNames(array.Length))
     End Function
@@ -172,7 +198,8 @@ Public Module PieChart
                 In array
                 Select New NamedValue(Of Double) With {
                     .Name = x.Name,
-                    .Value = x.Value / all
+                    .Value = x.Value / all,
+                    .Description = x.Value
                 }
         Dim colors As Color() = Designer.FromSchema(
             schema, array.Length
@@ -204,7 +231,8 @@ Public Module PieChart
                 out(i) = New Fractions With {
                     .Color = c(i),
                     .Name = tag,
-                    .Percentage = v#
+                    .Percentage = v#,
+                    .Value = Val(array(i).Description)
                 }
             End With
         Next

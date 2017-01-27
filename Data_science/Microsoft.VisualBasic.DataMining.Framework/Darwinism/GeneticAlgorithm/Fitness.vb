@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b33d671c24738165e97ec0f0ffc9c72, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::358bcb02b52f52b281310552cb282a2f, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Fitness.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,6 @@
 
 #End Region
 
-
 ' *****************************************************************************
 ' Copyright 2012 Yuriy Lagodiuk
 ' 
@@ -47,7 +46,7 @@ Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 
 Namespace Darwinism.GAF
 
-    Public Interface Fitness(Of C As Chromosome(Of C), T As IComparable(Of T))
+    Public Interface Fitness(Of C As Chromosome(Of C))
 
         ''' <summary>
         ''' Assume that chromosome1 is better than chromosome2 <br/>
@@ -57,6 +56,6 @@ Namespace Darwinism.GAF
         ''' fit1.compareTo(fit2) &lt;= 0 <br/>
         ''' (假若是并行模式的之下，还要求这个函数是线程安全的)
         ''' </summary>
-        Function Calculate(chromosome As C) As T
+        Function Calculate(chromosome As C) As Double
     End Interface
 End Namespace

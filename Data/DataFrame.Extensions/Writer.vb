@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0106e7c5afa39debfa05f4978a94057, ..\sciBASIC#\Data\DataFrame.Extensions\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::cde61daae1df435cb982184f30db6124, ..\sciBASIC#\Data\DataFrame.Extensions\Writer.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.IO
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Language
 

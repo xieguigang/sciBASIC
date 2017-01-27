@@ -1,0 +1,323 @@
+﻿<h1>sciBASIC#: Microsoft VisualBasic for Scientific Computing</h1>
+
+<p><img src="./etc/badge.png" alt="(๑•̀ㅂ•́)و✧" /><br />
+<img src="https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg" alt="" /><br />
+<a href=""><img src="https://img.shields.io/github/downloads/xieguigang/sciBASIC/total.svg?maxAge=2592000?style=flat-square" alt="Github All Releases" /></a><br />
+<a href="https://opensource.org/licenses/GPL-3.0/"><img src="https://badges.frapsoft.com/os/gpl/gpl.svg?v=103" alt="GPL Licence" /></a><br />
+<a href="https://doi.org/10.5281/zenodo.166002"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.166002.svg" alt="DOI" /></a></p>
+
+<h6>[WARNING] This project is a work in progress and is not recommended for production use.</h6>
+
+<blockquote>
+  <p>Probably some namespace and object name may changes frequently on each commit, and you are feel free to using the <strong>Object Browser</strong> in visual studio to adapted to the object not defined problem which was caused by these changes.....</p>
+</blockquote>
+
+<hr>
+
+<ul>
+<li><img src="./logo.jpg" alt="Microsoft VisualBasic logo" /></li>
+<li><img src="./etc/README/nodes.gif" alt="" /></li>
+</ul>
+
+<h4>Directory Structure</h4>
+
+<h6>1. source projects</h6>
+
+<ul>
+<li><strong><a href="./CLI_tools/">/CLI_tools</a></strong> : Some small utilities and example tools</li>
+<li><strong><a href="./Data/">/Data</a></strong> : <em>sciBASIC#</em> data framework system for data science, includes data frame, data I/O and data object search framework.</li>
+<li><strong><a href="./Data_science/">/Data_science</a></strong> : <em>sciBASIC#</em> Mathmatica system, data graphics plot system &amp; Data Mining library</li>
+<li><strong><a href="./Microsoft.VisualBasic.Architecture.Framework/">/Microsoft.VisualBasic.Architecture.Framework</a></strong> : Microsoft VisualBasic General App Runtime core</li>
+<li><strong><a href="./mime/">/mime</a></strong> : various mime-type doc parsers in VisualBasic</li>
+<li><strong><a href="./gr/">/gr</a></strong> : <strong>sciBASIC# Artists</strong>: (graphic artist) VB.NET data graphics system</li>
+<li><strong><a href="./win32_api/">/win32_api</a></strong> : Win32 API collection (<strong>Obsolete</strong>)</li>
+<li><strong><a href="./www/">/www</a></strong> : Web related utilities code</li>
+</ul>
+
+<h6>2. docs for User</h6>
+
+<ul>
+<li><strong><a href="./guides/">/guides</a></strong> : This framework code usage example and manual documents</li>
+<li><strong><a href="./vb_codestyle/">/vb_codestyle</a></strong> : sciBASIC# Coding style standard document</li>
+</ul>
+
+<hr />
+
+<h4>Scientific Computing Tools for VisualBasic.NET</h4>
+
+<p>A visualbasic language feature runtime library for data science CLI architecture applications which is running on Windows/Linux/macOS Desktop/server platform or supercomputer platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences programming in VisualBasic language, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.</p>
+
+<blockquote>
+  <p>Abount VisualBasic code style guidelines:<br />
+  + <a href="https://github.com/xieguigang/sciBASIC/tree/master/vb_codestyle">https://github.com/xieguigang/sciBASIC/tree/master/vb_codestyle</a></p>
+  
+  <p>Guides for using this framework, you can found the document and content index at the <a href="./guides/README.md">README.md</a>(This guidelines document is currently compiling for users):<br />
+  + <a href="https://github.com/xieguigang/sciBASIC/blob/master/guides/">https://github.com/xieguigang/sciBASIC/blob/master/guides/</a></p>
+</blockquote>
+
+<h5>Install this framework via nuget package</h5>
+
+<p>For .NET Framework 4.6:</p>
+
+<ul>
+<li><a href="https://www.nuget.org/packages/sciBASIC#">https://www.nuget.org/packages/sciBASIC#</a></li>
+</ul>
+
+<p>```bash</p>
+
+<h1>For install latest stable release version:</h1>
+
+<p>PM> Install-Package sciBASIC</p>
+
+<h1>For install latest unstable beta version:</h1>
+
+<p>PM> Install-Package sciBASIC -Pre<br />
+```</p>
+
+<p>===================================================================</p>
+
+<h2>Microsoft VisualBasic Trinity Natural Language Processor</h2>
+
+<h6>TextRank</h6>
+
+<p>PageRank analysis on the text paragraph for find out the keyword, here is the pagerank result of the this example paragraph:</p>
+
+<blockquote>
+  <p>"the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."</p>
+</blockquote>
+
+<p><img src="./Data/TextRank/visualize.png" alt="" /></p>
+
+<h2>Image fast binarization using VisualBasic image extension API</h2>
+
+<p><a href="./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb"><code>Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)</code></a></p>
+
+<p>```vbnet<br />
+Imports Microsoft.VisualBasic.Imaging</p>
+
+<p>Dim bitmap As Image = Image.FromFile("./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")</p>
+
+<p>Call bitmap.Grayscale().SaveAs("./etc/lena/lena.grayscale.png", ImageFormats.Png)<br />
+Call bitmap.GetBinaryBitmap<br />
+     .SaveAs("./etc/lena/lena.binary.png", ImageFormats.Png)<br />
+Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)<br />
+     .SaveAs("./etc/lena/lena.gray.png", ImageFormats.Png)<br />
+```</p>
+
+<p><table>
+<thead><tr><th>Normal</th><th>Binary</th><th>SparseGray</th><th>Grayscale</th></tr></thead>
+<tr><td><img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 /></td><td><img src="./etc/lena/lena.binary.png" width=160 height=160 /></td><td><img src="./etc/lena/lena.gray.png" width=160 height=160 /></td><td><img src="./etc/lena/lena.grayscale.png" width=160 height=160 /></td></tr>
+</table></p>
+
+<h2>Microsoft VisualBasic Mathematics &amp; Data Graphics System</h2>
+
+<ul>
+<li><strong><a href="./Data_science/Mathematical/">Mathematics &amp; Chart Ploting System</a></strong></li>
+<li><strong><a href="./Data_science/Darwinism/">Darwinism computing module</a></strong></li>
+<li><strong><a href="./Data_science/">Data Mining &amp; Machine Learning</a></strong></li>
+<li><strong><a href="./Data/DataFrame/">sciBASIC# DataFrame System</a></strong></li>
+<li><strong><a href="./gr/Datavisualization.Network/">Network Visualization Interface</a></strong></li>
+</ul>
+
+<p><img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" alt="" /></p>
+
+<h5>sciBASIC# Chart Plots System</h5>
+
+<p><code>vbnet<br />
+Imports Microsoft.VisualBasic.Data.ChartPlots<br />
+</code></p>
+
+<p><img src="./Data_science/algorithms/CMeans/CMeans.png" alt="" /><br />
+<img src="./Data_science/Mathematical/images/295022-plots-plots.png" alt="" /></p>
+
+<h6>3D heatmap</h6>
+
+<p>```vbnet<br />
+Dim func As Func(Of Double, Double, (Z#, Color#)) =<br />
+_<br />
+    Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)</p>
+
+<p>Call Plot3D.ScatterHeatmap.Plot(<br />
+    func, "-3,3", "-3,3",<br />
+    New Camera With {<br />
+        .screen = New Size(3600, 2500),<br />
+        .ViewDistance = -3.3,<br />
+        .angleZ = 30,<br />
+        .angleX = 30,<br />
+        .angleY = -30,<br />
+        .offset = New Point(-100, -100)<br />
+    }) _<br />
+    .SaveAs("./3d-heatmap.png")<br />
+```</p>
+
+<p><img src="./Data_science/Mathematical/images/3d-heatmap.png" alt="" /></p>
+
+<h6>Scatter Heatmap</h6>
+
+<p>You can using a lambda expression as the plot data source:</p>
+
+<p>```vbnet<br />
+Dim f As Func(Of Double, Double, Double) =<br />
+    Function(x, y) x ^ 2 + y ^ 3</p>
+
+<p>Call ScatterHeatmap _<br />
+    .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _<br />
+    .SaveAs("./scatter-heatmap.png")<br />
+```</p>
+
+<p><img src="./Data_science/Mathematical/images/scatter-heatmap.png" alt="" /><br />
+<img src="./Data_science/Mathematical/images/256821.654661046-rho_gamma3_1%2C120_0.25%2C20.png" alt="" /></p>
+
+<h6>Stacked Barplot</h6>
+
+<p>The stacked barplot is a best choice for visualize the sample composition and compares to other samples data:</p>
+
+<p>```vbnet<br />
+Imports Microsoft.VisualBasic.Data.ChartPlots</p>
+
+<p>' Plots metagenome taxonomy profiles annotation result using barplot<br />
+Dim taxonomy As BarDataGroup = csv.LoadBarData(<br />
+    "./FigurePlot-Reference-Unigenes.absolute.level1.csv",<br />
+    "Paired:c8") ' Using color brewer color profiles</p>
+
+<p>Call BarPlot.Plot(<br />
+    taxonomy,<br />
+    New Size(2000, 1400),<br />
+    stacked:=True,<br />
+    legendFont:=New Font(FontFace.BookmanOldStyle, 18)) _<br />
+    .SaveAs("./FigurePlot-Reference-Unigenes.absolute.level1.png")<br />
+```</p>
+
+<p><img src="./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png" alt="" /></p>
+
+<h6>beta-PDF</h6>
+
+<p>```vbnet<br />
+Public Function beta(x#, alpha#, _beta#) As Double<br />
+    Return Pow(x, alpha - 1) * Pow((1 - x), _beta - 1) *<br />
+        Exp(lgamma(alpha + _beta) - lgamma(alpha) - lgamma(_beta))<br />
+End Function</p>
+
+<p>Public Function lgamma(x As Double) As Double<br />
+    Dim logterm As Double = Math.Log(x * (1.0F + x) * (2.0F + x))<br />
+    Dim xp3 As Double = 3.0F + x</p>
+
+<pre><code>Return -2.081061F - x + 0.0833333F / xp3 - 
+    logterm + (2.5F + x) * Math.Log(xp3)
+</code></pre>
+
+<p>End Function<br />
+```<br />
+<img src="./Data_science/Mathematical/data/beta-PDF/beta_PDF.png" height="650px"></img></p>
+
+<blockquote>
+  <p><a href="https://en.wikipedia.org/wiki/Beta_distribution">https://en.wikipedia.org/wiki/Beta_distribution</a></p>
+</blockquote>
+
+<h6>Heatmap</h6>
+
+<p><img src="./Data_science/Mathematical/images/heatmap.png" alt="" /></p>
+
+<p>```vbnet<br />
+Dim data = DataSet.LoadDataSet("./Quick_correlation_matrix_heatmap/mtcars.csv")</p>
+
+<p>Call data.CorrelatesNormalized() _<br />
+    .Plot(mapName:="Jet",  ' Using internal color theme 'Jet'<br />
+          mapLevels:=20,<br />
+          legendFont:=New Font(FontFace.BookmanOldStyle, 32)) _<br />
+    .SaveAs("./images/heatmap.png")<br />
+```</p>
+
+<blockquote>
+  <h6>Microsoft.VisualBasic.Mathematical.Plots.Heatmap::Plot(IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))), Color(), Integer, String, Boolean, Size, Size, String, String, String) As Bitmap</h6>
+  
+  <p>Heatmap data source from R dataset <a href="./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv"><code>mtcars</code></a> and calculates <a href="./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb">the Pearson correlations</a>:<br />
+  <code>R<br />
+  data(mtcars)<br />
+  write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv")<br />
+  </code></p>
+</blockquote>
+
+<p>===================================================================</p>
+
+<h2>New VisualBasic Language Syntax in this runtime</h2>
+
+<p>First of all, imports the language feature namespace of VisualBasic</p>
+
+<p>```vbnet</p>
+
+<h1>Region "Microsoft VisualBasic.NET language"</h1>
+
+<p>' sciBASIC# general application runtime<br />
+' Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.dll</p>
+
+<h1>End Region</h1>
+
+<p>Imports Microsoft.VisualBasic.Language<br />
+```</p>
+
+<h6>1. Inline value assign</h6>
+
+<p>Old:</p>
+
+<p>```vbnet<br />
+Dim s As String = ""</p>
+
+<p>Do While Not s Is Nothing<br />
+   s = blablabla</p>
+
+<p>' Do other staff<br />
+Loop<br />
+```</p>
+
+<p>New:</p>
+
+<p>```vbnet<br />
+Dim s As New Value(Of String)</p>
+
+<p>Do While Not (s = blablabla) Is Nothing<br />
+   ' Do other staff<br />
+Loop<br />
+```</p>
+
+<h6>2. List(Of ) Add</h6>
+
+<p>Old:</p>
+
+<p>```vbnet<br />
+Dim l As New List(Of String)</p>
+
+<p>Call l.Add("123")<br />
+Call l.AddRange(From x In 100.Sequence Select CStr(x))<br />
+```</p>
+
+<p>New:</p>
+
+<p>```vbnet<br />
+Dim l As New List(Of String)</p>
+
+<p>l += "123"<br />
+l += From x As Integer<br />
+     In 100.Sequence<br />
+     Select CStr(x)<br />
+```</p>
+
+<h6>VB int Type</h6>
+
+<p>```vbnet<br />
+Dim min As int = 1<br />
+Dim max As int = 200<br />
+Dim x As Integer = 199</p>
+
+<p>Console.WriteLine(min &lt;= x &lt; max) ' True<br />
+x += 10 ' 209<br />
+Console.WriteLine(min &lt;= x &lt; max) ' False<br />
+x = -1<br />
+Console.WriteLine(min &lt;= x &lt; max) ' False<br />
+```</p>
+
+<p>===================================================================</p>
+
+<blockquote>
+  <p>Copyleft ! 2017, I@xieguigang.me</p>
+</blockquote>

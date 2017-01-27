@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31634f36d222ae1a7c729007865641e3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5ad3cf0e0a73e433bb81415d76eb0c6c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,11 @@ Imports Microsoft.VisualBasic.Language.C
 Namespace Mathematical
 
     ''' <summary>
-    ''' Generates a random number
+    ''' Generates a random number.
+    ''' (事实上这个函数指针的功能仅仅是返回一个实数，所以这里不仅仅是局限于随机数，也可以是一个固定值的实数)
     ''' </summary>
     ''' <returns></returns>
-    Public Delegate Function INextRandomNumber() As Double
+    Public Delegate Function IValueProvider() As Double
 
     ''' <summary>
     ''' Tells the function how to generates a new random seed?

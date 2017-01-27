@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::242e71af332e430898bc4deb1d4224a8, ..\sciBASIC#\Data_science\Mathematical\Plots\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::3f85b35b321321f9dcbf4561f46b6f83, ..\sciBASIC#\Data_science\Mathematical\Plots\Histogram.vb"
 
 ' Author:
 ' 
@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Mathematical.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -290,52 +290,4 @@ Public Module Histogram
                 }
         End Sub
     End Structure
-
-    Public Function FromODE(odes As IEnumerable(Of ODE), Optional colors$() = Nothing) As HistogramGroup
-        Dim clData As Color() = If(
-            colors.IsNullOrEmpty,
-            ChartColors.Shuffles,
-            colors.ToArray(AddressOf ToColor))
-        Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
- _
-            From x As SeqValue(Of ODE)
-            In odes.SeqIterator
-            Select New NamedValue(Of Color) With {
-                .Name = x.obj.Id,
-                .Value = clData(x.i)
-            }
-
-        Dim range As DoubleRange = odes.First.xrange
-        Dim delta# = range.Length / odes.First.y.Length
-        Dim samples = LinqAPI.Exec(Of HistProfile) <=
- _
-            From out As SeqValue(Of ODE)
-            In odes.SeqIterator
-            Let left = New Value(Of Double)(range.Min)
-            Select New HistProfile With {
-                .legend = New Legend With {
-                    .color = serials(out.i).Value.RGBExpression,
-                    .fontstyle = CSSFont.Win10Normal,
-                    .style = LegendStyles.Rectangle,
-                    .title = serials(out.i).Name
-                },
-                .data = LinqAPI.Exec(Of HistogramData) <=
- _
-                    From i As SeqValue(Of Double)
-                    In out.obj.y.SeqIterator
-                    Let x1 As Double = left
-                    Let x2 As Double = (left = left.value + delta)
-                    Where Not i.obj.IsNaNImaginary
-                    Select New HistogramData With {
-                        .x1 = x1,
-                        .x2 = x2,
-                        .y = i.obj
-                    }
-            }
-
-        Return New HistogramGroup With {
-            .Samples = samples,
-            .Serials = serials
-        }
-    End Function
 End Module

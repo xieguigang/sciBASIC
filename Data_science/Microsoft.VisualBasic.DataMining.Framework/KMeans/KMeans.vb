@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a94e5e1d6c51b24b32d97df8c9615a90, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::171f0f403593ccfac826092a76774329, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
 
     ' Author:
     ' 
@@ -94,6 +94,16 @@ Namespace KMeans
 
         ''' <summary>
         ''' Calculates The Mean Of A Cluster OR The Cluster Center
+        ''' 
+        ''' ```vbnet
+        ''' Dim cluster#(,) = {
+        '''     {15, 32, 35.6},
+        '''     {19, 54, 65.1}
+        ''' }
+        ''' Dim centroid#() = Kmeans.ClusterMean(cluster)
+        '''
+        ''' Call $"<br/>Cluster mean Calc: {centroid}".__DEBUG_ECHO
+        ''' ```
         ''' </summary>
         ''' <param name="cluster">
         ''' A two-dimensional array containing a dataset of numeric values
@@ -127,7 +137,9 @@ Namespace KMeans
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
-        ''' <param name="clusterCount">The number of clusters or groups to form</param>
+        ''' <param name="clusterCount">
+        ''' The number of clusters or groups to form.(当这个参数值为0的时候，函数也会返回一个空集合)
+        ''' </param>
         ''' <param name="source">
         ''' An array containing data that will be clustered, the elements number must greater than 2, at least 3 elements.
         ''' (里面的元素至少需要三个)
@@ -250,7 +262,7 @@ Namespace KMeans
  _
                         From c As SeqValue(Of KMeansCluster(Of T))
                         In clusters.SeqIterator.AsParallel
-                        Let cluster As KMeansCluster(Of T) = c.obj
+                        Let cluster As KMeansCluster(Of T) = c.value
                         Let clusterMean As Double() = If(
                             cluster.NumOfEntity = 0,
                             New Double(x.Properties.Length - 1) {},
@@ -258,10 +270,10 @@ Namespace KMeans
                         Let distance As Double = EuclideanDistance(x.Properties, clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
                         Select New SeqValue(Of Double) With {
                             .i = c.i,
-                            .obj = distance
+                            .value = distance
                         }
                     Dim index As Integer = min _
-                        .OrderBy(Function(distance) distance.obj) _
+                        .OrderBy(Function(distance) distance.value) _
                         .First.i ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
 
                     Call newClusters(index).Add(x)

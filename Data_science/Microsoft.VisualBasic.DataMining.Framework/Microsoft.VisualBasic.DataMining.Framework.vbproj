@@ -215,6 +215,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
+    <Compile Include="FuzzyCMeans\AlgorithmsUtils.vb" />
+    <Compile Include="FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb" />
+    <Compile Include="FuzzyCMeans\Algorithm\Utils.vb" />
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="Darwinism\Models\FitnessPool.vb" />
     <Compile Include="DFT.vb" />
@@ -230,6 +233,7 @@
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\IterartionListener.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Population.vb" />
+    <Compile Include="FuzzyCMeans\Entity.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
     <Compile Include="KMeans\EntityModels\csv.vb" />
@@ -237,10 +241,11 @@
     <Compile Include="KMeans\CompleteLinkage\Cluster.vb" />
     <Compile Include="KMeans\CompleteLinkage\Clustering.vb" />
     <Compile Include="KMeans\CompleteLinkage\Point.vb" />
+    <Compile Include="KMeans\Models\ClusterCollection.vb" />
     <Compile Include="KMeans\Parallel\Folks.vb" />
     <Compile Include="KMeans\Parallel\StreamAPI.vb" />
     <Compile Include="KMeans\EntityModels\Entity.vb" />
-    <Compile Include="KMeans\LDM.vb" />
+    <Compile Include="KMeans\Models\KMeansCluster.vb" />
     <Compile Include="KMeans\KMeans.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\TransactionTokensItem.vb" />
     <Compile Include="AprioriAlgorithm\Algorithm\Entities\Output.vb" />
@@ -341,6 +346,7 @@
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

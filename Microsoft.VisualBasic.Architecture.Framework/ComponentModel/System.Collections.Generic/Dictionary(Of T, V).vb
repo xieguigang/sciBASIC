@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d78d2b74a61c8ac680f576a8f6b7217a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::2b41282d2a47cc9aee9d12be6defe465, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Language
 ''' code for this type, see the Reference Source.
 ''' </summary>
 ''' <typeparam name="V"></typeparam>
-Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of String, V)
+Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of String, V)
     ' Implements IEnumerable(Of V)
 
     Sub New()
@@ -72,20 +72,20 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
     ''' </summary>
     ''' <param name="item"></param>
     Public Overloads Sub Add(item As V)
-        Call MyBase.Add(item.Identifier, item)
+        Call MyBase.Add(item.Key, item)
     End Sub
 
     Public Sub AddRange(source As IEnumerable(Of V))
         For Each x As V In source
-            Call MyBase.Add(x.Identifier, x)
+            Call MyBase.Add(x.Key, x)
         Next
     End Sub
 
     Public Sub InsertOrUpdate(x As V)
-        If Me.ContainsKey(x.Identifier) Then
-            Me(x.Identifier) = x
+        If Me.ContainsKey(x.Key) Then
+            Me(x.Key) = x
         Else
-            Call MyBase.Add(x.Identifier, x)
+            Call MyBase.Add(x.Key, x)
         End If
     End Sub
 
@@ -151,8 +151,8 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
     ''' <param name="x"></param>
     ''' <returns></returns>
     Public Overloads Function Remove(x As V) As Boolean
-        If Me.ContainsKey(x.Identifier) Then
-            Return Me.Remove(x.Identifier)
+        If Me.ContainsKey(x.Key) Then
+            Return Me.Remove(x.Key)
         Else
             Return False
         End If
@@ -188,6 +188,20 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
         Return hash
     End Operator
 
+    ''' <summary>
+    ''' 批量移除字典之中的键值对
+    ''' </summary>
+    ''' <param name="hash"></param>
+    ''' <param name="keys">需要移除的键名的列表</param>
+    ''' <returns></returns>
+    Public Shared Operator -(hash As Dictionary(Of V), keys As IEnumerable(Of String)) As Dictionary(Of V)
+        For Each k As String In keys
+            Call hash.Remove(k)
+        Next
+
+        Return hash
+    End Operator
+
     Public Shared Widening Operator CType(source As System.Collections.Generic.List(Of V)) As Dictionary(Of V)
         Return source.ToDictionary
     End Operator
@@ -216,6 +230,10 @@ Public Class Dictionary(Of V As sIdEnumerable) : Inherits SortedDictionary(Of St
 
     Public Shared Operator &(hash As Dictionary(Of V), null As String) As Boolean
         Return hash.ContainsKey(null)
+    End Operator
+
+    Public Shared Narrowing Operator CType(map As Dictionary(Of V)) As V()
+        Return map.Values.ToArray
     End Operator
 
     ' 实现这个集合接口会和字典的集合接口出现冲突

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34fb17a446146d5257217c2a24a2a54d, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::cb2f8549a22a04edc3a1b286e83b698a, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\Entity.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Namespace KMeans
 
@@ -37,9 +38,9 @@ Namespace KMeans
     ''' 计算所使用的对象实例实体模型
     ''' </summary>
     Public Class Entity : Inherits EntityBase(Of Double)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property uid As String Implements sIdEnumerable.Identifier
+        Public Property uid As String Implements INamedValue.Key
 
         Public Overrides Function ToString() As String
             Return $"{uid}  ({Length} Properties)"
@@ -65,7 +66,7 @@ Namespace KMeans
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) CStr(x.i),
-                                  Function(x) x.obj)
+                                  Function(x) x.value)
             }
         End Function
 
@@ -75,8 +76,23 @@ Namespace KMeans
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) maps(x.i),
-                                  Function(x) x.obj)
+                                  Function(x) x.value)
             }
         End Function
+
+        ''' <summary>
+        ''' 值相等判断
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Public Shared Operator =(a As Entity, b As Entity) As Boolean
+            Return a.uid.TextEquals(b.uid) AndAlso
+                VectorEqualityComparer.VectorEqualsToAnother(a.Properties, b.Properties)
+        End Operator
+
+        Public Shared Operator <>(a As Entity, b As Entity) As Boolean
+            Return Not a = b
+        End Operator
     End Class
 End Namespace

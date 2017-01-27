@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92956c9e685b943186b0f6716dbaae80, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::2a6f5c2346625d0ad50059dbcd45724d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Paragraph.vb"
 
     ' Author:
     ' 
@@ -62,6 +62,10 @@ Namespace Text
                         .Replace(ASCII.TAB, " "c)
                     Dim part As NamedValue(Of String) =
                         nextLine.GetTagValue
+
+                    If String.IsNullOrEmpty(nextLine) Then
+                        Exit Do
+                    End If
 
                     If Not String.IsNullOrEmpty(part.Name) Then ' 有空格
                         s.value = Trim((+s) & part.Name)

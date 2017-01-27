@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb5c3dd95e98fb947265188213234b0e, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\VectorAPI.vb"
+﻿#Region "Microsoft.VisualBasic::a23049a2a686accf4b219e3c7567d3de, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\VectorAPI.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@ Namespace Drawing2D
 
         Public ReadOnly Property APIModuleLibrary As String
             Get
-                'Return IO.Path.GetFileNameWithoutExtension(GetType(VectorAPI).Assembly.Location)
+                'Return basename(GetType(VectorAPI).Assembly.Location)
                 Return GetType(VectorAPI).Assembly.Location.ToFileURL
             End Get
         End Property

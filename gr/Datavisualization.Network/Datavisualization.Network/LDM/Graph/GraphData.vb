@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae3df9e9ec1a19044797112b8a461b7b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\GraphData.vb"
+﻿#Region "Microsoft.VisualBasic::dd7442d7209c58ba0f93ec6a6317c82f, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\GraphData.vb"
 
     ' Author:
     ' 
@@ -68,6 +68,7 @@ Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Linq
 Imports System.Text
+Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
@@ -100,6 +101,12 @@ Namespace Graph
         Public Property initialPostion() As AbstractVector
         Public Property origID() As String
         Public Property Force As Point
+
+        ''' <summary>
+        ''' 颜色<see cref="SolidBrush"/>或者绘图<see cref="TextureBrush"/>
+        ''' </summary>
+        ''' <returns></returns>
+        <ScriptIgnore>
         Public Property Color As Brush
         <DumpNode> Public Property Weights As Double()
 

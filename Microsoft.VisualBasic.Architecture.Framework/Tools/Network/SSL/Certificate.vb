@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d74caa9f7bad915f62c1d4b4662978e8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\SSL\Certificate.vb"
+﻿#Region "Microsoft.VisualBasic::56424bbe3437e0f8e2bdd340bb3cb693, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\SSL\Certificate.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.SecurityString
 
@@ -234,7 +235,7 @@ Namespace Net.SSL
             Catch ex As Exception
                 Throw New Exception(path.ToFileURL, ex)
             End Try
-            Dim refListBuffer = Parallel.GetReferences(assembly:=assembly, removeSystem:=True)
+            Dim refListBuffer = GetReferences(assembly:=assembly, removeSystem:=True)
 
             Return refListBuffer
         End Function

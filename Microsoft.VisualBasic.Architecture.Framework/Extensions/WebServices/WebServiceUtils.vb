@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::a81ce97e400bae356603ba3e8719cf37, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::36c94de2c06da55ad2e84121a05355a3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -43,6 +43,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal.Utility
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.HtmlParser
 
 ''' <summary>
@@ -99,63 +100,6 @@ Public Module WebServiceUtils
             Call reqparm.Add(Value.Key, Value.Value)
         Next
         Return reqparm
-    End Function
-
-    ''' <summary>
-    ''' Gets the link text in the html fragement text.
-    ''' </summary>
-    ''' <param name="html">A string that contains the url string pattern like: href="url_text"</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Html.Href")>
-    <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")>
-                                     html As String) As String
-
-        If String.IsNullOrEmpty(html) Then
-            Return ""
-        End If
-
-        Dim url As String = Regex.Match(html, "href="".+?""", RegexOptions.IgnoreCase).Value
-
-        If String.IsNullOrEmpty(url) Then
-            Return ""
-        Else
-            url = Mid(url, 6)
-            url = Mid(url, 2, Len(url) - 2)
-            Return url
-        End If
-    End Function
-
-    Public Const IMAGE_SOURCE As String = "<img.+?src=.+?>"
-
-    ''' <summary>
-    ''' Parsing image source url from the img html tag.
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <returns></returns>
-    <Extension> Public Function ImageSource(str As String) As String
-        str = Regex.Match(str, "src="".+?""", RegexOptions.IgnoreCase).Value
-        str = Mid(str, 5)
-        str = Mid(str, 2, Len(str) - 2)
-        Return str
-    End Function
-
-    Const HTML_TAG As String = "</?.+?(\s+.+?="".+?"")*>"
-
-    ''' <summary>
-    ''' Removes the html tags from the text string.
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <returns></returns>
-    <ExportAPI("Html.Tag.Trim")>
-    <Extension> Public Function TrimHTMLTag(str As String) As String
-        If String.IsNullOrEmpty(str) Then
-            Return ""
-        End If
-
-        str = Regex.Replace(str, HTML_TAG, "")
-        Return str
     End Function
 
     Const PortOccupied As String = "Only one usage of each socket address (protocol/network address/port) Is normally permitted"
@@ -454,7 +398,7 @@ Public Module WebServiceUtils
 
     <ExportAPI("POST", Info:="POST http request")>
     Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As String
-        Return url.PostRequest(params.BuildReqparm)
+        Return url.POST(params.BuildReqparm)
     End Function
 
     <ExportAPI("POST", Info:="POST http request")>
@@ -471,19 +415,22 @@ Public Module WebServiceUtils
     ''' <summary>
     ''' POST http request for get html.
     ''' (请注意，假若<paramref name="params"/>之中含有字符串数组的话，则会出错，这个时候需要使用
-    ''' <see cref="PostRequest(String, Dictionary(Of String, String()), String, String, String)"/>方法)
+    ''' <see cref="Post(String, Dictionary(Of String, String()), String, String, String)"/>方法)
     ''' </summary>
     ''' <param name="url$"></param>
     ''' <param name="params"></param>
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function PostRequest(url$, params As NameValueCollection, Optional Referer$ = "", Optional proxy$ = Nothing) As String
+    <Extension> Public Function POST(url$, params As NameValueCollection, Optional Referer$ = "", Optional proxy$ = Nothing) As String
         Using request As New WebClient
 
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
             Call request.Headers.Add(NameOf(Referer), Referer)
 
+            If String.IsNullOrEmpty(proxy) Then
+                proxy = WebServiceUtils.Proxy
+            End If
             If Not String.IsNullOrEmpty(proxy) Then
                 Call request.SetProxy(proxy)
             End If
@@ -507,10 +454,10 @@ Public Module WebServiceUtils
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function PostRequest(url$, data As Dictionary(Of String, String()),
-                                            Optional Referer$ = "",
-                                            Optional proxy$ = Nothing,
-                                            Optional ua As String = UserAgent.GoogleChrome) As String
+    <Extension> Public Function POST(url$, data As Dictionary(Of String, String()),
+                                     Optional Referer$ = "",
+                                     Optional proxy$ = Nothing,
+                                     Optional ua As String = UserAgent.GoogleChrome) As String
 
         Dim postString As New List(Of String)
 
@@ -556,39 +503,6 @@ Public Module WebServiceUtils
         End Using
     End Function
 
-    ''' <summary>
-    ''' 有些时候后面可能会存在多余的vbCrLf，则使用这个函数去除
-    ''' </summary>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TrimResponseTail(value As String) As String
-        If String.IsNullOrEmpty(value) Then
-            Return ""
-        End If
-
-        Dim l As Integer = Len(value)
-        Dim i As Integer = value.LastIndexOf(vbCrLf)
-        If i = l - 2 Then
-            Return Mid(value, 1, l - 2)
-        Else
-            Return value
-        End If
-    End Function
-
-    Private ReadOnly vbCrLfLen As Integer = Len(vbCrLf)
-
-    ''' <summary>
-    ''' 获取两个尖括号之间的内容
-    ''' </summary>
-    ''' <param name="html"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
-    <Extension> Public Function GetValue(html As String) As String
-        Return html.GetStackValue(">", "<")
-    End Function
-
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.(同时支持http位置或者本地文件，失败或者错误会返回空字符串)
@@ -619,45 +533,48 @@ Public Module WebServiceUtils
     '''
     <Extension> Public Function Get_PageContent(url As String, Optional RequestTimeOut As UInteger = 20, Optional FileSystemUrl As Boolean = False) As String
 #End If
-        Call $"Request data from: {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
+        ' Call $"Request data from: {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
+        Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
 
         If FileIO.FileSystem.FileExists(url) Then
             Call "[Job DONE!]".__DEBUG_ECHO
             Return FileIO.FileSystem.ReadAllText(url)
         Else
             If isFileUrl Then
-                Call $"url {url.ToFileURL} can Not be solved on your filesystem!".__DEBUG_ECHO
+                Call $"URL {url.ToFileURL} can not solved on your filesystem!".Warning
                 Return ""
             End If
         End If
 
-#If FRAMEWORD_CORE Then
-        Using Process As New CBusyIndicator(_start:=True)
-#End If
-            Return __downloadWebpage(
-                url,
-                retry,
-                headers,
-                proxy,
-                doNotRetry404, UA)
-
-#If FRAMEWORD_CORE Then
-        End Using
-#End If
-        Return ""
+        Return url.__httpRequest(retry, headers, proxy, doNotRetry404, UA)
     End Function
 
-    Private Function __downloadWebpage(url$,
-                                       RequestTimeOut%,
-                                       headers As Dictionary(Of String, String),
-                                       proxy As String,
-                                       DoNotRetry404 As Boolean,
-                                       UA$) As String
+    ''' <summary>
+    ''' Example for xx-net tool:
+    ''' 
+    ''' ```
+    ''' http://127.0.0.1:8087/
+    ''' ```
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Proxy As String
+
+    <Extension>
+    Private Function __httpRequest(url$,
+                                   retries%,
+                                   headers As Dictionary(Of String, String),
+                                   proxy As String,
+                                   DoNotRetry404 As Boolean,
+                                   UA$) As String
 
         Dim retryTime As Integer = 0
 
+        If String.IsNullOrEmpty(proxy) Then
+            proxy = WebServiceUtils.Proxy
+        End If
+
         Try
-RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
+RETRY:      Return __get(url, headers, proxy, UA)
         Catch ex As Exception
             Dim is404 As Boolean =
                 InStr(ex.Message, "(404) Not Found") > 0
@@ -665,13 +582,13 @@ RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
             ex = New Exception(url, ex)
             ex.PrintException
 
-            If retryTime < RequestTimeOut Then
+            If retryTime < retries Then
                 If is404 AndAlso DoNotRetry404 Then
                     Return LogException(url, ex)
                 End If
 
                 retryTime += 1
-                Call "Data downloading error, retry connect to the server!".__DEBUG_ECHO
+                Call "Data download error, retry connect to the server!".PrintException
                 GoTo RETRY
             Else
                 Return LogException(url, ex)
@@ -705,37 +622,36 @@ RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
         }
     End Function
 
-    Private Function __downloadWebpage(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
-        Call "Waiting for the server reply..".__DEBUG_ECHO
+    Private Function __get(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
+        Dim timer As Stopwatch = Stopwatch.StartNew
+        Dim webRequest As HttpWebRequest = HttpWebRequest.Create(url)
 
-        Dim Timer As Stopwatch = Stopwatch.StartNew
-        Dim WebRequest As HttpWebRequest = HttpWebRequest.Create(url)
-
-        WebRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
-        WebRequest.UserAgent = UserAgent.GoogleChrome
+        webRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
+        webRequest.UserAgent = UserAgent.GoogleChrome
 
         If Not headers.IsNullOrEmpty Then
             For Each x In headers
-                WebRequest.Headers(x.Key) = x.Value
+                webRequest.Headers(x.Key) = x.Value
             Next
         End If
         If Not String.IsNullOrEmpty(proxy) Then
-            Call WebRequest.SetProxy(proxy)
+            Call webRequest.SetProxy(proxy)
         End If
 
-        Dim WebResponse As WebResponse = WebRequest.GetResponse
+        Using respStream As Stream = webRequest.GetResponse.GetResponseStream,
+            reader As New StreamReader(respStream)
 
-        Using respStream As Stream = WebResponse.GetResponseStream, ioStream As New StreamReader(respStream)
-            Dim html As String = ioStream.ReadToEnd
-            Dim title As String = html.HTMLtitle
+            Dim html As String = reader.ReadToEnd
+            Dim title As String = html.HTMLTitle
 
             If InStr(html, "http://www.doctorcom.com") > 0 Then
                 Return ""
             End If
 
-            Call $"[{title}  {url}] -->  Package Size:= {Len(html)}bytes; Response time:= {Timer.ElapsedMilliseconds}ms".__DEBUG_ECHO
-            Call html.SaveTo($"{App.AppSystemTemp}/{url.NormalizePathString}.tmp")
-
+            Call $"[{title}  {url}] --> sizeOf:={Len(html)} chars; response_time:={timer.ElapsedMilliseconds} ms.".__DEBUG_ECHO
+#If DEBUG Then
+            Call html.SaveTo($"{App.AppSystemTemp}/{App.PID}/{url.NormalizePathString}.html")
+#End If
             Return html
         End Using
     End Function
@@ -753,7 +669,8 @@ RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
                                              <Parameter("Path.Save", "The saved location of the downloaded file data.")>
                                              save As String,
                                              Optional proxy As String = Nothing,
-                                             Optional ua As String = UserAgent.FireFox) As Boolean
+                                             Optional ua As String = UserAgent.FireFox,
+                                             Optional retry As Integer = 10) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -764,6 +681,7 @@ RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
     ''' <remarks></remarks>
     <Extension> Public Function DownloadFile(strUrl As String, SavedPath As String) As Boolean
 #End If
+RE0:
         Try
             Using dwl As New WebClient()
                 If Not String.IsNullOrEmpty(proxy) Then
@@ -772,6 +690,7 @@ RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
 
                 Call dwl.Headers.Add(UserAgent.UAheader, ua)
                 Call save.ParentPath.MkDIR
+                Call $"{strUrl} --> {save}".__DEBUG_ECHO
                 Call dwl.DownloadFile(strUrl, save)
             End Using
             Return True
@@ -782,6 +701,13 @@ RETRY:      Return __downloadWebpage(url, headers, proxy, UA)
                 New Exception(strUrl, ex),
                 trace)
             Call ex.PrintException
+
+            If retry > 0 Then
+                retry -= 1
+                GoTo RE0
+            Else
+
+            End If
 
             Return False
         Finally

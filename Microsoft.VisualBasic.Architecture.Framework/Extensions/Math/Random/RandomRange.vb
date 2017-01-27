@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d28cee72966ec15fcff79a7752f0c08b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\RandomRange.vb"
+﻿#Region "Microsoft.VisualBasic::72ce60e6f511fbb705d5a2e5d0b8f3c1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\RandomRange.vb"
 
     ' Author:
     ' 
@@ -38,25 +38,6 @@ Namespace Mathematical
     Public Module RandomRange
 
         ''' <summary>
-        ''' 返回零表示比较小的常数
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <param name="INF"></param>
-        ''' <returns></returns>
-        Public Function Log(x#, Optional INF% = 5) As Single
-            Dim p As Double = Math.Log10(Math.Abs(x))
-
-            If p < -4 Then
-                Return p
-            End If
-            If p > 5 Then
-                Return p
-            End If
-
-            Return 0
-        End Function
-
-        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="from"></param>
@@ -66,8 +47,8 @@ Namespace Mathematical
         ''' True的时候会通过牺牲性能来强制重新实例化随机数发生器来获取足够的随机
         ''' </param>
         ''' <returns></returns>
-        Public Function GetRandom(from#, to#, Optional INF% = 5, Optional forceInit As Boolean = False) As INextRandomNumber
-            Dim pf! = Log(from, INF), pt! = Log([to], INF)
+        Public Function GetRandom(from#, to#, Optional INF% = 5, Optional forceInit As Boolean = False) As IValueProvider
+            Dim pf! = ScientificNotation.PowerLog10(from, INF), pt! = ScientificNotation.PowerLog10([to], INF)
 
             If from > 0 Then
                 If [to] > 0 Then ' from 是正数，则to也必须是正数
@@ -155,7 +136,7 @@ Namespace Mathematical
         End Function
 
         Public Function Testing(from#, to#) As Double()
-            Dim rnd As INextRandomNumber = GetRandom(from, [to])
+            Dim rnd As IValueProvider = GetRandom(from, [to])
             Dim bufs As New List(Of Double)
 
             For Each i% In 1000%.Sequence

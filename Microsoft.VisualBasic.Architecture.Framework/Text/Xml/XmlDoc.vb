@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9930a38797f8943375a65cdf63151818, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f41e6c3218e22d9995b90fbdc2786bd1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDoc.vb"
 
     ' Author:
     ' 
@@ -94,6 +94,10 @@ Namespace Text.Xml
             Call doc.Replace([declare], setDeclare.ToString)
             Call xmlns.WriteNamespace(doc)
             Return doc.ToString
+        End Function
+
+        Public Function CreateObject(Of T)() As T
+            Return ToString.LoadFromXml(Of T)
         End Function
 
         Public Shared Function FromObject(Of T As Class)(x As T) As XmlDoc

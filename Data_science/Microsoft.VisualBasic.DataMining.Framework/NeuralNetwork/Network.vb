@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1345c958622569d97ad013386f8c0705, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Network.vb"
+﻿#Region "Microsoft.VisualBasic::0d3ff4153bfa4a9509f820e735689c37, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Network.vb"
 
     ' Author:
     ' 
@@ -36,9 +36,9 @@ Namespace NeuralNetwork
 #Region "-- Properties --"
         Public Property LearnRate() As Double
         Public Property Momentum() As Double
-        Public Property InputLayer() As List(Of Neuron)
-        Public Property HiddenLayer() As List(Of Neuron)
-        Public Property OutputLayer() As List(Of Neuron)
+        Public Property InputLayer() As IList(Of Neuron)
+        Public Property HiddenLayer() As IList(Of Neuron)
+        Public Property OutputLayer() As IList(Of Neuron)
 #End Region
 
 #Region "-- Constructor --"
@@ -107,8 +107,8 @@ Namespace NeuralNetwork
                 InputLayer(i).Value = inputs(i)
             Next
 
-            HiddenLayer.ForEach(Function(a) a.CalculateValue())
-            OutputLayer.ForEach(Function(a) a.CalculateValue())
+            HiddenLayer.ForEach(Sub(a, i) a.CalculateValue())
+            OutputLayer.ForEach(Sub(a, i) a.CalculateValue())
         End Sub
 
         Private Sub BackPropagate(ParamArray targets As Double())
@@ -116,9 +116,9 @@ Namespace NeuralNetwork
                 OutputLayer(i).CalculateGradient(targets(i))
             Next
 
-            HiddenLayer.ForEach(Function(a) a.CalculateGradient())
-            HiddenLayer.ForEach(Sub(a) a.UpdateWeights(LearnRate, Momentum))
-            OutputLayer.ForEach(Sub(a) a.UpdateWeights(LearnRate, Momentum))
+            HiddenLayer.ForEach(Sub(a, i) a.CalculateGradient())
+            HiddenLayer.ForEach(Sub(a, i) a.UpdateWeights(LearnRate, Momentum))
+            OutputLayer.ForEach(Sub(a, i) a.UpdateWeights(LearnRate, Momentum))
         End Sub
 
         ''' <summary>

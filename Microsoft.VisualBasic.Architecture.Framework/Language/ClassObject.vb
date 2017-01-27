@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4f3130afbea6f248a89ed7a93d801bf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
+﻿#Region "Microsoft.VisualBasic::f2c0ceab0b08fc0eef76bd1b5f0db133, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
 
     ' Author:
     ' 
@@ -28,11 +28,9 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.SecurityString
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
@@ -75,7 +73,9 @@ Namespace Language
         ''' but it will prevent your class from being treated as simpleContent. I know it's a 
         ''' dirty workaround, but I see no other easy way...
         ''' </remarks>
-        <XmlIgnore> <ScriptIgnore>
+        <XmlIgnore>
+        <ScriptIgnore>
+        <SoapIgnore>
         Public Overridable Property Extension As ExtendedProps Implements IClassObject.Extension
 
         ''' <summary>

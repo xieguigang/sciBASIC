@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d4a474e1d408e98191472c293a47eec, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\ValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::0880447dc50df2dd360d15d683a94184, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\ValuePair.vb"
 
     ' Author:
     ' 
@@ -26,38 +26,22 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel
-
-    Public Structure TagValue(Of T)
-        Implements IKeyValuePairObject(Of String, T)
-
-        Public Property tag As String Implements IKeyValuePairObject(Of String, T).Identifier
-        Public Property Value As T Implements IKeyValuePairObject(Of String, T).Value
-
-        Sub New(tag As String, x As T)
-            Me.tag = tag
-            Me.Value = x
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"[{tag}] --> {Value.GetJson}"
-        End Function
-    End Structure
 
     ''' <summary>
     ''' An object for the text file format xml data storage.(用于存储与XML文件之中的字符串键值对对象)
     ''' </summary>
     ''' <remarks>
-    ''' 20160524 为了更好的构建GCModeller项目的数据文档的格式，本类型对象不再继承自<see cref="KeyValuePairObject(Of String, String)"/>类型
+    ''' + 2016-05-24 为了更好的构建GCModeller项目的数据文档的格式，本类型对象不再继承自<see cref="KeyValuePairObject(Of String, String)"/>类型
     ''' </remarks>
     ''' 
     <XmlType("hashEntry")> Public Class KeyValuePair
-        Implements sIdEnumerable
+        Implements INamedValue
         Implements IKeyValuePair
 
         Public Sub New()
@@ -89,16 +73,22 @@ Namespace ComponentModel
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks>在这里可能用不了<see cref="XmlAttributeAttribute"></see>自定义属性，因为其基本类型之中的Key和Value可以是任意的类型的，Attribute格式无法序列化复杂的数据类型</remarks>
-        <XmlAttribute> Public Property Key As String Implements sIdEnumerable.Identifier, IKeyValuePair.Identifier
+        <XmlAttribute> Public Property Key As String Implements INamedValue.Key, IKeyValuePair.Identifier
         <XmlAttribute> Public Property Value As String Implements IKeyValuePairObject(Of String, String).Value
 #End Region
 
         Public Overloads Shared Widening Operator CType(obj As KeyValuePair(Of String, String)) As KeyValuePair
-            Return New KeyValuePair With {.Key = obj.Key, .Value = obj.Value}
+            Return New KeyValuePair With {
+                .Key = obj.Key,
+                .Value = obj.Value
+            }
         End Operator
 
         Public Overloads Shared Widening Operator CType(obj As String()) As KeyValuePair
-            Return New KeyValuePair With {.Key = obj.First, .Value = obj.Get(1)}
+            Return New KeyValuePair With {
+                .Key = obj.First,
+                .Value = obj.Get(1)
+            }
         End Operator
 
         Public Overrides Function ToString() As String
@@ -112,9 +102,11 @@ Namespace ComponentModel
             }
         End Function
 
-        Public Shared Function ToDictionary(ListData As IEnumerable(Of KeyValuePair)) As Dictionary(Of String, String)
+        Public Shared Function ToDictionary(list As IEnumerable(Of KeyValuePair)) As Dictionary(Of String, String)
             Dim Dictionary As Dictionary(Of String, String) =
-                ListData.ToDictionary(Function(obj) obj.Key, Function(obj) obj.Value)
+                list.ToDictionary(
+                    Function(obj) obj.Key,
+                    Function(obj) obj.Value)
             Return Dictionary
         End Function
 
@@ -147,6 +139,7 @@ Namespace ComponentModel
 
         Public Shared Function Distinct(source As KeyValuePair()) As KeyValuePair()
             Dim List = (From obj In source Select obj Order By obj.Key Ascending).ToList
+
             For i As Integer = 0 To List.Count - 1
                 If i >= List.Count Then
                     Exit For
@@ -169,13 +162,16 @@ Namespace ComponentModel
     End Class
 
     ''' <summary>
-    ''' {Key, strArray()} The value of this data type object is a string collection.(本类型对象的值属性类型为一个字符串集合)
+    ''' ``{Key, strArray()}`` The value of this data type object is a string collection.
+    ''' (本类型对象的值属性类型为一个字符串集合)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' 实际上这个类型完全可以由<see cref="NamedValue(Of String())"/>来替代，但是由于<see cref="NamedValue(Of String())"/>是通用化的，而本类型是特化为文本字符串的，所以使用本类型可以进行更加优雅的XML格式的文档生成
+    ''' </remarks>
     Public Class Key_strArrayValuePair : Inherits KeyValuePairObject(Of String, String())
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        <XmlAttribute> Public Overrides Property Key As String Implements sIdEnumerable.Identifier
+        <XmlAttribute> Public Overrides Property Key As String Implements INamedValue.Key
             Get
                 Return MyBase.Key
             End Get

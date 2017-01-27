@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78adedadccb7546ed6f65ae2ec6f250f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\UpdateThread.vb"
+﻿#Region "Microsoft.VisualBasic::da40149378a8e7b6aed40d08c66732e4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\UpdateThread.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Triggers
@@ -42,7 +43,7 @@ Namespace Parallel.Tasks
         Implements ITimer
 
         ''' <summary>
-        ''' ms
+        ''' Sleeps n **ms** interval
         ''' </summary>
         ''' <returns></returns>
         Public Property Periods As Integer Implements ITimer.Interval
@@ -60,15 +61,22 @@ Namespace Parallel.Tasks
         Public ReadOnly Property Running As Boolean
 
         ''' <summary>
+        ''' The caller stack name
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Caller As String
+
+        ''' <summary>
         ''' Running a specific action in the background periodically. The time unit of the parameter <paramref name="Periods"/> is ms or Ticks.
         ''' </summary>
         ''' <param name="Periods">ms for update thread sleeps</param>
         ''' <param name="updates"></param>
-        Sub New(Periods As Integer, updates As Action)
+        Sub New(Periods As Integer, updates As Action, <CallerMemberName> Optional caller$ = Nothing)
             Call MyBase.New(updates)
 
             Me.Running = False
             Me.Periods = Periods
+            Me.Caller = caller
         End Sub
 
         Private Sub __updates()
@@ -104,7 +112,7 @@ Namespace Parallel.Tasks
 #If DEBUG Then
             Call _execute()
 #Else
-  Try
+            Try
                 Call _execute()
             Catch ex As Exception
                 If Not ErrHandle Is Nothing Then
@@ -120,13 +128,20 @@ Namespace Parallel.Tasks
 
         Public Overrides Function ToString() As String
             Dim state As String = If(Running, NameOf(Running), NameOf([Stop]))
-            Return $"[{state}, {Me.Periods}ms]  => {Me.CallbackInvoke.ToString}"
+            Return $"[{Caller}::{state}, {Me.Periods}ms]  => {Me.CallbackInvoke.ToString}"
         End Function
 
-        Public Shared Function GetTicks(hh As Integer, mm As Integer) As Integer
+        ''' <summary>
+        ''' 获取得到总的毫秒数
+        ''' </summary>
+        ''' <param name="hh"></param>
+        ''' <param name="mm"></param>
+        ''' <param name="ss%"></param>
+        ''' <returns></returns>
+        Public Shared Function GetTicks(hh As Integer, mm As Integer, Optional ss% = 0) As Integer
             Dim hhss As Integer = hh * 60 * 60 ' 小时的秒数
             Dim mmss As Integer = mm * 60
-            Dim ticks As Integer = (hhss + mmss) * 1000
+            Dim ticks As Integer = (hhss + mmss + ss) * 1000
             Return ticks
         End Function
 

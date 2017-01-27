@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7220f40c4f8077d67878528a75d7ecd, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::f0dd8b8bf57133196e9ee6c4c1d8437f, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\WebResult.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.HtmlParser
 
 ''' <summary>
 ''' 一个结果条目

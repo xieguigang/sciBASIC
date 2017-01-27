@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4b31d8102d0fec02322c16fe38b341a, ..\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\Demo\SplineTest.vb"
+﻿#Region "Microsoft.VisualBasic::ff1498b7422f97a77c059bec38f6e87e, ..\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\Demo\SplineTest.vb"
 
     ' Author:
     ' 
@@ -247,4 +247,3 @@ Public Module SplineTest
             .SaveAs("../../../duom2-B-splines.png")
     End Sub
 End Module
-

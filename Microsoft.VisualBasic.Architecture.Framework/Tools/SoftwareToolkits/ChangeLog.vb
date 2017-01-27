@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::869374ba53eb6ac58769929a18878373, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ChangeLog.vb"
+﻿#Region "Microsoft.VisualBasic::4033dc03fbb13f686ee14b5b0fa9f49c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\ChangeLog.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,9 @@
 
 #End Region
 
+Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace SoftwareToolkits
 
@@ -36,7 +38,7 @@ Namespace SoftwareToolkits
     ''' Tools for generate the program change log document.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ChangeLog : Inherits Microsoft.VisualBasic.ComponentModel.ITextFile
+    Public Class ChangeLog : Inherits ITextFile
 
         ''' <summary>
         ''' 
@@ -46,7 +48,7 @@ Namespace SoftwareToolkits
         ''' <remarks></remarks>
         Sub New(Path As String, ApplyOn As String)
             Me.FilePath = Path
-            Dim Assembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(FileIO.FileSystem.GetFileInfo(ApplyOn).FullName)
+            Dim Assembly As Assembly = Assembly.LoadFrom(FileIO.FileSystem.GetFileInfo(ApplyOn).FullName)
             Dim Properties = Assembly.CustomAttributes.ToArray
 
         End Sub
@@ -110,8 +112,12 @@ Namespace SoftwareToolkits
         ''' <param name="Changes"></param>
         ''' <param name="version">假若为空的话，会自动的根据上一次版本的号码叠加1</param>
         ''' <remarks></remarks>
-        Public Sub AppendChangeInformation(Changes As Generic.IEnumerable(Of String), Optional version As Version = Nothing, Optional Status As String = "")
-            Dim UpdateRecord As UpdateInformation = New UpdateInformation With {.UpdateTime = Now.ToString, .Changes = Changes.ToArray, .VerStatus = Status}
+        Public Sub AppendChangeInformation(Changes As IEnumerable(Of String), Optional version As Version = Nothing, Optional Status As String = "")
+            Dim UpdateRecord As New UpdateInformation With {
+                .UpdateTime = Now.ToString,
+                .Changes = Changes.ToArray,
+                .VerStatus = Status
+            }
             If version Is Nothing Then
                 If _UpdateList.IsNullOrEmpty Then
                     version = New Version

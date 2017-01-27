@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a99e39f4df3bbf47a92d14666408958, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Adapter\IObject.vb"
+﻿#Region "Microsoft.VisualBasic::c59f5a7c4d2393eebda5486d459ac210, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Adapter\IObject.vb"
 
     ' Author:
     ' 

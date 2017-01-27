@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a3e6f0e8bf5e5c76b698fc6b35c5591, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\IterartionListener.vb"
+﻿#Region "Microsoft.VisualBasic::bcf5278e6d64246fb068835f3910563d, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\IterartionListener.vb"
 
     ' Author:
     ' 
@@ -46,8 +46,8 @@ Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 
 Namespace Darwinism.GAF
 
-    Public Interface IterartionListener(Of C As Chromosome(Of C), T As IComparable(Of T))
+    Public Interface IterartionListener(Of C As Chromosome(Of C))
 
-        Sub Update(environment As GeneticAlgorithm(Of C, T))
+        Sub Update(environment As GeneticAlgorithm(Of C))
     End Interface
 End Namespace

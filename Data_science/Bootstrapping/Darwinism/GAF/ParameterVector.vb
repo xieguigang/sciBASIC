@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68303c8411ff480d02288debe582850f, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\ParameterVector.vb"
+﻿#Region "Microsoft.VisualBasic::5d9cd9982b173bf81623f16373f4a93e, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\ParameterVector.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Web.Script.Serialization
-Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.DataMining.Darwinism
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
 Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
@@ -36,7 +35,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Darwinism.GAF
 

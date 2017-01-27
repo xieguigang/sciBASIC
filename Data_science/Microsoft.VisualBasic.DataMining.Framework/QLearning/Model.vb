@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d104baac38d3a15ae013cb2931ebdc2, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\QLearning\Model.vb"
+﻿#Region "Microsoft.VisualBasic::d629113f22067b3f820a49d8422c6663, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\QLearning\Model.vb"
 
     ' Author:
     ' 
@@ -71,9 +71,9 @@ Namespace QLearning.DataModel
     ''' 属性是时间
     ''' </summary>
     Public Class IndexCurve : Inherits DynamicPropertyBase(Of Double)
-        Implements sIdEnumerable
+        Implements INamedValue
 
-        Public Property uid As String Implements sIdEnumerable.Identifier
+        Public Property uid As String Implements INamedValue.Key
 
         Sub New()
         End Sub

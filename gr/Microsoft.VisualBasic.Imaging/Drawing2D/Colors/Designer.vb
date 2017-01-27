@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::ed5bc1745d4805e7d4c222a08046600e, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::cc4a0ec872995fff46f51be835ba70f4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -156,6 +156,17 @@ Namespace Drawing2D.Colors
         End Function
 
         ''' <summary>
+        ''' ``New <see cref="SolidBrush"/>(<see cref="GetColors(String, Integer, Integer)"/>)``
+        ''' </summary>
+        ''' <param name="term$"></param>
+        ''' <param name="n%"></param>
+        ''' <param name="alpha%"></param>
+        ''' <returns></returns>
+        Public Function GetBrushes(term$, Optional n% = 256, Optional alpha% = 255) As SolidBrush()
+            Return GetColors(term, n, alpha).ToArray(Function(c) New SolidBrush(c))
+        End Function
+
+        ''' <summary>
         ''' 相对于<see cref="GetColors"/>函数而言，这个函数是返回非连续的颜色谱，假若数量不足，会重新使用开头的起始颜色连续填充
         ''' </summary>
         ''' <param name="colors$"></param>
@@ -189,6 +200,8 @@ Namespace Drawing2D.Colors
         End Function
 
         ''' <summary>
+        ''' **<see cref="ColorCube.GetColorSequence"/>**
+        ''' 
         ''' Some useful color tables for images and tools to handle them.
         ''' Several color scales useful for image plots: a pleasing rainbow style color table patterned after 
         ''' that used in Matlab by Tim Hoar and also some simple color interpolation schemes between two or 

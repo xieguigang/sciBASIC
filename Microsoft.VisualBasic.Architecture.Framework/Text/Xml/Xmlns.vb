@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1458c78d9bcfa5f7c4ce5ffcb7b305f7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::99c262cf1bbd1a768e69cbb24dc5d34d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Xmlns.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,11 @@ Namespace Text.Xml
     ''' Xml namespace
     ''' </summary>
     Public Class Xmlns
+
+        ''' <summary>
+        ''' ``xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"``
+        ''' </summary>
+        Public Const DefaultXmlns As String = "xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"""
 
         Public Property xmlns As String
         Public Property [namespace] As Dictionary(Of NamedValue(Of String))

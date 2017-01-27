@@ -1,29 +1,30 @@
-# sciBASIC#: Microsoft VisualBasic for Scientific
+# sciBASIC#: Microsoft VisualBasic for Scientific Computing
 
 ![(๑•̀ㅂ•́)و✧](./etc/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
 [![Github All Releases](https://img.shields.io/github/downloads/xieguigang/sciBASIC/total.svg?maxAge=2592000?style=flat-square)]()
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.160492.svg)](https://doi.org/10.5281/zenodo.160492)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.166002.svg)](https://doi.org/10.5281/zenodo.166002)
 
 ###### [WARNING] This project is a work in progress and is not recommended for production use.
 > Probably some namespace and object name may changes frequently on each commit, and you are feel free to using the **Object Browser** in visual studio to adapted to the object not defined problem which was caused by these changes.....
 
 <hr>
 
-![Microsoft VisualBasic logo](./logo.jpg)
++ ![Microsoft VisualBasic logo](./logo.jpg)
++ ![](./etc/README/nodes.gif)
 
 #### Directory Structure
 
 ###### 1. source projects
 
 + **[/CLI_tools](./CLI_tools/)** : Some small utilities and example tools
-+ **[/Data](./Data/)** : VisualBasic data framework system for data science, includes data frame, data I/O and data object search framework.
-+ **[/Data_science](./Data_science/)** : VisualBasic mathmatica system, data graphics plot system & Data Mining library
-+ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic App Runtime core
-+ **[/mime](./mime/)** : VisualBasic various mime-types doc parsers
++ **[/Data](./Data/)** : *sciBASIC#* data framework system for data science, includes data frame, data I/O and data object search framework.
++ **[/Data_science](./Data_science/)** : *sciBASIC#* Mathmatica system, data graphics plot system & Data Mining library
++ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic General App Runtime core
++ **[/mime](./mime/)** : various mime-type doc parsers in VisualBasic
 + **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET data graphics system
-+ **[/win32_api](./win32_api/)** : Win32 API collection(Obsolete)
++ **[/win32_api](./win32_api/)** : Win32 API collection (**Obsolete**)
 + **[/www](./www/)** : Web related utilities code
 
 ###### 2. docs for User
@@ -58,10 +59,42 @@ PM> Install-Package sciBASIC
 PM> Install-Package sciBASIC -Pre
 ```
 
+===================================================================
+
+## Microsoft VisualBasic Trinity Natural Language Processor
+
+###### TextRank
+
+PageRank analysis on the text paragraph for find out the keyword, here is the pagerank result of the this example paragraph:
+
+> "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
+
+![](./Data/TextRank/visualize.png)
+
+## Image fast binarization using VisualBasic image extension API
+[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
+
+```vbnet
+Imports Microsoft.VisualBasic.Imaging
+
+Dim bitmap As Image = Image.FromFile("./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+
+Call bitmap.Grayscale().SaveAs("./etc/lena/lena.grayscale.png", ImageFormats.Png)
+Call bitmap.GetBinaryBitmap
+     .SaveAs("./etc/lena/lena.binary.png", ImageFormats.Png)
+Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
+     .SaveAs("./etc/lena/lena.gray.png", ImageFormats.Png)
+```
+
+|Normal|Binary|SparseGray|Grayscale|
+|------|------|----|---------|
+|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=160 height=160 />|<img src="./etc/lena/lena.gray.png" width=160 height=160 />|<img src="./etc/lena/lena.grayscale.png" width=160 height=160 />|
+
 ## Microsoft VisualBasic Mathematics & Data Graphics System
 
 + **[Mathematics & Chart Ploting System](./Data_science/Mathematical/)**
-+ **[Darwinism computing module](./Data_science/Darwinism)**
++ **[Darwinism computing module](./Data_science/Darwinism/)**
++ **[Data Mining &amp; Machine Learning](./Data_science/)**
 + **[sciBASIC# DataFrame System](./Data/DataFrame/)**
 + **[Network Visualization Interface](./gr/Datavisualization.Network/)**
 
@@ -69,14 +102,53 @@ PM> Install-Package sciBASIC -Pre
 
 ##### sciBASIC# Chart Plots System
 ```vbnet
-Imports Microsoft.VisualBasic.Mathematical.Plots
+Imports Microsoft.VisualBasic.Data.ChartPlots
 ```
 
-![](./Data_science/Mathematical/images/Bubble.png)
-![](./Data_science/Mathematical/images/pie_chart_vars.png)
+![](./Data_science/algorithms/CMeans/CMeans.png)
+![](./Data_science/Mathematical/images/295022-plots-plots.png)
+
+###### 3D heatmap
+
+```vbnet
+Dim func As Func(Of Double, Double, (Z#, Color#)) =
+_
+    Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)
+
+Call Plot3D.ScatterHeatmap.Plot(
+    func, "-3,3", "-3,3",
+    New Camera With {
+        .screen = New Size(3600, 2500),
+        .ViewDistance = -3.3,
+        .angleZ = 30,
+        .angleX = 30,
+        .angleY = -30,
+        .offset = New Point(-100, -100)
+    }) _
+    .SaveAs("./3d-heatmap.png")
+```
+
+![](./Data_science/Mathematical/images/3d-heatmap.png)
+
+###### Scatter Heatmap
+
+You can using a lambda expression as the plot data source:
+
+```vbnet
+Dim f As Func(Of Double, Double, Double) =
+    Function(x, y) x ^ 2 + y ^ 3
+
+Call ScatterHeatmap _
+    .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
+    .SaveAs("./scatter-heatmap.png")
+```
+
+![](./Data_science/Mathematical/images/scatter-heatmap.png)
+![](./Data_science/Mathematical/images/256821.654661046-rho_gamma3_1%2C120_0.25%2C20.png)
 
 ###### Stacked Barplot
-![](./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
+
+The stacked barplot is a best choice for visualize the sample composition and compares to other samples data:
 
 ```vbnet
 Imports Microsoft.VisualBasic.Data.ChartPlots
@@ -94,9 +166,28 @@ Call BarPlot.Plot(
     .SaveAs("./FigurePlot-Reference-Unigenes.absolute.level1.png")
 ```
 
-###### Histogram Plot of beta-PDF
-<a href="./Data_science/Mathematical/data/beta-PDF/">![](./Data_science/Mathematical/data/beta-PDF/beta_hist.png)</a>
+![](./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
 
+###### beta-PDF
+
+```vbnet
+Public Function beta(x#, alpha#, _beta#) As Double
+    Return Pow(x, alpha - 1) * Pow((1 - x), _beta - 1) *
+        Exp(lgamma(alpha + _beta) - lgamma(alpha) - lgamma(_beta))
+End Function
+
+Public Function lgamma(x As Double) As Double
+    Dim logterm As Double = Math.Log(x * (1.0F + x) * (2.0F + x))
+    Dim xp3 As Double = 3.0F + x
+
+    Return -2.081061F - x + 0.0833333F / xp3 - 
+        logterm + (2.5F + x) * Math.Log(xp3)
+End Function
+```
+<img src="./Data_science/Mathematical/data/beta-PDF/beta_PDF.png" height="650px"></img>
+> https://en.wikipedia.org/wiki/Beta_distribution
+
+###### Heatmap
 ![](./Data_science/Mathematical/images/heatmap.png)
 
 ```vbnet
@@ -117,7 +208,20 @@ data(mtcars)
 write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv")
 ```
 
-## What's new of VisualBasic language Syntax from this runtime library?
+===================================================================
+
+## New VisualBasic Language Syntax in this runtime
+
+First of all, imports the language feature namespace of VisualBasic
+
+```vbnet
+#Region "Microsoft VisualBasic.NET language"
+' sciBASIC# general application runtime
+' Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.dll
+#End Region
+
+Imports Microsoft.VisualBasic.Language
+```
 
 ###### 1. Inline value assign
 
@@ -136,8 +240,6 @@ Loop
 New:
 
 ```vbnet
-Imports Microsoft.VisualBasic.Language
-
 Dim s As New Value(Of String)
 
 Do While Not (s = blablabla) Is Nothing
@@ -145,7 +247,7 @@ Do While Not (s = blablabla) Is Nothing
 Loop
 ```
 
-###### 2. List(Of )
+###### 2. List(Of ) Add
 
 Old:
 
@@ -159,8 +261,6 @@ Call l.AddRange(From x In 100.Sequence Select CStr(x))
 New:
 
 ```vbnet
-Imports Microsoft.VisualBasic
-
 Dim l As New List(Of String)
 
 l += "123"
@@ -169,11 +269,9 @@ l += From x As Integer
      Select CStr(x)
 ```
 
-###### int Type
+###### VB int Type
 
 ```vbnet
-Imports Microsoft.VisualBasic.Language
-
 Dim min As int = 1
 Dim max As int = 200
 Dim x As Integer = 199
@@ -185,36 +283,6 @@ x = -1
 Console.WriteLine(min <= x < max) ' False
 ```
 
-## Framework Gallery
-Simple 3D Graphics by [Microsoft.VisualBasic.Imaging](./gr/Microsoft.VisualBasic.Imaging) 3D engine.
-
-![](./gr/d3.png)
-![](./etc/ColorDesigner-screenshot.png)
-
 ===================================================================
 
-###### Modules that Includes in this Framework:
-
-> 1. A data frame system for read/write csv data more easily.
-> 2. ODEs solver system and data plots system
-> 3. Various linq extensions for the data science programming on large amount data processing
-> 4. VisualBasic language Feature: Unix bash command supports in under development which parts of the API is available at namespace ``Microsoft.VisualBasic.Language``
-> 5. Image graphics system in namespace ``Microsoft.VisualBasic.Imaging``
-
-###### Image fast binarization using VisualBasic extension API
-[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
-
-```vbnet
-Imports Microsoft.VisualBasic.Imaging
-
-Dim bitmap As Image = Image.FromFile("./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
-
-Call bitmap.GetBinaryBitmap
-     .SaveAs("./etc/lena/lena.binary.png", ImageFormats.Png)
-Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
-     .SaveAs("./etc/lena/lena.gray.png", ImageFormats.Png)
-```
-
-|Normal|Binary|Gray|
-|------|------|----|
-|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=250 height=250 />|<img src="./etc/lena/lena.gray.png" width=250 height=250 />|
+> Copyleft ! 2017, I@xieguigang.me

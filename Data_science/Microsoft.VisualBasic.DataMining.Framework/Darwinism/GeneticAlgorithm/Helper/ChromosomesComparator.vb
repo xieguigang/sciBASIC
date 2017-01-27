@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e08292bc5736a56486251ee6ec090aa9, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Helper\ChromosomesComparator.vb"
+﻿#Region "Microsoft.VisualBasic::f673ca202f4bc486922c4a754974c4b4, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Helper\ChromosomesComparator.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,16 @@ Namespace Darwinism.GAF.Helper
     ''' 缓存的Key是染色体的ToString的计算值
     ''' </summary>
     ''' <typeparam name="C"></typeparam>
-    ''' <typeparam name="T"></typeparam>
-    Friend Class ChromosomesComparator(Of C As Chromosome(Of C), T As IComparable(Of T)) : Inherits FitnessPool(Of C, T)
+    Friend Class ChromosomesComparator(Of C As Chromosome(Of C)) : Inherits FitnessPool(Of C, Double)
         Implements IComparer(Of C)
 
-        Public Sub New(GA As GeneticAlgorithm(Of C, T))
-            caclFitness = AddressOf GA._fitnessFunc.Calculate
+        Public Sub New(GA As GeneticAlgorithm(Of C))
+            caclFitness = AddressOf GA.Fitness.Calculate
         End Sub
 
         Public Function compare(chr1 As C, chr2 As C) As Integer Implements IComparer(Of C).Compare
-            Dim fit1 As T = Fitness(chr1)
-            Dim fit2 As T = Fitness(chr2)
+            Dim fit1 As Double = Fitness(chr1)
+            Dim fit2 As Double = Fitness(chr2)
             Dim ret As Integer = fit1.CompareTo(fit2)
             Return ret
         End Function

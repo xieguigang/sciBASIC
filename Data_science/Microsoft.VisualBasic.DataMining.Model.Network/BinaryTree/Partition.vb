@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6ad3b04d11c0eb45a47e65675b01805, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\BinaryTree\Partition.vb"
+﻿#Region "Microsoft.VisualBasic::69ee0704be26ddfa8548295f8c35909f, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\BinaryTree\Partition.vb"
 
     ' Author:
     ' 
@@ -40,9 +40,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans
 
-    Public Class Partition : Implements sIdEnumerable
+    Public Class Partition : Implements INamedValue
 
-        Public Property Tag As String Implements sIdEnumerable.Identifier
+        Public Property Tag As String Implements INamedValue.Key
         Public ReadOnly Property NumOfEntity As Integer
             Get
                 If uids Is Nothing Then

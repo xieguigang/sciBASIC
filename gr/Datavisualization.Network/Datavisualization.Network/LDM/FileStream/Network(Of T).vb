@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8858b00ec8f8e8f922c233d96f99410, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::c8c8f345db15bc3e5b68217d0bd6ba22, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network(Of T).vb"
 
     ' Author:
     ' 
@@ -30,8 +30,6 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.csv.Extensions
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports Microsoft.VisualBasic.Data.visualize.Network.Abstract
 Imports Microsoft.VisualBasic.Language
 
 Namespace FileStream
@@ -85,21 +83,22 @@ Namespace FileStream
         Dim __nodes As Dictionary(Of T_Node)
         Dim __edges As List(Of T_Edge)
 
+        Public Function HaveNode(id$) As Boolean
+            Return __nodes.ContainsKey(id)
+        End Function
+
         ''' <summary>
         ''' 移除的重复的边
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub RemoveDuplicated()
-            Dim LQuery = (From edge As T_Edge
-                          In Edges
-                          Let uu As String() = {edge.FromNode, edge.ToNode}.OrderBy(Function(s) s).ToArray
-                          Select id = String.Join(";", uu),
-                              edge = edge
-                          Group By id Into Group).ToArray
+            Dim LQuery As T_Edge() =
+                Edges _
+                .GroupBy(Function(ed) ed.GetNullDirectedGuid(True)) _
+                .Select(Function(g) g.First) _
+                .ToArray
 
-            Edges = LinqAPI.Exec(Of T_Edge) <= From gpEdge
-                                               In LQuery
-                                               Select gpEdge.Group.First.edge
+            Edges = LQuery
         End Sub
 
         ''' <summary>
@@ -218,7 +217,7 @@ Namespace FileStream
         ''' <param name="node"></param>
         ''' <returns></returns>
         Public Shared Operator ^(net As Network(Of T_Node, T_Edge), node As T_Node) As Boolean
-            Return net ^ node.Identifier
+            Return net ^ node.ID
         End Operator
 
         ''' <summary>

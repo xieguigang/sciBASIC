@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb9986344915d69ccc1728eedf78df7a, ..\sciBASIC#\Data_science\Mathematical\Plots\Percents\PercentageData.vb"
+﻿#Region "Microsoft.VisualBasic::2b8d717c3fa6be24340d8ae1da09efb4, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\Fractions.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -35,7 +36,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Class Fractions
 
     ''' <summary>
-    ''' 对象在整体中所占的百分比
+    ''' 值范围为``[0, 1]``, 对象在整体中所占的百分比
     ''' </summary>
     ''' <returns></returns>
     Public Property Percentage As Double
@@ -49,8 +50,32 @@ Public Class Fractions
     ''' </summary>
     ''' <returns></returns>
     Public Property Color As Color
+    ''' <summary>
+    ''' 与占整体的百分比相对应的实际数量
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Value As Double
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
+    End Function
+
+    Public Enum ValueLabels
+        None
+        Percentage
+        Value
+    End Enum
+
+    Public Function GetValueLabel(type As ValueLabels) As String
+        Select Case type
+            Case ValueLabels.None
+                Return Nothing
+            Case ValueLabels.Value
+                Return Value.FormatNumeric(2)
+            Case ValueLabels.Percentage
+                Return (Percentage * 100).FormatNumeric(2) & "%"
+            Case Else
+                Return Value
+        End Select
     End Function
 End Class

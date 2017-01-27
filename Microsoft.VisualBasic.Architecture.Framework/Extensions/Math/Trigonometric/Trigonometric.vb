@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ade824709466137cd26515ae774c04b5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Trigonometric\Trigonometric.vb"
+﻿#Region "Microsoft.VisualBasic::f9d4f4f2bc3f41d5a64ef8f880078e0f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Trigonometric\Trigonometric.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,24 @@ Imports System.Runtime.CompilerServices
 Namespace Mathematical
 
     Public Module Trigonometric
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="r#"></param>
+        ''' <param name="alpha!"></param>
+        ''' <param name="fromDegree"><paramref name="alpha"/>角度参数是否是度为单位，默认是真，即函数会在这里自动转换为弧度</param>
+        ''' <returns></returns>
+        <Extension> Public Function ToPoint(r#, alpha!, Optional fromDegree As Boolean = True) As PointF
+            If fromDegree Then
+                alpha = alpha * Math.PI / 180
+            End If
+
+            Dim x = r * Math.Cos(alpha)
+            Dim y = r * Math.Sin(alpha)
+
+            Return New PointF(x, y)
+        End Function
 
         ''' <summary>
         ''' 

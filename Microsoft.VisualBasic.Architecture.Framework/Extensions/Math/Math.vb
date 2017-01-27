@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1083039dd3e4083c53e5ad1e5a6363b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::d4e9899c151d3f2bff40ae04987560e4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -30,12 +30,30 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Mathematical
 
     <PackageNamespace("VBMath", Publisher:="xie.guigang@gmail.com")>
     Public Module VBMathExtensions
+
+        ''' <summary>
+        ''' 请注意,<paramref name="data"/>的元素数量必须要和<paramref name="weights"/>的长度相等
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="weights">这个数组里面的值的和必须要等于1</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function WeighedAverage(data As IEnumerable(Of Double), ParamArray weights As Double()) As Double
+            Dim avg#
+
+            For Each x As SeqValue(Of Double) In data.SeqIterator
+                avg += (x.value * weights(x))
+            Next
+
+            Return avg
+        End Function
 
         ''' <summary>
         ''' [Sequence Generation] Generate regular sequences. seq is a standard generic with a default method.
@@ -260,16 +278,6 @@ Namespace Mathematical
             Return value
         End Function
 
-        <ExportAPI("Median")>
-        <Extension> Public Function Median(data As IEnumerable(Of Double)) As Double
-            Dim ordered = (From n As Double
-                       In data
-                           Select n
-                           Order By n Ascending).ToArray
-            Dim m As Integer = CInt(ordered.Length / 2)
-            Return ordered(m)
-        End Function
-
         ''' <summary>
         ''' Standard Deviation
         ''' </summary>
@@ -358,7 +366,7 @@ Namespace Mathematical
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
-                Return Math.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
+                Return Math.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
             End If
         End Function
 
@@ -431,6 +439,11 @@ Namespace Mathematical
                 k -= 1
             End While
             Return result
+        End Function
+
+        <Extension>
+        Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
+            Return v.ToArray(Function(x) x.FormatNumeric(digitals))
         End Function
     End Module
 End Namespace

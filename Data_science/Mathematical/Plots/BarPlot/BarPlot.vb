@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a545342e589fc01d861010d62225bef, ..\sciBASIC#\Data_science\Mathematical\Plots\BarPlot\BarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::3958be664014dd79cb31cebfdc318a07, ..\sciBASIC#\Data_science\Mathematical\Plots\BarPlot\BarPlot.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 这个不像<see cref="Histogram"/>用于描述若干组连续的数据，这个是将数据按照标签分组来表述出来的
@@ -132,16 +130,16 @@ Public Module BarPlot
 
             If stacked Then ' 改变Y
                 Dim right = x + dxStep
-                Dim top = sy(sample.obj.StackedSum)
+                Dim top = sy(sample.value.StackedSum)
                 Dim canvasHeight = grect.Size.Height - (grect.Margin.Height * 2)  ' 畫布的高度
                 Dim actualHeight = bottom - top ' 底部減去最高的就是實際的高度（縂的）
                 Dim barWidth = dxStep
 
                 Dim stack = If(stackReorder,
-                    sample.obj.data _
+                    sample.value.data _
                         .SeqIterator _
-                        .OrderBy(Function(o) o.obj),
-                    sample.obj.data.SeqIterator)
+                        .OrderBy(Function(o) o.value),
+                    sample.value.data.SeqIterator)
 
                 For Each val As SeqValue(Of Double) In stack
                     Dim topleft As New Point(x, top)
@@ -157,9 +155,9 @@ Public Module BarPlot
 
                 x += dxStep
             Else ' 改变X
-                For Each val As SeqValue(Of Double) In sample.obj.data.SeqIterator
+                For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                     Dim right = x + dxStep
-                    Dim top = sy(val.obj)
+                    Dim top = sy(val.value)
                     Dim rect As Rectangle = Rectangle(top, x, right, grect.Size.Height - grect.Margin.Height)
 
                     Call g.DrawRectangle(Pens.Black, rect)
@@ -252,39 +250,39 @@ Public Module BarPlot
                 From n
                 In data.SeqIterator
                 Select New BarDataSample With {
-                    .data = {n.obj},
+                    .data = {n.value},
                     .Tag = n.i
                 }
         }
     End Function
 
-    ''' <summary>
-    ''' Plot ODEs result using bar plot
-    ''' </summary>
-    ''' <param name="odes"></param>
-    ''' <returns></returns>
-    Public Function FromODE(ParamArray odes As ODE()) As BarDataGroup
-        Dim colors = Imaging.ChartColors.Shuffles
-        Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
- _
-            From x As SeqValue(Of ODE)
-            In odes.SeqIterator
-            Select New NamedValue(Of Color) With {
-                .Name = x.obj.df.ToString,
-                .Value = colors(x.i)
-            }
-        Dim samples = LinqAPI.Exec(Of BarDataSample) <=
- _
-            From i As Integer
-            In odes.First.y.Sequence
-            Select New BarDataSample With {
-                .Tag = i,
-                .data = odes.ToArray(Function(x) x.y(i))
-            }
+    '   ''' <summary>
+    '   ''' Plot ODEs result using bar plot
+    '   ''' </summary>
+    '   ''' <param name="odes"></param>
+    '   ''' <returns></returns>
+    '   Public Function FromODE(ParamArray odes As ODE()) As BarDataGroup
+    '       Dim colors = Imaging.ChartColors.Shuffles
+    '       Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
+    '_
+    '           From x As SeqValue(Of ODE)
+    '           In odes.SeqIterator
+    '           Select New NamedValue(Of Color) With {
+    '               .Name = x.value.df.ToString,
+    '               .Value = colors(x.i)
+    '           }
+    '       Dim samples = LinqAPI.Exec(Of BarDataSample) <=
+    '_
+    '           From i As Integer
+    '           In odes.First.y.Sequence
+    '           Select New BarDataSample With {
+    '               .Tag = i,
+    '               .data = odes.ToArray(Function(x) x.y(i))
+    '           }
 
-        Return New BarDataGroup With {
-            .Samples = samples,
-            .Serials = serials
-        }
-    End Function
+    '       Return New BarDataGroup With {
+    '           .Samples = samples,
+    '           .Serials = serials
+    '       }
+    '   End Function
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0d6f8c9866c73d50b401b0acb657441, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::db301fb5e9e153da1e98dcfeb8718dc3, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\LDM.vb"
 
     ' Author:
     ' 
@@ -72,8 +72,8 @@ Namespace Dijkstra
 
         Public Function ContainsNode(Id As String) As Boolean
             Dim LQuery = (From conn In _Connections.AsParallel
-                          Where String.Equals(conn.A.Identifier, Id, StringComparison.OrdinalIgnoreCase) OrElse
-                              String.Equals(conn.B.Identifier, Id, StringComparison.OrdinalIgnoreCase)
+                          Where String.Equals(conn.A.ID, Id, StringComparison.OrdinalIgnoreCase) OrElse
+                              String.Equals(conn.B.ID, Id, StringComparison.OrdinalIgnoreCase)
                           Select conn).ToArray
             Return Not LQuery.IsNullOrEmpty
         End Function

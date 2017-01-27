@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3de4745e9bb92b98a2a4d35634ac6869, ..\sciBASIC#\Data_science\Bootstrapping\BootstrapIterator.vb"
+﻿#Region "Microsoft.VisualBasic::960b88570771d29e13cde3b9d898af22, ..\sciBASIC#\Data_science\Bootstrapping\BootstrapIterator.vb"
 
     ' Author:
     ' 
@@ -69,11 +69,11 @@ Public Module BootstrapIterator
                                  Optional trimNaN As Boolean = True,
                                  Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
 
-        Dim varList = vars.Select(Function(x) New NamedValue(Of INextRandomNumber)(x, AddressOf range.NextNumber))
-        Dim y0 = yinit.Select(Function(x) New NamedValue(Of INextRandomNumber)(x, AddressOf range.NextNumber))
+        Dim varList = vars.Select(Function(x) New NamedValue(Of IValueProvider)(x, AddressOf range.NextNumber))
+        Dim y0 = yinit.Select(Function(x) New NamedValue(Of IValueProvider)(x, AddressOf range.NextNumber))
 
         Return GetType(T).Bootstrapping(
-            vars:=varList,
+            parameters:=varList,
             y0:=y0,
             k:=k,
             n:=n,
@@ -93,11 +93,11 @@ Public Module BootstrapIterator
                                   Optional trimNaN As Boolean = True,
                                   Optional parallel As Boolean = False) As IEnumerable(Of ODEsOut)
         Return model.Bootstrapping(
-            vars.Select(Function(x) New NamedValue(Of INextRandomNumber) With {
+            vars.Select(Function(x) New NamedValue(Of IValueProvider) With {
                 .Name = x.Name,
                 .Value = AddressOf x.Value.NextNumber
             }),
-            yinit.Select(Function(x) New NamedValue(Of INextRandomNumber) With {
+            yinit.Select(Function(x) New NamedValue(Of IValueProvider) With {
                 .Name = x.Name,
                 .Value = AddressOf x.Value.NextNumber
             }),
@@ -121,7 +121,7 @@ Public Module BootstrapIterator
     <Extension>
     Public Function Bootstrapping(model As Type,
                                    args As Dictionary(Of String, Double),
-                                     y0 As IEnumerable(Of NamedValue(Of INextRandomNumber)),
+                                     y0 As IEnumerable(Of NamedValue(Of IValueProvider)),
                                       k As Long,
                                       n As Integer,
                                       a As Double,
@@ -130,7 +130,7 @@ Public Module BootstrapIterator
                                   Optional parallel As Boolean = False,
                                   Optional echo As Boolean = True) As IEnumerable(Of ODEsOut)
         Dim vars = args.Select(
-            Function(v) New NamedValue(Of INextRandomNumber) With {
+            Function(v) New NamedValue(Of IValueProvider) With {
                 .Name = v.Key,
                 .Value = Function() v.Value  ' 在研究可能的系统状态的时候，参数值是固定不变的，只变化初始状态值y0
             })
@@ -140,7 +140,7 @@ Public Module BootstrapIterator
     ''' <summary>
     ''' Bootstrapping 参数估计分析，这个函数用于生成基本的采样数据
     ''' </summary>
-    ''' <param name="vars">各个参数的变化范围</param>
+    ''' <param name="parameters">各个参数的变化范围</param>
     ''' <param name="model">具体的求解方程组</param>
     ''' <param name="k">重复的次数</param>
     ''' <param name="y0">
@@ -151,8 +151,8 @@ Public Module BootstrapIterator
     ''' 
     <Extension>
     Public Iterator Function Bootstrapping(model As Type,
-                                            vars As IEnumerable(Of NamedValue(Of INextRandomNumber)),
-                                              y0 As IEnumerable(Of NamedValue(Of INextRandomNumber)),
+                                      parameters As IEnumerable(Of NamedValue(Of IValueProvider)),
+                                              y0 As IEnumerable(Of NamedValue(Of IValueProvider)),
                                                k As Long,
                                                n As Integer,
                                                a As Double,
@@ -161,13 +161,13 @@ Public Module BootstrapIterator
                                            Optional parallel As Boolean = False,
                                            Optional echo As Boolean = True) As IEnumerable(Of ODEsOut)
 
-        Dim params As NamedValue(Of INextRandomNumber)() = vars.ToArray
+        Dim params As NamedValue(Of IValueProvider)() = parameters.ToArray
         Dim i&
         Dim ps As Dictionary(Of String, Action(Of Object, Double)) =
             params _
             .Select(Function(x) x.Name) _
             .SetParameters(model)
-        Dim yinit As NamedValue(Of INextRandomNumber)() = y0.ToArray
+        Dim yinit As NamedValue(Of IValueProvider)() = y0.ToArray
         Dim proc As New EventProc(k, "Bootstrapping Samples")
 
         If echo Then
@@ -182,7 +182,8 @@ Public Module BootstrapIterator
 
             For Each x As ODEsOut In From it As Long ' 进行n次并行的采样计算
                                      In k.SeqIterator.AsParallel
-                                     Let odes_Out = params.iterate(model, yinit, ps, n, a, b)
+                                     Let odes_Out As ODEsOut = params _
+                                         .Iterates(model, yinit, ps, n, a, b)
                                      Let isNaNResult As Boolean = odes_Out.HaveNaN
                                      Where If(trimNaN, Not isNaNResult, True) ' 假若不需要trim，则总是True，即返回所有数据
                                      Select odes_Out
@@ -195,7 +196,7 @@ Public Module BootstrapIterator
             Next
         Else
             For Each it As Long In k.SeqIterator
-                Dim odes_Out = params.iterate(model, yinit, ps, n, a, b)
+                Dim odes_Out = params.Iterates(model, yinit, ps, n, a, b)
                 Dim isNaNResult As Boolean = odes_Out.HaveNaN
 
                 If If(trimNaN, Not isNaNResult, True) Then ' 假若不需要trim，则总是True，即返回所有数据
@@ -216,8 +217,8 @@ Public Module BootstrapIterator
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="vars"></param>
-    ''' <param name="yinis"></param>
+    ''' <param name="parms"></param>
+    ''' <param name="y0"></param>
     ''' <param name="ps"></param>
     ''' <param name="n"></param>
     ''' <param name="a"></param>
@@ -225,18 +226,16 @@ Public Module BootstrapIterator
     ''' <returns></returns>
     ''' <remarks>在Linux服务器上面有内存泄漏的危险</remarks>
     <Extension>
-    Public Function iterate(vars As NamedValue(Of INextRandomNumber)(),
-                            model As Type,
-                            yinis As NamedValue(Of INextRandomNumber)(),
-                            ps As Dictionary(Of String, Action(Of Object, Double)),
-                            n As Integer,
-                            a As Double,
-                            b As Double) As ODEsOut
+    Public Function Iterates(parms As NamedValue(Of IValueProvider)(),
+                             model As Type,
+                             y0 As NamedValue(Of IValueProvider)(),
+                             ps As Dictionary(Of String, Action(Of Object, Double)),
+                             n%, a#, b#) As ODEsOut
 
         Dim odes As ODEs = DirectCast(Activator.CreateInstance(model), ODEs)
         ' Dim debug As New List(Of NamedValue(Of Double))
 
-        For Each x In vars
+        For Each x As NamedValue(Of IValueProvider) In parms
             Dim value As Double = x.Value()()
             Call ps(x.Name)(odes, value)  ' 设置方程的参数的值
 
@@ -246,7 +245,7 @@ Public Module BootstrapIterator
             '}
         Next
 
-        For Each y In yinis
+        For Each y In y0
             Dim value As Double = y.Value()()
             odes(y.Name).value = value
             'debug += New NamedValue(Of Double) With {

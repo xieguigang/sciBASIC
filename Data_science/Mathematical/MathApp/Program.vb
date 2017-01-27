@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e3fc200c6b80274d6a3e560408992bf, ..\sciBASIC#\Data_science\Mathematical\MathApp\Program.vb"
+﻿#Region "Microsoft.VisualBasic::9a252c6c6ce3406c5c8c08498accf4c6, ..\sciBASIC#\Data_science\Mathematical\MathApp\Program.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.Mathematical
 Module Program
 
     Public Function Main() As Integer
+        betaTest()
         '   Call CubicSplineTest.Test()
         Call DEBUG.Main()
         Try

@@ -16,6 +16,7 @@ Please note that:
       + ``*`` for any characters
       + ``%`` for any single characters 
 3. If you are using **Normal search**, please note that the ASCII symbol will be using as the delimiter for tokenlize the alphabet words, then if you want these symbol is also be contains in result, please using **MUST** contains method: adding quot on your query term.
+
    > Here listing the delimiter symbols:
    > 
    > ```json

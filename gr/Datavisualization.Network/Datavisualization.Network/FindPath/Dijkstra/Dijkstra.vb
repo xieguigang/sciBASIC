@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fbc70979c3833b57e879240f5755324, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\Dijkstra.vb"
+﻿#Region "Microsoft.VisualBasic::a315830d5da0da0750c47e2683b74c55, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\Dijkstra.vb"
 
     ' Author:
     ' 
@@ -71,7 +71,7 @@ Namespace Dijkstra
 
             'Initialise the new routes. the constructor will set the route weight to in.max
             For Each location As FileStream.Node In _Locations
-                _shortestPaths.Add(location, New Route(location.Identifier))
+                _shortestPaths.Add(location, New Route(location.ID))
             Next
 
             'The startPosition has a weight 0. 
@@ -116,7 +116,7 @@ Namespace Dijkstra
         Public Function CalculateMinCost(starts As String) As Route()
             Dim LQuery = (From node As FileStream.Node
                           In _Locations.AsParallel
-                          Where String.Equals(starts, node.Identifier, StringComparison.OrdinalIgnoreCase)
+                          Where String.Equals(starts, node.ID, StringComparison.OrdinalIgnoreCase)
                           Select node).FirstOrDefault
             If LQuery Is Nothing Then
                 Return Nothing

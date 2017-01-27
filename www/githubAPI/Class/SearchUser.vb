@@ -1,32 +1,33 @@
-﻿#Region "Microsoft.VisualBasic::aed9bd31aa3f725d14d835ef38d7e4ad, ..\sciBASIC#\www\githubAPI\Class\SearchUser.vb"
+﻿#Region "Microsoft.VisualBasic::2ca5f1efd0365cc3b6ea8b6ddba59570, ..\sciBASIC#\www\githubAPI\Class\SearchUser.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -38,11 +39,14 @@ Namespace [Class]
         Public Property items As T()
     End Class
 
+    ''' <summary>
+    ''' <see cref="login"/>是主键<see cref="INamedValue.Key"/>
+    ''' </summary>
     Public Class User : Inherits ClassObject
-        Implements sIdEnumerable
+        Implements INamedValue
 
         Public Property score As Double
-        Public Property login As String Implements sIdEnumerable.Identifier
+        Public Property login As String Implements INamedValue.Key
         Public Property id As String
         Public Property avatar_url As String
         Public Property gravatar_id As String
@@ -77,4 +81,21 @@ Namespace [Class]
             Return Me.GetJson
         End Function
     End Class
+
+    Public Structure UserModel
+
+        Public Property User As User
+        Public Property Followers As String()
+        Public Property Followings As String()
+        Public Property Repositories As String()
+        ''' <summary>
+        ''' username/repository
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Stars As NamedValue(Of String)()
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Structure
 End Namespace

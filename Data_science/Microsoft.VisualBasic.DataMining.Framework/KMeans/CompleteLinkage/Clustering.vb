@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::346401f5b5a43dc8822a99e645f2e022, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\CompleteLinkage\Clustering.vb"
+﻿#Region "Microsoft.VisualBasic::3913e80f6b432e1f77cb92e583ec9caa, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\CompleteLinkage\Clustering.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Namespace KMeans.CompleteLinkage
 
         Protected Shared Sub __writeCluster(source As IEnumerable(Of Cluster(Of Point)))
             For Each c In source.SeqIterator
-                For Each x As Point In c.obj._innerList
+                For Each x As Point In c.value._innerList
                     Call x.CompleteLinkageCluster(c.i)
                 Next
             Next

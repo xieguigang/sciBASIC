@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f56c7b0354af3265322504e367051b4, ..\sciBASIC#\Data_science\Mathematical\ODE\var.vb"
+﻿#Region "Microsoft.VisualBasic::e531b1bd83bc0d15f191dbe55b03d4d2, ..\sciBASIC#\Data_science\Mathematical\ODE\var.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@ Public Class var : Inherits float
     Implements ICloneable
 
     Public Property Index As Integer
-    Public Property Name As String Implements sIdEnumerable.Identifier
+    Public Property Name As String Implements INamedValue.Key
     Public Overrides Property value As Double Implements Ivar.value
 
     Public Shared ReadOnly type As Type = GetType(var)
@@ -91,7 +91,7 @@ Public Class var : Inherits float
     End Function
 End Class
 
-Public Interface Ivar : Inherits sIdEnumerable
+Public Interface Ivar : Inherits INamedValue
 
     Property value As Double
 End Interface

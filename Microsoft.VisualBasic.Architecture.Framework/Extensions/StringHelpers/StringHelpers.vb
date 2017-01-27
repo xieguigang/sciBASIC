@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfeca4160d461c7ed7a5feb21d6dee46, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::ecd6d2354b852ef2e7f832fcbc2cf739, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' The extensions module for facilities the string operations.
@@ -135,6 +136,15 @@ Public Module StringHelpers
         End If
     End Function
 
+    <Extension>
+    Public Function StripBlank(s$, Optional includeNewline As Boolean = True) As String
+        If includeNewline Then
+            Return s.Trim(" "c, ASCII.TAB, ASCII.LF, ASCII.CR)
+        Else
+            Return s.Trim(" "c, ASCII.TAB)
+        End If
+    End Function
+
     ''' <summary>
     ''' Shortcuts for method <see cref="System.String.Equals"/>(s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>)
     ''' </summary>
@@ -149,12 +159,12 @@ Public Module StringHelpers
     ''' <summary>
     ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Singleline"/> 
     ''' </summary>
-    Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Singleline
+    Public Const RegexICSng As RegexOptions = RegexOptions.IgnoreCase Or RegexOptions.Singleline
 
     ''' <summary>
     ''' <see cref="RegexOptions.IgnoreCase"/> + <see cref="RegexOptions.Multiline"/> 
     ''' </summary>
-    Public Const RegexICMul As RegexOptions = RegexOptions.IgnoreCase + RegexOptions.Multiline
+    Public Const RegexICMul As RegexOptions = RegexOptions.IgnoreCase Or RegexOptions.Multiline
 
     ''' <summary>
     ''' <paramref name="s"/> Is Nothing, <see cref="System.String.IsNullOrEmpty"/>, <see cref="System.String.IsNullOrWhiteSpace"/>
@@ -525,12 +535,14 @@ Public Module StringHelpers
     ''' Using ``String.Equals`` or Regular expression function to determined this delimiter 
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter As String, Optional regex As Boolean = False) As IEnumerable(Of String())
+    <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter$,
+                                               Optional regex As Boolean = False,
+                                               Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
         Dim list As New List(Of String)
         Dim delimiterTest As Func(Of String, Boolean)
 
         If regex Then
-            Dim regexp As New Regex(delimiter, RegexOptions.Singleline)
+            Dim regexp As New Regex(delimiter, opt)
             delimiterTest = Function(line) regexp.Match(line).Value = line
         Else
             delimiterTest = Function(line) String.Equals(delimiter, line, StringComparison.Ordinal)
@@ -577,10 +589,10 @@ Public Module StringHelpers
             CompareMethod.Text)
 
         For Each str As SeqValue(Of String) In collection.SeqIterator
-            If String.Equals(str.obj, text, method) Then
+            If String.Equals(str.value, text, method) Then
                 Return str.i
             ElseIf fuzzy Then
-                If InStr(str.obj, text, method2) > 0 Then
+                If InStr(str.value, text, method2) > 0 Then
                     Return str.i
                 End If
             End If
@@ -599,7 +611,7 @@ Public Module StringHelpers
     <Extension>
     Public Function WildcardsLocated(collection As IEnumerable(Of String), text As String, Optional caseSensitive As Boolean = True) As Integer
         For Each s As SeqValue(Of String) In collection.SeqIterator
-            If text.WildcardMatch(s.obj, Not caseSensitive) Then
+            If text.WildcardMatch(s.value, Not caseSensitive) Then
                 Return s.i
             End If
         Next
