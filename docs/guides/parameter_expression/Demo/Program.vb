@@ -8,6 +8,9 @@ Module Program
         Test(1, 2, 3, z:="a+b")
         Test(2, 3, 1, y:="(a+b)*c", z:="x+y")
         Pause()
+
+        Dim math As New Expression
+        Dim result# = math.Evaluation("(cos(x/33)+1)^2-3")
     End Sub
 
     Function Test(a!, b&, c#,
