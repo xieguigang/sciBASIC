@@ -1,7 +1,5 @@
 # Programming Guidelines for sciBASIC#
 
-![](../etc/badge.png)
-
 ## Authors
 1. [@xieguigang](https://github.com/xieguigang) ([xie.guigang@gcmodeller.org](mailto://xie.guigang@gcmodeller.org))
 2. [@asuka](https://github.com/amethyst-asuka) ([amethyst.asuka@gcmodeller.org](mailto://amethyst.asuka@gcmodeller.org))
@@ -24,6 +22,10 @@
 >13. [Beta distribution](../Data_science/Mathematical/data/beta-PDF)
 >14. [least-squares fitting](../Data_science/Mathematical/data/least-squares)
 >15. [The tricks of IsNullorEmpty](./tricks_of_IsNullOrEmpty.md)
+
+## sciBASIC# SDK docs
+
+[./sdk/](./sdk/)
 
 ### Appendix
 >1. [Deal with the github merge conflicts](./MergeGthubConflicts.md)
