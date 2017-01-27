@@ -5,7 +5,7 @@ Module Program
 
     Sub Main()
 
-        Call Test(1, 2, 3)
+        Call Test(1, 2, 3, z:="a+b")
 
         Pause()
 
@@ -19,11 +19,15 @@ Module Program
     End Sub
 
     Sub Test(a!, b&, c#, Optional x$ = "(A + b^2)! * 100", Optional y$ = "(cos(x/33)+1)^2 -3", Optional z$ = "log(-Y) + 9")
-        Dim params As Dictionary(Of String, Double) = ParameterExpression.Evaluate(Function() {a, b, x, y, z})
-        Dim json$ = params.GetJson(True)
+        'Dim params As Dictionary(Of String, Double) = ParameterExpression.Evaluate(Function() {a, b, x, y, z})
+        'Dim json$ = params.GetJson(True)
+
+        Dim before = {a, b, c, x, y, z}
 
         Call ParameterExpression.Apply(Function() {a, b, x, y, z})
 
-        Call json.__DEBUG_ECHO
+        Dim after = {a, b, c, x, y, z}
+
+        'Call json.__DEBUG_ECHO
     End Sub
 End Module
