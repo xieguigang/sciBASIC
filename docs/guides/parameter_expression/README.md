@@ -1,4 +1,4 @@
-# Optional Parameter Expression
+# Optional Parameter Expression in VisualBasic
 
 You can install this VisualBasic runtime from nuget package:
 
@@ -8,9 +8,13 @@ You can install this VisualBasic runtime from nuget package:
 PM> Install-Package sciBASIC
 ```
 
+## Background
+
+
+
 ## R language example
 
-The R language is a kind of a popular math calculation language, and 
+The R language is a kind of a popular math computation language. And like the .NET language function, the R language function is also have the optional parameter, and its optional parameter is not only a constant, and also it allows user using the R expression as its optional parameter default value. For example:
 
 ```R
 # heatmap.2 {gplots}
@@ -30,7 +34,11 @@ heatmap.2 (x,
 )
 ```
 
+Example as the ``heatmap.2`` function have the optional parameter like ``cexRow`` or ``cexCol``, both of them have the R expression as the optional parameter default value.
+
 ## How to implements in VisualBasic?
+
+
 
 ### The math expression engine
 
@@ -48,6 +56,7 @@ Here is the example coe about how to use this math expression engine:
 Imports Microsoft.VisualBasic.Mathematical.Scripting
 
 Dim math As New Expression
+' Using this math expression evaluation engine just super easy! 
 Dim result# = math.Evaluation("(cos(x/33)+1)^2-3")
 
 Call "x <- 123 + 3^3!                 ".Evaluate
@@ -59,6 +68,17 @@ Call "(1+2)! / 5                      ".Evaluate
 
 ### Using Linq Expressions
 
+For evaluate the parameter expression, we should gets the parameter that required for the evaluation.
+
+```vbnet
+' Evaluate parameter manually
+Dim math As New Expression
+
+Call Math.SetVariable(NameOf(a), a)
+Call Math.SetVariable(NameOf(b), b)
+```
+
+Evaluate the prameter expression is easy and works fine, but still not so handy, as we must write additional code lines and manual setup the expression and variables. From the search of CodeProject, and then I found Mr DiponRoy's post [&lt;Log All Parameters that were Passed to Some Method in C#>](https://www.codeproject.com/tips/795865/log-all-parameters-that-were-passed-to-some-method) is what i want, we can do such things automatic by using the ``Linq Expression``:
 ![](./images/1.png)
 ![](./images/2.png)
 ![](./images/3.png)
