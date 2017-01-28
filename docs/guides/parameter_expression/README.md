@@ -38,7 +38,9 @@ Example as the ``heatmap.2`` function have the optional parameter like ``cexRow`
 
 ## How to implements in VisualBasic?
 
-
+1. Get parameter value using Linq Expression
+2. Evaluate parameter expression using math expression engine
+3. Set evaluated prameter numeric value using Linq Expression
 
 ### The math expression engine
 
@@ -79,10 +81,156 @@ Call Math.SetVariable(NameOf(b), b)
 ```
 
 Evaluate the prameter expression is easy and works fine, but still not so handy, as we must write additional code lines and manual setup the expression and variables. From the search of CodeProject, and then I found Mr DiponRoy's post [&lt;Log All Parameters that were Passed to Some Method in C#>](https://www.codeproject.com/tips/795865/log-all-parameters-that-were-passed-to-some-method) is what i want, we can do such things automatic by using the ``Linq Expression``:
+
+#### 1. Passing our parameter array
+
+```vbnet
+Dim array As Expression(Of Func(Of Object())) = Function() {a, b, c, x, y, z}
+```
+
+And then we can gets the parameters' linq expression by converts this array source into the ``NewArrayExpression`` in Linq:
+
+```vbnet
+Dim unaryExpression As NewArrayExpression = DirectCast(array.Body, NewArrayExpression)
+Dim arrayData As UnaryExpression() = unaryExpression _
+    .Expressions _
+    .Select(Function(e) DirectCast(e, UnaryExpression)) _
+    .ToArray
+```
 ![](./images/1.png)
 ![](./images/2.png)
+
+#### 2. Gets the parameter variable
+
+```vbnet
+For Each expr As UnaryExpression In arrayData
+    Dim member = DirectCast(expr.Operand, MemberExpression)
+    Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
+    ' ...
+Next
+```
 ![](./images/3.png)
+
+#### 3. Gets the parameter value and parameter name
+
+```vbnet
+Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
+Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
+Dim value As Object = field.GetValue(constantExpression.Value)
+```
 ![](./images/4.png)
+
+Here is the entire function code that you can using the Linq Expression for gets the parameters' value
+
+```vbnet
+<Extension>
+Public Function InitTable(caller As MethodBase, array As Expression(Of Func(Of Object()))) As Dictionary(Of Value)
+    Dim unaryExpression As NewArrayExpression = DirectCast(array.Body, NewArrayExpression)
+    Dim arrayData As UnaryExpression() = unaryExpression _
+        .Expressions _
+        .Select(Function(e) DirectCast(e, UnaryExpression)) _
+        .ToArray
+    Dim out As New Dictionary(Of Value)
+    Dim trace As New NamedValue(Of MethodBase) With {
+        .Name = caller.Name,
+        .Value = caller
+    }
+
+    For Each expr As UnaryExpression In arrayData
+        Dim member = DirectCast(expr.Operand, MemberExpression)
+        Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
+        Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
+        Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
+        Dim value As Object = field.GetValue(constantExpression.Value)
+
+        out += New Value With {
+            .Name = name,
+            .Type = value.GetType,
+            .value = value,
+            .Trace = trace
+        }
+    Next
+
+    Return out
+End Function
+```
+
+### Math expression evaluates
+
+```vbnet
+''' <summary>
+''' 进行参数计算的时候只会接受数值类型以及字符串类型的参数
+''' </summary>
+''' <param name="params">假若参数是不需要进行计算的，则在生成字典的时候不放进去就行了</param>
+''' <returns></returns>
+<Extension>
+Private Function Evaluate(params As Dictionary(Of Value), caller As MethodBase) As Dictionary(Of String, Double)
+    Dim callerParameters As ParameterInfo() = caller _
+        .GetParameters _
+        .Where(Function(n) params.ContainsKey(n.Name)) _
+        .ToArray   ' 按顺序计算
+    Dim out As New List(Of String)
+    Dim expression As New Expression
+
+    For Each name As ParameterInfo In callerParameters
+        Dim value As Value = params(name.Name)
+
+        If value.IsNumeric Then
+            Call expression.SetVariable(name.Name, CDbl(value.value))
+        ElseIf value.IsString Then
+            Call expression.SetVariable(name.Name, CStr(value.value))
+        Else
+            ' 忽略掉其他的类型
+            Continue For
+        End If
+
+        out += name.Name
+    Next
+
+    Dim values As Dictionary(Of String, Double) = out _
+        .ToDictionary(Function(name) name,
+                      Function(name) expression(name))
+    Return values
+End Function
+```
+
+### Update parameter value
+
+If you have noticed that in the previous article section, there is a variable which its definition is:
+
+```vbnet
+Dim field As FieldInfo = DirectCast(member.Member, FieldInfo) 
+```
+
+And you are familiar with the .NET reflection operation, and then you already know how to update the expression value back to your parameters.
+
+```
+Dim values As Dictionary(Of String, Double) 
+
+For Each expr As UnaryExpression In arrayData
+    ' ...
+    Dim target As Object = constantExpression.Value
+    Dim value As Object = values(name)
+    
+    Select Case field.FieldType
+        Case GetType(String)
+            value = CStr(value)
+        Case GetType(Integer)
+            value = CInt(value)
+        Case GetType(Long)
+            value = CLng(value)
+        Case GetType(Byte)
+            value = CByte(value)
+        Case GetType(Single)
+            value = CSng(value)
+        Case GetType(Decimal)
+            value = CDec(value)
+        Case GetType(Short)
+            value = CShort(value)
+    End Select
+
+Call field.SetValue(target, value)
+```
 
 ## Reference links
 
