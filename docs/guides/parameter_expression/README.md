@@ -120,7 +120,7 @@ Dim value As Object = field.GetValue(constantExpression.Value)
 ```
 ![](./images/4.png)
 
-Here is the entire function code that you can using the Linq Expression for gets the parameters' value
+Probably you have notice that we are getting the parameter from a member field, as the linq expression is comes from an anonymous function of an anonymous type. Here is the entire function code that you can using the Linq Expression for gets the parameters' value. 
 
 ```vbnet
 <Extension>
@@ -156,6 +156,8 @@ End Function
 ```
 
 ### Math expression evaluates
+
+Once we get the parameter value by using the linq expression, then we are able to evaluate the parameter expression using the math expression that we've mentioned before: for a numeric type parameter, we can directly update its value to the math expression engine, for a string type parameter, it will be treated as an math function expression, once it has been evaluated for the numeric result, the evaluation value will be updated to the math expression engine too. 
 
 ```vbnet
 ''' <summary>
@@ -202,7 +204,7 @@ If you have noticed that in the previous article section, there is a variable wh
 Dim field As FieldInfo = DirectCast(member.Member, FieldInfo) 
 ```
 
-And you are familiar with the .NET reflection operation, and then you already know how to update the expression value back to your parameters.
+And you are familiar with the .NET reflection operation, and then you already know how to update the expression value back to your parameters. Due to the reason of we just concern about the math expression for this optional parameter expression, so that our type conversion for set back the parameter value just limited to several numeric types.
 
 ```vbnet
 Dim values As Dictionary(Of String, Double) 
