@@ -204,7 +204,7 @@ Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
 
 And you are familiar with the .NET reflection operation, and then you already know how to update the expression value back to your parameters.
 
-```
+```vbnet
 Dim values As Dictionary(Of String, Double) 
 
 For Each expr As UnaryExpression In arrayData
