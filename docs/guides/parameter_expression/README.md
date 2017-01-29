@@ -10,9 +10,36 @@ PM> Install-Package sciBASIC
 
 ## Background
 
+Due to the reason of the limitation in .NET compiler, the optional parameter its default value just allowed constant value, not allow a math expression, even this math expression produce constant value result. For example,
 
+```vbnet
+' We can define the optional parameter its default value using a constant value
+Optional n% = 111%
+Optional s$ = "123" & "456"
 
-## R language example
+' But the math expression is not allowed
+Optional n% = 1+1
+' Or statics function
+Optional n% = Math.Log(2, 2)
+```
+
+For example, if we develop a graphic plot function, and want our program adjust the point size parameter automatic with the image resolution, so that we can define it as:
+
+```vbnet
+Public Sub Plot(..., Optional width% = 1000, Optional ptSize% = "log(width)/2")
+
+' Adjust the ptSize parameter its value automatic
+' ptSize = log(width)/2 = log(2000)/2
+Call Plot(...., width:= 2000)
+
+' We don't want the program adjust the ptSize automatic
+' So that we just needs overrides the ptSize parameter its default value expression, like
+Call Plot(...., width:=2000, ptSize = 20)
+```
+
+So that this parameter expression language feature is much convenient to our programming.
+
+### R language example
 
 The R language is a kind of a popular math computation language. And like the .NET language function, the R language function is also have the optional parameter, and its optional parameter is not only a constant, and also it allows user using the R expression as its optional parameter default value. For example:
 
@@ -72,7 +99,7 @@ Call "(1+2)! / 5                      ".Evaluate
 
 ### Using Linq Expressions
 
-For evaluate the parameter expression, we should gets the parameter that required for the evaluation. A very easy method is set up the parameter expression manual, like:
+For evaluate the parameter expression, we should gets the parameter that required for the evaluation. A very easy method is set up the parameter expression manually, like this example:
 
 ```vbnet
 ' Evaluate parameter expression manually
@@ -82,11 +109,11 @@ Call Math.SetVariable(NameOf(a), a)
 Call Math.SetVariable(NameOf(b), b)
 ```
 
-And this manual evaluate the prameter expression is easy and works fine, but still not so handy, as we must write additional code lines and manual setup the expression and variables. From the search of CodeProject, and then I found Mr DiponRoy's post [&lt;Log All Parameters that were Passed to Some Method in C#>](https://www.codeproject.com/tips/795865/log-all-parameters-that-were-passed-to-some-method) is what I want, we can do such things automatic by using the ``Linq Expression``:
+And this manually evaluation of the prameter expression is easy and works fine, but still not so handy, as we must write additional code lines and manual setup the expression and variables. From the search of CodeProject, and then I found Mr DiponRoy's post [&lt;Log All Parameters that were Passed to Some Method in C#>](https://www.codeproject.com/tips/795865/log-all-parameters-that-were-passed-to-some-method) is what I want, we can do such job automatic by using the ``Linq Expression``:
 
 #### 1. Passing our parameter array
 
-Fortunately we have a very powerful tool in .NET for look inside our program, **using Linq Expression or reflection**. For gets the optional parameter expression values, all we needs to do just create an array of these parameters that required of the expression evaluation using the lambda:
+Fortunately we have a very powerful tool in .NET to look inside our program: using **Linq Expression or reflection**. For gets the optional parameter expression values, all we needs to do just create an array of these parameters that required of the expression evaluation using the lambda:
 
 ```vbnet
 Dim array As Expression(Of Func(Of Object())) = Function() {a, b, c, x, y, z}
@@ -204,13 +231,13 @@ End Function
 
 ### Update parameter value
 
-If you have noticed that in the previous article section, there is a variable which its definition is:
+If you have noticed that in the previous article section, there is a local variable in the ``For Each`` loop which its definition is:
 
 ```vbnet
 Dim field As FieldInfo = DirectCast(member.Member, FieldInfo) 
 ```
 
-And you are familiar with the .NET reflection operation, and then you already know how to update the expression value back to your parameters. Due to the reason of we just concern about the math expression for this optional parameter expression, so that our type conversion for set back the parameter value just limited to several numeric types.
+And if you are familiar with the .NET reflection operation, and then you are already know how to update the expression value back to your parameters. Due to the reason of we just concern about the math expression for this optional parameter expression, so that our type conversion for set back the parameter value just limited to several numeric types.
 
 ```vbnet
 Dim values As Dictionary(Of String, Double) 
@@ -237,7 +264,7 @@ For Each expr As UnaryExpression In arrayData
             value = CShort(value)
     End Select
 
-Call field.SetValue(target, value)
+    Call field.SetValue(target, value)
 ```
 
 ## Reference links
