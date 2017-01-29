@@ -38,6 +38,8 @@ Example as the ``heatmap.2`` function have the optional parameter like ``cexRow`
 
 ## How to implements in VisualBasic?
 
+For implements this R language like optional parameter expression in VisualBasic, that we can done in simply 3 steps:
+
 1. Get parameter value using Linq Expression
 2. Evaluate parameter expression using math expression engine
 3. Set evaluated prameter numeric value using Linq Expression
@@ -48,11 +50,11 @@ First of all, for implements this new optional parameter expression language fea
 
 > [A complex Mathematics expression evaluation module in Visual Basic](https://www.codeproject.com/Articles/646391/A-complex-Mathematics-expression-evaluation-module)
 
-And here is the rewrite version of this engine:
+And here is the rewrite updated version of this engine:
 
-> [sciBASIC# math scripting](https://github.com/xieguigang/sciBASIC/tree/52285009eebf91ee2f2cd34be999feaf76fa993d/Data_science/Mathematical/Math/Scripting)
+> [sciBASIC# math scripting](https://github.com/xieguigang/sciBASIC/tree/52285009eebf91ee2f2cd34be999feaf76fa993d/Data_science/Mathematical/Math/Scripting) which is avaliable in dll module: ``Microsoft.VisualBasic.Mathematical.dll``.
 
-Here is the example coe about how to use this math expression engine:
+Here is the example code about how to use this math expression engine:
 
 ```vbnet
 Imports Microsoft.VisualBasic.Mathematical.Scripting
@@ -70,19 +72,21 @@ Call "(1+2)! / 5                      ".Evaluate
 
 ### Using Linq Expressions
 
-For evaluate the parameter expression, we should gets the parameter that required for the evaluation.
+For evaluate the parameter expression, we should gets the parameter that required for the evaluation. A very easy method is set up the parameter expression manual, like:
 
 ```vbnet
-' Evaluate parameter manually
+' Evaluate parameter expression manually
 Dim math As New Expression
 
 Call Math.SetVariable(NameOf(a), a)
 Call Math.SetVariable(NameOf(b), b)
 ```
 
-Evaluate the prameter expression is easy and works fine, but still not so handy, as we must write additional code lines and manual setup the expression and variables. From the search of CodeProject, and then I found Mr DiponRoy's post [&lt;Log All Parameters that were Passed to Some Method in C#>](https://www.codeproject.com/tips/795865/log-all-parameters-that-were-passed-to-some-method) is what i want, we can do such things automatic by using the ``Linq Expression``:
+And this manual evaluate the prameter expression is easy and works fine, but still not so handy, as we must write additional code lines and manual setup the expression and variables. From the search of CodeProject, and then I found Mr DiponRoy's post [&lt;Log All Parameters that were Passed to Some Method in C#>](https://www.codeproject.com/tips/795865/log-all-parameters-that-were-passed-to-some-method) is what I want, we can do such things automatic by using the ``Linq Expression``:
 
 #### 1. Passing our parameter array
+
+Fortunately we have a very powerful tool in .NET for look inside our program, **using Linq Expression or reflection**. For gets the optional parameter expression values, all we needs to do just create an array of these parameters that required of the expression evaluation using the lambda:
 
 ```vbnet
 Dim array As Expression(Of Func(Of Object())) = Function() {a, b, c, x, y, z}
@@ -102,6 +106,8 @@ Dim arrayData As UnaryExpression() = unaryExpression _
 
 #### 2. Gets the parameter variable
 
+And we can using a simple ``For Each`` loop to extract each parameter from the array input:
+
 ```vbnet
 For Each expr As UnaryExpression In arrayData
     Dim member = DirectCast(expr.Operand, MemberExpression)
@@ -120,7 +126,7 @@ Dim value As Object = field.GetValue(constantExpression.Value)
 ```
 ![](./images/4.png)
 
-Probably you have notice that we are getting the parameter from a member field, as the linq expression is comes from an anonymous function of an anonymous type. Here is the entire function code that you can using the Linq Expression for gets the parameters' value. 
+Probably you have notice that we are getting the parameter from a member field, as the linq expression is comes from an anonymous function of an anonymous type. From the debug view of the code we can know that, actually when we create a lambda, we also creates an anonymous type and using the anonymous function in this dynamics created anonymous type. Here is the entire function code that you can using the Linq Expression for gets the parameters' value. 
 
 ```vbnet
 <Extension>
