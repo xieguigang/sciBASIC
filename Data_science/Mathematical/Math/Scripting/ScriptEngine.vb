@@ -89,6 +89,9 @@ Namespace Scripting
             End If
         End Function
 
+        ' 字符串插值脚本
+        ' expr$ = "&blablabla $x + $y = $z blablabla...."
+
         ''' <summary>
         ''' <see cref="Shell"/> function name alias.
         ''' </summary>
