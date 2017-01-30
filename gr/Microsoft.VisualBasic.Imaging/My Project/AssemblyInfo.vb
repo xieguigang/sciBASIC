@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Drawing3D")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Drawing3D")> 
-<Assembly: AssemblyCopyright("Copyright ©  2015")> 
+<Assembly: AssemblyTitle("sciBASIC# graphics artist graphics engine")>
+<Assembly: AssemblyDescription("sciBASIC# graphics artist graphics engine")>
+<Assembly: AssemblyCompany("GPL3")>
+<Assembly: AssemblyProduct("sciBASIC Graphics")>
+<Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2015")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>

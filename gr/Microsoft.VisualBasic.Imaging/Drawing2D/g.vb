@@ -114,6 +114,24 @@ Namespace Drawing2D
             End If
         End Sub
 
+        <Extension> Public Function GetBrush(res$) As Brush
+            Dim bgColor As Color = res.ToColor(onFailure:=Nothing)
+
+            If Not bgColor.IsEmpty Then
+                Return New SolidBrush(bgColor)
+            Else
+                Dim img As Image
+
+                If res.FileExists Then
+                    img = LoadImage(path:=res$)
+                Else
+                    img = Base64Codec.GetImage(res$)
+                End If
+
+                Return New TextureBrush(img)
+            End If
+        End Function
+
         ''' <summary>
         ''' Data plots graphics engine.
         ''' </summary>

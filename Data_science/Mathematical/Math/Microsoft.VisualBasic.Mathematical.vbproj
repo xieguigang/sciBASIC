@@ -240,6 +240,7 @@
     <Compile Include="LinearAlgebra\Vector\VectorEqualityComparer.vb" />
     <Compile Include="LinearAlgebra\Vector\Vector.vb" />
     <Compile Include="HashMaps\HashMap.vb" />
+    <Compile Include="Scripting\StringInterpolation.vb" />
     <Compile Include="Scripting\ParameterCompute.vb" />
     <Compile Include="Spline\BezierCurve.vb" />
     <Compile Include="Spline\CatmullRomSpline.vb" />
