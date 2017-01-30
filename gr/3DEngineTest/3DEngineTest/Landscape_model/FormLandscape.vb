@@ -5,14 +5,11 @@ Imports Microsoft.VisualBasic.Linq
 Public Class FormLandscape
 
     Private Sub FormLandscape_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Call SaveDemo()
-
-        Dim path$ = App.HOME & "/demo.xml"
-        Dim model As Landscape.Graphics = path.LoadXml(Of Landscape.Graphics)
-        Dim surfaces = Landscape.IO.Load3DModel("G:\GCModeller\src\runtime\sciBASIC#\gr\3DEngineTest\example\3D\3dmodel.model").GetSurfaces.ToArray
+        Dim project = Landscape.IO.Open("G:\GCModeller\src\runtime\sciBASIC#\gr\3DEngineTest\example.3mf")
+        Dim surfaces = project.GetSurfaces
         Dim canvas As New GDIDevice With {
             .Painter = Sub(g, camera)
-                           Call g.FillBg(model.bg, New Rectangle(New Point, camera.screen))
+                           Call g.Clear(Color.LightBlue)
                            Call camera.Draw(g, surfaces)
                        End Sub,
             .Dock = DockStyle.Fill,
