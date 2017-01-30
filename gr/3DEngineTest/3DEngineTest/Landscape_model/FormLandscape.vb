@@ -9,7 +9,7 @@ Public Class FormLandscape
 
         Dim path$ = App.HOME & "/demo.xml"
         Dim model As Landscape.Graphics = path.LoadXml(Of Landscape.Graphics)
-        Dim surfaces = model.Surfaces.ToArray(Function(s) s.createobject)
+        Dim surfaces = Landscape.IO.Load3DModel("G:\GCModeller\src\runtime\sciBASIC#\gr\3DEngineTest\example\3D\3dmodel.model").GetSurfaces.ToArray
         Dim canvas As New GDIDevice With {
             .Painter = Sub(g, camera)
                            Call g.FillBg(model.bg, New Rectangle(New Point, camera.screen))
