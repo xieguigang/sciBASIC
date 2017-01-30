@@ -89,6 +89,7 @@
     <Compile Include="3DBuilder\Project.vb" />
     <Compile Include="3DBuilder\Extensions.vb" />
     <Compile Include="3DBuilder\IO.vb" />
+    <Compile Include="resources.vb" />
     <Compile Include="Graphics.vb" />
     <Compile Include="Surface.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
