@@ -96,13 +96,20 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CubeModel.vb">
+    <Compile Include="Landscape_model\LandscapeModel.vb" />
+    <Compile Include="Simple\CubeModel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FormTest.Designer.vb">
+    <Compile Include="Landscape_model\FormLandscape.Designer.vb">
+      <DependentUpon>FormLandscape.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Landscape_model\FormLandscape.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Simple\FormTest.Designer.vb">
       <DependentUpon>FormTest.vb</DependentUpon>
     </Compile>
-    <Compile Include="FormTest.vb">
+    <Compile Include="Simple\FormTest.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -122,7 +129,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FormTest.resx">
+    <EmbeddedResource Include="Landscape_model\FormLandscape.resx">
+      <DependentUpon>FormLandscape.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Simple\FormTest.resx">
       <DependentUpon>FormTest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">

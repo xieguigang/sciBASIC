@@ -5,7 +5,11 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 ''' <summary>
 ''' 方便将3D模型保存与XML文件之中的数据模型对象
 ''' </summary>
-Public Class Surface : Implements IEnumerable(Of Point3D)
+''' <remarks>
+''' 2017.1.30
+''' 由于受到XML序列化的限制，这里就不再实现这个枚举接口了
+''' </remarks>
+Public Class Surface ': Implements IEnumerable(Of Point3D)
 
     ''' <summary>
     ''' 请注意，在这里面的点都是有先后顺序分别的
@@ -39,13 +43,13 @@ Public Class Surface : Implements IEnumerable(Of Point3D)
         Return paint
     End Function
 
-    Public Iterator Function GetEnumerator() As IEnumerator(Of Point3D) Implements IEnumerable(Of Point3D).GetEnumerator
-        For Each x As Point3D In vertices
-            Yield x
-        Next
-    End Function
+    'Public Iterator Function GetEnumerator() As IEnumerator(Of Point3D) Implements IEnumerable(Of Point3D).GetEnumerator
+    '    For Each x As Point3D In vertices
+    '        Yield x
+    '    Next
+    'End Function
 
-    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-        Yield GetEnumerator()
-    End Function
+    'Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+    '    Yield GetEnumerator()
+    'End Function
 End Class
