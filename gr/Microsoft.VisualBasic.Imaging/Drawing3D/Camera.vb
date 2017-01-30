@@ -102,7 +102,7 @@ Namespace Drawing3D
 
 #End Region
 
-        Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface))
+        Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
             Dim faces As New List(Of Surface)
 
             With Me
@@ -114,7 +114,7 @@ Namespace Drawing3D
                 Next
             End With
 
-            Call canvas.SurfacePainter(Me, faces)
+            Call canvas.SurfacePainter(Me, faces, drawPath)
         End Sub
 
         Public Overrides Function ToString() As String

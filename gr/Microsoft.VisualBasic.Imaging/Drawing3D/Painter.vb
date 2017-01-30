@@ -45,7 +45,7 @@ Namespace Drawing3D
         ''' <param name="camera"></param>
         ''' <param name="surfaces"></param>
         <Extension>
-        Public Sub SurfacePainter(ByRef canvas As Graphics, camera As Camera, surfaces As IEnumerable(Of Surface))
+        Public Sub SurfacePainter(ByRef canvas As Graphics, camera As Camera, surfaces As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
             Dim sv As New List(Of Surface)
 
             For Each s As Surface In surfaces
@@ -73,6 +73,9 @@ Namespace Drawing3D
                     .Select(Function(p3D) p3D.PointXY(camera.screen)) _
                     .ToArray
 
+                If drawPath Then
+                    Call canvas.DrawPolygon(Pens.Black, points)
+                End If
                 Call canvas.FillPolygon(s.brush, points)
             Next
         End Sub
