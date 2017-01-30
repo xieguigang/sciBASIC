@@ -35,6 +35,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D
 
+    Public Delegate Sub Painter(g As Graphics, camera As Camera)
+
     ''' <summary>
     ''' GDI+图形设备的简易抽象
     ''' </summary>
@@ -49,7 +51,6 @@ Namespace Drawing3D
             .screen = Size,
             .ViewDistance = -40
         }
-        Protected models As New List(Of I3DModel)
 
         Dim _rotationThread As New UpdateThread(15, AddressOf RunRotate)
 
@@ -126,6 +127,8 @@ Namespace Drawing3D
             End Set
         End Property
 
+        Public Property Painter As Painter
+
         Protected Overridable Sub __init()
             Try
                 Throw New Exception("Please Implements the initialize code at here.")
@@ -152,19 +155,14 @@ Namespace Drawing3D
             End Try
         End Sub
 
-        Protected Overridable Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
-            Call g.Clear(Color.LightBlue)
-
-            For Each model As I3DModel In models
-                Call model.Copy(_camera.Rotate(model)).Draw(g, _camera)
-            Next
-        End Sub
-
         Private Sub GDIDevice_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
             e.Graphics.CompositingQuality = CompositingQuality.HighQuality
             e.Graphics.InterpolationMode = InterpolationMode.HighQualityBilinear
 
-            Call __updateGraphics(sender, g:=e.Graphics, region:=e.ClipRectangle)
+            If Not _Painter Is Nothing Then
+                _camera.screen = e.ClipRectangle.Size
+                _Painter(e.Graphics, _camera)
+            End If
         End Sub
 
         Private Sub InitializeComponent()

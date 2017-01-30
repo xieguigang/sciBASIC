@@ -36,7 +36,7 @@ Namespace Drawing3D
     ''' <summary>
     ''' ``PAINTERS ALGORITHM`` provider
     ''' </summary>
-    Public Module Painter
+    Public Module PainterAlgorithm
 
         ''' <summary>
         ''' 请注意，这个并没有rotate，只会利用camera进行project

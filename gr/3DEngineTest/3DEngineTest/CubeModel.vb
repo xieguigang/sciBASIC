@@ -41,11 +41,12 @@ Public Class CubeModel : Inherits GDIDevice
         _camera.angleZ += 1
     End Sub
 
-    Protected Overrides Sub __updateGraphics(sender As Object, ByRef g As Graphics, region As Rectangle)
-        ' Clear the window
-        g.Clear(Color.LightBlue)
-
-        'Dim view As ModelView = cubeModel.Rotate(m_angle, ClientSize, Aixs.All)
-        Call cubeModel.Draw(g, _camera)
+    Private Sub CubeModel_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Painter = Sub(g, camera)
+                      ' Clear the window
+                      Call g.Clear(Color.LightBlue)
+                      ' Rotate cube model and draw model
+                      Call cubeModel.Draw(g, camera)
+                  End Sub
     End Sub
 End Class
