@@ -45,7 +45,7 @@ Module Program
         '    Call gdi.Save("./test_text.png", ImageFormats.Png)
         'End Using
 
-        Call New Form1().ShowDialog()
+        '   Call New Form1().ShowDialog()
 
         Dim i As Integer = 1
 

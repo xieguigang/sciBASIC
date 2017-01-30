@@ -32,6 +32,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing3D
 
+    ''' <summary>
+    ''' 进行实际3D绘图操作的对象模型
+    ''' </summary>
     Public Structure Surface
         Implements IEnumerable(Of Point3D)
         Implements I3DModel
