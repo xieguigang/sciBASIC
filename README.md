@@ -95,8 +95,9 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 + **[Network Visualization Interface](./gr/Datavisualization.Network/)**
 + **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
 
-+ ![](./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
-+ ![](./gr/3DEngineTest/example/Metadata/thumbnail.png)
+------------------------------------------------------------------------
+
+<img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400"> <img src="./gr/3DEngineTest/example/Metadata/thumbnail.png" width="250">
 
 ## Microsoft VisualBasic Data Science & Data Plots System
 
