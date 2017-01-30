@@ -23,6 +23,7 @@
 13. [Beta distribution](../Data_science/Mathematical/data/beta-PDF)
 14. [least-squares fitting](../Data_science/Mathematical/data/least-squares)
 15. [The tricks of IsNullorEmpty](./guides/tricks_of_IsNullOrEmpty.md)
+16. [Optional Parameter Expression](./guides/parameter_expression/README.md)
 
 ## sciBASIC# SDK docs
 
