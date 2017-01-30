@@ -16,11 +16,12 @@ Public Class FormLandscape
                            Call camera.Draw(g, surfaces)
                        End Sub,
             .Dock = DockStyle.Fill,
+            .AutoRotation = False,
             .Animation = Sub(_camera)
                              ' Update the variable after each frame.
-                             _camera.angleX += 1
-                             _camera.angleY += 1
-                             _camera.angleZ += 1
+                             '_camera.angleX += 1
+                             '_camera.angleY += 1
+                             '_camera.angleZ += 1
                          End Sub
         }
 

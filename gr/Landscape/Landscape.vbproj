@@ -86,6 +86,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3DBuilder\Project.vb" />
+    <Compile Include="3DBuilder\Extensions.vb" />
+    <Compile Include="3DBuilder\IO.vb" />
     <Compile Include="Graphics.vb" />
     <Compile Include="Surface.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -141,5 +144,6 @@
       <Name>Microsoft.VisualBasic.Imaging</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
