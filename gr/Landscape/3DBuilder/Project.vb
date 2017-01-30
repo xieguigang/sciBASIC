@@ -1,4 +1,6 @@
-﻿Public Class Project
+﻿Imports System.Drawing
 
-    Public Property 
+Public Class Project
+
+    Public Property Thumbnail As Image
 End Class

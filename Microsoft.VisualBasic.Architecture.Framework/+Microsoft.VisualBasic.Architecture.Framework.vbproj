@@ -539,6 +539,7 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
+    <Compile Include="Tools\Network\MIME\Type.vb" />
     <Compile Include="Tools\Network\Tcp\IPTools\AddressEnumerator.vb" />
     <Compile Include="Tools\SoftwareToolkits\LicenseMgr.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
