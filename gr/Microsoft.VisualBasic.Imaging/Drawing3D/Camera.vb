@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Language
 
 Namespace Drawing3D
 
@@ -100,6 +101,21 @@ Namespace Drawing3D
         End Function
 
 #End Region
+
+        Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface))
+            Dim faces As New List(Of Surface)
+
+            With Me
+                For Each f As Surface In surface
+                    faces += New Surface With {
+                        .brush = f.brush,
+                        .vertices = Rotate(f.vertices).ToArray
+                    }
+                Next
+            End With
+
+            Call canvas.SurfacePainter(Me, faces)
+        End Sub
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

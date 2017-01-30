@@ -34,13 +34,6 @@ Public Class CubeModel : Inherits GDIDevice
 
     Dim cubeModel As New Cube(10)
 
-    Protected Overrides Sub ___animationLoop()
-        ' Update the variable after each frame.
-        _camera.angleX += 1
-        _camera.angleY += 1
-        _camera.angleZ += 1
-    End Sub
-
     Private Sub CubeModel_Load(sender As Object, e As EventArgs) Handles Me.Load
         Painter = Sub(g, camera)
                       ' Clear the window
@@ -48,5 +41,11 @@ Public Class CubeModel : Inherits GDIDevice
                       ' Rotate cube model and draw model
                       Call cubeModel.Draw(g, camera)
                   End Sub
+        Animation = Sub()
+                        ' Update the variable after each frame.
+                        _camera.angleX += 1
+                        _camera.angleY += 1
+                        _camera.angleZ += 1
+                    End Sub
     End Sub
 End Class

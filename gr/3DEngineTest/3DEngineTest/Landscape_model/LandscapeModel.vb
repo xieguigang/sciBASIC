@@ -5,12 +5,14 @@ Module LandscapeModel
 
     Public Function ModelData() As Landscape.Graphics
         Dim faces As Surface() = New Cube(20).faces
+        Dim colors = {"red", "black", "yellow", "green", "blue", "gray"}
+
         Return New Landscape.Graphics With {
             .bg = "lightblue",
             .Surfaces = faces.ToArray(
-            Function(f) New Landscape.Surface With {
-                .paint = "white",
-                .vertices = f.vertices
+            Function(f, i) New Landscape.Surface With {
+                .paint = colors(i),
+                .vertices = f.vertices.ToArray(Function(pt) New Landscape.Vector(pt))
             })
         }
     End Function

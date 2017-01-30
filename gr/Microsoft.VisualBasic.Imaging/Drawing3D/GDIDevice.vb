@@ -147,12 +147,12 @@ Namespace Drawing3D
             Call Me.___animationLoop()
         End Sub
 
-        Protected Overridable Sub ___animationLoop()
-            Try
-                Throw New Exception("Please Implements the control code at here.")
-            Catch ex As Exception
-                Call ex.__DEBUG_ECHO
-            End Try
+        Public Property Animation As Action(Of Camera)
+
+        Private Sub ___animationLoop()
+            If Not _Animation Is Nothing Then
+                Call _Animation(_camera)
+            End If
         End Sub
 
         Private Sub GDIDevice_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
