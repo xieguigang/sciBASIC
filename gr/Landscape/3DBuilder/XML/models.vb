@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Drawing
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -7,14 +8,17 @@ Public Class mesh
     Public Property vertices As Point3D()
     Public Property triangles As triangle()
 
-    Public Function GetSurfaces() As Drawing3D.Surface()
+    Public Function GetSurfaces(base As base) As Drawing3D.Surface()
         Dim out As New List(Of Drawing3D.Surface)
+        Dim color As Color = base.displaycolor.TranslateColor
+        Dim b As New SolidBrush(color)
 
         For Each t As triangle In triangles
             out += New Drawing3D.Surface With {
                 .vertices = {
                     vertices(t.v1), vertices(t.v2), vertices(t.v3)
-                }
+                },
+                .brush = b
             }
         Next
 

@@ -6,7 +6,7 @@ Module Program
 
     Sub Main()
 
-        Dim model = Landscape.IO.Load3DModel("G:\GCModeller\src\runtime\sciBASIC#\gr\3DEngineTest\example\3D\3dmodel.model")
+        Dim model = Landscape.IO.Load3DModel("G:\GCModeller\src\runtime\sciBASIC#\gr\3DEngineTest\example\3D\3dmodel.model").GetSurfaces.ToArray
 
         Dim dddd = "X:\[Content_Types].xml".LoadXml(Of Types)
 

@@ -1,4 +1,5 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -12,6 +13,24 @@ Imports Microsoft.VisualBasic.Serialization.JSON
     Public Property resources As resources
     Public Property build As build
 
+    Public Iterator Function GetSurfaces() As IEnumerable(Of Drawing3D.Surface)
+        For Each obj As SeqValue(Of [object]) In resources _
+            .objects _
+            .Where(AddressOf NotNull) _
+            .SeqIterator
+
+            Dim base As base = resources _
+                .basematerials _
+                .basematerials(obj)
+
+            For Each s As Drawing3D.Surface In (+obj) _
+                .mesh _
+                .GetSurfaces(base)
+
+                Yield s
+            Next
+        Next
+    End Function
 End Class
 
 Public Class build
