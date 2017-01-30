@@ -4,7 +4,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <summary>
 ''' ``3D/3dmodel.model`` xml file.
 ''' </summary>
-Public Class XmlModel3D
+''' 
+<XmlRoot("model")> Public Class XmlModel3D
 
     <XmlAttribute>
     Public Property unit As String

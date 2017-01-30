@@ -83,6 +83,15 @@ Namespace Text.Xml
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
+            Return ToString(False)
+        End Function
+
+        ''' <summary>
+        ''' 使用这个函数可以得到修改之后的Xml文档
+        ''' </summary>
+        ''' <param name="usingDefault_xmlns"><see cref="xmlns.DefaultXmlns"/></param>
+        ''' <returns></returns>
+        Public Overloads Function ToString(Optional usingDefault_xmlns As Boolean = False) As String
             Dim [declare] As String = Regex.Match(xml, XmlDeclares, RegexICSng).Value
             Dim setDeclare As New XmlDeclaration With {
                 .encoding = encoding,
@@ -92,12 +101,18 @@ Namespace Text.Xml
 
             Dim doc As New StringBuilder(xml)
             Call doc.Replace([declare], setDeclare.ToString)
-            Call xmlns.WriteNamespace(doc)
+            Call xmlns.WriteNamespace(doc, usingDefault_xmlns)
             Return doc.ToString
         End Function
 
-        Public Function CreateObject(Of T)() As T
-            Return ToString.LoadFromXml(Of T)
+        ''' <summary>
+        ''' 从新修改过的xml文档之中通过反序列化构建目标对象
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="usingDefault_xmlns"></param>
+        ''' <returns></returns>
+        Public Function CreateObject(Of T)(Optional usingDefault_xmlns As Boolean = False) As T
+            Return ToString(usingDefault_xmlns).LoadFromXml(Of T)
         End Function
 
         Public Shared Function FromObject(Of T As Class)(x As T) As XmlDoc

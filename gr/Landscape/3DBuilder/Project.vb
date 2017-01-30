@@ -3,6 +3,6 @@
 Public Class Project
 
     Public Property Thumbnail As Image
-    Public Property model As model
+    Public Property model As XmlModel3D
 
 End Class

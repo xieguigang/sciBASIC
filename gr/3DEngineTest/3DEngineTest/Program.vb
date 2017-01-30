@@ -1,9 +1,12 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocols
+﻿Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes.Type
 
 Module Program
 
     Sub Main()
+
+        Dim model = Landscape.IO.Load3DModel("G:\GCModeller\src\runtime\sciBASIC#\gr\3DEngineTest\example\3D\3dmodel.model")
 
         Dim dddd = "X:\[Content_Types].xml".LoadXml(Of Types)
 

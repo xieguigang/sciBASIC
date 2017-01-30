@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::99c262cf1bbd1a768e69cbb24dc5d34d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Xmlns.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -44,7 +45,15 @@ Namespace Text.Xml
         ''' </summary>
         Public Const DefaultXmlns As String = "xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"""
 
+        ''' <summary>
+        ''' ``xmlns=...``
+        ''' </summary>
+        ''' <returns></returns>
         Public Property xmlns As String
+        ''' <summary>
+        ''' 枚举所有``xmlns:&lt;type>``开始的属性
+        ''' </summary>
+        ''' <returns></returns>
         Public Property [namespace] As Dictionary(Of NamedValue(Of String))
 
         Public Property xsd As String
@@ -106,6 +115,10 @@ Namespace Text.Xml
             [namespace](ns) = New NamedValue(Of String)(ns, value)
         End Sub
 
+        Public Sub Clear(ns$)
+            Call [Set](ns, "")
+        End Sub
+
         ''' <summary>
         ''' The parser for the xml root node.
         ''' </summary>
@@ -127,12 +140,12 @@ Namespace Text.Xml
         ''' </summary>
         ''' <param name="xml"></param>
         ''' <remarks>当前的这个对象是新值，需要替换掉文档里面的旧值</remarks>
-        Public Sub WriteNamespace(xml As StringBuilder)
+        Public Sub WriteNamespace(xml As StringBuilder, Optional usingDefault_xmlns As Boolean = False)
             Dim rs As String = XmlDoc.__rootString(xml.ToString)
             Dim root As Xmlns = New Xmlns(rs) ' old xmlns value
             Dim ns As New StringBuilder(rs)  ' 可能还有其他的属性，所以在这里还不可以直接拼接字符串然后直接进行替换
 
-            For Each nsValue As NamedValue(Of String) In [namespace].Values
+            For Each nsValue As NamedValue(Of String) In [namespace].Values.SafeQuery
                 Dim rootNs As String = root(nsValue.Name)
 
                 If Not String.IsNullOrEmpty(rootNs) Then
@@ -154,6 +167,10 @@ Namespace Text.Xml
 
             If Not String.IsNullOrEmpty(xmlns) Then  ' 当前的xmlns值不为空值 ，则设置xmlns
                 Call __replace(ns, $"xmlns=""{xmlns}""")
+            End If
+
+            If usingDefault_xmlns Then
+                Call __replace(ns, DefaultXmlns)
             End If
 
             Call xml.Replace(rs, ns.ToString)
