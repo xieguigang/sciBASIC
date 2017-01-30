@@ -143,7 +143,7 @@ Namespace Text.Xml
                     Call ns.Replace($"{nsValue.Name}=""{rootNs}""", s)
                 Else
                     If Not String.IsNullOrEmpty(nsValue.Value) Then
-                        Call ns.Replace(">", $" {nsValue.Name}=""{nsValue.Value}"">")
+                        Call __replace(ns, $"{nsValue.Name}=""{nsValue.Value}""")
                     End If
                 End If
             Next
@@ -153,10 +153,16 @@ Namespace Text.Xml
             End If
 
             If Not String.IsNullOrEmpty(xmlns) Then  ' 当前的xmlns值不为空值 ，则设置xmlns
-                Call ns.Replace(">", $" xmlns=""{xmlns}"">")
+                Call __replace(ns, $"xmlns=""{xmlns}""")
             End If
 
             Call xml.Replace(rs, ns.ToString)
+        End Sub
+
+        Private Shared Sub __replace(ByRef sb As StringBuilder, value$)
+            Dim s$ = sb.ToString.TrimEnd(">"c).Trim
+            s &= " " & value & ">"
+            sb = New StringBuilder(s)
         End Sub
     End Class
 End Namespace

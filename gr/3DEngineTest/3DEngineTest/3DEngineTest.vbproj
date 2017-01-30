@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2C5B56A6-7A48-457F-B347-3E15CF82D579}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>_3DEngineTest.My.MyApplication</StartupObject>
+    <StartupObject>Sub Main</StartupObject>
     <RootNamespace>_3DEngineTest</RootNamespace>
     <AssemblyName>3DEngineTest</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Landscape_model\LandscapeModel.vb" />
+    <Compile Include="Program.vb" />
     <Compile Include="Simple\CubeModel.vb">
       <SubType>UserControl</SubType>
     </Compile>

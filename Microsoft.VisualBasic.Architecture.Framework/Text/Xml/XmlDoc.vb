@@ -60,13 +60,13 @@ Namespace Text.Xml
         ''' <param name="xml"></param>
         Sub New(xml As String)
             Dim [declare] As New XmlDeclaration(
-            Regex.Match(xml, XmlDeclares, RegexICSng).Value)
+                Regex.Match(xml, XmlDeclares, RegexICSng).Value)
             version = [declare].version
             standalone = [declare].standalone
             encoding = [declare].encoding
 
             Dim root As NamedValue(Of Xmlns) =
-            Xmlns.RootParser(__rootString(xml))
+                Xmlns.RootParser(__rootString(xml))
             rootNode = root.Name
             xmlns = root.Value
             Me.xml = xml
