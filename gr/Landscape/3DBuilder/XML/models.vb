@@ -1,12 +1,29 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class mesh
 
     Public Property vertices As Point3D()
     Public Property triangles As triangle()
-    Public Property components As component()
 
+    Public Function GetSurfaces() As Drawing3D.Surface()
+        Dim out As New List(Of Drawing3D.Surface)
+
+        For Each t As triangle In triangles
+            out += New Drawing3D.Surface With {
+                .vertices = {
+                    vertices(t.v1), vertices(t.v2), vertices(t.v3)
+                }
+            }
+        Next
+
+        Return out
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 End Class
 
 Public Class triangle

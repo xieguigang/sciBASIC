@@ -15,6 +15,8 @@ End Class
 Public Class resources
 
     Public Property basematerials As basematerials
+    <XmlElement("object")>
+    Public Property objects As [object]()
 
 End Class
 
@@ -22,8 +24,7 @@ Public Interface Iobject
     <XmlAttribute> Property id As Integer
 End Interface
 
-Public Class [object]
-    Implements Iobject
+Public Class [object] : Implements Iobject
 
     <XmlAttribute("id")>
     Public Property id As Integer Implements Iobject.id
@@ -31,10 +32,8 @@ Public Class [object]
     <XmlAttribute> Public Property pid As String
     <XmlAttribute> Public Property pindex As Integer
 
-
-End Class
-
-Public Class mesh
+    Public Property components As component()
+    Public Property mesh As mesh
 
 End Class
 
@@ -43,7 +42,8 @@ Public Class basematerials
 
     <XmlAttribute("id")>
     Public Property id As Integer Implements Iobject.id
-    <XmlElement("base")> Public Property basematerials As base()
+    <XmlElement("base")>
+    Public Property basematerials As base()
 
     Public Overrides Function ToString() As String
         Return basematerials.GetJson
