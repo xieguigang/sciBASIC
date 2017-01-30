@@ -39,7 +39,8 @@ Namespace Drawing3D
     '''
     ''' Copyright (c) 2011 Leonel Machava
     ''' </summary>
-    Public Structure Point3D
+    ''' 
+    <XmlType("vertex")> Public Structure Point3D
         Implements PointF3D
 
         ''' <summary>
