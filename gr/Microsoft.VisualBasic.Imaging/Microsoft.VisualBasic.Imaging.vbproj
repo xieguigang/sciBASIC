@@ -278,7 +278,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\mime\MIME_Markups\MIME_Markups.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>markups</Name>
+      <Name>MIME_Markups</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
