@@ -29,17 +29,21 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Tasks
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D
 
-    Public Delegate Sub Painter(g As Graphics, camera As Camera)
+    Public Delegate Function ModelData() As IEnumerable(Of Surface)
 
     ''' <summary>
-    ''' GDI+图形设备的简易抽象
+    ''' GDI+三维图形显示设备的简易抽象
     ''' </summary>
+    ''' <remarks>
+    ''' 在这个控件之中存在两条工作线程用来加速三维图形的绘制:
+    ''' 
+    ''' + 空间计算线程，用来对数据进行预处理，包括投影和排序，生成可以直接被使用的多边形缓存
+    ''' + 图形渲染线程，用于进行三维图形的绘图操作，进行图像显示
+    ''' </remarks>
     Public Class GDIDevice : Inherits UserControl
 
         Protected WithEvents _animationLoop As Timer
@@ -127,7 +131,11 @@ Namespace Drawing3D
             End Set
         End Property
 
-        Public Property Painter As Painter
+        ''' <summary>
+        ''' 这个属性用来提供模型数据，例如位移之后的模型数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Model As ModelData
 
         Protected Overridable Sub __init()
             Try

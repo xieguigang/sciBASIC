@@ -46,7 +46,12 @@ Namespace Drawing3D
         ''' <param name="surfaces"></param>
         <Extension>
         Public Sub SurfacePainter(ByRef canvas As Graphics, camera As Camera, surfaces As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
-            For Each polygon As Polygon In camera.PainterBuffer(surfaces)
+            Call canvas.BufferPainting(camera.PainterBuffer(surfaces), drawPath)
+        End Sub
+
+        <Extension>
+        Public Sub BufferPainting(ByRef canvas As Graphics, buf As IEnumerable(Of Polygon), Optional drawPath As Boolean = False)
+            For Each polygon As Polygon In buf
                 With polygon
                     If drawPath Then
                         Call canvas.DrawPolygon(Pens.Black, .points)
