@@ -1,39 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::87635e8df39662d389355e7b607d474f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\GDIDevice.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device.Worker
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
-Namespace Drawing3D
-
-    Public Delegate Function ModelData() As IEnumerable(Of Surface)
+Namespace Drawing3D.Device
 
     ''' <summary>
     ''' GDI+三维图形显示设备的简易抽象
@@ -57,6 +56,7 @@ Namespace Drawing3D
         }
 
         Dim _rotationThread As New UpdateThread(15, AddressOf RunRotate)
+        Dim worker As New Worker(Me, Function() _camera)
 
         Private Sub RunRotate()
             SyncLock _camera
@@ -74,6 +74,7 @@ Namespace Drawing3D
 
         Protected Overrides Sub Dispose(disposing As Boolean)
             Call _rotationThread.Dispose()
+            Call worker.Dispose()
             Call Pause()
 
             MyBase.Dispose(disposing)
@@ -114,11 +115,13 @@ Namespace Drawing3D
         Public Sub Run()
             _animationLoop.Enabled = True
             _animationLoop.Start()
+            worker.Run()
         End Sub
 
         Public Sub Pause()
             _animationLoop.Enabled = False
             _animationLoop.Stop()
+            worker.Pause()
         End Sub
 
         Public Property RefreshInterval As Integer
@@ -136,6 +139,7 @@ Namespace Drawing3D
         ''' </summary>
         ''' <returns></returns>
         Public Property Model As ModelData
+        Public Property bg As Brush
 
         Protected Overridable Sub __init()
             Try
@@ -160,16 +164,6 @@ Namespace Drawing3D
         Private Sub ___animationLoop()
             If Not _Animation Is Nothing Then
                 Call _Animation(_camera)
-            End If
-        End Sub
-
-        Private Sub GDIDevice_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
-            e.Graphics.CompositingQuality = CompositingQuality.HighQuality
-            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBilinear
-
-            If Not _Painter Is Nothing Then
-                _camera.screen = e.ClipRectangle.Size
-                _Painter(e.Graphics, _camera)
             End If
         End Sub
 

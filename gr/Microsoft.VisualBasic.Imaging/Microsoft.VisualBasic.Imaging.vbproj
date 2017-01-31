@@ -209,13 +209,14 @@
     <Compile Include="Drawing2D\Text\String.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
     <Compile Include="Drawing3D\Camera.vb" />
+    <Compile Include="Drawing3D\Device\Worker.vb" />
     <Compile Include="Drawing3D\Painter.vb" />
     <Compile Include="Drawing3D\Models\2DShape.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />
     <Compile Include="Drawing3D\Models\Surface.vb" />
     <Compile Include="Drawing3D\Models\Cube.vb" />
-    <Compile Include="Drawing3D\GDIDevice.vb">
+    <Compile Include="Drawing3D\Device\GDIDevice.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Drawing3D\Point3D.vb" />
@@ -243,7 +244,7 @@
     <Compile Include="TextureResourceLoader.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Drawing3D\GDIDevice.resx">
+    <EmbeddedResource Include="Drawing3D\Device\GDIDevice.resx">
       <DependentUpon>GDIDevice.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
