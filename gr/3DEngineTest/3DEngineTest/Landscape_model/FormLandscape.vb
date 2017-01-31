@@ -14,13 +14,7 @@ Public Class FormLandscape
             .bg = Color.LightBlue,
             .Model = Function() surfaces.faces,
             .Dock = DockStyle.Fill,
-            .AutoRotation = True,
-            .Animation = Sub(ByRef _camera)
-                             ' Update the variable after each frame.
-                             _camera.angleX += 1
-                             _camera.angleY += 1
-                             _camera.angleZ += 1
-                         End Sub
+            .AutoRotation = True
         }
         Controls.Add(canvas)
         canvas.Run()
@@ -37,5 +31,9 @@ Public Class FormLandscape
                 canvas.Model = Function() surfaces
             End If
         End Using
+    End Sub
+
+    Private Sub AutoRotateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoRotateToolStripMenuItem.Click
+        canvas.AutoRotation = AutoRotateToolStripMenuItem.Checked
     End Sub
 End Class

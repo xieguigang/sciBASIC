@@ -25,6 +25,7 @@ Partial Class FormLandscape
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AutoRotateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -39,7 +40,7 @@ Partial Class FormLandscape
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadModelToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadModelToolStripMenuItem, Me.AutoRotateToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -49,6 +50,13 @@ Partial Class FormLandscape
         Me.LoadModelToolStripMenuItem.Name = "LoadModelToolStripMenuItem"
         Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.LoadModelToolStripMenuItem.Text = "Load Model"
+        '
+        'AutoRotateToolStripMenuItem
+        '
+        Me.AutoRotateToolStripMenuItem.CheckOnClick = True
+        Me.AutoRotateToolStripMenuItem.Name = "AutoRotateToolStripMenuItem"
+        Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AutoRotateToolStripMenuItem.Text = "Auto Rotate"
         '
         'FormLandscape
         '
@@ -69,4 +77,5 @@ Partial Class FormLandscape
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LoadModelToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AutoRotateToolStripMenuItem As ToolStripMenuItem
 End Class
