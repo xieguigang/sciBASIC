@@ -38,6 +38,30 @@ Namespace Imaging
     Public Module ColorExtensions
 
         ''' <summary>
+        ''' Creates a new light color object for the control from the specified color and
+        ''' lightens it by the specified percentage.
+        ''' </summary>
+        ''' <param name="base">The <see cref="System.Drawing.Color"/> to be lightened.</param>
+        ''' <param name="percent!">The percentage to lighten the specified <see cref="System.Drawing.Color"/>.</param>
+        ''' <returns>A <see cref="System.Drawing.Color"/> that represents the light color on the control.</returns>
+        <Extension>
+        Public Function Light(base As Color, percent!) As Color
+            Return ControlPaint.Light(base, percent)
+        End Function
+
+        ''' <summary>
+        ''' Creates a new dark color object for the control from the specified color and
+        ''' darkens it by the specified percentage.
+        ''' </summary>
+        ''' <param name="base">The <see cref="System.Drawing.Color"/> to be darkened.</param>
+        ''' <param name="percent!">The percentage to darken the specified <see cref="System.Drawing.Color"/>.</param>
+        ''' <returns>A <see cref="System.Drawing.Color"/> that represent the dark color on the control.</returns>
+        <Extension>
+        Public Function Dark(base As Color, percent!) As Color
+            Return ControlPaint.Dark(base, percent)
+        End Function
+
+        ''' <summary>
         ''' ``rgb(r,g,b)``
         ''' </summary>
         ''' <param name="c"></param>

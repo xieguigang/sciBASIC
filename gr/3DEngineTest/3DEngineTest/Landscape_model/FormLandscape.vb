@@ -14,7 +14,8 @@ Public Class FormLandscape
             .bg = Color.LightBlue,
             .Model = Function() surfaces.faces,
             .Dock = DockStyle.Fill,
-            .AutoRotation = True
+            .AutoRotation = True,
+            .LightIllumination = True
         }
         Controls.Add(canvas)
         canvas.Run()

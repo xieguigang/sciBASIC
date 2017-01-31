@@ -58,6 +58,23 @@ Namespace Drawing3D.Device
         Dim _rotationThread As New UpdateThread(15, AddressOf RunRotate)
         Dim worker As New Worker(Me)
 
+        Public Property drawPath As Boolean
+            Get
+                Return worker.drawPath
+            End Get
+            Set(value As Boolean)
+                worker.drawPath = value
+            End Set
+        End Property
+        Public Property LightIllumination As Boolean
+            Get
+                Return worker.LightIllumination
+            End Get
+            Set(value As Boolean)
+                worker.LightIllumination = value
+            End Set
+        End Property
+
         Private Sub RunRotate()
             SyncLock _camera
                 If keyRotate.X <> 0R OrElse keyRotate.Y <> 0R OrElse keyRotate.Z <> 0R Then

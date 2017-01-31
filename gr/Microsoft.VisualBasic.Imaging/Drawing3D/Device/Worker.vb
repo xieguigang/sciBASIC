@@ -26,6 +26,7 @@ Namespace Drawing3D.Device
             End Get
         End Property
         Public Property drawPath As Boolean
+        Public Property LightIllumination As Boolean
 
         Sub New(dev As GDIDevice)
             Me.display = dev
@@ -49,7 +50,7 @@ Namespace Drawing3D.Device
 
             If Not buffer Is Nothing Then
                 Call e.Graphics.Clear(display.bg)
-                Call e.Graphics.BufferPainting(buffer, drawPath)
+                Call e.Graphics.BufferPainting(buffer, drawPath, LightIllumination)
             End If
         End Sub
 
