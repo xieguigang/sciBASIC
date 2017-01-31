@@ -209,6 +209,7 @@
     <Compile Include="Drawing2D\Text\String.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
     <Compile Include="Drawing3D\Camera.vb" />
+    <Compile Include="Drawing3D\Device\Light.vb" />
     <Compile Include="Drawing3D\Device\Worker.vb" />
     <Compile Include="Drawing3D\Painter.vb" />
     <Compile Include="Drawing3D\Models\2DShape.vb" />
