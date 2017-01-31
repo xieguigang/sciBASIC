@@ -46,7 +46,7 @@ Namespace Drawing3D.Device
     Public Class GDIDevice : Inherits UserControl
 
         Protected WithEvents _animationLoop As Timer
-        Protected _camera As New Camera With {
+        Protected Friend _camera As New Camera With {
             .angleX = 0,
             .angleY = 0,
             .angleZ = 0,
@@ -56,7 +56,7 @@ Namespace Drawing3D.Device
         }
 
         Dim _rotationThread As New UpdateThread(15, AddressOf RunRotate)
-        Dim worker As New Worker(Me, Function() _camera)
+        Dim worker As New Worker(Me)
 
         Private Sub RunRotate()
             SyncLock _camera
@@ -159,7 +159,7 @@ Namespace Drawing3D.Device
             Call Me.___animationLoop()
         End Sub
 
-        Public Property Animation As Action(Of Camera)
+        Public Property Animation As CameraControl
 
         Private Sub ___animationLoop()
             If Not _Animation Is Nothing Then

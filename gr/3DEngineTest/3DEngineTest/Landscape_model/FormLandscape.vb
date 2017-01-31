@@ -14,8 +14,8 @@ Public Class FormLandscape
             .bg = Color.LightBlue,
             .Model = Function() surfaces.faces,
             .Dock = DockStyle.Fill,
-            .AutoRotation = False,
-            .Animation = Sub(_camera)
+            .AutoRotation = True,
+            .Animation = Sub(ByRef _camera)
                              ' Update the variable after each frame.
                              _camera.angleX += 1
                              _camera.angleY += 1

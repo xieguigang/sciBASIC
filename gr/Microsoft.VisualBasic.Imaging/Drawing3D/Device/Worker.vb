@@ -1,7 +1,7 @@
-﻿Imports System.Drawing
-Imports System.Drawing.Drawing2D
+﻿Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace Drawing3D.Device
@@ -14,11 +14,11 @@ Namespace Drawing3D.Device
         Implements IObjectModel_Driver
 
         Public Delegate Function ModelData() As IEnumerable(Of Surface)
+        Public Delegate Sub CameraControl(ByRef camera As Camera)
 
         Dim buffer As IEnumerable(Of Polygon)
-        Dim camera As Func(Of Camera)
         Dim WithEvents display As GDIDevice
-        Dim spaceThread As New UpdateThread(10, AddressOf CreateBuffer)
+        Dim spaceThread As New UpdateThread(20, AddressOf CreateBuffer)
 
         Public ReadOnly Property model As ModelData
             Get
@@ -27,13 +27,20 @@ Namespace Drawing3D.Device
         End Property
         Public Property drawPath As Boolean
 
-        Sub New(dev As GDIDevice, camera As Func(Of Camera))
-            Me.camera = camera
+        Sub New(dev As GDIDevice)
             Me.display = dev
         End Sub
 
         Sub CreateBuffer()
-            buffer = camera().PainterBuffer(model()())
+            With display._camera
+                Dim surfaces As New List(Of Surface)
+
+                For Each s As Surface In model()()
+                    surfaces += New Surface(.Rotate(s.vertices).ToArray, s.brush)
+                Next
+
+                buffer = .PainterBuffer(surfaces)
+            End With
         End Sub
 
         Private Sub display_Paint(sender As Object, e As PaintEventArgs) Handles display.Paint

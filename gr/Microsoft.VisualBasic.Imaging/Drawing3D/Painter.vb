@@ -61,6 +61,12 @@ Namespace Drawing3D
             Next
         End Sub
 
+        ''' <summary>
+        ''' 请注意，这个并没有rotate，只会利用camera进行project
+        ''' </summary>
+        ''' <param name="camera"></param>
+        ''' <param name="surfaces"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function PainterBuffer(camera As Camera, surfaces As IEnumerable(Of Surface)) As IEnumerable(Of Polygon)
             Dim sv As New List(Of Surface)

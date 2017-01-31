@@ -45,6 +45,11 @@ Namespace Drawing3D
         Public vertices() As Point3D
         Public brush As Brush
 
+        Sub New(v As Point3D(), b As Brush)
+            brush = b
+            vertices = v
+        End Sub
+
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
             Dim path = New Point(vertices.Length - 1) {}
             Dim polygon As New GraphicsPath
