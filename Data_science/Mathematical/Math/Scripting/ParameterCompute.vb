@@ -42,7 +42,7 @@ Namespace Scripting
         <Extension>
         Public Function Evaluate(params As Expression(Of Func(Of Object()))) As Dictionary(Of String, Double)
             Dim caller As MethodBase = GetMyCaller()
-            Return caller.InitTable(params).Evaluate(caller)
+            Return caller.InitTable(params).Evaluate(caller, Nothing)
         End Function
 
         ''' <summary>
@@ -50,49 +50,83 @@ Namespace Scripting
         ''' </summary>
         Public Sub Apply(array As Expression(Of Func(Of Object())))
             Dim caller As MethodBase = GetMyCaller()
-            Dim values As Dictionary(Of String, Double) = caller.InitTable(array).Evaluate(caller)
+            Dim expressions As Dictionary(Of Value) = caller.InitTable(array)
+            Dim strings As List(Of String) = Nothing
+            ' 在这里已经计算出表达式的值了，下面只需要将值赋值回原始的参数变量就好了
+            Dim values As Dictionary(Of String, Double) = expressions.Evaluate(caller, strings)
             Dim unaryExpression As NewArrayExpression = DirectCast(array.Body, NewArrayExpression)
             Dim arrayData As UnaryExpression() = unaryExpression _
                 .Expressions _
                 .Select(Function(e) DirectCast(e, UnaryExpression)) _
                 .ToArray
+            Dim getValue As Func(Of String, String) = values.GetValue()
 
             For Each expr As UnaryExpression In arrayData
                 Dim member = DirectCast(expr.Operand, MemberExpression)
                 Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
                 Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
                 Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
-                Dim value As Object = values(name)
                 Dim target As Object = constantExpression.Value
+                Dim value As Object
 
-                Select Case field.FieldType
-                    Case GetType(String)
-                        value = CStr(value)
-                    Case GetType(Integer)
-                        value = CInt(value)
-                    Case GetType(Long)
-                        value = CLng(value)
-                    Case GetType(Byte)
-                        value = CByte(value)
-                    Case GetType(Single)
-                        value = CSng(value)
-                    Case GetType(Decimal)
-                        value = CDec(value)
-                    Case GetType(Short)
-                        value = CShort(value)
-                End Select
+                If strings.IndexOf(name) > -1 Then ' 进行字符串插值处理
+                    value = expressions(name).value
+                    value = Mid(CStr(value), 2).Interpolate(getValue)
+                Else
+                    value = values(name)
+
+                    Select Case field.FieldType
+                        Case GetType(String)
+                            value = CStr(value)
+                        Case GetType(Integer)
+                            value = CInt(value)
+                        Case GetType(Long)
+                            value = CLng(value)
+                        Case GetType(Byte)
+                            value = CByte(value)
+                        Case GetType(Single)
+                            value = CSng(value)
+                        Case GetType(Decimal)
+                            value = CDec(value)
+                        Case GetType(Short)
+                            value = CShort(value)
+                    End Select
+                End If
 
                 Call field.SetValue(target, value)
             Next
         End Sub
 
         ''' <summary>
-        ''' 进行参数计算的时候只会接受数值类型以及字符串类型的参数
+        ''' 因为字符串插值过程之中变量名称的大小写可能不会敏感，所以还需要在这个函数值中对Key进行额外的小写转换处理
         ''' </summary>
-        ''' <param name="params">假若参数是不需要进行计算的，则在生成字典的时候不放进去就行了</param>
+        ''' <param name="values"></param>
         ''' <returns></returns>
         <Extension>
-        Private Function Evaluate(params As Dictionary(Of Value), caller As MethodBase) As Dictionary(Of String, Double)
+        Private Function GetValue(values As Dictionary(Of String, Double)) As Func(Of String, String)
+            values = values.ToDictionary(
+                Function(x) x.Key.ToLower,
+                Function(x) x.Value)
+
+            Return Function(v$)
+                       v = v.ToLower
+
+                       If values.ContainsKey(v) Then
+                           Return values(v)
+                       Else
+                           Return Nothing
+                       End If
+                   End Function
+        End Function
+
+        ''' <summary>
+        ''' 进行参数计算的时候只会接受数值类型以及字符串类型的参数，字符串插值计算会被自动的忽略掉
+        ''' </summary>
+        ''' <param name="params">假若参数是不需要进行计算的，则在生成字典的时候不放进去就行了</param>
+        ''' <param name="strings">进行字符串插值的变量名称列表</param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function Evaluate(params As Dictionary(Of Value), caller As MethodBase, ByRef strings As List(Of String)) As Dictionary(Of String, Double)
             Dim callerParameters As ParameterInfo() = caller _
                 .GetParameters _
                 .Where(Function(n) params.ContainsKey(n.Name)) _
@@ -100,13 +134,22 @@ Namespace Scripting
             Dim out As New List(Of String)
             Dim expression As New Expression
 
+            strings = New List(Of String)
+
             For Each name As ParameterInfo In callerParameters
                 Dim value As Value = params(name.Name)
 
                 If value.IsNumeric Then
                     Call expression.SetVariable(name.Name, CDbl(value.value))
                 ElseIf value.IsString Then
-                    Call expression.SetVariable(name.Name, CStr(value.value))
+                    Dim s$ = CStr(value.value)
+
+                    If s.First = "@"c Then
+                        strings += name.Name
+                        Continue For ' 跳过字符串插值计算
+                    Else
+                        Call expression.SetVariable(name.Name, s)
+                    End If
                 Else
                     ' 忽略掉其他的类型
                     Continue For

@@ -19,14 +19,16 @@ Module Program
         With New Expression
             Call .SetVariable("x", "23")
             Call .SetVariable("y", "x*3")
-            Call "\$ $x*3\n\t=$y".Interpolate(AddressOf .GetValue).__DEBUG_ECHO
+            Call .SetVariable("z23", "Y*23")
+            Call "\$ $x*3\n\t=$y \n$y*23=$z23".Interpolate(AddressOf .GetValue).__DEBUG_ECHO
         End With
     End Sub
 
     Function Test(a!, b&, c#,
                   Optional x$ = "(A + b^2)! * 100",
                   Optional y$ = "(cos(x/33)+1)^2 -3",
-                  Optional z$ = "log(-Y) + 9") As (before As Object(), after As Object())
+                  Optional z$ = "log(-Y) + 9",
+                  Optional title$ = "@This is title string interpolate test: \$z value is $z") As (before As Object(), after As Object())
 
         Dim before As New Value(Of Object()), after As New Value(Of Object())
 
