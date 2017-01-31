@@ -1,4 +1,5 @@
-﻿Imports System.Drawing.Drawing2D
+﻿Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -27,6 +28,17 @@ Namespace Drawing3D.Device
         End Property
         Public Property drawPath As Boolean
         Public Property LightIllumination As Boolean
+        Public Property HorizontalPanel As Boolean = False
+
+        Dim __horizontalPanel As New Surface With {
+            .brush = New SolidBrush(Color.FromArgb(128, Color.Gray)),
+            .vertices = {
+                New Point3D(100, 100),
+                New Point3D(100, -100),
+                New Point3D(-100, -100),
+                New Point3D(-100, 100)
+            }
+        }
 
         Sub New(dev As GDIDevice)
             Me.display = dev
@@ -39,6 +51,12 @@ Namespace Drawing3D.Device
                 For Each s As Surface In model()()
                     surfaces += New Surface(.Rotate(s.vertices).ToArray, s.brush)
                 Next
+
+                If HorizontalPanel Then
+                    surfaces += New Surface(
+                        .Rotate(__horizontalPanel.vertices).ToArray,
+                        __horizontalPanel.brush)
+                End If
 
                 buffer = .PainterBuffer(surfaces)
             End With

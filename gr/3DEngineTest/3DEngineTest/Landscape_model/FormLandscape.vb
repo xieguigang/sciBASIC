@@ -14,8 +14,7 @@ Public Class FormLandscape
             .bg = Color.LightBlue,
             .Model = Function() surfaces.faces,
             .Dock = DockStyle.Fill,
-            .AutoRotation = True,
-            .LightIllumination = True
+            .AutoRotation = True
         }
         Controls.Add(canvas)
         canvas.Run()
@@ -29,6 +28,7 @@ Public Class FormLandscape
                 Dim project = Landscape.IO.Open(file.FileName)
                 Dim surfaces = project.GetSurfaces
 
+                canvas.LightIllumination = True
                 canvas.Model = Function() surfaces
             End If
         End Using
@@ -36,5 +36,15 @@ Public Class FormLandscape
 
     Private Sub AutoRotateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoRotateToolStripMenuItem.Click
         canvas.AutoRotation = AutoRotateToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub ResetToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetToolStripMenuItem.Click
+        Dim surfaces = New Cube(10)
+        canvas.Model = Function() surfaces.faces
+        canvas.LightIllumination = False
+    End Sub
+
+    Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
+        canvas.ViewDistance = TrackBar1.Value
     End Sub
 End Class

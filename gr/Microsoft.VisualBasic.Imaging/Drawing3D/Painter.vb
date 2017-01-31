@@ -68,7 +68,7 @@ Namespace Drawing3D
         End Sub
 
         ''' <summary>
-        ''' 请注意，这个并没有rotate，只会利用camera进行project
+        ''' 生成三维图形绘图的多边形缓存。请注意，这个并没有rotate，只会利用camera进行project
         ''' </summary>
         ''' <param name="camera"></param>
         ''' <param name="surfaces"></param>

@@ -57,6 +57,7 @@ Namespace Drawing3D.Device
 
         Dim _rotationThread As New UpdateThread(15, AddressOf RunRotate)
         Dim worker As New Worker(Me)
+        Dim mouse As New Mouse(Me)
 
         Public Property drawPath As Boolean
             Get
@@ -72,6 +73,14 @@ Namespace Drawing3D.Device
             End Get
             Set(value As Boolean)
                 worker.LightIllumination = value
+            End Set
+        End Property
+        Public Property ViewDistance As Single
+            Get
+                Return _camera.ViewDistance
+            End Get
+            Set
+                _camera.ViewDistance = Value
             End Set
         End Property
 
@@ -189,29 +198,15 @@ Namespace Drawing3D.Device
             '
             'GDIDevice
             '
+            Me.BackColor = System.Drawing.Color.LightBlue
+            Me.Cursor = System.Windows.Forms.Cursors.Cross
             Me.Name = "GDIDevice"
-            Me.Size = New Size(438, 355)
+            Me.Size = New System.Drawing.Size(438, 355)
             Me.ResumeLayout(False)
 
         End Sub
 
-        Dim _rotate As Boolean
-
         Public Event RotateCamera(angleX!, angleY!, angleZ!)
-
-        Private Sub GDIDevice_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-            _rotate = True
-        End Sub
-
-        Private Sub GDIDevice_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
-            If _rotate Then
-                _camera.angleX += 1
-                _camera.angleY += 1
-                _camera.angleZ += 1
-            End If
-
-            RaiseEvent RotateCamera(_camera.angleX, _camera.angleY, _camera.angleZ)
-        End Sub
 
         Public Sub RotateX(angle!)
             _camera.angleX = angle
@@ -229,10 +224,6 @@ Namespace Drawing3D.Device
             _camera.angleX = angle.X
             _camera.angleY = angle.Y
             _camera.angleZ = angle.Z
-        End Sub
-
-        Private Sub GDIDevice_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
-            _rotate = False
         End Sub
 
         Public Property DisableScreenResize As Boolean = False
@@ -266,13 +257,13 @@ Namespace Drawing3D.Device
         Private Sub GDIDevice_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
             Select Case e.KeyCode
                 Case System.Windows.Forms.Keys.Up
-                    keyRotate = New Point3D(0, 1, 0)
+                    keyRotate = New Point3D(0, 2, 0)
                 Case System.Windows.Forms.Keys.Down
-                    keyRotate = New Point3D(0, -1, 0)
+                    keyRotate = New Point3D(0, -2, 0)
                 Case System.Windows.Forms.Keys.Left
-                    keyRotate = New Point3D(1, 0, 0)
+                    keyRotate = New Point3D(2, 0, 0)
                 Case System.Windows.Forms.Keys.Right
-                    keyRotate = New Point3D(-1, 0, 0)
+                    keyRotate = New Point3D(-2, 0, 0)
                 Case Else
                     ' Do Nothing
             End Select
