@@ -90,17 +90,24 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 |------|------|----|---------|
 |<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=160 height=160 />|<img src="./etc/lena/lena.gray.png" width=160 height=160 />|<img src="./etc/lena/lena.grayscale.png" width=160 height=160 />|
 
-## Microsoft VisualBasic Mathematics & Data Graphics System
+## sciBASIC# Graphics Artist
+
++ **[Network Visualization Interface](./gr/Datavisualization.Network/)**
++ **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
+
+------------------------------------------------------------------------
+
+<img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400"> <img src="./gr/3DEngineTest/example/Metadata/thumbnail.png" width="250">
+
+## Microsoft VisualBasic Data Science & Data Plots System
 
 + **[Mathematics & Chart Ploting System](./Data_science/Mathematical/)**
 + **[Darwinism computing module](./Data_science/Darwinism/)**
 + **[Data Mining &amp; Machine Learning](./Data_science/)**
 + **[sciBASIC# DataFrame System](./Data/DataFrame/)**
-+ **[Network Visualization Interface](./gr/Datavisualization.Network/)**
-
-![](./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
 
 ##### sciBASIC# Chart Plots System
+
 ```vbnet
 Imports Microsoft.VisualBasic.Data.ChartPlots
 ```
