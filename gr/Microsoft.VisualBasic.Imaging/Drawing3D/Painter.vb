@@ -46,6 +46,18 @@ Namespace Drawing3D
         ''' <param name="surfaces"></param>
         <Extension>
         Public Sub SurfacePainter(ByRef canvas As Graphics, camera As Camera, surfaces As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
+            For Each polygon As Polygon In camera.PainterBuffer(surfaces)
+                With polygon
+                    If drawPath Then
+                        Call canvas.DrawPolygon(Pens.Black, .points)
+                    End If
+                    Call canvas.FillPolygon(.brush, .points)
+                End With
+            Next
+        End Sub
+
+        <Extension>
+        Public Function PainterBuffer(camera As Camera, surfaces As IEnumerable(Of Surface)) As IEnumerable(Of Polygon)
             Dim sv As New List(Of Surface)
 
             For Each s As Surface In surfaces
@@ -63,6 +75,8 @@ Namespace Drawing3D
                 Function(surface) surface _
                     .vertices _
                     .Average(Function(z) z.Z))
+            Dim screen As Size = camera.screen
+            Dim out As New List(Of Polygon)
 
             ' Draw the faces using the PAINTERS ALGORITHM (distant faces first, closer faces last).
             For i As Integer = 0 To sv.Count - 1
@@ -70,15 +84,25 @@ Namespace Drawing3D
                 Dim s As Surface = sv(index)
                 Dim points() As Point = s _
                     .vertices _
-                    .Select(Function(p3D) p3D.PointXY(camera.screen)) _
+                    .Select(Function(p3D) p3D.PointXY(screen)) _
                     .ToArray
 
-                If drawPath Then
-                    Call canvas.DrawPolygon(Pens.Black, points)
-                End If
-                Call canvas.FillPolygon(s.brush, points)
+                out += New Polygon With {
+                    .brush = s.brush,
+                    .points = points
+                }
             Next
-        End Sub
+
+            Return out
+        End Function
+
+        ''' <summary>
+        ''' 经过投影和排序操作之后的多边形图形缓存单元
+        ''' </summary>
+        Public Structure Polygon
+            Dim points As Point()
+            Dim brush As Brush
+        End Structure
 
         ''' <summary>
         ''' ``PAINTERS ALGORITHM`` kernel
