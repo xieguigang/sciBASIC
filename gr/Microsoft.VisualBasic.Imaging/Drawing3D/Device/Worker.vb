@@ -16,11 +16,15 @@ Namespace Drawing3D.Device
         Public Delegate Function ModelData() As IEnumerable(Of Surface)
 
         Dim buffer As IEnumerable(Of Polygon)
-        Public Property model As ModelData
         Dim camera As Func(Of Camera)
         Dim WithEvents display As GDIDevice
         Dim spaceThread As New UpdateThread(10, AddressOf CreateBuffer)
 
+        Public ReadOnly Property model As ModelData
+            Get
+                Return display.Model
+            End Get
+        End Property
         Public Property drawPath As Boolean
 
         Sub New(dev As GDIDevice, camera As Func(Of Camera))
@@ -29,7 +33,7 @@ Namespace Drawing3D.Device
         End Sub
 
         Sub CreateBuffer()
-            buffer = camera().PainterBuffer(model())
+            buffer = camera().PainterBuffer(model()())
         End Sub
 
         Private Sub display_Paint(sender As Object, e As PaintEventArgs) Handles display.Paint
@@ -37,6 +41,7 @@ Namespace Drawing3D.Device
             e.Graphics.InterpolationMode = InterpolationMode.HighQualityBilinear
 
             If Not buffer Is Nothing Then
+                Call e.Graphics.Clear(display.bg)
                 Call e.Graphics.BufferPainting(buffer, drawPath)
             End If
         End Sub

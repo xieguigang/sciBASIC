@@ -27,10 +27,10 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device.Worker
 Imports Microsoft.VisualBasic.Parallel.Tasks
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D.Device
 
@@ -139,7 +139,7 @@ Namespace Drawing3D.Device
         ''' </summary>
         ''' <returns></returns>
         Public Property Model As ModelData
-        Public Property bg As Brush
+        Public Property bg As Color
 
         Protected Overridable Sub __init()
             Try

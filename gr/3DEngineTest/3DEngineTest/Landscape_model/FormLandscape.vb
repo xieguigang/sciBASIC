@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Linq
 
 Public Class FormLandscape
@@ -10,10 +11,8 @@ Public Class FormLandscape
         Dim surfaces = New Cube(10)
 
         canvas = New GDIDevice With {
-            .Painter = Sub(g, camera)
-                           Call g.Clear(Color.LightBlue)
-                           Call surfaces.Draw(g, camera)
-                       End Sub,
+            .bg = Color.LightBlue,
+            .Model = Function() surfaces.faces,
             .Dock = DockStyle.Fill,
             .AutoRotation = False,
             .Animation = Sub(_camera)
@@ -35,10 +34,7 @@ Public Class FormLandscape
                 Dim project = Landscape.IO.Open(file.FileName)
                 Dim surfaces = project.GetSurfaces
 
-                canvas.Painter = Sub(g, camera)
-                                     Call g.Clear(Color.White)
-                                     Call camera.Draw(g, surfaces, True)
-                                 End Sub
+                canvas.Model = Function() surfaces
             End If
         End Using
     End Sub
