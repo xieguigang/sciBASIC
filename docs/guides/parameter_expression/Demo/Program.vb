@@ -5,12 +5,22 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module Program
 
     Sub Main()
+        Call __stringExpression()
+
         Test(1, 2, 3, z:="a+b")
         Test(2, 3, 1, y:="(a+b)*c", z:="x+y")
         Pause()
 
         Dim math As New Expression
         Dim result# = math.Evaluation("(cos(x/33)+1)^2-3")
+    End Sub
+
+    Private Sub __stringExpression()
+        With New Expression
+            Call .SetVariable("x", "23")
+            Call .SetVariable("y", "x*3")
+            Call "\$ $x*3\n\t=$y".Interpolate(AddressOf .GetValue).__DEBUG_ECHO
+        End With
     End Sub
 
     Function Test(a!, b&, c#,
