@@ -22,7 +22,7 @@ Namespace Scripting
         <Extension>
         Public Function Interpolate(expr$, getValue As Func(Of String, String)) As String
             Dim sb As New StringBuilder(expr.Replace("\$", VB_str))
-            Dim t = Regex.Matches(expr, "[$][a-z][a-z0-9]*", RegexICSng).ToArray
+            Dim t = Regex.Matches(sb.ToString, "[$][a-z][a-z0-9]*", RegexICSng).ToArray
 
             For Each v$ In t
                 Dim value$ = getValue(Mid(v, 2))
