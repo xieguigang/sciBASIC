@@ -203,24 +203,88 @@ End Function
 
 ### 3mf format
 
+![](./logo-3mf.png)
+
+3MF is a new 3D printing format that will allow design applications to send full-fidelity 3D models to a mix of other applications, platforms, services and printers. The 3MF specification allows companies to focus on innovation, rather than on basic interoperability issues, and it is engineered to avoid the problems associated with other 3D file formats.
+
+> http://www.3mf.io/what-is-3mf/
+
+Due to the reason of 3MF is an XML-based data format designed for using additive manufacturing, so that we can easily load the model in the ``*.3mf`` file using xml de-serialization in VisualBasic, and the xml model for this serialization operation is avaliable in namespace: ``Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf.XML``
+
+Open the 3mf model file just using one simple function:
+
+```vbnet
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape
+
+Dim project As Vendor_3mf.Project = Vendor_3mf.IO.Open(file)
+Dim surfaces As Surface() = project.GetSurfaces(True)
+```
+
+![](./344.png)
+
+```vbnet
+Public Class Project
+
+    ''' <summary>
+    ''' ``*.3mf/Metadata/thumbnail.png``
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Thumbnail As Image
+    ''' <summary>
+    ''' ``*.3mf/3D/3dmodel.model``
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property model As XmlModel3D
+
+    Public Shared Function FromZipDirectory(dir$) As Project
+        Return New Project With {
+            .Thumbnail = $"{dir}/Metadata/thumbnail.png".LoadImage,
+            .model = IO.Load3DModel(dir & "/3D/3dmodel.model")
+        }
+    End Function
+
+    ''' <summary>
+    ''' Get all of the 3D surface model data in this 3mf project.
+    ''' </summary>
+    ''' <param name="centraOffset"></param>
+    ''' <returns></returns>
+    Public Function GetSurfaces(Optional centraOffset As Boolean = False) As Surface()
+        If model Is Nothing Then
+            Return {}
+        Else
+            Dim out As Surface() = model.GetSurfaces.ToArray
+
+            If centraOffset Then
+                With out.Centra
+                    out = .Offsets(out).ToArray
+                End With
+            End If
+
+            Return out
+        End If
+    End Function
+End Class
+```
+
 ### The display device
 #### Buffer thread
 
 ```vbnet
-        ''' <summary>
-        ''' The polygon buffer unit after the 3D to 2D projection and the z-order sorts.
-        ''' (经过投影和排序操作之后的多边形图形缓存单元)
-        ''' </summary>
-        Public Structure Polygon
-            ''' <summary>
-            ''' The 3D projection result buffer
-            ''' </summary>
-            Dim points As Point()
-            ''' <summary>
-            ''' Surface fill
-            ''' </summary>
-            Dim brush As Brush
-        End Structure
+''' <summary>
+''' The polygon buffer unit after the 3D to 2D projection and the z-order sorts.
+''' (经过投影和排序操作之后的多边形图形缓存单元)
+''' </summary>
+Public Structure Polygon
+
+    ''' <summary>
+    ''' The 3D projection result buffer
+    ''' </summary>
+    Dim points As Point()
+    ''' <summary>
+    ''' Surface fill
+    ''' </summary>
+    Dim brush As Brush
+End Structure
 ```
 
 #### Graphics rendering

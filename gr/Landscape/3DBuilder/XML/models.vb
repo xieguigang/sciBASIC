@@ -31,46 +31,49 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class mesh
+Namespace Vendor_3mf.XML
 
-    Public Property vertices As Point3D()
-    Public Property triangles As triangle()
+    Public Class mesh
 
-    Public Function GetSurfaces(base As base) As Drawing3D.Surface()
-        Dim out As New List(Of Drawing3D.Surface)
-        Dim color As Color = base.displaycolor.TranslateColor
-        Dim b As New SolidBrush(color)
+        Public Property vertices As Point3D()
+        Public Property triangles As triangle()
 
-        For Each t As triangle In triangles
-            out += New Drawing3D.Surface With {
-                .vertices = {
-                    vertices(t.v1), vertices(t.v2), vertices(t.v3)
-                },
-                .brush = b
-            }
-        Next
+        Public Function GetSurfaces(base As base) As Surface()
+            Dim out As New List(Of Surface)
+            Dim color As Color = base.displaycolor.TranslateColor
+            Dim b As New SolidBrush(color)
 
-        Return out
-    End Function
+            For Each t As triangle In triangles
+                out += New Surface With {
+                    .vertices = {
+                        vertices(t.v1), vertices(t.v2), vertices(t.v3)
+                    },
+                    .brush = b
+                }
+            Next
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+            Return out
+        End Function
 
-Public Class triangle
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 
-    <XmlAttribute> Public Property v1 As Integer
-    <XmlAttribute> Public Property v2 As Integer
-    <XmlAttribute> Public Property v3 As Integer
+    Public Class triangle
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+        <XmlAttribute> Public Property v1 As Integer
+        <XmlAttribute> Public Property v2 As Integer
+        <XmlAttribute> Public Property v3 As Integer
 
-Public Class component
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 
-    <XmlAttribute>
-    Public Property objectid As Integer
-End Class
+    Public Class component
+
+        <XmlAttribute>
+        Public Property objectid As Integer
+    End Class
+End Namespace

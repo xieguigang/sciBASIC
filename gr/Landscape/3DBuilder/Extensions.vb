@@ -30,31 +30,33 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-Public Module Extensions
+Namespace Vendor_3mf
 
-    <Extension> Public Function Centra(surfaces As IEnumerable(Of Drawing3D.Surface)) As Point3D
-        Dim vertices = surfaces.Select(Function(s) s.vertices).ToVector
-        Dim x = vertices.Select(Function(p3D) p3D.X).Average
-        Dim y = vertices.Select(Function(p3D) p3D.Y).Average
-        Dim z = vertices.Select(Function(p3D) p3D.Z).Average
+    Public Module Extensions
 
-        Return New Point3D(x, y, z)
-    End Function
+        <Extension> Public Function Centra(surfaces As IEnumerable(Of Surface)) As Point3D
+            Dim vertices = surfaces.Select(Function(s) s.vertices).ToVector
+            Dim x = vertices.Select(Function(p3D) p3D.X).Average
+            Dim y = vertices.Select(Function(p3D) p3D.Y).Average
+            Dim z = vertices.Select(Function(p3D) p3D.Z).Average
 
-    <Extension>
-    Public Function Offsets(offset As Point3D, model As IEnumerable(Of Drawing3D.Surface)) As IEnumerable(Of Drawing3D.Surface)
-        Dim out As New List(Of Drawing3D.Surface)
+            Return New Point3D(x, y, z)
+        End Function
 
-        For Each surface As Drawing3D.Surface In model
-            out += New Drawing3D.Surface With {
-                .brush = surface.brush,
-                .vertices = surface _
-                    .vertices _
-                    .ToArray(Function(p3D) p3D - offset)
-            }
-        Next
+        <Extension>
+        Public Function Offsets(offset As Point3D, model As IEnumerable(Of Surface)) As IEnumerable(Of Surface)
+            Dim out As New List(Of Surface)
 
-        Return out
-    End Function
-End Module
+            For Each surface As Surface In model
+                out += New Surface With {
+                    .brush = surface.brush,
+                    .vertices = surface _
+                        .vertices _
+                        .ToArray(Function(p3D) p3D - offset)
+                }
+            Next
 
+            Return out
+        End Function
+    End Module
+End Namespace

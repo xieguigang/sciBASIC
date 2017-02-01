@@ -30,50 +30,53 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class base
+Namespace Vendor_3mf.XML
 
-    <XmlAttribute> Public Property name As String
-    <XmlAttribute> Public Property displaycolor As String
+    Public Class base
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property displaycolor As String
 
-Public Class resources
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 
-    Public Property basematerials As basematerials
-    <XmlElement("object")>
-    Public Property objects As [object]()
+    Public Class resources
 
-End Class
+        Public Property basematerials As basematerials
+        <XmlElement("object")>
+        Public Property objects As [object]()
 
-Public Interface Iobject
-    <XmlAttribute> Property id As Integer
-End Interface
+    End Class
 
-Public Class [object] : Implements Iobject
+    Public Interface Iobject
+        <XmlAttribute> Property id As Integer
+    End Interface
 
-    <XmlAttribute("id")>
-    Public Property id As Integer Implements Iobject.id
-    <XmlAttribute> Public Property type As String
-    <XmlAttribute> Public Property pid As String
-    <XmlAttribute> Public Property pindex As Integer
+    Public Class [object] : Implements Iobject
 
-    Public Property components As component()
-    Public Property mesh As mesh
+        <XmlAttribute("id")>
+        Public Property id As Integer Implements Iobject.id
+        <XmlAttribute> Public Property type As String
+        <XmlAttribute> Public Property pid As String
+        <XmlAttribute> Public Property pindex As Integer
 
-End Class
+        Public Property components As component()
+        Public Property mesh As mesh
 
-Public Class basematerials
-    Implements Iobject
+    End Class
 
-    <XmlAttribute("id")>
-    Public Property id As Integer Implements Iobject.id
-    <XmlElement("base")>
-    Public Property basematerials As base()
+    Public Class basematerials
+        Implements Iobject
 
-    Public Overrides Function ToString() As String
-        Return basematerials.GetJson
-    End Function
-End Class
+        <XmlAttribute("id")>
+        Public Property id As Integer Implements Iobject.id
+        <XmlElement("base")>
+        Public Property basematerials As base()
+
+        Public Overrides Function ToString() As String
+            Return basematerials.GetJson
+        End Function
+    End Class
+End Namespace

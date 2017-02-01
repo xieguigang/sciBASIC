@@ -27,33 +27,36 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf.XML
 Imports Microsoft.VisualBasic.Text.Xml
 
-Public Module IO
+Namespace Vendor_3mf
 
-    ''' <summary>
-    ''' Open ``*.3mf`` model file.
-    ''' </summary>
-    ''' <param name="zip$">``*.3mf``</param>
-    ''' <returns></returns>
-    Public Function Open(zip$) As Project
-        Dim tmp$ = App.GetAppSysTempFile("--" & zip.FileName, sessionID:=App.PID)
-        Call GZip.ImprovedExtractToDirectory(zip, tmp, Overwrite.Always)
-        Return Project.FromZipDirectory(tmp)
-    End Function
+    Public Module IO
 
-    Public Function Load3DModel(xml$) As XmlModel3D
-        Dim doc As New XmlDoc(xml.ReadAllText)
-        doc.xmlns.xmlns = Nothing
-        doc.xmlns.Clear("m")
+        ''' <summary>
+        ''' Open ``*.3mf`` model file.
+        ''' </summary>
+        ''' <param name="zip$">``*.3mf``</param>
+        ''' <returns></returns>
+        Public Function Open(zip$) As Project
+            Dim tmp$ = App.GetAppSysTempFile("--" & zip.FileName, sessionID:=App.PID)
+            Call GZip.ImprovedExtractToDirectory(zip, tmp, Overwrite.Always)
+            Return Project.FromZipDirectory(tmp)
+        End Function
 
-        Dim model As XmlModel3D = doc.CreateObject(Of XmlModel3D)(True)
-        Return model
-    End Function
+        Public Function Load3DModel(xml$) As XmlModel3D
+            Dim doc As New XmlDoc(xml.ReadAllText)
+            doc.xmlns.xmlns = Nothing
+            doc.xmlns.Clear("m")
 
-    <Extension> Public Function NotNull(o As [object]) As Boolean
-        Return Not o.mesh Is Nothing AndAlso
+            Dim model As XmlModel3D = doc.CreateObject(Of XmlModel3D)(True)
+            Return model
+        End Function
+
+        <Extension> Public Function NotNull(o As [object]) As Boolean
+            Return Not o.mesh Is Nothing AndAlso
             Not o.mesh.vertices.IsNullOrEmpty
-    End Function
-End Module
-
+        End Function
+    End Module
+End Namespace

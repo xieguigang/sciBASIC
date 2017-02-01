@@ -31,55 +31,58 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-''' <summary>
-''' ``3D/3dmodel.model`` xml file.
-''' </summary>
-''' 
-<XmlRoot("model")> Public Class XmlModel3D
+Namespace Vendor_3mf.XML
 
-    <XmlAttribute>
-    Public Property unit As String
-    Public Property resources As resources
-    Public Property build As build
+    ''' <summary>
+    ''' ``3D/3dmodel.model`` xml file.
+    ''' </summary>
+    ''' 
+    <XmlRoot("model")> Public Class XmlModel3D
 
-    Public Function GetSurfaces() As IEnumerable(Of Drawing3D.Surface)
-        Dim out As New List(Of Drawing3D.Surface)
+        <XmlAttribute>
+        Public Property unit As String
+        Public Property resources As resources
+        Public Property build As build
 
-        On Error Resume Next
+        Public Function GetSurfaces() As IEnumerable(Of Drawing3D.Surface)
+            Dim out As New List(Of Drawing3D.Surface)
 
-        For Each obj As SeqValue(Of [object]) In resources _
-            .objects _
-            .Where(AddressOf NotNull) _
-            .SeqIterator
+            On Error Resume Next
 
-            Dim base As base = resources _
-                .basematerials _
-                .basematerials(obj)
+            For Each obj As SeqValue(Of [object]) In resources _
+                .objects _
+                .Where(AddressOf NotNull) _
+                .SeqIterator
 
-            out += (+obj) _
-                .mesh _
-                .GetSurfaces(base)
-        Next
+                Dim base As base = resources _
+                    .basematerials _
+                    .basematerials(obj)
 
-        Return out
-    End Function
-End Class
+                out += (+obj) _
+                    .mesh _
+                    .GetSurfaces(base)
+            Next
 
-Public Class build
+            Return out
+        End Function
+    End Class
 
-    <XmlElement("item")> Public Property items As item()
+    Public Class build
 
-    Public Overrides Function ToString() As String
-        Return items.GetJson
-    End Function
-End Class
+        <XmlElement("item")> Public Property items As item()
 
-Public Class item
+        Public Overrides Function ToString() As String
+            Return items.GetJson
+        End Function
+    End Class
 
-    <XmlAttribute> Public Property objectid As Integer
-    <XmlAttribute> Public Property transform As Double()
+    Public Class item
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+        <XmlAttribute> Public Property objectid As Integer
+        <XmlAttribute> Public Property transform As Double()
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
+End Namespace

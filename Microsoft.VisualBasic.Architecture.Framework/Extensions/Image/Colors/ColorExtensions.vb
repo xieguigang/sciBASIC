@@ -208,7 +208,9 @@ Namespace Imaging
                 Return Color.Black
             End If
             If exp.First = "#"c Then
-                Return ColorTranslator.FromHtml(exp)
+                ' 2017-2-2
+                ' 经过测试与3mf文件之中的材质颜色定义一致，没有问题
+                Return HexColor.ConvertToRbg(exp)
             End If
             If Regex.Match(exp, "\d+").Value = exp Then
                 Return ColorTranslator.FromOle(CInt(exp))
