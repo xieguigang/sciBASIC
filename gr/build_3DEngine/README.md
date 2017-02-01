@@ -5,6 +5,9 @@
 Although this gdi+ based 3D graphic engine have the problem when the , but it is enough for the 3D plots for the scientific computing.
 
 ### The 3D rotation
+
+![](./Previews.gif)
+
 ### The projection
 ### The painter algorithm
 
