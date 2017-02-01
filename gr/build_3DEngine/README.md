@@ -1,8 +1,92 @@
-## Build My Own 3D graphics engine step by step
+# Build My Own 3D graphics engine step by step
+
+Install this framework via nuget package
+
+```python
+# https://www.nuget.org/packages/sciBASIC#
+# For .NET Framework 4.6:
+PM> Install-Package sciBASIC -Pre
+```
+
+## Background &amp; Introduction
+
+All of the Mathematical Sciences library/environment, like the GNU plot, matlab, R, scipy, have their own 3D engine for the scientific data 3D plots. In my recent work required of the 3D scatter plot for visualize my experiment data, and my ``sciBASIC#`` library didn't have its own 3D graphic engine yet. so that I decided create my own 3D graphic engine for my experiment data plots. For search on the Google and wiki, I found all the necessary algorithm for the 3D graphic and implemented this 3D engine based on the gdi+ graphic technics successfully.
 
 ![](./images/screenshot.png)
 
-Although this gdi+ based 3D graphic engine have the performance problem when the model is too complicated and have a lot of 3D surface to draw, but it is enough for the 3D plots for the scientific computing.
+Although this gdi+ based 3D graphic engine have the performance problem when the model is too complicated and have a lot of 3D surface to draw, but it is enough for the 3D plots for the scientific computing. For example, using this 3D graphic engine works perfectly for generate this 3D function plot:
+
+![](./images/3d-heatmap.png)
+
+**In this article I want to introduce how to build my own 3D graphic engine from ZERO step by step**, and in this article I want to mainly introduce the 3D graphic algorithm and the **3mf** 3D model format that can help you to using for implement your own 3D graphic engine in the future.
+
+## The 3D graphics algorithm
+
+### The 3D graphic object models
+
+First of all, I want to introduce the 2 important object that I use in my own 3D graphic engine.
+
+#### Point3D
+
+```vbnet
+<XmlType("vertex")> Public Structure Point3D
+    Implements PointF3D
+
+    Public Sub New(x As Single, y As Single, Optional z As Single = 0)
+        Me.X = x
+        Me.Y = y
+        Me.Z = z
+    End Sub
+
+    Public Sub New(Position As Point)
+        Call Me.New(Position.X, Position.Y)
+    End Sub
+
+    <XmlAttribute("x")> Public Property X As Single Implements PointF3D.X
+    <XmlAttribute("y")> Public Property Y As Single Implements PointF3D.Y
+    <XmlAttribute("z")> Public Property Z As Single Implements PointF3D.Z
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
+End Structure
+```
+
+#### Surface
+
+```vbnet
+''' <summary>
+''' Object model that using for the 3D graphics.
+''' (进行实际3D绘图操作的对象模型)
+''' </summary>
+Public Structure Surface
+    Implements IEnumerable(Of Point3D)
+    Implements I3DModel
+
+    ''' <summary>
+    ''' Vertix in this list have the necessary element orders
+    ''' for construct a correct closed figure.
+    ''' (请注意，在这里面的点都是有先后顺序分别的)
+    ''' </summary>
+    Public vertices() As Point3D
+    ''' <summary>
+    ''' Drawing texture material of this surface.
+    ''' </summary>
+    Public brush As Brush
+
+    Sub New(v As Point3D(), b As Brush)
+        brush = b
+        vertices = v
+    End Sub
+End Structure
+```
+
+And based on these two important data structure, then we are able to apply the 3D algorithm in this 3D graphic engine. And here is the 3D graphic algorithm that I implemented in this article:
+
++ 3D rotation
++ 3D to 2D projection
++ The painter algorithm
++ The light source algorithm
 
 ### The 3D rotation
 
@@ -201,71 +285,6 @@ Public Function OrderProvider(Of T)(source As IEnumerable(Of T), z As Func(Of T,
 End Function
 ```
 
-### 3mf format
-
-![](./images/logo-3mf.png)
-
-3MF is a new 3D printing format that will allow design applications to send full-fidelity 3D models to a mix of other applications, platforms, services and printers. The 3MF specification allows companies to focus on innovation, rather than on basic interoperability issues, and it is engineered to avoid the problems associated with other 3D file formats.
-
-> http://www.3mf.io/what-is-3mf/
-
-Due to the reason of 3MF is an XML-based data format designed for using additive manufacturing, so that we can easily load the model in the ``*.3mf`` file using xml de-serialization in VisualBasic, and the xml model for this serialization operation is avaliable in namespace: ``Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf.XML``
-
-Open the 3mf model file just using one simple function:
-
-```vbnet
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape
-
-Dim project As Vendor_3mf.Project = Vendor_3mf.IO.Open(file)
-Dim surfaces As Surface() = project.GetSurfaces(True)
-```
-
-![](./images/344.png)
-
-```vbnet
-Public Class Project
-
-    ''' <summary>
-    ''' ``*.3mf/Metadata/thumbnail.png``
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Thumbnail As Image
-    ''' <summary>
-    ''' ``*.3mf/3D/3dmodel.model``
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property model As XmlModel3D
-
-    Public Shared Function FromZipDirectory(dir$) As Project
-        Return New Project With {
-            .Thumbnail = $"{dir}/Metadata/thumbnail.png".LoadImage,
-            .model = IO.Load3DModel(dir & "/3D/3dmodel.model")
-        }
-    End Function
-
-    ''' <summary>
-    ''' Get all of the 3D surface model data in this 3mf project.
-    ''' </summary>
-    ''' <param name="centraOffset"></param>
-    ''' <returns></returns>
-    Public Function GetSurfaces(Optional centraOffset As Boolean = False) As Surface()
-        If model Is Nothing Then
-            Return {}
-        Else
-            Dim out As Surface() = model.GetSurfaces.ToArray
-
-            If centraOffset Then
-                With out.Centra
-                    out = .Offsets(out).ToArray
-                End With
-            End If
-
-            Return out
-        End If
-    End Function
-End Class
-```
-
 ### The display device
 
 I have create a winform control for display the 3d model which is avaliable in namespace ``Microsoft.VisualBasic.Imaging.Drawing3D.Device.GDIDevice``. Here is a simple code example of using this 3D model display control in winform:
@@ -328,6 +347,8 @@ Private Sub CreateBuffer()
     debugger.BufferWorker = App.NanoTime - now
 End Sub
 ```
+
+This model buffer worker thread apply the 3D projection for all surface in the model and run the Z-order based painters' algorithm, and then creates the 2D polygon buffer for the rendering thread. Here is the definition of this 2D polygon buffer unit:
 
 ```vbnet
 ''' <summary>
@@ -393,6 +414,8 @@ Public Function Illumination(surfaces As IEnumerable(Of Polygon)) As IEnumerable
 End Function
 ```
 
+##### The control rendering
+
 And here is the rendering thread, which is triggerd by a refresh thread:
 
 ```vbnet
@@ -432,4 +455,70 @@ Private Sub RenderingThread(sender As Object, e As PaintEventArgs) Handles devic
 
     debugger.RenderingWorker = App.NanoTime - now
 End Sub
+```
+
+## 3mf format
+
+Finally, we have all of the elements that can using for display the 3D graphic. For display a 3D graphic, we must put the model data into the display device control. And I use the **3mf** model file as my 3D engine input model data. Here is how I do for load the 3mf model data:
+
+Open the 3mf model file and load the 3D model into the canvas control just using two simple function:
+
+```vbnet
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape
+
+Dim project As Vendor_3mf.Project = Vendor_3mf.IO.Open(file)
+Dim surfaces As Surface() = project.GetSurfaces(True)
+```
+
+![](./images/344.png)
+
+3MF is a new 3D printing format that will allow design applications to send full-fidelity 3D models to a mix of other applications, platforms, services and printers. The 3MF specification allows companies to focus on innovation, rather than on basic interoperability issues, and it is engineered to avoid the problems associated with other 3D file formats.
+
+![](./images/logo-3mf.png)
+> http://www.3mf.io/what-is-3mf/
+
+Due to the reason of 3MF is an XML-based data format designed for using additive manufacturing, so that we can easily load the model in the ``*.3mf`` file using xml de-serialization in VisualBasic, and the xml model for this serialization operation is avaliable in namespace: ``Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf.XML``
+
+```vbnet
+Public Class Project
+
+    ''' <summary>
+    ''' ``*.3mf/Metadata/thumbnail.png``
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Thumbnail As Image
+    ''' <summary>
+    ''' ``*.3mf/3D/3dmodel.model``
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property model As XmlModel3D
+
+    Public Shared Function FromZipDirectory(dir$) As Project
+        Return New Project With {
+            .Thumbnail = $"{dir}/Metadata/thumbnail.png".LoadImage,
+            .model = IO.Load3DModel(dir & "/3D/3dmodel.model")
+        }
+    End Function
+
+    ''' <summary>
+    ''' Get all of the 3D surface model data in this 3mf project.
+    ''' </summary>
+    ''' <param name="centraOffset"></param>
+    ''' <returns></returns>
+    Public Function GetSurfaces(Optional centraOffset As Boolean = False) As Surface()
+        If model Is Nothing Then
+            Return {}
+        Else
+            Dim out As Surface() = model.GetSurfaces.ToArray
+
+            If centraOffset Then
+                With out.Centra
+                    out = .Offsets(out).ToArray
+                End With
+            End If
+
+            Return out
+        End If
+    End Function
+End Class
 ```
