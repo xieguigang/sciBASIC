@@ -37,7 +37,7 @@ Public Module IO
     ''' <param name="zip$">``*.3mf``</param>
     ''' <returns></returns>
     Public Function Open(zip$) As Project
-        Dim tmp$ = App.GetAppSysTempFile(sessionID:=App.PID)
+        Dim tmp$ = App.GetAppSysTempFile("--" & zip.FileName, sessionID:=App.PID)
         Call GZip.ImprovedExtractToDirectory(zip, tmp, Overwrite.Always)
         Return Project.FromZipDirectory(tmp)
     End Function
