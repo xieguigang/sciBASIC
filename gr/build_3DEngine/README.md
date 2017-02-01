@@ -2,7 +2,7 @@
 
 ![](./images/screenshot.png)
 
-Although this gdi+ based 3D graphic engine have the problem when the , but it is enough for the 3D plots for the scientific computing.
+Although this gdi+ based 3D graphic engine have the performance problem when the model is too complicated and have a lot of 3D surface to draw, but it is enough for the 3D plots for the scientific computing.
 
 ### The 3D rotation
 
@@ -267,6 +267,30 @@ End Class
 ```
 
 ### The display device
+
+I have create a winform control for display the 3d model which is avaliable in namespace ``Microsoft.VisualBasic.Imaging.Drawing3D.Device.GDIDevice``. Here is a simple code example of using this 3D model display control in winform:
+
+```vbnet
+Dim project As Vendor_3mf.Project = Vendor_3mf.IO.Open(file.FileName)
+Dim surfaces As Surface() = project.GetSurfaces(True)
+Dim canvas As New GDIDevice With {
+    .bg = Color.LightBlue,
+    .Model = Function() surfaces,
+    .Dock = DockStyle.Fill,
+    .LightIllumination = True,
+    .AutoRotation = True,
+    .ShowDebugger = True
+}
+
+Call Controls.Add(canvas)
+Call canvas.Run()
+```
+
+This 3D model display control is based on the gdi+ graphic engine, so that if the model is too complicated and have a lot of surface to draw, then this control rendering will be very slow. For improvements on the graphics rendering performance as possible as it can, I using 2 worker thread for the 3D graphic display:
+
++ Model buffer thread
++ Graphic rendering thread
+
 #### Buffer thread
 
 ```vbnet
@@ -291,7 +315,11 @@ End Structure
 
 ##### The light source
 
+Aplly the light source on the 3D model can makes our graphic more natural, here is an example of apply the light effects:
+
 ![](./images/Light-Demo.gif)
+
+One of the simple algorithm for apply the light source is darker the surface's color base on its Z-order depth, which this z-order depth can be obtain from the painter's algorithm:
 
 ```vbnet
 ''' <summary>
