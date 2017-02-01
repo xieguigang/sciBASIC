@@ -44,11 +44,24 @@ Public Class Project
         }
     End Function
 
-    Public Function GetSurfaces() As Drawing3D.Surface()
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="centraOffset"></param>
+    ''' <returns></returns>
+    Public Function GetSurfaces(Optional centraOffset As Boolean = False) As Drawing3D.Surface()
         If model Is Nothing Then
             Return {}
         Else
-            Return model.GetSurfaces.ToArray
+            Dim out As Drawing3D.Surface() = model.GetSurfaces.ToArray
+
+            If centraOffset Then
+                With out.Centra
+                    out = .Offsets(out).ToArray
+                End With
+            End If
+
+            Return out
         End If
     End Function
 End Class

@@ -54,7 +54,7 @@ Public Class FormLandscape
         }
             If file.ShowDialog = DialogResult.OK Then
                 Dim project = Landscape.IO.Open(file.FileName)
-                Dim surfaces = project.GetSurfaces
+                Dim surfaces = project.GetSurfaces(True)
 
                 canvas.LightIllumination = True
                 canvas.Model = Function() surfaces
