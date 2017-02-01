@@ -104,6 +104,11 @@ Namespace Drawing3D.Device
             debugger.BufferWorker = App.NanoTime - now
         End Sub
 
+        ''' <summary>
+        ''' 1 frame
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
         Private Sub RenderingThread(sender As Object, e As PaintEventArgs) Handles device.Paint
             Dim canvas As Graphics = e.Graphics
             Dim now& = App.NanoTime

@@ -51,6 +51,8 @@ Namespace Drawing3D.Device
 
             ' 显示设备捕捉信息
             Call draw(msg:=$"Mouse device:          ({mouse.X}, {mouse.Y})")
+
+            FPSCount += 1
         End Sub
 
         Private Sub device_MouseMove(sender As Object, e As MouseEventArgs) Handles device.MouseMove
