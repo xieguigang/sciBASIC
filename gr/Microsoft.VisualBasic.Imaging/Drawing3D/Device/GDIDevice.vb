@@ -165,6 +165,11 @@ Namespace Drawing3D.Device
         ''' </summary>
         ''' <returns></returns>
         Public Property Model As ModelData
+        ''' <summary>
+        ''' 这个接口提供一些额外的信息的显示，例如调试信息
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Plot As DrawGraphics
         Public Property bg As Color
 
         Protected Overridable Sub __init()
@@ -248,11 +253,6 @@ Namespace Drawing3D.Device
         End Sub
 
         Dim keyRotate As Point3D
-
-        'Public Sub SetAutoRotate(angle As Point3D)
-        '    keyRotate = angle
-        '    ' AutoRotation = True
-        'End Sub
 
         Private Sub GDIDevice_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
             Select Case e.KeyCode

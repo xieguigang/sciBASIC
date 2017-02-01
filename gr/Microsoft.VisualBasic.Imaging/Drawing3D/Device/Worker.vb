@@ -38,7 +38,7 @@ Namespace Drawing3D.Device
     ''' <summary>
     ''' 三维图形设备的工作线程管理器
     ''' </summary>
-    Public Class Worker
+    Public Class Worker : Inherits IDevice
         Implements IDisposable
         Implements IObjectModel_Driver
 
@@ -46,12 +46,11 @@ Namespace Drawing3D.Device
         Public Delegate Sub CameraControl(ByRef camera As Camera)
 
         Dim buffer As IEnumerable(Of Polygon)
-        Dim WithEvents display As GDIDevice
         Dim spaceThread As New UpdateThread(20, AddressOf CreateBuffer)
 
         Public ReadOnly Property model As ModelData
             Get
-                Return display.Model
+                Return device.Model
             End Get
         End Property
         Public Property drawPath As Boolean
@@ -68,12 +67,12 @@ Namespace Drawing3D.Device
             }
         }
 
-        Sub New(dev As GDIDevice)
-            Me.display = dev
+        Public Sub New(dev As GDIDevice)
+            MyBase.New(dev)
         End Sub
 
         Sub CreateBuffer()
-            With display._camera
+            With device._camera
                 Dim surfaces As New List(Of Surface)
 
                 For Each s As Surface In model()()
@@ -90,13 +89,18 @@ Namespace Drawing3D.Device
             End With
         End Sub
 
-        Private Sub display_Paint(sender As Object, e As PaintEventArgs) Handles display.Paint
-            e.Graphics.CompositingQuality = CompositingQuality.HighQuality
-            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBilinear
+        Private Sub display_Paint(sender As Object, e As PaintEventArgs) Handles device.Paint
+            Dim canvas As Graphics = e.Graphics
+
+            canvas.CompositingQuality = CompositingQuality.HighQuality
+            canvas.InterpolationMode = InterpolationMode.HighQualityBilinear
 
             If Not buffer Is Nothing Then
-                Call e.Graphics.Clear(display.bg)
-                Call e.Graphics.BufferPainting(buffer, drawPath, LightIllumination)
+                Call canvas.Clear(device.bg)
+                Call canvas.BufferPainting(buffer, drawPath, LightIllumination)
+            End If
+            If Not device.Plot Is Nothing Then
+                Call device.Plot()(canvas, device._camera)
             End If
         End Sub
 

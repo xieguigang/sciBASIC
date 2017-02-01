@@ -31,14 +31,13 @@ Imports System.Windows.Forms
 
 Namespace Drawing3D.Device
 
-    Public Class Mouse
+    Public Class Mouse : Inherits IDevice
 
-        Dim WithEvents device As GDIDevice
         Dim _rotate As Boolean
         Dim oldXY As Point
 
-        Sub New(dev As GDIDevice)
-            device = dev
+        Public Sub New(dev As GDIDevice)
+            MyBase.New(dev)
         End Sub
 
         Private Sub device_MouseDown(sender As Object, e As MouseEventArgs) Handles device.MouseDown
