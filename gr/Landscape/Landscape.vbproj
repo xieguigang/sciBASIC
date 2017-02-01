@@ -94,6 +94,7 @@
     <Compile Include="3DBuilder\XML\XmlModel3D.vb" />
     <Compile Include="3DBuilder\XML\models.vb" />
     <Compile Include="3DBuilder\XML\resources.vb" />
+    <Compile Include="Vector.vb" />
     <Compile Include="Graphics.vb" />
     <Compile Include="Surface.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

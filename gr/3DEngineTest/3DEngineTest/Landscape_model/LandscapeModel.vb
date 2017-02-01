@@ -31,16 +31,16 @@ Imports Microsoft.VisualBasic.Linq
 
 Module LandscapeModel
 
-    Public Function ModelData() As Landscape.Graphics
+    Public Function ModelData() As Landscape.Data.Graphics
         Dim faces As Surface() = New Cube(20).faces
         Dim colors = {"red", "black", "yellow", "green", "blue", "gray"}
 
-        Return New Landscape.Graphics With {
+        Return New Landscape.Data.Graphics With {
             .bg = "lightblue",
             .Surfaces = faces.ToArray(
-            Function(f, i) New Landscape.Surface With {
+            Function(f, i) New Landscape.Data.Surface With {
                 .paint = colors(i),
-                .vertices = f.vertices.ToArray(Function(pt) New Landscape.Vector(pt))
+                .vertices = f.vertices.ToArray(Function(pt) New Landscape.Data.Vector(pt))
             })
         }
     End Function
