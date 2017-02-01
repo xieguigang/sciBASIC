@@ -140,8 +140,87 @@ End Sub
 
 ### The painter algorithm
 
+The painter's algorithm, also known as a priority fill, is one of the simplest solutions to the visibility problem in 3D computer graphics. When projecting a 3D scene onto a 2D plane, it is necessary at some point to decide which polygons are visible, and which are hidden.
+
+The name "painter's algorithm" refers to the technique employed by many painters of painting distant parts of a scene before parts which are nearer thereby covering some areas of distant parts. The painter's algorithm sorts all the polygons in a scene by their depth and then paints them in this order, farthest to closest. It will paint over the parts that are normally not visible — thus solving the visibility problem — at the cost of having painted invisible areas of distant objects. The ordering used by the algorithm is called a 'depth order', and does not have to respect the numerical distances to the parts of the scene: the essential property of this ordering is, rather, that if one object obscures part of another then the first object is painted after the object that it obscures. Thus, a valid ordering can be described as a topological ordering of a directed acyclic graph representing occlusions between objects.
+
+![](./Painter's_algorithm.png)
+
+One simple method to implements this painter algorithm is using the ``z-order`` method
+
+> https://en.wikipedia.org/wiki/Z-order
+
+```vbnet
+''' <summary>
+''' ``PAINTERS ALGORITHM`` kernel
+''' </summary>
+''' <typeparam name="T"></typeparam>
+''' <param name="source"></param>
+''' <param name="z">计算出z轴的平均数据</param>
+''' <returns></returns>
+<Extension>
+Public Function OrderProvider(Of T)(source As IEnumerable(Of T), z As Func(Of T, Double)) As List(Of Integer)
+    Dim order As New List(Of Integer)
+    Dim avgZ As New List(Of Double)
+
+    ' Compute the average Z value of each face.
+    For Each i As SeqValue(Of T) In source.SeqIterator
+        Call avgZ.Add(z(+i))
+        Call order.Add(i)
+    Next
+
+    Dim iMax%, tmp#
+
+    ' Next we sort the faces in descending order based on the Z value.
+    ' The objective is to draw distant faces first. This is called
+    ' the PAINTERS ALGORITHM. So, the visible faces will hide the invisible ones.
+    ' The sorting algorithm used is the SELECTION SORT.
+    For i% = 0 To avgZ.Count - 1
+        iMax = i
+
+        For j = i + 1 To avgZ.Count - 1
+            If avgZ(j) > avgZ(iMax) Then
+                iMax = j
+            End If
+        Next
+
+        If iMax <> i Then
+            tmp = avgZ(i)
+            avgZ(i) = avgZ(iMax)
+            avgZ(iMax) = tmp
+
+            tmp = order(i)
+            order(i) = order(iMax)
+            order(iMax) = tmp
+        End If
+    Next
+
+    Call order.Reverse()
+
+    Return order
+End Function
+```
+
 ### 3mf format
 
 ### The display device
 #### Buffer thread
+
+```vbnet
+        ''' <summary>
+        ''' The polygon buffer unit after the 3D to 2D projection and the z-order sorts.
+        ''' (经过投影和排序操作之后的多边形图形缓存单元)
+        ''' </summary>
+        Public Structure Polygon
+            ''' <summary>
+            ''' The 3D projection result buffer
+            ''' </summary>
+            Dim points As Point()
+            ''' <summary>
+            ''' Surface fill
+            ''' </summary>
+            Dim brush As Brush
+        End Structure
+```
+
 #### Graphics rendering
