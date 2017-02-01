@@ -231,13 +231,15 @@ End Function
 
 ### String Evaluation
 
+This optional parameter expression not only allow the math expression, and also it works for the string interpolation expression, example as:
+
 ```vbnet
 Optional ylabel$ = "@Plots of the experiment data with \np-value cutoff: $pvalue, \nand z-value: $z (km/s)."
 ```
 
 + Where the first character ``@`` indicates that this parameter its string value should be translated as the string interpolation expression
 + Using ``$var`` for specific the parameter variable in this string interpolation
-+ Using ``\$`` for escaping the character ``$``, for example: ``\$var`` will only represent the text ``$var``, but ``$test`` will represent the parameter variable reference.
++ Using ``\$`` for escaping the character ``$``, so that ``\$var`` will only represent the text ``$var``, while ``$test`` will represent the parameter variable reference.
 + ``\n`` for ascii line feed and ``\t`` for ascii tab.
 
 ### Update parameter value
