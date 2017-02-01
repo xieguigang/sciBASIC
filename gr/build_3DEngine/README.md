@@ -40,9 +40,9 @@ End Function
 
 X-axis rotation looks like Z-axis rotation if replace:
 
-> X axis with Y axis
-> Y axis with Z axis
-> Z axis with X axis
++ X axis with Y axis
++ Y axis with Z axis
++ Z axis with X axis
 
 So we do the same replacement in the equations:
 ```vbnet
@@ -71,9 +71,9 @@ End Function
 
 Y-axis rotation looks like Z-axis rotation if replace:
 
-> X axis with Z axis
-> Y axis with X axis
-> Z axis with Y axis
++ X axis with Z axis
++ Y axis with X axis
++ Z axis with Y axis
 
 So we do the same replacement in equations :
 
@@ -100,8 +100,44 @@ Public Function RotateY(angle As Single) As Point3D
 End Function
 ```
 
+### The 3D projection
 
-### The projection
+> https://en.wikipedia.org/wiki/3D_projection
+
+To project the 3D point a<sub>x</sub>, a<sub>y</sub>, a<sub>z</sub> onto the 2D point b<sub>x</sub>, b<sub>y</sub> using an orthographic projection parallel to the y axis (profile view), the following equations can be used:
+
++ b<sub>x</sub> = s<sub>x</sub> \* a<sub>x</sub> + c<sub>x</sub>
++ b<sub>y</sub> = s<sub>z</sub> \* a<sub>z</sub> + c<sub>z</sub>
+
+where the vector ``s`` is an arbitrary scale factor, and ``c`` is an arbitrary offset. These constants are optional, and can be used to properly align the viewport.
+
+```vbnet
+''' <summary>
+''' Project the 3D point to the 2D screen.
+''' </summary>
+''' <param name="x!"></param>
+''' <param name="y!"></param>
+''' <param name="z!">Using for the painter algorithm.</param>
+''' <param name="viewWidth%"></param>
+''' <param name="viewHeight%"></param>
+''' <param name="fov%"></param>
+''' <param name="viewDistance%">
+''' View distance to the model from the view window.
+''' </param>
+Public Sub Project(ByRef x!, ByRef y!, z!,
+                   viewWidth%,
+                   viewHeight%,
+                   viewDistance%,
+                   Optional fov% = 256)
+
+    Dim factor! = fov / (viewDistance + z)
+
+    ' 2D point result (x, y)
+    x = x * factor + viewWidth / 2
+    y = y * factor + viewHeight / 2
+End Sub
+```
+
 ### The painter algorithm
 
 ### 3mf format
