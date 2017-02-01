@@ -29,6 +29,7 @@
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape
+Imports Microsoft.VisualBasic.Linq
 
 Public Class FormLandscape
 
@@ -94,5 +95,13 @@ Public Class FormLandscape
 
     Private Sub LightToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LightToolStripMenuItem.Click
         canvas.LightIllumination = LightToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub RemoveTexturesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveTexturesToolStripMenuItem.Click
+        Dim model As Surface() = canvas.Model()()
+        Dim color As SolidBrush = Brushes.Blue
+
+        model = model.ToArray(Function(s) New Surface With {.brush = color, .vertices = s.vertices})
+        canvas.Model = Function() model
     End Sub
 End Class
