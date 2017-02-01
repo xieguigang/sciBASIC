@@ -99,7 +99,7 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 
 <img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400"> <img src="./gr/3DEngineTest/example/Metadata/thumbnail.png" width="250">
 
-![](./gr/build_3DEngine/screenshot.png)
+![](./gr/build_3DEngine/images/screenshot.png)
 
 ## Microsoft VisualBasic Data Science & Data Plots System
 

@@ -1,12 +1,12 @@
 ## Build My Own 3D graphics engine step by step
 
-![](./screenshot.png)
+![](./images/screenshot.png)
 
 Although this gdi+ based 3D graphic engine have the problem when the , but it is enough for the 3D plots for the scientific computing.
 
 ### The 3D rotation
 
-![](./Previews.gif)
+![](./images/Previews.gif)
 
 3D Rotation is more complicated than 2D rotation since we must specify an axis of rotation. In 2D the axis of rotation is always perpendicular to the **x,y** plane, i.e., the Z axis, but in 3D the axis of rotation can have any spatial orientation. We will first look at rotation around the three principle axes **(X, Y, Z)** and then about an arbitrary axis. Note that for Inverse Rotation: **replace q with -q and then R(R-1) = 1**
 
@@ -144,7 +144,7 @@ The painter's algorithm, also known as a priority fill, is one of the simplest s
 
 The name "painter's algorithm" refers to the technique employed by many painters of painting distant parts of a scene before parts which are nearer thereby covering some areas of distant parts. The painter's algorithm sorts all the polygons in a scene by their depth and then paints them in this order, farthest to closest. It will paint over the parts that are normally not visible — thus solving the visibility problem — at the cost of having painted invisible areas of distant objects. The ordering used by the algorithm is called a 'depth order', and does not have to respect the numerical distances to the parts of the scene: the essential property of this ordering is, rather, that if one object obscures part of another then the first object is painted after the object that it obscures. Thus, a valid ordering can be described as a topological ordering of a directed acyclic graph representing occlusions between objects.
 
-![](./Painter's_algorithm.png)
+![](./images/Painter's_algorithm.png)
 
 One simple method to implements this painter algorithm is using the ``z-order`` method
 
@@ -203,7 +203,7 @@ End Function
 
 ### 3mf format
 
-![](./logo-3mf.png)
+![](./images/logo-3mf.png)
 
 3MF is a new 3D printing format that will allow design applications to send full-fidelity 3D models to a mix of other applications, platforms, services and printers. The 3MF specification allows companies to focus on innovation, rather than on basic interoperability issues, and it is engineered to avoid the problems associated with other 3D file formats.
 
@@ -220,7 +220,7 @@ Dim project As Vendor_3mf.Project = Vendor_3mf.IO.Open(file)
 Dim surfaces As Surface() = project.GetSurfaces(True)
 ```
 
-![](./344.png)
+![](./images/344.png)
 
 ```vbnet
 Public Class Project
@@ -288,3 +288,43 @@ End Structure
 ```
 
 #### Graphics rendering
+
+##### The light source
+
+![](./images/Light-Demo.gif)
+
+```vbnet
+''' <summary>
+''' Makes the 3D graphic more natural.
+''' </summary>
+''' <param name="surfaces">
+''' Polygon buffer.(经过投影和排序之后得到的多边形的缓存对象)
+''' </param>
+''' <returns></returns>
+<Extension>
+Public Function Illumination(surfaces As IEnumerable(Of Polygon)) As IEnumerable(Of Polygon)
+    Dim array As Polygon() = surfaces.ToArray
+    Dim steps! = 0.75! / array.Length
+    Dim dark! = 1.0!
+
+    ' 不能够打乱经过painter算法排序的结果，所以使用for循环
+    For i As Integer = 0 To array.Length - 1
+        With array(i)
+            If TypeOf .brush Is SolidBrush Then
+                Dim color As Color = DirectCast(.brush, SolidBrush).Color
+                Dim points As Point() = .points
+
+                color = color.Dark(dark)
+                array(i) = New Polygon With {
+                    .brush = New SolidBrush(color),
+                    .points = points
+                }
+            End If
+        End With
+
+        dark -= steps
+    Next
+
+    Return array
+End Function
+```

@@ -35,8 +35,8 @@ Namespace Drawing3D.Device
 
         Public Sub Reset()
             With device._camera
-                .angleX = 0
-                .angleY = 0
+                .angleX = -90
+                .angleY = 30
                 .angleZ = 0
             End With
         End Sub

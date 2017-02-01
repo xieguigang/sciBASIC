@@ -91,4 +91,8 @@ Public Class FormLandscape
     Private Sub ResetToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ResetToolStripMenuItem1.Click
         Call canvas.RotationThread.Reset
     End Sub
+
+    Private Sub LightToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LightToolStripMenuItem.Click
+        canvas.LightIllumination = LightToolStripMenuItem.Checked
+    End Sub
 End Class

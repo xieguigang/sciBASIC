@@ -37,17 +37,20 @@ Namespace Drawing3D.Device
     Public Module Light
 
         ''' <summary>
-        ''' 
+        ''' Makes the 3D graphic more natural.
         ''' </summary>
-        ''' <param name="surfaces">经过投影和排序之后得到的多边形的缓存对象</param>
+        ''' <param name="surfaces">
+        ''' Polygon buffer.(经过投影和排序之后得到的多边形的缓存对象)
+        ''' </param>
         ''' <returns></returns>
         <Extension>
         Public Function Illumination(surfaces As IEnumerable(Of Polygon)) As IEnumerable(Of Polygon)
             Dim array As Polygon() = surfaces.ToArray
-            Dim steps! = 1.0! / array.Length
+            Dim steps! = 0.75! / array.Length
             Dim dark! = 1.0!
 
-            For i As Integer = 0 To array.Length - 1  ' 不能够打乱经过painter算法排序的结果，所以使用for循环
+            ' 不能够打乱经过painter算法排序的结果，所以使用for循环
+            For i As Integer = 0 To array.Length - 1
                 With array(i)
                     If TypeOf .brush Is SolidBrush Then
                         Dim color As Color = DirectCast(.brush, SolidBrush).Color

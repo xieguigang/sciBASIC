@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::86694fa434d0dab3f8aa473a526431b1, ..\sciBASIC#\gr\Landscape\3DBuilder\XML\XmlModel3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Drawing
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -44,23 +45,34 @@ Namespace Vendor_3mf.XML
         Public Property resources As resources
         Public Property build As build
 
-        Public Function GetSurfaces() As IEnumerable(Of Drawing3D.Surface)
-            Dim out As New List(Of Drawing3D.Surface)
+        Public Function GetSurfaces() As IEnumerable(Of Surface)
+            Dim out As New List(Of Surface)
+            Dim objects As [object]() = resources _
+                .objects _
+                .Where(AddressOf NotNull) _
+                .ToArray
+            Dim materials As Brush() = resources _
+                .basematerials _
+                .basematerials _
+                .Select(Function(b) b.displaycolor.TranslateColor) _
+                .ToArray(Function(c) New SolidBrush(c))
 
             On Error Resume Next
 
-            For Each obj As SeqValue(Of [object]) In resources _
-                .objects _
-                .Where(AddressOf NotNull) _
-                .SeqIterator
+            For Each obj As [object] In objects
+                If obj.pindex Is Nothing Then
+                    ' 使用三角面自己的资源编号
+                    out += obj.mesh.GetSurfaces(materials)
+                Else
+                    ' 使用总编号
+                    Dim base As base = resources _
+                        .basematerials _
+                        .basematerials(CInt(obj.pindex))
 
-                Dim base As base = resources _
-                    .basematerials _
-                    .basematerials(obj)
-
-                out += (+obj) _
-                    .mesh _
-                    .GetSurfaces(base)
+                    out += obj _
+                        .mesh _
+                        .GetSurfaces(base)
+                End If
             Next
 
             Return out

@@ -35,6 +35,10 @@ Namespace Vendor_3mf.XML
     Public Class base
 
         <XmlAttribute> Public Property name As String
+        ''' <summary>
+        ''' OLE颜色值
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property displaycolor As String
 
         Public Overrides Function ToString() As String
@@ -60,7 +64,7 @@ Namespace Vendor_3mf.XML
         Public Property id As Integer Implements Iobject.id
         <XmlAttribute> Public Property type As String
         <XmlAttribute> Public Property pid As String
-        <XmlAttribute> Public Property pindex As Integer
+        <XmlAttribute> Public Property pindex As String
 
         Public Property components As component()
         Public Property mesh As mesh
