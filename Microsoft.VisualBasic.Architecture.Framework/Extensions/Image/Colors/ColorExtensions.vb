@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aae81eafaf294f25af35e6023ff8888b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f695ebfad0679eae655ab897b4907cfa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorExtensions.vb"
 
     ' Author:
     ' 

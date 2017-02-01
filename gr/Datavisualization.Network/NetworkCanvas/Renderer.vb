@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8466f7b939c46471b00451ed70950251, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::965e350ce9ad262dd7f3b764c8f1dddb, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fb853bd838ee77619be4a5bfdfbf843, ..\sciBASIC#\Data_science\Mathematical\Plots\g\AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::6e0efb7564a4efe0e91a3885b4bf259c, ..\sciBASIC#\Data_science\Mathematical\Plots\g\AxisScalling.vb"
 
     ' Author:
     ' 
@@ -80,4 +80,3 @@ Public Module AxisScalling
         Return l.ToArray
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ec8dc98121bd32da9a3c7a756daca86, ..\sciBASIC#\Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::6dc53359e6f746f4c9048c5abb4eea99, ..\sciBASIC#\Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Public Class MappingsHelper
         }
     End Function
 End Class
-
