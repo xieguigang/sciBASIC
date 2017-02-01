@@ -72,6 +72,7 @@ Partial Class FormLandscape
         'TrackBar1
         '
         Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TrackBar1.BackColor = System.Drawing.Color.LightBlue
         Me.TrackBar1.LargeChange = 10
         Me.TrackBar1.Location = New System.Drawing.Point(490, 436)
         Me.TrackBar1.Maximum = -5
@@ -91,7 +92,7 @@ Partial Class FormLandscape
         Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "FormLandscape"
-        Me.Text = "VB.NET landscape model demo"
+        Me.Text = "VB.NET 3D graphics engine demo"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
