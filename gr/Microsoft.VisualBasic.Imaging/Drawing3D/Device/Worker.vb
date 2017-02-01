@@ -104,7 +104,7 @@ Namespace Drawing3D.Device
             debugger.BufferWorker = App.NanoTime - now
         End Sub
 
-        Private Sub display_Paint(sender As Object, e As PaintEventArgs) Handles device.Paint
+        Private Sub RenderingThread(sender As Object, e As PaintEventArgs) Handles device.Paint
             Dim canvas As Graphics = e.Graphics
             Dim now& = App.NanoTime
 
@@ -144,6 +144,7 @@ Namespace Drawing3D.Device
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     Call spaceThread.Dispose()
+                    Call debugger.Dispose()
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

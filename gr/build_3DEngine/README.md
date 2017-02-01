@@ -294,6 +294,42 @@ This 3D model display control is based on the gdi+ graphic engine, so that if th
 #### Buffer thread
 
 ```vbnet
+Private Sub CreateBuffer()
+    Dim now& = App.NanoTime
+
+    With device._camera
+        Dim surfaces As New List(Of Surface)
+
+        For Each s As Surface In model()()
+            surfaces += New Surface(.Rotate(s.vertices).ToArray, s.brush)
+        Next
+
+        If device.ShowHorizontalPanel Then
+            surfaces += New Surface(
+                .Rotate(__horizontalPanel.vertices).ToArray,
+                __horizontalPanel.brush)
+        End If
+
+        buffer = .PainterBuffer(surfaces)
+
+        If .angleX > 360 Then
+            .angleX = 0
+        End If
+        If .angleY > 360 Then
+            .angleY = 0
+        End If
+        If .angleZ > 360 Then
+            .angleZ = 0
+        End If
+
+        Call device.RotationThread.Tick()
+    End With
+
+    debugger.BufferWorker = App.NanoTime - now
+End Sub
+```
+
+```vbnet
 ''' <summary>
 ''' The polygon buffer unit after the 3D to 2D projection and the z-order sorts.
 ''' (经过投影和排序操作之后的多边形图形缓存单元)
@@ -355,4 +391,45 @@ Public Function Illumination(surfaces As IEnumerable(Of Polygon)) As IEnumerable
 
     Return array
 End Function
+```
+
+And here is the rendering thread, which is triggerd by a refresh thread:
+
+```vbnet
+''' <summary>
+''' Forces the Paint event to be called.
+''' </summary>
+''' <param name="sender"></param>
+''' <param name="e"></param>
+Private Sub _animationLoop_Tick(sender As Object, e As EventArgs) Handles _animationLoop.Tick
+    Call Me.Invalidate()
+    Call Me.___animationLoop()
+End Sub
+```
+
+When the method of the winform control ``Me.Invalidate()`` have been invoked. Then this method call will force the control to refresh itself and raise the ``Control.Paint`` event, then we are able to do rendering job:
+
+```vbnet
+Private Sub RenderingThread(sender As Object, e As PaintEventArgs) Handles device.Paint
+    Dim canvas As Graphics = e.Graphics
+    Dim now& = App.NanoTime
+
+    canvas.CompositingQuality = CompositingQuality.HighQuality
+    canvas.InterpolationMode = InterpolationMode.HighQualityBilinear
+
+    With device
+        If Not buffer Is Nothing Then
+            Call canvas.Clear(device.bg)
+            Call canvas.BufferPainting(buffer, .drawPath, .LightIllumination)
+        End If
+        If Not .Plot Is Nothing Then
+            Call .Plot()(canvas, ._camera)
+        End If
+        If device.ShowDebugger Then
+            Call debugger.DrawInformation(canvas)
+        End If
+    End With
+
+    debugger.RenderingWorker = App.NanoTime - now
+End Sub
 ```
