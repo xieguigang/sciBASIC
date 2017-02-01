@@ -7,7 +7,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Arch
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Markups", "mime\MIME_Markups\MIME_Markups.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME_Markups", "mime\MIME_Markups\MIME_Markups.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imaging", "gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj", "{85E71B4B-9276-4EC8-AADC-C849205F1EA8}"
 EndProject
@@ -42,6 +42,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataFittings", "Data_science\Mathematical\DataFittings\DataFittings.vbproj", "{FC125B0D-1942-496F-B502-9C0EB80E35B6}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Math.Statistics", "Data_science\Mathematical\Math.Statistics\Math.Statistics.vbproj", "{FE321BE1-A0E5-4BAB-8B37-4F54A8E2187E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Landscape", "gr\Landscape\Landscape.vbproj", "{CCD693C3-EE09-473A-8344-26E05B373394}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -542,6 +544,36 @@ Global
 		{FE321BE1-A0E5-4BAB-8B37-4F54A8E2187E}.Release2|x64.Build.0 = Release|Any CPU
 		{FE321BE1-A0E5-4BAB-8B37-4F54A8E2187E}.Release2|x86.ActiveCfg = Release|Any CPU
 		{FE321BE1-A0E5-4BAB-8B37-4F54A8E2187E}.Release2|x86.Build.0 = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Debug|x64.ActiveCfg = Debug|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Debug|x64.Build.0 = Debug|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Debug|x86.Build.0 = Debug|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.docs|x64.ActiveCfg = Debug|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.docs|x64.Build.0 = Debug|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.docs|x86.ActiveCfg = Debug|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.docs|x86.Build.0 = Debug|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Publish|Any CPU.ActiveCfg = Publish|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Publish|Any CPU.Build.0 = Publish|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Publish|x64.ActiveCfg = Release|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Publish|x64.Build.0 = Release|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Publish|x86.ActiveCfg = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Publish|x86.Build.0 = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release|x64.ActiveCfg = Release|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release|x64.Build.0 = Release|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release|x86.ActiveCfg = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release|x86.Build.0 = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release2|x64.ActiveCfg = Release|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release2|x64.Build.0 = Release|x64
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release2|x86.ActiveCfg = Release|Any CPU
+		{CCD693C3-EE09-473A-8344-26E05B373394}.Release2|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -562,5 +594,6 @@ Global
 		{B21B924A-D67F-4554-8946-A154563394B2} = {EC2279F0-2D95-48CF-AF81-8D0AF49FDF2B}
 		{FC125B0D-1942-496F-B502-9C0EB80E35B6} = {EC2279F0-2D95-48CF-AF81-8D0AF49FDF2B}
 		{FE321BE1-A0E5-4BAB-8B37-4F54A8E2187E} = {EC2279F0-2D95-48CF-AF81-8D0AF49FDF2B}
+		{CCD693C3-EE09-473A-8344-26E05B373394} = {8C3E0BC6-7381-4D90-B1F7-ED690E38ACE7}
 	EndGlobalSection
 EndGlobal

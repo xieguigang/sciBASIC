@@ -1,12 +1,20 @@
 # Build My Own 3D graphics engine step by step
 
-Install this framework via nuget package
+Install ``sciBASIC#`` framework via nuget package
 
 ```python
 # https://www.nuget.org/packages/sciBASIC#
 # For .NET Framework 4.6:
 PM> Install-Package sciBASIC -Pre
 ```
+
+And then reference to these dll files:
+
++ Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201\__8da45dcd8060cc9a.dll
++ Microsoft.VisualBasic.Imaging.dll
++ Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.dll
++ Microsoft.VisualBasic.Mathematical.dll
++ Microsoft.VisualBasic.MIME.Markup.dll
 
 ## Background &amp; Introduction
 
