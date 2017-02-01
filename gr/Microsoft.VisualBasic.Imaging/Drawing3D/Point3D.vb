@@ -164,5 +164,12 @@ Namespace Drawing3D
             x = x * factor + viewWidth / 2
             y = y * factor + viewHeight / 2
         End Sub
+
+        Public Shared Operator -(p3D As Point3D, offset As Point3D) As Point3D
+            Return New Point3D(
+                p3D.X - offset.X,
+                p3D.Y - offset.Y,
+                p3D.Z - offset.Z)
+        End Operator
     End Structure
 End Namespace
