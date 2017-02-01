@@ -26,8 +26,13 @@ Partial Class FormLandscape
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoRotateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RotateXToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RotateYToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RotateZToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ResetToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -51,7 +56,7 @@ Partial Class FormLandscape
         'LoadModelToolStripMenuItem
         '
         Me.LoadModelToolStripMenuItem.Name = "LoadModelToolStripMenuItem"
-        Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.LoadModelToolStripMenuItem.Text = "Load Model"
         '
         'AutoRotateToolStripMenuItem
@@ -59,37 +64,77 @@ Partial Class FormLandscape
         Me.AutoRotateToolStripMenuItem.Checked = True
         Me.AutoRotateToolStripMenuItem.CheckOnClick = True
         Me.AutoRotateToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.AutoRotateToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RotateXToolStripMenuItem, Me.RotateYToolStripMenuItem, Me.RotateZToolStripMenuItem, Me.ToolStripMenuItem1, Me.ResetToolStripMenuItem1})
         Me.AutoRotateToolStripMenuItem.Name = "AutoRotateToolStripMenuItem"
-        Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.AutoRotateToolStripMenuItem.Text = "Auto Rotate"
+        '
+        'RotateXToolStripMenuItem
+        '
+        Me.RotateXToolStripMenuItem.Checked = True
+        Me.RotateXToolStripMenuItem.CheckOnClick = True
+        Me.RotateXToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.RotateXToolStripMenuItem.Name = "RotateXToolStripMenuItem"
+        Me.RotateXToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.RotateXToolStripMenuItem.Text = "rotate X"
+        '
+        'RotateYToolStripMenuItem
+        '
+        Me.RotateYToolStripMenuItem.Checked = True
+        Me.RotateYToolStripMenuItem.CheckOnClick = True
+        Me.RotateYToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.RotateYToolStripMenuItem.Name = "RotateYToolStripMenuItem"
+        Me.RotateYToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.RotateYToolStripMenuItem.Text = "rotate Y"
+        '
+        'RotateZToolStripMenuItem
+        '
+        Me.RotateZToolStripMenuItem.Checked = True
+        Me.RotateZToolStripMenuItem.CheckOnClick = True
+        Me.RotateZToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.RotateZToolStripMenuItem.Name = "RotateZToolStripMenuItem"
+        Me.RotateZToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.RotateZToolStripMenuItem.Text = "rotate Z"
         '
         'ResetToolStripMenuItem
         '
         Me.ResetToolStripMenuItem.Name = "ResetToolStripMenuItem"
-        Me.ResetToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.ResetToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ResetToolStripMenuItem.Text = "Reset"
         '
         'TrackBar1
         '
         Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TrackBar1.AutoSize = False
         Me.TrackBar1.BackColor = System.Drawing.Color.LightBlue
         Me.TrackBar1.LargeChange = 10
-        Me.TrackBar1.Location = New System.Drawing.Point(490, 436)
+        Me.TrackBar1.Location = New System.Drawing.Point(597, 462)
         Me.TrackBar1.Maximum = -5
         Me.TrackBar1.Minimum = -500
         Me.TrackBar1.Name = "TrackBar1"
-        Me.TrackBar1.Size = New System.Drawing.Size(230, 45)
+        Me.TrackBar1.Size = New System.Drawing.Size(123, 19)
         Me.TrackBar1.SmallChange = 5
         Me.TrackBar1.TabIndex = 1
         Me.TrackBar1.Value = -5
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(149, 6)
+        '
+        'ResetToolStripMenuItem1
+        '
+        Me.ResetToolStripMenuItem1.Name = "ResetToolStripMenuItem1"
+        Me.ResetToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.ResetToolStripMenuItem1.Text = "Reset"
         '
         'FormLandscape
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(742, 493)
-        Me.Controls.Add(Me.TrackBar1)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.Controls.Add(Me.TrackBar1)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "FormLandscape"
         Me.Text = "VB.NET 3D graphics engine demo"
@@ -107,4 +152,9 @@ Partial Class FormLandscape
     Friend WithEvents AutoRotateToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ResetToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TrackBar1 As TrackBar
+    Friend WithEvents RotateXToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RotateYToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RotateZToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents ResetToolStripMenuItem1 As ToolStripMenuItem
 End Class

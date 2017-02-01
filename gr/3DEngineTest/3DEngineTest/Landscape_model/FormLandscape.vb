@@ -76,4 +76,20 @@ Public Class FormLandscape
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
         canvas.ViewDistance = TrackBar1.Value
     End Sub
+
+    Private Sub RotateXToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RotateXToolStripMenuItem.Click
+        canvas.RotationThread.X = If(RotateXToolStripMenuItem.Checked, 1, 0)
+    End Sub
+
+    Private Sub RotateYToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RotateYToolStripMenuItem.Click
+        canvas.RotationThread.Y = If(RotateYToolStripMenuItem.Checked, 1, 0)
+    End Sub
+
+    Private Sub RotateZToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RotateZToolStripMenuItem.Click
+        canvas.RotationThread.Z = If(RotateZToolStripMenuItem.Checked, 1, 0)
+    End Sub
+
+    Private Sub ResetToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ResetToolStripMenuItem1.Click
+        Call canvas.RotationThread.Reset
+    End Sub
 End Class

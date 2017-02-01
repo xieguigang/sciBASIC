@@ -97,6 +97,8 @@ Namespace Drawing3D.Device
                 If .angleZ > 360 Then
                     .angleZ = 0
                 End If
+
+                Call device.RotationThread.Tick()
             End With
 
             debugger.BufferWorker = App.NanoTime - now
