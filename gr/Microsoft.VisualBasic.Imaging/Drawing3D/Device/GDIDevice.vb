@@ -55,26 +55,12 @@ Namespace Drawing3D.Device
             .ViewDistance = -40
         }
 
-        Dim _rotationThread As New UpdateThread(15, AddressOf RunRotate)
+        Dim rotationWorker As AutoRotation
         Dim worker As New Worker(Me)
         Dim mouse As New Mouse(Me)
 
         Public Property drawPath As Boolean
-            Get
-                Return worker.drawPath
-            End Get
-            Set(value As Boolean)
-                worker.drawPath = value
-            End Set
-        End Property
         Public Property LightIllumination As Boolean
-            Get
-                Return worker.LightIllumination
-            End Get
-            Set(value As Boolean)
-                worker.LightIllumination = value
-            End Set
-        End Property
         Public Property ViewDistance As Single
             Get
                 Return _camera.ViewDistance
@@ -83,6 +69,7 @@ Namespace Drawing3D.Device
                 _camera.ViewDistance = Value
             End Set
         End Property
+        Public Property ShowDebugger As Boolean
 
         Private Sub RunRotate()
             SyncLock _camera
@@ -99,7 +86,6 @@ Namespace Drawing3D.Device
         End Sub
 
         Protected Overrides Sub Dispose(disposing As Boolean)
-            Call _rotationThread.Dispose()
             Call worker.Dispose()
             Call Pause()
 
@@ -107,16 +93,10 @@ Namespace Drawing3D.Device
         End Sub
 
         Public Property AutoRotation As Boolean
+        Public ReadOnly Property RotationThread As AutoRotation
             Get
-                Return _rotationThread.Running
+                Return rotationWorker
             End Get
-            Set(value As Boolean)
-                If value Then
-                    _rotationThread.Start()
-                Else
-                    _rotationThread.Stop()
-                End If
-            End Set
         End Property
 
         ''' <summary>
@@ -171,6 +151,7 @@ Namespace Drawing3D.Device
         ''' <returns></returns>
         Public Property Plot As DrawGraphics
         Public Property bg As Color
+        Public Property ShowHorizontalPanel As Boolean = False
 
         Protected Overridable Sub __init()
             Try
