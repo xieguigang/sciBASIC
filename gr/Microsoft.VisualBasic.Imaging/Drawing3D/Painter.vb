@@ -40,7 +40,7 @@ Namespace Drawing3D
     Public Module PainterAlgorithm
 
         ''' <summary>
-        ''' 请注意，这个并没有rotate，只会利用camera进行project
+        ''' 这个函数主要是应用于函数绘图的。请注意，这个并没有rotate，只会利用camera进行project
         ''' </summary>
         ''' <param name="canvas"></param>
         ''' <param name="camera"></param>

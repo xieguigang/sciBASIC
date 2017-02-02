@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::411293be078982ec500e2c188ac00bfa, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\ScatterHeatmap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -63,7 +64,7 @@ Namespace Plot3D
                              Optional showLegend As Boolean = True,
                              Optional dev As FormDevice = Nothing) As Bitmap
 
-            Dim data As (sf As Surface, c As Double())() =
+            Dim data As (sf As Surface, C As Double())() =
                 f.Surface(
                 xrange, yrange,
                 xrange.Length / xn,
@@ -110,8 +111,8 @@ Namespace Plot3D
                                         Optional matrix As List(Of EntityObject) = Nothing,
                                         Optional axisFont$ = CSSFont.Win10Normal,
                                         Optional legendFont As Font = Nothing,
-                                        Optional showLegend As Boolean = True) As Device.IGraphics
-            Dim data As (sf As Surface, c As Double())() =
+                                        Optional showLegend As Boolean = True) As DrawGraphics
+            Dim data As (sf As Surface, C As Double())() =
              f.Surface(
              xrange, yrange,
              xrange.Length / xn,
@@ -133,7 +134,7 @@ Namespace Plot3D
                              Optional bg$ = "white",
                              Optional axisFont$ = CSSFont.Win10Normal,
                              Optional legendFont As Font = Nothing,
-                             Optional showLegend As Boolean = True) As Device.IGraphics
+                             Optional showLegend As Boolean = True) As DrawGraphics
 
             Dim averages As Double() = data _
                 .ToArray(Function(c) c.c.Average)
@@ -158,7 +159,7 @@ Namespace Plot3D
                 .showLegend = showLegend
             }
 
-            Return Sub(g, camera)
+            Return Sub(ByRef g, camera)
                        Call g.Clear(bg.ToColor)
                        Call internal.Plot(g, camera)
                    End Sub
@@ -176,7 +177,7 @@ Namespace Plot3D
                              Optional showLegend As Boolean = True,
                              Optional dev As FormDevice = Nothing) As Bitmap
 
-            Dim modelPlot As Device.IGraphics =
+            Dim modelPlot As DrawGraphics =
                 data _
                 .GetPlotFunction(legendFont:=legendFont,
                                  axisFont:=axisFont,

@@ -33,24 +33,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 
 Namespace Plot3D.Device
 
-    ''' <summary>
-    ''' 3D plot for <see cref="Canvas"/>
-    ''' </summary>
-    ''' <param name="g">gdi+ handle</param>
-    ''' <param name="camera">3d camera</param>
-    Public Delegate Sub IGraphics(g As Graphics, camera As Camera)
-
     Public Class Canvas : Inherits GDIDevice
 
         Friend WithEvents TrackBar1 As TrackBar
-
-        ''' <summary>
-        ''' ```vbnet
-        ''' Public Delegate Sub IGraphics(g As <see cref="Graphics"/>, camera As <see cref="Camera"/>)
-        ''' ```
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Plot As IGraphics
 
         Public ReadOnly Property Camera As Camera
             Get

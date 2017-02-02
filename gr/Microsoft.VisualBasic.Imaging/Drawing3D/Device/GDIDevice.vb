@@ -133,6 +133,9 @@ Namespace Drawing3D.Device
         ''' <returns></returns>
         Public Property Model As ModelData
         ''' <summary>
+        ''' ```vbnet
+        ''' Public Delegate Sub IGraphics(g As <see cref="Graphics"/>, camera As <see cref="Camera"/>)
+        ''' ```
         ''' 这个接口提供一些额外的信息的显示，例如调试信息
         ''' </summary>
         ''' <returns></returns>
