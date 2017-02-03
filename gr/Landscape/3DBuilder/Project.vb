@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf.XML
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
 Namespace Vendor_3mf
 
@@ -70,6 +71,10 @@ Namespace Vendor_3mf
 
                 Return out
             End If
+        End Function
+
+        Public Function GetMatrix(Optional centraOffset As Boolean = False) As Matrix
+            Return New Matrix(GetSurfaces(centraOffset))
         End Function
     End Class
 End Namespace
