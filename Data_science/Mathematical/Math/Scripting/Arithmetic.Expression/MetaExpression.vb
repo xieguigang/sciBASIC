@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c252c10d3bdc10fa282bf0e4297c863, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\MetaExpression.vb"
+﻿#Region "Microsoft.VisualBasic::b4fc2dc65962c44729ef56f6094ec19f, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\MetaExpression.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace Types
+Namespace Scripting.Types
 
     ''' <summary>
     ''' 在<see cref="SimpleExpression.Calculator"></see>之中由于移位操作的需要，需要使用类对象可以修改属性的特性来进行正常的计算，所以请不要修改为Structure类型

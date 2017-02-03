@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aafaf67594e2d6fe940605ec8869d3a8, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Logical\LogicalEvaluate.vb"
+﻿#Region "Microsoft.VisualBasic::280266813cb99ef71505fbc524dba56c, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Logical\LogicalEvaluate.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,7 @@
 
 #End Region
 
-Namespace Logical
+Namespace Scripting.Logical
 
     Public Module LogicalEvaluate
 

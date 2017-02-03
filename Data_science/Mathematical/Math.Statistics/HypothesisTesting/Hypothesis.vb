@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d41bb1d65e9dd7237c6b5438f3936fa, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\HypothesisTesting\Hypothesis.vb"
+﻿#Region "Microsoft.VisualBasic::5e52fb923691786f6ed99bbb88af77c4, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\HypothesisTesting\Hypothesis.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Hypothesis
 

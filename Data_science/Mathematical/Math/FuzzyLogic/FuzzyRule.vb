@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61bba6f4790b6d7d5e65b946b4371971, ..\sciBASIC#\Data_science\Mathematical\Math\FuzzyLogic\FuzzyRule.vb"
+﻿#Region "Microsoft.VisualBasic::7967a43dcfd988a5240952a1db5b518a, ..\sciBASIC#\Data_science\Mathematical\Math\FuzzyLogic\FuzzyRule.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Logical
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Logical.FuzzyLogic

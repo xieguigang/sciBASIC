@@ -1,10 +1,34 @@
-Imports System.Collections.Generic
-Imports System.Diagnostics
-Imports System.Linq
+﻿#Region "Microsoft.VisualBasic::1c51d4a2dc511464c83231556e1b6b84, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Parameters\ParamLogUtility.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Imports System.Linq.Expressions
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
@@ -20,6 +44,13 @@ Namespace Emit.Parameters
     ''' https://www.codeproject.com/tips/795865/log-all-parameters-that-were-passed-to-some-method
     ''' </remarks>
     Public Module ParamLogUtility
+
+        Public Function GetMyCaller() As MethodBase
+            ' [2] a()
+            ' [1]  ---> b()  ' my caller is a()
+            ' [0]  ---> GetMyCaller  
+            Return New StackTrace().GetFrame(2).GetMethod()
+        End Function
 
         Public Function Acquire(ParamArray providedParameters As Expression(Of Func(Of Object))()) As Dictionary(Of Value)
             Dim currentMethod As MethodBase = New StackTrace().GetFrame(1).GetMethod()
@@ -37,9 +68,9 @@ Namespace Emit.Parameters
         Public Function Acquire(currentMethod As MethodBase, ParamArray providedParameters As Expression(Of Func(Of Object))()) As Dictionary(Of Value)
             Dim out As New Dictionary(Of Value)
             ' Set class and current method info
-            Dim trace As New NamedValue(Of Type) With {
+            Dim trace As New NamedValue(Of MethodBase) With {
                 .Name = currentMethod.Name,
-                .Value = currentMethod.DeclaringType
+                .Value = currentMethod
             }
 
             ' Get current methods paramaters
@@ -70,7 +101,7 @@ Namespace Emit.Parameters
         End Function
 
         <Extension>
-        Private Sub AddProvidedParamaterDetail(out As Dictionary(Of Value), memberExpression As MemberExpression, trace As NamedValue(Of Type))
+        Private Sub AddProvidedParamaterDetail(out As Dictionary(Of Value), memberExpression As MemberExpression, trace As NamedValue(Of MethodBase))
             Dim constantExpression As ConstantExpression = DirectCast(memberExpression.Expression, ConstantExpression)
             Dim name As String = memberExpression.Member.Name
             Dim value = DirectCast(memberExpression.Member, FieldInfo).GetValue(constantExpression.Value)
@@ -84,5 +115,37 @@ Namespace Emit.Parameters
                 .Trace = trace
             }
         End Sub
+
+        <Extension>
+        Public Function InitTable(caller As MethodBase, array As Expression(Of Func(Of Object()))) As Dictionary(Of Value)
+            Dim unaryExpression As NewArrayExpression = DirectCast(array.Body, NewArrayExpression)
+            Dim arrayData As UnaryExpression() = unaryExpression _
+                .Expressions _
+                .Select(Function(e) DirectCast(e, UnaryExpression)) _
+                .ToArray
+            Dim out As New Dictionary(Of Value)
+            Dim trace As New NamedValue(Of MethodBase) With {
+                .Name = caller.Name,
+                .Value = caller
+            }
+
+            For Each expr As UnaryExpression In arrayData
+                Dim member = DirectCast(expr.Operand, MemberExpression)
+                Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
+                Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
+                Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
+                Dim value As Object = field.GetValue(constantExpression.Value)
+
+                out += New Value With {
+                    .Name = name,
+                    .Type = value.GetType,
+                    .value = value,
+                    .Trace = trace
+                }
+            Next
+
+            Return out
+        End Function
     End Module
 End Namespace
+

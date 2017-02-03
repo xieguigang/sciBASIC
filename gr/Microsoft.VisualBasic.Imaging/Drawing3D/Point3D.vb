@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab3c4b873ac23a6c5759e08344271c08, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::ed16d6db450a9a8f04b241f0866c62a4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D
@@ -38,7 +39,8 @@ Namespace Drawing3D
     '''
     ''' Copyright (c) 2011 Leonel Machava
     ''' </summary>
-    Public Structure Point3D
+    ''' 
+    <XmlType("vertex")> Public Structure Point3D
         Implements PointF3D
 
         ''' <summary>
@@ -78,9 +80,9 @@ Namespace Drawing3D
             Call Me.New(Position.X, Position.Y)
         End Sub
 
-        Public Property X As Single Implements PointF3D.X
-        Public Property Y As Single Implements PointF3D.Y
-        Public Property Z As Single Implements PointF3D.Z
+        <XmlAttribute("x")> Public Property X As Single Implements PointF3D.X
+        <XmlAttribute("y")> Public Property Y As Single Implements PointF3D.Y
+        <XmlAttribute("z")> Public Property Z As Single Implements PointF3D.Z
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -162,5 +164,12 @@ Namespace Drawing3D
             x = x * factor + viewWidth / 2
             y = y * factor + viewHeight / 2
         End Sub
+
+        Public Shared Operator -(p3D As Point3D, offset As Point3D) As Point3D
+            Return New Point3D(
+                p3D.X - offset.X,
+                p3D.Y - offset.Y,
+                p3D.Z - offset.Z)
+        End Operator
     End Structure
 End Namespace

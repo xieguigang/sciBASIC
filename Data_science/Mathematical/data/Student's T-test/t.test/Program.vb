@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3e1b436f488e3b161f84eba792ac3dd, ..\sciBASIC#\Data_science\Mathematical\data\Student's T-test\t.test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::13496174fc799effd7a6c1d0da389b9c, ..\sciBASIC#\Data_science\Mathematical\data\Student's T-test\t.test\Program.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Module Program
         Pause()
     End Sub
 End Module
-

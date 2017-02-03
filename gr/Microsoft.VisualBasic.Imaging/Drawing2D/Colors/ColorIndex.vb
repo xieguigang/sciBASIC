@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a6c0f30e7585934df21c302afd3243c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
+﻿#Region "Microsoft.VisualBasic::b68313fd7cbca033891d04680b6bf4dd, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic

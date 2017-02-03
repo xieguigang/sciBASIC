@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c55335bac4c18a25277d332225a88bdc, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::f41e417d039a54d90b8a3af5b6f24502, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Mathematical.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Scatter

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f85b35b321321f9dcbf4561f46b6f83, ..\sciBASIC#\Data_science\Mathematical\Plots\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::e2fcc6f580c8bb43bd7659f2cd5c8f7b, ..\sciBASIC#\Data_science\Mathematical\Plots\Histogram.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 

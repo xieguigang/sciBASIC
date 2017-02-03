@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a46370fddef164420801a51daec6080, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\FuncCaller.vb"
+﻿#Region "Microsoft.VisualBasic::0ca028d2ef97514b35389e6e09634d91, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\FuncCaller.vb"
 
     ' Author:
     ' 
@@ -26,37 +26,40 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.Types
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
 Imports Microsoft.VisualBasic.Linq
 
-''' <summary>
-''' Function object model.(调用函数的方法)
-''' </summary>
-Public Class FuncCaller
-
-    Public ReadOnly Property Name As String
-    Public ReadOnly Property Params As New List(Of SimpleExpression)
-
-    ReadOnly __calls As IFuncEvaluate
+Namespace Scripting
 
     ''' <summary>
-    ''' 
+    ''' Function object model.(调用函数的方法)
     ''' </summary>
-    ''' <param name="Name">The function name</param>
-    ''' <param name="evaluate">Engine handle</param>
-    Sub New(Name As String, evaluate As IFuncEvaluate)
-        Me.Name = Name
-        Me.__calls = evaluate
-    End Sub
+    Public Class FuncCaller
 
-    Public Overrides Function ToString() As String
-        Dim args As String() = Params.ToArray(Function(x) x.ToString)
-        Return $"{Name}({args.JoinBy(", ")})"
-    End Function
+        Public ReadOnly Property Name As String
+        Public ReadOnly Property Params As New List(Of SimpleExpression)
 
-    Public Function Evaluate() As Double
-        Return __calls(Name, Params.ToArray(Function(x) x.Evaluate))
-    End Function
-End Class
+        ReadOnly __calls As IFuncEvaluate
 
-Public Delegate Function IFuncEvaluate(name As String, args As Double()) As Double
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="Name">The function name</param>
+        ''' <param name="evaluate">Engine handle</param>
+        Sub New(Name As String, evaluate As IFuncEvaluate)
+            Me.Name = Name
+            Me.__calls = evaluate
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Dim args As String() = Params.ToArray(Function(x) x.ToString)
+            Return $"{Name}({args.JoinBy(", ")})"
+        End Function
+
+        Public Function Evaluate() As Double
+            Return __calls(Name, Params.ToArray(Function(x) x.Evaluate))
+        End Function
+    End Class
+
+    Public Delegate Function IFuncEvaluate(name As String, args As Double()) As Double
+End Namespace

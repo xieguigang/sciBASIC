@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83cefa8daeefbce31ef9d1e9a2d04a66, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\Arithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::11a3c7c963eb16b1927ea442696ebf09, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\Arithmetic.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,7 @@
 
 #End Region
 
-Namespace Helpers
+Namespace Scripting.Helpers
 
     ''' <summary>
     ''' The basics arithmetic operators' definition.

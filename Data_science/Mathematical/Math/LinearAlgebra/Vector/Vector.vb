@@ -86,6 +86,13 @@ Namespace LinearAlgebra
         End Sub
 
         ''' <summary>
+        ''' 创建一个空的向量
+        ''' </summary>
+        Sub New()
+            Call MyBase.New(8)
+        End Sub
+
+        ''' <summary>
         ''' Creates vector with a specific value sequence.
         ''' </summary>
         ''' <param name="data"></param>

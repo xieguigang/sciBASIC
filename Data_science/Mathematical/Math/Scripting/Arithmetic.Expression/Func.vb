@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::641142e264a6effca0ada6e358561139, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\Func.vb"
+﻿#Region "Microsoft.VisualBasic::42571234928ab1606a9b2132a181e889, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\Func.vb"
 
     ' Author:
     ' 
@@ -26,87 +26,89 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.Types
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
 
-''' <summary>
-''' User define function.(用户自定义函数)
-''' </summary>
-Public Class Func
-
-    ''' <summary>
-    ''' 函数名
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Name As String
-    ''' <summary>
-    ''' 参数列表
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Args As String()
-    ''' <summary>
-    ''' 函数表达式
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Expression As String
+Namespace Scripting
 
     ''' <summary>
-    ''' 从数据模型之中创建对象模型
+    ''' User define function.(用户自定义函数)
     ''' </summary>
-    ''' <param name="engine"></param>
-    ''' <returns></returns>
-    Public Function GetExpression(engine As Expression) As Func(Of Double(), Double)
-        Dim helper As New __callerHelper(Args.ToArray(Function(x) x.ToLower)) With {
+    Public Class Func
+
+        ''' <summary>
+        ''' 函数名
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Name As String
+        ''' <summary>
+        ''' 参数列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Args As String()
+        ''' <summary>
+        ''' 函数表达式
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Expression As String
+
+        ''' <summary>
+        ''' 从数据模型之中创建对象模型
+        ''' </summary>
+        ''' <param name="engine"></param>
+        ''' <returns></returns>
+        Public Function GetExpression(engine As Expression) As Func(Of Double(), Double)
+            Dim helper As New __callerHelper(Args.ToArray(Function(x) x.ToLower)) With {
             .__engine = engine
         }
-        Dim expr As SimpleExpression =
+            Dim expr As SimpleExpression =
             ExpressionParser.TryParse(Expression,
                                       AddressOf helper.getValue,
                                       AddressOf engine.Functions.Evaluate)
-        helper.__expr = expr
-        Return AddressOf helper.Evaluate
-    End Function
-
-    Private Class __callerHelper
-
-        Public __engine As Expression
-
-        ''' <summary>
-        ''' 默认全部都是变量
-        ''' </summary>
-        ReadOnly __args As Dictionary(Of String, Value(Of Double))
-        ReadOnly __names As String()
-
-        Sub New(args As String())
-            __args = args.ToDictionary(Function(x) x, Function(null) New Value(Of Double))
-            __names = args
-        End Sub
-
-        Public Function getValue(name As String) As Double
-            name = name.ToLower
-
-            If __args.ContainsKey(name.ToLower) Then
-                Return __args(name).value
-            Else
-                Return __engine.GetValue(name)
-            End If
+            helper.__expr = expr
+            Return AddressOf helper.Evaluate
         End Function
 
-        Public __expr As SimpleExpression
+        Private Class __callerHelper
 
-        Public Function Evaluate(args As Double()) As Double
-            For Each x As SeqValue(Of Double) In args.SeqIterator  ' 对lambda表达式设置环境变量
-                __args(__names(x.i)).value = x.value
-            Next
+            Public __engine As Expression
 
-            Return __expr.Evaluate
+            ''' <summary>
+            ''' 默认全部都是变量
+            ''' </summary>
+            ReadOnly __args As Dictionary(Of String, Value(Of Double))
+            ReadOnly __names As String()
+
+            Sub New(args As String())
+                __args = args.ToDictionary(Function(x) x, Function(null) New Value(Of Double))
+                __names = args
+            End Sub
+
+            Public Function getValue(name As String) As Double
+                name = name.ToLower
+
+                If __args.ContainsKey(name.ToLower) Then
+                    Return __args(name).value
+                Else
+                    Return __engine.GetValue(name)
+                End If
+            End Function
+
+            Public __expr As SimpleExpression
+
+            Public Function Evaluate(args As Double()) As Double
+                For Each x As SeqValue(Of Double) In args.SeqIterator  ' 对lambda表达式设置环境变量
+                    __args(__names(x.i)).value = x.value
+                Next
+
+                Return __expr.Evaluate
+            End Function
+        End Class
+
+        Public Overrides Function ToString() As String
+            Dim args As String = Me.Args.JoinBy(", ")
+            Return $"{Name}({args}) {Expression}"
         End Function
     End Class
-
-    Public Overrides Function ToString() As String
-        Dim args As String = Me.Args.JoinBy(", ")
-        Return $"{Name}({args}) {Expression}"
-    End Function
-End Class
+End Namespace

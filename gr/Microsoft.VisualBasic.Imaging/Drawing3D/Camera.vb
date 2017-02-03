@@ -1,33 +1,35 @@
-﻿#Region "Microsoft.VisualBasic::5016e67c59fa6050f51cba47f3d45479, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::0f74cfc0985efcf3898983483fc6adae, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
 Namespace Drawing3D
 
@@ -42,6 +44,10 @@ Namespace Drawing3D
         Public offset As Point
 
 #Region "Rotation"
+
+        Public Function Rotate(v As Vector3D) As Vector3D
+            Return v.RotateX(angleX).RotateY(angleY).RotateZ(angleZ)
+        End Function
 
         Public Function Rotate(pt As Point3D) As Point3D
             Return pt.RotateX(angleX).RotateY(angleY).RotateZ(angleZ)
@@ -100,6 +106,21 @@ Namespace Drawing3D
         End Function
 
 #End Region
+
+        Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
+            Dim faces As New List(Of Surface)
+
+            With Me
+                For Each f As Surface In surface
+                    faces += New Surface With {
+                        .brush = f.brush,
+                        .vertices = Rotate(f.vertices).ToArray
+                    }
+                Next
+            End With
+
+            Call canvas.SurfacePainter(Me, faces, drawPath)
+        End Sub
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

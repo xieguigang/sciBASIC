@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b777cadb57383eb506fae44b4dc06db8, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
+﻿#Region "Microsoft.VisualBasic::5584bdf7e82a54369c9affcf59e7222c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -36,16 +37,44 @@ Namespace Drawing3D
     ''' <summary>
     ''' ``PAINTERS ALGORITHM`` provider
     ''' </summary>
-    Public Module Painter
+    Public Module PainterAlgorithm
 
         ''' <summary>
-        ''' 请注意，这个并没有rotate，只会利用camera进行project
+        ''' 这个函数主要是应用于函数绘图的。请注意，这个并没有rotate，只会利用camera进行project
         ''' </summary>
         ''' <param name="canvas"></param>
         ''' <param name="camera"></param>
         ''' <param name="surfaces"></param>
         <Extension>
-        Public Sub SurfacePainter(ByRef canvas As Graphics, camera As Camera, surfaces As IEnumerable(Of Surface))
+        Public Sub SurfacePainter(ByRef canvas As Graphics, camera As Camera, surfaces As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
+            Call canvas.BufferPainting(camera.PainterBuffer(surfaces), drawPath)
+        End Sub
+
+        <Extension>
+        Public Sub BufferPainting(ByRef canvas As Graphics, buf As IEnumerable(Of Polygon),
+                                  Optional drawPath As Boolean = False,
+                                  Optional illumination As Boolean = False)
+            If illumination Then
+                buf = buf.Illumination
+            End If
+            For Each polygon As Polygon In buf
+                With polygon
+                    If drawPath Then
+                        Call canvas.DrawPolygon(Pens.Black, .points)
+                    End If
+                    Call canvas.FillPolygon(.brush, .points)
+                End With
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 生成三维图形绘图的多边形缓存。请注意，这个并没有rotate，只会利用camera进行project
+        ''' </summary>
+        ''' <param name="camera"></param>
+        ''' <param name="surfaces"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function PainterBuffer(camera As Camera, surfaces As IEnumerable(Of Surface)) As IEnumerable(Of Polygon)
             Dim sv As New List(Of Surface)
 
             For Each s As Surface In surfaces
@@ -63,6 +92,8 @@ Namespace Drawing3D
                 Function(surface) surface _
                     .vertices _
                     .Average(Function(z) z.Z))
+            Dim screen As Size = camera.screen
+            Dim out As New List(Of Polygon)
 
             ' Draw the faces using the PAINTERS ALGORITHM (distant faces first, closer faces last).
             For i As Integer = 0 To sv.Count - 1
@@ -70,12 +101,32 @@ Namespace Drawing3D
                 Dim s As Surface = sv(index)
                 Dim points() As Point = s _
                     .vertices _
-                    .Select(Function(p3D) p3D.PointXY(camera.screen)) _
+                    .Select(Function(p3D) p3D.PointXY(screen)) _
                     .ToArray
 
-                Call canvas.FillPolygon(s.brush, points)
+                out += New Polygon With {
+                    .brush = s.brush,
+                    .points = points
+                }
             Next
-        End Sub
+
+            Return out
+        End Function
+
+        ''' <summary>
+        ''' The polygon buffer unit after the 3D to 2D projection and the z-order sorts.
+        ''' (经过投影和排序操作之后的多边形图形缓存单元)
+        ''' </summary>
+        Public Structure Polygon
+            ''' <summary>
+            ''' The 3D projection result buffer
+            ''' </summary>
+            Dim points As Point()
+            ''' <summary>
+            ''' Surface fill
+            ''' </summary>
+            Dim brush As Brush
+        End Structure
 
         ''' <summary>
         ''' ``PAINTERS ALGORITHM`` kernel

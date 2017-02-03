@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::150189cef7a636076806abb98e97c3e6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\Pointer(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::5596f10c13fc06562c5fa41255e98c13, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\Pointer(Of T).vb"
 
     ' Author:
     ' 
@@ -222,6 +222,11 @@ Namespace Emit.Marshal
             Return ptr.__innerRaw(i)
         End Operator
 
+        ''' <summary>
+        ''' 指针的位置往回移动一个单位，然后返回原来的位置的元素的值
+        ''' </summary>
+        ''' <param name="ptr"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator -(ptr As Pointer(Of T)) As T
             Dim i As Integer = ptr.__index
             ptr.__index -= 1

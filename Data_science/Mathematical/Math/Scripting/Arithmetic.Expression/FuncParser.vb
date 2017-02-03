@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7d903003001d929f64828e1cc78ff41, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\FuncParser.vb"
+﻿#Region "Microsoft.VisualBasic::c8c0412f0e9c10519f9baa792fb9019b, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\FuncParser.vb"
 
     ' Author:
     ' 
@@ -29,29 +29,32 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
-''' <summary>
-''' Parser for the user define <see cref="Func"/>.(用户自定义函数的解析器)
-''' </summary>
-Public Module FuncParser
+Namespace Scripting
 
     ''' <summary>
-    ''' &lt;Function>(args) expression
+    ''' Parser for the user define <see cref="Func"/>.(用户自定义函数的解析器)
     ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    Public Function TryParse(s As String) As Func
-        Dim define As String = Mid(s, 1, InStr(s, ")"))
-        Dim expr As String = Mid(s, define.Length + 1)
-        Return define.__defineParser(expr)
-    End Function
+    Public Module FuncParser
 
-    <Extension> Private Function __defineParser(define As String, expr As String) As Func
-        Dim name As String = Mid(define, 1, InStr(define, "(") - 1)
-        Dim args As String = Mid(define, name.Length + 1).GetStackValue("(", ")")
-        Return New Func With {
+        ''' <summary>
+        ''' &lt;Function>(args) expression
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        Public Function TryParse(s As String) As Func
+            Dim define As String = Mid(s, 1, InStr(s, ")"))
+            Dim expr As String = Mid(s, define.Length + 1)
+            Return define.__defineParser(expr)
+        End Function
+
+        <Extension> Private Function __defineParser(define As String, expr As String) As Func
+            Dim name As String = Mid(define, 1, InStr(define, "(") - 1)
+            Dim args As String = Mid(define, name.Length + 1).GetStackValue("(", ")")
+            Return New Func With {
             .Args = args.Split(","c).ToArray(Function(s) s.Trim),
             .Expression = expr,
             .Name = name
         }
-    End Function
-End Module
+        End Function
+    End Module
+End Namespace

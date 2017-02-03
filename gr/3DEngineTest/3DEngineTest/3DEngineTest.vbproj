@@ -65,10 +65,15 @@
     <DocumentationFile>3DEngineTest.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>3mf.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -96,13 +101,21 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CubeModel.vb">
+    <Compile Include="Landscape_model\LandscapeModel.vb" />
+    <Compile Include="Program.vb" />
+    <Compile Include="Simple\CubeModel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FormTest.Designer.vb">
+    <Compile Include="Landscape_model\FormLandscape.Designer.vb">
+      <DependentUpon>FormLandscape.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Landscape_model\FormLandscape.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Simple\FormTest.Designer.vb">
       <DependentUpon>FormTest.vb</DependentUpon>
     </Compile>
-    <Compile Include="FormTest.vb">
+    <Compile Include="Simple\FormTest.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -122,7 +135,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FormTest.resx">
+    <EmbeddedResource Include="Landscape_model\FormLandscape.resx">
+      <DependentUpon>FormLandscape.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Simple\FormTest.resx">
       <DependentUpon>FormTest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -153,14 +169,21 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\mime\Markups\Markups.vbproj">
+    <ProjectReference Include="..\..\..\mime\MIME_Markups\MIME_Markups.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>Markups</Name>
+      <Name>MIME_Markups</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Landscape\Landscape.vbproj">
+      <Project>{ccd693c3-ee09-473a-8344-26e05b373394}</Project>
+      <Name>Landscape</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
       <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
       <Name>Microsoft.VisualBasic.Imaging</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="3mf.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

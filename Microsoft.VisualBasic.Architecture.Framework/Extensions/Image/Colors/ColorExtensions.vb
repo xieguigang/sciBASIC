@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aae81eafaf294f25af35e6023ff8888b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f695ebfad0679eae655ab897b4907cfa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorExtensions.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,30 @@ Imports Microsoft.VisualBasic.Language
 Namespace Imaging
 
     Public Module ColorExtensions
+
+        ''' <summary>
+        ''' Creates a new light color object for the control from the specified color and
+        ''' lightens it by the specified percentage.
+        ''' </summary>
+        ''' <param name="base">The <see cref="System.Drawing.Color"/> to be lightened.</param>
+        ''' <param name="percent!">The percentage to lighten the specified <see cref="System.Drawing.Color"/>.</param>
+        ''' <returns>A <see cref="System.Drawing.Color"/> that represents the light color on the control.</returns>
+        <Extension>
+        Public Function Light(base As Color, percent!) As Color
+            Return ControlPaint.Light(base, percent)
+        End Function
+
+        ''' <summary>
+        ''' Creates a new dark color object for the control from the specified color and
+        ''' darkens it by the specified percentage.
+        ''' </summary>
+        ''' <param name="base">The <see cref="System.Drawing.Color"/> to be darkened.</param>
+        ''' <param name="percent!">The percentage to darken the specified <see cref="System.Drawing.Color"/>.</param>
+        ''' <returns>A <see cref="System.Drawing.Color"/> that represent the dark color on the control.</returns>
+        <Extension>
+        Public Function Dark(base As Color, percent!) As Color
+            Return ControlPaint.Dark(base, percent)
+        End Function
 
         ''' <summary>
         ''' ``rgb(r,g,b)``
@@ -184,7 +208,9 @@ Namespace Imaging
                 Return Color.Black
             End If
             If exp.First = "#"c Then
-                Return ColorTranslator.FromHtml(exp)
+                ' 2017-2-2
+                ' 经过测试与3mf文件之中的材质颜色定义一致，没有问题
+                Return HexColor.ConvertToRbg(exp)
             End If
             If Regex.Match(exp, "\d+").Value = exp Then
                 Return ColorTranslator.FromOle(CInt(exp))

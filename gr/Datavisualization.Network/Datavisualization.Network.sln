@@ -17,7 +17,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imagi
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\..\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "markups", "..\..\mime\markups\markups.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "markups", "..\..\mime\MIME_markups\MIME_markups.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject

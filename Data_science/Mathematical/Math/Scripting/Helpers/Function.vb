@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd0e13fd748afd29673f59f6c38ba8be, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\Function.vb"
+﻿#Region "Microsoft.VisualBasic::f4d1e448638ae4fad2af9a5dd37ef543, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\Function.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports System.Text
 
-Namespace Helpers
+Namespace Scripting.Helpers
 
     ''' <summary>
     ''' Mathematics function calculation engine

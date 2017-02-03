@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee027621fc8a4ed6ee864059abb64dec, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\MetaExpression.vb"
+﻿#Region "Microsoft.VisualBasic::a1ee81b93d09d6e9094deac4b0faf157, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\MetaExpression.vb"
 
     ' Author:
     ' 
@@ -26,25 +26,28 @@
 
 #End Region
 
-''' <summary>
-''' 
-''' </summary>
-''' <typeparam name="T">Token type</typeparam>
-''' <typeparam name="O">Operator type</typeparam>
-Public Class MetaExpression(Of T, O)
-
-    Public Property [Operator] As O
+Namespace Scripting
 
     ''' <summary>
-    ''' 自动根据类型来计算出结果
+    ''' 
     ''' </summary>
-    ''' <returns></returns>
-    Public Overridable Property LEFT As T
+    ''' <typeparam name="T">Token type</typeparam>
+    ''' <typeparam name="O">Operator type</typeparam>
+    Public Class MetaExpression(Of T, O)
 
-    Sub New()
-    End Sub
+        Public Property [Operator] As O
 
-    Sub New(x As T)
-        LEFT = x
-    End Sub
-End Class
+        ''' <summary>
+        ''' 自动根据类型来计算出结果
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable Property LEFT As T
+
+        Sub New()
+        End Sub
+
+        Sub New(x As T)
+            LEFT = x
+        End Sub
+    End Class
+End Namespace

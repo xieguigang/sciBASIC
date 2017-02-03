@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ac04526e6fed4b4f70e78785670f00a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::4d77611d9416bae8ae2cc18cc31f782f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Surface.vb"
 
     ' Author:
     ' 
@@ -32,15 +32,29 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing3D
 
+    ''' <summary>
+    ''' Object model that using for the 3D graphics.
+    ''' (进行实际3D绘图操作的对象模型)
+    ''' </summary>
     Public Structure Surface
         Implements IEnumerable(Of Point3D)
         Implements I3DModel
 
         ''' <summary>
-        ''' 请注意，在这里面的点都是有先后顺序分别的
+        ''' Vertix in this list have the necessary element orders
+        ''' for construct a correct closed figure.
+        ''' (请注意，在这里面的点都是有先后顺序分别的)
         ''' </summary>
         Public vertices() As Point3D
+        ''' <summary>
+        ''' Drawing texture material of this surface.
+        ''' </summary>
         Public brush As Brush
+
+        Sub New(v As Point3D(), b As Brush)
+            brush = b
+            vertices = v
+        End Sub
 
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
             Dim path = New Point(vertices.Length - 1) {}

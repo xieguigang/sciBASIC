@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::596ea97b74cf19d267645a85cc4b92e8, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::7ec09874cf02fbbc46c97325b89403f3, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
@@ -113,6 +113,24 @@ Namespace Drawing2D
                 Call g.DrawImage(res, rect)
             End If
         End Sub
+
+        <Extension> Public Function GetBrush(res$) As Brush
+            Dim bgColor As Color = res.ToColor(onFailure:=Nothing)
+
+            If Not bgColor.IsEmpty Then
+                Return New SolidBrush(bgColor)
+            Else
+                Dim img As Image
+
+                If res.FileExists Then
+                    img = LoadImage(path:=res$)
+                Else
+                    img = Base64Codec.GetImage(res$)
+                End If
+
+                Return New TextureBrush(img)
+            End If
+        End Function
 
         ''' <summary>
         ''' Data plots graphics engine.

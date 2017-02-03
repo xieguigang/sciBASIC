@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd072cf251d5be7f61488ec09dd571d6, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\UnitExpression.vb"
+﻿#Region "Microsoft.VisualBasic::010eb132fd9ca8531dddd44db5a44442, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\UnitExpression.vb"
 
     ' Author:
     ' 
@@ -28,9 +28,9 @@
 
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Mathematical.Helpers
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Helpers
 
-Namespace Types
+Namespace Scripting.Types
 
     ''' <summary>
     ''' A class object stand for a very simple mathematic expression that have no bracket or function.

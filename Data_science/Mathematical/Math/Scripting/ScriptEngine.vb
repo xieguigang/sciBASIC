@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02c1fcd504fb9e4fcbfde18be7bc1eee, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\ScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::4c1cd0f39c2630fcfd74f07a05682259, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\ScriptEngine.vb"
 
     ' Author:
     ' 
@@ -26,77 +26,104 @@
 
 #End Region
 
-''' <summary>
-''' Math expression script engine.
-''' </summary>
-Public Module ScriptEngine
+Imports System.Runtime.CompilerServices
+
+Namespace Scripting
 
     ''' <summary>
-    ''' The default expression engine.
+    ''' Math expression script engine.
     ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property Expression As Expression =
-        Mathematical.Expression.DefaultEngine
+    Public Module ScriptEngine
 
-    ''' <summary>
-    ''' all of the commands are stored at here
-    ''' </summary>
-    ''' <remarks>
-    ''' .quit for do nothing and end of this program.
-    ''' </remarks>
-    Public ReadOnly Property StatementEngine As Dictionary(Of String, Action(Of String)) =
-        New Dictionary(Of String, Action(Of String)) From {
-            {"const", AddressOf Expression.Constant.Add},
-            {"function", AddressOf Expression.Functions.Add},
-            {"func", AddressOf Expression.Functions.Add},
-            {"var", AddressOf Expression.Variables.Set},
-            {".quit", Sub(NULL As String) NULL = Nothing}}
+        ''' <summary>
+        ''' The default expression engine.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Expression As Expression = Expression.DefaultEngine
 
-    ''' <summary>
-    ''' Lambda expression table.
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property Scripts As New Hashtable
+        ''' <summary>
+        ''' all of the commands are stored at here
+        ''' </summary>
+        ''' <remarks>
+        ''' .quit for do nothing and end of this program.
+        ''' </remarks>
+        Public ReadOnly Property StatementEngine As Dictionary(Of String, Action(Of String)) =
+            New Dictionary(Of String, Action(Of String)) From {
+                {"const", AddressOf Expression.Constant.Add},
+                {"function", AddressOf Expression.Functions.Add},
+                {"func", AddressOf Expression.Functions.Add},
+                {"var", AddressOf Expression.Variables.Set},
+                {".quit", Sub(null$) null = Nothing}}
 
-    ''' <summary>
-    ''' Run the simple script that stores in the <see cref="Scripts"/> table.
-    ''' </summary>
-    ''' <param name="statement"></param>
-    ''' <returns></returns>
-    Public Function Shell(statement$) As String
-        Dim Token As String = statement.Split.First.ToLower
+        ''' <summary>
+        ''' Lambda expression table.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Scripts As New Hashtable
 
-        If InStr(statement, "<-") Then  'This is a value assignment statement
-            Call Expression.Variables.AssignValue(statement)
-            Return String.Empty
-        End If
+        ''' <summary>
+        ''' Run the simple script that stores in the <see cref="Scripts"/> table.
+        ''' </summary>
+        ''' <param name="statement"></param>
+        ''' <returns></returns>
+        Public Function Shell(statement$) As Double
+            Dim Token As String = statement.Split.First.ToLower
 
-        If StatementEngine.ContainsKey(Token) Then
-            Call StatementEngine(Token)(Mid(statement, Len(Token) + 1).Trim)
-            Return String.Empty
-        Else  'if the statement input from the user is not appears in the engine dictionary, then maybe is a mathematics expression. 
-            Dim Result As Double = Expression.Evaluate(statement)
-            Expression.Variables.Set("$", Result)  'You can treat the variable 'last' as a system variable for return the result of a multiple function script in the future of this feature will add to this module.
+            ' This is a value assignment statement
+            If InStr(statement, "<-") Then
+                Return Expression.Variables.AssignValue(statement)
+            End If
 
-            Return Result
-        End If
-    End Function
+            If StatementEngine.ContainsKey(Token) Then
+                Call StatementEngine(Token)(Mid(statement, Len(Token) + 1).Trim)
+                Return 0
+            Else
+                ' if the statement input from the user is not appears 
+                ' in the engine dictionary, then maybe is a mathematics expression. 
+                Dim Result As Double = Expression.Evaluate(statement)
+                ' You can treat the variable 'last' as a system variable for return 
+                ' the Result of a multiple function script in the future of this 
+                ' feature will add to this module.
+                Expression.Variables.Set("$", Result)
+                Return Result
+            End If
+        End Function
 
-    ''' <summary>
-    ''' Set variable value
-    ''' </summary>
-    ''' <param name="Name"></param>
-    ''' <param name="expr"></param>
-    Public Sub SetVariable(Name$, expr$)
-        Call Expression.Variables.Set(Name, expr)
-    End Sub
+        ' 字符串插值脚本
+        ' expr$ = "&blablabla $x + $y = $z blablabla...."
 
-    ''' <summary>
-    ''' Add constant object
-    ''' </summary>
-    ''' <param name="Name"></param>
-    ''' <param name="expr"></param>
-    Public Sub AddConstant(Name$, expr$)
-        Call Expression.Constant.Add(Name, expr)
-    End Sub
-End Module
+        ''' <summary>
+        ''' <see cref="Shell"/> function name alias.
+        ''' </summary>
+        ''' <param name="statement$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Evaluate(statement$, Optional echo As Boolean = True) As Double
+            Dim x# = Shell(statement)
+
+            If echo Then
+                Call statement.__DEBUG_ECHO
+                Call $" = {x}".__DEBUG_ECHO
+            End If
+
+            Return x
+        End Function
+
+        ''' <summary>
+        ''' Set variable value
+        ''' </summary>
+        ''' <param name="Name"></param>
+        ''' <param name="expr"></param>
+        Public Sub SetVariable(Name$, expr$)
+            Call Expression.Variables.Set(Name, expr)
+        End Sub
+
+        ''' <summary>
+        ''' Add constant object
+        ''' </summary>
+        ''' <param name="Name"></param>
+        ''' <param name="expr"></param>
+        Public Sub AddConstant(Name$, expr$)
+            Call Expression.Constant.Add(Name, expr)
+        End Sub
+    End Module
+End Namespace

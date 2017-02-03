@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::694bf40b377ce642f2779e7322e2a5c2, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::5a251ffdbdef54e26ac191131aebea90, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\ScatterHeatmap.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Types
+Imports Microsoft.VisualBasic.Mathematical.Scripting
+Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
 
 ''' <summary>
 ''' 和普通的heatmap相比，这里的坐标轴是连续的数值变量，而普通的heatmap，其坐标轴都是离散的分类变量
@@ -234,12 +235,12 @@ Public Module ScatterHeatmap
         Public Function GetData(plotSize As Size) As (x#, y#, z#)()
             If func Is Nothing Then
                 ' 直接返回矩阵数据
-                Return LinqAPI.Exec(Of (x#,y#,z#)) <= 
-                    From line As DataSet 
+                Return LinqAPI.Exec(Of (x#, y#, Z#)) <=
+                    From line As DataSet
                     In matrix
                     Let xi = Val(line.ID)
-                    Let data = line.Properties.Select(Function(o) (x:=xi, y:=val(o.Key), z:=o.Value))
-                    Select data 
+                    Let data = line.Properties.Select(Function(o) (x:=xi, y:=Val(o.Key), Z:=o.Value))
+                    Select data
             Else
                 Return func _
                     .__getData(plotSize,  ' 得到通过计算返回来的数据
@@ -306,11 +307,11 @@ Public Module ScatterHeatmap
 
         Public Sub Plot(ByRef g As Graphics, region As GraphicsRegion)
             Dim data = GetData(region.PlotRegion.Size)
-            Dim scaler As New Scaling(Data)
+            Dim scaler As New Scaling(data)
             Dim xf = scaler.XScaler(region.Size, region.Margin)
             Dim yf = scaler.YScaler(region.Size, region.Margin)
             Dim colorDatas As SolidBrush() = Nothing
-            Dim getColors = GetColor(Data.ToArray(Function(o) o.Z), colorDatas)
+            Dim getColors = GetColor(data.ToArray(Function(o) o.z), colorDatas)
             Dim size As Size = region.Size
 
             Call g.DrawAxis(size, margin, scaler, False, offset, xlabel, ylabel)
@@ -319,8 +320,8 @@ Public Module ScatterHeatmap
 
             Dim us% = unit * scale
 
-            For i As Integer = 0 To Data.Length - 1
-                Dim p As (X#, y#, Z#) = Data(i)
+            For i As Integer = 0 To data.Length - 1
+                Dim p As (X#, y#, Z#) = data(i)
                 Dim c As SolidBrush = getColors(i)
                 Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.y) + offset.Y, us, us)
 
