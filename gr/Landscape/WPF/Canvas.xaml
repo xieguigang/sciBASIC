@@ -12,7 +12,7 @@
 
         <Viewport3D x:Name="viewport" Grid.Row="1">
             <Viewport3D.Camera>
-                <PerspectiveCamera x:Name="camera" FarPlaneDistance="50" LookDirection="0,0,-10"
+                <PerspectiveCamera x:Name="camera" FarPlaneDistance="150" LookDirection="0,0,-10"
 					UpDirection="0,1,0" NearPlaneDistance="0" Position="0,0,5"
 					FieldOfView="45" />
             </Viewport3D.Camera>
