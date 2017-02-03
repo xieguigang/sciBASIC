@@ -10,6 +10,19 @@ Namespace Drawing3D.Math3D
         Public Y As Vector
         Public Z As Vector
 
+        Default Public ReadOnly Property Surface(v As Integer()) As Point3D()
+            Get
+                Dim out As Point3D() = New Point3D(v.Length - 1) {}
+
+                For k As Integer = 0 To v.Length - 1
+                    Dim i = v(k)
+                    out(k) = New Point3D(X(i), Y(i), Z(i))
+                Next
+
+                Return out
+            End Get
+        End Property
+
         ''' <summary>
         ''' 函数返回来的点集合之中的元素顺序和向量之中的数值的顺序是一致的
         ''' </summary>
@@ -50,6 +63,14 @@ Namespace Drawing3D.Math3D
                 .X = x
                 .Y = y
                 .Z = z
+            End With
+        End Sub
+
+        Public Sub Add(p3D As Point3D)
+            With Me
+                .X.Add(p3D.X)
+                .Y.Add(p3D.Y)
+                .Z.Add(p3D.Z)
             End With
         End Sub
 
