@@ -1,11 +1,16 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Namespace Drawing3D.Math3D
 
     Public Class Matrix : Implements IEnumerable(Of Surface)
 
-        Public ReadOnly Property Matrix As New Vector3D
+        Public ReadOnly Property Matrix As New Vector3D With {
+            .X = New Vector,
+            .Y = New Vector,
+            .Z = New Vector
+        }
         ReadOnly surfaces As New List(Of SurfaceVector)
 
         Public Structure SurfaceVector
