@@ -3,8 +3,8 @@ Imports System.Windows.Input
 Imports System.Windows.Media
 Imports System.Windows.Media.Media3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf
-Imports Vertex = System.Windows.Media.Media3D.Point3D
 Imports Microsoft.VisualBasic.Language
+Imports Vertex = System.Windows.Media.Media3D.Point3D
 
 Public Class Canvas
 
@@ -42,83 +42,6 @@ Public Class Canvas
             Call __geometry.Add(geometry)
             Call group.Children.Add(geometry)
         Next
-
-        'For Each surface As Surface In project.GetSurfaces(True)
-
-        '    ' Define 3D mesh object
-        '    Dim mesh As New MeshGeometry3D()
-
-        '    mesh.Positions.Add(New Vertex(-0.5, -0.5, 1))
-        '    'mesh.Normals.Add(new Vector3D(0, 0, 1));
-        '    mesh.Positions.Add(New Vertex(0.5, -0.5, 1))
-        '    'mesh.Normals.Add(new Vector3D(0, 0, 1));
-        '    mesh.Positions.Add(New Vertex(0.5, 0.5, 1))
-        '    'mesh.Normals.Add(new Vector3D(0, 0, 1));
-        '    mesh.Positions.Add(New Vertex(-0.5, 0.5, 1))
-        '    'mesh.Normals.Add(new Vector3D(0, 0, 1));
-
-        '    mesh.Positions.Add(New Vertex(-1, -1, -1))
-        '    'mesh.Normals.Add(new Vector3D(0, 0, -1));
-        '    mesh.Positions.Add(New Vertex(1, -1, -1))
-        '    'mesh.Normals.Add(new Vector3D(0, 0, -1));
-        '    mesh.Positions.Add(New Vertex(1, 1, -1))
-        '    'mesh.Normals.Add(new Vector3D(0, 0, -1));
-        '    mesh.Positions.Add(New Vertex(-1, 1, -1))
-        '    'mesh.Normals.Add(new Vector3D(0, 0, -1));
-
-        '    ' Front face
-        '    mesh.TriangleIndices.Add(0)
-        '    mesh.TriangleIndices.Add(1)
-        '    mesh.TriangleIndices.Add(2)
-        '    mesh.TriangleIndices.Add(2)
-        '    mesh.TriangleIndices.Add(3)
-        '    mesh.TriangleIndices.Add(0)
-
-        '    ' Back face
-        '    mesh.TriangleIndices.Add(6)
-        '    mesh.TriangleIndices.Add(5)
-        '    mesh.TriangleIndices.Add(4)
-        '    mesh.TriangleIndices.Add(4)
-        '    mesh.TriangleIndices.Add(7)
-        '    mesh.TriangleIndices.Add(6)
-
-        '    ' Right face
-        '    mesh.TriangleIndices.Add(1)
-        '    mesh.TriangleIndices.Add(5)
-        '    mesh.TriangleIndices.Add(2)
-        '    mesh.TriangleIndices.Add(5)
-        '    mesh.TriangleIndices.Add(6)
-        '    mesh.TriangleIndices.Add(2)
-
-        '    ' Top face
-        '    mesh.TriangleIndices.Add(2)
-        '    mesh.TriangleIndices.Add(6)
-        '    mesh.TriangleIndices.Add(3)
-        '    mesh.TriangleIndices.Add(3)
-        '    mesh.TriangleIndices.Add(6)
-        '    mesh.TriangleIndices.Add(7)
-
-        '    ' Bottom face
-        '    mesh.TriangleIndices.Add(5)
-        '    mesh.TriangleIndices.Add(1)
-        '    mesh.TriangleIndices.Add(0)
-        '    mesh.TriangleIndices.Add(0)
-        '    mesh.TriangleIndices.Add(4)
-        '    mesh.TriangleIndices.Add(5)
-
-        '    ' Right face
-        '    mesh.TriangleIndices.Add(4)
-        '    mesh.TriangleIndices.Add(0)
-        '    mesh.TriangleIndices.Add(3)
-        '    mesh.TriangleIndices.Add(3)
-        '    mesh.TriangleIndices.Add(7)
-        '    mesh.TriangleIndices.Add(4)
-
-        '    ' Geometry creation
-        '    mGeometry = New GeometryModel3D(mesh, New DiffuseMaterial(Brushes.YellowGreen))
-        '    mGeometry.Transform = New Transform3DGroup()
-        '    group.Children.Add(mGeometry)
-        'Next
     End Sub
 
     Private Sub Grid_MouseWheel(sender As Object, e As MouseWheelEventArgs)
