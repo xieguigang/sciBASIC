@@ -426,7 +426,7 @@
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
-    <Compile Include="Language\UnixBash\FileSystem\Delete.vb" />
+    <Compile Include="Language\UnixBash\Shell\rm.vb" />
     <Compile Include="Language\Value\Numeric\int.vb" />
     <Compile Include="Language\Value\Numeric\float.vb" />
     <Compile Include="Language\Value\var.vb" />
@@ -604,11 +604,11 @@
     <Compile Include="Text\UnbufferedStringReader.vb" />
     <Compile Include="Text\Parser\HtmlParser\Table.vb" />
     <Compile Include="Language\Class.vb" />
-    <Compile Include="Language\UnixBash\FileSystem\Searchs.vb" />
+    <Compile Include="Language\UnixBash\Shell\ls.vb" />
     <Compile Include="Language\UnixBash\FileSystem\File.vb" />
     <Compile Include="Language\ClassObject.vb" />
     <Compile Include="Language\Value\Numeric\Numeric.vb" />
-    <Compile Include="Language\UnixBash\Text\Grep.vb" />
+    <Compile Include="Language\UnixBash\Shell\Text\Grep.vb" />
     <Compile Include="Tools\MMFProtocol\WorkFlow.vb" />
     <Compile Include="Parallel\Tasks\CallbackTask.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
