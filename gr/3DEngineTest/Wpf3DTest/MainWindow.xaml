@@ -1,0 +1,24 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf3DTest"
+        xmlns:Landscape="clr-namespace:Microsoft.VisualBasic.Imaging.Drawing3D.Landscape;assembly=Microsoft.VisualBasic.Imaging.Drawing3D.Landscape" x:Class="MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1863.56" Width="1200.187">
+    <Grid HorizontalAlignment="Left" Width="1220" Margin="0,0,-282,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="47*"/>
+            <ColumnDefinition Width="38*"/>
+            <ColumnDefinition Width="69*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="109*"/>
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="121*"/>
+        </Grid.ColumnDefinitions>
+
+        <Landscape:Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="1853" Width="1198" Grid.Column="4" Margin="72,240,48,240"/>
+
+    </Grid>
+</Window>

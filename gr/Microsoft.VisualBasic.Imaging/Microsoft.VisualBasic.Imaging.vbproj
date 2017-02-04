@@ -228,8 +228,8 @@
     </Compile>
     <Compile Include="Drawing3D\Point3D.vb" />
     <Compile Include="Drawing3D\Transformation.vb" />
-    <Compile Include="Drawing3D\Vector\Matrix.vb" />
-    <Compile Include="Drawing3D\Vector\Vector3D.vb" />
+    <Compile Include="Drawing3D\Math3D\Matrix.vb" />
+    <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

