@@ -426,6 +426,7 @@
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
+    <Compile Include="Language\UnixBash\ShellSyntax.vb" />
     <Compile Include="Language\UnixBash\Shell\rm.vb" />
     <Compile Include="Language\Value\Numeric\int.vb" />
     <Compile Include="Language\Value\Numeric\float.vb" />
