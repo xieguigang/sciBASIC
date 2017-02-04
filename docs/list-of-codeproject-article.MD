@@ -1,63 +1,44 @@
-Menus
+![](./logo250x135.gif)
 
-Menus and Toolbars	
-Develop a Plugin extension for your VisualBasic application
-Posted: 30 Dec 2013   Updated: 30 Dec 2013   Views: 11,081   Rating: 4.47/5    Votes: 12   Popularity: 4.79
-Licence: The Code Project Open License (CPOL)      Bookmarked: 28   Downloaded: 721
- 
+## Menus
 
+#### Menus and Toolbars
+[Develop a Plugin extension for your VisualBasic application](https://www.codeproject.com/Articles/703590/Develop-a-Plugin-extension-for-your-VisualBasic-ap)
 A simple and easy way to develop a application plugin
-Document / View
 
-Doc/View Internals	
-A powerful CSV document wrapper library
-Posted: 20 Jun 2014   Updated: 20 Jun 2014   Views: 6,904   Rating: 5.00/5    Votes: 2   Popularity: 1.51
-Licence: The Code Project Open License (CPOL)      Bookmarked: 13   Downloaded: 220
- 
+## Document / View
 
+#### Doc/View Internals
+[A powerful CSV document wrapper library](https://www.codeproject.com/Articles/788006/A-powerful-CSV-document-wrapper-library)
 I need a tool for exchange the data between my .NET program and R program, yeah this powerful library makes things better!
-Internet / Network
 
-HTTP	
-Simple HTTP Server in VisualBasic
-Posted: 2 Jan 2016   Updated: 2 Jan 2016   Views: 5,019   Rating: 5.00/5    Votes: 4   Popularity: 3.01
-Licence: The Code Project Open License (CPOL)      Bookmarked: 5   Downloaded: 283
- 
+## Internet / Network
 
+#### HTTP
+[Simple HTTP Server in VisualBasic](https://www.codeproject.com/Articles/1068466/Simple-HTTP-Server-in-VisualBasic)
 This is an alternative for "Simple HTTP Server in C#"
-Applications & Tools
 
-General	
-Easy Distribution Computing in VisualBasic
-Posted: 5 Feb 2016   Updated: 5 Feb 2016   Views: 3,685   Rating: 5.00/5    Votes: 2   Popularity: 1.51
-Licence: The Code Project Open License (CPOL)      Bookmarked: 5   Downloaded: 0
- 
+## Applications & Tools
 
+#### General
+[Easy Distribution Computing in VisualBasic](https://www.codeproject.com/Articles/1076209/Easy-Distribution-Computing-in-VisualBasic)
 Distribution computing framework source code used by http://services.gcmodeller.org online systemsbiology annotation system.
-GDI+
 
-General	
-Draw sequence logo
-Posted: 24 Apr 2016   Updated: 24 Apr 2016   Views: 2,500   Rating: 4.71/5    Votes: 3   Popularity: 2.07
-Licence: The GNU General Public License (GPLv3)      Bookmarked: 0   Downloaded: 0
- 
+## GDI+
 
+#### General
+[Draw sequence logo](https://www.codeproject.com/Articles/1095279/Draw-sequence-logo)
 Sequence logo drawer implements in VisualBasic
-Applications	
-Ubuntu like notify-osd program on windows
-This is an unfinished article   delete
-Posted: 8 May 2015   Updated: 8 May 2015   Views: 0   Rating: 0.0 / 5    Votes: 0   Popularity: 0.0
-Licence: The Code Project Open License (CPOL)      Bookmarked: 0   Downloaded: 0
- 
-DLLs & Assemblies
 
-General	
-Powerful ShellScript for bioinformatics researchers
-Posted: 24 Sep 2014   Updated: 14 Oct 2014   Views: 6,532   Rating: 5.00/5    Votes: 7   Popularity: 4.23
-Licence: The GNU General Public License (GPLv3)      Bookmarked: 8   Downloaded: 84
- 
+#### Applications
+[Ubuntu like notify-osd program on windows](https://www.codeproject.com/Articles/989420/Ubuntu-like-notify-osd-program-on-windows)
 
+## DLLs & Assemblies
+
+#### General
+[Powerful ShellScript for bioinformatics researchers](https://www.codeproject.com/Articles/820854/Powerful-ShellScript-for-bioinformatics-researcher)
 The ShellScript is originally developed for the debugging of my "genome-in-code" virtual cell simulation engine, but now it becomes a script language for a .Net program.
+
 Algorithms & Recipes
 
 Algorithms	
