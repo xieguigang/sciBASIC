@@ -55,7 +55,7 @@ Namespace Scripting
             Return New PointF(x, y)
         End Function
 
-        Public Function SizeParser(pt$) As Size
+        <Extension> Public Function SizeParser(pt$) As Size
             Dim x, y As Double
             Call Ranges.Parser(pt, x, y)
             Return New Size(x, y)
