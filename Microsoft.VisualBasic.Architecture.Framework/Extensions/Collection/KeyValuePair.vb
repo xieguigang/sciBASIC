@@ -173,4 +173,16 @@ Public Module KeyValuePairExtensions
                 Function(x) x.Key)
         End If
     End Function
+
+    <Extension>
+    Public Function Selects(Of T, V)(d As Dictionary(Of T, V), keys As IEnumerable(Of T), Optional skipNonExist As Boolean = False) As V()
+        If skipNonExist Then
+            Return keys _
+                .Where(AddressOf d.ContainsKey) _
+                .Select(Function(k) d(k)) _
+                .ToArray
+        Else
+            Return keys.Select(Function(k) d(k)).ToArray
+        End If
+    End Function
 End Module
