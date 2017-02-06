@@ -151,5 +151,11 @@ Namespace ComponentModel.Ranges
 
             Return out
         End Function
+
+        Public Function ScaleMapping(x#, valueRange As DoubleRange) As Double
+            Dim percent# = (x - Min) / Length
+            Dim value# = percent * valueRange.Length + valueRange.Min
+            Return value
+        End Function
     End Class
 End Namespace
