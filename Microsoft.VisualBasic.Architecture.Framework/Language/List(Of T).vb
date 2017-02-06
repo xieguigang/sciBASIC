@@ -102,6 +102,17 @@ Namespace Language
                 Next
             End Set
         End Property
+
+        Default Public Overloads Property Item(indices As IEnumerable(Of Integer)) As List(Of T)
+            Get
+                Return New List(Of T)(indices.Select(Function(i) Item(index:=i)))
+            End Get
+            Set(value As List(Of T))
+                For Each i As SeqValue(Of Integer) In indices.SeqIterator
+                    Item(index:=+i) = value(i.i)
+                Next
+            End Set
+        End Property
 #End Region
 
         ''' <summary>

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::76a28836a93d259d5252ad4aec168509, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.Extensions
 Imports Microsoft.VisualBasic.Imaging
@@ -109,7 +110,34 @@ Public Module __DEBUG_MAIN
         Pause()
     End Sub
 
+    Public Sub ListTest()
+        Dim list As New List(Of Integer)(New IntRange(-10, 10).ToArray)
+
+        Dim x = list(0)           ' -10
+        Dim y = list(-1)          '  10
+        Dim z = list("1->3")      '  -9,  -8, -7
+        Dim a = list("-5->1")     '   6,   7,  8,  9, 10, -10, -9
+        Dim b = list("0:8")       ' -10,  -9, -8, -7, -6,  -5, -4, -3
+        Dim c = list("0,-1,1,-2") ' -10,  10, -9,  9
+        Dim d = list("-1")        '  10
+
+        ' -9, -8, -7, -6, 10, 9, 8, 7
+        Dim e = list({1, 2, 3, 4, -1, -2, -3, -4})
+
+        Call x.GetJson.__DEBUG_ECHO
+        Call y.GetJson.__DEBUG_ECHO
+        Call z.GetJson.__DEBUG_ECHO
+        Call a.GetJson.__DEBUG_ECHO
+        Call b.GetJson.__DEBUG_ECHO
+        Call c.GetJson.__DEBUG_ECHO
+        Call d.GetJson.__DEBUG_ECHO
+        Call e.GetJson.__DEBUG_ECHO
+    End Sub
+
     Function Main() As Integer
+
+        Call ListTest()
+        Pause()
 
         Call testVariables()
         '  Call testColors()
