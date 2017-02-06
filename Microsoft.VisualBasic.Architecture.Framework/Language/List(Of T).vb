@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
@@ -42,6 +43,53 @@ Namespace Language
         ' Implements IEnumerable(Of Value(Of T))
 
         Dim __index As Pointer
+
+        Default Public Overloads Property Item(index%) As T
+            Get
+                If index < 0 Then
+                    index = Count + index  ' -1 -> count -1
+                End If
+                Return MyBase.Item(index)
+            End Get
+            Set(value As T)
+                If index < 0 Then
+                    index = Count + index  ' -1 -> count -1
+                End If
+                MyBase.Item(index) = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="exp$">
+        ''' + 1
+        ''' + 1:8, index=1, count=8
+        ''' + 1->8, index from 1 to 8
+        ''' + 8->1, index from 8 to 1
+        ''' + 1,2,3,4, index=1 or  2 or 3 or 4
+        ''' </param>
+        ''' <returns></returns>
+        Default Public Overloads Property Item(exp$) As T
+            Get
+                If exp.IsPattern("-?\d+") Then
+                    Return Item(index:=CInt(exp))
+
+                End If
+            End Get
+            Set(value As T)
+
+            End Set
+        End Property
+
+        Default Public Overloads Property Item(range As IntRange) As T
+            Get
+
+            End Get
+            Set(value As T)
+
+            End Set
+        End Property
 
         ''' <summary>
         ''' Initializes a new instance of the <see cref="List"/>`1 class that
