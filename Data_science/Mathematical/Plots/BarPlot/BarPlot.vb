@@ -183,7 +183,7 @@ Public Module BarPlot
         bottom += 80
 
         For Each key As SeqValue(Of String) In keys.SeqIterator
-            left = leftMargins(key) + dd / 2 - If(Not stacked, dxStep / 2, 0)
+            left = leftMargins(index:=key) + dd / 2 - If(Not stacked, dxStep / 2, 0)
 
             Dim sz = g.MeasureString((+key), font) ' 得到斜边的长度
             Dim dx! = sz.Width * Math.Cos(angle)
