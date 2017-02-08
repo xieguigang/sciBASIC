@@ -79,11 +79,37 @@ Namespace Imaging
         Wmf
     End Enum
 
-
     ''' <summary>
     ''' Specifies the file format of the image. Not inheritable.
     ''' </summary>
     Public Module ImageFormatExtensions
+
+        ''' <summary>
+        ''' default is <see cref="ImageFormat.Png"/>
+        ''' </summary>
+        ''' <param name="format">大小写不敏感</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetSaveImageFormat(format As String) As ImageFormat
+            Dim value As String = format.ToLower.Trim
+
+            If ImagingFormats.ContainsKey(value) Then
+                Return ImagingFormats(value)
+            Else
+                Return ImageFormat.Png
+            End If
+        End Function
+
+        ReadOnly ImagingFormats As New Dictionary(Of String, ImageFormat) From {
+            {"jpg", ImageFormat.Jpeg},
+            {"bmp", ImageFormat.Bmp},
+            {"emf", ImageFormat.Emf},
+            {"exif", ImageFormat.Exif},
+            {"gif", ImageFormat.Gif},
+            {"png", ImageFormat.Png},
+            {"wmf", ImageFormat.Wmf},
+            {"tiff", ImageFormat.Tiff}
+        }
 
         <Extension> Public Function GetFormat(format As ImageFormats) As ImageFormat
             Return __formats(format)
