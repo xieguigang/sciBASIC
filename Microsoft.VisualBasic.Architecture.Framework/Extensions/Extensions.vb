@@ -1755,6 +1755,12 @@ Public Module Extensions
         Return value
     End Function
 
+    ''' <summary>
+    ''' <paramref name="p"></paramref> plus one and then return its previous value. (p++)
+    ''' </summary>
+    ''' <param name="p"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
 #If FRAMEWORD_CORE Then
     <ExportAPI("Move.Next")>
     <Extension> Public Function MoveNext(ByRef p As Long) As Long
@@ -1943,18 +1949,6 @@ Public Module Extensions
         Return list
     End Function
 #End If
-
-    ''' <summary>
-    ''' <paramref name="p"></paramref> plus one and then return its previous value. (p++)
-    ''' </summary>
-    ''' <param name="p"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function MoveNext(ByRef p As Integer) As Integer
-        Dim i As Integer = p
-        p += 1
-        Return i
-    End Function
 
     <Extension> Public Function Increase(ByRef p As Integer) As Integer
         p += 1

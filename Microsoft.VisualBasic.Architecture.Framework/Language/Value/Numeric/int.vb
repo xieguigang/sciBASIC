@@ -147,6 +147,8 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' 位移<paramref name="n"/>个单位然后返回位移之后的结果值
+        ''' 
         ''' 对于<see cref="int"/>类型而言，其更加侧重于迭代器中的位移，所以这个加法运算是符合
         ''' ```vbnet
         ''' x += n
@@ -162,6 +164,10 @@ Namespace Language
             x.value += n
             Return x
         End Operator
+
+        'Public Overloads Shared Operator =(x As int, a As Integer) As int
+
+        'End Operator
 
         Public Shared Operator >(source As IEnumerable, handle As int) As Boolean
             Dim file As FileHandle = FileHandles.__getHandle(handle.value)
