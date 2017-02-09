@@ -521,6 +521,7 @@
     <Compile Include="Text\Paragraph.vb" />
     <Compile Include="Text\Parser\HtmlParser\HtmlStrips.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
+    <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
     <Compile Include="Text\Xml\Models.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
@@ -604,7 +605,7 @@
     <Compile Include="Extensions\Security\Md5HashProvider.vb" />
     <Compile Include="Extensions\StringHelpers\Parser.vb" />
     <Compile Include="Language\Linq.vb" />
-    <Compile Include="Text\UnbufferedStringReader.vb" />
+    <Compile Include="Text\IO\UnbufferedStringReader.vb" />
     <Compile Include="Text\Parser\HtmlParser\Table.vb" />
     <Compile Include="Language\Class.vb" />
     <Compile Include="Language\UnixBash\Shell\ls.vb" />
@@ -621,7 +622,7 @@
     <Compile Include="Serialization\ConfigMappings\Attributes.vb" />
     <Compile Include="Serialization\Controls\Contrls.vb" />
     <Compile Include="Text\Splitter.vb" />
-    <Compile Include="Text\EncodingHelper.vb" />
+    <Compile Include="Text\IO\EncodingHelper.vb" />
     <Compile Include="Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
     <Compile Include="Tools\Network\Protocol\Streams\VarArray.vb" />
     <Compile Include="Tools\SoftwareToolkits\ApplicationDetails.vb" />
@@ -669,8 +670,8 @@
     <Compile Include="Scripting\MetaData\Namespace.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryWriter.vb" />
     <Compile Include="Text\StringSimilarity\Similarity.vb" />
-    <Compile Include="Text\TextIndexing.vb" />
-    <Compile Include="Text\GB2312.vb" />
+    <Compile Include="Text\SearchEngine\TextIndexing\TextIndexing.vb" />
+    <Compile Include="Text\IO\GB2312.vb" />
     <Compile Include="Tools\Logging\LogFile\ISupportLoggingClient.vb" />
     <Compile Include="Tools\Logging\LogFile\LogReader.vb" />
     <Compile Include="Tools\Logging\LogFile\LogEntry.vb" />
@@ -773,7 +774,7 @@
     <Compile Include="Tools\SoftwareToolkits\UpdatesEditor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Text\TextFileEncodingDetector.vb" />
+    <Compile Include="Text\IO\TextFileEncodingDetector.vb" />
     <Compile Include="ComponentModel\Settings\SimpleConfig.vb" />
     <Compile Include="Extensions\IO\PathSearchTool.vb" />
     <Compile Include="ComponentModel\Href.vb" />
