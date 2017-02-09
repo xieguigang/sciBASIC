@@ -431,6 +431,7 @@
     <Compile Include="Language\Value\Numeric\int.vb" />
     <Compile Include="Language\Value\Numeric\float.vb" />
     <Compile Include="Language\Value\var.vb" />
+    <Compile Include="Parallel\Tasks\Actor%28Of T, V%29.vb" />
     <Compile Include="Scripting\Expressions\ArrayIndex.vb" />
     <Compile Include="Terminal\InteractiveIODevice\Shell.vb" />
     <Compile Include="Terminal\PipelineCLI.vb" />
