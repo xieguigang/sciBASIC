@@ -158,7 +158,7 @@ Namespace Text.Search
         ''' <param name="m"></param>
         ''' <param name="cutoff"></param>
         ''' <returns></returns>
-        Private Function IsMatch(m As String, cutoff As Integer) As Integer
+        Public Function IsMatch(m As String, cutoff As Integer) As Integer
             For i As Integer = _max To cutoff Step -1
                 If Not _mMatches.ContainsKey(i) Then
                     Continue For
