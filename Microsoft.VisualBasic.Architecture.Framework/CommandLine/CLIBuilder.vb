@@ -31,7 +31,6 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.CommandLine.Reflection.Optional
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 
@@ -49,6 +48,14 @@ Namespace CommandLine
         ''' </summary>
         ''' <remarks></remarks>
         Protected _executableAssembly As String
+
+        Public Function RunDotNetApp(args$) As IIORedirectAbstract
+            Return App.Shell(_executableAssembly, args, CLR:=True)
+        End Function
+
+        Public Function RunProgram(args$) As IIORedirectAbstract
+            Return App.Shell(_executableAssembly, args, CLR:=False)
+        End Function
 
         Public Overrides Function ToString() As String
             If String.IsNullOrEmpty(_executableAssembly) Then
