@@ -115,7 +115,10 @@ Namespace Scripting
         Public Function ParseNumeric(s As String) As Double
             If String.IsNullOrEmpty(s) Then
                 Return 0R
-            ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) Then
+            ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) OrElse
+                String.Equals(s, "NA", StringComparison.Ordinal) Then
+
+                ' R 语言之中是使用NA，.NET语言是使用NaN
                 Return Double.NaN
             Else
                 s = s.Replace(",", "")
