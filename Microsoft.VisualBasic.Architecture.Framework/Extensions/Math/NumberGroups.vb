@@ -70,6 +70,13 @@ Namespace Mathematical
             Return list
         End Function
 
+        ''' <summary>
+        ''' 按照相邻的两个数值是否在offset区间内来进行简单的分组操作
+        ''' </summary>
+        ''' <typeparam name="TagObject"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Groups(Of TagObject As INumberTag)(source As IEnumerable(Of TagObject), offset As Integer) As GroupResult(Of TagObject, Integer)()
             Dim list As New List(Of GroupResult(Of TagObject, Integer))
