@@ -48,9 +48,9 @@ Public Module AxisScalling
     ''' + 0-0.1
     ''' </remarks>
     Public Function GetAxisValues(max#, Optional parts% = 10, Optional min# = 0R) As Double()
-        Dim d = max - min
+        Dim d# = max - min
         Dim steps = d / parts
-        Dim pow% = Fix(Math.Log10(steps))
+        Dim pow# = Math.Log10(steps)
         Dim tick# = 10 ^ pow
 
         If parts * tick + min > max + tick Then
