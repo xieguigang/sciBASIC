@@ -89,6 +89,10 @@ Namespace Mathematical
         ''' <param name="decimal%"></param>
         ''' <returns></returns>
         Public Function FormatScientificNotation(n#, decimal%) As String
+            If n# = 0R Then
+                Return "0"
+            End If
+
             Dim power = Fix(Math.Log10(n))
             Dim s = n.ToString.Split("E"c, "e"c).First
             Dim t$() = s.Split("."c)

@@ -192,17 +192,40 @@ Public Module Scatter
                     }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="range">这个参数之中的Name属性是为了设置表达式计算之中的变量的目的</param>
+    ''' <param name="expression$"></param>
+    ''' <param name="steps#"></param>
+    ''' <param name="lineColor$"></param>
+    ''' <param name="lineWidth!"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="yline#">
+    ''' Combine with y line for visualize the numeric solve of the equation.
+    ''' </param>
+    ''' <param name="ylineColor$"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function Plot(range As NamedValue(Of DoubleRange),
-                         expression$,
-                         Optional steps# = 0.01,
-                         Optional lineColor$ = "black",
-                         Optional lineWidth! = 10,
-                         Optional bg$ = "white") As Bitmap
+    Public Function PlotFunction(range As NamedValue(Of DoubleRange),
+                                 expression$,
+                                 Optional steps# = 0.01,
+                                 Optional lineColor$ = "black",
+                                 Optional lineWidth! = 10,
+                                 Optional bg$ = "white",
+                                 Optional variables As Dictionary(Of String, String) = Nothing,
+                                 Optional yline# = Double.NaN,
+                                 Optional ylineColor$ = "red") As Bitmap
 
         Dim engine As New Expression
         Dim ranges As Double() = range.Value.seq(steps).ToArray
         Dim y As New List(Of Double)
+
+        If Not variables.IsNullOrEmpty Then
+            For Each var In variables
+                Call engine.SetVariable(var.Key, var.Value)
+            Next
+        End If
 
         For Each x# In ranges
             Call engine _
@@ -211,7 +234,22 @@ Public Module Scatter
         Next
 
         Dim serial As SerialData = FromVector(y, lineColor,,, lineWidth, ranges, expression,)
-        Return Plot({serial}, ,, bg)
+
+        If Double.IsNaN(yline) Then
+            Return Plot({serial}, ,, bg)
+        Else
+            Dim syline As New SerialData With {
+                .color = ylineColor.ToColor,
+                .PointSize = 3,
+                .width = 3,
+                .title = $"y={yline}",
+                .pts = {
+                    New PointData With {.pt = New PointF(range.Value.Min, yline)},
+                    New PointData With {.pt = New PointF(range.Value.Max, yline)}
+                }
+            }
+            Return Plot({syline, serial}, ,, bg)
+        End If
     End Function
 
     <Extension>
