@@ -115,6 +115,20 @@ Namespace Imaging
             Return __formats(format)
         End Function
 
+        Dim enumFormats As Dictionary(Of String, ImageFormats) =
+            [Enums](Of ImageFormats)() _
+            .ToDictionary(Function(t) t.ToString.ToLower)
+
+        ''' <summary>
+        ''' 不存在的名称会返回<see cref="ImageFormats.Png"/>类型
+        ''' </summary>
+        ''' <param name="format$">大小写不敏感</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ParseImageFormat(format$) As ImageFormats
+            Return enumFormats.TryGetValue(LCase(format), [default]:=ImageFormats.Png)
+        End Function
+
         ReadOnly __formats As SortedDictionary(Of ImageFormats, ImageFormat) =
             New SortedDictionary(Of ImageFormats, ImageFormat) From {
  _
@@ -132,16 +146,21 @@ Namespace Imaging
 
         ''' <summary>
         ''' Saves this <see cref="System.Drawing.Image"/> to the specified file in the specified format.
+        ''' (这个函数可以很容易的将图像对象保存为tiff文件)
         ''' </summary>
         ''' <param name="res">The image resource data that will be saved to the disk</param>
         ''' <param name="path">path string</param>
         ''' <param name="format">Image formats enumeration.</param>
         ''' <returns></returns>
-        <Extension> Public Function SaveAs(res As Image, path As String, Optional format As ImageFormats = ImageFormats.Png) As Boolean
+        <Extension> Public Function SaveAs(res As Image, path$, Optional format As ImageFormats = ImageFormats.Png) As Boolean
             Try
-                Dim parent As String = FileIO.FileSystem.GetParentPath(path)
-                Call FileIO.FileSystem.CreateDirectory(parent)
-                Call res.Save(path, format.GetFormat)
+                Call path.ParentPath.MkDIR
+
+                If format = ImageFormats.Tiff Then
+                    Return New TiffWriter(res).MultipageTiffSave(path)
+                Else
+                    Call res.Save(path, format.GetFormat)
+                End If
             Catch ex As Exception
                 ex = New Exception(path.ToFileURL, ex)
                 Call App.LogException(ex)
