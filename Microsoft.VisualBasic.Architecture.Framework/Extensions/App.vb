@@ -203,7 +203,7 @@ Public Module App
     ''' Getting the path of the home directory
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property UserHOME As String = PathMapper.HOME
+    Public ReadOnly Property UserHOME As String = PathMapper.HOME.GetDirectoryFullPath
 
     ''' <summary>
     ''' The currrent working directory of this application.(应用程序的当前的工作目录)
@@ -228,9 +228,11 @@ Public Module App
     ''' Linux里面的前一个文件夹
     ''' </summary>
     ''' <remarks>
-    ''' 假设你之前好不容易进入了一个很深的目录，然后不小心敲了个 cd /，是不是快气晕了啊，不用着急，通过下面的指令可以轻松的回到前一个指令：
+    ''' 假设你之前好不容易进入了一个很深的目录，然后不小心敲了个 ``cd /``，是不是快气晕了啊，不用着急，通过下面的指令可以轻松的回到前一个指令：
     '''
-    '''      cd -
+    ''' ```bash
+    ''' cd -
+    ''' ```
     ''' </remarks>
     Dim _preDIR As String
 
@@ -255,14 +257,14 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ProductProgramData As String =
-        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}"
+        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath
 
     ''' <summary>
     ''' The shared program data directory for a group of app which have the same product series name.
     ''' (同一產品程序集所共享的數據文件夾)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared"
+    Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared".GetDirectoryFullPath
 
 #Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
 
@@ -377,7 +379,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property LocalData As String =
-        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}"
+        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath
 
     ''' <summary>
     ''' The temp directory in the application local data.
@@ -856,7 +858,7 @@ Public Module App
     End Function
 
     Public ReadOnly Property CurrentProcessTemp As String =
-        GenerateTemp(App.SysTemp & "/tmp.io", App.PID)
+        GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath
 
     ''' <summary>
     '''
