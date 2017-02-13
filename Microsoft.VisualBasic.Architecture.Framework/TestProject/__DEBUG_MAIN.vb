@@ -275,11 +275,11 @@ Public Module __DEBUG_MAIN
         Dim nnndasdasd As dddddFile = IOProvider.LoadProfile(Of dddddFile)
 
         Dim n As New ProgressBar("Console ProgressBar Testing.")
-        Dim i As Integer = 0
+        Dim i As int = 0
 
         Do While True
             n.Step()
-            n.SetProgress(i.MoveNext, "Current Processing: " & SecurityString.GetMd5Hash(Rnd))
+            n.SetProgress(++i, "Current Processing: " & SecurityString.GetMd5Hash(Rnd))
             Threading.Thread.Sleep(1000)
         Loop
 

@@ -33,6 +33,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 
@@ -93,6 +95,16 @@ Namespace CommandLine
         End Property
 
         ''' <summary>
+        ''' 得到当前的命令行对象之中的所有的参数的名称的列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Keys As String()
+            Get
+                Return __lstParameter.ToArray(Function(v) v.Name)
+            End Get
+        End Property
+
+        ''' <summary>
         ''' The parameters in the commandline without the first token of the command name.
         ''' (将命令行解析为词元之后去掉命令的名称之后所剩下的所有的字符串列表)
         ''' </summary>
@@ -134,18 +146,24 @@ Namespace CommandLine
         Default Public ReadOnly Property Item(paramName As String) As String
             Get
                 Dim LQuery As NamedValue(Of String) =
-                    __lstParameter.Where(
-                        Function(x) String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault
+                    __lstParameter _
+                        .Where(Function(x) String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)) _
+                        .FirstOrDefault
 
                 Dim value As String = LQuery.Value ' 是值类型，不会出现空引用的情况
 
                 If value Is Nothing Then
                     value = ""
+                Else
+                    ' 尝试进行字符串插值，从而实现命令行部分脚本化
+                    value = value.Interpolate(__envir)
                 End If
 
                 Return value
             End Get
         End Property
+
+        ReadOnly __envir As Func(Of String, String) = AddressOf App.GetVariable
 
         Public Property SingleValue As String
 
