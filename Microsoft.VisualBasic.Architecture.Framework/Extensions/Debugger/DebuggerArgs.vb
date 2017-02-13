@@ -163,6 +163,11 @@ Namespace Debugging
                                     .Value = x.Value
                                 }
                             End Function).ToArray)
+
+                If vars.ContainsKey("Proxy") Then
+                    WebServiceUtils.Proxy = vars("Proxy")
+                    Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".__DEBUG_ECHO
+                End If
             End If
         End Sub
     End Module
