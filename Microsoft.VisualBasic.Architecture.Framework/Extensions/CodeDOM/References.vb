@@ -173,6 +173,9 @@ Namespace Emit.CodeDOM_VBC
             Return refList.ToArray
         End Function
 
-        Public ReadOnly Property RunTimeDirectory As String = FileIO.FileSystem.GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory).FullName.Replace("/", "\")
+        Public ReadOnly Property RunTimeDirectory As String = FileIO.FileSystem _
+            .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
+            .FullName _
+            .Replace("/", "\")
     End Module
 End Namespace

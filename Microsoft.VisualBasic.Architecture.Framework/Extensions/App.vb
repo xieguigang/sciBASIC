@@ -81,6 +81,8 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
 
+    Public ReadOnly Property RunTimeDirectory As String = ReferenceSolver.RunTimeDirectory
+
     ''' <summary>
     ''' Gets the number of ticks that represent the date and time of this instance.
     ''' 
@@ -164,6 +166,8 @@ Public Module App
             .Replace(gitBash, "")
         Return Microsoft.VisualBasic.CommandLine.TryParse(CLI)
     End Function
+
+    Public ReadOnly Property Github As String = "https://github.com/xieguigang/sciBASIC"
 
     ''' <summary>
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or
