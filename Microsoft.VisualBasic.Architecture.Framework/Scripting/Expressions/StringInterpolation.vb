@@ -30,7 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 
-Namespace Scripting
+Namespace Scripting.Expressions
 
     ''' <summary>
     ''' 简单的字符串插值引擎，可以用来调试字符串表达式的处理结果
