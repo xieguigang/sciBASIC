@@ -48,16 +48,22 @@ Public Module AxisScalling
     ''' + 0-0.1
     ''' </remarks>
     Public Function GetAxisValues(max#, Optional parts% = 10, Optional min# = 0R) As Double()
-        Dim d# = max - min
-        Dim steps = d / parts
-        Dim pow# = Math.Log10(steps)
-        Dim tick# = 10 ^ pow
+        'Dim d# = max - min
+        'Dim steps = d / parts
+        'Dim pow# = Math.Log10(steps)
+        'Dim tick# = 10 ^ pow
 
-        If parts * tick + min > max + tick Then
-            tick = 5 * 10 ^ (pow - 1)
-        End If
+        'If parts * tick + min > max + tick Then
+        '    tick = 5 * 10 ^ (pow - 1)
+        'End If
+        Dim tick# = (max - min) / parts
 
-        Return GetAxisByTick(max, tick, min)
+        Try
+            Return GetAxisByTick(max, tick, min)
+        Catch ex As Exception
+            Dim debug$ = $"range=[{min}, {max}], tick={tick}"
+            Throw New Exception(debug, ex)
+        End Try
     End Function
 
     <Extension>

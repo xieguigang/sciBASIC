@@ -317,18 +317,20 @@ Public Module Bootstraping
         Dim out As New Dictionary(Of Double, IntegerTagged(Of Double))
         Dim i As int = 0
         Dim x As New Value(Of Double)
+        Dim stop# = Fix(data.Max) + 1
+        Dim len% = data.Length
 
         data = data _
             .OrderBy(Function(n) n) _
             .ToArray  ' 升序排序方便进行快速计算
 
-        For min As Double = Fix(data.Min) To Fix(data.Max) + 1 Step [step]
+        For min As Double = Fix(data.Min) - 1 To [stop] Step [step]
             Dim upbound# = min + [step]
-            Dim n As Integer
+            Dim n As Integer = 0
             Dim list As New List(Of Double)
 
             ' 因为数据已经是经过排序了的，所以在这里可以直接进行区间计数
-            Do While (x = data(++i)) >= min AndAlso x < upbound
+            Do While i < len AndAlso (x = data(++i)) >= min AndAlso x < upbound
                 n += 1
                 list += x.value
             Loop
@@ -339,6 +341,10 @@ Public Module Bootstraping
                     .value = If(list.Count = 0, 0R, list.Average),
                     .TagStr = $"[{min}, {upbound}]"
                 })
+
+            If i.value = len Then
+                Exit For
+            End If
         Next
 
         Return out

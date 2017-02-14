@@ -169,55 +169,57 @@ Namespace BarPlot.Histogram
         ''' <returns></returns>
         <Extension>
         Public Function Plot(groups As HistogramGroup,
-                         Optional bg$ = "white",
-                         Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
-                         Optional showGrid As Boolean = True,
-                         Optional legendPos As Point = Nothing,
-                         Optional legendBorder As Border = Nothing,
-                         Optional alpha% = 255,
-                         Optional drawRect As Boolean = True) As Bitmap
+                             Optional bg$ = "white",
+                             Optional size As Size = Nothing,
+                             Optional margin As Size = Nothing,
+                             Optional showGrid As Boolean = True,
+                             Optional legendPos As Point = Nothing,
+                             Optional legendBorder As Border = Nothing,
+                             Optional alpha% = 255,
+                             Optional drawRect As Boolean = True) As Bitmap
 
             Return GraphicsPlots(
-           size, margin,
-           bg$,
-           Sub(ByRef g, region)
-               Dim mapper As New Scaling(groups, False)  ' 这里也不是使用y值来表示数量的，也用相对值
-               Dim annotations = groups.Serials.ToDictionary
+                size, margin,
+                bg$,
+                Sub(ByRef g, region)
+                    Dim mapper As New Scaling(groups, False)  ' 这里也不是使用y值来表示数量的，也用相对值
+                    Dim annotations = groups.Serials.ToDictionary
 
-               Call g.DrawAxis(size, margin, mapper, showGrid)
+                    Call g.DrawAxis(size, margin, mapper, showGrid)
 
-               For Each hist As HistProfile In mapper.ForEach_histSample(size, margin)
-                   Dim ann As NamedValue(Of Color) =
-                       annotations(hist.legend.title)
-                   Dim b As New SolidBrush(Drawing.Color.FromArgb(alpha, ann.Value))
+                    For Each hist As HistProfile In mapper.ForEach_histSample(size, margin)
+                        Dim ann As NamedValue(Of Color) = annotations(hist.legend.title)
+                        Dim b As New SolidBrush(Color.FromArgb(alpha, ann.Value))
 
-                   For Each block As HistogramData In hist.data
-                       Dim rect As New RectangleF(
-                           New PointF(block.x1, block.y),
-                           New SizeF(block.width, region.PlotRegion.Bottom - block.y))
-                       Call g.FillRectangle(b, rect)
-                       If drawRect Then
-                           Call g.DrawRectangle(
-                                Pens.Black,
-                                rect.Left, rect.Top, rect.Width, rect.Height)
-                       End If
-                   Next
-               Next
+                        For Each block As HistogramData In hist.data
+                            Dim rect As New RectangleF(
+                                New PointF(block.x1, block.y),
+                                New SizeF(block.width, region.PlotRegion.Bottom - block.y))
 
-               If legendPos.IsEmpty Then
-                   legendPos = New Point(
-                       CInt(size.Width * 0.8),
-                       margin.Height)
-               End If
+                            Call g.FillRectangle(b, rect)
 
-               Call g.DrawLegends(
-                    legendPos,
-                    groups.Samples _
-                          .Select(Function(x) x.legend),
-                    ,,
-                    legendBorder)
-           End Sub)
+                            If drawRect Then
+                                Call g.DrawRectangle(
+                                    Pens.Black,
+                                    rect.Left, rect.Top,
+                                    rect.Width, rect.Height)
+                            End If
+                        Next
+                    Next
+
+                    If legendPos.IsEmpty Then
+                        legendPos = New Point(
+                            CInt(size.Width * 0.8),
+                            margin.Height)
+                    End If
+
+                    Call g.DrawLegends(
+                        legendPos,
+                        groups.Samples _
+                            .Select(Function(x) x.legend),
+                        ,,
+                        legendBorder)
+                End Sub)
         End Function
 
         ''' <summary>
@@ -236,17 +238,18 @@ Namespace BarPlot.Histogram
         Public Function HistogramPlot(data As IEnumerable(Of Double),
                                       Optional step! = 1,
                                       Optional serialsTitle$ = "histogram plot",
-                                      Optional color$ = "blue",
+                                      Optional color$ = "lightblue",
                                       Optional bg$ = "white",
                                       Optional size As Size = Nothing,
                                       Optional margin As Size = Nothing,
-                                      Optional showGrid As Boolean = True) As Bitmap
+                                      Optional showGrid As Boolean = True,
+                                      Optional ByRef histData As IntegerTagged(Of Double)() = Nothing) As Bitmap
 
             Dim hist As Dictionary(Of Double, IntegerTagged(Of Double)) = data.ToArray.Hist([step])
             Dim s As New HistProfile(hist, [step]) With {
                 .legend = New Legend With {
                     .color = color,
-                    .fontstyle = CSSFont.Win10Normal,
+                    .fontstyle = CSSFont.Win7LargerBold,
                     .style = LegendStyles.Rectangle,
                     .title = serialsTitle
                 }
@@ -255,6 +258,8 @@ Namespace BarPlot.Histogram
                 .Samples = {s},
                 .Serials = {s.SerialData}
             }
+
+            histData = hist.Values.ToArray
 
             Return group.Plot(bg:=bg, margin:=margin, size:=size, showGrid:=showGrid)
         End Function
