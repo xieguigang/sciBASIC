@@ -289,25 +289,44 @@ EXIT_:          Dim array = source.ToArray
         ''' <returns></returns>
         <ExportAPI("Cluster.Trees.Network",
                    Info:="Create network model for visualize the binary tree clustering result.")>
-        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityLDM)) As FileStream.Network
-            Dim array = (From x As EntityLDM In source
+        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityLDM), Optional removesProperty As Boolean = False) As FileStream.Network
+            Dim array = (From x As EntityLDM
+                         In source
                          Let path As String() = x.Cluster.Split("."c)
                          Select New __edgePath With {
                              .node = x,
-                             .path = path}).ToArray
-            Dim nodes = array.ToArray(Function(x) New FileStream.Node With {
-                                          .ID = x.node.Name,
-                                          .NodeType = "Entity",
-                                          .Properties = x.node.Properties _
-                                                .ToDictionary(Function(xx) xx.Key,
-                                                              Function(xx) Math.Round(xx.Value, 4).ToString)
-                                          }).ToList
+                             .path = path
+                         }).ToArray
+            Dim nodes As List(Of Node) = array.Select(
+                Function(x) As Node
+                    Dim props As Dictionary(Of String, String)
+
+                    If removesProperty Then
+                        props = New Dictionary(Of String, String)
+                    Else
+                        props = x.node _
+                            .Properties _
+                            .ToDictionary(Function(xx) xx.Key,
+                                          Function(xx) CStr(Math.Round(xx.Value, 4)))
+                    End If
+
+                    Return New FileStream.Node With {
+                        .ID = x.node.Name,
+                        .NodeType = "Entity",
+                        .Properties = props
+                    }
+                End Function).ToList
+
             nodes += New FileStream.Node With {
                 .ID = "ROOT",
                 .NodeType = "ROOT"
             }
 
-            Dim edges = __buildNET(array, nodes ^ Function(x As Node) String.Equals(x.NodeType, "ROOT"), Scan0, nodes)
+            Dim edges = __buildNET(
+                array,
+                nodes ^ Function(x As Node) String.Equals(x.NodeType, "ROOT"),
+                Scan0,
+                nodes)
 
             Return New FileStream.Network With {
                 .Edges = edges,
