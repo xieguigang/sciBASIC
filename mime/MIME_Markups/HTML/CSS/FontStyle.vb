@@ -148,7 +148,7 @@ Namespace HTML.CSS
             Try
                 Dim tokens As String() = css.Split(";"c)
                 Dim styles As Dictionary(Of String, String) = tokens _
-                    .Where(Function(s) Not s.IsBlank) _
+                    .Where(Function(s) Not s.StringEmpty) _
                     .Select(Function(s) s.GetTagValue(":", True)) _
                     .ToDictionary(Function(x) x.Name.Trim.ToLower,
                                   Function(x) x.Value)

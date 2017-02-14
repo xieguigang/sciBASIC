@@ -62,7 +62,7 @@ Namespace IO
         End Function
 
         Public Shared Function LoadDataSet(Of T As EntityObject)(path As String, Optional uidMap As String = Nothing) As IEnumerable(Of T)
-            If uidMap.IsBlank Then
+            If uidMap.StringEmpty Then
                 Dim first As New RowObject(path.ReadFirstLine)
                 uidMap = first.First
             End If

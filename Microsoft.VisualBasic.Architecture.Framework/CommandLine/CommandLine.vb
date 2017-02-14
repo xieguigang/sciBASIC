@@ -385,7 +385,7 @@ Namespace CommandLine
         Public Function OpenStreamOutput(param As String) As StreamWriter
             Dim path As String = Me(param)
 
-            If path.IsBlank Then
+            If path.StringEmpty Then
                 Return New StreamWriter(Console.OpenStandardOutput)
             Else
                 Call path.ParentPath.MkDIR

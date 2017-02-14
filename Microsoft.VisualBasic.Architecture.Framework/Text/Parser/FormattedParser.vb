@@ -144,7 +144,7 @@ Namespace Text
         End Function
 
         Public Function UntilBlank(s As String) As Boolean
-            Return Not s.IsBlank
+            Return Not s.StringEmpty
         End Function
     End Module
 End Namespace

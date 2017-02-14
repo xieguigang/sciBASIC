@@ -155,7 +155,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
 
                 For Each pm As ProjectMember In sortedMembers.Values
                     methodList.AppendLine("#### " & pm.Name)
-                    If Not pm.Declare.IsBlank Then
+                    If Not pm.Declare.StringEmpty Then
                         methodList.AppendLine("```csharp")
                         methodList.AppendLine($"{pm.Declare}")
                         methodList.AppendLine("```")
@@ -174,14 +174,14 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                         Call methodList.AppendLine()
                     End If
 
-                    If Not pm.Returns.IsBlank Then
+                    If Not pm.Returns.StringEmpty Then
                         If Not url.[lib] = Libraries.Hexo Then
                             methodList.AppendLine()
                         End If
                         methodList.AppendLine("_returns: " & pm.Returns & "_")
                     End If
 
-                    If Not pm.Remarks.IsBlank Then
+                    If Not pm.Remarks.StringEmpty Then
                         For Each line As String In pm.Remarks.lTokens
                             Call methodList.AppendLine("> " & line)
                         Next
@@ -214,7 +214,7 @@ Namespace SoftwareToolkits.XmlDoc.Assembly
                 rmk &= "> " & l & vbCrLf
             Next
 
-            If Trim(rmk) = ">" OrElse rmk.IsBlank Then
+            If Trim(rmk) = ">" OrElse rmk.StringEmpty Then
                 rmk = ""
             End If
 

@@ -1659,7 +1659,7 @@ Public Module Extensions
         If source.IsNullOrEmpty Then
             Return New String() {}
         Else
-            Return (From x In source Where Not x.IsBlank Select x).ToArray
+            Return (From x In source Where Not x.StringEmpty Select x).ToArray
         End If
     End Function
 

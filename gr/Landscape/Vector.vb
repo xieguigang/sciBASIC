@@ -20,7 +20,7 @@ Namespace Data
             Get
                 Dim v As Single() = Me.Point3D _
                     .Split() _
-                    .Where(Function(t) Not t.IsBlank) _
+                    .Where(Function(t) Not t.StringEmpty) _
                     .ToArray(Function(s) CSng(s))
                 Return New Point3D(v(Scan0), v(1), v(2))
             End Get
