@@ -35,22 +35,24 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-Partial Module BarPlot
+Namespace BarPlot
 
-    ''' <summary>
-    ''' Plot bar plot in different direction compare with <see cref="Plot"/>
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="size"></param>
-    ''' <param name="margin"></param>
-    ''' <param name="bg$"></param>
-    ''' <param name="showGrid"></param>
-    ''' <param name="stacked"></param>
-    ''' <param name="showLegend"></param>
-    ''' <param name="legendPos"></param>
-    ''' <param name="legendBorder"></param>
-    ''' <returns></returns>
-    Public Function Plot2(data As BarDataGroup,
+    Partial Module BarPlotAPI
+
+        ''' <summary>
+        ''' Plot bar plot in different direction compare with <see cref="Plot"/>
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="size"></param>
+        ''' <param name="margin"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="showGrid"></param>
+        ''' <param name="stacked"></param>
+        ''' <param name="showLegend"></param>
+        ''' <param name="legendPos"></param>
+        ''' <param name="legendBorder"></param>
+        ''' <returns></returns>
+        Public Function Plot2(data As BarDataGroup,
                           Optional size As Size = Nothing,
                           Optional margin As Size = Nothing,
                           Optional bg$ = "white",
@@ -60,7 +62,7 @@ Partial Module BarPlot
                           Optional legendPos As Point = Nothing,
                           Optional legendBorder As Border = Nothing) As Bitmap
 
-        Return GraphicsPlots(
+            Return GraphicsPlots(
             size, margin, bg,
             Sub(ByRef g, region)
                 Dim top! = region.PlotRegion.Top
@@ -133,5 +135,6 @@ Partial Module BarPlot
                     Call g.DrawLegends(legendPos, legends,,, legendBorder)
                 End If
             End Sub)
-    End Function
-End Module
+        End Function
+    End Module
+End Namespace
