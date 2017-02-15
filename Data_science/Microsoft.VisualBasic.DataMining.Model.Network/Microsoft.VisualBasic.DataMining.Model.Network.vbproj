@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryTree\Partition.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="NeuralNetwork\ModelAPI.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
