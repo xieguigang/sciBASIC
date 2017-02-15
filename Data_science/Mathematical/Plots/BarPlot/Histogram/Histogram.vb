@@ -177,7 +177,9 @@ Namespace BarPlot.Histogram
                              Optional legendBorder As Border = Nothing,
                              Optional alpha% = 255,
                              Optional drawRect As Boolean = True,
-                             Optional showTagChartLayer As Boolean = False) As Bitmap
+                             Optional showTagChartLayer As Boolean = False,
+                             Optional xlabel$ = "X",
+                             Optional axisLabelFontStyle$ = CSSFont.Win7LargerBold) As Bitmap
 
             Return GraphicsPlots(
                 size, margin,
@@ -186,7 +188,9 @@ Namespace BarPlot.Histogram
                     Dim mapper As New Scaling(groups, False)  ' 这里也不是使用y值来表示数量的，也用相对值
                     Dim annotations = groups.Serials.ToDictionary
 
-                    Call g.DrawAxis(size, margin, mapper, showGrid)
+                    Call g.DrawAxis(size, margin, mapper, showGrid,
+                                    xlabel:=xlabel,
+                                    labelFontStyle:=axisLabelFontStyle)
 
                     For Each hist As HistProfile In mapper.ForEach_histSample(size, margin)
                         Dim ann As NamedValue(Of Color) = annotations(hist.legend.title)
@@ -223,6 +227,9 @@ Namespace BarPlot.Histogram
                             showGrid:=False,
                             showLegend:=False,
                             drawAxis:=False)
+
+                        ' 合并图层
+                        Call g.DrawImageUnscaled(chart, New Rectangle(New Point, size))
                     End If
 
                     If legendPos.IsEmpty Then
@@ -262,7 +269,7 @@ Namespace BarPlot.Histogram
                                       Optional margin As Size = Nothing,
                                       Optional showGrid As Boolean = True,
                                       Optional ByRef histData As IntegerTagged(Of Double)() = Nothing,
-                                      Optional showAverageCurve As Boolean = True) As Bitmap
+                                      Optional xlabel$ = "X") As Bitmap
 
             With data.ToArray.Hist([step])
 
@@ -284,7 +291,8 @@ Namespace BarPlot.Histogram
                 Return group.Plot(
                     bg:=bg, margin:=margin, size:=size,
                     showGrid:=showGrid,
-                    showTagChartLayer:=showAverageCurve)
+                    showTagChartLayer:=False,
+                    xlabel:=xlabel)
             End With
         End Function
     End Module

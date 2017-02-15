@@ -79,7 +79,7 @@ Public Module AxisScalling
     Public Function GetAxisByTick(max#, tick#, Optional min# = 0R) As Double()
         Dim l As New List(Of Double)
 
-        For i As Double = min To max Step tick
+        For i As Double = min To max + tick Step tick
             Call l.Add(i)
         Next
 
