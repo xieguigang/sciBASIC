@@ -67,13 +67,13 @@ Module TestingMain
         Dim ej As New KMeans.Entity With {.uid = NameOf(ej), .Properties = {10, 250}}
 
         Dim trace As New Dictionary(Of Integer, List(Of KMeans.Entity))
-        Dim cccc = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.FuzzyCMeans(3, 0.5, trace:=trace)
+        '  Dim cccc = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.FuzzyCMeans(3, 0.5, trace:=trace)
 
-        Dim g = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.GroupBy(Function(n) n.Fill).ToArray
+        'Dim g = {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}.GroupBy(Function(n) n.Fill).ToArray
 
-        For Each x In cccc
-            Call $"centra {x.uid} =>  {x.Properties.GetJson}".PrintException
-        Next
+        'For Each x In cccc
+        '    Call $"centra {x.uid} =>  {x.Properties.GetJson}".PrintException
+        'Next
 
         For Each x In {ea, eb, ec, ed, ee, ef, eg, eh, ei, ej}
             Call ($"{x.uid}: {x.Properties.GetJson} => " & x.ReadProperty(Of Dictionary(Of String, Double))("tooltip").value.GetJson).__DEBUG_ECHO
@@ -201,7 +201,7 @@ Module TestingMain
 
         nnn = (-1).Sequence
 
-        Dim Data0 = Microsoft.VisualBasic.Data.csv.DocumentStream.File.FastLoad("E:\xcb_vcell\xcb_model\Result\MAT_OUT.csv")
+        Dim Data0 = Microsoft.VisualBasic.Data.csv.IO.File.FastLoad("E:\xcb_vcell\xcb_model\Result\MAT_OUT.csv")
         Dim MAT = Microsoft.VisualBasic.DataMining.Serials.PeriodAnalysis.SerialsVarialble.Load(Data0)
 
         Dim datad = Microsoft.VisualBasic.Mathematical.Interpolation.BezierCurve.BezierSmoothInterpolation(MAT(1).SerialsData, 100)

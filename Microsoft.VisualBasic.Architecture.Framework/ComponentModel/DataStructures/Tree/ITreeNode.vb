@@ -4,11 +4,11 @@ Namespace ComponentModel.DataStructures.Tree
 
         Property Parent() As T
 
+        ReadOnly Property FullyQualifiedName() As String
         ReadOnly Property IsLeaf() As Boolean
         ReadOnly Property IsRoot() As Boolean
 
         Function GetRootNode() As T
 
-        Function GetFullyQualifiedName() As String
     End Interface
 End Namespace

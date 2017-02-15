@@ -5,7 +5,9 @@ Namespace ComponentModel.DataStructures.Tree
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <remarks>https://www.codeproject.com/Articles/345191/Simple-Generic-Tree</remarks>
-    Public MustInherit Class TreeNodeBase(Of T As {Class, ITreeNode(Of T)})
+    Public MustInherit Class TreeNodeBase(Of T As {
+                                              Class, ITreeNode(Of T)
+                                          })
         Implements ITreeNode(Of T)
 
         ''' <summary>
@@ -83,13 +85,15 @@ Namespace ComponentModel.DataStructures.Tree
         ''' <summary>
         ''' Dot separated name from the Root to this Tree Node
         ''' </summary>
-        Public Function GetFullyQualifiedName() As String Implements ITreeNode(Of T).GetFullyQualifiedName
-            If Parent Is Nothing Then
-                Return Name
-            End If
+        Public ReadOnly Property FullyQualifiedName() As String Implements ITreeNode(Of T).FullyQualifiedName
+            Get
+                If Parent Is Nothing Then
+                    Return Name
+                End If
 
-            Return String.Format("{0}.{1}", Parent.GetFullyQualifiedName(), Name)
-        End Function
+                Return String.Format("{0}.{1}", Parent.FullyQualifiedName(), Name)
+            End Get
+        End Property
 
         ''' <summary>
         ''' Add a Child Tree Node

@@ -155,6 +155,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryTree\EntityNode.vb" />
     <Compile Include="BinaryTree\Partition.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="NeuralNetwork\ModelAPI.vb" />
