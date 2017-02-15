@@ -66,15 +66,19 @@ Public Module Scatter
                          Optional fill As Boolean = False,
                          Optional fillPie As Boolean = True,
                          Optional legendFontSize! = 24,
-                         Optional absoluteScaling As Boolean = True) As Bitmap
+                         Optional absoluteScaling As Boolean = True,
+                         Optional drawAxis As Boolean = True) As Bitmap
 
         Return GraphicsPlots(
-            size, margin, bg,
+            size, margin,
+            bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = c.ToArray
                 Dim mapper As New Scaling(array, absoluteScaling)
 
-                Call g.DrawAxis(size, margin, mapper, showGrid)
+                If drawAxis Then
+                    Call g.DrawAxis(size, margin, mapper, showGrid)
+                End If
 
                 For Each line As SerialData In mapper.ForEach(size, margin)
                     Dim pts = line.pts.SlideWindows(2)

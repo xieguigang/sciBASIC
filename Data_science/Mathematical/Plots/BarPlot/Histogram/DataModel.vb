@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
@@ -11,7 +12,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace BarPlot.Histogram
 
     ''' <summary>
-    ''' {x, y}
+    ''' {x, y}，一个柱子的绘图数据
     ''' </summary>
     ''' <remarks>
     ''' <see cref="x1"/>到<see cref="x2"/>之间的距离是直方图的宽度
@@ -19,6 +20,15 @@ Namespace BarPlot.Histogram
     Public Structure HistogramData
 
         Public x1#, x2#, y#
+        Public pointY#
+
+        Public ReadOnly Property LinePoint As PointData
+            Get
+                Return New PointData With {
+                    .pt = New PointF(x1 + width / 2, pointY)
+                }
+            End Get
+        End Property
 
         ''' <summary>
         ''' delta between <see cref="x1"/> and <see cref="x2"/>
@@ -72,6 +82,16 @@ Namespace BarPlot.Histogram
             End Get
         End Property
 
+        Public Function GetLine(color As Color, width!, ptSize!, Optional type As DashStyle = DashStyle.Solid) As SerialData
+            Return New SerialData With {
+                .color = color,
+                .width = width,
+                .lineType = type,
+                .PointSize = ptSize,
+                .pts = data.ToArray(Function(x) x.LinePoint)
+            }
+        End Function
+
         ''' <summary>
         ''' 仅仅在这里初始化了<see cref="data"/>
         ''' </summary>
@@ -115,7 +135,8 @@ Namespace BarPlot.Histogram
                 Function(range) New HistogramData With {
                     .x1 = range.Key,
                     .x2 = .x1 + step!,
-                    .y = range.Value.Tag
+                    .y = range.Value.Tag,
+                    .pointY = range.Value.value
                 })
         End Sub
     End Structure

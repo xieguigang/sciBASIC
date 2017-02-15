@@ -33,6 +33,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' 一条曲线的绘图数据模型
+''' </summary>
 Public Class SerialData : Implements INamedValue
     Implements IEnumerable(Of PointData)
 

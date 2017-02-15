@@ -176,7 +176,8 @@ Namespace BarPlot.Histogram
                              Optional legendPos As Point = Nothing,
                              Optional legendBorder As Border = Nothing,
                              Optional alpha% = 255,
-                             Optional drawRect As Boolean = True) As Bitmap
+                             Optional drawRect As Boolean = True,
+                             Optional showTagChartLayer As Boolean = False) As Bitmap
 
             Return GraphicsPlots(
                 size, margin,
@@ -206,6 +207,23 @@ Namespace BarPlot.Histogram
                             End If
                         Next
                     Next
+
+                    If showTagChartLayer Then
+                        Dim serials As New List(Of SerialData)
+
+                        For Each hist As SeqValue(Of HistProfile) In groups.Samples.SeqIterator
+                            serials += (+hist).GetLine(groups.Serials(hist).Value, 2, 5)
+                        Next
+
+                        Dim chart As Bitmap = Scatter.Plot(
+                            serials,
+                            size:=size,
+                            margin:=margin,
+                            bg:="transparent",
+                            showGrid:=False,
+                            showLegend:=False,
+                            drawAxis:=False)
+                    End If
 
                     If legendPos.IsEmpty Then
                         legendPos = New Point(
@@ -243,25 +261,31 @@ Namespace BarPlot.Histogram
                                       Optional size As Size = Nothing,
                                       Optional margin As Size = Nothing,
                                       Optional showGrid As Boolean = True,
-                                      Optional ByRef histData As IntegerTagged(Of Double)() = Nothing) As Bitmap
+                                      Optional ByRef histData As IntegerTagged(Of Double)() = Nothing,
+                                      Optional showAverageCurve As Boolean = True) As Bitmap
 
-            Dim hist As Dictionary(Of Double, IntegerTagged(Of Double)) = data.ToArray.Hist([step])
-            Dim s As New HistProfile(hist, [step]) With {
-                .legend = New Legend With {
+            With data.ToArray.Hist([step])
+
+                Dim histLegend As New Legend With {
                     .color = color,
                     .fontstyle = CSSFont.Win7LargerBold,
                     .style = LegendStyles.Rectangle,
                     .title = serialsTitle
                 }
-            }
-            Dim group As New HistogramGroup With {
-                .Samples = {s},
-                .Serials = {s.SerialData}
-            }
 
-            histData = hist.Values.ToArray
+                Dim s As HistProfile = .NewModel([step], histLegend)
+                Dim group As New HistogramGroup With {
+                    .Samples = {s},
+                    .Serials = {s.SerialData}
+                }
 
-            Return group.Plot(bg:=bg, margin:=margin, size:=size, showGrid:=showGrid)
+                histData = .Values.ToArray
+
+                Return group.Plot(
+                    bg:=bg, margin:=margin, size:=size,
+                    showGrid:=showGrid,
+                    showTagChartLayer:=showAverageCurve)
+            End With
         End Function
     End Module
 End Namespace
