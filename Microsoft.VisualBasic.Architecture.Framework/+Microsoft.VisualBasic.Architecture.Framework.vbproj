@@ -362,11 +362,14 @@
     <Compile Include="ComponentModel\DataSource\SchemaMaps\SQL.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Mappings.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Schema.vb" />
-    <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
-    <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\ClusterParts.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\NewickParser.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
     <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
     <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\ITreeNode.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\SpecialTreeNode.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\TreeNodeBase.vb" />
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
@@ -401,7 +404,7 @@
     <Compile Include="ComponentModel\Coords.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
-    <Compile Include="ComponentModel\DataStructures\BinaryTree\TreeNode%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
@@ -731,7 +734,7 @@
     <Compile Include="Tools\Network\Tcp\TCPExtensions.vb" />
     <Compile Include="Tools\Network\Tcp\AsynInvoke.vb" />
     <Compile Include="Parallel\Threading.vb" />
-    <Compile Include="ComponentModel\DataStructures\BinaryTree\BinaryTree.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
     <Compile Include="Extensions\Image\GDI+\GDIPlusExtensions.vb" />
     <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />
