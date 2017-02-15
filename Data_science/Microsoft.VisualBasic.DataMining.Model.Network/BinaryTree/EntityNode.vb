@@ -7,21 +7,14 @@ Namespace KMeans
     Public Class EntityNode
         Inherits TreeNodeBase(Of EntityNode)
 
-        Public ReadOnly Property Entity As EntityLDM
-
-        Public Sub New(obj As EntityLDM)
-            MyBase.New(obj.Name)
-            Me.Entity = obj
+        Public Sub New(name As String)
+            MyBase.New(name)
         End Sub
 
-        Protected Overrides ReadOnly Property MySelf As EntityNode
+        Public Overrides ReadOnly Property MySelf As EntityNode
             Get
                 Return Me
             End Get
         End Property
-
-        Public Overrides Function ToString() As String
-            Return Entity.GetJson
-        End Function
     End Class
 End Namespace

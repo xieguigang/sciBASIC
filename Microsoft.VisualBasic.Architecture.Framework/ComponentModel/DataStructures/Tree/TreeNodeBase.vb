@@ -35,9 +35,9 @@ Namespace ComponentModel.DataStructures.Tree
         Public Property ChildNodes() As List(Of T)
 
         ''' <summary>
-        ''' this
+        ''' Me/this
         ''' </summary>
-        Protected MustOverride ReadOnly Property MySelf() As T
+        Public MustOverride ReadOnly Property MySelf() As T
 
         ''' <summary>
         ''' True if a Leaf Node

@@ -122,6 +122,8 @@ Namespace KMeans
             End Function
         End Structure
 
+        Public Const ROOT$ = NameOf(ROOT)
+
         ''' <summary>
         ''' Create network model for visualize the binary tree clustering result.(将树形聚类的结果转换为网络文件)
         ''' </summary>
@@ -129,7 +131,7 @@ Namespace KMeans
         ''' <returns></returns>
         <ExportAPI("Cluster.Trees.Network",
                    Info:="Create network model for visualize the binary tree clustering result.")>
-        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityLDM), Optional removesProperty As Boolean = False) As FileStream.Network
+        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityLDM), Optional removesProperty As Boolean = True) As FileStream.Network
             Dim array = (From x As EntityLDM
                          In source
                          Let path As String() = x.Cluster.Split("."c)
@@ -158,13 +160,13 @@ Namespace KMeans
                 End Function).ToList
 
             nodes += New FileStream.Node With {
-                .ID = "ROOT",
-                .NodeType = "ROOT"
+                .ID = ROOT,
+                .NodeType = ROOT
             }
 
             Dim edges = __buildNET(
                 array,
-                nodes ^ Function(x As Node) String.Equals(x.NodeType, "ROOT"),
+                nodes ^ Function(x As Node) String.Equals(x.NodeType, ROOT),
                 Scan0,
                 nodes)
 
