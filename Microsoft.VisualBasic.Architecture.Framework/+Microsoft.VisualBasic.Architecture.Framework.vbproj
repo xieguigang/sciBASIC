@@ -368,7 +368,6 @@
     <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
     <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\ITreeNode.vb" />
-    <Compile Include="ComponentModel\DataStructures\Tree\SpecialTreeNode.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\TreeNodeBase.vb" />
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
