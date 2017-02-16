@@ -156,7 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryTree\EntityNode.vb" />
-    <Compile Include="BinaryTree\BuildNodeTrees.vb" />
+    <Compile Include="BinaryTree\NodeTrees.vb" />
     <Compile Include="BinaryTree\TreeClustering.vb" />
     <Compile Include="BinaryTree\Partition.vb" />
     <Compile Include="Extensions.vb" />

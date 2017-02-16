@@ -9,6 +9,7 @@ Namespace ComponentModel.DataStructures.Tree
         ReadOnly Property IsRoot() As Boolean
 
         Function GetRootNode() As T
+        Function IteratesAllChilds() As IEnumerable(Of T)
 
     End Interface
 End Namespace

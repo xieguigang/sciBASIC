@@ -8,7 +8,7 @@ Namespace ComponentModel.DataStructures.Tree
     Public MustInherit Class TreeNodeBase(Of T As {
                                               Class, ITreeNode(Of T)
                                           })
-        Implements ITreeNode(Of T)
+        Implements ITreeNode(Of T), IEnumerable(Of T)
 
         ''' <summary>
         ''' 
@@ -113,5 +113,27 @@ Namespace ComponentModel.DataStructures.Tree
                 AddChild(child)
             Next
         End Sub
+
+        ''' <summary>
+        ''' Iterates all of my childs
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each myChild As T In ChildNodes
+                Yield myChild
+
+                For Each child As T In myChild.IteratesAllChilds
+                    Yield child
+                Next
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
+
+        Public Function IteratesAllChilds() As IEnumerable(Of T) Implements ITreeNode(Of T).IteratesAllChilds
+            Return Me
+        End Function
     End Class
 End Namespace
