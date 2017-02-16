@@ -9,10 +9,12 @@ Namespace KMeans
         Inherits TreeNodeBase(Of EntityNode)
 
         Public ReadOnly Property EntityID As String
+        Public ReadOnly Property Type As String
 
-        Public Sub New(name As String)
+        Public Sub New(name As String, type$)
             MyBase.New(__pathName(name))
-            EntityID = name
+            Me.Type = type
+            Me.EntityID = name
         End Sub
 
         Shared ReadOnly virtualPath As New Regex("\[\d+\]\d+(\.\d+)*")

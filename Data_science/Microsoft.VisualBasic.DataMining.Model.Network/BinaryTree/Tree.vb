@@ -123,6 +123,7 @@ Namespace KMeans
         End Structure
 
         Public Const ROOT$ = NameOf(ROOT)
+        Public Const EntityType$ = "Entity"
 
         ''' <summary>
         ''' Create network model for visualize the binary tree clustering result.(将树形聚类的结果转换为网络文件)
@@ -154,7 +155,7 @@ Namespace KMeans
 
                     Return New FileStream.Node With {
                         .ID = x.node.Name,
-                        .NodeType = "Entity",
+                        .NodeType = Tree.EntityType,
                         .Properties = props
                     }
                 End Function).ToList
@@ -212,7 +213,7 @@ Namespace KMeans
                 Dim parts = part.Group.ToArray(Function(x) x.x)
 
                 If parts.Length = 1 Then ' 叶节点
-                    Dim leaf = parts.First
+                    Dim leaf As __edgePath = parts.First
 
                     edges += New NetworkEdge With {
                         .FromNode = parent.ID,
