@@ -626,6 +626,10 @@ B21,B22,B23,...
             Return Csv
         End Function
 
+        Public Shared Function LoadTsv(path$, Optional encoding As Encodings = Encodings.UTF8) As File
+            Return DataImports.Imports(path, ASCII.TAB, encoding.GetEncodings)
+        End Function
+
         ''' <summary>
         ''' 同时兼容本地文件和网络文件的
         ''' </summary>
