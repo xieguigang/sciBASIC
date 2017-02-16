@@ -1,6 +1,7 @@
 ﻿
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Quantile
 
@@ -51,13 +52,35 @@ Namespace KMeans
             Next
         End Sub
 
+        ReadOnly __chars As Char() = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray
+
+        <Extension>
+        Public Function PartionTable(parts As IEnumerable(Of Partition)) As Dictionary(Of String, EntityLDM())
+            Dim g = parts.GroupBy(Function(p) p.Tag)
+            Dim out As New Dictionary(Of String, EntityLDM())
+
+            For Each part As IGrouping(Of String, Partition) In g
+                If part.Count > 1 Then
+                    Dim i As int = 0
+
+                    For Each [sub] As Partition In part
+                        Call out.Add(part.Key & $"-{__chars(++i)}", [sub].members)
+                    Next
+                Else
+                    Call out.Add(part.Key, part.First.members)
+                End If
+            Next
+
+            Return out
+        End Function
+
         ''' <summary>
         ''' 在进行分区的时候，分支最少的路径会被切割下来，分支多的路径会继续访问直到没有path路径为止
         ''' </summary>
         ''' <param name="tree"></param>
         ''' <param name="min">分区集合之中的最小节点数，为quantile百分比值</param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function CutTrees(tree As EntityNode, Optional min# = 0.05) As IEnumerable(Of Partition)
+        <Extension> Public Iterator Function CutTrees(tree As EntityNode, Optional min# = 0.99) As IEnumerable(Of Partition)
             ' 为了提高计算效率，在这里首先生成每一个分支节点的子节点数的缓存
             Dim childsDistribute As New Dictionary(Of String, Double)
 
@@ -70,9 +93,11 @@ Namespace KMeans
                 .Values _
                 .QuantileThreshold(quantile:=min)
 
-            For Each child As EntityNode In tree
+            For Each child As EntityNode In tree.ChildNodes
                 For Each part As Partition In child.__cutTrees(childsDistribute, min:=q)
-                    Yield part
+                    If part.members.Length > 0 Then
+                        Yield part
+                    End If
                 Next
             Next
         End Function
@@ -97,6 +122,7 @@ Namespace KMeans
             ' 如果所有的子节点数小于阈值，就作为一个分区cut下来
             If childsDistribute(tree.EntityID) <= min Then
                 Yield part(cut:=tree)
+                Return
             End If
 
             ' 第一个节点是分支数最少的，则会被cut掉
