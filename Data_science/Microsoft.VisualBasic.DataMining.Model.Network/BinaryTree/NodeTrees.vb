@@ -130,11 +130,18 @@ Namespace KMeans
                 .OrderBy(Function(n) childsDistribute(n.EntityID)) _
                 .ToArray
             Dim cutResult As EntityNode = childSorts.First
+            Dim skipn% = 1   ' 跳过第一个分组
 
             ' yield cutresult
-            Yield part(cutResult)
+            ' 2017-2-16 直接将最小的集合切分去除可能会导致出现大片的区域被标注为相同的颜色，
+            ' 则在这里会首先判断是否符合阈值， 不符合阈值的话才会被切割出去
+            If childsDistribute(cutResult.EntityID) <= min Then
+                Yield part(cutResult)
+            Else
+                skipn = 0   ' 集合的大小任然符合阈值要求，不会被跳过排除
+            End If
 
-            For Each branch As EntityNode In childSorts.Skip(1)
+            For Each branch As EntityNode In childSorts.Skip(skipn)
                 For Each cut In branch.__cutTrees(childsDistribute, min)
                     Yield cut
                 Next
