@@ -82,7 +82,7 @@ Namespace Mathematical.Correlations
         ''' <remarks>
         ''' https://github.com/felipebravom/RankCorrelation
         ''' </remarks>
-        Public Function rankKendallTauBeta(ByVal x As Double(), ByVal y As Double()) As Double
+        Public Function rankKendallTauBeta( x As Double(),  y As Double()) As Double
             Debug.Assert(x.Length = y.Length)
             Dim x_n As Integer = x.Length
             Dim y_n As Integer = y.Length
@@ -149,7 +149,7 @@ Namespace Mathematical.Correlations
         ''' <remarks>
         ''' https://github.com/felipebravom/RankCorrelation
         ''' </remarks>
-        Public Function kendallTauBeta(ByVal x As Double(), ByVal y As Double()) As Double
+        Public Function kendallTauBeta( x As Double(),  y As Double()) As Double
             Debug.Assert(x.Length = y.Length)
 
             Dim c As Integer = 0

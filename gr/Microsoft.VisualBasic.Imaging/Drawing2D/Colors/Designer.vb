@@ -124,8 +124,15 @@ Namespace Drawing2D.Colors
             ColorMap.PatternWinter
         }.ToArray(AddressOf LCase)
 
+        Public ReadOnly Property MaterialPalette As Color() = {
+            Color.Red, Color.Pink, Color.Black, Color.Purple, Color.DarkViolet,
+            Color.Indigo, Color.Blue, Color.LightBlue, Color.Cyan, Color.Teal,
+            Color.Green, Color.LightGreen, Color.Lime, Color.Yellow, Color.Orchid,
+            Color.Orange, Color.DarkOrange, Color.Brown, Color.Gray, Color.CadetBlue
+        }
+
         ''' <summary>
-        ''' 对于无效的键名称，默认是返回<see cref="Office2016"/>
+        ''' 对于无效的键名称，默认是返回<see cref="Office2016"/>，请注意，如果是所有的.net的颜色的话，这里面还会包含有白色，所以还需要手工去除掉白色
         ''' </summary>
         ''' <param name="term$"></param>
         ''' <returns></returns>
@@ -139,6 +146,16 @@ Namespace Drawing2D.Colors
 
             If ColorBrewer.ContainsKey(key.Name) Then
                 Return ColorBrewer(key.Name).GetColors(key.Value)
+            End If
+
+            If term.TextEquals("material") Then
+                Return MaterialPalette
+            ElseIf term.TextEquals("rainbow") Then
+                Return Rainbow
+            ElseIf term.TextEquals("dotnet.colors") Then
+                Return AllDotNetPrefixColors
+            ElseIf term.TextEquals("vb.chart") Then
+                Return ChartColors
             End If
 
             Return OfficeColorThemes.GetAccentColors(term)
