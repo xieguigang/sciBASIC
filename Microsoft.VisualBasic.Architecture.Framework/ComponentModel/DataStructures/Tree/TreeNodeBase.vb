@@ -1,4 +1,4 @@
-Namespace ComponentModel.DataStructures.Tree
+﻿Namespace ComponentModel.DataStructures.Tree
 
     ''' <summary>
     ''' Generic Tree Node base class
@@ -112,6 +112,28 @@ Namespace ComponentModel.DataStructures.Tree
             For Each child As T In children
                 AddChild(child)
             Next
+        End Sub
+
+        Public Sub ChildCountsTravel(distribute As Dictionary(Of String, Double), Optional getID As Func(Of T, String) = Nothing) Implements ITreeNode(Of T).ChildCountsTravel
+            Dim count As Double = ChildNodes.Count
+            Dim childCounts As New Dictionary(Of String, Double)
+
+            If getID Is Nothing Then
+                getID = Function(x) x.FullyQualifiedName
+            End If
+
+            For Each child As T In ChildNodes
+                ' 首先进行递归visit，之后才会有计数数据
+                Call childCounts.Clear()
+                Call child.ChildCountsTravel(childCounts, getID)
+                For Each counts In childCounts
+                    Call distribute.Add(counts.Key, counts.Value)
+                    count += counts.Value
+                Next
+            Next
+
+            Dim key$ = getID(MySelf)
+            Call distribute.Add(key, count)
         End Sub
 
         ''' <summary>

@@ -10,6 +10,7 @@ Namespace ComponentModel.DataStructures.Tree
 
         Function GetRootNode() As T
         Function IteratesAllChilds() As IEnumerable(Of T)
+        Sub ChildCountsTravel(distribute As Dictionary(Of String, Double), Optional getID As Func(Of T, String) = Nothing)
 
     End Interface
 End Namespace

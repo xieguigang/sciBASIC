@@ -49,9 +49,14 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="tree"></param>
         ''' <returns></returns>
-        <Extension> Public Function CutTrees(tree As EntityNode) As Partition
+        <Extension> Public Iterator Function CutTrees(tree As EntityNode) As IEnumerable(Of Partition)
             ' 为了提高计算效率，在这里首先生成每一个分支节点的子节点数的缓存
-            Dim childsDistribute As New Dictionary(Of String, Integer)
+            Dim childsDistribute As New Dictionary(Of String, Double)
+            Call tree.ChildCountsTravel(
+                childsDistribute,
+                getID:=Function(x) x.EntityID)
+            Call childsDistribute.SortByKey(desc:=True)
+
 
         End Function
     End Module

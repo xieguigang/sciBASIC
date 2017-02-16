@@ -33,6 +33,44 @@ Imports Microsoft.VisualBasic.Language
 
 Public Module KeyValuePairExtensions
 
+    <Extension> Public Sub SortByValue(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
+        Dim orders As KeyValuePair(Of V, T)()
+        Dim out As New Dictionary(Of V, T)
+
+        If Not desc Then
+            orders = table.OrderBy(Function(p) p.Value).ToArray
+        Else
+            orders = table _
+                .OrderByDescending(Function(p) p.Value) _
+                .ToArray
+        End If
+
+        For Each k As KeyValuePair(Of V, T) In orders
+            Call out.Add(k.Key, k.Value)
+        Next
+
+        table = out
+    End Sub
+
+    <Extension> Public Sub SortByKey(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
+        Dim orders As V()
+        Dim out As New Dictionary(Of V, T)
+
+        If Not desc Then
+            orders = table.Keys.OrderBy(Function(k) k).ToArray
+        Else
+            orders = table.Keys _
+                .OrderByDescending(Function(k) k) _
+                .ToArray
+        End If
+
+        For Each k As V In orders
+            Call out.Add(k, table(k))
+        Next
+
+        table = out
+    End Sub
+
     ''' <summary>
     ''' Determines whether the <see cref="NameValueCollection"/> contains the specified key.
     ''' </summary>
