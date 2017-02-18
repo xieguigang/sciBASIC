@@ -14,7 +14,7 @@ Namespace KMeans
         ''' <param name="resultSet"></param>
         ''' <param name="stop">Max iteration number for the kmeans kernel</param>
         ''' <returns></returns>
-        '''
+        ''' <param name="parallelDepth">-1表示不会限制并行的深度</param>
         <ExportAPI("Cluster.Trees")>
         <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM),
                                             Optional parallel As Boolean = False,
@@ -63,10 +63,23 @@ Namespace KMeans
                 parallelDepth)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="parallel"></param>
+        ''' <param name="[stop]"></param>
+        ''' <param name="parallelDepth%">-1表示不会限制，但是0表示只会是第一层为并行计算模式</param>
+        ''' <returns></returns>
         Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T),
                                                 Optional parallel As Boolean = False,
                                                 Optional [stop] As Integer = -1,
                                                 Optional parallelDepth% = 3) As Entity()
+            If parallelDepth <= -1 Then
+                parallelDepth = Integer.MaxValue
+            End If
+
             If parallel Then
                 Return __firstCluster(
                     source,
