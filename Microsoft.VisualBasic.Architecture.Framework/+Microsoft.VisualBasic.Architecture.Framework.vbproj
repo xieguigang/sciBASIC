@@ -408,7 +408,7 @@
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
-    <Compile Include="ComponentModel\DataStructures\SlideWindowHandle.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindowHandle.vb" />
     <Compile Include="ComponentModel\File\FileSaveHandle.vb" />
     <Compile Include="ComponentModel\IO\ReadStream.vb" />
     <Compile Include="ComponentModel\IO\WriteStream.vb" />
@@ -788,7 +788,7 @@
     <Compile Include="ComponentModel\Settings\Inf\INIProfile.vb" />
     <Compile Include="ComponentModel\File\ITextFile.vb" />
     <Compile Include="ComponentModel\Settings\Settings.vb" />
-    <Compile Include="ComponentModel\Comb.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\Combination\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\Attribute.vb" />
     <Compile Include="CommandLine\Reflection\ArgumentCollection.vb" />
