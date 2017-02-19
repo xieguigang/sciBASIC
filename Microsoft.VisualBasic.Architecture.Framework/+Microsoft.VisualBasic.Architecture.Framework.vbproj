@@ -596,7 +596,7 @@
     <Compile Include="Extensions\Math\Random\RandomExtensions.vb" />
     <Compile Include="Extensions\Math\ScaleMaps.vb" />
     <Compile Include="ComponentModel\DataStructures\Pointer.vb" />
-    <Compile Include="Extensions\CloneExtensions.vb" />
+    <Compile Include="Language\Value\Clones.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointer%28Of T%29.vb" />
     <Compile Include="Extensions\Security\Md5HashProvider.vb" />
     <Compile Include="Extensions\StringHelpers\Parser.vb" />
