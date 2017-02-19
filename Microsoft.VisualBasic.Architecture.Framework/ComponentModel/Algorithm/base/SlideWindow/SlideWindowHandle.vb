@@ -40,6 +40,7 @@ Namespace ComponentModel.Algorithm.base
     ''' <remarks></remarks>
     Public Structure SlideWindowHandle(Of T)
         Implements IEnumerable(Of T), IAddressHandle
+        Implements IGrouping(Of Integer, T)
 
         ''' <summary>
         ''' The position of the current Windows in the Windows list.(在创建的滑窗的队列之中当前的窗口对象的位置)
@@ -47,7 +48,7 @@ Namespace ComponentModel.Algorithm.base
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property p As Integer Implements IAddressHandle.Address
+        Public Property p As Integer Implements IAddressHandle.Address, IGrouping(Of Integer, T).Key
         ''' <summary>
         ''' The elements in this slide window.(这个划窗之中的元素的列表)
         ''' </summary>
