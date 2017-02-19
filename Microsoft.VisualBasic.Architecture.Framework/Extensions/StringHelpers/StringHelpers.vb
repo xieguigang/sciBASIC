@@ -171,7 +171,7 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s">The input test string</param>
     ''' <returns></returns>
-    <Extension> Public Function IsBlank(s As String) As Boolean
+    <Extension> Public Function StringEmpty(s As String) As Boolean
         If s Is Nothing OrElse
             String.IsNullOrEmpty(s) OrElse
             String.IsNullOrWhiteSpace(s) Then

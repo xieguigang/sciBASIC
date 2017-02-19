@@ -264,7 +264,11 @@ Public Module XmlExtensions
                 Return DirectCast(o, T)
             Catch ex As Exception
                 Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
-                ex = New Exception(Xml, ex)
+
+                If Len(Xml) <= 4096 * 100 Then
+                    ex = New Exception(Xml, ex)
+                End If
+
                 App.LogException(ex, curMethod)
 
                 If throwEx Then

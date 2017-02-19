@@ -84,7 +84,7 @@ Namespace Parallel
     End Class
 
     ''' <summary>
-    ''' 
+    ''' 分组操作的结果
     ''' </summary>
     ''' <typeparam name="T">Group的元素的类型</typeparam>
     ''' <typeparam name="Itag">Group的Key的类型</typeparam>

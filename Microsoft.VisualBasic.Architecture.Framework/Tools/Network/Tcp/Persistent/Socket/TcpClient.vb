@@ -262,7 +262,8 @@ Namespace Net.Persistent.Socket
 
             Call client.workSocket.BeginReceive(client.readBuffer, 0, StateObject.BufferSize, 0, ReceiveHandle, client)
             Call waitReceive()
-            Call client.Stack.MoveNext
+
+            client.Stack += 1
 
             If client.Stack > 1000 Then
                 _EndReceive = True

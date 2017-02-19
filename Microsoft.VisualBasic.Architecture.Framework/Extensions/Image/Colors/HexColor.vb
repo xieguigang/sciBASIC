@@ -38,7 +38,7 @@ Namespace Imaging
     ''' <remarks>http://stackoverflow.com/questions/13356486/convert-hex-color-string-to-rgb-color</remarks>
     Public Module HexColor
 
-        Public Function ConvertToRbg(ByVal HexColor As String) As Color
+        Public Function ConvertToRbg(HexColor As String) As Color
             Dim Red As String
             Dim Green As String
             Dim Blue As String
@@ -49,7 +49,7 @@ Namespace Imaging
             Return Color.FromArgb(Red, Green, Blue)
         End Function
 
-        Public Function HexToColor(ByVal hexColor As String) As Color
+        Public Function HexToColor(hexColor As String) As Color
             If hexColor.IndexOf("#"c) <> -1 Then
                 hexColor = hexColor.Replace("#", "")
             End If
@@ -68,7 +68,7 @@ Namespace Imaging
             Return Color.FromArgb(red, green, blue)
         End Function
 
-        Public Function hexToRbgNew(ByVal Hex As String) As Color
+        Public Function hexToRbgNew(Hex As String) As Color
             Hex = Replace(Hex, "#", "")
             Dim red As String = "&H" & Hex.Substring(0, 2)
             Hex = Replace(Hex, red, "", , 1)

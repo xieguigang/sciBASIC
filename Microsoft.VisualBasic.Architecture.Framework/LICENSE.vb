@@ -57,9 +57,9 @@ Public Module LICENSE
 #End If
 
     ''' <summary>
-    ''' https://github.com/xieguigang/VisualBasic_AppFramework
+    ''' https://github.com/xieguigang/sciBASIC
     ''' </summary>
     Public Sub GithubRepository()
-        Call System.Diagnostics.Process.Start("https://github.com/xieguigang/VisualBasic_AppFramework")
+        Call System.Diagnostics.Process.Start("https://github.com/xieguigang/sciBASIC")
     End Sub
 End Module

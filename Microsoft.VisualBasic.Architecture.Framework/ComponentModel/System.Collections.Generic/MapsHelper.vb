@@ -51,7 +51,15 @@ Namespace ComponentModel
     Public Structure Map(Of T1, V)
         Implements IMap
 
+        ''' <summary>
+        ''' The map source
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Key As T1 Implements IMap.Key
+        ''' <summary>
+        ''' The mapped target value.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Maps As V Implements IMap.Maps
 
         ''' <summary>

@@ -29,6 +29,8 @@
 
 [./sdk/](./sdk/)
 
+[List Of Codeproject articles](./list-of-codeproject-article.MD)
+
 ### Appendix
 
 1. [Deal with the github merge conflicts](./guides/MergeGthubConflicts.md)

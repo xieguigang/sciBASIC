@@ -60,13 +60,17 @@ Namespace Text.HtmlParser
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
-        <ExportAPI("Html.Tag.Trim"), Extension> Public Function StripHTMLTags(s$) As String
+        <ExportAPI("Html.Tag.Trim"), Extension> Public Function StripHTMLTags(s$, Optional stripBlank As Boolean = False) As String
             If String.IsNullOrEmpty(s) Then
                 Return ""
             End If
 
             s = Regex.Replace(s, "<[^>]+>", "")
             s = Regex.Replace(s, "</[^>]+>", "")
+
+            If stripBlank Then
+                s = s.StripBlank
+            End If
 
             Return s
         End Function

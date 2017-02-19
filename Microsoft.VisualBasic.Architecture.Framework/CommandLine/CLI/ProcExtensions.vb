@@ -80,7 +80,12 @@ Namespace CommandLine
 
         ''' <summary>
         ''' 执行CMD命令
-        ''' Example:excuteCommand("ipconfig", "/all", AddressOf PrintMessage)
+        ''' 
+        ''' Example:
+        ''' 
+        ''' ```vbnet
+        ''' Call excuteCommand("ipconfig", "/all", AddressOf PrintMessage)
+        ''' ```
         ''' </summary>
         ''' <param name="app">命令</param>
         ''' <param name="args">参数</param>

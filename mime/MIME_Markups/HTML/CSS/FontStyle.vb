@@ -60,6 +60,9 @@ Namespace HTML.CSS
         Public Const PlotTitle$ = "font-style: strong; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
         Public Const PlotSubTitle$ = "font-style: normal; font-size: 20; font-family: " & FontFace.BookmanOldStyle & ";"
 
+        Public Const UbuntuLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.Ubuntu & ";"
+        Public Const UbuntuNormal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
+
         ''' <summary>
         ''' The System.Drawing.FontStyle of the new font.
         ''' </summary>
@@ -145,7 +148,7 @@ Namespace HTML.CSS
             Try
                 Dim tokens As String() = css.Split(";"c)
                 Dim styles As Dictionary(Of String, String) = tokens _
-                    .Where(Function(s) Not s.IsBlank) _
+                    .Where(Function(s) Not s.StringEmpty) _
                     .Select(Function(s) s.GetTagValue(":", True)) _
                     .ToDictionary(Function(x) x.Name.Trim.ToLower,
                                   Function(x) x.Value)

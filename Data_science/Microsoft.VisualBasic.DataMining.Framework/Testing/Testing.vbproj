@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B8D9B266-355C-42C3-9669-457B3874E5D7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.TestingMain</StartupObject>
+    <StartupObject>Testing.Module1</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -69,6 +69,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Module1.vb" />
     <Compile Include="TestingMain.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -122,6 +123,10 @@
     <ProjectReference Include="..\..\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.DataMining.Model.Network\Microsoft.VisualBasic.DataMining.Model.Network.vbproj">
+      <Project>{3a114030-d9fd-4913-8e85-a78c032e9000}</Project>
+      <Name>Microsoft.VisualBasic.DataMining.Model.Network</Name>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.VisualBasic.DataMining.Framework.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>

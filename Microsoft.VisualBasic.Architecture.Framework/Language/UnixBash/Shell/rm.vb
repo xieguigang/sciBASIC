@@ -1,18 +1,5 @@
 ﻿Namespace Language.UnixBash
 
-    Partial Public Module FileSystemAPI
-
-        Public ReadOnly Property rm As FileDelete
-            Get
-                Return New FileDelete
-            End Get
-        End Property
-
-        Public ReadOnly Property rf As rmOption
-        Public ReadOnly Property f As rmOption
-
-    End Module
-
     ''' <summary>
     ''' ``rm -rf /*``
     ''' </summary>

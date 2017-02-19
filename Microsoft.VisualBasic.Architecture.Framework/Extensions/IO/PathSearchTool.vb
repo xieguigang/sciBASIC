@@ -349,18 +349,24 @@ Public Module ProgramPathSearchTool
     ''' (获取目标文件夹的名称或者文件的不包含拓展名的名称)
     ''' </summary>
     ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
+    ''' <remarks>
+    ''' ###### 2017-2-14 
+    ''' 原先的函数是依靠系统的API来工作的，故而只能够工作于已经存在的文件之上，
+    ''' 所以在这里为了更加方便的兼容文件夹或者文件路径，在这使用字符串的方法来
+    ''' 进行截取
+    ''' </remarks>
     <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
     <Extension> Public Function BaseName(fsObj As String) As String
-        If fsObj.FileExists Then
-            Return Path.GetFileNameWithoutExtension(fsObj)
-        Else
-            If String.IsNullOrEmpty(fsObj) Then
-                Throw New Exception(NameOf(fsObj) & " parameter is null!")
-            End If
-            Return FileIO.FileSystem.GetDirectoryInfo(fsObj).Name
+        If fsObj.StringEmpty Then
+            Throw New NullReferenceException(NameOf(fsObj) & " parameter is null!")
         End If
+
+        Dim t$() = fsObj.Trim("\"c, "/"c).Replace("\", "/").Split("/"c)
+        t = t.Last.Split("."c)
+        t = t.Take(t.Length - 1).ToArray
+
+        Dim name = String.Join(".", t)
+        Return name
     End Function
 
     ''' <summary>
@@ -369,7 +375,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension> Public Function GetBaseName(path As String) As String
-        Return basename(path)
+        Return BaseName(path)
     End Function
 
     ''' <summary>
@@ -891,7 +897,7 @@ Public Module ProgramPathSearchTool
         Try
             Dim path$ = file.FixPath.TrimEnd("/"c, "\"c)
             Dim fileInfo = FileIO.FileSystem.GetFileInfo(path$)
-            Dim Name As String = basename(fileInfo.FullName)
+            Dim Name As String = BaseName(fileInfo.FullName)
             Return $"{fileInfo.Directory.FullName}/{Name}"
         Catch ex As Exception
             ex = New Exception($"{NameOf(file)} --> {file}", ex)

@@ -40,7 +40,7 @@ Namespace FileStream
     ''' <typeparam name="T_Node"></typeparam>
     ''' <typeparam name="T_Edge"></typeparam>
     ''' <remarks></remarks>
-    Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge) : Inherits Language.UnixBash.File
+    Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge) : Inherits UnixBash.FileSystem.File
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
         Implements ISaveHandle
 

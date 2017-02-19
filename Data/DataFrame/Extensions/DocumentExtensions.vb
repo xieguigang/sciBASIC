@@ -36,10 +36,13 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
+''' <summary>
+''' The csv document extensions API
+''' </summary>
 Public Module DocumentExtensions
 
     ''' <summary>
-    ''' 
+    ''' 将列数据合并为一个csv文件对象
     ''' </summary>
     ''' <param name="cols"><see cref="io.File.Columns"/> filtering results.</param>
     ''' <returns></returns>

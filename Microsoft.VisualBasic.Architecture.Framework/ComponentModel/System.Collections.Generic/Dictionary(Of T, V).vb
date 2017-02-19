@@ -132,7 +132,7 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
     End Function
 
     ''' <summary>
-    ''' Gets the value associated with the specified key.
+    ''' Gets the value associated with the specified key.(假若找不到键值，就会返回Nothing)
     ''' </summary>
     ''' <param name="name">The key of the value to get.</param>
     ''' <param name="success">true if the System.Collections.Generic.SortedDictionary`2 contains an element

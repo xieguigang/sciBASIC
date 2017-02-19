@@ -30,7 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 
-Namespace Scripting
+Namespace Scripting.Expressions
 
     ''' <summary>
     ''' 简单的字符串插值引擎，可以用来调试字符串表达式的处理结果
@@ -44,17 +44,24 @@ Namespace Scripting
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="expr$"></param>
+        ''' <param name="expr$">
+        ''' 只有当变量的值不为空值的时候才会进行替换，但是当<paramref name="nullAsEmpty"/>为真的时候会被强行替换为空字符串进行替换
+        ''' </param>
         ''' <param name="getValue">Get string value of the variable in the expression.</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Interpolate(expr$, getValue As Func(Of String, String)) As String
+        Public Function Interpolate(expr$, getValue As Func(Of String, String), Optional nullAsEmpty As Boolean = False) As String
             Dim sb As New StringBuilder(expr.Replace("\$", VB_str))
             Dim t = Regex.Matches(sb.ToString, "[$][a-z][a-z0-9]*", RegexICSng).ToArray
 
             For Each v$ In t
                 Dim value$ = getValue(Mid(v, 2))
 
+                If value Is Nothing AndAlso nullAsEmpty Then
+                    value = ""
+                End If
+
+                ' 只对非空值进行替换
                 If Not value Is Nothing Then
                     Call sb.Replace(v, value)
                 End If
