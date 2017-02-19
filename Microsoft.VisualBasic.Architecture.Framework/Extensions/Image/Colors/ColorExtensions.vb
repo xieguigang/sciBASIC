@@ -204,7 +204,7 @@ Namespace Imaging
         ''' <param name="exp$"></param>
         ''' <returns></returns>
         <Extension> Public Function TranslateColor(exp$) As Color
-            If exp.IsBlank Then
+            If exp.StringEmpty Then
                 Return Color.Black
             End If
             If exp.First = "#"c Then

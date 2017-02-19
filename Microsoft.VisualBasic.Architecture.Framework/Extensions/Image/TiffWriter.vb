@@ -67,10 +67,9 @@ Namespace Imaging
         Public Function MultipageTiffSave(path As String) As Boolean
             If _imageLayers.Count = 0 Then
                 Return False
+            Else
+                Return SaveMultipage(_imageLayers, path, "TIFF")
             End If
-
-            Dim Res = SaveMultipage(_imageLayers, path, "TIFF")
-            Return Res
         End Function
 
         Public Function ExistingFileSave(path As String) As Boolean

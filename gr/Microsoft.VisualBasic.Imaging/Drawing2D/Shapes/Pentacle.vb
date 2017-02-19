@@ -73,7 +73,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="center"></param>
         ''' <param name="theta"></param>
         ''' <returns></returns>
-        Public Shared Function RotateTheta(ByVal pt As Point, ByVal center As Point, ByVal theta As Single) As Point
+        Public Shared Function RotateTheta( pt As Point,  center As Point,  theta As Single) As Point
             Dim x As Integer = CInt(center.X + (pt.X - center.X) * Math.Cos((theta * Math.PI / 180)) - (pt.Y - center.Y) * Math.Sin((theta * Math.PI / 180)))
             Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Math.Sin((theta * Math.PI / 180)) + (pt.Y - center.Y) * Math.Cos((theta * Math.PI / 180)))
 

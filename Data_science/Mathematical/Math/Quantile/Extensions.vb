@@ -93,6 +93,15 @@ Namespace Quantile
             Return estimator
         End Function
 
+        <Extension>
+        Public Function QuantileThreshold(data As IEnumerable(Of Double),
+                                          quantile#,
+                                          Optional epsilon# = Extensions.epsilon,
+                                          Optional compact_size% = 1000) As Double
+            Dim q As QuantileEstimationGK = data.GKQuantile(epsilon, compact_size)
+            Return q.Query(quantile)
+        End Function
+
         ''' <summary>
         ''' 将数值转化为相对应的quantile水平等级
         ''' </summary>

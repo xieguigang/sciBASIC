@@ -28,20 +28,20 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
 Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Correlations
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Mathematical
 
 Module Module1
 
@@ -222,7 +222,26 @@ Module Module1
         Pause()
     End Sub
 
+    Sub TestYlinePlot()
+
+        Call Scatter.PlotFunction(
+            range:=New NamedValue(Of DoubleRange) With {
+                .Name = "N",
+                .Value = "-20,20"
+            },
+            expression:="-(1/L)*log(1-n/100)",
+            variables:=New Dictionary(Of String, String) From {
+                {"L", "5"}
+            },
+            yline:=-1).SaveAs("x:\test.png")
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call TestYlinePlot()
+
         Call axisScallingTest()
 
         '        Call heatmap2()

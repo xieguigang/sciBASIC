@@ -28,7 +28,7 @@
 
 Imports System.Runtime.InteropServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Win32
 
 Namespace ComponentModel.Settings.Inf

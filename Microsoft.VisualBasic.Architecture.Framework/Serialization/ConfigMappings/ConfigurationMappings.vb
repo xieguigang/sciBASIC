@@ -174,11 +174,18 @@ Namespace Serialization
             If DataFramework.PrimitiveFromString.ContainsKey(Model.PropertyType) Then
                 Return DataFramework.PrimitiveFromString(Model.PropertyType)
             Else
-                Dim Method As MethodInfo = __getCustomMapping(
+                Dim method As MethodInfo = __getCustomMapping(
                     p_Type:=source.PropertyType,
                     ReturnedType:=Model.PropertyType,
                     Methods:=Methods)
-                Return Function(s As String) Method.Invoke(obj_source, {s})
+#If DEBUG Then
+                If method Is Nothing Then
+                    Call $"{source.Name} --> {Model.Name} is incomplete!".Warning
+                End If
+#End If
+                Return Function(s$)
+                           Return method.Invoke(obj_source, {s})
+                       End Function
             End If
         End Function
 

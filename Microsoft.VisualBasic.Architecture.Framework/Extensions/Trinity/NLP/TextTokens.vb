@@ -59,7 +59,7 @@ Namespace Data.Trinity.NLP
                 ignores = {}
             Else
                 ignores = ignores _
-                    .Where(Function(s) Not s.IsBlank) _
+                    .Where(Function(s) Not s.StringEmpty) _
                     .ToArray(AddressOf LCase)
             End If
 
@@ -95,7 +95,7 @@ Namespace Data.Trinity.NLP
                 ignores = {}
             Else
                 ignores = ignores _
-                    .Where(Function(s) Not s.IsBlank) _
+                    .Where(Function(s) Not s.StringEmpty) _
                     .ToArray(Function(s) s.ToLower)
             End If
 

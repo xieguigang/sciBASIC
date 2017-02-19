@@ -27,10 +27,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 
 Namespace Debugging
 
@@ -165,6 +163,11 @@ Namespace Debugging
                                     .Value = x.Value
                                 }
                             End Function).ToArray)
+
+                If vars.ContainsKey("Proxy") Then
+                    WebServiceUtils.Proxy = vars("Proxy")
+                    Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".__DEBUG_ECHO
+                End If
             End If
         End Sub
     End Module

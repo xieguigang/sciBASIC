@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-Namespace Language.UnixBash
+Namespace Language.UnixBash.FileSystem
 
     ''' <summary>
     ''' Asbtract file IO model

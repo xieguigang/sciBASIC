@@ -278,7 +278,7 @@ l += From x As Integer
      Select CStr(x)
 ```
 
-###### VB int Type
+###### VisualBasic int type
 
 ```vbnet
 Dim min As int = 1
@@ -290,6 +290,20 @@ x += 10 ' 209
 Console.WriteLine(min <= x < max) ' False
 x = -1
 Console.WriteLine(min <= x < max) ' False
+
+
+Dim bitChunk As Byte() = New Byte(INT64 - 1) {}
+Dim p As int = Scan0
+
+Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
+ProtocolCategory = BitConverter.ToInt64(bitChunk, Scan0)
+
+Call Array.ConstrainedCopy(rawStream, ++(p+INT64), bitChunk, Scan0, INT64)
+Protocol = BitConverter.ToInt64(bitChunk, Scan0)
+
+bitChunk = New Byte(INT64 - 1) {}
+Call Array.ConstrainedCopy(rawStream, p = (p + INT64), bitChunk, Scan0, INT64)
+BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 ```
 
 ===================================================================
