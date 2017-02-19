@@ -28,7 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base.SlideWindow
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq

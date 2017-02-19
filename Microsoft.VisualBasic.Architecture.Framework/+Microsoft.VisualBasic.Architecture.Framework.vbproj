@@ -353,6 +353,8 @@
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\ExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
