@@ -113,6 +113,12 @@ Namespace Language
                 Next
             End Set
         End Property
+
+        Default Public Overloads ReadOnly Property Item([where] As Predicate(Of T)) As T()
+            Get
+                Return MyBase.Where(Function(o) where(o)).ToArray
+            End Get
+        End Property
 #End Region
 
         ''' <summary>
