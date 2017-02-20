@@ -193,23 +193,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HTML\CSS\FontStyle.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssAnonymousBlockBox.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssAnonymousBox.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssBlock.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssBox.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssBoxWord.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssBoxWordSplitter.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssConstants.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssDefaults.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssDrawingHelper.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssLayoutEngine.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssLength.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssLineBox.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssPropertyAttribute.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssPropertyInheritedAttribute.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssRectangle.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssTable.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\CssValue.vb" />
+    <Compile Include="HTML\CSS\Render\CssAnonymousBlockBox.vb" />
+    <Compile Include="HTML\CSS\Render\CssAnonymousBox.vb" />
+    <Compile Include="HTML\CSS\Render\CssBlock.vb" />
+    <Compile Include="HTML\CSS\Render\CssBox.vb" />
+    <Compile Include="HTML\CSS\Render\CssBoxWord.vb" />
+    <Compile Include="HTML\CSS\Render\CssBoxWordSplitter.vb" />
+    <Compile Include="HTML\CSS\Render\CssConstants.vb" />
+    <Compile Include="HTML\CSS\Render\CssDefaults.vb" />
+    <Compile Include="HTML\CSS\Render\CssDrawingHelper.vb" />
+    <Compile Include="HTML\CSS\Render\CssLayoutEngine.vb" />
+    <Compile Include="HTML\CSS\Render\CssLength.vb" />
+    <Compile Include="HTML\CSS\Render\CssLineBox.vb" />
+    <Compile Include="HTML\CSS\Render\CssPropertyAttribute.vb" />
+    <Compile Include="HTML\CSS\Render\CssPropertyInheritedAttribute.vb" />
+    <Compile Include="HTML\CSS\Render\CssRectangle.vb" />
+    <Compile Include="HTML\CSS\Render\CssTable.vb" />
+    <Compile Include="HTML\CSS\Render\CssValue.vb" />
     <Compile Include="HTML\Render\HtmlConstants.vb" />
     <Compile Include="HTML\Render\HtmlRenderer.vb" />
     <Compile Include="HTML\Render\HtmlTag.vb" />
@@ -319,7 +319,9 @@
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="HTML\CSS\Render\CSS\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
