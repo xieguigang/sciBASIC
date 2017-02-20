@@ -159,7 +159,8 @@ Public Class HtmlTag
                     box.Height = TranslateLength(value)
 
                 Case HtmlConstants.hspace
-                    box.MarginRight = InlineAssignHelper(box.MarginLeft, TranslateLength(value))
+                    box.MarginLeft = TranslateLength(value)
+                    box.MarginRight = box.MarginLeft
 
                 Case HtmlConstants.nowrap
                     box.WhiteSpace = CssConstants.Nowrap
@@ -173,7 +174,8 @@ Public Class HtmlTag
                     box.VerticalAlign = value
 
                 Case HtmlConstants.vspace
-                    box.MarginTop = InlineAssignHelper(box.MarginBottom, TranslateLength(value))
+                    box.MarginBottom = TranslateLength(value)
+                    box.MarginTop = box.MarginBottom
 
                 Case HtmlConstants.width
                     box.Width = TranslateLength(value)
@@ -215,12 +217,12 @@ Public Class HtmlTag
 		Next
 	End Sub
 
-	''' <summary>
-	''' Cascades to the TD's the border spacified in the TABLE tag.
-	''' </summary>
-	''' <param name="table"></param>
-	''' <param name="border"></param>
-	Private Sub ApplyTablePadding(table As CssBox, padding As String)
+    ''' <summary>
+    ''' Cascades to the TD's the border spacified in the TABLE tag.
+    ''' </summary>
+    ''' <param name="table"></param>
+    ''' <param name="padding"></param>
+    Private Sub ApplyTablePadding(table As CssBox, padding As String)
 		For Each box As CssBox In table.Boxes
 			For Each cell As CssBox In box.Boxes
 
@@ -238,13 +240,8 @@ Public Class HtmlTag
 		Return Attributes.ContainsKey(attribute)
 	End Function
 
-	Public Overrides Function ToString() As String
-		Return String.Format("<{1}{0}>", TagName, If(IsClosing, "/", String.Empty))
-	End Function
-	Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-		target = value
-		Return value
-	End Function
-
-	#End Region
+    Public Overrides Function ToString() As String
+        Return String.Format("<{1}{0}>", TagName, If(IsClosing, "/", String.Empty))
+    End Function
+#End Region
 End Class
