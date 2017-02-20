@@ -1,12 +1,10 @@
-Imports System.Collections.Generic
-Imports System.Text
 Imports System.ComponentModel
-Imports System.Windows.Forms
+Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Reflection
 Imports System.Text.RegularExpressions
-Imports System.Drawing.Drawing2D
 Imports System.Threading
-Imports System.Drawing
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 
 ''' <summary>
 ''' Represents a CSS Box of text or replaced elements.
@@ -304,24 +302,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     BorderTopWidth = InlineAssignHelper(BorderLeftWidth, InlineAssignHelper(BorderRightWidth, InlineAssignHelper(BorderBottomWidth, values(0))))
-                    
+
                 Case 2
                     BorderTopWidth = InlineAssignHelper(BorderBottomWidth, values(0))
                     BorderLeftWidth = InlineAssignHelper(BorderRightWidth, values(1))
-                    
+
                 Case 3
                     BorderTopWidth = values(0)
                     BorderLeftWidth = InlineAssignHelper(BorderRightWidth, values(1))
                     BorderBottomWidth = values(2)
-                    
+
                 Case 4
                     BorderTopWidth = values(0)
                     BorderRightWidth = values(1)
                     BorderBottomWidth = values(2)
                     BorderLeftWidth = values(3)
-                    
+
                 Case Else
-                    
+
 
             End Select
         End Set
@@ -379,24 +377,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     BorderTopStyle = InlineAssignHelper(BorderLeftStyle, InlineAssignHelper(BorderRightStyle, InlineAssignHelper(BorderBottomStyle, values(0))))
-                    
+
                 Case 2
                     BorderTopStyle = InlineAssignHelper(BorderBottomStyle, values(0))
                     BorderLeftStyle = InlineAssignHelper(BorderRightStyle, values(1))
-                    
+
                 Case 3
                     BorderTopStyle = values(0)
                     BorderLeftStyle = InlineAssignHelper(BorderRightStyle, values(1))
                     BorderBottomStyle = values(2)
-                    
+
                 Case 4
                     BorderTopStyle = values(0)
                     BorderRightStyle = values(1)
                     BorderBottomStyle = values(2)
                     BorderLeftStyle = values(3)
-                    
+
                 Case Else
-                    
+
 
             End Select
         End Set
@@ -436,24 +434,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     BorderTopColor = InlineAssignHelper(BorderLeftColor, InlineAssignHelper(BorderRightColor, InlineAssignHelper(BorderBottomColor, values(0))))
-                    
+
                 Case 2
                     BorderTopColor = InlineAssignHelper(BorderBottomColor, values(0))
                     BorderLeftColor = InlineAssignHelper(BorderRightColor, values(1))
-                    
+
                 Case 3
                     BorderTopColor = values(0)
                     BorderLeftColor = InlineAssignHelper(BorderRightColor, values(1))
                     BorderBottomColor = values(2)
-                    
+
                 Case 4
                     BorderTopColor = values(0)
                     BorderRightColor = values(1)
                     BorderBottomColor = values(2)
                     BorderLeftColor = values(3)
-                    
+
                 Case Else
-                    
+
             End Select
         End Set
     End Property
@@ -678,24 +676,24 @@ Public Class CssBox
                     CornerNWRadius = r(0).Value
                     CornerSERadius = r(0).Value
                     CornerSWRadius = r(0).Value
-                    
+
                 Case 2
                     CornerNERadius = r(0).Value
                     CornerNWRadius = r(0).Value
                     CornerSERadius = r(1).Value
                     CornerSWRadius = r(1).Value
-                    
+
                 Case 3
                     CornerNERadius = r(0).Value
                     CornerNWRadius = r(1).Value
                     CornerSERadius = r(2).Value
-                    
+
                 Case 4
                     CornerNERadius = r(0).Value
                     CornerNWRadius = r(1).Value
                     CornerSERadius = r(2).Value
                     CornerSWRadius = r(3).Value
-                    
+
             End Select
 
             _cornerRadius = Value
@@ -766,24 +764,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     MarginTop = InlineAssignHelper(MarginLeft, InlineAssignHelper(MarginRight, InlineAssignHelper(MarginBottom, values(0))))
-                    
+
                 Case 2
                     MarginTop = InlineAssignHelper(MarginBottom, values(0))
                     MarginLeft = InlineAssignHelper(MarginRight, values(1))
-                    
+
                 Case 3
                     MarginTop = values(0)
                     MarginLeft = InlineAssignHelper(MarginRight, values(1))
                     MarginBottom = values(2)
-                    
+
                 Case 4
                     MarginTop = values(0)
                     MarginRight = values(1)
                     MarginBottom = values(2)
                     MarginLeft = values(3)
-                    
+
                 Case Else
-                    
+
 
             End Select
         End Set
@@ -850,24 +848,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     PaddingTop = InlineAssignHelper(PaddingLeft, InlineAssignHelper(PaddingRight, InlineAssignHelper(PaddingBottom, values(0))))
-                    
+
                 Case 2
                     PaddingTop = InlineAssignHelper(PaddingBottom, values(0))
                     PaddingLeft = InlineAssignHelper(PaddingRight, values(1))
-                    
+
                 Case 3
                     PaddingTop = values(0)
                     PaddingLeft = InlineAssignHelper(PaddingRight, values(1))
                     PaddingBottom = values(2)
-                    
+
                 Case 4
                     PaddingTop = values(0)
                     PaddingRight = values(1)
                     PaddingBottom = values(2)
                     PaddingLeft = values(3)
-                    
+
                 Case Else
-                    
+
             End Select
         End Set
     End Property
@@ -1276,29 +1274,29 @@ Public Class CssBox
         End Get
         Set
 
-            '''HACK: Because of performance, generic font families
-            '''      will be checked when only the generic font 
-            '''      family is given.
+            ' HACK: Because of performance, generic font families
+            '       will be checked when only the generic font 
+            '       family is given.
 
             Select Case Value
                 Case CssConstants.Serif
                     _fontFamily = CssDefaults.FontSerif
-                    
+
                 Case CssConstants.SansSerif
                     _fontFamily = CssDefaults.FontSansSerif
-                    
+
                 Case CssConstants.Cursive
                     _fontFamily = CssDefaults.FontCursive
-                    
+
                 Case CssConstants.Fantasy
                     _fontFamily = CssDefaults.FontFantasy
-                    
+
                 Case CssConstants.Monospace
                     _fontFamily = CssDefaults.FontMonospace
-                    
+
                 Case Else
                     _fontFamily = Value
-                    
+
             End Select
         End Set
     End Property
@@ -1902,34 +1900,34 @@ Public Class CssBox
                 Select Case FontSize
                     Case CssConstants.Medium
                         fsize = CssDefaults.FontSize
-                        
+
                     Case CssConstants.XXSmall
                         fsize = CssDefaults.FontSize - 4
-                        
+
                     Case CssConstants.XSmall
                         fsize = CssDefaults.FontSize - 3
-                        
+
                     Case CssConstants.Small
                         fsize = CssDefaults.FontSize - 2
-                        
+
                     Case CssConstants.Large
                         fsize = CssDefaults.FontSize + 2
-                        
+
                     Case CssConstants.XLarge
                         fsize = CssDefaults.FontSize + 3
-                        
+
                     Case CssConstants.XXLarge
                         fsize = CssDefaults.FontSize + 4
-                        
+
                     Case CssConstants.Smaller
                         fsize = parentSize - 2
-                        
+
                     Case CssConstants.Larger
                         fsize = parentSize + 2
-                        
+
                     Case Else
                         fsize = CssValue.ParseLength(FontSize, parentSize, Me, parentSize, True)
-                        
+
                 End Select
 
                 If fsize <= 1.0F Then
@@ -2511,7 +2509,6 @@ Public Class CssBox
     ''' <summary>
     ''' Gets the height of the font in the specified units
     ''' </summary>
-    ''' <param name="unit"></param>
     ''' <returns></returns>
     Public Function GetEmHeight() As Single
         'float res = Convert.ToSingle(ActualFont.Height);
@@ -2575,7 +2572,6 @@ Public Class CssBox
     ''' Bubbles up the padding from the starting box
     ''' </summary>
     ''' <param name="box"></param>
-    ''' <returns></returns>
     Private Sub GetMinimumWidth_BubblePadding(box As CssBox, endbox As CssBox, ByRef sum As Single)
         'float padding = box.ActualMarginLeft + box.ActualBorderLeftWidth + box.ActualPaddingLeft +
         '    box.ActualMarginRight + box.ActualBorderRightWidth + box.ActualPaddingRight;
@@ -2593,7 +2589,6 @@ Public Class CssBox
     ''' Gets the longest word (in width) inside the box, deeply.
     ''' </summary>
     ''' <param name="b"></param>
-    ''' <returns></returns>
     Private Sub GetMinimumWidth_LongestWord(b As CssBox, ByRef maxw As Single, ByRef word As CssBoxWord)
 
         If b.Words.Count > 0 Then
@@ -2646,7 +2641,6 @@ Public Class CssBox
     ''' Gets the longest word (in width) inside the box, deeply.
     ''' </summary>
     ''' <param name="b"></param>
-    ''' <returns></returns>
     Private Sub GetFullWidth_WordsWith(b As CssBox, g As Graphics, ByRef sum As Single, ByRef paddingsum As Single)
         If b.Display <> CssConstants.Inline Then
             sum = 0
@@ -2701,14 +2695,14 @@ Public Class CssBox
         Return ParentBox.ContainsInlinesOnly()
     End Function
 
-    ''' <summary>
-    ''' Gets the rectangles where inline box will be drawn. See Remarks for more info.
-    ''' </summary>
-    ''' <returns>Rectangles where content should be placed</returns>
-    ''' <remarks>
-    ''' Inline boxes can be splitted across different LineBoxes, that's why this method
-    ''' Delivers a rectangle for each LineBox related to this box, if inline.
-    ''' </remarks>
+    '''' <summary>
+    '''' Gets the rectangles where inline box will be drawn. See Remarks for more info.
+    '''' </summary>
+    '''' <returns>Rectangles where content should be placed</returns>
+    '''' <remarks>
+    '''' Inline boxes can be splitted across different LineBoxes, that's why this method
+    '''' Delivers a rectangle for each LineBox related to this box, if inline.
+    '''' </remarks>
 
     ''' <summary>
     ''' Inherits inheritable values from parent.
@@ -2746,7 +2740,6 @@ Public Class CssBox
     ''' Measures the bounds of box and children, recursively.
     ''' </summary>
     ''' <param name="g">Device context to draw</param>
-    ''' <param name="layoutRect">Rectangle containing the fragment</param>
     Public Overridable Sub MeasureBounds(g As Graphics)
         If Display = CssConstants.None Then
             Return

@@ -208,13 +208,13 @@ Public Class CssLength
 		Return New CssLength(String.Format("{0}pt", Convert.ToSingle(Number * emSize).ToString("0.0", NumberFormatInfo.InvariantInfo)))
 	End Function
 
-	''' <summary>
-	''' If length is in Ems, returns its value in pixels
-	''' </summary>
-	''' <param name="emSize">Pixel size factor to multiply</param>
-	''' <returns>Pixels size of this em</returns>
-	''' <exception cref="InvalidOperationException">If length has an error or isn't in ems</exception>
-	Public Function ConvertEmToPixels(pixelFactor As Single) As CssLength
+    ''' <summary>
+    ''' If length is in Ems, returns its value in pixels
+    ''' </summary>
+    ''' <param name="pixelFactor">Pixel size factor to multiply</param>
+    ''' <returns>Pixels size of this em</returns>
+    ''' <exception cref="InvalidOperationException">If length has an error or isn't in ems</exception>
+    Public Function ConvertEmToPixels(pixelFactor As Single) As CssLength
 		If HasError Then
 			Throw New InvalidOperationException("Invalid length")
 		End If

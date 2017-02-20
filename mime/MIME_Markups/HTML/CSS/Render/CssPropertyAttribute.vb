@@ -9,17 +9,17 @@ Public Class CssPropertyAttribute
 	Inherits Attribute
 	#Region "Fields"
 	Private _name As String
-	#End Region
+#End Region
 
-	#Region "Ctor"
+#Region "Ctor"
 
-	''' <summary>
-	''' Creates a new CssPropertyAttribute
-	''' </summary>
-	''' <param name="name">Name of the Css property</param>
-	Public Sub New(name__1 As String)
-		Name = name__1
-	End Sub
+    ''' <summary>
+    ''' Creates a new CssPropertyAttribute
+    ''' </summary>
+    ''' <param name="name">Name of the Css property</param>
+    Public Sub New(name As String)
+        Me.Name = name
+    End Sub
 	#End Region
 
 	#Region "Properties"

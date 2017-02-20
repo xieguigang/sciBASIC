@@ -6,6 +6,7 @@ Imports System.Reflection
 Imports System.Diagnostics
 Imports System.Globalization
 Imports System.Drawing
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 
 Public NotInheritable Class CssValue
 

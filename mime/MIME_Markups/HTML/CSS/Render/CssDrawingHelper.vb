@@ -34,7 +34,6 @@ Friend NotInheritable Class CssDrawingHelper
     ''' <summary>
     ''' Rounds the specified rectangle
     ''' </summary>
-    ''' <param name="p"></param>
     ''' <param name="b"></param>
     ''' <returns></returns>
     Private Shared Function RoundR(r As RectangleF, b As CssBox) As RectangleF
@@ -50,12 +49,12 @@ Friend NotInheritable Class CssDrawingHelper
     ''' <param name="isLineStart">Specifies if the border is for a starting line (no bevel on left)</param>
     ''' <param name="isLineEnd">Specifies if the border is for an ending line (no bevel on right)</param>
     ''' <returns>Beveled border path</returns>
-    Public Shared Function GetBorderPath(border__1 As Border, b As CssBox, r As RectangleF, isLineStart As Boolean, isLineEnd As Boolean) As GraphicsPath
+    Public Shared Function GetBorderPath(border As Border, b As CssBox, r As RectangleF, isLineStart As Boolean, isLineEnd As Boolean) As GraphicsPath
         Dim pts As PointF() = New PointF(3) {}
         Dim bwidth As Single = 0
         Dim corner As GraphicsPath = Nothing
 
-        Select Case border__1
+        Select Case border
             Case Border.Top
                 bwidth = b.ActualBorderTopWidth
                 pts(0) = RoundP(New PointF(r.Left + b.ActualCornerNW, r.Top), b)
@@ -74,7 +73,7 @@ Friend NotInheritable Class CssDrawingHelper
                     corner = CreateCorner(b, r, 1)
                 End If
 
-                
+
             Case Border.Right
                 bwidth = b.ActualBorderRightWidth
                 pts(0) = RoundP(New PointF(r.Right - bwidth, r.Top + b.ActualCornerNE), b)
@@ -92,7 +91,7 @@ Friend NotInheritable Class CssDrawingHelper
                 If b.ActualCornerNE > 0F Then
                     corner = CreateCorner(b, r, 2)
                 End If
-                
+
             Case Border.Bottom
                 bwidth = b.ActualBorderBottomWidth
                 pts(0) = RoundP(New PointF(r.Left + b.ActualCornerSW, r.Bottom - bwidth), b)
@@ -110,7 +109,7 @@ Friend NotInheritable Class CssDrawingHelper
                 If b.ActualCornerSE > 0F Then
                     corner = CreateCorner(b, r, 3)
                 End If
-                
+
             Case Border.Left
                 bwidth = b.ActualBorderLeftWidth
                 pts(0) = RoundP(New PointF(r.Left, r.Top + b.ActualCornerNW), b)
@@ -128,7 +127,7 @@ Friend NotInheritable Class CssDrawingHelper
                 If b.ActualCornerSW > 0F Then
                     corner = CreateCorner(b, r, 4)
                 End If
-                
+
         End Select
 
         Dim path As New GraphicsPath(pts, New Byte() {CByte(PathPointType.Line), CByte(PathPointType.Line), CByte(PathPointType.Line), CByte(PathPointType.Line)})
@@ -143,10 +142,6 @@ Friend NotInheritable Class CssDrawingHelper
     ''' <summary>
     ''' Creates the corner to place with the borders
     ''' </summary>
-    ''' <param name="outer"></param>
-    ''' <param name="inner"></param>
-    ''' <param name="startAngle"></param>
-    ''' <param name="sweepAngle"></param>
     ''' <returns></returns>
     Private Shared Function CreateCorner(b As CssBox, r As RectangleF, cornerIndex As Integer) As GraphicsPath
         Dim corner As New GraphicsPath()
@@ -231,10 +226,10 @@ Friend NotInheritable Class CssDrawingHelper
     ''' <param name="swRadius">Radius of the south west corner</param>
     ''' <returns>GraphicsPath with the lines of the rounded rectangle ready to be painted</returns>
     Public Shared Function GetRoundRect(rect As RectangleF, nwRadius As Single, neRadius As Single, seRadius As Single, swRadius As Single) As GraphicsPath
-        '''  NW-----NE
-        '''  |       |
-        '''  |       |
-        '''  SW-----SE
+        '  NW-----NE
+        '  |       |
+        '  |       |
+        '  SW-----SE
 
         Dim path As New GraphicsPath()
 

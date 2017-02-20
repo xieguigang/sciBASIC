@@ -1,7 +1,7 @@
 Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Text
-
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 
 Friend Class CssTable
 #Region "Subclasses"
@@ -268,12 +268,12 @@ Friend Class CssTable
             Select Case b.Display
                 Case CssConstants.TableCaption
                     _caption = b
-                    
+
                 Case CssConstants.TableColumn
                     For i As Integer = 0 To GetSpan(b) - 1
                         Columns.Add(CreateColumn(b))
                     Next
-                    
+
                 Case CssConstants.TableColumnGroup
                     If b.Boxes.Count = 0 Then
                         Dim gspan As Integer = GetSpan(b)
@@ -288,33 +288,33 @@ Friend Class CssTable
                             Next
                         Next
                     End If
-                    
+
                 Case CssConstants.TableFooterGroup
                     If FooterBox IsNot Nothing Then
                         BodyRows.Add(b)
                     Else
                         _footerBox = b
                     End If
-                    
+
                 Case CssConstants.TableHeaderGroup
                     If HeaderBox IsNot Nothing Then
                         BodyRows.Add(b)
                     Else
                         _headerBox = b
                     End If
-                    
+
                 Case CssConstants.TableRow
                     BodyRows.Add(b)
-                    
+
                 Case CssConstants.TableRowGroup
                     For Each bb As CssBox In b.Boxes
                         If b.Display = CssConstants.TableRow Then
                             BodyRows.Add(b)
                         End If
                     Next
-                    
+
                 Case Else
-                    
+
             End Select
         Next
         '#End Region
@@ -864,7 +864,6 @@ Friend Class CssTable
     ''' <summary>
     ''' Creates the column with the specified width
     ''' </summary>
-    ''' <param name="width"></param>
     ''' <returns></returns>
     Private Function CreateColumn(modelBox As CssBox) As CssBox
         Return modelBox

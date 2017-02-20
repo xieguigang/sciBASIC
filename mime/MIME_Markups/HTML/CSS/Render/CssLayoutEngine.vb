@@ -318,9 +318,9 @@ Friend NotInheritable Class CssLayoutEngine
                 Case Else
                     'case: baseline
                     lineBox.SetBaseLine(g, b, baseline)
-                    
 
-                    '''/Graphic cues
+
+                    'Graphic cues
                     'g.FillRectangle(Brushes.Aqua, r.Left, r.Top, r.Width, ascent);
                     'g.FillRectangle(Brushes.Yellow, r.Left, r.Top + ascent, r.Width, descent);
                     'g.DrawLine(Pens.Fuchsia, r.Left, baseline, r.Right, baseline);
@@ -429,7 +429,7 @@ Friend NotInheritable Class CssLayoutEngine
     ''' Applies centered alignment to the text on the linebox
     ''' </summary>
     ''' <param name="g"></param>
-    ''' <param name="lineBox"></param>
+    ''' <param name="line"></param>
     Private Shared Sub ApplyCenterAlignment(g As Graphics, line As CssLineBox)
         If line.Words.Count = 0 Then
             Return
@@ -458,7 +458,7 @@ Friend NotInheritable Class CssLayoutEngine
     ''' Applies right alignment to the text on the linebox
     ''' </summary>
     ''' <param name="g"></param>
-    ''' <param name="lineBox"></param>
+    ''' <param name="line"></param>
     Private Shared Sub ApplyRightAlignment(g As Graphics, line As CssLineBox)
         If line.Words.Count = 0 Then
             Return
@@ -493,7 +493,7 @@ Friend NotInheritable Class CssLayoutEngine
     ''' Simplest alignment, just arrange words.
     ''' </summary>
     ''' <param name="g"></param>
-    ''' <param name="lineBox"></param>
+    ''' <param name="line"></param>
     Private Shared Sub ApplyLeftAlignment(g As Graphics, line As CssLineBox)
         'No alignment needed.
 

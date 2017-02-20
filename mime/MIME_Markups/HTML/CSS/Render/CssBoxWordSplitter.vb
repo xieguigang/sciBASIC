@@ -77,16 +77,14 @@ Friend Class CssBoxWordSplitter
 	End Property
 
 
-	#End Region
+#End Region
 
-	#Region "Public Metods"
+#Region "Public Metods"
 
-	''' <summary>
-	''' Splits the text on words using rules of the specified box
-	''' </summary>
-	''' <param name="text"></param>
-	''' <returns></returns>
-	Public Sub SplitWords()
+    ''' <summary>
+    ''' Splits the text on words using rules of the specified box
+    ''' </summary>
+    Public Sub SplitWords()
 
 		If String.IsNullOrEmpty(Text) Then
 			Return

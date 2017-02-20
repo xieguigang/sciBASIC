@@ -41,9 +41,9 @@ Friend Class CssBoxWord
     ''' </summary>
     ''' <param name="owner"></param>
     ''' <param name="image"></param>
-    Public Sub New(owner As CssBox, image__1 As Image)
+    Public Sub New(owner As CssBox, image As Image)
         Me.New(owner)
-        Image = image__1
+        Me.Image = image
     End Sub
 
 #End Region
