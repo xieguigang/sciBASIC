@@ -154,5 +154,4 @@ Friend NotInheritable Class Parser
 		Return Nothing
 	End Function
 #End Region
-
 End Class
