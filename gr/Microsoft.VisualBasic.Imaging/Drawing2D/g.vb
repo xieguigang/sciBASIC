@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::7ec09874cf02fbbc46c97325b89403f3, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Drawing2D
@@ -48,20 +49,22 @@ Namespace Drawing2D
     ''' </summary>
     Public Module g
 
+        Public Const DefaultPadding$ = "padding:100px 100px 100px 100px;"
+
         ''' <summary>
-        ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="margin"/>:=(100,100)
+        ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100)
         ''' </summary>
         ''' <param name="size"></param>
-        ''' <param name="margin"></param>
+        ''' <param name="padding"></param>
         ''' <param name="bg"></param>
         ''' <param name="plotAPI"></param>
         ''' <returns></returns>
-        Public Function GraphicsPlots(ByRef size As Size, ByRef margin As Size, bg$, plotAPI As IPlot) As Bitmap
+        Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot) As Bitmap
             If size.IsEmpty Then
                 size = New Size(4300, 2000)
             End If
-            If margin.IsEmpty Then
-                margin = New Size(100, 100)
+            If padding.IsEmpty Then
+                padding = New Padding(100)
             End If
 
             Dim bmp As New Bitmap(size.Width, size.Height)
@@ -79,7 +82,7 @@ Namespace Drawing2D
 
                 Call plotAPI(g, New GraphicsRegion With {
                      .Size = size,
-                     .Margin = margin
+                     .Padding = padding
                 })
             End Using
 
@@ -136,21 +139,20 @@ Namespace Drawing2D
         ''' Data plots graphics engine.
         ''' </summary>
         ''' <param name="size"></param>
-        ''' <param name="margin"></param>
         ''' <param name="bg"></param>
         ''' <param name="plot"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GraphicsPlots(plot As Action(Of Graphics), ByRef size As Size, ByRef margin As Size, bg$) As Bitmap
-            Return GraphicsPlots(size, margin, bg, Sub(ByRef g, rect) Call plot(g))
+        Public Function GraphicsPlots(plot As Action(Of Graphics), ByRef size As Size, ByRef padding As Padding, bg$) As Bitmap
+            Return GraphicsPlots(size, padding, bg, Sub(ByRef g, rect) Call plot(g))
         End Function
 
-        Public Function Allocate(Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg$ = "white") As InternalCanvas
+        Public Function Allocate(Optional size As Size = Nothing, Optional padding$ = DefaultPadding, Optional bg$ = "white") As InternalCanvas
             Return New InternalCanvas With {
                 .size = size,
                 .bg = bg,
-                .margin = margin
+                .padding = padding
             }
         End Function
 
@@ -162,12 +164,12 @@ Namespace Drawing2D
             Dim plots As New List(Of IPlot)
 
             Public Property size As Size
-            Public Property margin As Size
+            Public Property padding As Padding
             Public Property bg As String
 
             Public Function InvokePlot() As Bitmap
                 Return GraphicsPlots(
-                    size, margin, bg,
+                    size, padding, bg,
                     Sub(ByRef g, rect)
 
                         For Each plot As IPlot In plots
@@ -198,7 +200,7 @@ Namespace Drawing2D
             ''' <returns></returns>
             Public Shared Operator <=(g As InternalCanvas, plot As IPlot) As Bitmap
                 Dim size As Size = g.size
-                Dim margin = g.margin
+                Dim margin = g.padding
                 Dim bg As String = g.bg
 
                 Return GraphicsPlots(size, margin, bg, plot)
