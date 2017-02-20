@@ -278,27 +278,28 @@ l += From x As Integer
      Select CStr(x)
 ```
 
-###### VisualBasic int type
+###### New Integer(int) type in visualbasic
 
 ```vbnet
 Dim min As int = 1
 Dim max As int = 200
-Dim x As Integer = 199
+Dim x% = 199
 
-Console.WriteLine(min <= x < max) ' True
+' Compares
+println(min <= x < max) ' True
 x += 10 ' 209
-Console.WriteLine(min <= x < max) ' False
+println(min <= x < max) ' False
 x = -1
-Console.WriteLine(min <= x < max) ' False
+println(min <= x < max) ' False
 
-
+' inline
 Dim bitChunk As Byte() = New Byte(INT64 - 1) {}
 Dim p As int = Scan0
 
 Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
 ProtocolCategory = BitConverter.ToInt64(bitChunk, Scan0)
 
-Call Array.ConstrainedCopy(rawStream, ++(p+INT64), bitChunk, Scan0, INT64)
+Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
 Protocol = BitConverter.ToInt64(bitChunk, Scan0)
 
 bitChunk = New Byte(INT64 - 1) {}
