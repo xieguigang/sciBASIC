@@ -6,6 +6,7 @@ Imports System.Reflection
 Imports System.Text.RegularExpressions
 Imports System.Drawing.Drawing2D
 Imports System.Threading
+Imports System.Drawing
 
 ''' <summary>
 ''' Represents a CSS Box of text or replaced elements.

@@ -1,6 +1,7 @@
 Imports System.Collections.Generic
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports System.Drawing
 
 ''' <summary>
 ''' HTML rendering

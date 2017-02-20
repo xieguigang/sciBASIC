@@ -247,11 +247,6 @@
     </Compile>
     <Compile Include="SVG\g.vb" />
     <Compile Include="SVG\Image.vb" />
-    <Compile Include="SVG\Render\HtmlConstants.vb" />
-    <Compile Include="SVG\Render\HtmlRenderer.vb" />
-    <Compile Include="SVG\Render\HtmlTag.vb" />
-    <Compile Include="SVG\Render\InitialContainer.vb" />
-    <Compile Include="SVG\Render\Parser.vb" />
     <Compile Include="SVG\SVG.vb" />
     <Compile Include="SVG\CSS.vb" />
     <Compile Include="SVG\Xml.vb" />
@@ -371,6 +366,7 @@
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
