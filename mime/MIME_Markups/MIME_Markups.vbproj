@@ -176,6 +176,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml.Serialization" />
@@ -193,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HTML\CSS\FontStyle.vb" />
+    <Compile Include="HTML\CSS\Padding.vb" />
     <Compile Include="HTML\CSS\Render\CssAnonymousBlockBox.vb" />
     <Compile Include="HTML\CSS\Render\CssAnonymousBox.vb" />
     <Compile Include="HTML\CSS\Render\CssBlock.vb" />
