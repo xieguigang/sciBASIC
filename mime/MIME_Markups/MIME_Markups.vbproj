@@ -193,6 +193,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HTML\CSS\FontStyle.vb" />
+    <Compile Include="HTML\CSS\Parser\CssAnonymousBlockBox.vb" />
+    <Compile Include="HTML\CSS\Parser\CssAnonymousBox.vb" />
+    <Compile Include="HTML\CSS\Parser\CssBlock.vb" />
+    <Compile Include="HTML\CSS\Parser\CssBox.vb" />
+    <Compile Include="HTML\CSS\Parser\CssBoxWord.vb" />
+    <Compile Include="HTML\CSS\Parser\CssBoxWordSplitter.vb" />
+    <Compile Include="HTML\CSS\Parser\CssConstants.vb" />
+    <Compile Include="HTML\CSS\Parser\CssDefaults.vb" />
+    <Compile Include="HTML\CSS\Parser\CssDrawingHelper.vb" />
+    <Compile Include="HTML\CSS\Parser\CssLayoutEngine.vb" />
+    <Compile Include="HTML\CSS\Parser\CssLength.vb" />
+    <Compile Include="HTML\CSS\Parser\CssLineBox.vb" />
+    <Compile Include="HTML\CSS\Parser\CssPropertyAttribute.vb" />
+    <Compile Include="HTML\CSS\Parser\CssPropertyInheritedAttribute.vb" />
+    <Compile Include="HTML\CSS\Parser\CssRectangle.vb" />
+    <Compile Include="HTML\CSS\Parser\CssTable.vb" />
+    <Compile Include="HTML\CSS\Parser\CssValue.vb" />
     <Compile Include="HTML\HtmlParser\DocParserAPI.vb" />
     <Compile Include="HTML\TextString.vb" />
     <Compile Include="HTML\Head\Meta.vb" />
