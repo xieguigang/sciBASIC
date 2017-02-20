@@ -1,9 +1,12 @@
 Imports System.Collections.Generic
 Imports System.Text
 
-Public Class CssPropertyInheritedAttribute
-	Inherits Attribute
+Namespace HTML.CSS.Render
 
-	Public Sub New()
-	End Sub
-End Class
+    Public Class CssPropertyInheritedAttribute
+        Inherits Attribute
+
+        Public Sub New()
+        End Sub
+    End Class
+End Namespace
