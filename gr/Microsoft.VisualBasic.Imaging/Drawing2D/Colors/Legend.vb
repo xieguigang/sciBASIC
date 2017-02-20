@@ -1,34 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::4a72f378291d49db2b37937db4182461, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Colors
 
@@ -44,7 +46,6 @@ Namespace Drawing2D.Colors
         ''' <param name="bg$"></param>
         ''' <param name="haveUnmapped"></param>
         ''' <param name="lsize"></param>
-        ''' <param name="lmargin"></param>
         ''' <returns></returns>
         <Extension>
         Public Function ColorMapLegend(designer As Color(),
@@ -53,7 +54,7 @@ Namespace Drawing2D.Colors
                                        Optional bg$ = "transparent",
                                        Optional haveUnmapped As Boolean = True,
                                        Optional lsize As Size = Nothing,
-                                       Optional lmargin As Size = Nothing,
+                                       Optional padding$ = DefaultPadding,
                                        Optional titleFont As Font = Nothing,
                                        Optional legendWidth! = -1) As Bitmap
             Dim br As SolidBrush() =
@@ -63,10 +64,12 @@ Namespace Drawing2D.Colors
                 min, max,
                 bg,
                 haveUnmapped,
-                lsize, lmargin,
+                lsize, padding,
                 titleFont,
                 legendWidth)
         End Function
+
+        Public Const DefaultPadding$ = "padding:50px 50px 50px 50px;"
 
         ''' <summary>
         ''' 输出的图例的大小默认为：``{800, 1000}``
@@ -78,7 +81,6 @@ Namespace Drawing2D.Colors
         ''' <param name="bg$"></param>
         ''' <param name="haveUnmapped"></param>
         ''' <param name="lsize"></param>
-        ''' <param name="lmargin"></param>
         ''' <param name="titleFont"></param>
         ''' <returns></returns>
         <Extension>
@@ -88,23 +90,20 @@ Namespace Drawing2D.Colors
                                        Optional bg$ = "transparent",
                                        Optional haveUnmapped As Boolean = True,
                                        Optional lsize As Size = Nothing,
-                                       Optional lmargin As Size = Nothing,
+                                       Optional padding$ = DefaultPadding,
                                        Optional titleFont As Font = Nothing,
                                        Optional legendWidth! = -1) As Bitmap
             If lsize.IsEmpty Then
                 lsize = New Size(800, 1000)
             End If
-            If lmargin.IsEmpty Then
-                lmargin = New Size(50, 50)
-            End If
 
             Return GraphicsPlots(
-                lsize, lmargin,
+                lsize, CSS.Padding.op_Implicit(padding),
                 bg,
                 Sub(ByRef g, region)
                     Dim graphicsRegion As Rectangle = region.PlotRegion
                     Dim size As Size = region.Size
-                    Dim margin As Size = region.Margin
+                    Dim margin As padding = region.Padding
                     Dim grayHeight As Integer = size.Height * 0.05
                     Dim y As Single
                     Dim font As Font = If(titleFont Is Nothing,
@@ -113,21 +112,21 @@ Namespace Drawing2D.Colors
                     Dim fSize As SizeF
                     Dim pt As Point
                     Dim rectWidth As Integer = If(legendWidth <= 0, 150, legendWidth)
-                    Dim legendsHeight As Integer = size.Height - (margin.Height * 3) - grayHeight * 3
+                    Dim legendsHeight As Integer = size.Height - (margin.Top * 3) - grayHeight * 3
                     Dim d As Single = legendsHeight / designer.Length
-                    Dim left As Integer = margin.Width + 30 + rectWidth
+                    Dim left As Integer = margin.Left + 30 + rectWidth
 
-                    Call g.DrawString(title, font, Brushes.Black, New Point(margin.Width, 0))
+                    Call g.DrawString(title, font, Brushes.Black, New Point(margin.Left, 0))
 
                     font = New Font(FontFace.BookmanOldStyle, 24)
-                    y = margin.Height * 2
+                    y = margin.Top * 2
 
                     Call g.DrawString(max, font, Brushes.Black, New Point(left, y))
 
                     For i As Integer = designer.Length - 1 To 0 Step -1
                         Call g.FillRectangle(
                         designer(i),
-                        New RectangleF(New PointF(margin.Width, y),
+                        New RectangleF(New PointF(margin.Left, y),
                                        New SizeF(rectWidth, d)))
                         y += d
                     Next
@@ -139,10 +138,10 @@ Namespace Drawing2D.Colors
                     New Point(left, If(designer.Length > 100, d, 0) + y - fSize.Height))
 
                     If haveUnmapped Then
-                        y = size.Height - margin.Height - grayHeight
+                        y = size.Height - margin.Top - grayHeight
                         fSize = g.MeasureString("Unknown", font)
                         pt = New Point(left, y - (grayHeight - fSize.Height) / 2)
-                        graphicsRegion = New Rectangle(New Point(margin.Width, y), New Size(rectWidth, grayHeight))
+                        graphicsRegion = New Rectangle(New Point(margin.Left, y), New Size(rectWidth, grayHeight))
 
                         Call g.DrawString("Unknown", font, Brushes.Black, pt)
                         Call g.FillRectangle(Brushes.LightGray, graphicsRegion)
