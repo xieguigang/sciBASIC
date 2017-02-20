@@ -37,7 +37,13 @@ Module Program
 
     Sub Main()
 
-        Dim html As String = "<font face=""Microsoft YaHei"" size=""25.5""><strong><span style=""color:red"">text</span></strong><b> &lt;&lt;&lt; <i><font face=""Ubuntu"" size=""12"">value</font></i></b></font> "
+        Dim html As String = "<font face=""Microsoft YaHei"" size=""25.5""><strong><span style=""color:red"">text</span></strong><b> &lt;&lt;&lt; <i><font face=""Ubuntu"" size=""12"">value</font></i></b></font> 
+<br />
+log<sub>2</sub> ratio
+
+<br />
+-log<sub>10</sub>(P-value)
+"
 
         Dim bitmap As New Bitmap(500, 300)
 
