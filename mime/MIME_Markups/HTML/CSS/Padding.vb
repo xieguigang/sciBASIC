@@ -5,12 +5,16 @@ Imports Microsoft.VisualBasic.Scripting
 
 Namespace HTML.CSS
 
-    '
-    ' Summary:
-    '     Represents padding or margin information associated with a user interface (UI)
-    '     element.
-    <TypeConverter(GetType(PaddingConverter))>
-    Public Structure Padding
+    ''' <summary>
+    ''' Represents padding or margin information associated with a gdi element.
+    ''' </summary>
+    <TypeConverter(GetType(PaddingConverter))> Public Structure Padding
+
+        Public ReadOnly Property IsEmpty As Boolean
+            Get
+                Return Top = 0 AndAlso Bottom = 0 AndAlso Left = 0 AndAlso Right = 0
+            End Get
+        End Property
 
         '
         ' Summary:
@@ -60,13 +64,10 @@ Namespace HTML.CSS
             Left = layoutVector(3)
         End Sub
 
-        '
-        ' Summary:
-        '     Gets the combined padding for the right and left edges.
-        '
-        ' Returns:
-        '     Gets the sum, in pixels, of the System.Windows.Forms.Padding.Left and System.Windows.Forms.Padding.Right
-        '     padding values.
+        ''' <summary>
+        ''' Gets the combined padding for the right and left edges.
+        ''' </summary>
+        ''' <returns></returns>
         <Browsable(False)> Public ReadOnly Property Horizontal As Integer
             Get
                 Return Left + Right
@@ -106,13 +107,10 @@ Namespace HTML.CSS
         <RefreshProperties(RefreshProperties.All)>
         Public Property Bottom As Integer
 
-        '
-        ' Summary:
-        '     Gets the combined padding for the top and bottom edges.
-        '
-        ' Returns:
-        '     Gets the sum, in pixels, of the System.Windows.Forms.Padding.Top and System.Windows.Forms.Padding.Bottom
-        '     padding values.
+        ''' <summary>
+        ''' Gets the combined padding for the top and bottom edges.
+        ''' </summary>
+        ''' <returns></returns>
         <Browsable(False)> Public ReadOnly Property Vertical As Integer
             Get
                 Return Top + Bottom
