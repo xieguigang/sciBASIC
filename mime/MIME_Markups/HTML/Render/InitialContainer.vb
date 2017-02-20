@@ -2,6 +2,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Drawing
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Render
 
 Namespace HTML.Render
 
@@ -26,7 +27,7 @@ Namespace HTML.Render
 
         Public Sub New(documentSource As String)
             Me.New()
-            _documentSource = documentSource
+            _DocumentSource = documentSource
             ParseDocument()
             CascadeStyles(Me)
             BlockCorrection(Me)

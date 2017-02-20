@@ -7,6 +7,7 @@ Imports System.Diagnostics
 Imports System.Globalization
 Imports System.Drawing
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace HTML.CSS.Render
 
@@ -380,7 +381,7 @@ Namespace HTML.CSS.Render
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        Public Shared Function GetImage(path As String) As Image
+        Public Shared Function GetImage(path As String) As Drawing.Image
             Dim source As Object = DetectSource(path)
 
             Dim finfo As FileInfo = TryCast(source, FileInfo)
@@ -394,19 +395,19 @@ Namespace HTML.CSS.Render
                     End If
 
 
-                    Return Image.FromFile(finfo.FullName)
+                    Return finfo.FullName.LoadImage
                 ElseIf prop IsNot Nothing Then
                     If Not prop.PropertyType.IsSubclassOf(GetType(Image)) AndAlso Not prop.PropertyType.Equals(GetType(Image)) Then
                         Return Nothing
                     End If
 
-                    Return TryCast(prop.GetValue(Nothing, Nothing), Image)
+                    Return TryCast(prop.GetValue(Nothing, Nothing), Drawing.Image)
                 ElseIf method IsNot Nothing Then
                     If Not method.ReturnType.IsSubclassOf(GetType(Image)) Then
                         Return Nothing
                     End If
 
-                    Return TryCast(method.Invoke(Nothing, Nothing), Image)
+                    Return TryCast(method.Invoke(Nothing, Nothing), Drawing.Image)
                 Else
                     Return Nothing
                 End If

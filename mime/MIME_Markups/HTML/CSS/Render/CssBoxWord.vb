@@ -1,6 +1,7 @@
 Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Text
+Imports Image = System.Drawing.Image
 
 Namespace HTML.CSS.Render
 
@@ -26,7 +27,7 @@ Namespace HTML.CSS.Render
         Private _breakAfter As Boolean
         Private _spacesBefore As Integer
         Private _breakBefore As Boolean
-        Private _image As Image
+        Private _image As Drawing.Image
 
 
 #End Region
@@ -43,7 +44,7 @@ Namespace HTML.CSS.Render
         ''' </summary>
         ''' <param name="owner"></param>
         ''' <param name="image"></param>
-        Public Sub New(owner As CssBox, image As Image)
+        Public Sub New(owner As CssBox, image As Drawing.Image)
             Me.New(owner)
             Me.Image = image
         End Sub
@@ -65,7 +66,7 @@ Namespace HTML.CSS.Render
         ''' <summary>
         ''' Gets the image this words represents (if one)
         ''' </summary>
-        Public Property Image() As Image
+        Public Property Image() As Drawing.Image
             Get
                 Return _image
             End Get
