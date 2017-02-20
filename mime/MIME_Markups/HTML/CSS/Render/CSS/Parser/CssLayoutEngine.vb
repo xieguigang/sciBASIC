@@ -206,16 +206,16 @@ Friend NotInheritable Class CssLayoutEngine
         Select Case lineBox.OwnerBox.TextAlign
             Case CssConstants.Right
                 ApplyRightAlignment(g, lineBox)
-                Exit Select
+                
             Case CssConstants.Center
                 ApplyCenterAlignment(g, lineBox)
-                Exit Select
+                
             Case CssConstants.Justify
                 ApplyJustifyAlignment(g, lineBox)
-                Exit Select
+                
             Case Else
                 ApplyLeftAlignment(g, lineBox)
-                Exit Select
+                
         End Select
 
         '#End Region
@@ -296,29 +296,29 @@ Friend NotInheritable Class CssLayoutEngine
             Select Case b.VerticalAlign
                 Case CssConstants.[Sub]
                     lineBox.SetBaseLine(g, b, baseline + lineBox.Rectangles(b).Height * 0.2F)
-                    Exit Select
+                    
                 Case CssConstants.Super
                     lineBox.SetBaseLine(g, b, baseline - lineBox.Rectangles(b).Height * 0.2F)
-                    Exit Select
+                    
                 Case CssConstants.TextTop
 
-                    Exit Select
+                    
                 Case CssConstants.TextBottom
 
-                    Exit Select
+                    
                 Case CssConstants.Top
 
-                    Exit Select
+                    
                 Case CssConstants.Bottom
 
-                    Exit Select
+                    
                 Case CssConstants.Middle
 
-                    Exit Select
+                    
                 Case Else
                     'case: baseline
                     lineBox.SetBaseLine(g, b, baseline)
-                    Exit Select
+                    
 
                     '''/Graphic cues
                     'g.FillRectangle(Brushes.Aqua, r.Left, r.Top, r.Width, ascent);

@@ -6,12 +6,13 @@ Imports System.Text.RegularExpressions
 ''' Collection of regular expressions used when parsing
 ''' </summary>
 Friend NotInheritable Class Parser
-	Private Sub New()
-	End Sub
-	''' <summary>
-	''' Extracts properties and values from a Css property block; e.g. property:value;
-	''' </summary>
-	Public Const CssProperties As String = ";?[^;\s]*:[^\{\}:;]*(\}|;)?"
+    Private Sub New()
+    End Sub
+
+    ''' <summary>
+    ''' Extracts properties and values from a Css property block; e.g. property:value;
+    ''' </summary>
+    Public Const CssProperties As String = ";?[^;\s]*:[^\{\}:;]*(\}|;)?"
 
 	''' <summary>
 	''' Extracts CSS style comments; e.g. /* comment */
@@ -152,6 +153,6 @@ Friend NotInheritable Class Parser
 
 		Return Nothing
 	End Function
+#End Region
 
-	#End Region
 End Class

@@ -304,24 +304,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     BorderTopWidth = InlineAssignHelper(BorderLeftWidth, InlineAssignHelper(BorderRightWidth, InlineAssignHelper(BorderBottomWidth, values(0))))
-                    Exit Select
+                    
                 Case 2
                     BorderTopWidth = InlineAssignHelper(BorderBottomWidth, values(0))
                     BorderLeftWidth = InlineAssignHelper(BorderRightWidth, values(1))
-                    Exit Select
+                    
                 Case 3
                     BorderTopWidth = values(0)
                     BorderLeftWidth = InlineAssignHelper(BorderRightWidth, values(1))
                     BorderBottomWidth = values(2)
-                    Exit Select
+                    
                 Case 4
                     BorderTopWidth = values(0)
                     BorderRightWidth = values(1)
                     BorderBottomWidth = values(2)
                     BorderLeftWidth = values(3)
-                    Exit Select
+                    
                 Case Else
-                    Exit Select
+                    
 
             End Select
         End Set
@@ -379,24 +379,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     BorderTopStyle = InlineAssignHelper(BorderLeftStyle, InlineAssignHelper(BorderRightStyle, InlineAssignHelper(BorderBottomStyle, values(0))))
-                    Exit Select
+                    
                 Case 2
                     BorderTopStyle = InlineAssignHelper(BorderBottomStyle, values(0))
                     BorderLeftStyle = InlineAssignHelper(BorderRightStyle, values(1))
-                    Exit Select
+                    
                 Case 3
                     BorderTopStyle = values(0)
                     BorderLeftStyle = InlineAssignHelper(BorderRightStyle, values(1))
                     BorderBottomStyle = values(2)
-                    Exit Select
+                    
                 Case 4
                     BorderTopStyle = values(0)
                     BorderRightStyle = values(1)
                     BorderBottomStyle = values(2)
                     BorderLeftStyle = values(3)
-                    Exit Select
+                    
                 Case Else
-                    Exit Select
+                    
 
             End Select
         End Set
@@ -436,24 +436,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     BorderTopColor = InlineAssignHelper(BorderLeftColor, InlineAssignHelper(BorderRightColor, InlineAssignHelper(BorderBottomColor, values(0))))
-                    Exit Select
+                    
                 Case 2
                     BorderTopColor = InlineAssignHelper(BorderBottomColor, values(0))
                     BorderLeftColor = InlineAssignHelper(BorderRightColor, values(1))
-                    Exit Select
+                    
                 Case 3
                     BorderTopColor = values(0)
                     BorderLeftColor = InlineAssignHelper(BorderRightColor, values(1))
                     BorderBottomColor = values(2)
-                    Exit Select
+                    
                 Case 4
                     BorderTopColor = values(0)
                     BorderRightColor = values(1)
                     BorderBottomColor = values(2)
                     BorderLeftColor = values(3)
-                    Exit Select
+                    
                 Case Else
-                    Exit Select
+                    
             End Select
         End Set
     End Property
@@ -678,24 +678,24 @@ Public Class CssBox
                     CornerNWRadius = r(0).Value
                     CornerSERadius = r(0).Value
                     CornerSWRadius = r(0).Value
-                    Exit Select
+                    
                 Case 2
                     CornerNERadius = r(0).Value
                     CornerNWRadius = r(0).Value
                     CornerSERadius = r(1).Value
                     CornerSWRadius = r(1).Value
-                    Exit Select
+                    
                 Case 3
                     CornerNERadius = r(0).Value
                     CornerNWRadius = r(1).Value
                     CornerSERadius = r(2).Value
-                    Exit Select
+                    
                 Case 4
                     CornerNERadius = r(0).Value
                     CornerNWRadius = r(1).Value
                     CornerSERadius = r(2).Value
                     CornerSWRadius = r(3).Value
-                    Exit Select
+                    
             End Select
 
             _cornerRadius = Value
@@ -766,24 +766,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     MarginTop = InlineAssignHelper(MarginLeft, InlineAssignHelper(MarginRight, InlineAssignHelper(MarginBottom, values(0))))
-                    Exit Select
+                    
                 Case 2
                     MarginTop = InlineAssignHelper(MarginBottom, values(0))
                     MarginLeft = InlineAssignHelper(MarginRight, values(1))
-                    Exit Select
+                    
                 Case 3
                     MarginTop = values(0)
                     MarginLeft = InlineAssignHelper(MarginRight, values(1))
                     MarginBottom = values(2)
-                    Exit Select
+                    
                 Case 4
                     MarginTop = values(0)
                     MarginRight = values(1)
                     MarginBottom = values(2)
                     MarginLeft = values(3)
-                    Exit Select
+                    
                 Case Else
-                    Exit Select
+                    
 
             End Select
         End Set
@@ -850,24 +850,24 @@ Public Class CssBox
             Select Case values.Length
                 Case 1
                     PaddingTop = InlineAssignHelper(PaddingLeft, InlineAssignHelper(PaddingRight, InlineAssignHelper(PaddingBottom, values(0))))
-                    Exit Select
+                    
                 Case 2
                     PaddingTop = InlineAssignHelper(PaddingBottom, values(0))
                     PaddingLeft = InlineAssignHelper(PaddingRight, values(1))
-                    Exit Select
+                    
                 Case 3
                     PaddingTop = values(0)
                     PaddingLeft = InlineAssignHelper(PaddingRight, values(1))
                     PaddingBottom = values(2)
-                    Exit Select
+                    
                 Case 4
                     PaddingTop = values(0)
                     PaddingRight = values(1)
                     PaddingBottom = values(2)
                     PaddingLeft = values(3)
-                    Exit Select
+                    
                 Case Else
-                    Exit Select
+                    
             End Select
         End Set
     End Property
@@ -1283,22 +1283,22 @@ Public Class CssBox
             Select Case Value
                 Case CssConstants.Serif
                     _fontFamily = CssDefaults.FontSerif
-                    Exit Select
+                    
                 Case CssConstants.SansSerif
                     _fontFamily = CssDefaults.FontSansSerif
-                    Exit Select
+                    
                 Case CssConstants.Cursive
                     _fontFamily = CssDefaults.FontCursive
-                    Exit Select
+                    
                 Case CssConstants.Fantasy
                     _fontFamily = CssDefaults.FontFantasy
-                    Exit Select
+                    
                 Case CssConstants.Monospace
                     _fontFamily = CssDefaults.FontMonospace
-                    Exit Select
+                    
                 Case Else
                     _fontFamily = Value
-                    Exit Select
+                    
             End Select
         End Set
     End Property
@@ -1902,34 +1902,34 @@ Public Class CssBox
                 Select Case FontSize
                     Case CssConstants.Medium
                         fsize = CssDefaults.FontSize
-                        Exit Select
+                        
                     Case CssConstants.XXSmall
                         fsize = CssDefaults.FontSize - 4
-                        Exit Select
+                        
                     Case CssConstants.XSmall
                         fsize = CssDefaults.FontSize - 3
-                        Exit Select
+                        
                     Case CssConstants.Small
                         fsize = CssDefaults.FontSize - 2
-                        Exit Select
+                        
                     Case CssConstants.Large
                         fsize = CssDefaults.FontSize + 2
-                        Exit Select
+                        
                     Case CssConstants.XLarge
                         fsize = CssDefaults.FontSize + 3
-                        Exit Select
+                        
                     Case CssConstants.XXLarge
                         fsize = CssDefaults.FontSize + 4
-                        Exit Select
+                        
                     Case CssConstants.Smaller
                         fsize = parentSize - 2
-                        Exit Select
+                        
                     Case CssConstants.Larger
                         fsize = parentSize + 2
-                        Exit Select
+                        
                     Case Else
                         fsize = CssValue.ParseLength(FontSize, parentSize, Me, parentSize, True)
-                        Exit Select
+                        
                 End Select
 
                 If fsize <= 1.0F Then

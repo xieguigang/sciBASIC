@@ -357,7 +357,7 @@ Namespace Matrix
                                 End If
                             Next
                         End If
-                        Exit Select
+                        
 
                 ' Split at negligible s(k).
 
@@ -382,7 +382,7 @@ Namespace Matrix
                                 End If
                             Next
                         End If
-                        Exit Select
+                        
 
                 ' Perform one qr step.
 
@@ -449,7 +449,7 @@ Namespace Matrix
                             e(p - 2) = f
                             iter = iter + 1
                         End If
-                        Exit Select
+                        
 
                 ' Convergence.
 
@@ -495,7 +495,7 @@ Namespace Matrix
                             iter = 0
                             p -= 1
                         End If
-                        Exit Select
+                        
                 End Select
             End While
         End Sub

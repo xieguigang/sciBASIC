@@ -121,65 +121,65 @@ Public Class HtmlTag
 					Else
 						box.VerticalAlign = value
 					End If
-					Exit Select
-				Case HtmlConstants.background
-					box.BackgroundImage = value
-					Exit Select
-				Case HtmlConstants.bgcolor
-					box.BackgroundColor = value
-					Exit Select
-				Case HtmlConstants.border
-					box.BorderWidth = TranslateLength(value)
 
-					If t = HtmlConstants.TABLE Then
-						ApplyTableBorder(box, value)
-					Else
-						box.BorderStyle = CssConstants.Solid
-					End If
-					Exit Select
-				Case HtmlConstants.bordercolor
-					box.BorderColor = value
-					Exit Select
-				Case HtmlConstants.cellspacing
-					box.BorderSpacing = TranslateLength(value)
-					Exit Select
-				Case HtmlConstants.cellpadding
-					ApplyTablePadding(box, value)
-					Exit Select
-				Case HtmlConstants.color
-					box.Color = value
-					Exit Select
-				Case HtmlConstants.dir
-					box.Direction = value
-					Exit Select
-				Case HtmlConstants.face
-					box.FontFamily = value
-					Exit Select
-				Case HtmlConstants.height
-					box.Height = TranslateLength(value)
-					Exit Select
-				Case HtmlConstants.hspace
-					box.MarginRight = InlineAssignHelper(box.MarginLeft, TranslateLength(value))
-					Exit Select
-				Case HtmlConstants.nowrap
-					box.WhiteSpace = CssConstants.Nowrap
-					Exit Select
-				Case HtmlConstants.size
-					If t = HtmlConstants.HR Then
-						box.Height = TranslateLength(value)
-					End If
-					Exit Select
-				Case HtmlConstants.valign
-					box.VerticalAlign = value
-					Exit Select
-				Case HtmlConstants.vspace
-					box.MarginTop = InlineAssignHelper(box.MarginBottom, TranslateLength(value))
-					Exit Select
-				Case HtmlConstants.width
-					box.Width = TranslateLength(value)
-					Exit Select
+                Case HtmlConstants.background
+                    box.BackgroundImage = value
 
-			End Select
+                Case HtmlConstants.bgcolor
+                    box.BackgroundColor = value
+
+                Case HtmlConstants.border
+                    box.BorderWidth = TranslateLength(value)
+
+                    If t = HtmlConstants.TABLE Then
+                        ApplyTableBorder(box, value)
+                    Else
+                        box.BorderStyle = CssConstants.Solid
+                    End If
+
+                Case HtmlConstants.bordercolor
+                    box.BorderColor = value
+
+                Case HtmlConstants.cellspacing
+                    box.BorderSpacing = TranslateLength(value)
+
+                Case HtmlConstants.cellpadding
+                    ApplyTablePadding(box, value)
+
+                Case HtmlConstants.color
+                    box.Color = value
+
+                Case HtmlConstants.dir
+                    box.Direction = value
+
+                Case HtmlConstants.face
+                    box.FontFamily = value
+
+                Case HtmlConstants.height
+                    box.Height = TranslateLength(value)
+
+                Case HtmlConstants.hspace
+                    box.MarginRight = InlineAssignHelper(box.MarginLeft, TranslateLength(value))
+
+                Case HtmlConstants.nowrap
+                    box.WhiteSpace = CssConstants.Nowrap
+
+                Case HtmlConstants.size
+                    If t = HtmlConstants.HR Then
+                        box.Height = TranslateLength(value)
+                    End If
+
+                Case HtmlConstants.valign
+                    box.VerticalAlign = value
+
+                Case HtmlConstants.vspace
+                    box.MarginTop = InlineAssignHelper(box.MarginBottom, TranslateLength(value))
+
+                Case HtmlConstants.width
+                    box.Width = TranslateLength(value)
+
+
+            End Select
 		Next
 	End Sub
 

@@ -9,14 +9,6 @@ Imports System.Drawing
 
 Public NotInheritable Class CssValue
 
-    Private Sub New()
-    End Sub
-
-    Shared Sub New()
-        'Add this assembly as a reference
-        References.Add(Assembly.GetExecutingAssembly())
-    End Sub
-
     ''' <summary>
     ''' Evals a number and returns it. If number is a percentage, it will be multiplied by <paramref name="hundredPercent"/>
     ''' </summary>
@@ -95,22 +87,22 @@ Public NotInheritable Class CssValue
         Select Case unit
             Case CssConstants.Em
                 factor = emFactor
-                Exit Select
+
             Case CssConstants.Px
                 factor = 1.0F
-                Exit Select
+
             Case CssConstants.Mm
                 factor = 3.0F
                 '3 pixels per millimeter
-                Exit Select
+
             Case CssConstants.Cm
                 factor = 37.0F
                 '37 pixels per centimeter
-                Exit Select
+
             Case CssConstants.[In]
                 factor = 96.0F
                 '96 pixels per inch
-                Exit Select
+
             Case CssConstants.Pt
                 factor = 96.0F / 72.0F
                 ' 1 point = 1/72 of inch
@@ -118,14 +110,14 @@ Public NotInheritable Class CssValue
                     Return ParseNumber(number, hundredPercent)
                 End If
 
-                Exit Select
+
             Case CssConstants.Pc
                 factor = 96.0F / 72.0F * 12.0F
                 ' 1 pica = 12 points
-                Exit Select
+
             Case Else
                 factor = 0F
-                Exit Select
+
         End Select
 
 
@@ -192,55 +184,55 @@ Public NotInheritable Class CssValue
             Select Case colorValue
                 Case CssConstants.Maroon
                     hex = "#800000"
-                    Exit Select
+
                 Case CssConstants.Red
                     hex = "#ff0000"
-                    Exit Select
+
                 Case CssConstants.Orange
                     hex = "#ffA500"
-                    Exit Select
+
                 Case CssConstants.Olive
                     hex = "#808000"
-                    Exit Select
+
                 Case CssConstants.Purple
                     hex = "#800080"
-                    Exit Select
+
                 Case CssConstants.Fuchsia
                     hex = "#ff00ff"
-                    Exit Select
+
                 Case CssConstants.White
                     hex = "#ffffff"
-                    Exit Select
+
                 Case CssConstants.Lime
                     hex = "#00ff00"
-                    Exit Select
+
                 Case CssConstants.Green
                     hex = "#008000"
-                    Exit Select
+
                 Case CssConstants.Navy
                     hex = "#000080"
-                    Exit Select
+
                 Case CssConstants.Blue
                     hex = "#0000ff"
-                    Exit Select
+
                 Case CssConstants.Aqua
                     hex = "#00ffff"
-                    Exit Select
+
                 Case CssConstants.Teal
                     hex = "#008080"
-                    Exit Select
+
                 Case CssConstants.Black
                     hex = "#000000"
-                    Exit Select
+
                 Case CssConstants.Silver
                     hex = "#c0c0c0"
-                    Exit Select
+
                 Case CssConstants.Gray
                     hex = "#808080"
-                    Exit Select
+
                 Case CssConstants.Yellow
                     hex = "#FFFF00"
-                    Exit Select
+
             End Select
 
             If String.IsNullOrEmpty(hex) Then
@@ -317,15 +309,6 @@ Public NotInheritable Class CssValue
     End Function
 
     ''' <summary>
-    ''' Gets a list of Assembly references used to search for external references
-    ''' </summary>
-    ''' <remarks>
-    ''' This references are used when loading images and other content, when
-    ''' rendering a piece of HTML/CSS
-    ''' </remarks>
-    Public Shared ReadOnly Property References() As New List(Of Assembly)
-
-    ''' <summary>
     ''' Detects the type name in a path. 
     ''' E.g. Gets System.Drawing.Graphics from a path like System.Drawing.Graphics.Clear
     ''' </summary>
@@ -343,7 +326,7 @@ Public NotInheritable Class CssValue
         moreInfo = moreInfo.Replace("(", String.Empty).Replace(")", String.Empty)
 
 
-        For Each a As Assembly In References
+        For Each a As Assembly In HtmlRenderer.References
             Dim t As Type = a.[GetType](type, False, True)
 
             If t IsNot Nothing Then

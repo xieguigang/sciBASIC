@@ -74,7 +74,7 @@ Friend NotInheritable Class CssDrawingHelper
                     corner = CreateCorner(b, r, 1)
                 End If
 
-                Exit Select
+                
             Case Border.Right
                 bwidth = b.ActualBorderRightWidth
                 pts(0) = RoundP(New PointF(r.Right - bwidth, r.Top + b.ActualCornerNE), b)
@@ -92,7 +92,7 @@ Friend NotInheritable Class CssDrawingHelper
                 If b.ActualCornerNE > 0F Then
                     corner = CreateCorner(b, r, 2)
                 End If
-                Exit Select
+                
             Case Border.Bottom
                 bwidth = b.ActualBorderBottomWidth
                 pts(0) = RoundP(New PointF(r.Left + b.ActualCornerSW, r.Bottom - bwidth), b)
@@ -110,7 +110,7 @@ Friend NotInheritable Class CssDrawingHelper
                 If b.ActualCornerSE > 0F Then
                     corner = CreateCorner(b, r, 3)
                 End If
-                Exit Select
+                
             Case Border.Left
                 bwidth = b.ActualBorderLeftWidth
                 pts(0) = RoundP(New PointF(r.Left, r.Top + b.ActualCornerNW), b)
@@ -128,7 +128,7 @@ Friend NotInheritable Class CssDrawingHelper
                 If b.ActualCornerSW > 0F Then
                     corner = CreateCorner(b, r, 4)
                 End If
-                Exit Select
+                
         End Select
 
         Dim path As New GraphicsPath(pts, New Byte() {CByte(PathPointType.Line), CByte(PathPointType.Line), CByte(PathPointType.Line), CByte(PathPointType.Line)})
@@ -162,7 +162,7 @@ Friend NotInheritable Class CssDrawingHelper
                 inner = RectangleF.FromLTRB(outer.Left + b.ActualBorderLeftWidth, outer.Top + b.ActualBorderTopWidth, outer.Right, outer.Bottom)
                 start1 = 180
                 start2 = 270
-                Exit Select
+                
             Case 2
                 outer = New RectangleF(r.Right - b.ActualCornerNE, r.Top, b.ActualCornerNE, b.ActualCornerNE)
                 inner = RectangleF.FromLTRB(outer.Left, outer.Top + b.ActualBorderTopWidth, outer.Right - b.ActualBorderRightWidth, outer.Bottom)
@@ -170,7 +170,7 @@ Friend NotInheritable Class CssDrawingHelper
                 inner.X -= inner.Width
                 start1 = -90
                 start2 = 0
-                Exit Select
+                
             Case 3
                 outer = RectangleF.FromLTRB(r.Right - b.ActualCornerSE, r.Bottom - b.ActualCornerSE, r.Right, r.Bottom)
                 inner = New RectangleF(outer.Left, outer.Top, outer.Width - b.ActualBorderRightWidth, outer.Height - b.ActualBorderBottomWidth)
@@ -180,7 +180,7 @@ Friend NotInheritable Class CssDrawingHelper
                 inner.Y -= inner.Height
                 start1 = 0
                 start2 = 90
-                Exit Select
+                
             Case 4
                 outer = New RectangleF(r.Left, r.Bottom - b.ActualCornerSW, b.ActualCornerSW, b.ActualCornerSW)
                 inner = RectangleF.FromLTRB(r.Left + b.ActualBorderLeftWidth, outer.Top, outer.Right, outer.Bottom - b.ActualBorderBottomWidth)
@@ -188,7 +188,7 @@ Friend NotInheritable Class CssDrawingHelper
                 start2 = 180
                 outer.Y -= outer.Height
                 inner.Y -= inner.Height
-                Exit Select
+                
         End Select
 
         If outer.Width <= 0F Then

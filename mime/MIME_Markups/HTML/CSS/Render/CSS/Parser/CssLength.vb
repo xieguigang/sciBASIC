@@ -91,30 +91,30 @@ Public Class CssLength
 			Case CssConstants.Em
 				_unit = CssUnit.Ems
 				_isRelative = True
-				Exit Select
+				
 			Case CssConstants.Ex
 				_unit = CssUnit.Ex
 				_isRelative = True
-				Exit Select
+				
 			Case CssConstants.Px
 				_unit = CssUnit.Pixels
 				_isRelative = True
-				Exit Select
+				
 			Case CssConstants.Mm
 				_unit = CssUnit.Milimeters
-				Exit Select
+				
 			Case CssConstants.Cm
 				_unit = CssUnit.Centimeters
-				Exit Select
+				
 			Case CssConstants.[In]
 				_unit = CssUnit.Inches
-				Exit Select
+				
 			Case CssConstants.Pt
 				_unit = CssUnit.Points
-				Exit Select
+				
 			Case CssConstants.Pc
 				_unit = CssUnit.Picas
-				Exit Select
+				
 			Case Else
 				_hasError = True
 				Return
@@ -239,31 +239,31 @@ Public Class CssLength
 
 			Select Case Unit
 				Case CssUnit.None
-					Exit Select
+					
 				Case CssUnit.Ems
 					u = "em"
-					Exit Select
+					
 				Case CssUnit.Pixels
 					u = "px"
-					Exit Select
+					
 				Case CssUnit.Ex
 					u = "ex"
-					Exit Select
+					
 				Case CssUnit.Inches
 					u = "in"
-					Exit Select
+					
 				Case CssUnit.Centimeters
 					u = "cm"
-					Exit Select
+					
 				Case CssUnit.Milimeters
 					u = "mm"
-					Exit Select
+					
 				Case CssUnit.Points
 					u = "pt"
-					Exit Select
+					
 				Case CssUnit.Picas
 					u = "pc"
-					Exit Select
+					
 			End Select
 
 			Return String.Format(NumberFormatInfo.InvariantInfo, "{0}{1}", Number, u)

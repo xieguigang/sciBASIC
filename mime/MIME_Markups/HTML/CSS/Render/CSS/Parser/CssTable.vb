@@ -268,12 +268,12 @@ Friend Class CssTable
             Select Case b.Display
                 Case CssConstants.TableCaption
                     _caption = b
-                    Exit Select
+                    
                 Case CssConstants.TableColumn
                     For i As Integer = 0 To GetSpan(b) - 1
                         Columns.Add(CreateColumn(b))
                     Next
-                    Exit Select
+                    
                 Case CssConstants.TableColumnGroup
                     If b.Boxes.Count = 0 Then
                         Dim gspan As Integer = GetSpan(b)
@@ -288,33 +288,33 @@ Friend Class CssTable
                             Next
                         Next
                     End If
-                    Exit Select
+                    
                 Case CssConstants.TableFooterGroup
                     If FooterBox IsNot Nothing Then
                         BodyRows.Add(b)
                     Else
                         _footerBox = b
                     End If
-                    Exit Select
+                    
                 Case CssConstants.TableHeaderGroup
                     If HeaderBox IsNot Nothing Then
                         BodyRows.Add(b)
                     Else
                         _headerBox = b
                     End If
-                    Exit Select
+                    
                 Case CssConstants.TableRow
                     BodyRows.Add(b)
-                    Exit Select
+                    
                 Case CssConstants.TableRowGroup
                     For Each bb As CssBox In b.Boxes
                         If b.Display = CssConstants.TableRow Then
                             BodyRows.Add(b)
                         End If
                     Next
-                    Exit Select
+                    
                 Case Else
-                    Exit Select
+                    
             End Select
         Next
         '#End Region

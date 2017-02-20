@@ -2,10 +2,15 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports System.Reflection
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 
-Public NotInheritable Class HtmlRenderer
-    Private Sub New()
-    End Sub
+''' <summary>
+''' A Professional HTML Renderer You Will Use
+''' 
+''' > https://www.codeproject.com/Articles/32376/A-Professional-HTML-Renderer-You-Will-Use
+''' </summary>
+Public Module HtmlRenderer
+
 #Region "References"
 
     ''' <summary>
@@ -15,25 +20,24 @@ Public NotInheritable Class HtmlRenderer
     ''' This references are used when loading images and other content, when
     ''' rendering a piece of HTML/CSS
     ''' </remarks>
-    Public Shared ReadOnly Property References() As List(Of Assembly)
+    Public ReadOnly Property References() As List(Of Assembly)
 
     ''' <summary>
     ''' Adds a reference to the References list if not yet listed
     ''' </summary>
     ''' <param name="assembly"></param>
-    Friend Shared Sub AddReference(assembly As Assembly)
+    Public Sub AddReference(assembly As Assembly)
         If Not References.Contains(assembly) Then
             References.Add(assembly)
         End If
     End Sub
 
-    Shared Sub New()
+    Sub New()
         'Initialize references list
         _References = New List(Of Assembly)()
         'Add this assembly as a reference
         References.Add(Assembly.GetExecutingAssembly())
     End Sub
-
 #End Region
 
 #Region "Methods"
@@ -45,7 +49,7 @@ Public NotInheritable Class HtmlRenderer
     ''' <param name="html">HTML source</param>
     ''' <param name="location">Point to start drawing</param>
     ''' <param name="width">Width to fit HTML drawing</param>
-    Public Shared Sub Render(g As Graphics, html As String, location As PointF, width As Single)
+    Public Sub Render(g As Graphics, html As String, location As PointF, width As Single)
         Render(g, html, New RectangleF(location, New SizeF(width, 0)), False)
     End Sub
 
@@ -56,7 +60,7 @@ Public NotInheritable Class HtmlRenderer
     ''' <param name="html">HTML source</param>
     ''' <param name="area">Area where HTML should be drawn</param>
     ''' <param name="clip">If true, it will only paint on the specified area</param>
-    Public Shared Sub Render(g As Graphics, html As String, area As RectangleF, clip As Boolean)
+    Public Sub Render(g As Graphics, html As String, area As RectangleF, clip As Boolean)
         Dim container As New InitialContainer(html)
         Dim prevClip As Region = g.Clip
 
@@ -69,9 +73,9 @@ Public NotInheritable Class HtmlRenderer
         container.Paint(g)
 
         If clip Then
-            g.SetClip(prevClip, System.Drawing.Drawing2D.CombineMode.Replace)
+            g.SetClip(prevClip, CombineMode.Replace)
         End If
     End Sub
-
 #End Region
-End Class
+
+End Module
