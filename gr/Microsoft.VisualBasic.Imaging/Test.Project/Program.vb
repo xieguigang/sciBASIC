@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::e120bfc7be2a5f3661b47bae6923a993, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,12 +31,34 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 
 Module Program
 
     Sub Main()
 
-        'Dim html As String = "<font face=""Microsoft YaHei"" size=""25.5""><strong>text</strong><b> &lt;&lt;&lt; <i><font face=""Ubuntu"" size=""12"">value</font></i></b></font> "
+        Dim html As String = "<font face=""Microsoft YaHei"" size=""25.5""><strong><span style=""color:red"">text</span></strong><b> &lt;&lt;&lt; <i><font face=""Ubuntu"" size=""12"">value</font></i></b></font> 
+<br />
+log<sub>2</sub> ratio
+
+<br />
+-log<sub>10</sub>(P-value)
+"
+
+        Dim bitmap As New Bitmap(500, 300)
+
+        Using g As Graphics = Graphics.FromImage(bitmap)
+
+            g.CompositingQuality = Drawing.Drawing2D.CompositingQuality.HighQuality
+            g.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+            Call g.Render(html, New PointF(10, 10), 500)
+
+        End Using
+
+
+        Call bitmap.SaveAs("x:/afsdfsdf.png")
+
+        Pause()
 
         'Dim strings = TextAPI.GetStrings(html)
 

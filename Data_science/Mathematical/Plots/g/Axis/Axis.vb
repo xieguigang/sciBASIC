@@ -41,12 +41,17 @@ Public Module Axis
                         showGrid As Boolean,
                         Optional offset As Point = Nothing,
                         Optional xlabel$ = "",
-                        Optional ylabel$ = "")
+                        Optional ylabel$ = "",
+                        Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
+                        Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left)
         With region
-            Call g.DrawAxis(.Size, .Margin,
+            Call g.DrawAxis(
+                .Size, .Margin,
                 scaler,
                 showGrid,
-                offset, xlabel, ylabel)
+                offset,
+                xlabel, ylabel,
+                xlayout, ylayout)
         End With
     End Sub
 
@@ -58,6 +63,8 @@ Public Module Axis
     ''' <param name="margin"></param>
     ''' <param name="scaler">Drawing Point data auto scaler</param>
     ''' <param name="showGrid">Show axis grid on the plot region?</param>
+    ''' <param name="xlayout">修改y属性</param>
+    ''' <param name="ylayout">修改x属性</param>
     <Extension>
     Public Sub DrawAxis(ByRef g As Graphics,
                         size As Size,
@@ -67,15 +74,17 @@ Public Module Axis
                         Optional offset As Point = Nothing,
                         Optional xlabel$ = "",
                         Optional ylabel$ = "",
-                        Optional labelFontStyle$ = CSSFont.UbuntuLarge)
+                        Optional labelFontStyle$ = CSSFont.UbuntuLarge,
+                        Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
+                        Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left)
 
         Dim ZERO As New Point(margin.Width + offset.X, size.Height - margin.Height + offset.Y) ' 坐标轴原点
         Dim right As New Point(size.Width - margin.Width + offset.X, ZERO.Y + offset.Y)  ' X轴
-        Dim top As New Point(margin.Width + offset.X, margin.Height + offset.Y)       ' Y轴
+        Dim top As New Point(margin.Width + offset.X, margin.Height + offset.Y)          ' Y轴
         Dim pen As New Pen(Color.Black, 5)
 
-        Call g.DrawLine(pen, ZERO, right)
-        Call g.DrawLine(pen, ZERO, top)
+        Call g.DrawLine(pen, ZERO, right)   ' X轴
+        Call g.DrawLine(pen, ZERO, top)     ' y轴
 
         Dim fontLarge As Font = CSSFont.TryParse(labelFontStyle)
         Call g.DrawString(scaler.xmin, fontLarge, Brushes.Black, New PointF(ZERO.X + 10, ZERO.Y + 10))
@@ -135,5 +144,26 @@ Public Module Axis
                 End If
             End If
         Next
+    End Sub
+
+    <Extension> Private Sub DrawY(ByRef g As Graphics, size As Size, margin As Size, label$, scaler As Scaling, layout As YAxisLayoutStyles, offset As Point, labelFont As Font)
+        Dim X%
+
+        Select Case layout
+            Case YAxisLayoutStyles.Centra
+                X = margin.Width + (size.Width / 2) + offset.X
+            Case YAxisLayoutStyles.Right
+                X = size.Width - margin.Width + offset.X
+            Case Else
+                X = margin.Width + offset.X
+        End Select
+
+        Dim ZERO As New Point(X, size.Height - margin.Height + offset.Y) ' 坐标轴原点，需要在这里修改layout
+        Dim top As New Point(X, margin.Height + offset.Y)                ' Y轴
+    End Sub
+
+    <Extension> Private Sub DrawX(ByRef g As Graphics, size As Size, margin As Size, label$, scaler As Scaling, layout As XAxisLayoutStyles, offset As Point, labelFont As Font)
+        Dim ZERO As New Point(margin.Width + offset.X, size.Height - margin.Height + offset.Y) ' 坐标轴原点
+        Dim right As New Point(size.Width - margin.Width + offset.X, ZERO.Y + offset.Y)        ' X轴
     End Sub
 End Module

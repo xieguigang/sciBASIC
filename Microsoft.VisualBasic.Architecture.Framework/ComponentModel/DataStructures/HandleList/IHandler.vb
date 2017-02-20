@@ -82,7 +82,7 @@ Namespace ComponentModel
         End Sub
     End Class
 
-    Public Module AddressDataExtensions
+    Public Module AddressedValueExtensions
 
         <Extension>
         Public Function Vector(Of T As IAddress(Of Integer), TOut)(source As IEnumerable(Of T), length As Integer, getValue As Func(Of T, TOut)) As TOut()

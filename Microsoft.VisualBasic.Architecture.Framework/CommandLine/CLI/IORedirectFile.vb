@@ -217,8 +217,8 @@ Namespace CommandLine
             Return Start(WaitForExit)
         End Function
 
-        Public Function Start(Optional WaitForExit As Boolean = False) As Integer Implements IIORedirectAbstract.Start
-            If WaitForExit Then
+        Public Function Start(Optional waitForExit As Boolean = False) As Integer Implements IIORedirectAbstract.Start
+            If waitForExit Then
                 Return Run()
             Else
                 Call Start(procExitCallback:=Nothing)

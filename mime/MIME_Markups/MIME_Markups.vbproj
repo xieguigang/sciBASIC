@@ -176,6 +176,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml.Serialization" />
@@ -193,6 +194,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HTML\CSS\FontStyle.vb" />
+    <Compile Include="HTML\CSS\Padding.vb" />
+    <Compile Include="HTML\CSS\Render\CssAnonymousBlockBox.vb" />
+    <Compile Include="HTML\CSS\Render\CssAnonymousBox.vb" />
+    <Compile Include="HTML\CSS\Render\CssBlock.vb" />
+    <Compile Include="HTML\CSS\Render\CssBox.vb" />
+    <Compile Include="HTML\CSS\Render\CssBoxWord.vb" />
+    <Compile Include="HTML\CSS\Render\CssBoxWordSplitter.vb" />
+    <Compile Include="HTML\CSS\Render\CssConstants.vb" />
+    <Compile Include="HTML\CSS\Render\CssDefaults.vb" />
+    <Compile Include="HTML\CSS\Render\CssDrawingHelper.vb" />
+    <Compile Include="HTML\CSS\Render\CssLayoutEngine.vb" />
+    <Compile Include="HTML\CSS\Render\CssLength.vb" />
+    <Compile Include="HTML\CSS\Render\CssLineBox.vb" />
+    <Compile Include="HTML\CSS\Render\CssPropertyAttribute.vb" />
+    <Compile Include="HTML\CSS\Render\CssPropertyInheritedAttribute.vb" />
+    <Compile Include="HTML\CSS\Render\CssRectangle.vb" />
+    <Compile Include="HTML\CSS\Render\CssTable.vb" />
+    <Compile Include="HTML\CSS\Render\CssValue.vb" />
+    <Compile Include="HTML\Render\HtmlConstants.vb" />
+    <Compile Include="HTML\Render\HtmlRenderer.vb" />
+    <Compile Include="HTML\Render\HtmlTag.vb" />
+    <Compile Include="HTML\Render\InitialContainer.vb" />
+    <Compile Include="HTML\Render\Parser.vb" />
     <Compile Include="HTML\HtmlParser\DocParserAPI.vb" />
     <Compile Include="HTML\TextString.vb" />
     <Compile Include="HTML\Head\Meta.vb" />
@@ -296,6 +320,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HTML\CSS\Render\CSS\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
