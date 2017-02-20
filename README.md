@@ -286,13 +286,16 @@ Dim max As int = 200
 Dim x% = 199
 
 ' Compares
-println(min <= x < max) ' True
+Call println(min <= x < max) ' True
 x += 10 ' 209
-println(min <= x < max) ' False
+Call println(min <= x < max) ' False
 x = -1
-println(min <= x < max) ' False
+Call println(min <= x < max) ' False
+```
 
-' inline
++ inline calculation and value assign
+
+```vbnet
 Dim bitChunk As Byte() = New Byte(INT64 - 1) {}
 Dim p As int = Scan0
 
