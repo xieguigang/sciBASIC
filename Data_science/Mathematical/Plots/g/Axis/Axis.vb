@@ -46,7 +46,7 @@ Public Module Axis
                         Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left)
         With region
             Call g.DrawAxis(
-                .Size, .Margin,
+                .Size, .Padding,
                 scaler,
                 showGrid,
                 offset,
@@ -58,9 +58,9 @@ Public Module Axis
     ''' <summary>
     ''' 
     ''' </summary>
+    ''' <param name="padding">需要根据这个值来计算出坐标轴的layout.</param>
     ''' <param name="g"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="scaler">Drawing Point data auto scaler</param>
     ''' <param name="showGrid">Show axis grid on the plot region?</param>
     ''' <param name="xlayout">修改y属性</param>
@@ -68,7 +68,7 @@ Public Module Axis
     <Extension>
     Public Sub DrawAxis(ByRef g As Graphics,
                         size As Size,
-                        margin As Size,
+                        padding As Padding,
                         scaler As Scaling,
                         showGrid As Boolean,
                         Optional offset As Point = Nothing,
