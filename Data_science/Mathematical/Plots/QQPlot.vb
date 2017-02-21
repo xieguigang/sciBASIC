@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d923c82f023d9b80d35f44f5c2ad4ee8, ..\sciBASIC#\Data_science\Mathematical\Plots\QQPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Quantile
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 ''' <summary>
 ''' Q-Q plot(Quantile-Quantile Plot)
@@ -71,13 +72,12 @@ Public Module QQPlot
     ''' <param name="x"></param>
     ''' <param name="y"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg$"></param>
     ''' <param name="ptSize!"></param>
     ''' <returns></returns>
     Public Function Plot(x#(), y#(),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional xcol$ = "black",
                          Optional ycol$ = "black",
@@ -118,6 +118,7 @@ Public Module QQPlot
             Function(n) screen(n, y#).Length)
         Dim xlMax% = Xlv.Values.Max,
             ylMax% = Ylv.Values.Max
+        Dim margin As Padding = padding
 
         If size.IsEmpty Then
             size = New Size(3000, 3000)
@@ -126,15 +127,15 @@ Public Module QQPlot
         Return GraphicsPlots(size, margin, bg,
             Sub(ByRef g, region)
                 ' canvas width/height
-                Dim cw! = region.Size.Width% - region.Margin.Width% * 2  ' x轴的长度为y向量的高
-                Dim ch! = region.Size.Height - region.Margin.Height * 2  ' y轴的长度为x向量的高
-                Dim Xbottom! = region.Size.Height - region.Margin.Height
-                Dim Ybottom! = region.Size.Width - region.Margin.Width
+                Dim cw! = region.Size.Width% - region.Padding.Horizontal   ' x轴的长度为y向量的高
+                Dim ch! = region.Size.Height - region.Padding.Vertical   ' y轴的长度为x向量的高
+                Dim Xbottom! = region.Size.Height - region.Padding.Top
+                Dim Ybottom! = region.Size.Width - region.Padding.Left
                 Dim yh As Func(Of Integer, Single) = Function(n) Ybottom - cw! * (n / ylMax)  ' x 轴为y的高
                 Dim xh As Func(Of Integer, Single) = Function(n) Xbottom - ch! * (n / xlMax)  ' y 轴为x的高
                 Dim dx! = cw! / q#.Length
                 Dim dy! = ch! / q#.Length
-                Dim left! = margin.Width
+                Dim left! = margin.Left
                 Dim top! = Xbottom
                 Dim bx As New SolidBrush(xcol.ToColor)
                 Dim by As New SolidBrush(ycol.ToColor)
