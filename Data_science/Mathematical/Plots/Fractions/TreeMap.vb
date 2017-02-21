@@ -42,22 +42,18 @@ Public Module TreeMap
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg$"></param>
     ''' <returns></returns>
     Public Function Plot(data As IEnumerable(Of Fractions),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = "padding: 350 100 350 100;",
                          Optional bg$ = "white") As Bitmap
 
         Dim array As List(Of Fractions) =
             data _
             .OrderByDescending(Function(x) x.Percentage) _
             .ToList
-
-        If margin.IsEmpty Then
-            margin = New Size(100, 350)
-        End If
+        Dim margin As Padding = padding
 
         Return GraphicsPlots(
             size, margin,
@@ -65,13 +61,13 @@ Public Module TreeMap
             Sub(ByRef g, region)
 
                 Dim rect As New Rectangle(
-                    New Point(margin.Width, margin.Height),
-                    New Size(size.Width - margin.Width * 2,
-                             size.Height - margin.Width - margin.Height))
+                    New Point(margin.Left, margin.Top),
+                    New Size(size.Width - margin.Horizontal,
+                             size.Height - margin.Left - margin.Top))
 
                 Dim f As Boolean = True ' true -> width percentage; false -> height percentage
                 Dim width! = rect.Width, height! = rect.Height
-                Dim x! = margin.Width, y! = margin.Height
+                Dim x! = margin.Left, y! = margin.Top
                 Dim drawW!, drawH!
                 Dim labels As New List(Of Fractions)
 
