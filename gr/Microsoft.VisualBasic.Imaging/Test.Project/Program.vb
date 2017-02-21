@@ -66,6 +66,10 @@ log<sub>2</sub> ratio
             g.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
             Call g.Render(html, New PointF(10, 10), 500)
 
+
+            Call Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text.TextRender.RenderHTML(g, "<span style=""color:lime"">Green Color Text</span>", CSSFont.PlotTitle, New PointF(0, 200))
+
+
         End Using
 
 
