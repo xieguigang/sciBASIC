@@ -256,12 +256,12 @@ Public Class Scaling
         Return New PointF(px!, py!)
     End Function
 
-    Public Function XScaler(size As Size, margin As Size) As Func(Of Single, Single)
-        Dim bottom As Integer = size.Height - margin.Height
-        Dim width As Integer = size.Width - margin.Width * 2
-        Dim height As Integer = size.Height - margin.Height * 2
+    Public Function XScaler(size As Size, margin As Padding) As Func(Of Single, Single)
+        Dim bottom As Integer = size.Height - margin.Bottom
+        Dim width As Integer = size.Width - margin.Horizontal
+        Dim height As Integer = size.Height - margin.Vertical
 
-        Return Function(x) margin.Width + width * (x - xmin) / dx
+        Return Function(x) margin.Left + width * (x - xmin) / dx
     End Function
 
     ''' <summary>
