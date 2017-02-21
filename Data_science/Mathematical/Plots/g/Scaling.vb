@@ -50,14 +50,25 @@ Public Class Scaling
     ReadOnly serials As SerialData()
     ReadOnly hist As HistogramGroup
 
+    ''' <summary>
+    ''' 数据集类型
+    ''' </summary>
     Public ReadOnly type As Type
 
+    ''' <summary>
+    ''' x值的实际范围
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property xrange As DoubleRange
         Get
             Return New DoubleRange(xmin, xmin + dx)
         End Get
     End Property
 
+    ''' <summary>
+    ''' y值的实际范围
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property yrange As DoubleRange
         Get
             Return New DoubleRange(ymin, ymin + dy)
