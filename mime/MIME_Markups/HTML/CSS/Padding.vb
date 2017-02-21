@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting
 
 Namespace HTML.CSS
@@ -51,6 +52,14 @@ Namespace HTML.CSS
                 .Right = right
                 .Bottom = bottom
             End With
+        End Sub
+
+        Sub New(margin As Size)
+            Call Me.New(margin.Width, margin.Height)
+        End Sub
+
+        Sub New(width%, height%)
+            Call Me.New(left:=width, right:=width, top:=height, bottom:=height)
         End Sub
 
         ''' <summary>
@@ -135,14 +144,29 @@ Namespace HTML.CSS
             End Get
         End Property
 
+        ''' <summary>
+        ''' 同时兼容padding css，以及使用size表达式统一赋值
+        ''' </summary>
+        ''' <param name="css$"></param>
+        ''' <returns></returns>
         Public Shared Widening Operator CType(css$) As Padding
-            Dim value$ = css.GetTagValue(":", trim:=True).Value.Trim(";"c)
-            Dim tokens$() = value.Split
+            Dim value As NamedValue(Of String) = css.GetTagValue(":", trim:=True)
+
+            If value.Name.StringEmpty AndAlso css.IndexOf(","c) > -1 Then
+                Dim size As Size = css.SizeParser
+                Return New Padding(margin:=size)
+            End If
+
+            Dim tokens$() = value.Value.Trim(";"c).Split
             Dim vector%() = tokens _
                 .Select(Function(s) CInt(s.ParseNumeric)) _
                 .ToArray
 
-            Return New Padding(vector)
+            If vector.Length = 1 Then  ' all
+                Return New Padding(all:=vector(Scan0))
+            Else
+                Return New Padding(vector)
+            End If
         End Operator
 
         '
