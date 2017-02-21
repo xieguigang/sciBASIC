@@ -77,5 +77,17 @@ Namespace Scripting.Expressions
 
             Return expr
         End Function
+
+        <Extension>
+        Public Function Interpolate(expr$, table As Dictionary(Of String, String), Optional nullAsEmpty As Boolean = False) As String
+            Dim getValue = Function(name$)
+                               If table.ContainsKey(name) Then
+                                   Return table(name$)
+                               Else
+                                   Return Nothing
+                               End If
+                           End Function
+            Return expr.Interpolate(getValue, nullAsEmpty)
+        End Function
     End Module
 End Namespace

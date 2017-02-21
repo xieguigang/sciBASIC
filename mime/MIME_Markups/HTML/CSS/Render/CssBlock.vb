@@ -14,12 +14,6 @@ Namespace HTML.CSS.Render
     ''' http://www.w3.org/TR/CSS21/syndata.html#block
     ''' </remarks>
     Public Class CssBlock
-#Region "Fields"
-        Private _block As String
-        Private _propertyValues As Dictionary(Of PropertyInfo, String)
-        Private _properties As Dictionary(Of String, String)
-
-#End Region
 
 #Region "Ctor"
 
@@ -37,7 +31,7 @@ Namespace HTML.CSS.Render
         ''' <param name="blockSource"></param>
         Public Sub New(blockSource As String)
             Me.New()
-            _block = blockSource
+            _BlockSource = blockSource
 
             'Extract property assignments
             Dim matches As MatchCollection = Parser.Match(Parser.CssProperties, blockSource)
@@ -78,31 +72,16 @@ Namespace HTML.CSS.Render
         ''' Gets the properties and its values
         ''' </summary>
         Public ReadOnly Property Properties() As Dictionary(Of String, String)
-            Get
-                Return _properties
-            End Get
-        End Property
 
         ''' <summary>
         ''' Gets the dictionary with property-ready values
         ''' </summary>
         Public ReadOnly Property PropertyValues() As Dictionary(Of PropertyInfo, String)
-            Get
-                Return _propertyValues
-            End Get
-        End Property
-
 
         ''' <summary>
         ''' Gets the block's source
         ''' </summary>
         Public ReadOnly Property BlockSource() As String
-            Get
-                Return _block
-            End Get
-        End Property
-
-
 #End Region
 
 #Region "Method"
@@ -135,7 +114,6 @@ Namespace HTML.CSS.Render
                 prop.SetValue(b, value, Nothing)
             Next
         End Sub
-
 #End Region
     End Class
 End Namespace
