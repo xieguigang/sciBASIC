@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Data.ChartPlots
+﻿Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
