@@ -67,18 +67,17 @@ Namespace BarPlot
             Return GraphicsPlots(
                 size, margin, bg,
                 Sub(ByRef g, region)
-                    Dim top! = region.PlotRegion.Top
+
                     Dim lefts! = region.PlotRegion.Left
+                    Dim top! = region.PlotRegion.Top
                     Dim mapper As New Scaling(data, stacked, True)
                     Dim n As Integer = If(
-                   stacked,
-                   data.Samples.Length,
-                   data.Samples.Sum(Function(x) x.data.Length))
-                    Dim dy As Double =
-                  (size.Height - 2 * margin.Height - 2 * margin.Height) / n
-                    Dim interval As Double = 2 * margin.Height / n
-                    Dim sx As Func(Of Single, Single) =
-                   mapper.XScaler(size, margin)
+                        stacked,
+                        data.Samples.Length,
+                        data.Samples.Sum(Function(x) x.data.Length))
+                    Dim dy As Double = (size.Height - margin.Vertical - margin.Vertical) / n
+                    Dim interval As Double = margin.Vertical / n
+                    Dim sx As Func(Of Single, Single) = mapper.XScaler(size, margin)
 
                     Call g.DrawAxis(size, margin, mapper, showGrid)
 
@@ -88,7 +87,7 @@ Namespace BarPlot
                         If stacked Then ' 改变Y
                             Dim bottom! = y + dy
                             Dim right = sx(sample.value.StackedSum)
-                            Dim canvasWidth = size.Height - (margin.Height * 2)
+                            Dim canvasWidth = size.Height - (margin.Vertical)
 
                             For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                                 Dim rect As Rectangle = Rectangle(y, lefts, right, bottom)
@@ -131,7 +130,7 @@ Namespace BarPlot
                         }
 
                         If legendPos.IsEmpty Then
-                            legendPos = New Point(CInt(size.Width * 0.8), margin.Height)
+                            legendPos = New Point(CInt(size.Width * 0.8), margin.Top)
                         End If
 
                         Call g.DrawLegends(legendPos, legends,,, legendBorder)
