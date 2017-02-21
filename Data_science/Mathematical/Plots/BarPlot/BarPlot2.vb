@@ -73,7 +73,7 @@ Namespace BarPlot
 
                     Dim lefts! = region.PlotRegion.Left
                     Dim top! = region.PlotRegion.Top
-                    Dim mapper As New Scaling(data, stacked, True)
+                    Dim mapper As New Mapper(New Scaling(data, stacked, True))
                     Dim n As Integer = If(
                         stacked,
                         data.Samples.Length,

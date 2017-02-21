@@ -532,7 +532,7 @@
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\Interface.vb" />
-    <Compile Include="Extensions\Image\Colors\ColorExtensions.vb" />
+    <Compile Include="Extensions\Image\Colors\GDIColors.vb" />
     <Compile Include="Extensions\IO\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />

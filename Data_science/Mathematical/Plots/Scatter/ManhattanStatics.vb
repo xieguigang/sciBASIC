@@ -94,12 +94,13 @@ Public Module ManhattanStatics
                             .errMinus = err.errMinus
                         })
                 }
-                Dim mapper As New Scaling({
+                Dim scalerData As New Scaling({
                     serrPlus,
                     s,
                     serrMinus
                 },
                 absoluteScaling)
+                Dim mapper As New Mapper(scalerData)
 
                 ' 绘制线条以及正负误差线
                 For Each line As SerialData In mapper.ForEach(size, margin)

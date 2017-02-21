@@ -78,7 +78,7 @@ Public Module Scatter
             bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = c.ToArray
-                Dim mapper As New Scaling(array, absoluteScaling)
+                Dim mapper As New Mapper(New Scaling(array, absoluteScaling))
 
                 If drawAxis Then
                     Call g.DrawAxis(size, margin, mapper, showGrid)

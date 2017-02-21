@@ -311,7 +311,7 @@ Public Module ScatterHeatmap
 
         Public Sub Plot(ByRef g As Graphics, region As GraphicsRegion)
             Dim data = GetData(region.PlotRegion.Size)
-            Dim scaler As New Scaling(data)
+            Dim scaler As New Mapper(New Scaling(data))
             Dim xf = scaler.XScaler(region.Size, region.Padding)
             Dim yf = scaler.YScaler(region.Size, region.Padding)
             Dim colorDatas As SolidBrush() = Nothing

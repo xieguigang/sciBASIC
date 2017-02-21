@@ -185,7 +185,7 @@ Namespace BarPlot.Histogram
                 size, margin,
                 bg$,
                 Sub(ByRef g, region)
-                    Dim mapper As New Scaling(groups, False)  ' 这里也不是使用y值来表示数量的，也用相对值
+                    Dim mapper As New Mapper(New Scaling(groups, False)) ' 这里也不是使用y值来表示数量的，也用相对值
                     Dim annotations = groups.Serials.ToDictionary
 
                     Call g.DrawAxis(size, margin, mapper, showGrid,

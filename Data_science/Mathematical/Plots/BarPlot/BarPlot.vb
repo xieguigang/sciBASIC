@@ -109,7 +109,8 @@ Namespace BarPlot
                             legendBorder As Border,
                             legendFont As Font)
 
-            Dim mapper As New Scaling(data, stacked, False)
+            Dim scaler As New Scaling(data, stacked, False)
+            Dim mapper As New Mapper(scaler)
             Dim n As Integer = If(
                 stacked,
                 data.Samples.Length,
