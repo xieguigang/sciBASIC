@@ -118,6 +118,11 @@ Namespace Drawing2D
             End If
         End Sub
 
+        ''' <summary>
+        ''' 同时兼容颜色以及图片纹理画刷的创建
+        ''' </summary>
+        ''' <param name="res$"></param>
+        ''' <returns></returns>
         <Extension> Public Function GetBrush(res$) As Brush
             Dim bgColor As Color = res.ToColor(onFailure:=Nothing)
 

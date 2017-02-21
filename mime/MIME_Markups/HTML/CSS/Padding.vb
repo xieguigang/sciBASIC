@@ -73,6 +73,14 @@ Namespace HTML.CSS
             Left = layoutVector(3)
         End Sub
 
+        Public Function GetCanvasRegion(size As Size) As Rectangle
+            Dim location As New Point(Left, Top)
+            Dim width = size.Width - Horizontal
+            Dim height = size.Height - Vertical
+
+            Return New Rectangle(location, New Size(width, height))
+        End Function
+
         ''' <summary>
         ''' Gets the combined padding for the right and left edges.
         ''' </summary>

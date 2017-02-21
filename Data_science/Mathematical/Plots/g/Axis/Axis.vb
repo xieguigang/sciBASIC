@@ -79,78 +79,48 @@ Namespace Graphic.Axis
                             Optional ylabel$ = "",
                             Optional labelFontStyle$ = CSSFont.UbuntuLarge,
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
-                            Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left)
+                            Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
+                            Optional gridFill$ = "lightgray",
+                            Optional gridColor$ = "white")
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
-
-            'Dim ZERO As New Point(margin.Width + offset.X, size.Height - margin.Height + offset.Y) ' 坐标轴原点
-            'Dim right As New Point(size.Width - margin.Width + offset.X, ZERO.Y + offset.Y)  ' X轴
-            'Dim top As New Point(margin.Width + offset.X, margin.Height + offset.Y)          ' Y轴
             Dim pen As New Pen(Color.Black, 5)
+            Dim rect As Rectangle = padding.GetCanvasRegion(size)
+            Dim tickFont As New Font(FontFace.MicrosoftYaHei, 14)
+            Dim sx = scaler.XScaler(size, padding)
+            Dim sy = scaler.YScaler(size, padding)
+            Dim gridPenX As New Pen(gridColor.TranslateColor, 1) With {
+                .DashStyle = Drawing2D.DashStyle.Dash
+            }
+            Dim gridPenY As New Pen(gridColor.TranslateColor, 1) With {
+                .DashStyle = Drawing2D.DashStyle.Dot
+            }
+            Dim gridFillBrush As Brush = gridFill.GetBrush
 
-            '
+            If scaler.dx <> 0R Then
+                For Each tick In scaler.xAxis
+                    Dim x = sx(tick) + offset.X
+                    Dim top As New Point(x, rect.Top)
+                    Dim bottom As New Point(x, rect.Bottom)
 
-            'Dim fontLarge As Font = CSSFont.TryParse(labelFontStyle)
-            'Call g.DrawString(scaler.xmin, fontLarge, Brushes.Black, New PointF(ZERO.X + 10, ZERO.Y + 10))
-            'Call g.DrawString(xlabel, fontLarge, Brushes.Black, New PointF(right.X + 20, right.Y - 5))
-            'Call g.DrawString(ylabel, fontLarge, Brushes.Black, New PointF(top.X - 10, top.Y - 50))
+                    ' 绘制x网格线
+                    Call g.DrawLine(gridPenX, top, bottom)
+                Next
+            End If
 
-            Dim fontSmall As New Font(FontFace.MicrosoftYaHei, 14)
+            If scaler.dy <> 0R Then
+                For Each tick In scaler.yAxis
+                    Dim y = sy(tick) + offset.Y
+                    Dim left As New Point(rect.Left, y)
+                    Dim right As New Point(rect.Right, y)
 
-            'Dim dx As Double() = AxisScalling.GetAxisValues(scaler.xrange) '+ scaler.xmin
-            'Dim dy As Double() = AxisScalling.GetAxisValues(scaler.yrange) '+ scaler.ymin
-            'Dim sx = scaler.XScaler(size, margin)
-            'Dim sy = scaler.YScaler(size, margin)
-            'Dim gridPenX As New Pen(Color.LightGray, 1) With {
-            '    .DashStyle = Drawing2D.DashStyle.Dash
-            '}
-            'Dim gridPenY As New Pen(Color.LightGray, 1) With {
-            '    .DashStyle = Drawing2D.DashStyle.Dot
-            '}
+                    ' 绘制y网格线
+                    Call g.DrawLine(gridPenY, left, right)
+                Next
+            End If
 
-            'pen = New Pen(Color.Black, 3)
-            'fontLarge = New Font(FontFace.MicrosoftYaHei, 20, FontStyle.Regular)
-
-            'For i As Integer = 0 To 9
-            '    Dim label# = dx(i)
-            '    Dim sz As SizeF
-
-            '    If scaler.dx <> 0R Then
-            '        Dim x = sx(label) + offset.X
-            '        Dim axisX As New PointF(x, ZERO.Y)
-
-            '        Dim labelText = (label).FormatNumeric(2)
-            '        sz = g.MeasureString(labelText, fontLarge)
-
-            '        Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + margin.Height * 0.2))
-            '        Call g.DrawString(labelText, fontLarge, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + margin.Height * 0.3))
-
-            '        If showGrid Then
-            '            Call g.DrawLine(gridPenX, axisX, New PointF(x, margin.Height))
-            '        End If
-            '    End If
-
-            '    label = dy(i)
-
-            '    If scaler.dy <> 0R Then
-            '        Dim y = sy(label) + offset.Y
-            '        Dim axisY As New PointF(ZERO.X, y)
-            '        Dim ddd = 10
-
-            '        Call g.DrawLine(pen, axisY, New PointF(ZERO.X - ddd, y))
-
-            '        Dim labelText = (label).FormatNumeric(2)
-            '        sz = g.MeasureString(labelText, fontSmall)
-            '        g.DrawString(labelText, fontSmall, Brushes.Black, New Point(ZERO.X - ddd - sz.Width, y - sz.Height / 2))
-
-            '        If showGrid Then
-            '            Call g.DrawLine(gridPenY, axisY, New PointF(size.Width - margin.Width, y))
-            '        End If
-            '    End If
-            'Next
-
-            Call g.DrawX(size, padding, pen, xlabel, scaler, xlayout, offset, labelFontStyle, fontSmall)
-            Call g.DrawY(size, padding, pen, ylabel, scaler, ylayout, offset, labelFontStyle, fontSmall)
+            Call g.DrawX(size, padding, pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont)
+            Call g.DrawY(size, padding, pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont)
         End Sub
 
         Public Property ddd As Integer = 10
