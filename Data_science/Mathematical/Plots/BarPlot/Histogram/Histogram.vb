@@ -55,16 +55,15 @@ Namespace BarPlot.Histogram
         ''' <param name="color$">histogram bar fill color</param>
         ''' <param name="bg$">Output image background color</param>
         ''' <param name="size"></param>
-        ''' <param name="margin"></param>
         ''' <param name="showGrid"></param>
         ''' <returns></returns>
         <Extension>
         Public Function Plot(data As IEnumerable(Of HistogramData),
-                         Optional color$ = "darkblue",
-                         Optional bg$ = "white",
-                         Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
-                         Optional showGrid As Boolean = True) As Bitmap
+                             Optional color$ = "darkblue",
+                             Optional bg$ = "white",
+                             Optional size As Size = Nothing,
+                             Optional padding$ = g.DefaultPadding,
+                             Optional showGrid As Boolean = True) As Bitmap
 
             Return New HistogramGroup With {
                 .Serials = {
@@ -84,7 +83,7 @@ Namespace BarPlot.Histogram
                     .data = data.ToArray
                 }
             }
-        }.Plot(bg, size, margin, showGrid)
+        }.Plot(bg, size, padding, showGrid)
         End Function
 
         ''' <summary>
@@ -97,18 +96,17 @@ Namespace BarPlot.Histogram
         ''' <param name="color$"></param>
         ''' <param name="bg$"></param>
         ''' <param name="size"></param>
-        ''' <param name="margin"></param>
         ''' <param name="showGrid"></param>
         ''' <returns></returns>
         Public Function Plot(data As IEnumerable(Of Double), xrange As DoubleRange,
                              Optional color$ = "darkblue",
                              Optional bg$ = "white",
                              Optional size As Size = Nothing,
-                             Optional margin As Size = Nothing,
+                             Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True) As Bitmap
 
             Dim hist As New HistProfile(data, xrange)
-            Return Plot(hist.data, color, bg, size, margin, showGrid)
+            Return Plot(hist.data, color, bg, size, padding, showGrid)
         End Function
 
         Public Function Plot(xrange As DoubleRange, expression As Func(Of Double, Double),
@@ -116,13 +114,13 @@ Namespace BarPlot.Histogram
                          Optional color$ = "darkblue",
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional showGrid As Boolean = True) As Bitmap
             Dim data As IEnumerable(Of Double) =
-            xrange _
-            .seq(steps) _
-            .Select(expression)
-            Return Plot(data, xrange, color, bg, size, margin, showGrid)
+                xrange _
+                .seq(steps) _
+                .Select(expression)
+            Return Plot(data, xrange, color, bg, size, padding, showGrid)
         End Function
 
         ''' <summary>
@@ -134,16 +132,15 @@ Namespace BarPlot.Histogram
         ''' <param name="color$">The histogram bar fill color</param>
         ''' <param name="bg$"></param>
         ''' <param name="size"></param>
-        ''' <param name="margin"></param>
         ''' <param name="showGrid"></param>
         ''' <returns></returns>
         Public Function Plot(xrange As NamedValue(Of DoubleRange), expression$,
-                         Optional steps# = 0.01,
-                         Optional color$ = "darkblue",
-                         Optional bg$ = "white",
-                         Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
-                         Optional showGrid As Boolean = True) As Bitmap
+                             Optional steps# = 0.01,
+                             Optional color$ = "darkblue",
+                             Optional bg$ = "white",
+                             Optional size As Size = Nothing,
+                             Optional padding$ = g.DefaultPadding,
+                             Optional showGrid As Boolean = True) As Bitmap
             Dim data As New List(Of Double)
             Dim engine As New Expression
 
@@ -152,7 +149,7 @@ Namespace BarPlot.Histogram
                 data += engine.Evaluation(expression$)
             Next
 
-            Return Plot(data, xrange.Value, color, bg, size, margin, showGrid)
+            Return Plot(data, xrange.Value, color, bg, size, padding, showGrid)
         End Function
 
         ''' <summary>
@@ -161,7 +158,6 @@ Namespace BarPlot.Histogram
         ''' <param name="groups"></param>
         ''' <param name="bg$"></param>
         ''' <param name="size"></param>
-        ''' <param name="margin"></param>
         ''' <param name="showGrid"></param>
         ''' <param name="legendPos">The legend position on the output image.</param>
         ''' <param name="legendBorder"></param>
@@ -171,7 +167,7 @@ Namespace BarPlot.Histogram
         Public Function Plot(groups As HistogramGroup,
                              Optional bg$ = "white",
                              Optional size As Size = Nothing,
-                             Optional margin As Size = Nothing,
+                             Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True,
                              Optional legendPos As Point = Nothing,
                              Optional legendBorder As Border = Nothing,
@@ -180,6 +176,8 @@ Namespace BarPlot.Histogram
                              Optional showTagChartLayer As Boolean = False,
                              Optional xlabel$ = "X",
                              Optional axisLabelFontStyle$ = CSSFont.Win7LargerBold) As Bitmap
+
+            Dim margin As Padding = padding
 
             Return GraphicsPlots(
                 size, margin,
@@ -222,7 +220,7 @@ Namespace BarPlot.Histogram
                         Dim chart As Bitmap = Scatter.Plot(
                             serials,
                             size:=size,
-                            margin:=margin,
+                            padding:=margin,
                             bg:="transparent",
                             showGrid:=False,
                             showLegend:=False,
@@ -235,7 +233,7 @@ Namespace BarPlot.Histogram
                     If legendPos.IsEmpty Then
                         legendPos = New Point(
                             CInt(size.Width * 0.8),
-                            margin.Height)
+                            margin.Top)
                     End If
 
                     Call g.DrawLegends(
@@ -256,7 +254,6 @@ Namespace BarPlot.Histogram
         ''' <param name="color$"></param>
         ''' <param name="bg$"></param>
         ''' <param name="size"></param>
-        ''' <param name="margin"></param>
         ''' <param name="showGrid"></param>
         ''' <returns></returns>
         <Extension>
@@ -266,7 +263,7 @@ Namespace BarPlot.Histogram
                                       Optional color$ = "lightblue",
                                       Optional bg$ = "white",
                                       Optional size As Size = Nothing,
-                                      Optional margin As Size = Nothing,
+                                      Optional padding$ = DefaultPadding,
                                       Optional showGrid As Boolean = True,
                                       Optional ByRef histData As IntegerTagged(Of Double)() = Nothing,
                                       Optional xlabel$ = "X") As Bitmap
@@ -289,7 +286,7 @@ Namespace BarPlot.Histogram
                 histData = .Values.ToArray
 
                 Return group.Plot(
-                    bg:=bg, margin:=margin, size:=size,
+                    bg:=bg, padding:=padding, size:=size,
                     showGrid:=showGrid,
                     showTagChartLayer:=False,
                     xlabel:=xlabel)

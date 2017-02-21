@@ -145,6 +145,15 @@ Namespace HTML.CSS
         End Property
 
         ''' <summary>
+        ''' 转换为css字符串
+        ''' </summary>
+        ''' <param name="padding"></param>
+        ''' <returns></returns>
+        Public Shared Narrowing Operator CType(padding As Padding) As String
+            Return padding.ToString
+        End Operator
+
+        ''' <summary>
         ''' 同时兼容padding css，以及使用size表达式统一赋值
         ''' </summary>
         ''' <param name="css$"></param>

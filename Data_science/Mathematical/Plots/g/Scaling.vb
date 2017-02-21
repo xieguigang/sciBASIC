@@ -198,18 +198,18 @@ Public Class Scaling
     ''' 返回的系列是已经被转换过的，直接使用来进行画图
     ''' </summary>
     ''' <returns></returns>
-    Public Iterator Function ForEach_histSample(size As Size, margin As Size) As IEnumerable(Of HistProfile)
-        Dim bottom As Integer = size.Height - margin.Height
-        Dim width As Integer = size.Width - margin.Width * 2
-        Dim height As Integer = size.Height - margin.Height * 2
+    Public Iterator Function ForEach_histSample(size As Size, margin As Padding) As IEnumerable(Of HistProfile)
+        Dim bottom As Integer = size.Height - margin.Bottom
+        Dim width As Integer = size.Width - margin.Horizontal
+        Dim height As Integer = size.Height - margin.Vertical
 
         For Each histData As HistProfile In hist.Samples
             Dim pts = LinqAPI.Exec(Of HistogramData) <=
  _
                 From p As HistogramData
                 In histData.data
-                Let px1 As Single = margin.Width + width * (p.x1 - xmin) / dx
-                Let px2 As Single = margin.Width + width * (p.x2 - xmin) / dx
+                Let px1 As Single = margin.Left + width * (p.x1 - xmin) / dx
+                Let px2 As Single = margin.Left + width * (p.x2 - xmin) / dx
                 Let py As Single = bottom - height * (p.y - ymin) / dy
                 Select New HistogramData With {
                     .x1 = px1,
