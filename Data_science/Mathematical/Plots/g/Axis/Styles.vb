@@ -14,6 +14,7 @@ Namespace Graphic.Axis
         ''' x轴位于图表的底部
         ''' </summary>
         Bottom
+        None
     End Enum
 
     Public Enum YAxisLayoutStyles
@@ -29,5 +30,6 @@ Namespace Graphic.Axis
         ''' y轴位于图表的右侧
         ''' </summary>
         Right
+        None
     End Enum
 End Namespace

@@ -158,11 +158,11 @@ Namespace Graphic.Legend
         ''' <param name="d%">Interval distance between the legend graphics.</param>
         <Extension>
         Public Sub DrawLegends(ByRef g As Graphics,
-                           topLeft As Point,
-                           ls As IEnumerable(Of Legend),
-                           Optional graphicSize As SizeF = Nothing,
-                           Optional d% = 10,
-                           Optional border As Border = Nothing)
+                               topLeft As Point,
+                               ls As IEnumerable(Of Legend),
+                               Optional graphicSize As SizeF = Nothing,
+                               Optional d% = 10,
+                               Optional border As Border = Nothing)
 
             If graphicSize.IsEmpty Then
                 graphicSize = New SizeF(120.0!, 45.0!)
