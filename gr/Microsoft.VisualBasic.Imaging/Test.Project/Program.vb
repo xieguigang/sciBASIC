@@ -31,27 +31,44 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 
 Module Program
 
     Sub Main()
 
-        Dim html As String = "<font face=""Microsoft YaHei"" size=""25.5""><strong><span style=""color:red"">text</span></strong><b> &lt;&lt;&lt; <i><font face=""Ubuntu"" size=""12"">value</font></i></b></font> 
+        Dim html As String = "
+<html>
+<head>
+<style type=""text/css"">
+body {" & CSSFont.UbuntuLarge & "}
+</style>
+</head>
+<body>
+
+<strong><span style=""color:red"">text</span></strong><b> &lt;&lt;&lt; <i>value</i></b> 
 <br />
 log<sub>2</sub> ratio
 
 <br />
 -log<sub>10</sub>(P-value)
+</body>
+</html>
 "
 
         Dim bitmap As New Bitmap(500, 300)
 
         Using g As Graphics = Graphics.FromImage(bitmap)
 
+            g.Clear(Color.White)
             g.CompositingQuality = Drawing.Drawing2D.CompositingQuality.HighQuality
             g.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
             Call g.Render(html, New PointF(10, 10), 500)
+
+
+            Call Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text.TextRender.RenderHTML(g, "<span style=""color:lime"">Green Color Text</span>", CSSFont.PlotTitle, New PointF(0, 200))
+
 
         End Using
 

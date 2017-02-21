@@ -53,7 +53,7 @@ Namespace HTML.Render
         ''' <param name="location">Point to start drawing</param>
         ''' <param name="width">Width to fit HTML drawing</param>
         <Extension> Public Sub Render(g As Graphics, html As String, location As PointF, width As Single)
-            Render(g, html, New RectangleF(location, New SizeF(width, 0)), False)
+            Call Render(g, html, New RectangleF(location, New SizeF(width, 0)), False)
         End Sub
 
         ''' <summary>

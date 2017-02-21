@@ -2248,22 +2248,36 @@ Public Module Extensions
         Next
     End Sub
 
+#Region "Removes Last Element"
+
     ''' <summary>
-    ''' Removes the last element in the List object.
+    ''' Removes the last element in the List object.(这个拓展函数同时兼容.NET框架的list类型以及sciBASIC之中的list类型)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="dotNETlist"></param>
+    ''' <returns></returns>
+    <Extension> Public Function RemoveLast(Of T)(ByRef dotNETlist As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
+        If dotNETlist.IsNullOrEmpty OrElse dotNETlist.Count = 1 Then
+            dotNETlist = New List(Of T)
+        Else
+            Dim i As Integer = dotNETlist.Count - 1
+            Call dotNETlist.RemoveAt(i)
+        End If
+
+        Return dotNETlist
+    End Function
+
+    ''' <summary>
+    ''' Removes the last element in the List object.(这个拓展函数同时兼容.NET框架的list类型以及sciBASIC之中的list类型)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>
     ''' <returns></returns>
     <Extension> Public Function RemoveLast(Of T)(ByRef list As List(Of T)) As List(Of T)
-        If list.IsNullOrEmpty OrElse list.Count = 1 Then
-            list = New List(Of T)
-        Else
-            Dim i As Integer = list.Count - 1
-            Call list.RemoveAt(i)
-        End If
-
-        Return list
+        Return DirectCast(RemoveLast(dotNETlist:=list), List(Of T))
     End Function
+
+#End Region
 
     <Extension> Public Function RemoveFirst(Of T)(ByRef list As List(Of T)) As List(Of T)
         If list.IsNullOrEmpty OrElse list.Count = 1 Then

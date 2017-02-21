@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Language
 
 Public Module AxisScalling
 
@@ -47,23 +48,87 @@ Public Module AxisScalling
     ''' + 0-1
     ''' + 0-0.1
     ''' </remarks>
-    Public Function GetAxisValues(max#, Optional parts% = 10, Optional min# = 0R) As Double()
-        'Dim d# = max - min
-        'Dim steps = d / parts
-        'Dim pow# = Math.Log10(steps)
-        'Dim tick# = 10 ^ pow
+    Public Function GetAxisValues(max#, Optional parts% = 10, Optional min# = 0R, Optional t# = 5 / 6, Optional decimal% = -1) As Double()
+        Dim vmax# = __max(max, min)
+        Dim vmin#
 
-        'If parts * tick + min > max + tick Then
-        '    tick = 5 * 10 ^ (pow - 1)
+        If min < 0 Then
+            vmin = -__max(Math.Abs(min), 0)
+        Else
+            vmin = If(min < t * max, 0, min - (max - min) / 20)
+        End If
+
+        Dim d = __fix(vmax, True) - __fix(vmin, False)
+        Dim p = Math.Round(Math.Log10(d), 0)
+        Dim tick# = 2 * ((10 ^ p) / parts)
+        Dim out As List(Of Double) = GetAxisByTick(vmax, tick, vmin)
+
+        If out(-2) > max Then
+            Call out.RemoveLast
+        End If
+
+        If 0 <= [decimal] Then
+            out = New List(Of Double)(out.Select(Function(x) Math.Round(x, [decimal])))
+        End If
+
+        Return out.ToArray
+    End Function
+
+    Private Function __max(max#, min#) As Double
+        Return max + (max - min) / 20
+    End Function
+
+    Private Function __fix(ByRef n#, enlarge As Boolean) As Double
+        If n = 0R Then
+            Return n
+        End If
+
+        'If enlarge Then
+        '    If n > 0 Then
+        '        n += 1
+        '    End If
+        'Else
+        '    If n < 0 Then
+        '        n -= 1
+        '    End If
         'End If
-        Dim tick# = (max - min) / parts
 
-        Try
-            Return GetAxisByTick(max, tick, min)
-        Catch ex As Exception
-            Dim debug$ = $"range=[{min}, {max}], tick={tick}"
-            Throw New Exception(debug, ex)
-        End Try
+        Dim p% = Math.Round(Math.Log10(Math.Abs(n)), 0)
+        Dim d = 10 ^ (p - 1)
+        Dim v#
+        Dim s = Math.Sign(n)
+
+        If Not enlarge Then
+            p = 10 ^ (p - 1)
+        Else
+            p = 10 ^ p
+        End If
+
+        For i As Double = 0 To 10 Step 0.5
+            v = s * p + s * i * d
+
+            If enlarge Then
+                If n <= v Then
+                    n = v
+                    Exit For
+                End If
+            Else
+                If (n > 0 AndAlso n <= v) OrElse (n < 0 AndAlso n > v) Then
+                    n = v
+
+                    'If enlarge Then
+                    '    ' 由于v已经是比原先的数要大的值，所以在这里可以直接跳过了
+                    '    Exit For
+                    'End If
+
+                    n -= 0.5 * d
+
+                    Exit For
+                End If
+            End If
+        Next
+
+        Return n
     End Function
 
     <Extension>
@@ -73,16 +138,20 @@ Public Module AxisScalling
 
     <Extension>
     Public Function GetAxisByTick(range As DoubleRange, tick#) As Double()
-        Return GetAxisByTick(range.Max, tick, range.Min)
+        Return GetAxisByTick(range.Max, tick, range.Min).ToArray
     End Function
 
-    Public Function GetAxisByTick(max#, tick#, Optional min# = 0R) As Double()
+    Public Function GetAxisByTick(max#, tick#, Optional min# = 0R) As List(Of Double)
         Dim l As New List(Of Double)
+        Dim i# = min
 
-        For i As Double = min To max + tick Step tick
-            Call l.Add(i)
-        Next
+        Do While i < max
+            l.Add(i)
+            i += tick
+        Loop
 
-        Return l.ToArray
+        l.Add(i)
+
+        Return l
     End Function
 End Module

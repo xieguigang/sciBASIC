@@ -1,4 +1,4 @@
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Text
 Imports System.Drawing.Drawing2D
 Imports System.IO
@@ -66,6 +66,11 @@ Namespace HTML.CSS.Render
             'Return zero if no length specified, zero specified
             If String.IsNullOrEmpty(length) OrElse length = "0" Then
                 Return 0F
+            Else
+                If length.IsPattern("\d+(\.\d+)?") Then
+                    ' 如果是数值类型则直接用作为font-size
+                    Return CSng(Val(length))
+                End If
             End If
 
             'If percentage, use ParseNumber
@@ -123,8 +128,6 @@ Namespace HTML.CSS.Render
                     factor = 0F
 
             End Select
-
-
 
             Return factor * ParseNumber(number, hundredPercent)
         End Function
