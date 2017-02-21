@@ -128,7 +128,6 @@ Public Module Heatmap
     ''' <param name="mapName$">The color map name. <see cref="Designer"/></param>
     ''' <param name="kmeans">Reorder datasets by using kmeans clustering</param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg$"></param>
     ''' <returns></returns>
     <Extension>
@@ -266,7 +265,7 @@ Public Module Heatmap
             size, padding,
             bg$,
             Sub(ByRef g, region)
-                Dim dw!? = CSng((size.Height - 2 * margin.Width) / array.Length)
+                Dim dw!? = CSng((size.Height - padding.Horizontal) / array.Length)
                 Dim correl#() = array _
                     .Select(Function(x) x.Value.Values) _
                     .IteratesALL _
@@ -280,7 +279,7 @@ Public Module Heatmap
                     .ToDictionary(Function(x) correl(x.i),
                                   Function(x) x.value)
 
-                Dim left! = margin.Width, top! = margin.Height
+                Dim left! = padding.Left, top! = padding.Top
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim getLeft As New Value(Of Single)(left)
                 Dim getTop As New Value(Of Single)(top)
@@ -310,7 +309,7 @@ Public Module Heatmap
                     legendWidth:=legendWidth,
                     lsize:=legendLayout.Size)
                 Dim lsize As Size = legend.Size
-                Dim lmargin As Integer = size.Width - size.Height + margin.Width
+                Dim lmargin As Integer = size.Width - size.Height + padding.Left
 
                 If Not legendLayout.Location.IsEmpty Then
                     left = legendLayout.Left
@@ -331,7 +330,7 @@ Public Module Heatmap
                 End If
 
                 Dim titleSize = g.MeasureString(mainTitle, titleFont)
-                Dim titlePosi As New PointF((left - titleSize.Width) / 2, (margin.Height - titleSize.Height) / 2)
+                Dim titlePosi As New PointF((left - titleSize.Width) / 2, (padding.Top - titleSize.Height) / 2)
 
                 Call g.DrawString(mainTitle, titleFont, Brushes.Black, titlePosi)
             End Sub)
