@@ -36,149 +36,151 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-''' <summary>
-''' 将数据坐标转换为绘图坐标
-''' </summary>
-Public Class Scaling
+Namespace Graphic
 
     ''' <summary>
-    ''' x,y轴分别的最大值和最小值的差值
+    ''' 将数据坐标转换为绘图坐标
     ''' </summary>
-    Public ReadOnly dx#, dy#
-    Public ReadOnly xmin, ymin As Single
+    Public Class Scaling
 
-    ReadOnly serials As SerialData()
-    ReadOnly hist As HistogramGroup
+        ''' <summary>
+        ''' x,y轴分别的最大值和最小值的差值
+        ''' </summary>
+        Public ReadOnly dx#, dy#
+        Public ReadOnly xmin, ymin As Single
 
-    ''' <summary>
-    ''' 数据集类型
-    ''' </summary>
-    Public ReadOnly type As Type
+        ReadOnly serials As SerialData()
+        ReadOnly hist As HistogramGroup
 
-    ''' <summary>
-    ''' x值的实际范围
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property xrange As DoubleRange
-        Get
-            Return New DoubleRange(xmin, xmin + dx)
-        End Get
-    End Property
+        ''' <summary>
+        ''' 数据集类型
+        ''' </summary>
+        Public ReadOnly type As Type
 
-    ''' <summary>
-    ''' y值的实际范围
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property yrange As DoubleRange
-        Get
-            Return New DoubleRange(ymin, ymin + dy)
-        End Get
-    End Property
+        ''' <summary>
+        ''' x值的实际范围
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property xrange As DoubleRange
+            Get
+                Return New DoubleRange(xmin, xmin + dx)
+            End Get
+        End Property
 
-    ''' <summary>
-    ''' 线条
-    ''' </summary>
-    ''' <param name="array"></param>
-    ''' <param name="absoluteScaling"></param>
-    Sub New(array As SerialData(), absoluteScaling As Boolean)
-        dx = Scaling(array, Function(p) p.pt.X, absoluteScaling, xmin)
-        dy = Scaling(array, Function(p) p.pt.Y, absoluteScaling, ymin)
-        serials = array
-        type = GetType(Scatter)
-    End Sub
+        ''' <summary>
+        ''' y值的实际范围
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property yrange As DoubleRange
+            Get
+                Return New DoubleRange(ymin, ymin + dy)
+            End Get
+        End Property
 
-    Sub New(data As (Double, Double)())
-        dx = ScalingTuple(data, Function(p) p.X, False, xmin)
-        dy = ScalingTuple(data, Function(p) p.y, False, ymin)
-        type = GetType(ScatterHeatmap)
-    End Sub
+        ''' <summary>
+        ''' 线条
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <param name="absoluteScaling"></param>
+        Sub New(array As SerialData(), absoluteScaling As Boolean)
+            dx = Scaling(array, Function(p) p.pt.X, absoluteScaling, xmin)
+            dy = Scaling(array, Function(p) p.pt.Y, absoluteScaling, ymin)
+            serials = array
+            type = GetType(Scatter)
+        End Sub
 
-    Sub New(data As (X#, y#, z#)())
-        dx = ScalingTuple(data, Function(p) p.X, False, xmin)
-        dy = ScalingTuple(data, Function(p) p.y, False, ymin)
-        type = GetType(ScatterHeatmap)
-    End Sub
+        Sub New(data As (Double, Double)())
+            dx = ScalingTuple(data, Function(p) p.X, False, xmin)
+            dy = ScalingTuple(data, Function(p) p.y, False, ymin)
+            type = GetType(ScatterHeatmap)
+        End Sub
 
-    ''' <summary>
-    ''' 连续的条型数据
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="absoluteScaling"></param>
-    Sub New(data As HistogramGroup, absoluteScaling As Boolean)
-        dx = Scaling(data, Function(x) {x.x1, x.x2}, xmin, absoluteScaling)
-        dy = Scaling(data, Function(x) {x.y}, ymin, absoluteScaling)
-        hist = data
-        type = GetType(Histogram)
-    End Sub
+        Sub New(data As (X#, y#, z#)())
+            dx = ScalingTuple(data, Function(p) p.X, False, xmin)
+            dy = ScalingTuple(data, Function(p) p.y, False, ymin)
+            type = GetType(ScatterHeatmap)
+        End Sub
 
-    ''' <summary>
-    ''' 分类的条型数据
-    ''' </summary>
-    ''' <param name="hist"></param>
-    ''' <param name="stacked"></param>
-    ''' <param name="horizontal"></param>
-    Sub New(hist As BarDataGroup, stacked As Boolean, horizontal As Boolean)
-        Call Me.New(__barDataProvider(hist, stacked), horizontal)
-    End Sub
+        ''' <summary>
+        ''' 连续的条型数据
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="absoluteScaling"></param>
+        Sub New(data As HistogramGroup, absoluteScaling As Boolean)
+            dx = Scaling(data, Function(x) {x.x1, x.x2}, xmin, absoluteScaling)
+            dy = Scaling(data, Function(x) {x.y}, ymin, absoluteScaling)
+            hist = data
+            type = GetType(Histogram)
+        End Sub
 
-    Private Shared Function __barDataProvider(hist As BarDataGroup, stacked As Boolean) As IEnumerable(Of Double)
-        If stacked Then
-            Return hist _
+        ''' <summary>
+        ''' 分类的条型数据
+        ''' </summary>
+        ''' <param name="hist"></param>
+        ''' <param name="stacked"></param>
+        ''' <param name="horizontal"></param>
+        Sub New(hist As BarDataGroup, stacked As Boolean, horizontal As Boolean)
+            Call Me.New(__barDataProvider(hist, stacked), horizontal)
+        End Sub
+
+        Private Shared Function __barDataProvider(hist As BarDataGroup, stacked As Boolean) As IEnumerable(Of Double)
+            If stacked Then
+                Return hist _
                 .Samples _
                 .Select(Function(s) s.StackedSum)
-        Else
-            Return hist _
+            Else
+                Return hist _
                 .Samples _
                 .Select(Function(s) s.data).Unlist
-        End If
-    End Function
+            End If
+        End Function
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="horizontal">
-    ''' 所进行绘制的条形图是否是水平的？
-    ''' </param>
-    Sub New(data As IEnumerable(Of Double), horizontal As Boolean)
-        Dim h#() = data.ToArray
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="horizontal">
+        ''' 所进行绘制的条形图是否是水平的？
+        ''' </param>
+        Sub New(data As IEnumerable(Of Double), horizontal As Boolean)
+            Dim h#() = data.ToArray
 
-        If Not horizontal Then
-            ymin! = h.Min
+            If Not horizontal Then
+                ymin! = h.Min
 
-            If ymin > 0 Then  ' 由於bar是有一定高度的，所以儅直接使用數據之中的最小值作爲繪圖的最小參考值的畫，會出現最小的那個bar會沒有高度的bug，在這裏統一修改為0為最小參考值
-                ymin = 0
+                If ymin > 0 Then  ' 由於bar是有一定高度的，所以儅直接使用數據之中的最小值作爲繪圖的最小參考值的畫，會出現最小的那個bar會沒有高度的bug，在這裏統一修改為0為最小參考值
+                    ymin = 0
+                End If
+
+                dy = h.Max - ymin
+            Else
+                xmin! = h.Min
+
+                If xmin > 0 Then
+                    xmin = 0
+                End If
+
+                dx = h.Max - xmin
             End If
 
-            dy = h.Max - ymin
-        Else
-            xmin! = h.Min
+            type = GetType(BarPlotAPI)
+        End Sub
 
-            If xmin > 0 Then
-                xmin = 0
-            End If
+        Public Function ScallingWidth(x As Double, width%) As Single
+            Return width * (x - xmin) / dx
+        End Function
 
-            dx = h.Max - xmin
-        End If
+        ''' <summary>
+        ''' 返回的系列是已经被转换过的，直接使用来进行画图
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function ForEach(size As Size, margin As Padding) As IEnumerable(Of SerialData)
+            Dim bottom As Integer = size.Height - margin.Bottom
+            Dim width As Integer = size.Width - margin.Horizontal
+            Dim height As Integer = size.Height - margin.Vertical
 
-        type = GetType(BarPlotAPI)
-    End Sub
-
-    Public Function ScallingWidth(x As Double, width%) As Single
-        Return width * (x - xmin) / dx
-    End Function
-
-    ''' <summary>
-    ''' 返回的系列是已经被转换过的，直接使用来进行画图
-    ''' </summary>
-    ''' <returns></returns>
-    Public Iterator Function ForEach(size As Size, margin As Padding) As IEnumerable(Of SerialData)
-        Dim bottom As Integer = size.Height - margin.Bottom
-        Dim width As Integer = size.Width - margin.Horizontal
-        Dim height As Integer = size.Height - margin.Vertical
-
-        For Each s As SerialData In serials
-            Dim pts = LinqAPI.Exec(Of PointData) <=
+            For Each s As SerialData In serials
+                Dim pts = LinqAPI.Exec(Of PointData) <=
  _
                 From p As PointData
                 In s.pts
@@ -193,7 +195,7 @@ Public Class Scaling
                     .Statics = p.Statics
                 }
 
-            Yield New SerialData With {
+                Yield New SerialData With {
                 .color = s.color,
                 .lineType = s.lineType,
                 .PointSize = s.PointSize,
@@ -202,20 +204,20 @@ Public Class Scaling
                 .width = s.width,
                 .DataAnnotations = s.DataAnnotations
             }
-        Next
-    End Function
+            Next
+        End Function
 
-    ''' <summary>
-    ''' 返回的系列是已经被转换过的，直接使用来进行画图
-    ''' </summary>
-    ''' <returns></returns>
-    Public Iterator Function ForEach_histSample(size As Size, margin As Padding) As IEnumerable(Of HistProfile)
-        Dim bottom As Integer = size.Height - margin.Bottom
-        Dim width As Integer = size.Width - margin.Horizontal
-        Dim height As Integer = size.Height - margin.Vertical
+        ''' <summary>
+        ''' 返回的系列是已经被转换过的，直接使用来进行画图
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function ForEach_histSample(size As Size, margin As Padding) As IEnumerable(Of HistProfile)
+            Dim bottom As Integer = size.Height - margin.Bottom
+            Dim width As Integer = size.Width - margin.Horizontal
+            Dim height As Integer = size.Height - margin.Vertical
 
-        For Each histData As HistProfile In hist.Samples
-            Dim pts = LinqAPI.Exec(Of HistogramData) <=
+            For Each histData As HistProfile In hist.Samples
+                Dim pts = LinqAPI.Exec(Of HistogramData) <=
  _
                 From p As HistogramData
                 In histData.data
@@ -228,148 +230,149 @@ Public Class Scaling
                     .y = py
                 }
 
-            Yield New HistProfile With {
+                Yield New HistProfile With {
                 .legend = histData.legend,
                 .data = pts
             }
-        Next
-    End Function
+            Next
+        End Function
 
-    Public Function PointScaler(size As Size, padding As Padding) As Func(Of PointF, PointF)
-        Dim bottom As Integer = size.Height - padding.Bottom
-        Dim width As Integer = size.Width - padding.Horizontal
-        Dim height As Integer = size.Height - padding.Vertical
+        Public Function PointScaler(size As Size, padding As Padding) As Func(Of PointF, PointF)
+            Dim bottom As Integer = size.Height - padding.Bottom
+            Dim width As Integer = size.Width - padding.Horizontal
+            Dim height As Integer = size.Height - padding.Vertical
 
-        Return Function(pt)
-                   Dim px As Single = padding.Left + width * (pt.X - xmin) / dx
-                   Dim py As Single = bottom - height * (pt.Y - ymin) / dy
+            Return Function(pt)
+                       Dim px As Single = padding.Left + width * (pt.X - xmin) / dx
+                       Dim py As Single = bottom - height * (pt.Y - ymin) / dy
 
-                   Return New PointF(px, py)
-               End Function
-    End Function
-
-    Public Function PointScaler(rect As GraphicsRegion) As Func(Of PointF, PointF)
-        Return PointScaler(rect.Size, rect.Padding)
-    End Function
-
-    Public Function TupleScaler(rect As GraphicsRegion) As Func(Of (x#, y#), PointF)
-        Dim point = PointScaler(rect.Size, rect.Padding)
-        Return Function(pt) point(New PointF(pt.x, pt.y))
-    End Function
-
-    Public Function PointScaler(r As GraphicsRegion, pt As PointF) As PointF
-        Dim bottom As Integer = r.Size.Height - r.Padding.Bottom
-        Dim width As Integer = r.Size.Width - r.Padding.Horizontal
-        Dim height As Integer = r.Size.Height - r.Padding.Vertical
-        Dim px As Single = r.Padding.Left + width * (pt.X - xmin) / dx
-        Dim py As Single = bottom - height * (pt.Y - ymin) / dy
-
-        Return New PointF(px!, py!)
-    End Function
-
-    Public Function XScaler(size As Size, margin As Padding) As Func(Of Single, Single)
-        Dim bottom As Integer = size.Height - margin.Bottom
-        Dim width As Integer = size.Width - margin.Horizontal
-        Dim height As Integer = size.Height - margin.Vertical
-
-        Return Function(x) margin.Left + width * (x - xmin) / dx
-    End Function
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="size"></param>
-    ''' <param name="margin"></param>
-    ''' <param name="avg">当这个参数值是一个有效的数字的时候，返回的Y将会以这个平均值为零点</param>
-    ''' <returns></returns>
-    Public Function YScaler(size As Size, margin As Padding, Optional avg# = Double.NaN) As Func(Of Single, Single)
-        Dim bottom As Integer = size.Height - margin.Bottom
-        Dim height As Integer = size.Height - margin.Vertical    ' 绘图区域的高度
-
-        If Double.IsNaN(avg#) Then
-            Return Function(y!) bottom - height * (y - ymin) / dy
-        Else
-            Dim half As Single = height / 2
-            Dim middle As Single = bottom - half
-
-            Return Function(y!) As Single
-                       Dim d! = y - avg
-
-                       If d >= 0F Then  ' 在上面
-                           Return middle - half * (y - avg) / dy
-                       Else
-                           Return middle + half * (avg - y) / dy
-                       End If
+                       Return New PointF(px, py)
                    End Function
-        End If
-    End Function
+        End Function
 
-    Public Shared Function Average(hist As BarDataGroup) As Double
-        Return hist.Samples.Select(Function(x) x.data).IteratesALL.Average()
-    End Function
+        Public Function PointScaler(rect As GraphicsRegion) As Func(Of PointF, PointF)
+            Return PointScaler(rect.Size, rect.Padding)
+        End Function
 
-    ''' <summary>
-    ''' 返回dx或者dy
-    ''' </summary>
-    ''' <param name="absoluteScaling">
-    ''' 假若值为真，则当min和max都是正数的时候，从min=0开始
-    ''' 当min和max都是负数的时候，从max=0结束
-    ''' 当min和max的符号不同的时候，只能够使用相对scalling
-    ''' </param>
-    ''' <returns></returns>
-    Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), absoluteScaling As Boolean, ByRef min!) As Single
-        Dim array!() = data.Select(Function(s) s.pts).IteratesALL.ToArray([get])
-        Return __scaling(array!, min!, absoluteScaling)
-    End Function
+        Public Function TupleScaler(rect As GraphicsRegion) As Func(Of (x#, y#), PointF)
+            Dim point = PointScaler(rect.Size, rect.Padding)
+            Return Function(pt) point(New PointF(pt.x, pt.y))
+        End Function
 
-    Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#, z#)), [get] As Func(Of (X#, y#, z#), Single), absoluteScaling As Boolean, ByRef min!) As Single
-        Dim array!() = data.ToArray([get])
-        Return __scaling(array!, min!, absoluteScaling)
-    End Function
+        Public Function PointScaler(r As GraphicsRegion, pt As PointF) As PointF
+            Dim bottom As Integer = r.Size.Height - r.Padding.Bottom
+            Dim width As Integer = r.Size.Width - r.Padding.Horizontal
+            Dim height As Integer = r.Size.Height - r.Padding.Vertical
+            Dim px As Single = r.Padding.Left + width * (pt.X - xmin) / dx
+            Dim py As Single = bottom - height * (pt.Y - ymin) / dy
 
-    Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#)), [get] As Func(Of (X#, y#), Single), absoluteScaling As Boolean, ByRef min!) As Single
-        Dim array!() = data.ToArray([get])
-        Return __scaling(array!, min!, absoluteScaling)
-    End Function
+            Return New PointF(px!, py!)
+        End Function
 
-    Public Shared Function Scaling(data As IEnumerable(Of Point3D), [get] As Func(Of Point3D, Single), absoluteScaling As Boolean, ByRef min!) As Single
-        Dim array!() = data.ToArray([get])
-        Return __scaling(array!, min!, absoluteScaling)
-    End Function
+        Public Function XScaler(size As Size, margin As Padding) As Func(Of Single, Single)
+            Dim bottom As Integer = size.Height - margin.Bottom
+            Dim width As Integer = size.Width - margin.Horizontal
+            Dim height As Integer = size.Height - margin.Vertical
 
-    ''' <summary>
-    ''' 返回``max-min``
-    ''' </summary>
-    ''' <param name="array!"></param>
-    ''' <param name="min!"></param>
-    ''' <param name="absoluteScaling"></param>
-    ''' <returns></returns>
-    Private Shared Function __scaling(array!(), ByRef min!, absoluteScaling As Boolean) As Single
-        Dim max! = array.Max : min! = array.Min
+            Return Function(x) margin.Left + width * (x - xmin) / dx
+        End Function
 
-        If absoluteScaling Then
-            If max < 0 Then
-                max = 0
-            ElseIf min > 0 Then
-                min = 0
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <param name="margin"></param>
+        ''' <param name="avg">当这个参数值是一个有效的数字的时候，返回的Y将会以这个平均值为零点</param>
+        ''' <returns></returns>
+        Public Function YScaler(size As Size, margin As Padding, Optional avg# = Double.NaN) As Func(Of Single, Single)
+            Dim bottom As Integer = size.Height - margin.Bottom
+            Dim height As Integer = size.Height - margin.Vertical    ' 绘图区域的高度
+
+            If Double.IsNaN(avg#) Then
+                Return Function(y!) bottom - height * (y - ymin) / dy
+            Else
+                Dim half As Single = height / 2
+                Dim middle As Single = bottom - half
+
+                Return Function(y!) As Single
+                           Dim d! = y - avg
+
+                           If d >= 0F Then  ' 在上面
+                               Return middle - half * (y - avg) / dy
+                           Else
+                               Return middle + half * (avg - y) / dy
+                           End If
+                       End Function
             End If
-        End If
+        End Function
 
-        Dim d As Single = max - min
-        Return d
-    End Function
+        Public Shared Function Average(hist As BarDataGroup) As Double
+            Return hist.Samples.Select(Function(x) x.data).IteratesALL.Average()
+        End Function
 
-    ''' <summary>
-    ''' 返回dx或者dy
-    ''' </summary>
-    ''' <returns></returns>
-    Public Shared Function Scaling(data As HistogramGroup, [get] As Func(Of HistogramData, Single()), ByRef min!, absoluteScaling As Boolean) As Single
-        Dim array!() = data.Samples _
+        ''' <summary>
+        ''' 返回dx或者dy
+        ''' </summary>
+        ''' <param name="absoluteScaling">
+        ''' 假若值为真，则当min和max都是正数的时候，从min=0开始
+        ''' 当min和max都是负数的时候，从max=0结束
+        ''' 当min和max的符号不同的时候，只能够使用相对scalling
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), absoluteScaling As Boolean, ByRef min!) As Single
+            Dim array!() = data.Select(Function(s) s.pts).IteratesALL.ToArray([get])
+            Return __scaling(array!, min!, absoluteScaling)
+        End Function
+
+        Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#, z#)), [get] As Func(Of (X#, y#, z#), Single), absoluteScaling As Boolean, ByRef min!) As Single
+            Dim array!() = data.ToArray([get])
+            Return __scaling(array!, min!, absoluteScaling)
+        End Function
+
+        Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#)), [get] As Func(Of (X#, y#), Single), absoluteScaling As Boolean, ByRef min!) As Single
+            Dim array!() = data.ToArray([get])
+            Return __scaling(array!, min!, absoluteScaling)
+        End Function
+
+        Public Shared Function Scaling(data As IEnumerable(Of Point3D), [get] As Func(Of Point3D, Single), absoluteScaling As Boolean, ByRef min!) As Single
+            Dim array!() = data.ToArray([get])
+            Return __scaling(array!, min!, absoluteScaling)
+        End Function
+
+        ''' <summary>
+        ''' 返回``max-min``
+        ''' </summary>
+        ''' <param name="array!"></param>
+        ''' <param name="min!"></param>
+        ''' <param name="absoluteScaling"></param>
+        ''' <returns></returns>
+        Private Shared Function __scaling(array!(), ByRef min!, absoluteScaling As Boolean) As Single
+            Dim max! = array.Max : min! = array.Min
+
+            If absoluteScaling Then
+                If max < 0 Then
+                    max = 0
+                ElseIf min > 0 Then
+                    min = 0
+                End If
+            End If
+
+            Dim d As Single = max - min
+            Return d
+        End Function
+
+        ''' <summary>
+        ''' 返回dx或者dy
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function Scaling(data As HistogramGroup, [get] As Func(Of HistogramData, Single()), ByRef min!, absoluteScaling As Boolean) As Single
+            Dim array!() = data.Samples _
             .Select(Function(s) s.data) _
             .IteratesALL _
             .ToArray([get]) _
             .IteratesALL _
             .ToArray
-        Return __scaling(array!, min!, absoluteScaling)
-    End Function
-End Class
+            Return __scaling(array!, min!, absoluteScaling)
+        End Function
+    End Class
+End Namespace

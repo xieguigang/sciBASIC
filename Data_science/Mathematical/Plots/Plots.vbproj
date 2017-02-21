@@ -192,6 +192,7 @@
     <Compile Include="g\Axis\AxisScalling.vb" />
     <Compile Include="g\Axis\AxisData.vb" />
     <Compile Include="g\Axis\Styles.vb" />
+    <Compile Include="g\Mapper.vb" />
     <Compile Include="g\ProfileGroup.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
     <Compile Include="g\Legends\Legend.vb" />
