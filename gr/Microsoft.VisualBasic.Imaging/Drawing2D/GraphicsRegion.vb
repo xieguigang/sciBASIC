@@ -46,6 +46,12 @@ Namespace Drawing2D
         ''' </summary>
         Public Padding As Padding
 
+        Public ReadOnly Property Bottom As Integer
+            Get
+                Return Size.Height - Padding.Bottom
+            End Get
+        End Property
+
         ''' <summary>
         ''' 整张画布出去margin部分剩余的可供绘图的区域
         ''' </summary>

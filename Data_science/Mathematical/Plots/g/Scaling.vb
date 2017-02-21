@@ -271,9 +271,9 @@ Public Class Scaling
     ''' <param name="margin"></param>
     ''' <param name="avg">当这个参数值是一个有效的数字的时候，返回的Y将会以这个平均值为零点</param>
     ''' <returns></returns>
-    Public Function YScaler(size As Size, margin As Size, Optional avg# = Double.NaN) As Func(Of Single, Single)
-        Dim bottom As Integer = size.Height - margin.Height
-        Dim height As Integer = size.Height - margin.Height * 2   ' 绘图区域的高度
+    Public Function YScaler(size As Size, margin As Padding, Optional avg# = Double.NaN) As Func(Of Single, Single)
+        Dim bottom As Integer = size.Height - margin.Bottom
+        Dim height As Integer = size.Height - margin.Vertical    ' 绘图区域的高度
 
         If Double.IsNaN(avg#) Then
             Return Function(y!) bottom - height * (y - ymin) / dy

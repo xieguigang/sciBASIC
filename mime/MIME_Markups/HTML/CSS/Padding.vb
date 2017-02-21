@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Scripting
 Namespace HTML.CSS
 
     ''' <summary>
-    ''' Represents padding or margin information associated with a gdi element.
+    ''' Represents padding or margin information associated with a gdi element. (padding: top, right, bottom, left)
     ''' </summary>
     <TypeConverter(GetType(PaddingConverter))> Public Structure Padding
 
@@ -117,12 +117,10 @@ Namespace HTML.CSS
             End Get
         End Property
 
-        '
-        ' Summary:
-        '     Returns a string that represents the current System.Windows.Forms.Padding.
-        '
-        ' Returns:
-        '     A System.String that represents the current System.Windows.Forms.Padding.
+        ''' <summary>
+        ''' padding: top, right, bottom, left
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return $"padding:{Top}px {Right}px {Bottom}px {Left}px;"
         End Function
