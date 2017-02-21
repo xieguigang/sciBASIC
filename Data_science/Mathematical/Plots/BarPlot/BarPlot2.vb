@@ -44,7 +44,7 @@ Namespace BarPlot
         ''' </summary>
         ''' <param name="data"></param>
         ''' <param name="size"></param>
-        ''' <param name="margin"></param>
+        ''' <param name="padding"></param>
         ''' <param name="bg$"></param>
         ''' <param name="showGrid"></param>
         ''' <param name="stacked"></param>
@@ -53,68 +53,69 @@ Namespace BarPlot
         ''' <param name="legendBorder"></param>
         ''' <returns></returns>
         Public Function Plot2(data As BarDataGroup,
-                          Optional size As Size = Nothing,
-                          Optional margin As Size = Nothing,
-                          Optional bg$ = "white",
-                          Optional showGrid As Boolean = True,
-                          Optional stacked As Boolean = False,
-                          Optional showLegend As Boolean = True,
-                          Optional legendPos As Point = Nothing,
-                          Optional legendBorder As Border = Nothing) As Bitmap
+                              Optional size As Size = Nothing,
+                              Optional padding$ = DefaultPadding,
+                              Optional bg$ = "white",
+                              Optional showGrid As Boolean = True,
+                              Optional stacked As Boolean = False,
+                              Optional showLegend As Boolean = True,
+                              Optional legendPos As Point = Nothing,
+                              Optional legendBorder As Border = Nothing) As Bitmap
+
+            Dim margin As Padding = padding
 
             Return GraphicsPlots(
-            size, margin, bg,
-            Sub(ByRef g, region)
-                Dim top! = region.PlotRegion.Top
-                Dim lefts! = region.PlotRegion.Left
-                Dim mapper As New Scaling(data, stacked, True)
-                Dim n As Integer = If(
-                   stacked,
-                   data.Samples.Length,
-                   data.Samples.Sum(Function(x) x.data.Length))
-                Dim dy As Double =
-                  (size.Height - 2 * margin.Height - 2 * margin.Height) / n
-                Dim interval As Double = 2 * margin.Height / n
-                Dim sx As Func(Of Single, Single) =
-                   mapper.XScaler(size, margin)
+                size, margin, bg,
+                Sub(ByRef g, region)
 
-                Call g.DrawAxis(size, margin, mapper, showGrid)
+                    Dim lefts! = region.PlotRegion.Left
+                    Dim top! = region.PlotRegion.Top
+                    Dim mapper As New Scaling(data, stacked, True)
+                    Dim n As Integer = If(
+                        stacked,
+                        data.Samples.Length,
+                        data.Samples.Sum(Function(x) x.data.Length))
+                    Dim dy As Double = (size.Height - margin.Vertical - margin.Vertical) / n
+                    Dim interval As Double = margin.Vertical / n
+                    Dim sx As Func(Of Single, Single) = mapper.XScaler(size, margin)
 
-                For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
-                    Dim y = top + interval
+                    Call g.DrawAxis(size, margin, mapper, showGrid)
 
-                    If stacked Then ' 改变Y
-                        Dim bottom! = y + dy
-                        Dim right = sx(sample.value.StackedSum)
-                        Dim canvasWidth = size.Height - (margin.Height * 2)
+                    For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
+                        Dim y = top + interval
 
-                        For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
-                            Dim rect As Rectangle = Rectangle(y, lefts, right, bottom)
+                        If stacked Then ' 改变Y
+                            Dim bottom! = y + dy
+                            Dim right = sx(sample.value.StackedSum)
+                            Dim canvasWidth = size.Height - (margin.Vertical)
 
-                            Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
+                            For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
+                                Dim rect As Rectangle = Rectangle(y, lefts, right, bottom)
 
-                            top += ((val.value - mapper.xmin) / mapper.dx) * canvasWidth
-                        Next
+                                Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
 
-                        top += dy
-                    Else ' 改变X
-                        For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
-                            Dim bottom! = y
-                            Dim right = sx(val.value)
-                            Dim rect As Rectangle = Rectangle(bottom, lefts, right, bottom + dy)
+                                top += ((val.value - mapper.xmin) / mapper.dx) * canvasWidth
+                            Next
 
-                            Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
-                            Call g.DrawRectangle(Pens.Black, rect)
+                            top += dy
+                        Else ' 改变X
+                            For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
+                                Dim bottom! = y
+                                Dim right = sx(val.value)
+                                Dim rect As Rectangle = Rectangle(bottom, lefts, right, bottom + dy)
 
-                            y += dy
-                        Next
-                    End If
+                                Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
+                                Call g.DrawRectangle(Pens.Black, rect)
 
-                    top = y
-                Next
+                                y += dy
+                            Next
+                        End If
 
-                If showLegend Then
-                    Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+                        top = y
+                    Next
+
+                    If showLegend Then
+                        Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
  _
                         From x As NamedValue(Of Color)
                         In data.Serials
@@ -128,13 +129,13 @@ Namespace BarPlot
                             .title = x.Name
                         }
 
-                    If legendPos.IsEmpty Then
-                        legendPos = New Point(CInt(size.Width * 0.8), margin.Height)
-                    End If
+                        If legendPos.IsEmpty Then
+                            legendPos = New Point(CInt(size.Width * 0.8), margin.Top)
+                        End If
 
-                    Call g.DrawLegends(legendPos, legends,,, legendBorder)
-                End If
-            End Sub)
+                        Call g.DrawLegends(legendPos, legends,,, legendBorder)
+                    End If
+                End Sub)
         End Function
     End Module
 End Namespace

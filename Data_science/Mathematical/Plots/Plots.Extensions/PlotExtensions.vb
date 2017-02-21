@@ -42,7 +42,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Public Module PlotExtensions
 
     ''' <summary>
-    ''' <see cref="ReorderProvider"/>
+    ''' 为heatmap的列和行之中的元素的排列位置提供排列顺序。<see cref="ReorderProvider"/>
     ''' </summary>
     ''' <param name="data"></param>
     ''' <returns></returns>
@@ -187,11 +187,29 @@ Public Module PlotExtensions
         }
     End Function
 
+    ''' <summary>
+    ''' 绘制积分计算的结果
+    ''' </summary>
+    ''' <param name="ode"></param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg As String = "white") As Bitmap
         Return Scatter.Plot({ode.FromODE("cyan")}, size, margin, bg)
     End Function
 
+    ''' <summary>
+    ''' 绘制常微分方程组的计算结果
+    ''' </summary>
+    ''' <param name="ode"></param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg"></param>
+    ''' <param name="ptSize"></param>
+    ''' <param name="width"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Plot(ode As ODEsOut,
                          Optional size As Size = Nothing,

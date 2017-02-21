@@ -31,13 +31,16 @@ Imports System.Text.RegularExpressions
 
 Namespace Mathematical
 
+    ''' <summary>
+    ''' 科学记数法
+    ''' </summary>
     Public Module ScientificNotation
 
         ''' <summary>
         ''' 返回零表示比较小的常数
         ''' </summary>
         ''' <param name="x"></param>
-        ''' <param name="INF"></param>
+        ''' <param name="INF">当位数超过这个值之后将会被判定为非常大或者非常小的一个数</param>
         ''' <returns></returns>
         Public Function PowerLog10(x#, Optional INF% = 5) As Single
             Dim pow# = Math.Log10(Math.Abs(x))
@@ -52,6 +55,12 @@ Namespace Mathematical
             Return 0
         End Function
 
+        ''' <summary>
+        ''' 是否需要科学记数法来格式化？
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <param name="INF%"></param>
+        ''' <returns></returns>
         Public Function UsingScientificNotation(x#, Optional INF% = 5) As Boolean
             Return ScientificNotation.PowerLog10(x, INF) <> 0!
         End Function

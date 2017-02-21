@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::8828cc6c19f48d66435eb5a603df45cf, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\ManhattanStatics.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base.SlideWindow
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module ManhattanStatics
 
@@ -40,13 +41,12 @@ Public Module ManhattanStatics
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg$"></param>
     ''' <param name="fill$">正负误差之间的填充颜色</param>
     ''' <returns></returns>
     Public Function Plot(s As SerialData,
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional fill$ = Nothing,
                          Optional errPlusColor$ = "green",
@@ -62,6 +62,7 @@ Public Module ManhattanStatics
         Dim epColor As New SolidBrush(errPlusColor.ToColor)
         Dim emColor As New SolidBrush(errMinusColor.ToColor)
         Dim eIColor As New SolidBrush(errInner.ToColor)
+        Dim margin As Padding = padding
 
         Return GraphicsPlots(
             size, margin, bg,
@@ -106,7 +107,7 @@ Public Module ManhattanStatics
                     Dim br As New SolidBrush(line.color)
                     Dim d = line.PointSize
                     Dim r As Single = line.PointSize / 2
-                    Dim bottom! = size.Height - margin.Height
+                    Dim bottom! = size.Height - margin.Bottom
 
                     For Each pt In pts
                         Dim a As PointData = pt.First

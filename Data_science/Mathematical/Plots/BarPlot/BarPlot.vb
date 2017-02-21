@@ -48,7 +48,7 @@ Namespace BarPlot
         ''' </summary>
         ''' <param name="data">Data groups</param>
         ''' <param name="size">image output size</param>
-        ''' <param name="margin">margin blank of the plots region</param>
+        ''' <param name="padding">margin blank of the plots region</param>
         ''' <param name="bg$">Background color expression</param>
         ''' <param name="showGrid">Show axis grid?</param>
         ''' <param name="stacked">Bar plot is stacked of each sample?</param>
@@ -60,7 +60,7 @@ Namespace BarPlot
         <Extension>
         Public Function Plot(data As BarDataGroup,
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = "padding: 300 120 300 120;",
                          Optional bg$ = "white",
                          Optional showGrid As Boolean = True,
                          Optional stacked As Boolean = False,
@@ -70,18 +70,16 @@ Namespace BarPlot
                          Optional legendBorder As Border = Nothing,
                          Optional legendFont As Font = Nothing) As Bitmap
 
-            If margin.IsEmpty Then
-                margin = New Size(120, 300)
-            End If
+            Dim margin As Padding = padding
 
             Return GraphicsPlots(
-            size, margin, bg,
-            Sub(ByRef g, grect) Call __plot1(
-                g, grect,
-                data,
-                bg,
-                showGrid, stacked, stackReordered,
-                showLegend, legendPos, legendBorder, legendFont))
+                size, margin, bg,
+                Sub(ByRef g, grect) Call __plot1(
+                    g, grect,
+                    data,
+                    bg,
+                    showGrid, stacked, stackReordered,
+                    showLegend, legendPos, legendBorder, legendFont))
         End Function
 
         ''' <summary>
@@ -98,32 +96,30 @@ Namespace BarPlot
         ''' <param name="legendPos"></param>
         ''' <param name="legendBorder"></param>
         Private Sub __plot1(ByRef g As Graphics, grect As GraphicsRegion,
-                        data As BarDataGroup,
-                        bg$,
-                        showGrid As Boolean,
-                        stacked As Boolean,
-                        stackReorder As Boolean,
-                        showLegend As Boolean,
-                        legendPos As Point,
-                        legendBorder As Border,
-                        legendFont As Font)
+                            data As BarDataGroup,
+                            bg$,
+                            showGrid As Boolean,
+                            stacked As Boolean,
+                            stackReorder As Boolean,
+                            showLegend As Boolean,
+                            legendPos As Point,
+                            legendBorder As Border,
+                            legendFont As Font)
 
             Dim mapper As New Scaling(data, stacked, False)
             Dim n As Integer = If(
-            stacked,
-            data.Samples.Length,
-            data.Samples.Sum(Function(x) x.data.Length) - 1)
-            Dim dxStep As Double =
-            (grect.Size.Width - 2 * grect.Margin.Width - 2 * grect.Margin.Width) / n
-            Dim interval As Double = 2 * grect.Margin.Width / n
-            Dim left As Single = grect.Margin.Width
-            Dim sy As Func(Of Single, Single) =
-            mapper.YScaler(grect.Size, grect.Margin)
-            Dim bottom = grect.Size.Height - grect.Margin.Height
+                stacked,
+                data.Samples.Length,
+                data.Samples.Sum(Function(x) x.data.Length) - 1)
+            Dim dxStep As Double = (grect.Size.Width - grect.Padding.Horizontal - 2 * grect.Padding.Horizontal) / n
+            Dim interval As Double = grect.Padding.Horizontal / n
+            Dim left As Single = grect.Padding.Left
+            Dim sy As Func(Of Single, Single) = mapper.YScaler(grect.Size, grect.Padding)
+            Dim bottom = grect.Size.Height - grect.Padding.Bottom
             Dim angle! = -45
             Dim leftMargins As New List(Of Single)
 
-            Call g.DrawAxis(grect.Size, grect.Margin, mapper, showGrid)
+            Call g.DrawAxis(grect.Size, grect.Padding, mapper, showGrid)
 
             For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
                 Dim x = left + interval
@@ -133,7 +129,7 @@ Namespace BarPlot
                 If stacked Then ' 改变Y
                     Dim right = x + dxStep
                     Dim top = sy(sample.value.StackedSum)
-                    Dim canvasHeight = grect.Size.Height - (grect.Margin.Height * 2)  ' 畫布的高度
+                    Dim canvasHeight = grect.Size.Height - (grect.Padding.Vertical)  ' 畫布的高度
                     Dim actualHeight = bottom - top ' 底部減去最高的就是實際的高度（縂的）
                     Dim barWidth = dxStep
 
@@ -160,7 +156,7 @@ Namespace BarPlot
                     For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                         Dim right = x + dxStep
                         Dim top = sy(val.value)
-                        Dim rect As Rectangle = Rectangle(top, x, right, grect.Size.Height - grect.Margin.Height)
+                        Dim rect As Rectangle = Rectangle(top, x, right, grect.Size.Height - grect.Padding.Bottom)
 
                         Call g.DrawRectangle(Pens.Black, rect)
                         Call g.FillRectangle(
@@ -168,7 +164,7 @@ Namespace BarPlot
                         Rectangle(top + 1,
                                   x + 1,
                                   right - 1,
-                                  grect.Size.Height - grect.Margin.Height - 1))
+                                  grect.Size.Height - grect.Padding.Bottom - 1))
                         x += dxStep
                     Next
                 End If
@@ -211,7 +207,7 @@ Namespace BarPlot
                 }
 
                 If legendPos.IsEmpty Then
-                    Dim Y% = grect.Margin.Height / legends.Length
+                    Dim Y% = grect.Padding.Bottom / legends.Length
                     Dim X%
                     Dim gr As Graphics = g
                     Dim maxW As Single = legends.Max(
