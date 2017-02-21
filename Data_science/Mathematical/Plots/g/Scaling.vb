@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 ''' <summary>
 ''' 将数据坐标转换为绘图坐标
@@ -223,13 +224,13 @@ Public Class Scaling
         Next
     End Function
 
-    Public Function PointScaler(size As Size, margin As Size) As Func(Of PointF, PointF)
-        Dim bottom As Integer = size.Height - margin.Height
-        Dim width As Integer = size.Width - margin.Width * 2
-        Dim height As Integer = size.Height - margin.Height * 2
+    Public Function PointScaler(size As Size, padding As Padding) As Func(Of PointF, PointF)
+        Dim bottom As Integer = size.Height - padding.Bottom
+        Dim width As Integer = size.Width - padding.Horizontal
+        Dim height As Integer = size.Height - padding.Vertical
 
         Return Function(pt)
-                   Dim px As Single = margin.Width + width * (pt.X - xmin) / dx
+                   Dim px As Single = padding.Left + width * (pt.X - xmin) / dx
                    Dim py As Single = bottom - height * (pt.Y - ymin) / dy
 
                    Return New PointF(px, py)
@@ -237,19 +238,19 @@ Public Class Scaling
     End Function
 
     Public Function PointScaler(rect As GraphicsRegion) As Func(Of PointF, PointF)
-        Return PointScaler(rect.Size, rect.Margin)
+        Return PointScaler(rect.Size, rect.Padding)
     End Function
 
     Public Function TupleScaler(rect As GraphicsRegion) As Func(Of (x#, y#), PointF)
-        Dim point = PointScaler(rect.Size, rect.Margin)
+        Dim point = PointScaler(rect.Size, rect.Padding)
         Return Function(pt) point(New PointF(pt.x, pt.y))
     End Function
 
     Public Function PointScaler(r As GraphicsRegion, pt As PointF) As PointF
-        Dim bottom As Integer = r.Size.Height - r.Margin.Height
-        Dim width As Integer = r.Size.Width - r.Margin.Width * 2
-        Dim height As Integer = r.Size.Height - r.Margin.Height * 2
-        Dim px As Single = r.Margin.Width + width * (pt.X - xmin) / dx
+        Dim bottom As Integer = r.Size.Height - r.Padding.Bottom
+        Dim width As Integer = r.Size.Width - r.Padding.Horizontal
+        Dim height As Integer = r.Size.Height - r.Padding.Vertical
+        Dim px As Single = r.Padding.Left + width * (pt.X - xmin) / dx
         Dim py As Single = bottom - height * (pt.Y - ymin) / dy
 
         Return New PointF(px!, py!)
