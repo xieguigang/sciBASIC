@@ -50,6 +50,7 @@ Namespace Drawing2D
     Public Module g
 
         Public Const DefaultPadding$ = "padding:100px 100px 100px 100px;"
+        Public Const ZeroPadding$ = "padding: 0px 0px 0px 0px;"
 
         ''' <summary>
         ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100)
