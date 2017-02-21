@@ -279,7 +279,7 @@ Public Module Scatter
 
     Public Function Plot(points As IEnumerable(Of Point),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional lineColor$ = "black",
                          Optional bg$ = "white",
                          Optional title$ = "Plot Of Points",
@@ -292,12 +292,12 @@ Public Module Scatter
                         lineWidth!,
                         ptSize!,
                         lineType)
-        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+        Return {s}.Plot(size:=size, padding:=padding, bg:=bg)
     End Function
 
     Public Function Plot(points As IEnumerable(Of PointF),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional lineColor$ = "black",
                          Optional bg$ = "white",
                          Optional title$ = "Plot Of Points",
@@ -310,7 +310,7 @@ Public Module Scatter
                         lineWidth!,
                         ptSize!,
                         lineType)
-        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+        Return {s}.Plot(size:=size, padding:=padding, bg:=bg)
     End Function
 
     <Extension>

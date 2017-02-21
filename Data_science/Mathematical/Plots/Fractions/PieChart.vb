@@ -45,7 +45,6 @@ Public Module PieChart
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg"></param>
     ''' <param name="legend"></param>
     ''' <param name="legendBorder"></param>
