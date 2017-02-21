@@ -35,7 +35,10 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Imaging
 
-    Public Module ColorExtensions
+    ''' <summary>
+    ''' Extensions function for the gdi+ color type.
+    ''' </summary>
+    Public Module GDIColors
 
         ''' <summary>
         ''' Creates a new light color object for the control from the specified color and
