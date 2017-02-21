@@ -13,9 +13,9 @@ Module Module1
 
         Dim mapper As New Mapper(x, y)
 
-        Using g As GDIPlusDeviceHandle = New Size(1440, 900).CreateGDIDevice
+        Using g As GDIPlusDeviceHandle = New Size(1600, 1200).CreateGDIDevice
 
-            Call g.Graphics.DrawAxis(g.Size, "padding: 100 50 200 200", mapper, True,
+            Call g.Graphics.DrawAxis(g.Size, "padding: 50 50 50 50", mapper, True,
                                      xlabel:="<span style=""color:green"">log<sub>2</sub>(Fold Change)</span>",
                                      ylabel:="-log<sub>10</sub>(P-value)",
                                      ylayout:=YAxisLayoutStyles.Centra)

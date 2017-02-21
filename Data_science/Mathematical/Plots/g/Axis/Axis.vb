@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
@@ -80,7 +81,7 @@ Namespace Graphic.Axis
                             Optional labelFontStyle$ = CSSFont.PlotSubTitle,
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
-                            Optional gridFill$ = "lightgray",
+                            Optional gridFill$ = "rgb(242,242,242)",
                             Optional gridColor$ = "white")
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
@@ -89,13 +90,14 @@ Namespace Graphic.Axis
             Dim tickFont As New Font(FontFace.MicrosoftYaHei, 14)
             Dim sx = scaler.XScaler(size, padding)
             Dim sy = scaler.YScaler(size, padding)
-            Dim gridPenX As New Pen(gridColor.TranslateColor, 1) With {
+            Dim gridPenX As New Pen(gridColor.TranslateColor, 2) With {
                 .DashStyle = Drawing2D.DashStyle.Dash
             }
-            Dim gridPenY As New Pen(gridColor.TranslateColor, 1) With {
+            Dim gridPenY As New Pen(gridColor.TranslateColor, 2) With {
                 .DashStyle = Drawing2D.DashStyle.Dot
             }
-            Dim gridFillBrush As Brush = gridFill.GetBrush
+
+            Call g.FillRectangle(gridFill.GetBrush, rect)
 
             If scaler.dx <> 0R Then
                 For Each tick In scaler.xAxis
@@ -123,7 +125,7 @@ Namespace Graphic.Axis
             Call g.DrawY(size, padding, pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont)
         End Sub
 
-        Public Property ddd As Integer = 10
+        Public Property delta As Integer = 10
 
         <Extension> Private Sub DrawY(ByRef g As Graphics, size As Size, padding As Padding,
                                       pen As Pen, label$,
@@ -155,12 +157,12 @@ Namespace Graphic.Axis
                     Dim y! = sy(tick) + offset.Y
                     Dim axisY As New PointF(ZERO.X, y)
 
-                    Call g.DrawLine(pen, axisY, New PointF(ZERO.X - ddd, y))
+                    Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
 
                     Dim labelText = (tick).FormatNumeric(2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
-                    g.DrawString(labelText, tickFont, Brushes.Black, New Point(ZERO.X - ddd - sz.Width, y - sz.Height / 2))
+                    g.DrawString(labelText, tickFont, Brushes.Black, New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2))
                 End If
             Next
 
