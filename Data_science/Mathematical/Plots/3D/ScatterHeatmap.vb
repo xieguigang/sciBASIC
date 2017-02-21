@@ -40,6 +40,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Plot3D
@@ -175,7 +176,8 @@ Namespace Plot3D
                              Optional axisFont$ = CSSFont.Win10Normal,
                              Optional legendFont As Font = Nothing,
                              Optional showLegend As Boolean = True,
-                             Optional dev As FormDevice = Nothing) As Bitmap
+                             Optional dev As FormDevice = Nothing,
+                             Optional padding$ = g.ZeroPadding) As Bitmap
 
             Dim modelPlot As DrawGraphics =
                 data _
@@ -186,6 +188,7 @@ Namespace Plot3D
                                  mapLevels:=mapLevels,
                                  mapName:=mapName,
                                  showLegend:=showLegend)
+            Dim margin As CSS.Padding = padding
 
             If Not dev Is Nothing Then
                 dev.canvas = New Canvas With {
@@ -199,7 +202,7 @@ Namespace Plot3D
             End If
 
             Return GraphicsPlots(
-                camera.screen, New Size,
+                camera.screen, margin,
                 bg$,
                 Sub(ByRef g, region)
                     Call modelPlot(g, camera)

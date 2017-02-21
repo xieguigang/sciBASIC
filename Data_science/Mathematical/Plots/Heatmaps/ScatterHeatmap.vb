@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::5a251ffdbdef54e26ac191131aebea90, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\ScatterHeatmap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Scripting
 Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 ''' <summary>
 ''' 和普通的heatmap相比，这里的坐标轴是连续的数值变量，而普通的heatmap，其坐标轴都是离散的分类变量
@@ -85,6 +86,7 @@ Public Module ScatterHeatmap
                          Optional mapLevels% = 25,
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
+                         Optional padding$ = "padding: 100 400 100 400;",
                          Optional unit% = 5,
                          Optional legendTitle$ = "",
                          Optional legendFont As Font = Nothing,
@@ -99,7 +101,7 @@ Public Module ScatterHeatmap
                 xrange, yrange,
                 colorMap,
                 mapLevels,
-                bg, size,
+                bg, size, padding,
                 unit,
                 legendTitle, legendFont,
                 xsteps, ysteps,
@@ -133,6 +135,7 @@ Public Module ScatterHeatmap
                          Optional mapLevels% = 25,
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
+                         Optional padding$ = "padding: 100 400 100 400",
                          Optional unit% = 5,
                          Optional legendTitle$ = "Scatter Heatmap",
                          Optional legendFont As Font = Nothing,
@@ -147,11 +150,11 @@ Public Module ScatterHeatmap
                          Optional logbase# = -1.0R,
                          Optional scale# = 1.0#) As Bitmap
 
+        Dim margin As Padding = padding
+
         If size.IsEmpty Then
             size = New Size(3000, 2400)
         End If
-
-        Dim margin As New Size(400, 100)
 
         Return GraphicsPlots(
            size, margin,
@@ -185,20 +188,19 @@ Public Module ScatterHeatmap
                          Optional mapLevels% = 25,
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
+                         Optional padding$ = "padding: 100 400 100 400;",
                          Optional legendTitle$ = "Scatter Heatmap",
                          Optional legendFont As Font = Nothing,
                          Optional xlabel$ = "X",
                          Optional ylabel$ = "Y",
                          Optional minZ# = Double.MinValue,
                          Optional maxZ# = Double.MaxValue) As Bitmap
-        If size.IsEmpty Then
-            size = New Size(3000, 2400)
-        End If
 
-        Dim margin As New Size(400, 100)
+        Dim margin As Padding = padding
 
         Return GraphicsPlots(
-           size, margin,
+           If(size.IsEmpty, New Size(3000, 2400), size),
+           margin,
            bg$, AddressOf New __plotHelper With {
                 .margin = margin,
                 .offset = New Point(-300, 0),
@@ -218,7 +220,8 @@ Public Module ScatterHeatmap
     ''' 因为ByRef参数不能够再lambda表达式之中进行使用，所以在这里必须要使用一个helper对象来读取原始的矩阵数据
     ''' </summary>
     Private Class __plotHelper
-        Public margin As Size, offset As Point
+
+        Public margin As Padding, offset As Point
         Public func As Func(Of Double, Double, Double)
         Public xrange As DoubleRange, yrange As DoubleRange
         Public xsteps!, ysteps!
@@ -308,8 +311,8 @@ Public Module ScatterHeatmap
         Public Sub Plot(ByRef g As Graphics, region As GraphicsRegion)
             Dim data = GetData(region.PlotRegion.Size)
             Dim scaler As New Scaling(data)
-            Dim xf = scaler.XScaler(region.Size, region.Margin)
-            Dim yf = scaler.YScaler(region.Size, region.Margin)
+            Dim xf = scaler.XScaler(region.Size, region.Padding)
+            Dim yf = scaler.YScaler(region.Size, region.Padding)
             Dim colorDatas As SolidBrush() = Nothing
             Dim getColors = GetColor(data.ToArray(Function(o) o.z), colorDatas)
             Dim size As Size = region.Size

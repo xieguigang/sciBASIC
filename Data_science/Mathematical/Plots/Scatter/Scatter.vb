@@ -50,13 +50,12 @@ Public Module Scatter
     ''' </summary>
     ''' <param name="c"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg"></param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,
@@ -68,6 +67,8 @@ Public Module Scatter
                          Optional legendFontSize! = 24,
                          Optional absoluteScaling As Boolean = True,
                          Optional drawAxis As Boolean = True) As Bitmap
+
+        Dim margin As Padding = padding
 
         Return GraphicsPlots(
             size, margin,
@@ -88,7 +89,7 @@ Public Module Scatter
                     Dim br As New SolidBrush(line.color)
                     Dim d = line.PointSize
                     Dim r As Single = line.PointSize / 2
-                    Dim bottom! = size.Height - margin.Height
+                    Dim bottom! = size.Height - margin.Bottom
 
                     For Each pt In pts
                         Dim a As PointData = pt.First
@@ -141,7 +142,7 @@ Public Module Scatter
                             }
 
                         If legendPosition.IsEmpty Then
-                            legendPosition = New Point(CInt(size.Width * 0.7), margin.Height)
+                            legendPosition = New Point(CInt(size.Width * 0.7), margin.Bottom)
                         End If
 
                         Call g.DrawLegends(legendPosition, legends,,, legendBorder)
@@ -152,14 +153,14 @@ Public Module Scatter
 
     Public Function Plot(x As Vector,
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional ptSize As Single = 15,
                          Optional width As Single = 5,
                          Optional drawLine As Boolean = False) As Bitmap
         Return {
             FromVector(x,,, ptSize, width)
-        }.Plot(size, margin, bg, True, False, , drawLine)
+        }.Plot(size, padding, bg, True, False, , drawLine)
     End Function
 
     Public Function FromVector(y As IEnumerable(Of Double),
@@ -278,7 +279,7 @@ Public Module Scatter
 
     Public Function Plot(points As IEnumerable(Of Point),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional lineColor$ = "black",
                          Optional bg$ = "white",
                          Optional title$ = "Plot Of Points",
@@ -291,12 +292,12 @@ Public Module Scatter
                         lineWidth!,
                         ptSize!,
                         lineType)
-        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+        Return {s}.Plot(size:=size, padding:=padding, bg:=bg)
     End Function
 
     Public Function Plot(points As IEnumerable(Of PointF),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional lineColor$ = "black",
                          Optional bg$ = "white",
                          Optional title$ = "Plot Of Points",
@@ -309,7 +310,7 @@ Public Module Scatter
                         lineWidth!,
                         ptSize!,
                         lineType)
-        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+        Return {s}.Plot(size:=size, padding:=padding, bg:=bg)
     End Function
 
     <Extension>

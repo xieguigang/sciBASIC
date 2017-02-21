@@ -41,18 +41,19 @@ Public Module Bubble
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg"></param>
     ''' <param name="legend"></param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(data As IEnumerable(Of SerialData),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional legend As Boolean = True,
                          Optional logR As Boolean = False,
                          Optional legendBorder As Border = Nothing) As Bitmap
+
+        Dim margin As Padding = padding
 
         Return GraphicsPlots(
             size, margin, bg,
@@ -80,7 +81,7 @@ Public Module Bubble
 
                 If legend Then
 
-                    Dim topLeft As New Point(size.Width * 0.8, margin.Height)
+                    Dim topLeft As New Point(size.Width * 0.8, margin.Top)
                     Dim legends = LinqAPI.Exec(Of Legend) <=
  _
                         From x As SerialData
