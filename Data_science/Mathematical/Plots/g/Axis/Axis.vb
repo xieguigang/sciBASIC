@@ -49,7 +49,8 @@ Namespace Graphic.Axis
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
                             Optional labelFont$ = CSSFont.PlotSubTitle,
-                            Optional axisStroke$ = Stroke.AxisStroke)
+                            Optional axisStroke$ = Stroke.AxisStroke,
+                            Optional gridFill$ = "rgb(245,245,245)")
             With region
                 Call g.DrawAxis(
                     .Size, .Padding,
@@ -59,7 +60,7 @@ Namespace Graphic.Axis
                     xlabel, ylabel,
                     xlayout:=xlayout, ylayout:=ylayout,
                     labelFontStyle:=labelFont,
-                    axisStroke:=axisStroke)
+                    axisStroke:=axisStroke, gridFill:=gridFill)
             End With
         End Sub
 
@@ -85,7 +86,7 @@ Namespace Graphic.Axis
                             Optional labelFontStyle$ = CSSFont.PlotSubTitle,
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
-                            Optional gridFill$ = "rgb(242,242,242)",
+                            Optional gridFill$ = "rgb(245,245,245)",
                             Optional gridColor$ = "white",
                             Optional axisStroke$ = Stroke.AxisStroke)
 
