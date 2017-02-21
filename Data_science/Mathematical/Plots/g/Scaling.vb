@@ -161,17 +161,17 @@ Public Class Scaling
     ''' 返回的系列是已经被转换过的，直接使用来进行画图
     ''' </summary>
     ''' <returns></returns>
-    Public Iterator Function ForEach(size As Size, margin As Size) As IEnumerable(Of SerialData)
-        Dim bottom As Integer = size.Height - margin.Height
-        Dim width As Integer = size.Width - margin.Width * 2
-        Dim height As Integer = size.Height - margin.Height * 2
+    Public Iterator Function ForEach(size As Size, margin As Padding) As IEnumerable(Of SerialData)
+        Dim bottom As Integer = size.Height - margin.Bottom
+        Dim width As Integer = size.Width - margin.Horizontal
+        Dim height As Integer = size.Height - margin.Vertical
 
         For Each s As SerialData In serials
             Dim pts = LinqAPI.Exec(Of PointData) <=
  _
                 From p As PointData
                 In s.pts
-                Let px As Single = margin.Width + width * (p.pt.X - xmin) / dx
+                Let px As Single = margin.Left + width * (p.pt.X - xmin) / dx
                 Let yh As Single = If(dy = 0R, height / 2, height * (p.pt.Y - ymin) / dy) ' 如果y没有变化，则是一条居中的水平直线
                 Let py As Single = bottom - yh
                 Select New PointData(px, py) With {
