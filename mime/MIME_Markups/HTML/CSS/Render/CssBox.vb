@@ -4,7 +4,9 @@ Imports System.Drawing.Drawing2D
 Imports System.Reflection
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace HTML.CSS.Render
 
@@ -1298,7 +1300,12 @@ Namespace HTML.CSS.Render
 
                     Case Else
                         _fontFamily = Value
-
+#If DEBUG Then
+                        If _fontFamily.TextEquals("Ubuntu") Then
+                            Call Me.ToString.__DEBUG_ECHO
+                        End If
+#End If
+                        _fontFamily = FontFace.GetFontName(_fontFamily)
                 End Select
             End Set
         End Property
@@ -2959,7 +2966,10 @@ Namespace HTML.CSS.Render
                 Return
             End If
 
-            Dim areas As List(Of RectangleF) = If(Rectangles.Count = 0, New List(Of RectangleF)(New RectangleF() {Bounds}), New List(Of RectangleF)(Rectangles.Values))
+            Dim areas As List(Of RectangleF) = If(
+                Rectangles.Count = 0,
+                New List(Of RectangleF)(New RectangleF() {Bounds}),
+                New List(Of RectangleF)(Rectangles.Values))
 
             Dim rects As RectangleF() = areas.ToArray()
             Dim offset As PointF = If(InitialContainer IsNot Nothing, InitialContainer.ScrollOffset, PointF.Empty)
