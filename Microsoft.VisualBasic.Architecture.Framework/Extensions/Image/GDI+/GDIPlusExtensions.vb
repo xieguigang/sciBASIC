@@ -337,7 +337,7 @@ Namespace Imaging
             Dim gdi As Graphics = Graphics.FromImage(Bitmap)
             Dim rect As New Rectangle(New Point, Bitmap.Size)
 
-            If filled = Nothing Then
+            If filled.IsNullOrEmpty Then
                 filled = Color.White
             End If
 
@@ -464,6 +464,11 @@ Namespace Imaging
         <Extension> Public Function CorpBlank(res As Image, Optional margin As Integer = 0, Optional blankColor As Color = Nothing) As Image
             If blankColor.IsNullOrEmpty Then
                 blankColor = Color.White
+            ElseIf blankColor.Name = NameOf(Color.Transparent) Then
+                ' 系统的transparent颜色为 0,255,255,255
+                ' 但是bitmap之中的transparent为 0,0,0,0
+                ' 在这里要变换一下
+                blankColor = New Color
             End If
 
             Dim top As Integer

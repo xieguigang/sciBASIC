@@ -77,7 +77,7 @@ Namespace Graphic.Axis
                             Optional offset As Point = Nothing,
                             Optional xlabel$ = "",
                             Optional ylabel$ = "",
-                            Optional labelFontStyle$ = CSSFont.UbuntuLarge,
+                            Optional labelFontStyle$ = CSSFont.PlotSubTitle,
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
                             Optional gridFill$ = "lightgray",
@@ -166,8 +166,8 @@ Namespace Graphic.Axis
 
             Dim labelImage As Image = label.__plotLabel(labelFont)
             ' y轴标签文本是旋转90度绘制于左边
-            labelImage = labelImage.RotateImage(90)
-            g.DrawImageUnscaled(labelImage, New Point(0, (size.Height - labelImage.Height) / 2))
+            labelImage = labelImage.RotateImage(-90)
+            g.DrawImageUnscaled(labelImage, New Point((padding.Left - labelImage.Width) / 2, (size.Height - labelImage.Height) / 2))
         End Sub
 
         ''' <summary>
@@ -224,7 +224,10 @@ Namespace Graphic.Axis
             Next
 
             Dim labelImage As Image = label.__plotLabel(labelFont)
-            g.DrawImageUnscaled(labelImage, New Point((size.Width - labelImage.Width) / 2, size.Height - labelImage.Height))
+            g.DrawImageUnscaled(
+                labelImage,
+                New Point((size.Width - labelImage.Width) / 2,
+                          size.Height - padding.Bottom + (padding.Bottom - labelImage.Height) * 0.5))
         End Sub
     End Module
 End Namespace

@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Histogram
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -28,15 +29,19 @@ Namespace Graphic
         Public ReadOnly xmin, ymin As Single
 
         Sub New(range As Scaling, Optional parts% = 10)
-            xAxis = New Vector(range.xrange.GetAxisValues(parts))
-            yAxis = New Vector(range.yrange.GetAxisValues(parts))
+            Call Me.New(range.xrange, range.yrange, parts)
 
+            serials = range.serials
+            hist = range.hist
+        End Sub
+
+        Sub New(xrange As DoubleRange, yrange As DoubleRange, Optional parts% = 10)
+            xAxis = New Vector(xrange.GetAxisValues(parts))
+            yAxis = New Vector(yrange.GetAxisValues(parts))
             dx = xAxis.Max - xAxis.Min
             dy = yAxis.Max - yAxis.Min
             xmin = xAxis.Min
             ymin = yAxis.Min
-            serials = range.serials
-            hist = range.hist
         End Sub
 
         Public Function ScallingWidth(x As Double, width%) As Single
