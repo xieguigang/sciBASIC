@@ -96,7 +96,7 @@ Namespace Topology
                 Dim beta# = _beta(v.Name).Sum(
                     Function(x) x.parm.Value * x.v)
 
-                dy(v) = alpha - beta
+                dy(index:=v) = alpha - beta
             Next
         End Sub
     End Class

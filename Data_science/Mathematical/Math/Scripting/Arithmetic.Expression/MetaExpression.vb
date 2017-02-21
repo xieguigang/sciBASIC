@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c252c10d3bdc10fa282bf0e4297c863, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\MetaExpression.vb"
+﻿#Region "Microsoft.VisualBasic::b4fc2dc65962c44729ef56f6094ec19f, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\MetaExpression.vb"
 
     ' Author:
     ' 

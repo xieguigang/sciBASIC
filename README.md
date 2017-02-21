@@ -90,17 +90,26 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 |------|------|----|---------|
 |<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=160 height=160 />|<img src="./etc/lena/lena.gray.png" width=160 height=160 />|<img src="./etc/lena/lena.grayscale.png" width=160 height=160 />|
 
-## Microsoft VisualBasic Mathematics & Data Graphics System
+## sciBASIC# Graphics Artist
+
++ **[Network Visualization Interface](./gr/Datavisualization.Network/)**
++ **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
+
+------------------------------------------------------------------------
+
+<img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400"> <img src="./gr/3DEngineTest/example/Metadata/thumbnail.png" width="250">
+
+![](./gr/build_3DEngine/images/screenshot.png)
+
+## Microsoft VisualBasic Data Science & Data Plots System
 
 + **[Mathematics & Chart Ploting System](./Data_science/Mathematical/)**
 + **[Darwinism computing module](./Data_science/Darwinism/)**
 + **[Data Mining &amp; Machine Learning](./Data_science/)**
 + **[sciBASIC# DataFrame System](./Data/DataFrame/)**
-+ **[Network Visualization Interface](./gr/Datavisualization.Network/)**
-
-![](./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png)
 
 ##### sciBASIC# Chart Plots System
+
 ```vbnet
 Imports Microsoft.VisualBasic.Data.ChartPlots
 ```
@@ -269,18 +278,36 @@ l += From x As Integer
      Select CStr(x)
 ```
 
-###### VB int Type
+###### New Integer(int) type in visualbasic
 
 ```vbnet
 Dim min As int = 1
 Dim max As int = 200
-Dim x As Integer = 199
+Dim x% = 199
 
-Console.WriteLine(min <= x < max) ' True
+' Compares
+Call println(min <= x < max) ' True
 x += 10 ' 209
-Console.WriteLine(min <= x < max) ' False
+Call println(min <= x < max) ' False
 x = -1
-Console.WriteLine(min <= x < max) ' False
+Call println(min <= x < max) ' False
+```
+
++ inline calculation and value assign
+
+```vbnet
+Dim bitChunk As Byte() = New Byte(INT64 - 1) {}
+Dim p As int = Scan0
+
+Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
+ProtocolCategory = BitConverter.ToInt64(bitChunk, Scan0)
+
+Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
+Protocol = BitConverter.ToInt64(bitChunk, Scan0)
+
+bitChunk = New Byte(INT64 - 1) {}
+Call Array.ConstrainedCopy(rawStream, p = (p + INT64), bitChunk, Scan0, INT64)
+BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 ```
 
 ===================================================================

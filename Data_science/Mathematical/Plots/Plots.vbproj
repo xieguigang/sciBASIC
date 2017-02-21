@@ -178,8 +178,10 @@
     <Compile Include="3D\ScatterHeatmap.vb" />
     <Compile Include="3D\Scatter.vb" />
     <Compile Include="3D\Data.vb" />
-    <Compile Include="Axis.vb" />
+    <Compile Include="BarPlot\Histogram\Extensions.vb" />
+    <Compile Include="g\Axis\Axis.vb" />
     <Compile Include="BarPlot\BarPlot2.vb" />
+    <Compile Include="BarPlot\Histogram\DataModel.vb" />
     <Compile Include="Bubble.vb" />
     <Compile Include="csv\BarData.vb" />
     <Compile Include="Dendrogram\Dendrogram.vb" />
@@ -187,7 +189,9 @@
     <Compile Include="Fractions\TreeMap.vb" />
     <Compile Include="Fractions\Fractions.vb" />
     <Compile Include="Fractions\Pyramid.vb" />
-    <Compile Include="g\AxisScalling.vb" />
+    <Compile Include="g\Axis\AxisScalling.vb" />
+    <Compile Include="g\Axis\AxisData.vb" />
+    <Compile Include="g\Axis\Styles.vb" />
     <Compile Include="g\ProfileGroup.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
     <Compile Include="g\Legends\Legend.vb" />
@@ -197,7 +201,7 @@
     <Compile Include="BarPlot\Data.vb" />
     <Compile Include="Heatmaps\HeatmapTable.vb" />
     <Compile Include="Heatmaps\ScatterHeatmap.vb" />
-    <Compile Include="Histogram.vb" />
+    <Compile Include="BarPlot\Histogram\Histogram.vb" />
     <Compile Include="ImageData.vb" />
     <Compile Include="QQPlot.vb" />
     <Compile Include="Fractions\PieChart.vb" />
@@ -252,7 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data\DataFrame\+VB_DataFrame.vbproj">
-      <Project>{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}</Project>
+      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>+VB_DataFrame</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">

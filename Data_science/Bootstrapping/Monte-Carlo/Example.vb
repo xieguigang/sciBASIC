@@ -47,7 +47,7 @@ Namespace MonteCarlo.Example
         Dim f As Double
 
         Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
-            dy(sin) = a * Math.Sin(dx) + f
+            dy(index:=sin) = a * Math.Sin(dx) + f
         End Sub
 
         Public Overrides Function params() As ValueRange()
@@ -77,7 +77,7 @@ Namespace MonteCarlo.Example
         Dim compare As Boolean = False
 
         Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
-            dy(sin) = a * Math.Sin(dx) + f
+            dy(index:=sin) = a * Math.Sin(dx) + f
         End Sub
 
         Protected Overrides Function y0() As var()

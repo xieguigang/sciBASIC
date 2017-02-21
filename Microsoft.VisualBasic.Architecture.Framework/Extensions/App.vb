@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::6593dd6f84cc3cb84a05df5c81dc0885, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Security
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -40,7 +41,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -80,6 +81,11 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
                   Publisher:="amethyst.asuka@gcmodeller.org",
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
+
+    Public ReadOnly Property RunTimeDirectory As String = FileIO.FileSystem _
+        .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
+        .FullName _
+        .Replace("/", "\")
 
     ''' <summary>
     ''' Gets the number of ticks that represent the date and time of this instance.
@@ -165,6 +171,8 @@ Public Module App
         Return Microsoft.VisualBasic.CommandLine.TryParse(CLI)
     End Function
 
+    Public ReadOnly Property Github As String = "https://github.com/xieguigang/sciBASIC"
+
     ''' <summary>
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or
     ''' an executable program developed with Visual Basic. The My feature provides greater
@@ -189,7 +197,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property AssemblyName As String =
-        basename(App.ExecutablePath)
+        BaseName(App.ExecutablePath)
 
     Public ReadOnly Property ProductName As String =
         If(String.IsNullOrEmpty(Application.ProductName.Trim), AssemblyName, Application.ProductName.Trim)
@@ -203,7 +211,7 @@ Public Module App
     ''' Getting the path of the home directory
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property UserHOME As String = PathMapper.HOME
+    Public ReadOnly Property UserHOME As String = PathMapper.HOME.GetDirectoryFullPath
 
     ''' <summary>
     ''' The currrent working directory of this application.(应用程序的当前的工作目录)
@@ -228,9 +236,11 @@ Public Module App
     ''' Linux里面的前一个文件夹
     ''' </summary>
     ''' <remarks>
-    ''' 假设你之前好不容易进入了一个很深的目录，然后不小心敲了个 cd /，是不是快气晕了啊，不用着急，通过下面的指令可以轻松的回到前一个指令：
+    ''' 假设你之前好不容易进入了一个很深的目录，然后不小心敲了个 ``cd /``，是不是快气晕了啊，不用着急，通过下面的指令可以轻松的回到前一个指令：
     '''
-    '''      cd -
+    ''' ```bash
+    ''' cd -
+    ''' ```
     ''' </remarks>
     Dim _preDIR As String
 
@@ -255,14 +265,14 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ProductProgramData As String =
-        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}"
+        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath
 
     ''' <summary>
     ''' The shared program data directory for a group of app which have the same product series name.
     ''' (同一產品程序集所共享的數據文件夾)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared"
+    Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared".GetDirectoryFullPath
 
 #Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
 
@@ -348,7 +358,7 @@ Public Module App
         Dim assm As Assembly = type.Assembly
         Dim productName As String = ApplicationDetails.GetProductName(assm)
         If String.IsNullOrEmpty(productName) Then
-            productName = basename(assm.Location)
+            productName = BaseName(assm.Location)
         End If
         Return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{productName}"
     End Function
@@ -377,7 +387,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property LocalData As String =
-        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}"
+        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath
 
     ''' <summary>
     ''' The temp directory in the application local data.
@@ -856,7 +866,7 @@ Public Module App
     End Function
 
     Public ReadOnly Property CurrentProcessTemp As String =
-        GenerateTemp(App.SysTemp & "/tmp.io", App.PID)
+        GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath
 
     ''' <summary>
     '''

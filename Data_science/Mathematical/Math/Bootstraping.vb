@@ -260,6 +260,7 @@ Public Module Bootstraping
     End Function
 
     ''' <summary>
+    ''' ###### 频数分布表与直方图
     ''' 返回来的标签数据之中的标签是在某个区间范围内的数值集合的平均值
     ''' </summary>
     ''' <param name="data"></param>
@@ -300,6 +301,51 @@ Public Module Bootstraping
         If out(max - 1).value = 0 Then
             Call out.Remove(max)
         End If
+
+        Return out
+    End Function
+
+    ''' <summary>
+    ''' ###### 频数分布表与直方图
+    ''' 这个函数返回来的是频数以及区间内的所有的数的平均值
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="step!"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Hist(data As Double(), Optional step! = 1) As Dictionary(Of Double, IntegerTagged(Of Double))
+        Dim out As New Dictionary(Of Double, IntegerTagged(Of Double))
+        Dim i As int = 0
+        Dim x As New Value(Of Double)
+        Dim stop# = Fix(data.Max) + 1
+        Dim len% = data.Length
+
+        data = data _
+            .OrderBy(Function(n) n) _
+            .ToArray  ' 升序排序方便进行快速计算
+
+        For min As Double = Fix(data.Min) - 1 To [stop] Step [step]
+            Dim upbound# = min + [step]
+            Dim n As Integer = 0
+            Dim list As New List(Of Double)
+
+            ' 因为数据已经是经过排序了的，所以在这里可以直接进行区间计数
+            Do While i < len AndAlso (x = data(++i)) >= min AndAlso x < upbound
+                n += 1
+                list += x.value
+            Loop
+
+            Call out.Add(
+                min, New IntegerTagged(Of Double) With {
+                    .Tag = n,
+                    .value = If(list.Count = 0, 0R, list.Average),
+                    .TagStr = $"[{min}, {upbound}]"
+                })
+
+            If i.value = len Then
+                Exit For
+            End If
+        Next
 
         Return out
     End Function

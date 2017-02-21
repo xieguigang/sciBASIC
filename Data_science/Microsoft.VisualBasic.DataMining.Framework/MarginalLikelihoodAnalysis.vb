@@ -81,14 +81,14 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="burnin">          used for 'toString' display purposes only </param>
     ''' <param name="analysisType"> </param>
     ''' <param name="bootstrapLength"> a value of zero will turn off bootstrapping </param>
-    Public Sub New(ByVal sample As IList(Of Double), ByVal burnin As Integer, ByVal analysisType As String, ByVal bootstrapLength As Integer)
+    Public Sub New( sample As IList(Of Double),  burnin As Integer,  analysisType As String,  bootstrapLength As Integer)
         Me.sample = sample
         Me.Burnin = burnin
         Me.analysisType = analysisType
         Me.bootstrapLength = bootstrapLength
     End Sub
 
-    Public Overridable Function calculateLogMarginalLikelihood(ByVal sample As IList(Of Double)) As Double
+    Public Overridable Function calculateLogMarginalLikelihood( sample As IList(Of Double)) As Double
         If analysisType.Equals("aicm") Then
             Return logMarginalLikelihoodAICM(sample)
         ElseIf analysisType.Equals("smoothed") Then
@@ -105,7 +105,7 @@ Public Class MarginalLikelihoodAnalysis
     ''' </summary>
     ''' <param name="v"> a posterior sample of logLikelihoods </param>
     ''' <returns> the log marginal likelihood </returns>
-    Public Overridable Function logMarginalLikelihoodArithmetic(ByVal v As IList(Of Double?)) As Double
+    Public Overridable Function logMarginalLikelihoodArithmetic( v As IList(Of Double?)) As Double
         Dim size As Integer = v.Count
         Dim sum As Double = LogTricks.logZero
 
@@ -121,7 +121,7 @@ Public Class MarginalLikelihoodAnalysis
     ''' </summary>
     ''' <param name="v"> a posterior sample of logLikelihoods </param>
     ''' <returns> the log marginal likelihood </returns>
-    Public Overridable Function logMarginalLikelihoodHarmonic(ByVal v As IList(Of Double)) As Double
+    Public Overridable Function logMarginalLikelihoodHarmonic( v As IList(Of Double)) As Double
         Dim sum As Double = 0
         Dim size As Integer = v.Count
         For i As Integer = 0 To size - 1
@@ -143,7 +143,7 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="v"> a posterior sample of logLikelihoods </param>
     ''' <returns> the AICM (lower values are better) </returns>
 
-    Public Overridable Function logMarginalLikelihoodAICM(ByVal v As IList(Of Double)) As Double
+    Public Overridable Function logMarginalLikelihoodAICM( v As IList(Of Double)) As Double
 
         Dim sum As Double = 0
         Dim size As Integer = v.Count
@@ -201,7 +201,7 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="delta"> proportion of pseudo-samples from the prior </param>
     ''' <param name="Pdata"> current estimate of the log marginal likelihood </param>
     ''' <returns> the log marginal likelihood </returns>
-    Public Overridable Function logMarginalLikelihoodSmoothed(ByVal v As IList(Of Double), ByVal delta As Double, ByVal Pdata As Double) As Double
+    Public Overridable Function logMarginalLikelihoodSmoothed( v As IList(Of Double),  delta As Double,  Pdata As Double) As Double
 
         Dim logDelta As Double = Math.Log(delta)
         Dim logInvDelta As Double = Math.Log(1.0 - delta)
@@ -236,7 +236,7 @@ Public Class MarginalLikelihoodAnalysis
         End Get
     End Property
 
-    Public Overridable Function logMarginalLikelihoodSmoothed(ByVal v As IList(Of Double?)) As Double
+    Public Overridable Function logMarginalLikelihoodSmoothed( v As IList(Of Double?)) As Double
 
         Const delta As Double = 0.01 ' todo make class adjustable by accessor/setter
 

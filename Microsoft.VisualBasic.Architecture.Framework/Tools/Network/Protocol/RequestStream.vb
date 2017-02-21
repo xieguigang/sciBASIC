@@ -135,18 +135,16 @@ Namespace Net.Protocols
             Call MyBase.New(rawStream)
 
             Dim bitChunk As Byte() = New Byte(INT64 - 1) {}
-            Dim p As Integer = Scan0
+            Dim p As int = Scan0
 
-            Call Array.ConstrainedCopy(rawStream, p.Move(INT64), bitChunk, Scan0, INT64)
+            Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
             Me.ProtocolCategory = BitConverter.ToInt64(bitChunk, Scan0)
-            Call p.MoveNext
 
-            Call Array.ConstrainedCopy(rawStream, p.Move(INT64), bitChunk, Scan0, INT64)
+            Call Array.ConstrainedCopy(rawStream, ++(p+INT64), bitChunk, Scan0, INT64)
             Me.Protocol = BitConverter.ToInt64(bitChunk, Scan0)
-            Call p.MoveNext
 
             bitChunk = New Byte(INT64 - 1) {}
-            Call Array.ConstrainedCopy(rawStream, p.Move(INT64), bitChunk, Scan0, INT64)
+            Call Array.ConstrainedCopy(rawStream, p = (p + INT64), bitChunk, Scan0, INT64)
             Me.BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
             bitChunk = New Byte(Me.BufferLength - 1) {}
@@ -157,11 +155,11 @@ Namespace Net.Protocols
                 Return
             End If
 
-            Call Array.ConstrainedCopy(rawStream, p.Move(BufferLength), bitChunk, Scan0, Me.BufferLength)
+            Call Array.ConstrainedCopy(rawStream, p = (p + BufferLength), bitChunk, Scan0, Me.BufferLength)
             Me.ChunkBuffer = bitChunk
 
             bitChunk = New Byte(INT64 - 1) {}
-            Call Array.ConstrainedCopy(rawStream, p.Move(INT64), bitChunk, Scan0, INT64)
+            Call Array.ConstrainedCopy(rawStream, p + INT64, bitChunk, Scan0, INT64)
             Me.uid = BitConverter.ToInt64(bitChunk, Scan0)
         End Sub
 

@@ -33,6 +33,44 @@ Imports Microsoft.VisualBasic.Language
 
 Public Module KeyValuePairExtensions
 
+    <Extension> Public Sub SortByValue(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
+        Dim orders As KeyValuePair(Of V, T)()
+        Dim out As New Dictionary(Of V, T)
+
+        If Not desc Then
+            orders = table.OrderBy(Function(p) p.Value).ToArray
+        Else
+            orders = table _
+                .OrderByDescending(Function(p) p.Value) _
+                .ToArray
+        End If
+
+        For Each k As KeyValuePair(Of V, T) In orders
+            Call out.Add(k.Key, k.Value)
+        Next
+
+        table = out
+    End Sub
+
+    <Extension> Public Sub SortByKey(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
+        Dim orders As V()
+        Dim out As New Dictionary(Of V, T)
+
+        If Not desc Then
+            orders = table.Keys.OrderBy(Function(k) k).ToArray
+        Else
+            orders = table.Keys _
+                .OrderByDescending(Function(k) k) _
+                .ToArray
+        End If
+
+        For Each k As V In orders
+            Call out.Add(k, table(k))
+        Next
+
+        table = out
+    End Sub
+
     ''' <summary>
     ''' Determines whether the <see cref="NameValueCollection"/> contains the specified key.
     ''' </summary>
@@ -171,6 +209,18 @@ Public Module KeyValuePairExtensions
             Return d.ToDictionary(
                 Function(x) x.Value,
                 Function(x) x.Key)
+        End If
+    End Function
+
+    <Extension>
+    Public Function Selects(Of T, V)(d As Dictionary(Of T, V), keys As IEnumerable(Of T), Optional skipNonExist As Boolean = False) As V()
+        If skipNonExist Then
+            Return keys _
+                .Where(AddressOf d.ContainsKey) _
+                .Select(Function(k) d(k)) _
+                .ToArray
+        Else
+            Return keys.Select(Function(k) d(k)).ToArray
         End If
     End Function
 End Module

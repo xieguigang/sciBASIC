@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8466f7b939c46471b00451ed70950251, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::965e350ce9ad262dd7f3b764c8f1dddb, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 
@@ -72,7 +72,7 @@ Public Class Renderer : Inherits AbstractRenderer
 
         For Each edge As Edge In iForceDirected.graph.edges
             Dim w As Single = CSng(5.0! * edge.Data.weight)
-            w = If(w < 1.5!, 1.5!, w)
+            w = If(w < 3.0!, 3.0!, w)
             Call ws.Add(edge, w)
         Next
         For Each n As Node In iForceDirected.graph.nodes

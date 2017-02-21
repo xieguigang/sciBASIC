@@ -1,4 +1,4 @@
-# VisualBasic Data Graphics System
+# VB.NET Graphics Artist
 
 ![](../etc/lena/grayscale-heatmap.png)
 

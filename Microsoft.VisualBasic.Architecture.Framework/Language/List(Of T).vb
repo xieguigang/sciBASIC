@@ -1,38 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::2a464be949d7e1383005582755b78afc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\List(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.FileIO
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Language.UnixBash.FileHandles
+Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace Language
 
@@ -46,6 +44,82 @@ Namespace Language
         ' Implements IEnumerable(Of Value(Of T))
 
         Dim __index As Pointer
+
+#Region "Improvements Index"
+
+        Default Public Overloads Property Item(index%) As T
+            Get
+                If index < 0 Then
+                    index = Count + index  ' -1 -> count -1
+                End If
+                Return MyBase.Item(index)
+            End Get
+            Set(value As T)
+                If index < 0 Then
+                    index = Count + index  ' -1 -> count -1
+                End If
+                MyBase.Item(index) = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="exp$">
+        ''' + ``1``, index=1
+        ''' + ``1:8``, index=1, count=8
+        ''' + ``1->8``, index from 1 to 8
+        ''' + ``8->1``, index from 8 to 1
+        ''' + ``1,2,3,4``, index=1 or  2 or 3 or 4
+        ''' </param>
+        ''' <returns></returns>
+        Default Public Overloads Property Item(exp$) As List(Of T)
+            Get
+                Dim list As New List(Of T)
+
+                For Each i% In exp.TranslateIndex
+                    list += Item(index:=i)
+                Next
+
+                Return list
+            End Get
+            Set(value As List(Of T))
+                For Each i As SeqValue(Of Integer) In exp.TranslateIndex.SeqIterator
+                    Item(index:=+i) = value(i.i)
+                Next
+            End Set
+        End Property
+
+        Default Public Overloads Property Item(range As IntRange) As List(Of T)
+            Get
+                Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
+            End Get
+            Set(value As List(Of T))
+                Dim indices As Integer() = range.ToArray
+
+                For i As Integer = 0 To indices.Length - 1
+                    Item(index:=indices(i)) = value(i)
+                Next
+            End Set
+        End Property
+
+        Default Public Overloads Property Item(indices As IEnumerable(Of Integer)) As List(Of T)
+            Get
+                Return New List(Of T)(indices.Select(Function(i) Item(index:=i)))
+            End Get
+            Set(value As List(Of T))
+                For Each i As SeqValue(Of Integer) In indices.SeqIterator
+                    Item(index:=+i) = value(i.i)
+                Next
+            End Set
+        End Property
+
+        Default Public Overloads ReadOnly Property Item([where] As Predicate(Of T)) As T()
+            Get
+                Return MyBase.Where(Function(o) where(o)).ToArray
+            End Get
+        End Property
+#End Region
 
         ''' <summary>
         ''' Initializes a new instance of the <see cref="List"/>`1 class that

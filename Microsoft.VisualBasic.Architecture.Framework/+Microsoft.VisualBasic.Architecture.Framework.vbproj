@@ -105,7 +105,7 @@
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -308,10 +308,6 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ValueTuple, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\System.ValueTuple.4.3.0-preview1-24530-04\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows" />
@@ -357,6 +353,8 @@
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\ExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
@@ -366,11 +364,13 @@
     <Compile Include="ComponentModel\DataSource\SchemaMaps\SQL.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Mappings.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Schema.vb" />
-    <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
-    <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\ClusterParts.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\NewickParser.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
     <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
     <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\ITreeNode.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\TreeNodeBase.vb" />
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
@@ -391,6 +391,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
     <Compile Include="Extensions\CodeDOM\References.vb" />
+    <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\GDI+\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
@@ -405,11 +406,11 @@
     <Compile Include="ComponentModel\Coords.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
-    <Compile Include="ComponentModel\DataStructures\BinaryTree\TreeNode%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
-    <Compile Include="ComponentModel\DataStructures\SlideWindowHandle.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindowHandle.vb" />
     <Compile Include="ComponentModel\File\FileSaveHandle.vb" />
     <Compile Include="ComponentModel\IO\ReadStream.vb" />
     <Compile Include="ComponentModel\IO\WriteStream.vb" />
@@ -426,9 +427,15 @@
     <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
+    <Compile Include="Language\UnixBash\ShellSyntax.vb" />
+    <Compile Include="Language\UnixBash\Shell\rm.vb" />
+    <Compile Include="Language\Value\IfValue.vb" />
     <Compile Include="Language\Value\Numeric\int.vb" />
     <Compile Include="Language\Value\Numeric\float.vb" />
     <Compile Include="Language\Value\var.vb" />
+    <Compile Include="Parallel\Tasks\Actor%28Of T, V%29.vb" />
+    <Compile Include="Scripting\Expressions\ArrayIndex.vb" />
+    <Compile Include="Scripting\Expressions\StringInterpolation.vb" />
     <Compile Include="Terminal\InteractiveIODevice\Shell.vb" />
     <Compile Include="Terminal\PipelineCLI.vb" />
     <Compile Include="Terminal\InnerQueue.vb" />
@@ -517,6 +524,7 @@
     <Compile Include="Text\Paragraph.vb" />
     <Compile Include="Text\Parser\HtmlParser\HtmlStrips.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
+    <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
     <Compile Include="Text\Xml\Models.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
@@ -539,6 +547,7 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
+    <Compile Include="Tools\Network\MIME\Type.vb" />
     <Compile Include="Tools\Network\Tcp\IPTools\AddressEnumerator.vb" />
     <Compile Include="Tools\SoftwareToolkits\LicenseMgr.vb" />
     <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
@@ -594,19 +603,19 @@
     <Compile Include="Extensions\Math\Random\RandomExtensions.vb" />
     <Compile Include="Extensions\Math\ScaleMaps.vb" />
     <Compile Include="ComponentModel\DataStructures\Pointer.vb" />
-    <Compile Include="Extensions\CloneExtensions.vb" />
+    <Compile Include="Language\Value\Clones.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointer%28Of T%29.vb" />
     <Compile Include="Extensions\Security\Md5HashProvider.vb" />
     <Compile Include="Extensions\StringHelpers\Parser.vb" />
     <Compile Include="Language\Linq.vb" />
-    <Compile Include="Text\UnbufferedStringReader.vb" />
+    <Compile Include="Text\IO\UnbufferedStringReader.vb" />
     <Compile Include="Text\Parser\HtmlParser\Table.vb" />
     <Compile Include="Language\Class.vb" />
-    <Compile Include="Language\UnixBash\FileSystem\Searchs.vb" />
+    <Compile Include="Language\UnixBash\Shell\ls.vb" />
     <Compile Include="Language\UnixBash\FileSystem\File.vb" />
     <Compile Include="Language\ClassObject.vb" />
     <Compile Include="Language\Value\Numeric\Numeric.vb" />
-    <Compile Include="Language\UnixBash\Text\Grep.vb" />
+    <Compile Include="Language\UnixBash\Shell\Text\Grep.vb" />
     <Compile Include="Tools\MMFProtocol\WorkFlow.vb" />
     <Compile Include="Parallel\Tasks\CallbackTask.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
@@ -616,7 +625,7 @@
     <Compile Include="Serialization\ConfigMappings\Attributes.vb" />
     <Compile Include="Serialization\Controls\Contrls.vb" />
     <Compile Include="Text\Splitter.vb" />
-    <Compile Include="Text\EncodingHelper.vb" />
+    <Compile Include="Text\IO\EncodingHelper.vb" />
     <Compile Include="Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
     <Compile Include="Tools\Network\Protocol\Streams\VarArray.vb" />
     <Compile Include="Tools\SoftwareToolkits\ApplicationDetails.vb" />
@@ -664,8 +673,8 @@
     <Compile Include="Scripting\MetaData\Namespace.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryWriter.vb" />
     <Compile Include="Text\StringSimilarity\Similarity.vb" />
-    <Compile Include="Text\TextIndexing.vb" />
-    <Compile Include="Text\GB2312.vb" />
+    <Compile Include="Text\SearchEngine\TextIndexing\TextIndexing.vb" />
+    <Compile Include="Text\IO\GB2312.vb" />
     <Compile Include="Tools\Logging\LogFile\ISupportLoggingClient.vb" />
     <Compile Include="Tools\Logging\LogFile\LogReader.vb" />
     <Compile Include="Tools\Logging\LogFile\LogEntry.vb" />
@@ -728,7 +737,7 @@
     <Compile Include="Tools\Network\Tcp\TCPExtensions.vb" />
     <Compile Include="Tools\Network\Tcp\AsynInvoke.vb" />
     <Compile Include="Parallel\Threading.vb" />
-    <Compile Include="ComponentModel\DataStructures\BinaryTree\BinaryTree.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
     <Compile Include="Extensions\Image\GDI+\GDIPlusExtensions.vb" />
     <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />
@@ -768,7 +777,7 @@
     <Compile Include="Tools\SoftwareToolkits\UpdatesEditor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Text\TextFileEncodingDetector.vb" />
+    <Compile Include="Text\IO\TextFileEncodingDetector.vb" />
     <Compile Include="ComponentModel\Settings\SimpleConfig.vb" />
     <Compile Include="Extensions\IO\PathSearchTool.vb" />
     <Compile Include="ComponentModel\Href.vb" />
@@ -782,7 +791,7 @@
     <Compile Include="ComponentModel\Settings\Inf\INIProfile.vb" />
     <Compile Include="ComponentModel\File\ITextFile.vb" />
     <Compile Include="ComponentModel\Settings\Settings.vb" />
-    <Compile Include="ComponentModel\Comb.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\Combination\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\Attribute.vb" />
     <Compile Include="CommandLine\Reflection\ArgumentCollection.vb" />

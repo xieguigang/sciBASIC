@@ -1,36 +1,36 @@
-﻿#Region "Microsoft.VisualBasic::c55335bac4c18a25277d332225a88bdc, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::f41e417d039a54d90b8a3af5b6f24502, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures.SlideWindow
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging
@@ -50,13 +50,12 @@ Public Module Scatter
     ''' </summary>
     ''' <param name="c"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg"></param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,
@@ -66,15 +65,21 @@ Public Module Scatter
                          Optional fill As Boolean = False,
                          Optional fillPie As Boolean = True,
                          Optional legendFontSize! = 24,
-                         Optional absoluteScaling As Boolean = True) As Bitmap
+                         Optional absoluteScaling As Boolean = True,
+                         Optional drawAxis As Boolean = True) As Bitmap
+
+        Dim margin As Padding = padding
 
         Return GraphicsPlots(
-            size, margin, bg,
+            size, margin,
+            bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = c.ToArray
                 Dim mapper As New Scaling(array, absoluteScaling)
 
-                Call g.DrawAxis(size, margin, mapper, showGrid)
+                If drawAxis Then
+                    Call g.DrawAxis(size, margin, mapper, showGrid)
+                End If
 
                 For Each line As SerialData In mapper.ForEach(size, margin)
                     Dim pts = line.pts.SlideWindows(2)
@@ -84,7 +89,7 @@ Public Module Scatter
                     Dim br As New SolidBrush(line.color)
                     Dim d = line.PointSize
                     Dim r As Single = line.PointSize / 2
-                    Dim bottom! = size.Height - margin.Height
+                    Dim bottom! = size.Height - margin.Bottom
 
                     For Each pt In pts
                         Dim a As PointData = pt.First
@@ -137,7 +142,7 @@ Public Module Scatter
                             }
 
                         If legendPosition.IsEmpty Then
-                            legendPosition = New Point(CInt(size.Width * 0.7), margin.Height)
+                            legendPosition = New Point(CInt(size.Width * 0.7), margin.Bottom)
                         End If
 
                         Call g.DrawLegends(legendPosition, legends,,, legendBorder)
@@ -148,14 +153,14 @@ Public Module Scatter
 
     Public Function Plot(x As Vector,
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional ptSize As Single = 15,
                          Optional width As Single = 5,
                          Optional drawLine As Boolean = False) As Bitmap
         Return {
             FromVector(x,,, ptSize, width)
-        }.Plot(size, margin, bg, True, False, , drawLine)
+        }.Plot(size, padding, bg, True, False, , drawLine)
     End Function
 
     Public Function FromVector(y As IEnumerable(Of Double),
@@ -192,17 +197,40 @@ Public Module Scatter
                     }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="range">这个参数之中的Name属性是为了设置表达式计算之中的变量的目的</param>
+    ''' <param name="expression$"></param>
+    ''' <param name="steps#"></param>
+    ''' <param name="lineColor$"></param>
+    ''' <param name="lineWidth!"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="yline#">
+    ''' Combine with y line for visualize the numeric solve of the equation.
+    ''' </param>
+    ''' <param name="ylineColor$"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function Plot(range As NamedValue(Of DoubleRange),
-                         expression$,
-                         Optional steps# = 0.01,
-                         Optional lineColor$ = "black",
-                         Optional lineWidth! = 10,
-                         Optional bg$ = "white") As Bitmap
+    Public Function PlotFunction(range As NamedValue(Of DoubleRange),
+                                 expression$,
+                                 Optional steps# = 0.01,
+                                 Optional lineColor$ = "black",
+                                 Optional lineWidth! = 10,
+                                 Optional bg$ = "white",
+                                 Optional variables As Dictionary(Of String, String) = Nothing,
+                                 Optional yline# = Double.NaN,
+                                 Optional ylineColor$ = "red") As Bitmap
 
         Dim engine As New Expression
         Dim ranges As Double() = range.Value.seq(steps).ToArray
         Dim y As New List(Of Double)
+
+        If Not variables.IsNullOrEmpty Then
+            For Each var In variables
+                Call engine.SetVariable(var.Key, var.Value)
+            Next
+        End If
 
         For Each x# In ranges
             Call engine _
@@ -211,7 +239,22 @@ Public Module Scatter
         Next
 
         Dim serial As SerialData = FromVector(y, lineColor,,, lineWidth, ranges, expression,)
-        Return Plot({serial}, ,, bg)
+
+        If Double.IsNaN(yline) Then
+            Return Plot({serial}, ,, bg)
+        Else
+            Dim syline As New SerialData With {
+                .color = ylineColor.ToColor,
+                .PointSize = 3,
+                .width = 3,
+                .title = $"y={yline}",
+                .pts = {
+                    New PointData With {.pt = New PointF(range.Value.Min, yline)},
+                    New PointData With {.pt = New PointF(range.Value.Max, yline)}
+                }
+            }
+            Return Plot({syline, serial}, ,, bg)
+        End If
     End Function
 
     <Extension>
@@ -236,7 +279,7 @@ Public Module Scatter
 
     Public Function Plot(points As IEnumerable(Of Point),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional lineColor$ = "black",
                          Optional bg$ = "white",
                          Optional title$ = "Plot Of Points",
@@ -249,12 +292,12 @@ Public Module Scatter
                         lineWidth!,
                         ptSize!,
                         lineType)
-        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+        Return {s}.Plot(size:=size, padding:=padding, bg:=bg)
     End Function
 
     Public Function Plot(points As IEnumerable(Of PointF),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional lineColor$ = "black",
                          Optional bg$ = "white",
                          Optional title$ = "Plot Of Points",
@@ -267,7 +310,7 @@ Public Module Scatter
                         lineWidth!,
                         ptSize!,
                         lineType)
-        Return {s}.Plot(size:=size, margin:=margin, bg:=bg)
+        Return {s}.Plot(size:=size, padding:=padding, bg:=bg)
     End Function
 
     <Extension>

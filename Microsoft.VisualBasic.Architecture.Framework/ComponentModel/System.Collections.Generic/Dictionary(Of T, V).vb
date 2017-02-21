@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b41282d2a47cc9aee9d12be6defe465, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::05667d44dd1cf6e8925c45410f15b8a4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -132,7 +132,7 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
     End Function
 
     ''' <summary>
-    ''' Gets the value associated with the specified key.
+    ''' Gets the value associated with the specified key.(假若找不到键值，就会返回Nothing)
     ''' </summary>
     ''' <param name="name">The key of the value to get.</param>
     ''' <param name="success">true if the System.Collections.Generic.SortedDictionary`2 contains an element

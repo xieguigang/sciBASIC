@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99c262cf1bbd1a768e69cbb24dc5d34d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::c66c4c92801a2f88402d862f348b2698, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Xmlns.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -44,7 +45,15 @@ Namespace Text.Xml
         ''' </summary>
         Public Const DefaultXmlns As String = "xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"""
 
+        ''' <summary>
+        ''' ``xmlns=...``
+        ''' </summary>
+        ''' <returns></returns>
         Public Property xmlns As String
+        ''' <summary>
+        ''' 枚举所有``xmlns:&lt;type>``开始的属性
+        ''' </summary>
+        ''' <returns></returns>
         Public Property [namespace] As Dictionary(Of NamedValue(Of String))
 
         Public Property xsd As String
@@ -106,6 +115,10 @@ Namespace Text.Xml
             [namespace](ns) = New NamedValue(Of String)(ns, value)
         End Sub
 
+        Public Sub Clear(ns$)
+            Call [Set](ns, "")
+        End Sub
+
         ''' <summary>
         ''' The parser for the xml root node.
         ''' </summary>
@@ -127,12 +140,12 @@ Namespace Text.Xml
         ''' </summary>
         ''' <param name="xml"></param>
         ''' <remarks>当前的这个对象是新值，需要替换掉文档里面的旧值</remarks>
-        Public Sub WriteNamespace(xml As StringBuilder)
+        Public Sub WriteNamespace(xml As StringBuilder, Optional usingDefault_xmlns As Boolean = False)
             Dim rs As String = XmlDoc.__rootString(xml.ToString)
             Dim root As Xmlns = New Xmlns(rs) ' old xmlns value
             Dim ns As New StringBuilder(rs)  ' 可能还有其他的属性，所以在这里还不可以直接拼接字符串然后直接进行替换
 
-            For Each nsValue As NamedValue(Of String) In [namespace].Values
+            For Each nsValue As NamedValue(Of String) In [namespace].Values.SafeQuery
                 Dim rootNs As String = root(nsValue.Name)
 
                 If Not String.IsNullOrEmpty(rootNs) Then
@@ -143,7 +156,7 @@ Namespace Text.Xml
                     Call ns.Replace($"{nsValue.Name}=""{rootNs}""", s)
                 Else
                     If Not String.IsNullOrEmpty(nsValue.Value) Then
-                        Call ns.Replace(">", $" {nsValue.Name}=""{nsValue.Value}"">")
+                        Call __replace(ns, $"{nsValue.Name}=""{nsValue.Value}""")
                     End If
                 End If
             Next
@@ -153,10 +166,20 @@ Namespace Text.Xml
             End If
 
             If Not String.IsNullOrEmpty(xmlns) Then  ' 当前的xmlns值不为空值 ，则设置xmlns
-                Call ns.Replace(">", $" xmlns=""{xmlns}"">")
+                Call __replace(ns, $"xmlns=""{xmlns}""")
+            End If
+
+            If usingDefault_xmlns Then
+                Call __replace(ns, DefaultXmlns)
             End If
 
             Call xml.Replace(rs, ns.ToString)
+        End Sub
+
+        Private Shared Sub __replace(ByRef sb As StringBuilder, value$)
+            Dim s$ = sb.ToString.TrimEnd(">"c).Trim
+            s &= " " & value & ">"
+            sb = New StringBuilder(s)
         End Sub
     End Class
 End Namespace

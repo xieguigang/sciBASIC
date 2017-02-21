@@ -47,10 +47,10 @@ Namespace Emit.CodeDOM_VBC
         Sub New()
             Dim assm As Assembly = Assembly.GetEntryAssembly
             Dim main As MethodInfo = assm.EntryPoint
-            Dim [module] As Type = main.DeclaringType
 
-            ReferenceSolver.ExecutingReferences =
-                [module].GetReferences
+            With main.DeclaringType
+                ReferenceSolver.ExecutingReferences = .GetReferences
+            End With
         End Sub
 
         ''' <summary>
@@ -71,21 +71,33 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="assembly"></param>
         ''' <param name="i"></param>
         ''' <param name="refList"></param>
-        ''' 
+        ''' <param name="fullNames">防止重复加载</param>
         <Extension>
-        Private Sub __getReferences(assembly As Assembly, i As Integer, ByRef refList As List(Of String))
-            Dim myRefs = assembly.GetReferencedAssemblies
+        Private Sub __getReferences(assembly As Assembly, i As Integer, ByRef refList As List(Of String), fullNames As List(Of String))
+            Dim myRefs As AssemblyName() = assembly _
+                .GetReferencedAssemblies _
+                .Where(Function(a) Not String.IsNullOrEmpty(a.FullName) AndAlso
+                    fullNames.IndexOf(a.FullName) = -1) _
+                .ToArray
             Dim tmp As List(Of String) = refList
+
+            Call fullNames.AddRange(myRefs.Select(Function(a) a.FullName))
+            Call refList.Add(assembly.Location)
+
+            i += 1
+
             Dim LQuery = LinqAPI.MakeList(Of String) <=
  _
                 From ref As AssemblyName
                 In myRefs
-                Where Not String.IsNullOrEmpty(ref.FullName)
                 Let entry = ref.FullName
                 Select refListValue =
-                    getReferences(url:=entry, i:=i + 1, refList:=tmp)
+                    getReferences(
+                        url:=entry,
+                        i:=i,
+                        refList:=tmp,
+                        fullNames:=fullNames)
 
-            Call LQuery.Add(assembly.Location)
             Call refList.AddRange(LQuery.AsEnumerable)
         End Sub
 
@@ -98,7 +110,7 @@ Namespace Emit.CodeDOM_VBC
         Public Function GetReferences(assembly As Assembly, removeSystem As Boolean, Optional strict As Boolean = True) As String()
             Dim refList As New List(Of String)
 
-            assembly.__getReferences(0, refList)
+            assembly.__getReferences(0, refList, fullNames:=New List(Of String))
             refList += From ref As AssemblyName
                        In GetType(App).Assembly.GetReferencedAssemblies   ' 添加VB_Framework的引用
                        Let ass As Assembly =
@@ -156,7 +168,7 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="url">+特殊符号存在于这个字符串之中的话，函数会出错</param>
         ''' <param name="i"></param>
         ''' <returns></returns>
-        Private Function getReferences(url As String, i As Integer, ByRef refList As List(Of String)) As String()
+        Private Function getReferences(url As String, i As Integer, ByRef refList As List(Of String), fullNames As List(Of String)) As String()
             Dim assembly = System.Reflection.Assembly.Load(url)
 
             If IsSystemAssembly(assembly.Location, True) OrElse refList.IndexOf(assembly.Location) > -1 Then
@@ -168,11 +180,11 @@ Namespace Emit.CodeDOM_VBC
                 Call refList.Add(assembly.Location)
             End If
 
-            Call __getReferences(assembly, i:=i + 1, refList:=refList)
+            Call __getReferences(assembly, i:=i + 1, refList:=refList, fullNames:=fullNames)
 
             Return refList.ToArray
         End Function
 
-        Public ReadOnly Property RunTimeDirectory As String = FileIO.FileSystem.GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory).FullName.Replace("/", "\")
+        Public ReadOnly Property RunTimeDirectory As String = App.RunTimeDirectory
     End Module
 End Namespace

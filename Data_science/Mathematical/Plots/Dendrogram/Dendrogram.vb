@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b17c69a8fdc8f7d0640e3356bc3f1fa, ..\sciBASIC#\Data_science\Mathematical\Plots\Dendrogram\Dendrogram.vb"
+﻿#Region "Microsoft.VisualBasic::c55f07d7b217780d84c04359700c9cc0, ..\sciBASIC#\Data_science\Mathematical\Plots\Dendrogram\Dendrogram.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Dendrogram
 

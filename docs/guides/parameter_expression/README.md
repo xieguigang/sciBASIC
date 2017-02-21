@@ -34,7 +34,7 @@ Call Plot(...., width:= 2000)
 
 ' We don't want the program adjust the ptSize automatic
 ' So that we just needs overrides the ptSize parameter its default value expression, like
-Call Plot(...., width:=2000, ptSize = 20)
+Call Plot(...., width:= 2000, ptSize = 20)
 ```
 
 So that this parameter expression language feature is much convenient to our programming.
@@ -229,24 +229,37 @@ Private Function Evaluate(params As Dictionary(Of Value), caller As MethodBase) 
 End Function
 ```
 
+### String Evaluation
+
+This optional parameter expression not only allow the math expression, and also it works for the string interpolation expression, example as:
+
+```vbnet
+Optional ylabel$ = "@Plots of the experiment data with \np-value cutoff: $pvalue, \nand z-value: $z (km/s)."
+```
+
++ Where the first character ``@`` indicates that this parameter its string value should be translated as the string interpolation expression
++ Using ``$var`` for specific the parameter variable in this string interpolation
++ Using ``\$`` for escaping the character ``$``, so that ``\$var`` will only represent the text ``$var``, while ``$test`` will represent the parameter variable reference.
++ ``\n`` for ascii line feed and ``\t`` for ascii tab.
+
 ### Update parameter value
 
 If you have noticed that in the previous article section, there is a local variable in the ``For Each`` loop which its definition is:
 
 ```vbnet
-Dim field As FieldInfo = DirectCast(member.Member, FieldInfo) 
+Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
 ```
 
 And if you are familiar with the .NET reflection operation, and then you are already know how to update the expression value back to your parameters. Due to the reason of we just concern about the math expression for this optional parameter expression, so that our type conversion for set back the parameter value just limited to several numeric types.
 
 ```vbnet
-Dim values As Dictionary(Of String, Double) 
+Dim values As Dictionary(Of String, Double)
 
 For Each expr As UnaryExpression In arrayData
     ' ...
     Dim target As Object = constantExpression.Value
     Dim value As Object = values(name)
-    
+
     Select Case field.FieldType
         Case GetType(String)
             value = CStr(value)
@@ -301,5 +314,16 @@ Module Program
 
         Return (+before, +after)
     End Function
+
+    Sub StringTest(z#,
+                   Optional pvalue# = 0.005,
+                   Optional title$ = "@This is title string interpolate test: \$z value is $z",
+                   Optional ylabel$ = "@Plots of the experiment data with \np-value cutoff: $pvalue, \nand z-value: $z (km/s).")
+
+        Call $"Parameter before the expression evaluation is: { ({z, pvalue, title, ylabel}).GetJson }".__DEBUG_ECHO
+        Call ParameterExpression.Apply(Function() {z, pvalue, title, ylabel})
+        Call $"Parameters after the expression evaluation is: { ({z, pvalue, title, ylabel}).GetJson(True) }".__DEBUG_ECHO
+
+    End Sub
 End Module
 ```

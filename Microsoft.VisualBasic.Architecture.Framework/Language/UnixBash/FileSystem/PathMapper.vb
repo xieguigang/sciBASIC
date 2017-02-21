@@ -28,7 +28,7 @@
 
 Imports System.IO
 
-Namespace Language.UnixBash
+Namespace Language.UnixBash.FileSystem
 
     ''' <summary>
     ''' Maps the linux path to the Windows path.(这个模块是将Linux路径映射为Windows路径的)
