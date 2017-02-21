@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f7f7f7e7c23e0109e8b962d4cb18714c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDIPlusExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Drawing.Imaging
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Imaging
@@ -44,6 +45,29 @@ Namespace Imaging
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GDIPlusExtensions
+
+        ''' <summary>
+        ''' 同时兼容颜色以及图片纹理画刷的创建
+        ''' </summary>
+        ''' <param name="res$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function GetBrush(res$) As Brush
+            Dim bgColor As Color = res.ToColor(onFailure:=Nothing)
+
+            If Not bgColor.IsEmpty Then
+                Return New SolidBrush(bgColor)
+            Else
+                Dim img As Image
+
+                If res.FileExists Then
+                    img = LoadImage(path:=res$)
+                Else
+                    img = Base64Codec.GetImage(res$)
+                End If
+
+                Return New TextureBrush(img)
+            End If
+        End Function
 
         <Extension>
         Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As SolidBrush)

@@ -119,29 +119,6 @@ Namespace Drawing2D
         End Sub
 
         ''' <summary>
-        ''' 同时兼容颜色以及图片纹理画刷的创建
-        ''' </summary>
-        ''' <param name="res$"></param>
-        ''' <returns></returns>
-        <Extension> Public Function GetBrush(res$) As Brush
-            Dim bgColor As Color = res.ToColor(onFailure:=Nothing)
-
-            If Not bgColor.IsEmpty Then
-                Return New SolidBrush(bgColor)
-            Else
-                Dim img As Image
-
-                If res.FileExists Then
-                    img = LoadImage(path:=res$)
-                Else
-                    img = Base64Codec.GetImage(res$)
-                End If
-
-                Return New TextureBrush(img)
-            End If
-        End Function
-
-        ''' <summary>
         ''' Data plots graphics engine.
         ''' </summary>
         ''' <param name="size"></param>

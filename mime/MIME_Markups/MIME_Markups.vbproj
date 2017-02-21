@@ -193,6 +193,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTML\CSS\Stroke.vb" />
     <Compile Include="HTML\CSS\FontStyle.vb" />
     <Compile Include="HTML\CSS\Padding.vb" />
     <Compile Include="HTML\CSS\Render\CssAnonymousBlockBox.vb" />

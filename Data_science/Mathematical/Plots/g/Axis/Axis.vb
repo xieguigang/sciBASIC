@@ -48,7 +48,8 @@ Namespace Graphic.Axis
                             Optional ylabel$ = "",
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
-                            Optional labelFont$ = CSSFont.PlotSubTitle)
+                            Optional labelFont$ = CSSFont.PlotSubTitle,
+                            Optional axisStroke$ = Stroke.AxisStroke)
             With region
                 Call g.DrawAxis(
                     .Size, .Padding,
@@ -57,7 +58,8 @@ Namespace Graphic.Axis
                     offset,
                     xlabel, ylabel,
                     xlayout:=xlayout, ylayout:=ylayout,
-                    labelFontStyle:=labelFont)
+                    labelFontStyle:=labelFont,
+                    axisStroke:=axisStroke)
             End With
         End Sub
 
@@ -84,10 +86,10 @@ Namespace Graphic.Axis
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
                             Optional gridFill$ = "rgb(242,242,242)",
-                            Optional gridColor$ = "white")
+                            Optional gridColor$ = "white",
+                            Optional axisStroke$ = Stroke.AxisStroke)
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
-            Dim pen As New Pen(Color.Black, 5)
             Dim rect As Rectangle = padding.GetCanvasRegion(size)
             Dim tickFont As New Font(FontFace.MicrosoftYaHei, 14)
             Dim sx = scaler.XScaler(size, padding)
@@ -123,6 +125,8 @@ Namespace Graphic.Axis
                 Next
             End If
 
+            Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
+
             If xlayout <> XAxisLayoutStyles.None Then
                 Call g.DrawX(size, padding, pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont)
             End If
@@ -146,6 +150,8 @@ Namespace Graphic.Axis
                     X = padding.Left + (size.Width - padding.Horizontal) / 2 + offset.X
                 Case YAxisLayoutStyles.Right
                     X = size.Width - padding.Right + offset.X
+                Case YAxisLayoutStyles.ZERO
+                    X = scaler.XScaler(size, padding)(0) + offset.X
                 Case Else
                     X = padding.Left + offset.X
             End Select

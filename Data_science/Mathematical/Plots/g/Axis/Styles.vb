@@ -14,6 +14,7 @@ Namespace Graphic.Axis
         ''' x轴位于图表的底部
         ''' </summary>
         Bottom
+        ZERO
         None
     End Enum
 
@@ -30,6 +31,7 @@ Namespace Graphic.Axis
         ''' y轴位于图表的右侧
         ''' </summary>
         Right
+        ZERO
         None
     End Enum
 End Namespace

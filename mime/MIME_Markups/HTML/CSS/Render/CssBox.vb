@@ -3162,7 +3162,7 @@ Namespace HTML.CSS.Render
                 x2 -= ActualPaddingRight + ActualBorderRightWidth
             End If
 
-            g.DrawLine(New Pen(ActualColor), x1, y, x2, y)
+            g.DrawLine(New Drawing.Pen(ActualColor), x1, y, x2, y)
         End Sub
 
         ''' <summary>
