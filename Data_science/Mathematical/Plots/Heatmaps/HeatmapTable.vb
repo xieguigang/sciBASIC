@@ -50,7 +50,7 @@ Public Module HeatmapTable
                          Optional mapLevels% = 20,
                          Optional mapName$ = ColorMap.PatternJet,
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional triangularStyle As Boolean = True,
                          Optional fontStyle$ = CSSFont.Win10Normal,
@@ -64,6 +64,8 @@ Public Module HeatmapTable
                          Optional drawValueLabel As Boolean = True,
                          Optional valuelabelFont As Font = Nothing) As Bitmap
 
+        Dim margin As Padding = padding
+
         Return Heatmap.__plotInterval(
             Sub(g, region, array, left, font, dw, levels, top, colors)
 
@@ -75,7 +77,7 @@ Public Module HeatmapTable
                     valuelabelFont = New Font(FontFace.CambriaMath, 16, Drawing.FontStyle.Bold)
                 End If
 
-                margin = region.Margin
+                ' margin = region.Margin
 
                 For Each x As SeqValue(Of NamedValue(Of Dictionary(Of String, Double))) In array.SeqIterator(offset:=1)  ' 在这里绘制具体的矩阵
 
@@ -119,12 +121,12 @@ Public Module HeatmapTable
                         i += 1
                     Next
 
-                    left.value = margin.Width
+                    left.value = margin.Left
                     top.value += dw!
 
                     Dim sz As SizeF = g.MeasureString((+x).Name, font)
                     Dim y As Single = top.value - dw - (sz.Height - dw) / 2
-                    Dim lx! = margin.Width - sz.Width - margin.Width * 0.1
+                    Dim lx! = margin.Left - sz.Width - margin.Horizontal * 0.1
 
                     Call g.DrawString((+x).Name, font, Brushes.Black, New PointF(lx, y))
                 Next

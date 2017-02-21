@@ -138,7 +138,7 @@ Public Module Heatmap
                          Optional mapName$ = ColorMap.PatternJet,
                          Optional kmeans As ReorderProvider = Nothing,
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional fontStyle$ = CSSFont.Win10Normal,
                          Optional legendTitle$ = "Heatmap Color Legend",
@@ -159,6 +159,7 @@ Public Module Heatmap
         End If
 
         Dim legendFont As Font = CSSFont.TryParse(legendFontStyle)
+        Dim margin As Padding = padding
 
         Return __plotInterval(
             Sub(g, region, array, left, font, dw, levels, top, colors)
@@ -170,7 +171,7 @@ Public Module Heatmap
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim blockSize As New SizeF(dw, dw)
 
-                margin = region.Margin
+                ' margin = region.Margin
 
                 For Each x As NamedValue(Of Dictionary(Of String, Double)) In array   ' 在这里绘制具体的矩阵
                     For Each key$ In keys
@@ -198,12 +199,12 @@ Public Module Heatmap
                         left.value += dw!
                     Next
 
-                    left.value = margin.Width
+                    left.value = margin.Left
                     top.value += dw!
 
                     Dim sz As SizeF = g.MeasureString(x.Name, font)
                     Dim y As Single = top.value - dw - (sz.Height - dw) / 2
-                    Dim lx As Single = margin.Width - sz.Width - margin.Width * 0.1
+                    Dim lx As Single = margin.Left - sz.Width - margin.Left * 0.1
 
                     Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
                 Next
@@ -227,7 +228,7 @@ Public Module Heatmap
                                    Optional mapLevels% = 100,
                                    Optional mapName$ = ColorMap.PatternJet,
                                    Optional size As Size = Nothing,
-                                   Optional margin As Size = Nothing,
+                                   Optional padding As Padding = Nothing,
                                    Optional bg$ = "white",
                                    Optional fontStyle$ = CSSFont.Win10Normal,
                                    Optional legendTitle$ = "Heatmap Color Legend",
@@ -243,7 +244,7 @@ Public Module Heatmap
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim angle! = 45.0F
 
-        If margin.IsEmpty Then
+        If padding.IsEmpty Then
             Dim maxLabel As String = LinqAPI.DefaultFirst(Of String) <=
                 From x
                 In array
@@ -252,7 +253,7 @@ Public Module Heatmap
 
             Dim sz As Size = maxLabel.MeasureString(font)
 
-            margin = New Size(sz.Width * 1.5, sz.Width * 1.5)
+            padding = New Padding(sz.Width * 1.5, sz.Width * 1.5)
         End If
 
         size = If(size.IsEmpty, New Size(2000, 1600), size)
@@ -262,7 +263,7 @@ Public Module Heatmap
         End If
 
         Return GraphicsPlots(
-            size, margin,
+            size, padding,
             bg$,
             Sub(ByRef g, region)
                 Dim dw!? = CSng((size.Height - 2 * margin.Width) / array.Length)
