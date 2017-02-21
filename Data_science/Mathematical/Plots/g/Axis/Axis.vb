@@ -81,19 +81,21 @@ Namespace Graphic.Axis
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left)
 
+            ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
+
             'Dim ZERO As New Point(margin.Width + offset.X, size.Height - margin.Height + offset.Y) ' 坐标轴原点
             'Dim right As New Point(size.Width - margin.Width + offset.X, ZERO.Y + offset.Y)  ' X轴
             'Dim top As New Point(margin.Width + offset.X, margin.Height + offset.Y)          ' Y轴
-            'Dim pen As New Pen(Color.Black, 5)
+            Dim pen As New Pen(Color.Black, 5)
 
-            'Call g.DrawLine(pen, ZERO, right)   ' X轴
+            '
 
             'Dim fontLarge As Font = CSSFont.TryParse(labelFontStyle)
             'Call g.DrawString(scaler.xmin, fontLarge, Brushes.Black, New PointF(ZERO.X + 10, ZERO.Y + 10))
             'Call g.DrawString(xlabel, fontLarge, Brushes.Black, New PointF(right.X + 20, right.Y - 5))
             'Call g.DrawString(ylabel, fontLarge, Brushes.Black, New PointF(top.X - 10, top.Y - 50))
 
-            'Dim fontSmall As New Font(FontFace.MicrosoftYaHei, 14)
+            Dim fontSmall As New Font(FontFace.MicrosoftYaHei, 14)
 
             'Dim dx As Double() = AxisScalling.GetAxisValues(scaler.xrange) '+ scaler.xmin
             'Dim dy As Double() = AxisScalling.GetAxisValues(scaler.yrange) '+ scaler.ymin
@@ -146,7 +148,12 @@ Namespace Graphic.Axis
             '        End If
             '    End If
             'Next
+
+            Call g.DrawX(size, padding, pen, xlabel, scaler, xlayout, offset, labelFontStyle, fontSmall)
+            Call g.DrawY(size, padding, pen, ylabel, scaler, ylayout, offset, labelFontStyle, fontSmall)
         End Sub
+
+        Public Property ddd As Integer = 10
 
         <Extension> Private Sub DrawY(ByRef g As Graphics, size As Size, padding As Padding,
                                       pen As Pen, label$,
@@ -168,7 +175,6 @@ Namespace Graphic.Axis
             Dim ZERO As New Point(X, size.Height - padding.Bottom + offset.Y) ' 坐标轴原点，需要在这里修改layout
             Dim top As New Point(X, padding.Top + offset.Y)                   ' Y轴
             Dim sy As Func(Of Single, Single) = scaler.YScaler(size, padding)
-            Dim ddd = 10
 
             Call g.DrawLine(pen, ZERO, top)     ' y轴
 
@@ -211,9 +217,44 @@ Namespace Graphic.Axis
             Return out
         End Function
 
-        <Extension> Private Sub DrawX(ByRef g As Graphics, size As Size, margin As Size, label$, scaler As Scaling, layout As XAxisLayoutStyles, offset As Point, labelFont As Font)
-            Dim ZERO As New Point(margin.Width + offset.X, size.Height - margin.Height + offset.Y) ' 坐标轴原点
-            Dim right As New Point(size.Width - margin.Width + offset.X, ZERO.Y + offset.Y)        ' X轴
+        <Extension> Private Sub DrawX(ByRef g As Graphics, size As Size, padding As Padding,
+                                      pen As Pen, label$,
+                                      scaler As Mapper,
+                                      layout As XAxisLayoutStyles, offset As Point,
+                                      labelFont$, tickFont As Font)
+            Dim Y%
+
+            Select Case layout
+                Case XAxisLayoutStyles.Centra
+                    Y = padding.Top + (size.Height - padding.Vertical) / 2 + offset.Y
+                Case XAxisLayoutStyles.Top
+                    Y = padding.Top + offset.Y
+                Case Else
+                    Y = size.Height - padding.Bottom + offset.Y
+            End Select
+
+            Dim ZERO As New Point(padding.Left + offset.X, Y)                       ' 坐标轴原点
+            Dim right As New Point(size.Width - padding.Right + offset.X, Y)        ' X轴
+            Dim sx = scaler.XScaler(size, padding)
+
+            Call g.DrawLine(pen, ZERO, right)   ' X轴
+
+            For Each tick# In scaler.xAxis
+
+                If scaler.dx <> 0R Then
+                    Dim x = sx(tick) + offset.X
+                    Dim axisX As New PointF(x, ZERO.Y)
+
+                    Dim labelText = (tick).FormatNumeric(2)
+                    Dim sz As SizeF = g.MeasureString(labelText, tickFont)
+
+                    Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + padding.Top * 0.2))
+                    Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + padding.Top * 0.3))
+                End If
+            Next
+
+            Dim labelImage As Image = label.__plotLabel(labelFont)
+            g.DrawImageUnscaled(labelImage, New Point((size.Width - labelImage.Width) / 2, size.Height - labelImage.Height))
         End Sub
     End Module
 End Namespace
