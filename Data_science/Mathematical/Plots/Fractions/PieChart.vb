@@ -62,7 +62,7 @@ Public Module PieChart
     <Extension>
     Public Function Plot(data As IEnumerable(Of Fractions),
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional valueLabel As Fractions.ValueLabels = Fractions.ValueLabels.Percentage,
                          Optional valueLabelStyle$ = CSSFont.Win7Bold,
@@ -71,6 +71,9 @@ Public Module PieChart
                          Optional legendBorder As Border = Nothing,
                          Optional minRadius As Single = -1,
                          Optional reorder% = 0) As Bitmap
+
+        Dim margin As Padding = padding
+
 #Const DEBUG = 0
         If reorder <> 0 Then
             If reorder > 0 Then
@@ -84,7 +87,7 @@ Public Module PieChart
 
         Dim __plot As Action(Of Graphics) =
             Sub(g As Graphics)
-                Dim r# = (Math.Min(size.Width, size.Height) - Math.Max(margin.Width, margin.Height)) / 2  ' 最大的半径值
+                Dim r# = (Math.Min(size.Width, size.Height) - margin.LayoutVector.Max) / 2  ' 最大的半径值
                 Dim topLeft As New Point(size.Width / 2 - r, size.Height / 2 - r)
                 Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
 
@@ -142,8 +145,8 @@ Public Module PieChart
                 If legend Then
                     Dim font As Font = CSSFont.TryParse(legendFont)
                     Dim maxL = data.Select(Function(x) g.MeasureString(x.Name, font).Width).Max
-                    Dim left = size.Width - (margin.Width * 2) - maxL
-                    Dim top = margin.Height
+                    Dim left = size.Width - (margin.Horizontal) - maxL
+                    Dim top = margin.Top
                     Dim legends As New List(Of Legend)
 
                     For Each x As Fractions In data
