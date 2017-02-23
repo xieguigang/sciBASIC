@@ -105,7 +105,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
-    <OutputPath>bin\Publish\</OutputPath>
+    <OutputPath>X:\nuget_publish\VB_APP\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>true</Optimize>
