@@ -100,6 +100,11 @@ Public Module ProgramPathSearchTool
         Next
     End Function
 
+    <Extension>
+    Public Function TheFile(DIR$, keyword$, Optional opt As SearchOption = SearchOption.TopDirectoryOnly) As String
+        Return FileIO.FileSystem.GetFiles(DIR, opt, keyword).FirstOrDefault
+    End Function
+
     ''' <summary>
     ''' Gets the URL type file path.(获取URL类型的文件路径)
     ''' </summary>

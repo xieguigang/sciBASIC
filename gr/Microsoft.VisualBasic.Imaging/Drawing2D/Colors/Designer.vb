@@ -88,6 +88,19 @@ Namespace Drawing2D.Colors
             Color.Violet
         }
 
+        Public ReadOnly Property ClusterColour As Color() = {
+            Color.FromArgb(128, 200, 180),
+            Color.FromArgb(135, 70, 194),
+            Color.FromArgb(140, 210, 90),
+            Color.FromArgb(200, 80, 147),
+            Color.FromArgb(201, 169, 79),
+            Color.FromArgb(112, 127, 189),
+            Color.FromArgb(192, 82, 58),
+            Color.FromArgb(83, 99, 60),
+            Color.FromArgb(78, 45, 69),
+            Color.FromArgb(202, 161, 169)
+        }
+
         Sub New()
             Dim colors As Dictionary(Of String, String()) = My.Resources _
                 .designer_colors _
@@ -156,6 +169,8 @@ Namespace Drawing2D.Colors
                 Return AllDotNetPrefixColors
             ElseIf term.TextEquals("vb.chart") Then
                 Return ChartColors
+            ElseIf term.TextEquals("clusters") Then
+                Return ClusterColour
             End If
 
             Return OfficeColorThemes.GetAccentColors(term)
