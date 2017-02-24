@@ -95,6 +95,7 @@ Namespace KMeans
             Return data.Select(
                 Function(d) New EntityLDM With {
                     .Name = d.ID,
+                    .Cluster = "",
                     .Properties = New Dictionary(Of String, Double)(d.Properties)
                 }).ToArray
         End Function

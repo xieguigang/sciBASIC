@@ -87,6 +87,10 @@ Public Module Extensions
         Call Console.WriteLine(out)
     End Sub
 
+    Public Sub println()
+        Call Console.WriteLine()
+    End Sub
+
     ''' <summary>
     ''' ``days, hh:mm:ss.ms``
     ''' </summary>

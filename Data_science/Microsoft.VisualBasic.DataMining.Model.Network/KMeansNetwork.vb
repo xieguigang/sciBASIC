@@ -17,7 +17,8 @@ Namespace KMeans
         ''' <returns></returns>
         <Extension> Public Function ToNetwork(kmeans As IEnumerable(Of EntityLDM),
                                               Optional colors As Dictionary(Of String, Color) = Nothing,
-                                              Optional defaultColor$ = "lightgray") As Network
+                                              Optional defaultColor$ = "lightgray",
+                                              Optional cut As Func(Of Double, Boolean) = Nothing) As Network
 
             Dim data As EntityLDM() = kmeans.ToArray
             Dim edges As New List(Of NetworkEdge)
@@ -50,11 +51,15 @@ Namespace KMeans
                     }
                 }).ToDictionary
 
+            If cut Is Nothing Then
+                cut = Function(score) score > Double.MinValue
+            End If
+
             For Each vector As EntityLDM In data
                 Dim from$ = vector.Name
                 Dim color$
 
-                For Each hit In vector.Properties
+                For Each hit In vector.Properties.Where(Function(h) cut(h.Value))
                     Dim clusters$() = {
                         nodes(from$), nodes(hit.Key)
                     }.Select(Function(n) n.NodeType) _
@@ -84,7 +89,9 @@ Namespace KMeans
             Next
 
             Return New Network With {
-                .Edges = edges.RemoveDuplicated(False, False), ' 相似度是无方向的
+                .Edges = edges _
+                .RemoveSelfLoop _
+                .RemoveDuplicated(False, False), ' 相似度是无方向的
                 .Nodes = nodes
             }
         End Function
