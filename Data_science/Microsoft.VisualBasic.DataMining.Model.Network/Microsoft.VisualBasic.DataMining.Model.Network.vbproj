@@ -160,6 +160,7 @@
     <Compile Include="BinaryTree\TreeClustering.vb" />
     <Compile Include="BinaryTree\Partition.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="KMeansNetwork.vb" />
     <Compile Include="NeuralNetwork\ModelAPI.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
