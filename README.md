@@ -14,7 +14,13 @@
 + ![Microsoft VisualBasic logo](./logo.jpg)
 + ![](./etc/README/nodes.gif)
 
-#### Directory Structure
+### Runtime Installation
+
++ Compile &amp; Application Development on this runtime required the latest VisualStudio 2017.
++ If you are running sciBASIC runtime on Windows, please makesure your operating system supports .NET framework 4.6
++ If you are running sciBASIC runtime on Linux/macOS, please install mono runtime at first by following the installation manual on **mono-project** website. And then the ``Microsoft VisualBasic core runtime`` is required, you can find this runtime file in this repository: [Microsoft.VisualBasic.7z](./Microsoft.VisualBasic.7z), just extract this 7z archive and put the **Microsoft.VisualBasic.dll** kernel in the application directory.
+
+### Directory Structure
 
 ###### 1. source projects
 
@@ -31,7 +37,6 @@
 
 + **[/guides](./guides/)** : This framework code usage example and manual documents
 + **[/vb_codestyle](./vb_codestyle/)** : sciBASIC# Coding style standard document
-
 
 ---------------------------------------------------------------------------------------------------------------
 
