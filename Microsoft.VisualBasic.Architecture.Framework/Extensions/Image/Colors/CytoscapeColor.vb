@@ -75,6 +75,11 @@ Namespace Imaging
 
 #End Region
 
+        ''' <summary>
+        ''' To HTML color
+        ''' </summary>
+        ''' <param name="color"></param>
+        ''' <returns></returns>
         <Extension> Public Function RGB2Hexadecimal(color As Color) As String
             'Dim RGBValue As Integer = color.ToArgb
             'Dim HexValue = DeciamlToHexadeciaml(RGBValue)

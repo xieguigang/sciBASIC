@@ -145,6 +145,14 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
         Return value
     End Function
 
+    Public Overloads Function TryGetValue(name$, [default] As V) As V
+        If MyBase.ContainsKey(name) Then
+            Return MyBase.Item(name)
+        Else
+            Return [default]
+        End If
+    End Function
+
     ''' <summary>
     ''' 假若目标元素不存在于本字典之中，则会返回False
     ''' </summary>

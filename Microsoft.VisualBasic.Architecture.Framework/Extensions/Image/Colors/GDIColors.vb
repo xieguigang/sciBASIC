@@ -40,6 +40,17 @@ Namespace Imaging
     ''' </summary>
     Public Module GDIColors
 
+        <Extension>
+        Public Function Average(colors As IEnumerable(Of Color)) As Color
+            Dim data As Color() = colors.ToArray
+            Dim A% = data.Select(Function(c) CDbl(c.A)).Average
+            Dim R% = data.Select(Function(c) CDbl(c.R)).Average
+            Dim G% = data.Select(Function(c) CDbl(c.G)).Average
+            Dim B% = data.Select(Function(c) CDbl(c.B)).Average
+
+            Return Color.FromArgb(A, R, G, B)
+        End Function
+
         ''' <summary>
         ''' Creates a new light color object for the control from the specified color and
         ''' lightens it by the specified percentage.
