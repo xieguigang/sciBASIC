@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel
@@ -37,8 +38,15 @@ Namespace ComponentModel
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Structure MapsHelper(Of T)
+
         ReadOnly __default As T
         ReadOnly __maps As IReadOnlyDictionary(Of String, T)
+
+        Default Public ReadOnly Property Value(key$) As T
+            Get
+                Return GetValue(key)
+            End Get
+        End Property
 
         Sub New(map As IReadOnlyDictionary(Of String, T), Optional [default] As T = Nothing)
             __default = [default]
@@ -51,6 +59,10 @@ Namespace ComponentModel
             Else
                 Return __default
             End If
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return __maps.DictionaryData.GetJson
         End Function
     End Structure
 

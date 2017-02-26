@@ -32,8 +32,36 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Public Module KeyValuePairExtensions
+
+    <Extension>
+    Public Function DictionaryData(Of T, V)(source As IReadOnlyDictionary(Of T, V)) As Dictionary(Of T, V)
+        Return source.ToDictionary(Function(x) x.Key, Function(x) x.Value)
+    End Function
+
+    ''' <summary>
+    ''' 类型必须是枚举类型
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="lcaseKey"></param>
+    ''' <param name="usingDescription"></param>
+    ''' <returns></returns>
+    Public Function EnumParser(Of T)(Optional lcaseKey As Boolean = True, Optional usingDescription As Boolean = False) As Dictionary(Of String, T)
+        Dim values As [Enum]() = Enums(Of T)().ToArray(Function(e) DirectCast(CType(e, Object), [Enum]))
+        Dim [case] = If(lcaseKey, Function(key$) LCase(key), Function(key$) key)
+
+        If usingDescription Then
+            Return values.ToDictionary(
+                Function(e) [case](key:=e.Description),
+                Function(e) DirectCast(CType(e, Object), T))
+        Else
+            Return values.ToDictionary(
+                Function(e) [case](key:=e.ToString),
+                Function(e) DirectCast(CType(e, Object), T))
+        End If
+    End Function
 
     <Extension>
     Public Function NamedValues(maps As IEnumerable(Of IDMap)) As NamedValue(Of String)()
