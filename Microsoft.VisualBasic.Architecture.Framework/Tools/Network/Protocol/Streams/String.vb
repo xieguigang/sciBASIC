@@ -44,7 +44,7 @@ Namespace Net.Protocols.Streams
                 Return TextEncodings.GetEncodings(_encoding)
             End Get
             Set(value As Encodings)
-                _encoding = value.GetEncodings
+                _encoding = value.CodePage
             End Set
         End Property
 
@@ -54,7 +54,7 @@ Namespace Net.Protocols.Streams
         End Sub
 
         Sub New(s As String, Optional encoding As Encodings = Encodings.UTF8)
-            Call Me.New(s, encoding.GetEncodings)
+            Call Me.New(s, encoding.CodePage)
         End Sub
 
         Sub New(s As String, Optional encoding As Encoding = Nothing)
@@ -70,7 +70,7 @@ Namespace Net.Protocols.Streams
             Dim encoding As Byte = raw(Scan0)
             Dim s As Byte() = raw.Skip(1).ToArray
 
-            _encoding = CType(encoding, Encodings).GetEncodings
+            _encoding = CType(encoding, Encodings).CodePage
             _value = _encoding.GetString(s)
         End Sub
 

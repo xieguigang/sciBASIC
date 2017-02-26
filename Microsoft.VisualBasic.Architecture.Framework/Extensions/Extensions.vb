@@ -74,7 +74,7 @@ Public Module Extensions
 
     <Extension>
     Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
-        Return source.Select(Function(row) $"{row.Name}{ASCII.TAB}{row.Value}").SaveTo(path, encoding.GetEncodings)
+        Return source.Select(Function(row) $"{row.Name}{ASCII.TAB}{row.Value}").SaveTo(path, encoding.CodePage)
     End Function
 
     ''' <summary>

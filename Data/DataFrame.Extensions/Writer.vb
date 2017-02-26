@@ -56,7 +56,7 @@ Public Class Writer : Implements IDisposable
         Dim fs As New FileStream(path, FileMode.OpenOrCreate)
 
         __class = cls
-        __file = New StreamWriter(fs, encoding.GetEncodings)
+        __file = New StreamWriter(fs, encoding.CodePage)
 
         row += "#"
 

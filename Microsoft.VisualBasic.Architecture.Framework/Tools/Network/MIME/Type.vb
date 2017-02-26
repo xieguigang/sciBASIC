@@ -59,7 +59,7 @@ Namespace Net.Protocols.ContentTypes
                 xml.xmlns.xmlns = xmlns
                 xml.encoding = XmlEncodings.UTF8
 
-                Return xml.ToString.SaveTo(path, Encodings.UTF8.GetEncodings)
+                Return xml.ToString.SaveTo(path, Encodings.UTF8.CodePage)
             End Function
         End Class
     End Class

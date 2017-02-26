@@ -152,7 +152,7 @@ Namespace ComponentModel
 #End Region
 
         Public Function Save(Optional path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(path, encoding.GetEncodings)
+            Return Save(path, encoding.CodePage)
         End Function
     End Class
 End Namespace

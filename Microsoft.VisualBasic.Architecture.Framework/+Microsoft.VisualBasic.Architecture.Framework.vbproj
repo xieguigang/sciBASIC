@@ -637,7 +637,7 @@
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinModel.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\Extensions.vb" />
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
-    <Compile Include="Extensions\StringHelpers\TextEncodings.vb" />
+    <Compile Include="Text\TextEncodings.vb" />
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
     <Compile Include="Extensions\WebServices\Base64Codec.vb" />
     <Compile Include="Extensions\WebServices\NetResponse.vb" />

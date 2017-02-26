@@ -48,7 +48,7 @@ Public Module TextDoc
     <Extension>
     Public Function SaveTSV(tsv As IEnumerable(Of IDMap), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Dim lines = tsv.Select(Function(x) x.TSV)
-        Return lines.SaveTo(path, encoding.GetEncodings)
+        Return lines.SaveTo(path, encoding.CodePage)
     End Function
 
     ''' <summary>
@@ -60,7 +60,7 @@ Public Module TextDoc
     <Extension>
     Public Iterator Function ForEachChar(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of Char)
         Using file As New FileStream(path, FileMode.Open)
-            Using reader As New IO.BinaryReader(file, encoding.GetEncodings)
+            Using reader As New IO.BinaryReader(file, encoding.CodePage)
                 Dim bs As Stream = reader.BaseStream
                 Dim l As Long = bs.Length
 
@@ -79,7 +79,7 @@ Public Module TextDoc
     ''' <returns></returns>
     <Extension>
     Public Function OpenWriter(path$, Optional encoding As Encodings = Encodings.UTF8, Optional newLine$ = ASCII.LF) As StreamWriter
-        Return FileIO.OpenWriter(path, encoding.GetEncodings, newLine)
+        Return FileIO.OpenWriter(path, encoding.CodePage, newLine)
     End Function
 
     ''' <summary>
@@ -90,7 +90,7 @@ Public Module TextDoc
     <Extension>
     Public Iterator Function IterateAllLines(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
         Using fs As New FileStream(path, FileMode.Open, access:=FileAccess.Read, share:=FileShare.Read)
-            Using reader As New StreamReader(fs, encoding.GetEncodings)
+            Using reader As New StreamReader(fs, encoding.CodePage)
 
                 Do While Not reader.EndOfStream
                     Yield reader.ReadLine

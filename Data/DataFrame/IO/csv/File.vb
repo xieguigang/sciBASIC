@@ -101,7 +101,7 @@ B21,B22,B23,...
                 Optional trimBlanks As Boolean = False)
 
             FilePath = path
-            _innerTable = __loads(path, encoding.GetEncodings, trimBlanks)
+            _innerTable = __loads(path, encoding.CodePage, trimBlanks)
         End Sub
 
         Sub New(source As IEnumerable(Of RowObject), path As String)
@@ -627,7 +627,7 @@ B21,B22,B23,...
         End Function
 
         Public Shared Function LoadTsv(path$, Optional encoding As Encodings = Encodings.UTF8) As File
-            Return DataImports.Imports(path, ASCII.TAB, encoding.GetEncodings)
+            Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
 
         ''' <summary>

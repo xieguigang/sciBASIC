@@ -177,7 +177,7 @@ Namespace SoftwareToolkits
         End Function
 
         Public Function GetString(name As String, encoding As Encodings) As String
-            Dim stream As New StreamReader(GetStream(name), encoding.GetEncodings)
+            Dim stream As New StreamReader(GetStream(name), encoding.CodePage)
             Return stream.ReadToEnd
         End Function
 

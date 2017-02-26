@@ -51,7 +51,7 @@ Public Module XmlExtensions
     Public Function SafeLoadXml(Of T)(xml As String,
                                       Optional encoding As Encodings = Encodings.Default,
                                       Optional preProcess As Func(Of String, String) = Nothing) As T
-        Return xml.LoadXml(Of T)(encoding.GetEncodings, False, preProcess)
+        Return xml.LoadXml(Of T)(encoding.CodePage, False, preProcess)
     End Function
 
     ''' <summary>

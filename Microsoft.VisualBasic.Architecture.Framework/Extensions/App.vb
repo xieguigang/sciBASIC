@@ -362,7 +362,7 @@ Public Module App
     ''' <returns></returns>
     Public Function NullDevice(Optional encoding As Encodings = Encodings.ASCII) As StreamWriter
         Dim ms As New MemoryStream(capacity:=BufferSize)
-        Dim codePage As Encoding = encoding.GetEncodings
+        Dim codePage As Encoding = encoding.CodePage
         Return New StreamWriter(ms, encoding:=codePage)
     End Function
 

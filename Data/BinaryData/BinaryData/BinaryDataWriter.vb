@@ -77,7 +77,7 @@ Public Class BinaryDataWriter
     End Sub
 
     Public Sub New(output As Stream, Optional encoding As Encodings = Encodings.UTF8)
-        Me.New(output, encoding.GetEncodings)
+        Me.New(output, encoding.CodePage)
     End Sub
 
     ''' <summary>

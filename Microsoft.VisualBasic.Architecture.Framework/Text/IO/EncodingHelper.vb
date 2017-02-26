@@ -46,7 +46,7 @@ Namespace Text
         ''' </summary>
         ''' <param name="encoding"></param>
         Sub New(encoding As Encodings)
-            TextEncoding = encoding.GetEncodings
+            TextEncoding = encoding.CodePage
         End Sub
 
         '
