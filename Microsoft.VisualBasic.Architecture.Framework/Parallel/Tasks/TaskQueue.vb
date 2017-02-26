@@ -39,7 +39,7 @@ Namespace Parallel.Tasks
     ''' </summary>
     Public Class TaskQueue(Of T) : Implements IDisposable
 
-        ReadOnly __tasks As New Queue(Of __task)
+        ReadOnly __tasks As New Queue(Of __task)(App.BufferSize)
 
         ''' <summary>
         ''' 返回当前的任务池之中的任务数量
@@ -47,7 +47,9 @@ Namespace Parallel.Tasks
         ''' <returns></returns>
         Public ReadOnly Property Tasks As Integer
             Get
-                Return __tasks.Count
+                SyncLock __tasks
+                    Return __tasks.Count
+                End SyncLock
             End Get
         End Property
 
@@ -55,6 +57,9 @@ Namespace Parallel.Tasks
         ''' 会单独启动一条新的线程来用来执行任务队列
         ''' </summary>
         Sub New()
+#If DEBUG Then
+            Call $"Using default buffer_size={App.BufferSize}".__DEBUG_ECHO
+#End If
             Call RunTask(AddressOf __taskQueueEXEC)
         End Sub
 
@@ -70,7 +75,11 @@ Namespace Parallel.Tasks
                 .handle = handle,
                 .receiveDone = New ManualResetEvent(False)
             }
-            Call __tasks.Enqueue(task)
+
+            SyncLock __tasks
+                Call __tasks.Enqueue(task)
+            End SyncLock
+
             Call task.receiveDone.WaitOne()
             Call task.receiveDone.Reset()
 
@@ -94,7 +103,10 @@ Namespace Parallel.Tasks
                 .handle = handle,
                 .callback = callback
             }
-            Call __tasks.Enqueue(task)
+
+            SyncLock __tasks
+                Call __tasks.Enqueue(task)
+            End SyncLock
         End Sub
 
         ''' <summary>
@@ -113,8 +125,13 @@ Namespace Parallel.Tasks
         ''' </summary>
         Private Sub __taskQueueEXEC()
             Do While Not disposedValue
-                If Not __tasks.Count = 0 Then
-                    Dim task As __task = __tasks.Dequeue
+                If Not Tasks = 0 Then
+                    Dim task As __task
+
+                    SyncLock __tasks
+                        task = __tasks.Dequeue
+                    End SyncLock
+
                     _RunningTask = True
                     Call task.Run()
                     If Not task.receiveDone Is Nothing Then
