@@ -76,6 +76,7 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 ''' <summary>
 ''' Provides information about, and means to manipulate, the current environment Application information collection.
 ''' (More easily runtime environment information provider on <see cref="PlatformID.Unix"/>/LINUX platform for visualbasic program.)
+''' (从命令行之中使用``/@set``参数赋值环境变量的时候，每一个变量之间使用分号进行分隔)
 ''' </summary>
 '''
 <PackageNamespace("App", Description:="More easily runtime environment information provider on LINUX platform for visualbasic program.",
