@@ -179,6 +179,7 @@
     <Compile Include="3D\Scatter.vb" />
     <Compile Include="3D\Data.vb" />
     <Compile Include="BarPlot\Histogram\Extensions.vb" />
+    <Compile Include="csv\Extensions.vb" />
     <Compile Include="g\Axis\Axis.vb" />
     <Compile Include="BarPlot\BarPlot2.vb" />
     <Compile Include="BarPlot\Histogram\DataModel.vb" />

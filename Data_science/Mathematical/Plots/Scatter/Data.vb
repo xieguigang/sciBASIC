@@ -132,6 +132,14 @@ Public Structure PointData
         pt = New PointF(x, y)
     End Sub
 
+    Sub New(pt As PointF)
+        Me.pt = pt
+    End Sub
+
+    Sub New(pt As Point)
+        Me.pt = New PointF(pt.X, pt.Y)
+    End Sub
+
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function

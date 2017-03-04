@@ -177,6 +177,10 @@ B21,B22,B23,...
         ''' 将本文件之中的所有列取出来，假若有任意一个列的元素的数目不够的话，则会在相应的位置之上使用空白来替换
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 由于是使用<see cref="_innerTable"/>来作为数据源的，所以对于csv对象而言，是含有header数据的，即含有第一行数据
+        ''' 对于<see cref="DataFrame"/>类型而言，由于在创建对象的时候，第一行数据由于需要被用作为header，所以这个内部表对象之中是不包含有header行的，即这个属性所输出的结果只中是不包含有header行的
+        ''' </remarks>
         Public ReadOnly Iterator Property Columns As IEnumerable(Of String())
             Get
                 If _innerTable.Count = 0 Then

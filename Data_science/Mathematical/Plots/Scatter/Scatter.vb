@@ -54,6 +54,10 @@ Public Module Scatter
     ''' <param name="c"></param>
     ''' <param name="size"></param>
     ''' <param name="bg"></param>
+    ''' <param name="fill">是否进行填充？当这个参数为真的时候就相当于绘制histogram图形了</param>
+    ''' <param name="drawLine">
+    ''' 是否绘制两个点之间的连接线段，当这个参数为假的时候，将不会绘制连线，就相当于绘制散点图了，而非折线图
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
@@ -69,7 +73,11 @@ Public Module Scatter
                          Optional fillPie As Boolean = True,
                          Optional legendFontSize! = 24,
                          Optional absoluteScaling As Boolean = True,
-                         Optional drawAxis As Boolean = True) As Bitmap
+                         Optional XaxisAbsoluteScalling As Boolean = False,
+                         Optional YaxisAbsoluteScalling As Boolean = False,
+                         Optional drawAxis As Boolean = True,
+                         Optional Xlabel$ = "X",
+                         Optional Ylabel$ = "Y") As Bitmap
 
         Dim margin As Padding = padding
 
@@ -78,10 +86,13 @@ Public Module Scatter
             bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = c.ToArray
-                Dim mapper As New Mapper(New Scaling(array, absoluteScaling))
+                Dim mapper As New Mapper(
+                    New Scaling(array, absoluteScaling),
+                    XabsoluteScalling:=XaxisAbsoluteScalling,
+                    YabsoluteScalling:=YaxisAbsoluteScalling)
 
                 If drawAxis Then
-                    Call g.DrawAxis(size, margin, mapper, showGrid)
+                    Call g.DrawAxis(size, margin, mapper, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
                 End If
 
                 For Each line As SerialData In mapper.ForEach(size, margin)

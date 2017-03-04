@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::6e0efb7564a4efe0e91a3885b4bf259c, ..\sciBASIC#\Data_science\Mathematical\Plots\g\AxisScalling.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Axis
 
@@ -40,6 +41,9 @@ Namespace Graphic.Axis
         ''' <param name="max#"></param>
         ''' <param name="parts%"></param>
         ''' <param name="min#"></param>
+        ''' <param name="absoluteScalling">
+        ''' 这个主要是相对于<paramref name="min"/>的计算而言的，当这个不为真的视乎，scalling函数会将较小的min值直接设置为0，反之不会
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>
         ''' + 0-10
@@ -50,14 +54,14 @@ Namespace Graphic.Axis
         ''' + 0-1
         ''' + 0-0.1
         ''' </remarks>
-        Public Function GetAxisValues(max#, Optional parts% = 10, Optional min# = 0R, Optional t# = 5 / 6, Optional decimal% = -1) As Double()
+        Public Function GetAxisValues(max#, Optional parts% = 10, Optional min# = 0R, Optional t# = 5 / 6, Optional decimal% = -1, Optional absoluteScalling As Boolean = False) As Double()
             Dim vmax# = __max(max, min)
             Dim vmin#
 
             If min < 0 Then
                 vmin = -__max(Math.Abs(min), 0)
             Else
-                vmin = If(min < t * max, 0, min - (max - min) / 20)
+                vmin = If(min < t * max, If(absoluteScalling, min, 0), min - (max - min) / 20)
             End If
 
             Dim d = __fix(vmax, True) - __fix(vmin, False)
@@ -76,7 +80,24 @@ Namespace Graphic.Axis
             Return out.ToArray
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="max#">必须始终是正数</param>
+        ''' <param name="min#"></param>
+        ''' <returns></returns>
         Private Function __max(max#, min#) As Double
+            'Dim p% = Fix(Math.Log10(max)) ' max.ToString.Split("."c).First.Length - 1
+            'Dim value#
+            'Dim upbound% = (CInt(Val(CStr(max.ToString.First)) + 1)) * 10 ^ p
+
+            'If max < upbound Then
+            '    value = upbound
+            'Else
+            '    value = max + (max - min) / 20
+            'End If
+
+            'Return value
             Return max + (max - min) / 20
         End Function
 
@@ -95,16 +116,19 @@ Namespace Graphic.Axis
             '    End If
             'End If
 
-            Dim p% = Math.Round(Math.Log10(Math.Abs(n)), 0)
+            Dim p% = Fix(Math.Log10(Math.Abs(n))) ' Math.Round(Math.Log10(Math.Abs(n)), 0)
             Dim d = 10 ^ (p - 1)
             Dim v#
             Dim s = Math.Sign(n)
+            Dim l% = CInt(Val(Math.Abs(n).ToString.First))
 
             If Not enlarge Then
                 p = 10 ^ (p - 1)
             Else
                 p = 10 ^ p
             End If
+
+            p *= l
 
             For i As Double = 0 To 10 Step 0.5
                 v = s * p + s * i * d
@@ -134,8 +158,8 @@ Namespace Graphic.Axis
         End Function
 
         <Extension>
-        Public Function GetAxisValues(range As DoubleRange, Optional parts% = 10) As Double()
-            Return GetAxisValues(range.Max, parts, range.Min)
+        Public Function GetAxisValues(range As DoubleRange, Optional parts% = 10, Optional absoluteScalling As Boolean = False) As Double()
+            Return GetAxisValues(range.Max, parts, range.Min, absoluteScalling:=absoluteScalling)
         End Function
 
         <Extension>
@@ -147,12 +171,25 @@ Namespace Graphic.Axis
             Dim l As New List(Of Double)
             Dim i# = min
 
-            Do While i < max
-                l.Add(i)
-                i += tick
-            Loop
+            If tick = 0# Then
+                Throw New InvalidExpressionException($"Tick can not be ZERO! min={min}, max={max}")
+            End If
 
-            l.Add(i)
+            Try
+                Do While i < max
+                    l.Add(i)
+                    i += tick
+                Loop
+
+                Call l.Add(i)
+            Catch ex As Exception
+                Dim debug As New Dictionary(Of String, Double) From {
+                    {NameOf(min), min},
+                    {NameOf(max), max},
+                    {NameOf(tick), tick}
+                }
+                Throw New Exception(debug.GetJson, ex)
+            End Try
 
             Return l
         End Function
