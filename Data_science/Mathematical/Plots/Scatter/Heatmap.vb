@@ -64,14 +64,15 @@ Partial Module Scatter
                 Call g.__plotInternal(rect, data.ToArray, colors,
                                       fieldX, fieldY, valueField,
                                       labelX:=xlabel, labelY:=ylabel,
-                                      ptSize:=ptSize)
+                                      ptSize:=ptSize,
+                                      legendTitle:=legendTitle)
             End Sub)
     End Function
 
     <Extension>
     Private Sub __plotInternal(g As Graphics, rect As GraphicsRegion, data As DataSet(), colors As Color(),
-                               fieldX$, fieldY$, fieldValue$, 
-                               labelX$,labelY$,
+                               fieldX$, fieldY$, fieldValue$,
+                               labelX$, labelY$, legendTitle$,
                                ptSize%)
 
         Dim points As (pt As PointF, value#)() = data.ToArray(
@@ -96,9 +97,16 @@ Partial Module Scatter
         Dim left As Image = Scatter.Plot(
             serials, scatterPlotSize,
             Xlabel:=labelX, Ylabel:=labelY, drawLine:=False, showLegend:=False)
+        Dim legend As Image = Legends.ColorMapLegend(
+            designer:=colors,
+            title:=legendTitle,
+            min:=points.Min(Function(pt) pt.value),
+            max:=points.Max(Function(pt) pt.value),
+            lsize:=New Size(rect.Size.Width - leftWidth, rect.Size.Height * 0.7))
 
         With g
             .DrawImageUnscaled(left, New Point)
+            .DrawImage(legend, leftWidth, CInt((rect.Size.Height - legend.Height) / 2))
         End With
     End Sub
 End Module
