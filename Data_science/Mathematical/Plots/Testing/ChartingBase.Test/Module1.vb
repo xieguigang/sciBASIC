@@ -8,23 +8,23 @@ Module Module1
 
     Sub Main()
 
-        Dim x = "-60,23"
-        Dim y = "-0.5,2"
+        'Dim x = "-60,23"
+        'Dim y = "-0.5,2"
 
-        Dim mapper As New Mapper(x, y)
+        'Dim mapper As New Mapper(x, y)
 
-        Using g As GDIPlusDeviceHandle = New Size(1600, 1200).CreateGDIDevice
+        'Using g As GDIPlusDeviceHandle = New Size(1600, 1200).CreateGDIDevice
 
-            Call g.Graphics.DrawAxis(g.Size, "padding: 50 50 50 50", mapper, True,
-                                     xlabel:="<span style=""color:green"">log<sub>2</sub>(Fold Change)</span>",
-                                     ylabel:="-log<sub>10</sub>(P-value)",
-                                     ylayout:=YAxisLayoutStyles.Centra)
+        '    Call g.Graphics.DrawAxis(g.Size, "padding: 50 50 50 50", mapper, True,
+        '                             xlabel:="<span style=""color:green"">log<sub>2</sub>(Fold Change)</span>",
+        '                             ylabel:="-log<sub>10</sub>(P-value)",
+        '                             ylayout:=YAxisLayoutStyles.Centra)
 
-            Call g.Save("x:\test.png", ImageFormats.Png)
+        '    Call g.Save("x:\test.png", ImageFormats.Png)
 
-        End Using
+        'End Using
 
-        Pause()
+        'Pause()
 
 
         Call AxisScalling.GetAxisValues(98,, -83.4023).GetJson.__DEBUG_ECHO
