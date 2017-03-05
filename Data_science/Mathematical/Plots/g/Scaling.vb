@@ -88,13 +88,13 @@ Namespace Graphic
         Sub New(data As (Double, Double)())
             dx = ScalingTuple(data, Function(p) p.X, False, xmin)
             dy = ScalingTuple(data, Function(p) p.y, False, ymin)
-            type = GetType(ScatterHeatmap)
+            type = GetType(Contour)
         End Sub
 
         Sub New(data As (X#, y#, z#)())
             dx = ScalingTuple(data, Function(p) p.X, False, xmin)
             dy = ScalingTuple(data, Function(p) p.y, False, ymin)
-            type = GetType(ScatterHeatmap)
+            type = GetType(Contour)
         End Sub
 
         ''' <summary>

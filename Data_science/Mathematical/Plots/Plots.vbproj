@@ -202,7 +202,7 @@
     <Compile Include="Heatmaps\Heatmap.vb" />
     <Compile Include="BarPlot\Data.vb" />
     <Compile Include="Heatmaps\HeatmapTable.vb" />
-    <Compile Include="Heatmaps\ScatterHeatmap.vb" />
+    <Compile Include="Heatmaps\Contour.vb" />
     <Compile Include="BarPlot\Histogram\Histogram.vb" />
     <Compile Include="ImageData.vb" />
     <Compile Include="QQPlot.vb" />

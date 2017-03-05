@@ -43,9 +43,11 @@ Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 ''' <summary>
+''' ###### 等高线图
+''' 
 ''' 和普通的heatmap相比，这里的坐标轴是连续的数值变量，而普通的heatmap，其坐标轴都是离散的分类变量
 ''' </summary>
-Public Module ScatterHeatmap
+Public Module Contour
 
     Public Function Compile(exp$) As Func(Of Double, Double, Double)
         With New Expression
