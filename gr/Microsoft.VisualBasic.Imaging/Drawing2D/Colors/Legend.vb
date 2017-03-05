@@ -111,7 +111,7 @@ Namespace Drawing2D.Colors
                         titleFont)
                     Dim fSize As SizeF
                     Dim pt As Point
-                    Dim rectWidth As Integer = If(legendWidth <= 0, 150, legendWidth)
+                    Dim rectWidth As Integer = If(legendWidth <= 0, size.Width - margin.Horizontal, legendWidth)
                     Dim legendsHeight As Integer = size.Height - (margin.Top * 3) - grayHeight * 3
                     Dim d As Single = legendsHeight / designer.Length
                     Dim left As Integer = margin.Left + 30 + rectWidth

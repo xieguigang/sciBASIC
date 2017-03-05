@@ -1,8 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -102,7 +101,9 @@ Partial Module Scatter
             title:=legendTitle,
             min:=points.Min(Function(pt) pt.value),
             max:=points.Max(Function(pt) pt.value),
-            lsize:=New Size(rect.Size.Width - leftWidth, rect.Size.Height * 0.7))
+            lsize:=New Size(rect.Size.Width - leftWidth + rect.Padding.Right, rect.Size.Height * 0.7))
+
+        leftWidth -= (rect.Padding.Right)
 
         With g
             .DrawImageUnscaled(left, New Point)
