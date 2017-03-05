@@ -39,7 +39,8 @@ Partial Module Scatter
                                 Optional bg$ = "white",
                                 Optional xlabel$ = Nothing,
                                 Optional ylabel$ = Nothing,
-                                Optional legendTitle$ = Nothing) As Image
+                                Optional legendTitle$ = Nothing,
+                                Optional ptSize% = 8) As Image
 
         Dim colors As Color() = Designer.GetColors(colorSchema, n:=levels)
 
@@ -62,14 +63,16 @@ Partial Module Scatter
             Sub(ByRef g, rect)
                 Call g.__plotInternal(rect, data.ToArray, colors,
                                       fieldX, fieldY, valueField,
-                                      labelX:=xlabel, labelY:=ylabel)
+                                      labelX:=xlabel, labelY:=ylabel,
+                                      ptSize:=ptSize)
             End Sub)
     End Function
 
     <Extension>
     Private Sub __plotInternal(g As Graphics, rect As GraphicsRegion, data As DataSet(), colors As Color(),
                                fieldX$, fieldY$, fieldValue$, 
-                               labelX$,labelY$)
+                               labelX$,labelY$,
+                               ptSize%)
 
         Dim points As (pt As PointF, value#)() = data.ToArray(
             Function(o) (New PointF(o(fieldX), o(fieldY)), o(fieldValue)))
@@ -84,10 +87,12 @@ Partial Module Scatter
             .Select(Function(o) New SerialData() With {
                 .color = colorHelper(o.Key),
                 .pts = o.Select(Function(x) New PointData(x.Item1)).ToArray,
-                .title = o.Key
+                .title = o.Key,
+                .PointSize = ptSize
             }) _
             .ToArray
-        Dim scatterPlotSize As New Size(width:=rect.Size.Width * 0.8, height:=rect.Size.Height)
+        Dim leftWidth% = rect.Size.Width * 0.9
+        Dim scatterPlotSize As New Size(width:=leftWidth, height:=rect.Size.Height)
         Dim left As Image = Scatter.Plot(
             serials, scatterPlotSize,
             Xlabel:=labelX, Ylabel:=labelY, drawLine:=False, showLegend:=False)
