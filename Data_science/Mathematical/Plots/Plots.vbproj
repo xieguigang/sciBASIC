@@ -212,6 +212,7 @@
     <Compile Include="Scatter\Annotation.vb" />
     <Compile Include="Scatter\ManhattanStatics.vb" />
     <Compile Include="Scatter\Data.vb" />
+    <Compile Include="Scatter\Heatmap.vb" />
     <Compile Include="Scatter\Scatter.vb" />
     <Compile Include="g\Scaling.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
