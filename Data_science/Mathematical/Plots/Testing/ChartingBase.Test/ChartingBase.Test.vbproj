@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{56BF764F-5458-4873-9203-F44E7DC12905}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>ChartingBase.Test.Module1</StartupObject>
+    <StartupObject>ChartingBase.Test.Module2</StartupObject>
     <RootNamespace>ChartingBase.Test</RootNamespace>
     <AssemblyName>ChartingBase.Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module1.vb" />
+    <Compile Include="Module2.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

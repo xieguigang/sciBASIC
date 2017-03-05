@@ -190,5 +190,20 @@ Namespace Mathematical
 
             Return data.ToArray
         End Function
+
+        <Extension>
+        Public Function MapHelper(Of T)(data As IEnumerable(Of T)) As Func(Of Integer, T)
+            Dim source As T() = data.ToArray
+
+            Return Function(level%)
+                       If level < 0 Then
+                           level = 0
+                       ElseIf level >= source.Length Then
+                           level = source.Length - 1
+                       End If
+
+                       Return source(level)
+                   End Function
+        End Function
     End Module
 End Namespace

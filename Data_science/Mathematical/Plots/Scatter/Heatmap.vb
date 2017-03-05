@@ -79,9 +79,10 @@ Partial Module Scatter
             .SeqIterator _
             .Select(Function(p) (p.value.pt, p.value.value,seq:=levels (p))) _
             .GroupBy(Function (o)o.seq  )
+        Dim colorHelper = colors.MapHelper
         Dim serials As SerialData() = valueGroups _
             .Select(Function(o) New SerialData() With {
-                .color = colors(o.Key),
+                .color = colorHelper(o.Key),
                 .pts = o.Select(Function(x) New PointData(x.Item1)).ToArray,
                 .title = o.Key
             }) _
