@@ -156,5 +156,19 @@ Namespace Text.HtmlParser
         <Extension> Public Function GetValue(html As String) As String
             Return html.GetStackValue(">", "<")
         End Function
+
+        ' <br><br/>
+
+        Const LineFeed$ = "(<br>)|(<br\s*/>)"
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="html$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function HtmlLines(html$) As String()
+            Return Regex.Split(html, LineFeed, RegexICSng)
+        End Function
     End Module
 End Namespace
