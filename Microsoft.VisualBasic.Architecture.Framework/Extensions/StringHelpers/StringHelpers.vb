@@ -46,6 +46,23 @@ Imports Microsoft.VisualBasic.Text
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    ''' <summary>
+    ''' 将<paramref name="replaces"/>列表之中的字符串都替换为空字符串
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="replaces"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Strips(s$, replaces As IEnumerable(Of String)) As String
+        Dim sb As New StringBuilder(s)
+
+        For Each r$ In replaces
+            Call sb.Replace(r, "")
+        Next
+
+        Return sb.ToString
+    End Function
+
     <Extension>
     Public Function CharString(chs As IEnumerable(Of Char)) As String
         Return New String(chs.ToArray)
