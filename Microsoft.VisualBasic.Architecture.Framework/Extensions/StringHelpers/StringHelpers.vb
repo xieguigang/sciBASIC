@@ -528,10 +528,11 @@ Public Module StringHelpers
     <Extension> Public Function StringSplit(Source As String, RegexDelimiter As String, Optional TrimTrailingEmptyStrings As Boolean = False) As String()
         Dim splitArray As String() = Regex.Split(Source, RegexDelimiter)
 
-        If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then Return splitArray
+        If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
+            Return splitArray
+        End If
 
         For i As Integer = splitArray.Length To 1 Step -1
-
             If splitArray(i - 1).Length > 0 Then
                 If i < splitArray.Length Then
                     Call Array.Resize(splitArray, i)
