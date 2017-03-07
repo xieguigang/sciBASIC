@@ -32,6 +32,18 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
 
+    ''' <summary>
+    ''' 在一个一维数组中搜索指定对象，并返回其首个匹配项的索引。
+    ''' </summary>
+    ''' <typeparam name="T">数组元素的类型。</typeparam>
+    ''' <param name="array">要搜索的从零开始的一维数组。</param>
+    ''' <param name="o">要在 array 中查找的对象。</param>
+    ''' <returns>如果在整个 array 中找到 value 的第一个匹配项，则为该项的从零开始的索引；否则为 -1。</returns>
+    <Extension>
+    Public Function IndexOf(Of T)(array As T(), o As T) As Integer
+        Return System.Array.IndexOf(array, value:=o)
+    End Function
+
     <Extension>
     Public Function GetMinIndex(values As List(Of Double)) As Integer
         Dim min As Double = Double.MaxValue
