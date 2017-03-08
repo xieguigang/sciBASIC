@@ -526,6 +526,10 @@ Public Module StringHelpers
     '''
     <ExportAPI("StringsSplit", Info:="This method is used to replace most calls to the Java String.split method.")>
     <Extension> Public Function StringSplit(Source As String, RegexDelimiter As String, Optional TrimTrailingEmptyStrings As Boolean = False) As String()
+        If Source.StringEmpty Then
+            Return {}
+        End If
+
         Dim splitArray As String() = Regex.Split(Source, RegexDelimiter)
 
         If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
@@ -553,10 +557,11 @@ Public Module StringHelpers
     ''' Using ``String.Equals`` or Regular expression function to determined this delimiter 
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter$,
-                                               Optional regex As Boolean = False,
-                                               Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
-        Dim list As New List(Of String)
+    <Extension> Public Function Split(source As IEnumerable(Of String),
+                                      delimiter$,
+                                      Optional regex As Boolean = False,
+                                      Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
+
         Dim delimiterTest As Func(Of String, Boolean)
 
         If regex Then
@@ -566,13 +571,35 @@ Public Module StringHelpers
             delimiterTest = Function(line) String.Equals(delimiter, line, StringComparison.Ordinal)
         End If
 
+        Return source.Split(delimiterTest, includes:=False)
+    End Function
+
+    <Extension>
+    Public Iterator Function Split(source As IEnumerable(Of String),
+                                   delimiterTest As Func(Of String, Boolean),
+                                   Optional includes As Boolean = True) As IEnumerable(Of String())
+
+        Dim list As New List(Of String)
+        Dim first As Boolean = True  ' first line
+
         For Each line As String In source
-            If delimiterTest(line) Then
-                Yield list.ToArray
-                Call list.Clear()
+            If True = delimiterTest(line) Then
+                If first Then
+                    first = False
+                Else
+                    Yield list.ToArray
+
+                    list.Clear()
+                End If
+
+                If includes Then
+                    list.Add(line)
+                End If
             Else
                 Call list.Add(line)
             End If
+
+            first = False
         Next
 
         If list.Count > 0 Then

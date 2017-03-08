@@ -1470,16 +1470,6 @@ Public Module Extensions
         Return True
     End Function
 
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Time2Binary", Info:="Convert the date time value into a long data type value.")>
-    <Extension> Public Function ToBinary([Date] As Date) As Long
-#Else
-    <Extension> Public Function ToBinary([Date] As Date) As Long
-#End If
-        Return [Date].Year * 100000 + [Date].Month * 10000 + [Date].Day * 1000 +
-                [Date].Hour * 100 + [Date].Minute * 10 + [Date].Second
-    End Function
-
     ''' <summary>
     ''' 这个是一个安全的方法，假若下标越界或者目标数据源为空的话，则会返回空值
     ''' </summary>
@@ -2238,6 +2228,7 @@ Public Module Extensions
     ''' Nothing
     ''' </summary>
     Friend Const null = Nothing
+    Public Const void As Object = Nothing
 
     ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>
