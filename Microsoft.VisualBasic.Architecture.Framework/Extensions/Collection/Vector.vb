@@ -1,36 +1,78 @@
 ﻿#Region "Microsoft.VisualBasic::f7e2f29bf69a097626c970532f88c956, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
+
+    Public Function LengthEquals(Of T)(n%, any As Boolean, ParamArray array As IEnumerable(Of T)()) As Boolean
+        Dim c%() = array.Select(Function(s) s.Count).ToArray
+        Dim equals = c.Where(Function(x) x = n).ToArray
+
+        If any Then
+            Return equals.Length > 0
+        Else
+            Return equals.Length = array.Length
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 用来生成map数据的，
+    ''' + 当两个向量长度相同，会不进行任何处理，即两个向量之间，元素都可以一一对应，
+    ''' + 但是当某一个向量的长度为1的时候，就会将该向量补齐，因为此时会是一对多的关系
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function PairData(Of T)(a As T(), b As T()) As IEnumerable(Of Map(Of T, T))
+        If a.Length = 1 AndAlso b.Length > 1 Then
+            ' 补齐a
+            a = a(0).CopyVector(b.Length)
+        ElseIf a.Length > 1 AndAlso b.Length = 1 Then
+            ' 补齐b
+            b = b(0).CopyVector(a.Length)
+        ElseIf a.Length <> b.Length Then
+            ' 无法计算
+            Throw New Exception("Both a and b their length should be equals or one of them should be length=1!")
+        End If
+
+        For i As Integer = 0 To a.Length - 1
+            Yield New Map(Of T, T) With {
+                .Key = a(i),
+                .Maps = b(i)
+            }
+        Next
+    End Function
 
     ''' <summary>
     ''' 在一个一维数组中搜索指定对象，并返回其首个匹配项的索引。
