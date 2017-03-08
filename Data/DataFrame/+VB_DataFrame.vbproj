@@ -230,6 +230,7 @@
     <Compile Include="IO\csv\File.vb" />
     <Compile Include="IO\csv\HTMLWriter.vb" />
     <Compile Include="IO\MetaData\Meta.vb" />
+    <Compile Include="IO\MetaData\GenericMeta.vb" />
     <Compile Include="IO\NetStream\File.vb" />
     <Compile Include="IO\NetStream\RowObject.vb" />
     <Compile Include="IO\NetStream\StreamHelper.vb" />

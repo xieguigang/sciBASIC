@@ -317,8 +317,17 @@ Namespace Language
             Return list
         End Operator
 
+        ''' <summary>
+        ''' 将这个列表对象隐式转换为向量数组
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
         Public Shared Narrowing Operator CType(list As List(Of T)) As T()
-            Return list.ToArray
+            If list Is Nothing Then
+                Return {}
+            Else
+                Return list.ToArray
+            End If
         End Operator
 
         ' 因为这个隐式会使得数组被默认转换为本List对象，会导致 + 运算符重载失败，所以在这里将这个隐式转换取消掉

@@ -28,20 +28,27 @@ Namespace Graphic
         Public ReadOnly dx#, dy#
         Public ReadOnly xmin, ymin As Single
 
-        Sub New(range As Scaling, Optional parts% = 10, Optional XabsoluteScalling As Boolean = False, Optional YabsoluteScalling As Boolean = False)
-            Call Me.New(range.xrange, range.yrange, parts, XabsoluteScalling, YabsoluteScalling)
+        Sub New(range As Scaling, Optional parts% = 10, Optional XabsoluteScalling As Boolean = False, Optional YabsoluteScalling As Boolean = False, Optional ignoreAxis As Boolean = False)
+            Call Me.New(range.xrange, range.yrange, parts, XabsoluteScalling, YabsoluteScalling, ignoreAxis)
 
             serials = range.serials
             hist = range.hist
         End Sub
 
-        Sub New(xrange As DoubleRange, yrange As DoubleRange, Optional parts% = 10, Optional XabsoluteScalling As Boolean = False, Optional YabsoluteScalling As Boolean = False)
-            xAxis = New Vector(xrange.GetAxisValues(parts, XabsoluteScalling))
-            yAxis = New Vector(yrange.GetAxisValues(parts, YabsoluteScalling))
-            dx = xAxis.Max - xAxis.Min
-            dy = yAxis.Max - yAxis.Min
-            xmin = xAxis.Min
-            ymin = yAxis.Min
+        Sub New(xrange As DoubleRange, yrange As DoubleRange, Optional parts% = 10, Optional XabsoluteScalling As Boolean = False, Optional YabsoluteScalling As Boolean = False, Optional ignoreAxis As Boolean = False)
+            If Not ignoreAxis Then
+                xAxis = New Vector(xrange.GetAxisValues(parts, XabsoluteScalling))
+                yAxis = New Vector(yrange.GetAxisValues(parts, YabsoluteScalling))
+                dx = xAxis.Max - xAxis.Min
+                dy = yAxis.Max - yAxis.Min
+                xmin = xAxis.Min
+                ymin = yAxis.Min
+            Else
+                dx = xrange.Max - xrange.Min
+                dy = yrange.Max - yrange.Min
+                xmin = xrange.Min
+                ymin = yrange.Min
+            End If
         End Sub
 
         Public Function ScallingWidth(x As Double, width%) As Single
