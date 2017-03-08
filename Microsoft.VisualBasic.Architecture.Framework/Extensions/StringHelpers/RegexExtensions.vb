@@ -192,4 +192,22 @@ Public Module RegexExtensions
     <Extension> Public Function RawRegexp(raw$) As Regex
         Return New Regex(raw, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
     End Function
+
+    ''' <summary>
+    ''' 函数返回以1为底的位置，当找不到的时候会返回零
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Locates(str$, pattern$, Optional opt As RegexOptions = RegexICSng) As Integer
+        Dim sub$ = Regex.Match(str, pattern, opt).Value
+
+        If String.IsNullOrEmpty([sub]) Then
+            Return 0
+        Else
+            Return InStr(str, [sub], CompareMethod.Binary)
+        End If
+    End Function
 End Module
