@@ -375,7 +375,11 @@ Public Module ProgramPathSearchTool
 
         Dim t$() = fsObj.Trim("\"c, "/"c).Replace("\", "/").Split("/"c)
         t = t.Last.Split("."c)
-        t = t.Take(t.Length - 1).ToArray
+        If t.Length > 1 Then
+            ' 文件名之中并没有包含有拓展名后缀，则数组长度为1，则不跳过了
+            ' 有后缀拓展名，则split之后肯定会长度大于1的
+            t = t.Take(t.Length - 1).ToArray
+        End If
 
         Dim name = String.Join(".", t)
         Return name
