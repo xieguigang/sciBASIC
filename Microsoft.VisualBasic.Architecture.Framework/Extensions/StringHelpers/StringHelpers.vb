@@ -133,6 +133,10 @@ Public Module StringHelpers
     ''' <returns></returns>
     <Extension>
     Public Function GetTagValue(s As String, Optional delimiter As String = " ", Optional trim As Boolean = False, Optional failureNoName As Boolean = True) As NamedValue(Of String)
+        If s.StringEmpty Then
+            Return Nothing
+        End If
+
         Dim p As Integer = InStr(s, delimiter, CompareMethod.Text)
 
         If p = 0 Then
