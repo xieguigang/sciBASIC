@@ -100,6 +100,13 @@ Public Module ProgramPathSearchTool
         Next
     End Function
 
+    ''' <summary>
+    ''' 这个函数只会返回文件列表之中的第一个文件，故而需要提取某一个文件价值中的某一个特定的文件，推荐使用这个函数
+    ''' </summary>
+    ''' <param name="DIR$"></param>
+    ''' <param name="keyword$"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function TheFile(DIR$, keyword$, Optional opt As SearchOption = SearchOption.TopDirectoryOnly) As String
         Return FileIO.FileSystem.GetFiles(DIR, opt, keyword).FirstOrDefault
