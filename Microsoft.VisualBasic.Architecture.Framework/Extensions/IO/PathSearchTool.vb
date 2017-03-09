@@ -108,7 +108,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="opt"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function TheFile(DIR$, keyword$, Optional opt As SearchOption = SearchOption.TopDirectoryOnly) As String
+    Public Function TheFile(DIR$, keyword$, Optional opt As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As String
         Return FileIO.FileSystem.GetFiles(DIR, opt, keyword).FirstOrDefault
     End Function
 
