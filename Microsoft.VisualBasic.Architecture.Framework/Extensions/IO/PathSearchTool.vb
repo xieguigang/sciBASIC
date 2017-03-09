@@ -50,6 +50,16 @@ Imports Microsoft.VisualBasic.Text
 Public Module ProgramPathSearchTool
 
     ''' <summary>
+    ''' 函数返回文件的拓展名后缀，请注意，这里的返回值是不会带有小数点的
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ExtensionSuffix(path$) As String
+        Return path.Split("."c).Last
+    End Function
+
+    ''' <summary>
     ''' Combine directory path.(这个主要是用于生成文件夹名称)
     ''' 
     ''' ###### Example usage
