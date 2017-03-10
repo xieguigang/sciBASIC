@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.KeyValuePair
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 <Extension>
 Public Module IEnumerations
@@ -170,6 +171,7 @@ Public Module IEnumerations
 
     ''' <summary>
     ''' 使用<paramref name="uniqueId"/>唯一标识符从集合之中取出一个目标对象。
+    ''' 小集合推荐使用这个函数，但是对于大型集合或者需要查询的次数非常多的话，则推荐使用字典操作来提升性能
     ''' 请注意这个函数会完全匹配字符串的，即大小写敏感
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -199,18 +201,35 @@ Public Module IEnumerations
         Return LQuery
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="distinct">
+    ''' True: 这个参数会去处重复项
+    ''' </param>
+    ''' <returns></returns>
     <Extension> Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T), distinct As Boolean) As Dictionary(Of T)
-        If Not distinct Then Return source.ToDictionary
+        If Not distinct Then
+            Return source.ToDictionary
+        End If
 
-        Dim Thash As Dictionary(Of T) = New Dictionary(Of T)
-        For Each item As T In source
-            If Not Thash.ContainsKey(item.Key) Then
-                Call Thash.Add(item.Key, item)
+        Dim table As New Dictionary(Of T)
+        Dim duplicates As New List(Of String)
+
+        For Each x As T In source
+            If Not table.ContainsKey(x.Key) Then
+                Call table.Add(x.Key, x)
             Else
-                Call Console.WriteLine(item.Key & " is dulplicated......")
+                duplicates += x.Key
             End If
         Next
 
-        Return Thash
+        If duplicates.Count > 0 Then
+            Call $"Dictionary table build complete, but there is dulplicated keys: {duplicates.GetJson}...".Warning
+        End If
+
+        Return table
     End Function
 End Module
