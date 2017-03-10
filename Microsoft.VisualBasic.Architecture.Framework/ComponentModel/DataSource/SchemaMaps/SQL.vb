@@ -32,6 +32,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     ''' SQL之中的一个数据表的抽象描述接口
     ''' </summary>
     Public MustInherit Class SQLTable
+        Implements ICloneable
 
         ''' <summary>
         ''' INSERT INTO table_name (field1, field2,...) VALUES (value1, value2,....)
@@ -58,6 +59,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return GetInsertSQL()
+        End Function
+
+        Public Function Clone() As Object Implements ICloneable.Clone
+            Return MyClass.MemberwiseClone
         End Function
     End Class
 End Namespace
