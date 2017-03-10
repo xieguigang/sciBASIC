@@ -530,8 +530,8 @@ Namespace Linq
                 Return source.__toArrayNoWhere([CType], Parallel)
             Else
                 Return source.ToArray(Of T)(
-                    Function(x As IKeyValuePairObject(Of TKey, TValue)) [CType](x.Identifier, x.Value),
-                    where:=Function(x) Where(x.Identifier, x.Value),
+                    Function(x As IKeyValuePairObject(Of TKey, TValue)) [CType](x.Key, x.Value),
+                    where:=Function(x) Where(x.Key, x.Value),
                     Parallel:=Parallel)
             End If
         End Function
@@ -540,7 +540,7 @@ Namespace Linq
         Private Function __toArrayNoWhere(Of T, TKey, TValue)(source As IEnumerable(Of IKeyValuePairObject(Of TKey, TValue)),
                                                          [CType] As Func(Of TKey, TValue, T),
                                                          Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value), parallel:=Parallel)
+            Return source.ToArray(Of T)(Function(x) [CType](x.Key, x.Value), parallel:=Parallel)
         End Function
 
         <Extension>

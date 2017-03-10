@@ -41,7 +41,7 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Property Identifier As TKey
+        Property Key As TKey
         ''' <summary>
         ''' Gets the value in the key/value pair.
         ''' </summary>
@@ -57,7 +57,7 @@ Namespace ComponentModel.Collection.Generic
     ''' <typeparam name="TValue"></typeparam>
     ''' <remarks></remarks>
     Public Interface IReadOnlyDataSource(Of TValue)
-        ReadOnly Property Identifier As String
+        ReadOnly Property Key As String
         ReadOnly Property Value As TValue
     End Interface
 
@@ -75,7 +75,7 @@ Namespace ComponentModel.Collection.Generic
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overridable Property Key As TKey Implements IKeyValuePairObject(Of TKey, TValue).Identifier
+        Public Overridable Property Key As TKey Implements IKeyValuePairObject(Of TKey, TValue).Key
         ''' <summary>
         ''' Gets the value in the key/value pair.
         ''' </summary>

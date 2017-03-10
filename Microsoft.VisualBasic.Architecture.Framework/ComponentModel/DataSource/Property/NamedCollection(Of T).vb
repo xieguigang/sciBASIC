@@ -14,7 +14,7 @@ Namespace ComponentModel.DataSourceModel
         Implements IKeyValuePairObject(Of String, T())
         Implements Value(Of T()).IValueOf
 
-        Public Property Name As String Implements IKeyedEntity(Of String).Key, IKeyValuePairObject(Of String, T()).Identifier
+        Public Property Name As String Implements IKeyedEntity(Of String).Key, IKeyValuePairObject(Of String, T()).Key
         Public Property Value As T() Implements IKeyValuePairObject(Of String, T()).Value, Value(Of T()).IValueOf.value
         Public Property Description As String
 

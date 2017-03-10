@@ -92,13 +92,13 @@ Public Module IEnumerations
 
     <Extension> Public Function FindByItemKey(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Key As String, Optional Explicit As Boolean = True) As PairItemType()
         Dim Method = If(Explicit, System.StringComparison.Ordinal, System.StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.Identifier, Key, Method) Select item).ToArray
+        Dim LQuery = (From item In source Where String.Equals(item.Key, Key, Method) Select item).ToArray
         Return LQuery
     End Function
 
     <Extension> Public Function FindByItemValue(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Value As String, Optional strict As Boolean = True) As PairItemType()
         Dim Method = If(strict, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.Identifier, Value, Method) Select item).ToArray
+        Dim LQuery = (From item In source Where String.Equals(item.Key, Value, Method) Select item).ToArray
         Return LQuery
     End Function
 
