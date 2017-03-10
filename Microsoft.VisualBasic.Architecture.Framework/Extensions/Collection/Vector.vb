@@ -45,6 +45,22 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
+    ''' + False: 测试失败，不会满足<see cref="PairData(Of T)(T(), T())"/>的条件
+    ''' + True: 可以使用<see cref="PairData(Of T)(T(), T())"/>来生成Mapping匹配
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    Public Function TestPairData(Of T)(a As T(), b As T()) As Boolean
+        If a.Length <> b.Length AndAlso Not LengthEquals(1, True, a, b) Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
+    ''' <summary>
     ''' 用来生成map数据的，
     ''' + 当两个向量长度相同，会不进行任何处理，即两个向量之间，元素都可以一一对应，
     ''' + 但是当某一个向量的长度为1的时候，就会将该向量补齐，因为此时会是一对多的关系

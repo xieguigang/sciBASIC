@@ -523,18 +523,21 @@ Public Module StringHelpers
     ''' This method is used to replace most calls to the Java String.split method.
     ''' </summary>
     ''' <param name="source"></param>
-    ''' <param name="regexDelimiter"></param>
+    ''' <param name="pattern"><see cref="Regex"/> patterns</param>
     ''' <param name="trimTrailingEmptyStrings"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("StringsSplit", Info:="This method is used to replace most calls to the Java String.split method.")>
-    <Extension> Public Function StringSplit(Source As String, RegexDelimiter As String, Optional TrimTrailingEmptyStrings As Boolean = False) As String()
-        If Source.StringEmpty Then
+    <Extension> Public Function StringSplit(source$, pattern$,
+                                            Optional TrimTrailingEmptyStrings As Boolean = False,
+                                            Optional opt As RegexOptions = RegexICSng) As String()
+        If source.StringEmpty Then
             Return {}
         End If
 
-        Dim splitArray As String() = Regex.Split(Source, RegexDelimiter)
+        Dim splitArray As String() = Regex.Split(
+            source, pattern, options:=opt)
 
         If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
             Return splitArray
