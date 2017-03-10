@@ -37,6 +37,16 @@ Imports Microsoft.VisualBasic.Linq
 Public Module KeyValuePairExtensions
 
     <Extension>
+    Public Function ContainsKey(Of T As INamedValue)(table As Dictionary(Of T), k As NamedValue(Of T)) As Boolean
+        Return table.ContainsKey(k.Name)
+    End Function
+
+    <Extension>
+    Public Function ContainsKey(Of T)(table As Dictionary(Of String, T), k As NamedValue(Of T)) As Boolean
+        Return table.ContainsKey(k.Name)
+    End Function
+
+    <Extension>
     Public Function DictionaryData(Of T, V)(source As IReadOnlyDictionary(Of T, V)) As Dictionary(Of T, V)
         Return source.ToDictionary(Function(x) x.Key, Function(x) x.Value)
     End Function

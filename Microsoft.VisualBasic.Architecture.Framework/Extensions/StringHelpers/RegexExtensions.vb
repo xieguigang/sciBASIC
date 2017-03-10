@@ -158,6 +158,7 @@ Public Module RegexExtensions
 
     ''' <summary>
     ''' Converts the <see cref="Regex"/> string pattern match results to the objects.
+    ''' （这个函数是非并行化的，所以不需要担心会打乱顺序）
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -165,11 +166,13 @@ Public Module RegexExtensions
     ''' <returns></returns>
     <Extension>
     Public Function ToArray(Of T)(source As MatchCollection, [ctype] As Func(Of String, T)) As T()
-        Dim LQuery As T() =
-            LinqAPI.Exec(Of T) <= From m As Match
-                                  In source
-                                  Let s As String = m.Value
-                                  Select [ctype](s)
+        Dim LQuery As T() = LinqAPI.Exec(Of T) <=
+ _
+            From m As Match
+            In source
+            Let s As String = m.Value
+            Select [ctype](s)
+
         Return LQuery
     End Function
 
