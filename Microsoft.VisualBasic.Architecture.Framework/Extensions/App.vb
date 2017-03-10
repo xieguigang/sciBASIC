@@ -280,6 +280,11 @@ Public Module App
 
     Dim __joinedVariables As New Dictionary(Of NamedValue(Of String))
 
+    ''' <summary>
+    ''' 添加参数到应用程序的环境变量之中
+    ''' </summary>
+    ''' <param name="name$"></param>
+    ''' <param name="value$"></param>
     Public Sub JoinVariable(name$, value$)
         __joinedVariables(name) =
             New NamedValue(Of String) With {
@@ -288,6 +293,10 @@ Public Module App
         }
     End Sub
 
+    ''' <summary>
+    ''' 添加参数集合到应用程序的环境变量之中
+    ''' </summary>
+    ''' <param name="vars"></param>
     Public Sub JoinVariables(ParamArray vars As NamedValue(Of String)())
         For Each v As NamedValue(Of String) In vars
             __joinedVariables(v.Name) = v

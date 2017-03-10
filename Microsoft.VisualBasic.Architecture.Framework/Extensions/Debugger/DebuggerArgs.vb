@@ -169,6 +169,16 @@ Namespace Debugging
                     Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".__DEBUG_ECHO
                 End If
             End If
+
+            ' /@var=name "value"
+            For Each var As NamedValue(Of String) In args.ParameterList
+                With var
+                    If InStr(.Name, "/@var=", CompareMethod.Text) = 1 Then
+                        Dim name$ = .Name.GetTagValue("=").Value
+                        Call App.JoinVariable(name, .Value)
+                    End If
+                End With
+            Next
         End Sub
     End Module
 End Namespace
