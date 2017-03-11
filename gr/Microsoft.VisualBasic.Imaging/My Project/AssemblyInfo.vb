@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("sciBASIC# graphics artist graphics engine")>
-<Assembly: AssemblyDescription("sciBASIC# graphics artist graphics engine")>
+<Assembly: AssemblyTitle("sciBASIC# graphics artist graphics engine for VisualBasic imaging and D3.js color rendering")>
+<Assembly: AssemblyDescription("sciBASIC# graphics artist graphics engine for VisualBasic imaging and D3.js color rendering")>
 <Assembly: AssemblyCompany("GPL3")>
 <Assembly: AssemblyProduct("sciBASIC Graphics")>
 <Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2015")>

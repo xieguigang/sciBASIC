@@ -32,14 +32,25 @@ Namespace BarPlot
         ''' <param name="padding$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Plot(data As IEnumerable(Of BarSerial), Optional size As Size = Nothing, Optional padding$ = g.DefaultPadding, Optional bg$ = "white") As Bitmap
+        Public Function Plot(data As IEnumerable(Of BarSerial),
+                             Optional size As Size = Nothing,
+                             Optional padding$ = g.DefaultPadding,
+                             Optional bg$ = "white") As Bitmap
+
             Return g.GraphicsPlots(
                 size, padding,
                 bg,
                 Sub(ByRef g, region)
-
+                    Call data _
+                        .ToArray _
+                        .__plotInternal(g, region)
                 End Sub)
         End Function
+
+        <Extension>
+        Private Sub __plotInternal(data As BarSerial(), g As Graphics, region As GraphicsRegion)
+
+        End Sub
 
         ''' <summary>
         ''' 使用这个函数进行条形图之中的系列的颜色的渲染
