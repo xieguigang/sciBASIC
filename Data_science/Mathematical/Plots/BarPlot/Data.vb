@@ -34,63 +34,74 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class BarDataSample
+Namespace BarPlot
 
-    Public Property Tag As String
-    Public Property data As Double()
+    Public Class BarDataSample
 
-    ''' <summary>
-    ''' The sum of <see cref="data"/>
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property StackedSum As Double
-        Get
-            Return data.Sum
-        End Get
-    End Property
+        Public Property Tag As String
+        Public Property data As Double()
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+        ''' <summary>
+        ''' The sum of <see cref="data"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property StackedSum As Double
+            Get
+                Return data.Sum
+            End Get
+        End Property
 
-Public Class BarDataGroup : Inherits ProfileGroup
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 
-    ''' <summary>
-    ''' 与<see cref="BarDataSample.data"/>里面的数据顺序是一致的
-    ''' </summary>
-    ''' <returns></returns>
-    Public Overrides Property Serials As NamedValue(Of Color)()
-    Public Property Samples As BarDataSample()
+    Public Class BarDataGroup : Inherits ProfileGroup
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
+        ''' <summary>
+        ''' 与<see cref="BarDataSample.data"/>里面的数据顺序是一致的
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Property Serials As NamedValue(Of Color)()
+        Public Property Samples As BarDataSample()
 
-    Public Shared Function FromDistributes(data As IEnumerable(Of Double), Optional base! = 10.0F, Optional color$ = "darkblue") As BarDataGroup
-        Dim source = data.Distributes(base!)
-        Dim bg As Color = color.ToColor(onFailure:=Drawing.Color.DarkBlue)
-        Dim values As New List(Of Double)
-        Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
-            From lv As Integer
-            In source.Keys
-            Select New NamedValue(Of Color) With {
-                .Name = lv.ToString,
-                .Value = bg
-            }
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
-        For Each x In serials
-            values += source(CInt(x.Name)).value
-        Next
+        ''' <summary>
+        ''' 这个应该是生成直方图的数据
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="base!"></param>
+        ''' <param name="color$"></param>
+        ''' <returns></returns>
+        Public Shared Function FromDistributes(data As IEnumerable(Of Double), Optional base! = 10.0F, Optional color$ = "darkblue") As BarDataGroup
+            Dim source = data.Distributes(base!)
+            Dim bg As Color = color.ToColor(onFailure:=Drawing.Color.DarkBlue)
+            Dim values As New List(Of Double)
+            Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
+ _
+                From lv As Integer
+                In source.Keys
+                Select New NamedValue(Of Color) With {
+                    .Name = lv.ToString,
+                    .Value = bg
+                }
 
-        Return New BarDataGroup With {
-            .Serials = serials,
-            .Samples = {
-                New BarDataSample With {
-                    .Tag = "Distribution",
-                    .data = values
+            For Each x In serials
+                values += source(CInt(x.Name)).value
+            Next
+
+            Return New BarDataGroup With {
+                .Serials = serials,
+                .Samples = {
+                    New BarDataSample With {
+                        .Tag = "Distribution",
+                        .data = values
+                    }
                 }
             }
-        }
-    End Function
-End Class
+        End Function
+    End Class
+End Namespace
