@@ -47,7 +47,9 @@ Namespace HTML.CSS
         End Function
 
         Public Shared Function TryParse(css$) As Stroke
-            Dim t As Dictionary(Of String, String) = css.Split(";"c) _
+            Dim t As Dictionary(Of String, String) = css _
+                .Trim(";"c) _
+                .Split(";"c) _
                 .Select(AddressOf Trim) _
                 .Select(Function(s) s.GetTagValue(":", trim:=True)) _
                 .ToDictionary(Function(x) x.Name,

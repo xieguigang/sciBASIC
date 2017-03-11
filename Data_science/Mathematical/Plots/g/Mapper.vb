@@ -28,17 +28,44 @@ Namespace Graphic
         Public ReadOnly dx#, dy#
         Public ReadOnly xmin, ymin As Single
 
-        Sub New(range As Scaling, Optional parts% = 10, Optional XabsoluteScalling As Boolean = False, Optional YabsoluteScalling As Boolean = False, Optional ignoreAxis As Boolean = False)
-            Call Me.New(range.xrange, range.yrange, parts, XabsoluteScalling, YabsoluteScalling, ignoreAxis)
+        Sub New(range As Scaling,
+                Optional parts% = 10,
+                Optional XabsoluteScalling As Boolean = False,
+                Optional YabsoluteScalling As Boolean = False,
+                Optional ignoreAxis As Boolean = False,
+                Optional ignoreX As Boolean = False,
+                Optional ignoreY As Boolean = False)
+
+            Call Me.New(range.xrange, range.yrange, parts,
+                        XabsoluteScalling,
+                        YabsoluteScalling,
+                        ignoreAxis, ignoreX, ignoreY)
 
             serials = range.serials
             hist = range.hist
         End Sub
 
-        Sub New(xrange As DoubleRange, yrange As DoubleRange, Optional parts% = 10, Optional XabsoluteScalling As Boolean = False, Optional YabsoluteScalling As Boolean = False, Optional ignoreAxis As Boolean = False)
+        Sub New(xrange As DoubleRange, yrange As DoubleRange,
+                Optional parts% = 10,
+                Optional XabsoluteScalling As Boolean = False,
+                Optional YabsoluteScalling As Boolean = False,
+                Optional ignoreAxis As Boolean = False,
+                Optional ignoreX As Boolean = False,
+                Optional ignoreY As Boolean = False)
+
             If Not ignoreAxis Then
-                xAxis = New Vector(xrange.GetAxisValues(parts, XabsoluteScalling))
-                yAxis = New Vector(yrange.GetAxisValues(parts, YabsoluteScalling))
+
+                If Not ignoreX Then
+                    xAxis = New Vector(xrange.GetAxisValues(parts, XabsoluteScalling))
+                Else
+                    xAxis = New Vector({0R})
+                End If
+                If Not ignoreY Then
+                    yAxis = New Vector(yrange.GetAxisValues(parts, YabsoluteScalling))
+                Else
+                    yAxis = New Vector({0R})
+                End If
+
                 dx = xAxis.Max - xAxis.Min
                 dy = yAxis.Max - yAxis.Min
                 xmin = xAxis.Min

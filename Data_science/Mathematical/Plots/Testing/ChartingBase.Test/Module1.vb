@@ -3,10 +3,27 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Imaging
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.StyledBarplot
 
 Module Module1
 
     Sub Main()
+
+        Dim s = {
+            New BarSerial With {.Brush = "red", .Label = "label<sub>1</sub>", .Value = 123},
+            New BarSerial With {.Brush = "red", .Label = "label<sub>1</sub>", .Value = 123},
+            New BarSerial With {.Brush = "cyan", .Label = "label<sub>1</sub>", .Value = 123},
+            New BarSerial With {.Brush = "red", .Label = "label<sub>1</sub>", .Value = 123},
+            New BarSerial With {.Brush = "orange", .Label = "label<sub>1</sub>", .Value = 13},
+            New BarSerial With {.Brush = "blue", .Label = "label<sub>1</sub>", .Value = 223},
+            New BarSerial With {.Brush = "yellow", .Label = "label<sub>1</sub>", .Value = 223},
+            New BarSerial With {.Brush = "black", .Label = "label<sub>1</sub>", .Value = 223},
+            New BarSerial With {.Brush = "red", .Label = "label<sub>1</sub>", .Value = 223}
+        }
+
+        Call s.Plot().SaveAs("x:/test.png")
+
+        Pause()
 
         'Dim x = "-60,23"
         'Dim y = "-0.5,2"

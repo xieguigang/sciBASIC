@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BarPlot
@@ -37,33 +38,42 @@ Namespace BarPlot
         ''' <returns></returns>
         <Extension>
         Public Function Plot(data As IEnumerable(Of BarSerial),
-                             Optional size As Size = Nothing,
+                             Optional size$ = "1024,800",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
-                             Optional interval# = 0.025,
-                             Optional labelFont$ = CSSFont.Win10Normal) As Bitmap
+                             Optional interval# = 0.085,
+                             Optional labelFont$ = CSSFont.Win10Normal,
+                             Optional shadowOffset% = 4) As Bitmap
 
             Return g.GraphicsPlots(
-                size, padding,
+                size.SizeParser, padding,
                 bg,
                 Sub(ByRef g, region)
                     Call data _
                         .ToArray _
                         .__plotInternal(g, region,
                                         interval:=interval * region.PlotRegion.Width,
-                                        labelFont:=labelFont)
+                                        labelFont:=labelFont,
+                                        shadowOffset:=shadowOffset)
                 End Sub)
         End Function
 
         <Extension>
-        Private Sub __plotInternal(data As BarSerial(), g As Graphics, region As GraphicsRegion, interval%, labelFont$)
-            Dim scaler As New Mapper(New Scaling(data.Select(Function(o) o.Value), horizontal:=False))
+        Private Sub __plotInternal(data As BarSerial(),
+                                   g As Graphics, region As GraphicsRegion,
+                                   interval%,
+                                   labelFont$,
+                                   shadowOffset%)
+
+            Dim scaler As New Mapper(
+                range:=New Scaling(data.Select(Function(o) o.Value), horizontal:=False),
+                ignoreX:=True)
             Dim bWidth% = (region.PlotRegion.Width - data.Length * interval) / data.Length
             Dim bTop%
             Dim hScaler As Func(Of Single, Single) =
                 scaler _
                 .YScaler(region.Size, region.Padding)
-            Dim bLeft% = region.Padding.Left + interval
+            Dim bLeft% = region.Padding.Left + interval / 2
             Dim bRECT As Rectangle   ' shadow rectangle
             Dim barRECT As Rectangle
             Dim label As Image
@@ -87,7 +97,9 @@ Namespace BarPlot
                 ' rotate -90
                 label = label.RotateImage(-90)
                 labelLeft = bLeft + (bWidth - label.Width) / 2
-                g.DrawImageUnscaled(label, New Point(labelLeft, region.Bottom))
+                g.DrawImageUnscaled(label, New Point(labelLeft, region.Bottom + 20))
+
+                bLeft += interval + bWidth
             Next
         End Sub
 

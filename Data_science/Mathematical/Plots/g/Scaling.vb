@@ -141,6 +141,8 @@ Namespace Graphic
         Sub New(data As IEnumerable(Of Double), horizontal As Boolean)
             Dim h#() = data.ToArray
 
+            ' dx = 100 和 dy = 100 是为了防止tick出错而特意设置的
+
             If Not horizontal Then
                 ymin! = h.Min
 
@@ -148,6 +150,7 @@ Namespace Graphic
                     ymin = 0
                 End If
 
+                ' dx = 100
                 dy = h.Max - ymin
             Else
                 xmin! = h.Min
@@ -156,6 +159,7 @@ Namespace Graphic
                     xmin = 0
                 End If
 
+                ' dy = 100
                 dx = h.Max - xmin
             End If
 
