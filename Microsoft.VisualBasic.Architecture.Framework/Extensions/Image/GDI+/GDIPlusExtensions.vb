@@ -315,11 +315,24 @@ Namespace Imaging
             End If
         End Function
 
+        ''' <summary>
+        ''' 返回位移的新的点位置值
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
         <ExportAPI("Offset")>
         <Extension> Public Function OffSet2D(p As Point, x As Integer, y As Integer) As Point
             Return New Point(x + p.X, y + p.Y)
         End Function
 
+        ''' <summary>
+        ''' 返回位置的新的点位置值
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         <ExportAPI("Offset")>
         <Extension> Public Function OffSet2D(p As Point, offset As Point) As Point
             Return New Point(offset.X + p.X, offset.Y + p.Y)

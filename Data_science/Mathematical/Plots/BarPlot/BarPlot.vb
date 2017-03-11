@@ -62,21 +62,22 @@ Namespace BarPlot
         ''' <returns></returns>
         <Extension>
         Public Function Plot(data As BarDataGroup,
-                         Optional size As Size = Nothing,
-                         Optional padding$ = "padding: 300 120 300 120;",
-                         Optional bg$ = "white",
-                         Optional showGrid As Boolean = True,
-                         Optional stacked As Boolean = False,
-                         Optional stackReordered? As Boolean = True,
-                         Optional showLegend As Boolean = True,
-                         Optional legendPos As Point = Nothing,
-                         Optional legendBorder As Border = Nothing,
-                         Optional legendFont As Font = Nothing) As Bitmap
+                             Optional size As Size = Nothing,
+                             Optional padding$ = "padding: 300 120 300 120;",
+                             Optional bg$ = "white",
+                             Optional showGrid As Boolean = True,
+                             Optional stacked As Boolean = False,
+                             Optional stackReordered? As Boolean = True,
+                             Optional showLegend As Boolean = True,
+                             Optional legendPos As Point = Nothing,
+                             Optional legendBorder As Border = Nothing,
+                             Optional legendFont As Font = Nothing) As Bitmap
 
             Dim margin As Padding = padding
 
             Return GraphicsPlots(
-                size, margin, bg,
+                size, margin,
+                bg,
                 Sub(ByRef g, grect) Call __plot1(
                     g, grect,
                     data,
@@ -164,11 +165,11 @@ Namespace BarPlot
 
                         Call g.DrawRectangle(Pens.Black, rect)
                         Call g.FillRectangle(
-                        New SolidBrush(data.Serials(val.i).Value),
-                        Rectangle(top + 1,
-                                  x + 1,
-                                  right - 1,
-                                  grect.Size.Height - grect.Padding.Bottom - 1))
+                            New SolidBrush(data.Serials(val.i).Value),
+                            Rectangle(top + 1,
+                                      x + 1,
+                                      right - 1,
+                                      grect.Size.Height - grect.Padding.Bottom - 1))
                         x += dxStep
                     Next
                 End If
@@ -177,8 +178,8 @@ Namespace BarPlot
             Next
 
             Dim keys$() = data.Samples _
-            .Select(Function(s) s.Tag) _
-            .ToArray
+                .Select(Function(s) s.Tag) _
+                .ToArray
             Dim font As New Font(FontFace.SegoeUI, 28)
             Dim dd = leftMargins(1) - leftMargins(0)
 
@@ -242,20 +243,20 @@ Namespace BarPlot
         <Extension>
         Public Function FromData(data As IEnumerable(Of Double)) As BarDataGroup
             Return New BarDataGroup With {
-            .Serials = {
-                New NamedValue(Of Color) With {
-                    .Name = "",
-                    .Value = Color.Lime
-                }
-            },
-            .Samples = LinqAPI.Exec(Of BarDataSample) <=
-                From n
-                In data.SeqIterator
-                Select New BarDataSample With {
-                    .data = {n.value},
-                    .Tag = n.i
-                }
-        }
+                .Serials = {
+                    New NamedValue(Of Color) With {
+                        .Name = "",
+                        .Value = Color.Lime
+                    }
+                },
+                .Samples = LinqAPI.Exec(Of BarDataSample) <=
+                    From n
+                    In data.SeqIterator
+                    Select New BarDataSample With {
+                        .data = {n.value},
+                        .Tag = n.i
+                    }
+            }
         End Function
 
         '   ''' <summary>
