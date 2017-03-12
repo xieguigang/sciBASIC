@@ -185,7 +185,11 @@ Namespace Text.HtmlParser
         ''' <returns></returns>
         <Extension>
         Public Function HtmlLines(html$) As String()
-            Return Regex.Split(html, LineFeed, RegexICSng)
+            If html.StringEmpty Then
+                Return {}
+            Else
+                Return Regex.Split(html, LineFeed, RegexICSng)
+            End If
         End Function
     End Module
 End Namespace
