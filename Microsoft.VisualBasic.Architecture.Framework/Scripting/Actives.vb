@@ -30,9 +30,9 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Language
+Imports v = System.Array
 
 Namespace Scripting
 
@@ -80,31 +80,39 @@ Namespace Scripting
             If type.Equals(GetType(Char)) Then
                 Return "c"c
             End If
-            If type.Equals(GetType(Date)) OrElse type.Equals(GetType(DateTime)) Then
+            If type.Equals(GetType(Date)) OrElse
+                type.Equals(GetType(DateTime)) Then
                 Return Now
             End If
             If __examples.ContainsKey(type) Then
                 Return __examples(type)
             End If
+
             If type.IsInheritsFrom(GetType(Array)) Then
-                Dim e As Object = type.GetElementType.__active
-                Dim array As Array =
-                    System.Array.CreateInstance(type.GetElementType, 1)
-
-                Call array.SetValue(e, Scan0)
-
-                Return array
+                Return type.__activeArray
+            ElseIf type.IsInheritsFrom(GetType(List(Of ))) Then
+                Return type.__activeList
+            ElseIf type.IsInheritsFrom(GetType(Dictionary(Of ,))) Then
+                Return type.__activeDictionary
             End If
 
             Try
                 Dim obj As Object = Activator.CreateInstance(type)
+                Dim source As IEnumerable(Of PropertyInfo) =
+                    type _
+                    .GetProperties _
+                    .Where(Function(x)
+                               Return x.CanWrite AndAlso
+                                      x.GetIndexParameters _
+                                       .IsNullOrEmpty
+                           End Function)
 
-                For Each prop As PropertyInfo In type.GetProperties.Where(
-                    Function(x) x.CanWrite AndAlso
-                    x.GetIndexParameters.IsNullOrEmpty)
+                For Each prop As PropertyInfo In source
+                    Dim value As Object = prop _
+                        .PropertyType _
+                        .__active
 
-                    Dim value As Object = prop.PropertyType.__active
-
+                    ' 对于复杂的自定义类型，进行递归分解构造
                     Call prop.SetValue(obj, value)
                 Next
 
@@ -114,6 +122,44 @@ Namespace Scripting
                 Call App.LogException(ex)
                 Return Nothing
             End Try
+        End Function
+
+        ''' <summary>
+        ''' + <see cref="System.Collections.Generic.List(Of T)"/>
+        ''' + <see cref="Microsoft.VisualBasic.Language.List(Of T)"/>(会统一返回这种类型)
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function __activeList(type As Type) As Object
+            Dim base As Type = type.GenericTypeArguments(Scan0)
+            Dim value As Object = base.__active
+            Dim list As Type = GetType(List(Of )).MakeGenericType(base)
+            Dim IList As IList = DirectCast(Activator.CreateInstance(list), IList)
+            Call IList.Add(value)
+            Return IList
+        End Function
+
+        <Extension>
+        Private Function __activeArray(type As Type) As Object
+            Dim base As Type = type.GetElementType
+            Dim value As Object = base.__active
+            Dim array As Array = v.CreateInstance(base, 1)
+            Call array.SetValue(value, Scan0)
+            Return array
+        End Function
+
+        <Extension>
+        Private Function __activeDictionary(type As Type) As Object
+            With type.GenericTypeArguments.ToList
+                Dim baseKey As Type = .Item(0)
+                Dim baseValue As Type = .Item(1)
+                Dim k As Object = baseKey.__active
+                Dim v As Object = baseValue.__active
+                Dim IDictionary As IDictionary = DirectCast(Activator.CreateInstance(type), IDictionary)
+                Call IDictionary.Add(k, v)
+                Return IDictionary
+            End With
         End Function
 
         ReadOnly __examples As IReadOnlyDictionary(Of Type, Object) =

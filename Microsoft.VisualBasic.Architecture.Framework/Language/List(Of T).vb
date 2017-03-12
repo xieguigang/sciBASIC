@@ -38,6 +38,7 @@ Namespace Language
     ''' Represents a strongly typed list of objects that can be accessed by index. Provides
     ''' methods to search, sort, and manipulate lists.To browse the .NET Framework source
     ''' code for this type, see the Reference Source.
+    ''' (加强版的<see cref="System.Collections.Generic.List(Of T)"/>)
     ''' </summary>
     ''' <typeparam name="T">The type of elements in the list.</typeparam>
     Public Class List(Of T) : Inherits Generic.List(Of T)
