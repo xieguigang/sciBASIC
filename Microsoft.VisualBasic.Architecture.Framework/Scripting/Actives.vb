@@ -36,9 +36,17 @@ Imports v = System.Array
 
 Namespace Scripting
 
+    ''' <summary>
+    ''' <see cref="Activator"/>
+    ''' </summary>
     Public Module Actives
 
-        <Extension> Public Function DisplType(type As Type) As String
+        ''' <summary>
+        ''' 请注意，所需要进行显示的类型必须要Public类型的，假若该目标类型在Module之中，请保证Module也是Public访问的
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <Extension> Public Function DisplayType(type As Type) As String
             Dim sb As New StringBuilder
             Dim view As ActiveViews = type.GetCustomAttribute(Of ActiveViews)
 
@@ -90,9 +98,9 @@ Namespace Scripting
 
             If type.IsInheritsFrom(GetType(Array)) Then
                 Return type.__activeArray
-            ElseIf type.IsInheritsFrom(GetType(List(Of ))) Then
+            ElseIf type.IsInheritsFrom(GetType(List(Of )), strict:=False) Then
                 Return type.__activeList
-            ElseIf type.IsInheritsFrom(GetType(Dictionary(Of ,))) Then
+            ElseIf type.IsInheritsFrom(GetType(Dictionary(Of ,)), strict:=False) Then
                 Return type.__activeDictionary
             End If
 
