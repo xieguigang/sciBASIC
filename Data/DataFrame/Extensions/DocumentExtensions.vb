@@ -165,7 +165,7 @@ Public Module DocumentExtensions
 
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$, Optional encoding As Encodings = Encodings.Default) As T()
-        Return [Imports](Of T)(path, delimiter:=ASCII.TAB, encoding:=encoding.GetEncodings)
+        Return [Imports](Of T)(path, delimiter:=ASCII.TAB, encoding:=encoding.CodePage)
     End Function
 
     <Extension>
@@ -217,6 +217,6 @@ Public Module DocumentExtensions
 
     <Extension>
     Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As IO.File
-        Return IO.File.Load(path, encoding.GetEncodings)
+        Return IO.File.Load(path, encoding.CodePage)
     End Function
 End Module

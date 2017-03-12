@@ -622,12 +622,14 @@ RETRY:      Return __get(url, headers, proxy, UA)
         }
     End Function
 
+    Public Property DefaultUA As String = UserAgent.GoogleChrome
+
     Private Function __get(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim webRequest As HttpWebRequest = HttpWebRequest.Create(url)
 
         webRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
-        webRequest.UserAgent = UserAgent.GoogleChrome
+        webRequest.UserAgent = If(UA = UserAgent.GoogleChrome, DefaultUA, UA)
 
         If Not headers.IsNullOrEmpty Then
             For Each x In headers
@@ -644,7 +646,9 @@ RETRY:      Return __get(url, headers, proxy, UA)
             Dim html As String = reader.ReadToEnd
             Dim title As String = html.HTMLTitle
 
-            If InStr(html, "http://www.doctorcom.com") > 0 Then
+            ' 判断是否是由于还没有登陆校园网客户端而导致的错误
+            If InStr(html, "http://www.doctorcom.com", CompareMethod.Text) > 0 Then
+                Call "Please login your Campus Broadband Network Client at first!".PrintException
                 Return ""
             End If
 

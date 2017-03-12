@@ -73,7 +73,7 @@ Namespace ComponentModel
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks>在这里可能用不了<see cref="XmlAttributeAttribute"></see>自定义属性，因为其基本类型之中的Key和Value可以是任意的类型的，Attribute格式无法序列化复杂的数据类型</remarks>
-        <XmlAttribute> Public Property Key As String Implements INamedValue.Key, IKeyValuePair.Identifier
+        <XmlAttribute> Public Property Key As String Implements INamedValue.Key, IKeyValuePair.Key
         <XmlAttribute> Public Property Value As String Implements IKeyValuePairObject(Of String, String).Value
 #End Region
 

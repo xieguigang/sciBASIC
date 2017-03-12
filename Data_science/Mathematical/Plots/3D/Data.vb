@@ -104,6 +104,10 @@ Namespace Plot3D
             Next
         End Function
 
+        'Public Function Grid(x As IEnumerable(Of Double), y As IEnumerable(Of Double)) As Rectangle()
+
+        'End Function
+
         ''' <summary>
         ''' 生成函数计算结果的三维表面
         ''' </summary>

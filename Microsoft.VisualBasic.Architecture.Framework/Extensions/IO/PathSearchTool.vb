@@ -50,6 +50,16 @@ Imports Microsoft.VisualBasic.Text
 Public Module ProgramPathSearchTool
 
     ''' <summary>
+    ''' 函数返回文件的拓展名后缀，请注意，这里的返回值是不会带有小数点的
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ExtensionSuffix(path$) As String
+        Return path.Split("."c).Last
+    End Function
+
+    ''' <summary>
     ''' Combine directory path.(这个主要是用于生成文件夹名称)
     ''' 
     ''' ###### Example usage
@@ -98,6 +108,18 @@ Public Module ProgramPathSearchTool
         For Each file As String In files
             Yield file
         Next
+    End Function
+
+    ''' <summary>
+    ''' 这个函数只会返回文件列表之中的第一个文件，故而需要提取某一个文件价值中的某一个特定的文件，推荐使用这个函数
+    ''' </summary>
+    ''' <param name="DIR$"></param>
+    ''' <param name="keyword$"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function TheFile(DIR$, keyword$, Optional opt As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As String
+        Return FileIO.FileSystem.GetFiles(DIR, opt, keyword).FirstOrDefault
     End Function
 
     ''' <summary>
@@ -363,7 +385,11 @@ Public Module ProgramPathSearchTool
 
         Dim t$() = fsObj.Trim("\"c, "/"c).Replace("\", "/").Split("/"c)
         t = t.Last.Split("."c)
-        t = t.Take(t.Length - 1).ToArray
+        If t.Length > 1 Then
+            ' 文件名之中并没有包含有拓展名后缀，则数组长度为1，则不跳过了
+            ' 有后缀拓展名，则split之后肯定会长度大于1的
+            t = t.Take(t.Length - 1).ToArray
+        End If
 
         Dim name = String.Join(".", t)
         Return name

@@ -80,7 +80,7 @@ Public Class BinaryDataReader
     End Sub
 
     Public Sub New(input As Stream, Optional encoding As Encodings = Encodings.UTF8)
-        Me.New(input, encoding.GetEncodings)
+        Me.New(input, encoding.CodePage)
     End Sub
 
     ''' <summary>

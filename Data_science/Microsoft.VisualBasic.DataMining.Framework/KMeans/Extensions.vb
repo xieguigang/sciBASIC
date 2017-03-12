@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace KMeans
 
@@ -56,10 +57,10 @@ Namespace KMeans
         ''' Performance the clustering operation on the entity data model.
         ''' </summary>
         ''' <param name="source"></param>
-        ''' <param name="n"></param>
+        ''' <param name="expected"></param>
         ''' <returns></returns>
         <Extension> Public Function Kmeans(source As IEnumerable(Of EntityLDM),
-                                           n As Integer,
+                                           expected As Integer,
                                            Optional debug As Boolean = True,
                                            Optional parallel As Boolean = True) As List(Of EntityLDM)
 
@@ -69,7 +70,7 @@ Namespace KMeans
                 .Keys _
                 .ToArray
             Dim clusters As ClusterCollection(Of Entity) =
-                ClusterDataSet(clusterCount:=n,
+                ClusterDataSet(clusterCount:=expected,
                                source:=source.ToArray(Function(x) x.ToModel),
                                debug:=debug,
                                parallel:=parallel)
@@ -79,7 +80,7 @@ Namespace KMeans
                 Dim values As EntityLDM() = (+cluster) _
                     .ToArray(Function(x) x.ToLDM(maps))
 
-                For Each x In values
+                For Each x As EntityLDM In values
                     x.Cluster = cluster.i
                 Next
 
@@ -87,6 +88,16 @@ Namespace KMeans
             Next
 
             Return result
+        End Function
+
+        <Extension>
+        Public Function ToKMeansModels(data As IEnumerable(Of DataSet)) As EntityLDM()
+            Return data.Select(
+                Function(d) New EntityLDM With {
+                    .Name = d.ID,
+                    .Cluster = "",
+                    .Properties = New Dictionary(Of String, Double)(d.Properties)
+                }).ToArray
         End Function
     End Module
 End Namespace

@@ -108,7 +108,7 @@ Public Module IOExtensions
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encodings = Encodings.Default) As Boolean
-        Return data.FlushAllLines(saveTo, encoding.GetEncodings)
+        Return data.FlushAllLines(saveTo, encoding.CodePage)
     End Function
 
     ''' <summary>

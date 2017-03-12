@@ -104,8 +104,12 @@ Namespace FileStream
         ''' 带有方向的互作关系字符串
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetDirectedGuid() As String
-            Return $"{FromNode} {InteractionType} {ToNode}"
+        Public Function GetDirectedGuid(Optional ignoreTypes As Boolean = False) As String
+            If Not ignoreTypes Then
+                Return $"{FromNode} {InteractionType} {ToNode}"
+            Else
+                Return $"{FromNode} + {ToNode}"
+            End If
         End Function
 
         ''' <summary>

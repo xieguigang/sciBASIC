@@ -33,6 +33,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 
 Public Module Bubble
 
@@ -59,7 +62,7 @@ Public Module Bubble
             size, margin, bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = data.ToArray
-                Dim mapper As New Scaling(array, False)  ' 这个并不是以y值来表示数量上的关系的，point是随机位置，所以在这里使用相对scalling
+                Dim mapper As New Mapper(New Scaling(array, False)) ' 这个并不是以y值来表示数量上的关系的，point是随机位置，所以在这里使用相对scalling
                 Dim scale As Func(Of Double, Double) =
                      [If](Of Func(Of Double, Double))(
                      logR, Function(r) Math.Log(r + 1) + 1,

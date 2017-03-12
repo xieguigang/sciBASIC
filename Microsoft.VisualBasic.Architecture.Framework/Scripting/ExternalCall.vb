@@ -64,7 +64,7 @@ Namespace Scripting
         ''' <returns></returns>
         Public Function Run(script As String, Optional args As Specialized.NameValueCollection = Nothing) As ShellValue
             Dim tmp As String = App.GetAppSysTempFile(__ext)
-            Call script.SaveTo(tmp, Encodings.ASCII.GetEncodings)
+            Call script.SaveTo(tmp, Encodings.ASCII.CodePage)
             Return Shell(path:=tmp, args:=args)
         End Function
 

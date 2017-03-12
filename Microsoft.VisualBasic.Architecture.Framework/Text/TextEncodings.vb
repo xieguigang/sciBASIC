@@ -81,11 +81,11 @@ Namespace Text
         }
 
         ''' <summary>
-        ''' Get text file save encodings instance
+        ''' Get text file save <see cref="Encoding"/> instance
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetEncodings(value As Encodings) As Encoding
+        <Extension> Public Function CodePage(value As Encodings) As Encoding
             If TextEncodings.ContainsKey(value) Then
                 Return _TextEncodings(value)
             Else
@@ -136,11 +136,11 @@ Namespace Text
         <Extension>
         Public Function TransEncoding(path As String, encoding As Encodings, Optional from As Encoding = Nothing) As Boolean
             If Not path.FileExists Then
-                Call "".SaveTo(path, encoding.GetEncodings)
+                Call "".SaveTo(path, encoding.CodePage)
             End If
 
             Dim tmp As String = If(from Is Nothing, IO.File.ReadAllText(path), IO.File.ReadAllText(path, from))
-            Return tmp.SaveTo(path, encoding.GetEncodings)
+            Return tmp.SaveTo(path, encoding.CodePage)
         End Function
     End Module
 End Namespace

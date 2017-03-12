@@ -35,7 +35,24 @@ Namespace Text.HtmlParser
 
     Public Module HtmlStrips
 
-        Public Const PAGE_CONTENT_TITLE As String = "<title>.+</title>"
+        ''' <summary>
+        ''' 从html文本之中解析出所有的链接
+        ''' </summary>
+        ''' <param name="html$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function GetLinks(html$) As String()
+            If String.IsNullOrEmpty(html) Then
+                Return New String() {}
+            Else
+                Dim links$() = Regex _
+                    .Matches(html, HtmlLink, RegexICSng) _
+                    .ToArray(AddressOf HtmlStrips.GetValue)
+                Return links
+            End If
+        End Function
+
+        Public Const HtmlLink As String = "<a href="".+?"">.+?</a>"
+        Public Const HtmlPageTitle As String = "<title>.+</title>"
 
         ''' <summary>
         ''' Parsing the title text from the html inputs.
@@ -44,7 +61,7 @@ Namespace Text.HtmlParser
         ''' <returns></returns>
         <Extension> Public Function HTMLTitle(html As String) As String
             Dim title As String =
-                Regex.Match(html, PAGE_CONTENT_TITLE, RegexOptions.IgnoreCase).Value
+                Regex.Match(html, HtmlPageTitle, RegexOptions.IgnoreCase).Value
 
             If String.IsNullOrEmpty(title) Then
                 title = "NULL_TITLE"
@@ -155,6 +172,20 @@ Namespace Text.HtmlParser
         <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
         <Extension> Public Function GetValue(html As String) As String
             Return html.GetStackValue(">", "<")
+        End Function
+
+        ' <br><br/>
+
+        Const LineFeed$ = "(<br>)|(<br\s*/>)"
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="html$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function HtmlLines(html$) As String()
+            Return Regex.Split(html, LineFeed, RegexICSng)
         End Function
     End Module
 End Namespace

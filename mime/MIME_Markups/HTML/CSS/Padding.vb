@@ -73,6 +73,14 @@ Namespace HTML.CSS
             Left = layoutVector(3)
         End Sub
 
+        Public Function GetCanvasRegion(size As Size) As Rectangle
+            Dim location As New Point(Left, Top)
+            Dim width = size.Width - Horizontal
+            Dim height = size.Height - Vertical
+
+            Return New Rectangle(location, New Size(width, height))
+        End Function
+
         ''' <summary>
         ''' Gets the combined padding for the right and left edges.
         ''' </summary>
@@ -159,14 +167,15 @@ Namespace HTML.CSS
         ''' <param name="css$"></param>
         ''' <returns></returns>
         Public Shared Widening Operator CType(css$) As Padding
-            Dim value As NamedValue(Of String) = css.GetTagValue(":", trim:=True)
+            Dim value As NamedValue(Of String) = css _
+                .GetTagValue(":", trim:=True)
 
             If value.Name.StringEmpty AndAlso css.IndexOf(","c) > -1 Then
                 Dim size As Size = css.SizeParser
                 Return New Padding(margin:=size)
             End If
 
-            Dim tokens$() = value.Value.Trim(";"c).Split
+            Dim tokens$() = (+value).Trim$(";"c).Split
             Dim vector%() = tokens _
                 .Select(Function(s) CInt(s.ParseNumeric)) _
                 .ToArray

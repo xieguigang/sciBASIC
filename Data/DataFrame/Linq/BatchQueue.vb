@@ -102,7 +102,7 @@ Namespace IO.Linq
                                                 As IEnumerable(Of NamedValue(Of T()))
 
             Dim sw As Stopwatch = Stopwatch.StartNew
-            Dim encode As Encoding = encoding.GetEncodings
+            Dim encode As Encoding = encoding.CodePage
 
             Call "Wait for the IO queue.....".__DEBUG_ECHO
 

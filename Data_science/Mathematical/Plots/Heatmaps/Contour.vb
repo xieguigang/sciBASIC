@@ -29,11 +29,12 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -42,9 +43,11 @@ Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 ''' <summary>
+''' ###### 等高线图
+''' 
 ''' 和普通的heatmap相比，这里的坐标轴是连续的数值变量，而普通的heatmap，其坐标轴都是离散的分类变量
 ''' </summary>
-Public Module ScatterHeatmap
+Public Module Contour
 
     Public Function Compile(exp$) As Func(Of Double, Double, Double)
         With New Expression
@@ -310,7 +313,7 @@ Public Module ScatterHeatmap
 
         Public Sub Plot(ByRef g As Graphics, region As GraphicsRegion)
             Dim data = GetData(region.PlotRegion.Size)
-            Dim scaler As New Scaling(data)
+            Dim scaler As New Mapper(New Scaling(data))
             Dim xf = scaler.XScaler(region.Size, region.Padding)
             Dim yf = scaler.YScaler(region.Size, region.Padding)
             Dim colorDatas As SolidBrush() = Nothing

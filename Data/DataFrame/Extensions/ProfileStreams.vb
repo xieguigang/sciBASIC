@@ -38,7 +38,7 @@ Public Module ProfileStreams
     <Extension>
     Public Function WriteProfiles(Of T As IProfile)(x As T, path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean
         Dim buf As ProfileTable() = x.GenerateProfiles
-        Return buf.SaveTo(path, encoding.GetEncodings)
+        Return buf.SaveTo(path, encoding.CodePage)
     End Function
 
     <Extension>
@@ -53,7 +53,7 @@ Public Module ProfileStreams
 
     <Extension>
     Public Function LoadProfiles(Of T As IProfile)(path As String, Optional encoding As Encodings = Encodings.UTF8) As T
-        Dim buf As ProfileTable() = path.LoadCsv(Of ProfileTable)(encoding:=encoding.GetEncodings).ToArray
+        Dim buf As ProfileTable() = path.LoadCsv(Of ProfileTable)(encoding:=encoding.CodePage).ToArray
         Dim config As Settings(Of T) = Settings(Of T).CreateEmpty
 
         For Each x As ProfileTable In buf

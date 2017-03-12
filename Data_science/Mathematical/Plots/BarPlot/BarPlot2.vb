@@ -28,6 +28,9 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
@@ -70,7 +73,7 @@ Namespace BarPlot
 
                     Dim lefts! = region.PlotRegion.Left
                     Dim top! = region.PlotRegion.Top
-                    Dim mapper As New Scaling(data, stacked, True)
+                    Dim mapper As New Mapper(New Scaling(data, stacked, True))
                     Dim n As Integer = If(
                         stacked,
                         data.Samples.Length,

@@ -52,11 +52,20 @@ Namespace Language
         End Function
     End Module
 
+    Public Interface IMySelf(Of T As IMySelf(Of T))
+
+        ''' <summary>
+        ''' With keyword in VisualBasic
+        ''' </summary>
+        ''' <returns></returns>
+        ReadOnly Property MySelf As T
+    End Interface
+
     ''' <summary>
     ''' The base class object in VisualBasic
     ''' </summary>
     Public Class ClassObject
-        Implements IClassObject
+        Implements IClassObject, IMySelf(Of ClassObject)
 
         ''' <summary>
         ''' The extension property.(为了节省内存的需要，这个附加属性尽量不要被自动初始化)
@@ -77,6 +86,12 @@ Namespace Language
         <ScriptIgnore>
         <SoapIgnore>
         Public Overridable Property Extension As ExtendedProps Implements IClassObject.Extension
+
+        Public Overridable ReadOnly Property this As ClassObject Implements IMySelf(Of ClassObject).MySelf
+            Get
+                Return Me
+            End Get
+        End Property
 
         ''' <summary>
         ''' Get dynamics property value.

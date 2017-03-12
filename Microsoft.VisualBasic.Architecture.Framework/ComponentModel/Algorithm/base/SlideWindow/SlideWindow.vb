@@ -52,6 +52,8 @@ Namespace ComponentModel.Algorithm.base
                     .Left = 0,
                     .Elements = tmp.ToArray
                 }
+                ' 这里要return，否则会出现重复的数据
+                Return
             End If
 
             If offset < 1 Then

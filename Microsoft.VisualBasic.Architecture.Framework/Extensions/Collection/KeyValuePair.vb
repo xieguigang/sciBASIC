@@ -1,37 +1,106 @@
 ﻿#Region "Microsoft.VisualBasic::dc970315c583e3f0093a530c58d1ff1f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Public Module KeyValuePairExtensions
+
+    <Extension>
+    Public Function ContainsKey(Of T As INamedValue)(table As Dictionary(Of T), k As NamedValue(Of T)) As Boolean
+        Return table.ContainsKey(k.Name)
+    End Function
+
+    <Extension>
+    Public Function ContainsKey(Of T)(table As Dictionary(Of String, T), k As NamedValue(Of T)) As Boolean
+        Return table.ContainsKey(k.Name)
+    End Function
+
+    <Extension>
+    Public Function DictionaryData(Of T, V)(source As IReadOnlyDictionary(Of T, V)) As Dictionary(Of T, V)
+        Return source.ToDictionary(Function(x) x.Key, Function(x) x.Value)
+    End Function
+
+    ''' <summary>
+    ''' 类型必须是枚举类型
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="lcaseKey"></param>
+    ''' <param name="usingDescription"></param>
+    ''' <returns></returns>
+    Public Function EnumParser(Of T)(Optional lcaseKey As Boolean = True, Optional usingDescription As Boolean = False) As Dictionary(Of String, T)
+        Dim values As [Enum]() = Enums(Of T)().ToArray(Function(e) DirectCast(CType(e, Object), [Enum]))
+        Dim [case] = If(lcaseKey, Function(key$) LCase(key), Function(key$) key)
+
+        If usingDescription Then
+            Return values.ToDictionary(
+                Function(e) [case](key:=e.Description),
+                Function(e) DirectCast(CType(e, Object), T))
+        Else
+            Return values.ToDictionary(
+                Function(e) [case](key:=e.ToString),
+                Function(e) DirectCast(CType(e, Object), T))
+        End If
+    End Function
+
+    <Extension>
+    Public Function NamedValues(maps As IEnumerable(Of IDMap)) As NamedValue(Of String)()
+        Return maps _
+            .Select(Function(m) New NamedValue(Of String)(m.Key, m.Maps)) _
+            .ToArray
+    End Function
+
+    <Extension>
+    Public Function NameValueCollection(maps As IEnumerable(Of IDMap)) As NameValueCollection
+        Dim nc As New NameValueCollection
+
+        For Each m As IDMap In maps
+            Call nc.Add(m.Key, m.Maps)
+        Next
+
+        Return nc
+    End Function
+
+    <Extension>
+    Public Function NameValueCollection(maps As IEnumerable(Of NamedValue(Of String))) As NameValueCollection
+        Dim nc As New NameValueCollection
+
+        For Each m As NamedValue(Of String) In maps
+            Call nc.Add(m.Name, m.Value)
+        Next
+
+        Return nc
+    End Function
 
     <Extension> Public Sub SortByValue(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
         Dim orders As KeyValuePair(Of V, T)()

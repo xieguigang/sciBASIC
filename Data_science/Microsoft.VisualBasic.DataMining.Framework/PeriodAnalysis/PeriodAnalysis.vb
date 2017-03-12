@@ -51,7 +51,7 @@ Namespace Serials.PeriodAnalysis
         <Extension> Public Function Analysis(source As IEnumerable(Of SerialsVarialble),
                                              UniqueId As String,
                                              WindowSize As UInteger) As SamplingData
-            Dim data As SerialsVarialble = source.GetItem(uniqueId:=UniqueId)
+            Dim data As SerialsVarialble = source.Take(uniqueId:=UniqueId)
             Return Analysis(data, WindowSize)
         End Function
 

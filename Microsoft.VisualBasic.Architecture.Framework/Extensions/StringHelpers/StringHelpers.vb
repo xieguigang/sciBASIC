@@ -46,6 +46,23 @@ Imports Microsoft.VisualBasic.Text
 <PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    ''' <summary>
+    ''' 将<paramref name="replaces"/>列表之中的字符串都替换为空字符串
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="replaces"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Strips(s$, replaces As IEnumerable(Of String)) As String
+        Dim sb As New StringBuilder(s)
+
+        For Each r$ In replaces
+            Call sb.Replace(r, "")
+        Next
+
+        Return sb.ToString
+    End Function
+
     <Extension>
     Public Function CharString(chs As IEnumerable(Of Char)) As String
         Return New String(chs.ToArray)
@@ -116,6 +133,10 @@ Public Module StringHelpers
     ''' <returns></returns>
     <Extension>
     Public Function GetTagValue(s As String, Optional delimiter As String = " ", Optional trim As Boolean = False, Optional failureNoName As Boolean = True) As NamedValue(Of String)
+        If s.StringEmpty Then
+            Return Nothing
+        End If
+
         Dim p As Integer = InStr(s, delimiter, CompareMethod.Text)
 
         If p = 0 Then
@@ -502,19 +523,27 @@ Public Module StringHelpers
     ''' This method is used to replace most calls to the Java String.split method.
     ''' </summary>
     ''' <param name="source"></param>
-    ''' <param name="regexDelimiter"></param>
+    ''' <param name="pattern"><see cref="Regex"/> patterns</param>
     ''' <param name="trimTrailingEmptyStrings"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("StringsSplit", Info:="This method is used to replace most calls to the Java String.split method.")>
-    <Extension> Public Function StringSplit(Source As String, RegexDelimiter As String, Optional TrimTrailingEmptyStrings As Boolean = False) As String()
-        Dim splitArray As String() = Regex.Split(Source, RegexDelimiter)
+    <Extension> Public Function StringSplit(source$, pattern$,
+                                            Optional TrimTrailingEmptyStrings As Boolean = False,
+                                            Optional opt As RegexOptions = RegexICSng) As String()
+        If source.StringEmpty Then
+            Return {}
+        End If
 
-        If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then Return splitArray
+        Dim splitArray As String() = Regex.Split(
+            source, pattern, options:=opt)
+
+        If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
+            Return splitArray
+        End If
 
         For i As Integer = splitArray.Length To 1 Step -1
-
             If splitArray(i - 1).Length > 0 Then
                 If i < splitArray.Length Then
                     Call Array.Resize(splitArray, i)
@@ -535,10 +564,11 @@ Public Module StringHelpers
     ''' Using ``String.Equals`` or Regular expression function to determined this delimiter 
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function Split(source As IEnumerable(Of String), delimiter$,
-                                               Optional regex As Boolean = False,
-                                               Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
-        Dim list As New List(Of String)
+    <Extension> Public Function Split(source As IEnumerable(Of String),
+                                      delimiter$,
+                                      Optional regex As Boolean = False,
+                                      Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
+
         Dim delimiterTest As Func(Of String, Boolean)
 
         If regex Then
@@ -548,13 +578,35 @@ Public Module StringHelpers
             delimiterTest = Function(line) String.Equals(delimiter, line, StringComparison.Ordinal)
         End If
 
+        Return source.Split(delimiterTest, includes:=False)
+    End Function
+
+    <Extension>
+    Public Iterator Function Split(source As IEnumerable(Of String),
+                                   delimiterTest As Func(Of String, Boolean),
+                                   Optional includes As Boolean = True) As IEnumerable(Of String())
+
+        Dim list As New List(Of String)
+        Dim first As Boolean = True  ' first line
+
         For Each line As String In source
-            If delimiterTest(line) Then
-                Yield list.ToArray
-                Call list.Clear()
+            If True = delimiterTest(line) Then
+                If first Then
+                    first = False
+                Else
+                    Yield list.ToArray
+
+                    list.Clear()
+                End If
+
+                If includes Then
+                    list.Add(line)
+                End If
             Else
                 Call list.Add(line)
             End If
+
+            first = False
         Next
 
         If list.Count > 0 Then

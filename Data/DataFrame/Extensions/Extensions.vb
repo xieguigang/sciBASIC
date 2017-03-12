@@ -127,7 +127,7 @@ Public Module Extensions
         Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
         Dim slines As String() = lines.ToArray(Function(x) x.AsLine(vbTab))
         Dim sdoc As String = String.Join(vbCrLf, slines)
-        Return sdoc.SaveTo(saveTo, encoding.GetEncodings)
+        Return sdoc.SaveTo(saveTo, encoding.CodePage)
     End Function
 
     <Extension> Public Sub ForEach(Of T As Class)(path As String, invoke As Action(Of T))
@@ -385,14 +385,14 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                 {NameOf(EntityObject.ID), KeyMap}
             }
         End If
-        Return source.SaveTo(path, , encoding.GetEncodings, blank,, modify, reorderKeys)
+        Return source.SaveTo(path, , encoding.CodePage, blank,, modify, reorderKeys)
     End Function
 
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
                                              path As String,
                                              encoding As Encodings,
                                              Optional explicit As Boolean = False) As Boolean
-        Return source.SaveTo(path, explicit, encoding.GetEncodings)
+        Return source.SaveTo(path, explicit, encoding.CodePage)
     End Function
 
     ''' <summary>
@@ -430,7 +430,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                             Select s =
                                                 n.ToString
         Dim buf As New IO.File({New RowObject(row)})
-        Return buf.Save(path, encoding.GetEncodings)
+        Return buf.Save(path, encoding.CodePage)
     End Function
 
     ''' <summary>

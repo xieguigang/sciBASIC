@@ -14,7 +14,26 @@
 + ![Microsoft VisualBasic logo](./logo.jpg)
 + ![](./etc/README/nodes.gif)
 
-#### Directory Structure
+### Runtime Installation
+
++ Compile &amp; Application Development on this runtime required the latest VisualStudio 2017.
++ If you are running sciBASIC runtime on Windows, please makesure your operating system supports .NET framework 4.6
++ If you are running sciBASIC runtime on Linux/macOS, please install mono runtime at first by following the installation manual on **mono-project** website. And then the ``Microsoft VisualBasic core runtime`` is required, you can find this runtime file in this repository: [Microsoft.VisualBasic.7z](./Microsoft.VisualBasic.7z), just extract this 7z archive and put the **Microsoft.VisualBasic.dll** kernel in the application directory.
+
+### Install this framework via nuget package
+
+For .NET Framework 4.6:
+
++ https://www.nuget.org/packages/sciBASIC#
+
+```bash
+# For install latest stable release version:
+PM> Install-Package sciBASIC
+# For install latest unstable beta version:
+PM> Install-Package sciBASIC -Pre
+```
+
+### Directory Structure
 
 ###### 1. source projects
 
@@ -32,10 +51,9 @@
 + **[/guides](./guides/)** : This framework code usage example and manual documents
 + **[/vb_codestyle](./vb_codestyle/)** : sciBASIC# Coding style standard document
 
-
 ---------------------------------------------------------------------------------------------------------------
 
-#### Scientific Computing Tools for VisualBasic.NET
+### Scientific Computing Tools for VisualBasic.NET
 
 A visualbasic language feature runtime library for data science CLI architecture applications which is running on Windows/Linux/macOS Desktop/server platform or supercomputer platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences programming in VisualBasic language, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
 
@@ -44,20 +62,6 @@ A visualbasic language feature runtime library for data science CLI architecture
 
 > Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
 > + https://github.com/xieguigang/sciBASIC/blob/master/guides/
-
-
-##### Install this framework via nuget package
-
-For .NET Framework 4.6:
-
-+ https://www.nuget.org/packages/sciBASIC#
-
-```bash
-# For install latest stable release version:
-PM> Install-Package sciBASIC
-# For install latest unstable beta version:
-PM> Install-Package sciBASIC -Pre
-```
 
 ===================================================================
 
@@ -280,6 +284,8 @@ l += From x As Integer
 
 ###### New Integer(int) type in visualbasic
 
++ value ranges syntax
+
 ```vbnet
 Dim min As int = 1
 Dim max As int = 200
@@ -312,4 +318,4 @@ BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
 ===================================================================
 
-> Copyleft ! 2017, I@xieguigang.me
+> Copyleft ! 2017, [I@xieguigang.me](mailto://I@xieguigang.me) (http://scibasic.cool/)

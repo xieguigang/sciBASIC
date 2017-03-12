@@ -180,7 +180,7 @@ Namespace ComponentModel
         End Function
 
         Public Shared Iterator Function LinesIterator(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
-            Using read As New BufferedStream(path, encoding.GetEncodings)
+            Using read As New BufferedStream(path, encoding.CodePage)
                 Do While Not read.EndRead
                     For Each line As String In read.BufferProvider
                         Yield line

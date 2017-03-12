@@ -56,6 +56,7 @@ Namespace Net.Protocols.ContentTypes
         Public Const Unknown As String = "application/octet-stream"
         Public Const MsDownload As String = "application/x-msdownload"
         Public Const Json As String = "application/json"
+        Public Const ZIP As String = "application/zip"
 
         Public ReadOnly Property UnknownType As New ContentType With {
             .FileExt = "*.*",

@@ -35,7 +35,21 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Imaging
 
-    Public Module ColorExtensions
+    ''' <summary>
+    ''' Extensions function for the gdi+ color type.
+    ''' </summary>
+    Public Module GDIColors
+
+        <Extension>
+        Public Function Average(colors As IEnumerable(Of Color)) As Color
+            Dim data As Color() = colors.ToArray
+            Dim A% = data.Select(Function(c) CDbl(c.A)).Average
+            Dim R% = data.Select(Function(c) CDbl(c.R)).Average
+            Dim G% = data.Select(Function(c) CDbl(c.G)).Average
+            Dim B% = data.Select(Function(c) CDbl(c.B)).Average
+
+            Return Color.FromArgb(A, R, G, B)
+        End Function
 
         ''' <summary>
         ''' Creates a new light color object for the control from the specified color and
@@ -235,9 +249,16 @@ Namespace Imaging
         ''' <param name="b"></param>
         ''' <returns></returns>
         <Extension> Public Function Equals(a As Color, b As Color) As Boolean
-            If a.A <> b.A Then
-                Return False
+            If a.A = b.A Then
+                If a.A = 0 Then
+                    ' 只要是alpha值为零，肯定是透明色
+                    ' 在这里判定为相同的颜色
+                    Return True
+                End If
+            Else
+                Return False '  alpha值不相等，则颜色值肯定不相等
             End If
+
             If a.B <> b.B Then
                 Return False
             End If

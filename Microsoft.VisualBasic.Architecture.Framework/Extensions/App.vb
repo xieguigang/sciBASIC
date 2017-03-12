@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SoftwareToolkits
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 
 '                   _ooOoo_
@@ -75,6 +76,7 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 ''' <summary>
 ''' Provides information about, and means to manipulate, the current environment Application information collection.
 ''' (More easily runtime environment information provider on <see cref="PlatformID.Unix"/>/LINUX platform for visualbasic program.)
+''' (从命令行之中使用``/@set``参数赋值环境变量的时候，每一个变量之间使用分号进行分隔)
 ''' </summary>
 '''
 <PackageNamespace("App", Description:="More easily runtime environment information provider on LINUX platform for visualbasic program.",
@@ -278,6 +280,11 @@ Public Module App
 
     Dim __joinedVariables As New Dictionary(Of NamedValue(Of String))
 
+    ''' <summary>
+    ''' 添加参数到应用程序的环境变量之中
+    ''' </summary>
+    ''' <param name="name$"></param>
+    ''' <param name="value$"></param>
     Public Sub JoinVariable(name$, value$)
         __joinedVariables(name) =
             New NamedValue(Of String) With {
@@ -286,6 +293,10 @@ Public Module App
         }
     End Sub
 
+    ''' <summary>
+    ''' 添加参数集合到应用程序的环境变量之中
+    ''' </summary>
+    ''' <param name="vars"></param>
     Public Sub JoinVariables(ParamArray vars As NamedValue(Of String)())
         For Each v As NamedValue(Of String) In vars
             __joinedVariables(v.Name) = v
@@ -348,6 +359,22 @@ Public Module App
     End Function
 
 #End Region
+
+    ''' <summary>
+    ''' 其他的模块可能也会依赖于这个初始化参数
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property BufferSize As Integer = 4 * 1024
+
+    ''' <summary>
+    ''' 假若有些时候函数的参数要求有一个输出流，但是并不想输出任何数据的话，则可以使用这个进行输出
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function NullDevice(Optional encoding As Encodings = Encodings.ASCII) As StreamWriter
+        Dim ms As New MemoryStream(capacity:=BufferSize)
+        Dim codePage As Encoding = encoding.CodePage
+        Return New StreamWriter(ms, encoding:=codePage)
+    End Function
 
     ''' <summary>
     ''' 使用<see cref="ProductSharedDIR"/>的位置会变化的，则使用本函数则会使用获取当前的模块的文件夹，即使其不是exe程序而是一个dll文件

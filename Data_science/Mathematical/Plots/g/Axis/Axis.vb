@@ -28,142 +28,243 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Text.HtmlParser
 
-Public Module Axis
+Namespace Graphic.Axis
 
-    <Extension>
-    Public Sub DrawAxis(ByRef g As Graphics, region As GraphicsRegion,
-                        scaler As Scaling,
-                        showGrid As Boolean,
-                        Optional offset As Point = Nothing,
-                        Optional xlabel$ = "",
-                        Optional ylabel$ = "",
-                        Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
-                        Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left)
-        With region
-            Call g.DrawAxis(
-                .Size, .Padding,
-                scaler,
-                showGrid,
-                offset,
-                xlabel, ylabel,
-                xlayout, ylayout)
-        End With
-    End Sub
+    Public Module Axis
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="padding">需要根据这个值来计算出坐标轴的layout.</param>
-    ''' <param name="g"></param>
-    ''' <param name="size"></param>
-    ''' <param name="scaler">Drawing Point data auto scaler</param>
-    ''' <param name="showGrid">Show axis grid on the plot region?</param>
-    ''' <param name="xlayout">修改y属性</param>
-    ''' <param name="ylayout">修改x属性</param>
-    <Extension>
-    Public Sub DrawAxis(ByRef g As Graphics,
-                        size As Size,
-                        padding As Padding,
-                        scaler As Scaling,
-                        showGrid As Boolean,
-                        Optional offset As Point = Nothing,
-                        Optional xlabel$ = "",
-                        Optional ylabel$ = "",
-                        Optional labelFontStyle$ = CSSFont.UbuntuLarge,
-                        Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
-                        Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left)
+        <Extension>
+        Public Sub DrawAxis(ByRef g As Graphics, region As GraphicsRegion,
+                            scaler As Mapper,
+                            showGrid As Boolean,
+                            Optional offset As Point = Nothing,
+                            Optional xlabel$ = "",
+                            Optional ylabel$ = "",
+                            Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
+                            Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
+                            Optional labelFont$ = CSSFont.PlotSubTitle,
+                            Optional axisStroke$ = Stroke.AxisStroke,
+                            Optional gridFill$ = "rgb(245,245,245)")
+            With region
+                Call g.DrawAxis(
+                    .Size, .Padding,
+                    scaler,
+                    showGrid,
+                    offset,
+                    xlabel, ylabel,
+                    xlayout:=xlayout, ylayout:=ylayout,
+                    labelFontStyle:=labelFont,
+                    axisStroke:=axisStroke, gridFill:=gridFill)
+            End With
+        End Sub
 
-        'Dim ZERO As New Point(margin.Width + offset.X, size.Height - margin.Height + offset.Y) ' 坐标轴原点
-        'Dim right As New Point(size.Width - margin.Width + offset.X, ZERO.Y + offset.Y)  ' X轴
-        'Dim top As New Point(margin.Width + offset.X, margin.Height + offset.Y)          ' Y轴
-        'Dim pen As New Pen(Color.Black, 5)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="padding">需要根据这个值来计算出坐标轴的layout.</param>
+        ''' <param name="g"></param>
+        ''' <param name="size"></param>
+        ''' <param name="scaler">Drawing Point data auto scaler</param>
+        ''' <param name="showGrid">Show axis grid on the plot region?</param>
+        ''' <param name="xlayout">修改y属性</param>
+        ''' <param name="ylayout">修改x属性</param>
+        <Extension>
+        Public Sub DrawAxis(ByRef g As Graphics,
+                            size As Size,
+                            padding As Padding,
+                            scaler As Mapper,
+                            showGrid As Boolean,
+                            Optional offset As Point = Nothing,
+                            Optional xlabel$ = "",
+                            Optional ylabel$ = "",
+                            Optional labelFontStyle$ = CSSFont.PlotSubTitle,
+                            Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
+                            Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
+                            Optional gridFill$ = "rgb(245,245,245)",
+                            Optional gridColor$ = "white",
+                            Optional axisStroke$ = Stroke.AxisStroke)
 
-        'Call g.DrawLine(pen, ZERO, right)   ' X轴
-        'Call g.DrawLine(pen, ZERO, top)     ' y轴
+            ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
+            Dim rect As Rectangle = padding.GetCanvasRegion(size)
+            Dim tickFont As New Font(FontFace.MicrosoftYaHei, 14)
+            Dim sx = scaler.XScaler(size, padding)
+            Dim sy = scaler.YScaler(size, padding)
+            Dim gridPenX As New Pen(gridColor.TranslateColor, 2) With {
+                .DashStyle = Drawing2D.DashStyle.Dash
+            }
+            Dim gridPenY As New Pen(gridColor.TranslateColor, 2) With {
+                .DashStyle = Drawing2D.DashStyle.Dot
+            }
 
-        'Dim fontLarge As Font = CSSFont.TryParse(labelFontStyle)
-        'Call g.DrawString(scaler.xmin, fontLarge, Brushes.Black, New PointF(ZERO.X + 10, ZERO.Y + 10))
-        'Call g.DrawString(xlabel, fontLarge, Brushes.Black, New PointF(right.X + 20, right.Y - 5))
-        'Call g.DrawString(ylabel, fontLarge, Brushes.Black, New PointF(top.X - 10, top.Y - 50))
+            Call g.FillRectangle(gridFill.GetBrush, rect)
 
-        'Dim fontSmall As New Font(FontFace.MicrosoftYaHei, 14)
+            If scaler.dx <> 0R Then
+                For Each tick In scaler.xAxis
+                    Dim x = sx(tick) + offset.X
+                    Dim top As New Point(x, rect.Top)
+                    Dim bottom As New Point(x, rect.Bottom)
 
-        'Dim dx As Double() = AxisScalling.GetAxisValues(scaler.xrange) '+ scaler.xmin
-        'Dim dy As Double() = AxisScalling.GetAxisValues(scaler.yrange) '+ scaler.ymin
-        'Dim sx = scaler.XScaler(size, margin)
-        'Dim sy = scaler.YScaler(size, margin)
-        'Dim gridPenX As New Pen(Color.LightGray, 1) With {
-        '    .DashStyle = Drawing2D.DashStyle.Dash
-        '}
-        'Dim gridPenY As New Pen(Color.LightGray, 1) With {
-        '    .DashStyle = Drawing2D.DashStyle.Dot
-        '}
+                    ' 绘制x网格线
+                    Call g.DrawLine(gridPenX, top, bottom)
+                Next
+            End If
 
-        'pen = New Pen(Color.Black, 3)
-        'fontLarge = New Font(FontFace.MicrosoftYaHei, 20, FontStyle.Regular)
+            If scaler.dy <> 0R Then
+                For Each tick In scaler.yAxis
+                    Dim y = sy(tick) + offset.Y
+                    Dim left As New Point(rect.Left, y)
+                    Dim right As New Point(rect.Right, y)
 
-        'For i As Integer = 0 To 9
-        '    Dim label# = dx(i)
-        '    Dim sz As SizeF
+                    ' 绘制y网格线
+                    Call g.DrawLine(gridPenY, left, right)
+                Next
+            End If
 
-        '    If scaler.dx <> 0R Then
-        '        Dim x = sx(label) + offset.X
-        '        Dim axisX As New PointF(x, ZERO.Y)
+            Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
 
-        '        Dim labelText = (label).FormatNumeric(2)
-        '        sz = g.MeasureString(labelText, fontLarge)
+            If xlayout <> XAxisLayoutStyles.None Then
+                Call g.DrawX(size, padding, pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont)
+            End If
+            If ylayout <> YAxisLayoutStyles.None Then
+                Call g.DrawY(size, padding, pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont)
+            End If
+        End Sub
 
-        '        Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + margin.Height * 0.2))
-        '        Call g.DrawString(labelText, fontLarge, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + margin.Height * 0.3))
+        Public Property delta As Integer = 10
 
-        '        If showGrid Then
-        '            Call g.DrawLine(gridPenX, axisX, New PointF(x, margin.Height))
-        '        End If
-        '    End If
+        <Extension> Private Sub DrawY(ByRef g As Graphics, size As Size, padding As Padding,
+                                      pen As Pen, label$,
+                                      scaler As Mapper,
+                                      layout As YAxisLayoutStyles, offset As Point,
+                                      labelFont$, tickFont As Font)
 
-        '    label = dy(i)
+            Dim X%  ' y轴的layout的变化只需要变换x的值即可
 
-        '    If scaler.dy <> 0R Then
-        '        Dim y = sy(label) + offset.Y
-        '        Dim axisY As New PointF(ZERO.X, y)
-        '        Dim ddd = 10
+            Select Case layout
+                Case YAxisLayoutStyles.Centra
+                    X = padding.Left + (size.Width - padding.Horizontal) / 2 + offset.X
+                Case YAxisLayoutStyles.Right
+                    X = size.Width - padding.Right + offset.X
+                Case YAxisLayoutStyles.ZERO
+                    X = scaler.XScaler(size, padding)(0) + offset.X
+                Case Else
+                    X = padding.Left + offset.X
+            End Select
 
-        '        Call g.DrawLine(pen, axisY, New PointF(ZERO.X - ddd, y))
+            Dim ZERO As New Point(X, size.Height - padding.Bottom + offset.Y) ' 坐标轴原点，需要在这里修改layout
+            Dim top As New Point(X, padding.Top + offset.Y)                   ' Y轴
+            Dim sy As Func(Of Single, Single) = scaler.YScaler(size, padding)
 
-        '        Dim labelText = (label).FormatNumeric(2)
-        '        sz = g.MeasureString(labelText, fontSmall)
-        '        g.DrawString(labelText, fontSmall, Brushes.Black, New Point(ZERO.X - ddd - sz.Width, y - sz.Height / 2))
+            Call g.DrawLine(pen, ZERO, top)     ' y轴
 
-        '        If showGrid Then
-        '            Call g.DrawLine(gridPenY, axisY, New PointF(size.Width - margin.Width, y))
-        '        End If
-        '    End If
-        'Next
-    End Sub
+            For Each tick# In scaler.yAxis
 
-    <Extension> Private Sub DrawY(ByRef g As Graphics, size As Size, margin As Size, label$, scaler As Scaling, layout As YAxisLayoutStyles, offset As Point, labelFont As Font)
-        Dim X%
+                If scaler.dy <> 0R Then
 
-        Select Case layout
-            Case YAxisLayoutStyles.Centra
-                X = margin.Width + (size.Width / 2) + offset.X
-            Case YAxisLayoutStyles.Right
-                X = size.Width - margin.Width + offset.X
-            Case Else
-                X = margin.Width + offset.X
-        End Select
+                    Dim y! = sy(tick) + offset.Y
+                    Dim axisY As New PointF(ZERO.X, y)
 
-        Dim ZERO As New Point(X, size.Height - margin.Height + offset.Y) ' 坐标轴原点，需要在这里修改layout
-        Dim top As New Point(X, margin.Height + offset.Y)                ' Y轴
-    End Sub
+                    Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
 
-    <Extension> Private Sub DrawX(ByRef g As Graphics, size As Size, margin As Size, label$, scaler As Scaling, layout As XAxisLayoutStyles, offset As Point, labelFont As Font)
-        Dim ZERO As New Point(margin.Width + offset.X, size.Height - margin.Height + offset.Y) ' 坐标轴原点
-        Dim right As New Point(size.Width - margin.Width + offset.X, ZERO.Y + offset.Y)        ' X轴
-    End Sub
-End Module
+                    Dim labelText = (tick).FormatNumeric(2)
+                    Dim sz As SizeF = g.MeasureString(labelText, tickFont)
+
+                    g.DrawString(labelText, tickFont, Brushes.Black, New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2))
+                End If
+            Next
+
+            If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
+                Dim labelImage As Image = label.__plotLabel(labelFont)
+
+                ' y轴标签文本是旋转90度绘制于左边
+                labelImage = labelImage.RotateImage(-90)
+
+                Dim location As New Point(
+                    (padding.Left - labelImage.Width) / 2,
+                    (size.Height - labelImage.Height) / 2)
+
+                Call g.DrawImageUnscaled(labelImage, location)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' 绘制坐标轴标签html文本
+        ''' </summary>
+        ''' <param name="label$"></param>
+        ''' <param name="css$"></param>
+        ''' <returns></returns>
+        <Extension> Private Function __plotLabel(label$, css$) As Image
+            Return DrawLabel(label, css)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="label$">HTML</param>
+        ''' <param name="cssFont$">For html ``&lt;p>...&lt;/p>`` css style</param>
+        ''' <param name="maxSize$"></param>
+        ''' <returns></returns>
+        Public Function DrawLabel(label$, cssFont$, Optional maxSize$ = "1600,600") As Image
+            Dim g As GDIPlusDeviceHandle = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
+            Dim out As Image
+
+            TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
+            out = g.ImageResource
+            out = out.CorpBlank(blankColor:=Color.Transparent)
+
+            Return out
+        End Function
+
+        <Extension> Private Sub DrawX(ByRef g As Graphics, size As Size, padding As Padding,
+                                      pen As Pen, label$,
+                                      scaler As Mapper,
+                                      layout As XAxisLayoutStyles, offset As Point,
+                                      labelFont$, tickFont As Font)
+            Dim Y%
+
+            Select Case layout
+                Case XAxisLayoutStyles.Centra
+                    Y = padding.Top + (size.Height - padding.Vertical) / 2 + offset.Y
+                Case XAxisLayoutStyles.Top
+                    Y = padding.Top + offset.Y
+                Case Else
+                    Y = size.Height - padding.Bottom + offset.Y
+            End Select
+
+            Dim ZERO As New Point(padding.Left + offset.X, Y)                       ' 坐标轴原点
+            Dim right As New Point(size.Width - padding.Right + offset.X, Y)        ' X轴
+            Dim sx = scaler.XScaler(size, padding)
+
+            Call g.DrawLine(pen, ZERO, right)   ' X轴
+
+            For Each tick# In scaler.xAxis
+
+                If scaler.dx <> 0R Then
+                    Dim x As Single = sx(tick) + offset.X
+                    Dim axisX As New PointF(x, ZERO.Y)
+
+                    Dim labelText = (tick).FormatNumeric(2)
+                    Dim sz As SizeF = g.MeasureString(labelText, tickFont)
+
+                    Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + padding.Top * 0.2))
+                    Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + padding.Top * 0.3))
+                End If
+            Next
+
+            If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
+                Dim labelImage As Image = label.__plotLabel(labelFont)
+                Call g.DrawImageUnscaled(
+                    labelImage,
+                    New Point((size.Width - labelImage.Width) / 2,
+                              size.Height - padding.Bottom + (padding.Bottom - labelImage.Height) * 0.5))
+            End If
+        End Sub
+    End Module
+End Namespace

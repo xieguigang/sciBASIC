@@ -45,7 +45,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute>
-        Public Property Name As String Implements INamedValue.Key, IKeyValuePairObject(Of String, T).Identifier
+        Public Property Name As String Implements INamedValue.Key, IKeyValuePairObject(Of String, T).Key
 
         ''' <summary>
         ''' Object value
@@ -88,5 +88,9 @@ Namespace ComponentModel.DataSourceModel
         Public Function FixValue(h As Func(Of T, T)) As NamedValue(Of T)
             Return New NamedValue(Of T)(Name, h(Value))
         End Function
+
+        Public Shared Operator +(obj As NamedValue(Of T)) As T
+            Return obj.Value
+        End Operator
     End Structure
 End Namespace

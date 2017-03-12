@@ -32,8 +32,10 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Histogram
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
@@ -192,12 +194,11 @@ Public Module PlotExtensions
     ''' </summary>
     ''' <param name="ode"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional margin As Size = Nothing, Optional bg As String = "white") As Bitmap
-        Return Scatter.Plot({ode.FromODE("cyan")}, size, margin, bg)
+    Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional padding$ = g.DefaultPadding, Optional bg As String = "white") As Bitmap
+        Return Scatter.Plot({ode.FromODE("cyan")}, size, padding, bg)
     End Function
 
     ''' <summary>
@@ -205,7 +206,6 @@ Public Module PlotExtensions
     ''' </summary>
     ''' <param name="ode"></param>
     ''' <param name="size"></param>
-    ''' <param name="margin"></param>
     ''' <param name="bg"></param>
     ''' <param name="ptSize"></param>
     ''' <param name="width"></param>
@@ -213,11 +213,11 @@ Public Module PlotExtensions
     <Extension>
     Public Function Plot(ode As ODEsOut,
                          Optional size As Size = Nothing,
-                         Optional margin As Size = Nothing,
+                         Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional ptSize As Single = 30,
                          Optional width As Single = 5) As Bitmap
-        Return Scatter.Plot(ode.FromODEs(, ptSize, width), size, margin, bg)
+        Return Scatter.Plot(ode.FromODEs(, ptSize, width), size, padding, bg)
     End Function
 
     ''' <summary>

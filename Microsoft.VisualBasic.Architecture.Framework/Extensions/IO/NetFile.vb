@@ -70,7 +70,7 @@ Namespace FileIO
                 stream = WebResponse.GetResponseStream
             End If
 
-            Dim out As New StreamReader(stream, encoding.GetEncodings)
+            Dim out As New StreamReader(stream, encoding.CodePage)
             Return out
         End Function
 

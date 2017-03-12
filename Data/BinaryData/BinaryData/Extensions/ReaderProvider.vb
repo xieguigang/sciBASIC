@@ -47,7 +47,7 @@ Public Class ReaderProvider
 
     Sub New(path$, Optional encoding As Encodings = Encodings.ASCII, Optional buffered& = 1024 * 1024 * 10)
         URI = path$
-        __encoding = encoding.GetEncodings
+        __encoding = encoding.CodePage
 
         If FileIO.FileSystem.GetFileInfo(path).Length <= buffered Then
             Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)   ' 文件数据将会被缓存
