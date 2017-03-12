@@ -32,13 +32,13 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Terminal
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' The extensions module for facilities the string operations.
@@ -56,7 +56,7 @@ Public Module StringHelpers
     Public Function Strips(s$, replaces As IEnumerable(Of String)) As String
         Dim sb As New StringBuilder(s)
 
-        For Each r$ In replaces
+        For Each r As String In replaces
             Call sb.Replace(r, "")
         Next
 
@@ -427,13 +427,15 @@ Public Module StringHelpers
 
     ''' <summary>
     ''' Does this input string is matched by the specific regex expression?
+    ''' (判断所输入的整个字符串是否为进行判断的<paramref name="regex"/>模式，
+    ''' 即使用正则表达式所匹配的结果字符串和所输入的字符串一致)
     ''' </summary>
     ''' <param name="str"></param>
     ''' <param name="regex"></param>
     ''' <returns></returns>
     <ExportAPI("Matched?")>
-    <Extension> Public Function Matched(str$, regex$, Optional opt As RegexOptions = RegexICSng) As Boolean
-        Return RegularExpressions.Regex.Match(str, regex).Success
+    <Extension> Public Function MatchPattern(str$, regex$, Optional opt As RegexOptions = RegexICSng) As Boolean
+        Return r.Match(str, regex).Success
     End Function
 
     ''' <summary>
