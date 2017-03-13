@@ -13,11 +13,33 @@ Namespace ComponentModel.DataSourceModel
     Public Structure NamedCollection(Of T) : Implements INamedValue
         Implements IKeyValuePairObject(Of String, T())
         Implements Value(Of T()).IValueOf
+        Implements IEnumerable(Of T)
+        Implements IGrouping(Of String, T)
 
-        Public Property Name As String Implements IKeyedEntity(Of String).Key, IKeyValuePairObject(Of String, T()).Key
+        ''' <summary>
+        ''' 这个集合对象的标识符名称
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Name As String Implements _
+            IKeyedEntity(Of String).Key,
+            IKeyValuePairObject(Of String, T()).Key,
+            IGrouping(Of String, T).Key
+
+        ''' <summary>
+        ''' 目标集合对象
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Value As T() Implements IKeyValuePairObject(Of String, T()).Value, Value(Of T()).IValueOf.value
+        ''' <summary>
+        ''' 目标集合对象的描述信息
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Description As String
 
+        ''' <summary>
+        ''' 当前的这个命名的目标集合对象是否是空对象？
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsEmpty As Boolean
             Get
                 Return Name Is Nothing AndAlso Value Is Nothing
@@ -54,6 +76,16 @@ Namespace ComponentModel.DataSourceModel
 
         Public Overrides Function ToString() As String
             Return Name & " --> " & Value.GetJson
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each x As T In Value.SafeQuery
+                Yield x
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Structure
 End Namespace
