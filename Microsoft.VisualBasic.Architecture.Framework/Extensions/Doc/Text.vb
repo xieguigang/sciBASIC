@@ -31,12 +31,20 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
+
+    <Extension>
+    Public Function TsvHeaders(path$) As IndexOf(Of String)
+        Dim header$() = path.ReadFirstLine.Split(ASCII.TAB)
+        Dim index As New IndexOf(Of String)(header)
+        Return index
+    End Function
 
     ''' <summary>
     ''' 将IDmapping数据保存为tsv文件
