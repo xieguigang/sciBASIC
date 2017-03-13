@@ -33,9 +33,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Xml
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml

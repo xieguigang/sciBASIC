@@ -1,8 +1,9 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataSourceModel
 
@@ -15,21 +16,32 @@ Namespace ComponentModel.DataSourceModel
         Implements Value(Of T()).IValueOf
         Implements IEnumerable(Of T)
         Implements IGrouping(Of String, T)
+        Implements IList(Of T)
 
         ''' <summary>
         ''' 这个集合对象的标识符名称
         ''' </summary>
         ''' <returns></returns>
-        Public Property Name As String Implements _
+        <XmlAttribute> Public Property Name As String Implements _
             IKeyedEntity(Of String).Key,
             IKeyValuePairObject(Of String, T()).Key,
             IGrouping(Of String, T).Key
+
+        Dim __list As List(Of T)
 
         ''' <summary>
         ''' 目标集合对象
         ''' </summary>
         ''' <returns></returns>
         Public Property Value As T() Implements IKeyValuePairObject(Of String, T()).Value, Value(Of T()).IValueOf.value
+            Get
+                Return __list.ToArray
+            End Get
+            Set(value As T())
+                __list = New List(Of T)(value)
+            End Set
+        End Property
+
         ''' <summary>
         ''' 目标集合对象的描述信息
         ''' </summary>
@@ -43,6 +55,27 @@ Namespace ComponentModel.DataSourceModel
         Public ReadOnly Property IsEmpty As Boolean
             Get
                 Return Name Is Nothing AndAlso Value Is Nothing
+            End Get
+        End Property
+
+        Default Public Property Item(index As Integer) As T Implements IList(Of T).Item
+            Get
+                Return __list(index)
+            End Get
+            Set(value As T)
+                __list(index) = value
+            End Set
+        End Property
+
+        Public ReadOnly Property Count As Integer Implements ICollection(Of T).Count
+            Get
+                Return __list.Count
+            End Get
+        End Property
+
+        Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of T).IsReadOnly
+            Get
+                Return False
             End Get
         End Property
 
@@ -79,13 +112,45 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In Value.SafeQuery
+            For Each x As T In __list.SafeQuery
                 Yield x
             Next
         End Function
 
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
+        End Function
+
+        Private Function IndexOf(item As T) As Integer Implements IList(Of T).IndexOf
+            Return __list.IndexOf(item)
+        End Function
+
+        Private Sub Insert(index As Integer, item As T) Implements IList(Of T).Insert
+            Call __list.Insert(index, item)
+        End Sub
+
+        Private Sub RemoveAt(index As Integer) Implements IList(Of T).RemoveAt
+            Call __list.RemoveAt(index)
+        End Sub
+
+        Private Sub Add(item As T) Implements ICollection(Of T).Add
+            Call __list.Add(item)
+        End Sub
+
+        Private Sub Clear() Implements ICollection(Of T).Clear
+            Call __list.Clear()
+        End Sub
+
+        Private Function Contains(item As T) As Boolean Implements ICollection(Of T).Contains
+            Return __list.Contains(item)
+        End Function
+
+        Private Sub CopyTo(array() As T, arrayIndex As Integer) Implements ICollection(Of T).CopyTo
+            Call __list.CopyTo(array, arrayIndex)
+        End Sub
+
+        Private Function Remove(item As T) As Boolean Implements ICollection(Of T).Remove
+            Return __list.Remove(item)
         End Function
     End Structure
 End Namespace
