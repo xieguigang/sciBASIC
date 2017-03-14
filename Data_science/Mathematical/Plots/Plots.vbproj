@@ -193,6 +193,7 @@
     <Compile Include="Fractions\Pyramid.vb" />
     <Compile Include="g\Axis\AxisScalling.vb" />
     <Compile Include="g\Axis\AxisData.vb" />
+    <Compile Include="g\Axis\AxisProvider.vb" />
     <Compile Include="g\Axis\Styles.vb" />
     <Compile Include="g\DataScaler.vb" />
     <Compile Include="g\Mapper.vb" />
