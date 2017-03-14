@@ -56,6 +56,11 @@ Public Module TextDoc
         End If
     End Function
 
+    ''' <summary>
+    ''' 解析出TSV文件的头部并且生成index数据
+    ''' </summary>
+    ''' <param name="path$">``*.tsv``文件路径</param>
+    ''' <returns></returns>
     <Extension>
     Public Function TsvHeaders(path$) As IndexOf(Of String)
         Dim header$() = path.ReadFirstLine.Split(ASCII.TAB)
