@@ -224,6 +224,7 @@
   <ItemGroup>
     <Compile Include="DATA\SQL.vb" />
     <Compile Include="IO\BackendWriter.vb" />
+    <Compile Include="IO\Generic\Extensions.vb" />
     <Compile Include="IO\Generic\DataSet.vb" />
     <Compile Include="IO\Generic\Table.vb" />
     <Compile Include="IO\DataFrame.vb" />

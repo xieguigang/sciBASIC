@@ -134,10 +134,9 @@ B21,B22,B23,...
         ''' <remarks></remarks>
         Public ReadOnly Property Width As Integer
             Get
-                Dim LQuery = From row As RowObject
-                             In _innerTable.AsParallel
-                             Select row.NumbersOfColumn '
-                Return LQuery.Max
+                Return _innerTable _
+                    .Select(Function(row) row.NumbersOfColumn) _
+                    .Max
             End Get
         End Property
 
@@ -795,11 +794,11 @@ B21,B22,B23,...
         End Function
 
         Public Shared Operator <=(df As File, type As Type) As Object()
-            Return Reflector.LoadDataToObject(Extensions.DataFrame(df), type, False).ToArray
+            Return Reflector.LoadDataToObject(df.DataFrame, type, False).ToArray
         End Operator
 
-        Public Shared Operator >=(df As File, TypeInfo As System.Type) As Object()
-            Return df <= TypeInfo
+        Public Shared Operator >=(df As File, type As Type) As Object()
+            Return df <= type
         End Operator
 
         Public Shared Operator >(File As File, path As String) As Boolean
