@@ -1,14 +1,20 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
+Public Interface IPropertyValue : Inherits INamedValue, Value(Of String).IValueOf
+    Property [Property] As String
+End Interface
+
 Public Class PropertyValue
     Implements INamedValue
+    Implements IPropertyValue
 
     Public Property Key As String Implements IKeyedEntity(Of String).Key
-    Public Property [Property] As String
-    Public Property Value As String
+    Public Property [Property] As String Implements IPropertyValue.Property
+    Public Property Value As String Implements IPropertyValue.value
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
