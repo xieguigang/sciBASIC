@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace ComponentModel.DataSourceModel
 
     ''' <summary>
-    ''' The value object have a name string.
+    ''' The value object have a name string.(一个具有自己的名称的变量值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Structure NamedValue(Of T) : Implements INamedValue

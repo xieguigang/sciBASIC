@@ -42,6 +42,16 @@ Namespace ComponentModel.Collection
         Dim index As List(Of SeqValue(Of T))
 
         ''' <summary>
+        ''' 获取包含在<see cref="System.Collections.Generic.Dictionary"/>中的键/值对的数目。
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Count As Integer
+            Get
+                Return maps.Count
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 请注意，这里的数据源请尽量使用Distinct的，否则对于重复的数据，只会记录下第一个位置
         ''' </summary>
         ''' <param name="source"></param>
