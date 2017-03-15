@@ -78,7 +78,16 @@ Namespace Graphic
             End If
         End Sub
 
-        Sub New(x As AxisProvider, y As AxisProvider,
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="range">所获取得到的绘图所使用的系列的数据</param>
+        ''' <param name="ignoreAxis"></param>
+        ''' <param name="ignoreX"></param>
+        ''' <param name="ignoreY"></param>
+        Sub New(x As AxisProvider, y As AxisProvider, range As Scaling,
                 Optional ignoreAxis As Boolean = False,
                 Optional ignoreX As Boolean = False,
                 Optional ignoreY As Boolean = False)
@@ -109,6 +118,8 @@ Namespace Graphic
                 xmin = xrange.Min
                 ymin = yrange.Min
             End If
+
+            serials = range.serials
         End Sub
 
         Public Function ScallingWidth(x As Double, width%) As Single
