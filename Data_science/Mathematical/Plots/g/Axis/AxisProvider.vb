@@ -26,6 +26,11 @@ Namespace Graphic.Axis
         Sub New()
         End Sub
 
+        Sub New(data#())
+            Range = New DoubleRange(data.Min, data.Max)
+            Tick = data(1) - data(0)
+        End Sub
+
         Public Function AxisTicks() As Double()
             If n = 0 Then
                 Return Range.GetAxisByTick(Tick)
