@@ -193,7 +193,7 @@ Namespace Graphic.Legend
             If Not regionBorder Is Nothing Then
                 Dim maxTitleSize As SizeF = legends.MaxLegendSize(g)
                 With graphicSize
-                    size = New SizeF(.Width + d + maxTitleSize.Width, .Height * (n + 1))
+                    size = New SizeF(.Width + d + maxTitleSize.Width, Math.Max(.Height, maxTitleSize.Height) * (n + 1))
                     ZERO = New Point(ZERO.X + d / 2, ZERO.Y - d * 1.2)
                     g.DrawRectangle(
                         regionBorder.GetPen,
