@@ -30,10 +30,8 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Legend
 
@@ -45,6 +43,8 @@ Namespace Graphic.Legend
         ''' <param name="g"></param>
         ''' <param name="pos"></param>
         ''' <param name="l"></param>
+        ''' <param name="graphicsSize">图例之中的图形的大小都是根据这个参数值来自动调整的</param>
+        ''' <param name="border">绘制每一个图例的边</param>
         ''' <returns></returns>
         <Extension>
         Public Function DrawLegend(ByRef g As Graphics, pos As Point, graphicsSize As SizeF, l As Legend, Optional border As Border = Nothing) As SizeF
@@ -56,7 +56,7 @@ Namespace Graphic.Legend
                 Case LegendStyles.Circle
                     Dim r As Single = Math.Min(graphicsSize.Height, graphicsSize.Width) / 2
                     Dim c As New Point(pos.X + graphicsSize.Width / 2,
-                                   pos.Y + graphicsSize.Height / 2)
+                                       pos.Y + graphicsSize.Height / 2)
 
                     Call Circle.Draw(g, c, r, New SolidBrush(l.color.ToColor), border)
 
@@ -66,8 +66,8 @@ Namespace Graphic.Legend
                     Dim a As New Point(pos.X + d, pos.Y + graphicsSize.Height / 2)
                     Dim b As New Point(pos.X + graphicsSize.Width - d, a.Y)
                     Dim pen As New Pen(l.color.ToColor, 3) With {
-                    .DashStyle = DashStyle.Dash
-                }
+                        .DashStyle = DashStyle.Dash
+                    }
 
                     Call g.DrawLine(pen, a, b)
 
@@ -75,17 +75,19 @@ Namespace Graphic.Legend
 
                     Dim d As Integer = Math.Min(graphicsSize.Height, graphicsSize.Width)
                     Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
-                                         pos.Y + (graphicsSize.Height - d) / 2)
+                                             pos.Y + (graphicsSize.Height - d) / 2)
+                    Dim b As New SolidBrush(l.color.ToColor)
 
-                    Call Diamond.Draw(g, topLeft, New Size(d, d), New SolidBrush(l.color.ToColor), border)
+                    Call Diamond.Draw(g, topLeft, New Size(d, d), b, border)
 
                 Case LegendStyles.Hexagon
 
                     Dim d As Integer = Math.Min(graphicsSize.Height, graphicsSize.Width)
                     Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
-                                         pos.Y + (graphicsSize.Height - d) / 2)
+                                             pos.Y + (graphicsSize.Height - d) / 2)
+                    Dim b As New SolidBrush(l.color.ToColor)
 
-                    Call Hexagon.Draw(g, topLeft, New Size(d * 1.15, d), New SolidBrush(l.color.ToColor), border)
+                    Call Hexagon.Draw(g, topLeft, New Size(d * 1.15, d), b, border)
 
                 Case LegendStyles.Rectangle
 
@@ -93,18 +95,21 @@ Namespace Graphic.Legend
                     Dim dh As Integer = graphicsSize.Height * 0.2
 
                     Call Box.DrawRectangle(
-                    g, New Point(pos.X + dw, pos.Y + dh),
-                    New Size(graphicsSize.Width - dw * 2,
-                             graphicsSize.Height - dh * 2),
-                    New SolidBrush(l.color.ToColor), border)
+                        g, New Point(pos.X + dw, pos.Y + dh),
+                        New Size(graphicsSize.Width - dw * 2,
+                                 graphicsSize.Height - dh * 2),
+                        New SolidBrush(l.color.ToColor), border)
 
                 Case LegendStyles.Square
                     Dim r As Single = Math.Min(graphicsSize.Height, graphicsSize.Width)
+                    Dim location As New Point(
+                        pos.X + graphicsSize.Width - r,
+                        pos.Y + graphicsSize.Height - r)
 
-                    Call Box.DrawRectangle(g,
-                    New Point(pos.X + graphicsSize.Width - r, pos.Y + graphicsSize.Height - r),
-                    New Size(r, r),
-                    New SolidBrush(l.color.ToColor), border)
+                    Call Box.DrawRectangle(
+                        g, location,
+                        New Size(r, r),
+                        New SolidBrush(l.color.ToColor), border)
 
                 Case LegendStyles.SolidLine
 
@@ -112,8 +117,8 @@ Namespace Graphic.Legend
                     Dim a As New Point(pos.X + d, pos.Y + graphicsSize.Height / 2)
                     Dim b As New Point(pos.X + graphicsSize.Width - d, a.Y)
                     Dim pen As New Pen(l.color.ToColor, 3) With {
-                    .DashStyle = DashStyle.Solid
-                }
+                        .DashStyle = DashStyle.Solid
+                    }
 
                     Call g.DrawLine(pen, a, b)
 
@@ -121,7 +126,7 @@ Namespace Graphic.Legend
 
                     Dim d As Integer = Math.Min(graphicsSize.Height, graphicsSize.Width)
                     Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
-                                         pos.Y + (graphicsSize.Height - d) / 2)
+                                             pos.Y + (graphicsSize.Height - d) / 2)
 
                     Call Triangle.Draw(g, topLeft, New Size(d, d), New SolidBrush(l.color.ToColor), border)
 
@@ -131,15 +136,15 @@ Namespace Graphic.Legend
 
                 Case Else
                     Throw New NotSupportedException(
-                    l.style.ToString & " currently is not supported yet!")
+                        l.style.ToString & " currently is not supported yet!")
 
             End Select
 
             Call g.DrawString(l.title,
-                          font,
-                          Brushes.Black,
-                          New Point(pos.X + graphicsSize.Width + 5,
-                                    pos.Y + (graphicsSize.Height - fSize.Height) / 2))
+                              font,
+                              Brushes.Black,
+                              New Point(pos.X + graphicsSize.Width + 5,
+                                        pos.Y + (graphicsSize.Height - fSize.Height) / 2))
 
             If fSize.Height > graphicsSize.Height Then
                 Return fSize
@@ -154,31 +159,55 @@ Namespace Graphic.Legend
         ''' <param name="g"></param>
         ''' <param name="topLeft"></param>
         ''' <param name="ls"></param>
-        ''' <param name="graphicSize">单个legend图形的绘图区域的大小</param>
+        ''' <param name="graphicSize">
+        ''' 单个legend图形的绘图区域的大小，图例之中的shap的大小都是根据这个参数来进行限制自动调整的
+        ''' </param>
         ''' <param name="d%">Interval distance between the legend graphics.</param>
+        ''' <param name="regionBorder">整个图例的绘图区域的边的绘制设置</param>
         <Extension>
         Public Sub DrawLegends(ByRef g As Graphics,
                                topLeft As Point,
                                ls As IEnumerable(Of Legend),
                                Optional graphicSize As SizeF = Nothing,
                                Optional d% = 10,
-                               Optional border As Border = Nothing)
+                               Optional border As Border = Nothing,
+                               Optional regionBorder As Border = Nothing)
+
+            Dim ZERO As Point = topLeft
+            Dim n As Integer
+            Dim size As SizeF
+            Dim legends As Legend() = ls.ToArray
 
             If graphicSize.IsEmpty Then
                 graphicSize = New SizeF(120.0!, 45.0!)
             End If
 
-            For Each l As Legend In ls
+            For Each l As Legend In legends
+                n += 1
+                size = g.DrawLegend(topLeft, graphicSize, l, border)
                 topLeft = New Point(
-                topLeft.X,
-                g.DrawLegend(
-                topLeft,
-                graphicSize,
-                l,
-                border).Height + d + topLeft.Y)
+                    topLeft.X,
+                    size.Height + d + topLeft.Y)
             Next
+
+            If Not regionBorder Is Nothing Then
+                Dim maxTitleSize As SizeF = legends.MaxLegendSize(g)
+                With graphicSize
+                    size = New SizeF(.Width + d + maxTitleSize.Width, Math.Max(.Height, maxTitleSize.Height) * (n + 1))
+                    ZERO = New Point(ZERO.X + d / 2, ZERO.Y - d * 1.2)
+                    g.DrawRectangle(
+                        regionBorder.GetPen,
+                        New Rectangle(ZERO, size.ToSize))
+                End With
+            End If
         End Sub
 
+        ''' <summary>
+        ''' 这个函数返回legend之中的图例的标题字符串的最大绘制大小 
+        ''' </summary>
+        ''' <param name="legends"></param>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function MaxLegendSize(legends As IEnumerable(Of Legend), g As Graphics) As SizeF
             Dim maxW! = Single.MinValue, maxH! = Single.MinValue

@@ -78,6 +78,50 @@ Namespace Graphic
             End If
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="range">所获取得到的绘图所使用的系列的数据</param>
+        ''' <param name="ignoreAxis"></param>
+        ''' <param name="ignoreX"></param>
+        ''' <param name="ignoreY"></param>
+        Sub New(x As AxisProvider, y As AxisProvider, range As Scaling,
+                Optional ignoreAxis As Boolean = False,
+                Optional ignoreX As Boolean = False,
+                Optional ignoreY As Boolean = False)
+
+            If Not ignoreAxis Then
+
+                If Not ignoreX Then
+                    xAxis = New Vector(x.AxisTicks)
+                Else
+                    xAxis = New Vector({0R})
+                End If
+                If Not ignoreY Then
+                    yAxis = New Vector(y.AxisTicks)
+                Else
+                    yAxis = New Vector({0R})
+                End If
+
+                dx = xAxis.Max - xAxis.Min
+                dy = yAxis.Max - yAxis.Min
+                xmin = xAxis.Min
+                ymin = yAxis.Min
+            Else
+                Dim xrange As DoubleRange = x.Range
+                Dim yrange As DoubleRange = y.Range
+
+                dx = xrange.Max - xrange.Min
+                dy = yrange.Max - yrange.Min
+                xmin = xrange.Min
+                ymin = yrange.Min
+            End If
+
+            serials = range.serials
+        End Sub
+
         Public Function ScallingWidth(x As Double, width%) As Single
             Return width * (x - xmin) / dx
         End Function

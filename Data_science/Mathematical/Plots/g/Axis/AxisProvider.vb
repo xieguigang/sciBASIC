@@ -23,6 +23,9 @@ Namespace Graphic.Axis
         Public Property n As Integer
         Public Property Tick As Double
 
+        Sub New()
+        End Sub
+
         Public Function AxisTicks() As Double()
             If n = 0 Then
                 Return Range.GetAxisByTick(Tick)

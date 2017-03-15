@@ -97,6 +97,11 @@ Public Module ListExtensions
     End Function
 
     <Extension>
+    Public Function Indexing(Of T)(source As IEnumerable(Of T)) As IndexOf(Of T)
+        Return New IndexOf(Of T)(source)
+    End Function
+
+    <Extension>
     Public Sub Swap(Of T)(ByRef l As System.Collections.Generic.List(Of T), i%, j%)
         Dim tmp = l(i)
         l(i) = l(j)
