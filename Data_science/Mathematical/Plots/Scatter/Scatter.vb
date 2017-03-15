@@ -58,6 +58,9 @@ Public Module Scatter
     ''' <param name="drawLine">
     ''' 是否绘制两个点之间的连接线段，当这个参数为假的时候，将不会绘制连线，就相当于绘制散点图了，而非折线图
     ''' </param>
+    ''' <param name="xaxis">
+    ''' 参数<paramref name="xaxis"/>和<paramref name="yaxis"/>必须要同时不为空才会起作用
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
@@ -77,7 +80,9 @@ Public Module Scatter
                          Optional YaxisAbsoluteScalling As Boolean = False,
                          Optional drawAxis As Boolean = True,
                          Optional Xlabel$ = "X",
-                         Optional Ylabel$ = "Y") As Bitmap
+                         Optional Ylabel$ = "Y",
+                         Optional yaxis$ = Nothing,
+                         Optional xaxis$ = Nothing) As Bitmap
 
         Dim margin As Padding = padding
 
@@ -86,10 +91,16 @@ Public Module Scatter
             bg,
             Sub(ByRef g, grect)
                 Dim array As SerialData() = c.ToArray
-                Dim mapper As New Mapper(
-                    New Scaling(array, absoluteScaling),
-                    XabsoluteScalling:=XaxisAbsoluteScalling,
-                    YabsoluteScalling:=YaxisAbsoluteScalling)
+                Dim mapper As Mapper
+
+                If xaxis.StringEmpty OrElse yaxis.StringEmpty Then
+                    mapper = New Mapper(
+                        New Scaling(array, absoluteScaling),
+                        XabsoluteScalling:=XaxisAbsoluteScalling,
+                        YabsoluteScalling:=YaxisAbsoluteScalling)
+                Else
+                    mapper = New Mapper(xaxis, yaxis)
+                End If
 
                 If drawAxis Then
                     Call g.DrawAxis(size, margin, mapper, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)

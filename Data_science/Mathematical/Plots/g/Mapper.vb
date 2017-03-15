@@ -78,6 +78,39 @@ Namespace Graphic
             End If
         End Sub
 
+        Sub New(x As AxisProvider, y As AxisProvider,
+                Optional ignoreAxis As Boolean = False,
+                Optional ignoreX As Boolean = False,
+                Optional ignoreY As Boolean = False)
+
+            If Not ignoreAxis Then
+
+                If Not ignoreX Then
+                    xAxis = New Vector(x.AxisTicks)
+                Else
+                    xAxis = New Vector({0R})
+                End If
+                If Not ignoreY Then
+                    yAxis = New Vector(y.AxisTicks)
+                Else
+                    yAxis = New Vector({0R})
+                End If
+
+                dx = xAxis.Max - xAxis.Min
+                dy = yAxis.Max - yAxis.Min
+                xmin = xAxis.Min
+                ymin = yAxis.Min
+            Else
+                Dim xrange As DoubleRange = x.Range
+                Dim yrange As DoubleRange = y.Range
+
+                dx = xrange.Max - xrange.Min
+                dy = yrange.Max - yrange.Min
+                xmin = xrange.Min
+                ymin = yrange.Min
+            End If
+        End Sub
+
         Public Function ScallingWidth(x As Double, width%) As Single
             Return width * (x - xmin) / dx
         End Function
