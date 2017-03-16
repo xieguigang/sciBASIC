@@ -119,6 +119,7 @@ Namespace Graphic
                 ymin = yrange.Min
             End If
 
+            hist = range.hist
             serials = range.serials
         End Sub
 

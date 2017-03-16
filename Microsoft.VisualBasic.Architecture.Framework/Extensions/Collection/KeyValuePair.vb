@@ -36,6 +36,11 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module KeyValuePairExtensions
 
+    <Extension>
+    Public Function Values(Of T)(source As IEnumerable(Of NamedValue(Of T))) As T()
+        Return source.Select(Function(x) x.Value).ToArray
+    End Function
+
     ''' <summary>
     ''' gets all <see cref="INamedValue.Key"/> values
     ''' </summary>
