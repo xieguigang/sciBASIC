@@ -3,6 +3,10 @@ Namespace ComponentModel.DataStructures.Tree
     Public Interface ITreeNode(Of T)
 
         Property Parent() As T
+        ''' <summary>
+        ''' Children
+        ''' </summary>
+        Property ChildNodes() As List(Of T)
 
         ReadOnly Property FullyQualifiedName() As String
         ReadOnly Property IsLeaf() As Boolean
