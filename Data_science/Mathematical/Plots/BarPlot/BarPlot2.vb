@@ -63,13 +63,11 @@ Namespace BarPlot
                               Optional stacked As Boolean = False,
                               Optional showLegend As Boolean = True,
                               Optional legendPos As Point = Nothing,
-                              Optional legendBorder As Border = Nothing) As Bitmap
+                              Optional legendBorder As Stroke = Nothing) As Bitmap
 
             Dim margin As Padding = padding
-
-            Return GraphicsPlots(
-                size, margin, bg,
-                Sub(ByRef g, region)
+            Dim plotInternal =
+                Sub(ByRef g As Graphics, region As GraphicsRegion)
 
                     Dim lefts! = region.PlotRegion.Left
                     Dim top! = region.PlotRegion.Top
@@ -138,7 +136,9 @@ Namespace BarPlot
 
                         Call g.DrawLegends(legendPos, legends,,, legendBorder)
                     End If
-                End Sub)
+                End Sub
+
+            Return GraphicsPlots(size, margin, bg, plotInternal)
         End Function
     End Module
 End Namespace

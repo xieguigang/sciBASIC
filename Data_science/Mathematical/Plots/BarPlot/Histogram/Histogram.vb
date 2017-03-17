@@ -172,7 +172,7 @@ Namespace BarPlot.Histogram
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True,
                              Optional legendPos As Point = Nothing,
-                             Optional legendBorder As Border = Nothing,
+                             Optional legendBorder As Stroke = Nothing,
                              Optional alpha% = 255,
                              Optional drawRect As Boolean = True,
                              Optional showTagChartLayer As Boolean = False,
@@ -180,11 +180,8 @@ Namespace BarPlot.Histogram
                              Optional axisLabelFontStyle$ = CSSFont.Win7LargerBold) As Bitmap
 
             Dim margin As Padding = padding
-
-            Return GraphicsPlots(
-                size, margin,
-                bg$,
-                Sub(ByRef g, region)
+            Dim plotInternal =
+                Sub(ByRef g As Graphics, region As GraphicsRegion)
                     Dim mapper As New Mapper(New Scaling(groups, False)) ' 这里也不是使用y值来表示数量的，也用相对值
                     Dim annotations = groups.Serials.ToDictionary
 
@@ -244,7 +241,9 @@ Namespace BarPlot.Histogram
                             .Select(Function(x) x.legend),
                         ,,
                         legendBorder)
-                End Sub)
+                End Sub
+
+            Return GraphicsPlots(size, margin, bg$, plotInternal)
         End Function
 
         ''' <summary>

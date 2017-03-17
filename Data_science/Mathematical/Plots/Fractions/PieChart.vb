@@ -68,7 +68,7 @@ Public Module PieChart
                          Optional valueLabelStyle$ = CSSFont.Win7Bold,
                          Optional legend As Boolean = True,
                          Optional legendFont$ = CSSFont.Win7LargeBold,
-                         Optional legendBorder As Border = Nothing,
+                         Optional legendBorder As Stroke = Nothing,
                          Optional minRadius As Single = -1,
                          Optional reorder% = 0) As Bitmap
 
