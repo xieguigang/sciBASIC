@@ -50,6 +50,7 @@ Namespace Drawing2D
     Public Module g
 
         Public Const DefaultPadding$ = "padding:100px 100px 100px 100px;"
+        Public Const DefaultPaddingLarger$ = "padding:100px 100px 150px 150px;"
         Public Const ZeroPadding$ = "padding: 0px 0px 0px 0px;"
 
         ''' <summary>

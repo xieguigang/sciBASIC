@@ -451,6 +451,10 @@ Namespace IO
             Call _innerColumns.CopyTo(array, arrayIndex)
         End Sub
 
+        ''' <summary>
+        ''' 当前数据行的列的数目
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property NumbersOfColumn As Integer Implements ICollection(Of String).Count
             Get
                 Return _innerColumns.Count

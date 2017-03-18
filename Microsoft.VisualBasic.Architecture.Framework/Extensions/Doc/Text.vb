@@ -31,12 +31,42 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="handle$">
+    ''' + 当这个参数为文件路径的时候会返回<see cref="IteratesALL(Of T)(IEnumerable(Of IEnumerable(Of T)))"/>函数的结果
+    ''' + 当这个参数只是为文本字符串的时候，则会返回<see cref="lTokens"/>函数的结果
+    ''' </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function LineIterators(handle$) As IEnumerable(Of String)
+        If handle.FileExists Then
+            Return handle.IterateAllLines
+        Else
+            Return handle.lTokens
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 解析出TSV文件的头部并且生成index数据
+    ''' </summary>
+    ''' <param name="path$">``*.tsv``文件路径</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function TsvHeaders(path$) As IndexOf(Of String)
+        Dim header$() = path.ReadFirstLine.Split(ASCII.TAB)
+        Dim index As New IndexOf(Of String)(header)
+        Return index
+    End Function
 
     ''' <summary>
     ''' 将IDmapping数据保存为tsv文件

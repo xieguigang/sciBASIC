@@ -70,7 +70,7 @@ Namespace BarPlot
                              Optional stackReordered? As Boolean = True,
                              Optional showLegend As Boolean = True,
                              Optional legendPos As Point = Nothing,
-                             Optional legendBorder As Border = Nothing,
+                             Optional legendBorder As Stroke = Nothing,
                              Optional legendFont As Font = Nothing) As Bitmap
 
             Dim margin As Padding = padding
@@ -107,7 +107,7 @@ Namespace BarPlot
                             stackReorder As Boolean,
                             showLegend As Boolean,
                             legendPos As Point,
-                            legendBorder As Border,
+                            legendBorder As Stroke,
                             legendFont As Font)
 
             Dim scaler As New Scaling(data, stacked, False)

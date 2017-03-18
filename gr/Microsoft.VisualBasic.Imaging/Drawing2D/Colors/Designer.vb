@@ -144,12 +144,31 @@ Namespace Drawing2D.Colors
             Color.Orange, Color.DarkOrange, Color.Brown, Color.Gray, Color.CadetBlue
         }
 
+        <Extension>
+        Private Function IsColorNameList(exp$) As Boolean
+            If InStr(exp, ",") > 0 Then
+                If exp.IsPattern("rgb\(\d+\s*(,\s*\d+\s*)+\)") Then
+                    Return False
+                Else
+                    Return True
+                End If
+            Else
+                Return False
+            End If
+        End Function
+
         ''' <summary>
         ''' 对于无效的键名称，默认是返回<see cref="Office2016"/>，请注意，如果是所有的.net的颜色的话，这里面还会包含有白色，所以还需要手工去除掉白色
         ''' </summary>
-        ''' <param name="term$"></param>
+        ''' <param name="term$">假若这里所输入的是一组颜色值，则必须是htmlcolor或者颜色名称，RGB表达式将不会被允许</param>
         ''' <returns></returns>
         Public Function GetColors(term$) As Color()
+            If term.IsColorNameList Then
+                Return term _
+                    .StringSplit(",\s*") _
+                    .Select(Function(c) c.TranslateColor) _
+                    .ToArray
+            End If
             If Array.IndexOf(__allColorMapNames, term.ToLower) > -1 Then
                 Return New ColorMap(20, 255).ColorSequence(term)
             End If

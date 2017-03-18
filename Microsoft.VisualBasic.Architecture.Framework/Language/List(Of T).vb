@@ -38,6 +38,7 @@ Namespace Language
     ''' Represents a strongly typed list of objects that can be accessed by index. Provides
     ''' methods to search, sort, and manipulate lists.To browse the .NET Framework source
     ''' code for this type, see the Reference Source.
+    ''' (加强版的<see cref="System.Collections.Generic.List(Of T)"/>)
     ''' </summary>
     ''' <typeparam name="T">The type of elements in the list.</typeparam>
     Public Class List(Of T) : Inherits Generic.List(Of T)
@@ -125,6 +126,7 @@ Namespace Language
         ''' Initializes a new instance of the <see cref="List"/>`1 class that
         ''' contains elements copied from the specified collection and has sufficient capacity
         ''' to accommodate the number of elements copied.
+        ''' (这是一个安全的构造函数，假若输入的参数为空值，则只会创建一个空的列表，而不会抛出错误)
         ''' </summary>
         ''' <param name="source">The collection whose elements are copied to the new list.</param>
         Sub New(source As IEnumerable(Of T))

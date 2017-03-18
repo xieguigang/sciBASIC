@@ -371,7 +371,7 @@ Namespace Mathematical
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 计算两个向量之间的欧氏距离，请注意，这两个向量的长度必须要相等
         ''' </summary>
         ''' <param name="a">Point A</param>
         ''' <param name="b">Point B</param>

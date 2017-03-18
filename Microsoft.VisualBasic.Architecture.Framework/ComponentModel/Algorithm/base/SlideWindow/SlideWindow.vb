@@ -1,7 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Algorithm.base
 
@@ -44,10 +43,13 @@ Namespace ComponentModel.Algorithm.base
                            Optional offset As Integer = 1,
                            Optional extTails As Boolean = False) As IEnumerable(Of SlideWindowHandle(Of T))
 
-            Dim tmp As List(Of T) = data.ToList
+            Dim tmp As New List(Of T)(data)
             Dim n As Integer = tmp.Count
 
-            If slideWindowSize >= n Then
+            If n = 0 Then
+                ' 没有任何数据，则返回一个空集合
+                Return
+            ElseIf slideWindowSize >= n Then
                 Yield New SlideWindowHandle(Of T)() With {
                     .Left = 0,
                     .Elements = tmp.ToArray

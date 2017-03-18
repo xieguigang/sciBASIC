@@ -156,7 +156,12 @@ Namespace CommandLine
                     value = ""
                 Else
                     ' 尝试进行字符串插值，从而实现命令行部分脚本化
-                    value = value.Interpolate(__envir)
+
+                    ' 2017-3-13
+                    ' 对于Windows文件路径而言， 不推荐转义
+                    ' 因为Windows的文件路径分隔符为\，很容易引起误解，例如C:\tsv会被误转义为C:<TAB>sv而导致错误
+                    ' 所以在这里关闭escape参数选项
+                    value = value.Interpolate(__envir, escape:=False)
                 End If
 
                 Return value

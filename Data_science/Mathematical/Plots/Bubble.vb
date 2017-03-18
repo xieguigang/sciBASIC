@@ -54,21 +54,46 @@ Public Module Bubble
                          Optional bg As String = "white",
                          Optional legend As Boolean = True,
                          Optional logR As Boolean = False,
-                         Optional legendBorder As Border = Nothing) As Bitmap
+                         Optional legendBorder As Stroke = Nothing,
+                         Optional bubbleBorder As Stroke = Nothing,
+                         Optional xAxis$ = Nothing,
+                         Optional yAxis$ = Nothing,
+                         Optional xlabel$ = "",
+                         Optional ylabel$ = "",
+                         Optional axisLabelFontCSS$ = CSSFont.Win7LargeBold,
+                         Optional tagFontCSS$ = CSSFont.Win10Normal) As Bitmap
 
         Dim margin As Padding = padding
+        Dim tagLabelFont As Font = CSSFont.TryParse(tagFontCSS).GDIObject
 
-        Return GraphicsPlots(
-            size, margin, bg,
-            Sub(ByRef g, grect)
+        Dim plotInternal =
+            Sub(ByRef g As Graphics, grect As GraphicsRegion)
                 Dim array As SerialData() = data.ToArray
-                Dim mapper As New Mapper(New Scaling(array, False)) ' 这个并不是以y值来表示数量上的关系的，point是随机位置，所以在这里使用相对scalling
+                Dim mapper As Mapper
+                Dim rangeData As New Scaling(array, False)
+
+                If xAxis.StringEmpty Then
+                    ' 任意一个位空值就会使用普通的axis数据计算方法
+                    mapper = New Mapper(rangeData) ' 这个并不是以y值来表示数量上的关系的，point是随机位置，所以在这里使用相对scalling
+                Else
+                    Dim yaxisData As New AxisProvider(rangeData.yrange.GetAxisValues)
+                    mapper = New Mapper(x:=xAxis, y:=yaxisData, range:=rangeData)
+                End If
+
                 Dim scale As Func(Of Double, Double) =
                      [If](Of Func(Of Double, Double))(
                      logR, Function(r) Math.Log(r + 1) + 1,
                            Function(r) r)
 
-                Call g.DrawAxis(size, margin, mapper, True)
+                Call g.DrawAxis(size, margin, mapper, True,
+                                xlabel:=xlabel,
+                                ylabel:=ylabel,
+                                labelFontStyle:=axisLabelFontCSS)
+                Dim bubblePen As Pen = Nothing
+
+                If Not bubbleBorder Is Nothing Then
+                    bubblePen = bubbleBorder.GDIObject
+                End If
 
                 For Each s As SerialData In mapper.ForEach(size, margin)
                     Dim b As New SolidBrush(s.color)
@@ -79,6 +104,14 @@ Public Module Bubble
                         Dim rect As New Rectangle(p, New Size(r * 2, r * 2))
 
                         Call g.FillPie(b, rect, 0, 360)
+
+                        If Not bubblePen Is Nothing Then
+                            Call g.DrawPie(bubblePen, rect, 0, 360)
+                        End If
+
+                        If Not pt.Tag.StringEmpty Then
+                            Call g.DrawString(pt.Tag, tagLabelFont, Brushes.Black, New PointF(rect.Right, rect.Top))
+                        End If
                     Next
                 Next
 
@@ -98,6 +131,8 @@ Public Module Bubble
 
                     Call g.DrawLegends(topLeft, legends,,, legendBorder)
                 End If
-            End Sub)
+            End Sub
+
+        Return GraphicsPlots(size, margin, bg, plotInternal)
     End Function
 End Module

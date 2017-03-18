@@ -172,21 +172,30 @@ Namespace BarPlot.Histogram
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True,
                              Optional legendPos As Point = Nothing,
-                             Optional legendBorder As Border = Nothing,
+                             Optional legendBorder As Stroke = Nothing,
                              Optional alpha% = 255,
                              Optional drawRect As Boolean = True,
                              Optional showTagChartLayer As Boolean = False,
                              Optional xlabel$ = "X",
-                             Optional axisLabelFontStyle$ = CSSFont.Win7LargerBold) As Bitmap
+                             Optional axisLabelFontStyle$ = CSSFont.Win7LargerBold,
+                             Optional xAxis$ = Nothing) As Bitmap
 
             Dim margin As Padding = padding
+            Dim plotInternal =
+                Sub(ByRef g As Graphics, region As GraphicsRegion)
 
-            Return GraphicsPlots(
-                size, margin,
-                bg$,
-                Sub(ByRef g, region)
-                    Dim mapper As New Mapper(New Scaling(groups, False)) ' 这里也不是使用y值来表示数量的，也用相对值
+                    Dim scalerData As New Scaling(groups, False)
+                    Dim mapper As Mapper ' 这里也不是使用y值来表示数量的，也用相对值
                     Dim annotations = groups.Serials.ToDictionary
+
+                    If xAxis.StringEmpty Then
+                        mapper = New Mapper(scalerData)
+                    Else
+                        mapper = New Mapper(
+                            xAxis,
+                            y:=New AxisProvider(scalerData.yrange.GetAxisValues),
+                            range:=scalerData)
+                    End If
 
                     Call g.DrawAxis(size, margin, mapper, showGrid,
                                     xlabel:=xlabel,
@@ -234,7 +243,7 @@ Namespace BarPlot.Histogram
 
                     If legendPos.IsEmpty Then
                         legendPos = New Point(
-                            CInt(size.Width * 0.8),
+                            CInt(size.Width * 0.7),
                             margin.Top)
                     End If
 
@@ -244,7 +253,9 @@ Namespace BarPlot.Histogram
                             .Select(Function(x) x.legend),
                         ,,
                         legendBorder)
-                End Sub)
+                End Sub
+
+            Return GraphicsPlots(size, margin, bg$, plotInternal)
         End Function
 
         ''' <summary>
@@ -268,7 +279,8 @@ Namespace BarPlot.Histogram
                                       Optional padding$ = DefaultPadding,
                                       Optional showGrid As Boolean = True,
                                       Optional ByRef histData As IntegerTagged(Of Double)() = Nothing,
-                                      Optional xlabel$ = "X") As Bitmap
+                                      Optional xlabel$ = "X",
+                                      Optional xAxis$ = Nothing) As Bitmap
 
             With data.ToArray.Hist([step])
 
@@ -291,7 +303,8 @@ Namespace BarPlot.Histogram
                     bg:=bg, padding:=padding, size:=size,
                     showGrid:=showGrid,
                     showTagChartLayer:=False,
-                    xlabel:=xlabel)
+                    xlabel:=xlabel,
+                    xAxis:=xAxis)
             End With
         End Function
     End Module
