@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.25914.0
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imaging", "..\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj", "{85E71B4B-9276-4EC8-AADC-C849205F1EA8}"
 EndProject
@@ -240,8 +240,8 @@ Global
 		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Publish|x86.Build.0 = Release|Any CPU
 		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Release|x64.ActiveCfg = Release|Any CPU
-		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Release|x64.Build.0 = Release|Any CPU
+		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Release|x64.ActiveCfg = Release|x64
+		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Release|x64.Build.0 = Release|x64
 		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Release|x86.ActiveCfg = Release|Any CPU
 		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Release|x86.Build.0 = Release|Any CPU
 		{914063F7-3ABA-4508-BDC4-754E5BBB2F62}.Release2|Any CPU.ActiveCfg = Release|Any CPU
