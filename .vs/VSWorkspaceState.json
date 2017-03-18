@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\gr",
+    "\\gr\\3DEngineTest"
   ],
+  "SelectedNode": "\\gr\\3DEngineTest\\3DEngineTest.sln",
   "PreviewInSolutionExplorer": false
 }
