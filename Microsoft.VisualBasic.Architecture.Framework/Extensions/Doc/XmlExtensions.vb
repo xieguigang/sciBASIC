@@ -33,9 +33,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Xml
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
@@ -71,9 +69,14 @@ Public Module XmlExtensions
     <Extension> Public Function LoadXml(Of T)(XmlFile As String,
                                               Optional encoding As Encoding = Nothing,
                                               Optional ThrowEx As Boolean = True,
-                                              Optional preprocess As Func(Of String, String) = Nothing) As T
+                                              Optional preprocess As Func(Of String, String) = Nothing,
+                                              Optional stripInvalidsCharacter As Boolean = False) As T
         Dim type As Type = GetType(T)
-        Dim obj As Object = XmlFile.LoadXml(type, encoding, ThrowEx, preprocess)
+        Dim obj As Object = XmlFile.LoadXml(
+            type, encoding, ThrowEx,
+            preprocess,
+            stripInvalidsCharacter:=stripInvalidsCharacter)
+
         If obj Is Nothing Then
             Return Nothing  ' 由于在底层函数之中已经将错误给处理掉了，所以这里直接返回
         Else
@@ -95,10 +98,12 @@ Public Module XmlExtensions
     <Extension> Public Function LoadXml(XmlFile As String, type As Type,
                                         Optional encoding As Encoding = Nothing,
                                         Optional ThrowEx As Boolean = True,
-                                        Optional preprocess As Func(Of String, String) = Nothing) As Object
+                                        Optional preprocess As Func(Of String, String) = Nothing,
+                                        Optional stripInvalidsCharacter As Boolean = False) As Object
+
         If encoding Is Nothing Then encoding = Encoding.Default
 
-        If (Not XmlFile.FileExists) OrElse FileIO.FileSystem.GetFileInfo(XmlFile).Length = 0 Then
+        If Not XmlFile.FileExists(ZERO_Nonexists:=True) Then
             Dim exMsg As String =
                 $"{XmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
             Dim ex As New Exception(exMsg)
@@ -114,6 +119,9 @@ Public Module XmlExtensions
 
         If Not preprocess Is Nothing Then
             XmlDoc = preprocess(XmlDoc)
+        End If
+        If stripInvalidsCharacter Then
+            XmlDoc = XmlDoc.StripInvalidCharacters
         End If
 
         Using Stream As New StringReader(s:=XmlDoc)

@@ -171,6 +171,17 @@ Public Module Extensions
         Return DataFrame.CreateObject(csv)
     End Function
 
+    <Extension>
+    Public Function DataFrame(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))) As EntityObject()
+        Return source.ToArray(
+            Function(o)
+                Return New EntityObject With {
+                    .ID = o.Name,
+                    .Properties = o.Value
+                }
+            End Function)
+    End Function
+
     <ExportAPI("Write.Csv")>
     <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path As String, Optional encoding As Encoding = Nothing) As Boolean
         Return Reflector.Save(data, False).SaveDataFrame(path, encoding)

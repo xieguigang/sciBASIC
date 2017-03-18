@@ -97,17 +97,40 @@ Public Module DataImports
         Return New IO.File(LQuery)
     End Function
 
+    ''' <summary>
+    ''' 使用特定的分隔符进行数据的导入操作
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="text$"></param>
+    ''' <param name="delimiter$"></param>
+    ''' <param name="maps"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ImportsData(Of T As Class)(text$, Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
         Return ImportsData(text.lTokens, delimiter) _
             .AsDataSource(Of T)(maps:=maps)
     End Function
 
+    ''' <summary>
+    ''' 使用特定的分隔符进行数据的导入操作
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="text"></param>
+    ''' <param name="delimiter$"></param>
+    ''' <param name="maps"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ImportsData(Of T As Class)(text As IEnumerable(Of String), Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
         Return ImportsData(text, delimiter).AsDataSource(Of T)(maps:=maps)
     End Function
 
+    ''' <summary>
+    ''' 导入TSV数据为内存表
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="lines"></param>
+    ''' <param name="maps"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As Dictionary(Of String, String) = Nothing) As T()
         Return ImportsData(lines, ASCII.TAB) _
@@ -123,15 +146,17 @@ Public Module DataImports
     ''' 
     <ExportAPI("Row.Parsing", Info:="Row parsing its column tokens")>
     Public Function RowParsing(Line As String, SplitRegxExpression As String) As IO.RowObject
-        Dim Row = Regex.Split(Line, SplitRegxExpression)
-        For i As Integer = 0 To Row.Count - 1
-            If Not String.IsNullOrEmpty(Row(i)) Then
-                If Row(i).First = """"c AndAlso Row(i).Last = """"c Then
-                    Row(i) = Mid(Row(i), 2, Len(Row(i)) - 2)
+        Dim columns$() = Regex.Split(Line, SplitRegxExpression)
+
+        For i As Integer = 0 To columns.Length - 1
+            If Not String.IsNullOrEmpty(columns(i)) Then
+                If columns(i).First = """"c AndAlso columns(i).Last = """"c Then
+                    columns(i) = Mid(columns(i), 2, Len(columns(i)) - 2)
                 End If
             End If
         Next
-        Return Row
+
+        Return columns
     End Function
 
     ''' <summary>

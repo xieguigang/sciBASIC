@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::f0104a7e307a7e6325c77edf62f27518, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Vector.Shapes
 
@@ -36,7 +37,7 @@ Namespace Drawing2D.Vector.Shapes
                                topLeft As Point,
                                size As SizeF,
                                Optional br As Brush = Nothing,
-                               Optional border As Border = Nothing)
+                               Optional border As Stroke = Nothing)
 
             Dim pts(9) As Point
             Dim center As New Point(topLeft.X + size.Width / 2, topLeft.Y + size.Height / 2)
@@ -56,12 +57,12 @@ Namespace Drawing2D.Vector.Shapes
             Next
 
             If br Is Nothing Then
-                Call g.DrawPolygon(If(border Is Nothing, New Pen(Color.Black), border.GetPen), pts) ' 画一个空心五角星
+                Call g.DrawPolygon(If(border Is Nothing, New Pen(Color.Black), border.GDIObject), pts) ' 画一个空心五角星
             Else
                 g.FillPolygon(br, pts) ' 画一个实心的五角星
 
                 If Not border Is Nothing Then
-                    Call g.DrawPolygon(border.GetPen, pts)
+                    Call g.DrawPolygon(border.GDIObject, pts)
                 End If
             End If
         End Sub
@@ -73,7 +74,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="center"></param>
         ''' <param name="theta"></param>
         ''' <returns></returns>
-        Public Shared Function RotateTheta( pt As Point,  center As Point,  theta As Single) As Point
+        Public Shared Function RotateTheta(pt As Point, center As Point, theta As Single) As Point
             Dim x As Integer = CInt(center.X + (pt.X - center.X) * Math.Cos((theta * Math.PI / 180)) - (pt.Y - center.Y) * Math.Sin((theta * Math.PI / 180)))
             Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Math.Sin((theta * Math.PI / 180)) + (pt.Y - center.Y) * Math.Cos((theta * Math.PI / 180)))
 
