@@ -47,7 +47,7 @@ Namespace Graphic.Legend
         ''' <param name="border">绘制每一个图例的边</param>
         ''' <returns></returns>
         <Extension>
-        Public Function DrawLegend(ByRef g As Graphics, pos As Point, graphicsSize As SizeF, l As Legend, Optional border As Border = Nothing) As SizeF
+        Public Function DrawLegend(ByRef g As Graphics, pos As Point, graphicsSize As SizeF, l As Legend, Optional border As Stroke = Nothing) As SizeF
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
 
@@ -170,8 +170,8 @@ Namespace Graphic.Legend
                                ls As IEnumerable(Of Legend),
                                Optional graphicSize As SizeF = Nothing,
                                Optional d% = 10,
-                               Optional border As Border = Nothing,
-                               Optional regionBorder As Border = Nothing)
+                               Optional border As Stroke = Nothing,
+                               Optional regionBorder As Stroke = Nothing)
 
             Dim ZERO As Point = topLeft
             Dim n As Integer
@@ -196,7 +196,7 @@ Namespace Graphic.Legend
                     size = New SizeF(.Width + d + maxTitleSize.Width, Math.Max(.Height, maxTitleSize.Height) * (n + 1))
                     ZERO = New Point(ZERO.X + d / 2, ZERO.Y - d * 1.2)
                     g.DrawRectangle(
-                        regionBorder.GetPen,
+                        regionBorder.GDIObject,
                         New Rectangle(ZERO, size.ToSize))
                 End With
             End If

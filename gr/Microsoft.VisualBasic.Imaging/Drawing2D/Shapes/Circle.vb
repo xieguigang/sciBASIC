@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::62068313aedd93a8660ff696de63e012, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Vector.Shapes
 
@@ -86,7 +87,7 @@ Namespace Drawing2D.Vector.Shapes
                                          center As Point,
                                          radius As Single,
                                          Optional br As Brush = Nothing,
-                                         Optional border As Border = Nothing)
+                                         Optional border As Stroke = Nothing)
             Dim rect As New Rectangle(
                 New Point(center.X - radius, center.Y - radius),
                 New Size(radius * 2, radius * 2))
@@ -99,9 +100,9 @@ Namespace Drawing2D.Vector.Shapes
                     center.Y - radius - border.width,
                     radius * 2 + 1,
                     radius * 2 + 1)
-                border.color = If(border.color.IsEmpty, Color.Black, border.color)
+                border.fill = If(border.fill.StringEmpty, "Black", border.fill)
 
-                Call g.DrawPie(border.GetPen, rect, 0, 360)
+                Call g.DrawPie(border.GDIObject, rect, 0, 360)
             End If
         End Sub
     End Class

@@ -4,10 +4,24 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Imaging
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.StyledBarplot
+Imports Microsoft.VisualBasic.Data.ChartPlots.Dendrogram
 
 Module Module1
 
     Sub Main()
+
+        Dim t As New Tree("root")
+
+        Call t.ChildNodes.Add(New Tree("123"))
+        Call t.ChildNodes.Add(New Tree("333"))
+        Call t.ChildNodes.Last.AddChild(New Tree("233"))
+        Call t.ChildNodes.Last.AddChild(New Tree("abc"))
+        Call t.ChildNodes.Last.AddChild(New Tree("666"))
+
+        Call t.Plot.SaveAs("x:\fff.png")
+
+
+        Pause()
 
         Dim s = {
             New BarSerial With {.Brush = "red", .Label = "label<sub>1</sub>", .Value = 123},

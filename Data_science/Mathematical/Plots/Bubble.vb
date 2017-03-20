@@ -54,7 +54,8 @@ Public Module Bubble
                          Optional bg As String = "white",
                          Optional legend As Boolean = True,
                          Optional logR As Boolean = False,
-                         Optional legendBorder As Border = Nothing,
+                         Optional legendBorder As Stroke = Nothing,
+                         Optional bubbleBorder As Stroke = Nothing,
                          Optional xAxis$ = Nothing,
                          Optional yAxis$ = Nothing,
                          Optional xlabel$ = "",
@@ -88,6 +89,11 @@ Public Module Bubble
                                 xlabel:=xlabel,
                                 ylabel:=ylabel,
                                 labelFontStyle:=axisLabelFontCSS)
+                Dim bubblePen As Pen = Nothing
+
+                If Not bubbleBorder Is Nothing Then
+                    bubblePen = bubbleBorder.GDIObject
+                End If
 
                 For Each s As SerialData In mapper.ForEach(size, margin)
                     Dim b As New SolidBrush(s.color)
@@ -98,6 +104,10 @@ Public Module Bubble
                         Dim rect As New Rectangle(p, New Size(r * 2, r * 2))
 
                         Call g.FillPie(b, rect, 0, 360)
+
+                        If Not bubblePen Is Nothing Then
+                            Call g.DrawPie(bubblePen, rect, 0, 360)
+                        End If
 
                         If Not pt.Tag.StringEmpty Then
                             Call g.DrawString(pt.Tag, tagLabelFont, Brushes.Black, New PointF(rect.Right, rect.Top))

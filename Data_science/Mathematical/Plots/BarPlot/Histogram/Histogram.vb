@@ -172,7 +172,7 @@ Namespace BarPlot.Histogram
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True,
                              Optional legendPos As Point = Nothing,
-                             Optional legendBorder As Border = Nothing,
+                             Optional legendBorder As Stroke = Nothing,
                              Optional alpha% = 255,
                              Optional drawRect As Boolean = True,
                              Optional showTagChartLayer As Boolean = False,

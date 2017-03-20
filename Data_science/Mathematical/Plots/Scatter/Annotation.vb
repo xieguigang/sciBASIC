@@ -82,9 +82,9 @@ Public Structure Annotation
             .style = Me.Legend,
             .title = Text
         }
-        Dim border As New Border With {
-            .color = Drawing.Color.Black,
-            .style = DashStyle.Solid,
+        Dim border As New Stroke With {
+            .fill = "Black",
+            .dash = DashStyle.Solid,
             .width = 3
         }
 
