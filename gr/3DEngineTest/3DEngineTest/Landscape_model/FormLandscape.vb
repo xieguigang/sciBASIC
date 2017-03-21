@@ -104,4 +104,8 @@ Public Class FormLandscape
         model = model.ToArray(Function(s) New Surface With {.brush = color, .vertices = s.vertices})
         canvas.Model = Function() model
     End Sub
+
+    Private Sub trbFOV_Scroll(sender As Object, e As EventArgs) Handles trbFOV.Scroll
+        canvas.FOV = TrackBar1.Value
+    End Sub
 End Class
