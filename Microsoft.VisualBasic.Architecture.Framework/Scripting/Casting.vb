@@ -113,6 +113,8 @@ Namespace Scripting
         ''' 
         <Extension>
         Public Function ParseNumeric(s As String) As Double
+            s = Strings.Trim(s)
+
             If String.IsNullOrEmpty(s) Then
                 Return 0R
             ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) OrElse

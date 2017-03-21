@@ -79,6 +79,12 @@ Public Module IOExtensions
         Return IO.File.Open(path, mode)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding">使用系统默认的编码方案</param>
+    ''' <returns></returns>
     <ExportAPI("Open.Reader")>
     <Extension>
     Public Function OpenReader(path As String, Optional encoding As Encoding = Nothing) As StreamReader
