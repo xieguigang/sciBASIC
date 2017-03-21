@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Dendrogram
 
@@ -52,6 +53,10 @@ Namespace Dendrogram
             Public Sub New(name As String)
                 MyBase.New(name)
             End Sub
+
+            Public Overrides Function ToString() As String
+                Return Name & ": " & Location.GetJson
+            End Function
         End Class
 
         ''' <summary>
@@ -77,18 +82,18 @@ Namespace Dendrogram
         <Extension>
         Public Function HorizontalLayout(tree As Tree, screen As Rectangle, Optional getDistance As Func(Of Tree, Tree, Double) = Nothing) As TreeLayout
             Dim totalLeafs = tree.LeafNodesCounts
-            Dim x!
+            Dim x! = screen.Left
             Dim widths As New Dictionary(Of Tree, Single)
             Dim childLayouts As New List(Of TreeLayout)
 
             For Each child As Tree In tree.ChildNodes
-                Dim width! = (child.LeafNodesCounts / totalLeafs) * screen.Width  ' 当前的这个分支所占据的绘制宽度
-                Dim height! = screen.Height
-                Dim dh! = height - child.MaxTravelDepth
+                Dim width! = (child.LeafNodesCounts / totalLeafs) * screen.Width + 1 ' 当前的这个分支所占据的绘制宽度
+                Dim dh! = screen.Height / child.MaxTravelDepth
+                Dim height! = screen.Height - dh
                 Dim y = screen.Top + dh
                 Dim nextBlock As New Rectangle(x, y, width, height)
 
-                Call childLayouts.Add(child.HorizontalLayout(screen, getDistance))
+                Call childLayouts.Add(child.HorizontalLayout(nextBlock, getDistance))
                 Call widths.Add(child, width)
 
                 x += width
@@ -96,7 +101,7 @@ Namespace Dendrogram
 
             Dim layout As New TreeLayout(tree.Name) With {
                 .ChildNodes = childLayouts,
-                .Location = New PointF(screen.Left + widths.Values.Min, screen.Top)
+                .Location = New PointF(screen.Left + If(widths.Count = 0, screen.Left + screen.Width / 2, widths.Values.Min), screen.Top)
             }
             Return layout
         End Function

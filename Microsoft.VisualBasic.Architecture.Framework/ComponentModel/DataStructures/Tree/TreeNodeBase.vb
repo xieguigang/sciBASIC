@@ -65,7 +65,7 @@
             Dim l As New List(Of Integer) From {0}
 
             For Each c As T In child.ChildNodes
-                l.Add(__travelInternal(child))
+                l.Add(__travelInternal(child:=c))
             Next
 
             ' 最后的 +1 是因为当前的对象自己本身也是一层节点
