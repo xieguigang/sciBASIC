@@ -133,6 +133,17 @@ Namespace ComponentModel.DataSourceModel
         Public Overrides Function ToString() As String
             Return $"{Properties.Count} Property(s)."
         End Function
+
+        ''' <summary>
+        ''' Using for debugger view, this property is usually usefull for the dictionary view 
+        ''' to see if any duplicated was existed? 
+        ''' </summary>
+        ''' <returns></returns>
+        Protected ReadOnly Property MyHashCode As Integer
+            Get
+                Return GetHashCode()
+            End Get
+        End Property
     End Class
 
     ''' <summary>

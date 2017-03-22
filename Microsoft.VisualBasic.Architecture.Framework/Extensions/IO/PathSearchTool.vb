@@ -101,6 +101,14 @@ Public Module ProgramPathSearchTool
         End If
     End Function
 
+    ''' <summary>
+    ''' 使用<see cref="FileIO.FileSystem.GetFiles"/>函数枚举
+    ''' **当前的**(不是递归的搜索所有的子文件夹)文件夹之中的
+    ''' 所有的符合条件的文件路径
+    ''' </summary>
+    ''' <param name="DIR">文件夹路径</param>
+    ''' <param name="keyword">文件名进行匹配的关键词</param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function EnumerateFiles(DIR As String, ParamArray keyword As String()) As IEnumerable(Of String)
         Dim files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword)
@@ -111,7 +119,7 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 这个函数只会返回文件列表之中的第一个文件，故而需要提取某一个文件价值中的某一个特定的文件，推荐使用这个函数
+    ''' 这个函数只会返回文件列表之中的第一个文件，故而需要提取某一个文件夹之中的某一个特定的文件，推荐使用这个函数
     ''' </summary>
     ''' <param name="DIR$"></param>
     ''' <param name="keyword$"></param>
