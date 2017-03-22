@@ -378,9 +378,13 @@ Public Module ProgramPathSearchTool
     ''' 进行截取
     ''' </remarks>
     <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
-    <Extension> Public Function BaseName(fsObj As String) As String
+    <Extension> Public Function BaseName(fsObj As String, Optional allowEmpty As Boolean = False) As String
         If fsObj.StringEmpty Then
-            Throw New NullReferenceException(NameOf(fsObj) & " parameter is null!")
+            If allowEmpty Then
+                Return ""
+            Else
+                Throw New NullReferenceException(NameOf(fsObj) & " file system object handle is null!")
+            End If
         End If
 
         Dim t$() = fsObj.Trim("\"c, "/"c).Replace("\", "/").Split("/"c)

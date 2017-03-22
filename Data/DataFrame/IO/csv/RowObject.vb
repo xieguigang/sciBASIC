@@ -174,7 +174,9 @@ Namespace IO
         ''' insert the data into a spercific column  
         ''' </summary>
         ''' <param name="value"></param>
-        ''' <param name="column"></param>
+        ''' <param name="column">
+        ''' 假若列的位置超过了当前的行所具有的列的数量，那么这个方法还会自动补齐空格
+        ''' </param>
         ''' <returns>仅为LINQ查询使用的一个无意义的值</returns>
         ''' <remarks></remarks>
         Public Function InsertAt(value As String, column As Integer) As Integer
@@ -475,6 +477,11 @@ Namespace IO
             Return _innerColumns.IndexOf(item)
         End Function
 
+        ''' <summary>
+        ''' 直接使用list对象的Insert方法插入目标值，这个方法不像<see cref="RowObject.InsertAt(String, Integer)"/>，这个方法不会自动补齐空格的
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="item"></param>
         Public Sub Insert(index As Integer, item As String) Implements IList(Of String).Insert
             Call _innerColumns.Insert(index, item)
         End Sub

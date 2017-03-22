@@ -18,7 +18,7 @@ Module Module1
         Call t.ChildNodes.Last.AddChild(New Tree("abc"))
         Call t.ChildNodes.Last.AddChild(New Tree("666"))
 
-        Call t.Plot.SaveAs("x:\fff.png")
+        Dim layout = t.HorizontalLayout(New Rectangle(100, 100, 1000, 2000))
 
 
         Pause()

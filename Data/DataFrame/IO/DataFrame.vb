@@ -292,9 +292,9 @@ Namespace IO
         End Function
 
         Private Shared Function __createObject(file As File) As DataFrame
-            Dim df As DataFrame = New DataFrame With {
-                  ._innerTable = file._innerTable.Skip(1).ToList,
-                  .FilePath = file.FilePath
+            Dim df As New DataFrame With {
+                ._innerTable = file._innerTable.Skip(1).ToList,
+                .FilePath = file.FilePath
             }
             df.__columnList = __getColumnList(file._innerTable)
             df._SchemaOridinal = __createSchemaOridinal(df)

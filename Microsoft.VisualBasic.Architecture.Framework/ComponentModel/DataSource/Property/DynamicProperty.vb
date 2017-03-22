@@ -108,9 +108,9 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' 枚举这个动态字典类型之中的所有的键名
+        ''' 枚举这个动态字典类型之中的所有的键名，这个函数是默认不包含有类型自有的属性名称的
         ''' </summary>
-        ''' <param name="joinProperties">是否包括属性名称</param>
+        ''' <param name="joinProperties">是否包括属性名称，默认不包含</param>
         ''' <returns></returns>
         Public Function EnumerateKeys(Optional joinProperties As Boolean = False) As String()
             Dim out As New List(Of String)
