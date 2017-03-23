@@ -665,7 +665,8 @@ Public Module Extensions
     ''' <summary>
     ''' Data partitioning function.
     ''' (将目标集合之中的数据按照<paramref name="parTokens"></paramref>参数分配到子集合之中，
-    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序)
+    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序，
+    ''' 每一个子集和之中的元素数量为<paramref name="parTokens"/>)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -1668,16 +1669,13 @@ Public Module Extensions
     '''
     <ExportAPI("Shuffles")>
     <Extension> Public Function Shuffles(Of T)(source As IEnumerable(Of T)) As T()
-        Call VBMath.Randomize()
-
         Dim tmp As New List(Of T)(source)
         Dim buf As T() = New T(tmp.Count - 1) {}
-        Dim Seeds As Integer = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / CLng(Integer.MaxValue) * 2
-        Dim Rand As New Random(Seed:=Seeds)
+        Dim rand As New Random(Seed:=Mathematical.Seed)
         Dim l As Integer = tmp.Count - 1
 
         For i As Integer = 0 To buf.Length - 1
-            Dim index As Integer = Rand.Next(minValue:=0, maxValue:=l)
+            Dim index As Integer = rand.Next(minValue:=0, maxValue:=l)
             buf(i) = tmp(index)
             Call tmp.RemoveAt(index)
             l -= 1

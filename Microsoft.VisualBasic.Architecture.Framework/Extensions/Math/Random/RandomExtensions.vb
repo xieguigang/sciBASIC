@@ -57,6 +57,18 @@ Namespace Mathematical
     <PackageNamespace("Random", Publisher:="rvs76", Description:="Some extension methods for Random for creating a few more kinds of random stuff.")>
     Public Module RandomExtensions
 
+        ''' <summary>
+        ''' A number used to calculate a starting value for the pseudo-random number sequence.
+        ''' If a negative number is specified, the absolute value of the number is used.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Seed() As Integer
+            Dim seeds% = CLng(Integer.MaxValue) * 2
+            VBMath.Randomize()
+            seeds = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / seeds
+            Return seeds
+        End Function
+
         Public Function randf(min As Double, max As Double) As Double
             Dim minInteger As Integer = CInt(Math.Truncate(min * 10000))
             Dim maxInteger As Integer = CInt(Math.Truncate(max * 10000))
