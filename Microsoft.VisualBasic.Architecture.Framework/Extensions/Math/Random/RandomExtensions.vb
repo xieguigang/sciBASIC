@@ -63,10 +63,10 @@ Namespace Mathematical
         ''' </summary>
         ''' <returns></returns>
         Public Function Seed() As Integer
-            Dim seeds% = CLng(Integer.MaxValue) * 2
+            Dim seeds& = CLng(Integer.MaxValue) * 2
             VBMath.Randomize()
             seeds = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / seeds
-            Return seeds
+            Return CInt(seeds)
         End Function
 
         Public Function randf(min As Double, max As Double) As Double
