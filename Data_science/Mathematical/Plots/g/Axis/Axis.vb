@@ -292,8 +292,8 @@ Namespace Graphic.Axis
                     Dim labelText = (tick).FormatNumeric(2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
-                    Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + padding.Top * 0.2))
-                    Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + padding.Top * 0.3))
+                    Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + padding.Bottom * 0.18))
+                    Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + padding.Bottom * 0.28))
                 End If
             Next
 
