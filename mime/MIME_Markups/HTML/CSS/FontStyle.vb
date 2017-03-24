@@ -51,11 +51,14 @@ Namespace HTML.CSS
     ''' </summary>
     Public Class CSSFont
 
-        Public Const Win7Normal As String = "font-style: normal; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win10Normal As String = "font-style: normal; font-size: 12; font-family: " & FontFace.SegoeUI & ";"
+        Public Const Win10NormalLarger As String = "font-style: normal; font-size: 16; font-family: " & FontFace.SegoeUI & ";"
+
+        Public Const Win7Normal As String = "font-style: normal; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7Bold As String = "font-style: strong; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7LargerBold As String = "font-style: strong; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7LargeBold As String = "font-style: strong; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7Large As String = "font-style: strong; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
 
         Public Const PlotTitle$ = "font-style: strong; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
         Public Const PlotSubTitle$ = "font-style: normal; font-size: 20; font-family: " & FontFace.BookmanOldStyle & ";"

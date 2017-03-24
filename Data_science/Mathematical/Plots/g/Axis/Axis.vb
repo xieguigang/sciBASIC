@@ -137,13 +137,47 @@ Namespace Graphic.Axis
             End If
         End Sub
 
+        <Extension>
+        Public Sub DrawYGrid(scaler As Mapper, g As Graphics, region As GraphicsRegion,
+                             pen As Pen,
+                             label$,
+                             Optional offset As Point = Nothing,
+                             Optional labelFont$ = CSSFont.Win7Large,
+                             Optional tickFont$ = CSSFont.Win10NormalLarger,
+                             Optional gridStroke$ = Stroke.AxisGridStroke)
+            With region
+                Dim sy = scaler.YScaler(.Size, .Padding)
+                Dim rect As Rectangle = .Padding.GetCanvasRegion(.Size)
+                Dim gridPen As Pen = Stroke.TryParse(css:=gridStroke)
+
+                For Each tick As Double In scaler.yAxis
+                    Dim y = sy(tick) + offset.Y
+                    Dim left As New Point(rect.Left, y)
+                    Dim right As New Point(rect.Right, y)
+
+                    ' 绘制y网格线
+                    Call g.DrawLine(gridPen, left, right)
+                Next
+
+                Call g.DrawY(.Size, .Padding,
+                             pen, label,
+                             scaler,
+                             YAxisLayoutStyles.Left,
+                             offset,
+                             labelFont, CSSFont.TryParse(tickFont),
+                             False)
+            End With
+        End Sub
+
         Public Property delta As Integer = 10
 
-        <Extension> Private Sub DrawY(ByRef g As Graphics, size As Size, padding As Padding,
-                                      pen As Pen, label$,
-                                      scaler As Mapper,
-                                      layout As YAxisLayoutStyles, offset As Point,
-                                      labelFont$, tickFont As Font)
+        <Extension> Public Sub DrawY(ByRef g As Graphics, size As Size, padding As Padding,
+                                     pen As Pen, label$,
+                                     scaler As Mapper,
+                                     layout As YAxisLayoutStyles, offset As Point,
+                                     labelFont$,
+                                     tickFont As Font,
+                                     Optional showAxisLine As Boolean = True)
 
             Dim X%  ' y轴的layout的变化只需要变换x的值即可
 
@@ -162,21 +196,25 @@ Namespace Graphic.Axis
             Dim top As New Point(X, padding.Top + offset.Y)                   ' Y轴
             Dim sy As Func(Of Single, Single) = scaler.YScaler(size, padding)
 
-            Call g.DrawLine(pen, ZERO, top)     ' y轴
+            If showAxisLine Then
+                Call g.DrawLine(pen, ZERO, top)     ' y轴
+            End If
 
             For Each tick# In scaler.yAxis
 
                 If scaler.dy <> 0R Then
-
                     Dim y! = sy(tick) + offset.Y
                     Dim axisY As New PointF(ZERO.X, y)
 
-                    Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                    If showAxisLine Then
+                        Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                    End If
 
                     Dim labelText = (tick).FormatNumeric(2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
+                    Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
 
-                    g.DrawString(labelText, tickFont, Brushes.Black, New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2))
+                    g.DrawString(labelText, tickFont, Brushes.Black, p)
                 End If
             Next
 
@@ -222,11 +260,12 @@ Namespace Graphic.Axis
             Return out
         End Function
 
-        <Extension> Private Sub DrawX(ByRef g As Graphics, size As Size, padding As Padding,
-                                      pen As Pen, label$,
-                                      scaler As Mapper,
-                                      layout As XAxisLayoutStyles, offset As Point,
-                                      labelFont$, tickFont As Font)
+        <Extension> Public Sub DrawX(ByRef g As Graphics, size As Size, padding As Padding,
+                                     pen As Pen, label$,
+                                     scaler As Mapper,
+                                     layout As XAxisLayoutStyles, offset As Point,
+                                     labelFont$,
+                                     tickFont As Font)
             Dim Y%
 
             Select Case layout

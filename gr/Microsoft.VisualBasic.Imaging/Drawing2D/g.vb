@@ -50,7 +50,11 @@ Namespace Drawing2D
     Public Module g
 
         Public Const DefaultPadding$ = "padding:100px 100px 100px 100px;"
-        Public Const DefaultPaddingLarger$ = "padding:100px 100px 150px 150px;"
+
+        ''' <summary>
+        ''' 与<see cref="DefaultPadding"/>相比而言，这个padding的值在坐标轴Axis的label的绘制上空间更加大
+        ''' </summary>
+        Public Const DefaultLargerPadding$ = "padding:100px 100px 150px 150px;"
         Public Const ZeroPadding$ = "padding: 0px 0px 0px 0px;"
 
         ''' <summary>
@@ -63,7 +67,7 @@ Namespace Drawing2D
         ''' <returns></returns>
         Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot) As Bitmap
             If size.IsEmpty Then
-                size = New Size(4300, 2000)
+                size = New Size(3600, 2000)
             End If
             If padding.IsEmpty Then
                 padding = New Padding(100)
