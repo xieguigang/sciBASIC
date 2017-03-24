@@ -68,5 +68,6 @@ Namespace Graphic.Legend
         ''' 正方形
         ''' </summary>
         Square
+        RoundRectangle
     End Enum
 End Namespace

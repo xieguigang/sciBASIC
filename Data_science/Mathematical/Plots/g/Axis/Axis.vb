@@ -265,7 +265,8 @@ Namespace Graphic.Axis
                                      scaler As Mapper,
                                      layout As XAxisLayoutStyles, offset As Point,
                                      labelFont$,
-                                     tickFont As Font)
+                                     tickFont As Font,
+                                     Optional overridesTickLine% = -1)
             Dim Y%
 
             Select Case layout
@@ -280,6 +281,7 @@ Namespace Graphic.Axis
             Dim ZERO As New Point(padding.Left + offset.X, Y)                       ' 坐标轴原点
             Dim right As New Point(size.Width - padding.Right + offset.X, Y)        ' X轴
             Dim sx = scaler.XScaler(size, padding)
+            Dim d! = If(overridesTickLine <= 0, padding.Bottom * 0.18, overridesTickLine)
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
@@ -292,8 +294,8 @@ Namespace Graphic.Axis
                     Dim labelText = (tick).FormatNumeric(2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
-                    Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + padding.Bottom * 0.18))
-                    Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + padding.Bottom * 0.28))
+                    Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
+                    Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
                 End If
             Next
 

@@ -16,10 +16,7 @@ Namespace Drawing2D.Vector.Shapes
                                Optional br As Brush = Nothing,
                                Optional border As Stroke = Nothing)
 
-            Dim rect As New Rectangle(Int(size.Width / 5),
-                                      Int(size.Height / 5),
-                                      Int(size.Width / 2),
-                                      Int(size.Height / 2))
+            Dim rect As New Rectangle(topLeft, size.ToSize)
             Dim path As GraphicsPath = GetRoundedRectPath(rect, radius)
 
             If Not br Is Nothing Then
