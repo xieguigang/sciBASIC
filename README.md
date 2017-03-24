@@ -120,6 +120,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 
 ![](./Data_science/algorithms/CMeans/CMeans.png)
 ![](./Data_science/Mathematical/images/295022-plots-plots.png)
+![](https://raw.githubusercontent.com/xieguigang/spectrum/master/spectrum/Plot.png)
 
 ###### 3D heatmap
 
