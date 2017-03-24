@@ -37,6 +37,23 @@ Imports Microsoft.VisualBasic.Linq
 Public Module KeyValuePairExtensions
 
     <Extension>
+    Public Function IteratesAll(Of T As INamedValue)(source As IEnumerable(Of NamedCollection(Of T))) As T()
+        Return source.Select(Function(c) c.Value).IteratesALL.ToArray
+    End Function
+
+    <Extension>
+    Public Function GroupByKey(Of T As INamedValue)(source As IEnumerable(Of T)) As NamedCollection(Of T)()
+        Return source _
+            .GroupBy(Function(o) o.Key) _
+            .ToArray(Function(g)
+                         Return New NamedCollection(Of T) With {
+                             .Name = g.Key,
+                             .Value = g.ToArray
+                         }
+                     End Function)
+    End Function
+
+    <Extension>
     Public Function Values(Of T)(source As IEnumerable(Of NamedValue(Of T))) As T()
         Return source.Select(Function(x) x.Value).ToArray
     End Function

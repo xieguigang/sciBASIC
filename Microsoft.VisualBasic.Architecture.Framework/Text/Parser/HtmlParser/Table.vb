@@ -76,7 +76,7 @@ Namespace Text.HtmlParser
         ''' 
         <Extension>
         Public Function GetColumnsHTML(row As String) As String()
-            Dim cols As String() = Regex.Matches(row, "<td.+?</td>", RegexICSng).ToArray
+            Dim cols As String() = Regex.Matches(row, "(<td.+?</td>)|(<th.+?</th>)", RegexICSng).ToArray
             cols = cols.ToArray(Function(s) s.GetValue)
             Return cols
         End Function

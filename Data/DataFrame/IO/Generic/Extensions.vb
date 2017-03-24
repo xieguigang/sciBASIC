@@ -33,5 +33,16 @@ Namespace IO
                 .Properties = props
             }
         End Function
+
+        ''' <summary>
+        ''' 批量的从目标对象集合之中选出目标属性值
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="key$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Values(data As IEnumerable(Of EntityObject), key$) As String()
+            Return data.Select(Function(r) r(key$)).ToArray
+        End Function
     End Module
 End Namespace

@@ -95,6 +95,12 @@ Namespace ComponentModel.DataSourceModel
                 .JoinBy("; ")
         End Sub
 
+        Sub New(name$, data As IEnumerable(Of T), Optional description$ = Nothing)
+            Me.Name = name
+            Me.Description = description
+            Me.Value = data.ToArray
+        End Sub
+
         Public Function GetValues() As NamedValue(Of T)()
             Dim name$ = Me.Name
             Dim describ$ = Description

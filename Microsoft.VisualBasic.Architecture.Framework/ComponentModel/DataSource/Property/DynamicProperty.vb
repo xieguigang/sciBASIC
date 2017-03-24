@@ -108,9 +108,9 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' 枚举这个动态字典类型之中的所有的键名
+        ''' 枚举这个动态字典类型之中的所有的键名，这个函数是默认不包含有类型自有的属性名称的
         ''' </summary>
-        ''' <param name="joinProperties">是否包括属性名称</param>
+        ''' <param name="joinProperties">是否包括属性名称，默认不包含</param>
         ''' <returns></returns>
         Public Function EnumerateKeys(Optional joinProperties As Boolean = False) As String()
             Dim out As New List(Of String)
@@ -133,6 +133,17 @@ Namespace ComponentModel.DataSourceModel
         Public Overrides Function ToString() As String
             Return $"{Properties.Count} Property(s)."
         End Function
+
+        ''' <summary>
+        ''' Using for debugger view, this property is usually usefull for the dictionary view 
+        ''' to see if any duplicated was existed? 
+        ''' </summary>
+        ''' <returns></returns>
+        Protected ReadOnly Property MyHashCode As Integer
+            Get
+                Return GetHashCode()
+            End Get
+        End Property
     End Class
 
     ''' <summary>
