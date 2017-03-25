@@ -37,6 +37,11 @@ Namespace Imaging
     <PackageNamespace("GDI.Transform")>
     Public Module GDITransform
 
+        <Extension>
+        Public Function ToPoint(pf As PointF) As Point
+            Return New Point(pf.X, pf.Y)
+        End Function
+
         ''' <summary>
         ''' Gets the center location of the region rectangle.
         ''' </summary>
