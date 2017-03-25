@@ -120,6 +120,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 
 ![](./Data_science/algorithms/CMeans/CMeans.png)
 ![](./Data_science/Mathematical/images/295022-plots-plots.png)
+![](https://raw.githubusercontent.com/xieguigang/spectrum/master/spectrum/Plot.png)
 
 ###### 3D heatmap
 
@@ -214,9 +215,10 @@ Call data.CorrelatesNormalized() _
 ```
 
 > ###### Microsoft.VisualBasic.Mathematical.Plots.Heatmap::Plot(IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))), Color(), Integer, String, Boolean, Size, Size, String, String, String) As Bitmap
->
-> Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):
-> ```R
+
+Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):
+
+```R
 data(mtcars)
 write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv")
 ```
