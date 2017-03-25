@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Threading
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -96,6 +97,27 @@ Namespace Parallel.Threads
         Sub New()
             Me.New(LQuerySchedule.Recommended_NUM_THREADS)
         End Sub
+
+        ''' <summary>
+        ''' 获取当前的这个线程池对象的状态的摘要信息
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetStatus() As Dictionary(Of String, String)
+            Dim out As New Dictionary(Of String, String)
+
+            Call out.Add(NameOf(Me.FullCapacity), FullCapacity)
+            Call out.Add(NameOf(Me.NumOfThreads), NumOfThreads)
+            Call out.Add(NameOf(Me.WorkingThreads), WorkingThreads)
+            Call out.Add(NameOf(Me.__pendings), __pendings.Count)
+
+            For Each t As SeqValue(Of TaskQueue(Of Long)) In __threads.SeqIterator
+                With (+t)
+                    Call out.Add("thread___" & t.i & "___" & .uid, .Tasks)
+                End With
+            Next
+
+            Return out
+        End Function
 
         ''' <summary>
         ''' 使用线程池里面的空闲线程来执行任务

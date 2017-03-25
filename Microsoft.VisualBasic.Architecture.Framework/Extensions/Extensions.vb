@@ -1690,9 +1690,15 @@ Public Module Extensions
         Return buf
     End Function
 
+    ''' <summary>
+    ''' 返回n长度的序列数值，这些序列数值是打乱顺序的，但是升序排序之后会得到1:n的序列
+    ''' 请注意，这个序列并不是随机数，而是将n长度的序列之中的元素打乱顺序的结果
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
     <ExportAPI("Sequence.Random")>
     <Extension> Public Function SeqRandom(n As Integer) As Integer()
-        Dim source As Integer() = n.Sequence
+        Dim source As Integer() = n.Sequence.ToArray
         Dim Random As Integer() = source.Shuffles
         Return Random
     End Function
