@@ -230,17 +230,23 @@ Public Module Extensions
     ''' Function pointer of the task work that needs to be tested.(需要测试性能的工作对象)
     ''' </param>
     ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
-    Public Function Time(work As Action) As Long
-        Dim sw As Stopwatch = Stopwatch.StartNew
+    Public Function Time(work As Action, Optional echo As Boolean = True) As Long
+        Dim startTick As Long = App.NanoTime
         Call work()
-        Call $"Work takes {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
-        Return sw.ElapsedMilliseconds
+        Dim endTick As Long = App.NanoTime
+        Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
+        If echo Then
+            Call $"Work takes {t}ms...".__DEBUG_ECHO
+        End If
+        Return t
     End Function
 
     Public Function Time(Of T)(work As Func(Of T)) As T
-        Dim sw As Stopwatch = Stopwatch.StartNew
+        Dim startTick As Long = App.NanoTime
         Dim value As T = work()
-        Call $"Work takes {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
+        Dim endTick As Long = App.NanoTime
+        Dim ms& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
+        Call $"Work takes {ms}ms...".__DEBUG_ECHO
         Return value
     End Function
 

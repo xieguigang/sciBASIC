@@ -426,7 +426,7 @@
     <Compile Include="Extensions\IO\CollectionIO.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
-    <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
+    <Compile Include="ComponentModel\ValuePair\Binding.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
     <Compile Include="Language\UnixBash\ShellSyntax.vb" />
