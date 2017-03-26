@@ -161,7 +161,9 @@ Namespace Parallel.Threads
                     Call resultList.Add(completeTask.GetValue)  '  将完成的任务从任务池之中移除然后获取返回值
                 Next
 
-                Call Thread.Sleep(TimeInterval)
+                If TimeInterval > 0 Then
+                    Call Thread.Sleep(TimeInterval)
+                End If
             Loop
 
             Dim WaitForExit As T() =

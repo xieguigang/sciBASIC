@@ -117,6 +117,9 @@ Namespace Language
         ''' <summary>
         ''' ZERO
         ''' </summary>
+        ''' <param name="caseSensitive">
+        ''' 大小写敏感？假若是需要应用于文件名称，在Windows操作系统之上建议设置为False不敏感，否则会出现相同字母但是不同大小写的文件会被覆盖的情况出现
+        ''' </param>
         Sub New(Optional caseSensitive As Boolean = True)
             Call Me.New(Scan0, caseSensitive)
         End Sub
@@ -148,6 +151,12 @@ Namespace Language
             Return ToString()
         End Function
 
+        ''' <summary>
+        ''' 请注意，这个操作是线程不安全的，所以请确保在执行这个命令之前使用``SyncLock``加锁
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         Public Shared Operator +(i As Uid, n As Integer) As Uid
             For o As Integer = 0 To n - 1
                 Call i.__plus(i.chars.Count - 1)
@@ -156,6 +165,11 @@ Namespace Language
             Return i
         End Operator
 
+        ''' <summary>
+        ''' 请注意，这个操作是线程不安全的，所以请确保在执行这个命令之前使用``SyncLock``加锁
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         Public Shared Operator +(i As Uid) As Uid
             Call i.__plus(i.chars.Count - 1)
             Return i
@@ -169,6 +183,10 @@ Namespace Language
             Return New String(
                 chars.ToArray(Function(x) __chars(x)))
         End Function
+
+        Public Shared Operator &(i As Uid, s$) As String
+            Return i.ToString & s
+        End Operator
 
         Public Shared Narrowing Operator CType(i As Uid) As String
             Return i.ToString
