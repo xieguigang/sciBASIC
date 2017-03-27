@@ -7,8 +7,24 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 
 Public Module SQL
+
+    ''' <summary>
+    ''' 提供了一个与SQL DUMP功能类似的拓展方法，这个函数会自动的将目标集合写入所指定的文件夹之中的某一个csv文件。
+    ''' 这个csv文件的文件名为泛型类型的Class名称
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="DIR$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function DumpToTable(Of T)(data As IEnumerable(Of T), DIR$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Dim path$ = $"{DIR}/{GetType(T).Name}.csv"
+        Return data.SaveTo(path,, encoding.CodePage)
+    End Function
 
     ''' <summary>
     ''' 将SQL脚本之中的数据转换为Excel数据框模型，这个函数仅对简单的SQL脚本有效，
