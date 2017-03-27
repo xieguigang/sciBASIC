@@ -29,6 +29,7 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting
 
 Namespace Serialization
 
@@ -63,7 +64,7 @@ Namespace Serialization
 
             For Each Node In Mappings '读取数据
                 Dim value As Object = Node.Source.GetValue(source)
-                Dim str As String = DataFramework.__toStringInternal(value, "")
+                Dim str As String = CStrSafe(value, "")
                 value = Node.SourceToMappingCasting(str)
                 Call Node.Mapping.SetValue(DataModel, value)
             Next

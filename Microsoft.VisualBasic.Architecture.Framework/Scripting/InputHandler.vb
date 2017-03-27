@@ -228,7 +228,8 @@ Namespace Scripting
         Public ReadOnly Property [String] As Type = GetType(String)
 
         ''' <summary>
-        ''' Does the <paramref name="inputtype"/> type can be cast to type <paramref name="DefType"/>.(主要为了方便减少脚本编程模块的代码)
+        ''' Does the <paramref name="inputtype"/> type can be cast to type <paramref name="DefType"/>.
+        ''' (主要为了方便减少脚本编程模块的代码)
         ''' </summary>
         ''' <param name="inputType"></param>
         ''' <param name="DefType"></param>
@@ -238,12 +239,12 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' <seealso cref="ComponentModel.DataSourceModel.__toStringInternal"/>, 出现错误的时候总是会返回空字符串的
+        ''' <seealso cref="CStrSafe"/>, 出现错误的时候总是会返回空字符串的
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
         Public Function ToString(obj As Object, Optional null As String = "") As String
-            Return __toStringInternal(obj, null)
+            Return CStrSafe(obj, null)
         End Function
 
         ''' <summary>
