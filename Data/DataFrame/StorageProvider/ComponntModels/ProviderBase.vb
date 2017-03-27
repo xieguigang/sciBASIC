@@ -90,6 +90,16 @@ Namespace StorageProvider.ComponentModels
         ''' <returns></returns>
         Public MustOverride Overloads Function ToString(obj As Object) As String
 
+        ''' <summary>
+        ''' 从目标实例之中读取属性数据然后转换为字符串
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Function GetValue(obj As Object) As String
+            Dim value As Object = BindProperty.GetValue(obj)
+            Return ToString(value)
+        End Function
+
         Sub New(BindProperty As PropertyInfo)
             Call Me.New(BindProperty, BindProperty.PropertyType)
         End Sub

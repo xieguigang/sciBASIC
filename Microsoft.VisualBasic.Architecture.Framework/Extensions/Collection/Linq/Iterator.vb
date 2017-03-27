@@ -36,6 +36,16 @@ Namespace Linq
 
     Public Module IteratorExtensions
 
+        <Extension>
+        Public Iterator Function SeqIterator(source As IEnumerable, Optional offset% = 0) As IEnumerable(Of SeqValue(Of Object))
+            Dim i As Integer = offset
+
+            For Each o As Object In source
+                Yield New SeqValue(Of Object)(i, o)
+                i += 1
+            Next
+        End Function
+
         ''' <summary>
         ''' Iterates all of the objects in the source sequence with collection index position.
         ''' </summary>
