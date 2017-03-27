@@ -42,9 +42,16 @@ Namespace Text
         ''' </summary>
         [Default] = 0
         ASCII = 10
+        ''' <summary>
+        ''' utf-16编码的别名？所以使用这个编码的效果是和<see cref="UTF16"/>的效果是一样的
+        ''' </summary>
         Unicode
         UTF7
         UTF8
+        ''' <summary>
+        ''' VB.NET的XML文件的默认编码格式为utf-16
+        ''' </summary>
+        UTF16
         UTF32
 
         ''' <summary>
@@ -77,7 +84,8 @@ Namespace Text
             {Encodings.UTF7, Encoding.UTF7},
             {Encodings.UTF32, Encoding.UTF32},
             {Encodings.UTF8, Encoding.UTF8},
-            {Encodings.Default, Encoding.Default}
+            {Encodings.Default, Encoding.Default},
+            {Encodings.UTF16, Encoding.Unicode}
         }
 
         ''' <summary>

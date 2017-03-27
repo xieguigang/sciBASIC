@@ -188,7 +188,7 @@ Public Module TextDoc
     <Extension>
     Public Function ReadAllLines(path As String, Optional Encoding As Encoding = Nothing) As String()
         If Encoding Is Nothing Then
-            Encoding = System.Text.Encoding.UTF8
+            Encoding = Encoding.UTF8
         End If
         If path.FileExists Then
             Return IO.File.ReadAllLines(path, encoding:=Encoding)

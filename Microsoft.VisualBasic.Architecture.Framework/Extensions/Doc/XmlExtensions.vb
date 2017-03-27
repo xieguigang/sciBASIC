@@ -218,18 +218,18 @@ Public Module XmlExtensions
     ''' <param name="obj"></param>
     ''' <param name="saveXml"></param>
     ''' <param name="throwEx"></param>
-    ''' <param name="encoding"></param>
+    ''' <param name="encoding">VB.NET的XML文件的默认编码格式为``utf-16``</param>
     ''' <returns></returns>
     <Extension> Public Function SaveAsXml(Of T As Class)(
                                     obj As T,
                                 saveXml As String,
                        Optional throwEx As Boolean = True,
-                       Optional encoding As Encoding = Nothing,
+                       Optional encoding As Encodings = Encodings.UTF16,
     <CallerMemberName> Optional caller As String = "") As Boolean
 
         Dim xmlDoc As String = obj.GetXml(throwEx)
         Try
-            Return xmlDoc.SaveTo(saveXml, encoding)
+            Return xmlDoc.SaveTo(saveXml, encoding.CodePage)
         Catch ex As Exception
             ex = New Exception(caller, ex)
             If throwEx Then

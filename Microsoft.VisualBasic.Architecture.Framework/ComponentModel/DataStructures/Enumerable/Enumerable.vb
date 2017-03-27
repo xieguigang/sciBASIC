@@ -178,11 +178,12 @@ Public Module IEnumerations
     ''' <param name="source"></param>
     ''' <param name="uniqueId"></param>
     ''' <returns></returns>
-    <Extension> Public Function Take(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String) As T
+    <Extension> Public Function Take(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String, Optional strict As Boolean = True) As T
+        Dim level As StringComparison = If(strict, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
         Dim LQuery As T = LinqAPI.DefaultFirst(Of T) <=
             From o As T
             In source
-            Where String.Equals(uniqueId, o.Key)
+            Where String.Equals(uniqueId, o.Key, comparisonType:=level)
             Select o
 
         Return LQuery
