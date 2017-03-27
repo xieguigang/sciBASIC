@@ -28,10 +28,20 @@
 
 Namespace ComponentModel
 
+    ''' <summary>
+    ''' 作用与<see cref="KeyValuePair(Of T, K)"/>类似，只不过类型的名称更加符合绑定的描述
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="K"></typeparam>
     Public Structure Binding(Of T, K)
-        Public Bind As T
-        Public Target As K
 
+        Dim Bind As T
+        Dim Target As K
+
+        ''' <summary>
+        ''' 当<see cref="Bind"/>以及<see cref="Target"/>都同时为空值的时候这个参数才会为真
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsEmpty As Boolean
             Get
                 Return Bind Is Nothing AndAlso Target Is Nothing

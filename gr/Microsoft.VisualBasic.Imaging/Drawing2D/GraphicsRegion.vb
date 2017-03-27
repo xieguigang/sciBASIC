@@ -77,6 +77,12 @@ Namespace Drawing2D
             End Get
         End Property
 
+        Public Function TopCentra(size As Size) As Point
+            Dim left = (Me.Size.Width - size.Width) / 2
+            Dim top = (Padding.Top - size.Height) / 2
+            Return New Point(left, top)
+        End Function
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

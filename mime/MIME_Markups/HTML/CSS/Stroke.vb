@@ -12,6 +12,7 @@ Namespace HTML.CSS
     Public Class Stroke
 
         Public Const AxisStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
+        Public Const AxisGridStroke$ = "stroke: lightgray; stroke-width: 2px; stroke-dash: dash;"
 
         Public Property fill As String
         Public Property width As Single
@@ -61,6 +62,10 @@ Namespace HTML.CSS
                 .width = Val(t.TryGetValue("stroke-width"))
             }
         End Function
+
+        Public Shared Narrowing Operator CType(stroke As Stroke) As Pen
+            Return stroke.GDIObject
+        End Operator
 
         Public Shared Widening Operator CType(css$) As Stroke
             Return TryParse(css)

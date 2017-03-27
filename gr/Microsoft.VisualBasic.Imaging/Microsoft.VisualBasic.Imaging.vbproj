@@ -195,6 +195,7 @@
     <Compile Include="Drawing2D\g.vb" />
     <Compile Include="Drawing2D\GraphicsRegion.vb" />
     <Compile Include="Drawing2D\Shapes\Arrow.vb" />
+    <Compile Include="Drawing2D\Shapes\RoundRect.vb" />
     <Compile Include="Drawing2D\Shapes\Pentacle.vb" />
     <Compile Include="Drawing2D\Shapes\Hexagon.vb" />
     <Compile Include="Drawing2D\Shapes\Diamond.vb" />

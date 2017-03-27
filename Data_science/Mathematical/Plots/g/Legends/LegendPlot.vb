@@ -47,7 +47,7 @@ Namespace Graphic.Legend
         ''' <param name="border">绘制每一个图例的边</param>
         ''' <returns></returns>
         <Extension>
-        Public Function DrawLegend(ByRef g As Graphics, pos As Point, graphicsSize As SizeF, l As Legend, Optional border As Stroke = Nothing) As SizeF
+        Public Function DrawLegend(ByRef g As Graphics, pos As Point, graphicsSize As SizeF, l As Legend, Optional border As Stroke = Nothing, Optional radius% = 5) As SizeF
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
 
@@ -98,6 +98,18 @@ Namespace Graphic.Legend
                         g, New Point(pos.X + dw, pos.Y + dh),
                         New Size(graphicsSize.Width - dw * 2,
                                  graphicsSize.Height - dh * 2),
+                        New SolidBrush(l.color.ToColor), border)
+
+                Case LegendStyles.RoundRectangle
+
+                    Dim dw As Integer = graphicsSize.Width * 0.1
+                    Dim dh As Integer = graphicsSize.Height * 0.2
+
+                    Call RoundRect.Draw(
+                        g, New Point(pos.X + dw, pos.Y + dh),
+                        New Size(graphicsSize.Width - dw * 2,
+                                 graphicsSize.Height - dh * 2),
+                        radius,
                         New SolidBrush(l.color.ToColor), border)
 
                 Case LegendStyles.Square
@@ -164,6 +176,7 @@ Namespace Graphic.Legend
         ''' </param>
         ''' <param name="d%">Interval distance between the legend graphics.</param>
         ''' <param name="regionBorder">整个图例的绘图区域的边的绘制设置</param>
+        ''' <param name="radius">这个是用于圆角矩形的图例图形的绘制参数</param>
         <Extension>
         Public Sub DrawLegends(ByRef g As Graphics,
                                topLeft As Point,
@@ -171,7 +184,9 @@ Namespace Graphic.Legend
                                Optional graphicSize As SizeF = Nothing,
                                Optional d% = 10,
                                Optional border As Stroke = Nothing,
-                               Optional regionBorder As Stroke = Nothing)
+                               Optional regionBorder As Stroke = Nothing,
+                               Optional roundRectRegion As Boolean = True,
+                               Optional radius% = 5)
 
             Dim ZERO As Point = topLeft
             Dim n As Integer
@@ -184,7 +199,7 @@ Namespace Graphic.Legend
 
             For Each l As Legend In legends
                 n += 1
-                size = g.DrawLegend(topLeft, graphicSize, l, border)
+                size = g.DrawLegend(topLeft, graphicSize, l, border, radius)
                 topLeft = New Point(
                     topLeft.X,
                     size.Height + d + topLeft.Y)
@@ -192,12 +207,18 @@ Namespace Graphic.Legend
 
             If Not regionBorder Is Nothing Then
                 Dim maxTitleSize As SizeF = legends.MaxLegendSize(g)
+
                 With graphicSize
                     size = New SizeF(.Width + d + maxTitleSize.Width, Math.Max(.Height, maxTitleSize.Height) * (n + 1))
-                    ZERO = New Point(ZERO.X + d / 2, ZERO.Y - d * 1.2)
-                    g.DrawRectangle(
-                        regionBorder.GDIObject,
-                        New Rectangle(ZERO, size.ToSize))
+                    ZERO = New Point(ZERO.X - d / 2, ZERO.Y - d * 1.2)
+
+                    If roundRectRegion Then
+                        Call RoundRect.Draw(g, ZERO, size, 15,, regionBorder)
+                    Else
+                        g.DrawRectangle(
+                            regionBorder.GDIObject,
+                            New Rectangle(ZERO, size.ToSize))
+                    End If
                 End With
             End If
         End Sub

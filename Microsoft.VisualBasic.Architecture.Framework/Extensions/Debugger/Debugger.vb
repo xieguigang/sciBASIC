@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f2a87a8ff6cc83f5bf647137a0f98157, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Language
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Debugging
+Imports Microsoft.VisualBasic.Logging
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
@@ -101,7 +102,10 @@ Public Module VBDebugger
             Dim head As String = $"DEBUG {Now.ToString}"
             Dim str As String = $"{_Indent(Indent)} {MSG}"
 
-            Call Terminal.AddToQueue(Sub() Call __print(head, str, ConsoleColor.White))
+            Call Terminal.AddToQueue(
+                Sub()
+                    Call __print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
+                End Sub)
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
@@ -110,14 +114,29 @@ Public Module VBDebugger
         Return Nothing
     End Function
 
-    Private Sub __print(head As String, str As String, msgColor As ConsoleColor)
+    <Extension> Public Sub __INFO_ECHO(msg$)
+        If Not Mute AndAlso __level < DebuggerLevels.Warning Then
+            Dim head As String = $"INFO {Now.ToString}"
+            Dim str As String = " " & msg
+
+            Call Terminal.AddToQueue(
+                Sub()
+                    Call __print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+                End Sub)
+#If DEBUG Then
+            Call Debug.WriteLine($"[{head}]{str}")
+#End If
+        End If
+    End Sub
+
+    Private Sub __print(head As String, str As String, msgColor As ConsoleColor, level As MSG_TYPES)
         If ForceSTDError Then
             Call Console.Error.WriteLine($"[{head}]{str}")
         Else
             Dim cl As ConsoleColor = Console.ForegroundColor
 
             Call Console.Write("[")
-            Console.ForegroundColor = DebuggerTagColor
+            Console.ForegroundColor = DebuggerTagColors(level)
             Call Console.Write(head)
             Console.ForegroundColor = cl
             Call Console.Write("]")
@@ -175,7 +194,12 @@ Public Module VBDebugger
 #End If
     End Sub
 
-    Const DebuggerTagColor As ConsoleColor = ConsoleColor.DarkGreen
+    ReadOnly DebuggerTagColors As New Dictionary(Of MSG_TYPES, ConsoleColor) From {
+        {MSG_TYPES.DEBUG, ConsoleColor.DarkGreen},
+        {MSG_TYPES.ERR, ConsoleColor.Red},
+        {MSG_TYPES.INF, ConsoleColor.Blue},
+        {MSG_TYPES.WRN, ConsoleColor.Yellow}
+    }
 
     ''' <summary>
     ''' Display the wraning level(YELLOW color) message on the console.
@@ -188,7 +212,10 @@ Public Module VBDebugger
         If Not Mute Then
             Dim head As String = $"WARN@{calls} {Now.ToString}"
 
-            Call Terminal.AddToQueue(Sub() Call __print(head, " " & msg, ConsoleColor.Yellow))
+            Call Terminal.AddToQueue(
+                Sub()
+                    Call __print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
+                End Sub)
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{msg}")
 #End If

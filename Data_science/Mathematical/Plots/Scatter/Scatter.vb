@@ -66,7 +66,7 @@ Public Module Scatter
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
                          Optional size As Size = Nothing,
-                         Optional padding$ = g.DefaultPaddingLarger,
+                         Optional padding$ = g.DefaultLargerPadding,
                          Optional bg As String = "white",
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,

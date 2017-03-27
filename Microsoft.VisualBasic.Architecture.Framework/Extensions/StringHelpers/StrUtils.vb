@@ -63,6 +63,22 @@ Imports System.Text.RegularExpressions
 Public Module StrUtils
 
     ''' <summary>
+    ''' 32-126
+    ''' </summary>
+    ''' <param name="len%"></param>
+    ''' <returns></returns>
+    Public Function RandomASCIIString(len%) As String
+        Dim rnd As New Random
+        Dim s As New List(Of Char)
+
+        For i As Integer = 0 To len
+            s.Add(Chr(rnd.Next(32, 127)))
+        Next
+
+        Return New String(s.ToArray)
+    End Function
+
+    ''' <summary>
     ''' <see cref="CultureInfo.InvariantCulture"/>, Gets the System.Globalization.CultureInfo object that is culture-independent
     ''' (invariant).
     ''' </summary>

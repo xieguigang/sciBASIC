@@ -87,7 +87,7 @@ Namespace Graphic
         ''' <param name="ignoreAxis"></param>
         ''' <param name="ignoreX"></param>
         ''' <param name="ignoreY"></param>
-        Sub New(x As AxisProvider, y As AxisProvider, range As Scaling,
+        Sub New(x As AxisProvider, y As AxisProvider, Optional range As Scaling = Nothing,
                 Optional ignoreAxis As Boolean = False,
                 Optional ignoreX As Boolean = False,
                 Optional ignoreY As Boolean = False)
@@ -119,8 +119,10 @@ Namespace Graphic
                 ymin = yrange.Min
             End If
 
-            hist = range.hist
-            serials = range.serials
+            If Not range Is Nothing Then
+                hist = range.hist
+                serials = range.serials
+            End If
         End Sub
 
         Public Function ScallingWidth(x As Double, width%) As Single
