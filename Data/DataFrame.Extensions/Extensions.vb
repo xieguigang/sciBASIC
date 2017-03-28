@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -66,7 +67,8 @@ Public Module SchemasAPI
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="primary$">
-    ''' 如果没有指定主键域的话，会默认用元素在集合之中的index编号来作为<see cref="EntityObject.ID"/>的属性值
+    ''' 如果没有指定主键域的话，会默认用元素在集合之中的index编号来作为<see cref="EntityObject.ID"/>的属性值，
+    ''' 假若目标类型也继承了<see cref="INamedValue"/>则会自动读取这个属性作为主键
     ''' </param>
     ''' <returns></returns>
     ''' 
@@ -79,12 +81,18 @@ Public Module SchemasAPI
         Dim schema As [Class] = [Class].GetSchema(type)
         Dim getID As Func(Of SeqValue(Of Object), String)
         Dim out As New List(Of EntityObject)
+        Dim primaryField As Field
 
-        If primary.StringEmpty Then
-            Dim field As Field = schema.GetField(primary)
-            schema.Remove(primary)
+        If Not primary.StringEmpty Then
+            primaryField = schema.GetField(primary)
+        Else
+            primaryField = schema.PrimaryField
+        End If
+
+        If Not primaryField Is Nothing Then
+            schema.Remove(primaryField.Name)
             getID = Function(o)
-                        Dim value As Object = field _
+                        Dim value As Object = primaryField _
                             .BindProperty _
                             .GetValue(+o)
                         Return Scripting.CStrSafe(value)
@@ -106,21 +114,47 @@ Public Module SchemasAPI
         Return out
     End Function
 
+    ''' <summary>
+    ''' 获取Schema之中的主键域
+    ''' </summary>
+    ''' <param name="schema"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function PrimaryField(schema As [Class]) As Field
+        Dim ilist As Type() = schema.Type.GetInterfaces
+
+        For Each [interface] As Type In {
+            GetType(INamedValue),
+            GetType(IReadOnlyId)
+        }
+            If ilist.IndexOf([interface]) > -1 Then
+                Dim map = schema.Type.GetInterfaceMap([interface])
+                Dim props = map.TargetMethods
+
+                ' 不能够查找出实现接口的属性？？？
+
+            End If
+        Next
+
+        Return Nothing
+    End Function
+
     <Extension>
     Public Function Summary(schema As [Class], o As Object, ByRef fill As EntityObject, stack$) As EntityObject
         For Each prop As Field In schema
+            Dim name$ = prop.Name
+
+            If Not stack.StringEmpty Then
+                name = $"{stack}${name}"
+            End If
+
             If Scripting.IsPrimitive(prop.Type) Then
                 Dim s$ = Scripting.CStrSafe(prop.GetValue(o))
-                Dim name$ = prop.Name
-
-                If Not stack.StringEmpty Then
-                    name = $"{stack}${name}"
-                End If
                 fill.Properties.Add(name, s)
             Else
                 ' 对于复杂类型，进行递归展开
                 Dim [sub] As Object = prop.GetValue(o)
-                Call prop.InnerClass.Summary(o, fill, stack:=prop.Name)
+                prop.InnerClass.Summary([sub], fill, stack:=name)
             End If
         Next
 

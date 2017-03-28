@@ -33,6 +33,8 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Public Module IOExample
 
@@ -64,7 +66,34 @@ Public Module IOExample
         End Function
     End Class
 
+    Public Class stackA
+        Implements INamedValue
+
+        Public Property a As String Implements INamedValue.Key
+        Public Property b As String
+        Public Property c As String
+        Public Property d As stackB
+
+        Public Shared Function Random() As stackA
+            Return New stackA With {.a = Rnd(), .b = Rnd(), .c = Rnd(), .d = New stackB With {.d = Now, .b = Rnd(), .e = Rnd()}}
+        End Function
+    End Class
+
+    Public Class stackB
+        Public Property d As Date
+        Public Property b As Boolean
+        Public Property e As Double
+        Public Property nv As NamedValue(Of Integer) = New NamedValue(Of Integer) With {.Name = Rnd(), .Description = Rnd(), .Value = Rnd()}
+    End Class
+
     Sub Main()
+
+        Dim lllll = {stackA.Random, stackA.Random, stackA.Random, stackA.Random}
+        Dim result = lllll.Summary
+
+        Call result.SaveTo("x:\test.csv")
+
+        Pause()
 
         Dim ttt = csv.IO.CharsParser("""Iron ion, ""(Fe2+)"",Iron homeostasis,PM0352,Iron homeostasis,Fur - Pasteurellales,+,XC_2767,XC_1988; XC_1989,oo""""oo,123")
 
