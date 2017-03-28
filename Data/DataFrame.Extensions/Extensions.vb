@@ -27,9 +27,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 
 Public Module SchemasAPI
@@ -55,7 +58,7 @@ Public Module SchemasAPI
             Next
         End Using
 
-        Return schema.GetJson(True).SaveTo(DIR & "/" & Schema.DefaultName)
+        Return JSON.GetJson(schema, True).SaveTo(DIR & "/" & Schema.DefaultName)
     End Function
 
     ''' <summary>
@@ -68,8 +71,45 @@ Public Module SchemasAPI
     ''' 如果没有指定主键域的话，会默认用元素在集合之中的index编号来作为<see cref="EntityObject.ID"/>的属性值
     ''' </param>
     ''' <returns></returns>
+    ''' 
+    <Extension>
     Public Function Summary(Of T As Class)(source As IEnumerable(Of T), Optional primary$ = Nothing) As EntityObject()
+        Return Summary(source, GetType(T), primary)
+    End Function
 
+    Public Function Summary(source As IEnumerable, type As Type, Optional primary$ = Nothing) As EntityObject()
+        Dim schema As SchemaProvider = SchemaProvider.CreateObject(type).CopyReadDataFromObject
+        Dim getID As Func(Of SeqValue(Of Object), String)
+        Dim out As New List(Of EntityObject)
 
+        If primary.StringEmpty Then
+            Dim field = schema.GetField(primary)
+
+            schema.Remove(primary)
+            getID = Function(o)
+                        Dim value As Object = field _
+                            .BindProperty _
+                            .GetValue(+o)
+                        Return Scripting.CStrSafe(value)
+                    End Function
+        Else
+            getID = Function(o) CStr(o.i)
+        End If
+
+        For Each i As SeqValue(Of Object) In source.SeqIterator
+            Dim ID$ = getID(i)
+            Dim table As New Dictionary(Of String, String)
+
+            For Each field In schema
+                If DataFramework.IsPrimitive(field.BindProperty.PropertyType) Then
+                    table.Add(field.Name, field.GetValue(+i))
+                Else
+                    ' 递归进行下一级的展开
+
+                End If
+            Next
+        Next
+
+        Return out
     End Function
 End Module
