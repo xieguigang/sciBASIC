@@ -230,7 +230,7 @@ Namespace Logical.FuzzyLogic
         End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
-            Return ToModel.SaveAsXml(Path, True, encoding)
+            Return ToModel.GetXml.SaveTo(Path, encoding)
         End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save

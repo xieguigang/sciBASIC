@@ -27,9 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
@@ -78,13 +76,12 @@ Public Module SchemasAPI
     End Function
 
     Public Function Summary(source As IEnumerable, type As Type, Optional primary$ = Nothing) As EntityObject()
-        Dim schema As SchemaProvider = SchemaProvider.CreateObject(type).CopyReadDataFromObject
+        Dim schema As [Class] = [Class].GetSchema(type)
         Dim getID As Func(Of SeqValue(Of Object), String)
         Dim out As New List(Of EntityObject)
 
         If primary.StringEmpty Then
-            Dim field = schema.GetField(primary)
-
+            Dim field As Field = schema.GetField(primary)
             schema.Remove(primary)
             getID = Function(o)
                         Dim value As Object = field _
@@ -97,19 +94,36 @@ Public Module SchemasAPI
         End If
 
         For Each i As SeqValue(Of Object) In source.SeqIterator
-            Dim ID$ = getID(i)
-            Dim table As New Dictionary(Of String, String)
-
-            For Each field In schema
-                If DataFramework.IsPrimitive(field.BindProperty.PropertyType) Then
-                    table.Add(field.Name, field.GetValue(+i))
-                Else
-                    ' 递归进行下一级的展开
-
-                End If
-            Next
+            out += schema.Summary(
+                (+i),
+                stack:="",
+                fill:=New EntityObject With {
+                    .ID = getID(i),
+                    .Properties = New Dictionary(Of String, String)
+                })
         Next
 
         Return out
+    End Function
+
+    <Extension>
+    Public Function Summary(schema As [Class], o As Object, ByRef fill As EntityObject, stack$) As EntityObject
+        For Each prop As Field In schema
+            If Scripting.IsPrimitive(prop.Type) Then
+                Dim s$ = Scripting.CStrSafe(prop.GetValue(o))
+                Dim name$ = prop.Name
+
+                If Not stack.StringEmpty Then
+                    name = $"{stack}${name}"
+                End If
+                fill.Properties.Add(name, s)
+            Else
+                ' 对于复杂类型，进行递归展开
+                Dim [sub] As Object = prop.GetValue(o)
+                Call prop.InnerClass.Summary(o, fill, stack:=prop.Name)
+            End If
+        Next
+
+        Return fill
     End Function
 End Module
