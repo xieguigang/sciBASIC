@@ -257,6 +257,10 @@ Namespace Text
             Return sb.ToString
         End Function
 
+        ''' <summary>
+        ''' 可以印刷的ASCII符号列表
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().ToArray(AddressOf Chr)
 
         Public Class [Byte]
