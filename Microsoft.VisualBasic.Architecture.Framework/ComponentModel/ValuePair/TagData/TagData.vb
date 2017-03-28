@@ -56,6 +56,10 @@ Namespace ComponentModel.TagData
         Public Overloads Shared Narrowing Operator CType(t As TagData(Of T, V)) As KeyValuePair(Of T, V)
             Return New KeyValuePair(Of T, V)(t.Tag, t.value)
         End Operator
+
+        Public Overloads Shared Narrowing Operator CType(r As TagData(Of T, V)) As Tuple(Of T, V)
+            Return New Tuple(Of T, V)(r.Tag, r.value)
+        End Operator
     End Class
 
     ''' <summary>
