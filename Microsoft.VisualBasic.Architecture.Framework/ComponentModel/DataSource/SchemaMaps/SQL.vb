@@ -68,8 +68,12 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' 的复制这些属性，从而很容易的复制数据表之中的一个行对象)
         ''' </summary>
         ''' <returns></returns>
-        Public Function Clone() As Object Implements ICloneable.Clone
+        Private Function Clone() As Object Implements ICloneable.Clone
             Return MyClass.MemberwiseClone
+        End Function
+
+        Public Function Copy() As SQLTable
+            Return DirectCast(MyClass.MemberwiseClone, SQLTable)
         End Function
     End Class
 End Namespace
