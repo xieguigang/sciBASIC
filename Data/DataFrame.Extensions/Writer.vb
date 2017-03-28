@@ -60,7 +60,7 @@ Public Class Writer : Implements IDisposable
 
         row += "#"
 
-        For Each field As Field In cls.Fields
+        For Each field As Field In cls.Fields.Values
             If Not field.InnerClass Is Nothing Then
                 field.InnerClass.__writer =
                     New Writer(field.InnerClass, DIR, encoding)
@@ -83,7 +83,7 @@ Public Class Writer : Implements IDisposable
         Call row.Clear()
         Call row.Add(i)
 
-        For Each field As Field In __class.Fields
+        For Each field As Field In __class.Fields.Values
             Dim x As Object = field.GetValue(obj)
 
             If field.InnerClass Is Nothing Then  ' 对于简单属性，直接生成字符串
@@ -108,7 +108,7 @@ Public Class Writer : Implements IDisposable
                 Call __file.Close()
                 Call __file.Dispose()
 
-                For Each field In __class.Fields
+                For Each field In __class.Fields.Values
                     If Not field.InnerClass Is Nothing Then
                         Call field.InnerClass.__writer.Dispose()
                     End If
