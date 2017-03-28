@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee70b0eefbf830b3826de93c5eb76440, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\ITextFile.vb"
+﻿#Region "Microsoft.VisualBasic::66ef0b05716687ddf6e656b6e2c4a9d2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\ITextFile.vb"
 
     ' Author:
     ' 

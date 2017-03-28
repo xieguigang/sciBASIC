@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9495c6e3db531ecdbb16b8ba9222869c, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::67dbfce3c228916799d188c3918f105d, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Edge.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0637e35e03fb51e0ab23a9a363276ae, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\LICENSE.vb"
+﻿#Region "Microsoft.VisualBasic::95666d3aca68ff95c78b4cab8c665409, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\LICENSE.vb"
 
     ' Author:
     ' 

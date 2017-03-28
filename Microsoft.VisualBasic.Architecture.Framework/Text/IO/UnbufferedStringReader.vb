@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b79e4afc046df4d4e13ceb4c18f7d9f7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\UnbufferedStringReader.vb"
+﻿#Region "Microsoft.VisualBasic::b79e4afc046df4d4e13ceb4c18f7d9f7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\IO\UnbufferedStringReader.vb"
 
     ' Author:
     ' 

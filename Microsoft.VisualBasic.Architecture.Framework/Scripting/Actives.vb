@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e0d513cb16d5e78999b2b03fe5e8aef, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Actives.vb"
+﻿#Region "Microsoft.VisualBasic::57eedd9ea997593c874d4cf2c0965873, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Actives.vb"
 
     ' Author:
     ' 

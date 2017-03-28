@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef8edf99fdb73138d77310baa2a796d0, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::1928a2f3d177ce0b2f8d80e7ece6af4b, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
 
     ' Author:
     ' 

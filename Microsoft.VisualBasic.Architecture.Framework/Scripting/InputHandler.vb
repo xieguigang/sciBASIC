@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::118b5b1c4c57c094e84b2e58d193c215, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::0001392a7e574292e31858e37e8699b7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
 
     ' Author:
     ' 

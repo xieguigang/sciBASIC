@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d696acc6f6a6080b68c1ced54c42180, ..\sciBASIC#\Data\DataFrame\Extensions\ProfileStreams.vb"
+﻿#Region "Microsoft.VisualBasic::0fb13f179fe81f31c21c8d04cdae09bd, ..\sciBASIC#\Data\DataFrame\Extensions\ProfileStreams.vb"
 
     ' Author:
     ' 

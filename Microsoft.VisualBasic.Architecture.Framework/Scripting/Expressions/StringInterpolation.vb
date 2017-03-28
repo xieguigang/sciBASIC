@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82e59f33b460ad6cb3377d88c6c2e98c, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\StringInterpolation.vb"
+﻿#Region "Microsoft.VisualBasic::53951d2fedd0e0d31383d7c8050cca66, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Expressions\StringInterpolation.vb"
 
     ' Author:
     ' 
