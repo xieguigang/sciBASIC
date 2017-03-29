@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02d92a935a9fdf339c2455b649c34e6e, ..\sciBASIC#\Data\Trinity\TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::c38ba59d43decdae4483244cc0150aa6, ..\sciBASIC#\Data\Trinity\TextRank.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Text

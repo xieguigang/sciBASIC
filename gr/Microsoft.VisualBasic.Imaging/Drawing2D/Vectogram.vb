@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9db34a107380d97488e81d03ebc92fc, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
+﻿#Region "Microsoft.VisualBasic::731f4d8a6932e2a8368950dacde8f27a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
 
     ' Author:
     ' 

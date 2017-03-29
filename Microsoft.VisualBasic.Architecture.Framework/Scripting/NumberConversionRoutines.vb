@@ -1,7 +1,35 @@
+ï»¿#Region "Microsoft.VisualBasic::0f83c4fd37ca00863517144f45b4bb07, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\NumberConversionRoutines.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Namespace Scripting
 
     ''' <summary>
-    ''' Õâ¸öÄ£¿éÖ®ÖÐ°üº¬ÓÐÒ»ÏµÁÐµÄ³¢ÊÔ°²È«µÄ¶ÔÒ»Ð©»ù±¾µÄÀàÐÍ½øÐÐÊý¾Ý×ª»»²Ù×÷
+    ''' ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Ö®ï¿½Ð°ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ïµï¿½ÐµÄ³ï¿½ï¿½Ô°ï¿½È«ï¿½Ä¶ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     ''' </summary>
     Public Module NumberConversionRoutines
 
@@ -64,7 +92,7 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' ³¢ÊÔ½«ÈÎÒâÀàÐÍ°²È«µÄ×ª»»Îª×Ö·û´®Öµ
+        ''' ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½È«ï¿½ï¿½×ªï¿½ï¿½Îªï¿½Ö·ï¿½ï¿½ï¿½Öµ
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
@@ -75,12 +103,12 @@ Namespace Scripting
                 ElseIf Convert.IsDBNull(obj) Then
                     Return String.Empty
                 Else
-                    ' ÒòÎª¶ÔÏó¿ÉÄÜ»á¶¨ÒåÁËNarrowingÎªStringÀàÐÍµÄ²Ù×÷·û£¬ËùÒÔÔÚÕâÀïµ÷ÓÃCStr²Ù×÷·û¶ø²»ÊÇµ÷ÓÃToString·½·¨
+                    ' ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü»á¶¨ï¿½ï¿½ï¿½ï¿½NarrowingÎªStringï¿½ï¿½ï¿½ÍµÄ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CStrï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ToStringï¿½ï¿½ï¿½ï¿½
                     Return CStr(obj)
                 End If
             Catch ex As Exception
                 Try
-                    ' ²»Çå³þCstrÊÇ·ñÒ²»áµ÷ÓÃToStringº¯Êý
+                    ' ï¿½ï¿½ï¿½ï¿½ï¿½Cstrï¿½Ç·ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ToStringï¿½ï¿½ï¿½ï¿½
                     Return obj.ToString
                 Catch ex2 As Exception
                     Return [default]
