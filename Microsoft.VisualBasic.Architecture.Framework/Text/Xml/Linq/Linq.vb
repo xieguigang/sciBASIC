@@ -32,7 +32,7 @@ Namespace Text.Xml.Linq
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing) As IEnumerable(Of T)
+        Public Iterator Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
             Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
             Dim XmlNodeList As XmlNodeList = XML _
                 .LoadXmlDocument _
@@ -45,7 +45,8 @@ Namespace Text.Xml.Linq
 
                 Call sb.Clear()
                 Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
-                Call sb.Append($"<{typeName} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" ")
+                Call sb.Append($"<{typeName} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""")
+                Call sb.Append(" ")
 
                 For Each attr As XmlAttribute In xmlNode.Attributes
                     Call sb.Append($"{attr.Name}=""{attr.Value}""")
@@ -55,6 +56,10 @@ Namespace Text.Xml.Linq
                 Call sb.AppendLine(">")
                 Call sb.AppendLine(XML)
                 Call sb.AppendLine($"</{typeName}>")
+
+                If Not xmlns.StringEmpty Then
+                    Call sb.Replace($"xmlns=""{xmlns}""", "")
+                End If
 
                 XML = sb.ToString
                 o = XML.LoadFromXml(Of T)
