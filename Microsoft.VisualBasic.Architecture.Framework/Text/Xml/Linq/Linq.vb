@@ -30,6 +30,10 @@ Namespace Text.Xml.Linq
         ''' <param name="typeName">
         ''' 列表之中的节点在XML之中的tag标记名称，假若这个参数值为空的话，则会默认使用目标类型名称<see cref="Type.Name"/>
         ''' </param>
+        ''' <param name="xmlns">
+        ''' Using for the namespace replacement.
+        ''' (当这个参数存在的时候，目标命名空间申明将会被替换为空字符串，数据对象才会被正确的加载)
+        ''' </param>
         ''' <returns></returns>
         <Extension>
         Public Iterator Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
