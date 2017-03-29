@@ -530,6 +530,7 @@
     <Compile Include="Text\Parser\HtmlParser\HtmlStrips.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
+    <Compile Include="Text\Xml\Linq\Linq.vb" />
     <Compile Include="Text\Xml\Models.vb" />
     <Compile Include="Text\Xml\Extensions.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />

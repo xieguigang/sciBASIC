@@ -1,32 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::f9c56394474665db59560e5cc91b410d, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Dynamic
+Imports System.Reflection
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace StorageProvider.ComponentModels
@@ -35,16 +39,27 @@ Namespace StorageProvider.ComponentModels
     ''' Data structure for high perfermence data loading.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class DynamicObjectLoader : Inherits Dynamic.DynamicObject
+    Public Class DynamicObjectLoader : Inherits DynamicObject
         Implements IDataRecord
         Implements IEnumerable(Of KeyValuePair(Of String, String))
 
 #If NET_40 = 0 Then
         Implements IReadOnlyDictionary(Of String, String)
 #End If
-
+        ''' <summary>
+        ''' The row value of the specific row number <see cref="LineNumber"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Property RowData As RowObject
+        ''' <summary>
+        ''' The table's fields ordinal schema
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Schema As Dictionary(Of String, Integer)
+        ''' <summary>
+        ''' Row line index number in the csv data file.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property LineNumber As Long
 
         Protected Friend _innerDataFrame As DataFrame
@@ -52,8 +67,12 @@ Namespace StorageProvider.ComponentModels
         Public Sub New()
         End Sub
 
-        Public Sub New(DataFrame As DataFrame)
-            Schema = DataFrame.SchemaOridinal
+        ''' <summary>
+        ''' Copy the ordinal schema from the source data frame.
+        ''' </summary>
+        ''' <param name="df">The source data frame</param>
+        Public Sub New(df As DataFrame)
+            Schema = df.SchemaOridinal
         End Sub
 
         Sub New(row As RowObject, schema As Dictionary(Of String, Integer))
@@ -81,10 +100,21 @@ Namespace StorageProvider.ComponentModels
             End Set
         End Property
 
+        ''' <summary>
+        ''' Get field values by using a collection of the column index
+        ''' </summary>
+        ''' <param name="idx"></param>
+        ''' <returns></returns>
         Public Function Read(idx As IEnumerable(Of Integer)) As String()
             Return idx.ToArray(Function(x) RowData.Column(x))
         End Function
 
+        ''' <summary>
+        ''' Set value by for the specific field <paramref name="Name"/>
+        ''' </summary>
+        ''' <param name="Name"></param>
+        ''' <param name="Value"></param>
+        ''' <returns></returns>
         Public Function SetAttributeValue(Name As String, Value As String) As Boolean
             If Schema.ContainsKey(Name) Then
                 Dim Order As Integer = Schema(Name)
@@ -98,7 +128,12 @@ Namespace StorageProvider.ComponentModels
             Return True
         End Function
 
-        Public Function GetOrdinal(Column As String) As Integer
+        ''' <summary>
+        ''' Get order index of the specific <paramref name="Column"/> in this csv table.
+        ''' </summary>
+        ''' <param name="Column"></param>
+        ''' <returns></returns>
+        Public Function GetOrdinal(Column As String) As Integer Implements IDataRecord.GetOrdinal
             If Schema.ContainsKey(Column) Then
                 Return Schema(Column)
             Else
@@ -106,21 +141,42 @@ Namespace StorageProvider.ComponentModels
             End If
         End Function
 
+        ''' <summary>
+        ''' Gets the order index collection of the specific <paramref name="Column"/> fields in this csv table.
+        ''' </summary>
+        ''' <param name="Column"></param>
+        ''' <returns></returns>
         Public Function GetOrdinal(Column As IEnumerable(Of String)) As Integer()
             Return Column.ToArray(Function(x) GetOrdinal(x))
         End Function
 
+        ''' <summary>
+        ''' Get column value by using a specific column index
+        ''' </summary>
+        ''' <param name="Ordinal"></param>
+        ''' <returns></returns>
         Public Function GetValue(Ordinal As Integer) As String
             Return RowData.Column(Ordinal)
         End Function
 
+        ''' <summary>
+        ''' Gets the columns' values by using a specific collection of the column index.
+        ''' </summary>
+        ''' <param name="ords"></param>
+        ''' <returns></returns>
         Public Function GetValues(ords As Integer()) As String()
             Return ords.ToArray(Function(n) RowData.Column(n))
         End Function
 
+        ''' <summary>
+        ''' Creates the ordinal schema
+        ''' </summary>
+        ''' <param name="columns"></param>
+        ''' <returns></returns>
         Public Shared Function CreateSchema(columns As String()) As Dictionary(Of String, Integer)
-            Dim LQuery = (From i As Integer In columns.Sequence Select i, Col = columns(i)).ToArray
-            Return LQuery.ToDictionary(Function(item) item.Col, elementSelector:=Function(item) item.i)
+            Return columns.SeqIterator _
+                .ToDictionary(Function(field) +field,
+                              Function(index) index.i)
         End Function
 
         Public Overrides Function ToString() As String
@@ -128,29 +184,32 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         ''' <summary>
-        ''' 函数会尝试将目标对象的属性值按照名称进行赋值，前提是目标属性值的类型应该为基本的类型。假若类型转换不成功，则会返回空对象
+        ''' Try cast this row data as the target type object. 
+        ''' If the casting failure, then this function will returns nothing.
+        ''' (函数会尝试将目标对象的属性值按照名称进行赋值，前提是目标属性值的类型应该为基本的类型。
+        ''' 假若类型转换不成功，则会返回空对象)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function [TryCast](Of T As Class)() As T
-            Dim Properties As System.Reflection.PropertyInfo() =
-                (From pInfo As System.Reflection.PropertyInfo
-                 In GetType(T).GetProperties(System.Reflection.BindingFlags.Public)
+            Dim Properties As PropertyInfo() =
+                (From pInfo As PropertyInfo
+                 In GetType(T).GetProperties(BindingFlags.Public)
                  Where Scripting.IsPrimitive(pInfo.PropertyType)
                  Select pInfo).ToArray
-            Dim FilledObject As T = Activator.CreateInstance(Of T)()
+            Dim o As T = Activator.CreateInstance(Of T)()
 
-            For Each [Property] As System.Reflection.PropertyInfo In Properties
+            For Each [Property] As PropertyInfo In Properties
 
                 Dim value As String = ""
                 Call __tryGetValue([Property].Name, value)
 
                 Dim obj_Value As Object = Scripting.CTypeDynamic(value, [Property].PropertyType)
-                Call [Property].SetValue(FilledObject, obj_Value, Nothing)
+                Call [Property].SetValue(o, obj_Value, Nothing)
             Next
 
-            Return FilledObject
+            Return o
         End Function
 
 #Region ""
@@ -219,8 +278,13 @@ Namespace StorageProvider.ComponentModels
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Function GetKey(key As String) As String
-            Dim LQuery = (From item In Schema Where String.Equals(item.Key, key, StringComparison.OrdinalIgnoreCase) Select value_key = item.Key).ToArray
-            Return LQuery.FirstOrDefault
+            Dim LQuery = LinqAPI.DefaultFirst(Of String) <=
+                From item
+                In Schema
+                Where String.Equals(item.Key, key, StringComparison.OrdinalIgnoreCase)
+                Select value_key = item.Key
+
+            Return LQuery
         End Function
 
         Private Function __tryGetValue(key As String, ByRef value As String) As Boolean
@@ -341,16 +405,12 @@ Namespace StorageProvider.ComponentModels
             Throw New NotImplementedException()
         End Function
 
-        Private Function IDataRecord_GetOrdinal(name As String) As Integer Implements IDataRecord.GetOrdinal
-            Throw New NotImplementedException()
-        End Function
-
         Public Function GetBoolean(i As Integer) As Boolean Implements IDataRecord.GetBoolean
-            Throw New NotImplementedException()
+            Return RowData(i).getBoolean
         End Function
 
         Public Function GetByte(i As Integer) As Byte Implements IDataRecord.GetByte
-            Throw New NotImplementedException()
+            Return CByte(Val(RowData(i)))
         End Function
 
         Public Function GetBytes(i As Integer, fieldOffset As Long, buffer() As Byte, bufferoffset As Integer, length As Integer) As Long Implements IDataRecord.GetBytes
@@ -358,7 +418,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Public Function GetChar(i As Integer) As Char Implements IDataRecord.GetChar
-            Throw New NotImplementedException()
+            Return RowData(i).FirstOrDefault
         End Function
 
         Public Function GetChars(i As Integer, fieldoffset As Long, buffer() As Char, bufferoffset As Integer, length As Integer) As Long Implements IDataRecord.GetChars
@@ -366,39 +426,39 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Public Function GetGuid(i As Integer) As Guid Implements IDataRecord.GetGuid
-            Throw New NotImplementedException()
+            Return Guid.Parse(RowData(i))
         End Function
 
         Public Function GetInt16(i As Integer) As Short Implements IDataRecord.GetInt16
-            Throw New NotImplementedException()
+            Return CShort(Val(RowData(i)))
         End Function
 
         Public Function GetInt32(i As Integer) As Integer Implements IDataRecord.GetInt32
-            Throw New NotImplementedException()
+            Return CInt(Val(RowData(i)))
         End Function
 
         Public Function GetInt64(i As Integer) As Long Implements IDataRecord.GetInt64
-            Throw New NotImplementedException()
+            Return CLng(Val(RowData(i)))
         End Function
 
         Public Function GetFloat(i As Integer) As Single Implements IDataRecord.GetFloat
-            Throw New NotImplementedException()
+            Return CSng(Val(RowData(i)))
         End Function
 
         Public Function GetDouble(i As Integer) As Double Implements IDataRecord.GetDouble
-            Throw New NotImplementedException()
+            Return Val(RowData(i))
         End Function
 
         Public Function GetString(i As Integer) As String Implements IDataRecord.GetString
-            Throw New NotImplementedException()
+            Return RowData(i)
         End Function
 
         Public Function GetDecimal(i As Integer) As Decimal Implements IDataRecord.GetDecimal
-            Throw New NotImplementedException()
+            Return CDec(Val(RowData(i)))
         End Function
 
         Public Function GetDateTime(i As Integer) As Date Implements IDataRecord.GetDateTime
-            Throw New NotImplementedException()
+            Return Date.Parse(RowData(i))
         End Function
 
         Public Function GetData(i As Integer) As IDataReader Implements IDataRecord.GetData
