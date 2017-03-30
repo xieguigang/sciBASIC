@@ -225,11 +225,13 @@ Public Module App
         End Get
         Set(value As String)
             If String.Equals(value, "-") Then  ' 切换到前一个工作目录
-                FileIO.FileSystem.CurrentDirectory = _preDIR
+                value = _preDIR
             Else
                 _preDIR = FileIO.FileSystem.CurrentDirectory
-                FileIO.FileSystem.CurrentDirectory = value
             End If
+
+            FileIO.FileSystem.CreateDirectory(value)
+            FileIO.FileSystem.CurrentDirectory = value
         End Set
     End Property
 
@@ -1025,6 +1027,15 @@ Public Module App
         New UpdateThread(10 * 60 * 1000, AddressOf App.__GCThreadInvoke)
 
     Dim _CLIAutoClean As Boolean = False
+    Dim __exitHooks As New List(Of Action)
+
+    ''' <summary>
+    ''' 这里添加在应用程序退出执行的时候所需要完成的任务
+    ''' </summary>
+    ''' <param name="hook"></param>
+    Public Sub AddExitCleanHook(hook As Action)
+        Call __exitHooks.Add(hook)
+    End Sub
 
     ''' <summary>
     ''' 自动停止GC当前程序的线程
@@ -1037,6 +1048,10 @@ Public Module App
         If _CLIAutoClean Then
             Call StopGC()
         End If
+
+        For Each hook As Action In __exitHooks
+            Call hook()
+        Next
 
         Return state
     End Function
