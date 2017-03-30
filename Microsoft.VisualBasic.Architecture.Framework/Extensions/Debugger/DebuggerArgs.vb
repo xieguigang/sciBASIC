@@ -153,8 +153,12 @@ Namespace Debugging
             End If
 
             Dim vars As Dictionary(Of String, String) = args.GetDictionary("/@set")
+            Dim disableLoadOptions As Boolean = args.GetBoolean("--load_options.disable")
 
-            If Not vars.IsNullOrEmpty Then
+            ' --load_options.disable 开关将会禁止所有的环境项目的设置
+            ' 但是环境变量任然会进行加载设置
+
+            If Not disableLoadOptions AndAlso Not vars.IsNullOrEmpty Then
                 Call App.JoinVariables(
                     vars _
                     .Select(Function(x)
@@ -166,7 +170,11 @@ Namespace Debugging
 
                 If vars.ContainsKey("Proxy") Then
                     WebServiceUtils.Proxy = vars("Proxy")
-                    Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".__DEBUG_ECHO
+                    Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".__INFO_ECHO
+                End If
+                If vars.ContainsKey("setwd") Then
+                    App.CurrentDirectory = vars("setwd")
+                    Call $"[Config] current_work_directory={App.CurrentDirectory}".__INFO_ECHO
                 End If
             End If
 
