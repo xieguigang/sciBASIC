@@ -1,34 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::c76a6917dd558e6ee8dadfa31d3987fd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Tsv.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
 Imports RowTokens = System.Collections.Generic.IEnumerable(Of System.String)
 
@@ -48,16 +52,12 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="Path"></param>
         ''' <returns></returns>
         Public Iterator Function Load(Of T As Class)(path$, Optional encoding As Encodings = Encodings.UTF8) As IEnumerable(Of T)
-            Dim data = TsvFileIO.LoadFile(path, encoding.CodePage)
-            Dim header$() = data.First.ToArray
-            Dim schemaOrdinals As New Dictionary(Of String, Integer)
-
-            For i As Integer = 0 To header.Length - 1
-                Call schemaOrdinals.Add(header(i), i)
-            Next
-
+            Dim data As RowTokens() = TsvFileIO.LoadFile(path, encoding.CodePage)
             Dim tableSchema = DataFramework.Schema(Of T)(PropertyAccess.ReadWrite, True)
             Dim type As Type = GetType(T)
+            Dim schemaOrdinals As IndexOf(Of String) = path _
+                .OpenReader(encoding.CodePage) _
+                .GetTsvHeader(False)
 
             For Each line As String() In data.Skip(1).Select(Function(r) DirectCast(r, String()))
                 Dim o As Object = Activator.CreateInstance(type)
@@ -72,6 +72,19 @@ Namespace ComponentModel.DataSourceModel
 
                 Yield DirectCast(o, T)
             Next
+        End Function
+
+        <Extension>
+        Public Function GetTsvHeader(stream As StreamReader, Optional lower As Boolean = False, Optional process As Func(Of String, String) = Nothing) As IndexOf(Of String)
+            Dim t As Func(Of String, String) = If(process Is Nothing, Function(s$) s, process)
+            Dim headers$() = stream.ReadLine _
+                .Split(ASCII.TAB) _
+                .Select(process) _
+                .ToArray
+            Dim source = If(lower,
+                headers.Select(AddressOf Strings.LCase),
+                headers.As(Of IEnumerable(Of String)))
+            Return New IndexOf(Of String)(source)
         End Function
 
         ''' <summary>
