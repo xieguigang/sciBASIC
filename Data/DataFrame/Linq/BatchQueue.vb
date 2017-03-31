@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb79876da6f5d76d6f5b8646db4d6ba2, ..\sciBASIC#\Data\DataFrame\Linq\BatchQueue.vb"
+﻿#Region "Microsoft.VisualBasic::c1efc09820286c4c6870615468178aea, ..\sciBASIC#\Data\DataFrame\Linq\BatchQueue.vb"
 
     ' Author:
     ' 
@@ -102,7 +102,7 @@ Namespace IO.Linq
                                                 As IEnumerable(Of NamedValue(Of T()))
 
             Dim sw As Stopwatch = Stopwatch.StartNew
-            Dim encode As Encoding = encoding.GetEncodings
+            Dim encode As Encoding = encoding.CodePage
 
             Call "Wait for the IO queue.....".__DEBUG_ECHO
 

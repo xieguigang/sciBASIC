@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e39c71cd872e64e9f3eb30861ce7c53e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
+﻿#Region "Microsoft.VisualBasic::e367dc52e0ae517e10294a2f5247d720, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
 
     ' Author:
     ' 
@@ -189,6 +189,21 @@ Namespace Mathematical
             End If
 
             Return data.ToArray
+        End Function
+
+        <Extension>
+        Public Function MapHelper(Of T)(data As IEnumerable(Of T)) As Func(Of Integer, T)
+            Dim source As T() = data.ToArray
+
+            Return Function(level%)
+                       If level < 0 Then
+                           level = 0
+                       ElseIf level >= source.Length Then
+                           level = source.Length - 1
+                       End If
+
+                       Return source(level)
+                   End Function
         End Function
     End Module
 End Namespace

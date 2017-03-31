@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67beb42d4fc01a85d6cf36d6480f7ead, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\InteractiveIODevice\InteractiveDevice.vb"
+﻿#Region "Microsoft.VisualBasic::17805255bceab15b494eb0d3c45d8349, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\InteractiveIODevice\InteractiveDevice.vb"
 
     ' Author:
     ' 
@@ -233,7 +233,7 @@ EXIT_INPUT:         strCommand = HistoryCallerStack & n.KeyChar & MyBase.ReadLin
         End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(Path, encoding.GetEncodings)
+            Return Save(Path, encoding.CodePage)
         End Function
     End Class
 End Namespace

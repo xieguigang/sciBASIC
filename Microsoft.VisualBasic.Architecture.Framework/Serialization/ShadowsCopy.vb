@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26f4fff10fba887366bd157f86618ee5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\ShadowsCopy.vb"
+﻿#Region "Microsoft.VisualBasic::0898f47b50df563417e9960e4917913b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\ShadowsCopy.vb"
 
     ' Author:
     ' 
@@ -26,14 +26,42 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
 
 #If NET_40 = 0 Then
 
 Namespace Serialization
 
     Public Module ShadowsCopy
+
+        ''' <summary>
+        ''' Perform a deep Copy of the object.
+        ''' </summary>
+        ''' <typeparam name="T">The type of object being copied.</typeparam>
+        ''' <param name="source">The object instance to copy.</param>
+        ''' <returns>The copied object.</returns>
+        <Extension> Public Function DeepCopy(Of T)(source As T) As T
+            If (Not GetType(T).IsSerializable) Then
+                Throw New ArgumentException("The type must be serializable.", NameOf(source))
+            End If
+
+            ' Don't serialize a null object, simply return the default for that object
+            If (Object.ReferenceEquals(source, null)) Then
+                Return Nothing
+            End If
+
+            Using stream As New MemoryStream()
+                With New BinaryFormatter()
+                    Call .Serialize(stream, source)
+                    Call stream.Seek(0, SeekOrigin.Begin)
+                    Return DirectCast(.Deserialize(stream), T)
+                End With
+            End Using
+        End Function
 
         ''' <summary>
         ''' 将目标对象之中的属性按值复制

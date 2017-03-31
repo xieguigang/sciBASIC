@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7740fc2bc95538164720179f47d3d5ff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::f4e76c17bc7e3242f9b262d020998aff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
 
     ' Author:
     ' 
@@ -156,7 +156,7 @@ Namespace CommandLine.Reflection
                             Call sb.AppendLine("###### " & param.Name)
 
                             For Each pType As Type In param.Value.AcceptTypes
-                                Call sb.AppendLine(Actives.DisplType(pType))
+                                Call sb.AppendLine(Actives.DisplayType(pType))
                             Next
                         Next
                     End If

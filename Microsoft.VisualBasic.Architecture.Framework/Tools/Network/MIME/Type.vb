@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::852b2464d95099949b7cd6d7f34f9cf5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\Type.vb"
+﻿#Region "Microsoft.VisualBasic::a4445348bb9f829f9c7046c1d266b9a6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\Type.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Namespace Net.Protocols.ContentTypes
                 xml.xmlns.xmlns = xmlns
                 xml.encoding = XmlEncodings.UTF8
 
-                Return xml.ToString.SaveTo(path, Encodings.UTF8.GetEncodings)
+                Return xml.ToString.SaveTo(path, Encodings.UTF8.CodePage)
             End Function
         End Class
     End Class

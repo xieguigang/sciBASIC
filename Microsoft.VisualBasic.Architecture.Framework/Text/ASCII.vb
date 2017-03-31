@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8395e817dc0e86fe9474821db810bf61, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::f1dc74aa68683f48dcfd87889b0c0c10, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -257,6 +257,10 @@ Namespace Text
             Return sb.ToString
         End Function
 
+        ''' <summary>
+        ''' 可以印刷的ASCII符号列表
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().ToArray(AddressOf Chr)
 
         Public Class [Byte]

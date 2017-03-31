@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e14bc688b675f14a2e0a0d2e9dc76654, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::a608b60079024d3abfde990a310f71bf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,20 @@ Namespace ComponentModel.Collection
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Class IndexOf(Of T)
+        Implements IEnumerable(Of SeqValue(Of T))
 
         Dim maps As New Dictionary(Of T, Integer)
+        Dim index As List(Of SeqValue(Of T))
+
+        ''' <summary>
+        ''' 获取包含在<see cref="System.Collections.Generic.Dictionary"/>中的键/值对的数目。
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Count As Integer
+            Get
+                Return maps.Count
+            End Get
+        End Property
 
         ''' <summary>
         ''' 请注意，这里的数据源请尽量使用Distinct的，否则对于重复的数据，只会记录下第一个位置
@@ -49,6 +61,12 @@ Namespace ComponentModel.Collection
                     Call maps.Add(+x, x.i)
                 End If
             Next
+
+            index = maps.Select(
+                Function(s) New SeqValue(Of T) With {
+                    .i = s.Value,
+                    .value = s.Key
+                }).ToList
         End Sub
 
         ''' <summary>
@@ -73,6 +91,11 @@ Namespace ComponentModel.Collection
         Public Sub Add(x As T)
             If Not maps.ContainsKey(x) Then
                 Call maps.Add(x, maps.Count)
+                Call index.Add(
+                    New SeqValue(Of T) With {
+                        .i = maps.Count,
+                        .value = x
+                    })
             End If
         End Sub
 
@@ -96,5 +119,15 @@ Namespace ComponentModel.Collection
         Public Shared Narrowing Operator CType(index As IndexOf(Of T)) As Dictionary(Of T, Integer)
             Return New Dictionary(Of T, Integer)(index.maps)
         End Operator
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of SeqValue(Of T)) Implements IEnumerable(Of SeqValue(Of T)).GetEnumerator
+            For Each o As SeqValue(Of T) In index
+                Yield o
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Class
 End Namespace

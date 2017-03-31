@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::762dc6c06301b0524048e96e6a0141df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::dfc787c2c39b1a6dfcd1caca22003d3a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,15 @@ Namespace Language
     ''' <typeparam name="T"></typeparam>
     Public Class Value(Of T) : Implements IValueOf
 
+        ''' <summary>
+        ''' This object have a <see cref="IValueOf.value"/> property for stores its data
+        ''' </summary>
         Public Interface IValueOf
+
+            ''' <summary>
+            ''' value property for this object stores its data
+            ''' </summary>
+            ''' <returns></returns>
             Property value As T
         End Interface
 

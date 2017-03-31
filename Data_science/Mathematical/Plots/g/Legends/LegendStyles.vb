@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ef47a9641388cf67b8e226a538a1858, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Legends\LegendStyles.vb"
+﻿#Region "Microsoft.VisualBasic::6a078d8355f04beaeca3061182d5630e, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Legends\LegendStyles.vb"
 
     ' Author:
     ' 
@@ -26,44 +26,48 @@
 
 #End Region
 
-''' <summary>
-''' Vector shapes that drawing of this legend.
-''' </summary>
-Public Enum LegendStyles
+Namespace Graphic.Legend
+
     ''' <summary>
-    ''' 矩形
+    ''' Vector shapes that drawing of this legend.
     ''' </summary>
-    Rectangle
-    ''' <summary>
-    ''' 圆形
-    ''' </summary>
-    Circle
-    ''' <summary>
-    ''' 实线
-    ''' </summary>
-    SolidLine
-    ''' <summary>
-    ''' 虚线
-    ''' </summary>
-    DashLine
-    ''' <summary>
-    ''' 菱形
-    ''' </summary>
-    Diamond
-    ''' <summary>
-    ''' 三角形
-    ''' </summary>
-    Triangle
-    ''' <summary>
-    ''' 六边形
-    ''' </summary>
-    Hexagon
-    ''' <summary>
-    ''' 五角星
-    ''' </summary>
-    Pentacle
-    ''' <summary>
-    ''' 正方形
-    ''' </summary>
-    Square
-End Enum
+    Public Enum LegendStyles
+        ''' <summary>
+        ''' 矩形
+        ''' </summary>
+        Rectangle
+        ''' <summary>
+        ''' 圆形
+        ''' </summary>
+        Circle
+        ''' <summary>
+        ''' 实线
+        ''' </summary>
+        SolidLine
+        ''' <summary>
+        ''' 虚线
+        ''' </summary>
+        DashLine
+        ''' <summary>
+        ''' 菱形
+        ''' </summary>
+        Diamond
+        ''' <summary>
+        ''' 三角形
+        ''' </summary>
+        Triangle
+        ''' <summary>
+        ''' 六边形
+        ''' </summary>
+        Hexagon
+        ''' <summary>
+        ''' 五角星
+        ''' </summary>
+        Pentacle
+        ''' <summary>
+        ''' 正方形
+        ''' </summary>
+        Square
+        RoundRectangle
+    End Enum
+End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c7cc02d87cac814baff1dacd03b5df6, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::59dc0509df443ce8f1482d4ea2424e98, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -67,7 +68,7 @@ Public Module PieChart
                          Optional valueLabelStyle$ = CSSFont.Win7Bold,
                          Optional legend As Boolean = True,
                          Optional legendFont$ = CSSFont.Win7LargeBold,
-                         Optional legendBorder As Border = Nothing,
+                         Optional legendBorder As Stroke = Nothing,
                          Optional minRadius As Single = -1,
                          Optional reorder% = 0) As Bitmap
 

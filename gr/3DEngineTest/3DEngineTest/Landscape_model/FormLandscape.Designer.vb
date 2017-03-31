@@ -33,11 +33,13 @@ Partial Class FormLandscape
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ResetToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.LightToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RemoveTexturesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
-        Me.RemoveTexturesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.trbFOV = New System.Windows.Forms.TrackBar()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trbFOV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -119,6 +121,12 @@ Partial Class FormLandscape
         Me.LightToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
         Me.LightToolStripMenuItem.Text = "Light"
         '
+        'RemoveTexturesToolStripMenuItem
+        '
+        Me.RemoveTexturesToolStripMenuItem.Name = "RemoveTexturesToolStripMenuItem"
+        Me.RemoveTexturesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.RemoveTexturesToolStripMenuItem.Text = "Remove Textures"
+        '
         'ResetToolStripMenuItem
         '
         Me.ResetToolStripMenuItem.Name = "ResetToolStripMenuItem"
@@ -131,26 +139,36 @@ Partial Class FormLandscape
         Me.TrackBar1.AutoSize = False
         Me.TrackBar1.BackColor = System.Drawing.Color.LightBlue
         Me.TrackBar1.LargeChange = 10
-        Me.TrackBar1.Location = New System.Drawing.Point(597, 462)
-        Me.TrackBar1.Maximum = -5
+        Me.TrackBar1.Location = New System.Drawing.Point(543, 462)
+        Me.TrackBar1.Maximum = 500
         Me.TrackBar1.Minimum = -500
         Me.TrackBar1.Name = "TrackBar1"
-        Me.TrackBar1.Size = New System.Drawing.Size(123, 19)
+        Me.TrackBar1.Size = New System.Drawing.Size(177, 19)
         Me.TrackBar1.SmallChange = 5
         Me.TrackBar1.TabIndex = 1
         Me.TrackBar1.Value = -5
         '
-        'RemoveTexturesToolStripMenuItem
+        'trbFOV
         '
-        Me.RemoveTexturesToolStripMenuItem.Name = "RemoveTexturesToolStripMenuItem"
-        Me.RemoveTexturesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
-        Me.RemoveTexturesToolStripMenuItem.Text = "Remove Textures"
+        Me.trbFOV.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.trbFOV.AutoSize = False
+        Me.trbFOV.BackColor = System.Drawing.Color.LightBlue
+        Me.trbFOV.LargeChange = 10
+        Me.trbFOV.Location = New System.Drawing.Point(543, 437)
+        Me.trbFOV.Maximum = 500
+        Me.trbFOV.Minimum = -500
+        Me.trbFOV.Name = "trbFOV"
+        Me.trbFOV.Size = New System.Drawing.Size(177, 19)
+        Me.trbFOV.SmallChange = 5
+        Me.trbFOV.TabIndex = 2
+        Me.trbFOV.Value = 256
         '
         'FormLandscape
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(742, 493)
+        Me.Controls.Add(Me.trbFOV)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.TrackBar1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -160,6 +178,7 @@ Partial Class FormLandscape
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trbFOV, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -178,4 +197,5 @@ Partial Class FormLandscape
     Friend WithEvents ResetToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents LightToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RemoveTexturesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents trbFOV As TrackBar
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9495c6e3db531ecdbb16b8ba9222869c, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::67dbfce3c228916799d188c3918f105d, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Edge.vb"
 
     ' Author:
     ' 
@@ -104,8 +104,12 @@ Namespace FileStream
         ''' 带有方向的互作关系字符串
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetDirectedGuid() As String
-            Return $"{FromNode} {InteractionType} {ToNode}"
+        Public Function GetDirectedGuid(Optional ignoreTypes As Boolean = False) As String
+            If Not ignoreTypes Then
+                Return $"{FromNode} {InteractionType} {ToNode}"
+            Else
+                Return $"{FromNode} + {ToNode}"
+            End If
         End Function
 
         ''' <summary>

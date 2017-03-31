@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::997ff7784fd8aebd817257931ae3589b, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::d7ccc6002ad634e43309946a8097731c, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@ Namespace StorageProvider.ComponentModels
     ''' </summary>
     ''' <remarks></remarks>
     Public Class SchemaProvider
+        Implements IEnumerable(Of StorageProvider)
 
         ''' <summary>
         ''' 基本数据类型的列
@@ -158,6 +159,28 @@ Namespace StorageProvider.ComponentModels
         Dim _dictEnumColumns As Dictionary(Of String, [Enum])
         Dim _dictKeyMeta As Dictionary(Of String, KeyValuePair)
 #End Region
+
+        ''' <summary>
+        ''' 从Schema之中移除一个绑定的域
+        ''' </summary>
+        ''' <param name="name$"></param>
+        Public Sub Remove(name$)
+            If _dictCollectionColumns.ContainsKey(name) Then
+                _dictCollectionColumns.Remove(name)
+                _collectionColumns = _dictCollectionColumns.Values.ToArray
+            ElseIf _dictColumns.ContainsKey(name) Then
+                _dictColumns.Remove(name)
+                _columns = _dictColumns.Values.ToArray
+            ElseIf _dictEnumColumns.ContainsKey(name) Then
+                _dictEnumColumns.Remove(name)
+                _enumColumns = _dictEnumColumns.Values.ToArray
+            ElseIf _dictKeyMeta.ContainsKey(name) Then
+                _dictKeyMeta.Remove(name)
+                _keyMeta = _dictKeyMeta.Values.ToArray
+            Else
+                ' 没有找到相应的键名，则不做进一步的处理了
+            End If
+        End Sub
 
         Public ReadOnly Property HasMetaAttributes As Boolean
             Get
@@ -434,6 +457,16 @@ Namespace StorageProvider.ComponentModels
         Private Shared Function __columnType(type As ProviderIds) As Boolean
             Return type = Reflection.ProviderIds.Column OrElse
                 type = Reflection.ProviderIds.NullMask
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of StorageProvider) Implements IEnumerable(Of StorageProvider).GetEnumerator
+            For Each field As StorageProvider In Properties
+                Yield field
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

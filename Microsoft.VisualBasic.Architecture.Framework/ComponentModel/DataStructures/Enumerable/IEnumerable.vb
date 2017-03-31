@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af724995adf68f395e8091ab6c07d50e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::b60dc5167bf84b7d8b5f2ad02c4e5d00, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,8 @@ Namespace ComponentModel.Collection.Generic
 
     ''' <summary>
     ''' This type of object have a <see cref="INamedValue.Key"></see> property to unique identified itself in a collection.
-    ''' This interface was inherits from type <see cref="IKeyedEntity(Of String)"/>
+    ''' This interface was inherits from type <see cref="IKeyedEntity(Of String)"/>.
+    ''' (一个具有自己的名称的变量值的抽象)
     ''' </summary>
     ''' <remarks></remarks>
     Public Interface INamedValue : Inherits IKeyedEntity(Of String)

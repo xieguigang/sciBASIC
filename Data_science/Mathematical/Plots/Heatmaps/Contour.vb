@@ -1,39 +1,40 @@
-﻿#Region "Microsoft.VisualBasic::5a251ffdbdef54e26ac191131aebea90, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::2b8d2621a04a8045b1862638f763cfe7, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\Contour.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -42,9 +43,11 @@ Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 ''' <summary>
+''' ###### 等高线图
+''' 
 ''' 和普通的heatmap相比，这里的坐标轴是连续的数值变量，而普通的heatmap，其坐标轴都是离散的分类变量
 ''' </summary>
-Public Module ScatterHeatmap
+Public Module Contour
 
     Public Function Compile(exp$) As Func(Of Double, Double, Double)
         With New Expression
@@ -310,7 +313,7 @@ Public Module ScatterHeatmap
 
         Public Sub Plot(ByRef g As Graphics, region As GraphicsRegion)
             Dim data = GetData(region.PlotRegion.Size)
-            Dim scaler As New Scaling(data)
+            Dim scaler As New Mapper(New Scaling(data))
             Dim xf = scaler.XScaler(region.Size, region.Padding)
             Dim yf = scaler.YScaler(region.Size, region.Padding)
             Dim colorDatas As SolidBrush() = Nothing

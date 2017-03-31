@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b3ab60738735bed129a6ef32bde33d6, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Border.vb"
+﻿#Region "Microsoft.VisualBasic::5d276fd000755bc7e3fd26bcfdf1ba64, ..\sciBASIC#\Data_science\Mathematical\Plots\g\DataScaler.vb"
 
     ' Author:
     ' 
@@ -26,29 +26,10 @@
 
 #End Region
 
-Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Drawing2D.Vector.Shapes
+Namespace Graphic
 
-    ''' <summary>
-    ''' 边对象
-    ''' </summary>
-    Public Class Border
+    Public Class DataScaler
 
-        Public Property width As Single
-        Public Property color As Color
-        Public Property style As DashStyle
-
-        Public Function GetPen() As Pen
-            Return New Pen(color, width) With {
-                .DashStyle = style
-            }
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
     End Class
 End Namespace

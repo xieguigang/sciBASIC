@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc4a0ec872995fff46f51be835ba70f4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b0f1f858d6aa1c7ac5c47bf5dbe85ba4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -88,6 +88,19 @@ Namespace Drawing2D.Colors
             Color.Violet
         }
 
+        Public ReadOnly Property ClusterColour As Color() = {
+            Color.FromArgb(128, 200, 180),
+            Color.FromArgb(135, 70, 194),
+            Color.FromArgb(140, 210, 90),
+            Color.FromArgb(200, 80, 147),
+            Color.FromArgb(201, 169, 79),
+            Color.FromArgb(112, 127, 189),
+            Color.FromArgb(192, 82, 58),
+            Color.FromArgb(83, 99, 60),
+            Color.FromArgb(78, 45, 69),
+            Color.FromArgb(202, 161, 169)
+        }
+
         Sub New()
             Dim colors As Dictionary(Of String, String()) = My.Resources _
                 .designer_colors _
@@ -131,12 +144,31 @@ Namespace Drawing2D.Colors
             Color.Orange, Color.DarkOrange, Color.Brown, Color.Gray, Color.CadetBlue
         }
 
+        <Extension>
+        Private Function IsColorNameList(exp$) As Boolean
+            If InStr(exp, ",") > 0 Then
+                If exp.IsPattern("rgb\(\d+\s*(,\s*\d+\s*)+\)") Then
+                    Return False
+                Else
+                    Return True
+                End If
+            Else
+                Return False
+            End If
+        End Function
+
         ''' <summary>
         ''' 对于无效的键名称，默认是返回<see cref="Office2016"/>，请注意，如果是所有的.net的颜色的话，这里面还会包含有白色，所以还需要手工去除掉白色
         ''' </summary>
-        ''' <param name="term$"></param>
+        ''' <param name="term$">假若这里所输入的是一组颜色值，则必须是htmlcolor或者颜色名称，RGB表达式将不会被允许</param>
         ''' <returns></returns>
         Public Function GetColors(term$) As Color()
+            If term.IsColorNameList Then
+                Return term _
+                    .StringSplit(",\s*") _
+                    .Select(Function(c) c.TranslateColor) _
+                    .ToArray
+            End If
             If Array.IndexOf(__allColorMapNames, term.ToLower) > -1 Then
                 Return New ColorMap(20, 255).ColorSequence(term)
             End If
@@ -156,6 +188,8 @@ Namespace Drawing2D.Colors
                 Return AllDotNetPrefixColors
             ElseIf term.TextEquals("vb.chart") Then
                 Return ChartColors
+            ElseIf term.TextEquals("clusters") Then
+                Return ClusterColour
             End If
 
             Return OfficeColorThemes.GetAccentColors(term)

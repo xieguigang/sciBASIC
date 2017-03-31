@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f762dec2e9f1fe5c9a98cf0c85f16f08, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::7a48d91588f36eb09bb11f7889443d1b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -30,13 +30,56 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.FileIO.Extensions
 
 <PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="handle$">
+    ''' + 当这个参数为文件路径的时候会返回<see cref="Linq.IteratesALL(Of T)(IEnumerable(Of IEnumerable(Of T)))"/>函数的结果
+    ''' + 当这个参数只是为文本字符串的时候，则会返回<see cref="lTokens"/>函数的结果
+    ''' </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function LineIterators(handle$) As IEnumerable(Of String)
+        If handle.FileExists Then
+            Return handle.IterateAllLines
+        Else
+            Return handle.lTokens
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 解析出TSV文件的头部并且生成index数据
+    ''' </summary>
+    ''' <param name="path$">``*.tsv``文件路径</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function TsvHeaders(path$) As IndexOf(Of String)
+        Dim header$() = path.ReadFirstLine.Split(ASCII.TAB)
+        Dim index As New IndexOf(Of String)(header)
+        Return index
+    End Function
+
+    ''' <summary>
+    ''' 将IDmapping数据保存为tsv文件
+    ''' </summary>
+    ''' <param name="tsv"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SaveTSV(tsv As IEnumerable(Of IDMap), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Dim lines = tsv.Select(Function(x) x.TSV)
+        Return lines.SaveTo(path, encoding.CodePage)
+    End Function
 
     ''' <summary>
     ''' Enumerate all of the chars in the target text file.
@@ -47,7 +90,7 @@ Public Module TextDoc
     <Extension>
     Public Iterator Function ForEachChar(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of Char)
         Using file As New FileStream(path, FileMode.Open)
-            Using reader As New IO.BinaryReader(file, encoding.GetEncodings)
+            Using reader As New IO.BinaryReader(file, encoding.CodePage)
                 Dim bs As Stream = reader.BaseStream
                 Dim l As Long = bs.Length
 
@@ -66,7 +109,7 @@ Public Module TextDoc
     ''' <returns></returns>
     <Extension>
     Public Function OpenWriter(path$, Optional encoding As Encodings = Encodings.UTF8, Optional newLine$ = ASCII.LF) As StreamWriter
-        Return FileIO.OpenWriter(path, encoding.GetEncodings, newLine)
+        Return FileIO.OpenWriter(path, encoding.CodePage, newLine)
     End Function
 
     ''' <summary>
@@ -77,7 +120,7 @@ Public Module TextDoc
     <Extension>
     Public Iterator Function IterateAllLines(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
         Using fs As New FileStream(path, FileMode.Open, access:=FileAccess.Read, share:=FileShare.Read)
-            Using reader As New StreamReader(fs, encoding.GetEncodings)
+            Using reader As New StreamReader(fs, encoding.CodePage)
 
                 Do While Not reader.EndOfStream
                     Yield reader.ReadLine
@@ -145,7 +188,7 @@ Public Module TextDoc
     <Extension>
     Public Function ReadAllLines(path As String, Optional Encoding As Encoding = Nothing) As String()
         If Encoding Is Nothing Then
-            Encoding = System.Text.Encoding.UTF8
+            Encoding = Encoding.UTF8
         End If
         If path.FileExists Then
             Return IO.File.ReadAllLines(path, encoding:=Encoding)

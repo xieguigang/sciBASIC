@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0134e693432e7596033f72bc5d1cc795, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\sitemap.xml.vb"
+﻿#Region "Microsoft.VisualBasic::f4e6823b9373fdd84311f2b08fb328ff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\sitemap.xml.vb"
 
     ' Author:
     ' 
@@ -90,7 +90,7 @@ Namespace Net.Http
         End Function
 
         Public Function Save(Optional path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(path, encoding.GetEncodings)
+            Return Save(path, encoding.CodePage)
         End Function
 
         Public Shared Function ScanAllFiles(wwwroot$, host$, Optional changefreq As changefreqs = changefreqs.monthly) As sitemap

@@ -1,42 +1,73 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges
+﻿#Region "Microsoft.VisualBasic::bd3e93c16c3f27018042ac75ec6adc12, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Axis\AxisData.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-''' <summary>
-''' 手工指定Axis的数据
-''' </summary>
-Public Class AxisValue
+Namespace Graphic.Axis
 
     ''' <summary>
-    ''' 最大值和最小值
+    ''' 手工指定Axis的数据
     ''' </summary>
-    ''' <returns></returns>
-    Public Property Range As DoubleRange
+    Public Class AxisValue
+
+        ''' <summary>
+        ''' 最大值和最小值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Range As DoubleRange
+        ''' <summary>
+        ''' 数值标签出现的间隔
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Tick As Double
+        ''' <summary>
+        ''' 坐标轴的标题
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Title As String
+        Public Property Font As String
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
+    End Class
+
     ''' <summary>
-    ''' 数值标签出现的间隔
+    ''' 横纵坐标轴的画图数据
     ''' </summary>
-    ''' <returns></returns>
-    Public Property Tick As Double
-    ''' <summary>
-    ''' 坐标轴的标题
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Title As String
-    Public Property Font As String
+    Public Structure AxisData
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
+        Dim X, Y As AxisValue
 
-End Class
-
-''' <summary>
-''' 横纵坐标轴的画图数据
-''' </summary>
-Public Structure AxisData
-
-    Dim X, Y As AxisValue
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Structure
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Structure
+End Namespace

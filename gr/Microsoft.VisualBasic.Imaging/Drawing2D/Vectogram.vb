@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9db34a107380d97488e81d03ebc92fc, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
+﻿#Region "Microsoft.VisualBasic::731f4d8a6932e2a8368950dacde8f27a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Vectogram.vb"
 
     ' Author:
     ' 
@@ -157,7 +157,7 @@ Namespace Drawing2D
         End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(Path, encoding.GetEncodings)
+            Return Save(Path, encoding.CodePage)
         End Function
 #End Region
     End Class

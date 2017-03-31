@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42204b9cf89ad6a073e2c5b6f156ddc8, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Data.vb"
+﻿#Region "Microsoft.VisualBasic::34c0dd86b9f1b7b38428af8abfa48b92, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Data.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -129,6 +130,14 @@ Public Structure PointData
 
     Sub New(x!, y!)
         pt = New PointF(x, y)
+    End Sub
+
+    Sub New(pt As PointF)
+        Me.pt = pt
+    End Sub
+
+    Sub New(pt As Point)
+        Me.pt = New PointF(pt.X, pt.Y)
     End Sub
 
     Public Overrides Function ToString() As String

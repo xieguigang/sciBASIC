@@ -1,7 +1,34 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::403ac0f0abeb9980d910350ca8ee9d5c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Algorithm.base
 
@@ -44,14 +71,19 @@ Namespace ComponentModel.Algorithm.base
                            Optional offset As Integer = 1,
                            Optional extTails As Boolean = False) As IEnumerable(Of SlideWindowHandle(Of T))
 
-            Dim tmp As List(Of T) = data.ToList
+            Dim tmp As New List(Of T)(data)
             Dim n As Integer = tmp.Count
 
-            If slideWindowSize >= n Then
+            If n = 0 Then
+                ' 没有任何数据，则返回一个空集合
+                Return
+            ElseIf slideWindowSize >= n Then
                 Yield New SlideWindowHandle(Of T)() With {
                     .Left = 0,
                     .Elements = tmp.ToArray
                 }
+                ' 这里要return，否则会出现重复的数据
+                Return
             End If
 
             If offset < 1 Then

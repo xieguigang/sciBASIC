@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::544a5bf4ea0f1ea3d296fefb91158a0a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::20ef26769b1e0993b778687268765b54, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -157,19 +157,22 @@ Public Module RegexExtensions
     End Function
 
     ''' <summary>
-    ''' Converts the regex string match results to the objects.
+    ''' Converts the <see cref="Regex"/> string pattern match results to the objects.
+    ''' （这个函数是非并行化的，所以不需要担心会打乱顺序）
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="[CType]">The object parser</param>
+    ''' <param name="[ctype]">The object parser</param>
     ''' <returns></returns>
     <Extension>
-    Public Function ToArray(Of T)(source As MatchCollection, [CType] As Func(Of String, T)) As T()
-        Dim LQuery As T() =
-            LinqAPI.Exec(Of T) <= From m As Match
-                                  In source
-                                  Let s As String = m.Value
-                                  Select [CType](s)
+    Public Function ToArray(Of T)(source As MatchCollection, [ctype] As Func(Of String, T)) As T()
+        Dim LQuery As T() = LinqAPI.Exec(Of T) <=
+ _
+            From m As Match
+            In source
+            Let s As String = m.Value
+            Select [ctype](s)
+
         Return LQuery
     End Function
 
@@ -191,5 +194,23 @@ Public Module RegexExtensions
     ''' <returns></returns>
     <Extension> Public Function RawRegexp(raw$) As Regex
         Return New Regex(raw, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
+    End Function
+
+    ''' <summary>
+    ''' 函数返回以1为底的位置，当找不到的时候会返回零
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Locates(str$, pattern$, Optional opt As RegexOptions = RegexICSng) As Integer
+        Dim sub$ = Regex.Match(str, pattern, opt).Value
+
+        If String.IsNullOrEmpty([sub]) Then
+            Return 0
+        Else
+            Return InStr(str, [sub], CompareMethod.Binary)
+        End If
     End Function
 End Module

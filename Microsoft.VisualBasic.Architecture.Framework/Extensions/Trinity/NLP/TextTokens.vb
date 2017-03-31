@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec303219ed8dabbbd83ba77a74f579d3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Trinity\NLP\TextTokens.vb"
+﻿#Region "Microsoft.VisualBasic::4cc178ad45386597a524b398cb279331, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Trinity\NLP\TextTokens.vb"
 
     ' Author:
     ' 

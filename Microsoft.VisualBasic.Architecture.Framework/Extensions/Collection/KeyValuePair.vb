@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc970315c583e3f0093a530c58d1ff1f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::46f89fcd593d9663e5b6da1f21047c39, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -28,10 +28,117 @@
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Public Module KeyValuePairExtensions
+
+    <Extension>
+    Public Function IteratesAll(Of T As INamedValue)(source As IEnumerable(Of NamedCollection(Of T))) As T()
+        Return source.Select(Function(c) c.Value).IteratesALL.ToArray
+    End Function
+
+    <Extension>
+    Public Function GroupByKey(Of T As INamedValue)(source As IEnumerable(Of T)) As NamedCollection(Of T)()
+        Return source _
+            .GroupBy(Function(o) o.Key) _
+            .ToArray(Function(g)
+                         Return New NamedCollection(Of T) With {
+                             .Name = g.Key,
+                             .Value = g.ToArray
+                         }
+                     End Function)
+    End Function
+
+    <Extension>
+    Public Function Values(Of T)(source As IEnumerable(Of NamedValue(Of T))) As T()
+        Return source.Select(Function(x) x.Value).ToArray
+    End Function
+
+    ''' <summary>
+    ''' gets all <see cref="INamedValue.Key"/> values
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="distinct"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Keys(Of T As INamedValue)(source As IEnumerable(Of T), Optional distinct As Boolean = False) As String()
+        Dim list As IEnumerable(Of String) = source.Select(Function(o) o.Key)
+        If distinct Then
+            list = list.Distinct
+        End If
+        Return list.ToArray
+    End Function
+
+    <Extension>
+    Public Function ContainsKey(Of T As INamedValue)(table As Dictionary(Of T), k As NamedValue(Of T)) As Boolean
+        Return table.ContainsKey(k.Name)
+    End Function
+
+    <Extension>
+    Public Function ContainsKey(Of T)(table As Dictionary(Of String, T), k As NamedValue(Of T)) As Boolean
+        Return table.ContainsKey(k.Name)
+    End Function
+
+    <Extension>
+    Public Function DictionaryData(Of T, V)(source As IReadOnlyDictionary(Of T, V)) As Dictionary(Of T, V)
+        Return source.ToDictionary(Function(x) x.Key, Function(x) x.Value)
+    End Function
+
+    ''' <summary>
+    ''' 类型必须是枚举类型
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="lcaseKey"></param>
+    ''' <param name="usingDescription"></param>
+    ''' <returns></returns>
+    Public Function EnumParser(Of T)(Optional lcaseKey As Boolean = True, Optional usingDescription As Boolean = False) As Dictionary(Of String, T)
+        Dim values As [Enum]() = Enums(Of T)().ToArray(Function(e) DirectCast(CType(e, Object), [Enum]))
+        Dim [case] = If(lcaseKey, Function(key$) LCase(key), Function(key$) key)
+
+        If usingDescription Then
+            Return values.ToDictionary(
+                Function(e) [case](key:=e.Description),
+                Function(e) DirectCast(CType(e, Object), T))
+        Else
+            Return values.ToDictionary(
+                Function(e) [case](key:=e.ToString),
+                Function(e) DirectCast(CType(e, Object), T))
+        End If
+    End Function
+
+    <Extension>
+    Public Function NamedValues(maps As IEnumerable(Of IDMap)) As NamedValue(Of String)()
+        Return maps _
+            .Select(Function(m) New NamedValue(Of String)(m.Key, m.Maps)) _
+            .ToArray
+    End Function
+
+    <Extension>
+    Public Function NameValueCollection(maps As IEnumerable(Of IDMap)) As NameValueCollection
+        Dim nc As New NameValueCollection
+
+        For Each m As IDMap In maps
+            Call nc.Add(m.Key, m.Maps)
+        Next
+
+        Return nc
+    End Function
+
+    <Extension>
+    Public Function NameValueCollection(maps As IEnumerable(Of NamedValue(Of String))) As NameValueCollection
+        Dim nc As New NameValueCollection
+
+        For Each m As NamedValue(Of String) In maps
+            Call nc.Add(m.Name, m.Value)
+        Next
+
+        Return nc
+    End Function
 
     <Extension> Public Sub SortByValue(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
         Dim orders As KeyValuePair(Of V, T)()

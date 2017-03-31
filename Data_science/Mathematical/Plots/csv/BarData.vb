@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5687edceb27c873b904e8d73ec5fd139, ..\sciBASIC#\Data_science\Mathematical\Plots\csv\BarData.vb"
+﻿#Region "Microsoft.VisualBasic::1cdf09addd8505d3fd1f3d78a1d5996e, ..\sciBASIC#\Data_science\Mathematical\Plots\csv\BarData.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.OfficeColorThemes
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 
 Namespace csv
 

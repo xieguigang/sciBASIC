@@ -222,7 +222,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DATA\SQL.vb" />
     <Compile Include="IO\BackendWriter.vb" />
+    <Compile Include="IO\Generic\Extensions.vb" />
     <Compile Include="IO\Generic\DataSet.vb" />
     <Compile Include="IO\Generic\Table.vb" />
     <Compile Include="IO\DataFrame.vb" />
@@ -230,17 +232,18 @@
     <Compile Include="IO\csv\File.vb" />
     <Compile Include="IO\csv\HTMLWriter.vb" />
     <Compile Include="IO\MetaData\Meta.vb" />
+    <Compile Include="IO\MetaData\GenericMeta.vb" />
     <Compile Include="IO\NetStream\File.vb" />
     <Compile Include="IO\NetStream\RowObject.vb" />
     <Compile Include="IO\NetStream\StreamHelper.vb" />
     <Compile Include="IO\csv\RowObject.vb" />
     <Compile Include="IO\csv\StreamIO.vb" />
     <Compile Include="IO\csv\Tokenizer.vb" />
-    <Compile Include="Excel\Extensions.vb" />
-    <Compile Include="Excel\Coordinates.vb" />
-    <Compile Include="Excel\Excel.vb" />
-    <Compile Include="Excel\ExcelReader.vb" />
-    <Compile Include="Excel\Functions\Numerics.vb" />
+    <Compile Include="DATA\Excel\Extensions.vb" />
+    <Compile Include="DATA\Excel\Coordinates.vb" />
+    <Compile Include="DATA\Excel\Excel.vb" />
+    <Compile Include="DATA\Excel\ExcelReader.vb" />
+    <Compile Include="DATA\Excel\Functions\Numerics.vb" />
     <Compile Include="Extensions\DocumentExtensions.vb" />
     <Compile Include="Extensions\PipeStream.vb" />
     <Compile Include="Extensions\ProfileStreams.vb" />

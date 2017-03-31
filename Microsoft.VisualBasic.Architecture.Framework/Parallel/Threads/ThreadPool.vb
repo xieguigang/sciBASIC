@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6deff5b15dcc6518d3955bd92e698ef9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::97dec99b68ef318017993afcd211cb89, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
@@ -26,26 +26,25 @@
 
 #End Region
 
-Imports System.Text
 Imports System.Threading
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports taskBind = Microsoft.VisualBasic.ComponentModel.Binding(Of System.Action, System.Action(Of Long))
 
 Namespace Parallel.Threads
 
     ''' <summary>
     ''' 使用多条线程来执行任务队列，推荐在编写Web服务器的时候使用这个模块来执行任务
     ''' </summary>
-    Public Class ThreadPool
-        Implements IDisposable
+    Public Class ThreadPool : Implements IDisposable
 
         ReadOnly __threads As TaskQueue(Of Long)()
         ''' <summary>
         ''' 临时的句柄缓存
         ''' </summary>
-        ReadOnly __pendings As New Queue(Of KeyValuePair(Of Action, Action(Of Long)))(capacity:=10240)
+        ReadOnly __pendings As New Queue(Of taskBind)(capacity:=10240)
 
         ''' <summary>
         ''' 线程池之中的线程数量
@@ -100,13 +99,36 @@ Namespace Parallel.Threads
         End Sub
 
         ''' <summary>
+        ''' 获取当前的这个线程池对象的状态的摘要信息
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetStatus() As Dictionary(Of String, String)
+            Dim out As New Dictionary(Of String, String)
+
+            Call out.Add(NameOf(Me.FullCapacity), FullCapacity)
+            Call out.Add(NameOf(Me.NumOfThreads), NumOfThreads)
+            Call out.Add(NameOf(Me.WorkingThreads), WorkingThreads)
+            Call out.Add(NameOf(Me.__pendings), __pendings.Count)
+
+            For Each t As SeqValue(Of TaskQueue(Of Long)) In __threads.SeqIterator
+                With (+t)
+                    Call out.Add("thread___" & t.i & "___" & .uid, .Tasks)
+                End With
+            Next
+
+            Return out
+        End Function
+
+        ''' <summary>
         ''' 使用线程池里面的空闲线程来执行任务
         ''' </summary>
         ''' <param name="task"></param>
         ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
         Public Sub RunTask(task As Action, Optional callback As Action(Of Long) = Nothing)
-            Dim pends As New KeyValuePair(Of Action, Action(Of Long))(task, callback)
-
+            Dim pends As New taskBind With {
+                .Bind = task,
+                .Target = callback
+            }
             SyncLock __pendings
                 Call __pendings.Enqueue(pends)
             End SyncLock
@@ -130,9 +152,9 @@ Namespace Parallel.Threads
             Do While Not Me.disposedValue
                 SyncLock __pendings
                     If __pendings.Count > 0 Then
-                        Dim task = __pendings.Dequeue
-                        Dim h As Func(Of Long) = Function() Time(work:=task.Key)
-                        Dim callback = task.Value
+                        Dim task As taskBind = __pendings.Dequeue
+                        Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
+                        Dim callback As Action(Of Long) = task.Target
                         Call GetAvaliableThread.Enqueue(h, callback)  ' 当线程池里面的线程数量非常多的时候，这个事件会变长，所以讲分配的代码单独放在线程里面执行，以提神web服务器的响应效率
                     Else
                         Call Thread.Sleep(1)
@@ -140,6 +162,18 @@ Namespace Parallel.Threads
                 End SyncLock
             Loop
         End Sub
+
+        Private Structure __taskInvoke
+            Dim task As Action
+
+            ''' <summary>
+            ''' 不清楚是不是因为lambda有问题，所以导致计时器没有正常的工作，所以在这里使用内部类来工作
+            ''' </summary>
+            ''' <returns></returns>
+            Public Function Run() As Long
+                Return Time(work:=task)
+            End Function
+        End Structure
 
         ''' <summary>
         ''' 这个函数总是会返回一个线程对象的

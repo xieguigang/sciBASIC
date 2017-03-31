@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, ..\sciBASIC#\Data\DataFrame\Excel\Functions\Numerics.vb"
+﻿#Region "Microsoft.VisualBasic::cec6d930ae488206ead5b8daa45913ae, ..\sciBASIC#\Data\DataFrame\DATA\Excel\Coordinates.vb"
 
     ' Author:
     ' 
@@ -27,18 +27,25 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 
 Namespace Excel
 
-    Public Module Numerics
+    Public Module Coordinates
 
         <Extension>
-        Public Function SUM(data As IO.File, ParamArray cells As String()) As Double
-            Return cells.Select(Function(c) data.CellValue(c).ParseDouble).Sum
+        Public Function CellValue(data As IO.File, c As String) As String
+            Dim y As Integer = CInt(Regex.Match(c, "\d+").Value)
+            Dim x As String = Mid(c, 1, c.Length - CStr(y).Length)
+            Return data.Cell(XValue(x), y)
+        End Function
+
+        Public Function XValue(x As String) As Integer
+            Throw New NotImplementedException
         End Function
 
         <Extension>
-        Public Function SUM(data As IO.File, range As String) As Double
+        Public Function RangeSelects(data As IO.File, range As String) As String()
             Throw New NotImplementedException
         End Function
     End Module

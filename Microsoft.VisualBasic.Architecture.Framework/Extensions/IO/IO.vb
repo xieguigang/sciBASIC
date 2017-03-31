@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e970052e232c8e363b6f5cdf3de1ba44, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::044f06d2d2be7feef5694039ee75a3d3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
 
     ' Author:
     ' 
@@ -79,6 +79,12 @@ Public Module IOExtensions
         Return IO.File.Open(path, mode)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding">使用系统默认的编码方案</param>
+    ''' <returns></returns>
     <ExportAPI("Open.Reader")>
     <Extension>
     Public Function OpenReader(path As String, Optional encoding As Encoding = Nothing) As StreamReader
@@ -108,7 +114,7 @@ Public Module IOExtensions
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encodings = Encodings.Default) As Boolean
-        Return data.FlushAllLines(saveTo, encoding.GetEncodings)
+        Return data.FlushAllLines(saveTo, encoding.CodePage)
     End Function
 
     ''' <summary>

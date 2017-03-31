@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b82b1ccb05d1a5217c8319dad6be9d54, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::49f552d31e1136001a9218bee7b662ed, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,16 @@ Imports Microsoft.VisualBasic.Text
 Public Module ProgramPathSearchTool
 
     ''' <summary>
+    ''' 函数返回文件的拓展名后缀，请注意，这里的返回值是不会带有小数点的
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ExtensionSuffix(path$) As String
+        Return path.Split("."c).Last
+    End Function
+
+    ''' <summary>
     ''' Combine directory path.(这个主要是用于生成文件夹名称)
     ''' 
     ''' ###### Example usage
@@ -91,6 +101,14 @@ Public Module ProgramPathSearchTool
         End If
     End Function
 
+    ''' <summary>
+    ''' 使用<see cref="FileIO.FileSystem.GetFiles"/>函数枚举
+    ''' **当前的**(不是递归的搜索所有的子文件夹)文件夹之中的
+    ''' 所有的符合条件的文件路径
+    ''' </summary>
+    ''' <param name="DIR">文件夹路径</param>
+    ''' <param name="keyword">文件名进行匹配的关键词</param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function EnumerateFiles(DIR As String, ParamArray keyword As String()) As IEnumerable(Of String)
         Dim files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword)
@@ -98,6 +116,18 @@ Public Module ProgramPathSearchTool
         For Each file As String In files
             Yield file
         Next
+    End Function
+
+    ''' <summary>
+    ''' 这个函数只会返回文件列表之中的第一个文件，故而需要提取某一个文件夹之中的某一个特定的文件，推荐使用这个函数
+    ''' </summary>
+    ''' <param name="DIR$"></param>
+    ''' <param name="keyword$"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function TheFile(DIR$, keyword$, Optional opt As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As String
+        Return FileIO.FileSystem.GetFiles(DIR, opt, keyword).FirstOrDefault
     End Function
 
     ''' <summary>
@@ -356,14 +386,22 @@ Public Module ProgramPathSearchTool
     ''' 进行截取
     ''' </remarks>
     <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
-    <Extension> Public Function BaseName(fsObj As String) As String
+    <Extension> Public Function BaseName(fsObj As String, Optional allowEmpty As Boolean = False) As String
         If fsObj.StringEmpty Then
-            Throw New NullReferenceException(NameOf(fsObj) & " parameter is null!")
+            If allowEmpty Then
+                Return ""
+            Else
+                Throw New NullReferenceException(NameOf(fsObj) & " file system object handle is null!")
+            End If
         End If
 
         Dim t$() = fsObj.Trim("\"c, "/"c).Replace("\", "/").Split("/"c)
         t = t.Last.Split("."c)
-        t = t.Take(t.Length - 1).ToArray
+        If t.Length > 1 Then
+            ' 文件名之中并没有包含有拓展名后缀，则数组长度为1，则不跳过了
+            ' 有后缀拓展名，则split之后肯定会长度大于1的
+            t = t.Take(t.Length - 1).ToArray
+        End If
 
         Dim name = String.Join(".", t)
         Return name

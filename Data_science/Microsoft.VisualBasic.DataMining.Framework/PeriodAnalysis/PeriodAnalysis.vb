@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef8edf99fdb73138d77310baa2a796d0, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::1928a2f3d177ce0b2f8d80e7ece6af4b, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Namespace Serials.PeriodAnalysis
         <Extension> Public Function Analysis(source As IEnumerable(Of SerialsVarialble),
                                              UniqueId As String,
                                              WindowSize As UInteger) As SamplingData
-            Dim data As SerialsVarialble = source.GetItem(uniqueId:=UniqueId)
+            Dim data As SerialsVarialble = source.Take(uniqueId:=UniqueId)
             Return Analysis(data, WindowSize)
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dff7e1376e86469990ad209ddccc9bb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::7b7f5bcc5483a0656ab9cf423dedc35e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Xml
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
@@ -51,7 +49,7 @@ Public Module XmlExtensions
     Public Function SafeLoadXml(Of T)(xml As String,
                                       Optional encoding As Encodings = Encodings.Default,
                                       Optional preProcess As Func(Of String, String) = Nothing) As T
-        Return xml.LoadXml(Of T)(encoding.GetEncodings, False, preProcess)
+        Return xml.LoadXml(Of T)(encoding.CodePage, False, preProcess)
     End Function
 
     ''' <summary>
@@ -71,9 +69,14 @@ Public Module XmlExtensions
     <Extension> Public Function LoadXml(Of T)(XmlFile As String,
                                               Optional encoding As Encoding = Nothing,
                                               Optional ThrowEx As Boolean = True,
-                                              Optional preprocess As Func(Of String, String) = Nothing) As T
+                                              Optional preprocess As Func(Of String, String) = Nothing,
+                                              Optional stripInvalidsCharacter As Boolean = False) As T
         Dim type As Type = GetType(T)
-        Dim obj As Object = XmlFile.LoadXml(type, encoding, ThrowEx, preprocess)
+        Dim obj As Object = XmlFile.LoadXml(
+            type, encoding, ThrowEx,
+            preprocess,
+            stripInvalidsCharacter:=stripInvalidsCharacter)
+
         If obj Is Nothing Then
             Return Nothing  ' 由于在底层函数之中已经将错误给处理掉了，所以这里直接返回
         Else
@@ -95,10 +98,12 @@ Public Module XmlExtensions
     <Extension> Public Function LoadXml(XmlFile As String, type As Type,
                                         Optional encoding As Encoding = Nothing,
                                         Optional ThrowEx As Boolean = True,
-                                        Optional preprocess As Func(Of String, String) = Nothing) As Object
+                                        Optional preprocess As Func(Of String, String) = Nothing,
+                                        Optional stripInvalidsCharacter As Boolean = False) As Object
+
         If encoding Is Nothing Then encoding = Encoding.Default
 
-        If (Not XmlFile.FileExists) OrElse FileIO.FileSystem.GetFileInfo(XmlFile).Length = 0 Then
+        If Not XmlFile.FileExists(ZERO_Nonexists:=True) Then
             Dim exMsg As String =
                 $"{XmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
             Dim ex As New Exception(exMsg)
@@ -114,6 +119,9 @@ Public Module XmlExtensions
 
         If Not preprocess Is Nothing Then
             XmlDoc = preprocess(XmlDoc)
+        End If
+        If stripInvalidsCharacter Then
+            XmlDoc = XmlDoc.StripInvalidCharacters
         End If
 
         Using Stream As New StringReader(s:=XmlDoc)
@@ -210,18 +218,18 @@ Public Module XmlExtensions
     ''' <param name="obj"></param>
     ''' <param name="saveXml"></param>
     ''' <param name="throwEx"></param>
-    ''' <param name="encoding"></param>
+    ''' <param name="encoding">VB.NET的XML文件的默认编码格式为``utf-16``</param>
     ''' <returns></returns>
     <Extension> Public Function SaveAsXml(Of T As Class)(
                                     obj As T,
                                 saveXml As String,
                        Optional throwEx As Boolean = True,
-                       Optional encoding As Encoding = Nothing,
+                       Optional encoding As Encodings = Encodings.UTF16,
     <CallerMemberName> Optional caller As String = "") As Boolean
 
         Dim xmlDoc As String = obj.GetXml(throwEx)
         Try
-            Return xmlDoc.SaveTo(saveXml, encoding)
+            Return xmlDoc.SaveTo(saveXml, encoding.CodePage)
         Catch ex As Exception
             ex = New Exception(caller, ex)
             If throwEx Then

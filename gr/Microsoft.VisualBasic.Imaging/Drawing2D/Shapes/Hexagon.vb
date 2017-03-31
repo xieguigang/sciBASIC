@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::846f3580df1f248f659ff911b8024708, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Hexagon.vb"
+﻿#Region "Microsoft.VisualBasic::b101f7b4bdc307c5a85086cec9aedcf8, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Hexagon.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Vector.Shapes
 
@@ -36,7 +37,7 @@ Namespace Drawing2D.Vector.Shapes
     ''' </summary>
     Public Class Hexagon
 
-        Public Shared Sub Draw(ByRef g As Graphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Border = Nothing)
+        Public Shared Sub Draw(ByRef g As Graphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
             Dim rect As New Rectangle(topLeft, size)
             Dim a As New Point(topLeft.X + size.Width / 4, topLeft.Y)
             Dim b As New Point(topLeft.X + size.Width * 3 / 4, topLeft.Y)
@@ -57,7 +58,7 @@ Namespace Drawing2D.Vector.Shapes
             Call g.FillPath(If(br Is Nothing, Brushes.Black, br), hex)
 
             If Not border Is Nothing Then
-                Call g.DrawPath(border.GetPen, hex)
+                Call g.DrawPath(border.GDIObject, hex)
             End If
         End Sub
     End Class

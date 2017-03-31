@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e52410a1de322d1b47668c9f4cd7236, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::481d86dc9358bad0eeb08b9252d0081d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\Enumerable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.KeyValuePair
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 <Extension>
 Public Module IEnumerations
@@ -58,7 +60,7 @@ Public Module IEnumerations
 
     <Extension>
     Public Function GetItem(Of T As INamedValue)(Id As String, source As IEnumerable(Of T)) As T
-        Return source.GetItem(Id)
+        Return source.Take(Id)
     End Function
 
     <Extension> Public Function GetItems(Of T As INamedValue)(source As IEnumerable(Of T), Id As String) As T()
@@ -90,13 +92,13 @@ Public Module IEnumerations
 
     <Extension> Public Function FindByItemKey(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Key As String, Optional Explicit As Boolean = True) As PairItemType()
         Dim Method = If(Explicit, System.StringComparison.Ordinal, System.StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.Identifier, Key, Method) Select item).ToArray
+        Dim LQuery = (From item In source Where String.Equals(item.Key, Key, Method) Select item).ToArray
         Return LQuery
     End Function
 
     <Extension> Public Function FindByItemValue(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Value As String, Optional strict As Boolean = True) As PairItemType()
         Dim Method = If(strict, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.Identifier, Value, Method) Select item).ToArray
+        Dim LQuery = (From item In source Where String.Equals(item.Key, Value, Method) Select item).ToArray
         Return LQuery
     End Function
 
@@ -116,31 +118,74 @@ Public Module IEnumerations
         Return LQuery
     End Function
 
-    <Extension> Public Function GetItems(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String, Optional Explicit As Boolean = True) As T()
-        If source.IsNullOrEmpty Then Return New T() {}
+    ''' <summary>
+    ''' 这个函数假设参数<paramref name="source"/>之中是有重复的对象，则可以使用uniqueID数据提取出一个集合
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="uniqueId"></param>
+    ''' <param name="strict">是否大小写敏感，默认大小写敏感</param>
+    ''' <returns></returns>
+    <Extension> Public Function Takes(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String, Optional strict As Boolean = True) As T()
+        If source.IsNullOrEmpty Then
+            Return New T() {}
+        End If
 
-        Dim method As StringComparison = If(Explicit, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim value = (From x As T In source Where String.Equals(x.Key, uniqueId, method) Select x).ToArray
-
-        Return value
+        If strict Then
+            Dim table As Dictionary(Of String, T()) = source _
+                .GroupBy(Function(o) o.Key) _
+                .ToDictionary(Function(k) k.Key,
+                              Function(g) g.ToArray)
+            If table.ContainsKey(uniqueId) Then
+                Return table(uniqueId)
+            Else
+                Return {}
+            End If
+        Else
+            Return LinqAPI.Exec(Of T) <= From x As T
+                                         In source
+                                         Where String.Equals(x.Key, uniqueId, StringComparison.OrdinalIgnoreCase)
+                                         Select x
+        End If
     End Function
 
     ''' <summary>
-    ''' 按照UniqueId列表来筛选出目标集合
+    ''' 按照uniqueId列表来筛选出目标集合，这个函数是使用字典来进行查询操作的，故而效率会比较高
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="lstId"></param>
+    ''' <param name="list">The list of ID value for <see cref="INamedValue.Key"/></param>
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function Takes(Of T As INamedValue)(lstId As IEnumerable(Of String), source As IEnumerable(Of T)) As T()
-        Dim Dict As Dictionary(Of T) = source.ToDictionary
-        Dim LQuery As T() = (From sId As String In lstId Where Dict.ContainsKey(sId) Select Dict(sId)).ToArray
+    <Extension> Public Function Takes(Of T As INamedValue)(list As IEnumerable(Of String), source As IEnumerable(Of T)) As T()
+        Dim table As Dictionary(Of T) = source.ToDictionary
+        Dim LQuery As T() = LinqAPI.Exec(Of T) <=
+ _
+            From sId As String
+            In list
+            Where table.ContainsKey(sId)
+            Select table(sId)
+
         Return LQuery
     End Function
 
-    <Extension> Public Function GetItem(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String) As T
-        Dim LQuery = (From itemObj As T In source Where String.Equals(uniqueId, itemObj.Key) Select itemObj).FirstOrDefault
+    ''' <summary>
+    ''' 使用<paramref name="uniqueId"/>唯一标识符从集合之中取出一个目标对象。
+    ''' 小集合推荐使用这个函数，但是对于大型集合或者需要查询的次数非常多的话，则推荐使用字典操作来提升性能
+    ''' 请注意这个函数会完全匹配字符串的，即大小写敏感
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="uniqueId"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Take(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String, Optional strict As Boolean = True) As T
+        Dim level As StringComparison = If(strict, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
+        Dim LQuery As T = LinqAPI.DefaultFirst(Of T) <=
+            From o As T
+            In source
+            Where String.Equals(uniqueId, o.Key, comparisonType:=level)
+            Select o
+
         Return LQuery
     End Function
 
@@ -157,18 +202,35 @@ Public Module IEnumerations
         Return LQuery
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="distinct">
+    ''' True: 这个参数会去处重复项
+    ''' </param>
+    ''' <returns></returns>
     <Extension> Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T), distinct As Boolean) As Dictionary(Of T)
-        If Not distinct Then Return source.ToDictionary
+        If Not distinct Then
+            Return source.ToDictionary
+        End If
 
-        Dim Thash As Dictionary(Of T) = New Dictionary(Of T)
-        For Each item As T In source
-            If Not Thash.ContainsKey(item.Key) Then
-                Call Thash.Add(item.Key, item)
+        Dim table As New Dictionary(Of T)
+        Dim duplicates As New List(Of String)
+
+        For Each x As T In source
+            If Not table.ContainsKey(x.Key) Then
+                Call table.Add(x.Key, x)
             Else
-                Call Console.WriteLine(item.Key & " is dulplicated......")
+                duplicates += x.Key
             End If
         Next
 
-        Return Thash
+        If duplicates.Count > 0 Then
+            Call $"Dictionary table build complete, but there is dulplicated keys: {duplicates.GetJson}...".Warning
+        End If
+
+        Return table
     End Function
 End Module

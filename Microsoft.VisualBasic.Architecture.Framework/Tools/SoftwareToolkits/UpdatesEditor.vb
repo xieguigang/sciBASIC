@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f3cea1962468749ad6c5c7c4898f856, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\UpdatesEditor.vb"
+﻿#Region "Microsoft.VisualBasic::edbd6815630780d12bcf89543efa7bb2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\UpdatesEditor.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@ Namespace SoftwareToolkits
         End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(Path, encoding.GetEncodings)
+            Return Save(Path, encoding.CodePage)
         End Function
     End Class
 End Namespace

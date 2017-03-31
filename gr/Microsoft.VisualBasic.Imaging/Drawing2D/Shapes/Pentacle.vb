@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0104a7e307a7e6325c77edf62f27518, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
+﻿#Region "Microsoft.VisualBasic::2a9112e9a402d5331dcee9d6629b11d5, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Vector.Shapes
 
@@ -36,7 +37,7 @@ Namespace Drawing2D.Vector.Shapes
                                topLeft As Point,
                                size As SizeF,
                                Optional br As Brush = Nothing,
-                               Optional border As Border = Nothing)
+                               Optional border As Stroke = Nothing)
 
             Dim pts(9) As Point
             Dim center As New Point(topLeft.X + size.Width / 2, topLeft.Y + size.Height / 2)
@@ -56,12 +57,12 @@ Namespace Drawing2D.Vector.Shapes
             Next
 
             If br Is Nothing Then
-                Call g.DrawPolygon(If(border Is Nothing, New Pen(Color.Black), border.GetPen), pts) ' 画一个空心五角星
+                Call g.DrawPolygon(If(border Is Nothing, New Pen(Color.Black), border.GDIObject), pts) ' 画一个空心五角星
             Else
                 g.FillPolygon(br, pts) ' 画一个实心的五角星
 
                 If Not border Is Nothing Then
-                    Call g.DrawPolygon(border.GetPen, pts)
+                    Call g.DrawPolygon(border.GDIObject, pts)
                 End If
             End If
         End Sub
@@ -73,7 +74,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="center"></param>
         ''' <param name="theta"></param>
         ''' <returns></returns>
-        Public Shared Function RotateTheta( pt As Point,  center As Point,  theta As Single) As Point
+        Public Shared Function RotateTheta(pt As Point, center As Point, theta As Single) As Point
             Dim x As Integer = CInt(center.X + (pt.X - center.X) * Math.Cos((theta * Math.PI / 180)) - (pt.Y - center.Y) * Math.Sin((theta * Math.PI / 180)))
             Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Math.Sin((theta * Math.PI / 180)) + (pt.Y - center.Y) * Math.Cos((theta * Math.PI / 180)))
 

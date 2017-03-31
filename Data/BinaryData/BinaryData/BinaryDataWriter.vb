@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::637d25620ecab24f42badd17c20d7703, ..\sciBASIC#\Data\BinaryData\BinaryData\BinaryDataWriter.vb"
+﻿#Region "Microsoft.VisualBasic::5d0c0672a957b4ee37c37778571a3a28, ..\sciBASIC#\Data\BinaryData\BinaryData\BinaryDataWriter.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Public Class BinaryDataWriter
     End Sub
 
     Public Sub New(output As Stream, Optional encoding As Encodings = Encodings.UTF8)
-        Me.New(output, encoding.GetEncodings)
+        Me.New(output, encoding.CodePage)
     End Sub
 
     ''' <summary>

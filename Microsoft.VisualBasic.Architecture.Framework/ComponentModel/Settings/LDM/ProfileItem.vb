@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d493d88dee4d7c4a7fdbfc53b03c14d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ProfileItem.vb"
+﻿#Region "Microsoft.VisualBasic::bfc066dc0ba5e93e074aaa5eb3bd2d2a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ProfileItem.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace ComponentModel.Settings
         Implements IKeyValuePairObject(Of String, String)
         Implements INamedValue
 
-        <XmlAttribute> Public Overridable Property Name As String Implements IKeyValuePairObject(Of String, String).Identifier, INamedValue.Key
+        <XmlAttribute> Public Overridable Property Name As String Implements IKeyValuePairObject(Of String, String).Key, INamedValue.Key
         <XmlAttribute> Public Overridable Property Description As String Implements IKeyValuePairObject(Of String, String).Value
 
         ''' <summary>

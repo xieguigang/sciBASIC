@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05667d44dd1cf6e8925c45410f15b8a4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::3e66224e31a1cc4d43b1a9eb5b59bbd7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -143,6 +143,14 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
         Dim value As V = Nothing
         success = MyBase.TryGetValue(name, value)
         Return value
+    End Function
+
+    Public Overloads Function TryGetValue(name$, [default] As V) As V
+        If MyBase.ContainsKey(name) Then
+            Return MyBase.Item(name)
+        Else
+            Return [default]
+        End If
     End Function
 
     ''' <summary>

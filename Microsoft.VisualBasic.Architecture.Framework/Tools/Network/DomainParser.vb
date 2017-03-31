@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37de8c1c0645357b1156eb56fd82c722, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\DomainParser.vb"
+﻿#Region "Microsoft.VisualBasic::800e31560b0c188e953893216e2f677e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\DomainParser.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@ Namespace Net
 
     Public Structure DomainName : Implements IKeyValuePairObject(Of String, String)
 
-        Public Property Domain As String Implements IKeyValuePairObject(Of String, String).Identifier
+        Public Property Domain As String Implements IKeyValuePairObject(Of String, String).Key
         ''' <summary>
         ''' 顶级域名
         ''' </summary>

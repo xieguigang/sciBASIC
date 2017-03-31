@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ed6fd4f620dd7f07b05ca404d4e9d7c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
+﻿#Region "Microsoft.VisualBasic::eff419ab5fb0ba76646a5164cd912894, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
 
     ' Author:
     ' 
@@ -180,7 +180,7 @@ Namespace ComponentModel
         End Function
 
         Public Shared Iterator Function LinesIterator(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
-            Using read As New BufferedStream(path, encoding.GetEncodings)
+            Using read As New BufferedStream(path, encoding.CodePage)
                 Do While Not read.EndRead
                     For Each line As String In read.BufferProvider
                         Yield line
