@@ -66,7 +66,7 @@ Namespace Text.Xml.Linq
 
                 Call sb.Clear()
                 Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
-                Call sb.Append($"<{typeName} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""")
+                Call sb.Append($"<{nodeName} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""")
                 Call sb.Append(" ")
 
                 For Each attr As XmlAttribute In xmlNode.Attributes
@@ -76,7 +76,7 @@ Namespace Text.Xml.Linq
 
                 Call sb.AppendLine(">")
                 Call sb.AppendLine(XML)
-                Call sb.AppendLine($"</{typeName}>")
+                Call sb.AppendLine($"</{nodeName}>")
 
                 If Not xmlns.StringEmpty Then
                     Call sb.Replace($"xmlns=""{xmlns}""", "")
