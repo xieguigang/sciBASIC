@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f41e417d039a54d90b8a3af5b6f24502, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::35068ef7ed7ad7348656e132f3041848, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
 
     ' Author:
     ' 
@@ -66,7 +66,7 @@ Public Module Scatter
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
                          Optional size As Size = Nothing,
-                         Optional padding$ = g.DefaultPaddingLarger,
+                         Optional padding$ = g.DefaultLargerPadding,
                          Optional bg As String = "white",
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,

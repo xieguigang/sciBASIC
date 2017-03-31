@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::f762dec2e9f1fe5c9a98cf0c85f16f08, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::7a48d91588f36eb09bb11f7889443d1b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -43,7 +43,7 @@ Public Module TextDoc
     ''' 
     ''' </summary>
     ''' <param name="handle$">
-    ''' + 当这个参数为文件路径的时候会返回<see cref="IteratesALL(Of T)(IEnumerable(Of IEnumerable(Of T)))"/>函数的结果
+    ''' + 当这个参数为文件路径的时候会返回<see cref="Linq.IteratesALL(Of T)(IEnumerable(Of IEnumerable(Of T)))"/>函数的结果
     ''' + 当这个参数只是为文本字符串的时候，则会返回<see cref="lTokens"/>函数的结果
     ''' </param>
     ''' <returns></returns>
@@ -188,7 +188,7 @@ Public Module TextDoc
     <Extension>
     Public Function ReadAllLines(path As String, Optional Encoding As Encoding = Nothing) As String()
         If Encoding Is Nothing Then
-            Encoding = System.Text.Encoding.UTF8
+            Encoding = Encoding.UTF8
         End If
         If path.FileExists Then
             Return IO.File.ReadAllLines(path, encoding:=Encoding)

@@ -63,7 +63,7 @@ A visualbasic language feature runtime library for data science CLI architecture
 > Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
 > + https://github.com/xieguigang/sciBASIC/blob/master/guides/
 
-===================================================================
+<hr/>
 
 ## Microsoft VisualBasic Trinity Natural Language Processor
 
@@ -99,7 +99,7 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 + **[Network Visualization Interface](./gr/Datavisualization.Network/)**
 + **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
 
-------------------------------------------------------------------------
+<hr/>
 
 <img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400"> <img src="./gr/3DEngineTest/example/Metadata/thumbnail.png" width="250">
 
@@ -120,6 +120,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 
 ![](./Data_science/algorithms/CMeans/CMeans.png)
 ![](./Data_science/Mathematical/images/295022-plots-plots.png)
+![](https://raw.githubusercontent.com/xieguigang/spectrum/master/spectrum/Plot.png)
 
 ###### 3D heatmap
 
@@ -214,14 +215,15 @@ Call data.CorrelatesNormalized() _
 ```
 
 > ###### Microsoft.VisualBasic.Mathematical.Plots.Heatmap::Plot(IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))), Color(), Integer, String, Boolean, Size, Size, String, String, String) As Bitmap
->
-> Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):
-> ```R
+
+Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):
+
+```R
 data(mtcars)
 write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv")
 ```
 
-===================================================================
+<hr/>
 
 ## New VisualBasic Language Syntax in this runtime
 
@@ -316,6 +318,6 @@ Call Array.ConstrainedCopy(rawStream, p = (p + INT64), bitChunk, Scan0, INT64)
 BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 ```
 
-===================================================================
+<hr/>
 
 > Copyleft ! 2017, [I@xieguigang.me](mailto://I@xieguigang.me) (http://scibasic.cool/)

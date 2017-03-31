@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89af23eca77446364c928645e49da674, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
+﻿#Region "Microsoft.VisualBasic::54df8940f1d002aee3eb1b4926f3c245, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
 
     ' Author:
     ' 
@@ -89,6 +89,16 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="obj"></param>
         ''' <returns></returns>
         Public MustOverride Overloads Function ToString(obj As Object) As String
+
+        ''' <summary>
+        ''' 从目标实例之中读取属性数据然后转换为字符串
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Function GetValue(obj As Object) As String
+            Dim value As Object = BindProperty.GetValue(obj)
+            Return ToString(value)
+        End Function
 
         Sub New(BindProperty As PropertyInfo)
             Call Me.New(BindProperty, BindProperty.PropertyType)

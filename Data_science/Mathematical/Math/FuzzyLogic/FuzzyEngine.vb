@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1e6f470192d3ae083b7bc99040dfa06, ..\sciBASIC#\Data_science\Mathematical\Math\FuzzyLogic\FuzzyEngine.vb"
+﻿#Region "Microsoft.VisualBasic::dd3dfa7a4fa52fbe8df3a0979220daae, ..\sciBASIC#\Data_science\Mathematical\Math\FuzzyLogic\FuzzyEngine.vb"
 
     ' Author:
     ' 
@@ -230,7 +230,7 @@ Namespace Logical.FuzzyLogic
         End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
-            Return ToModel.SaveAsXml(Path, True, encoding)
+            Return ToModel.GetXml.SaveTo(Path, encoding)
         End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save

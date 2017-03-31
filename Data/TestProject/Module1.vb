@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b403bdc1733945181976086e0bdcadd, ..\sciBASIC#\Data\TestProject\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::f5835f1d37bcd0d77deae4ca8a5c996a, ..\sciBASIC#\Data\TestProject\Module1.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@ Module Module1
 
         Pause()
 
-        Dim source As IEnumerable(Of NamedValue(Of String))
+        '     Dim source As IEnumerable(Of NamedValue(Of String))
 
         Call "Aedes aegypti strain Liverpool supercont1.301 genomic scaffold, whole genome shotgun sequence".Match("(Aedes OR Aed) AND Aegypti").__DEBUG_ECHO
 

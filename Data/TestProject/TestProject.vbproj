@@ -117,6 +117,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataFrame.Extensions\+VB_DataFrame.Extensions.vbproj">
+      <Project>{344bf0cf-107f-45d2-9074-9865d8f86506}</Project>
+      <Name>+VB_DataFrame.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataFrame\+VB_DataFrame.vbproj">
       <Project>{5914e529-39f5-4e1a-a70f-050ab1df934b}</Project>
       <Name>+VB_DataFrame</Name>

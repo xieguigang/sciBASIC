@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cd73844c9ba630213af8bf18d31811e, ..\sciBASIC#\Data\TestProject\IOExample.vb"
+﻿#Region "Microsoft.VisualBasic::3dce65cb4944939b4910c2ebd02bc5be, ..\sciBASIC#\Data\TestProject\IOExample.vb"
 
     ' Author:
     ' 
@@ -26,11 +26,15 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Public Module IOExample
 
@@ -62,9 +66,36 @@ Public Module IOExample
         End Function
     End Class
 
+    Public Class stackA
+        Implements INamedValue
+
+        Public Property a As String Implements INamedValue.Key
+        Public Property b As String
+        Public Property c As String
+        Public Property d As stackB
+
+        Public Shared Function Random() As stackA
+            Return New stackA With {.a = Rnd(), .b = Rnd(), .c = Rnd(), .d = New stackB With {.d = Now, .b = Rnd(), .e = Rnd()}}
+        End Function
+    End Class
+
+    Public Class stackB
+        Public Property d As Date
+        Public Property b As Boolean
+        Public Property e As Double
+        Public Property nv As NamedValue(Of Integer) = New NamedValue(Of Integer) With {.Name = Rnd(), .Description = Rnd(), .Value = Rnd()}
+    End Class
+
     Sub Main()
 
-        Dim ttt = DocumentStream.CharsParser("""Iron ion, ""(Fe2+)"",Iron homeostasis,PM0352,Iron homeostasis,Fur - Pasteurellales,+,XC_2767,XC_1988; XC_1989,oo""""oo,123")
+        Dim lllll = {stackA.Random, stackA.Random, stackA.Random, stackA.Random}
+        Dim result = lllll.Summary
+
+        Call result.SaveTo("x:\test.csv")
+
+        Pause()
+
+        Dim ttt = csv.IO.CharsParser("""Iron ion, ""(Fe2+)"",Iron homeostasis,PM0352,Iron homeostasis,Fur - Pasteurellales,+,XC_2767,XC_1988; XC_1989,oo""""oo,123")
 
 
         Dim data = {New TestCustomParser With {.data = New KeyValuePair(Of String, Integer)("abc", 2333)}}

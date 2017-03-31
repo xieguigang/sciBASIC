@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe830920c3f522df38ea255b2d43e2df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\FormattedParser.vb"
+﻿#Region "Microsoft.VisualBasic::9f2b8d11a18f7b2b25118883ceecd7ef, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\FormattedParser.vb"
 
     ' Author:
     ' 

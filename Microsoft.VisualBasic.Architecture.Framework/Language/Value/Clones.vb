@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d6b72ff584335c64ebc472915b4838c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CloneExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::24e140f55c3cf7e559838feb896ab08f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Clones.vb"
 
     ' Author:
     ' 

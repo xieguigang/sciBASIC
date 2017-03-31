@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a1aa9ea5b750bb25bf2e78cb58d1c89, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\IniFile.vb"
+﻿#Region "Microsoft.VisualBasic::2f366413a1b5eaf3d72e9e36f364e7b6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\IniFile.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0134e693432e7596033f72bc5d1cc795, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\sitemap.xml.vb"
+﻿#Region "Microsoft.VisualBasic::f4e6823b9373fdd84311f2b08fb328ff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\sitemap.xml.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6feb88e94b4a0dee2cc1e4f071df3e5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDITransform.vb"
+﻿#Region "Microsoft.VisualBasic::b4d3a91356dd5561df28014ccd219817, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDITransform.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,11 @@ Namespace Imaging
 
     <PackageNamespace("GDI.Transform")>
     Public Module GDITransform
+
+        <Extension>
+        Public Function ToPoint(pf As PointF) As Point
+            Return New Point(pf.X, pf.Y)
+        End Function
 
         ''' <summary>
         ''' Gets the center location of the region rectangle.

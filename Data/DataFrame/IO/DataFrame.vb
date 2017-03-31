@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11da719da20d5fb1b9f463d41de3bf1e, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::cc523c213f958b82374673916cf650b0, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
 
     ' Author:
     ' 
@@ -292,9 +292,9 @@ Namespace IO
         End Function
 
         Private Shared Function __createObject(file As File) As DataFrame
-            Dim df As DataFrame = New DataFrame With {
-                  ._innerTable = file._innerTable.Skip(1).ToList,
-                  .FilePath = file.FilePath
+            Dim df As New DataFrame With {
+                ._innerTable = file._innerTable.Skip(1).ToList,
+                .FilePath = file.FilePath
             }
             df.__columnList = __getColumnList(file._innerTable)
             df._SchemaOridinal = __createSchemaOridinal(df)

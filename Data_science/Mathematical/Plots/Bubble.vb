@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7748d95cdf60597fed66d5a81920bbf, ..\sciBASIC#\Data_science\Mathematical\Plots\Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::186403bb679362c0f0e36d3f3a4293e8, ..\sciBASIC#\Data_science\Mathematical\Plots\Bubble.vb"
 
     ' Author:
     ' 
