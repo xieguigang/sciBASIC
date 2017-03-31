@@ -4,8 +4,16 @@ Imports System.Xml
 
 Namespace Text.Xml.Linq
 
+    ''' <summary>
+    ''' Using large xml file as Linq data source
+    ''' </summary>
     Public Module Data
 
+        ''' <summary>
+        ''' Load a specific xml file from a file location <paramref name="path"/> into a <see cref="XmlDocument"/> object.
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function LoadXmlDocument(path$) As XmlDocument
             Dim XmlDoc As New XmlDocument()
@@ -13,6 +21,14 @@ Namespace Text.Xml.Linq
             Return XmlDoc
         End Function
 
+        ''' <summary>
+        ''' Using <paramref name="default"/> string name or <see cref="Type.Name"/>
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="default$">
+        ''' If this parameter value is <see cref="StringEmpty"/>, then <see cref="Type.Name"/> will be use as the xml node name.
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetTypeName(type As Type, default$) As String
             If [default].StringEmpty Then
@@ -23,7 +39,8 @@ Namespace Text.Xml.Linq
         End Function
 
         ''' <summary>
-        ''' 这个函数只建议在读取超大的XML文件的时候使用，并且这个XML文件仅仅是一个数组或者列表的序列化结果
+        ''' Only works for the xml file that contains a list or array of xml element, and then this function using this list element as linq data source.
+        ''' (这个函数只建议在读取超大的XML文件的时候使用，并且这个XML文件仅仅是一个数组或者列表的序列化结果)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="XML$">超大的XML文件的文件路径</param>
