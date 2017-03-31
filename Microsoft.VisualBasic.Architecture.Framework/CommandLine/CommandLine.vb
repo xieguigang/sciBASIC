@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::97f184119e8e3b210f8d6fe94aa96740, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::31b233f87479a372b8b1fb124ded7844, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -156,7 +156,12 @@ Namespace CommandLine
                     value = ""
                 Else
                     ' 尝试进行字符串插值，从而实现命令行部分脚本化
-                    value = value.Interpolate(__envir)
+
+                    ' 2017-3-13
+                    ' 对于Windows文件路径而言， 不推荐转义
+                    ' 因为Windows的文件路径分隔符为\，很容易引起误解，例如C:\tsv会被误转义为C:<TAB>sv而导致错误
+                    ' 所以在这里关闭escape参数选项
+                    value = value.Interpolate(__envir, escape:=False)
                 End If
 
                 Return value

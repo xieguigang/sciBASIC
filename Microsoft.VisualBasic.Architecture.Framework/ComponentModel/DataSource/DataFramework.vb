@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac3edf2a6866b611648a9f285887eed9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::e00c7047e7cbdbcc8be00776f3cd8f17, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
 
     ' Author:
     ' 
@@ -145,26 +145,38 @@ Namespace ComponentModel.DataSourceModel
         ''' Object <see cref="Object.ToString"/> methods.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ToStrings As Dictionary(Of Type, __LDMStringTypeCastHandler) =
-            New Dictionary(Of Type, __LDMStringTypeCastHandler) From {
+        Public ReadOnly Property ToStrings As New Dictionary(Of Type, __LDMStringTypeCastHandler) From {
  _
-                {GetType(String), AddressOf DataFramework.__toStringInternal},
-                {GetType(Boolean), AddressOf DataFramework.ValueToString},
-                {GetType(DateTime), AddressOf DataFramework.ValueToString},
-                {GetType(Double), AddressOf DataFramework.ValueToString},
-                {GetType(Integer), AddressOf DataFramework.ValueToString},
-                {GetType(Long), AddressOf DataFramework.ValueToString},
-                {GetType(Byte), AddressOf DataFramework.ValueToString},
-                {GetType(ULong), AddressOf DataFramework.ValueToString},
-                {GetType(UInteger), AddressOf DataFramework.ValueToString},
-                {GetType(Short), AddressOf DataFramework.ValueToString},
-                {GetType(UShort), AddressOf DataFramework.ValueToString},
-                {GetType(Char), AddressOf DataFramework.__toStringInternal},
-                {GetType(Single), AddressOf DataFramework.ValueToString},
-                {GetType(SByte), AddressOf DataFramework.ValueToString}
+                {GetType(String), Function(s$) s},
+                {GetType(Boolean), AddressOf DataFramework.valueToString},
+                {GetType(DateTime), AddressOf DataFramework.valueToString},
+                {GetType(Double), AddressOf DataFramework.valueToString},
+                {GetType(Integer), AddressOf DataFramework.valueToString},
+                {GetType(Long), AddressOf DataFramework.valueToString},
+                {GetType(Byte), AddressOf DataFramework.valueToString},
+                {GetType(ULong), AddressOf DataFramework.valueToString},
+                {GetType(UInteger), AddressOf DataFramework.valueToString},
+                {GetType(Short), AddressOf DataFramework.valueToString},
+                {GetType(UShort), AddressOf DataFramework.valueToString},
+                {GetType(Char), AddressOf DataFramework.valueToString},
+                {GetType(Single), AddressOf DataFramework.valueToString},
+                {GetType(SByte), AddressOf DataFramework.valueToString}
         }
 
         Public Delegate Function CTypeDynamics(obj As Object, ConvertType As Type) As Object
+
+        ''' <summary>
+        ''' 这个函数是为了提供转换的方法给字典对象<see cref="ToStrings"/>
+        ''' </summary>
+        ''' <param name="o">
+        ''' 因为<see cref="ToStrings"/>要求的是<see cref="__LDMStringTypeCastHandler"/>，
+        ''' 即<see cref="Object"/>类型转换为字符串，所以在这里就不适用T泛型了，而是直接
+        ''' 使用<see cref="Object"/>类型
+        ''' </param>
+        ''' <returns></returns>
+        Private Function valueToString(o) As String
+            Return CStr(o)
+        End Function
 
         ''' <summary>
         ''' Is one of the primitive type in the hash <see cref="ToStrings"/>?
@@ -175,33 +187,6 @@ Namespace ComponentModel.DataSourceModel
             Return ToStrings.ContainsKey(type)
         End Function
 #End If
-
-        ''' <summary>
-        ''' Call <see cref="Object.ToString"/> of the value types
-        ''' </summary>
-        ''' <param name="x">Object should be <see cref="ValueType"/></param>
-        ''' <returns></returns>
-        Public Function ValueToString(x As Object) As String
-            Return x.ToString
-        End Function
-
-        ''' <summary>
-        ''' 出现错误的时候总是会返回空字符串的
-        ''' </summary>
-        ''' <param name="obj"></param>
-        ''' <returns></returns>
-        Friend Function __toStringInternal(obj As Object, Optional null As String = "") As String
-            If obj Is Nothing Then
-                Return null
-            Else
-                Try
-                    Return obj.ToString
-                Catch ex As Exception
-                    Call App.LogException(ex)
-                    Return null
-                End Try
-            End If
-        End Function
 
         ''' <summary>
         ''' Convert target data object collection into a datatable for the data source of the <see cref="System.Windows.Forms.DataGridView"></see>>.

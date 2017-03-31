@@ -70,6 +70,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Module1.vb" />
     <Compile Include="ParallelTemplate.vb" />
     <Compile Include="ParallelLoadingTest.vb" />
     <Compile Include="__DEBUG_MAIN.vb" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4e9899c151d3f2bff40ae04987560e4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::9f4bb42500b3bbbe690853653334b2a0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -371,7 +371,7 @@ Namespace Mathematical
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 计算两个向量之间的欧氏距离，请注意，这两个向量的长度必须要相等
         ''' </summary>
         ''' <param name="a">Point A</param>
         ''' <param name="b">Point B</param>

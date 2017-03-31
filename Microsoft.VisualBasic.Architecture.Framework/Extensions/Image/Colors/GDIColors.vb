@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f695ebfad0679eae655ab897b4907cfa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::98913cea4beb95bcad7533df426de50f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,38 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Imaging
 
-    Public Module ColorExtensions
+    ''' <summary>
+    ''' Extensions function for the gdi+ color type.
+    ''' </summary>
+    Public Module GDIColors
+
+        ''' <summary>
+        ''' 调整所输入的这一组颜色的alpha值
+        ''' </summary>
+        ''' <param name="colors"></param>
+        ''' <param name="alphaValue%"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Alpha(colors As IEnumerable(Of Color), alphaValue%) As Color()
+            Dim out As New List(Of Color)
+            For Each c As Color In colors
+                With c
+                    out += Color.FromArgb(alphaValue, .R, .G, .B)
+                End With
+            Next
+            Return out
+        End Function
+
+        <Extension>
+        Public Function Average(colors As IEnumerable(Of Color)) As Color
+            Dim data As Color() = colors.ToArray
+            Dim A% = data.Select(Function(c) CDbl(c.A)).Average
+            Dim R% = data.Select(Function(c) CDbl(c.R)).Average
+            Dim G% = data.Select(Function(c) CDbl(c.G)).Average
+            Dim B% = data.Select(Function(c) CDbl(c.B)).Average
+
+            Return Color.FromArgb(A, R, G, B)
+        End Function
 
         ''' <summary>
         ''' Creates a new light color object for the control from the specified color and
@@ -235,9 +266,16 @@ Namespace Imaging
         ''' <param name="b"></param>
         ''' <returns></returns>
         <Extension> Public Function Equals(a As Color, b As Color) As Boolean
-            If a.A <> b.A Then
-                Return False
+            If a.A = b.A Then
+                If a.A = 0 Then
+                    ' 只要是alpha值为零，肯定是透明色
+                    ' 在这里判定为相同的颜色
+                    Return True
+                End If
+            Else
+                Return False '  alpha值不相等，则颜色值肯定不相等
             End If
+
             If a.B <> b.B Then
                 Return False
             End If

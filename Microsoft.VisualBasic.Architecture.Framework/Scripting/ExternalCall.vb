@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0355ba9f301ae8ae54825fe3ae9e282, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\ExternalCall.vb"
+﻿#Region "Microsoft.VisualBasic::e89d45804d6ee3431139653914d37a34, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\ExternalCall.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,7 @@ Namespace Scripting
         ''' <returns></returns>
         Public Function Run(script As String, Optional args As Specialized.NameValueCollection = Nothing) As ShellValue
             Dim tmp As String = App.GetAppSysTempFile(__ext)
-            Call script.SaveTo(tmp, Encodings.ASCII.GetEncodings)
+            Call script.SaveTo(tmp, Encodings.ASCII.CodePage)
             Return Shell(path:=tmp, args:=args)
         End Function
 

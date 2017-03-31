@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a85772db68b2c3bcfa60b00fee38d5d, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::baddd1cf128745180a85040ca7de20c1, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -127,7 +127,7 @@ Public Module Extensions
         Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
         Dim slines As String() = lines.ToArray(Function(x) x.AsLine(vbTab))
         Dim sdoc As String = String.Join(vbCrLf, slines)
-        Return sdoc.SaveTo(saveTo, encoding.GetEncodings)
+        Return sdoc.SaveTo(saveTo, encoding.CodePage)
     End Function
 
     <Extension> Public Sub ForEach(Of T As Class)(path As String, invoke As Action(Of T))
@@ -169,6 +169,17 @@ Public Module Extensions
         Loop
 
         Return DataFrame.CreateObject(csv)
+    End Function
+
+    <Extension>
+    Public Function DataFrame(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))) As EntityObject()
+        Return source.ToArray(
+            Function(o)
+                Return New EntityObject With {
+                    .ID = o.Name,
+                    .Properties = o.Value
+                }
+            End Function)
     End Function
 
     <ExportAPI("Write.Csv")>
@@ -385,14 +396,14 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                 {NameOf(EntityObject.ID), KeyMap}
             }
         End If
-        Return source.SaveTo(path, , encoding.GetEncodings, blank,, modify, reorderKeys)
+        Return source.SaveTo(path, , encoding.CodePage, blank,, modify, reorderKeys)
     End Function
 
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
                                              path As String,
                                              encoding As Encodings,
                                              Optional explicit As Boolean = False) As Boolean
-        Return source.SaveTo(path, explicit, encoding.GetEncodings)
+        Return source.SaveTo(path, explicit, encoding.CodePage)
     End Function
 
     ''' <summary>
@@ -430,7 +441,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                             Select s =
                                                 n.ToString
         Dim buf As New IO.File({New RowObject(row)})
-        Return buf.Save(path, encoding.GetEncodings)
+        Return buf.Save(path, encoding.CodePage)
     End Function
 
     ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::991050ed27028611c6569879af07faff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\LargeTextFile.vb"
+﻿#Region "Microsoft.VisualBasic::6f83db4b6b05330c402fbadc01ddf63c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\LargeTextFile.vb"
 
     ' Author:
     ' 
@@ -26,10 +26,12 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports System.Text
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' Wrapper for the file operations.
@@ -37,6 +39,30 @@ Imports System.Runtime.CompilerServices
 ''' <remarks></remarks>
 <[Namespace]("Large_Text_File")>
 Public Module LargeTextFile
+
+    <Extension>
+    Public Function IteratesTableData(path$, ByRef title$, Optional skip% = -1, Optional encoding As Encodings = Encodings.ASCII) As IEnumerable(Of String)
+        Using reader As StreamReader = path.OpenReader(encoding.CodePage)
+            Dim i% = skip
+
+            ' skip lines
+            Do While i > 0
+                reader.ReadLine()
+                i -= 1
+            Loop
+
+            title = reader.ReadLine
+
+            Return reader.IteratesStream
+        End Using
+    End Function
+
+    <Extension>
+    Public Iterator Function IteratesStream(s As StreamReader) As IEnumerable(Of String)
+        Do While Not s.EndOfStream
+            Yield s.ReadLine
+        Loop
+    End Function
 
     <ExportAPI("Partitioning")>
     Public Function TextPartition(data As Generic.IEnumerable(Of String)) As String()()

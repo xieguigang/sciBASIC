@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6b62a11b682e54b2072066ee5db022a, ..\sciBASIC#\Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
+﻿#Region "Microsoft.VisualBasic::7f534f371ba738e6c57ec5c426c6d57f, ..\sciBASIC#\Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Public Class ReaderProvider
 
     Sub New(path$, Optional encoding As Encodings = Encodings.ASCII, Optional buffered& = 1024 * 1024 * 10)
         URI = path$
-        __encoding = encoding.GetEncodings
+        __encoding = encoding.CodePage
 
         If FileIO.FileSystem.GetFileInfo(path).Length <= buffered Then
             Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)   ' 文件数据将会被缓存

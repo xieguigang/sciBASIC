@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0b4319beaafd4279e24e46e16cc8169, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::0037282aeb9a3bfaa0834d5238d35e52, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,7 @@ Namespace Net.Protocols.ContentTypes
         Public Const Unknown As String = "application/octet-stream"
         Public Const MsDownload As String = "application/x-msdownload"
         Public Const Json As String = "application/json"
+        Public Const ZIP As String = "application/zip"
 
         Public ReadOnly Property UnknownType As New ContentType With {
             .FileExt = "*.*",

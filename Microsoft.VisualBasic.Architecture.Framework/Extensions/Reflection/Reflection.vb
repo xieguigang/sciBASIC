@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8f41233d8c5bb3adba1d11725a47994, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::df2d4bc3fe32a6785edd77d07334ad26, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -30,11 +30,11 @@ Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -306,12 +306,31 @@ NULL:       If Not strict Then
     ''' </summary>
     ''' <param name="a">继承类型继承自基本类型，具备有基本类型的所有特性</param>
     ''' <param name="b">基本类型</param>
-    ''' <param name="strict">这个参数是为了解决比较来自不同的assembly文件之中的相同类型的比较，但是这个可能会在类型转换出现一些BUG</param>
+    ''' <param name="strict">
+    ''' + 这个参数是为了解决比较来自不同的assembly文件之中的相同类型的比较，但是这个可能会在类型转换出现一些BUG
+    ''' + 假若不严格要求的话，那么则两种类型相等的时候也会被算作为继承关系
+    ''' + 假若是非严格判断，那么对于泛型而言，只要基本类型也相等也会被判断为成立的继承关系，这个是为了<see cref="Actives"/>操作设计的
+    ''' 
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>假若两个类型是来自于不同的assembly文件的话，即使这两个类型是相同的对象，也会无法判断出来</remarks>
     <ExportAPI("Is.InheritsFrom")>
     <Extension> Public Function IsInheritsFrom(a As Type, b As Type, Optional strict As Boolean = True) As Boolean
         Dim baseType As Type = a.BaseType
+
+        If Not strict Then
+            If a.Equals(b) Then
+                Return True
+            End If
+            If a.IsGenericType AndAlso b.IsGenericType Then
+                ' 2017-3-12
+                ' GetType(Dictionary(Of String, Double)).IsInheritsFrom(GetType(Dictionary(Of ,)))
+
+                If a.GetGenericTypeDefinition.Equals(b) Then
+                    Return True
+                End If
+            End If
+        End If
 
         Do While Not baseType Is Nothing
             If baseType.Equals(b) Then

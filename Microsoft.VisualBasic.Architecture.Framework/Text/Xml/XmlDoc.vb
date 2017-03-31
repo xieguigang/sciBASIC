@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6698ff08ee09329415c23159faffce62, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b61bf0fa2d698a608f5994a2d3b59c44, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlDoc.vb"
 
     ' Author:
     ' 
@@ -134,7 +134,7 @@ Namespace Text.Xml
         End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return SaveTo(Path, encoding.GetEncodings)
+            Return SaveTo(Path, encoding.CodePage)
         End Function
     End Class
 End Namespace

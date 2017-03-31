@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e51852b24296706ada29970d93e783b2, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Diamond.vb"
+﻿#Region "Microsoft.VisualBasic::a937345bb24dbd4448ab8ad581a73e57, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Diamond.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Vector.Shapes
 
@@ -37,7 +38,7 @@ Namespace Drawing2D.Vector.Shapes
                                topLeft As Point,
                                size As Size,
                                Optional br As Brush = Nothing,
-                               Optional border As Border = Nothing)
+                               Optional border As Stroke = Nothing)
 
             Dim a As New Point(topLeft.X + size.Width / 2, topLeft.Y)
             Dim b As New Point(topLeft.X + size.Width, topLeft.Y + size.Height / 2)
@@ -54,7 +55,7 @@ Namespace Drawing2D.Vector.Shapes
             Call g.FillPath(If(br Is Nothing, Brushes.Black, br), diamond)
 
             If Not border Is Nothing Then
-                Call g.DrawPath(border.GetPen, diamond)
+                Call g.DrawPath(border.GDIObject, diamond)
             End If
         End Sub
     End Class

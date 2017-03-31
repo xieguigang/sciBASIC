@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::409f2e289aaa13a7e06ffb3f631ff29c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\BatchTasks.vb"
+﻿#Region "Microsoft.VisualBasic::8dc998ed567ab4eb0d7e886d46b61b59, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\BatchTasks.vb"
 
     ' Author:
     ' 
@@ -161,7 +161,9 @@ Namespace Parallel.Threads
                     Call resultList.Add(completeTask.GetValue)  '  将完成的任务从任务池之中移除然后获取返回值
                 Next
 
-                Call Thread.Sleep(TimeInterval)
+                If TimeInterval > 0 Then
+                    Call Thread.Sleep(TimeInterval)
+                End If
             Loop
 
             Dim WaitForExit As T() =

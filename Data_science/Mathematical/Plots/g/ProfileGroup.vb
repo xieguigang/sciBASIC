@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18193899bcf15f450fd47ceec4995c47, ..\sciBASIC#\Data_science\Mathematical\Plots\g\ProfileGroup.vb"
+﻿#Region "Microsoft.VisualBasic::1f8ea136d1d0594faf98b3f75ae16ff3, ..\sciBASIC#\Data_science\Mathematical\Plots\g\ProfileGroup.vb"
 
     ' Author:
     ' 
@@ -30,18 +30,21 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-''' <summary>
-''' The plot data group
-''' </summary>
-Public MustInherit Class ProfileGroup
+Namespace Graphic
 
     ''' <summary>
-    ''' The color profile of the plot elements
+    ''' The plot data group
     ''' </summary>
-    ''' <returns></returns>
-    Public Overridable Property Serials As NamedValue(Of Color)()
+    Public MustInherit Class ProfileGroup
 
-    Public Overrides Function ToString() As String
-        Return MyClass.GetJson
-    End Function
-End Class
+        ''' <summary>
+        ''' The color profile of the plot elements
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable Property Serials As NamedValue(Of Color)()
+
+        Public Overrides Function ToString() As String
+            Return MyClass.GetJson
+        End Function
+    End Class
+End Namespace

@@ -226,6 +226,7 @@
     <Compile Include="FindPath\PQDijkstra\HeapNode.vb" />
     <Compile Include="FindPath\PQDijkstra\PriorityQueue.vb" />
     <Compile Include="LDM\Abstract.vb" />
+    <Compile Include="LDM\Extensions.vb" />
     <Compile Include="NetworkAPI.vb" />
     <Compile Include="FindPath\PathFinder.vb" />
     <Compile Include="PageRank\GraphMatrix.vb" />

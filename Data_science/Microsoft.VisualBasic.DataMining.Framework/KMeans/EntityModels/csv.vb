@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba9e42613f7e44615447b0e6b78a225a, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\csv.vb"
+﻿#Region "Microsoft.VisualBasic::fa795dea8fe861b66600c13bfe2ef469, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\csv.vb"
 
     ' Author:
     ' 
@@ -29,12 +29,13 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
 Namespace KMeans
 
     ''' <summary>
-    ''' 存储在Csv文件里面的数据模型
+    ''' 存储在Csv文件里面的数据模型，近似等价于<see cref="DataSet"/>，只不过多带了一个用来描述cluster的<see cref="Cluster"/>属性标签
     ''' </summary>
     Public Class EntityLDM : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b14e8a3148a3b68af9768a7da00701eb, ..\sciBASIC#\Data\DataFrame\IO\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::61a4b1160b285e0f6292e714e89fe810, ..\sciBASIC#\Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace IO
 
@@ -55,6 +56,10 @@ Namespace IO
                 .ID = ID,
                 .Properties = New Dictionary(Of String, String)(Properties)
             }
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{ID} => ({Properties.Count}) {Properties.Keys.ToArray.GetJson}"
         End Function
 
         Public Shared Function LoadDataSet(path As String, Optional uidMap As String = Nothing) As IEnumerable(Of EntityObject)

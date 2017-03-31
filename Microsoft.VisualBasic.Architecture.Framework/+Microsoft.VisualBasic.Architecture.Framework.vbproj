@@ -355,6 +355,8 @@
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
     <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb" />
+    <Compile Include="ComponentModel\DataSource\Tsv.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\NamedCollection%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
@@ -391,6 +393,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
     <Compile Include="Extensions\CodeDOM\References.vb" />
+    <Compile Include="Extensions\Doc\PropertyValue.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\GDI+\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
@@ -424,10 +427,11 @@
     <Compile Include="Extensions\IO\CollectionIO.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
-    <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
+    <Compile Include="ComponentModel\ValuePair\Binding.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
     <Compile Include="Language\UnixBash\ShellSyntax.vb" />
+    <Compile Include="Language\UnixBash\Shell\tree.vb" />
     <Compile Include="Language\UnixBash\Shell\rm.vb" />
     <Compile Include="Language\Value\IfValue.vb" />
     <Compile Include="Language\Value\Numeric\int.vb" />
@@ -436,6 +440,7 @@
     <Compile Include="Parallel\Tasks\Actor%28Of T, V%29.vb" />
     <Compile Include="Scripting\Expressions\ArrayIndex.vb" />
     <Compile Include="Scripting\Expressions\StringInterpolation.vb" />
+    <Compile Include="Scripting\NumberConversionRoutines.vb" />
     <Compile Include="Terminal\InteractiveIODevice\Shell.vb" />
     <Compile Include="Terminal\PipelineCLI.vb" />
     <Compile Include="Terminal\InnerQueue.vb" />
@@ -525,14 +530,16 @@
     <Compile Include="Text\Parser\HtmlParser\HtmlStrips.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
+    <Compile Include="Text\Xml\Linq\Linq.vb" />
     <Compile Include="Text\Xml\Models.vb" />
+    <Compile Include="Text\Xml\Extensions.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
     <Compile Include="Text\Xml\XmlDoc.vb" />
     <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
     <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
     <Compile Include="Extensions\Image\GDI+\Interface.vb" />
-    <Compile Include="Extensions\Image\Colors\ColorExtensions.vb" />
+    <Compile Include="Extensions\Image\Colors\GDIColors.vb" />
     <Compile Include="Extensions\IO\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
@@ -636,7 +643,7 @@
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinModel.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\Extensions.vb" />
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
-    <Compile Include="Extensions\StringHelpers\TextEncodings.vb" />
+    <Compile Include="Text\TextEncodings.vb" />
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
     <Compile Include="Extensions\WebServices\Base64Codec.vb" />
     <Compile Include="Extensions\WebServices\NetResponse.vb" />

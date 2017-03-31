@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03bcb05344830f09c29df8b2320fd1a9, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\TokenIcer.vb"
+﻿#Region "Microsoft.VisualBasic::d29f040653c95f46f530977c5ce99292, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\TokenIcer.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace Scripting
 
@@ -40,7 +41,7 @@ Namespace Scripting
             End If
 
             Return Tokens(c) = Mathematical.Scripting.Tokens.OpenStack OrElse
-            Tokens(c) = Mathematical.Scripting.Tokens.OpenBracket
+                Tokens(c) = Mathematical.Scripting.Tokens.OpenBracket
         End Function
 
         Public Function IsCloseStack(c As Char) As Boolean
@@ -49,46 +50,45 @@ Namespace Scripting
             End If
 
             Return Tokens(c) = Mathematical.Scripting.Tokens.CloseBracket OrElse
-            Tokens(c) = Mathematical.Scripting.Tokens.CloseStack
-
+                Tokens(c) = Mathematical.Scripting.Tokens.CloseStack
         End Function
 
         Public ReadOnly Property Tokens As IReadOnlyDictionary(Of Char, Tokens) =
-        New Dictionary(Of Char, Tokens) From {
+            New Dictionary(Of Char, Tokens) From {
  _
-        {"0"c, Mathematical.Scripting.Tokens.Number},  ' Numbers
-        {"1"c, Mathematical.Scripting.Tokens.Number},
-        {"2"c, Mathematical.Scripting.Tokens.Number},
-        {"3"c, Mathematical.Scripting.Tokens.Number},
-        {"4"c, Mathematical.Scripting.Tokens.Number},
-        {"5"c, Mathematical.Scripting.Tokens.Number},
-        {"6"c, Mathematical.Scripting.Tokens.Number},
-        {"7"c, Mathematical.Scripting.Tokens.Number},
-        {"8"c, Mathematical.Scripting.Tokens.Number},
-        {"9"c, Mathematical.Scripting.Tokens.Number},
-        {"."c, Mathematical.Scripting.Tokens.Number},
+                {"0"c, Mathematical.Scripting.Tokens.Number},  ' Numbers
+                {"1"c, Mathematical.Scripting.Tokens.Number},
+                {"2"c, Mathematical.Scripting.Tokens.Number},
+                {"3"c, Mathematical.Scripting.Tokens.Number},
+                {"4"c, Mathematical.Scripting.Tokens.Number},
+                {"5"c, Mathematical.Scripting.Tokens.Number},
+                {"6"c, Mathematical.Scripting.Tokens.Number},
+                {"7"c, Mathematical.Scripting.Tokens.Number},
+                {"8"c, Mathematical.Scripting.Tokens.Number},
+                {"9"c, Mathematical.Scripting.Tokens.Number},
+                {"."c, Mathematical.Scripting.Tokens.Number},
  _
-        {"+"c, Mathematical.Scripting.Tokens.Operator},  ' Operators
-        {"-"c, Mathematical.Scripting.Tokens.Operator},
-        {"*"c, Mathematical.Scripting.Tokens.Operator},
-        {"/"c, Mathematical.Scripting.Tokens.Operator},
-        {"!"c, Mathematical.Scripting.Tokens.Operator},
-        {"%"c, Mathematical.Scripting.Tokens.Operator},
-        {"^"c, Mathematical.Scripting.Tokens.Operator},
+                {"+"c, Mathematical.Scripting.Tokens.Operator},  ' Operators
+                {"-"c, Mathematical.Scripting.Tokens.Operator},
+                {"*"c, Mathematical.Scripting.Tokens.Operator},
+                {"/"c, Mathematical.Scripting.Tokens.Operator},
+                {"!"c, Mathematical.Scripting.Tokens.Operator},
+                {"%"c, Mathematical.Scripting.Tokens.Operator},
+                {"^"c, Mathematical.Scripting.Tokens.Operator},
  _
-        {"["c, Mathematical.Scripting.Tokens.OpenBracket},  ' Brackets
-        {"]"c, Mathematical.Scripting.Tokens.OpenBracket},
-        {"{"c, Mathematical.Scripting.Tokens.CloseBracket},
-        {"}"c, Mathematical.Scripting.Tokens.CloseBracket},
+                {"["c, Mathematical.Scripting.Tokens.OpenBracket},  ' Brackets
+                {"]"c, Mathematical.Scripting.Tokens.OpenBracket},
+                {"{"c, Mathematical.Scripting.Tokens.CloseBracket},
+                {"}"c, Mathematical.Scripting.Tokens.CloseBracket},
  _
-        {"("c, Mathematical.Scripting.Tokens.OpenStack},  ' Stacks 
-        {")"c, Mathematical.Scripting.Tokens.CloseStack},
+                {"("c, Mathematical.Scripting.Tokens.OpenStack},  ' Stacks 
+                {")"c, Mathematical.Scripting.Tokens.CloseStack},
  _
-        {" "c, Mathematical.Scripting.Tokens.WhiteSpace},    ' White Space
-        {CChar(vbTab), Mathematical.Scripting.Tokens.WhiteSpace},
+                {" "c, Mathematical.Scripting.Tokens.WhiteSpace},    ' White Space
+                {ASCII.TAB, Mathematical.Scripting.Tokens.WhiteSpace},
  _
-        {","c, Mathematical.Scripting.Tokens.Delimiter}
-    }
+                {","c, Mathematical.Scripting.Tokens.Delimiter}
+            }
 
         ''' <summary>
         ''' 和VisualBasic的标识符命名规则一样，变量请不要以数字开头，否则会被解析为一个数字从而产生错误的表达式

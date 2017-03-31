@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ec4cde0eedb681c584a3cc82c8d01d9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\SQL.vb"
+﻿#Region "Microsoft.VisualBasic::41dac769326a424721fd3c298c84a5bd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\SQL.vb"
 
     ' Author:
     ' 
@@ -29,9 +29,11 @@
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
     ''' <summary>
-    ''' SQL之中的一个数据表的抽象描述接口
+    ''' A generic abstract model of a SQL table.
+    ''' (SQL之中的一个数据表的抽象描述接口)
     ''' </summary>
     Public MustInherit Class SQLTable
+        Implements ICloneable
 
         ''' <summary>
         ''' INSERT INTO table_name (field1, field2,...) VALUES (value1, value2,....)
@@ -58,6 +60,20 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return GetInsertSQL()
+        End Function
+
+        ''' <summary>
+        ''' Clones the property values.
+        ''' (由于这个<see cref="SQLTable"/>对象的所有属性都是简单的基本类型，所以能够很容易
+        ''' 的复制这些属性，从而很容易的复制数据表之中的一个行对象)
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function Clone() As Object Implements ICloneable.Clone
+            Return MyClass.MemberwiseClone
+        End Function
+
+        Public Function Copy() As SQLTable
+            Return DirectCast(MyClass.MemberwiseClone, SQLTable)
         End Function
     End Class
 End Namespace

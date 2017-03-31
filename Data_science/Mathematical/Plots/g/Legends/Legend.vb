@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aac8568a770c7692f099ecd8d48c8bc5, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Legends\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::ff1926df3b40ef815c00c7428de1dbfe, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Legends\Legend.vb"
 
     ' Author:
     ' 
@@ -35,22 +35,25 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class Legend
+Namespace Graphic.Legend
 
-    Public Property style As LegendStyles
-    Public Property title As String
-    Public Property color As String
-    ''' <summary>
-    ''' CSS expression, which can be parsing by <see cref="CSSFont"/> 
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property fontstyle As String
+    Public Class Legend
 
-    Public Function GetFont() As Font
-        Return CSSFont.TryParse(fontstyle).GDIObject
-    End Function
+        Public Property style As LegendStyles
+        Public Property title As String
+        Public Property color As String
+        ''' <summary>
+        ''' CSS expression, which can be parsing by <see cref="CSSFont"/> 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property fontstyle As String
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+        Public Function GetFont() As Font
+            Return CSSFont.TryParse(fontstyle).GDIObject
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
+End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c005779e33df658014a97926999a6900, ..\sciBASIC#\Data_science\Mathematical\Plots\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::446f3898944e086f71b720472b6c1443, ..\sciBASIC#\Data_science\Mathematical\Plots\ImageData.vb"
 
     ' Author:
     ' 
@@ -74,7 +74,7 @@ Public Module ImageDataExtensions
         Dim xrange As DoubleRange = $"0 -> {img.Width}"
         Dim yrange As DoubleRange = $"0 -> {img.Height}"
 
-        Return ScatterHeatmap.Plot(
+        Return Contour.Plot(
             color, xrange, yrange,
             xsteps:=steps, ysteps:=steps, unit:=1, scale:=3,
             colorMap:="Jet",

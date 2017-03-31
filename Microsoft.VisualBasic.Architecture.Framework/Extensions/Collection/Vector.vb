@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7e2f29bf69a097626c970532f88c956, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::a000b8c4c7dde87caa736b8399686715, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -27,10 +27,80 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
+
+    Public Function LengthEquals(Of T)(n%, any As Boolean, ParamArray array As IEnumerable(Of T)()) As Boolean
+        Dim c%() = array.Select(Function(s) s.Count).ToArray
+        Dim equals = c.Where(Function(x) x = n).ToArray
+
+        If any Then
+            Return equals.Length > 0
+        Else
+            Return equals.Length = array.Length
+        End If
+    End Function
+
+    ''' <summary>
+    ''' + False: 测试失败，不会满足<see cref="PairData(Of T)(T(), T())"/>的条件
+    ''' + True: 可以使用<see cref="PairData(Of T)(T(), T())"/>来生成Mapping匹配
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    Public Function TestPairData(Of T)(a As T(), b As T()) As Boolean
+        If a.Length <> b.Length AndAlso Not LengthEquals(1, True, a, b) Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 用来生成map数据的，
+    ''' + 当两个向量长度相同，会不进行任何处理，即两个向量之间，元素都可以一一对应，
+    ''' + 但是当某一个向量的长度为1的时候，就会将该向量补齐，因为此时会是一对多的关系
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function PairData(Of T)(a As T(), b As T()) As IEnumerable(Of Map(Of T, T))
+        If a.Length = 1 AndAlso b.Length > 1 Then
+            ' 补齐a
+            a = a(0).CopyVector(b.Length)
+        ElseIf a.Length > 1 AndAlso b.Length = 1 Then
+            ' 补齐b
+            b = b(0).CopyVector(a.Length)
+        ElseIf a.Length <> b.Length Then
+            ' 无法计算
+            Throw New Exception("Both a and b their length should be equals or one of them should be length=1!")
+        End If
+
+        For i As Integer = 0 To a.Length - 1
+            Yield New Map(Of T, T) With {
+                .Key = a(i),
+                .Maps = b(i)
+            }
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 在一个一维数组中搜索指定对象，并返回其首个匹配项的索引。
+    ''' </summary>
+    ''' <typeparam name="T">数组元素的类型。</typeparam>
+    ''' <param name="array">要搜索的从零开始的一维数组。</param>
+    ''' <param name="o">要在 array 中查找的对象。</param>
+    ''' <returns>如果在整个 array 中找到 value 的第一个匹配项，则为该项的从零开始的索引；否则为 -1。</returns>
+    <Extension>
+    Public Function IndexOf(Of T)(array As T(), o As T) As Integer
+        Return System.Array.IndexOf(array, value:=o)
+    End Function
 
     <Extension>
     Public Function GetMinIndex(values As List(Of Double)) As Integer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f683f926f4d1ba8ecf5358475664bc51, ..\sciBASIC#\Data\DataFrame\IO\File.vb"
+﻿#Region "Microsoft.VisualBasic::f1748b097faaf931e383240c550e188d, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -101,7 +101,7 @@ B21,B22,B23,...
                 Optional trimBlanks As Boolean = False)
 
             FilePath = path
-            _innerTable = __loads(path, encoding.GetEncodings, trimBlanks)
+            _innerTable = __loads(path, encoding.CodePage, trimBlanks)
         End Sub
 
         Sub New(source As IEnumerable(Of RowObject), path As String)
@@ -134,10 +134,9 @@ B21,B22,B23,...
         ''' <remarks></remarks>
         Public ReadOnly Property Width As Integer
             Get
-                Dim LQuery = From row As RowObject
-                             In _innerTable.AsParallel
-                             Select row.NumbersOfColumn '
-                Return LQuery.Max
+                Return _innerTable _
+                    .Select(Function(row) row.NumbersOfColumn) _
+                    .Max
             End Get
         End Property
 
@@ -177,6 +176,10 @@ B21,B22,B23,...
         ''' 将本文件之中的所有列取出来，假若有任意一个列的元素的数目不够的话，则会在相应的位置之上使用空白来替换
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 由于是使用<see cref="_innerTable"/>来作为数据源的，所以对于csv对象而言，是含有header数据的，即含有第一行数据
+        ''' 对于<see cref="DataFrame"/>类型而言，由于在创建对象的时候，第一行数据由于需要被用作为header，所以这个内部表对象之中是不包含有header行的，即这个属性所输出的结果只中是不包含有header行的
+        ''' </remarks>
         Public ReadOnly Iterator Property Columns As IEnumerable(Of String())
             Get
                 If _innerTable.Count = 0 Then
@@ -627,7 +630,7 @@ B21,B22,B23,...
         End Function
 
         Public Shared Function LoadTsv(path$, Optional encoding As Encodings = Encodings.UTF8) As File
-            Return DataImports.Imports(path, ASCII.TAB, encoding.GetEncodings)
+            Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
 
         ''' <summary>
@@ -791,11 +794,11 @@ B21,B22,B23,...
         End Function
 
         Public Shared Operator <=(df As File, type As Type) As Object()
-            Return Reflector.LoadDataToObject(Extensions.DataFrame(df), type, False).ToArray
+            Return Reflector.LoadDataToObject(df.DataFrame, type, False).ToArray
         End Operator
 
-        Public Shared Operator >=(df As File, TypeInfo As System.Type) As Object()
-            Return df <= TypeInfo
+        Public Shared Operator >=(df As File, type As Type) As Object()
+            Return df <= type
         End Operator
 
         Public Shared Operator >(File As File, path As String) As Boolean

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4d1e448638ae4fad2af9a5dd37ef543, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\Function.vb"
+﻿#Region "Microsoft.VisualBasic::91dab63741c15c412773aff58df5afba, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\Function.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,8 @@ Namespace Scripting.Helpers
                 {"exp", Function(args) Math.Exp(args(Scan0))},
                 {"floor", Function(args) Math.Floor(args(Scan0))},
                 {"ieeeremainder", Function(args) Math.IEEERemainder(args(Scan0), args(1))},
-                {"log", Function(args) Math.Log(args(Scan0))},
+                {"log", Function(args) Math.Log(args(Scan0), newBase:=args(1))},
+                {"ln", Function(args) Math.Log(args(Scan0))},
                 {"log10", Function(args) Math.Log10(args(Scan0))},
                 {"max", Function(args) Math.Max(args(Scan0), args(1))},
                 {"min", Function(args) Math.Min(args(Scan0), args(1))},

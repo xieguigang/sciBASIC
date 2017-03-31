@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::145c8a742c214ab8874de94669811569, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4517300726090b063413dc244e9e8fd7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -74,7 +74,7 @@ Public Module Extensions
 
     <Extension>
     Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
-        Return source.Select(Function(row) $"{row.Name}{ASCII.TAB}{row.Value}").SaveTo(path, encoding.GetEncodings)
+        Return source.Select(Function(row) $"{row.Name}{ASCII.TAB}{row.Value}").SaveTo(path, encoding.CodePage)
     End Function
 
     ''' <summary>
@@ -85,6 +85,10 @@ Public Module Extensions
     Public Sub println(s$, ParamArray args As Object())
         Dim out As String = STDIO__.CLangStringFormatProvider.sprintf(s, args)
         Call Console.WriteLine(out)
+    End Sub
+
+    Public Sub println()
+        Call Console.WriteLine()
     End Sub
 
     ''' <summary>
@@ -226,17 +230,23 @@ Public Module Extensions
     ''' Function pointer of the task work that needs to be tested.(需要测试性能的工作对象)
     ''' </param>
     ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
-    Public Function Time(work As Action) As Long
-        Dim sw As Stopwatch = Stopwatch.StartNew
+    Public Function Time(work As Action, Optional echo As Boolean = True) As Long
+        Dim startTick As Long = App.NanoTime
         Call work()
-        Call $"Work takes {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
-        Return sw.ElapsedMilliseconds
+        Dim endTick As Long = App.NanoTime
+        Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
+        If echo Then
+            Call $"Work takes {t}ms...".__DEBUG_ECHO
+        End If
+        Return t
     End Function
 
     Public Function Time(Of T)(work As Func(Of T)) As T
-        Dim sw As Stopwatch = Stopwatch.StartNew
+        Dim startTick As Long = App.NanoTime
         Dim value As T = work()
-        Call $"Work takes {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
+        Dim endTick As Long = App.NanoTime
+        Dim ms& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
+        Call $"Work takes {ms}ms...".__DEBUG_ECHO
         Return value
     End Function
 
@@ -661,7 +671,8 @@ Public Module Extensions
     ''' <summary>
     ''' Data partitioning function.
     ''' (将目标集合之中的数据按照<paramref name="parTokens"></paramref>参数分配到子集合之中，
-    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序)
+    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序，
+    ''' 每一个子集和之中的元素数量为<paramref name="parTokens"/>)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -1466,16 +1477,6 @@ Public Module Extensions
         Return True
     End Function
 
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Time2Binary", Info:="Convert the date time value into a long data type value.")>
-    <Extension> Public Function ToBinary([Date] As Date) As Long
-#Else
-    <Extension> Public Function ToBinary([Date] As Date) As Long
-#End If
-        Return [Date].Year * 100000 + [Date].Month * 10000 + [Date].Day * 1000 +
-                [Date].Hour * 100 + [Date].Minute * 10 + [Date].Second
-    End Function
-
     ''' <summary>
     ''' 这个是一个安全的方法，假若下标越界或者目标数据源为空的话，则会返回空值
     ''' </summary>
@@ -1674,16 +1675,13 @@ Public Module Extensions
     '''
     <ExportAPI("Shuffles")>
     <Extension> Public Function Shuffles(Of T)(source As IEnumerable(Of T)) As T()
-        Call VBMath.Randomize()
-
         Dim tmp As New List(Of T)(source)
         Dim buf As T() = New T(tmp.Count - 1) {}
-        Dim Seeds As Integer = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / CLng(Integer.MaxValue) * 2
-        Dim Rand As New Random(Seed:=Seeds)
+        Dim rand As New Random(Seed:=Mathematical.Seed)
         Dim l As Integer = tmp.Count - 1
 
         For i As Integer = 0 To buf.Length - 1
-            Dim index As Integer = Rand.Next(minValue:=0, maxValue:=l)
+            Dim index As Integer = rand.Next(minValue:=0, maxValue:=l)
             buf(i) = tmp(index)
             Call tmp.RemoveAt(index)
             l -= 1
@@ -1692,9 +1690,15 @@ Public Module Extensions
         Return buf
     End Function
 
+    ''' <summary>
+    ''' 返回n长度的序列数值，这些序列数值是打乱顺序的，但是升序排序之后会得到1:n的序列
+    ''' 请注意，这个序列并不是随机数，而是将n长度的序列之中的元素打乱顺序的结果
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
     <ExportAPI("Sequence.Random")>
     <Extension> Public Function SeqRandom(n As Integer) As Integer()
-        Dim source As Integer() = n.Sequence
+        Dim source As Integer() = n.Sequence.ToArray
         Dim Random As Integer() = source.Shuffles
         Return Random
     End Function
@@ -2234,6 +2238,7 @@ Public Module Extensions
     ''' Nothing
     ''' </summary>
     Friend Const null = Nothing
+    Public Const void As Object = Nothing
 
     ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>

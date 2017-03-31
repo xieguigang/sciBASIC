@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::2a464be949d7e1383005582755b78afc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::a63d76923e137aa3fa4a0f6d33eb0412, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\List(Of T).vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -38,6 +38,7 @@ Namespace Language
     ''' Represents a strongly typed list of objects that can be accessed by index. Provides
     ''' methods to search, sort, and manipulate lists.To browse the .NET Framework source
     ''' code for this type, see the Reference Source.
+    ''' (加强版的<see cref="System.Collections.Generic.List(Of T)"/>)
     ''' </summary>
     ''' <typeparam name="T">The type of elements in the list.</typeparam>
     Public Class List(Of T) : Inherits Generic.List(Of T)
@@ -125,6 +126,7 @@ Namespace Language
         ''' Initializes a new instance of the <see cref="List"/>`1 class that
         ''' contains elements copied from the specified collection and has sufficient capacity
         ''' to accommodate the number of elements copied.
+        ''' (这是一个安全的构造函数，假若输入的参数为空值，则只会创建一个空的列表，而不会抛出错误)
         ''' </summary>
         ''' <param name="source">The collection whose elements are copied to the new list.</param>
         Sub New(source As IEnumerable(Of T))
@@ -317,8 +319,17 @@ Namespace Language
             Return list
         End Operator
 
+        ''' <summary>
+        ''' 将这个列表对象隐式转换为向量数组
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
         Public Shared Narrowing Operator CType(list As List(Of T)) As T()
-            Return list.ToArray
+            If list Is Nothing Then
+                Return {}
+            Else
+                Return list.ToArray
+            End If
         End Operator
 
         ' 因为这个隐式会使得数组被默认转换为本List对象，会导致 + 运算符重载失败，所以在这里将这个隐式转换取消掉

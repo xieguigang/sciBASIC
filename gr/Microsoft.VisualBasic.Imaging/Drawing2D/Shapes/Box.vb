@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f69ab106471f7a10588272530acdfa65, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
+﻿#Region "Microsoft.VisualBasic::5141abc08a762ae8198b789031adf555, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
 
     ' Author:
     ' 
@@ -27,10 +27,7 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Vector.Shapes
 
@@ -46,12 +43,12 @@ Namespace Drawing2D.Vector.Shapes
                                         topLeft As Point,
                                         size As Size,
                                         Optional br As Brush = Nothing,
-                                        Optional border As Border = Nothing)
+                                        Optional border As Stroke = Nothing)
 
             Call g.FillRectangle(If(br Is Nothing, Brushes.Black, br), New Rectangle(topLeft, size))
 
             If Not border Is Nothing Then
-                Call g.DrawRectangle(border.GetPen, New Rectangle(topLeft, size))
+                Call g.DrawRectangle(border.GDIObject, New Rectangle(topLeft, size))
             End If
         End Sub
     End Class

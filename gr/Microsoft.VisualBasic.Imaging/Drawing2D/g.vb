@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::7ec09874cf02fbbc46c97325b89403f3, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::cdcd09da8a8ca408542f1c6463ef991b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -50,6 +50,11 @@ Namespace Drawing2D
     Public Module g
 
         Public Const DefaultPadding$ = "padding:100px 100px 100px 100px;"
+
+        ''' <summary>
+        ''' 与<see cref="DefaultPadding"/>相比而言，这个padding的值在坐标轴Axis的label的绘制上空间更加大
+        ''' </summary>
+        Public Const DefaultLargerPadding$ = "padding:100px 100px 150px 150px;"
         Public Const ZeroPadding$ = "padding: 0px 0px 0px 0px;"
 
         ''' <summary>
@@ -62,7 +67,7 @@ Namespace Drawing2D
         ''' <returns></returns>
         Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot) As Bitmap
             If size.IsEmpty Then
-                size = New Size(4300, 2000)
+                size = New Size(3600, 2000)
             End If
             If padding.IsEmpty Then
                 padding = New Padding(100)
@@ -117,24 +122,6 @@ Namespace Drawing2D
                 Call g.DrawImage(res, rect)
             End If
         End Sub
-
-        <Extension> Public Function GetBrush(res$) As Brush
-            Dim bgColor As Color = res.ToColor(onFailure:=Nothing)
-
-            If Not bgColor.IsEmpty Then
-                Return New SolidBrush(bgColor)
-            Else
-                Dim img As Image
-
-                If res.FileExists Then
-                    img = LoadImage(path:=res$)
-                Else
-                    img = Base64Codec.GetImage(res$)
-                End If
-
-                Return New TextureBrush(img)
-            End If
-        End Function
 
         ''' <summary>
         ''' Data plots graphics engine.

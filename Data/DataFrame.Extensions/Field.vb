@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e4f5d7b97ccfa4a7243d74b3ccf6d8d, ..\sciBASIC#\Data\DataFrame.Extensions\Field.vb"
+﻿#Region "Microsoft.VisualBasic::06e29ce1fab3adbe683124c4d39eda5f, ..\sciBASIC#\Data\DataFrame.Extensions\Field.vb"
 
     ' Author:
     ' 
@@ -26,10 +26,9 @@
 
 #End Region
 
-Imports System.IO
 Imports System.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
@@ -39,15 +38,27 @@ Imports Microsoft.VisualBasic.Language
 ''' + ``#`` uid;
 ''' + ``[FiledName]`` This field links to a external file, and id is point to the ``#`` uid field in the external file.
 ''' </summary>
-Public Class Field
+Public Class Field : Implements IReadOnlyId
 
     ''' <summary>
     ''' Field Name
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Name As String
+    Public ReadOnly Property Name As String Implements IReadOnlyId.Identity
         Get
             Return Binding.Name
+        End Get
+    End Property
+
+    Public ReadOnly Property BindProperty As PropertyInfo
+        Get
+            Return Binding.BindProperty
+        End Get
+    End Property
+
+    Public ReadOnly Property Type As Type
+        Get
+            Return BindProperty.PropertyType
         End Get
     End Property
 
@@ -75,12 +86,13 @@ End Class
 ''' Class object schema
 ''' </summary>
 Public Class [Class]
+    Implements IEnumerable(Of Field)
 
     ''' <summary>
     ''' Properties in the class type
     ''' </summary>
     ''' <returns></returns>
-    Public Property Fields As Field()
+    Public Property Fields As Dictionary(Of String, Field)
     ''' <summary>
     ''' raw
     ''' </summary>
@@ -102,6 +114,20 @@ Public Class [Class]
     Public Property Stack As String
 
     Friend __writer As Writer
+
+    Public Function GetField(name$) As Field
+        If Fields.ContainsKey(name) Then
+            Return Fields(name)
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Public Sub Remove(name$)
+        If Fields.ContainsKey(name) Then
+            Call Fields.Remove(name)
+        End If
+    End Sub
 
     ''' <summary>
     ''' 
@@ -133,9 +159,19 @@ Public Class [Class]
         Next
 
         Return New [Class] With {
-            .Fields = fields,
+            .Fields = fields.ToDictionary(Function(k) k.Name),
             .Type = type,
             .Stack = stack
         }
+    End Function
+
+    Public Iterator Function GetEnumerator() As IEnumerator(Of Field) Implements IEnumerable(Of Field).GetEnumerator
+        For Each f As Field In Fields.Values
+            Yield f
+        Next
+    End Function
+
+    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Yield GetEnumerator()
     End Function
 End Class

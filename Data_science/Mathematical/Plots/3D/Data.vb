@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c76736ea0d3232800f4acdc6e015726, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Data.vb"
+﻿#Region "Microsoft.VisualBasic::f2f00926f55b826da8243f6dc5cbe016, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Data.vb"
 
     ' Author:
     ' 
@@ -103,6 +103,10 @@ Namespace Plot3D
                 previousX = xline
             Next
         End Function
+
+        'Public Function Grid(x As IEnumerable(Of Double), y As IEnumerable(Of Double)) As Rectangle()
+
+        'End Function
 
         ''' <summary>
         ''' 生成函数计算结果的三维表面

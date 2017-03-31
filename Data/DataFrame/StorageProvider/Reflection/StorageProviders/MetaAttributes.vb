@@ -27,14 +27,15 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.Data.csv.DataImports
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace StorageProvider.Reflection
 
+    ''' <summary>
+    ''' 解析出字典域标记信息
+    ''' </summary>
     Public Module MetaAttributeParser
 
         Public Function GetEntry(type As Type) As ComponentModels.MetaAttribute
@@ -54,7 +55,7 @@ Namespace StorageProvider.Reflection
         End Function
 
         ''' <summary>
-        ''' 将Csv文档里面的数据加载进入对象数组的字典属性之中
+        ''' 将csv文档里面的数据加载进入对象数组的字典属性之中
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="buf"></param>

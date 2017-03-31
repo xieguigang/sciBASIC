@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8c8f345db15bc3e5b68217d0bd6ba22, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::e6616df3f37be4824f71d5718f5e916d, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network(Of T).vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@ Namespace FileStream
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
         Implements ISaveHandle
 
-        Public Property Nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Identifier
+        Public Property Nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Key
             Get
                 If __nodes Is Nothing Then
                     __nodes = New Dictionary(Of T_Node)

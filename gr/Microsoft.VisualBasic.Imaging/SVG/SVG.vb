@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4007be0f26e99834f7bcd3ab3bbe41ec, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::b23810aea7ec28fcfd76abccf744d9d4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\SVG.vb"
 
     ' Author:
     ' 
@@ -117,7 +117,7 @@ Namespace SVG
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         Public Function SaveAsXml(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return SaveAsXml(Path, encoding.GetEncodings)
+            Return SaveAsXml(Path, encoding.CodePage)
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::671ecfbf74e4d2133b65f9e4cee19aac, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d48e5ccc8da20468163e0990dccb8988, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -165,7 +165,7 @@ Public Module DocumentExtensions
 
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$, Optional encoding As Encodings = Encodings.Default) As T()
-        Return [Imports](Of T)(path, delimiter:=ASCII.TAB, encoding:=encoding.GetEncodings)
+        Return [Imports](Of T)(path, delimiter:=ASCII.TAB, encoding:=encoding.CodePage)
     End Function
 
     <Extension>
@@ -217,6 +217,6 @@ Public Module DocumentExtensions
 
     <Extension>
     Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As IO.File
-        Return IO.File.Load(path, encoding.GetEncodings)
+        Return IO.File.Load(path, encoding.CodePage)
     End Function
 End Module

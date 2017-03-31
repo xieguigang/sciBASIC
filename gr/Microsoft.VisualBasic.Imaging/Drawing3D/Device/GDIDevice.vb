@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef10186931ee7307962bc35c9ab99fc4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\GDIDevice.vb"
+﻿#Region "Microsoft.VisualBasic::221b50cef5332fb081066f0db4e83255, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\GDIDevice.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,6 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device.Worker
-Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Keyboard = System.Windows.Forms.Keys
 
@@ -70,6 +69,15 @@ Namespace Drawing3D.Device
                 _camera.ViewDistance = Value
             End Set
         End Property
+        Public Property FOV As Double
+            Get
+                Return _camera.fov
+            End Get
+            Set(value As Double)
+                _camera.fov = value
+            End Set
+        End Property
+
         Public Property ShowDebugger As Boolean
 
         Protected Overrides Sub Dispose(disposing As Boolean)

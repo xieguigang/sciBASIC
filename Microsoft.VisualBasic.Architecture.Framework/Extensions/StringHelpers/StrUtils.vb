@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6592cf5117588debfcc1b320e90c607d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::4adae42acc2268152d948f5c86dd25df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,22 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 
 Public Module StrUtils
+
+    ''' <summary>
+    ''' 32-126
+    ''' </summary>
+    ''' <param name="len%"></param>
+    ''' <returns></returns>
+    Public Function RandomASCIIString(len%) As String
+        Dim rnd As New Random
+        Dim s As New List(Of Char)
+
+        For i As Integer = 0 To len
+            s.Add(Chr(rnd.Next(32, 127)))
+        Next
+
+        Return New String(s.ToArray)
+    End Function
 
     ''' <summary>
     ''' <see cref="CultureInfo.InvariantCulture"/>, Gets the System.Globalization.CultureInfo object that is culture-independent

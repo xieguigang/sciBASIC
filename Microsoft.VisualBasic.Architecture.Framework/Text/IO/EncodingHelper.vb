@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::426282c6900d9308b6143b828bf3b68b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\EncodingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::c7deacbacbe45ff501aee967090fc664, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\IO\EncodingHelper.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@ Namespace Text
         ''' </summary>
         ''' <param name="encoding"></param>
         Sub New(encoding As Encodings)
-            TextEncoding = encoding.GetEncodings
+            TextEncoding = encoding.CodePage
         End Sub
 
         '

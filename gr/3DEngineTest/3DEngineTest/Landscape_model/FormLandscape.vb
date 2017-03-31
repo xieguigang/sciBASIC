@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::b373ab817fa0ae1e9ac6ac4051709a23, ..\sciBASIC#\gr\3DEngineTest\3DEngineTest\Landscape_model\FormLandscape.vb"
+﻿#Region "Microsoft.VisualBasic::3aaf1244cd012144c4a91f6860fb672f, ..\sciBASIC#\gr\3DEngineTest\3DEngineTest\Landscape_model\FormLandscape.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -103,5 +103,9 @@ Public Class FormLandscape
 
         model = model.ToArray(Function(s) New Surface With {.brush = color, .vertices = s.vertices})
         canvas.Model = Function() model
+    End Sub
+
+    Private Sub trbFOV_Scroll(sender As Object, e As EventArgs) Handles trbFOV.Scroll
+        canvas.FOV = TrackBar1.Value
     End Sub
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51b161bc9cd9f1a7cd4acbbe6c3c8f67, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\File.vb"
+﻿#Region "Microsoft.VisualBasic::69ce03f575be7bc5fc19e5c0f6c67512, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\FileSystem\File.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@ Namespace Language.UnixBash.FileSystem
         Implements ISaveHandle
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(Path, encoding.GetEncodings)
+            Return Save(Path, encoding.CodePage)
         End Function
 
         Public MustOverride Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
@@ -139,7 +139,7 @@ Namespace Language.UnixBash.FileSystem
                     __handle.value += 1
 
                     Dim handle As New FileHandle With {
-                        .encoding = encoding.GetEncodings,
+                        .encoding = encoding.CodePage,
                         .FileName = file,
                         .handle = __handle.value
                     }

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0880447dc50df2dd360d15d683a94184, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\ValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::bcf8419d5b16e72ac6fe4413a7a2771f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\ValuePair.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,7 @@ Namespace ComponentModel
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks>在这里可能用不了<see cref="XmlAttributeAttribute"></see>自定义属性，因为其基本类型之中的Key和Value可以是任意的类型的，Attribute格式无法序列化复杂的数据类型</remarks>
-        <XmlAttribute> Public Property Key As String Implements INamedValue.Key, IKeyValuePair.Identifier
+        <XmlAttribute> Public Property Key As String Implements INamedValue.Key, IKeyValuePair.Key
         <XmlAttribute> Public Property Value As String Implements IKeyValuePairObject(Of String, String).Value
 #End Region
 

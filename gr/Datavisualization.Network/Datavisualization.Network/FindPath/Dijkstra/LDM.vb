@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db301fb5e9e153da1e98dcfeb8718dc3, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::d63737a15523d166ac4757f944fc5883, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\LDM.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@ Namespace Dijkstra
 
         Public Property Selected As Boolean = False
         Public Property B As FileStream.Node Implements IKeyValuePairObject(Of FileStream.Node, FileStream.Node).Value
-        Public Property A As FileStream.Node Implements IKeyValuePairObject(Of FileStream.Node, FileStream.Node).Identifier
+        Public Property A As FileStream.Node Implements IKeyValuePairObject(Of FileStream.Node, FileStream.Node).Key
         Public Property Weight As Integer
 
         Public Sub New(a As FileStream.Node, b As FileStream.Node, weight As Integer)

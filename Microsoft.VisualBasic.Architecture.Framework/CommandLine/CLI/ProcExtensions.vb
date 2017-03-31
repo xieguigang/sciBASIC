@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be742b08ec5ee6acbd6de90b1dc2c322, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\ProcExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4d392c32a1602f5d210f95a3e4e5f784, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\ProcExtensions.vb"
 
     ' Author:
     ' 
