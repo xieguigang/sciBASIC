@@ -33,6 +33,20 @@ Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Public Module Extensions
 
     ''' <summary>
+    ''' Tuple range iterates
+    ''' </summary>
+    ''' <param name="range">Number values iterates from value ``from`` to value ``to``.</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function Iterates(range As (From%, To%)) As IEnumerable(Of Integer)
+        Dim step% = Math.Sign(range.To - range.From)
+
+        For i As Integer = range.From To range.To Step [step]
+            Yield i
+        Next
+    End Function
+
+    ''' <summary>
     ''' 返回数值序列之中的首次出现符合条件的减少的位置
     ''' </summary>
     ''' <param name="data"></param>
