@@ -1053,6 +1053,10 @@ Public Module App
             Call hook()
         Next
 
+#If DEBUG Then
+        ' 应用程序在 debug 模式下会自动停止在这里
+        Call Pause()
+#End If
         Return state
     End Function
 

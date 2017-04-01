@@ -107,7 +107,7 @@ Namespace CommandLine
             If Not args.IsNullOrEmpty Then
                 Dim i As Integer = __methodInvoke(args.Name.ToLower, {args}, args.Parameters)
 #If DEBUG Then
-                Call Pause()
+
 #Else
                 If Stack.TextEquals("Main") Then
                     If AutoPaused Then
