@@ -1049,9 +1049,17 @@ Public Module App
             Call StopGC()
         End If
 
+        ' 在这里等待终端的内部线程输出工作完毕，防止信息的输出错位
+
+        Call Terminal.WaitQueue()
+        Call Console.WriteLine()
+
         For Each hook As Action In __exitHooks
             Call hook()
         Next
+
+        Call Terminal.WaitQueue()
+        Call Console.WriteLine()
 
 #If DEBUG Then
         ' 应用程序在 debug 模式下会自动停止在这里
