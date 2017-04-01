@@ -79,7 +79,7 @@ Namespace ComponentModel.DataSourceModel
             Dim t As Func(Of String, String) = If(process Is Nothing, Function(s$) s, process)
             Dim headers$() = stream.ReadLine _
                 .Split(ASCII.TAB) _
-                .Select(process) _
+                .Select(selector:=t) _
                 .ToArray
             Dim source = If(lower,
                 headers.Select(AddressOf Strings.LCase),

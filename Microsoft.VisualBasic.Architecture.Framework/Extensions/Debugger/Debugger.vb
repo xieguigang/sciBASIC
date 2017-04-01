@@ -116,7 +116,7 @@ Public Module VBDebugger
 
     <Extension> Public Sub __INFO_ECHO(msg$)
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
-            Dim head As String = $"INFO {Now.ToString}"
+            Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
             Call Terminal.AddToQueue(
@@ -210,7 +210,7 @@ Public Module VBDebugger
     <Extension>
     Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
         If Not Mute Then
-            Dim head As String = $"WARN@{calls} {Now.ToString}"
+            Dim head As String = $"WARNG <{calls}> {Now.ToString}"
 
             Call Terminal.AddToQueue(
                 Sub()

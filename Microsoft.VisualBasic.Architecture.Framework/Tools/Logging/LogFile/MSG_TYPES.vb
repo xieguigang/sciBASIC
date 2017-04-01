@@ -40,7 +40,7 @@ Namespace Logging
         ''' The normal information message.[WHITE]
         ''' </summary>
         ''' <remarks></remarks>
-        <Description("INFO")> INF
+        <Description("INFOM")> INF
         ''' <summary>
         ''' The program error information message.[RED]
         ''' </summary>
@@ -50,7 +50,7 @@ Namespace Logging
         ''' Warnning message from the program.[YELLOW]
         ''' </summary>
         ''' <remarks></remarks>
-        <Description("WARN")> WRN
+        <Description("WARNG")> WRN
         ''' <summary>
         ''' The program debug information message.[BLUE]
         ''' </summary>
