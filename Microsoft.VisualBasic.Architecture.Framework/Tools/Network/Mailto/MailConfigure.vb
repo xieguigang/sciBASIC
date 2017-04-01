@@ -88,19 +88,23 @@ Namespace Net.Mailto
             Dim addr As String = Regex.Match(uri, "[^/]+?:\d+").Value
             Dim p As Integer = InStr(uri, "/mail?", CompareMethod.Text)
             uri = Mid(uri, p + 6)
-            Dim Tokens As String() = uri.Split("%"c)
-            Dim Parameters = (From str As String
-                              In Tokens
-                              Let Key As String = str.Split("="c).First
-                              Let value As String = Mid(str, Len(Key) + 2)
-                              Select Key, value).ToDictionary(Function(obj) obj.Key.ToLower,
-                                                              Function(obj) obj.value)
-            Tokens = addr.Split(":"c)
+            Dim tokens As String() = uri.Split("%"c)
+            Dim list = From str As String
+                       In tokens
+                       Let Key As String = str.Split("="c).First
+                       Let value As String = Mid(str, Len(Key) + 2)
+                       Select Key, value
+            Dim args = list.ToDictionary(
+                Function(k) k.Key.ToLower,
+                Function(k) k.value)
+
+            tokens = addr.Split(":"c)
+
             Return New MailConfigure With {
-                .HostAddress = Tokens(0),
-                .Port = CInt(Val(Tokens(1))),
-                .Account = decrypt(Parameters("account")),
-                .Password = decrypt(Parameters("password"))
+                .HostAddress = tokens(0),
+                .Port = CInt(Val(tokens(1))),
+                .Account = decrypt(args("account")),
+                .Password = decrypt(args("password"))
             }
         End Function
     End Structure
