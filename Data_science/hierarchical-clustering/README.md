@@ -15,12 +15,12 @@ Pass a distance matrix and a cluster name array along with a linkage strategy to
 
 ```vbnet
 Dim distances = {
-    {0#, 1, 9, 7, 11, 14},
-    {1, 0, 4, 3, 8, 10},
-    {9, 4, 0, 9, 2, 8},
-    {7, 3, 9, 0, 6, 13},
-    {11, 8, 2, 6, 0, 10},
-    {14, 10, 8, 13, 10, 0}
+    { 0,  1, 9,  7, 11, 14},
+    { 1,  0, 4,  3,  8, 10},
+    { 9,  4, 0,  9,  2,  8},
+    { 7,  3, 9,  0,  6, 13},
+    {11,  8, 2,  6,  0, 10},
+    {14, 10, 8, 13, 10,  0}
 }
 Dim names$() = {"O1", "O2", "O3", "O4", "O5", "O6"}
 Dim alg As ClusteringAlgorithm = New DefaultClusteringAlgorithm
@@ -37,7 +37,7 @@ Alternatively, you can pass a [pdist](http://www.mathworks.com/help/stats/pdist.
 ```vbnet
 Dim names$() = { "O1", "O2", "O3", "O4", "O5", "O6" }
 Dim pdist = {
-	{1, 9, 7, 11 ,14 ,4 ,3 ,8 ,10 ,9 ,2 ,8 ,6 ,13 ,10}
+    {1, 9, 7, 11 ,14 ,4 ,3 ,8 ,10 ,9 ,2 ,8 ,6 ,13 ,10}
 }
 Dim alg As ClusteringAlgorithm = New PDistClusteringAlgorithm()
 Dim cluster = alg.performClustering(pdist, names, New AverageLinkageStrategy())
