@@ -37,7 +37,7 @@ Namespace DendrogramVisualize
         Private wModel As Double = 0.0
         Private hModel As Double = 0.0
 
-        Public Property ShowDistanceValues As Boolean
+        Public Property ShowDistanceValues As Boolean = True
         Public Property ShowScale As Boolean = True
         Public Property ScalePadding As Integer = 10
         Public Property ScaleTickLength As Integer = 4
@@ -166,7 +166,7 @@ Namespace DendrogramVisualize
 
                         Dim distanceValueStr As String = sprintf("%." & ScaleValueDecimals & "f", distanceValue)
                         Dim rect As RectangleF = g2.FontMetrics.GetStringBounds(distanceValueStr, g2.Graphics)
-                        g2.DrawString(distanceValueStr, CInt(Fix(xTick - (rect.Width / 2))), y2 - scaleTickLabelPadding)
+                        g2.DrawString(distanceValueStr, CInt(Fix(xTick - (rect.Width / 2))), y2 - scaleTickLabelPadding - rect.Height)
                         xTick -= xDisplayInterval
                         distanceValue += xModelInterval
                     Loop

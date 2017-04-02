@@ -1,4 +1,4 @@
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Language
@@ -41,6 +41,15 @@ Namespace DendrogramVisualize
             Me.LinkPoint = initPoint
         End Sub
 
+        ''' <summary>
+        ''' 绘制具体的聚类结果
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="xDisplayOffset"></param>
+        ''' <param name="yDisplayOffset"></param>
+        ''' <param name="xDisplayFactor"></param>
+        ''' <param name="yDisplayFactor"></param>
+        ''' <param name="decorated"></param>
         Public Sub paint(g As Graphics2D, xDisplayOffset As Integer, yDisplayOffset As Integer, xDisplayFactor As Double, yDisplayFactor As Double, decorated As Boolean) Implements Paintable.paint
             Dim x1, y1, x2, y2 As Integer
             Dim fontMetrics As FontMetrics = g.FontMetrics
@@ -51,11 +60,13 @@ Namespace DendrogramVisualize
             g.FillEllipse(Brushes.Black, x1 - DotRadius, y1 - DotRadius, DotRadius * 2, DotRadius * 2)
             g.DrawLine(Pens.Black, x1, y1, x2, y2)
 
-            If Cluster.Leaf Then g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, x1 + NamePadding, y1 + (fontMetrics.Height / 2) - 2)
+            If Cluster.Leaf Then
+                g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, x1 + NamePadding, y1 - (fontMetrics.Height / 2) - 2)
+            End If
             If decorated AndAlso Cluster.Distance IsNot Nothing AndAlso (Not Cluster.Distance.NaN) AndAlso Cluster.Distance.Distance > 0 Then
                 Dim s As String = String.Format("{0:F2}", Cluster.Distance)
                 Dim rect As RectangleF = fontMetrics.GetStringBounds(s, g.Graphics)
-                g.DrawString(s, fontMetrics, Brushes.Black, x1 - CInt(Fix(rect.Width)), y1 - 2)
+                g.DrawString(s, fontMetrics, Brushes.Black, x1 - CInt(Fix(rect.Width)), y1 - 2 - rect.Height)
             End If
 
             x1 = x2
