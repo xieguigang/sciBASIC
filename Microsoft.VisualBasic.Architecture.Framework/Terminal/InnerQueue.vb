@@ -38,6 +38,10 @@ Namespace Terminal
 
         Public ReadOnly Property InnerThread As New ThreadQueue
 
+        ''' <summary>
+        ''' 添加终端输出的任务到任务队列之中
+        ''' </summary>
+        ''' <param name="task"></param>
         Public Sub AddToQueue(task As Action)
             Call InnerThread.AddToQueue(task)
         End Sub

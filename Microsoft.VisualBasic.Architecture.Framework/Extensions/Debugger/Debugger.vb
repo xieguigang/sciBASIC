@@ -1,48 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::0e48dab570ea1bcf0c796e5fc71bcfe5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Terminal.Utility
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Language
-Imports System.Reflection
 Imports Microsoft.VisualBasic.Debugging
+Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Logging
+Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Terminal.Utility
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
 ''' </summary>
 Public Module VBDebugger
-
-    Public Function Fail(msg$)
-        Throw New Exception(msg)
-    End Function
 
     ''' <summary>
     ''' 当在执行大型的数据集合的时候怀疑linq里面的某一个任务进入了死循环状态，可以使用这个方法来检查是否如此
@@ -116,7 +112,7 @@ Public Module VBDebugger
 
     <Extension> Public Sub __INFO_ECHO(msg$)
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
-            Dim head As String = $"INFO {Now.ToString}"
+            Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
             Call Terminal.AddToQueue(
@@ -129,6 +125,13 @@ Public Module VBDebugger
         End If
     End Sub
 
+    ''' <summary>
+    ''' 头部和消息字符串都是放在一个task之中进行输出的，<see cref="xConsole"/>的输出也是和内部的debugger输出使用的同一个消息线程
+    ''' </summary>
+    ''' <param name="head"></param>
+    ''' <param name="str"></param>
+    ''' <param name="msgColor"></param>
+    ''' <param name="level"></param>
     Private Sub __print(head As String, str As String, msgColor As ConsoleColor, level As MSG_TYPES)
         If ForceSTDError Then
             Call Console.Error.WriteLine($"[{head}]{str}")
@@ -169,10 +172,26 @@ Public Module VBDebugger
         Return False
     End Function
 
+    ''' <summary>
+    ''' 等待调试器输出工作线程将内部的消息队列输出完毕
+    ''' </summary>
     Public Sub WaitOutput()
         Call Terminal.WaitQueue()
     End Sub
 
+    ''' <summary>
+    ''' 使用<see cref="xConsole"/>输出消息
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property UsingxConsole As Boolean = False
+
+    ''' <summary>
+    ''' 输出的终端消息带有指定的终端颜色色彩，当<see cref="UsingxConsole"/>为True的时候，
+    ''' <paramref name="msg"/>参数之中的文本字符串兼容<see cref="xConsole"/>语法，
+    ''' 而<paramref name="color"/>将会被<see cref="xConsole"/>覆盖而不会起作用
+    ''' </summary>
+    ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
+    ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
     <Extension>
     Public Sub WriteLine(msg As String, color As ConsoleColor)
         If Mute Then
@@ -182,11 +201,16 @@ Public Module VBDebugger
         If ForceSTDError Then
             Console.Error.WriteLine(msg)
         Else
-            Dim cl As ConsoleColor = Console.ForegroundColor
+            If UsingxConsole AndAlso App.IsMicrosoftPlatform Then
+                Call xConsole.CoolWrite(msg)
+            Else
+                ' 使用传统的输出输出方法
+                Dim cl As ConsoleColor = Console.ForegroundColor
 
-            Console.ForegroundColor = color
-            Console.WriteLine(msg)
-            Console.ForegroundColor = cl
+                Console.ForegroundColor = color
+                Console.WriteLine(msg)
+                Console.ForegroundColor = cl
+            End If
         End If
 
 #If DEBUG Then
@@ -210,7 +234,7 @@ Public Module VBDebugger
     <Extension>
     Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
         If Not Mute Then
-            Dim head As String = $"WARN@{calls} {Now.ToString}"
+            Dim head As String = $"WARNG <{calls}> {Now.ToString}"
 
             Call Terminal.AddToQueue(
                 Sub()
@@ -302,25 +326,6 @@ Public Module VBDebugger
             Return False
         End If
     End Function
-
-    ''' <summary>
-    ''' VisualBasic application exception wrapper
-    ''' </summary>
-    Public Class VisualBasicAppException : Inherits Exception
-
-        ''' <summary>
-        ''' <see cref="Exception"/> inner wrapper
-        ''' </summary>
-        ''' <param name="ex">The exception details</param>
-        ''' <param name="calls">Method name where occurs this exception.</param>
-        Sub New(ex As Exception, calls As String)
-            MyBase.New("@" & calls, ex)
-        End Sub
-
-        Public Shared Function Creates(msg As String, calls As String) As VisualBasicAppException
-            Return New VisualBasicAppException(New Exception(msg), calls)
-        End Function
-    End Class
 
     ''' <summary>
     ''' Output the full debug information while the project is debugging in debug mode.

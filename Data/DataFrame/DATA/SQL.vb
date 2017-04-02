@@ -37,6 +37,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
+''' <summary>
+''' MySQL data extensions
+''' </summary>
 Public Module SQL
 
     ''' <summary>
@@ -109,6 +112,11 @@ Public Module SQL
         Next
     End Function
 
+    ''' <summary>
+    ''' Parse the ``VALUES`` data from the INSERT INTo SQL statement.
+    ''' </summary>
+    ''' <param name="insertSQL$"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function SQLValues(insertSQL$) As String()
         Dim values$ = Regex.Split(insertSQL, "\)\s*VALUES\s*\(", RegexICSng).Last
@@ -118,6 +126,11 @@ Public Module SQL
         Return t
     End Function
 
+    ''' <summary>
+    ''' Gets the fields list from INSERT INTO SQL.
+    ''' </summary>
+    ''' <param name="insertSQL$"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function SQLFields(insertSQL$) As IndexOf(Of String)
         Dim fields$ = Regex _

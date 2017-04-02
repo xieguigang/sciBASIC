@@ -134,7 +134,7 @@ Namespace Language
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the List`1 class that
+        ''' Initializes a new instance of the <see cref="List(Of T)"/> class that
         ''' contains elements copied from the specified collection and has sufficient capacity
         ''' to accommodate the number of elements copied.
         ''' </summary>
@@ -144,15 +144,15 @@ Namespace Language
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the List`1 class that
-        ''' is empty and has the default initial capacity.
+        ''' Initializes a new instance of the Microsoft VisualBasic language <see cref="List(Of T)"/> class 
+        ''' that is empty and has the default initial capacity.
         ''' </summary>
         Public Sub New()
             Call MyBase.New
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the List`1 class that
+        ''' Initializes a new instance of the <see cref="List(Of T)"/> class that
         ''' is empty and has the specified initial capacity.
         ''' </summary>
         ''' <param name="capacity">The number of elements that the new list can initially store.</param>
@@ -186,11 +186,13 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds an object to the end of the List`1.
+        ''' Adds an object to the end of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
-        ''' <param name="x">The object to be added to the end of the List`1. The
-        ''' value can be null for reference types.</param>
+        ''' <param name="x">
+        ''' The object to be added to the end of the <see cref="List(Of T)"/>. 
+        ''' The value can be null for reference types.
+        ''' </param>
         ''' <returns></returns>
         Public Shared Operator +(list As List(Of T), x As T) As List(Of T)
             If list Is Nothing Then
@@ -202,7 +204,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds an object to the end of the List`1.
+        ''' Adds an object to the end of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
         ''' <param name="x">The object to be added to the end of the List`1. The

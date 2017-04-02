@@ -516,17 +516,21 @@ Public Module App
     ''' Is this application running on a Microsoft OS platform.(是否是运行于微软的操作系统平台？)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property IsMicrosoftPlatform As Boolean
-        Get
-            Dim pt As PlatformID = Platform
+    Public ReadOnly Property IsMicrosoftPlatform As Boolean = App.__isMicrosoftPlatform
 
-            Return pt = PlatformID.Win32NT OrElse
-                pt = PlatformID.Win32S OrElse
-                pt = PlatformID.Win32Windows OrElse
-                pt = PlatformID.WinCE OrElse
-                pt = PlatformID.Xbox
-        End Get
-    End Property
+    ''' <summary>
+    ''' 这个主要是判断一个和具体的操作系统平台相关的Win32 API是否能够正常的工作？
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function __isMicrosoftPlatform() As Boolean
+        Dim pt As PlatformID = Platform
+
+        Return pt = PlatformID.Win32NT OrElse
+            pt = PlatformID.Win32S OrElse
+            pt = PlatformID.Win32Windows OrElse
+            pt = PlatformID.WinCE OrElse
+            pt = PlatformID.Xbox
+    End Function
 
     ''' <summary>
     ''' Example: ``tmp2A10.tmp``
@@ -1049,10 +1053,22 @@ Public Module App
             Call StopGC()
         End If
 
+        ' 在这里等待终端的内部线程输出工作完毕，防止信息的输出错位
+
+        Call Terminal.WaitQueue()
+        Call Console.WriteLine()
+
         For Each hook As Action In __exitHooks
             Call hook()
         Next
 
+        Call Terminal.WaitQueue()
+        Call Console.WriteLine()
+
+#If DEBUG Then
+        ' 应用程序在 debug 模式下会自动停止在这里
+        Call Pause()
+#End If
         Return state
     End Function
 
