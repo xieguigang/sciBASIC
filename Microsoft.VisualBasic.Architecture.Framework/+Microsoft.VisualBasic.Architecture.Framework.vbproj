@@ -603,8 +603,8 @@
     <Compile Include="Extensions\Doc\XmlExtensions.vb" />
     <Compile Include="Extensions\Image\Colors\ColorCube.vb" />
     <Compile Include="Extensions\Image\Colors\ColorMap.vb" />
-    <Compile Include="Extensions\Image\GDI+\Graphics.vb" />
-    <Compile Include="Extensions\Image\GDI+\GDITransform.vb" />
+    <Compile Include="Extensions\Image\GDI+\Graphics2D.vb" />
+    <Compile Include="Extensions\Image\GDI+\GeomTransform.vb" />
     <Compile Include="Extensions\Image\Wmf.vb" />
     <Compile Include="Extensions\Image\TiffWriter.vb" />
     <Compile Include="Extensions\Image\ImageFormat.vb" />
@@ -750,7 +750,7 @@
     <Compile Include="Parallel\Threading.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
-    <Compile Include="Extensions\Image\GDI+\GDIPlusExtensions.vb" />
+    <Compile Include="Extensions\Image\GDI+\GraphicsExtensions.vb" />
     <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />
     <Compile Include="Terminal\InteractiveIODevice\InteractiveDevice.vb" />
     <Compile Include="Terminal\InteractiveIODevice\HistoryStacks.vb" />

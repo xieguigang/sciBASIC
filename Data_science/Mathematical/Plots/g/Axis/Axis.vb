@@ -250,7 +250,7 @@ Namespace Graphic.Axis
         ''' <param name="maxSize$"></param>
         ''' <returns></returns>
         Public Function DrawLabel(label$, cssFont$, Optional maxSize$ = "1600,600") As Image
-            Dim g As GDIPlusDeviceHandle = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
+            Dim g As Graphics2D = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
             Dim out As Image
 
             TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)

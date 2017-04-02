@@ -1,32 +1,31 @@
 ﻿#Region "Microsoft.VisualBasic::4e9aba58ed1ccc47a93e7e1bd8388226, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Graphics.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
@@ -34,11 +33,6 @@ Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Reflection
-Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Imaging
 
@@ -46,7 +40,7 @@ Namespace Imaging
     ''' GDI+ device handle for encapsulates a GDI+ drawing surface.(GDI+绘图设备句柄)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class GDIPlusDeviceHandle : Inherits IGraphics
+    Public Class Graphics2D : Inherits IGraphics
         Implements IDisposable, IDeviceContext
 
         ''' <summary>
@@ -147,32 +141,32 @@ Namespace Imaging
         ''' <param name="r"></param>
         ''' <param name="filled">所填充的颜色</param>
         ''' <returns></returns>
-        Public Shared Function CreateDevice(r As Size, Optional filled As Color = Nothing) As GDIPlusDeviceHandle
+        Public Shared Function CreateDevice(r As Size, Optional filled As Color = Nothing) As Graphics2D
             Return r.CreateGDIDevice(filled)
         End Function
 
-        Public Shared Narrowing Operator CType(obj As GDIPlusDeviceHandle) As Image
+        Public Shared Narrowing Operator CType(obj As Graphics2D) As Image
             Return obj.ImageResource
         End Operator
 
-        Public Shared Widening Operator CType(obj As Image) As GDIPlusDeviceHandle
+        Public Shared Widening Operator CType(obj As Image) As Graphics2D
             Dim Gr As Graphics = Graphics.FromImage(obj)
-            Return New GDIPlusDeviceHandle With {
+            Return New Graphics2D With {
                 .ImageResource = obj,
                 ._Graphics = Gr
             }
         End Operator
 
-        Public Shared Widening Operator CType(obj As Bitmap) As GDIPlusDeviceHandle
+        Public Shared Widening Operator CType(obj As Bitmap) As Graphics2D
             Dim Gr As Graphics = Graphics.FromImage(obj)
-            Return New GDIPlusDeviceHandle With {
+            Return New Graphics2D With {
                 .ImageResource = obj,
                 ._Graphics = Gr
             }
         End Operator
 
-        Friend Shared Function CreateObject(g As Graphics, res As Image) As GDIPlusDeviceHandle
-            Return New GDIPlusDeviceHandle With {
+        Friend Shared Function CreateObject(g As Graphics, res As Image) As Graphics2D
+            Return New Graphics2D With {
                 .ImageResource = res,
                 ._Graphics = g
             }

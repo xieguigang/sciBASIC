@@ -34,8 +34,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Imaging
 
-    <PackageNamespace("GDI.Transform")>
-    Public Module GDITransform
+    <PackageNamespace("GDI.Transform")> Public Module GeomTransform
 
         <Extension>
         Public Function ToPoint(pf As PointF) As Point

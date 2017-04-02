@@ -44,7 +44,7 @@ Namespace Imaging
                   Publisher:="xie.guigang@gmail.com",
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
-    Public Module GDIPlusExtensions
+    Public Module GraphicsExtensions
 
         ''' <summary>
         ''' 同时兼容颜色以及图片纹理画刷的创建
@@ -213,9 +213,9 @@ Namespace Imaging
         ''' <param name="pen">Default pen width is 1px and with color <see cref="Color.Black"/>.(默认的绘图笔为黑色的1个像素的边框)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function ImageAddFrame(Handle As GDIPlusDeviceHandle,
+        <Extension> Public Function ImageAddFrame(Handle As Graphics2D,
                                               Optional pen As Drawing.Pen = Nothing,
-                                              Optional offset As Integer = 0) As GDIPlusDeviceHandle
+                                              Optional offset As Integer = 0) As Graphics2D
 
             Dim TopLeft As New Point(offset, offset)
             Dim TopRight As New Point(Handle.Width - offset, 1 + offset)
@@ -245,11 +245,11 @@ Namespace Imaging
         ''' <remarks></remarks>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As Drawing.SizeF, Optional filled As Color = Nothing) As GDIPlusDeviceHandle
+        <Extension> Public Function CreateGDIDevice(r As Drawing.SizeF, Optional filled As Color = Nothing) As Graphics2D
             Return (New Size(CInt(r.Width), CInt(r.Height))).CreateGDIDevice(filled)
         End Function
 
-        <Extension> Public Function OpenDevice(ctrl As System.Windows.Forms.Control) As GDIPlusDeviceHandle
+        <Extension> Public Function OpenDevice(ctrl As System.Windows.Forms.Control) As Graphics2D
             Dim ImageRes As Image
 
             'If ctrl.BackgroundImage Is Nothing Then
@@ -274,12 +274,12 @@ Namespace Imaging
         ''' <returns></returns>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function GDIPlusDeviceHandleFromImageFile(path As String) As GDIPlusDeviceHandle
+        <Extension> Public Function GDIPlusDeviceHandleFromImageFile(path As String) As Graphics2D
             Dim Image As Image = LoadImage(path)
             Dim GrDevice As Graphics = Graphics.FromImage(Image)
             GrDevice.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
             GrDevice.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
-            Return GDIPlusDeviceHandle.CreateObject(GrDevice, Image)
+            Return Graphics2D.CreateObject(GrDevice, Image)
         End Function
 
         ''' <summary>
@@ -289,7 +289,7 @@ Namespace Imaging
         ''' <returns></returns>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function GdiFromImage(res As Image, <CallerMemberName> Optional caller As String = "") As GDIPlusDeviceHandle
+        <Extension> Public Function GdiFromImage(res As Image, <CallerMemberName> Optional caller As String = "") As Graphics2D
             Try
                 ' res = New Bitmap(DirectCast(res.Clone, Image))
             Catch ex As Exception
@@ -297,12 +297,12 @@ Namespace Imaging
                 ex = New Exception(caller, ex)
                 Throw ex
             End Try
-            Dim Gr As GDIPlusDeviceHandle = res.Size.CreateGDIDevice
+            Dim Gr As Graphics2D = res.Size.CreateGDIDevice
             Call Gr.Graphics.DrawImage(res, 0, 0, Gr.Width, Gr.Height)
             Return Gr
         End Function
 
-        <Extension> Public Function BackgroundGraphics(ctrl As Control) As GDIPlusDeviceHandle
+        <Extension> Public Function BackgroundGraphics(ctrl As Control) As Graphics2D
             If Not ctrl.BackgroundImage Is Nothing Then
                 Try
                     Return ctrl.BackgroundImage.GdiFromImage
@@ -355,7 +355,7 @@ Namespace Imaging
         <ExportAPI("GDI+.Create")>
         <Extension> Public Function CreateGDIDevice(r As Size,
                                                     Optional filled As Color = Nothing,
-                                                    <CallerMemberName> Optional trace As String = "") As GDIPlusDeviceHandle
+                                                    <CallerMemberName> Optional trace As String = "") As Graphics2D
             Dim Bitmap As Bitmap
 
             If r.Width = 0 OrElse r.Height = 0 Then
@@ -385,7 +385,7 @@ Namespace Imaging
             gdi.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
             gdi.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
 
-            Return GDIPlusDeviceHandle.CreateObject(gdi, Bitmap)
+            Return Graphics2D.CreateObject(gdi, Bitmap)
         End Function
 
         ''' <summary>
@@ -409,7 +409,7 @@ Namespace Imaging
         <ExportAPI("Image.Resize")>
         Public Function Resize(Image As Image, newSize As Size) As Image
             SyncLock Image
-                Dim Gr As GDIPlusDeviceHandle = newSize.CreateGDIDevice
+                Dim Gr As Graphics2D = newSize.CreateGDIDevice
                 Call Gr.Graphics.DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
                 Return Gr.ImageResource
             End SyncLock
