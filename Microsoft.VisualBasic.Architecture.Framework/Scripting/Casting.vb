@@ -195,7 +195,7 @@ Namespace Scripting
             Return FileIO.FileSystem.GetFileInfo(path)
         End Function
 
-        Public Function CastGDIPlusDeviceHandle(path As String) As GDIPlusDeviceHandle
+        Public Function CastGDIPlusDeviceHandle(path As String) As Graphics2D
             Return GDIPlusDeviceHandleFromImageFile(path)
         End Function
 

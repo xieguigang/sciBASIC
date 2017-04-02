@@ -54,18 +54,18 @@ Namespace Drawing2D.Vector.Text
         ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
         ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
         ''' string specified by the text parameter as drawn with the font parameter.</returns>
-        Public Function MeasureString(gdi As GDIPlusDeviceHandle) As SizeF
+        Public Function MeasureString(gdi As Graphics2D) As SizeF
             Dim szs As SizeF() = Strings.ToArray(Function(x) x.MeasureString(gdi))
             Dim width As Integer = szs.Sum(Function(x) x.Width)
             Dim maxh As Integer = szs.Max(Function(x) x.Height)
             Return New SizeF(width, maxh)
         End Function
 
-        Public Overrides Sub Draw(gdi As GDIPlusDeviceHandle, loci As Rectangle)
+        Public Overrides Sub Draw(gdi As Graphics2D, loci As Rectangle)
             Call Draw(gdi, loci.Location)
         End Sub
 
-        Public Overloads Sub Draw(gdi As GDIPlusDeviceHandle, loci As Point)
+        Public Overloads Sub Draw(gdi As Graphics2D, loci As Point)
             Call Strings.ToArray.DrawStrng(loci, gdi)
         End Sub
 
@@ -127,7 +127,7 @@ Namespace Drawing2D.Vector.Text
         ''' <param name="loc">最开始的左上角的位置</param>
         ''' <param name="gdi"></param>
         <Extension>
-        Public Sub DrawStrng(texts As [String](), loc As Point, gdi As GDIPlusDeviceHandle)
+        Public Sub DrawStrng(texts As [String](), loc As Point, gdi As Graphics2D)
             Dim szs As SizeF() = texts.ToArray(Function(x) x.MeasureString(gdi))
             Dim maxH As Integer = szs.Select(Function(x) x.Height).Max
             Dim lowY As Integer = loc.Y + maxH
