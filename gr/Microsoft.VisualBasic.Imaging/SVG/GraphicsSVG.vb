@@ -513,23 +513,39 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
-            Throw New NotImplementedException()
+            Dim rectangle As New rect(rect) With {
+                .style = New Stroke(pen).CSSValue
+            }
+            rects += rectangle
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-            Throw New NotImplementedException()
+            Dim rectangle As New rect() With {
+                .x = x,
+                .y = y,
+                .width = width,
+                .height = height,
+                .style = New Stroke(pen).CSSValue
+            }
+            rects += rectangle
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
+            DrawRectangle(pen, CSng(x), CSng(y), CSng(width), CSng(height))
         End Sub
 
         Public Overrides Sub DrawRectangles(pen As Pen, rects() As RectangleF)
-            Throw New NotImplementedException()
+            For Each rect In rects
+                With rect
+                    Call DrawRectangle(pen, .X, .Y, .Width, .Height)
+                End With
+            Next
         End Sub
 
         Public Overrides Sub DrawRectangles(pen As Pen, rects() As Rectangle)
-            Throw New NotImplementedException()
+            For Each rect In rects
+                Call DrawRectangle(pen, rect)
+            Next
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
