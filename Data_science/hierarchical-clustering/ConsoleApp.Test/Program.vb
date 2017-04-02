@@ -20,7 +20,7 @@ Module Program
 
         Dim g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
         Call dp.paint(g)
-        Call g.Save("./test.png", ImageFormats.Png)
+        Call g.Save("../../../test.png", ImageFormats.Png)
 
         Pause()
     End Sub
@@ -34,9 +34,12 @@ Module Program
             {11, 8, 2, 6, 0, 10},
             {14, 10, 8, 13, 10, 0}
         }
-        Dim names As String() = {"O1", "O2", "O3", "O4", "O5", "O6"}
+        Dim names$() = {"O1", "O2", "O3", "O4", "O5", "O6"}
         Dim alg As ClusteringAlgorithm = New DefaultClusteringAlgorithm
-        Dim cluster As Cluster = alg.performClustering(distances.RowIterator.ToArray, names, New AverageLinkageStrategy)
+        Dim cluster As Cluster = alg.performClustering(
+            distances.RowIterator.ToArray,
+            names,
+            New AverageLinkageStrategy)
         cluster.Print
         Return cluster
     End Function
