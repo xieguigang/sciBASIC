@@ -558,7 +558,7 @@ Namespace SVG
             }
 
             If TypeOf brush Is SolidBrush Then
-                Dim color$ = "color: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+                Dim color$ = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
                 text.style &= color
             End If
 

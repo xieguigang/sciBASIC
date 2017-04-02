@@ -27,7 +27,7 @@ Namespace SVG
 
             If Not g.bg.StringEmpty Then
                 SVG.style = New XmlMeta.CSS With {
-                    .style = "fill:" & g.bg
+                    .style = "svg{ background-color:" & g.bg & "}"
                 }
             End If
             Return SVG.SaveAsXml(path,)
