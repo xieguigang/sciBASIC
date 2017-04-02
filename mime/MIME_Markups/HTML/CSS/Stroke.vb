@@ -54,6 +54,15 @@ Namespace HTML.CSS
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(width!)
+            Me.width = width
+            fill = "black"
+            dash = DashStyle.Solid
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"stroke: {fill}; stroke-width: {width}px; stroke-dash: {dash};"
         End Function

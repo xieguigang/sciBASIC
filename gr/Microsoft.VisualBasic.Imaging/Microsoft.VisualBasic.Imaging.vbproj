@@ -199,6 +199,7 @@
     <Compile Include="Drawing2D\Shapes\Pentacle.vb" />
     <Compile Include="Drawing2D\Shapes\Hexagon.vb" />
     <Compile Include="Drawing2D\Shapes\Diamond.vb" />
+    <Compile Include="Drawing2D\Text\FontMetrics.vb" />
     <Compile Include="Drawing2D\Text\Text.vb" />
     <Compile Include="Drawing2D\VectorObject.vb" />
     <Compile Include="Drawing2D\VectorAPI.vb" />
