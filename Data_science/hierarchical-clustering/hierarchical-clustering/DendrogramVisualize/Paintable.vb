@@ -18,7 +18,7 @@ Imports Microsoft.VisualBasic.Imaging
 ' *****************************************************************************
 '
 
-Namespace com.apporiented.algorithm.clustering.visualization
+Namespace DendrogramVisualize
 
 
     ''' <summary>

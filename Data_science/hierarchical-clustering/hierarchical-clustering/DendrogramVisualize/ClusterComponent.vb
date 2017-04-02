@@ -20,10 +20,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 ' *****************************************************************************
 '
 
-Namespace com.apporiented.algorithm.clustering.visualization
-
-
-
+Namespace DendrogramVisualize
 
     Public Class ClusterComponent
         Implements Paintable
@@ -33,10 +30,10 @@ Namespace com.apporiented.algorithm.clustering.visualization
         Public Property DotRadius As Integer = 2
         Public Property LinkPoint As VCoord
         Public Property InitPoint As VCoord
-        Public Property Cluster As com.apporiented.algorithm.clustering.Cluster
+        Public Property Cluster As Cluster
         Public Property PrintName As Boolean
 
-        Public Sub New(cluster As com.apporiented.algorithm.clustering.Cluster, printName As Boolean, initPoint As VCoord)
+        Public Sub New(cluster As Cluster, printName As Boolean, initPoint As VCoord)
             Me.PrintName = printName
             Me.Cluster = cluster
             Me.InitPoint = initPoint

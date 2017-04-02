@@ -1,4 +1,5 @@
 Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 '
 '*****************************************************************************
@@ -17,102 +18,97 @@ Imports System.Collections.Generic
 ' limitations under the License.
 ' *****************************************************************************
 
-Namespace com.apporiented.algorithm.clustering
+Public Class DefaultClusteringAlgorithm
+    Implements ClusteringAlgorithm
 
+    Public Function performClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performClustering
 
-    Public Class DefaultClusteringAlgorithm
-        Implements ClusteringAlgorithm
+        checkArguments(distances, clusterNames, linkageStrategy)
+        ' Setup model 
+        Dim clusters As IList(Of Cluster) = createClusters(clusterNames)
+        Dim linkages As DistanceMap = createLinkages(distances, clusters)
 
-        Public Function performClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performClustering
+        ' Process 
+        Dim builder As New HierarchyBuilder(clusters, linkages)
+        Do While Not builder.TreeComplete
+            builder.agglomerate(linkageStrategy)
+        Loop
 
-            checkArguments(distances, clusterNames, linkageStrategy)
-            ' Setup model 
-            Dim clusters As IList(Of Cluster) = createClusters(clusterNames)
-            Dim linkages As DistanceMap = createLinkages(distances, clusters)
+        Return builder.RootCluster
+    End Function
 
-            ' Process 
-            Dim builder As New HierarchyBuilder(clusters, linkages)
-            Do While Not builder.TreeComplete
-                builder.agglomerate(linkageStrategy)
-            Loop
+    Public Function performFlatClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy, threshold As Double) As IList(Of Cluster) Implements ClusteringAlgorithm.performFlatClustering
 
-            Return builder.RootCluster
-        End Function
+        checkArguments(distances, clusterNames, linkageStrategy)
+        ' Setup model 
+        Dim clusters As IList(Of Cluster) = createClusters(clusterNames)
+        Dim linkages As DistanceMap = createLinkages(distances, clusters)
 
-        Public Function performFlatClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy, threshold As Double) As IList(Of Cluster) Implements ClusteringAlgorithm.performFlatClustering
+        ' Process 
+        Dim builder As New HierarchyBuilder(clusters, linkages)
+        Return builder.flatAgg(linkageStrategy, threshold)
+    End Function
 
-            checkArguments(distances, clusterNames, linkageStrategy)
-            ' Setup model 
-            Dim clusters As IList(Of Cluster) = createClusters(clusterNames)
-            Dim linkages As DistanceMap = createLinkages(distances, clusters)
+    Private Sub checkArguments(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy)
+        If distances Is Nothing OrElse distances.Length = 0 OrElse distances(0).Length <> distances.Length Then Throw New System.ArgumentException("Invalid distance matrix")
+        If distances.Length <> clusterNames.Length Then Throw New System.ArgumentException("Invalid cluster name array")
+        If linkageStrategy Is Nothing Then Throw New System.ArgumentException("Undefined linkage strategy")
+        Dim uniqueCount As Integer = clusterNames.Distinct.Count
+        If uniqueCount <> clusterNames.Length Then Throw New System.ArgumentException("Duplicate names")
+    End Sub
 
-            ' Process 
-            Dim builder As New HierarchyBuilder(clusters, linkages)
-            Return builder.flatAgg(linkageStrategy, threshold)
-        End Function
+    Public Function performWeightedClustering(distances As Double()(), clusterNames As String(), weights As Double(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performWeightedClustering
 
-        Private Sub checkArguments(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy)
-            If distances Is Nothing OrElse distances.Length = 0 OrElse distances(0).Length <> distances.Length Then Throw New System.ArgumentException("Invalid distance matrix")
-            If distances.Length <> clusterNames.Length Then Throw New System.ArgumentException("Invalid cluster name array")
-            If linkageStrategy Is Nothing Then Throw New System.ArgumentException("Undefined linkage strategy")
-            Dim uniqueCount As Integer = clusterNames.Distinct.Count
-            If uniqueCount <> clusterNames.Length Then Throw New System.ArgumentException("Duplicate names")
-        End Sub
+        checkArguments(distances, clusterNames, linkageStrategy)
 
-        Public Function performWeightedClustering(distances As Double()(), clusterNames As String(), weights As Double(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performWeightedClustering
+        If weights.Length <> clusterNames.Length Then Throw New System.ArgumentException("Invalid weights array")
 
-            checkArguments(distances, clusterNames, linkageStrategy)
+        ' Setup model 
+        Dim clusters As IList(Of Cluster) = createClusters(clusterNames, weights)
+        Dim linkages As DistanceMap = createLinkages(distances, clusters)
 
-            If weights.Length <> clusterNames.Length Then Throw New System.ArgumentException("Invalid weights array")
+        ' Process 
+        Dim builder As New HierarchyBuilder(clusters, linkages)
+        Do While Not builder.TreeComplete
+            builder.agglomerate(linkageStrategy)
+        Loop
 
-            ' Setup model 
-            Dim clusters As IList(Of Cluster) = createClusters(clusterNames, weights)
-            Dim linkages As DistanceMap = createLinkages(distances, clusters)
+        Return builder.RootCluster
+    End Function
 
-            ' Process 
-            Dim builder As New HierarchyBuilder(clusters, linkages)
-            Do While Not builder.TreeComplete
-                builder.agglomerate(linkageStrategy)
-            Loop
+    Private Function createLinkages(distances As Double()(), clusters As IList(Of Cluster)) As DistanceMap
+        Dim linkages As New DistanceMap
+        For col As Integer = 0 To clusters.Count - 1
+            For row As Integer = col + 1 To clusters.Count - 1
+                Dim link As New ClusterPair
+                Dim lCluster As Cluster = clusters(col)
+                Dim rCluster As Cluster = clusters(row)
+                link.LinkageDistance = distances(col)(row)
+                link.setlCluster(lCluster)
+                link.setrCluster(rCluster)
+                linkages.add(link)
+            Next row
+        Next col
+        Return linkages
+    End Function
 
-            Return builder.RootCluster
-        End Function
+    Private Function createClusters(clusterNames As String()) As IList(Of Cluster)
+        Dim clusters As IList(Of Cluster) = New List(Of Cluster)
+        For Each clusterName As String In clusterNames
+            Dim cluster As New Cluster(clusterName)
+            clusters.Add(cluster)
+        Next clusterName
+        Return clusters
+    End Function
 
-        Private Function createLinkages(distances As Double()(), clusters As IList(Of Cluster)) As DistanceMap
-            Dim linkages As New DistanceMap
-            For col As Integer = 0 To clusters.Count - 1
-                For row As Integer = col + 1 To clusters.Count - 1
-                    Dim link As New ClusterPair
-                    Dim lCluster As Cluster = clusters(col)
-                    Dim rCluster As Cluster = clusters(row)
-                    link.LinkageDistance = distances(col)(row)
-                    link.setlCluster(lCluster)
-                    link.setrCluster(rCluster)
-                    linkages.add(link)
-                Next row
-            Next col
-            Return linkages
-        End Function
+    Private Function createClusters(clusterNames As String(), weights As Double()) As IList(Of Cluster)
+        Dim clusters As IList(Of Cluster) = New List(Of Cluster)
+        For i As Integer = 0 To weights.Length - 1
+            Dim cluster As New Cluster(clusterNames(i))
+            cluster.Distance = New Distance(0.0, weights(i))
+            clusters.Add(cluster)
+        Next i
+        Return clusters
+    End Function
 
-        Private Function createClusters(clusterNames As String()) As IList(Of Cluster)
-            Dim clusters As IList(Of Cluster) = New List(Of Cluster)
-            For Each clusterName As String In clusterNames
-                Dim cluster As New Cluster(clusterName)
-                clusters.Add(cluster)
-            Next clusterName
-            Return clusters
-        End Function
-
-        Private Function createClusters(clusterNames As String(), weights As Double()) As IList(Of Cluster)
-            Dim clusters As IList(Of Cluster) = New List(Of Cluster)
-            For i As Integer = 0 To weights.Length - 1
-                Dim cluster As New Cluster(clusterNames(i))
-                cluster.Distance = New Distance(0.0, weights(i))
-                clusters.Add(cluster)
-            Next i
-            Return clusters
-        End Function
-
-    End Class
-
-End Namespace
+End Class

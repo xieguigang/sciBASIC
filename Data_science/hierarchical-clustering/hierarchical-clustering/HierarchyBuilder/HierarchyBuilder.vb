@@ -19,7 +19,7 @@ Imports System.Collections.Generic
 ' *****************************************************************************
 '
 
-Namespace com.apporiented.algorithm.clustering
+Namespace Hierarchy
 
 
     Public Class HierarchyBuilder

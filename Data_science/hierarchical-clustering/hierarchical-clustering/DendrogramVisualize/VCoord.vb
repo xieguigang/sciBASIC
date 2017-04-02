@@ -16,21 +16,21 @@
 ' *****************************************************************************
 ' 
 
-Namespace com.apporiented.algorithm.clustering.visualization
+Namespace DendrogramVisualize
 
-	''' <summary>
-	''' Virtual coordinates.
-	''' </summary>
-	Public Class VCoord
+    ''' <summary>
+    ''' Virtual coordinates.
+    ''' </summary>
+    Public Class VCoord
 
 
 
-        Public Sub New( x As Double, y As Double)
-			Me.x = x
-			Me.y = y
-		End Sub
+        Public Sub New(x As Double, y As Double)
+            Me.X = x
+            Me.Y = y
+        End Sub
 
-		Public Property X As Double
+        Public Property X As Double
 
         Public Property Y As Double
 

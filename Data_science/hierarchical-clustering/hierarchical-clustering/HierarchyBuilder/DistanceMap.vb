@@ -2,7 +2,7 @@ Imports System
 Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
-Namespace com.apporiented.algorithm.clustering
+Namespace Hierarchy
 
 
     ''' <summary>

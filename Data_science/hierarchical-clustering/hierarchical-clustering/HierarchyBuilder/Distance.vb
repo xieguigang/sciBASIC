@@ -18,7 +18,7 @@ Imports System
 ' *****************************************************************************
 '
 
-Namespace com.apporiented.algorithm.clustering
+Namespace Hierarchy
 
     Public Class Distance
         Implements IComparable(Of Distance), ICloneable

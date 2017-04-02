@@ -20,8 +20,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 ' limitations under the License.
 ' *****************************************************************************
 ' 
-
-Namespace com.apporiented.algorithm.clustering.visualization
+Namespace DendrogramVisualize
 
 
 
@@ -29,7 +28,7 @@ Namespace com.apporiented.algorithm.clustering.visualization
 
         Friend Shared ReadOnly solidStroke As New Stroke(1.0F)
 
-        Private _model As com.apporiented.algorithm.clustering.Cluster
+        Private _model As Cluster
         Private component As ClusterComponent
 
         Private scaleTickLabelPadding As Integer = 4
@@ -54,11 +53,11 @@ Namespace com.apporiented.algorithm.clustering.visualization
         Public Property Size As SizeF
         Public Property LineColor As Color = Color.Black
 
-        Public Property Model As com.apporiented.algorithm.clustering.Cluster
+        Public Property Model As Cluster
             Get
                 Return _model
             End Get
-            Set(model As com.apporiented.algorithm.clustering.Cluster)
+            Set(model As Cluster)
                 Me._model = model
                 component = createComponent(model)
                 updateModelMetrics()
@@ -78,15 +77,17 @@ Namespace com.apporiented.algorithm.clustering.visualization
             hModel = maxY - minY
         End Sub
 
-        Private Function createComponent(cluster As com.apporiented.algorithm.clustering.Cluster, initCoord As VCoord, clusterHeight As Double) As ClusterComponent
-
+        Private Function createComponent(cluster As Cluster, initCoord As VCoord, clusterHeight As Double) As ClusterComponent
             Dim comp As ClusterComponent = Nothing
+
             If cluster IsNot Nothing Then
+
                 comp = New ClusterComponent(cluster, cluster.Leaf, initCoord)
                 Dim leafHeight As Double = clusterHeight / cluster.countLeafs()
                 Dim yChild As Double = initCoord.Y - (clusterHeight / 2)
                 Dim distance As Double = cluster.DistanceValue
-                For Each child As com.apporiented.algorithm.clustering.Cluster In cluster.Children
+
+                For Each child As Cluster In cluster.Children
                     Dim childLeafCount As Integer = child.countLeafs()
                     Dim childHeight As Double = childLeafCount * leafHeight
                     Dim childDistance As Double = child.DistanceValue
@@ -98,13 +99,13 @@ Namespace com.apporiented.algorithm.clustering.visualization
 
                     childComp.LinkPoint = initCoord
                     comp.Children.Add(childComp)
-                Next child
+                Next
             End If
-            Return comp
 
+            Return comp
         End Function
 
-        Private Function createComponent(model As com.apporiented.algorithm.clustering.Cluster) As ClusterComponent
+        Private Function createComponent(model As Cluster) As ClusterComponent
 
             Dim virtualModelHeight As Double = 1
             Dim initCoord As New VCoord(0, virtualModelHeight / 2)
