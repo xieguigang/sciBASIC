@@ -12,14 +12,13 @@ Module Program
     Public Sub Main()
         Dim cluster As Cluster = createSampleCluster()
         Dim dp As New DendrogramPanel With {
-            .Size = New Size(1024, 768),
             .LineColor = Color.Black,
             .ScaleValueDecimals = 0,
             .ScaleValueInterval = 1,
             .Model = cluster
         }
 
-        Dim g As Graphics2D = dp.Size.CreateGDIDevice(filled:=Color.White)
+        Dim g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
         Call dp.paint(g)
         Call g.Save("./test.png", ImageFormats.Png)
 

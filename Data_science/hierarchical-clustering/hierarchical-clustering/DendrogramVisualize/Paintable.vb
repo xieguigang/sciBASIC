@@ -20,16 +20,13 @@ Imports Microsoft.VisualBasic.Imaging
 
 Namespace DendrogramVisualize
 
-
     ''' <summary>
     ''' Implemented by visual components of the dendrogram.
     ''' @author lars
     ''' 
     ''' </summary>
     Public Interface Paintable
-
         Sub paint(g As Graphics2D, xDisplayOffset As Integer, yDisplayOffset As Integer, xDisplayFactor As Double, yDisplayFactor As Double, decorated As Boolean)
-
     End Interface
 
 End Namespace

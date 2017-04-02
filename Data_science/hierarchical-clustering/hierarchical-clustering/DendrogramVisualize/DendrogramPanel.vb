@@ -1,7 +1,8 @@
-Imports System.Drawing
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 ' 
 ' *****************************************************************************
@@ -21,8 +22,6 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 ' *****************************************************************************
 ' 
 Namespace DendrogramVisualize
-
-
 
     Public Class DendrogramPanel
 
@@ -50,7 +49,6 @@ Namespace DendrogramVisualize
         Public Property BorderRight As Integer = 20
         Public Property BorderBottom As Integer = 20
 
-        Public Property Size As SizeF
         Public Property LineColor As Color = Color.Black
 
         Public Property Model As Cluster
@@ -63,7 +61,6 @@ Namespace DendrogramVisualize
                 updateModelMetrics()
             End Set
         End Property
-
 
         Private Sub updateModelMetrics()
             Dim minX As Double = component.RectMinX
@@ -114,6 +111,7 @@ Namespace DendrogramVisualize
         End Function
 
         Public Sub paint(g2 As Graphics2D)
+            Dim size As Size = g2.Size
             Dim wDisplay As Integer = Size.Width - BorderLeft - BorderRight
             Dim hDisplay As Integer = Size.Height - BorderTop - BorderBottom
             Dim xDisplayOrigin As Integer = BorderLeft
@@ -128,7 +126,7 @@ Namespace DendrogramVisualize
 
                 If ShowScale Then
                     Dim rect As RectangleF = g2.FontMetrics.GetStringBounds("0", g2.Graphics)
-                    Dim scaleHeight As Integer = CInt(Fix(rect.Height)) + ScalePadding + ScaleTickLength + scaleTickLabelPadding
+                    Dim scaleHeight As Integer = rect.Height + ScalePadding + ScaleTickLength + scaleTickLabelPadding
                     hDisplay -= scaleHeight
                     yDisplayOrigin += scaleHeight
                 End If
@@ -160,11 +158,13 @@ Namespace DendrogramVisualize
                     y2 = yDisplayOrigin - ScalePadding - ScaleTickLength
                     Dim distanceValue As Double = 0
                     Dim xDisplayInterval As Double = xModelInterval * xFactor
-                    Do While xTick >= xDisplayOrigin
-                        g2.DrawLine(xTick, y1, xTick, y2)
 
-                        'JAVA TO VB CONVERTER TODO TASK: The following line has a Java format specifier which cannot be directly translated to .NET:
-                        Dim distanceValueStr As String = String.Format("%." & ScaleValueDecimals & "f", distanceValue)
+                    Do While xTick >= xDisplayOrigin
+
+                        ' 绘制坐标轴的Tick竖线
+                        Call g2.DrawLine(xTick, y1, xTick, y2)
+
+                        Dim distanceValueStr As String = sprintf("%." & ScaleValueDecimals & "f", distanceValue)
                         Dim rect As RectangleF = g2.FontMetrics.GetStringBounds(distanceValueStr, g2.Graphics)
                         g2.DrawString(distanceValueStr, CInt(Fix(xTick - (rect.Width / 2))), y2 - scaleTickLabelPadding)
                         xTick -= xDisplayInterval
