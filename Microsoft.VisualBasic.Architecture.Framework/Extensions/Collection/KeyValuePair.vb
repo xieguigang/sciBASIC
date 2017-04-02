@@ -36,6 +36,21 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module KeyValuePairExtensions
 
+    ''' <summary>
+    ''' 删除字典之中的指定的键值对，然后返回被删除的数据值
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function RemoveAndGet(Of K, V)(table As Dictionary(Of K, V), key As K) As V
+        Dim item As V = table(key)
+        Call table.Remove(key)
+        Return item
+    End Function
+
     <Extension>
     Public Function IteratesAll(Of T As INamedValue)(source As IEnumerable(Of NamedCollection(Of T))) As T()
         Return source.Select(Function(c) c.Value).IteratesALL.ToArray
