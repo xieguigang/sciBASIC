@@ -27,12 +27,11 @@
 #End Region
 
 Imports System.Web.Script.Serialization
-Imports Microsoft.VisualBasic.DataMining.Darwinism
-Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF
-Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper
-Imports Microsoft.VisualBasic.DataMining.Darwinism.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 

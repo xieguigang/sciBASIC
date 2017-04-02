@@ -28,11 +28,11 @@
 
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver
-Imports Microsoft.VisualBasic.DataMining.Darwinism
-Imports Microsoft.VisualBasic.DataMining.Darwinism.DifferentialEvolution
-Imports Microsoft.VisualBasic.DataMining.Darwinism.GAF.Helper.ListenerHelper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.DifferentialEvolution
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper.ListenerHelper
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 
