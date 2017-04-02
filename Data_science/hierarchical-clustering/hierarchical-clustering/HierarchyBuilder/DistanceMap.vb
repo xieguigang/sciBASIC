@@ -84,7 +84,7 @@ Namespace Hierarchy
 
         Public Function add(link As ClusterPair) As Boolean
             Dim e As New Item(Me, link)
-            Dim existingItem As Item = pairHash(e.hash)
+            Dim existingItem As Item = pairHash.TryGetValue(e.hash)
             If existingItem IsNot Nothing Then
                 Console.Error.WriteLine("hashCode = " & existingItem.hash & " adding redundant link:" & link.ToString & " (exist:" & existingItem.ToString & ")")
                 Return False

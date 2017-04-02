@@ -22,11 +22,6 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 Public Class Cluster
 
-    Public Sub New(name As String)
-        Me.Name = name
-        LeafNames = New List(Of String)
-    End Sub
-
     Public Property Distance As Distance
 
     Public ReadOnly Property WeightValue As Double
@@ -41,7 +36,17 @@ Public Class Cluster
         End Get
     End Property
 
-    Public Property Children As IList(Of Cluster)
+    Public Property Parent As Cluster
+    Public Property Name As String
+    Public ReadOnly Property Children As IList(Of Cluster)
+    Public ReadOnly Property LeafNames As List(Of String)
+
+    Public Sub New(name As String)
+        Me.Name = name
+        LeafNames = New List(Of String)
+        Children = New List(Of Cluster)
+        Distance = New Distance
+    End Sub
 
     Public Sub addLeafName(lname As String)
         LeafNames.Add(lname)
@@ -50,10 +55,6 @@ Public Class Cluster
     Public Sub appendLeafNames(lnames As IList(Of String))
         LeafNames.AddRange(lnames)
     End Sub
-
-    Public ReadOnly Property LeafNames As List(Of String)
-    Public Property Parent As Cluster
-    Public Property Name As String
 
     Public Sub addChild(cluster As Cluster)
         Children.Add(cluster)
@@ -101,17 +102,6 @@ Public Class Cluster
         Next child
         Return count
     End Function
-
-    Public Sub toConsole(indent As Integer)
-        For i As Integer = 0 To indent - 1
-            Console.Write("  ")
-        Next i
-        Dim ___name As String = Name + (If(Leaf, " (leaf)", "")) + (If(Distance IsNot Nothing, "  distance: " & Distance.ToString, ""))
-        Console.WriteLine(___name)
-        For Each child As Cluster In Children
-            child.toConsole(indent + 1)
-        Next child
-    End Sub
 
     Public ReadOnly Property TotalDistance As Double
         Get

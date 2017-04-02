@@ -77,6 +77,7 @@
     <Import Include="System.Linq.Expressions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Cluster.vb" />
     <Compile Include="ClusteringAlgorithm.vb" />
