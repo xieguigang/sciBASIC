@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
-    <Import Include="Microsoft.VisualBasic.Language" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
@@ -81,7 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Cluster.vb" />
     <Compile Include="ClusteringAlgorithm.vb" />
-    <Compile Include="ClusterPair.vb" />
+    <Compile Include="HierarchyBuilder\HierarchyTreeNode.vb" />
     <Compile Include="DefaultClusteringAlgorithm.vb" />
     <Compile Include="HierarchyBuilder\Distance.vb" />
     <Compile Include="HierarchyBuilder\DistanceMap.vb" />

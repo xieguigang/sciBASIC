@@ -67,11 +67,11 @@ Public Class PDistClusteringAlgorithm
         For col As Integer = 0 To clusters.Count - 1
             Dim cluster_col As Cluster = clusters(col)
             For row As Integer = col + 1 To clusters.Count - 1
-                Dim link As New ClusterPair
+                Dim link As New HierarchyTreeNode
                 Dim d As Double = distances(0)(accessFunction(row, col, clusters.Count))
                 link.LinkageDistance = d
-                link.setlCluster(cluster_col)
-                link.setrCluster(clusters(row))
+                link.lCluster = (cluster_col)
+                link.rCluster = (clusters(row))
                 linkages.add(link)
             Next row
         Next col
@@ -82,7 +82,7 @@ Public Class PDistClusteringAlgorithm
         Dim clusters As IList(Of Cluster) = New List(Of Cluster)
         For Each clusterName As String In clusterNames
             Dim cluster As New Cluster(clusterName)
-            cluster.addLeafName(clusterName)
+            cluster.AddLeafName(clusterName)
             clusters.Add(cluster)
         Next clusterName
         Return clusters

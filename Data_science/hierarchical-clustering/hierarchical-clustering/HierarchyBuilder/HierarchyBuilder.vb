@@ -21,7 +21,6 @@ Imports System.Collections.Generic
 
 Namespace Hierarchy
 
-
     Public Class HierarchyBuilder
 
         Public ReadOnly Property Distances As DistanceMap
@@ -63,21 +62,21 @@ Namespace Hierarchy
         End Function
 
         Public Sub agglomerate(linkageStrategy As LinkageStrategy)
-            Dim minDistLink As ClusterPair = Distances.removeFirst()
+            Dim minDistLink As HierarchyTreeNode = Distances.removeFirst()
             If minDistLink IsNot Nothing Then
-                Clusters.Remove(minDistLink.getrCluster())
-                Clusters.Remove(minDistLink.getlCluster())
+                Clusters.Remove(minDistLink.rCluster())
+                Clusters.Remove(minDistLink.lCluster())
 
-                Dim oldClusterL As Cluster = minDistLink.getlCluster()
-                Dim oldClusterR As Cluster = minDistLink.getrCluster()
-                Dim newCluster As Cluster = minDistLink.agglomerate(Nothing)
+                Dim oldClusterL As Cluster = minDistLink.lCluster()
+                Dim oldClusterR As Cluster = minDistLink.rCluster()
+                Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
 
                 For Each iClust As Cluster In Clusters
-                    Dim link1 As ClusterPair = findByClusters(iClust, oldClusterL)
-                    Dim link2 As ClusterPair = findByClusters(iClust, oldClusterR)
-                    Dim newLinkage As New ClusterPair
-                    newLinkage.setlCluster(iClust)
-                    newLinkage.setrCluster(newCluster)
+                    Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
+                    Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
+                    Dim newLinkage As New HierarchyTreeNode
+                    newLinkage.lCluster = iClust
+                    newLinkage.rCluster = newCluster
                     Dim distanceValues As ICollection(Of Distance) = New List(Of Distance)
 
                     If link1 IsNot Nothing Then
@@ -103,7 +102,7 @@ Namespace Hierarchy
             End If
         End Sub
 
-        Private Function findByClusters(c1 As Cluster, c2 As Cluster) As ClusterPair
+        Private Function findByClusters(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Return Distances.findByCodePair(c1, c2)
         End Function
     End Class

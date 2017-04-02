@@ -21,11 +21,11 @@ Namespace Hierarchy
 
             Private ReadOnly outerInstance As DistanceMap
 
-            Friend ReadOnly pair As ClusterPair
+            Friend ReadOnly pair As HierarchyTreeNode
             Friend ReadOnly hash As String
             Friend removed As Boolean = False
 
-            Friend Sub New(outerInstance As DistanceMap, p As ClusterPair)
+            Friend Sub New(outerInstance As DistanceMap, p As HierarchyTreeNode)
                 Me.outerInstance = outerInstance
                 pair = p
                 hash = outerInstance.hashCodePair(p)
@@ -49,31 +49,31 @@ Namespace Hierarchy
             pairHash = New Dictionary(Of String, Item)
         End Sub
 
-        Public Function list() As IList(Of ClusterPair)
-            Dim l As IList(Of ClusterPair) = New List(Of ClusterPair)
+        Public Function list() As IList(Of HierarchyTreeNode)
+            Dim l As IList(Of HierarchyTreeNode) = New List(Of HierarchyTreeNode)
             For Each clusterPair As Item In data
                 l.Add(clusterPair.pair)
             Next clusterPair
             Return l
         End Function
 
-        Public Function findByCodePair(c1 As Cluster, c2 As Cluster) As ClusterPair
+        Public Function findByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Dim inCode As String = hashCodePair(c1, c2)
             Return pairHash(inCode).pair
         End Function
 
-        Public Function removeFirst() As ClusterPair
+        Public Function removeFirst() As HierarchyTreeNode
             Dim poll As Item = data.Dequeue
             Do While poll IsNot Nothing AndAlso poll.removed
                 poll = data.Dequeue
             Loop
             If poll Is Nothing Then Return Nothing
-            Dim link As ClusterPair = poll.pair
+            Dim link As HierarchyTreeNode = poll.pair
             pairHash.Remove(poll.hash)
             Return link
         End Function
 
-        Public Function remove(link As ClusterPair) As Boolean
+        Public Function remove(link As HierarchyTreeNode) As Boolean
             Dim ___remove As Item = pairHash.RemoveAndGet(hashCodePair(link))
             If ___remove Is Nothing Then Return False
             ___remove.removed = True
@@ -82,7 +82,7 @@ Namespace Hierarchy
         End Function
 
 
-        Public Function add(link As ClusterPair) As Boolean
+        Public Function add(link As HierarchyTreeNode) As Boolean
             Dim e As New Item(Me, link)
             Dim existingItem As Item = pairHash.TryGetValue(e.hash)
             If existingItem IsNot Nothing Then
@@ -111,8 +111,8 @@ Namespace Hierarchy
         ''' <summary>
         ''' Compute some kind of unique ID for a given cluster pair. </summary>
         ''' <returns> The ID </returns>
-        Friend Function hashCodePair(link As ClusterPair) As String
-            Return hashCodePair(link.getlCluster(), link.getrCluster())
+        Friend Function hashCodePair(link As HierarchyTreeNode) As String
+            Return hashCodePair(link.lCluster(), link.rCluster())
         End Function
 
         Friend Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As String

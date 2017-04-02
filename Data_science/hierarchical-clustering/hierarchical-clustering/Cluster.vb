@@ -1,4 +1,4 @@
-Imports System
+﻿Imports System
 Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
@@ -41,22 +41,22 @@ Public Class Cluster
     Public ReadOnly Property Children As IList(Of Cluster)
     Public ReadOnly Property LeafNames As List(Of String)
 
-    Public Sub New(name As String)
+    Public Sub New(name$)
         Me.Name = name
         LeafNames = New List(Of String)
         Children = New List(Of Cluster)
         Distance = New Distance
     End Sub
 
-    Public Sub addLeafName(lname As String)
+    Public Sub AddLeafName(lname$)
         LeafNames.Add(lname)
     End Sub
 
-    Public Sub appendLeafNames(lnames As IList(Of String))
+    Public Sub AppendLeafNames(lnames As IEnumerable(Of String))
         LeafNames.AddRange(lnames)
     End Sub
 
-    Public Sub addChild(cluster As Cluster)
+    Public Sub AddChild(cluster As Cluster)
         Children.Add(cluster)
     End Sub
 
@@ -69,15 +69,27 @@ Public Class Cluster
     End Function
 
     Public Overrides Function Equals(obj As Object) As Boolean
-        If Me Is obj Then Return True
-        If obj Is Nothing Then Return False
-        If Me.GetType() IsNot obj.GetType() Then Return False
+        If obj Is Nothing Then
+            Return False
+        End If
+        If Me Is obj Then
+            Return True
+        End If
+
+        If Me.GetType() IsNot obj.GetType() Then
+            Return False
+        End If
+
         Dim other As Cluster = CType(obj, Cluster)
+
         If Name Is Nothing Then
-            If other.Name IsNot Nothing Then Return False
+            If other.Name IsNot Nothing Then
+                Return False
+            End If
         ElseIf Not Name.Equals(other.Name) Then
             Return False
         End If
+
         Return True
     End Function
 
@@ -91,22 +103,30 @@ Public Class Cluster
         End Get
     End Property
 
-    Public Function countLeafs() As Integer
-        Return countLeafs(Me, 0)
+    Public Function CountLeafs() As Integer
+        Return CountLeafs(Me, 0)
     End Function
 
-    Public Function countLeafs(node As Cluster, count As Integer) As Integer
+    ''' <summary>
+    ''' 对某一个节点的所有的叶节点进行计数
+    ''' </summary>
+    ''' <param name="node"></param>
+    ''' <param name="count"></param>
+    ''' <returns></returns>
+    Public Shared Function CountLeafs(node As Cluster, count As Integer) As Integer
         If node.Leaf Then count += 1
         For Each child As Cluster In node.Children
-            count += child.countLeafs()
-        Next child
+            count += child.CountLeafs()
+        Next
         Return count
     End Function
 
     Public ReadOnly Property TotalDistance As Double
         Get
             Dim dist As Double = If(Distance Is Nothing, 0, Distance.Distance)
-            If Children.Count > 0 Then dist += Children(0).TotalDistance
+            If Children.Count > 0 Then
+                dist += Children(0).TotalDistance
+            End If
             Return dist
         End Get
     End Property

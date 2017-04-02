@@ -83,12 +83,12 @@ Namespace DendrogramVisualize
             If cluster IsNot Nothing Then
 
                 comp = New ClusterComponent(cluster, cluster.Leaf, initCoord)
-                Dim leafHeight As Double = clusterHeight / cluster.countLeafs()
+                Dim leafHeight As Double = clusterHeight / cluster.CountLeafs()
                 Dim yChild As Double = initCoord.Y - (clusterHeight / 2)
                 Dim distance As Double = cluster.DistanceValue
 
                 For Each child As Cluster In cluster.Children
-                    Dim childLeafCount As Integer = child.countLeafs()
+                    Dim childLeafCount As Integer = child.CountLeafs()
                     Dim childHeight As Double = childLeafCount * leafHeight
                     Dim childDistance As Double = child.DistanceValue
                     Dim childInitCoord As New VCoord(initCoord.X + (distance - childDistance), yChild + childHeight / 2.0)

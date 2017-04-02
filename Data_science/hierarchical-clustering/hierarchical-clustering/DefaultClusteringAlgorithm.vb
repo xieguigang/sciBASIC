@@ -80,12 +80,12 @@ Public Class DefaultClusteringAlgorithm
         Dim linkages As New DistanceMap
         For col As Integer = 0 To clusters.Count - 1
             For row As Integer = col + 1 To clusters.Count - 1
-                Dim link As New ClusterPair
+                Dim link As New HierarchyTreeNode
                 Dim lCluster As Cluster = clusters(col)
                 Dim rCluster As Cluster = clusters(row)
                 link.LinkageDistance = distances(col)(row)
-                link.setlCluster(lCluster)
-                link.setrCluster(rCluster)
+                link.lCluster = (lCluster)
+                link.rCluster = (rCluster)
                 linkages.add(link)
             Next row
         Next col

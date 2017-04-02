@@ -5,6 +5,10 @@ Imports Microsoft.VisualBasic.Imaging
 
 Module Program
 
+    Sub New()
+        VBDebugger.Mute = True
+    End Sub
+
     Public Sub Main()
         Dim cluster As Cluster = createSampleCluster()
         Dim dp As New DendrogramPanel With {
@@ -18,6 +22,8 @@ Module Program
         Dim g As Graphics2D = dp.Size.CreateGDIDevice(filled:=Color.White)
         Call dp.paint(g)
         Call g.Save("./test.png", ImageFormats.Png)
+
+        Pause()
     End Sub
 
     Private Function createSampleCluster() As Cluster
