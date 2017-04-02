@@ -50,11 +50,11 @@ Public MustInherit Class VectorObject
         Me.RECT = rect
     End Sub
 
-    Public Overridable Sub Draw(gdi As GDIPlusDeviceHandle)
+    Public Overridable Sub Draw(gdi As Graphics2D)
         Call Draw(gdi, RECT)
     End Sub
 
-    Public MustOverride Sub Draw(gdi As GDIPlusDeviceHandle, loci As Rectangle)
+    Public MustOverride Sub Draw(gdi As Graphics2D, loci As Rectangle)
 
     Public Overrides Function ToString() As String
         Return RECT.GetJson

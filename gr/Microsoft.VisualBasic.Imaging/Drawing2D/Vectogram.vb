@@ -46,7 +46,7 @@ Namespace Drawing2D
 
         Dim _lstElements As List(Of Shape) = New List(Of Shape)
 
-        Public ReadOnly Property GDIDevice As GDIPlusDeviceHandle
+        Public ReadOnly Property GDIDevice As Graphics2D
 
         Public ReadOnly Property Size As Size
             Get
