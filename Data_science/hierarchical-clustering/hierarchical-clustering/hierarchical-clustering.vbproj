@@ -90,7 +90,6 @@
     <Compile Include="DendrogramVisualize\ClusterComponent.vb" />
     <Compile Include="DendrogramVisualize\DendrogramPanel.vb" />
     <Compile Include="DendrogramVisualize\Paintable.vb" />
-    <Compile Include="DendrogramVisualize\VCoord.vb" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

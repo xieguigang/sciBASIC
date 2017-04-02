@@ -29,12 +29,12 @@ Namespace DendrogramVisualize
         Public Property Children As New List(Of ClusterComponent)
         Public Property NamePadding As Integer = 6
         Public Property DotRadius As Integer = 2
-        Public Property LinkPoint As VCoord
-        Public Property InitPoint As VCoord
+        Public Property LinkPoint As PointF
+        Public Property InitPoint As PointF
         Public Property Cluster As Cluster
         Public Property PrintName As Boolean
 
-        Public Sub New(cluster As Cluster, printName As Boolean, initPoint As VCoord)
+        Public Sub New(cluster As Cluster, printName As Boolean, initPoint As PointF)
             Me.PrintName = printName
             Me.Cluster = cluster
             Me.InitPoint = initPoint
@@ -63,21 +63,20 @@ Namespace DendrogramVisualize
             y2 = CInt(Fix(LinkPoint.Y * yDisplayFactor + yDisplayOffset))
             g.DrawLine(Pens.Black, x1, y1, x2, y2)
 
-
             For Each child As ClusterComponent In Children
                 child.paint(g, xDisplayOffset, yDisplayOffset, xDisplayFactor, yDisplayFactor, decorated)
-            Next child
+            Next
         End Sub
 
         Public ReadOnly Property RectMinX As Double
             Get
 
                 ' TODO Better use closure / callback here
-                Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
                 Dim val As Double = Math.Min(InitPoint.X, LinkPoint.X)
                 For Each child As ClusterComponent In Children
                     val = Math.Min(val, child.RectMinX)
-                Next child
+                Next
                 Return val
             End Get
         End Property
@@ -86,11 +85,11 @@ Namespace DendrogramVisualize
             Get
 
                 ' TODO Better use closure here
-                Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
                 Dim val As Double = Math.Min(InitPoint.Y, LinkPoint.Y)
                 For Each child As ClusterComponent In Children
                     val = Math.Min(val, child.RectMinY)
-                Next child
+                Next
                 Return val
             End Get
         End Property
@@ -99,11 +98,11 @@ Namespace DendrogramVisualize
             Get
 
                 ' TODO Better use closure here
-                Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
                 Dim val As Double = Math.Max(InitPoint.X, LinkPoint.X)
                 For Each child As ClusterComponent In Children
                     val = Math.Max(val, child.RectMaxX)
-                Next child
+                Next
                 Return val
             End Get
         End Property
@@ -112,11 +111,11 @@ Namespace DendrogramVisualize
             Get
 
                 ' TODO Better use closure here
-                Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
                 Dim val As Double = Math.Max(InitPoint.Y, LinkPoint.Y)
                 For Each child As ClusterComponent In Children
                     val = Math.Max(val, child.RectMaxY)
-                Next child
+                Next
                 Return val
             End Get
         End Property

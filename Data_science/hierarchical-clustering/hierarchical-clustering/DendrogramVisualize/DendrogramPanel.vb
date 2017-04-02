@@ -77,7 +77,7 @@ Namespace DendrogramVisualize
             hModel = maxY - minY
         End Sub
 
-        Private Function createComponent(cluster As Cluster, initCoord As VCoord, clusterHeight As Double) As ClusterComponent
+        Private Function createComponent(cluster As Cluster, initCoord As PointF, clusterHeight As Double) As ClusterComponent
             Dim comp As ClusterComponent = Nothing
 
             If cluster IsNot Nothing Then
@@ -91,7 +91,7 @@ Namespace DendrogramVisualize
                     Dim childLeafCount As Integer = child.CountLeafs()
                     Dim childHeight As Double = childLeafCount * leafHeight
                     Dim childDistance As Double = child.DistanceValue
-                    Dim childInitCoord As New VCoord(initCoord.X + (distance - childDistance), yChild + childHeight / 2.0)
+                    Dim childInitCoord As New PointF(initCoord.X + (distance - childDistance), yChild + childHeight / 2.0)
                     yChild += childHeight
 
                     ' Traverse cluster node tree 
@@ -106,10 +106,8 @@ Namespace DendrogramVisualize
         End Function
 
         Private Function createComponent(model As Cluster) As ClusterComponent
-
             Dim virtualModelHeight As Double = 1
-            Dim initCoord As New VCoord(0, virtualModelHeight / 2)
-
+            Dim initCoord As New PointF(0, virtualModelHeight / 2)
             Dim comp As ClusterComponent = createComponent(model, initCoord, virtualModelHeight)
             comp.LinkPoint = initCoord
             Return comp
