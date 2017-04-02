@@ -37,7 +37,7 @@ Imports System.Reflection
 Namespace Imaging
 
     ''' <summary>
-    ''' GDI+ device handle for encapsulates a GDI+ drawing surface.(GDI+绘图设备句柄)
+    ''' GDI+ device handle for encapsulates a GDI+ drawing surface.(GDI+绘图设备句柄，这个对象其实是为了将gdi+绘图与图形模块的SVG绘图操作统一起来的)
     ''' </summary>
     ''' <remarks></remarks>
     Public Class Graphics2D : Inherits IGraphics
@@ -82,6 +82,17 @@ Namespace Imaging
                 Return Size.Height
             End Get
         End Property
+
+        ''' <summary>
+        ''' Default pen for drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Stroke As Pen
+        ''' <summary>
+        ''' Default font value for text drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Font As Font
 
         ''' <summary>
         ''' Gets the width and height, in pixels, of this image.(图像的大小)
@@ -179,6 +190,10 @@ Namespace Imaging
             Call Me.Graphics.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
         End Sub
 
+        Public Overloads Sub DrawLine(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
+            Call Graphics.DrawLine(Stroke, x1, y1, x2, y2)
+        End Sub
+
 #Region "Implements Class Graphics"
 
         '
@@ -209,6 +224,10 @@ Namespace Imaging
                 Return Graphics.ClipBounds
             End Get
         End Property
+
+        Public Overloads Sub DrawString(str As String, x As Integer, y As Integer)
+            Call Graphics.DrawString(str, Font, Brushes.Black, New Point(x, y))
+        End Sub
 
         ''' <summary>
         ''' Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
