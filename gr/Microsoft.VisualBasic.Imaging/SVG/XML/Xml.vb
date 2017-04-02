@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -65,21 +66,47 @@ Namespace SVG
         Public Property title As title
     End Class
 
+    ''' <summary>
+    ''' 不规则的多边形对象
+    ''' </summary>
     Public Class polygon : Inherits node
+        ''' <summary>
+        ''' 定点坐标列表
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property points As String()
     End Class
 
+    ''' <summary>
+    ''' 矩形对象
+    ''' </summary>
     Public Class rect : Inherits node
+
         Public Property height As String
         Public Property width As String
         Public Property y As String
         Public Property x As String
+
+        Sub New()
+        End Sub
+
+        Sub New(rect As Rectangle)
+            With Me
+                .width = rect.Width
+                .height = rect.Height
+                .x = rect.X
+                .y = rect.Y
+            End With
+        End Sub
     End Class
 
     Public Class path : Inherits node
         <XmlAttribute> Public Property d As String
     End Class
 
+    ''' <summary>
+    ''' 一个线段对象
+    ''' </summary>
     Public Class line : Inherits node
         <XmlAttribute> Public Property y2 As Single
         <XmlAttribute> Public Property x2 As Single
@@ -87,15 +114,33 @@ Namespace SVG
         <XmlAttribute> Public Property x1 As Single
     End Class
 
+    ''' <summary>
+    ''' SVG之中的文本对象
+    ''' </summary>
     Public Class text : Inherits node
         <XmlAttribute> Public Property transform As String
         <XmlAttribute> Public Property dy As String
+        ''' <summary>
+        ''' 文本字符串
+        ''' </summary>
+        ''' <returns></returns>
         <XmlText> Public Property value As String
         <XmlAttribute("text-anchor")> Public Property anchor As String
+        ''' <summary>
+        ''' 文本对象在画布上面的坐标位置
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property y As String
+        ''' <summary>
+        ''' 文本对象在画布上面的坐标位置
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property x As String
     End Class
 
+    ''' <summary>
+    ''' 在这个SVG对象之中所定义的CSS样式数据
+    ''' </summary>
     Public Class CSSStyles
         <XmlElement("style")> Public Property styles As XmlMeta.CSS()
         <XmlAttribute> Public Property id As String

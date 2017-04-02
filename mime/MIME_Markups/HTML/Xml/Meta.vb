@@ -34,8 +34,15 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace HTML.XmlMeta
 
+    ''' <summary>
+    ''' Html之中的CSS样式
+    ''' </summary>
     Public Class CSS
 
+        ''' <summary>
+        ''' ``text/css``
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property type As String
             Get
                 Return "text/css"
@@ -46,6 +53,10 @@ Namespace HTML.XmlMeta
         End Property
 
         <XmlAttribute> Public Property id As String
+        ''' <summary>
+        ''' 具体的CSS内容
+        ''' </summary>
+        ''' <returns></returns>
         <XmlText> Public Property style As String
 
         Public Overrides Function ToString() As String
