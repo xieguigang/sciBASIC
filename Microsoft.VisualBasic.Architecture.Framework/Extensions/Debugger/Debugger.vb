@@ -32,6 +32,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Logging
+Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Terminal.Utility
 
 ''' <summary>
@@ -124,6 +125,13 @@ Public Module VBDebugger
         End If
     End Sub
 
+    ''' <summary>
+    ''' 头部和消息字符串都是放在一个task之中进行输出的，<see cref="xConsole"/>的输出也是和内部的debugger输出使用的同一个消息线程
+    ''' </summary>
+    ''' <param name="head"></param>
+    ''' <param name="str"></param>
+    ''' <param name="msgColor"></param>
+    ''' <param name="level"></param>
     Private Sub __print(head As String, str As String, msgColor As ConsoleColor, level As MSG_TYPES)
         If ForceSTDError Then
             Call Console.Error.WriteLine($"[{head}]{str}")
@@ -164,10 +172,26 @@ Public Module VBDebugger
         Return False
     End Function
 
+    ''' <summary>
+    ''' 等待调试器输出工作线程将内部的消息队列输出完毕
+    ''' </summary>
     Public Sub WaitOutput()
         Call Terminal.WaitQueue()
     End Sub
 
+    ''' <summary>
+    ''' 使用<see cref="xConsole"/>输出消息
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property UsingxConsole As Boolean = False
+
+    ''' <summary>
+    ''' 输出的终端消息带有指定的终端颜色色彩，当<see cref="UsingxConsole"/>为True的时候，
+    ''' <paramref name="msg"/>参数之中的文本字符串兼容<see cref="xConsole"/>语法，
+    ''' 而<paramref name="color"/>将会被<see cref="xConsole"/>覆盖而不会起作用
+    ''' </summary>
+    ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
+    ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
     <Extension>
     Public Sub WriteLine(msg As String, color As ConsoleColor)
         If Mute Then
@@ -177,11 +201,16 @@ Public Module VBDebugger
         If ForceSTDError Then
             Console.Error.WriteLine(msg)
         Else
-            Dim cl As ConsoleColor = Console.ForegroundColor
+            If UsingxConsole AndAlso App.IsMicrosoftPlatform Then
+                Call xConsole.CoolWrite(msg)
+            Else
+                ' 使用传统的输出输出方法
+                Dim cl As ConsoleColor = Console.ForegroundColor
 
-            Console.ForegroundColor = color
-            Console.WriteLine(msg)
-            Console.ForegroundColor = cl
+                Console.ForegroundColor = color
+                Console.WriteLine(msg)
+                Console.ForegroundColor = cl
+            End If
         End If
 
 #If DEBUG Then
