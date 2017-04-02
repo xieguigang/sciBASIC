@@ -15,6 +15,12 @@ Namespace SVG
         ''' </summary>
         ReadOnly __graphics As Graphics = Graphics.FromImage(New Bitmap(100, 100))
 
+        Dim text As New List(Of text)
+        Dim rects As New List(Of rect)
+        Dim lines As New List(Of line)
+        Dim circles As New List(Of circle)
+        Dim polygon As New List(Of polygon)
+
         Public Overrides Property Clip As Region
             Get
                 Throw New NotImplementedException()
@@ -815,10 +821,6 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub ReleaseHdc()
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub ReleaseHdc(hdc As IntPtr)
             Throw New NotImplementedException()
         End Sub
@@ -931,10 +933,6 @@ Namespace SVG
             Throw New NotImplementedException()
         End Function
 
-        Public Overrides Function GetHdc() As IntPtr
-            Throw New NotImplementedException()
-        End Function
-
         Public Overrides Function GetNearestColor(color As Color) As Color
             Throw New NotImplementedException()
         End Function
@@ -972,39 +970,35 @@ Namespace SVG
         End Function
 
         Public Overrides Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
-            Throw New NotImplementedException()
+            Return __graphics.MeasureCharacterRanges(text, font, layoutRect, stringFormat)
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
-            Throw New NotImplementedException()
+            Return __graphics.MeasureString(text, font)
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
-            Throw New NotImplementedException()
+            Return __graphics.MeasureString(text, font, width)
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
-            Throw New NotImplementedException()
+            Return __graphics.MeasureString(text, font, layoutArea)
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
-            Throw New NotImplementedException()
+            Return __graphics.MeasureString(text, font, width, format)
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
-            Throw New NotImplementedException()
+            Return __graphics.MeasureString(text, font, origin, stringFormat)
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
-            Throw New NotImplementedException()
+            Return __graphics.MeasureString(text, font, layoutArea, stringFormat)
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function Save() As GraphicsState
-            Throw New NotImplementedException()
+            Return __graphics.MeasureString(text, font, layoutArea, stringFormat, charactersFitted, linesFilled)
         End Function
     End Class
 End Namespace

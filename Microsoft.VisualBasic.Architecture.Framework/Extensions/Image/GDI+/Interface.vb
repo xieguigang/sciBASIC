@@ -42,8 +42,8 @@ Namespace Imaging
     ''' <summary>
     ''' Encapsulates a GDI+/SVG etc drawing surface. This class must be inherited.
     ''' </summary>
-    Public MustInherit Class IGraphics : Inherits MarshalByRefObject
-        Implements IDisposable, IDeviceContext
+    Public MustInherit Class IGraphics
+        Implements IDisposable
         '
         ' Summary:
         '     Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
@@ -3983,11 +3983,7 @@ Namespace Imaging
         '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that determines
         '     the order of the multiplication.
         Public MustOverride Sub MultiplyTransform(matrix As Matrix, order As MatrixOrder)
-        '
-        ' Summary:
-        '     Releases a device context handle obtained by a previous call to the System.Drawing.Graphics.GetHdc
-        '     method of this System.Drawing.Graphics.
-        Public MustOverride Sub ReleaseHdc() Implements IDeviceContext.ReleaseHdc
+
         '
         ' Summary:
         '     Releases a device context handle obtained by a previous call to the System.Drawing.Graphics.GetHdc
@@ -4333,13 +4329,7 @@ Namespace Imaging
         '     An System.Object representing the cumulative graphics context.
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public MustOverride Function GetContextInfo() As Object
-        '
-        ' Summary:
-        '     Gets the handle to the device context associated with this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     Handle to the device context associated with this System.Drawing.Graphics.
-        Public MustOverride Function GetHdc() As IntPtr Implements IDeviceContext.GetHdc
+
         '
         ' Summary:
         '     Gets the nearest color to the specified System.Drawing.Color structure.
@@ -4697,15 +4687,6 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     font is null.
         Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
-        '
-        ' Summary:
-        '     Saves the current state of this System.Drawing.Graphics and identifies the saved
-        '     state with a System.Drawing.Drawing2D.GraphicsState.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.Drawing2D.GraphicsState that represents
-        '     the saved state of this System.Drawing.Graphics.
-        Public MustOverride Function Save() As GraphicsState
 
     End Class
 End Namespace

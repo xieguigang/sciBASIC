@@ -41,7 +41,7 @@ Namespace Imaging
     ''' </summary>
     ''' <remarks></remarks>
     Public Class Graphics2D : Inherits IGraphics
-        Implements IDisposable, IDeviceContext
+        Implements IDisposable
 
         ''' <summary>
         ''' GDI+ device handle.(GDI+绘图设备句柄)
@@ -4537,13 +4537,7 @@ Namespace Imaging
         Public Overrides Sub MultiplyTransform(matrix As Drawing2D.Matrix, order As MatrixOrder)
 
         End Sub
-        '
-        ' Summary:
-        '     Releases a device context handle obtained by a previous call to the System.Drawing.Graphics.GetHdc
-        '     method of this System.Drawing.Graphics.
-        Public Overrides Sub ReleaseHdc() Implements IDeviceContext.ReleaseHdc
 
-        End Sub
         '
         ' Summary:
         '     Releases a device context handle obtained by a previous call to the System.Drawing.Graphics.GetHdc
@@ -4945,15 +4939,7 @@ Namespace Imaging
         Public Overrides Function GetContextInfo() As Object
             Return Graphics.GetContextInfo
         End Function
-        '
-        ' Summary:
-        '     Gets the handle to the device context associated with this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     Handle to the device context associated with this System.Drawing.Graphics.
-        Public Overrides Function GetHdc() As IntPtr Implements IDeviceContext.GetHdc
-            Return Graphics.GetHdc
-        End Function
+
         '
         ' Summary:
         '     Gets the nearest color to the specified System.Drawing.Color structure.
@@ -5334,17 +5320,6 @@ Namespace Imaging
         '     font is null.
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
             Return Graphics.MeasureString(text, font, layoutArea, stringFormat, charactersFitted, linesFilled)
-        End Function
-        '
-        ' Summary:
-        '     Saves the current state of this System.Drawing.Graphics and identifies the saved
-        '     state with a System.Drawing.Drawing2D.GraphicsState.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.Drawing2D.GraphicsState that represents
-        '     the saved state of this System.Drawing.Graphics.
-        Public Overrides Function Save() As GraphicsState
-            Return Graphics.Save
         End Function
 
         Public Overrides Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
