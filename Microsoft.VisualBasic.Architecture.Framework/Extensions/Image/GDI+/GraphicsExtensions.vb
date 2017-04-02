@@ -32,6 +32,7 @@ Imports System.Drawing.Imaging
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -46,6 +47,15 @@ Namespace Imaging
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GraphicsExtensions
+
+        <Extension>
+        Public Function GraphicsPath(points As Point()) As GraphicsPath
+            Dim path As New GraphicsPath
+            For Each pt In points.SlideWindows(2)
+                Call path.AddLine(pt(0), pt(1))
+            Next
+            Return path
+        End Function
 
         ''' <summary>
         ''' 同时兼容颜色以及图片纹理画刷的创建

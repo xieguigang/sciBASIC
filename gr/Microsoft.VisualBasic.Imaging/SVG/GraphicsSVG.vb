@@ -22,6 +22,7 @@ Namespace SVG
         Protected Friend rects As New List(Of rect)
         Protected Friend lines As New List(Of line)
         Protected Friend circles As New List(Of circle)
+        Protected Friend paths As New List(Of path)
         Protected Friend polygons As New List(Of polygon)
         Protected Friend bg$
 
@@ -435,7 +436,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawEllipse(pen As Pen, rect As Rectangle)
-            Throw New NotImplementedException()
+
         End Sub
 
         Public Overrides Sub DrawEllipse(pen As Pen, rect As RectangleF)
@@ -486,7 +487,10 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)
-            Throw New NotImplementedException()
+            Dim pathData As New path(path) With {
+                .style = New Stroke(pen).CSSValue
+            }
+            paths += pathData
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)

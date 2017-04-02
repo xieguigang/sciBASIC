@@ -19,6 +19,7 @@ Namespace SVG
                 .circles = g.circles,
                 .polygon = g.polygons,
                 .rect = g.rects,
+                .path = g.paths,
                 .texts = g.texts,
                 .lines = g.lines,
                 .width = sz.Width,

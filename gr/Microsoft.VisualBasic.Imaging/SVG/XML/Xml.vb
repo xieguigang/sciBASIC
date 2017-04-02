@@ -27,6 +27,8 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
+Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -83,10 +85,10 @@ Namespace SVG
     ''' </summary>
     Public Class rect : Inherits node
 
-        Public Property height As String
-        Public Property width As String
-        Public Property y As String
-        Public Property x As String
+        <XmlAttribute> Public Property height As String
+        <XmlAttribute> Public Property width As String
+        <XmlAttribute> Public Property y As String
+        <XmlAttribute> Public Property x As String
 
         Sub New()
         End Sub
@@ -101,8 +103,44 @@ Namespace SVG
         End Sub
     End Class
 
+    ''' <summary>
+    ''' ``&lt;path>`` 标签用来定义路径。
+    ''' </summary>
     Public Class path : Inherits node
+
+        ''' <summary>
+        ''' 下面的命令可用于路径数据：
+        ''' 
+        ''' M = moveto
+        ''' L = lineto
+        ''' H = horizontal lineto
+        ''' V = vertical lineto
+        ''' C = curveto
+        ''' S = smooth curveto
+        ''' Q = quadratic Belzier curve
+        ''' T = smooth quadratic Belzier curveto
+        ''' A = elliptical Arc
+        ''' Z = closepath
+        ''' 
+        ''' 注释：以上所有命令均允许小写字母。大写表示绝对定位，小写表示相对定位。
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property d As String
+
+        Sub New()
+        End Sub
+
+        Sub New(path As GraphicsPath)
+            Dim points = path.PathData.Points.Select(Function(pt) $"{pt.X} {pt.Y}")
+            Dim sb As New StringBuilder
+            Call sb.Append("M" & points.First)
+            For Each pt In points.Skip(1)
+                Call sb.Append(" ")
+                Call sb.Append("L" & pt)
+            Next
+            Call sb.Append("Z")
+            d = sb.ToString
+        End Sub
     End Class
 
     ''' <summary>
