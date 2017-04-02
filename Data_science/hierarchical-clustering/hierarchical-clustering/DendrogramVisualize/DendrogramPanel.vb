@@ -40,21 +40,21 @@ Namespace com.apporiented.algorithm.clustering.visualization
         Private hModel As Double = 0.0
 
         Public Property ShowDistanceValues As Boolean
-        Public Overridable Property ShowScale As Boolean = True
-        Public Overridable Property ScalePadding As Integer = 10
-        Public Overridable Property ScaleTickLength As Integer = 4
-        Public Overridable Property ScaleValueInterval As Double
-        Public Overridable Property ScaleValueDecimals As Integer
+        Public Property ShowScale As Boolean = True
+        Public Property ScalePadding As Integer = 10
+        Public Property ScaleTickLength As Integer = 4
+        Public Property ScaleValueInterval As Double
+        Public Property ScaleValueDecimals As Integer
 
-        Public Overridable Property BorderTop As Integer = 20
-        Public Overridable Property BorderLeft As Integer = 20
-        Public Overridable Property BorderRight As Integer = 20
-        Public Overridable Property BorderBottom As Integer = 20
+        Public Property BorderTop As Integer = 20
+        Public Property BorderLeft As Integer = 20
+        Public Property BorderRight As Integer = 20
+        Public Property BorderBottom As Integer = 20
 
         Public Property Size As SizeF
-        Public Overridable Property LineColor As Color = Color.Black
+        Public Property LineColor As Color = Color.Black
 
-        Public Overridable Property Model As com.apporiented.algorithm.clustering.Cluster
+        Public Property Model As com.apporiented.algorithm.clustering.Cluster
             Get
                 Return _model
             End Get

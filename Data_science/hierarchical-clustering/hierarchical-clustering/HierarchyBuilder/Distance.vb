@@ -20,34 +20,32 @@ Imports System
 
 Namespace com.apporiented.algorithm.clustering
 
-	Public Class Distance
-		Implements IComparable(Of Distance), ICloneable
+    Public Class Distance
+        Implements IComparable(Of Distance), ICloneable
 
+        Public Property Distance As Double
+        Public Property Weight As Double
 
-        Public Sub New()
-			Me.New(0.0)
-		End Sub
-
-        Public Sub New( distance As Double)
-            Me.New(distance, 1.0)
-        End Sub
-
-        Public Sub New( distance As Double, weight As Double)
-            Me.Distance = distance
-            Me.Weight = weight
-        End Sub
-
-        Public Overridable Property Distance As Double
-
-        Public Overridable Property Weight As Double
-
-        Public Overridable ReadOnly Property NaN As Boolean
+        Public ReadOnly Property NaN As Boolean
             Get
                 Return Double.IsNaN(Distance)
             End Get
         End Property
 
-        Public Function compareTo( distance As Distance) As Integer Implements IComparable(Of Distance).CompareTo
+        Public Sub New()
+            Me.New(0.0)
+        End Sub
+
+        Public Sub New(distance As Double)
+            Me.New(distance, 1.0)
+        End Sub
+
+        Public Sub New(distance As Double, weight As Double)
+            Me.Distance = distance
+            Me.Weight = weight
+        End Sub
+
+        Public Function compareTo(distance As Distance) As Integer Implements IComparable(Of Distance).CompareTo
             Return If(distance Is Nothing, 1, Me.Distance.CompareTo(distance.Distance))
         End Function
 
@@ -59,5 +57,4 @@ Namespace com.apporiented.algorithm.clustering
             Return New Distance(Distance, Weight)
         End Function
     End Class
-
 End Namespace

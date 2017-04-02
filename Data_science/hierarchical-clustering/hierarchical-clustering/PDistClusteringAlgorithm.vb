@@ -24,27 +24,27 @@ Namespace com.apporiented.algorithm.clustering
 	Public Class PDistClusteringAlgorithm
 		Implements ClusteringAlgorithm
 
-		Public Function performClustering( distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performClustering
+        Public Function performClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performClustering
 
-			' Argument checks 
-			If distances Is Nothing OrElse distances.Length = 0 Then Throw New System.ArgumentException("Invalid distance matrix")
-			If distances(0).Length <> clusterNames.Length * (clusterNames.Length - 1) \ 2 Then Throw New System.ArgumentException("Invalid cluster name array")
-			If linkageStrategy Is Nothing Then Throw New System.ArgumentException("Undefined linkage strategy")
+            ' Argument checks 
+            If distances Is Nothing OrElse distances.Length = 0 Then Throw New System.ArgumentException("Invalid distance matrix")
+            If distances(0).Length <> clusterNames.Length * (clusterNames.Length - 1) \ 2 Then Throw New System.ArgumentException("Invalid cluster name array")
+            If linkageStrategy Is Nothing Then Throw New System.ArgumentException("Undefined linkage strategy")
 
-			' Setup model 
-			Dim clusters As IList(Of Cluster) = createClusters(clusterNames)
-			Dim linkages As DistanceMap = createLinkages(distances, clusters)
+            ' Setup model 
+            Dim clusters As IList(Of Cluster) = createClusters(clusterNames)
+            Dim linkages As DistanceMap = createLinkages(distances, clusters)
 
-			' Process 
-			Dim builder As New HierarchyBuilder(clusters, linkages)
-			Do While Not builder.TreeComplete
-				builder.agglomerate(linkageStrategy)
-			Loop
+            ' Process 
+            Dim builder As New HierarchyBuilder(clusters, linkages)
+            Do While Not builder.TreeComplete
+                builder.agglomerate(linkageStrategy)
+            Loop
 
-			Return builder.RootCluster
-		End Function
+            Return builder.RootCluster
+        End Function
 
-		Public Function performFlatClustering( distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy, threshold As Double ) As IList(Of Cluster) Implements ClusteringAlgorithm.performFlatClustering
+        Public Function performFlatClustering( distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy, threshold As Double ) As IList(Of Cluster) Implements ClusteringAlgorithm.performFlatClustering
 
 			' Argument checks 
 			If distances Is Nothing OrElse distances.Length = 0 Then Throw New System.ArgumentException("Invalid distance matrix")
@@ -80,19 +80,19 @@ Namespace com.apporiented.algorithm.clustering
 			Return linkages
 		End Function
 
-		Private Function createClusters( clusterNames As String()) As IList(Of Cluster)
-			Dim clusters As IList(Of Cluster) = New List(Of Cluster)
-			For Each clusterName As String In clusterNames
-				Dim cluster As New Cluster(clusterName)
-				cluster.addLeafName(clusterName)
-				clusters.Add(cluster)
-			Next clusterName
-			Return clusters
-		End Function
+        Private Function createClusters(clusterNames As String()) As IList(Of Cluster)
+            Dim clusters As IList(Of Cluster) = New List(Of Cluster)
+            For Each clusterName As String In clusterNames
+                Dim cluster As New Cluster(clusterName)
+                cluster.addLeafName(clusterName)
+                clusters.Add(cluster)
+            Next clusterName
+            Return clusters
+        End Function
 
-		' Credit to this function goes to
-		' http://stackoverflow.com/questions/13079563/how-does-condensed-distance-matrix-work-pdist
-		Private Shared Function accessFunction( i As Integer, j As Integer, n As Integer) As Integer
+        ' Credit to this function goes to
+        ' http://stackoverflow.com/questions/13079563/how-does-condensed-distance-matrix-work-pdist
+        Private Shared Function accessFunction( i As Integer, j As Integer, n As Integer) As Integer
 			Return n * j - j * (j + 1) \ 2 + i - 1 - j
 		End Function
 

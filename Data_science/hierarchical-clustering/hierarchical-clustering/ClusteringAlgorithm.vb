@@ -21,13 +21,12 @@ Imports System.Collections.Generic
 Namespace com.apporiented.algorithm.clustering
 
 
-	Public Interface ClusteringAlgorithm
+    Public Interface ClusteringAlgorithm
 
-		Function performClustering( distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy) As Cluster
+        Function performClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy) As Cluster
+        Function performWeightedClustering(distances As Double()(), clusterNames As String(), weights As Double(), linkageStrategy As LinkageStrategy) As Cluster
+        Function performFlatClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy, threshold As Double) As IList(Of Cluster)
 
-		Function performWeightedClustering( distances As Double()(), clusterNames As String(), weights As Double(), linkageStrategy As LinkageStrategy) As Cluster
-
-		Function performFlatClustering( distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy, threshold As Double ) As IList(Of Cluster)
-	End Interface
+    End Interface
 
 End Namespace

@@ -21,53 +21,53 @@ Imports System.Text
 
 Namespace com.apporiented.algorithm.clustering
 
-	Public Class ClusterPair
-		Implements IComparable(Of ClusterPair)
+    Public Class ClusterPair
+        Implements IComparable(Of ClusterPair)
 
-		Private Shared globalIndex As Long = 0
+        Private Shared globalIndex As Long = 0
 
-		Private lCluster As Cluster
-		Private rCluster As Cluster
+        Private lCluster As Cluster
+        Private rCluster As Cluster
 
         Public Sub New()
-		End Sub
+        End Sub
 
-        Public Sub New( left As Cluster, right As Cluster, distance As Double)
+        Public Sub New(left As Cluster, right As Cluster, distance As Double)
             lCluster = left
             rCluster = right
             LinkageDistance = distance
         End Sub
 
-        Public Overridable Function getOtherCluster( c As Cluster) As Cluster
+        Public Function getOtherCluster(c As Cluster) As Cluster
             Return If(lCluster Is c, rCluster, lCluster)
         End Function
 
-        Public Overridable Function getlCluster() As Cluster
+        Public Function getlCluster() As Cluster
             Return lCluster
         End Function
 
-        Public Overridable Sub setlCluster( lCluster As Cluster)
+        Public Sub setlCluster(lCluster As Cluster)
             Me.lCluster = lCluster
         End Sub
 
-        Public Overridable Function getrCluster() As Cluster
+        Public Function getrCluster() As Cluster
             Return rCluster
         End Function
 
-        Public Overridable Sub setrCluster( rCluster As Cluster)
+        Public Sub setrCluster(rCluster As Cluster)
             Me.rCluster = rCluster
         End Sub
 
-        Public Overridable Property LinkageDistance As Double
+        Public Property LinkageDistance As Double
 
-        ''' <returns> a new ClusterPair with the two left/right inverted </returns>
-        Public Overridable Function reverse() As ClusterPair
+        ''' <returns> 
+        ''' a new ClusterPair with the two left/right inverted
+        ''' </returns>
+        Public Function reverse() As ClusterPair
             Return New ClusterPair(getrCluster(), getlCluster(), LinkageDistance)
         End Function
 
-
-
-        Public Function compareTo( o As ClusterPair) As Integer Implements IComparable(Of ClusterPair).CompareTo
+        Public Function compareTo(o As ClusterPair) As Integer Implements IComparable(Of ClusterPair).CompareTo
             Dim result As Integer
             If o Is Nothing OrElse o.LinkageDistance = 0 Then
                 result = -1
@@ -81,7 +81,7 @@ Namespace com.apporiented.algorithm.clustering
         End Function
 
 
-        Public Overridable Function agglomerate( name As String) As Cluster
+        Public Function agglomerate(name As String) As Cluster
             If name Is Nothing Then
                 globalIndex += 1
                 name = "clstr#" & (globalIndex)
@@ -128,7 +128,6 @@ Namespace com.apporiented.algorithm.clustering
             sb.Append(" : ").Append(LinkageDistance)
             Return sb.ToString()
         End Function
-
     End Class
 
 End Namespace

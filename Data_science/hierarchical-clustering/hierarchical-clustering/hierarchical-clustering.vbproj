@@ -77,23 +77,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.vb" />
-    <Compile Include="AverageLinkageStrategy.vb" />
     <Compile Include="Cluster.vb" />
     <Compile Include="ClusteringAlgorithm.vb" />
     <Compile Include="ClusterPair.vb" />
-    <Compile Include="CompleteLinkageStrategy.vb" />
     <Compile Include="DefaultClusteringAlgorithm.vb" />
-    <Compile Include="Distance.vb" />
-    <Compile Include="DistanceMap.vb" />
-    <Compile Include="HierarchyBuilder.vb" />
+    <Compile Include="HierarchyBuilder\Distance.vb" />
+    <Compile Include="HierarchyBuilder\DistanceMap.vb" />
+    <Compile Include="HierarchyBuilder\HierarchyBuilder.vb" />
     <Compile Include="LinkageStrategy.vb" />
     <Compile Include="PDistClusteringAlgorithm.vb" />
-    <Compile Include="SingleLinkageStrategy.vb" />
-    <Compile Include="visualization\ClusterComponent.vb" />
-    <Compile Include="visualization\DendrogramPanel.vb" />
-    <Compile Include="visualization\Paintable.vb" />
-    <Compile Include="visualization\VCoord.vb" />
-    <Compile Include="WeightedLinkageStrategy.vb" />
+    <Compile Include="DendrogramVisualize\ClusterComponent.vb" />
+    <Compile Include="DendrogramVisualize\DendrogramPanel.vb" />
+    <Compile Include="DendrogramVisualize\Paintable.vb" />
+    <Compile Include="DendrogramVisualize\VCoord.vb" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

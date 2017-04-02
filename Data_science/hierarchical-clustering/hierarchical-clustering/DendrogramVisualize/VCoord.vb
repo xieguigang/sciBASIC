@@ -1,5 +1,3 @@
-Imports System.Collections.Generic
-
 '
 '*****************************************************************************
 ' Copyright 2013 Lars Behnke
@@ -16,28 +14,39 @@ Imports System.Collections.Generic
 ' See the License for the specific language governing permissions and
 ' limitations under the License.
 ' *****************************************************************************
+' 
+
+Namespace com.apporiented.algorithm.clustering.visualization
+
+	''' <summary>
+	''' Virtual coordinates.
+	''' </summary>
+	Public Class VCoord
 
 
-Namespace com.apporiented.algorithm.clustering
 
+        Public Sub New( x As Double, y As Double)
+			Me.x = x
+			Me.y = y
+		End Sub
 
-	Public Class AverageLinkageStrategy
-		Implements LinkageStrategy
+		Public Property X As Double
 
-		Public Function calculateDistance( distances As ICollection(Of Distance)) As Distance Implements LinkageStrategy.calculateDistance
-			Dim sum As Double = 0
-			Dim result As Double
+        Public Property Y As Double
 
-			For Each dist As Distance In distances
-				sum += dist.Distance
-			Next dist
-			If distances.Count > 0 Then
-				result = sum / distances.Count
-			Else
-				result = 0.0
-			End If
-			Return New Distance(result)
-		End Function
-	End Class
+        Public Overrides Function Equals(obj As Object) As Boolean
+            If TypeOf obj Is VCoord Then
+                Dim other As VCoord = CType(obj, VCoord)
+                Return X = other.X AndAlso Y = other.Y
+            Else
+                Return False
+            End If
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return String.Format("Coord({0:F3},{1:F3})", X, Y)
+        End Function
+
+    End Class
 
 End Namespace

@@ -22,51 +22,48 @@ Imports System.Collections.Generic
 Namespace com.apporiented.algorithm.clustering
 
 
-	Public Class Cluster
+    Public Class Cluster
 
-        Public Sub New( name As String)
-			Me.name = name
-			leafNames = New List(Of String)
-		End Sub
+        Public Sub New(name As String)
+            Me.Name = name
+            LeafNames = New List(Of String)
+        End Sub
 
-		Public Overridable Property Distance As Distance
+        Public Property Distance As Distance
 
-
-        Public Overridable ReadOnly Property WeightValue As Double
+        Public ReadOnly Property WeightValue As Double
             Get
                 Return Distance.Weight
             End Get
         End Property
 
-        Public Overridable ReadOnly Property DistanceValue As Double
+        Public ReadOnly Property DistanceValue As Double
             Get
                 Return Distance.Distance
             End Get
         End Property
 
-        Public Overridable Property Children As IList(Of Cluster)
+        Public Property Children As IList(Of Cluster)
 
-        Public Overridable Sub addLeafName( lname As String)
-			leafNames.Add(lname)
-		End Sub
+        Public Sub addLeafName(lname As String)
+            LeafNames.Add(lname)
+        End Sub
 
-		Public Overridable Sub appendLeafNames( lnames As IList(Of String))
-			leafNames.AddRange(lnames)
-		End Sub
+        Public Sub appendLeafNames(lnames As IList(Of String))
+            LeafNames.AddRange(lnames)
+        End Sub
 
-        Public Overridable ReadOnly Property LeafNames As List(Of String)
+        Public ReadOnly Property LeafNames As List(Of String)
+        Public Property Parent As Cluster
+        Public Property Name As String
 
-        Public Overridable Property Parent As Cluster
-
-        Public Overridable Property Name As String
-
-        Public Overridable Sub addChild( cluster As Cluster)
+        Public Sub addChild(cluster As Cluster)
             Children.Add(cluster)
         End Sub
 
-        Public Overridable Function contains( cluster As Cluster) As Boolean
-			Return Children.Contains(cluster)
-		End Function
+        Public Function contains(cluster As Cluster) As Boolean
+            Return Children.Contains(cluster)
+        End Function
 
         Public Overrides Function ToString() As String
             Return "Cluster " & Name
@@ -89,45 +86,42 @@ Namespace com.apporiented.algorithm.clustering
             Return If(Name Is Nothing, 0, Name.GetHashCode())
         End Function
 
-        Public Overridable ReadOnly Property Leaf As Boolean
+        Public ReadOnly Property Leaf As Boolean
             Get
                 Return Children.Count = 0
             End Get
         End Property
 
-        Public Overridable Function countLeafs() As Integer
-			Return countLeafs(Me, 0)
-		End Function
+        Public Function countLeafs() As Integer
+            Return countLeafs(Me, 0)
+        End Function
 
-		Public Overridable Function countLeafs( node As Cluster, count As Integer) As Integer
-			If node.Leaf Then count += 1
-			For Each child As Cluster In node.Children
-				count += child.countLeafs()
-			Next child
-			Return count
-		End Function
+        Public Function countLeafs(node As Cluster, count As Integer) As Integer
+            If node.Leaf Then count += 1
+            For Each child As Cluster In node.Children
+                count += child.countLeafs()
+            Next child
+            Return count
+        End Function
 
-		Public Overridable Sub toConsole( indent As Integer)
-			For i As Integer = 0 To indent - 1
-				Console.Write("  ")
-
-			Next i
+        Public Sub toConsole(indent As Integer)
+            For i As Integer = 0 To indent - 1
+                Console.Write("  ")
+            Next i
             Dim ___name As String = Name + (If(Leaf, " (leaf)", "")) + (If(Distance IsNot Nothing, "  distance: " & Distance.ToString, ""))
             Console.WriteLine(___name)
-			For Each child As Cluster In Children
-				child.toConsole(indent + 1)
-			Next child
-		End Sub
+            For Each child As Cluster In Children
+                child.toConsole(indent + 1)
+            Next child
+        End Sub
 
-        Public Overridable ReadOnly Property TotalDistance As Double
+        Public ReadOnly Property TotalDistance As Double
             Get
-                Dim dist As Double  = If(Distance Is Nothing, 0, Distance.Distance)
+                Dim dist As Double = If(Distance Is Nothing, 0, Distance.Distance)
                 If Children.Count > 0 Then dist += Children(0).TotalDistance
                 Return dist
-
             End Get
         End Property
-
     End Class
 
 End Namespace

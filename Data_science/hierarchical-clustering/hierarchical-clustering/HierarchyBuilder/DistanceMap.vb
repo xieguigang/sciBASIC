@@ -49,7 +49,7 @@ Namespace com.apporiented.algorithm.clustering
             pairHash = New Dictionary(Of String, Item)
         End Sub
 
-        Public Overridable Function list() As IList(Of ClusterPair)
+        Public Function list() As IList(Of ClusterPair)
             Dim l As IList(Of ClusterPair) = New List(Of ClusterPair)
             For Each clusterPair As Item In data
                 l.Add(clusterPair.pair)
@@ -57,12 +57,12 @@ Namespace com.apporiented.algorithm.clustering
             Return l
         End Function
 
-        Public Overridable Function findByCodePair(c1 As Cluster, c2 As Cluster) As ClusterPair
+        Public Function findByCodePair(c1 As Cluster, c2 As Cluster) As ClusterPair
             Dim inCode As String = hashCodePair(c1, c2)
             Return pairHash(inCode).pair
         End Function
 
-        Public Overridable Function removeFirst() As ClusterPair
+        Public Function removeFirst() As ClusterPair
             Dim poll As Item = data.Dequeue
             Do While poll IsNot Nothing AndAlso poll.removed
                 poll = data.Dequeue
@@ -73,7 +73,7 @@ Namespace com.apporiented.algorithm.clustering
             Return link
         End Function
 
-        Public Overridable Function remove(link As ClusterPair) As Boolean
+        Public Function remove(link As ClusterPair) As Boolean
             Dim ___remove As Item = pairHash.RemoveAndGet(hashCodePair(link))
             If ___remove Is Nothing Then Return False
             ___remove.removed = True
@@ -82,7 +82,7 @@ Namespace com.apporiented.algorithm.clustering
         End Function
 
 
-        Public Overridable Function add(link As ClusterPair) As Boolean
+        Public Function add(link As ClusterPair) As Boolean
             Dim e As New Item(Me, link)
             Dim existingItem As Item = pairHash(e.hash)
             If existingItem IsNot Nothing Then
@@ -99,7 +99,7 @@ Namespace com.apporiented.algorithm.clustering
         ''' Peak into the minimum distance
         ''' @return
         ''' </summary>
-        Public Overridable Function minDist() As Double
+        Public Function minDist() As Double
             Dim peek As Item = data.Peek()
             If peek IsNot Nothing Then
                 Return peek.pair.LinkageDistance
@@ -111,15 +111,15 @@ Namespace com.apporiented.algorithm.clustering
         ''' <summary>
         ''' Compute some kind of unique ID for a given cluster pair. </summary>
         ''' <returns> The ID </returns>
-        Friend Overridable Function hashCodePair(link As ClusterPair) As String
+        Friend Function hashCodePair(link As ClusterPair) As String
             Return hashCodePair(link.getlCluster(), link.getrCluster())
         End Function
 
-        Friend Overridable Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As String
+        Friend Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As String
             Return hashCodePairNames(lCluster.Name, rCluster.Name)
         End Function
 
-        Friend Overridable Function hashCodePairNames(lName As String, rName As String) As String
+        Friend Function hashCodePairNames(lName As String, rName As String) As String
             If lName.CompareTo(rName) < 0 Then
                 Return lName & "~~~" & rName 'getlCluster().hashCode() + 31 * (getrCluster().hashCode());
             Else

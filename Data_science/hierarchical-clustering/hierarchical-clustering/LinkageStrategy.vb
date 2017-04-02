@@ -21,9 +21,70 @@ Imports System.Collections.Generic
 Namespace com.apporiented.algorithm.clustering
 
 
-	Public Interface LinkageStrategy
+    Public Interface LinkageStrategy
+        Function CalculateDistance(distances As ICollection(Of Distance)) As Distance
+    End Interface
 
-		Function calculateDistance( distances As ICollection(Of Distance)) As Distance
-	End Interface
+    Public Class SingleLinkageStrategy
+        Implements LinkageStrategy
 
+        Public Function CalculateDistance(distances As ICollection(Of Distance)) As Distance Implements LinkageStrategy.CalculateDistance
+            Dim min As Double = Double.NaN
+
+            For Each dist As Distance In distances
+                If Double.IsNaN(min) OrElse dist.Distance < min Then min = dist.Distance
+            Next
+
+            Return New Distance(min)
+        End Function
+    End Class
+
+
+    Public Class WeightedLinkageStrategy
+        Implements LinkageStrategy
+
+        Public Function CalculateDistance(distances As ICollection(Of Distance)) As Distance Implements LinkageStrategy.CalculateDistance
+            Dim sum As Double = 0
+            Dim weightTotal As Double = 0
+
+            For Each distance As Distance In distances
+                weightTotal += distance.Weight
+                sum += distance.Distance * distance.Weight
+            Next distance
+
+            Return New Distance(sum / weightTotal, weightTotal)
+        End Function
+    End Class
+
+    Public Class CompleteLinkageStrategy
+        Implements LinkageStrategy
+
+        Public Function CalculateDistance(distances As ICollection(Of Distance)) As Distance Implements LinkageStrategy.CalculateDistance
+            Dim max As Double = Double.NaN
+
+            For Each dist As Distance In distances
+                If Double.IsNaN(max) OrElse dist.Distance > max Then max = dist.Distance
+            Next dist
+            Return New Distance(max)
+        End Function
+    End Class
+
+    Public Class AverageLinkageStrategy
+        Implements LinkageStrategy
+
+        Public Function CalculateDistance(distances As ICollection(Of Distance)) As Distance Implements LinkageStrategy.CalculateDistance
+            Dim sum As Double = 0
+            Dim result As Double
+
+            For Each dist As Distance In distances
+                sum += dist.Distance
+            Next dist
+            If distances.Count > 0 Then
+                result = sum / distances.Count
+            Else
+                result = 0.0
+            End If
+            Return New Distance(result)
+        End Function
+    End Class
 End Namespace

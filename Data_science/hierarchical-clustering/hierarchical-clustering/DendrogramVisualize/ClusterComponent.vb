@@ -28,13 +28,13 @@ Namespace com.apporiented.algorithm.clustering.visualization
     Public Class ClusterComponent
         Implements Paintable
 
-        Public Overridable Property Children As IList(Of ClusterComponent)
-        Public Overridable Property NamePadding As Integer = 6
-        Public Overridable Property DotRadius As Integer = 2
-        Public Overridable Property LinkPoint As VCoord
-        Public Overridable Property InitPoint As VCoord
-        Public Overridable Property Cluster As com.apporiented.algorithm.clustering.Cluster
-        Public Overridable Property PrintName As Boolean
+        Public Property Children As IList(Of ClusterComponent)
+        Public Property NamePadding As Integer = 6
+        Public Property DotRadius As Integer = 2
+        Public Property LinkPoint As VCoord
+        Public Property InitPoint As VCoord
+        Public Property Cluster As com.apporiented.algorithm.clustering.Cluster
+        Public Property PrintName As Boolean
 
         Public Sub New(cluster As com.apporiented.algorithm.clustering.Cluster, printName As Boolean, initPoint As VCoord)
             Me.PrintName = printName
@@ -71,7 +71,7 @@ Namespace com.apporiented.algorithm.clustering.visualization
             Next child
         End Sub
 
-        Public Overridable ReadOnly Property RectMinX As Double
+        Public ReadOnly Property RectMinX As Double
             Get
 
                 ' TODO Better use closure / callback here
@@ -84,7 +84,7 @@ Namespace com.apporiented.algorithm.clustering.visualization
             End Get
         End Property
 
-        Public Overridable ReadOnly Property RectMinY As Double
+        Public ReadOnly Property RectMinY As Double
             Get
 
                 ' TODO Better use closure here
@@ -97,7 +97,7 @@ Namespace com.apporiented.algorithm.clustering.visualization
             End Get
         End Property
 
-        Public Overridable ReadOnly Property RectMaxX As Double
+        Public ReadOnly Property RectMaxX As Double
             Get
 
                 ' TODO Better use closure here
@@ -110,7 +110,7 @@ Namespace com.apporiented.algorithm.clustering.visualization
             End Get
         End Property
 
-        Public Overridable ReadOnly Property RectMaxY As Double
+        Public ReadOnly Property RectMaxY As Double
             Get
 
                 ' TODO Better use closure here
@@ -123,7 +123,7 @@ Namespace com.apporiented.algorithm.clustering.visualization
             End Get
         End Property
 
-        Public Overridable Function getNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
+        Public Function getNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = 0
             If includeNonLeafs OrElse Cluster.Leaf Then
                 Dim rect As RectangleF = g.FontMetrics.GetStringBounds(Cluster.Name, g.Graphics)
@@ -132,7 +132,7 @@ Namespace com.apporiented.algorithm.clustering.visualization
             Return width
         End Function
 
-        Public Overridable Function getMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
+        Public Function getMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = getNameWidth(g, includeNonLeafs)
             For Each comp As ClusterComponent In Children
                 Dim childWidth As Integer = comp.getMaxNameWidth(g, includeNonLeafs)
