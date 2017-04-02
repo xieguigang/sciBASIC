@@ -90,6 +90,24 @@ Namespace Language
             Return maxInd
         End Function
 
+        <Extension>
+        Public Function MinIndex(Of T As IComparable)(source As IEnumerable(Of T)) As Integer
+            Dim i As Integer
+            Dim min As T = source.First
+            Dim minInd As Integer = 0
+
+            For Each x As T In source.Skip(1)
+                i += 1
+
+                If x.CompareTo(min) < 0 Then
+                    min = x
+                    minInd = i
+                End If
+            Next
+
+            Return minInd
+        End Function
+
         ''' <summary>
         ''' =
         ''' </summary>
