@@ -38,6 +38,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -83,7 +84,7 @@ Public Module Extensions
     ''' <param name="s$"></param>
     ''' <param name="args"></param>
     Public Sub println(s$, ParamArray args As Object())
-        Dim out As String = STDIO__.CLangStringFormatProvider.sprintf(s, args)
+        Dim out As String = sprintf(s, args)
         Call Console.WriteLine(out)
     End Sub
 

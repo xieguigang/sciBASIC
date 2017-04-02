@@ -28,8 +28,8 @@
 
 Imports System.Drawing
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace SVG
 

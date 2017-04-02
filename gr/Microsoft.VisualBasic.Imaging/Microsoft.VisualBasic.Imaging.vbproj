@@ -185,8 +185,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="d3js\color\rgb.vb" />
-    <Compile Include="d3js\interpolate\rgb.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
     <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
@@ -199,6 +197,7 @@
     <Compile Include="Drawing2D\Shapes\Pentacle.vb" />
     <Compile Include="Drawing2D\Shapes\Hexagon.vb" />
     <Compile Include="Drawing2D\Shapes\Diamond.vb" />
+    <Compile Include="Drawing2D\Text\FontMetrics.vb" />
     <Compile Include="Drawing2D\Text\Text.vb" />
     <Compile Include="Drawing2D\VectorObject.vb" />
     <Compile Include="Drawing2D\VectorAPI.vb" />
@@ -245,11 +244,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SVG\g.vb" />
-    <Compile Include="SVG\Image.vb" />
-    <Compile Include="SVG\SVG.vb" />
-    <Compile Include="SVG\CSS.vb" />
-    <Compile Include="SVG\Xml.vb" />
+    <Compile Include="SVG\Renderer.vb" />
+    <Compile Include="SVG\GraphicsSVG.vb" />
+    <Compile Include="SVG\XML\g.vb" />
+    <Compile Include="SVG\XML\Image.vb" />
+    <Compile Include="SVG\XML\SVG.vb" />
+    <Compile Include="SVG\XML\CSS.vb" />
+    <Compile Include="SVG\XML\Xml.vb" />
     <Compile Include="TextureResourceLoader.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -366,7 +367,9 @@
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="d3js\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

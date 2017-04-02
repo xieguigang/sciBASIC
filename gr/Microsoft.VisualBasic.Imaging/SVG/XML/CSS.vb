@@ -37,6 +37,7 @@ Namespace SVG.CSS
     ''' Style generator for the value of <see cref="XmlMeta.CSS.style"/>
     ''' </summary>
     Public Class DirectedForceGraph
+
         Public Property node As CssValue
         Public Property link As CssValue
         Public Property text As Font
@@ -82,6 +83,7 @@ Namespace SVG.CSS
     End Class
 
     Public Class CssValue : Inherits ClassObject
+
         <DataFrameColumn> Public Property stroke As String
         <DataFrameColumn("stroke-width")> Public Property strokeWidth As String
         <DataFrameColumn("stroke-opacity")> Public Property strokeOpacity As String

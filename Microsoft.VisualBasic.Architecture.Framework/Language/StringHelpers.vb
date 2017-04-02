@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Terminal.STDIO__
+Imports Microsoft.VisualBasic.Language.C
 
 Namespace Language
 

@@ -819,7 +819,7 @@
     <Compile Include="Tools\MMFProtocol\ProcessLock.vb" />
     <Compile Include="Terminal\STDIO__\Shell.vb" />
     <Compile Include="Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
-    <Compile Include="Terminal\STDIO__\CFormatProvider.vb" />
+    <Compile Include="Language\C\CFormatProvider.vb" />
     <Compile Include="Terminal\STDIO__\STDIO.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
