@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::c57771dc136fcd202fe303f85b03adec, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDIPlusExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
@@ -353,9 +354,7 @@ Namespace Imaging
         ''' <remarks></remarks>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As Size,
-                                                    Optional filled As Color = Nothing,
-                                                    <CallerMemberName> Optional trace As String = "") As Graphics2D
+        <Extension> Public Function CreateGDIDevice(r As Size, Optional filled As Color = Nothing, <CallerMemberName> Optional trace$ = "") As Graphics2D
             Dim Bitmap As Bitmap
 
             If r.Width = 0 OrElse r.Height = 0 Then
@@ -378,12 +377,12 @@ Namespace Imaging
                 filled = Color.White
             End If
 
-            Call gdi.FillRectangle(New SolidBrush(filled), rect)
+            Call gdi.Clear(filled)
 
-            gdi.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
-            gdi.PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality
-            gdi.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            gdi.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+            gdi.InterpolationMode = InterpolationMode.HighQualityBicubic
+            gdi.PixelOffsetMode = PixelOffsetMode.HighQuality
+            gdi.CompositingQuality = CompositingQuality.HighQuality
+            gdi.SmoothingMode = SmoothingMode.HighQuality
 
             Return Graphics2D.CreateObject(gdi, Bitmap)
         End Function

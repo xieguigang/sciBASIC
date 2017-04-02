@@ -33,7 +33,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 #End Region
 
-Namespace Terminal.STDIO__
+Namespace Language.C
 
     ''' <summary>
     ''' Provides C like format print

@@ -37,7 +37,7 @@ Imports System.Reflection
 Namespace Imaging
 
     ''' <summary>
-    ''' GDI+ device handle for encapsulates a GDI+ drawing surface.(GDI+绘图设备句柄)
+    ''' GDI+ device handle for encapsulates a GDI+ drawing surface.(GDI+绘图设备句柄，这个对象其实是为了将gdi+绘图与图形模块的SVG绘图操作统一起来的)
     ''' </summary>
     ''' <remarks></remarks>
     Public Class Graphics2D : Inherits IGraphics
@@ -84,6 +84,17 @@ Namespace Imaging
         End Property
 
         ''' <summary>
+        ''' Default pen for drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Stroke As Pen
+        ''' <summary>
+        ''' Default font value for text drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Font As Font
+
+        ''' <summary>
         ''' Gets the width and height, in pixels, of this image.(图像的大小)
         ''' </summary>
         ''' <returns>A System.Drawing.Size structure that represents the width and height, in pixels,
@@ -102,8 +113,8 @@ Namespace Imaging
         ''' <param name="Path"></param>
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
-        Public Overloads Function Save(Path As String, Optional Format As ImageFormats = ImageFormats.Png) As Boolean
-            Return Save(Path, Format.GetFormat)
+        Public Overloads Function Save(path$, Optional Format As ImageFormats = ImageFormats.Png) As Boolean
+            Return Save(path, Format.GetFormat)
         End Function
 
         ''' <summary>
@@ -112,13 +123,13 @@ Namespace Imaging
         ''' <param name="Path"></param>
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
-        Public Overloads Function Save(Path As String, Optional Format As ImageFormat = Nothing) As Boolean
+        Public Overloads Function Save(path$, Optional Format As ImageFormat = Nothing) As Boolean
             If Format Is Nothing Then
                 Format = ImageFormat.Png
             End If
 
             Try
-                Call __save(Path, Format)
+                Call __save(path, Format)
             Catch ex As Exception
                 Return App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
             End Try
@@ -127,12 +138,12 @@ Namespace Imaging
         End Function
 
         Private Sub __save(path As String, format As ImageFormat)
-            Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(path))
+            Call path.ParentPath.MkDIR
             Call ImageResource.Save(path, format)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return ImageResource.Size.ToString
+            Return Size.ToString
         End Function
 
         ''' <summary>
@@ -145,30 +156,37 @@ Namespace Imaging
             Return r.CreateGDIDevice(filled)
         End Function
 
-        Public Shared Narrowing Operator CType(obj As Graphics2D) As Image
-            Return obj.ImageResource
+        ''' <summary>
+        ''' Get the internal <see cref="ImageResource"/>
+        ''' </summary>
+        ''' <param name="g2D"></param>
+        ''' <returns></returns>
+        Public Shared Narrowing Operator CType(g2D As Graphics2D) As Image
+            Return g2D.ImageResource
         End Operator
 
-        Public Shared Widening Operator CType(obj As Image) As Graphics2D
-            Dim Gr As Graphics = Graphics.FromImage(obj)
-            Return New Graphics2D With {
-                .ImageResource = obj,
-                ._Graphics = Gr
-            }
+        Public Shared Widening Operator CType(img As Image) As Graphics2D
+            Dim g As Graphics = Graphics.FromImage(img)
+            Return CreateObject(g, res:=img)
         End Operator
 
-        Public Shared Widening Operator CType(obj As Bitmap) As Graphics2D
-            Dim Gr As Graphics = Graphics.FromImage(obj)
-            Return New Graphics2D With {
-                .ImageResource = obj,
-                ._Graphics = Gr
-            }
+        Public Shared Widening Operator CType(img As Bitmap) As Graphics2D
+            Dim g As Graphics = Graphics.FromImage(img)
+            Return CreateObject(g, img)
         End Operator
 
+        ''' <summary>
+        ''' Internal create gdi device helper
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="res"></param>
+        ''' <returns></returns>
         Friend Shared Function CreateObject(g As Graphics, res As Image) As Graphics2D
             Return New Graphics2D With {
                 .ImageResource = res,
-                ._Graphics = g
+                ._Graphics = g,
+                .Font = New Font(FontFace.MicrosoftYaHei, 12),
+                .Stroke = Pens.Black
             }
         End Function
 
@@ -177,6 +195,10 @@ Namespace Imaging
         ''' </summary>
         Public Overrides Sub Dispose() Implements IDisposable.Dispose
             Call Me.Graphics.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
+        End Sub
+
+        Public Overloads Sub DrawLine(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
+            Call Graphics.DrawLine(Stroke, x1, y1, x2, y2)
         End Sub
 
 #Region "Implements Class Graphics"
@@ -209,6 +231,10 @@ Namespace Imaging
                 Return Graphics.ClipBounds
             End Get
         End Property
+
+        Public Overloads Sub DrawString(str As String, x As Integer, y As Integer)
+            Call Graphics.DrawString(str, Font, Brushes.Black, New Point(x, y))
+        End Sub
 
         ''' <summary>
         ''' Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
