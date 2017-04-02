@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace SVG
@@ -39,7 +40,7 @@ Namespace SVG
     Public MustInherit Class node
 
         ''' <summary>
-        ''' CSS style definition.(请注意，假若是SVG对象则赋值这个属性无效)
+        ''' CSS style definition <see cref="ICSSValue"/>.(请注意，假若是SVG对象则赋值这个属性无效)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property style As String

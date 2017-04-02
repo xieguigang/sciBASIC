@@ -2,6 +2,8 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace SVG
 
@@ -15,11 +17,11 @@ Namespace SVG
         ''' </summary>
         ReadOnly __graphics As Graphics = Graphics.FromImage(New Bitmap(100, 100))
 
-        Dim text As New List(Of text)
-        Dim rects As New List(Of rect)
-        Dim lines As New List(Of line)
-        Dim circles As New List(Of circle)
-        Dim polygon As New List(Of polygon)
+        Protected Friend texts As New List(Of text)
+        Protected Friend rects As New List(Of rect)
+        Protected Friend lines As New List(Of line)
+        Protected Friend circles As New List(Of circle)
+        Protected Friend polygons As New List(Of polygon)
 
         Public Overrides Property Clip As Region
             Get
@@ -189,105 +191,7 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub Dispose()
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawArc(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawArc(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawBezier(pen As Pen, pt1 As PointF, pt2 As PointF, pt3 As PointF, pt4 As PointF)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawBezier(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single, x3 As Single, y3 As Single, x4 As Single, y4 As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawBeziers(pen As Pen, points() As PointF)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawBeziers(pen As Pen, points() As Point)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawCurve(pen As Pen, points() As Point)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, tension As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawCurve(pen As Pen, points() As Point, tension As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer, tension As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawCurve(pen As Pen, points() As Point, offset As Integer, numberOfSegments As Integer, tension As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawEllipse(pen As Pen, rect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawEllipse(pen As Pen, rect As RectangleF)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
-        End Sub
+#Region "向SVG之中嵌入图片图像数据"
 
         Public Overrides Sub DrawIcon(icon As Icon, targetRect As Rectangle)
             Throw New NotImplementedException()
@@ -440,6 +344,109 @@ Namespace SVG
         Public Overrides Sub DrawImageUnscaledAndClipped(image As Drawing.Image, rect As Rectangle)
             Throw New NotImplementedException()
         End Sub
+#End Region
+
+        Public Overrides Sub Dispose()
+            Throw New NotImplementedException()
+        End Sub
+
+#Region "矢量图绘制方法"
+
+        Public Overrides Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawArc(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawArc(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawBezier(pen As Pen, pt1 As PointF, pt2 As PointF, pt3 As PointF, pt4 As PointF)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawBezier(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single, x3 As Single, y3 As Single, x4 As Single, y4 As Single)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawBeziers(pen As Pen, points() As PointF)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawBeziers(pen As Pen, points() As Point)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawCurve(pen As Pen, points() As Point)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, tension As Single)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawCurve(pen As Pen, points() As Point, tension As Single)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer, tension As Single)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawCurve(pen As Pen, points() As Point, offset As Integer, numberOfSegments As Integer, tension As Single)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawEllipse(pen As Pen, rect As Rectangle)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawEllipse(pen As Pen, rect As RectangleF)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
+            Throw New NotImplementedException()
+        End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
             Throw New NotImplementedException()
@@ -514,7 +521,13 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
-            Throw New NotImplementedException()
+            Dim text As New text With {
+                .value = s,
+                .x = point.X,
+                .y = point.Y,
+                .style = New CSSFont(font).CSSValue
+            }
+            texts += text
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
@@ -536,6 +549,8 @@ Namespace SVG
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
             Throw New NotImplementedException()
         End Sub
+
+#End Region
 
         Public Overrides Sub EndContainer(container As GraphicsContainer)
             Throw New NotImplementedException()
