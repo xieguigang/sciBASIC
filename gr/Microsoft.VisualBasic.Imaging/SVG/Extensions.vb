@@ -1,4 +1,7 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.Scripting
 
 Namespace SVG
 
@@ -10,14 +13,23 @@ Namespace SVG
         ''' <param name="g"></param>
         ''' <param name="path$">``*.svg``保存的SVG文件的路径</param>
         ''' <returns></returns>
-        <Extension> Public Function WriteSVG(g As GraphicsSVG, path$) As Boolean
+        <Extension> Public Function WriteSVG(g As GraphicsSVG, path$, Optional size$ = "1440,900") As Boolean
+            Dim sz As Size = size.SizeParser
             Dim SVG As New SVGXml With {
                 .circles = g.circles,
                 .polygon = g.polygons,
                 .rect = g.rects,
                 .texts = g.texts,
-                .lines = g.lines
+                .lines = g.lines,
+                .width = sz.Width,
+                .height = sz.Height
             }
+
+            If Not g.bg.StringEmpty Then
+                SVG.style = New XmlMeta.CSS With {
+                    .style = "fill:" & g.bg
+                }
+            End If
             Return SVG.SaveAsXml(path,)
         End Function
     End Module

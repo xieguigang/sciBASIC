@@ -38,6 +38,8 @@ Module Program
 
     Sub Main()
 
+        Call SVGTest.Test()
+
         Dim html As String = "
 <html>
 <head>

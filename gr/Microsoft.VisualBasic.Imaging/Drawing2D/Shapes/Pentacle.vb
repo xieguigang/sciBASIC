@@ -31,6 +31,9 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Vector.Shapes
 
+    ''' <summary>
+    ''' 五角星
+    ''' </summary>
     Public Class Pentacle
 
         Public Shared Sub Draw(ByRef g As Graphics,

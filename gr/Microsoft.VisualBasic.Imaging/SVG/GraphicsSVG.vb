@@ -23,6 +23,7 @@ Namespace SVG
         Protected Friend lines As New List(Of line)
         Protected Friend circles As New List(Of circle)
         Protected Friend polygons As New List(Of polygon)
+        Protected Friend bg$
 
         Public Overrides Property Clip As Region
             Get
@@ -173,7 +174,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub Clear(color As Color)
-            Throw New NotImplementedException()
+            bg$ = color.RGB2Hexadecimal
         End Sub
 
         Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
@@ -555,6 +556,12 @@ Namespace SVG
                 .y = point.Y,
                 .style = New CSSFont(font).CSSValue
             }
+
+            If TypeOf brush Is SolidBrush Then
+                Dim color$ = "color: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+                text.style &= color
+            End If
+
             texts += text
         End Sub
 
