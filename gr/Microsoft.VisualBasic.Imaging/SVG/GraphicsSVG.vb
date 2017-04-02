@@ -2,6 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -441,7 +442,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-            Throw New NotImplementedException()
+
         End Sub
 
         Public Overrides Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
@@ -449,27 +450,38 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
-            Throw New NotImplementedException()
+            DrawLine(pen, pt1.X, pt1.Y, pt2.X, pt2.Y)
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
-            Throw New NotImplementedException()
+            DrawLine(pen, pt1.X, pt1.Y, pt2.X, pt2.Y)
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
-            Throw New NotImplementedException()
+            DrawLine(pen, x1:=CSng(x1), x2:=CSng(x2), y1:=CSng(y1), y2:=CSng(y2))
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
-            Throw New NotImplementedException()
+            Dim line As New line With {
+                .x1 = x1,
+                .x2 = x2,
+                .y1 = y1,
+                .y2 = y2,
+                .style = New Stroke(pen).CSSValue
+            }
+            lines += line
         End Sub
 
         Public Overrides Sub DrawLines(pen As Pen, points() As PointF)
-            Throw New NotImplementedException()
+            For Each pt In points.SlideWindows(2)
+                DrawLine(pen, pt(0), pt(1))
+            Next
         End Sub
 
         Public Overrides Sub DrawLines(pen As Pen, points() As Point)
-            Throw New NotImplementedException()
+            For Each pt In points.SlideWindows(2)
+                DrawLine(pen, pt(0), pt(1))
+            Next
         End Sub
 
         Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)

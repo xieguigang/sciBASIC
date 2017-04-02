@@ -37,7 +37,7 @@ Namespace HTML.CSS
     ''' stroke: color/image; stroke-width: width(px); stroke-dash: dash_style;
     ''' ```
     ''' </summary>
-    Public Class Stroke
+    Public Class Stroke : Inherits ICSSValue
 
         Public Const AxisStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
         Public Const AxisGridStroke$ = "stroke: lightgray; stroke-width: 2px; stroke-dash: dash;"
@@ -54,6 +54,12 @@ Namespace HTML.CSS
             End Get
         End Property
 
+        Public Overrides ReadOnly Property CSSValue As String
+            Get
+                Return ToString()
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
@@ -61,6 +67,12 @@ Namespace HTML.CSS
             Me.width = width
             fill = "black"
             dash = DashStyle.Solid
+        End Sub
+
+        Sub New(style As Pen)
+            width = style.Width
+            fill = style.Color.RGB2Hexadecimal
+            dash = style.DashStyle
         End Sub
 
         Public Overrides Function ToString() As String
