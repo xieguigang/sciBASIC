@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
     <MyType>Windows</MyType>
-    <RootNamespace>HierarchicalClustering</RootNamespace>
-    <AssemblyName>hierarchical-clustering</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.DataMining.HierarchicalClustering</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.DataMining.HierarchicalClustering</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -33,12 +33,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>hierarchical-clustering.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.HierarchicalClustering.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>hierarchical-clustering.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.HierarchicalClustering.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -111,6 +111,10 @@
     <ProjectReference Include="..\..\..\..\sciBASIC\mime\MIME_Markups\MIME_Markups.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME_Markups</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj">
+      <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
+      <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
