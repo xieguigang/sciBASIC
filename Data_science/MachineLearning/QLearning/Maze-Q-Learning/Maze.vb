@@ -28,9 +28,8 @@
 
 Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.DataMining
-Imports Microsoft.VisualBasic.DataMining.QLearning
-Imports Microsoft.VisualBasic.DataMining.QLearning.DataModel
+Imports Microsoft.VisualBasic.MachineLearning.QLearning
+Imports Microsoft.VisualBasic.MachineLearning.QLearning.DataModel
 
 Public Class Maze : Inherits QLearning(Of Char())
 
