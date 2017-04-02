@@ -1,6 +1,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Language
 
 '
 '*****************************************************************************
@@ -25,7 +26,7 @@ Namespace DendrogramVisualize
     Public Class ClusterComponent
         Implements Paintable
 
-        Public Property Children As IList(Of ClusterComponent)
+        Public Property Children As New List(Of ClusterComponent)
         Public Property NamePadding As Integer = 6
         Public Property DotRadius As Integer = 2
         Public Property LinkPoint As VCoord

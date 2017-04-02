@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
+Imports Microsoft.VisualBasic.Imaging
 
 Module Program
 
@@ -13,6 +14,10 @@ Module Program
             .ScaleValueInterval = 1,
             .Model = cluster
         }
+
+        Dim g As Graphics2D = dp.Size.CreateGDIDevice(filled:=Color.White)
+        Call dp.paint(g)
+        Call g.Save("./test.png", ImageFormats.Png)
     End Sub
 
     Private Function createSampleCluster() As Cluster

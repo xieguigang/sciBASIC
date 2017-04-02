@@ -113,8 +113,8 @@ Namespace Imaging
         ''' <param name="Path"></param>
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
-        Public Overloads Function Save(Path As String, Optional Format As ImageFormats = ImageFormats.Png) As Boolean
-            Return Save(Path, Format.GetFormat)
+        Public Overloads Function Save(path$, Optional Format As ImageFormats = ImageFormats.Png) As Boolean
+            Return Save(path, Format.GetFormat)
         End Function
 
         ''' <summary>
@@ -123,13 +123,13 @@ Namespace Imaging
         ''' <param name="Path"></param>
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
-        Public Overloads Function Save(Path As String, Optional Format As ImageFormat = Nothing) As Boolean
+        Public Overloads Function Save(path$, Optional Format As ImageFormat = Nothing) As Boolean
             If Format Is Nothing Then
                 Format = ImageFormat.Png
             End If
 
             Try
-                Call __save(Path, Format)
+                Call __save(path, Format)
             Catch ex As Exception
                 Return App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
             End Try
