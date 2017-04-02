@@ -49,6 +49,11 @@ Namespace Imaging
     Public Module GraphicsExtensions
 
         <Extension>
+        Public Function PointF(pf As Point) As PointF
+            Return New PointF(pf.X, pf.Y)
+        End Function
+
+        <Extension>
         Public Function GraphicsPath(points As Point()) As GraphicsPath
             Dim path As New GraphicsPath
             For Each pt In points.SlideWindows(2)

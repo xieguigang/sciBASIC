@@ -510,11 +510,14 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
-            Throw New NotImplementedException()
+            Dim polygon As New polygon(points) With {
+                .style = New Stroke(pen).CSSValue
+            }
+            polygons += polygon
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As Point)
-            Throw New NotImplementedException()
+            DrawPolygon(pen, points.Select(Function(pt) pt.PointF).ToArray)
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)

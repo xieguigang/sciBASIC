@@ -73,11 +73,19 @@ Namespace SVG
     ''' 不规则的多边形对象
     ''' </summary>
     Public Class polygon : Inherits node
+
         ''' <summary>
         ''' 定点坐标列表
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property points As String()
+
+        Sub New()
+        End Sub
+
+        Sub New(pts As IEnumerable(Of PointF))
+            points = pts.Select(Function(pt) $"{pt.X},{pt.Y}").ToArray
+        End Sub
     End Class
 
     ''' <summary>
