@@ -138,12 +138,12 @@ Namespace Imaging
         End Function
 
         Private Sub __save(path As String, format As ImageFormat)
-            Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(path))
+            Call path.ParentPath.MkDIR
             Call ImageResource.Save(path, format)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return ImageResource.Size.ToString
+            Return Size.ToString
         End Function
 
         ''' <summary>
@@ -156,30 +156,37 @@ Namespace Imaging
             Return r.CreateGDIDevice(filled)
         End Function
 
-        Public Shared Narrowing Operator CType(obj As Graphics2D) As Image
-            Return obj.ImageResource
+        ''' <summary>
+        ''' Get the internal <see cref="ImageResource"/>
+        ''' </summary>
+        ''' <param name="g2D"></param>
+        ''' <returns></returns>
+        Public Shared Narrowing Operator CType(g2D As Graphics2D) As Image
+            Return g2D.ImageResource
         End Operator
 
-        Public Shared Widening Operator CType(obj As Image) As Graphics2D
-            Dim Gr As Graphics = Graphics.FromImage(obj)
-            Return New Graphics2D With {
-                .ImageResource = obj,
-                ._Graphics = Gr
-            }
+        Public Shared Widening Operator CType(img As Image) As Graphics2D
+            Dim g As Graphics = Graphics.FromImage(img)
+            Return CreateObject(g, res:=img)
         End Operator
 
-        Public Shared Widening Operator CType(obj As Bitmap) As Graphics2D
-            Dim Gr As Graphics = Graphics.FromImage(obj)
-            Return New Graphics2D With {
-                .ImageResource = obj,
-                ._Graphics = Gr
-            }
+        Public Shared Widening Operator CType(img As Bitmap) As Graphics2D
+            Dim g As Graphics = Graphics.FromImage(img)
+            Return CreateObject(g, img)
         End Operator
 
+        ''' <summary>
+        ''' Internal create gdi device helper
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="res"></param>
+        ''' <returns></returns>
         Friend Shared Function CreateObject(g As Graphics, res As Image) As Graphics2D
             Return New Graphics2D With {
                 .ImageResource = res,
-                ._Graphics = g
+                ._Graphics = g,
+                .Font = New Font(FontFace.MicrosoftYaHei, 12),
+                .Stroke = Pens.Black
             }
         End Function
 
