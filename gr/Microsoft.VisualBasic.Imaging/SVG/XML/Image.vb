@@ -31,7 +31,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net.Http
 
-Namespace SVG
+Namespace SVG.XML
 
     ''' <summary>
     ''' Does SVG support embedding of bitmap images?

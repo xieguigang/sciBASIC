@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
-Namespace SVG
+Namespace SVG.XML
 
     ''' <summary>
     ''' The svg vector graphics in Xml document format.

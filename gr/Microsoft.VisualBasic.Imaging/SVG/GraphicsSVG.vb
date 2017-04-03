@@ -3,7 +3,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace SVG
@@ -17,15 +17,7 @@ Namespace SVG
         ''' 主要是需要进行字体的大小计算所需要使用的一个内部gdi+对象
         ''' </summary>
         ReadOnly __graphics As Graphics = Graphics.FromImage(New Bitmap(100, 100))
-
-        Protected Friend texts As New List(Of text)
-        Protected Friend rects As New List(Of rect)
-        Protected Friend lines As New List(Of line)
-        Protected Friend circles As New List(Of circle)
-        Protected Friend paths As New List(Of path)
-        Protected Friend polygons As New List(Of polygon)
-        Protected Friend images As New List(Of Image)
-        Protected Friend bg$
+        Friend ReadOnly __svgData As New SVGDataCache
 
         Public Overrides Property Clip As Region
             Get
@@ -176,7 +168,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub Clear(color As Color)
-            bg$ = color.RGB2Hexadecimal
+            __svgData.bg$ = color.RGB2Hexadecimal
         End Sub
 
         Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
@@ -231,11 +223,11 @@ Namespace SVG
 
         Public Overrides Sub DrawImage(image As Drawing.Image, rect As RectangleF)
             Dim point As PointF = rect.Location
-            Dim img As New Image(image, rect.Size) With {
-                .x = Point.X,
-                .y = Point.Y
+            Dim img As New XML.Image(image, rect.Size) With {
+                .x = point.X,
+                .y = point.Y
             }
-            images += img
+            Call __svgData.Add(img)
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, x As Integer, y As Integer)
@@ -478,7 +470,7 @@ Namespace SVG
                 .y2 = y2,
                 .style = New Stroke(pen).CSSValue
             }
-            lines += line
+            Call __svgData.Add(line)
         End Sub
 
         Public Overrides Sub DrawLines(pen As Pen, points() As PointF)
@@ -497,7 +489,7 @@ Namespace SVG
             Dim pathData As New path(path) With {
                 .style = New Stroke(pen).CSSValue
             }
-            paths += pathData
+            Call __svgData.Add(pathData)
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
@@ -520,7 +512,7 @@ Namespace SVG
             Dim polygon As New polygon(points) With {
                 .style = New Stroke(pen).CSSValue
             }
-            polygons += polygon
+            Call __svgData.Add(polygon)
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As Point)
@@ -531,7 +523,7 @@ Namespace SVG
             Dim rectangle As New rect(rect) With {
                 .style = New Stroke(pen).CSSValue
             }
-            rects += rectangle
+            Call __svgData.Add(rectangle)
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
@@ -542,7 +534,7 @@ Namespace SVG
                 .height = height,
                 .style = New Stroke(pen).CSSValue
             }
-            rects += rectangle
+            Call __svgData.Add(rectangle)
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
@@ -564,7 +556,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
-            Dim text As New text With {
+            Dim text As New XML.text With {
                 .value = s,
                 .x = point.X,
                 .y = point.Y,
@@ -576,7 +568,7 @@ Namespace SVG
                 text.style &= color
             End If
 
-            texts += text
+            Call __svgData.Add(text)
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
@@ -801,7 +793,7 @@ Namespace SVG
             Dim pathData As New path(path) With {
                 .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
             }
-            paths += pathData
+            Call __svgData.Add(pathData)
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
@@ -856,7 +848,7 @@ Namespace SVG
                 .height = height,
                 .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
             }
-            rects += rect
+            Call __svgData.Add(rect)
         End Sub
 
         Public Overrides Sub FillRectangles(brush As Brush, rects() As RectangleF)

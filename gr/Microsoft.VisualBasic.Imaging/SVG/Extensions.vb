@@ -1,14 +1,25 @@
 ﻿Imports System.Drawing
 Imports System.IO
-Imports System.Text
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports System.Text
+Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
 
 Namespace SVG
 
     Public Module Extensions
+
+        ''' <summary>
+        ''' Get the current svg model data from current graphics engine.
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="size$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function SVG(g As GraphicsSVG, Optional size$ = "1440,900") As SVGXml
+            Return g.__svgData.GetSVG(size.SizeParser)
+        End Function
 
         ''' <summary>
         ''' 将画布<see cref="GraphicsSVG"/>之中的内容写入SVG文件
@@ -25,24 +36,8 @@ Namespace SVG
 
         <Extension> Public Function WriteSVG(g As GraphicsSVG, out As Stream, Optional size$ = "1440,900") As Boolean
             Dim sz As Size = size.SizeParser
-            Dim SVG As New SVGXml With {
-                .circles = g.circles,
-                .polygon = g.polygons,
-                .rect = g.rects,
-                .path = g.paths,
-                .texts = g.texts,
-                .lines = g.lines,
-                .width = sz.Width,
-                .height = sz.Height
-            }
-
-            If Not g.bg.StringEmpty Then
-                SVG.style = New XmlMeta.CSS With {
-                    .style = "svg{ background-color:" & g.bg & "}"
-                }
-            End If
-
-            Dim XML$ = SVG.GetSVGXml
+            Dim svg As SVGXml = g.__svgData.GetSVG(sz)
+            Dim XML$ = svg.GetSVGXml
             Dim bytes As Byte() = Encoding.Unicode.GetBytes(XML)
 
             Call out.Write(bytes, Scan0, bytes.Length)

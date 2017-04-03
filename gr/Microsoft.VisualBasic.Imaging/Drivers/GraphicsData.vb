@@ -1,8 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.IO
-Imports System.Text
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.SVG
+Imports Microsoft.VisualBasic.Imaging.SVG.XML
 
 Namespace Driver
 

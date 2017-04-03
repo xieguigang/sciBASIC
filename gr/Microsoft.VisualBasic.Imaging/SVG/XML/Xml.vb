@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace SVG
+Namespace SVG.XML
 
     ''' <summary>
     ''' The basically SVG XML document node, it can be tweaks on the style by using CSS

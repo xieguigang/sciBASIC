@@ -7,6 +7,9 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Driver
 
+    ''' <summary>
+    ''' Makes the ``DrawImage`` function compatible with old gdi+ interface
+    ''' </summary>
     Public Module Extensions
 
         '
