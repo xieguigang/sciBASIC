@@ -33,6 +33,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Scripting
 
 Namespace SVG.XML
 
@@ -63,10 +64,19 @@ Namespace SVG.XML
     End Class
 
     Public Class circle : Inherits node
+
         <XmlAttribute> Public Property cy As Single
         <XmlAttribute> Public Property cx As Single
         <XmlAttribute> Public Property r As Single
+
         Public Property title As title
+
+        Public Shared Operator +(c As circle, offset As Point) As circle
+            c = DirectCast(c.MemberwiseClone, circle)
+            c.cx += offset.X
+            c.cy += offset.Y
+            Return c
+        End Operator
     End Class
 
     ''' <summary>
@@ -79,13 +89,37 @@ Namespace SVG.XML
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property points As String()
+            Get
+                Return cache
+            End Get
+            Set(value As String())
+                cache = value
+                data = value.Select(AddressOf FloatPointParser).ToArray
+            End Set
+        End Property
+
+        Dim data As PointF()
+        Dim cache$()
 
         Sub New()
         End Sub
 
         Sub New(pts As IEnumerable(Of PointF))
-            points = pts.Select(Function(pt) $"{pt.X},{pt.Y}").ToArray
+            data = pts.ToArray
+            cache = data.Select(Function(pt) $"{pt.X},{pt.Y}").ToArray
         End Sub
+
+        Public Shared Operator +(polygon As polygon, offset As Point) As polygon
+            Dim points As PointF() = polygon _
+                .data _
+                .Select(Function(pt) New PointF(pt.X + offset.X, pt.Y + offset.Y)) _
+                .ToArray
+            Return New polygon(points) With {
+                .style = polygon.style,
+                .id = polygon.id,
+                .class = polygon.class
+            }
+        End Operator
     End Class
 
     ''' <summary>
@@ -109,6 +143,13 @@ Namespace SVG.XML
                 .y = rect.Y
             End With
         End Sub
+
+        Public Shared Operator +(rect As rect, offset As Point) As rect
+            rect = DirectCast(rect.MemberwiseClone(), rect)
+            rect.x += offset.X
+            rect.y += offset.Y
+            Return rect
+        End Operator
     End Class
 
     ''' <summary>
@@ -155,10 +196,24 @@ Namespace SVG.XML
     ''' 一个线段对象
     ''' </summary>
     Public Class line : Inherits node
+
         <XmlAttribute> Public Property y2 As Single
         <XmlAttribute> Public Property x2 As Single
         <XmlAttribute> Public Property y1 As Single
         <XmlAttribute> Public Property x1 As Single
+
+        Public Shared Operator +(line As line, offset As Point) As line
+            line = DirectCast(line.MemberwiseClone, line)
+
+            With line
+                .x1 += offset.X
+                .x2 += offset.X
+                .y1 += offset.Y
+                .y2 += offset.Y
+
+                Return line
+            End With
+        End Operator
     End Class
 
     ''' <summary>

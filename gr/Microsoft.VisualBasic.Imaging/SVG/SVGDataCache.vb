@@ -84,7 +84,13 @@ Namespace SVG
         ''' <param name="offset"></param>
         ''' <returns></returns>
         Public Shared Operator +(data As SVGDataCache, offset As Point) As SVGDataCache
-
+            Return New SVGDataCache With {
+                .bg = data.bg,
+                .circles = data.circles.Select(Function(c) c + offset).ToList,
+                .polygons = data.polygons.Select(Function(pl) pl + offset).ToList,
+                .rects = data.rects.Select(Function(rt) rt + offset).ToList,
+                .lines = data.lines.Select(Function(l) l + offset).ToList
+            }
         End Operator
     End Class
 End Namespace
