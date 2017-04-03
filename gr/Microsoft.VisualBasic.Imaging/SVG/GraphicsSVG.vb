@@ -798,7 +798,10 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
-            Throw New NotImplementedException()
+            Dim pathData As New path(path) With {
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+            }
+            paths += pathData
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
@@ -830,27 +833,42 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
-            Throw New NotImplementedException()
+            With rect
+                Call FillRectangle(brush, .X, .Y, .Width, .Height)
+            End With
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, rect As RectangleF)
-            Throw New NotImplementedException()
+            With rect
+                Call FillRectangle(brush, .X, .Y, .Width, .Height)
+            End With
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
+            FillRectangle(brush, CSng(x), CSng(y), CSng(width), CSng(height))
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
-            Throw New NotImplementedException()
+            Dim rect As New rect With {
+                .x = x,
+                .y = y,
+                .width = width,
+                .height = height,
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+            }
+            rects += rect
         End Sub
 
         Public Overrides Sub FillRectangles(brush As Brush, rects() As RectangleF)
-            Throw New NotImplementedException()
+            For Each rect In rects
+                Call FillRectangle(brush, rect)
+            Next
         End Sub
 
         Public Overrides Sub FillRectangles(brush As Brush, rects() As Rectangle)
-            Throw New NotImplementedException()
+            For Each rect In rects
+                Call FillRectangle(brush, rect)
+            Next
         End Sub
 
         Public Overrides Sub FillRegion(brush As Brush, region As Region)
