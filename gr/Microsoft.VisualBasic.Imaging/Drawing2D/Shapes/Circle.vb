@@ -100,9 +100,13 @@ Namespace Drawing2D.Vector.Shapes
                     center.Y - radius - border.width,
                     radius * 2 + 1,
                     radius * 2 + 1)
-                border.fill = If(border.fill.StringEmpty, "Black", border.fill)
+                border.fill = If(
+                    border.fill.StringEmpty,
+                    "Black",
+                    border.fill)
 
-                Call g.DrawPie(border.GDIObject, rect, 0, 360)
+                Call g.DrawCircle(
+                    rect.Centre, radius, border.GDIObject, fill:=False)
             End If
         End Sub
     End Class

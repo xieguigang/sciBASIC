@@ -95,14 +95,14 @@ Namespace Imaging
         End Sub
 
         <Extension>
-        Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As Color, Optional fill As Boolean = True)
+        Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As Pen, Optional fill As Boolean = True)
             Dim d = r * 2
 
             With centra
                 If fill Then
-                    Call g.FillPie(New SolidBrush(color), .X - r, .Y - r, d, d, 0, 360)
+                    Call g.FillPie(New SolidBrush(color.Color), .X - r, .Y - r, d, d, 0, 360)
                 Else
-                    Call g.DrawPie(New Pen(color), .X - r, .Y - r, d, d, 0, 360)
+                    Call g.DrawPie(color, .X - r, .Y - r, d, d, 0, 360)
                 End If
             End With
         End Sub

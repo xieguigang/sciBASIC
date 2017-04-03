@@ -24,6 +24,7 @@ Namespace SVG
         Protected Friend circles As New List(Of circle)
         Protected Friend paths As New List(Of path)
         Protected Friend polygons As New List(Of polygon)
+        Protected Friend images As New List(Of Image)
         Protected Friend bg$
 
         Public Overrides Property Clip As Region
@@ -209,7 +210,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, point As Point)
-            Throw New NotImplementedException()
+            DrawImage(image, New RectangleF(point.PointF, image.Size))
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As Point)
@@ -221,23 +222,29 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, rect As Rectangle)
-            Throw New NotImplementedException()
+            DrawImage(image, CType(rect, RectangleF))
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, point As PointF)
-            Throw New NotImplementedException()
+            DrawImage(image, New RectangleF(point, image.Size))
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, rect As RectangleF)
-            Throw New NotImplementedException()
+            Dim point As PointF = rect.Location
+            Dim img As New Image(image, rect.Size) With {
+                .x = Point.X,
+                .y = Point.Y
+            }
+            images += img
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, x As Integer, y As Integer)
-            Throw New NotImplementedException()
+            DrawImage(image, CSng(x), CSng(y))
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, x As Single, y As Single)
-            Throw New NotImplementedException()
+            Dim size = image.Size
+            DrawImage(image, New RectangleF(x, y, size.Width, size.Height))
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
@@ -257,7 +264,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, x As Single, y As Single, width As Single, height As Single)
-            Throw New NotImplementedException()
+            DrawImage(image, New RectangleF(x, y, width, height))
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
@@ -265,7 +272,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
+            DrawImage(image, New RectangleF(x, y, width, height))
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)

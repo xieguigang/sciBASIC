@@ -59,6 +59,10 @@ Namespace SVG
         End Sub
 
         Sub New(image As Bitmap, Optional size As Size = Nothing)
+            Call Me.New(image, New SizeF(size.Width, size.Height))
+        End Sub
+
+        Sub New(image As Drawing.Image, Optional size As SizeF = Nothing)
             data = base64Header & image.ToBase64String
             If size.IsEmpty Then
                 size = image.Size
