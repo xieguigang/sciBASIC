@@ -59,6 +59,40 @@ Namespace Drawing2D
         Public Const DefaultLargerPadding$ = "padding:100px 100px 150px 150px;"
         Public Const ZeroPadding$ = "padding: 0px 0px 0px 0px;"
 
+        Sub New()
+            Dim type$ = App.GetVariable("graphic_driver")
+            If type.TextEquals("svg") Then
+                g.__defaultDriver = Drivers.SVG
+            ElseIf type.TextEquals("gdi") Then
+                g.__defaultDriver = Drivers.GDI
+            Else
+                g.__defaultDriver = Drivers.Default
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' 用户所指定的图形引擎驱动程序类型，但是这个值会被开发人员设定的驱动程序类型的值所覆盖
+        ''' </summary>
+        ReadOnly __defaultDriver As Drivers = Drivers.Default
+
+        ''' <summary>
+        ''' 这个函数不会返回<see cref="Drivers.Default"/>
+        ''' </summary>
+        ''' <param name="developerValue">程序开发人员所设计的驱动程序的值</param>
+        ''' <returns></returns>
+        Private Function __getDriver(developerValue As Drivers) As Drivers
+            If developerValue <> Drivers.Default Then
+                Return developerValue
+            Else
+                If g.__defaultDriver = Drivers.Default Then
+                    ' 默认为使用gdi引擎
+                    Return Drivers.GDI
+                Else
+                    Return g.__defaultDriver
+                End If
+            End If
+        End Function
+
         ''' <summary>
         ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100)
         ''' </summary>
@@ -66,10 +100,11 @@ Namespace Drawing2D
         ''' <param name="padding"></param>
         ''' <param name="bg">颜色值或者图片资源文件的url或者文件路径</param>
         ''' <param name="plotAPI"></param>
+        ''' <param name="driver">驱动程序是默认与当前的环境参数设置相关的</param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot, Optional driver As Drivers = Drivers.GDI) As GraphicsData
+        Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot, Optional driver As Drivers = Drivers.Default) As GraphicsData
             Dim image As GraphicsData
 
             If size.IsEmpty Then
@@ -79,7 +114,7 @@ Namespace Drawing2D
                 padding = New Padding(100)
             End If
 
-            If driver = Drivers.SVG Then
+            If g.__getDriver(developerValue:=driver) = Drivers.SVG Then
                 Dim svg As New GraphicsSVG
                 Call svg.Clear(bg.TranslateColor)
                 Call plotAPI(svg, New GraphicsRegion With {
