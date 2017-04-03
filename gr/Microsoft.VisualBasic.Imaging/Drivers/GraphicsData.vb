@@ -88,6 +88,12 @@ Namespace Driver
 
     Public Class SVGData : Inherits GraphicsData
 
+        Friend ReadOnly Property SVG As SVGDataCache
+            Get
+                Return engine.__svgData
+            End Get
+        End Property
+
         Dim engine As GraphicsSVG
 
         Public Sub New(img As Object, size As Size)

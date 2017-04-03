@@ -44,6 +44,18 @@ Namespace SVG
             images += image
         End Sub
 
+        Public Sub Add(data As SVGDataCache)
+            With data
+                Call Me.texts.Add(.texts)
+                Call Me.circles.Add(.circles)
+                Call Me.images.Add(.images)
+                Call Me.lines.Add(.lines)
+                Call Me.paths.Add(.paths)
+                Call Me.polygons.Add(.polygons)
+                Call Me.rects.Add(.rects)
+            End With
+        End Sub
+
         Public Function GetSVG(size As Size) As SVGXml
             Dim SVG As New SVGXml With {
                 .circles = circles,
@@ -64,5 +76,15 @@ Namespace SVG
 
             Return SVG
         End Function
+
+        ''' <summary>
+        ''' 所有的节点元素都需要进行位置位移
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Public Shared Operator +(data As SVGDataCache, offset As Point) As SVGDataCache
+
+        End Operator
     End Class
 End Namespace

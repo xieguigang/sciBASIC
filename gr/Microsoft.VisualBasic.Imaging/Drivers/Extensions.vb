@@ -29,7 +29,31 @@ Namespace Driver
         '   T:System.ArgumentNullException:
         '     image is null.
         <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, point As Point)
+            If TypeOf g Is GraphicsSVG Then
+                Dim svg As GraphicsSVG = DirectCast(g, GraphicsSVG)
 
+                If image.Driver = Drivers.GDI Then
+                    Dim gdi As Drawing.Image = DirectCast(image, ImageData).Image
+                    Dim img As New XML.Image(gdi) With {
+                        .x = point.X,
+                        .y = point.Y
+                    }
+                    Call svg.__svgData.Add(img)
+                Else
+                    ' 直接合并SVG的节点
+                    Dim imageData = DirectCast(image, SVGData).SVG
+                    '在这里还需要根据位置计算出位移
+                    Call svg.__svgData.Add(imageData + point)
+                End If
+            Else
+                ' gdi+ engine只允许gdi+图像合并
+                If image.Driver = Drivers.SVG Then
+                    Throw New NotImplementedException
+                Else
+                    Dim gdi As Drawing.Image = DirectCast(image, ImageData).Image
+                    Call DirectCast(g, Graphics2D).DrawImage(gdi, point)
+                End If
+            End If
         End Sub
         '
         ' Summary:

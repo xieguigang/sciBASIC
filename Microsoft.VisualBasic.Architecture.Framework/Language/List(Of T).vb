@@ -181,6 +181,10 @@ Namespace Language
             Next
         End Sub
 
+        Public Overloads Sub Add(data As IEnumerable(Of T))
+            Call MyBase.AddRange(data.SafeQuery)
+        End Sub
+
         ''' <summary>
         ''' Pop all of the elements value in to array from the list object and then clear all of the list data.
         ''' </summary>
