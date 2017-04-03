@@ -107,6 +107,28 @@ Namespace Imaging
             End With
         End Sub
 
+        <Extension>
+        Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As SolidBrush)
+            Dim d = r * 2
+
+            With centra
+                Call g.FillPie(color, .X - r, .Y - r, d, d, 0, 360)
+            End With
+        End Sub
+
+        <Extension>
+        Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As Pen, Optional fill As Boolean = True)
+            Dim d = r * 2
+
+            With centra
+                If fill Then
+                    Call g.FillPie(New SolidBrush(color.Color), .X - r, .Y - r, d, d, 0, 360)
+                Else
+                    Call g.DrawPie(color, .X - r, .Y - r, d, d, 0, 360)
+                End If
+            End With
+        End Sub
+
         ''' <summary>
         ''' 这个方形区域的面积
         ''' </summary>

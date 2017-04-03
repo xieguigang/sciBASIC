@@ -203,7 +203,6 @@
     <Compile Include="Drawing2D\Shapes\Box.vb" />
     <Compile Include="Drawing2D\Shapes\Triangle.vb" />
     <Compile Include="Drawing2D\Shapes\Line.vb" />
-    <Compile Include="Drawing2D\Text\String.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
     <Compile Include="Drawing3D\Camera.vb" />
     <Compile Include="Drawing3D\Device\AutoRotation.vb" />
@@ -213,7 +212,6 @@
     <Compile Include="Drawing3D\Device\Light.vb" />
     <Compile Include="Drawing3D\Device\Worker.vb" />
     <Compile Include="Drawing3D\Painter.vb" />
-    <Compile Include="Drawing3D\Models\2DShape.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />
     <Compile Include="Drawing3D\Models\Surface.vb" />
