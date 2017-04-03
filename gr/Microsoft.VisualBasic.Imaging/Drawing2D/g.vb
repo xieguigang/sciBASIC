@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::cdcd09da8a8ca408542f1c6463ef991b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,8 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Net.Http
@@ -42,7 +44,7 @@ Namespace Drawing2D
     ''' </summary>
     ''' <param name="g">GDI+设备</param>
     ''' <param name="grct">绘图区域的大小</param>
-    Public Delegate Sub IPlot(ByRef g As Graphics, grct As GraphicsRegion)
+    Public Delegate Sub IPlot(ByRef g As IGraphics, grct As GraphicsRegion)
 
     ''' <summary>
     ''' Data plots graphics engine common abstract.
@@ -62,10 +64,12 @@ Namespace Drawing2D
         ''' </summary>
         ''' <param name="size"></param>
         ''' <param name="padding"></param>
-        ''' <param name="bg"></param>
+        ''' <param name="bg">颜色值或者图片资源文件的url或者文件路径</param>
         ''' <param name="plotAPI"></param>
         ''' <returns></returns>
-        Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot, Optional driver As Drivers = Drivers.GDI) As Bitmap
+        Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot, Optional driver As Drivers = Drivers.GDI) As GraphicsData
+            Dim image As GraphicsData
+
             If size.IsEmpty Then
                 size = New Size(3600, 2000)
             End If
@@ -73,26 +77,44 @@ Namespace Drawing2D
                 padding = New Padding(100)
             End If
 
-            Dim bmp As New Bitmap(size.Width, size.Height)
+            If driver = Drivers.SVG Then
+                Dim svg As New GraphicsSVG
+                Call svg.Clear(bg.TranslateColor)
+                Call plotAPI(svg, New GraphicsRegion With {
+                       .Size = size,
+                       .Padding = padding
+                  })
 
-            Using g As Graphics = Graphics.FromImage(bmp)
-                Dim rect As New Rectangle(New Point, size)
+                image = New SVGData(svg, size)
+            Else
+                ' using gdi+ graphics driver
+                ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
+                Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent)
+                    Dim rect As New Rectangle(New Point, size)
 
-                g.FillBg(bg$, rect)
-                g.CompositingQuality = CompositingQuality.HighQuality
-                g.CompositingMode = CompositingMode.SourceOver
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality
-                g.SmoothingMode = SmoothingMode.HighQuality
-                g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                    With g.Graphics
 
-                Call plotAPI(g, New GraphicsRegion With {
-                     .Size = size,
-                     .Padding = padding
-                })
-            End Using
+                        Call .FillBg(bg$, rect)
 
-            Return bmp
+                        .CompositingQuality = CompositingQuality.HighQuality
+                        .CompositingMode = CompositingMode.SourceOver
+                        .InterpolationMode = InterpolationMode.HighQualityBicubic
+                        .PixelOffsetMode = PixelOffsetMode.HighQuality
+                        .SmoothingMode = SmoothingMode.HighQuality
+                        .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+
+                    End With
+
+                    Call plotAPI(g, New GraphicsRegion With {
+                         .Size = size,
+                         .Padding = padding
+                    })
+
+                    image = New ImageData(g.ImageResource, size)
+                End Using
+            End If
+
+            Return image
         End Function
 
         ''' <summary>
@@ -111,7 +133,7 @@ Namespace Drawing2D
             If Not bgColor.IsEmpty Then
                 Call g.FillRectangle(New SolidBrush(bgColor), rect)
             Else
-                Dim res As Image
+                Dim res As Drawing.Image
 
                 If bg.FileExists Then
                     res = LoadImage(path:=bg$)
@@ -132,7 +154,7 @@ Namespace Drawing2D
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GraphicsPlots(plot As Action(Of Graphics), ByRef size As Size, ByRef padding As Padding, bg$) As Bitmap
+        Public Function GraphicsPlots(plot As Action(Of IGraphics), ByRef size As Size, ByRef padding As Padding, bg$) As GraphicsData
             Return GraphicsPlots(size, padding, bg, Sub(ByRef g, rect) Call plot(g))
         End Function
 
@@ -155,7 +177,7 @@ Namespace Drawing2D
             Public Property padding As Padding
             Public Property bg As String
 
-            Public Function InvokePlot() As Bitmap
+            Public Function InvokePlot() As GraphicsData
                 Return GraphicsPlots(
                     size, padding, bg,
                     Sub(ByRef g, rect)
@@ -176,7 +198,7 @@ Namespace Drawing2D
                 Return g
             End Operator
 
-            Public Shared Narrowing Operator CType(g As InternalCanvas) As Bitmap
+            Public Shared Narrowing Operator CType(g As InternalCanvas) As GraphicsData
                 Return g.InvokePlot
             End Operator
 
@@ -186,7 +208,7 @@ Namespace Drawing2D
             ''' <param name="g"></param>
             ''' <param name="plot"></param>
             ''' <returns></returns>
-            Public Shared Operator <=(g As InternalCanvas, plot As IPlot) As Bitmap
+            Public Shared Operator <=(g As InternalCanvas, plot As IPlot) As GraphicsData
                 Dim size As Size = g.size
                 Dim margin = g.padding
                 Dim bg As String = g.bg
@@ -194,7 +216,7 @@ Namespace Drawing2D
                 Return GraphicsPlots(size, margin, bg, plot)
             End Operator
 
-            Public Shared Operator >=(g As InternalCanvas, plot As IPlot) As Bitmap
+            Public Shared Operator >=(g As InternalCanvas, plot As IPlot) As GraphicsData
                 Throw New NotSupportedException
             End Operator
         End Class
