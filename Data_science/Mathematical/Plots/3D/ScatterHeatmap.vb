@@ -205,9 +205,8 @@ Namespace Plot3D
             Return GraphicsPlots(
                 camera.screen, margin,
                 bg$,
-                Sub(ByRef g, region)
-                    Call modelPlot(g, camera)
-                End Sub)
+                driver:=Drivers.GDI,
+                plotAPI:=Sub(ByRef g, region) Call modelPlot(DirectCast(g, Graphics2D).Graphics, camera))
         End Function
 
         Private Structure __plot
@@ -221,7 +220,7 @@ Namespace Plot3D
             Dim legendFont As Font
             Dim showLegend As Boolean
 
-            Public Sub Plot(g As IGraphics, camera As Camera)
+            Public Sub Plot(g As Graphics, camera As Camera)
 
                 'Call g.DrawAxis(
                 '    rawPoints,
@@ -268,7 +267,7 @@ Namespace Plot3D
                     Dim left% = camera.screen.Width - lsize.Width + 150
                     Dim top% = camera.screen.Height / 3
 
-                    Call g.DrawImageUnscaled(legend, left, top)
+                    Call g.DrawImageUnscaled(DirectCast(legend, ImageData).Image, left, top)
                 End If
             End Sub
         End Structure

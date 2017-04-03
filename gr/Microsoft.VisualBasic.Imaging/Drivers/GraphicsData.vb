@@ -1,4 +1,6 @@
 ﻿Imports System.Drawing
+Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.SVG
 
@@ -38,20 +40,21 @@ Namespace Driver
         End Sub
 
         Public MustOverride Function Save(path$) As Boolean
+        Public MustOverride Function Save(out As Stream) As Boolean
 
     End Class
 
     Public Class ImageData : Inherits GraphicsData
 
-        Dim image As Drawing.Image
+        Public ReadOnly Property Image As Drawing.Image
 
         Public Sub New(img As Object, size As Size)
             MyBase.New(img, size)
 
             If img.GetType() Is GetType(Bitmap) Then
-                image = CType(DirectCast(img, Bitmap), Drawing.Image)
+                Image = CType(DirectCast(img, Bitmap), Drawing.Image)
             Else
-                image = DirectCast(img, Drawing.Image)
+                Image = DirectCast(img, Drawing.Image)
             End If
         End Sub
 
@@ -68,7 +71,18 @@ Namespace Driver
         End Property
 
         Public Overrides Function Save(path As String) As Boolean
-            Return image.SaveAs(path, ImageData.DefaultFormat)
+            Return Image.SaveAs(path, ImageData.DefaultFormat)
+        End Function
+
+        Public Overrides Function Save(out As Stream) As Boolean
+            Try
+                Call Image.Save(out, DefaultFormat.GetFormat)
+            Catch ex As Exception
+                Call App.LogException(ex)
+                Return False
+            End Try
+
+            Return True
         End Function
     End Class
 
@@ -91,6 +105,13 @@ Namespace Driver
             With Size
                 Dim sz$ = $"{ .Width},{ .Height}"
                 Return engine.WriteSVG(path, sz)
+            End With
+        End Function
+
+        Public Overrides Function Save(out As Stream) As Boolean
+            With Size
+                Dim sz$ = $"{ .Width},{ .Height}"
+                Return engine.WriteSVG(out, size:=sz)
             End With
         End Function
     End Class
