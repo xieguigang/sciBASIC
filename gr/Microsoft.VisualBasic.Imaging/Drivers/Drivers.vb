@@ -1,11 +1,9 @@
-﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.SVG
+﻿Imports Microsoft.VisualBasic.Imaging.SVG
 
 Namespace Driver
 
     ''' <summary>
-    ''' The imaging graphics engine list
+    ''' The imaging graphics engine list for <see cref="IGraphics"/>
     ''' </summary>
     Public Enum Drivers
         ''' <summary>
