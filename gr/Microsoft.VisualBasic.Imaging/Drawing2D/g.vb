@@ -65,7 +65,7 @@ Namespace Drawing2D
         ''' <param name="bg"></param>
         ''' <param name="plotAPI"></param>
         ''' <returns></returns>
-        Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot) As Bitmap
+        Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot, Optional driver As Drivers = Drivers.GDI) As Bitmap
             If size.IsEmpty Then
                 size = New Size(3600, 2000)
             End If
