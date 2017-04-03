@@ -70,7 +70,7 @@ Namespace Drawing2D.Vector.Shapes
             End Get
         End Property
 
-        Public Overrides Function Draw(ByRef g As Graphics, Optional overridesLoci As Point = Nothing) As RectangleF
+        Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim rect = MyBase.Draw(g, overridesLoci)
             Call Draw(g, Location, Radius, Brush)
             Return rect
@@ -83,7 +83,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="center"></param>
         ''' <param name="radius"></param>
         ''' <param name="br"></param>
-        Public Overloads Shared Sub Draw(ByRef g As Graphics,
+        Public Overloads Shared Sub Draw(ByRef g As IGraphics,
                                          center As Point,
                                          radius As Single,
                                          Optional br As Brush = Nothing,

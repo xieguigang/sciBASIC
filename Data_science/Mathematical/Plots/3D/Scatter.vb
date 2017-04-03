@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::5468a67bc0ba0abbb89abaccdc2d8f46, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -65,7 +66,7 @@ Namespace Plot3D
                              Optional lineColor$ = "red",
                              Optional font As Font = Nothing,
                              Optional bg$ = "white",
-                             Optional padding As Padding = Nothing) As Bitmap
+                             Optional padding As Padding = Nothing) As GraphicsData
 
             Dim data As Point3D() = func _
                 .Evaluate(x, y, xsteps, ysteps) _
@@ -80,10 +81,8 @@ Namespace Plot3D
                 padding = "padding: 5px 5px 5px 5px;"
             End If
 
-            Return GraphicsPlots(
-                camera.screen, padding,
-                bg,
-                Sub(ByRef g, region)
+            Dim plotInternal =
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Call AxisDraw.DrawAxis(g, data, camera, font)
 
                     With camera
@@ -102,7 +101,9 @@ Namespace Plot3D
                             previous = cur
                         Next
                     End With
-                End Sub)
+                End Sub
+
+            Return camera.screen.GraphicsPlots(padding, bg, plotInternal)
         End Function
     End Module
 End Namespace

@@ -36,7 +36,7 @@ Namespace Drawing2D.Vector.Shapes
     ''' </summary>
     Public Class Pentacle
 
-        Public Shared Sub Draw(ByRef g As Graphics, topLeft As Point, size As SizeF, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
+        Public Shared Sub Draw(ByRef g As IGraphics, topLeft As Point, size As SizeF, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
             Dim pts As Point() = PathData(topLeft, size)
 
             If br Is Nothing Then

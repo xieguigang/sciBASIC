@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.Imaging.SVG
 
 Namespace Driver
 
+    ''' <summary>
+    ''' gdi+ images: <see cref="Drawing.Image"/>, <see cref="Bitmap"/> / SVG image: <see cref="SVGXml"/>
+    ''' </summary>
     Public MustInherit Class GraphicsData
 
         ''' <summary>
@@ -12,6 +15,18 @@ Namespace Driver
         ''' <returns></returns>
         Public MustOverride ReadOnly Property Driver As Drivers
         Public ReadOnly Property Size As Size
+
+        Public ReadOnly Property Width As Integer
+            Get
+                Return Size.Width
+            End Get
+        End Property
+
+        Public ReadOnly Property Height As Integer
+            Get
+                Return Size.Height
+            End Get
+        End Property
 
         ''' <summary>
         ''' 

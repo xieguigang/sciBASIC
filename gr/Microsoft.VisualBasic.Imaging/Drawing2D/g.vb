@@ -67,6 +67,8 @@ Namespace Drawing2D
         ''' <param name="bg">颜色值或者图片资源文件的url或者文件路径</param>
         ''' <param name="plotAPI"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot, Optional driver As Drivers = Drivers.GDI) As GraphicsData
             Dim image As GraphicsData
 

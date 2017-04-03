@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::59dc0509df443ce8f1482d4ea2424e98, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\PieChart.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -70,7 +70,7 @@ Public Module PieChart
                          Optional legendFont$ = CSSFont.Win7LargeBold,
                          Optional legendBorder As Stroke = Nothing,
                          Optional minRadius As Single = -1,
-                         Optional reorder% = 0) As Bitmap
+                         Optional reorder% = 0) As GraphicsData
 
         Dim margin As Padding = padding
 
@@ -85,8 +85,8 @@ Public Module PieChart
             End If
         End If
 
-        Dim __plot As Action(Of Graphics) =
-            Sub(g As Graphics)
+        Dim __plot As Action(Of IGraphics) =
+            Sub(g As IGraphics)
                 Dim r# = (Math.Min(size.Width, size.Height) - margin.LayoutVector.Max) / 2  ' 最大的半径值
                 Dim topLeft As New Point(size.Width / 2 - r, size.Height / 2 - r)
                 Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)

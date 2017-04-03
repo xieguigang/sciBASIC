@@ -41,7 +41,7 @@ Namespace Graphic.Axis
     Public Module Axis
 
         <Extension>
-        Public Sub DrawAxis(ByRef g As Graphics, region As GraphicsRegion,
+        Public Sub DrawAxis(ByRef g As IGraphics, region As GraphicsRegion,
                             scaler As Mapper,
                             showGrid As Boolean,
                             Optional offset As Point = Nothing,
@@ -76,7 +76,7 @@ Namespace Graphic.Axis
         ''' <param name="xlayout">修改y属性</param>
         ''' <param name="ylayout">修改x属性</param>
         <Extension>
-        Public Sub DrawAxis(ByRef g As Graphics,
+        Public Sub DrawAxis(ByRef g As IGraphics,
                             size As Size,
                             padding As Padding,
                             scaler As Mapper,
@@ -138,7 +138,7 @@ Namespace Graphic.Axis
         End Sub
 
         <Extension>
-        Public Sub DrawYGrid(scaler As Mapper, g As Graphics, region As GraphicsRegion,
+        Public Sub DrawYGrid(scaler As Mapper, g As IGraphics, region As GraphicsRegion,
                              pen As Pen,
                              label$,
                              Optional offset As Point = Nothing,
@@ -171,7 +171,7 @@ Namespace Graphic.Axis
 
         Public Property delta As Integer = 10
 
-        <Extension> Public Sub DrawY(ByRef g As Graphics, size As Size, padding As Padding,
+        <Extension> Public Sub DrawY(ByRef g As IGraphics, size As Size, padding As Padding,
                                      pen As Pen, label$,
                                      scaler As Mapper,
                                      layout As YAxisLayoutStyles, offset As Point,
@@ -260,7 +260,7 @@ Namespace Graphic.Axis
             Return out
         End Function
 
-        <Extension> Public Sub DrawX(ByRef g As Graphics, size As Size, padding As Padding,
+        <Extension> Public Sub DrawX(ByRef g As IGraphics, size As Size, padding As Padding,
                                      pen As Pen, label$,
                                      scaler As Mapper,
                                      layout As XAxisLayoutStyles, offset As Point,
