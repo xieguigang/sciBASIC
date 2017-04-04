@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -122,7 +123,7 @@ Namespace BarPlot
                 ' Draw bar
                 g.FillRectangle(s.Brush.GetBrush, barRECT)
                 ' Draw label
-                label = DrawLabel(s.Label, cssFont:=labelFont)
+                label = TextRender.DrawHtmlText(s.Label, cssFont:=labelFont)
                 ' rotate -90
                 label = label.RotateImage(-90)
                 labelLeft = bLeft + (bWidth - label.Width) / 2

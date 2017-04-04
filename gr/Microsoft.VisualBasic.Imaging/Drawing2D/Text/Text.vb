@@ -75,5 +75,23 @@ Namespace Drawing2D.Vector.Text
                 g, html,
                 location, maxWidth)
         End Sub
+
+        ''' <summary>
+        ''' Rendering the html text as gdi+ image
+        ''' </summary>
+        ''' <param name="label$">HTML</param>
+        ''' <param name="cssFont$">For html ``&lt;p>...&lt;/p>`` css style</param>
+        ''' <param name="maxSize$"></param>
+        ''' <returns></returns>
+        Public Function DrawHtmlText(label$, cssFont$, Optional maxSize$ = "1600,600") As Drawing.Image
+            Dim g As Graphics2D = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
+            Dim out As Drawing.Image
+
+            TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
+            out = g.ImageResource
+            out = out.CorpBlank(blankColor:=Color.Transparent)
+
+            Return out
+        End Function
     End Module
 End Namespace

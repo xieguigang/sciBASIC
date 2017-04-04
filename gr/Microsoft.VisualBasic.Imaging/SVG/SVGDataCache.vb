@@ -47,13 +47,13 @@ Namespace SVG
 
         Public Sub Add(data As SVGDataCache)
             With data
-                Call Me.texts.Add(.texts)
-                Call Me.circles.Add(.circles)
-                Call Me.images.Add(.images)
-                Call Me.lines.Add(.lines)
-                Call Me.paths.Add(.paths)
-                Call Me.polygons.Add(.polygons)
-                Call Me.rects.Add(.rects)
+                Call Me.texts.AddRange(.texts)
+                Call Me.circles.AddRange(.circles)
+                Call Me.images.AddRange(.images)
+                Call Me.lines.AddRange(.lines)
+                Call Me.paths.AddRange(.paths)
+                Call Me.polygons.AddRange(.polygons)
+                Call Me.rects.AddRange(.rects)
             End With
         End Sub
 
