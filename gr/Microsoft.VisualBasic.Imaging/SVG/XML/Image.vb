@@ -82,5 +82,12 @@ Namespace SVG.XML
         Public Function SaveAs(fileName As String, Optional format As ImageFormats = ImageFormats.Png) As Boolean
             Return GetGDIObject.SaveAs(fileName, format)
         End Function
+
+        Public Shared Operator +(img As Image, offset As PointF) As Image
+            img = DirectCast(img.MemberwiseClone, Image)
+            img.x += offset.X
+            img.y += offset.Y
+            Return img
+        End Operator
     End Class
 End Namespace

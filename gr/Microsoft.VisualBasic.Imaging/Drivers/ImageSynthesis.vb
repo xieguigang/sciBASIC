@@ -115,7 +115,7 @@ Namespace Driver
                     Call svg.__svgData.Add(img)
                 Else
                     ' 直接合并SVG的节点
-                    Dim imageData = DirectCast(image, SVGData).SVG
+                    Dim imageData As SVGDataCache = DirectCast(image, SVGData).SVG
                     '在这里还需要根据位置计算出位移
                     Call svg.__svgData.Add(imageData + point)
                 End If

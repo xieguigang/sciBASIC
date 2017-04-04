@@ -96,19 +96,19 @@ log<sub>2</sub> ratio
         'Next
 
 
-        '    Call TextureResourceLoader.AdjustColor(Microsoft.VisualBasic.Drawing.TextureResourceLoader.LoadInternalDefaultResource.First, Color.SeaGreen).Save("x:\reddddd.bmp")
+        ''    Call TextureResourceLoader.AdjustColor(Microsoft.VisualBasic.Drawing.TextureResourceLoader.LoadInternalDefaultResource.First, Color.SeaGreen).Save("x:\reddddd.bmp")
 
-        Dim vec = New Vectogram(1000, 1000)
+        'Dim vec = New Vectogram(1000, 1000)
 
-        Call vec.AddTextElement("1234", New Font(FontFace.MicrosoftYaHei, 20), System.Drawing.Color.DarkCyan, vec.GDIDevice.Center)
+        'Call vec.AddTextElement("1234", New Font(FontFace.MicrosoftYaHei, 20), System.Drawing.Color.DarkCyan, vec.GDIDevice.Center)
 
-        Call vec.AddCircle(Color.Red, New Point(100, 20), 100)
+        'Call vec.AddCircle(Color.Red, New Point(100, 20), 100)
 
-        Dim res = vec.ToImage
+        'Dim res = vec.ToImage
 
-        Call res.Save("x:\ffff.png")
+        'Call res.Save("x:\ffff.png")
 
-        Call New DrawingScript(vec).ToScript.SaveTo("script.txt")
+        'Call New DrawingScript(vec).ToScript.SaveTo("script.txt")
 
     End Sub
 

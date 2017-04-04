@@ -93,7 +93,10 @@ Namespace SVG
                 .circles = data.circles.Select(Function(c) c + offset).ToList,
                 .polygons = data.polygons.Select(Function(pl) pl + offset).ToList,
                 .rects = data.rects.Select(Function(rt) rt + offset).ToList,
-                .lines = data.lines.Select(Function(l) l + offset).ToList
+                .lines = data.lines.Select(Function(l) l + offset).ToList,
+                .images = data.images.Select(Function(img) img + offset).ToList,
+                .paths = data.paths.Select(Function(d) d + offset).ToList,
+                .texts = data.texts.Select(Function(t) t + offset).ToList
             }
         End Operator
     End Class
