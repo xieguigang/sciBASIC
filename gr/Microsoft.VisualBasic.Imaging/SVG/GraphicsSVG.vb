@@ -515,19 +515,25 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            With rect
+                Call DrawPie(pen, .X, .Y, .Width, .Height, startAngle, sweepAngle)
+            End With
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            With rect
+                Call DrawPie(pen, .X, .Y, .Width, .Height, startAngle, sweepAngle)
+            End With
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
-            Throw New NotImplementedException()
+            Call DrawPie(pen, x, y, width, height, CSng(startAngle), CSng(sweepAngle))
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            Dim path As path = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
+            path.style = New Stroke(pen).CSSValue
+            Call __svgData.Add(path)
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
