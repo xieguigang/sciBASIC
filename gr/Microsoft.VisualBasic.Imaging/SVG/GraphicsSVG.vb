@@ -3,6 +3,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -344,23 +345,28 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, rect As Rectangle)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaled(img, rect)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, point As Point)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaled(img, point)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaled(img, x, y)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaled(img, x, y, width, height)
         End Sub
 
         Public Overrides Sub DrawImageUnscaledAndClipped(image As Drawing.Image, rect As Rectangle)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaledAndClipped(img, rect)
         End Sub
 #End Region
 
@@ -509,19 +515,25 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            With rect
+                Call DrawPie(pen, .X, .Y, .Width, .Height, startAngle, sweepAngle)
+            End With
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            With rect
+                Call DrawPie(pen, .X, .Y, .Width, .Height, startAngle, sweepAngle)
+            End With
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
-            Throw New NotImplementedException()
+            Call DrawPie(pen, x, y, width, height, CSng(startAngle), CSng(sweepAngle))
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            Dim path As path = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
+            path.style = New Stroke(pen).CSSValue
+            Call __svgData.Add(path)
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
@@ -819,15 +831,19 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            With rect
+                Call FillPie(brush, .X, .Y, .Width, .Height, startAngle, sweepAngle)
+            End With
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
-            Throw New NotImplementedException()
+            Call FillPie(brush, CSng(x), CSng(y), CSng(width), CSng(height), CSng(startAngle), CSng(sweepAngle))
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            Dim path As path = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
+            path.style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+            Call __svgData.Add(path)
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point)

@@ -36,7 +36,7 @@ Namespace Driver
         ''' <param name="img">其实这个参数在基类<see cref="GraphicsData"/>之中是无用的，只是为了统一接口而设置的</param>
         ''' <param name="size"></param>
         Sub New(img As Object, size As Size)
-            size = size
+            Me.Size = size
         End Sub
 
         Public MustOverride Function Save(path$) As Boolean
@@ -71,6 +71,9 @@ Namespace Driver
         End Property
 
         Public Overrides Function Save(path As String) As Boolean
+            If path.ExtensionSuffix.TextEquals("svg") Then
+                Call $"The gdi+ image file save path: {path.ToFileURL} ending with *.svg file extension suffix!".Warning
+            End If
             Return Image.SaveAs(path, ImageData.DefaultFormat)
         End Function
 
@@ -108,6 +111,10 @@ Namespace Driver
         End Property
 
         Public Overrides Function Save(path As String) As Boolean
+            If Not path.ExtensionSuffix.TextEquals("svg") Then
+                Call $"The SVG image file save path: {path.ToFileURL} not ending with *.svg file extension suffix!".Warning
+            End If
+
             With Size
                 Dim sz$ = $"{ .Width},{ .Height}"
                 Return engine.WriteSVG(path, sz)

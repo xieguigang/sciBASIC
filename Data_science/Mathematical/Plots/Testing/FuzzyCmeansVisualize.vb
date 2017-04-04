@@ -158,7 +158,7 @@ Module FuzzyCMeansVisualize
         Next
 
         Call Scatter.Plot(plotData, New Size(5000, 3000), fillPie:=True, showLegend:=False) _
-            .SaveAs("./CMeans.png")
+            .Save("./CMeans.png")
     End Sub
 End Module
 
