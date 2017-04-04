@@ -121,7 +121,7 @@ Module Module1
                 .Name = "N",
                 .Value = "-20,20"
             },
-            expression:="-(1/L)*log(1-n/100)",
+            expression:="-(1/L)*ln(1-n/100)",
             variables:=New Dictionary(Of String, String) From {
                 {"L", "5"}
             },
@@ -131,6 +131,8 @@ Module Module1
     End Sub
 
     Sub Main()
+
+        Call App.JoinVariable("graphic_driver", "svg")
 
         Call TestYlinePlot()
 

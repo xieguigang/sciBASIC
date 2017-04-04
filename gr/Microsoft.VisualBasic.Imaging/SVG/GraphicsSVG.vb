@@ -3,6 +3,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -344,23 +345,28 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, rect As Rectangle)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaled(img, rect)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, point As Point)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaled(img, point)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaled(img, x, y)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaled(img, x, y, width, height)
         End Sub
 
         Public Overrides Sub DrawImageUnscaledAndClipped(image As Drawing.Image, rect As Rectangle)
-            Throw New NotImplementedException()
+            Dim img As New ImageData(image, image.Size)
+            Call Me.DrawImageUnscaledAndClipped(img, rect)
         End Sub
 #End Region
 
