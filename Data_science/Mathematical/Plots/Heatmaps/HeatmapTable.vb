@@ -1,40 +1,40 @@
 ﻿#Region "Microsoft.VisualBasic::49988d2e7b07844d474b04de6f93ec57, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\HeatmapTable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module HeatmapTable
 
@@ -62,13 +62,11 @@ Public Module HeatmapTable
                          Optional titleFont As Font = Nothing,
                          Optional drawGrid As Boolean = False,
                          Optional drawValueLabel As Boolean = True,
-                         Optional valuelabelFont As Font = Nothing) As Bitmap
+                         Optional valuelabelFont As Font = Nothing) As GraphicsData
 
         Dim margin As Padding = padding
-
-        Return Heatmap.__plotInterval(
-            Sub(g, region, array, left, font, dw, levels, top, colors)
-
+        Dim plotInternal =
+            Sub(g As IGraphics, region As GraphicsRegion, array As NamedValue(Of Dictionary(Of String, Double))(), left As Value(Of Single), font As Font, dw As Single, levels As Dictionary(Of Double, Integer), top As Value(Of Single), colors As Color())
                 ' 在绘制上三角的时候假设每一个对象的keys的顺序都是相同的
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小
@@ -93,9 +91,9 @@ Public Module HeatmapTable
                         Else
                             Dim level% = levels(c#)  '  得到等级
                             Dim color As Color = colors(   ' 得到当前的方格的颜色
-                                If(level% > colors.Length - 1,
-                                colors.Length - 1,
-                                level))
+                                                                              If(level% > colors.Length - 1,
+                                                                              colors.Length - 1,
+                                                                              level))
 
                             Dim b As New SolidBrush(color)
                             Dim r As Single = Math.Abs(c) * dw / 2 ' 计算出半径的大小
@@ -130,9 +128,8 @@ Public Module HeatmapTable
 
                     Call g.DrawString((+x).Name, font, Brushes.Black, New PointF(lx, y))
                 Next
+            End Sub
 
-            End Sub,
-            data.ToArray,,
-            mapLevels, mapName, size, margin, bg, fontStyle, legendTitle, legendFont, min, max, mainTitle, titleFont)
+        Return Heatmap.__plotInterval(plotInternal, data.ToArray,, mapLevels, mapName, size, margin, bg, fontStyle, legendTitle, legendFont, min, max, mainTitle, titleFont)
     End Function
 End Module

@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
-Namespace SVG
+Namespace SVG.XML
 
     ''' <summary>
     ''' The svg vector graphics in Xml document format.
@@ -97,6 +97,14 @@ Namespace SVG
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         Private Function SaveAsXml(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+            Return GetSVGXml.SaveTo(Path, encoding)
+        End Function
+
+        ''' <summary>
+        ''' 将当前的这个SVG对象序列化为XML字符串文本
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetSVGXml() As String
             Dim sb As New StringBuilder(Me.GetXml)
             Call sb.Replace("image.data=""", "xlink:href=""")
 
@@ -106,7 +114,7 @@ Namespace SVG
             xml.xmlns.Set("xlink", "http://www.w3.org/1999/xlink")
             xml.xmlns.xmlns = "http://www.w3.org/2000/svg"
 
-            Return xml.SaveTo(Path, encoding)
+            Return xml.ToString
         End Function
 
         ''' <summary>

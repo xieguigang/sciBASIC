@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::37e99e919c60b7974262f53694d61235, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Axis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -38,7 +39,7 @@ Namespace Plot3D
     Public Module AxisDraw
 
         <Extension>
-        Public Sub DrawAxis(ByRef g As Graphics, data As Point3D(), camera As Camera, font As Font)
+        Public Sub DrawAxis(ByRef g As IGraphics, data As Point3D(), camera As Camera, font As Font)
             Dim x = data.ToArray(Function(o) o.X)
             Dim y = data.ToArray(Function(o) o.Y)
             Dim z = data.ToArray(Function(o) o.Z)
@@ -51,7 +52,7 @@ Namespace Plot3D
         End Sub
 
         <Extension>
-        Public Sub DrawAxis(ByRef g As Graphics,
+        Public Sub DrawAxis(ByRef g As IGraphics,
                             camera As Camera,
                             font As Font,
                             x As DoubleRange,
@@ -75,7 +76,7 @@ Namespace Plot3D
         End Sub
 
         <Extension>
-        Public Sub DrawAxis(ByRef g As Graphics, camera As Camera, font As Font, axis As Axis)
+        Public Sub DrawAxis(ByRef g As IGraphics, camera As Camera, font As Font, axis As Axis)
             With camera
                 Dim a As New Point3D(axis.x1, axis.y1, axis.z1)
                 Dim b As New Point3D(axis.x1, axis.y2, axis.z1)

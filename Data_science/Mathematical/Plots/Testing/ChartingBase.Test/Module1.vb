@@ -70,7 +70,7 @@ Module Module1
             New BarSerial With {.Brush = "red", .Label = "label<sub>1</sub>", .Value = 223}
         }
 
-        Call s.Plot().SaveAs("x:/test.png")
+        Call s.Plot().Save("x:/test.png")
 
         Pause()
 

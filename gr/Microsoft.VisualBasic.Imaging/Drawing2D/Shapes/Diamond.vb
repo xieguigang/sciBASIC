@@ -34,7 +34,7 @@ Namespace Drawing2D.Vector.Shapes
 
     Public Class Diamond
 
-        Public Shared Sub Draw(ByRef g As Graphics,
+        Public Shared Sub Draw(ByRef g As IGraphics,
                                topLeft As Point,
                                size As Size,
                                Optional br As Brush = Nothing,

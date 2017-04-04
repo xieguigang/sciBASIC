@@ -185,6 +185,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="d3js\CSSModel.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
     <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
@@ -199,15 +200,10 @@
     <Compile Include="Drawing2D\Shapes\Diamond.vb" />
     <Compile Include="Drawing2D\Text\FontMetrics.vb" />
     <Compile Include="Drawing2D\Text\Text.vb" />
-    <Compile Include="Drawing2D\VectorObject.vb" />
-    <Compile Include="Drawing2D\VectorAPI.vb" />
-    <Compile Include="Drawing2D\Vectogram.vb" />
     <Compile Include="Drawing2D\Shapes\Circle.vb" />
     <Compile Include="Drawing2D\Shapes\Box.vb" />
     <Compile Include="Drawing2D\Shapes\Triangle.vb" />
     <Compile Include="Drawing2D\Shapes\Line.vb" />
-    <Compile Include="Drawing2D\VectorScript.vb" />
-    <Compile Include="Drawing2D\Text\String.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
     <Compile Include="Drawing3D\Camera.vb" />
     <Compile Include="Drawing3D\Device\AutoRotation.vb" />
@@ -217,7 +213,6 @@
     <Compile Include="Drawing3D\Device\Light.vb" />
     <Compile Include="Drawing3D\Device\Worker.vb" />
     <Compile Include="Drawing3D\Painter.vb" />
-    <Compile Include="Drawing3D\Models\2DShape.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />
     <Compile Include="Drawing3D\Models\Surface.vb" />
@@ -229,6 +224,9 @@
     <Compile Include="Drawing3D\Transformation.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
+    <Compile Include="Drivers\GraphicsData.vb" />
+    <Compile Include="Drivers\Drivers.vb" />
+    <Compile Include="Drivers\ImageSynthesis.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -244,12 +242,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SVG\CSS\ObjectStyle.vb" />
+    <Compile Include="SVG\SVGDataCache.vb" />
+    <Compile Include="SVG\Extensions.vb" />
     <Compile Include="SVG\Renderer.vb" />
     <Compile Include="SVG\GraphicsSVG.vb" />
     <Compile Include="SVG\XML\g.vb" />
     <Compile Include="SVG\XML\Image.vb" />
     <Compile Include="SVG\XML\SVG.vb" />
-    <Compile Include="SVG\XML\CSS.vb" />
+    <Compile Include="d3js\CSS.vb" />
     <Compile Include="SVG\XML\Xml.vb" />
     <Compile Include="TextureResourceLoader.vb" />
   </ItemGroup>
@@ -367,9 +368,7 @@
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="d3js\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

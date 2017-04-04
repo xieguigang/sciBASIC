@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::66bde4ee23eb899b15d910f589cd2e5c, ..\sciBASIC#\Data_science\Mathematical\Plots\BarPlot\BarPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -71,7 +72,7 @@ Namespace BarPlot
                              Optional showLegend As Boolean = True,
                              Optional legendPos As Point = Nothing,
                              Optional legendBorder As Stroke = Nothing,
-                             Optional legendFont As Font = Nothing) As Bitmap
+                             Optional legendFont As Font = Nothing) As GraphicsData
 
             Dim margin As Padding = padding
 
@@ -99,7 +100,7 @@ Namespace BarPlot
         ''' <param name="showLegend"></param>
         ''' <param name="legendPos"></param>
         ''' <param name="legendBorder"></param>
-        Private Sub __plot1(ByRef g As Graphics, grect As GraphicsRegion,
+        Private Sub __plot1(ByRef g As IGraphics, grect As GraphicsRegion,
                             data As BarDataGroup,
                             bg$,
                             showGrid As Boolean,
@@ -214,7 +215,7 @@ Namespace BarPlot
                 If legendPos.IsEmpty Then
                     Dim Y% = grect.Padding.Bottom / legends.Length
                     Dim X%
-                    Dim gr As Graphics = g
+                    Dim gr As IGraphics = g
                     Dim maxW As Single = legends.Max(
                     Function(l) gr _
                         .MeasureString(l.title, legendFont) _
@@ -258,35 +259,5 @@ Namespace BarPlot
                     }
             }
         End Function
-
-        '   ''' <summary>
-        '   ''' Plot ODEs result using bar plot
-        '   ''' </summary>
-        '   ''' <param name="odes"></param>
-        '   ''' <returns></returns>
-        '   Public Function FromODE(ParamArray odes As ODE()) As BarDataGroup
-        '       Dim colors = Imaging.ChartColors.Shuffles
-        '       Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
-        '_
-        '           From x As SeqValue(Of ODE)
-        '           In odes.SeqIterator
-        '           Select New NamedValue(Of Color) With {
-        '               .Name = x.value.df.ToString,
-        '               .Value = colors(x.i)
-        '           }
-        '       Dim samples = LinqAPI.Exec(Of BarDataSample) <=
-        '_
-        '           From i As Integer
-        '           In odes.First.y.Sequence
-        '           Select New BarDataSample With {
-        '               .Tag = i,
-        '               .data = odes.ToArray(Function(x) x.y(i))
-        '           }
-
-        '       Return New BarDataGroup With {
-        '           .Samples = samples,
-        '           .Serials = serials
-        '       }
-        '   End Function
     End Module
 End Namespace

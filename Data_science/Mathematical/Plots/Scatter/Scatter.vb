@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::35068ef7ed7ad7348656e132f3041848, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -85,11 +86,11 @@ Public Module Scatter
                          Optional Xlabel$ = "X",
                          Optional Ylabel$ = "Y",
                          Optional yaxis$ = Nothing,
-                         Optional xaxis$ = Nothing) As Bitmap
+                         Optional xaxis$ = Nothing) As GraphicsData
 
         Dim margin As Padding = padding
         Dim plotInternal =
-            Sub(ByRef g As Graphics, grect As GraphicsRegion)
+            Sub(ByRef g As IGraphics, grect As GraphicsRegion)
                 Dim array As SerialData() = c.ToArray
                 Dim mapper As Mapper
                 Dim serialsData As New Scaling(array, absoluteScaling)
@@ -189,7 +190,7 @@ Public Module Scatter
                          Optional bg As String = "white",
                          Optional ptSize As Single = 15,
                          Optional width As Single = 5,
-                         Optional drawLine As Boolean = False) As Bitmap
+                         Optional drawLine As Boolean = False) As GraphicsData
         Return {
             FromVector(x,,, ptSize, width)
         }.Plot(size, padding, bg, True, False, , drawLine:=drawLine)
@@ -252,7 +253,7 @@ Public Module Scatter
                                  Optional bg$ = "white",
                                  Optional variables As Dictionary(Of String, String) = Nothing,
                                  Optional yline# = Double.NaN,
-                                 Optional ylineColor$ = "red") As Bitmap
+                                 Optional ylineColor$ = "red") As GraphicsData
 
         Dim engine As New Expression
         Dim ranges As Double() = range.Value.seq(steps).ToArray
@@ -296,7 +297,7 @@ Public Module Scatter
                          Optional lineColor$ = "black",
                          Optional lineWidth! = 10,
                          Optional bg$ = "white",
-                         Optional title$ = "Function Plot") As Bitmap
+                         Optional title$ = "Function Plot") As GraphicsData
 
         Dim ranges As Double() = range.seq(steps).ToArray
         Dim y As New List(Of Double)
@@ -317,7 +318,7 @@ Public Module Scatter
                          Optional title$ = "Plot Of Points",
                          Optional lineWidth! = 5.0!,
                          Optional ptSize! = 15.0!,
-                         Optional lineType As DashStyle = DashStyle.Solid) As Bitmap
+                         Optional lineType As DashStyle = DashStyle.Solid) As GraphicsData
         Dim s As SerialData = points _
             .FromPoints(lineColor$,
                         title$,
@@ -335,7 +336,7 @@ Public Module Scatter
                          Optional title$ = "Plot Of Points",
                          Optional lineWidth! = 5.0!,
                          Optional ptSize! = 15.0!,
-                         Optional lineType As DashStyle = DashStyle.Solid) As Bitmap
+                         Optional lineType As DashStyle = DashStyle.Solid) As GraphicsData
         Dim s As SerialData = points _
             .FromPoints(lineColor$,
                         title$,

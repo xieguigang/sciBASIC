@@ -49,7 +49,7 @@ Namespace HTML.CSS
     '''
     ''' 可以不设置其中的某个值，比如 ``font:100% verdana;`` 也是允许的。未设置的属性会使用其默认值。
     ''' </summary>
-    Public Class CSSFont
+    Public Class CSSFont : Inherits ICSSValue
 
         Public Const Win10Normal As String = "font-style: normal; font-size: 12; font-family: " & FontFace.SegoeUI & ";"
         Public Const Win10NormalLarger As String = "font-style: normal; font-size: 16; font-family: " & FontFace.SegoeUI & ";"
@@ -88,6 +88,12 @@ Namespace HTML.CSS
         Public ReadOnly Property GDIObject As Font
             Get
                 Return New Font(family, size, style)
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property CSSValue As String
+            Get
+                Return ToString()
             End Get
         End Property
 
@@ -171,6 +177,10 @@ Namespace HTML.CSS
             End Try
         End Function
 
+        ''' <summary>
+        ''' To CSS style text
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder
 

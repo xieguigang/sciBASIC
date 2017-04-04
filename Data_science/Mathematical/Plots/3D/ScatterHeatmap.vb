@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::a238a891e68281dbbaa1f7420a473b05, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\ScatterHeatmap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -63,7 +64,7 @@ Namespace Plot3D
                              Optional axisFont$ = CSSFont.Win10Normal,
                              Optional legendFont As Font = Nothing,
                              Optional showLegend As Boolean = True,
-                             Optional dev As FormDevice = Nothing) As Bitmap
+                             Optional dev As FormDevice = Nothing) As GraphicsData
 
             Dim data As (sf As Surface, C As Double())() =
                 f.Surface(
@@ -177,7 +178,7 @@ Namespace Plot3D
                              Optional legendFont As Font = Nothing,
                              Optional showLegend As Boolean = True,
                              Optional dev As FormDevice = Nothing,
-                             Optional padding$ = g.ZeroPadding) As Bitmap
+                             Optional padding$ = g.ZeroPadding) As GraphicsData
 
             Dim modelPlot As DrawGraphics =
                 data _
@@ -204,9 +205,8 @@ Namespace Plot3D
             Return GraphicsPlots(
                 camera.screen, margin,
                 bg$,
-                Sub(ByRef g, region)
-                    Call modelPlot(g, camera)
-                End Sub)
+                driver:=Drivers.GDI,
+                plotAPI:=Sub(ByRef g, region) Call modelPlot(DirectCast(g, Graphics2D).Graphics, camera))
         End Function
 
         Private Structure __plot
@@ -257,7 +257,7 @@ Namespace Plot3D
                         .Width = camera.screen.Width * 0.15,
                         .Height = 5 / 4 * .Width
                     }
-                    Dim legend As Bitmap = colors.ColorMapLegend(
+                    Dim legend As GraphicsData = colors.ColorMapLegend(
                         haveUnmapped:=False,
                         min:=Math.Round(averages.Min, 1),
                         max:=Math.Round(averages.Max, 1),
@@ -267,7 +267,7 @@ Namespace Plot3D
                     Dim left% = camera.screen.Width - lsize.Width + 150
                     Dim top% = camera.screen.Height / 3
 
-                    Call g.DrawImageUnscaled(legend, left, top)
+                    Call g.DrawImageUnscaled(DirectCast(legend, ImageData).Image, left, top)
                 End If
             End Sub
         End Structure
@@ -292,7 +292,7 @@ Namespace Plot3D
                              Optional mapLevels% = 25,
                              Optional bg$ = "white",
                              Optional axisFont$ = CSSFont.Win10Normal,
-                             Optional legendFont As Font = Nothing) As Bitmap
+                             Optional legendFont As Font = Nothing) As GraphicsData
 
             Return matrix.Surface.ToArray _
                 .Plot(
