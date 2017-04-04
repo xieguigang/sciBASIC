@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 
-Namespace SVG.CSS
+Namespace d3js.SVG.CSS
 
     ''' <summary>
     ''' Style generator for the value of <see cref="XmlMeta.CSS.style"/>

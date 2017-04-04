@@ -600,7 +600,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
-            Throw New NotImplementedException()
+            Call DrawString(s, font, brush, New PointF(x, y))
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
@@ -766,11 +766,17 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF)
-            Throw New NotImplementedException()
+            Dim path As New path(points.GraphicsPath) With {
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+            }
+            Call __svgData.Add(path)
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point)
-            Throw New NotImplementedException()
+            Dim path As New path(points.GraphicsPath) With {
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+            }
+            Call __svgData.Add(path)
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
@@ -825,11 +831,14 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point)
-            Throw New NotImplementedException()
+            Call FillPolygon(brush, points.Select(AddressOf PointF).ToArray)
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
-            Throw New NotImplementedException()
+            Dim polygon As New polygon(points) With {
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+            }
+            Call __svgData.Add(polygon)
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)

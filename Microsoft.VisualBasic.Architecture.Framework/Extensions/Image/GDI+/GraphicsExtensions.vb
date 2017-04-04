@@ -54,7 +54,16 @@ Namespace Imaging
         End Function
 
         <Extension>
-        Public Function GraphicsPath(points As Point()) As GraphicsPath
+        Public Function GraphicsPath(points As IEnumerable(Of Point)) As GraphicsPath
+            Dim path As New GraphicsPath
+            For Each pt In points.SlideWindows(2)
+                Call path.AddLine(pt(0), pt(1))
+            Next
+            Return path
+        End Function
+
+        <Extension>
+        Public Function GraphicsPath(points As IEnumerable(Of PointF)) As GraphicsPath
             Dim path As New GraphicsPath
             For Each pt In points.SlideWindows(2)
                 Call path.AddLine(pt(0), pt(1))

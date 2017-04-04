@@ -185,6 +185,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="d3js\CSSModel.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
     <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
@@ -241,6 +242,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SVG\CSS\ObjectStyle.vb" />
     <Compile Include="SVG\SVGDataCache.vb" />
     <Compile Include="SVG\Extensions.vb" />
     <Compile Include="SVG\Renderer.vb" />
@@ -248,7 +250,7 @@
     <Compile Include="SVG\XML\g.vb" />
     <Compile Include="SVG\XML\Image.vb" />
     <Compile Include="SVG\XML\SVG.vb" />
-    <Compile Include="SVG\XML\CSS.vb" />
+    <Compile Include="d3js\CSS.vb" />
     <Compile Include="SVG\XML\Xml.vb" />
     <Compile Include="TextureResourceLoader.vb" />
   </ItemGroup>
@@ -366,9 +368,7 @@
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="d3js\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
