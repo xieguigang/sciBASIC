@@ -47,7 +47,7 @@ Namespace Graphic.Legend
         ''' <param name="border">绘制每一个图例的边</param>
         ''' <returns></returns>
         <Extension>
-        Public Function DrawLegend(ByRef g As Graphics, pos As Point, graphicsSize As SizeF, l As Legend, Optional border As Stroke = Nothing, Optional radius% = 5) As SizeF
+        Public Function DrawLegend(ByRef g As IGraphics, pos As Point, graphicsSize As SizeF, l As Legend, Optional border As Stroke = Nothing, Optional radius% = 5) As SizeF
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
 
@@ -178,7 +178,7 @@ Namespace Graphic.Legend
         ''' <param name="regionBorder">整个图例的绘图区域的边的绘制设置</param>
         ''' <param name="radius">这个是用于圆角矩形的图例图形的绘制参数</param>
         <Extension>
-        Public Sub DrawLegends(ByRef g As Graphics,
+        Public Sub DrawLegends(ByRef g As IGraphics,
                                topLeft As Point,
                                ls As IEnumerable(Of Legend),
                                Optional graphicSize As SizeF = Nothing,
@@ -230,7 +230,7 @@ Namespace Graphic.Legend
         ''' <param name="g"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function MaxLegendSize(legends As IEnumerable(Of Legend), g As Graphics) As SizeF
+        Public Function MaxLegendSize(legends As IEnumerable(Of Legend), g As IGraphics) As SizeF
             Dim maxW! = Single.MinValue, maxH! = Single.MinValue
 
             For Each l As Legend In legends

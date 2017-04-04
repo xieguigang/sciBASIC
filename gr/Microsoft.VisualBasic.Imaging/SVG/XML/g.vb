@@ -28,7 +28,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace SVG
+Namespace SVG.XML
 
     ''' <summary>
     ''' SVG之中的画布对象，<see cref="SVGXml"/>和<see cref="g"/>都属于这种类型

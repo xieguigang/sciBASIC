@@ -62,7 +62,7 @@ Namespace Drawing2D.Vector.Shapes
             End Get
         End Property
 
-        Public Overloads Shared Sub Draw(ByRef g As Graphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
+        Public Overloads Shared Sub Draw(ByRef g As IGraphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
             Dim t As New GraphicsPath
             Dim a As New Point(topLeft.X + size.Width / 2, topLeft.Y)
             Dim rect As New Rectangle(topLeft, size)

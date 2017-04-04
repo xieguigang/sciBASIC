@@ -59,7 +59,7 @@ Module Module2
 
         Call Scatter _
             .PlotHeatmap(data, valueField:="Z", legendTitle:="Heatmap(Z)") _
-            .SaveAs("x:\scatter.plotHeatmap.png")
+            .Save("x:\scatter.plotHeatmap.png")
     End Sub
 End Module
 

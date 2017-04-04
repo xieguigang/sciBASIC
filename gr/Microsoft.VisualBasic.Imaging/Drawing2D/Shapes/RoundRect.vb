@@ -37,7 +37,7 @@ Namespace Drawing2D.Vector.Shapes
     ''' </summary>
     Public Class RoundRect
 
-        Public Shared Sub Draw(ByRef g As Graphics,
+        Public Shared Sub Draw(ByRef g As IGraphics,
                                topLeft As Point,
                                size As SizeF,
                                radius%,

@@ -1,42 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::a03b8b08e5b7b40808954ebd8a5fe3e5, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\Pyramid.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.g
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 
 Public Module Pyramid
 
@@ -55,7 +54,7 @@ Public Module Pyramid
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional legendBorder As Stroke = Nothing,
-                         Optional wp# = 0.8) As Bitmap
+                         Optional wp# = 0.8) As GraphicsData
 
         Dim array As Fractions() =
             data _
@@ -68,7 +67,7 @@ Public Module Pyramid
         End If
 
         Dim plotInternal =
-            Sub(ByRef g As Graphics, region As GraphicsRegion)
+            Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim height% = region.PlotRegion.Height
                 Dim width% = region.PlotRegion.Width * wp
                 Dim left! = (region.PlotRegion.Width - width) / 2 + margin.Left
@@ -103,7 +102,7 @@ Public Module Pyramid
                 Next
 
                 Dim font As New Font(FontFace.MicrosoftYaHei, 32)
-                Dim gr As Graphics = g
+                Dim gr As IGraphics = g
                 Dim maxL = data.Select(Function(x) gr.MeasureString(x.Name, font).Width).Max
                 left = size.Width - (margin.Horizontal) - maxL
                 Dim top = margin.Top

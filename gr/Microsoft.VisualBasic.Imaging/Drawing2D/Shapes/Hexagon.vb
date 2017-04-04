@@ -37,7 +37,7 @@ Namespace Drawing2D.Vector.Shapes
     ''' </summary>
     Public Class Hexagon
 
-        Public Shared Sub Draw(ByRef g As Graphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
+        Public Shared Sub Draw(ByRef g As IGraphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
             Dim rect As New Rectangle(topLeft, size)
             Dim a As New Point(topLeft.X + size.Width / 4, topLeft.Y)
             Dim b As New Point(topLeft.X + size.Width * 3 / 4, topLeft.Y)

@@ -33,6 +33,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports RowTokens = System.Collections.Generic.IEnumerable(Of System.String)
 
@@ -74,10 +75,21 @@ Namespace ComponentModel.DataSourceModel
             Next
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="stream"></param>
+        ''' <param name="lower"></param>
+        ''' <param name="process"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Linux平台上面的mono这里有bug，为什么<see cref="StreamReader.ReadLine()"/>一直都输出空值？
+        ''' </remarks>
         <Extension>
         Public Function GetTsvHeader(stream As StreamReader, Optional lower As Boolean = False, Optional process As Func(Of String, String) = Nothing) As IndexOf(Of String)
             Dim t As Func(Of String, String) = If(process Is Nothing, Function(s$) s, process)
-            Dim headers$() = stream.ReadLine _
+            Dim line$ = stream.ReadLine
+            Dim headers$() = line _
                 .Split(ASCII.TAB) _
                 .Select(selector:=t) _
                 .ToArray

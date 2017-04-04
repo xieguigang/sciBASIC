@@ -31,7 +31,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net.Http
 
-Namespace SVG
+Namespace SVG.XML
 
     ''' <summary>
     ''' Does SVG support embedding of bitmap images?
@@ -59,6 +59,10 @@ Namespace SVG
         End Sub
 
         Sub New(image As Bitmap, Optional size As Size = Nothing)
+            Call Me.New(image, New SizeF(size.Width, size.Height))
+        End Sub
+
+        Sub New(image As Drawing.Image, Optional size As SizeF = Nothing)
             data = base64Header & image.ToBase64String
             If size.IsEmpty Then
                 size = image.Size
@@ -78,5 +82,12 @@ Namespace SVG
         Public Function SaveAs(fileName As String, Optional format As ImageFormats = ImageFormats.Png) As Boolean
             Return GetGDIObject.SaveAs(fileName, format)
         End Function
+
+        Public Shared Operator +(img As Image, offset As PointF) As Image
+            img = DirectCast(img.MemberwiseClone, Image)
+            img.x += offset.X
+            img.y += offset.Y
+            Return img
+        End Operator
     End Class
 End Namespace

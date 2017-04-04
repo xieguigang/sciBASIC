@@ -120,7 +120,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' \       |
         '''  \|-----
         ''' </summary>
-        Public Overrides Function Draw(ByRef g As Graphics, Optional overridesLoci As Point = Nothing) As RectangleF
+        Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim Path As New GraphicsPath
             Dim Direction As Integer = If(DirectionLeft, 1, -1)
             Dim Top As Integer = Me.Location.Y - BodySize.Height / 2
