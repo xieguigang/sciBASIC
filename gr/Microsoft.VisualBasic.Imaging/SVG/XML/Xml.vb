@@ -71,7 +71,7 @@ Namespace SVG.XML
 
         Public Property title As title
 
-        Public Shared Operator +(c As circle, offset As Point) As circle
+        Public Shared Operator +(c As circle, offset As PointF) As circle
             c = DirectCast(c.MemberwiseClone, circle)
             c.cx += offset.X
             c.cy += offset.Y
@@ -109,7 +109,7 @@ Namespace SVG.XML
             cache = data.Select(Function(pt) $"{pt.X},{pt.Y}").ToArray
         End Sub
 
-        Public Shared Operator +(polygon As polygon, offset As Point) As polygon
+        Public Shared Operator +(polygon As polygon, offset As PointF) As polygon
             Dim points As PointF() = polygon _
                 .data _
                 .Select(Function(pt) New PointF(pt.X + offset.X, pt.Y + offset.Y)) _
@@ -144,7 +144,7 @@ Namespace SVG.XML
             End With
         End Sub
 
-        Public Shared Operator +(rect As rect, offset As Point) As rect
+        Public Shared Operator +(rect As rect, offset As PointF) As rect
             rect = DirectCast(rect.MemberwiseClone(), rect)
             rect.x += offset.X
             rect.y += offset.Y
@@ -190,6 +190,15 @@ Namespace SVG.XML
             Call sb.Append("Z")
             d = sb.ToString
         End Sub
+
+        Public Shared Operator +(path As path, offset As PointF) As path
+            Dim data = path.d.Split
+            path = DirectCast(path.MemberwiseClone, path)
+
+            ' 这里该如何进行偏移？
+
+            Return path
+        End Operator
     End Class
 
     ''' <summary>
@@ -202,7 +211,7 @@ Namespace SVG.XML
         <XmlAttribute> Public Property y1 As Single
         <XmlAttribute> Public Property x1 As Single
 
-        Public Shared Operator +(line As line, offset As Point) As line
+        Public Shared Operator +(line As line, offset As PointF) As line
             line = DirectCast(line.MemberwiseClone, line)
 
             With line
@@ -238,6 +247,13 @@ Namespace SVG.XML
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property x As String
+
+        Public Shared Operator +(text As text, offset As PointF) As text
+            text = DirectCast(text.MemberwiseClone, text)
+            text.x += offset.X
+            text.y += offset.Y
+            Return text
+        End Operator
     End Class
 
     ''' <summary>
