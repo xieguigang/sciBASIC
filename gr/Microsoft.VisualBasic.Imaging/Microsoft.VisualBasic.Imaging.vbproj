@@ -245,7 +245,7 @@
     <Compile Include="SVG\CSS\ObjectStyle.vb" />
     <Compile Include="SVG\ModelBuilder.vb" />
     <Compile Include="SVG\SVGDataCache.vb" />
-    <Compile Include="SVG\Extensions.vb" />
+    <Compile Include="SVG\SVGWriter.vb" />
     <Compile Include="SVG\Renderer.vb" />
     <Compile Include="SVG\GraphicsSVG.vb" />
     <Compile Include="SVG\XML\g.vb" />
