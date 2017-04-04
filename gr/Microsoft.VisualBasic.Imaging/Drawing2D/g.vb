@@ -61,6 +61,7 @@ Namespace Drawing2D
 
         Sub New()
             Dim type$ = App.GetVariable("graphic_driver")
+
             If type.TextEquals("svg") Then
                 g.__defaultDriver = Drivers.SVG
             ElseIf type.TextEquals("gdi") Then
@@ -94,7 +95,8 @@ Namespace Drawing2D
         End Function
 
         ''' <summary>
-        ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100)
+        ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100).
+        ''' (用户可以通过命令行设置环境变量``graphic_driver``来切换图形引擎)
         ''' </summary>
         ''' <param name="size"></param>
         ''' <param name="padding"></param>

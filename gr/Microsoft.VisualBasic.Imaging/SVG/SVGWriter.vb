@@ -8,7 +8,10 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace SVG
 
-    Public Module Extensions
+    ''' <summary>
+    ''' Write the data in <see cref="GraphicsSVG"/> as a xml file.
+    ''' </summary>
+    Public Module SVGWriter
 
         ''' <summary>
         ''' Get the current svg model data from current graphics engine.

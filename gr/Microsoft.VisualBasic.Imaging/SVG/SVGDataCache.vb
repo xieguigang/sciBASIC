@@ -59,12 +59,16 @@ Namespace SVG
 
         Public Function GetSVG(size As Size) As SVGXml
             Dim SVG As New SVGXml With {
-                .circles = circles,
-                .polygon = polygons,
-                .rect = rects,
-                .path = paths,
-                .texts = texts,
-                .lines = lines,
+                .gs = {
+                    New g With {
+                        .circles = circles,
+                        .polygon = polygons,
+                        .rect = rects,
+                        .path = paths,
+                        .texts = texts,
+                        .lines = lines
+                    }
+                },
                 .width = size.Width,
                 .height = size.Height
             }
