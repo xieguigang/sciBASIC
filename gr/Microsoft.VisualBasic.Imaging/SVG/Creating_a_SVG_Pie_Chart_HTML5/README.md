@@ -1,5 +1,7 @@
 ## Creating a SVG Pie Chart-HTML5
 
+> http://www.cnblogs.com/vivianma/p/3678619.html
+
 To create a simple pie chart kind of structure in SVG(Scalable Vector Graphics) Based on values given in an array. So if the array has five values in it then the pie chart will have five slice,here is how it looks,
 
 ![](./211539597161679.jpg)
