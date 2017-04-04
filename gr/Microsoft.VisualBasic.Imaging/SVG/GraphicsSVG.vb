@@ -825,15 +825,19 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            With rect
+                Call FillPie(brush, .X, .Y, .Width, .Height, startAngle, sweepAngle)
+            End With
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
-            Throw New NotImplementedException()
+            Call FillPie(brush, CSng(x), CSng(y), CSng(width), CSng(height), CSng(startAngle), CSng(sweepAngle))
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            Dim path As path = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
+            path.style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+            Call __svgData.Add(path)
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point)

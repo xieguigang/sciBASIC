@@ -243,6 +243,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SVG\CSS\ObjectStyle.vb" />
+    <Compile Include="SVG\ModelBuilder.vb" />
     <Compile Include="SVG\SVGDataCache.vb" />
     <Compile Include="SVG\Extensions.vb" />
     <Compile Include="SVG\Renderer.vb" />
