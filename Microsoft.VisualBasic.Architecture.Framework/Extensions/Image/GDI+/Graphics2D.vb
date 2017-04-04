@@ -4086,7 +4086,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
-
+            Call Graphics.FillEllipse(brush, x, y, width, height)
         End Sub
         '
         ' Summary:
