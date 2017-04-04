@@ -115,7 +115,7 @@ Namespace Drawing2D
             End If
 
             If g.__getDriver(developerValue:=driver) = Drivers.SVG Then
-                Dim svg As New GraphicsSVG
+                Dim svg As New GraphicsSVG(size)
                 Call svg.Clear(bg.TranslateColor)
                 Call plotAPI(svg, New GraphicsRegion With {
                        .Size = size,

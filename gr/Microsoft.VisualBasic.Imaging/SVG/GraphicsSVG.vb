@@ -17,7 +17,17 @@ Namespace SVG
         ''' 主要是需要进行字体的大小计算所需要使用的一个内部gdi+对象
         ''' </summary>
         ReadOnly __graphics As Graphics = Graphics.FromImage(New Bitmap(100, 100))
-        Friend ReadOnly __svgData As New SVGDataCache
+        Friend ReadOnly __svgData As SVGDataCache
+
+        Public Sub New(size As Size)
+            __svgData = New SVGDataCache With {
+                .Size = size
+            }
+        End Sub
+
+        Public Sub New(width%, height%)
+            Me.New(New Drawing.Size(width, height))
+        End Sub
 
         Public Overrides Property Clip As Region
             Get
@@ -160,6 +170,12 @@ Namespace SVG
         Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
             Get
                 Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property Size As Size
+            Get
+                Return __svgData.Size
             End Get
         End Property
 

@@ -99,7 +99,7 @@ Namespace Imaging
         ''' </summary>
         ''' <returns>A System.Drawing.Size structure that represents the width and height, in pixels,
         ''' of this image.</returns>
-        Public ReadOnly Property Size As Size
+        Public Overrides ReadOnly Property Size As Size
 
         ''' <summary>
         ''' 在图象上面的中心的位置点

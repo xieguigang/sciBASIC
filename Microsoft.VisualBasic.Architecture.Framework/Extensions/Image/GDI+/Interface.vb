@@ -44,6 +44,9 @@ Namespace Imaging
     ''' </summary>
     Public MustInherit Class IGraphics
         Implements IDisposable
+
+        Public MustOverride ReadOnly Property Size As Size
+
         '
         ' Summary:
         '     Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.

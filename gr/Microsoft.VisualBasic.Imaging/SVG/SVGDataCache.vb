@@ -15,6 +15,7 @@ Namespace SVG
         Protected Friend polygons As New List(Of polygon)
         Protected Friend images As New List(Of XML.Image)
         Protected Friend bg$
+        Protected Friend Size As Size
 
         Public Sub Add(text As XML.text)
             texts += text
