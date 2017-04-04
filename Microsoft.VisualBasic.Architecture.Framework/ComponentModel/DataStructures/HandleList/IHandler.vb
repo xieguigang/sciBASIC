@@ -66,10 +66,8 @@ Namespace ComponentModel
         Implements IHashHandle
 
         Public Property obj As T
-
         Public Property Address As Integer Implements IAddressHandle.Address
-
-        Public Property Identifier As String Implements INamedValue.Key
+        Public Property ID As String Implements INamedValue.Key
             Get
                 Return obj.Key
             End Get

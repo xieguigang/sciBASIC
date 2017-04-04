@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::f6873bb4f9a61d57b2c4aa1f88f4d78c, ..\sciBASIC#\mime\MIME_Markups\YAML\TextParserCommon.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Language
 
 Namespace YAML.Grammar
 
     Partial Public Class YamlParser
 
         Public Property Position() As Integer
+        Public Errors As New List(Of LineValue(Of String))()
 
-        Private Input As ParserInput(Of Char)
-
-        Public Errors As New List(Of KeyValuePair(Of Integer, String))()
-        Private ErrorStatck As New Stack(Of Integer)()
+        Dim ErrorStatck As New Stack(Of Integer)()
+        Dim Input As ParserInput(Of Char)
 
         Public Sub New()
         End Sub
@@ -118,7 +118,10 @@ Namespace YAML.Grammar
         End Function
 
         Private Function [Error](message As String) As Integer
-            Errors.Add(New KeyValuePair(Of Integer, String)(_Position, message))
+            Errors += New LineValue(Of String) With {
+                .Line = _Position,
+                .value = message
+            }
             Return Errors.Count
         End Function
 
@@ -132,8 +135,8 @@ Namespace YAML.Grammar
         ''' <returns></returns>
         Public Function GetEorrorMessages() As String
             Dim text As New StringBuilder()
-            For Each msg As KeyValuePair(Of Integer, String) In Errors
-                text.Append(Input.FormErrorMessage(msg.Key, msg.Value))
+            For Each msg As LineValue(Of String) In Errors
+                text.Append(Input.FormErrorMessage(msg.Line, msg.value))
                 text.AppendLine()
             Next
             Return text.ToString()
