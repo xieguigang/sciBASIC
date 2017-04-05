@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::38647b7c1e093d7814e0327bff436430, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\SVG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,11 +31,12 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.SVG
+Imports Microsoft.VisualBasic.Imaging.d3js.SVG.CSS
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.SVG
-Imports Microsoft.VisualBasic.Imaging.SVG.CSS
+Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 
 ''' <summary>
@@ -79,24 +80,24 @@ Public Module SVGExtensions
             is3D,
             New IGetPoint(AddressOf Get3DPoint),
             New IGetPoint(AddressOf Get2DPoint))
-        Dim nodes As SVG.circle() =
-            LinqAPI.Exec(Of SVG.circle) <= From n As Graph.Node
-                                           In graph.nodes
-                                           Let pos As Point = getPoint(n, rect, viewDistance)
-                                           Let c As Color = If(
+        Dim nodes As circle() =
+            LinqAPI.Exec(Of circle) <= From n As Graph.Node
+                                       In graph.nodes
+                                       Let pos As Point = getPoint(n, rect, viewDistance)
+                                       Let c As Color = If(
                                                TypeOf n.Data.Color Is SolidBrush,
                                                DirectCast(n.Data.Color, SolidBrush).Color,
                                                Color.Black)
-                                           Let r As Single = n.__getRadius
-                                           Let pt As Point =
+                                       Let r As Single = n.__getRadius
+                                       Let pt As Point =
                                                New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
-                                           Select New circle With {
-                                               .class = "node",
-                                               .cx = pt.X,
-                                               .cy = pt.Y,
-                                               .r = r,
-                                               .style = $"fill: rgb({c.R}, {c.G}, {c.B});"
-                                           }
+                                       Select New circle With {
+                                           .class = "node",
+                                           .cx = pt.X,
+                                           .cy = pt.Y,
+                                           .r = r,
+                                           .style = $"fill: rgb({c.R}, {c.G}, {c.B});"
+                                       }
         Dim links As line() =
             LinqAPI.Exec(Of line) <= From edge As Edge
                                      In graph.edges
@@ -113,12 +114,12 @@ Public Module SVGExtensions
                                          .y1 = pts.Y - rs,
                                          .y2 = ptt.Y - rt
                                      }
-        Dim labels As SVG.text() = LinqAPI.Exec(Of SVG.text) <=
+        Dim labels As SVG.XML.text() = LinqAPI.Exec(Of SVG.XML.text) <=
  _
             From n As Graph.Node
             In graph.nodes
             Let pos As Point = getPoint(n, rect, viewDistance)
-            Select New SVG.text With {
+            Select New SVG.XML.text With {
                 .x = CStr(pos.X),
                 .y = CStr(pos.Y),
                 .value = n.ID,

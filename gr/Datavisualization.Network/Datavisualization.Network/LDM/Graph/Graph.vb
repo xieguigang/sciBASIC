@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::0aa9da80a0746d2a39f9465f5587167d, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Graph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -69,6 +69,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Graph
 
@@ -269,6 +270,11 @@ Namespace Graph
             Call notify()
         End Sub
 
+        ''' <summary>
+        ''' 根据node节点的label来查找
+        ''' </summary>
+        ''' <param name="label"></param>
+        ''' <returns></returns>
         Public Function GetNode(label As String) As Node
             Dim retNode As Node = Nothing
             nodes.ForEach(Sub(n As Node)
@@ -333,27 +339,35 @@ Namespace Graph
             Next
         End Sub
 
+#Region "Network data source"
+
+        ''' <summary>
+        ''' 这个属性与<see cref="connectedNodes()"/>属性之间的区别就是这个属性之中还包含着孤立的没有任何连接的节点
+        ''' </summary>
+        ''' <returns></returns>
         Public Property nodes() As List(Of Node) Implements IGraph.nodes
         Public Property edges() As List(Of Edge) Implements IGraph.edges
+#End Region
 
         ''' <summary>
         ''' Returns the set of all Nodes that have emanating Edges.
         ''' This therefore returns all Nodes that will be visible in the drawing.
+        ''' (这个属性之中是没有任何孤立的节点的)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property connectedNodes() As Node()
             Get
-                Dim _connectedNodes As New List(Of Node)
-
-                For Each Edge In edges
-                    Call _connectedNodes.Add(Edge.Source)
-                    Call _connectedNodes.Add(Edge.Target)
-                Next
-
-                Return _connectedNodes.Distinct.ToArray
+                Return edges _
+                    .Select(Function(d) {d.Source, d.Target}) _
+                    .IteratesALL _
+                    .Distinct _
+                    .ToArray
             End Get
         End Property
 
+        ''' <summary>
+        ''' <see cref="Node.ID"/>为键名
+        ''' </summary>
         Private m_nodeSet As Dictionary(Of String, Node)
         Private m_adjacencySet As Dictionary(Of String, Dictionary(Of String, List(Of Edge)))
 

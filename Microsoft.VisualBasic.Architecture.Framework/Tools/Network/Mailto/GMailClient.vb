@@ -1,36 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::1e67fe0699524b0755b6baf3713c8317, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Mailto\GMailClient.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Net
 Imports System.Net.Mail
-Imports System.Net.Mime
-Imports System.Xml.Serialization
-Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Serialization
+Imports System.Text
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Net.Mailto
@@ -41,20 +39,18 @@ Namespace Net.Mailto
     ''' <remarks></remarks>
     Public Class EMailClient
 
-        Dim Account As System.Net.NetworkCredential
+        Dim Account As NetworkCredential
         Dim SmtpServerPort As Integer
         Dim SmtpServerHostAddress As String
 
         Sub New(Account As String, Password As String, Port As Integer, HostAddress As String)
-            Me.Account = New System.Net.NetworkCredential(userName:=Account, password:=Password)
+            Me.Account = New NetworkCredential(userName:=Account, password:=Password)
             Me.SmtpServerPort = Port
             Me.SmtpServerHostAddress = HostAddress
         End Sub
 
-        Sub New(Config As MailConfigure)
-            Account = New System.Net.NetworkCredential(userName:=Config.Account, password:=Config.Password)
-            SmtpServerHostAddress = Config.HostAddress
-            SmtpServerPort = Config.Port
+        Sub New(cfg As MailConfigure)
+            Call Me.New(cfg.Account, cfg.Password, cfg.Port, cfg.HostAddress)
         End Sub
 
         ''' <summary>
@@ -73,15 +69,15 @@ Namespace Net.Mailto
         End Function
 
         Public Function SendEMail(MailContents As MailContents, displayName As String, ParamArray Receivers As String()) As Boolean
-            Dim SmtpClient As New SmtpClient()
-            SmtpClient.Credentials = Me.Account
-            SmtpClient.Port = SmtpServerPort
-            SmtpClient.Host = SmtpServerHostAddress
-            SmtpClient.EnableSsl = True
-
+            Dim SmtpClient As New SmtpClient With {
+                .Credentials = Me.Account,
+                .Port = SmtpServerPort,
+                .Host = SmtpServerHostAddress,
+                .EnableSsl = True
+            }
             Dim msg As MailMessage = MailContents
 
-            msg.From = New MailAddress(Account.UserName, displayName, System.Text.Encoding.UTF8)
+            msg.From = New MailAddress(Account.UserName, displayName, Encoding.UTF8)
 
             For Each addr As String In Receivers
                 Call msg.To.Add(addr)

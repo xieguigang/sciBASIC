@@ -57,7 +57,7 @@ Namespace Drawing2D.Vector.Shapes
             Me.BrushPen = New Pen(New SolidBrush(Color), Width)
         End Sub
 
-        Public Overrides Function Draw(ByRef g As Graphics, Optional overridesLoci As Point = Nothing) As RectangleF
+        Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim rect As RectangleF = MyBase.Draw(g, overridesLoci)
             Dim p1 = Location
             Dim p2 = New Point(Me.Location.X + pt2.X - pt1.X, Me.Location.Y + pt2.Y - pt1.Y)

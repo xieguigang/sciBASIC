@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::1f40e80ed25d7a57982c1831230d77c3, ..\sciBASIC#\Data_science\Mathematical\Plots\Plots.Extensions\PlotExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
@@ -197,7 +198,7 @@ Public Module PlotExtensions
     ''' <param name="bg"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional padding$ = g.DefaultPadding, Optional bg As String = "white") As Bitmap
+    Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional padding$ = g.DefaultPadding, Optional bg As String = "white") As GraphicsData
         Return Scatter.Plot({ode.FromODE("cyan")}, size, padding, bg)
     End Function
 
@@ -216,7 +217,7 @@ Public Module PlotExtensions
                          Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional ptSize As Single = 30,
-                         Optional width As Single = 5) As Bitmap
+                         Optional width As Single = 5) As GraphicsData
         Return Scatter.Plot(ode.FromODEs(, ptSize, width), size, padding, bg)
     End Function
 

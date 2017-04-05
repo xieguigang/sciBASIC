@@ -145,13 +145,17 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\mime\Markups\Markups.vbproj">
-      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>Markups</Name>
+    <ProjectReference Include="..\..\..\mime\MIME_Markups\MIME_Markups.vbproj">
+      <Project>{2DD4BE80-DDC3-4767-94A7-10F1C3395716}</Project>
+      <Name>MIME_Markups</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Bootstrapping\Bootstrapping.vbproj">
       <Project>{b21b924a-d67f-4554-8946-a154563394b2}</Project>
       <Name>Bootstrapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MachineLearning\MachineLearning.vbproj">
+      <Project>{a43ec013-2b55-4d25-b9f1-96bd5fb1e577}</Project>
+      <Name>MachineLearning</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>

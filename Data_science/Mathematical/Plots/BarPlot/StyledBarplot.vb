@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::99aa9fafd456ce3c5708f7943d555d04, ..\sciBASIC#\Data_science\Mathematical\Plots\BarPlot\StyledBarplot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,8 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -71,7 +73,7 @@ Namespace BarPlot
                              Optional bg$ = "white",
                              Optional interval# = 0.085,
                              Optional labelFont$ = CSSFont.Win10Normal,
-                             Optional shadowOffset% = 4) As Bitmap
+                             Optional shadowOffset% = 4) As GraphicsData
 
             Return g.GraphicsPlots(
                 size.SizeParser, padding,
@@ -88,7 +90,7 @@ Namespace BarPlot
 
         <Extension>
         Private Sub __plotInternal(data As BarSerial(),
-                                   g As Graphics, region As GraphicsRegion,
+                                   g As IGraphics, region As GraphicsRegion,
                                    interval%,
                                    labelFont$,
                                    shadowOffset%)
@@ -121,7 +123,7 @@ Namespace BarPlot
                 ' Draw bar
                 g.FillRectangle(s.Brush.GetBrush, barRECT)
                 ' Draw label
-                label = DrawLabel(s.Label, cssFont:=labelFont)
+                label = TextRender.DrawHtmlText(s.Label, cssFont:=labelFont)
                 ' rotate -90
                 label = label.RotateImage(-90)
                 labelLeft = bLeft + (bWidth - label.Width) / 2

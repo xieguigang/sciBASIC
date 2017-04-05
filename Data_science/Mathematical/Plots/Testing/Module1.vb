@@ -53,9 +53,8 @@ Module Module1
         Dim f As Func(Of Double, Double, Double) =
             Function(x, y) Math.Sqrt(x * x + y * y)
 
-        Call ScatterHeatmap _
-            .Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x ^ 2 + y ^ 3") _
-            .SaveAs("./scatter-heatmap.png")
+        Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x ^ 2 + y ^ 3") _
+            .Save("./scatter-heatmap.png")
 
         'Dim matrix As New List(Of DataSet)
 
@@ -85,7 +84,7 @@ Module Module1
         .angleY = -30,
         .offset = New Point(0, -100)
     }, bg:="transparent", showLegend:=False) _
-    .SaveAs("./3d-heatmap.png")
+    .Save("./3d-heatmap.png")
     End Sub
 
     Public Sub heatmap2()
@@ -94,9 +93,9 @@ Module Module1
         Dim spcc = data.CorrelationMatrix(AddressOf Spearman)
 
         Call HeatmapTable.Plot(spcc,) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
+            .Save("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
         Call Heatmap.Plot(spcc, mapLevels:=25) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.heatmap.png")
+            .Save("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.heatmap.png")
 
     End Sub
 
@@ -122,16 +121,18 @@ Module Module1
                 .Name = "N",
                 .Value = "-20,20"
             },
-            expression:="-(1/L)*log(1-n/100)",
+            expression:="-(1/L)*ln(1-n/100)",
             variables:=New Dictionary(Of String, String) From {
                 {"L", "5"}
             },
-            yline:=-1).SaveAs("x:\test.png")
+            yline:=-1).Save("x:\test.png")
 
         Pause()
     End Sub
 
     Sub Main()
+
+        Call App.JoinVariable("graphic_driver", "svg")
 
         Call TestYlinePlot()
 
@@ -156,7 +157,7 @@ Module Module1
                           mapLevels:=20,
                           padding:="padding: 300",
                           legendTitle:="Spearman correlations",
-                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).SaveAs("x:\spcc.png")
+                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("x:\spcc.png")
         Pause()
         Dim data = csv.LoadBarData(
     "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",
@@ -166,8 +167,8 @@ Module Module1
         "gray"
     })
 
-        Call BarPlot.Plot(data, size:=New Size(2000, 2500), stacked:=True) _
-    .SaveAs("X:/Fruit_consumption-bar-stacked.png")
+        Call BarPlot.BarPlotAPI.Plot(data, size:=New Size(2000, 2500), stacked:=True) _
+    .Save("X:/Fruit_consumption-bar-stacked.png")
 
         Pause()
 
@@ -181,7 +182,7 @@ Module Module1
         'Pause()
         Dim example = csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics\example.csv", {Color.Red}, 5).First
 
-        Call ManhattanStatics.Plot(example).SaveAs("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics/demo.png")
+        Call ManhattanStatics.Plot(example).Save("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics/demo.png")
 
         Pause()
     End Sub

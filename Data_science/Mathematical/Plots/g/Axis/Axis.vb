@@ -41,7 +41,7 @@ Namespace Graphic.Axis
     Public Module Axis
 
         <Extension>
-        Public Sub DrawAxis(ByRef g As Graphics, region As GraphicsRegion,
+        Public Sub DrawAxis(ByRef g As IGraphics, region As GraphicsRegion,
                             scaler As Mapper,
                             showGrid As Boolean,
                             Optional offset As Point = Nothing,
@@ -76,7 +76,7 @@ Namespace Graphic.Axis
         ''' <param name="xlayout">修改y属性</param>
         ''' <param name="ylayout">修改x属性</param>
         <Extension>
-        Public Sub DrawAxis(ByRef g As Graphics,
+        Public Sub DrawAxis(ByRef g As IGraphics,
                             size As Size,
                             padding As Padding,
                             scaler As Mapper,
@@ -138,7 +138,7 @@ Namespace Graphic.Axis
         End Sub
 
         <Extension>
-        Public Sub DrawYGrid(scaler As Mapper, g As Graphics, region As GraphicsRegion,
+        Public Sub DrawYGrid(scaler As Mapper, g As IGraphics, region As GraphicsRegion,
                              pen As Pen,
                              label$,
                              Optional offset As Point = Nothing,
@@ -171,7 +171,7 @@ Namespace Graphic.Axis
 
         Public Property delta As Integer = 10
 
-        <Extension> Public Sub DrawY(ByRef g As Graphics, size As Size, padding As Padding,
+        <Extension> Public Sub DrawY(ByRef g As IGraphics, size As Size, padding As Padding,
                                      pen As Pen, label$,
                                      scaler As Mapper,
                                      layout As YAxisLayoutStyles, offset As Point,
@@ -239,28 +239,10 @@ Namespace Graphic.Axis
         ''' <param name="css$"></param>
         ''' <returns></returns>
         <Extension> Private Function __plotLabel(label$, css$) As Image
-            Return DrawLabel(label, css)
+            Return TextRender.DrawHtmlText(label, css)
         End Function
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="label$">HTML</param>
-        ''' <param name="cssFont$">For html ``&lt;p>...&lt;/p>`` css style</param>
-        ''' <param name="maxSize$"></param>
-        ''' <returns></returns>
-        Public Function DrawLabel(label$, cssFont$, Optional maxSize$ = "1600,600") As Image
-            Dim g As GDIPlusDeviceHandle = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
-            Dim out As Image
-
-            TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
-            out = g.ImageResource
-            out = out.CorpBlank(blankColor:=Color.Transparent)
-
-            Return out
-        End Function
-
-        <Extension> Public Sub DrawX(ByRef g As Graphics, size As Size, padding As Padding,
+        <Extension> Public Sub DrawX(ByRef g As IGraphics, size As Size, padding As Padding,
                                      pen As Pen, label$,
                                      scaler As Mapper,
                                      layout As XAxisLayoutStyles, offset As Point,
