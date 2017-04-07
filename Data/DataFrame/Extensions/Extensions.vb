@@ -65,6 +65,32 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
+    ''' Anonymous type data reader helper.(System.MissingMethodException occurred
+    '''  HResult=0x80131513
+    '''  Message=No parameterless constructor defined for this object.
+    '''  Source=mscorlib
+    '''  StackTrace:
+    '''   at System.RuntimeTypeHandle.CreateInstance(RuntimeType type, Boolean publicOnly, Boolean noCheck, Boolean&amp; canBeCached, RuntimeMethodHandleInternal&amp; ctor, Boolean&amp; bNeedSecurityCheck)
+    '''   at System.RuntimeType.CreateInstanceSlow(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark&amp; stackMark)
+    '''   at System.Activator.CreateInstance(Type type, Boolean nonPublic)
+    '''   at System.Activator.CreateInstance(Type type)
+    '''   at Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector._Closure$__1-0._Lambda$__0(SeqValue`1 line) In G:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb:line 96
+    '''   at System.Linq.Parallel.SelectQueryOperator`2.SelectQueryOperatorEnumerator`1.MoveNext(TOutput&amp; currentElement, TKey&amp; currentKey)
+    '''   at System.Linq.Parallel.PipelineSpoolingTask`2.SpoolingWork()
+    '''   at System.Linq.Parallel.SpoolingTaskBase.Work()
+    ''')对于匿名类型，这个方法还无法正常工作
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path$"></param>
+    ''' <param name="template"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function LoadCsv(Of T As Class)(path$, template As T, Optional encoding As Encodings = Encodings.UTF8) As T()
+        Return path.LoadCsv(Of T)(encoding:=encoding.CodePage).ToArray
+    End Function
+
+    ''' <summary>
     ''' Save variable value vector as data frame
     ''' </summary>
     ''' <param name="samples"></param>

@@ -88,6 +88,17 @@ Public Module IOExample
 
     Sub Main()
 
+        Dim anoType As New With {
+            .MotifFamily = "",
+            .Regulator = "",
+            .Pcc = ""
+        }
+
+        Dim data_ddddddd = "G:\GCModeller\src\runtime\sciBASIC#\Data\TestProject\parser_TEST.csv".LoadCsv(template:=anoType)
+
+
+
+
         Dim lllll = {stackA.Random, stackA.Random, stackA.Random, stackA.Random}
         Dim result = lllll.Summary
 

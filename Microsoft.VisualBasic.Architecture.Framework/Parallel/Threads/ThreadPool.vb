@@ -171,7 +171,9 @@ Namespace Parallel.Threads
             ''' </summary>
             ''' <returns></returns>
             Public Function Run() As Long
-                Return Time(work:=task)
+                Dim time& = App.NanoTime
+                Call task()
+                Return App.NanoTime - time
             End Function
         End Structure
 
