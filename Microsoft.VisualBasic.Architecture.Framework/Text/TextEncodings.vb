@@ -47,6 +47,9 @@ Namespace Text
         ''' </summary>
         Unicode
         UTF7
+        ''' <summary>
+        ''' HTML的默认的编码格式，假若所保存的html文本出现乱码，请考虑是不是应该要选择这个编码才行？
+        ''' </summary>
         UTF8
         ''' <summary>
         ''' VB.NET的XML文件的默认编码格式为utf-16

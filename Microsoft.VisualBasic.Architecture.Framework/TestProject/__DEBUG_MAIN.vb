@@ -138,7 +138,7 @@ Public Module __DEBUG_MAIN
 
     Function Main() As Integer
 
-        Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("123233123", "a1bc").HTMLVisualize.SaveTo("x:\test.html", Encoding.UTF8)
+        Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("123233123", "a1bc").HTMLVisualize.SaveWithHTMLEncoding("x:\test223.html")
 
 
         Pause()

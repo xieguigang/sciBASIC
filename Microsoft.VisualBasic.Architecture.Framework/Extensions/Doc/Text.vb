@@ -216,6 +216,17 @@ Public Module TextDoc
     End Sub
 
     ''' <summary>
+    ''' 使用html文本的默认编码格式<see cref="Encodings.UTF8"/>来保存这个文本文件
+    ''' </summary>
+    ''' <param name="html$"></param>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SaveWithHTMLEncoding(html$, path$) As Boolean
+        Return html.SaveTo(path, Encoding.UTF8)
+    End Function
+
+    ''' <summary>
     ''' Write the text file data into a file which was specific by the <paramref name="path"></paramref> value,
     ''' this function not append the new data onto the target file.
     ''' (将目标文本字符串写入到一个指定路径的文件之中，但是不会在文件末尾追加新的数据)
