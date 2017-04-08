@@ -162,7 +162,7 @@ Vladimir I",
 
         <ExportAPI("ToHTML", Info:="View distance evolve route of the Levenshtein Edit Distance calculation.")>
         Public Function GetVisulization(res As DistResult) As String
-            Return res.Visualize
+            Return res.htmlVisualize
         End Function
 
         <ExportAPI("Write.Xml.DistResult")>
