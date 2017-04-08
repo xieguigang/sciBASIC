@@ -38,23 +38,29 @@ Namespace Text.Levenshtein
             html += <h3>Summary</h3>
             html += <table>
                         <tr>
-                            <td>Reference: </td><td> ({dist.__getReference.Length}) <strong> {dist.Reference}</strong></td>
+                            <td>Reference: </td>
+                            <td>(<%= dist.__getReference.Length %>)<strong><%= dist.Reference %></strong></td>
                         </tr>
                         <tr>
-                            <td>Hypotheses: </td><td> ({dist.__getSubject.Length}) <strong> {dist.Hypotheses}</strong></td>
+                            <td>Hypotheses: </td>
+                            <td>(<%= dist.__getSubject.Length %><strong><%= dist.Hypotheses %></strong></td>
                         </tr>
                         <tr>
-                            <td>Levenshtein Edit: </td><td> ({Len(distEdits) - distEdits.Count("m"c)}/{Len(distEdits)}) <strong> {distEdits}</strong></td>
+                            <td>Levenshtein Edit: </td>
+                            <td>(<%= Len(distEdits) - distEdits.Count("m"c) %>/<%= Len(distEdits) %>)<strong><%= distEdits %></strong></td>
                         </tr>
                         <tr>
-                            <td>Matches: </td><td> ({distEdits.Count("m"c)}/{Len(distEdits)}) <strong> {dist.Matches}</strong></td>
+                            <td>Matches: </td>
+                            <td>(<%= distEdits.Count("m"c) %>/<%= Len(distEdits) %>)<strong><%= dist.Matches %></strong></td>
                         </tr>
-                        <%= {dist.__innerInsert()} %>
+                        <%= {dist.__innerInsert} %>
                         <tr>
-                            <td>Distance: </td><td><strong> {dist.Distance}</strong></td>
+                            <td>Distance: </td>
+                            <td><strong><%= dist.Distance %></strong></td>
                         </tr>
                         <tr>
-                            <td>Score: </td><td><strong> {dist.Score}</strong></td>
+                            <td>Score: </td>
+                            <td><strong><%= dist.Score %></strong></td>
                         </tr>
                     </table>
             html += <p>
