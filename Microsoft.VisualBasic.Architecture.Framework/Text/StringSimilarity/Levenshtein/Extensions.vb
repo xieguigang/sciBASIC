@@ -30,7 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 
-Namespace Text
+Namespace Text.Levenshtein
 
     Public Module LevExtensions
 
