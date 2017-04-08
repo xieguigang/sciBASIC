@@ -134,10 +134,16 @@ Namespace Text.Levenshtein
         End Function
 
         Public Function TrimMatrix(l As Integer) As Streams.Array.Double()
-            Me.DistTable = Me.DistTable.ToArray(
-            Function(row) New Streams.Array.Double With {
-                .Values = row.Values.ToArray(Function(n) Math.Round(n, l))
-            })
+            Me.DistTable = Me.
+                DistTable _
+                .ToArray(Function(row)
+                             Dim values#() = row _
+                                 .Values _
+                                 .ToArray(Function(n) Math.Round(n, l))
+                             Return New Streams.Array.Double With {
+                                 .Values = values
+                             }
+                         End Function)
             Return Me.DistTable
         End Function
 

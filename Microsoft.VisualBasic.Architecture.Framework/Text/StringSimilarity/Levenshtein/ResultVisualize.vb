@@ -16,76 +16,80 @@ Namespace Text.Levenshtein
         <Extension>
         Public Function HTMLVisualize(result As DistResult) As String
             Try
-                Return result.__visualizeHTML().ToString
+                Return result.__visualizeHTML()
             Catch ex As Exception
                 Call App.LogException(ex)
-                Return <html>
-                           <head>
-                               <title><%= NameOf(HTTP_RFC.RFC_INTERNAL_SERVER_ERROR) %></title>
-                           </head>
-                           <body>
-                               <pre><%= ex.ToString %></pre>
-                           </body>
-                       </html>
+                Return _
+                    <html>
+                        <head>
+                            <title><%= NameOf(HTTP_RFC.RFC_INTERNAL_SERVER_ERROR) %></title>
+                        </head>
+                        <body>
+                            <pre><%= ex.ToString %></pre>
+                        </body>
+                    </html>
             End Try
         End Function
 
         <Extension>
-        Private Function __visualizeHTML(dist As DistResult) As XElement
+        Private Function __visualizeHTML(dist As DistResult) As String
             Dim html As New XmlBuilder()
-            Dim distEdits$ = dist.DistEdits
+            Dim edits$ = dist.DistEdits
 
             html += <h3>Summary</h3>
-            html += <table>
-                        <tr>
-                            <td>Reference: </td>
-                            <td>(<%= dist.__getReference.Length %>)<strong><%= dist.Reference %></strong></td>
-                        </tr>
-                        <tr>
-                            <td>Hypotheses: </td>
-                            <td>(<%= dist.__getSubject.Length %><strong><%= dist.Hypotheses %></strong></td>
-                        </tr>
-                        <tr>
-                            <td>Levenshtein Edit: </td>
-                            <td>(<%= Len(distEdits) - distEdits.Count("m"c) %>/<%= Len(distEdits) %>)<strong><%= distEdits %></strong></td>
-                        </tr>
-                        <tr>
-                            <td>Matches: </td>
-                            <td>(<%= distEdits.Count("m"c) %>/<%= Len(distEdits) %>)<strong><%= dist.Matches %></strong></td>
-                        </tr>
-                        <%= {dist.__innerInsert} %>
-                        <tr>
-                            <td>Distance: </td>
-                            <td><strong><%= dist.Distance %></strong></td>
-                        </tr>
-                        <tr>
-                            <td>Score: </td>
-                            <td><strong><%= dist.Score %></strong></td>
-                        </tr>
-                    </table>
+            html += "<table>"
+            html += <tr>
+                        <td>Reference: </td>
+                        <td><%= dist.__getReference.Length %>(chars)</td>
+                        <td><%= dist.Reference %></td>
+                    </tr>
+            html += <tr>
+                        <td>Hypotheses: </td>
+                        <td><%= dist.__getSubject.Length %>(chars)</td>
+                        <td><%= dist.Hypotheses %></td>
+                    </tr>
+            html += dist.__innerInsert
+            html += <tr>
+                        <td>Distance: </td>
+                        <td></td>
+                        <td><%= dist.Distance %></td>
+                    </tr>
+            html += <tr>
+                        <td>Similarity: </td>
+                        <td></td>
+                        <td><%= dist.MatchSimilarity * 100 %>%</td>
+                    </tr>
+            html += "</table>"
+            html += <hr/>
+            html += <h4>Levenshtein Edit Distance Table</h4>
             html += <p>
-                        <table>
-                            <tr><td>d</td><td> -> Delete</td></tr>
-                            <tr><td>i</td><td> -> Insert</td></tr>
-                            <tr><td>m</td><td> -> Match</td></tr>
-                            <tr><td>s</td><td> -> Substitute</td></tr>
-                        </table>
+                        Levenshtein Edit: <br/>
+                        <strong><%= edits %></strong> have (<%= edits.Count("m"c) %>/<%= Len(edits) %>) matches.<br/>
+
+                        <p>
+                            <table>
+                                <tr><td>d</td><td> -> Delete</td></tr>
+                                <tr><td>i</td><td> -> Insert</td></tr>
+                                <tr><td>m</td><td> -> Match</td></tr>
+                                <tr><td>s</td><td> -> Substitute</td></tr>
+                            </table>
+                        </p>
                     </p>
-            html += <h3>Levenshtein Edit Distance Table</h3>
+
             html += dist.__innerMatrix
 
-            Return <html>
-                       <head>
-                           <title><%= dist.ToString %></title>
-                       </head>
-                       <body style="font-family:Ubuntu;">
-                           <%= html.ToString %>
-                       </body>
-                   </html>
+            Return (<html>
+                        <head>
+                            <title><%= dist.ToString %></title>
+                        </head>
+                        <body style="font-family:Ubuntu;">
+                            $content
+                        </body>
+                    </html>).ToString _
+                            .Replace("$content", html.ToString)
         End Function
 
         <Extension> Private Function __innerMatrix(matrix As DistResult) As String
-            Dim MAT As StringBuilder = New StringBuilder("<table>")
             Dim dict As Dictionary(Of Integer, Integer())
 
             If matrix.DistTable Is Nothing Then
@@ -95,38 +99,69 @@ Namespace Text.Levenshtein
             If matrix.CSS.IsNullOrEmpty Then
                 dict = New Dictionary(Of Integer, Integer())
             Else
-                dict = (From cell As Point
-                    In matrix.CSS
+                Dim g = From cell As Point
+                        In matrix.CSS
                         Select cell
-                        Group cell By cell.X Into Group) _
-                        .ToDictionary(Function(row) row.X,
-                                      Function(row) row.Group.ToArray.ToArray(Function(cell) cell.Y))
+                        Group cell By cell.X Into Group
+
+                dict = g _
+                    .ToDictionary(Function(row) row.X,
+                                  Function(row)
+                                      Return row _
+                                        .Group _
+                                        .ToArray(Function(cell) cell.Y)
+                                  End Function)
             End If
 
             Dim Reference As String = matrix.__getReference()
             Dim Hypotheses As String = matrix.__getSubject()
+            Dim MAT As New XmlBuilder
+            Dim hyps$() = Hypotheses _
+                .Select(Function(c)
+                            Return <td>
+                                       <strong><%= c %></strong>
+                                   </td>
+                        End Function) _
+                .Select(Function(s) s.ToString) _
+                .ToArray
 
-            Call MAT.AppendLine($"<tr><td><tr><td></td>
-{Hypotheses.ToArray(Function(ch) $"<td><strong>{ch.ToString}</strong></td>").JoinBy("")}</tr>")
+            MAT += (<tr>
+                        <td></td>
+                        $content
+                    </tr>).ToString _
+                          .Replace("$content", hyps.JoinBy(""))
 
             For i As Integer = 0 To Len(Reference) - 1
-                Dim row As New StringBuilder()
+                Dim r As New XmlBuilder
 
                 For j As Integer = 0 To Len(Hypotheses) - 1
+                    Dim c = Math.Round(matrix.DistTable(i)(j), 2)
+
                     If dict.ContainsKey(i) AndAlso Array.IndexOf(dict(i), j) > -1 Then
-                        Call row.Append($"<td style=""background-color:green;color:white""><strong>{matrix.DistTable(i)(j)}</strong></td>")
+                        r += <td style="background-color:green;color:white">
+                           <strong><%= c %></strong>
+                       </td>
                     Else
-                        Call row.Append($"<td>{ matrix.DistTable(i)(j)}</td>")
+                        r += <td><%= c %></td>
                     End If
                 Next
-                Call MAT.AppendLine($"<tr><td><strong>{Reference(i).ToString}</strong></td>
-{row.ToString}
-<td style=""background-color:blue;color:white""><strong>{matrix.DistEdits(i).ToString}</strong></td></tr>")
+
+                MAT += (<tr>
+                           <td>
+                               <strong><%= Reference(i) %></strong>
+                           </td>
+                                $content
+                           <td style="background-color:blue;color:white">
+                               <strong><%= matrix.DistEdits(i) %></strong>
+                           </td>
+                       </tr>).ToString _
+                              .Replace("$content", r.ToString)
             Next
 
-            Call MAT.AppendLine("</table>")
-
-            Return MAT.ToString
+            Return (<table>
+                        $content
+                    </table>).ToString _
+                             .Replace("$content", MAT.ToString)
         End Function
     End Module
 End Namespace

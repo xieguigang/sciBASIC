@@ -43,6 +43,7 @@ Namespace Scripting.SymbolBuilder
         End Sub
 
         Sub New()
+            Call Me.New(capacity:=1024)
         End Sub
 
         Public Overrides Function ToString() As String
