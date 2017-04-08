@@ -1,8 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace Text.Levenshtein
@@ -16,7 +16,7 @@ Namespace Text.Levenshtein
         <Extension>
         Public Function HTMLVisualize(result As DistResult) As String
             Try
-                Return result.__visualizeHTML()
+                Return result.__visualizeHTML().FormatHTML
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return _
@@ -139,22 +139,22 @@ Namespace Text.Levenshtein
 
                     If dict.ContainsKey(i) AndAlso Array.IndexOf(dict(i), j) > -1 Then
                         r += <td style="background-color:green;color:white">
-                           <strong><%= c %></strong>
-                       </td>
+                                 <strong><%= c %></strong>
+                             </td>
                     Else
                         r += <td><%= c %></td>
                     End If
                 Next
 
                 MAT += (<tr>
-                           <td>
-                               <strong><%= Reference(i) %></strong>
-                           </td>
+                            <td>
+                                <strong><%= Reference(i) %></strong>
+                            </td>
                                 $content
                            <td style="background-color:blue;color:white">
-                               <strong><%= matrix.DistEdits(i) %></strong>
-                           </td>
-                       </tr>).ToString _
+                                <strong><%= matrix.DistEdits(i) %></strong>
+                            </td>
+                        </tr>).ToString _
                               .Replace("$content", r.ToString)
             Next
 

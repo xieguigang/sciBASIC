@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.Serialization
+Imports System.Text
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -137,7 +138,7 @@ Public Module __DEBUG_MAIN
 
     Function Main() As Integer
 
-        Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("123233123", "a1bc").HTMLVisualize.SaveTo("x:\test.html")
+        Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("123233123", "a1bc").HTMLVisualize.SaveTo("x:\test.html", Encoding.UTF8)
 
 
         Pause()
