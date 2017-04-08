@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace Text.Levenshtein
 
@@ -15,7 +16,7 @@ Namespace Text.Levenshtein
         <Extension>
         Public Function HTMLVisualize(result As DistResult) As String
             Try
-                Return result.__visualizeHTML()
+                Return result.__visualizeHTML().ToString
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return <html>
@@ -30,52 +31,51 @@ Namespace Text.Levenshtein
         End Function
 
         <Extension>
-        Private Function __visualizeHTML(dist As DistResult) As String
-            Dim html As StringBuilder = New StringBuilder(1024)
+        Private Function __visualizeHTML(dist As DistResult) As XElement
+            Dim html As New XmlBuilder()
             Dim distEdits$ = dist.DistEdits
 
-            Call html.AppendLine("<!DOCTYPE HTML>
-<html>
-<head>
-<title>{dist.ToString()}</title>
-</head>
-")
-            Call html.AppendLine("<body style=""font-family:Ubuntu;"">")
-            Call html.AppendLine("<h3>Summary</h3>")
-            Call html.AppendLine($"<table>
-<tr>
-<td>Reference: </td><td> ({dist.__getReference.Length}) <strong> {dist.Reference}</strong></td>
-</tr>
-<tr>
-<td>Hypotheses: </td><td> ({dist.__getSubject.Length}) <strong> {dist.Hypotheses}</strong></td>
-</tr>
-<tr>
-<td>Levenshtein Edit: </td><td> ({Len(distEdits) - distEdits.Count("m"c)}/{Len(distEdits)}) <strong> {distEdits}</strong></td>
-</tr>
-<tr>
-<td>Matches: </td><td> ({distEdits.Count("m"c)}/{Len(distEdits)}) <strong> {dist.Matches}</strong></td>
-</tr>
-{dist.__innerInsert()}
-<tr>
-<td>Distance: </td><td> <strong> {dist.Distance}</strong></td>
-<tr>
-<tr>
-<td>Score: </td><td> <strong> {dist.Score}</strong></td>
-</tr>
-</table>")
-            Call html.AppendLine("<p>
-<table>
-<tr><td>d</td><td> -> Delete</td></tr>
-<tr><td>i</td><td> -> Insert</td></tr>
-<tr><td>m</td><td> -> Match</td></tr>
-<tr><td>s</td><td> -> Substitute</td></tr>
-</table>
-</p>")
-            Call html.AppendLine("<h3>Levenshtein Edit Distance Table</h3>")
-            Call html.AppendLine(dist.__innerMatrix)
-            Call html.AppendLine("</body></html>")
+            html += <h3>Summary</h3>
+            html += <table>
+                        <tr>
+                            <td>Reference: </td><td> ({dist.__getReference.Length}) <strong> {dist.Reference}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Hypotheses: </td><td> ({dist.__getSubject.Length}) <strong> {dist.Hypotheses}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Levenshtein Edit: </td><td> ({Len(distEdits) - distEdits.Count("m"c)}/{Len(distEdits)}) <strong> {distEdits}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Matches: </td><td> ({distEdits.Count("m"c)}/{Len(distEdits)}) <strong> {dist.Matches}</strong></td>
+                        </tr>
+                        <%= {dist.__innerInsert()} %>
+                        <tr>
+                            <td>Distance: </td><td><strong> {dist.Distance}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Score: </td><td><strong> {dist.Score}</strong></td>
+                        </tr>
+                    </table>
+            html += <p>
+                        <table>
+                            <tr><td>d</td><td> -> Delete</td></tr>
+                            <tr><td>i</td><td> -> Insert</td></tr>
+                            <tr><td>m</td><td> -> Match</td></tr>
+                            <tr><td>s</td><td> -> Substitute</td></tr>
+                        </table>
+                    </p>
+            html += <h3>Levenshtein Edit Distance Table</h3>
+            html += dist.__innerMatrix
 
-            Return html.ToString
+            Return <html>
+                       <head>
+                           <title><%= dist.ToString %></title>
+                       </head>
+                       <body style="font-family:Ubuntu;">
+                           <%= html.ToString %>
+                       </body>
+                   </html>
         End Function
 
         <Extension> Private Function __innerMatrix(matrix As DistResult) As String
