@@ -104,7 +104,7 @@ Namespace Text.Levenshtein
         'End Property
 
         ''' <summary>
-        ''' m+ scores
+        ''' ``m+`` scores.(0-1之间)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property MatchSimilarity As Double

@@ -136,6 +136,11 @@ Public Module __DEBUG_MAIN
 
     Function Main() As Integer
 
+        Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("a1bc", "123233123").MatchSimilarity.__DEBUG_ECHO
+        Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("123233123", "123233123").MatchSimilarity.__DEBUG_ECHO
+
+
+
         Call ListTest()
         Pause()
 
@@ -254,7 +259,7 @@ Public Module __DEBUG_MAIN
 
         Dim type As Type = GetType(dddddFile)
 
-        Call Scripting.Actives.DisplType(type).__DEBUG_ECHO
+        Call Scripting.Actives.DisplayType(type).__DEBUG_ECHO
 
         Call Pause()
 
