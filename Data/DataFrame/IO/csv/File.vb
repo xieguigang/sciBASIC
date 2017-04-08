@@ -89,7 +89,7 @@ B21,B22,B23,...
         ''' </summary>
         ''' <param name="data"></param>
         Sub New(data As IEnumerable(Of RowObject))
-            _innerTable = data.ToList
+            _innerTable = data.AsList
         End Sub
 
         ''' <summary>
@@ -559,7 +559,7 @@ B21,B22,B23,...
 
         Public Overloads Shared Widening Operator CType(rows As RowObject()) As File
             Return New File With {
-                ._innerTable = rows.ToList
+                ._innerTable = rows.AsList
             }
         End Operator
 
@@ -593,15 +593,15 @@ B21,B22,B23,...
                 Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
                 Dim Rows = (From line As SeqValue(Of String)
                             In cache.AsParallel
-                            Let __innerList As List(Of String) = line.value.Split(","c).ToList
+                            Let __innerList As List(Of String) = line.value.Split(","c).AsList
                             Select i = line.i,
                                 data = New RowObject With {._innerColumns = __innerList}
                             Order By i Ascending)
-                cData._innerTable = (From item In Rows Select item.data).ToList
+                cData._innerTable = (From item In Rows Select item.data).AsList
             Else
                 Dim Rows = (From strLine As String In lines
-                            Let InternalList As List(Of String) = strLine.Split(","c).ToList
-                            Select New RowObject With {._innerColumns = InternalList}).ToList
+                            Let InternalList As List(Of String) = strLine.Split(","c).AsList
+                            Select New RowObject With {._innerColumns = InternalList}).AsList
                 cData._innerTable = Rows
             End If
 
