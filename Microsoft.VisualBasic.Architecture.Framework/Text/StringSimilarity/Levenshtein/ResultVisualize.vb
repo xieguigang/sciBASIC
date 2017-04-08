@@ -18,15 +18,14 @@ Namespace Text.Levenshtein
                 Return result.__visualizeHTML()
             Catch ex As Exception
                 Call App.LogException(ex)
-                Return $"<!DOCTYPE HTML>
-<html>
-<head>
-<title>{NameOf(HTTP_RFC.RFC_INTERNAL_SERVER_ERROR)}</title>
-</head>
-<body>
-<pre>{ex.ToString}</pre>
-</body>
-</html>"
+                Return <html>
+                           <head>
+                               <title><%= NameOf(HTTP_RFC.RFC_INTERNAL_SERVER_ERROR) %></title>
+                           </head>
+                           <body>
+                               <pre><%= ex.ToString %></pre>
+                           </body>
+                       </html>
             End Try
         End Function
 
@@ -35,7 +34,7 @@ Namespace Text.Levenshtein
             Dim html As StringBuilder = New StringBuilder(1024)
             Dim distEdits$ = dist.DistEdits
 
-            Call html.AppendLine($"<!DOCTYPE HTML>
+            Call html.AppendLine("<!DOCTYPE HTML>
 <html>
 <head>
 <title>{dist.ToString()}</title>
