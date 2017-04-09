@@ -80,7 +80,7 @@
 '        Public Shared ReadOnly FunctionList As List(Of String) = (
 '            From s As String In Functions.Keys
 '            Select s
-'            Order By Len(s) Descending).ToList
+'            Order By Len(s) Descending).AsList
 
 '        ''' <summary>
 '        ''' Function name 'ieeeremainder' is the max length of the function name

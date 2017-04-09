@@ -551,7 +551,7 @@ B21,B22,B23,...
             Dim LQuery = (From line As String
                           In data.AsParallel
                           Let row As RowObject = CType(line, RowObject)
-                          Select row).ToList
+                          Select row).AsList
             Return New File With {
                 ._innerTable = LQuery
             }

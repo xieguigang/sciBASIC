@@ -137,7 +137,7 @@ Namespace FuzzyCMeans
 
         Public Function MakeInitialSeeds(coordinates As List(Of Entity), numberOfClusters As Integer) As List(Of Entity)
             Dim random As New Random()
-            Dim coordinatesCopy As List(Of Entity) = coordinates.ToList()
+            Dim coordinatesCopy As List(Of Entity) = coordinates.AsList()
             Dim initialClusterCenters As New List(Of Entity)()
             For i As Integer = 0 To numberOfClusters - 1
                 Dim clusterCenterPointNumber As Integer = random.[Next](0, coordinatesCopy.Count)

@@ -80,7 +80,7 @@ Public Module MatrixExtensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToVectorList(Of T)(MAT As T(,)) As List(Of T())
-        Return MAT.RowIterator.ToList
+        Return MAT.RowIterator.AsList
     End Function
 
     <Extension>

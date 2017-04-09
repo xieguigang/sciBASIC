@@ -209,7 +209,7 @@ Public Module Extensions
         If source.IsNullOrEmpty Then
             Return -1
         Else
-            Return source.ToList.IndexOf(x)
+            Return source.AsList.IndexOf(x)
         End If
     End Function
 
@@ -732,7 +732,7 @@ Public Module Extensions
     ''' <param name="target"></param>
     ''' <returns></returns>
     <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), target As IEnumerable(Of T)) As List(Of T)
-        Dim srcList As List(Of T) = If(source.IsNullOrEmpty, New List(Of T), source.ToList)
+        Dim srcList As List(Of T) = If(source.IsNullOrEmpty, New List(Of T), source.AsList)
         If Not target.IsNullOrEmpty Then
             Call srcList.AddRange(target)
         End If

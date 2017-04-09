@@ -68,7 +68,7 @@ Namespace Language.Java
         ''' 
         <Extension>
         Public Function sublist(Of T)(list As List(Of T), fromIndex%, toIndex%) As List(Of T)
-            Return list.Skip(fromIndex).Take(toIndex - fromIndex).ToList
+            Return list.Skip(fromIndex).Take(toIndex - fromIndex).AsList
         End Function
 
         <Extension>

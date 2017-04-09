@@ -179,7 +179,7 @@ Public Module GZip
                                 Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
                                 Optional compression As CompressionLevel = CompressionLevel.Optimal)
         Dim files = FileIO.FileSystem.GetFiles(DIR)
-        Call AddToArchive(saveZip, files.ToList, action, fileOverwrite, compression)
+        Call AddToArchive(saveZip, files.AsList, action, fileOverwrite, compression)
     End Sub
 
     ''' <summary>

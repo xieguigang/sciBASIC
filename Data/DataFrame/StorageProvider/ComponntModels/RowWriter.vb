@@ -191,7 +191,7 @@ Namespace StorageProvider.ComponentModels
                                           In Columns
                                           Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
                                           Let strData As String = colum.ToString(value)
-                                          Select strData).ToList
+                                          Select strData).AsList
             Dim metas As String() = __meta(obj)
             Call row.AddRange(metas)
             Return New RowObject(row)

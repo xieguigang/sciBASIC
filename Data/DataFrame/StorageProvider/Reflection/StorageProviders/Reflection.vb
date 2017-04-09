@@ -119,7 +119,8 @@ Namespace StorageProvider.Reflection
         ''' <remarks>在这里查找所有具有写属性的属性对象即可</remarks>
         Public Function Convert(Of ItemType As Class)(DataFrame As DataFrame, Optional explicit As Boolean = True) As List(Of ItemType)
             Dim type As Type = GetType(ItemType)
-            Return DataFrame.LoadDataToObject(type, explicit) _
+            Return DataFrame _
+                .LoadDataToObject(type, explicit) _
                 .ToList(Function(x) DirectCast(x, ItemType))
         End Function
 

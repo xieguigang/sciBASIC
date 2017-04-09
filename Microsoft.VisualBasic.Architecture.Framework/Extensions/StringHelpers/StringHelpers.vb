@@ -397,7 +397,7 @@ Public Module StringHelpers
                  In union
                  Select s
                  Distinct
-                 Order By s Ascending).ToList  '获取并集，接下来需要从并集之中去除在两个集合之中都不存在的
+                 Order By s Ascending).AsList  '获取并集，接下来需要从并集之中去除在两个集合之中都不存在的
 
         For Each Line As IEnumerable(Of String) In source
             For Each row In source       '遍历每一个集合

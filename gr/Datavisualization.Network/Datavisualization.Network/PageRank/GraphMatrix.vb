@@ -90,7 +90,7 @@ Public Class GraphMatrix
         End If
 
         For Each k In indices.Keys.ToArray
-            indices(k) = indices(k).Distinct.ToList
+            indices(k) = indices(k).Distinct.AsList
         Next
     End Sub
 

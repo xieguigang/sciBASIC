@@ -349,7 +349,7 @@ Namespace Net.Persistent.Application
             '获取新产生的空闲连接
             _freeCnnInfo = (From cnn In Me._Connections.AsParallel
                             Where (From item In Me._socketList Where item.Value.GetHashCode = cnn.GetHashCode Select 1).ToArray.IsNullOrEmpty
-                            Select Guid = CStr(cnn.GetHashCode)).ToList
+                            Select Guid = CStr(cnn.GetHashCode)).AsList
             Call $"{_freeCnnInfo.Count} free connections pending for clean up....".__DEBUG_ECHO
 
             For Each usr In Me._socketList.ToArray

@@ -133,9 +133,9 @@ Public Module ListExtensions
         Dim result As List(Of TOut)
 
         If parallel Then
-            result = (From x As T In source.AsParallel Select [CType](x)).ToList
+            result = (From x As T In source.AsParallel Select [CType](x)).AsList
         Else
-            result = (From x As T In source Select [CType](x)).ToList
+            result = (From x As T In source Select [CType](x)).AsList
         End If
 
         Return result

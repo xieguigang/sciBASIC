@@ -298,7 +298,7 @@ Namespace Terminal
             ' If even index
             ' Split the item
             ' Keep the entire item
-            args = s.Split(""""c).Select(Function(element, index) If(index Mod 2 = 0, element.Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries), New String() {element})).SelectMany(Function(element) element).ToList()
+            args = s.Split(""""c).Select(Function(element, index) If(index Mod 2 = 0, element.Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries), New String() {element})).SelectMany(Function(element) element).AsList()
 
             If args.Count = 0 Then
                 args.Add(String.Empty)

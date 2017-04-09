@@ -104,14 +104,14 @@ Namespace ComponentModel.DataStructures.Tree
         ''' List of Leaf Nodes
         ''' </summary>
         Public Function GetLeafNodes() As List(Of T)
-            Return ChildNodes.Where(Function(x) x.IsLeaf).ToList()
+            Return ChildNodes.Where(Function(x) x.IsLeaf).AsList()
         End Function
 
         ''' <summary>
         ''' List of Non Leaf Nodes
         ''' </summary>
         Public Function GetNonLeafNodes() As List(Of T)
-            Return ChildNodes.Where(Function(x) Not x.IsLeaf).ToList()
+            Return ChildNodes.Where(Function(x) Not x.IsLeaf).AsList()
         End Function
 
         ''' <summary>
