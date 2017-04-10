@@ -12,7 +12,12 @@ Namespace Driver
     Public MustInherit Class GraphicsData
 
         ''' <summary>
-        ''' 驱动程序的类型
+        ''' The graphics engine driver type indicator, 
+        ''' 
+        ''' + for <see cref="Drivers.GDI"/> -> <see cref="ImageData"/>(<see cref="Drawing.Image"/>, <see cref="Bitmap"/>)
+        ''' + for <see cref="Drivers.SVG"/> -> <see cref="SVGData"/>(<see cref="SVGXml"/>)
+        ''' 
+        ''' (驱动程序的类型)
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride ReadOnly Property Driver As Drivers
@@ -44,6 +49,9 @@ Namespace Driver
 
     End Class
 
+    ''' <summary>
+    ''' Get image value from <see cref="ImageData.Image"/>
+    ''' </summary>
     Public Class ImageData : Inherits GraphicsData
 
         Public ReadOnly Property Image As Drawing.Image

@@ -28,6 +28,9 @@ Namespace DendrogramVisualize
         Friend Shared ReadOnly solidStroke As New Stroke(1.0F)
 
         Private _model As Cluster
+        ''' <summary>
+        ''' Root node
+        ''' </summary>
         Private component As ClusterComponent
 
         Private scaleTickLabelPadding As Integer = 4
@@ -62,6 +65,12 @@ Namespace DendrogramVisualize
             End Set
         End Property
 
+        ''' <summary>
+        ''' ``<see cref="Cluster.Name"/> --> Class Color``
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ClassTable As Dictionary(Of String, String)
+
         Private Sub updateModelMetrics()
             Dim minX As Double = component.RectMinX
             Dim maxX As Double = component.RectMaxX
@@ -74,27 +83,34 @@ Namespace DendrogramVisualize
             hModel = maxY - minY
         End Sub
 
-        Private Function createComponent(cluster As Cluster, initCoord As PointF, clusterHeight As Double) As ClusterComponent
+        ''' <summary>
+        ''' 对整棵树进行递归生成layout信息
+        ''' </summary>
+        ''' <param name="cluster"></param>
+        ''' <param name="pt0"></param>
+        ''' <param name="clusterHeight"></param>
+        ''' <returns></returns>
+        Private Function createComponent(cluster As Cluster, pt0 As PointF, clusterHeight As Double) As ClusterComponent
             Dim comp As ClusterComponent = Nothing
 
             If cluster IsNot Nothing Then
-
-                comp = New ClusterComponent(cluster, cluster.Leaf, initCoord)
                 Dim leafHeight As Double = clusterHeight / cluster.CountLeafs()
-                Dim yChild As Double = initCoord.Y - (clusterHeight / 2)
+                Dim yChild As Double = pt0.Y - (clusterHeight / 2)
                 Dim distance As Double = cluster.DistanceValue
+
+                comp = New ClusterComponent(cluster, cluster.Leaf, pt0)
 
                 For Each child As Cluster In cluster.Children
                     Dim childLeafCount As Integer = child.CountLeafs()
                     Dim childHeight As Double = childLeafCount * leafHeight
                     Dim childDistance As Double = child.DistanceValue
-                    Dim childInitCoord As New PointF(initCoord.X + (distance - childDistance), yChild + childHeight / 2.0)
+                    Dim childInitCoord As New PointF(pt0.X + (distance - childDistance), yChild + childHeight / 2.0)
                     yChild += childHeight
 
                     ' Traverse cluster node tree 
                     Dim childComp As ClusterComponent = createComponent(child, childInitCoord, childHeight)
 
-                    childComp.LinkPoint = initCoord
+                    childComp.LinkPoint = pt0
                     comp.Children.Add(childComp)
                 Next
             End If
@@ -112,68 +128,18 @@ Namespace DendrogramVisualize
 
         Public Sub paint(g2 As Graphics2D)
             Dim size As Size = g2.Size
-            Dim wDisplay As Integer = Size.Width - BorderLeft - BorderRight
-            Dim hDisplay As Integer = Size.Height - BorderTop - BorderBottom
+            Dim wDisplay As Integer = size.Width - BorderLeft - BorderRight
+            Dim hDisplay As Integer = size.Height - BorderTop - BorderBottom
             Dim xDisplayOrigin As Integer = BorderLeft
             Dim yDisplayOrigin As Integer = BorderBottom
 
+            ' 设置默认的笔对象
             g2.Stroke = solidStroke
 
+            ' 如果cluster的结果不为空
             If component IsNot Nothing Then
-
-                Dim nameGutterWidth As Integer = component.getMaxNameWidth(g2, False) + component.NamePadding
-                wDisplay -= nameGutterWidth
-
-                If ShowScale Then
-                    Dim rect As RectangleF = g2.FontMetrics.GetStringBounds("0", g2.Graphics)
-                    Dim scaleHeight As Integer = rect.Height + ScalePadding + ScaleTickLength + scaleTickLabelPadding
-                    hDisplay -= scaleHeight
-                    yDisplayOrigin += scaleHeight
-                End If
-
-                ' Calculate conversion factor and offset for display 
-                Dim xFactor As Double = wDisplay / wModel
-                Dim yFactor As Double = hDisplay / hModel
-                Dim xOffset As Integer = CInt(Fix(xDisplayOrigin - xModelOrigin * xFactor))
-                Dim yOffset As Integer = CInt(Fix(yDisplayOrigin - yModelOrigin * yFactor))
-                component.paint(g2, xOffset, yOffset, xFactor, yFactor, ShowDistanceValues)
-
-                If ShowScale Then
-                    Dim x1 As Integer = xDisplayOrigin
-                    Dim y1 As Integer = yDisplayOrigin - ScalePadding
-                    Dim x2 As Integer = x1 + wDisplay
-                    Dim y2 As Integer = y1
-                    g2.DrawLine(x1, y1, x2, y2)
-
-                    Dim totalDistance As Double = component.Cluster.TotalDistance
-                    Dim xModelInterval As Double
-                    If ScaleValueInterval <= 0 Then
-                        xModelInterval = totalDistance / 10.0
-                    Else
-                        xModelInterval = ScaleValueInterval
-                    End If
-
-                    Dim xTick As Integer = xDisplayOrigin + wDisplay
-                    y1 = yDisplayOrigin - ScalePadding
-                    y2 = yDisplayOrigin - ScalePadding - ScaleTickLength
-                    Dim distanceValue As Double = 0
-                    Dim xDisplayInterval As Double = xModelInterval * xFactor
-
-                    Do While xTick >= xDisplayOrigin
-
-                        ' 绘制坐标轴的Tick竖线
-                        Call g2.DrawLine(xTick, y1, xTick, y2)
-
-                        Dim distanceValueStr As String = sprintf("%." & ScaleValueDecimals & "f", distanceValue)
-                        Dim rect As RectangleF = g2.FontMetrics.GetStringBounds(distanceValueStr, g2.Graphics)
-                        g2.DrawString(distanceValueStr, CInt(Fix(xTick - (rect.Width / 2))), y2 - scaleTickLabelPadding - rect.Height)
-                        xTick -= xDisplayInterval
-                        distanceValue += xModelInterval
-                    Loop
-
-                End If
+                Call __draw(g2, wDisplay, hDisplay, xDisplayOrigin, yDisplayOrigin)
             Else
-
                 ' No data available 
                 Dim str As String = "No data"
                 Dim rect As RectangleF = g2.FontMetrics.GetStringBounds(str, g2.Graphics)
@@ -182,6 +148,65 @@ Namespace DendrogramVisualize
                 g2.DrawString(str, xt, yt)
             End If
         End Sub
-    End Class
 
+        Private Sub __draw(g2 As Graphics2D, wDisplay%, hDisplay%, xDisplayOrigin%, yDisplayOrigin%)
+            Dim nameGutterWidth As Integer = component.GetMaxNameWidth(g2, False) + component.NamePadding
+
+            wDisplay -= nameGutterWidth
+
+            If ShowScale Then
+                Dim rect As RectangleF = g2.FontMetrics.GetStringBounds("0", g2.Graphics)
+                Dim scaleHeight As Integer = rect.Height + ScalePadding + ScaleTickLength + scaleTickLabelPadding
+                hDisplay -= scaleHeight
+                yDisplayOrigin += scaleHeight
+            End If
+
+            ' Calculate conversion factor and offset for display 
+            Dim xFactor As Double = wDisplay / wModel
+            Dim yFactor As Double = hDisplay / hModel
+            Dim xOffset As Integer = CInt(Fix(xDisplayOrigin - xModelOrigin * xFactor))
+            Dim yOffset As Integer = CInt(Fix(yDisplayOrigin - yModelOrigin * yFactor))
+            Dim classHeight! = (1 / component.Cluster.CountLeafs) * yFactor
+
+            ' 从这里开始进行递归的绘制出整个进化树
+            Call component.paint(g2, xOffset, yOffset, xFactor, yFactor, ShowDistanceValues, classHeight, ClassTable)
+
+            ' 在这里进行标尺的绘制
+            If ShowScale Then
+                Dim x1 As Integer = xDisplayOrigin
+                Dim y1 As Integer = yDisplayOrigin - ScalePadding
+                Dim x2 As Integer = x1 + wDisplay
+                Dim y2 As Integer = y1
+
+                Call g2.DrawLine(x1, y1, x2, y2)
+
+                Dim totalDistance As Double = component.Cluster.TotalDistance
+                Dim xModelInterval As Double
+
+                If ScaleValueInterval <= 0 Then
+                    xModelInterval = totalDistance / 10.0
+                Else
+                    xModelInterval = ScaleValueInterval
+                End If
+
+                Dim xTick As Integer = xDisplayOrigin + wDisplay
+                y1 = yDisplayOrigin - ScalePadding
+                y2 = yDisplayOrigin - ScalePadding - ScaleTickLength
+                Dim distanceValue As Double = 0
+                Dim xDisplayInterval As Double = xModelInterval * xFactor
+
+                Do While xTick >= xDisplayOrigin
+
+                    ' 绘制坐标轴的Tick竖线
+                    Call g2.DrawLine(xTick, y1, xTick, y2)
+
+                    Dim distanceValueStr As String = sprintf("%." & ScaleValueDecimals & "f", distanceValue)
+                    Dim rect As RectangleF = g2.FontMetrics.GetStringBounds(distanceValueStr, g2.Graphics)
+                    g2.DrawString(distanceValueStr, CInt(Fix(xTick - (rect.Width / 2))), y2 - scaleTickLabelPadding - rect.Height)
+                    xTick -= xDisplayInterval
+                    distanceValue += xModelInterval
+                Loop
+            End If
+        End Sub
+    End Class
 End Namespace

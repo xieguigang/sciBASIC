@@ -181,9 +181,10 @@ Namespace Language
             Next
         End Sub
 
-        Public Overloads Sub Add(data As IEnumerable(Of T))
-            Call MyBase.AddRange(data.SafeQuery)
-        End Sub
+        ' 这个Add方法会导致一些隐式转换的类型匹配失败，所以删除掉这个方法
+        'Public Overloads Sub Add(data As IEnumerable(Of T))
+        '    Call MyBase.AddRange(data.SafeQuery)
+        'End Sub
 
         ''' <summary>
         ''' Pop all of the elements value in to array from the list object and then clear all of the list data.
@@ -304,7 +305,7 @@ Namespace Language
         ''' <param name="list"></param>
         ''' <returns></returns>
         Public Shared Operator +(vals As IEnumerable(Of T), list As List(Of T)) As List(Of T)
-            Dim all As List(Of T) = vals.ToList
+            Dim all As List(Of T) = vals.AsList
             Call all.AddRange(list)
             Return all
         End Operator

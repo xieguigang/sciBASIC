@@ -41,7 +41,7 @@ Namespace TreeAPI
         Public Function BuildTree(net As IEnumerable(Of FileStream.NetworkEdge)) As BinaryTree(Of NodeTypes)
             Dim ROOTs = net.GetConnections(ROOT)
             Dim tree As New BinaryTree(Of NodeTypes)(ROOT, NodeTypes.ROOT)
-            Dim netList = net.ToList
+            Dim netList = net.AsList
 
             For Each node In ROOTs
                 Dim Xnext As String = node.GetConnectedNode(ROOT)

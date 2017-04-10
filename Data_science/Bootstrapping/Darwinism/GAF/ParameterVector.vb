@@ -146,7 +146,7 @@ Namespace Darwinism.GAF
 
             Return {
                 thisClone, otheClone
-            }.ToList
+            }.AsList
         End Function
 
         ''' <summary>

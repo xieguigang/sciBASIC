@@ -47,13 +47,13 @@ Namespace SVG
 
         Public Sub Add(data As SVGDataCache)
             With data
-                Call Me.texts.Add(.texts)
-                Call Me.circles.Add(.circles)
-                Call Me.images.Add(.images)
-                Call Me.lines.Add(.lines)
-                Call Me.paths.Add(.paths)
-                Call Me.polygons.Add(.polygons)
-                Call Me.rects.Add(.rects)
+                Call Me.texts.AddRange(.texts)
+                Call Me.circles.AddRange(.circles)
+                Call Me.images.AddRange(.images)
+                Call Me.lines.AddRange(.lines)
+                Call Me.paths.AddRange(.paths)
+                Call Me.polygons.AddRange(.polygons)
+                Call Me.rects.AddRange(.rects)
             End With
         End Sub
 
@@ -95,13 +95,13 @@ Namespace SVG
         Public Shared Operator +(data As SVGDataCache, offset As PointF) As SVGDataCache
             Return New SVGDataCache With {
                 .bg = data.bg,
-                .circles = data.circles.Select(Function(c) c + offset).ToList,
-                .polygons = data.polygons.Select(Function(pl) pl + offset).ToList,
-                .rects = data.rects.Select(Function(rt) rt + offset).ToList,
-                .lines = data.lines.Select(Function(l) l + offset).ToList,
-                .images = data.images.Select(Function(img) img + offset).ToList,
-                .paths = data.paths.Select(Function(d) d + offset).ToList,
-                .texts = data.texts.Select(Function(t) t + offset).ToList
+                .circles = data.circles.Select(Function(c) c + offset).AsList,
+                .polygons = data.polygons.Select(Function(pl) pl + offset).AsList,
+                .rects = data.rects.Select(Function(rt) rt + offset).AsList,
+                .lines = data.lines.Select(Function(l) l + offset).AsList,
+                .images = data.images.Select(Function(img) img + offset).AsList,
+                .paths = data.paths.Select(Function(d) d + offset).AsList,
+                .texts = data.texts.Select(Function(t) t + offset).AsList
             }
         End Operator
     End Class

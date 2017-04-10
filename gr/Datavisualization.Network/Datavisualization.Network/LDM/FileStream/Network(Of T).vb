@@ -70,7 +70,7 @@ Namespace FileStream
                 If value Is Nothing Then
                     __edges = New List(Of T_Edge)
                 Else
-                    __edges = value.ToList
+                    __edges = value.AsList
                 End If
             End Set
         End Property

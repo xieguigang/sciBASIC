@@ -26,6 +26,10 @@ Namespace SVG
             }
         End Sub
 
+        Friend Sub New(svg As SVGDataCache)
+            __svgData = svg
+        End Sub
+
         Public Sub New(width%, height%)
             Me.New(New Drawing.Size(width, height))
         End Sub

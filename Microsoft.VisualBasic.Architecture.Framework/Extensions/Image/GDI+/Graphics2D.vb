@@ -176,10 +176,10 @@ Namespace Imaging
         End Operator
 
         ''' <summary>
-        ''' Internal create gdi device helper
+        ''' Internal create gdi device helper.(这个函数不会克隆原来的图像对象<paramref name="res"/>)
         ''' </summary>
         ''' <param name="g"></param>
-        ''' <param name="res"></param>
+        ''' <param name="res">绘图的基础图像对象</param>
         ''' <returns></returns>
         Friend Shared Function CreateObject(g As Graphics, res As Image) As Graphics2D
             Return New Graphics2D With {
@@ -188,6 +188,20 @@ Namespace Imaging
                 .Font = New Font(FontFace.MicrosoftYaHei, 12),
                 .Stroke = Pens.Black
             }
+        End Function
+
+        ''' <summary>
+        ''' Creates a new System.Drawing.Graphics from the specified System.Drawing.Image.
+        ''' </summary>
+        ''' <param name="image">
+        ''' System.Drawing.Image from which to create the new System.Drawing.Graphics.
+        ''' </param>
+        ''' <returns>
+        ''' This method returns a new System.Drawing.Graphics for the specified System.Drawing.Image.
+        ''' </returns>
+        Public Shared Function Open(image As Image) As Graphics2D
+            Dim g As Graphics = Graphics.FromImage(image)
+            Return Graphics2D.CreateObject(g, image)
         End Function
 
         ''' <summary>
@@ -4072,7 +4086,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
-
+            Call Graphics.FillEllipse(brush, x, y, width, height)
         End Sub
         '
         ' Summary:

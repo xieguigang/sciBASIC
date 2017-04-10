@@ -98,7 +98,7 @@ Namespace HTML
                 If value.IsNullOrEmpty Then
                     __elementNodes = New List(Of InnerPlantText)
                 Else
-                    __elementNodes = value.ToList
+                    __elementNodes = value.AsList
                 End If
             End Set
         End Property

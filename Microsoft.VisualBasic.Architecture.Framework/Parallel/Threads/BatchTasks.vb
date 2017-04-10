@@ -111,7 +111,7 @@ Namespace Parallel.Threads
         ''' You can controls the parallel tasks number from this parameter, smaller or equals to ZERO means auto 
         ''' config the thread number, If want single thread, not parallel, set this value to 1, and positive 
         ''' value greater than 1 will makes the tasks parallel.
-        ''' (可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量)
+        ''' (可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量, 1为单线程)
         ''' </param>
         ''' <param name="TimeInterval">The task run loop sleep time, unit is **ms**</param>
         ''' <param name="smart">

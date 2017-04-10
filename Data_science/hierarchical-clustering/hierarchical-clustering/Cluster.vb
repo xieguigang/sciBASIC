@@ -103,6 +103,10 @@ Public Class Cluster
         End Get
     End Property
 
+    ''' <summary>
+    ''' 计算出所有的叶节点的总数，包括自己的child的叶节点
+    ''' </summary>
+    ''' <returns></returns>
     Public Function CountLeafs() As Integer
         Return CountLeafs(Me, 0)
     End Function

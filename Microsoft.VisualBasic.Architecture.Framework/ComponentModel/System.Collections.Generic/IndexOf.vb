@@ -66,7 +66,7 @@ Namespace ComponentModel.Collection
                 Function(s) New SeqValue(Of T) With {
                     .i = s.Value,
                     .value = s.Key
-                }).ToList
+                }).AsList
         End Sub
 
         ''' <summary>

@@ -132,11 +132,11 @@ Namespace Serials.PeriodAnalysis
 
         Private Function FilteringData(Peaks As List(Of TimePoint), Trough As List(Of TimePoint), OriginalTimePoints As Integer) As SamplingData
             Dim PeaksId = (From p In Peaks Select p.Time Distinct).ToArray, TroughsId = (From p In Trough Select p.Time Distinct).ToArray
-            Dim Sample As SamplingData = New SamplingData With {.Peaks = (From p In PeaksId Select TimePoint.GetData(Peaks, p)).ToList, .Trough = (From p In TroughsId Select TimePoint.GetData(Trough, p)).ToList}
+            Dim Sample As SamplingData = New SamplingData With {.Peaks = (From p In PeaksId Select TimePoint.GetData(Peaks, p)).AsList, .Trough = (From p In TroughsId Select TimePoint.GetData(Trough, p)).AsList}
             Dim Chunkbuffer As List(Of TimePoint) = New List(Of TimePoint)
             Call Chunkbuffer.AddRange(Sample.Peaks)
             Call Chunkbuffer.AddRange(Sample.Trough)
-            Sample.FiltedData = (From p In Chunkbuffer Select p Order By p.Time Ascending).ToList
+            Sample.FiltedData = (From p In Chunkbuffer Select p Order By p.Time Ascending).AsList
 
             Dim PeaksBuffer = TimePoint.CreateBufferObject(Sample.Peaks), TroughBuffer = TimePoint.CreateBufferObject(Sample.Trough)
             Dim PreData = Sample.FiltedData.First
