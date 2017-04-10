@@ -27,10 +27,10 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Language
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Imaging
 
@@ -269,62 +269,6 @@ While any number of complex code solutions could be created to attempt to addres
             Return System.Math.Sqrt(squareR + squareG + squareB)
         End Function
 
-        ''' <summary>
-        ''' Converts a RGB color into its Hue, Saturation, and Luminance (HSL) values.
-        ''' </summary>
-        ''' <param name="rgb">The color to convert.</param>
-        ''' <returns>The HSL representation of the color.</returns>
-        ''' <remarks>
-        ''' Source algorithm found using web search at:
-        ''' http://geekymonkey.com/Programming/CSharp/RGB2HSL_HSL2RGB.htm This link is external to TechNet Wiki. It will open in a new window.
-        ''' (Adapted to VB)
-        ''' </remarks>
-        ''' 
-        <ExportAPI("Color.HSL")>
-        Public Function GetHSL(rgb As Color) As HSLColor
-            Dim h, s, l As Double
-            Dim r As Double = rgb.R / 255.0
-            Dim g As Double = rgb.G / 255.0
-            Dim b As Double = rgb.B / 255.0
-            Dim v, m, vm As Double
-            Dim r2, g2, b2 As Double
-
-            h = 0
-            s = 0
-            l = 0
-            v = Math.Max(r, g)
-            v = Math.Max(v, b)
-            m = Math.Min(r, g)
-            m = Math.Min(m, b)
-            l = (m + v) / 2.0
-            If l <= 0.0 Then
-                Exit Function
-            End If
-
-            vm = v - m
-            s = vm
-            If s > 0.0 Then
-                s /= If((l <= 0.5), (v + m), (2.0 - v - m))
-            Else
-                Exit Function
-            End If
-
-            r2 = (v - r) / vm
-            g2 = (v - g) / vm
-            b2 = (v - b) / vm
-
-            If (r = v) Then
-                h = If(g = m, 5.0 + b2, 1.0 - g2)
-            ElseIf (g = v) Then
-                h = If(b = m, 1.0 + r2, 3.0 - b2)
-            Else
-                h = If(r = m, 3.0 + g2, 5.0 - r2)
-            End If
-
-            h /= 6.0
-            Return New HSLColor(h, s, l)
-        End Function
-
         <ExportAPI("CompareLess")>
         Public Function CompareLess(value As Integer, inc As Integer) As Boolean
             Return value < 255 - Math.Abs(inc)
@@ -366,32 +310,4 @@ While any number of complex code solutions could be created to attempt to addres
             Return radians
         End Function
     End Module
-
-    ''' <summary>
-    ''' Describes a RGB color in Hue, Saturation, and Luminance values.
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Structure HSLColor
-        ''' <summary>
-        ''' The color hue.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property H As Double
-        ''' <summary>
-        ''' The color saturation.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property S As Double
-        ''' <summary>
-        ''' The color luminance.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property L As Double
-
-        Public Sub New(hValue As Double, sValue As Double, lValue As Double)
-            H = hValue
-            S = sValue
-            L = lValue
-        End Sub
-    End Structure
 End Namespace
