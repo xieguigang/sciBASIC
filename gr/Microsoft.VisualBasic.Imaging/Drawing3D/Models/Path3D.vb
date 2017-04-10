@@ -5,7 +5,7 @@ Namespace Drawing3D.IsoMetric
 
     Public Class Path3D
 
-        Public Property Points As Point3D()
+        Public Property Points As List(Of Point3D)
 
         ''' <summary>
         ''' 
@@ -13,7 +13,7 @@ Namespace Drawing3D.IsoMetric
         ''' <returns></returns>
         Public ReadOnly Property Depth() As Double
             Get
-                Dim length As Integer = Me.Points.Length
+                Dim length As Integer = Me.Points.Count
                 Dim total As Double = 0
 
                 For i As Integer = 0 To length - 1
@@ -31,62 +31,39 @@ Namespace Drawing3D.IsoMetric
         Public Sub New()
         End Sub
 
-        Public Sub New(points As Point3D())
-            Me.Points = points
+        Public Sub New(points As IEnumerable(Of Point3D))
+            Me.Points = New List(Of Point3D)(points)
         End Sub
 
-        Public Sub Push(___point As Point3D)
-            If Points Is Nothing Then Points = New Point3D() {}
-            Points = add(___point, Points)
+        Public Sub Push(point As Point3D)
+            Call Points.Add(point)
         End Sub
-
-        Public Shared Function add(___point As Point3D, values As Point3D()) As Point3D()
-            Dim anotherArray As Point3D() = New Point3D(values.Length) {}
-            Array.Copy(values, 0, anotherArray, 0, values.Length)
-            anotherArray(values.Length) = ___point
-            Return anotherArray
-        End Function
-
-        Private Shared Function concat(a As Point3D(), b As Point3D()) As Point3D()
-            Dim c As Point3D() = New Point3D(a.Length + b.Length - 1) {}
-            Array.Copy(a, 0, c, 0, a.Length)
-            Array.Copy(b, 0, c, a.Length, b.Length)
-            Return c
-        End Function
-
-        Private Shared Function reverseArray(array As Point3D()) As Point3D()
-            If array.Length = 0 Then
-                Return {}
-            ElseIf array.Length = 1 Then
-                Return array
-            Else
-                ' recursion: concatenate the reverse of the end of the array
-                ' to the first element (put at the end)
-                Return concat(reverseArray(java.util.Arrays.copyOfRange(array, 1, array.Length)), New Point3D() {array(0)})
-            End If
-        End Function
 
         ''' <summary>
         ''' Returns a new path with the points in reverse order
         ''' </summary>
         Public Function Reverse() As Path3D
-            Return New Path3D(reverseArray(Me.Points))
+            Dim list As New List(Of Point3D)(Me.Points)
+            Call list.Reverse()
+            Return New Path3D(list)
         End Function
 
         Public Function Translate(dx As Double, dy As Double, dz As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Length - 1) {}
+            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
-            For i As Integer = 0 To Me.Points.Length - 1
+
+            For i As Integer = 0 To Me.Points.Count - 1
                 ___point = Me.Points(i)
                 ___points(i) = ___point.Translate(dx, dy, dz)
-            Next i
+            Next
+
             Return New Path3D(___points)
         End Function
 
         Public Function rotateX(origin As Point3D, angle As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Length - 1) {}
+            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
-            For i As Integer = 0 To Me.Points.Length - 1
+            For i As Integer = 0 To Me.Points.Count - 1
                 ___point = Me.Points(i)
                 ___points(i) = ___point.RotateX(origin, angle)
             Next i
@@ -94,9 +71,9 @@ Namespace Drawing3D.IsoMetric
         End Function
 
         Public Function rotateY(origin As Point3D, angle As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Length - 1) {}
+            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
-            For i As Integer = 0 To Me.Points.Length - 1
+            For i As Integer = 0 To Me.Points.Count - 1
                 ___point = Me.Points(i)
                 ___points(i) = ___point.RotateY(origin, angle)
             Next i
@@ -104,9 +81,9 @@ Namespace Drawing3D.IsoMetric
         End Function
 
         Public Function rotateZ(origin As Point3D, angle As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Length - 1) {}
+            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
-            For i As Integer = 0 To Me.Points.Length - 1
+            For i As Integer = 0 To Me.Points.Count - 1
                 ___point = Me.Points(i)
                 ___points(i) = ___point.RotateZ(origin, angle)
             Next i
@@ -114,9 +91,9 @@ Namespace Drawing3D.IsoMetric
         End Function
 
         Public Function Scale(origin As Point3D, dx As Double, dy As Double, dz As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Length - 1) {}
+            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
-            For i As Integer = 0 To Me.Points.Length - 1
+            For i As Integer = 0 To Me.Points.Count - 1
                 ___point = Me.Points(i)
                 ___points(i) = ___point.Scale(origin, dx, dy, dz)
             Next i
@@ -124,9 +101,9 @@ Namespace Drawing3D.IsoMetric
         End Function
 
         Public Function Scale(origin As Point3D, dx As Double, dy As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Length - 1) {}
+            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
-            For i As Integer = 0 To Me.Points.Length - 1
+            For i As Integer = 0 To Me.Points.Count - 1
                 ___point = Me.Points(i)
                 ___points(i) = ___point.Scale(origin, dx, dy)
             Next i
@@ -134,9 +111,9 @@ Namespace Drawing3D.IsoMetric
         End Function
 
         Public Function Scale(origin As Point3D, dx As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Length - 1) {}
+            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
-            For i As Integer = 0 To Me.Points.Length - 1
+            For i As Integer = 0 To Me.Points.Count - 1
                 ___point = Me.Points(i)
                 ___points(i) = ___point.Scale(origin, dx)
             Next i
@@ -145,7 +122,7 @@ Namespace Drawing3D.IsoMetric
 
         Public Function TranslatePoints(dx As Double, dy As Double, dz As Double) As Path3D
             Dim ___point As Point3D
-            For i As Integer = 0 To Me.Points.Length - 1
+            For i As Integer = 0 To Me.Points.Count - 1
                 ___point = Me.Points(i)
                 Points(i) = ___point.Translate(dx, dy, dz)
             Next i
@@ -180,7 +157,7 @@ Namespace Drawing3D.IsoMetric
             Dim observerPosition As Double = n.dotProduct(OU) - d
             Dim result As Integer = 0
             Dim result0 As Integer = 0
-            Dim length As Integer = Me.Points.Length
+            Dim length As Integer = Me.Points.Count
 
             For i As Integer = 0 To length - 1
                 Dim OP As Point3D = Math3D.Transformation.ORIGIN - Me.Points(i)

@@ -6,6 +6,60 @@ Namespace Drawing3D.Math3D
 
         Public ReadOnly Property ORIGIN As New Point3D(0, 0, 0)
 
+#Region "3D rotation around a specific point"
+
+        ''' <summary>
+        ''' Rotate about origin on the X axis
+        ''' </summary>
+        ''' 
+        <Extension>
+        Public Function RotateX([Me] As Point3D, origin As Point3D, angle As Double) As Point3D
+            Dim pY As Double = [Me].Y - origin.Y
+            Dim pZ As Double = [Me].Z - origin.Z
+            Dim cos As Double = Math.Cos(angle)
+            Dim sin As Double = Math.Sin(angle)
+            Dim ___z As Double = pZ * cos - pY * sin
+            Dim ___y As Double = pZ * sin + pY * cos
+            pZ = ___z
+            pY = ___y
+            Return New Point3D([Me].X, pY + origin.Y, pZ + origin.Z)
+        End Function
+
+        ''' <summary>
+        ''' Rotate about origin on the Y axis
+        ''' </summary>
+        ''' 
+        <Extension>
+        Public Function RotateY([Me] As Point3D, origin As Point3D, angle As Double) As Point3D
+            Dim pX As Double = [Me].X - origin.X
+            Dim pZ As Double = [Me].Z - origin.Z
+            Dim cos As Double = Math.Cos(angle)
+            Dim sin As Double = Math.Sin(angle)
+            Dim ___x As Double = pX * cos - pZ * sin
+            Dim ___z As Double = pX * sin + pZ * cos
+            pX = ___x
+            pZ = ___z
+            Return New Point3D(pX + origin.X, [Me].Y, pZ + origin.Z)
+        End Function
+
+        ''' <summary>
+        ''' Rotate about origin on the Y axis
+        ''' </summary>
+        ''' 
+        <Extension>
+        Public Function RotateZ([Me] As Point3D, origin As Point3D, angle As Double) As Point3D
+            Dim pX As Double = [Me].X - origin.X
+            Dim pY As Double = [Me].Y - origin.Y
+            Dim cos As Double = Math.Cos(angle)
+            Dim sin As Double = Math.Sin(angle)
+            Dim ___x As Double = pX * cos - pY * sin
+            Dim ___y As Double = pX * sin + pY * cos
+            pX = ___x
+            pY = ___y
+            Return New Point3D(pX + origin.X, pY + origin.Y, [Me].Z)
+        End Function
+#End Region
+
         ''' <summary>
         ''' Translate a point from a given dx, dy, and dz
         ''' </summary>
