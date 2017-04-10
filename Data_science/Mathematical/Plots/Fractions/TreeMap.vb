@@ -54,7 +54,7 @@ Public Module TreeMap
         Dim array As List(Of Fractions) =
             data _
             .OrderByDescending(Function(x) x.Percentage) _
-            .ToList
+            .AsList
         Dim margin As Padding = padding
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)

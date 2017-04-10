@@ -88,8 +88,13 @@ Public Module ProgramPathSearchTool
     ''' Make directory
     ''' </summary>
     ''' <param name="DIR"></param>
-    <Extension> Public Sub MkDIR(DIR As String)
-        Call FileIO.FileSystem.CreateDirectory(DIR)
+    <Extension> Public Sub MkDIR(DIR$)
+        Try
+            Call FileIO.FileSystem.CreateDirectory(DIR)
+        Catch ex As Exception
+            ex = New Exception("DIR value is: " & DIR, ex)
+            Throw ex
+        End Try
     End Sub
 
     <Extension>

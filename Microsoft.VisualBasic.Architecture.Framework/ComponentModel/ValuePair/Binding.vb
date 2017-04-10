@@ -48,6 +48,11 @@ Namespace ComponentModel
             End Get
         End Property
 
+        Sub New(source As T, target As K)
+            Me.Bind = source
+            Me.Target = target
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Bind.ToString & " --> " & Target.ToString
         End Function

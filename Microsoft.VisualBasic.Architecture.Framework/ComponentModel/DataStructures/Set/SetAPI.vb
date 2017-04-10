@@ -45,7 +45,7 @@ Public Module SetAPI
     <Extension>
     Public Function Intersection(Of T)(s1 As IEnumerable(Of T), s2 As IEnumerable(Of T), __uid As GetUid(Of T)) As T()
         Dim tag As String = NameOf(s1) '  由于需要交换标签，所以在这里不能使用并行化
-        Dim uids = (From x As T In s1.AsParallel Select uid = __uid(x), st = tag, x).ToList
+        Dim uids = (From x As T In s1.AsParallel Select uid = __uid(x), st = tag, x).AsList
         tag = NameOf(s2)
         uids += (From x As T In s2.AsParallel Select uid = __uid(x), st = tag, x).ToArray
         Dim Groups = (From x In uids Select x Group x By x.uid Into Group)  ' 按照uid字符串进行分组

@@ -67,7 +67,7 @@ Namespace IO
                 Row(i) = s
             Next
 
-            Return Row.ToList
+            Return Row.AsList
         End Function
 
         ''' <summary>

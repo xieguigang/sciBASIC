@@ -80,7 +80,7 @@ Namespace Emit.Parameters
             '      Select New With {
             '          .Name = aParamater.Name,
             '          .DataType = aParamater.ParameterType
-            '}).ToList() _
+            '}).AsList() _
             '  .ForEach(Sub(obj) _methodParamaters.Add(obj.Name, obj.DataType))
 
             ' Get provided methods paramaters

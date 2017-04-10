@@ -72,7 +72,7 @@ Namespace Language
 
         Public Shared Operator <=(cls As [Class](Of T), path As String) As List(Of T)
             Dim source As IEnumerable = CollectionIO.DefaultLoadHandle(cls.Type, path, Encoding.Default)
-            Return (From x In source Select DirectCast(x, T)).ToList
+            Return (From x In source Select DirectCast(x, T)).AsList
         End Operator
 
         Public Shared Operator >=(cls As [Class](Of T), path As String) As List(Of T)

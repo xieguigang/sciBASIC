@@ -116,7 +116,7 @@ Namespace Emit.CodeDOM_VBC
                        Let ass As Assembly =
                            Assembly.Load(ref.FullName)
                        Select ass.Location
-            refList = refList.Distinct.ToList
+            refList = refList.Distinct.AsList
 
             If removeSystem Then
                 refList = LinqAPI.MakeList(Of String) <=

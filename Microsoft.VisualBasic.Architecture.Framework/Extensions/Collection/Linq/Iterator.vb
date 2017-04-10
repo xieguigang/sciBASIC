@@ -107,6 +107,11 @@ Namespace Linq
         Public Function ValueArray(Of T)(source As IEnumerable(Of Value(Of T).IValueOf)) As T()
             Return source.Select(Function(o) o.value).ToArray
         End Function
+
+        <Extension>
+        Public Function Indices(Of T)(source As IEnumerable(Of SeqValue(Of T))) As Integer()
+            Return source.Select(Function(o) o.i).ToArray
+        End Function
     End Module
 
     Public Structure SeqValue(Of T1, T2) : Implements IAddressHandle

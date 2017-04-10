@@ -136,7 +136,7 @@ Public Module TextDoc
     ''' <returns></returns>
     <Extension> Public Function ReadFirstLine(path As String) As String
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
-            Using reader As StreamReader = New StreamReader(file)
+            Using reader As StreamReader = New StreamReader(file, DefaultEncoding)
                 Dim first As String = reader.ReadLine
                 Return first
             End Using
@@ -156,7 +156,7 @@ Public Module TextDoc
     <Extension>
     Public Function ReadAllText(path As String, Optional encoding As Encoding = Nothing, Optional throwEx As Boolean = True, Optional suppress As Boolean = False) As String
         If encoding Is Nothing Then
-            encoding = Encoding.UTF8
+            encoding = DefaultEncoding
         End If
         Try
             Return FileIO.FileSystem.ReadAllText(path, encoding:=encoding)
@@ -188,13 +188,42 @@ Public Module TextDoc
     <Extension>
     Public Function ReadAllLines(path As String, Optional Encoding As Encoding = Nothing) As String()
         If Encoding Is Nothing Then
-            Encoding = Encoding.UTF8
+            Encoding = DefaultEncoding
         End If
         If path.FileExists Then
             Return IO.File.ReadAllLines(path, encoding:=Encoding)
         Else
             Return New String() {}
         End If
+    End Function
+
+    ''' <summary>
+    ''' Default is <see cref="Encoding.Default"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property DefaultEncoding As Encoding
+
+    Sub New()
+        Dim codepage$ = App.GetVariable("default_encoding")
+
+        If codepage.StringEmpty Then
+            DefaultEncoding = Encoding.Default
+        Else
+            DefaultEncoding = Text _
+                .ParseEncodingsName(codepage, Encodings.Default) _
+                .CodePage
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 使用html文本的默认编码格式<see cref="Encodings.UTF8"/>来保存这个文本文件
+    ''' </summary>
+    ''' <param name="html$"></param>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SaveWithHTMLEncoding(html$, path$) As Boolean
+        Return html.SaveTo(path, Encoding.UTF8)
     End Function
 
     ''' <summary>
@@ -220,7 +249,7 @@ Public Module TextDoc
         End If
 
         If encoding Is Nothing Then
-            encoding = Encoding.Default
+            encoding = DefaultEncoding
         End If
 
         Dim DIR As String

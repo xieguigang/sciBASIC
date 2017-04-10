@@ -247,7 +247,7 @@ Namespace Language
             ''' <param name="linq">The collection whose elements are copied to the new list.</param>
             ''' <returns></returns>
             Public Shared Operator <=(cls As ListHelper(Of T), linq As IEnumerable(Of T)) As List(Of T)
-                Return linq.ToList
+                Return linq.AsList
             End Operator
 
             Public Shared Operator >=(cls As ListHelper(Of T), linq As IEnumerable(Of T)) As List(Of T)

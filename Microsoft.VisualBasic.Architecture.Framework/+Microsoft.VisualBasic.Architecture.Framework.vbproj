@@ -446,6 +446,7 @@
     <Compile Include="Scripting\Expressions\ArrayIndex.vb" />
     <Compile Include="Scripting\Expressions\StringInterpolation.vb" />
     <Compile Include="Scripting\NumberConversionRoutines.vb" />
+    <Compile Include="Scripting\ScriptBuilder.vb" />
     <Compile Include="Terminal\InteractiveIODevice\Shell.vb" />
     <Compile Include="Terminal\PipelineCLI.vb" />
     <Compile Include="Terminal\InnerQueue.vb" />
@@ -535,6 +536,8 @@
     <Compile Include="Text\Parser\HtmlParser\HtmlStrips.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
+    <Compile Include="Text\StringSimilarity\Levenshtein\ResultVisualize.vb" />
+    <Compile Include="Text\Xml\XmlBuilder.vb" />
     <Compile Include="Text\Xml\Linq\Linq.vb" />
     <Compile Include="Text\Xml\Models.vb" />
     <Compile Include="Text\Xml\Extensions.vb" />

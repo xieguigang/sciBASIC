@@ -138,7 +138,7 @@ Namespace ComponentModel
         End Function
 
         Public Shared Function Distinct(source As KeyValuePair()) As KeyValuePair()
-            Dim List = (From obj In source Select obj Order By obj.Key Ascending).ToList
+            Dim List = (From obj In source Select obj Order By obj.Key Ascending).AsList
 
             For i As Integer = 0 To List.Count - 1
                 If i >= List.Count Then

@@ -41,7 +41,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 
-Namespace Text
+Namespace Text.Levenshtein
 
     ''' <summary>
     ''' Levenshtein Edit Distance Algorithm for measure string distance
@@ -162,7 +162,7 @@ Vladimir I",
 
         <ExportAPI("ToHTML", Info:="View distance evolve route of the Levenshtein Edit Distance calculation.")>
         Public Function GetVisulization(res As DistResult) As String
-            Return res.Visualize
+            Return res.htmlVisualize
         End Function
 
         <ExportAPI("Write.Xml.DistResult")>
@@ -321,6 +321,7 @@ Vladimir I",
         ''' <summary>
         ''' The edit distance between two strings is defined as the minimum number of
         ''' edit operations required to transform one string into another.
+        ''' (请注意，这函数是大小写敏感的。如果需要大小写不敏感，在使用前，请先将函数的两个字符串参数都转换为小写形式)
         ''' </summary>
         ''' <param name="reference"></param>
         ''' <param name="hypotheses"></param>

@@ -133,9 +133,9 @@ Public Module ListExtensions
         Dim result As List(Of TOut)
 
         If parallel Then
-            result = (From x As T In source.AsParallel Select [CType](x)).ToList
+            result = (From x As T In source.AsParallel Select [CType](x)).AsList
         Else
-            result = (From x As T In source Select [CType](x)).ToList
+            result = (From x As T In source Select [CType](x)).AsList
         End If
 
         Return result
@@ -147,7 +147,7 @@ Public Module ListExtensions
     ''' to accommodate the number of elements copied.
     ''' </summary>
     ''' <param name="source">The collection whose elements are copied to the new list.</param>
-    <Extension> Public Function ToList(Of T)(source As IEnumerable(Of T)) As List(Of T)
+    <Extension> Public Function AsList(Of T)(source As IEnumerable(Of T)) As List(Of T)
         Return New List(Of T)(source)
     End Function
 

@@ -95,13 +95,13 @@ Namespace SVG
         Public Shared Operator +(data As SVGDataCache, offset As PointF) As SVGDataCache
             Return New SVGDataCache With {
                 .bg = data.bg,
-                .circles = data.circles.Select(Function(c) c + offset).ToList,
-                .polygons = data.polygons.Select(Function(pl) pl + offset).ToList,
-                .rects = data.rects.Select(Function(rt) rt + offset).ToList,
-                .lines = data.lines.Select(Function(l) l + offset).ToList,
-                .images = data.images.Select(Function(img) img + offset).ToList,
-                .paths = data.paths.Select(Function(d) d + offset).ToList,
-                .texts = data.texts.Select(Function(t) t + offset).ToList
+                .circles = data.circles.Select(Function(c) c + offset).AsList,
+                .polygons = data.polygons.Select(Function(pl) pl + offset).AsList,
+                .rects = data.rects.Select(Function(rt) rt + offset).AsList,
+                .lines = data.lines.Select(Function(l) l + offset).AsList,
+                .images = data.images.Select(Function(img) img + offset).AsList,
+                .paths = data.paths.Select(Function(d) d + offset).AsList,
+                .texts = data.texts.Select(Function(t) t + offset).AsList
             }
         End Operator
     End Class

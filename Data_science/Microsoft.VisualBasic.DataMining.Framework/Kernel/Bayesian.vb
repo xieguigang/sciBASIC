@@ -48,7 +48,7 @@ Namespace Kernel.Classifier
         Dim Width As Integer
 
         Public Shared Function Load(Data As Generic.IEnumerable(Of ComponentModel.Entity)) As Bayesian
-            Dim Entities As List(Of ComponentModel.Entity) = Data.ToList
+            Dim Entities As List(Of ComponentModel.Entity) = Data.AsList
             Return New Bayesian With {
                 .Entities = Entities,
                 .AllClass = GetAllClass(Entities),

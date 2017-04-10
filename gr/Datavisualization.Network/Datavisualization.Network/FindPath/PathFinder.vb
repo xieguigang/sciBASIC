@@ -48,7 +48,7 @@ Public Class PathFinder(Of NetworkNode As FileStream.NetworkEdge)
         End If
 
         Dim LQuery = (From NodeItem In StartNodes
-                      Let PathResult = MoveNextStep(NodeItem, ShadowCopy(Network), ends:=NodeB, starts:=NodeItem.GetConnectedNode(NodeA)).ToList
+                      Let PathResult = MoveNextStep(NodeItem, ShadowCopy(Network), ends:=NodeB, starts:=NodeItem.GetConnectedNode(NodeA)).AsList
                       Let Path = AssemblePath(PathResult, NodeItem)
                       Let value = New With {.Length = Path.Count, .Path = Path}
                       Select value
@@ -72,13 +72,13 @@ Public Class PathFinder(Of NetworkNode As FileStream.NetworkEdge)
         If PathResult.IsNullOrEmpty Then '找不到路径
             Return New NetworkNode() {}
         End If
-        Dim ChunkList = PathResult.ToList
+        Dim ChunkList = PathResult.AsList
         Call ChunkList.Add(StartNode)
         Return ChunkList.ToArray
     End Function
 
     Private Shared Function ShadowCopy(Network As Generic.IEnumerable(Of NetworkNode)) As List(Of NetworkNode)
-        Dim LQuery = (From Node In Network Select Node).ToList
+        Dim LQuery = (From Node In Network Select Node).AsList
         Return LQuery
     End Function
 

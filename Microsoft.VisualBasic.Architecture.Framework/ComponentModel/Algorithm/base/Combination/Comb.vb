@@ -110,7 +110,7 @@ Namespace ComponentModel.Algorithm.base
 
         Public Shared Function CreateObject(source As IEnumerable(Of T)) As Comb(Of T)
             Return New Comb(Of T) With {
-                .source = source.ToList
+                .source = source.AsList
             }
         End Function
 
@@ -120,7 +120,7 @@ Namespace ComponentModel.Algorithm.base
 
         Public Shared Widening Operator CType(source As T()) As Comb(Of T)
             Return New Comb(Of T) With {
-                .source = source.ToList
+                .source = source.AsList
             }
         End Operator
 

@@ -224,7 +224,7 @@ Public Module Extensions
 
         Dim csv As New IO.File
 
-        Call csv.AppendLine((From p In headers Select p.Key).ToList)
+        Call csv.AppendLine((From p In headers Select p.Key).AsList)
         Call csv.AppendRange(LQuery)
 
         Return csv.Save(path, encoding)
@@ -238,7 +238,7 @@ Public Module Extensions
 
     <ExportAPI("Row.Parsing")>
     <Extension> Public Function ToCsvRow(data As IEnumerable(Of String)) As RowObject
-        Return CType(data.ToList, RowObject)
+        Return CType(data.AsList, RowObject)
     End Function
 
     ''' <summary>

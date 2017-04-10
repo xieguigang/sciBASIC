@@ -121,7 +121,7 @@ Namespace Clustering
                           Select New SimpleCluster With {
                               .Kernel = kernel.Average,
                               .Items = kernel,
-                              .d = d}).ToList '进行初筛
+                              .d = d}).AsList '进行初筛
             '出现偏移的核都被合并进入偏向性的核之中，进行递归聚类
             Dim get_Merged = Function(p As Integer) As SimpleCluster
                                  If p < 0 OrElse p = LQuery.Count Then
@@ -157,7 +157,7 @@ Namespace Clustering
                       Select New SimpleCluster With
                          {
                              .Kernel = item.Kernel,
-                             .Items = (From sk In sub_kernels Select sk.Items).ToArray.ToVector, .d = item.d}).ToList
+                             .Items = (From sk In sub_kernels Select sk.Items).ToArray.ToVector, .d = item.d}).AsList
 
             If LQuery.Count = 1 Then '在阈值d之下已经无法再聚类的，则必须要退出递归
                 Return LQuery.ToArray
@@ -180,7 +180,7 @@ Namespace Clustering
 
                 [next].Items = {[next].Items, LQuery}.ToVector
                 [next].Kernel = [next].Items.Average
-                Dim tmpList = item.Items.ToList
+                Dim tmpList = item.Items.AsList
                 For Each n In LQuery
                     Call tmpList.Remove(n)
                 Next

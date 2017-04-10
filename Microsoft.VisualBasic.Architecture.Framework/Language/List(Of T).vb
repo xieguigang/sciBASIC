@@ -305,7 +305,7 @@ Namespace Language
         ''' <param name="list"></param>
         ''' <returns></returns>
         Public Shared Operator +(vals As IEnumerable(Of T), list As List(Of T)) As List(Of T)
-            Dim all As List(Of T) = vals.ToList
+            Dim all As List(Of T) = vals.AsList
             Call all.AddRange(list)
             Return all
         End Operator
