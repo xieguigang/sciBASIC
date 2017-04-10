@@ -35,6 +35,26 @@ Namespace Imaging
             Return ToRGB.RGB2Hexadecimal
         End Function
 
+        ''' <summary>
+        ''' Lighten target color composition.
+        ''' </summary>
+        ''' <param name="percentage"></param>
+        ''' <param name="lightColor"></param>
+        ''' <returns></returns>
+        Public Function Lighten(percentage As Double, lightColor As Color) As Color
+            Dim base As Color = ToRGB()
+            Dim newColor As Color = Color.FromArgb(
+                base.A,
+                (lightColor.R / 255.0) * base.R,
+                (lightColor.G / 255.0) * base.G,
+                (lightColor.B / 255.0) * base.B)
+            Dim hsl As HSLColor = HSLColor.GetHSL(newColor)
+            Dim l = Math.Min(hsl.L + percentage, 1)
+
+            newColor = New HSLColor(hsl.H, hsl.S, l).ToRGB
+            Return newColor
+        End Function
+
         Public Function ToRGB() As Color
             Dim r, g, b As Double
             Dim h As Double = Me.H
@@ -87,42 +107,35 @@ Namespace Imaging
             Dim r As Double = rgb.R / 255.0
             Dim g As Double = rgb.G / 255.0
             Dim b As Double = rgb.B / 255.0
-            Dim v, m, vm As Double
+            Dim max, min, vm As Double
             Dim r2, g2, b2 As Double
 
-            h = 0
-            s = 0
-            l = 0
-            v = Math.Max(r, g)
-            v = Math.Max(v, b)
-            m = Math.Min(r, g)
-            m = Math.Min(m, b)
-            l = (m + v) / 2.0
-            If l <= 0.0 Then
-                Exit Function
-            End If
+            max = Math.Max(r, g)
+            max = Math.Max(max, b)
+            min = Math.Min(r, g)
+            min = Math.Min(min, b)
 
-            vm = v - m
-            s = vm
-            If s > 0.0 Then
-                s /= If((l <= 0.5), (v + m), (2.0 - v - m))
+            l = (min + max) / 2.0
+
+            If max = min Then
+                s = 0
+                h = s
             Else
-                Exit Function
+                Dim d As Double = max - min
+
+                s = If(l > 0.5, d / (2.0 - max - min), d / (max + min))
+
+                If max = r Then
+                    h = (g - b) / d + (If(g < b, 6.0, 0.0))
+                ElseIf max = g Then
+                    h = (b - r) / d + 2.0
+                ElseIf max = b Then
+                    h = (r - g) / d + 4.0
+                End If
+
+                h /= 6.0
             End If
 
-            r2 = (v - r) / vm
-            g2 = (v - g) / vm
-            b2 = (v - b) / vm
-
-            If (r = v) Then
-                h = If(g = m, 5.0 + b2, 1.0 - g2)
-            ElseIf (g = v) Then
-                h = If(b = m, 1.0 + r2, 3.0 - b2)
-            Else
-                h = If(r = m, 3.0 + g2, 5.0 - r2)
-            End If
-
-            h /= 6.0
             Return New HSLColor(h, s, l)
         End Function
     End Structure
