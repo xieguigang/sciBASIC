@@ -46,7 +46,7 @@ Public Module StreamExtension
     Public Function DataFrame(df As ODEsOut, Optional xDisp As String = "X", Optional fix% = -1) As IO.File
         Dim ly = df.y.Values.ToArray
         Dim file As New IO.File
-        Dim head As New RowObject(xDisp + ly.AsList(Function(s) s.Name))
+        Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.Name))
         Dim round As Func(Of Double, String)
 
         If fix <= 0 Then
@@ -67,7 +67,7 @@ Public Module StreamExtension
 #End If
 
         For Each x As SeqValue(Of Double) In df.x.SeqIterator
-            file += (round(x.value) + ly.AsList(Function(n) round(n.Value(x.i))))
+            file += (round(x.value) + ly.ToList(Function(n) round(n.Value(x.i))))
         Next
 
         Dim skips As Integer = ly.Length + 2
