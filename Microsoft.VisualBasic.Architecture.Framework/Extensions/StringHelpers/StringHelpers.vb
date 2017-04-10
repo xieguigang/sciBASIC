@@ -124,7 +124,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' tagName{<paramref name="delimiter"/>}value
+    ''' Text parser for the format: ``tagName{<paramref name="delimiter"/>}value``
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="delimiter"></param>
@@ -559,7 +559,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' String collection tokens by a certain delimiter string element.
+    ''' String collection tokenized by a certain delimiter string element.
     ''' </summary>
     ''' <param name="source"></param>
     ''' <param name="delimiter">
@@ -577,7 +577,9 @@ Public Module StringHelpers
             Dim regexp As New Regex(delimiter, opt)
             delimiterTest = Function(line) regexp.Match(line).Value = line
         Else
-            delimiterTest = Function(line) String.Equals(delimiter, line, StringComparison.Ordinal)
+            delimiterTest = Function(line)
+                                Return String.Equals(delimiter, line, StringComparison.Ordinal)
+                            End Function
         End If
 
         Return source.Split(delimiterTest, includes:=False)
