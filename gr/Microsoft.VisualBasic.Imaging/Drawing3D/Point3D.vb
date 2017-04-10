@@ -70,14 +70,25 @@ Namespace Drawing3D
             End Get
         End Property
 
+        ''' <summary>
+        ''' The depth of a point in the isometric plane
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Depth As Double
+            Get
+                ' z is weighted slightly to accommodate |_ arrangements 
+                Return Me.X + Me.Y - 2 * Me.Z
+            End Get
+        End Property
+
         Public Sub New(x As Single, y As Single, Optional z As Single = 0)
             Me.X = x
             Me.Y = y
             Me.Z = z
         End Sub
 
-        Public Sub New(Position As Point)
-            Call Me.New(Position.X, Position.Y)
+        Public Sub New(p As Point)
+            Call Me.New(p.X, p.Y)
         End Sub
 
         <XmlAttribute("x")> Public Property X As Single Implements PointF3D.X
