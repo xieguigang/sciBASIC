@@ -212,6 +212,7 @@
     <Compile Include="Drawing3D\Device\Mouse.vb" />
     <Compile Include="Drawing3D\Device\Light.vb" />
     <Compile Include="Drawing3D\Device\Worker.vb" />
+    <Compile Include="Drawing3D\Math3D\Transformation.vb" />
     <Compile Include="Drawing3D\Painter.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />

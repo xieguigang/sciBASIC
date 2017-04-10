@@ -107,8 +107,7 @@ Namespace Imaging
             Dim r As Double = rgb.R / 255.0
             Dim g As Double = rgb.G / 255.0
             Dim b As Double = rgb.B / 255.0
-            Dim max, min, vm As Double
-            Dim r2, g2, b2 As Double
+            Dim max, min As Double
 
             max = Math.Max(r, g)
             max = Math.Max(max, b)
