@@ -399,6 +399,7 @@
     <Compile Include="Extensions\Debugger\VisualBasicAppException.vb" />
     <Compile Include="Extensions\Doc\PropertyValue.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
+    <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
     <Compile Include="Extensions\Image\GDI+\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />

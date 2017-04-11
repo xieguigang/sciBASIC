@@ -212,6 +212,10 @@
     <Compile Include="Drawing3D\Device\Mouse.vb" />
     <Compile Include="Drawing3D\Device\Light.vb" />
     <Compile Include="Drawing3D\Device\Worker.vb" />
+    <Compile Include="Drawing3D\Models\Shape.vb" />
+    <Compile Include="Drawing3D\Math3D\Transformation.vb" />
+    <Compile Include="Drawing3D\Math3D\Vector.vb" />
+    <Compile Include="Drawing3D\Models\Path3D.vb" />
     <Compile Include="Drawing3D\Painter.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />
@@ -369,7 +373,10 @@
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Drawing3D\Models\Paths\" />
+    <Folder Include="Drawing3D\Models\Shapes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
