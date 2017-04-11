@@ -397,7 +397,7 @@
     <Compile Include="Extensions\Collection\NumericSequence.vb" />
     <Compile Include="Extensions\Collection\Which.vb" />
     <Compile Include="Extensions\Debugger\VisualBasicAppException.vb" />
-    <Compile Include="Extensions\Doc\PropertyValue.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
     <Compile Include="Extensions\Image\GDI+\LayoutedObject.vb" />
@@ -538,6 +538,7 @@
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\ResultVisualize.vb" />
+    <Compile Include="Text\Xml\Linq\Entity.vb" />
     <Compile Include="Text\Xml\XmlBuilder.vb" />
     <Compile Include="Text\Xml\Linq\Linq.vb" />
     <Compile Include="Text\Xml\Models.vb" />

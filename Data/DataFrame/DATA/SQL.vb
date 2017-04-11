@@ -48,12 +48,17 @@ Public Module SQL
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="data"></param>
-    ''' <param name="DIR$"></param>
+    ''' <param name="handle$">Directory or file name(``*.csv``)</param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function DumpToTable(Of T)(data As IEnumerable(Of T), DIR$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
-        Dim path$ = $"{DIR}/{GetType(T).Name}.csv"
+    Public Function DumpToTable(Of T)(data As IEnumerable(Of T),
+                                      handle$,
+                                      Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Dim path$ = If(
+            handle.Split("."c).Last.TextEquals("csv"),
+            handle,
+            $"{handle}/{GetType(T).Name}.csv")
         Return data.SaveTo(path,, encoding.CodePage)
     End Function
 

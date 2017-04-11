@@ -29,7 +29,7 @@
 Namespace Scripting
 
     ''' <summary>
-    ''' ���ģ��֮�а�����һϵ�еĳ��԰�ȫ�Ķ�һЩ���������ͽ�������ת������
+    ''' 这个模块之中包含有安全的将字符串解析为不同的数值类型的方法函数
     ''' </summary>
     Public Module NumberConversionRoutines
 
@@ -92,7 +92,7 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' ���Խ��������Ͱ�ȫ��ת��Ϊ�ַ���ֵ
+        ''' 安全的将目标对象转换为字符串值
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
@@ -103,12 +103,13 @@ Namespace Scripting
                 ElseIf Convert.IsDBNull(obj) Then
                     Return String.Empty
                 Else
-                    ' ��Ϊ������ܻᶨ����NarrowingΪString���͵Ĳ��������������������CStr�����������ǵ���ToString����
+                    ' 目标类型可能定义了Narrow为String类型的操作符，所以在这里不会调用ToString的结果
+                    ' 出错了之后才会调用ToString
                     Return CStr(obj)
                 End If
             Catch ex As Exception
                 Try
-                    ' �����Cstr�Ƿ�Ҳ�����ToString����
+                    ' 调用ToString函数来返回字符串值
                     Return obj.ToString
                 Catch ex2 As Exception
                     Return [default]
