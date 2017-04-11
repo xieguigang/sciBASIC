@@ -26,15 +26,35 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Field = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.StorageProvider
 
 ''' <summary>
 ''' 在写csv的时候生成列域名的映射的一些快捷函数
 ''' </summary>
 Public Class MappingsHelper
+
+    ''' <summary>
+    ''' 这个函数只适用于只需要解析一个或者少数属性的列名称，假若需要解析的列数量很多，则出于性能方面的考虑不推荐使用这个函数来进行
+    ''' </summary>
+    ''' <param name="schema"></param>
+    ''' <param name="propertyName$">
+    ''' 推荐使用``NameOf``操作符来获取属性的名称
+    ''' </param>
+    ''' <returns>这个函数返回空值表名没有这个属性</returns>
+    Public Shared Function ColumnName(schema As Type, propertyName$) As String
+        Dim schemaTable As SchemaProvider = SchemaProvider.CreateObject(schema)
+
+        For Each field As Field In schemaTable
+            If field.BindProperty.Name = propertyName Then
+                Return field.Name
+            End If
+        Next
+
+        Return Nothing
+    End Function
 
     ''' <summary>
     ''' 使用这个函数来判断当前的Class对象的定义之下，能否将csv文件之中的所有的列的数据都读取完全
