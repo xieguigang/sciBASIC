@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
-Namespace io.fabianterhorst.isometric.shapes
+Namespace Drawing3D.IsoMetric.Shapes
 
 
     ''' <summary>
@@ -15,7 +15,7 @@ Namespace io.fabianterhorst.isometric.shapes
 
         Public Sub New(ByVal origin As Point3D)
             MyBase.New()
-            Dim center As Point3D = origin.translate(0.5, 0.5, 0.5)
+            Dim center As Point3D = origin.Translate(0.5, 0.5, 0.5)
             Dim upperTriangle As New Path3D(New Point3D() {origin.translate(0, 0, 0.5), origin.translate(0.5, 0.5, 1), origin.translate(0, 1, 0.5)})
             Dim lowerTriangle As New Path3D(New Point3D() {origin.Translate(0, 0, 0.5), origin.Translate(0, 1, 0.5), origin.Translate(0.5, 0.5, 0)})
             Dim ___paths As Path3D() = New Path3D(7) {}

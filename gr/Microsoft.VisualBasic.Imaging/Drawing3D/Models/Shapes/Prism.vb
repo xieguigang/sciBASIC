@@ -1,7 +1,7 @@
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 
-Namespace io.fabianterhorst.isometric.shapes
+Namespace Drawing3D.IsoMetric.Shapes
 
 
     ''' <summary>
@@ -38,8 +38,8 @@ Namespace io.fabianterhorst.isometric.shapes
             Dim face3 As New Path3D(New Point3D() {origin, New Point3D(origin.X + dx, origin.Y, origin.Z), New Point3D(origin.X + dx, origin.Y + dy, origin.Z), New Point3D(origin.X, origin.Y + dy, origin.Z)
             })
             ' This surface is oriented backwards, so we need to reverse the points 
-            ___paths(4) = face3.reverse()
-            ___paths(5) = face3.translatePoints(0, 0, dz)
+            ___paths(4) = face3.Reverse()
+            ___paths(5) = face3.TranslatePoints(0, 0, dz)
 
             paths = ___paths.AsList
         End Sub

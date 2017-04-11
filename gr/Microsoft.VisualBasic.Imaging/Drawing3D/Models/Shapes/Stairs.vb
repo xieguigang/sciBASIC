@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
-Namespace io.fabianterhorst.isometric.shapes
+Namespace Drawing3D.IsoMetric.Shapes
 
 
     ''' <summary>

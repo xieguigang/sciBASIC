@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
-Namespace io.fabianterhorst.isometric.shapes
+Namespace Drawing3D.IsoMetric.Shapes
 
 
     ''' <summary>
@@ -33,7 +33,7 @@ Namespace io.fabianterhorst.isometric.shapes
             Dim face2 As New Path3D(New Point3D() {origin, New Point3D(origin.X + dx / 2, origin.Y + dy / 2, origin.Z + dz), New Point3D(origin.X, origin.Y + dy, origin.Z)
             })
             ___paths(2) = face2
-            ___paths(3) = face2.rotateZ(origin.translate(dx / 2.0, dy / 2.0, 0), Math.PI)
+            ___paths(3) = face2.RotateZ(origin.Translate(dx / 2.0, dy / 2.0, 0), Math.PI)
             paths = ___paths.AsList
         End Sub
     End Class

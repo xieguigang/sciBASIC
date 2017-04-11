@@ -1,7 +1,7 @@
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 
-Namespace io.fabianterhorst.isometric.paths
+Namespace Drawing3D.IsoMetric.Paths
 
 
     ''' <summary>

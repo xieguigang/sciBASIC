@@ -1,7 +1,7 @@
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 
-Namespace io.fabianterhorst.isometric.shapes
+Namespace Drawing3D.IsoMetric.Shapes
 
     Public Class Knot
         Inherits Shape3D
