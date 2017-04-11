@@ -212,10 +212,19 @@
     <Compile Include="Drawing3D\Device\Mouse.vb" />
     <Compile Include="Drawing3D\Device\Light.vb" />
     <Compile Include="Drawing3D\Device\Worker.vb" />
-    <Compile Include="Drawing3D\Models\Shape.vb" />
+    <Compile Include="Drawing3D\Models\Paths\Circle.vb" />
+    <Compile Include="Drawing3D\Models\Paths\Rectangle.vb" />
+    <Compile Include="Drawing3D\Models\Paths\Star.vb" />
+    <Compile Include="Drawing3D\Models\Shape3D.vb" />
     <Compile Include="Drawing3D\Math3D\Transformation.vb" />
     <Compile Include="Drawing3D\Math3D\Vector.vb" />
     <Compile Include="Drawing3D\Models\Path3D.vb" />
+    <Compile Include="Drawing3D\Models\Shapes\Cylinder.vb" />
+    <Compile Include="Drawing3D\Models\Shapes\Knot.vb" />
+    <Compile Include="Drawing3D\Models\Shapes\Octahedron.vb" />
+    <Compile Include="Drawing3D\Models\Shapes\Prism.vb" />
+    <Compile Include="Drawing3D\Models\Shapes\Pyramid.vb" />
+    <Compile Include="Drawing3D\Models\Shapes\Stairs.vb" />
     <Compile Include="Drawing3D\Painter.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />
@@ -373,10 +382,7 @@
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Drawing3D\Models\Paths\" />
-    <Folder Include="Drawing3D\Models\Shapes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

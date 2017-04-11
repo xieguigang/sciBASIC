@@ -3,9 +3,9 @@
     ''' <summary>
     ''' A collection of the path3D data.
     ''' </summary>
-    Public Class Shape
+    Public Class Shape3D
 
-        Dim paths As List(Of Path3D)
+        Protected Friend paths As List(Of Path3D)
 
         Public Sub New()
             paths = New List(Of Path3D)
@@ -19,78 +19,78 @@
             Call paths.Add(___path)
         End Sub
 
-        Public Overridable Sub push(paths As Path3D())
+        Public Overridable Sub push(paths As IEnumerable(Of Path3D))
             Call Me.paths.AddRange(paths)
         End Sub
 
-        Public Overridable Function Translate(dx As Double, dy As Double, dz As Double) As Shape
+        Public Overridable Function Translate(dx As Double, dy As Double, dz As Double) As Shape3D
             Dim ___paths As Path3D() = New Path3D(Me.paths.Count - 1) {}
             Dim ___point As Path3D
             For i As Integer = 0 To Me.paths.Count - 1
                 ___point = Me.paths(i)
                 ___paths(i) = ___point.Translate(dx, dy, dz)
             Next i
-            Return New Shape(___paths)
+            Return New Shape3D(___paths)
         End Function
 
-        Public Overridable Function rotateX(origin As Point3D, angle As Double) As Shape
+        Public Overridable Function rotateX(origin As Point3D, angle As Double) As Shape3D
             Dim ___paths As Path3D() = New Path3D(Me.paths.Count - 1) {}
             Dim ___point As Path3D
             For i As Integer = 0 To Me.paths.Count - 1
                 ___point = Me.paths(i)
                 ___paths(i) = ___point.RotateX(origin, angle)
             Next i
-            Return New Shape(___paths)
+            Return New Shape3D(___paths)
         End Function
 
-        Public Overridable Function rotateY(origin As Point3D, angle As Double) As Shape
+        Public Overridable Function rotateY(origin As Point3D, angle As Double) As Shape3D
             Dim ___paths As Path3D() = New Path3D(Me.paths.Count - 1) {}
             Dim ___point As Path3D
             For i As Integer = 0 To Me.paths.Count - 1
                 ___point = Me.paths(i)
                 ___paths(i) = ___point.RotateY(origin, angle)
             Next i
-            Return New Shape(___paths)
+            Return New Shape3D(___paths)
         End Function
 
-        Public Overridable Function rotateZ(origin As Point3D, angle As Double) As Shape
+        Public Overridable Function rotateZ(origin As Point3D, angle As Double) As Shape3D
             Dim ___paths As Path3D() = New Path3D(Me.paths.Count - 1) {}
             Dim ___point As Path3D
             For i As Integer = 0 To Me.paths.Count - 1
                 ___point = Me.paths(i)
                 ___paths(i) = ___point.RotateZ(origin, angle)
             Next i
-            Return New Shape(___paths)
+            Return New Shape3D(___paths)
         End Function
 
-        Public Overridable Function scale(origin As Point3D, dx As Double, dy As Double, dz As Double) As Shape
+        Public Overridable Function scale(origin As Point3D, dx As Double, dy As Double, dz As Double) As Shape3D
             Dim ___paths As Path3D() = New Path3D(Me.paths.Count - 1) {}
             Dim ___point As Path3D
             For i As Integer = 0 To Me.paths.Count - 1
                 ___point = Me.paths(i)
                 ___paths(i) = ___point.Scale(origin, dx, dy, dz)
             Next i
-            Return New Shape(___paths)
+            Return New Shape3D(___paths)
         End Function
 
-        Public Overridable Function scale(origin As Point3D, dx As Double, dy As Double) As Shape
+        Public Overridable Function scale(origin As Point3D, dx As Double, dy As Double) As Shape3D
             Dim ___paths As Path3D() = New Path3D(Me.paths.Count - 1) {}
             Dim ___point As Path3D
             For i As Integer = 0 To Me.paths.Count - 1
                 ___point = Me.paths(i)
                 ___paths(i) = ___point.Scale(origin, dx, dy)
             Next i
-            Return New Shape(___paths)
+            Return New Shape3D(___paths)
         End Function
 
-        Public Overridable Function scale(origin As Point3D, dx As Double) As Shape
+        Public Overridable Function scale(origin As Point3D, dx As Double) As Shape3D
             Dim ___paths As Path3D() = New Path3D(Me.paths.Count - 1) {}
             Dim ___point As Path3D
             For i As Integer = 0 To Me.paths.Count - 1
                 ___point = Me.paths(i)
                 ___paths(i) = ___point.Scale(origin, dx)
             Next i
-            Return New Shape(___paths)
+            Return New Shape3D(___paths)
         End Function
 
         Public Overridable Sub scalePath3Ds(origin As Point3D, dx As Double, dy As Double, dz As Double)
@@ -160,19 +160,19 @@
             Return Me.paths.ToArray
         End Function
 
-        Public Shared Function extrude(___path As Path3D) As Shape
-            Return extrude(New Shape, ___path, 1)
+        Public Shared Function extrude(___path As Path3D) As Shape3D
+            Return extrude(New Shape3D, ___path, 1)
         End Function
 
-        Public Shared Function extrude(___path As Path3D, height As Double) As Shape
-            Return extrude(New Shape, ___path, height)
+        Public Shared Function extrude(___path As Path3D, height As Double) As Shape3D
+            Return extrude(New Shape3D, ___path, height)
         End Function
 
-        Public Shared Function extrude(___shape As Shape, ___path As Path3D) As Shape
+        Public Shared Function extrude(___shape As Shape3D, ___path As Path3D) As Shape3D
             Return extrude(___shape, ___path, 1)
         End Function
 
-        Public Shared Function extrude(___shape As Shape, ___path As Path3D, height As Double) As Shape
+        Public Shared Function extrude(___shape As Shape3D, ___path As Path3D, height As Double) As Shape3D
             Dim topPath3D As Path3D = ___path.Translate(0, 0, height)
             Dim i As Integer
             Dim length As Integer = ___path.Points.Count
