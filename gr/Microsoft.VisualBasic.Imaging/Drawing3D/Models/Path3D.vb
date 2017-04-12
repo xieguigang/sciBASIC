@@ -60,7 +60,7 @@ Namespace Drawing3D.IsoMetric
             Return New Path3D(___points)
         End Function
 
-        Public Function rotateX(origin As Point3D, angle As Double) As Path3D
+        Public Function RotateX(origin As Point3D, angle As Double) As Path3D
             Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
             For i As Integer = 0 To Me.Points.Count - 1
@@ -70,7 +70,7 @@ Namespace Drawing3D.IsoMetric
             Return New Path3D(___points)
         End Function
 
-        Public Function rotateY(origin As Point3D, angle As Double) As Path3D
+        Public Function RotateY(origin As Point3D, angle As Double) As Path3D
             Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
             For i As Integer = 0 To Me.Points.Count - 1
@@ -80,7 +80,7 @@ Namespace Drawing3D.IsoMetric
             Return New Path3D(___points)
         End Function
 
-        Public Function rotateZ(origin As Point3D, angle As Double) As Path3D
+        Public Function RotateZ(origin As Point3D, angle As Double) As Path3D
             Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
             Dim ___point As Point3D
             For i As Integer = 0 To Me.Points.Count - 1
