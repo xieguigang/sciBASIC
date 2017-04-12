@@ -95,14 +95,26 @@ Namespace ComponentModel.TagData
         End Function
     End Structure
 
+    ''' <summary>
+    ''' 使用一个整形数作为目标对象值的标签信息
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class IntegerTagged(Of T) : Inherits TagData(Of Integer, T)
 
     End Class
 
+    ''' <summary>
+    ''' 使用一个实数作为目标对象值的标签信息
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class DoubleTagged(Of T) : Inherits TagData(Of Double, T)
 
     End Class
 
+    ''' <summary>
+    ''' 使用一个长整形数作为目标对象值的标签信息
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class LongTagged(Of T) : Inherits TagData(Of Long, T)
 
     End Class
