@@ -2117,6 +2117,16 @@ Public Module Extensions
         Return array Is Nothing OrElse array.Length = 0
     End Function
 
+    ''' <summary>
+    ''' 这个字符串数组之中的所有的元素都是空字符串？
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function EmptyStringVector(s$()) As Boolean
+        Return s.Where(Function(c) Not c.StringEmpty).Count = 0
+    End Function
+
     <ExportAPI("CopyFile", Info:="kernel32.dll!CopyFileW")>
     <DllImport("kernel32.dll", EntryPoint:="CopyFileW", CharSet:=CharSet.Unicode, ExactSpelling:=False)>
     Public Function CopyFile(lpExistingFilename$, lpNewFileName$, bFailIfExists As Boolean) As Boolean

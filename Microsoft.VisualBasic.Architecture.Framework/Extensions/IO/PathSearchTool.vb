@@ -129,9 +129,12 @@ Public Module ProgramPathSearchTool
     ''' <param name="DIR$"></param>
     ''' <param name="keyword$"></param>
     ''' <param name="opt"></param>
-    ''' <returns></returns>
+    ''' <returns>当查找不到目标文件或者文件夹不存在的时候会返回空值</returns>
     <Extension>
     Public Function TheFile(DIR$, keyword$, Optional opt As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As String
+        If Not DIR.DirectoryExists Then
+            Return Nothing
+        End If
         Return FileIO.FileSystem.GetFiles(DIR, opt, keyword).FirstOrDefault
     End Function
 

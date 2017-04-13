@@ -2594,7 +2594,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
-
+            Call Graphics.DrawPolygon(pen, points)
         End Sub
         '
         ' Summary:
@@ -2611,7 +2611,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
-
+            Call Graphics.DrawRectangle(pen, rect)
         End Sub
         '
         ' Summary:
