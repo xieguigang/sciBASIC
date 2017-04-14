@@ -1,10 +1,9 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.Collections.Generic
+﻿Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
 Namespace Drawing3D
 
-    Public Class Isometric
+    Public Class IsometricEngine
 
         Private ReadOnly angle, scale As Double
 
@@ -14,20 +13,20 @@ Namespace Drawing3D
 
         Private items As IList(Of Item) = New List(Of Item)
 
-        Private ReadOnly lightAngle As Vector
+        Private ReadOnly lightAngle As Point3D
 
         Private ReadOnly colorDifference As Double
 
-        Private ReadOnly lightColor As Color
+        Private ReadOnly lightColor As HSLColor
 
         Public Sub New()
             Me.angle = Math.PI / 6
             Me.scale = 70
             Me.transformation = New Double() {{Me.scale * Math.Cos(Me.angle), Me.scale * Math.Sin(Me.angle)}, {Me.scale * Math.Cos(Math.PI - Me.angle), Me.scale * Math.Sin(Math.PI - Me.angle)}}
-            Dim lightPosition As New Vector(2, -1, 3)
-            Me.lightAngle = lightPosition.normalize()
+            Dim lightPosition As New Point3D(2, -1, 3)
+            Me.lightAngle = lightPosition.Normalize()
             Me.colorDifference = 0.2
-            Me.lightColor = New Color(255, 255, 255)
+            Me.lightColor = New HSLColor(255, 255, 255)
 
         End Sub
 
@@ -36,25 +35,25 @@ Namespace Drawing3D
         ''' Y rides perpendicular to this angle (in isometric view: PI - angle)
         ''' Z affects the y coordinate of the drawn point
         ''' </summary>
-        Public Overridable Function translatePoint(ByVal ___point As Point) As Point
-            Return New Point(Me.originX + ___point.x * Me.transformation(0)(0) + ___point.y * Me.transformation(1)(0), Me.originY - ___point.x * Me.transformation(0)(1) - ___point.y * Me.transformation(1)(1) - (___point.z * Me.scale))
+        Public Overridable Function translatePoint(ByVal ___point As Point3D) As Point3D
+            Return New Point3D(Me.originX + ___point.X * Me.transformation(0)(0) + ___point.Y * Me.transformation(1)(0), Me.originY - ___point.X * Me.transformation(0)(1) - ___point.Y * Me.transformation(1)(1) - (___point.Z * Me.scale))
         End Function
 
-        Public Overridable Sub add(ByVal ___path As Path, ByVal color As Color)
+        Public Overridable Sub add(ByVal ___path As Path3D, ByVal color As HSLColor)
             addPath(___path, color)
         End Sub
 
-        Public Overridable Sub add(ByVal paths As Path(), ByVal color As Color)
-            For Each ___path As Path In paths
+        Public Overridable Sub add(ByVal paths As Path3D(), ByVal color As HSLColor)
+            For Each ___path As Path3D In paths
                 add(___path, color)
             Next ___path
         End Sub
 
-        Public Overridable Sub add(ByVal ___shape As Shape, ByVal color As Color)
+        Public Overridable Sub add(ByVal ___shape As Shape3D, ByVal color As HSLColor)
             ' Fetch paths ordered by distance to prevent overlaps 
-            Dim paths As Path() = ___shape.orderedPaths()
+            Dim paths As Path3D() = ___shape.orderedPath3Ds()
 
-            For Each ___path As Path In paths
+            For Each ___path As Path3D In paths
                 addPath(___path, color)
             Next ___path
         End Sub
@@ -63,21 +62,21 @@ Namespace Drawing3D
             items.Clear()
         End Sub
 
-        Private Sub addPath(ByVal ___path As Path, ByVal color As Color)
+        Private Sub addPath(ByVal ___path As Path3D, ByVal color As HSLColor)
             Me.items.Add(New Item(___path, transformColor(___path, color)))
         End Sub
 
-        Private Function transformColor(ByVal ___path As Path, ByVal color As Color) As Color
-            Dim p1 As Point = ___path.points(1)
-            Dim p2 As Point = ___path.points(0)
-            Dim i As Double = p2.x - p1.x
-            Dim j As Double = p2.y - p1.y
-            Dim k As Double = p2.z - p1.z
-            p1 = ___path.points(2)
-            p2 = ___path.points(1)
-            Dim i2 As Double = p2.x - p1.x
-            Dim j2 As Double = p2.y - p1.y
-            Dim k2 As Double = p2.z - p1.z
+        Private Function transformColor(ByVal ___path As Path3D, ByVal color As HSLColor) As HSLColor
+            Dim p1 As Point3D = ___path.Points(1)
+            Dim p2 As Point3D = ___path.Points(0)
+            Dim i As Double = p2.X - p1.X
+            Dim j As Double = p2.Y - p1.Y
+            Dim k As Double = p2.Z - p1.Z
+            p1 = ___path.Points(2)
+            p2 = ___path.Points(1)
+            Dim i2 As Double = p2.X - p1.X
+            Dim j2 As Double = p2.Y - p1.Y
+            Dim k2 As Double = p2.Z - p1.Z
             Dim i3 As Double = j * k2 - j2 * k
             Dim j3 As Double = -1 * (i * k2 - i2 * k)
             Dim k3 As Double = i * j2 - i2 * j
@@ -85,8 +84,8 @@ Namespace Drawing3D
             i = If(magnitude = 0, 0, i3 / magnitude)
             j = If(magnitude = 0, 0, j3 / magnitude)
             k = If(magnitude = 0, 0, k3 / magnitude)
-            Dim brightness As Double = i * lightAngle.i + j * lightAngle.j + k * lightAngle.k
-            Return color.lighten(brightness * Me.colorDifference, Me.lightColor)
+            Dim brightness As Double = i * lightAngle.X + j * lightAngle.Y + k * lightAngle.Z
+            Return color.Lighten(brightness * Me.colorDifference, Me.lightColor)
         End Function
 
         Public Overridable Sub measure(ByVal width As Integer, ByVal height As Integer, ByVal sort As Boolean)
@@ -95,11 +94,11 @@ Namespace Drawing3D
 
             For Each item As Item In items
 
-                item.transformedPoints = New Point(item.path.points.Length - 1) {}
+                item.transformedPoints = New Point3D(item.path.points.Length - 1) {}
 
                 If Not item.drawPath.Empty Then item.drawPath.rewind() 'Todo: test if .reset is not needed and rewind is enough
-
-                Dim ___point As Point
+                Dim i As Integer = 0
+                Dim ___point As Point3D
                 For i As Integer = 0 To item.path.points.Length - 1
                     ___point = item.path.points(i)
                     item.transformedPoints(i) = translatePoint(___point)
@@ -107,8 +106,10 @@ Namespace Drawing3D
 
                 item.drawPath.moveTo(CSng(item.transformedPoints(0).x), CSng(item.transformedPoints(0).y))
 
-                Dim i As Integer = 1
+
                 Dim length As Integer = item.transformedPoints.Length
+
+                i = 1
                 Do While i < length
                     item.drawPath.lineTo(CSng(item.transformedPoints(i).x), CSng(item.transformedPoints(i).y))
                     i += 1
@@ -122,7 +123,7 @@ Namespace Drawing3D
 
         Private Function sortPaths() As IList(Of Item)
             Dim sortedItems As New List(Of Item)
-            Dim observer As New Point(-10, -10, 20)
+            Dim observer As New Point3D(-10, -10, 20)
             Dim length As Integer = items.Count
             Dim drawBefore As IList(Of IList(Of Integer?)) = New List(Of IList(Of Integer?))(length)
             For i As Integer = 0 To length - 1
@@ -181,58 +182,58 @@ Namespace Drawing3D
             Return sortedItems
         End Function
 
-        Public Overridable Sub draw(ByVal canvas As android.graphics.Canvas)
+        Public Overridable Sub draw(ByVal canvas As IGraphics)
             For Each item As Item In items
                 '            this.ctx.globalAlpha = color.a;
                 '            this.ctx.fillStyle = this.ctx.strokeStyle = color.toHex();
                 '            this.ctx.stroke();
                 '            this.ctx.fill();
                 '            this.ctx.restore();
-                canvas.drawPath(item.drawPath, item.paint)
+                canvas.DrawPath(item.drawPath, item.paint)
             Next item
         End Sub
 
         'Todo: use android.grphics region object to check if point is inside region
         'Todo: use path.op to check if the path intersects with another path
         'JAVA TO VB CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-        Public Overridable Function findItemForPosition(ByVal position As Point) As Item
+        Public Overridable Function findItemForPosition(ByVal position As Point3D) As Item
             'Todo: reverse sorting for click detection, because hidden object is getting drawed first und will be returned as the first as well
             'Items are already sorted for depth sort so break should not be a problem here
             For Each item As Item In Me.items
                 If item.transformedPoints Is Nothing Then Continue For
-                Dim items As IList(Of Point) = New List(Of Point)
-                Dim top As Point = Nothing, bottom As Point = Nothing, left As Point = Nothing, right As Point = Nothing
-                For Each ___point As Point In item.transformedPoints
-                    If top Is Nothing OrElse ___point.y > top.y Then
+                Dim items As IList(Of Point3D) = New List(Of Point3D)
+                Dim top As Point3D = Nothing, bottom As Point3D = Nothing, left As Point3D = Nothing, right As Point3D = Nothing
+                For Each ___point As Point3D In item.transformedPoints
+                    If top Is Nothing OrElse ___point.Y > top.Y Then
                         If top Is Nothing Then
-                            top = New Point(___point.x, ___point.y)
+                            top = New Point3D(___point.X, ___point.Y)
                         Else
-                            top.y = ___point.y
-                            top.x = ___point.x
+                            top.Y = ___point.Y
+                            top.X = ___point.X
                         End If
                     End If
-                    If bottom Is Nothing OrElse ___point.y < bottom.y Then
+                    If bottom Is Nothing OrElse ___point.Y < bottom.Y Then
                         If bottom Is Nothing Then
-                            bottom = New Point(___point.x, ___point.y)
+                            bottom = New Point3D(___point.X, ___point.Y)
                         Else
-                            bottom.y = ___point.y
-                            bottom.x = ___point.x
+                            bottom.Y = ___point.Y
+                            bottom.X = ___point.X
                         End If
                     End If
-                    If left Is Nothing OrElse ___point.x < left.x Then
+                    If left Is Nothing OrElse ___point.X < left.X Then
                         If left Is Nothing Then
-                            left = New Point(___point.x, ___point.y)
+                            left = New Point3D(___point.X, ___point.Y)
                         Else
-                            left.x = ___point.x
-                            left.y = ___point.y
+                            left.X = ___point.X
+                            left.Y = ___point.Y
                         End If
                     End If
-                    If right Is Nothing OrElse ___point.x > right.x Then
+                    If right Is Nothing OrElse ___point.X > right.X Then
                         If right Is Nothing Then
-                            right = New Point(___point.x, ___point.y)
+                            right = New Point3D(___point.X, ___point.Y)
                         Else
-                            right.x = ___point.x
-                            right.y = ___point.y
+                            right.X = ___point.X
+                            right.Y = ___point.Y
                         End If
                     End If
                 Next ___point
@@ -243,32 +244,32 @@ Namespace Drawing3D
                 items.Add(bottom)
 
                 'search for equal points that are above or below for left and right or left and right for bottom and top
-                For Each ___point As Point In item.transformedPoints
-                    If ___point.x = left.x Then
-                        If ___point.y <> left.y Then items.Add(___point)
+                For Each ___point As Point3D In item.transformedPoints
+                    If ___point.X = left.X Then
+                        If ___point.Y <> left.Y Then items.Add(___point)
                     End If
-                    If ___point.x = right.x Then
-                        If ___point.y <> right.y Then items.Add(___point)
+                    If ___point.X = right.X Then
+                        If ___point.Y <> right.Y Then items.Add(___point)
                     End If
-                    If ___point.y = top.y Then
-                        If ___point.y <> top.y Then items.Add(___point)
+                    If ___point.Y = top.Y Then
+                        If ___point.Y <> top.Y Then items.Add(___point)
                     End If
-                    If ___point.y = bottom.y Then
-                        If ___point.y <> bottom.y Then items.Add(___point)
+                    If ___point.Y = bottom.Y Then
+                        If ___point.Y <> bottom.Y Then items.Add(___point)
                     End If
                 Next ___point
 
-                If isPointInPoly(items, position.x, position.y) Then Return item
+                If isPointInPoly(items, position.X, position.Y) Then Return item
             Next item
             Return Nothing
         End Function
 
         Friend Class Item
-            Friend path As Path
-            Friend baseColor As Color
+            Friend path As Path3D
+            Friend baseColor As HSLColor
             Friend paint As android.graphics.Paint
             Friend drawn As Integer
-            Friend transformedPoints As Point()
+            Friend transformedPoints As Point3D()
             Friend drawPath As android.graphics.Path
 
             Friend Sub New(ByVal item As Item)
@@ -280,7 +281,7 @@ Namespace Drawing3D
                 Me.baseColor = item.baseColor
             End Sub
 
-            Friend Sub New(ByVal ___path As Path, ByVal baseColor As Color)
+            Friend Sub New(ByVal ___path As Path3D, ByVal baseColor As HSLColor)
                 drawPath = New android.graphics.Path
                 drawn = 0
                 Me.paint = New android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG)
@@ -292,44 +293,44 @@ Namespace Drawing3D
             End Sub
         End Class
 
-        Private Function isPointInPoly(ByVal poly As IList(Of Point), ByVal x As Double, ByVal y As Double) As Boolean
+        Private Function isPointInPoly(ByVal poly As IList(Of Point3D), ByVal x As Double, ByVal y As Double) As Boolean
             Dim c As Boolean = False
             Dim i As Integer = -1
             Dim l As Integer = poly.Count
             Dim j As Integer = l - 1
             'JAVA TO VB CONVERTER TODO TASK: Assignments within expressions are not supported in VB
             Do While i += 1 < l
-				If ((poly(i).y <= y AndAlso y < poly(j).y) OrElse (poly(j).y <= y AndAlso y < poly(i).y)) AndAlso (x < (poly(j).x - poly(i).x) * (y - poly(i).y) / (poly(j).y - poly(i).y) + poly(i).x) Then c = Not c
+				If ((poly(i).Y <= y AndAlso y < poly(j).Y) OrElse (poly(j).Y <= y AndAlso y < poly(i).Y)) AndAlso (x < (poly(j).X - poly(i).X) * (y - poly(i).Y) / (poly(j).Y - poly(i).Y) + poly(i).X) Then c = Not c
                 j = i
             Loop
             Return c
         End Function
 
-        Private Function isPointInPoly(ByVal poly As Point(), ByVal x As Double, ByVal y As Double) As Boolean
+        Private Function isPointInPoly(ByVal poly As Point3D(), ByVal x As Double, ByVal y As Double) As Boolean
             Dim c As Boolean = False
             Dim i As Integer = -1
             Dim l As Integer = poly.Length
             Dim j As Integer = l - 1
             'JAVA TO VB CONVERTER TODO TASK: Assignments within expressions are not supported in VB
             Do While i += 1 < l
-				If ((poly(i).y <= y AndAlso y < poly(j).y) OrElse (poly(j).y <= y AndAlso y < poly(i).y)) AndAlso (x < (poly(j).x - poly(i).x) * (y - poly(i).y) / (poly(j).y - poly(i).y) + poly(i).x) Then c = Not c
+				If ((poly(i).Y <= y AndAlso y < poly(j).Y) OrElse (poly(j).Y <= y AndAlso y < poly(i).Y)) AndAlso (x < (poly(j).X - poly(i).X) * (y - poly(i).Y) / (poly(j).Y - poly(i).Y) + poly(i).X) Then c = Not c
                 j = i
             Loop
             Return c
         End Function
 
-        Private Function hasIntersection(ByVal pointsA As Point(), ByVal pointsB As Point()) As Boolean
+        Private Function hasIntersection(ByVal pointsA As Point3D(), ByVal pointsB As Point3D()) As Boolean
             Dim i As Integer, j As Integer, lengthA As Integer = pointsA.Length, lengthB As Integer = pointsB.Length, lengthPolyA As Integer, lengthPolyB As Integer
-            Dim AminX As Double = pointsA(0).x
-            Dim AminY As Double = pointsA(0).y
+            Dim AminX As Double = pointsA(0).X
+            Dim AminY As Double = pointsA(0).Y
             Dim AmaxX As Double = AminX
             Dim AmaxY As Double = AminY
-            Dim BminX As Double = pointsB(0).x
-            Dim BminY As Double = pointsB(0).y
+            Dim BminX As Double = pointsB(0).X
+            Dim BminY As Double = pointsB(0).Y
             Dim BmaxX As Double = BminX
             Dim BmaxY As Double = BminY
 
-            Dim ___point As Point
+            Dim ___point As Point3D
 
             For i = 0 To lengthA - 1
                 ___point = pointsA(i)
@@ -348,8 +349,8 @@ Namespace Drawing3D
 
             If ((AminX <= BminX AndAlso BminX <= AmaxX) OrElse (BminX <= AminX AndAlso AminX <= BmaxX)) AndAlso ((AminY <= BminY AndAlso BminY <= AmaxY) OrElse (BminY <= AminY AndAlso AminY <= BmaxY)) Then
                 ' now let's be more specific
-                Dim polyA As Point() = Path.add(pointsA(0), pointsA)
-                Dim polyB As Point() = Path.add(pointsB(0), pointsB)
+                Dim polyA As Point3D() = Path.add(pointsA(0), pointsA)
+                Dim polyB As Point3D() = Path.add(pointsB(0), pointsB)
 
                 ' see if edges cross, or one contained in the other
                 lengthPolyA = polyA.Length
