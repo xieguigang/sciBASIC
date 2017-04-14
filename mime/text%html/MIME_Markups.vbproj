@@ -262,38 +262,6 @@
     </Compile>
     <Compile Include="HTML\Xml\Meta.vb" />
     <Compile Include="Markups\StreamWriter\Markdown.vb" />
-    <Compile Include="YAML\ChompingMethod.vb" />
-    <Compile Include="YAML\ParserCustom.vb" />
-    <Compile Include="YAML\ParserInput.vb" />
-    <Compile Include="YAML\Serialization\Serialization.vb" />
-    <Compile Include="YAML\Syntax\BlockScalarModifier.vb" />
-    <Compile Include="YAML\Syntax\DataItem.vb" />
-    <Compile Include="YAML\Syntax\Directive.vb" />
-    <Compile Include="YAML\Syntax\GlobalTagPrefix.vb" />
-    <Compile Include="YAML\Syntax\LocalTagPrefix.vb" />
-    <Compile Include="YAML\Syntax\Mapping.vb" />
-    <Compile Include="YAML\Syntax\MappingEntry.vb" />
-    <Compile Include="YAML\Syntax\NamedTagHandle.vb" />
-    <Compile Include="YAML\Syntax\NodeProperty.vb" />
-    <Compile Include="YAML\Syntax\NonSpecificTag.vb" />
-    <Compile Include="YAML\Syntax\PrimaryTagHandle.vb" />
-    <Compile Include="YAML\Syntax\ReservedDirective.vb" />
-    <Compile Include="YAML\Syntax\Scalar.vb" />
-    <Compile Include="YAML\Syntax\SecondaryTagHandle.vb" />
-    <Compile Include="YAML\Syntax\Sequence.vb" />
-    <Compile Include="YAML\Syntax\ShorthandTag.vb" />
-    <Compile Include="YAML\Syntax\Tag.vb" />
-    <Compile Include="YAML\Syntax\TagDirective.vb" />
-    <Compile Include="YAML\Syntax\TagHandle.vb" />
-    <Compile Include="YAML\Syntax\TagPrefix.vb" />
-    <Compile Include="YAML\Syntax\VerbatimTag.vb" />
-    <Compile Include="YAML\Syntax\YamlDirective.vb" />
-    <Compile Include="YAML\Syntax\YamlDocument.vb" />
-    <Compile Include="YAML\Syntax\YamlStream.vb" />
-    <Compile Include="YAML\Syntax\YamlVersion.vb" />
-    <Compile Include="YAML\TextInput.vb" />
-    <Compile Include="YAML\TextParserCommon.vb" />
-    <Compile Include="YAML\YamlParser.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -314,9 +282,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="YAML\YAML.PEG.txt" />
-    <None Include="YAML\YAML.txt" />
-    <None Include="YAML\YAML_Sample.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
