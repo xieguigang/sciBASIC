@@ -206,6 +206,7 @@
     <Compile Include="Drawing2D\Shapes\Line.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
     <Compile Include="Drawing3D\Camera.vb" />
+    <Compile Include="Drawing3D\Isometric.vb" />
     <Compile Include="Drawing3D\Device\AutoRotation.vb" />
     <Compile Include="Drawing3D\Device\IDevice.vb" />
     <Compile Include="Drawing3D\Device\Debugger.vb" />
