@@ -60,6 +60,10 @@ Namespace Net.Protocols.ContentTypes
         ''' <returns></returns>
         <Column(Name:="More Details")> Public Property Details As String
 
+        Public Function IsEmpty() As Boolean
+            Return Name Is Nothing AndAlso MIMEType Is Nothing AndAlso FileExt Is Nothing AndAlso Details Is Nothing
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{MIMEType} (*{FileExt})"
         End Function
