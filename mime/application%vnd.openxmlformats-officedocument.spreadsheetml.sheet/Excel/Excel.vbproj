@@ -63,7 +63,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.vb" />
+    <Compile Include="docProps\app.xml.vb" />
+    <Compile Include="docProps\custom.xml.vb" />
+    <Compile Include="docProps\core.xml.vb" />
+    <Compile Include="File.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -79,6 +82,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="xl\theme\theme.xml.vb" />
+    <Compile Include="xl\workbook.xml.vb" />
+    <Compile Include="xl\styles.xml.vb" />
+    <Compile Include="xl\sharedStrings.xml.vb" />
+    <Compile Include="xl\worksheets\sheet.xml.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -99,5 +107,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
