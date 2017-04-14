@@ -539,6 +539,7 @@
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\ResultVisualize.vb" />
     <Compile Include="Text\Xml\Linq\Entity.vb" />
+    <Compile Include="Text\Xml\OpenXml\Content_Types.vb" />
     <Compile Include="Text\Xml\XmlBuilder.vb" />
     <Compile Include="Text\Xml\Linq\Linq.vb" />
     <Compile Include="Text\Xml\Models.vb" />

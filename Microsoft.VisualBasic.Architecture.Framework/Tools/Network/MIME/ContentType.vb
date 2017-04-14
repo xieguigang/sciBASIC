@@ -34,7 +34,7 @@ Namespace Net.Protocols.ContentTypes
     ''' <summary>
     ''' MIME types / Internet Media Types
     ''' </summary>
-    Public Class ContentType
+    Public Structure ContentType
 
         ''' <summary>
         ''' Type name or brief info
@@ -80,5 +80,5 @@ Namespace Net.Protocols.ContentTypes
                 Return mime
             End If
         End Function
-    End Class
+    End Structure
 End Namespace
