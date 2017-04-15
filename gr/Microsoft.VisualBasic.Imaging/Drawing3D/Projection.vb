@@ -40,7 +40,7 @@ Namespace Drawing3D
                       Category:=APICategories.UtilityTools,
                       Publisher:="xie.guigang@gmail.com",
                       Description:="3D coordinate transformation tools.")>
-    Public Module Transformation
+    Public Module Projection
 
         ''' <summary>
         ''' Gets the projection 2D point result from this readonly property
@@ -50,23 +50,23 @@ Namespace Drawing3D
         <Extension> Public Function PointXY(p As Point3D, Optional rect As Size = Nothing) As Point
             Dim x! = p.X, y! = p.Y
 
-            If X > Integer.MaxValue OrElse Single.IsPositiveInfinity(X) Then
-                X = rect.Width
-            ElseIf X < Integer.MinValue OrElse Single.IsNegativeInfinity(X) Then
-                X = 0
-            ElseIf Single.IsNaN(X) Then
-                X = rect.Width
+            If x > Integer.MaxValue OrElse Single.IsPositiveInfinity(x) Then
+                x = rect.Width
+            ElseIf x < Integer.MinValue OrElse Single.IsNegativeInfinity(x) Then
+                x = 0
+            ElseIf Single.IsNaN(x) Then
+                x = rect.Width
             End If
 
-            If Y > Integer.MaxValue OrElse Single.IsPositiveInfinity(Y) Then
-                Y = rect.Height
-            ElseIf Y < Integer.MinValue OrElse Single.IsNegativeInfinity(Y) Then
-                Y = 0
-            ElseIf Single.IsNaN(Y) Then
-                Y = rect.Height
+            If y > Integer.MaxValue OrElse Single.IsPositiveInfinity(y) Then
+                y = rect.Height
+            ElseIf y < Integer.MinValue OrElse Single.IsNegativeInfinity(y) Then
+                y = 0
+            ElseIf Single.IsNaN(y) Then
+                y = rect.Height
             End If
 
-            Return New Point(X, Y)
+            Return New Point(x, y)
         End Function
 
         <Extension>

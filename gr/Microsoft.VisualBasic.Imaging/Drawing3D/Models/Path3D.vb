@@ -1,7 +1,7 @@
 ﻿
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
-Namespace Drawing3D.IsoMetric
+Namespace Drawing3D.Isometric
 
     Public Class Path3D
 
@@ -183,5 +183,9 @@ Namespace Drawing3D.IsoMetric
                 Return ((result + result0) \ length)
             End If
         End Function
+
+        Public Shared Widening Operator CType(points As Point3D()) As Path3D
+            Return New Path3D(points)
+        End Operator
     End Class
 End Namespace

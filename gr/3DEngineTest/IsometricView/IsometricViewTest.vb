@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
 Imports IsometricView = Microsoft.VisualBasic.Imaging.Drawing3D.IsometricEngine
 
 Public Class IsometricViewTest
@@ -152,10 +152,10 @@ Public Class IsometricViewTest
         isometricView.Add(New Shapes.Prism(New Point3D(3, 0, 2), 2, 4, 1), Color.FromArgb(33, 150, 243))
         isometricView.Add(New Shapes.Prism(New Point3D(2, 1, 2), 1, 3, 1), Color.FromArgb(33, 150, 243))
         isometricView.Add((New Shapes.Stairs(New Point3D(2, 0, 2), 10)).RotateZ(New Point3D(2.5, 0.5, 0), -Math.PI / 2), Color.FromArgb(33, 150, 243))
-        isometricView.Add((New Shapes.Pyramid(New Point3D(2, 3, 3))).scale(New Point3D(2, 4, 3), 0.5), Color.FromArgb(180, 180, 0))
-        isometricView.Add((New Shapes.Pyramid(New Point3D(4, 3, 3))).scale(New Point3D(5, 4, 3), 0.5), Color.FromArgb(180, 0, 180))
-        isometricView.Add((New Shapes.Pyramid(New Point3D(4, 1, 3))).scale(New Point3D(5, 1, 3), 0.5), Color.FromArgb(0, 180, 180))
-        isometricView.Add((New Shapes.Pyramid(New Point3D(2, 1, 3))).scale(New Point3D(2, 1, 3), 0.5), Color.FromArgb(40, 180, 40))
+        isometricView.Add((New Shapes.Pyramid(New Point3D(2, 3, 3))).Scale(New Point3D(2, 4, 3), 0.5), Color.FromArgb(180, 180, 0))
+        isometricView.Add((New Shapes.Pyramid(New Point3D(4, 3, 3))).Scale(New Point3D(5, 4, 3), 0.5), Color.FromArgb(180, 0, 180))
+        isometricView.Add((New Shapes.Pyramid(New Point3D(4, 1, 3))).Scale(New Point3D(5, 1, 3), 0.5), Color.FromArgb(0, 180, 180))
+        isometricView.Add((New Shapes.Pyramid(New Point3D(2, 1, 3))).Scale(New Point3D(2, 1, 3), 0.5), Color.FromArgb(40, 180, 40))
         isometricView.Add(New Shapes.Prism(New Point3D(3, 2, 3), 1, 1, 0.2), Color.FromArgb(50, 50, 50))
         isometricView.Add((New Shapes.Octahedron(New Point3D(3, 2, 3.2))).RotateZ(New Point3D(3.5, 2.5, 0), angle), Color.FromArgb(0, 180, 180))
     End Sub

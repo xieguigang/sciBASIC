@@ -1,7 +1,7 @@
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
 
-Namespace Drawing3D.IsoMetric.Shapes
+Namespace Drawing3D.Isometric.Shapes
 
 
     ''' <summary>
@@ -18,7 +18,7 @@ Namespace Drawing3D.IsoMetric.Shapes
         Public Sub New(origin As Point3D, radius As Double, vertices As Double, height As Double)
             MyBase.New()
             Dim circle As New Paths.Circle(origin, radius, vertices)
-            extrude(Me, circle, height)
+            Extrude(Me, circle, height)
         End Sub
     End Class
 

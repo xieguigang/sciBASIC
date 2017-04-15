@@ -1,5 +1,5 @@
 ﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -53,7 +53,7 @@ Namespace Drawing3D
 
         Public Sub Add(shape As Shape3D, color As Color)
             ' Fetch paths ordered by distance to prevent overlaps 
-            Dim paths As Path3D() = shape.orderedPath3Ds()
+            Dim paths As Path3D() = shape.OrderedPath3Ds()
 
             For Each path As Path3D In paths
                 Call AddPath(path, color)

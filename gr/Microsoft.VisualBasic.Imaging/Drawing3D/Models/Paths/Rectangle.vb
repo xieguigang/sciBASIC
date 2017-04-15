@@ -1,13 +1,11 @@
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
 
-Namespace Drawing3D.IsoMetric.Paths
-
+Namespace Drawing3D.Isometric.Paths
 
     ''' <summary>
     ''' Created by fabianterhorst on 01.04.17.
     ''' </summary>
-
     Public Class Rectangle
         Inherits Path3D
 
@@ -19,5 +17,4 @@ Namespace Drawing3D.IsoMetric.Paths
             Push(New Point3D(origin.X, origin.Y + height, origin.Z))
         End Sub
     End Class
-
 End Namespace

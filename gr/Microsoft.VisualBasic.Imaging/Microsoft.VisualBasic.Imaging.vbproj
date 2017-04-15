@@ -238,7 +238,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Drawing3D\Point3D.vb" />
-    <Compile Include="Drawing3D\Transformation.vb" />
+    <Compile Include="Drawing3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
     <Compile Include="Drivers\GraphicsData.vb" />

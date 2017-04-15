@@ -43,7 +43,7 @@ Namespace Drawing3D
         End Sub
 
         Public Function Copy(data As IEnumerable(Of Point3D)) As I3DModel Implements I3DModel.Copy
-            Dim array = data.ToArray
+            Dim array As Point3D() = data.ToArray
             Return New Line3D With {
                 .a = data(0),
                 .b = data(1),
