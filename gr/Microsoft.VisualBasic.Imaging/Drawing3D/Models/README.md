@@ -1,5 +1,6 @@
 # Isometric
-Isometric drawing library for Android
+
+> Imports from this original java works: [**Isometric drawing library for Android**](https://github.com/FabianTerhorst/Isometric)
 
 ```vbnet
 Imports Microsoft.VisualBasic.Imaging
@@ -21,141 +22,141 @@ End Using
 
 ### Drawing a simple cube
 
-```java
-isometricView.add(
-	new Prism(
-		new Point(/* x */ 0, /* y */ 0, /* z */ 0), 
-		/* width */ 1, /* length */ 1, /* height */ 1
-	), 
-	new Color(33, 150, 243)
-);
+```vbnet
+Call isometricView.add(
+	New Prism(
+		New Point3D(0, 0, 0),
+		1, 1, 1
+	),
+	Color.FromArgb(33, 150, 243)
+)
 ```
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotOne.png?raw=true)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotOne.png)
 
 ### Drawing multiple Shapes
-#### There are 3 basic components: points, paths and shapes. A shape needs an origin point and 3 measurements for the x, y and z axes. The default Prism constructor is setting all measurements to 1.
 
-```java
-isometricView.add(new Prism(new Point(0, 0, 0)), new Color(33, 150, 243));
-isometricView.add(new Prism(new Point(-1, 1, 0), 1, 2, 1), new Color(33, 150, 243));
-isometricView.add(new Prism(new Point(1, -1, 0), 2, 1, 1), new Color(33, 150, 243));
+There are 3 basic components: ``points``, ``paths`` and ``shapes``. A shape needs an origin point and 3 measurements for the x, y and z axes. The default Prism constructor is setting all measurements to 1.
+
+```vbnet
+isometricView.Add(new Prism(new Point3D(0, 0, 0)), Color.FromArgb(33, 150, 243))
+isometricView.Add(new Prism(new Point3D(-1, 1, 0), 1, 2, 1), Color.FromArgb(33, 150, 243))
+isometricView.Add(new Prism(new Point3D(1, -1, 0), 2, 1, 1), Color.FromArgb(33, 150, 243))
 ```
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotTwo.png?raw=true)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotTwo.png?raw=true)
 
 ### Drawing multiple Paths
-#### Paths are two dimensional. You can draw and color paths the same as shapes.
 
-```java
-isometricView.add(new Prism(Point.ORIGIN, 3, 3, 1), new Color(50, 60, 160));
-isometricView.add(new Path(new Point[]{
-    new Point(1, 1, 1),
-    new Point(2, 1, 1),
-    new Point(2, 2, 1),
-    new Point(1, 2, 1)
-}), new Color(50, 160, 60));
+Paths are two dimensional. You can draw and color paths the same as shapes.
+
+```vbnet
+isometricView.add(new Prism(Math3D.ORIGIN, 3, 3, 1), Color.FromArgb(50, 60, 160))
+isometricView.add(new Path({
+    new Point3D(1, 1, 1),
+    new Point3D(2, 1, 1),
+    new Point3D(2, 2, 1),
+    new Point3D(1, 2, 1)
+}), Color.FromArgb(50, 160, 60))
 ```
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotPath.png?raw=true)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotPath.png?raw=true)
 
 ### The grid
-#### Here you can see how the grid looks like. The blue grid is the xy-plane. The z-line is the z-axis.
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotGrid.png?raw=true)
+Here you can see how the grid looks like. The blue grid is the xy-plane. The z-line is the z-axis.
+
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotGrid.png?raw=true)
 
 ### Supports complex structures
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png?raw=true)
-
-# Include in your project
-## Using JCenter
-```groovy
-compile 'io.fabianterhorst:Isometric:0.0.6'
-```
-
-### Available Shapes
-#### [Cylinder](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Cylinder.java), [Knot](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Knot.java), [Octahedron](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Octahedron.java), [Prism](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Prism.java), [Pyramid](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Pyramid.java) and [Stairs](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Stairs.java)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png?raw=true)
 
 ### Translate
-#### Traslate is translating an point, path or shape to the given x, y and z distance. Translate is returning a new point, path or shape.
 
-```java
-Prism prism = new Prism(new Point(0, 0, 0));
-isometricView.add(prism, new Color(33, 150, 243));
-isometricView.add(prism.translate(0, 0, 1.1), new Color(33, 150, 243));
+Traslate is translating an point, path or shape to the given x, y and z distance. Translate is returning a new point, path or shape.
+
+```vbnet
+Dim prism As New Prism(new Point3D(0, 0, 0))
+isometricView.add(prism, Color.FromArgb(33, 150, 243))
+isometricView.add(prism.translate(0, 0, 1.1), Color.FromArgb(33, 150, 243))
 ```
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotTranslate.png?raw=true)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotTranslate.png?raw=true)
 
 ### Scale
-#### Scale is scaling an point, path or shape with the given x, y and z scaling factors. Scale is returning a new point, path or shape.
 
-```java
-Color blue = new Color(50, 60, 160);
-Color red = new Color(160, 60, 50);
-Prism cube = new Prism(Point.ORIGIN);
-isometricView.add(cube.scale(Point.ORIGIN, 3.0, 3.0, 0.5), red);
+Scale is scaling an point, path or shape with the given x, y and z scaling factors. Scale is returning a new point, path or shape.
+
+```vbnet
+Dim blue = Color.FromArgb(50, 60, 160)
+Dim red = Color.FromArgb(160, 60, 50)
+Dim cube As new Prism(Math3D.ORIGIN)
+isometricView.add(cube.scale(Math3D.ORIGIN, 3.0, 3.0, 0.5), red)
 isometricView.add(cube
-	.scale(Point.ORIGIN, 3.0, 3.0, 0.5)
-	.translate(0, 0, 0.6), blue);
+	.scale(Math3D.ORIGIN, 3.0, 3.0, 0.5)
+	.translate(0, 0, 0.6), blue)
 ```
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotScale.png?raw=true)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotScale.png?raw=true)
 
 ### RotateZ
-#### RotateZ is rotating an point, path or shape with the given angle in radians on the xy-plane (where an angle of 0 runs along the position x-axis). RotateZ is returning a new point, path or shape.
 
-```java
-Color blue = new Color(50, 60, 160);
-Color red = new Color(160, 60, 50);
-Prism cube = new Prism(Point.ORIGIN, 3, 3, 1);
+RotateZ is rotating an point, path or shape with the given angle in radians on the xy-plane (where an angle of 0 runs along the position x-axis). RotateZ is returning a new point, path or shape.
+
+```vbnet
+Dim blue = Color.FromArgb(50, 60, 160)
+Dim red = Color.FromArgb(160, 60, 50)
+Dim cube As new Prism(Math3D.ORIGIN, 3, 3, 1)
 isometricView.add(cube, red);
 isometricView.add(cube
-	/* (1.5, 1.5) is the center of the prism */
-	.rotateZ(new Point(1.5, 1.5, 0), Math.PI / 12)
-	.translate(0, 0, 1.1), blue);
+	' /* (1.5, 1.5) is the center of the prism */
+	.rotateZ(new Point3D(1.5, 1.5, 0), Math.PI / 12)
+	.translate(0, 0, 1.1), blue)
 ```
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotRotateZ.png?raw=true)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotRotateZ.png?raw=true)
 
 ### Shapes from Paths
-#### The method ```Shape.extrude``` allows you to create a 3D model by popping out a 2D path along the z-axis.
 
-```java
-Color blue = new Color(50, 60, 160);
-Color red = new Color(160, 60, 50);
-isometricView.add(new Prism(Point.ORIGIN, 3, 3, 1), blue);
-isometricView.add(Shape.extrude(new Path(new Point[]{
-	new Point(1, 1, 1),
-	new Point(2, 1, 1),
-	new Point(2, 3, 1)
-}), 0.3), red);
+The method ```Shape.extrude``` allows you to create a 3D model by popping out a 2D path along the z-axis.
+
+```vbnet
+Dim blue = Color.FromArgb(50, 60, 160)
+Dim red = Color.FromArgb(160, 60, 50)
+
+Call isometricView.add(new Prism(Math3D.ORIGIN, 3, 3, 1), blue)
+Call isometricView.add(Shape.extrude(new Path(new Point[]{
+	new Point3D(1, 1, 1),
+	new Point3D(2, 1, 1),
+	new Point3D(2, 3, 1)
+}), 0.3), red)
 ```
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotExtrude.png?raw=true)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotExtrude.png?raw=true)
 
 ### Available Shapes
-#### [Cylinder](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Cylinder.java)
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotCylinder.png?raw=true)
+###### Cylinder
 
-[Knot](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Knot.java)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotCylinder.png?raw=true)
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotKnot.png?raw=true)
+###### Knot
 
-[Octahedron](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Octahedron.java)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotKnot.png?raw=true)
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotOctahedron.png?raw=true)
+###### Octahedron
 
-[Prism](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Prism.java)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotOctahedron.png?raw=true)
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotPrism.png?raw=true)
+###### Prism
 
-[Pyramid](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Pyramid.java) 
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotPrism.png?raw=true)
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotPyramid.png?raw=true)
+###### Pyramid
 
-[Stairs](https://github.com/FabianTerhorst/Isometric/blob/master/lib/src/main/java/io/fabianterhorst/isometric/shapes/Stairs.java)
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotPyramid.png?raw=true)
 
-![Image](https://github.com/FabianTerhorst/Isometric/blob/master/lib/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotStairs.png?raw=true)
+###### Stairs
+
+![Image](./screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotStairs.png?raw=true)
