@@ -52,7 +52,7 @@ Paths are two dimensional. You can draw and color paths the same as shapes.
 
 ```vbnet
 isometricView.add(new Prism(Math3D.ORIGIN, 3, 3, 1), Color.FromArgb(50, 60, 160))
-isometricView.add(new Path({
+isometricView.add(new Path3D({
     new Point3D(1, 1, 1),
     new Point3D(2, 1, 1),
     new Point3D(2, 2, 1),
@@ -126,7 +126,7 @@ Dim blue = Color.FromArgb(50, 60, 160)
 Dim red = Color.FromArgb(160, 60, 50)
 
 Call isometricView.add(new Prism(Math3D.ORIGIN, 3, 3, 1), blue)
-Call isometricView.add(Shape.extrude(new Path(new Point[]{
+Call isometricView.add(Shape.extrude(new Path3D({
 	new Point3D(1, 1, 1),
 	new Point3D(2, 1, 1),
 	new Point3D(2, 3, 1)
