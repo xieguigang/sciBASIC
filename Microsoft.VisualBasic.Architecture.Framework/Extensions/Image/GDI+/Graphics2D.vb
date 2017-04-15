@@ -2409,7 +2409,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
         Public Overrides Sub DrawLines(pen As Pen, points() As PointF)
-
+            Call Graphics.DrawLines(pen, points)
         End Sub
         '
         ' Summary:
@@ -2426,7 +2426,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.-or-path is null.
         Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)
-
+            Call Graphics.DrawPath(pen, path)
         End Sub
         '
         ' Summary:
@@ -2453,7 +2453,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-
+            Call Graphics.DrawPie(pen, rect, startAngle, sweepAngle)
         End Sub
         '
         ' Summary:
@@ -2480,7 +2480,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawPie(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-
+            Call Graphics.DrawPie(pen, rect, startAngle, sweepAngle)
         End Sub
         '
         ' Summary:

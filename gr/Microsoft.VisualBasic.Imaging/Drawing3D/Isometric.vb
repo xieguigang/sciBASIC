@@ -46,17 +46,17 @@ Namespace Drawing3D
                 Me.originY - ___point.X * Me.transformation(0)(1) - ___point.Y * Me.transformation(1)(1) - (___point.Z * Me.scale))
         End Function
 
-        Public Sub add(___path As Path3D, color As HSLColor)
+        Public Sub add(___path As Path3D, color As Color)
             addPath(___path, color)
         End Sub
 
-        Public Sub add(paths As Path3D(), color As HSLColor)
+        Public Sub add(paths As Path3D(), color As Color)
             For Each ___path As Path3D In paths
                 add(___path, color)
             Next ___path
         End Sub
 
-        Public Sub add(___shape As Shape3D, color As HSLColor)
+        Public Sub add(___shape As Shape3D, color As Color)
             ' Fetch paths ordered by distance to prevent overlaps 
             Dim paths As Path3D() = ___shape.orderedPath3Ds()
 
@@ -69,11 +69,11 @@ Namespace Drawing3D
             models.Clear()
         End Sub
 
-        Private Sub addPath(___path As Path3D, color As HSLColor)
+        Private Sub addPath(___path As Path3D, color As Color)
             Me.models.Add(New Model2D(___path, transformColor(___path, color)))
         End Sub
 
-        Private Function transformColor(___path As Path3D, color As HSLColor) As Color
+        Private Function transformColor(___path As Path3D, color As Color) As Color
             Dim p1 As Point3D = ___path.Points(1)
             Dim p2 As Point3D = ___path.Points(0)
             Dim i As Double = p2.X - p1.X
@@ -92,7 +92,7 @@ Namespace Drawing3D
             j = If(magnitude = 0, 0, j3 / magnitude)
             k = If(magnitude = 0, 0, k3 / magnitude)
             Dim brightness As Double = i * lightAngle.X + j * lightAngle.Y + k * lightAngle.Z
-            Return color.Lighten(brightness * Me.colorDifference, Me.lightColor)
+            Return HSLColor.GetHSL(color).Lighten(brightness * Me.colorDifference, Me.lightColor)
         End Function
 
         Public Sub measure(width As Integer, height As Integer, sort As Boolean)
