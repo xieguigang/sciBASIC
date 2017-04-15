@@ -205,6 +205,16 @@ Namespace Drawing2D
             }
         End Function
 
+        <Extension>
+        Public Function CreateGraphics(img As GraphicsData) As IGraphics
+            If img.Driver = Drivers.SVG Then
+                Dim svg = DirectCast(img, SVGData).SVG
+                Return New GraphicsSVG(svg)
+            Else
+                Return Graphics2D.Open(DirectCast(img, ImageData).Image)
+            End If
+        End Function
+
         ''' <summary>
         ''' 可以借助这个画布对象创建多图层的绘图操作
         ''' </summary>

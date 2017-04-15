@@ -97,7 +97,7 @@ Public Class DefaultClusteringAlgorithm
         For Each clusterName As String In clusterNames
             Dim cluster As New Cluster(clusterName)
             clusters.Add(cluster)
-        Next clusterName
+        Next
         Return clusters
     End Function
 
@@ -107,7 +107,7 @@ Public Class DefaultClusteringAlgorithm
             Dim cluster As New Cluster(clusterNames(i))
             cluster.Distance = New Distance(0.0, weights(i))
             clusters.Add(cluster)
-        Next i
+        Next
         Return clusters
     End Function
 

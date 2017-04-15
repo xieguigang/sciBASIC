@@ -239,25 +239,7 @@ Namespace Graphic.Axis
         ''' <param name="css$"></param>
         ''' <returns></returns>
         <Extension> Private Function __plotLabel(label$, css$) As Image
-            Return DrawLabel(label, css)
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="label$">HTML</param>
-        ''' <param name="cssFont$">For html ``&lt;p>...&lt;/p>`` css style</param>
-        ''' <param name="maxSize$"></param>
-        ''' <returns></returns>
-        Public Function DrawLabel(label$, cssFont$, Optional maxSize$ = "1600,600") As Image
-            Dim g As Graphics2D = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
-            Dim out As Image
-
-            TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
-            out = g.ImageResource
-            out = out.CorpBlank(blankColor:=Color.Transparent)
-
-            Return out
+            Return TextRender.DrawHtmlText(label, css)
         End Function
 
         <Extension> Public Sub DrawX(ByRef g As IGraphics, size As Size, padding As Padding,

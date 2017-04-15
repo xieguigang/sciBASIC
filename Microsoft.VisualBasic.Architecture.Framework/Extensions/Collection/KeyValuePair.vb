@@ -34,16 +34,20 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' KeyValue pair data related extensions API.
+''' </summary>
 Public Module KeyValuePairExtensions
 
     ''' <summary>
-    ''' 删除字典之中的指定的键值对，然后返回被删除的数据值
+    ''' Removes the target key in the dictionary table, and then gets the removed value.
+    ''' (删除字典之中的指定的键值对，然后返回被删除的数据值)
     ''' </summary>
     ''' <typeparam name="K"></typeparam>
     ''' <typeparam name="V"></typeparam>
     ''' <param name="table"></param>
     ''' <param name="key"></param>
-    ''' <returns></returns>
+    ''' <returns>The value of the removed <paramref name="key"/></returns>
     <Extension>
     Public Function RemoveAndGet(Of K, V)(table As Dictionary(Of K, V), key As K) As V
         Dim item As V = table(key)
@@ -51,11 +55,23 @@ Public Module KeyValuePairExtensions
         Return item
     End Function
 
+    ''' <summary>
+    ''' Iterates all of the values in the <paramref name="source"/> collection data.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function IteratesAll(Of T As INamedValue)(source As IEnumerable(Of NamedCollection(Of T))) As T()
         Return source.Select(Function(c) c.Value).IteratesALL.ToArray
     End Function
 
+    ''' <summary>
+    ''' Groups source by <see cref="INamedValue.Key"/>
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GroupByKey(Of T As INamedValue)(source As IEnumerable(Of T)) As NamedCollection(Of T)()
         Return source _
@@ -68,6 +84,12 @@ Public Module KeyValuePairExtensions
                      End Function)
     End Function
 
+    ''' <summary>
+    ''' Retrieve all items' value data.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Values(Of T)(source As IEnumerable(Of NamedValue(Of T))) As T()
         Return source.Select(Function(x) x.Value).ToArray
@@ -89,23 +111,45 @@ Public Module KeyValuePairExtensions
         Return list.ToArray
     End Function
 
+    ''' <summary>
+    ''' Dictionary object contains the specific <see cref="NamedValue(Of T).Name"/>?
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="k"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ContainsKey(Of T As INamedValue)(table As Dictionary(Of T), k As NamedValue(Of T)) As Boolean
         Return table.ContainsKey(k.Name)
     End Function
 
+    ''' <summary>
+    ''' Dictionary object contains the specific <see cref="NamedValue(Of T).Name"/>?
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="k"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ContainsKey(Of T)(table As Dictionary(Of String, T), k As NamedValue(Of T)) As Boolean
         Return table.ContainsKey(k.Name)
     End Function
 
+    ''' <summary>
+    ''' Converts the interface object into a Dictionary object.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function DictionaryData(Of T, V)(source As IReadOnlyDictionary(Of T, V)) As Dictionary(Of T, V)
         Return source.ToDictionary(Function(x) x.Key, Function(x) x.Value)
     End Function
 
     ''' <summary>
-    ''' 类型必须是枚举类型
+    ''' Creates the dictionary for string converts to enum value.
+    ''' (接受的泛型类型必须是枚举类型)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="lcaseKey"></param>

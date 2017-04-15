@@ -46,7 +46,7 @@ Namespace KMeans.CompleteLinkage
         Friend mNumDesiredClusters As Integer
 
         Public Sub New(source As IEnumerable(Of Point), numClusters As Integer)
-            _source = source.ToList
+            _source = source.AsList
             mNumDesiredClusters = numClusters
         End Sub
 

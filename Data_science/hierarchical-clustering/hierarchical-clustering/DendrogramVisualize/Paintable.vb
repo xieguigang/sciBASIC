@@ -26,7 +26,18 @@ Namespace DendrogramVisualize
     ''' 
     ''' </summary>
     Public Interface Paintable
-        Sub paint(g As Graphics2D, xDisplayOffset As Integer, yDisplayOffset As Integer, xDisplayFactor As Double, yDisplayFactor As Double, decorated As Boolean)
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="xDisplayOffset%"></param>
+        ''' <param name="yDisplayOffset%"></param>
+        ''' <param name="xDisplayFactor#"></param>
+        ''' <param name="yDisplayFactor#"></param>
+        ''' <param name="decorated"></param>
+        ''' <param name="classTable">``<see cref="Cluster.Name"/> --> Color``</param>
+        Sub paint(g As Graphics2D, xDisplayOffset%, yDisplayOffset%, xDisplayFactor#, yDisplayFactor#, decorated As Boolean, classHeight!, Optional classTable As Dictionary(Of String, String) = Nothing)
     End Interface
 
 End Namespace

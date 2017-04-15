@@ -27,29 +27,33 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector
 
 Namespace StorageProvider.ComponentModels
 
     ''' <summary>
-    ''' 数据读写对象的基本类型
+    ''' The base type of the data I/O object schema.
+    ''' (数据读写对象的基本类型)
     ''' </summary>
     Public MustInherit Class StorageProvider
 
         ''' <summary>
-        ''' 这个属性值在Csv文件的第几列？
+        ''' The column index of this column in the csv table.
+        ''' (这个属性值在Csv文件的第几列？)
         ''' </summary>
         ''' <returns></returns>
         Public Property Ordinal As Integer
         ''' <summary>
-        ''' The bind property in the reflected class object.(在反射的类型定义之中所绑定的属性入口定义)
+        ''' The bind property in the reflected class object.
+        ''' (在反射的类型定义之中所绑定的属性入口定义)
         ''' </summary>
         ''' <returns></returns>
         Public Property BindProperty As PropertyInfo
 
         ''' <summary>
-        ''' 假若目标属性之中没有提供名称的话，则会使用属性名称来代替
+        ''' If the target property didn't provides the column name by 
+        ''' using custom attribute, then this property will returns 
+        ''' the Class propertyName from <see cref="PropertyInfo"/>.
+        ''' (假若目标属性之中没有提供名称的话，则会使用属性名称来代替)
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride ReadOnly Property Name As String
@@ -100,6 +104,10 @@ Namespace StorageProvider.ComponentModels
             Return ToString(value)
         End Function
 
+        ''' <summary>
+        ''' Creates the object model from target property definition.
+        ''' </summary>
+        ''' <param name="BindProperty"></param>
         Sub New(BindProperty As PropertyInfo)
             Call Me.New(BindProperty, BindProperty.PropertyType)
         End Sub
@@ -118,6 +126,10 @@ Namespace StorageProvider.ComponentModels
             Me.LoadMethod = LoadMethod
         End Sub
 
+        ''' <summary>
+        ''' VB style definition string
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Dim vbDim$ = $"[Dim {Name} As {BindProperty.PropertyType.FullName}]"
             Return vbDim & $" //{Me.GetType.Name} --> {BindProperty.Name}"

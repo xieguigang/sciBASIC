@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::4517300726090b063413dc244e9e8fd7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.SecurityString
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports Microsoft.VisualBasic.Text.Similarity
 
 #Const FRAMEWORD_CORE = 1
@@ -208,7 +209,7 @@ Public Module Extensions
         If source.IsNullOrEmpty Then
             Return -1
         Else
-            Return source.ToList.IndexOf(x)
+            Return source.AsList.IndexOf(x)
         End If
     End Function
 
@@ -731,7 +732,7 @@ Public Module Extensions
     ''' <param name="target"></param>
     ''' <returns></returns>
     <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), target As IEnumerable(Of T)) As List(Of T)
-        Dim srcList As List(Of T) = If(source.IsNullOrEmpty, New List(Of T), source.ToList)
+        Dim srcList As List(Of T) = If(source.IsNullOrEmpty, New List(Of T), source.AsList)
         If Not target.IsNullOrEmpty Then
             Call srcList.AddRange(target)
         End If
@@ -1392,19 +1393,21 @@ Public Module Extensions
 
     ''' <summary>
     ''' Fuzzy match two string, this is useful for the text query or searching.
+    ''' (请注意，这个函数是不会自动转换大小写的，如果是需要字符大小写不敏感，
+    ''' 请先将query以及subject都转换为小写)
     ''' </summary>
-    ''' <param name="Query"></param>
+    ''' <param name="query"></param>
     ''' <param name="Subject"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("FuzzyMatch",
                Info:="Fuzzy match two string, this is useful for the text query or searching.")>
-    <Extension> Public Function FuzzyMatching(Query As String, Subject As String, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
+    <Extension> Public Function FuzzyMatching(query$, subject$, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
         If tokenbased Then
-            Dim similarity# = Evaluate(Query, Subject,,, )
+            Dim similarity# = Evaluate(query, subject,,, )
             Return similarity >= cutoff
         Else
-            Dim dist = LevenshteinDistance.ComputeDistance(Query, Subject)
+            Dim dist = LevenshteinDistance.ComputeDistance(query, subject)
             If dist Is Nothing Then
                 Return False
             Else
@@ -2112,6 +2115,16 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function IsNullOrEmpty(Of T)(array As T()) As Boolean
         Return array Is Nothing OrElse array.Length = 0
+    End Function
+
+    ''' <summary>
+    ''' 这个字符串数组之中的所有的元素都是空字符串？
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function EmptyStringVector(s$()) As Boolean
+        Return s.Where(Function(c) Not c.StringEmpty).Count = 0
     End Function
 
     <ExportAPI("CopyFile", Info:="kernel32.dll!CopyFileW")>

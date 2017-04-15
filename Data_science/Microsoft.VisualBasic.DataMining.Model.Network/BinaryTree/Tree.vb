@@ -158,7 +158,7 @@ Namespace KMeans
                         .NodeType = Tree.EntityType,
                         .Properties = props
                     }
-                End Function).ToList
+                End Function).AsList
 
             nodes += New FileStream.Node With {
                 .ID = ROOT,

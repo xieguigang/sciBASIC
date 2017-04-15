@@ -49,7 +49,7 @@ Namespace IO
 
         Sub New(Optional Columns As IEnumerable(Of String) = Nothing)
             If Not Columns Is Nothing Then
-                Me._innerColumns = Columns.ToList
+                Me._innerColumns = Columns.AsList
             End If
         End Sub
 
@@ -352,7 +352,7 @@ Namespace IO
 
         Public Shared Widening Operator CType(Tokens As String()) As RowObject
             Return New RowObject With {
-                ._innerColumns = Tokens.ToList
+                ._innerColumns = Tokens.AsList
             }
         End Operator
 
@@ -364,7 +364,7 @@ Namespace IO
 
         Public Shared Function CreateObject(DataTokens As IEnumerable(Of String)) As RowObject
             Return New RowObject With {
-                ._innerColumns = DataTokens.ToList
+                ._innerColumns = DataTokens.AsList
             }
         End Function
 

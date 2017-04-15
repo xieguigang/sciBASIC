@@ -44,33 +44,6 @@ Namespace Drawing3D
         Implements PointF3D
 
         ''' <summary>
-        ''' Gets the projection 2D point result from this readonly property
-        ''' </summary>
-        ''' <param name="rect"></param>
-        ''' <returns></returns>
-        Public ReadOnly Property PointXY(Optional rect As Size = Nothing) As Point
-            Get
-                If X > Integer.MaxValue OrElse Single.IsPositiveInfinity(X) Then
-                    X = rect.Width
-                ElseIf X < Integer.MinValue OrElse Single.IsNegativeInfinity(X) Then
-                    X = 0
-                ElseIf Single.IsNaN(X) Then
-                    X = rect.Width
-                End If
-
-                If Y > Integer.MaxValue OrElse Single.IsPositiveInfinity(Y) Then
-                    Y = rect.Height
-                ElseIf Y < Integer.MinValue OrElse Single.IsNegativeInfinity(Y) Then
-                    Y = 0
-                ElseIf Single.IsNaN(Y) Then
-                    Y = rect.Height
-                End If
-
-                Return New Point(X, Y)
-            End Get
-        End Property
-
-        ''' <summary>
         ''' The depth of a point in the isometric plane
         ''' </summary>
         ''' <returns></returns>
@@ -181,6 +154,22 @@ Namespace Drawing3D
                 p3D.X - offset.X,
                 p3D.Y - offset.Y,
                 p3D.Z - offset.Z)
+        End Operator
+
+        ''' <summary>
+        ''' 所有的分量是否都等于目标值？使用这个操作符可以很方便的判断点是否为空值
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="n!"></param>
+        ''' <returns></returns>
+        Public Shared Operator =(p As Point3D, n!) As Boolean
+            With p
+                Return .X = n AndAlso .Y = n AndAlso .Z = n
+            End With
+        End Operator
+
+        Public Shared Operator <>(p As Point3D, n!) As Boolean
+            Return Not p = n
         End Operator
     End Structure
 End Namespace

@@ -55,7 +55,7 @@ Namespace ComponentModel.DataSourceModel
             IKeyValuePairObject(Of String, T()).Key,
             IGrouping(Of String, T).Key
 
-        Dim __list As List(Of T)
+        Private __list As List(Of T)
 
         ''' <summary>
         ''' 目标集合对象

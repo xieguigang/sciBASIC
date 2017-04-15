@@ -111,23 +111,23 @@ Namespace Dendrogram
             Return tree.Where(Function(child) child.IsLeaf).Count
         End Function
 
-        ''' <summary>
-        ''' 垂直放置的
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function Vertical(Of T)(tree As BinaryTree(Of T), getDistance As Func(Of T, T, Double), screen As Rectangle) As BinaryTree(Of ILayoutedObject(Of T))
+        '''' <summary>
+        '''' 垂直放置的
+        '''' </summary>
+        '''' <returns></returns>
+        'Public Function Vertical(Of T)(tree As BinaryTree(Of T), getDistance As Func(Of T, T, Double), screen As Rectangle) As BinaryTree(Of ILayoutedObject(Of T))
 
-        End Function
+        'End Function
 
-        ''' <summary>
-        ''' 圆弧状的
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' http://stackoverflow.com/questions/5089030/how-do-i-create-a-radial-cluster-like-the-following-code-example-in-python
-        ''' </remarks>
-        Public Function Radial(Of T)(tree As BinaryTree(Of T), getDistance As Func(Of T, T, Double), screen As Rectangle) As BinaryTree(Of ILayoutedObject(Of T))
+        '''' <summary>
+        '''' 圆弧状的
+        '''' </summary>
+        '''' <returns></returns>
+        '''' <remarks>
+        '''' http://stackoverflow.com/questions/5089030/how-do-i-create-a-radial-cluster-like-the-following-code-example-in-python
+        '''' </remarks>
+        'Public Function Radial(Of T)(tree As BinaryTree(Of T), getDistance As Func(Of T, T, Double), screen As Rectangle) As BinaryTree(Of ILayoutedObject(Of T))
 
-        End Function
+        'End Function
     End Module
 End Namespace

@@ -10,14 +10,19 @@ Namespace Text.Xml.Linq
     Public Module Data
 
         ''' <summary>
-        ''' Load a specific xml file from a file location <paramref name="path"/> into a <see cref="XmlDocument"/> object.
+        ''' Load a specific xml file from a file location <paramref name="pathOrDoc"/>/ or 
+        ''' a xml text document data into a <see cref="XmlDocument"/> object.
         ''' </summary>
-        ''' <param name="path$"></param>
+        ''' <param name="pathOrDoc"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function LoadXmlDocument(path$) As XmlDocument
+        Public Function LoadXmlDocument(pathOrDoc$) As XmlDocument
             Dim XmlDoc As New XmlDocument()
-            Call XmlDoc.Load(path)
+            If pathOrDoc.FileExists Then
+                Call XmlDoc.Load(pathOrDoc)
+            Else
+                Call XmlDoc.LoadXml(pathOrDoc)
+            End If
             Return XmlDoc
         End Function
 

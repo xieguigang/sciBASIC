@@ -52,7 +52,7 @@ Namespace StorageProvider.ComponentModels
         ''' <returns></returns>
         Public Property RowData As RowObject
         ''' <summary>
-        ''' The table's fields ordinal schema
+        ''' The table's fields ordinal schema.(通过对csv文件的头部所解析得到的域的名称列表)
         ''' </summary>
         ''' <returns></returns>
         Public Property Schema As Dictionary(Of String, Integer)

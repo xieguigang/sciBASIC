@@ -115,7 +115,7 @@ Namespace ComponentModel.Settings.Inf
                     End If
                 Next
 
-NEW_KEY:        Dim List = strLines.ToList
+NEW_KEY:        Dim List = strLines.AsList
                 Call List.Insert(index, $"{key}={value}")
                 Call IO.File.WriteAllLines(path, List.ToArray)
 

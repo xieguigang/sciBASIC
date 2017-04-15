@@ -50,9 +50,10 @@ Namespace DendrogramVisualize
         ''' <param name="xDisplayFactor"></param>
         ''' <param name="yDisplayFactor"></param>
         ''' <param name="decorated"></param>
-        Public Sub paint(g As Graphics2D, xDisplayOffset As Integer, yDisplayOffset As Integer, xDisplayFactor As Double, yDisplayFactor As Double, decorated As Boolean) Implements Paintable.paint
+        Public Sub paint(g As Graphics2D, xDisplayOffset%, yDisplayOffset%, xDisplayFactor#, yDisplayFactor#, decorated As Boolean, classHeight!, Optional classTable As Dictionary(Of String, String) = Nothing) Implements Paintable.paint
             Dim x1, y1, x2, y2 As Integer
             Dim fontMetrics As FontMetrics = g.FontMetrics
+
             x1 = CInt(Fix(InitPoint.X * xDisplayFactor + xDisplayOffset))
             y1 = CInt(Fix(InitPoint.Y * yDisplayFactor + yDisplayOffset))
             x2 = CInt(Fix(LinkPoint.X * xDisplayFactor + xDisplayOffset))
@@ -61,7 +62,16 @@ Namespace DendrogramVisualize
             g.DrawLine(Pens.Black, x1, y1, x2, y2)
 
             If Cluster.Leaf Then
-                g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, x1 + NamePadding, y1 - (fontMetrics.Height / 2) - 2)
+                Dim nx! = x1 + NamePadding
+                Dim ny! = y1
+
+                ' 绘制叶节点
+                g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, nx, y1 - (fontMetrics.Height / 2) - 2)
+                If Not classTable Is Nothing Then
+                    ' 如果还存在分类信息的话，会绘制分类的颜色条
+                    Dim color As Brush = classTable(Cluster.Name).GetBrush
+                    ' Dim rect As New RectangleF(New PointF())
+                End If
             End If
             If decorated AndAlso Cluster.Distance IsNot Nothing AndAlso (Not Cluster.Distance.NaN) AndAlso Cluster.Distance.Distance > 0 Then
                 Dim s As String = String.Format("{0:F2}", Cluster.Distance)
@@ -75,7 +85,7 @@ Namespace DendrogramVisualize
             g.DrawLine(Pens.Black, x1, y1, x2, y2)
 
             For Each child As ClusterComponent In Children
-                child.paint(g, xDisplayOffset, yDisplayOffset, xDisplayFactor, yDisplayFactor, decorated)
+                child.paint(g, xDisplayOffset, yDisplayOffset, xDisplayFactor, yDisplayFactor, decorated, classHeight, classTable)
             Next
         End Sub
 
@@ -140,10 +150,10 @@ Namespace DendrogramVisualize
             Return width
         End Function
 
-        Public Function getMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
+        Public Function GetMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = getNameWidth(g, includeNonLeafs)
             For Each comp As ClusterComponent In Children
-                Dim childWidth As Integer = comp.getMaxNameWidth(g, includeNonLeafs)
+                Dim childWidth As Integer = comp.GetMaxNameWidth(g, includeNonLeafs)
                 If childWidth > width Then width = childWidth
             Next comp
             Return width
