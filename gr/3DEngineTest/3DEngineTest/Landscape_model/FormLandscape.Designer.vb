@@ -37,6 +37,8 @@ Partial Class FormLandscape
         Me.ResetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.trbFOV = New System.Windows.Forms.TrackBar()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.trbFOV, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -156,18 +158,39 @@ Partial Class FormLandscape
         Me.trbFOV.LargeChange = 10
         Me.trbFOV.Location = New System.Drawing.Point(543, 437)
         Me.trbFOV.Maximum = 500
-        Me.trbFOV.Minimum = -500
         Me.trbFOV.Name = "trbFOV"
         Me.trbFOV.Size = New System.Drawing.Size(177, 19)
         Me.trbFOV.SmallChange = 5
         Me.trbFOV.TabIndex = 2
         Me.trbFOV.Value = 256
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.LightBlue
+        Me.Label1.Location = New System.Drawing.Point(506, 437)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(31, 13)
+        Me.Label1.TabIndex = 3
+        Me.Label1.Text = "FOV:"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.LightBlue
+        Me.Label2.Location = New System.Drawing.Point(459, 462)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(78, 13)
+        Me.Label2.TabIndex = 4
+        Me.Label2.Text = "View Distance:"
+        '
         'FormLandscape
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(742, 493)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.trbFOV)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.TrackBar1)
@@ -198,4 +221,6 @@ Partial Class FormLandscape
     Friend WithEvents LightToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RemoveTexturesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents trbFOV As TrackBar
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
 End Class
