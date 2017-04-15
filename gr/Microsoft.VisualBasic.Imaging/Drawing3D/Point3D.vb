@@ -182,5 +182,21 @@ Namespace Drawing3D
                 p3D.Y - offset.Y,
                 p3D.Z - offset.Z)
         End Operator
+
+        ''' <summary>
+        ''' 所有的分量是否都等于目标值？使用这个操作符可以很方便的判断点是否为空值
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="n!"></param>
+        ''' <returns></returns>
+        Public Shared Operator =(p As Point3D, n!) As Boolean
+            With p
+                Return .X = n AndAlso .Y = n AndAlso .Z = n
+            End With
+        End Operator
+
+        Public Shared Operator <>(p As Point3D, n!) As Boolean
+            Return Not p = n
+        End Operator
     End Structure
 End Namespace
