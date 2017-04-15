@@ -4115,7 +4115,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
-
+            Call Graphics.FillEllipse(brush, x, y, width, height)
         End Sub
         '
         ' Summary:
@@ -4132,7 +4132,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-path is null.
         Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
-
+            Call Graphics.FillPath(brush, path)
         End Sub
         '
         ' Summary:
@@ -4198,7 +4198,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
-
+            Call Graphics.FillPie(brush, x, y, width, height, startAngle, sweepAngle)
         End Sub
         '
         ' Summary:
@@ -4237,7 +4237,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-
+            Call Graphics.FillPie(brush, x, y, width, height, startAngle, sweepAngle)
         End Sub
         '
         ' Summary:
@@ -4256,7 +4256,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point)
-
+            Call Graphics.FillPolygon(brush, points)
         End Sub
         '
         ' Summary:
@@ -4275,7 +4275,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
-
+            Call Graphics.FillPolygon(brush, points)
         End Sub
         '
         ' Summary:
@@ -4298,7 +4298,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
-
+            Call Graphics.FillPolygon(brush, points, fillMode)
         End Sub
         '
         ' Summary:
@@ -4321,7 +4321,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
-
+            Call Graphics.FillPolygon(brush, points, fillMode)
         End Sub
         '
         ' Summary:

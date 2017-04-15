@@ -8,7 +8,7 @@ Namespace Drawing3D
     Public Class Model2D
         Friend path As Path3D
         Friend baseColor As Color
-        Friend paint As Pen
+        Friend paint As SolidBrush
         Friend drawn As Integer
         Friend transformedPoints As Point3D()
         Friend drawPath As Path2D
@@ -26,7 +26,7 @@ Namespace Drawing3D
             drawPath = New Path2D
             drawn = 0
             Me.baseColor = baseColor
-            Me.paint = New Pen(Color.FromArgb(CInt(Fix(baseColor.A)), CInt(Fix(baseColor.R)), CInt(Fix(baseColor.G)), CInt(Fix(baseColor.B))), 1)
+            Me.paint = New SolidBrush(Color.FromArgb(CInt(Fix(baseColor.A)), CInt(Fix(baseColor.R)), CInt(Fix(baseColor.G)), CInt(Fix(baseColor.B))))
             Me.path = ___path
         End Sub
     End Class

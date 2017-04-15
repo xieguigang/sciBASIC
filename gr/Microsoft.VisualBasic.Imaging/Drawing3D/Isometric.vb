@@ -202,7 +202,7 @@ Namespace Drawing3D
                 '            this.ctx.fill();
                 '            this.ctx.restore();
                 With model2D
-                    Call canvas.DrawPath(.paint, .drawPath.Path)
+                    Call canvas.FillPath(.paint, .drawPath.Path)
                 End With
             Next
         End Sub
