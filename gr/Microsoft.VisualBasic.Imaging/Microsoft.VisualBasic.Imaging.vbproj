@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="d3js\CSSModel.vb" />
+    <Compile Include="Drawing2D\Path2D.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
     <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
@@ -193,6 +194,7 @@
     <Compile Include="Drawing2D\Colors\Legend.vb" />
     <Compile Include="Drawing2D\g.vb" />
     <Compile Include="Drawing2D\GraphicsRegion.vb" />
+    <Compile Include="Drawing2D\Extensions.vb" />
     <Compile Include="Drawing2D\Shapes\Arrow.vb" />
     <Compile Include="Drawing2D\Shapes\RoundRect.vb" />
     <Compile Include="Drawing2D\Shapes\Pentacle.vb" />

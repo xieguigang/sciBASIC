@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 
 Namespace Drawing3D
@@ -10,7 +11,7 @@ Namespace Drawing3D
         Friend paint As Pen
         Friend drawn As Integer
         Friend transformedPoints As Point3D()
-        Friend drawPath As GraphicsPath
+        Friend drawPath As Path2D
 
         Friend Sub New(ByVal item As Model2D)
             transformedPoints = item.transformedPoints
@@ -22,7 +23,7 @@ Namespace Drawing3D
         End Sub
 
         Friend Sub New(ByVal ___path As Path3D, ByVal baseColor As Color)
-            drawPath = New GraphicsPath
+            drawPath = New Path2D
             drawn = 0
             Me.baseColor = baseColor
             Me.paint = New Pen(Color.FromArgb(CInt(Fix(baseColor.A)), CInt(Fix(baseColor.R)), CInt(Fix(baseColor.G)), CInt(Fix(baseColor.B))), 1)

@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
@@ -104,7 +105,7 @@ Namespace Drawing3D
                 item.transformedPoints = New Point3D(item.path.Points.Count - 1) {}
 
                 If Not item.drawPath Is Nothing Then
-                    item.drawPath.Reset() 'Todo: test if .reset is not needed and rewind is enough
+                    item.drawPath.Rewind() 'Todo: test if .reset is not needed and rewind is enough
                 End If
                 Dim i As Integer = 0
                 Dim ___point As Point3D
@@ -113,14 +114,13 @@ Namespace Drawing3D
                     item.transformedPoints(i) = translatePoint(___point)
                 Next
 
-                item.drawPath.moveTo(CSng(item.transformedPoints(0).X), CSng(item.transformedPoints(0).Y))
-
-
                 Dim length As Integer = item.transformedPoints.Length
+
+                Call item.drawPath.MoveTo(CSng(item.transformedPoints(0).X), CSng(item.transformedPoints(0).Y))
 
                 i = 1
                 Do While i < length
-                    item.drawPath.AddLin(CSng(item.transformedPoints(i).X), CSng(item.transformedPoints(i).Y))
+                    item.drawPath.LineTo(CSng(item.transformedPoints(i).X), CSng(item.transformedPoints(i).Y))
                     i += 1
                 Loop
 
@@ -199,7 +199,7 @@ Namespace Drawing3D
                 '            this.ctx.fill();
                 '            this.ctx.restore();
                 With item
-                    Call canvas.DrawPath(.paint, .drawPath)
+                    Call canvas.DrawPath(.paint, .drawPath.Path)
                 End With
             Next
         End Sub
