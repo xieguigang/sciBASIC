@@ -22,13 +22,11 @@ Public Class IsometricViewTest
         End Using
     End Sub
 
-
     Public Overridable Sub doScreenshotOne()
         Dim view As New IsometricView
         sampleOne(view)
         measureAndScreenshotView(view, 680, 220)
     End Sub
-
 
     Public Overridable Sub doScreenshotTwo()
         Dim view As New IsometricView
@@ -36,13 +34,11 @@ Public Class IsometricViewTest
         measureAndScreenshotView(view, 680, 540)
     End Sub
 
-
     Public Overridable Sub doScreenshotThree()
         Dim view As New IsometricView
         sampleThree(0, view)
         measureAndScreenshotView(view, 820, 680)
     End Sub
-
 
     Public Overridable Sub doScreenshotGrid()
         Dim view As New IsometricView
@@ -50,13 +46,11 @@ Public Class IsometricViewTest
         measureAndScreenshotView(view, 680, 540)
     End Sub
 
-
     Public Overridable Sub doScreenshotPath3D()
         Dim view As New IsometricView
         path(view)
         measureAndScreenshotView(view, 680, 440)
     End Sub
-
 
     Public Overridable Sub doScreenshotTranslate()
         Dim view As New IsometricView
@@ -64,13 +58,11 @@ Public Class IsometricViewTest
         measureAndScreenshotView(view, 680, 440)
     End Sub
 
-
     Public Overridable Sub doScreenshotScale()
         Dim view As New IsometricView
         scale(view)
         measureAndScreenshotView(view, 680, 440)
     End Sub
-
 
     Public Overridable Sub doScreenshotRotateZ()
         Dim view As New IsometricView
@@ -78,13 +70,11 @@ Public Class IsometricViewTest
         measureAndScreenshotView(view, 680, 440)
     End Sub
 
-
     Public Overridable Sub doScreenshotExtrude()
         Dim view As New IsometricView
         extrude(view)
         measureAndScreenshotView(view, 680, 440)
     End Sub
-
 
     Public Overridable Sub doScreenshotCylinder()
         Dim view As New IsometricView
@@ -92,13 +82,11 @@ Public Class IsometricViewTest
         measureAndScreenshotView(view, 680, 440)
     End Sub
 
-
     Public Overridable Sub doScreenshotKnot()
         Dim view As New IsometricView
         knot(view)
         measureAndScreenshotView(view, 680, 440)
     End Sub
-
 
     Public Overridable Sub doScreenshotOctahedron()
         Dim view As New IsometricView
@@ -106,20 +94,17 @@ Public Class IsometricViewTest
         measureAndScreenshotView(view, 680, 440)
     End Sub
 
-
     Public Overridable Sub doScreenshotPrism()
         Dim view As New IsometricView
         prism(view)
         measureAndScreenshotView(view, 680, 440)
     End Sub
 
-
     Public Overridable Sub doScreenshotPyramid()
         Dim view As New IsometricView
         pyramid(view)
         measureAndScreenshotView(view, 680, 440)
     End Sub
-
 
     Public Overridable Sub doScreenshotStairs()
         Dim view As New IsometricView
@@ -129,106 +114,106 @@ Public Class IsometricViewTest
 
     Public Overridable Sub grid(isometricView As IsometricEngine)
         For x As Integer = 0 To 9
-            isometricView.add(New Path3D({New Point3D(x, 0, 0), New Point3D(x, 10, 0), New Point3D(x, 0, 0)
-            }), Color.FromArgb(50, 160, 60))
-        Next x
+            isometricView.Add(
+                New Path3D({New Point3D(x, 0, 0), New Point3D(x, 10, 0), New Point3D(x, 0, 0)}),
+                Color.FromArgb(50, 160, 60))
+        Next
         For y As Integer = 0 To 9
-            isometricView.add(New Path3D(New Point3D() {New Point3D(0, y, 0), New Point3D(10, y, 0), New Point3D(0, y, 0)
-            }), Color.FromArgb(50, 160, 60))
-        Next y
-        isometricView.add(New Shapes.Prism(Math3D.ORIGIN), Color.FromArgb(33, 150, 243))
-        isometricView.add(New Path3D(New Point3D() {Math3D.ORIGIN, New Point3D(0, 0, 10), Math3D.ORIGIN}), Color.FromArgb(160, 50, 60))
+            isometricView.Add(
+                New Path3D({New Point3D(0, y, 0), New Point3D(10, y, 0), New Point3D(0, y, 0)}),
+                Color.FromArgb(50, 160, 60))
+        Next
+        isometricView.Add(New Shapes.Prism(Math3D.ORIGIN), Color.FromArgb(33, 150, 243))
+        isometricView.Add(New Path3D({Math3D.ORIGIN, New Point3D(0, 0, 10), Math3D.ORIGIN}), Color.FromArgb(160, 50, 60))
     End Sub
 
     Public Overridable Sub path(isometricView As IsometricEngine)
-        isometricView.add(New Shapes.Prism(Math3D.ORIGIN, 3, 3, 1), Color.FromArgb(50, 60, 160))
-        isometricView.add(New Path3D(New Point3D() {New Point3D(1, 1, 1), New Point3D(2, 1, 1), New Point3D(2, 2, 1), New Point3D(1, 2, 1)
-        }), Color.FromArgb(50, 160, 60))
+        isometricView.Add(New Shapes.Prism(Math3D.ORIGIN, 3, 3, 1), Color.FromArgb(50, 60, 160))
+        isometricView.Add(New Path3D({New Point3D(1, 1, 1), New Point3D(2, 1, 1), New Point3D(2, 2, 1), New Point3D(1, 2, 1)}), Color.FromArgb(50, 160, 60))
     End Sub
 
     Public Overridable Sub sampleOne(isometricView As IsometricEngine)
-        isometricView.add(New Shapes.Prism(New Point3D(0, 0, 0)), Color.FromArgb(33, 150, 243))
+        isometricView.Add(New Shapes.Prism(New Point3D(0, 0, 0)), Color.FromArgb(33, 150, 243))
     End Sub
 
     Public Overridable Sub sampleTwo(isometricView As IsometricEngine)
-        isometricView.add(New Shapes.Prism(New Point3D(0, 0, 0), 4, 4, 2), GREEN)
-        isometricView.add(New Shapes.Prism(New Point3D(-1, 1, 0), 1, 2, 1), PURPLE)
-        isometricView.add(New Shapes.Prism(New Point3D(1, -1, 0), 2, 1, 1), Color.FromArgb(33, 150, 243))
+        isometricView.Add(New Shapes.Prism(New Point3D(0, 0, 0), 4, 4, 2), GREEN)
+        isometricView.Add(New Shapes.Prism(New Point3D(-1, 1, 0), 1, 2, 1), PURPLE)
+        isometricView.Add(New Shapes.Prism(New Point3D(1, -1, 0), 2, 1, 1), Color.FromArgb(33, 150, 243))
     End Sub
 
     Public Overridable Sub sampleThree(angle As Double, isometricView As IsometricEngine)
-        isometricView.clear()
-        isometricView.add(New Shapes.Prism(New Point3D(1, -1, 0), 4, 5, 2), Color.FromArgb(33, 150, 243))
-        isometricView.add(New Shapes.Prism(New Point3D(0, 0, 0), 1, 4, 1), Color.FromArgb(33, 150, 243))
-        isometricView.add(New Shapes.Prism(New Point3D(-1, 1, 0), 1, 3, 1), Color.FromArgb(33, 150, 243))
-        isometricView.add(New Shapes.Stairs(New Point3D(-1, 0, 0), 10), Color.FromArgb(33, 150, 243))
-        isometricView.add((New Shapes.Stairs(New Point3D(0, 3, 1), 10)).rotateZ(New Point3D(0.5, 3.5, 1), -Math.PI / 2), Color.FromArgb(33, 150, 243))
-        isometricView.add(New Shapes.Prism(New Point3D(3, 0, 2), 2, 4, 1), Color.FromArgb(33, 150, 243))
-        isometricView.add(New Shapes.Prism(New Point3D(2, 1, 2), 1, 3, 1), Color.FromArgb(33, 150, 243))
-        isometricView.add((New Shapes.Stairs(New Point3D(2, 0, 2), 10)).rotateZ(New Point3D(2.5, 0.5, 0), -Math.PI / 2), Color.FromArgb(33, 150, 243))
-        isometricView.add((New Shapes.Pyramid(New Point3D(2, 3, 3))).scale(New Point3D(2, 4, 3), 0.5), Color.FromArgb(180, 180, 0))
-        isometricView.add((New Shapes.Pyramid(New Point3D(4, 3, 3))).scale(New Point3D(5, 4, 3), 0.5), Color.FromArgb(180, 0, 180))
-        isometricView.add((New Shapes.Pyramid(New Point3D(4, 1, 3))).scale(New Point3D(5, 1, 3), 0.5), Color.FromArgb(0, 180, 180))
-        isometricView.add((New Shapes.Pyramid(New Point3D(2, 1, 3))).scale(New Point3D(2, 1, 3), 0.5), Color.FromArgb(40, 180, 40))
-        isometricView.add(New Shapes.Prism(New Point3D(3, 2, 3), 1, 1, 0.2), Color.FromArgb(50, 50, 50))
-        isometricView.add((New Shapes.Octahedron(New Point3D(3, 2, 3.2))).rotateZ(New Point3D(3.5, 2.5, 0), angle), Color.FromArgb(0, 180, 180))
+        isometricView.Clear()
+        isometricView.Add(New Shapes.Prism(New Point3D(1, -1, 0), 4, 5, 2), Color.FromArgb(33, 150, 243))
+        isometricView.Add(New Shapes.Prism(New Point3D(0, 0, 0), 1, 4, 1), Color.FromArgb(33, 150, 243))
+        isometricView.Add(New Shapes.Prism(New Point3D(-1, 1, 0), 1, 3, 1), Color.FromArgb(33, 150, 243))
+        isometricView.Add(New Shapes.Stairs(New Point3D(-1, 0, 0), 10), Color.FromArgb(33, 150, 243))
+        isometricView.Add((New Shapes.Stairs(New Point3D(0, 3, 1), 10)).RotateZ(New Point3D(0.5, 3.5, 1), -Math.PI / 2), Color.FromArgb(33, 150, 243))
+        isometricView.Add(New Shapes.Prism(New Point3D(3, 0, 2), 2, 4, 1), Color.FromArgb(33, 150, 243))
+        isometricView.Add(New Shapes.Prism(New Point3D(2, 1, 2), 1, 3, 1), Color.FromArgb(33, 150, 243))
+        isometricView.Add((New Shapes.Stairs(New Point3D(2, 0, 2), 10)).RotateZ(New Point3D(2.5, 0.5, 0), -Math.PI / 2), Color.FromArgb(33, 150, 243))
+        isometricView.Add((New Shapes.Pyramid(New Point3D(2, 3, 3))).scale(New Point3D(2, 4, 3), 0.5), Color.FromArgb(180, 180, 0))
+        isometricView.Add((New Shapes.Pyramid(New Point3D(4, 3, 3))).scale(New Point3D(5, 4, 3), 0.5), Color.FromArgb(180, 0, 180))
+        isometricView.Add((New Shapes.Pyramid(New Point3D(4, 1, 3))).scale(New Point3D(5, 1, 3), 0.5), Color.FromArgb(0, 180, 180))
+        isometricView.Add((New Shapes.Pyramid(New Point3D(2, 1, 3))).scale(New Point3D(2, 1, 3), 0.5), Color.FromArgb(40, 180, 40))
+        isometricView.Add(New Shapes.Prism(New Point3D(3, 2, 3), 1, 1, 0.2), Color.FromArgb(50, 50, 50))
+        isometricView.Add((New Shapes.Octahedron(New Point3D(3, 2, 3.2))).RotateZ(New Point3D(3.5, 2.5, 0), angle), Color.FromArgb(0, 180, 180))
     End Sub
 
     Public Overridable Sub translate(isometricView As IsometricEngine)
         Dim ___blue As Color = Color.FromArgb(50, 60, 160)
         Dim ___red As Color = Color.FromArgb(160, 60, 50)
         Dim cube As New Shapes.Prism(New Point3D(0, 0, 0))
-        isometricView.add(cube, ___red)
-        isometricView.add(cube.Translate(0, 0, 1.1), ___blue)
-        isometricView.add(cube.Translate(0, 0, 2.2), ___red)
+        isometricView.Add(cube, ___red)
+        isometricView.Add(cube.Translate(0, 0, 1.1), ___blue)
+        isometricView.Add(cube.Translate(0, 0, 2.2), ___red)
     End Sub
 
     Public Overridable Sub scale(isometricView As IsometricEngine)
         Dim ___blue As Color = Color.FromArgb(50, 60, 160)
         Dim ___red As Color = Color.FromArgb(160, 60, 50)
         Dim cube As New Shapes.Prism(Math3D.ORIGIN)
-        isometricView.add(cube.scale(Math3D.ORIGIN, 3.0, 3.0, 0.5), ___red)
-        isometricView.add(cube.scale(Math3D.ORIGIN, 3.0, 3.0, 0.5).Translate(0, 0, 0.6), ___blue)
+        isometricView.Add(cube.Scale(Math3D.ORIGIN, 3.0, 3.0, 0.5), ___red)
+        isometricView.Add(cube.Scale(Math3D.ORIGIN, 3.0, 3.0, 0.5).Translate(0, 0, 0.6), ___blue)
     End Sub
 
     Public Overridable Sub rotateZ(isometricView As IsometricEngine)
         Dim ___blue As Color = Color.FromArgb(50, 60, 160)
         Dim ___red As Color = Color.FromArgb(160, 60, 50)
         Dim cube As New Shapes.Prism(Math3D.ORIGIN, 3, 3, 1)
-        isometricView.add(cube, ___red)
-        isometricView.add(cube.rotateZ(New Point3D(1.5, 1.5, 0), Math.PI / 12).Translate(0, 0, 1.1), ___blue)
+        isometricView.Add(cube, ___red)
+        isometricView.Add(cube.RotateZ(New Point3D(1.5, 1.5, 0), Math.PI / 12).Translate(0, 0, 1.1), ___blue)
         ' (1.5, 1.5) is the center of the prism 
     End Sub
 
     Public Overridable Sub extrude(isometricView As IsometricEngine)
         Dim ___blue As Color = Color.FromArgb(50, 60, 160)
         Dim ___red As Color = Color.FromArgb(160, 60, 50)
-        isometricView.add(New Shapes.Prism(Math3D.ORIGIN, 3, 3, 1), ___blue)
-        isometricView.add(Shape3D.extrude(New Path3D(New Point3D() {New Point3D(1, 1, 1), New Point3D(2, 1, 1), New Point3D(2, 3, 1)
-        }), 0.3), ___red)
+        isometricView.Add(New Shapes.Prism(Math3D.ORIGIN, 3, 3, 1), ___blue)
+        isometricView.Add(Shape3D.Extrude(New Path3D(New Point3D() {New Point3D(1, 1, 1), New Point3D(2, 1, 1), New Point3D(2, 3, 1)}), 0.3), ___red)
     End Sub
 
     Public Overridable Sub cylinder(isometricView As IsometricEngine)
-        isometricView.add(New Shapes.Cylinder(New Point3D(1, 1, 1), 30, 1), BLUE)
+        isometricView.Add(New Shapes.Cylinder(New Point3D(1, 1, 1), 30, 1), BLUE)
     End Sub
 
     Public Overridable Sub knot(isometricView As IsometricView)
-        isometricView.add(New Shapes.Knot(New Point3D(1, 1, 1)), GREEN)
+        isometricView.Add(New Shapes.Knot(New Point3D(1, 1, 1)), GREEN)
     End Sub
 
     Public Overridable Sub octahedron(isometricView As IsometricView)
-        isometricView.add(New Shapes.Octahedron(New Point3D(1, 1, 1)), RED)
+        isometricView.Add(New Shapes.Octahedron(New Point3D(1, 1, 1)), RED)
     End Sub
 
     Public Overridable Sub prism(isometricView As IsometricView)
-        isometricView.add(New Shapes.Prism(New Point3D(1, 1, 1)), YELLOW)
+        isometricView.Add(New Shapes.Prism(New Point3D(1, 1, 1)), YELLOW)
     End Sub
 
     Public Overridable Sub pyramid(isometricView As IsometricView)
-        isometricView.add(New Shapes.Pyramid(New Point3D(1, 1, 1)), TEAL)
+        isometricView.Add(New Shapes.Pyramid(New Point3D(1, 1, 1)), TEAL)
     End Sub
 
     Public Overridable Sub stairs(isometricView As IsometricView)
-        isometricView.add(New Shapes.Stairs(New Point3D(1, 1, 1), 10), LIGHT_GREEN)
+        isometricView.Add(New Shapes.Stairs(New Point3D(1, 1, 1), 10), LIGHT_GREEN)
     End Sub
 End Class

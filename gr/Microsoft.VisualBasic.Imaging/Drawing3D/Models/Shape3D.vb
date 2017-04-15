@@ -53,7 +53,7 @@
             Return New Shape3D(___paths)
         End Function
 
-        Public Overridable Function rotateZ(origin As Point3D, angle As Double) As Shape3D
+        Public Overridable Function RotateZ(origin As Point3D, angle As Double) As Shape3D
             Dim ___paths As Path3D() = New Path3D(Me.paths.Count - 1) {}
             Dim ___point As Path3D
             For i As Integer = 0 To Me.paths.Count - 1
@@ -63,7 +63,7 @@
             Return New Shape3D(___paths)
         End Function
 
-        Public Overridable Function scale(origin As Point3D, dx As Double, dy As Double, dz As Double) As Shape3D
+        Public Overridable Function Scale(origin As Point3D, dx As Double, dy As Double, dz As Double) As Shape3D
             Dim ___paths As Path3D() = New Path3D(Me.paths.Count - 1) {}
             Dim ___point As Path3D
             For i As Integer = 0 To Me.paths.Count - 1
@@ -164,7 +164,7 @@
             Return extrude(New Shape3D, ___path, 1)
         End Function
 
-        Public Shared Function extrude(___path As Path3D, height As Double) As Shape3D
+        Public Shared Function Extrude(___path As Path3D, height As Double) As Shape3D
             Return extrude(New Shape3D, ___path, height)
         End Function
 

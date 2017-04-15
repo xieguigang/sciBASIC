@@ -12,29 +12,29 @@ Namespace Drawing3D
         ''' </summary>
         Friend path As Path3D
         Friend baseColor As Color
-        Friend paint As SolidBrush
+        Friend Paint As SolidBrush
         Friend drawn As Integer
         Friend transformedPoints As Point3D()
 
         ''' <summary>
         ''' 经过模型数据<see cref="path"/>转换之后所得到的绘图所使用的对象模型
         ''' </summary>
-        Friend drawPath As Path2D
+        Friend DrawPath As Path2D
 
         Friend Sub New(item As Model2D)
             transformedPoints = item.transformedPoints
-            drawPath = item.drawPath
+            DrawPath = item.DrawPath
             drawn = item.drawn
-            Me.paint = item.paint
+            Me.Paint = item.Paint
             Me.path = item.path
             Me.baseColor = item.baseColor
         End Sub
 
         Friend Sub New(___path As Path3D, baseColor As Color)
-            drawPath = New Path2D
+            DrawPath = New Path2D
             drawn = 0
             Me.baseColor = baseColor
-            Me.paint = New SolidBrush(Color.FromArgb(CInt(Fix(baseColor.A)), CInt(Fix(baseColor.R)), CInt(Fix(baseColor.G)), CInt(Fix(baseColor.B))))
+            Me.Paint = New SolidBrush(Color.FromArgb(CInt(Fix(baseColor.A)), CInt(Fix(baseColor.R)), CInt(Fix(baseColor.G)), CInt(Fix(baseColor.B))))
             Me.path = ___path
         End Sub
     End Class
