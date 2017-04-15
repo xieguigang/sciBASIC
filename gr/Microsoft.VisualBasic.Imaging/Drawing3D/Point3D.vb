@@ -44,33 +44,6 @@ Namespace Drawing3D
         Implements PointF3D
 
         ''' <summary>
-        ''' Gets the projection 2D point result from this readonly property
-        ''' </summary>
-        ''' <param name="rect"></param>
-        ''' <returns></returns>
-        Public ReadOnly Property PointXY(Optional rect As Size = Nothing) As Point
-            Get
-                If X > Integer.MaxValue OrElse Single.IsPositiveInfinity(X) Then
-                    X = rect.Width
-                ElseIf X < Integer.MinValue OrElse Single.IsNegativeInfinity(X) Then
-                    X = 0
-                ElseIf Single.IsNaN(X) Then
-                    X = rect.Width
-                End If
-
-                If Y > Integer.MaxValue OrElse Single.IsPositiveInfinity(Y) Then
-                    Y = rect.Height
-                ElseIf Y < Integer.MinValue OrElse Single.IsNegativeInfinity(Y) Then
-                    Y = 0
-                ElseIf Single.IsNaN(Y) Then
-                    Y = rect.Height
-                End If
-
-                Return New Point(X, Y)
-            End Get
-        End Property
-
-        ''' <summary>
         ''' The depth of a point in the isometric plane
         ''' </summary>
         ''' <returns></returns>
