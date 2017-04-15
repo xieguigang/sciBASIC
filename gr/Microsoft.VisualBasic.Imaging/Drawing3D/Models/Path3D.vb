@@ -29,6 +29,7 @@ Namespace Drawing3D.IsoMetric
         End Property
 
         Public Sub New()
+            Points = New List(Of Point3D)
         End Sub
 
         Public Sub New(points As IEnumerable(Of Point3D))

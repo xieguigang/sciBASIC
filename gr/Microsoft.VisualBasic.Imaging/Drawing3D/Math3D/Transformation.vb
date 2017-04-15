@@ -4,6 +4,10 @@ Namespace Drawing3D.Math3D
 
     Public Module Transformation
 
+        ''' <summary>
+        ''' 三维坐标系的原点``(0, 0, 0)``
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ORIGIN As New Point3D(0, 0, 0)
 
 #Region "3D rotation around a specific point"

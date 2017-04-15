@@ -71,6 +71,27 @@ Namespace Imaging
 
         Dim __innerImage As Image
 
+        Protected Sub New()
+        End Sub
+
+        Sub New(size As Size, fill As Color)
+            Dim base = size.CreateGDIDevice(fill)
+
+            Stroke = base.Stroke
+            Font = base.Font
+            ImageResource = base.ImageResource
+            Graphics = base.Graphics
+        End Sub
+
+        Sub New(context As Context)
+            Call Me.New(context.size, context.color.TranslateColor)
+        End Sub
+
+        Public Structure Context
+            Dim size As Size
+            Dim color$
+        End Structure
+
         Public ReadOnly Property Width As Integer
             Get
                 Return Size.Width
