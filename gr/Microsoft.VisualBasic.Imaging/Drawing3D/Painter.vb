@@ -46,17 +46,22 @@ Namespace Drawing3D
         ''' <param name="camera"></param>
         ''' <param name="surfaces"></param>
         <Extension>
-        Public Sub SurfacePainter(ByRef canvas As Graphics, camera As Camera, surfaces As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
-            Call canvas.BufferPainting(camera.PainterBuffer(surfaces), drawPath)
+        Public Sub SurfacePainter(ByRef canvas As Graphics,
+                                  camera As Camera,
+                                  surfaces As IEnumerable(Of Surface),
+                                  Optional drawPath As Boolean = False,
+                                  Optional illumination As Boolean = True)
+            Dim buf = camera.PainterBuffer(
+                surfaces,
+                illumination)
+            Call canvas.BufferPainting(buf, drawPath)
         End Sub
 
         <Extension>
-        Public Sub BufferPainting(ByRef canvas As Graphics, buf As IEnumerable(Of Polygon),
-                                  Optional drawPath As Boolean = False,
-                                  Optional illumination As Boolean = False)
-            If illumination Then
-                buf = buf.Illumination
-            End If
+        Public Sub BufferPainting(ByRef canvas As Graphics, buf As IEnumerable(Of Polygon), Optional drawPath As Boolean = False)
+            'If illumination Then
+            '    buf = buf.Illumination
+            'End If
             For Each polygon As Polygon In buf
                 With polygon
                     If drawPath Then
@@ -72,19 +77,24 @@ Namespace Drawing3D
         ''' </summary>
         ''' <param name="camera"></param>
         ''' <param name="surfaces"></param>
+        ''' <param name="illumination">是否需要对每一个表面进行光照处理？</param>
         ''' <returns></returns>
         <Extension>
-        Public Function PainterBuffer(camera As Camera, surfaces As IEnumerable(Of Surface)) As IEnumerable(Of Polygon)
+        Public Function PainterBuffer(camera As Camera, surfaces As IEnumerable(Of Surface), illumination As Boolean) As IEnumerable(Of Polygon)
             Dim sv As New List(Of Surface)
 
             For Each s As Surface In surfaces
                 Dim v As Point3D() = camera _
                     .Project(s.vertices) _
                     .ToArray
+                Dim color As Color = If(
+                    illumination,
+                    camera.Lighting(s),
+                    DirectCast(s.brush, SolidBrush).Color)
 
                 sv += New Surface With {
                     .vertices = v,
-                    .brush = s.brush
+                    .brush = New SolidBrush(color)
                 }
             Next
 

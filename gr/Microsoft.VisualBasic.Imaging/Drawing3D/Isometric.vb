@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
@@ -64,36 +65,15 @@ Namespace Drawing3D
             Call models.Clear()
         End Sub
 
+        ''' <summary>
+        ''' 这个函数会同时对曲面进行光照处理
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="color"></param>
         Private Sub AddPath(path As Path3D, color As Color)
-            Me.models.Add(New Model2D(path, transformColor(path, color)))
+            color = path.Lighting(lightAngle, color, colorDifference, lightColor)
+            models.Add(New Model2D(path, color))
         End Sub
-
-        Private Function transformColor(path As Path3D, color As Color) As Color
-            Dim p1 As Point3D = path.Points(1)
-            Dim p2 As Point3D = path.Points(0)
-            Dim i As Double = p2.X - p1.X
-            Dim j As Double = p2.Y - p1.Y
-            Dim k As Double = p2.Z - p1.Z
-
-            p1 = path.Points(2)
-            p2 = path.Points(1)
-
-            Dim i2 As Double = p2.X - p1.X
-            Dim j2 As Double = p2.Y - p1.Y
-            Dim k2 As Double = p2.Z - p1.Z
-            Dim i3 As Double = j * k2 - j2 * k
-            Dim j3 As Double = -1 * (i * k2 - i2 * k)
-            Dim k3 As Double = i * j2 - i2 * j
-            Dim magnitude As Double = Math.Sqrt(i3 * i3 + j3 * j3 + k3 * k3)
-
-            i = If(magnitude = 0, 0, i3 / magnitude)
-            j = If(magnitude = 0, 0, j3 / magnitude)
-            k = If(magnitude = 0, 0, k3 / magnitude)
-
-            Dim brightness As Double = i * lightAngle.X + j * lightAngle.Y + k * lightAngle.Z
-
-            Return HSLColor.GetHSL(color).Lighten(brightness * Me.colorDifference, Me.lightColor)
-        End Function
 
         ''' <summary>
         ''' 在绘图前面需要调用这个方法进行图形合成

@@ -86,7 +86,8 @@ Namespace Drawing3D.Device
 
                 buffer = matrix.TranslateBuffer(
                     device._camera,
-                    vector)
+                    vector,
+                    device.LightIllumination)
 
                 If .angleX > 360 Then
                     .angleX = 0
@@ -119,7 +120,7 @@ Namespace Drawing3D.Device
             With device
                 If Not buffer Is Nothing Then
                     Call canvas.Clear(device.bg)
-                    Call canvas.BufferPainting(buffer, .drawPath, .LightIllumination)
+                    Call canvas.BufferPainting(buffer, .drawPath)
                 End If
                 If Not .Plot Is Nothing Then
                     Call .Plot()(canvas, ._camera)
