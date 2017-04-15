@@ -225,6 +225,8 @@ Namespace Drawing3D
                 '            this.ctx.restore();
                 With model2D
                     Call canvas.FillPath(.Paint, .DrawPath.Path)
+                    ' 对于线条而言，直接使用DrawPath来进行绘制
+                    Call canvas.DrawPath(New Pen(.Paint), .DrawPath.Path)
                 End With
             Next
         End Sub
