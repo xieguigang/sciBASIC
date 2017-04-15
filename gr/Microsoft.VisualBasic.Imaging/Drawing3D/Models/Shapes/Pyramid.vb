@@ -26,7 +26,7 @@ Namespace Drawing3D.Isometric.Shapes
             Dim paths As Path3D() = New Path3D(3) {}
             ' Push the face, and its opposite face, by rotating around the Z-axis 
             paths(0) = face1
-            paths(1) = face1.RotateZ(Math3D.ORIGIN.Translate(dx / 2.0, dy / 2.0, 0), Math.PI)
+            paths(1) = face1.RotateZ(origin.Translate(dx / 2.0, dy / 2.0, 0), Math.PI)
 
             ' Path parallel to the y-axis 
             Dim face2 As Path3D = {

@@ -20,7 +20,7 @@ Namespace Drawing3D.Isometric.Shapes
             points(0) = origin
 
             For i As Integer = 0% To stepCount - 1
-                Dim stepCorner As Point3D = Math3D.ORIGIN.Translate(0, i / stepCount, (i + 1) / stepCount)
+                Dim stepCorner As Point3D = origin.Translate(0, i / stepCount, (i + 1) / stepCount)
 
                 paths(count - 1) = {
                     stepCorner,
