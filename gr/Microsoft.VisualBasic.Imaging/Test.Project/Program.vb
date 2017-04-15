@@ -49,6 +49,7 @@ Module Program
      Color.FromArgb(33, 150, 243)
 )
         Using g As Graphics2D = New Size(1000, 1000).CreateGDIDevice
+
             Call isometricView.Draw(g)
             Call g.ImageResource.SaveAs("x:\out.png")
         End Using

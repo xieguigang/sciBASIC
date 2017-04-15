@@ -53,7 +53,7 @@ Namespace Drawing3D
         Public Sub add(paths As Path3D(), color As Color)
             For Each ___path As Path3D In paths
                 add(___path, color)
-            Next ___path
+            Next
         End Sub
 
         Public Sub add(___shape As Shape3D, color As Color)
@@ -62,7 +62,7 @@ Namespace Drawing3D
 
             For Each ___path As Path3D In paths
                 addPath(___path, color)
-            Next ___path
+            Next
         End Sub
 
         Public Sub clear()
@@ -95,6 +95,12 @@ Namespace Drawing3D
             Return HSLColor.GetHSL(color).Lighten(brightness * Me.colorDifference, Me.lightColor)
         End Function
 
+        ''' <summary>
+        ''' 在绘图前面需要调用这个方法进行图形合成
+        ''' </summary>
+        ''' <param name="width"></param>
+        ''' <param name="height"></param>
+        ''' <param name="sort"></param>
         Public Sub measure(width As Integer, height As Integer, sort As Boolean)
             Me.originX = width \ 2
             Me.originY = height * 0.9
@@ -124,7 +130,7 @@ Namespace Drawing3D
                 Loop
 
                 item.drawPath.CloseAllFigures()
-            Next item
+            Next
 
             If sort Then Me.models = sortPaths()
         End Sub
@@ -136,7 +142,7 @@ Namespace Drawing3D
             Dim drawBefore As New List(Of IList(Of Integer))(length)
             For i As Integer = 0 To length - 1
                 drawBefore.Insert(i, New List(Of Integer))
-            Next i
+            Next
             Dim itemA As Model2D
             Dim itemB As Model2D
             For i As Integer = 0 To length - 1
@@ -151,8 +157,8 @@ Namespace Drawing3D
                             drawBefore(j).Add(i)
                         End If
                     End If
-                Next j
-            Next i
+                Next
+            Next
             Dim drawThisTurn As Integer = 1
             Dim currItem As Model2D
             Dim integers As List(Of Integer)
@@ -180,13 +186,13 @@ Namespace Drawing3D
                             drawThisTurn = 1
                         End If
                     End If
-                Next i
+                Next
             Loop
 
             For i As Integer = 0 To length - 1
                 currItem = models(i)
                 If currItem.drawn = 0 Then sortedItems.Add(New Model2D(currItem))
-            Next i
+            Next
             Return sortedItems
         End Function
 
@@ -195,6 +201,11 @@ Namespace Drawing3D
         ''' </summary>
         ''' <param name="canvas"></param>
         Public Sub Draw(ByRef canvas As IGraphics)
+            ' 进行图形合成
+            With canvas.Size
+                Call Me.measure(.Width, .Height, True)
+            End With
+
             For Each model2D As Model2D In models
                 '            this.ctx.globalAlpha = color.a;
                 '            this.ctx.fillStyle = this.ctx.strokeStyle = color.toHex();
@@ -249,7 +260,7 @@ Namespace Drawing3D
                             right.Y = ___point.Y
                         End If
                     End If
-                Next ___point
+                Next
 
                 items.Add(left)
                 items.Add(top)
@@ -270,20 +281,23 @@ Namespace Drawing3D
                     If ___point.Y = bottom.Y Then
                         If ___point.Y <> bottom.Y Then items.Add(___point)
                     End If
-                Next ___point
+                Next
 
-                If isPointInPoly(items, position.X, position.Y) Then Return item
-            Next item
+                If isPointInPoly(items, position.X, position.Y) Then
+                    Return item
+                End If
+            Next
+
             Return Nothing
         End Function
 
         Private Function isPointInPoly(poly As IList(Of Point3D), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
-            Dim i As int = 0
+            Dim i As int = -1
             Dim l As Integer = poly.Count
             Dim j As Integer = l - 1
 
-            Do While ++i < l
+            Do While ++i < l - 1
                 If ((poly(i).Y <= y AndAlso y < poly(j).Y) OrElse (poly(j).Y <= y AndAlso y < poly(i).Y)) AndAlso (x < (poly(j).X - poly(i).X) * (y - poly(i).Y) / (poly(j).Y - poly(i).Y) + poly(i).X) Then
                     c = Not c
                 End If
@@ -295,11 +309,11 @@ Namespace Drawing3D
 
         Private Function isPointInPoly(poly As Point3D(), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
-            Dim i As int = 0
+            Dim i As int = -1
             Dim l As Integer = poly.Length
             Dim j As Integer = l - 1
 
-            Do While ++i < l
+            Do While ++i < l - 1
                 If ((poly(i).Y <= y AndAlso y < poly(j).Y) OrElse (poly(j).Y <= y AndAlso y < poly(i).Y)) AndAlso (x < (poly(j).X - poly(i).X) * (y - poly(i).Y) / (poly(j).Y - poly(i).Y) + poly(i).X) Then
                     c = Not c
                 End If
@@ -327,14 +341,14 @@ Namespace Drawing3D
                 AminY = Math.Min(AminY, ___point.Y)
                 AmaxX = Math.Max(AmaxX, ___point.X)
                 AmaxY = Math.Max(AmaxY, ___point.Y)
-            Next i
+            Next
             For i = 0 To lengthB - 1
                 ___point = pointsB(i)
                 BminX = Math.Min(BminX, ___point.X)
                 BminY = Math.Min(BminY, ___point.Y)
                 BmaxX = Math.Max(BmaxX, ___point.X)
                 BmaxY = Math.Max(BmaxY, ___point.Y)
-            Next i
+            Next
 
             If ((AminX <= BminX AndAlso BminX <= AmaxX) OrElse (BminX <= AminX AndAlso AminX <= BmaxX)) AndAlso ((AminY <= BminY AndAlso BminY <= AmaxY) OrElse (BminY <= AminY AndAlso AminY <= BmaxY)) Then
                 ' now let's be more specific
@@ -359,33 +373,40 @@ Namespace Drawing3D
                     deltaAY(i) = polyA(i + 1).Y - ___point.Y
                     'equation written as deltaY.x - deltaX.y + r = 0
                     rA(i) = deltaAX(i) * ___point.Y - deltaAY(i) * ___point.X
-                Next i
+                Next
 
                 For i = 0 To lengthPolyB - 2
                     ___point = polyB(i)
                     deltaBX(i) = polyB(i + 1).X - ___point.X
                     deltaBY(i) = polyB(i + 1).Y - ___point.Y
                     rB(i) = deltaBX(i) * ___point.Y - deltaBY(i) * ___point.X
-                Next i
+                Next
 
                 For i = 0 To lengthPolyA - 2
                     For j = 0 To lengthPolyB - 2
                         If deltaAX(i) * deltaBY(j) <> deltaAY(i) * deltaBX(j) Then
                             'case when vectors are colinear, or one polygon included in the other, is covered after
                             'two segments cross each other if and only if the points of the first are on each side of the line defined by the second and vice-versa
-                            If (deltaAY(i) * polyB(j).X - deltaAX(i) * polyB(j).Y + rA(i)) * (deltaAY(i) * polyB(j + 1).X - deltaAX(i) * polyB(j + 1).Y + rA(i)) < -0.000000001 AndAlso (deltaBY(j) * polyA(i).X - deltaBX(j) * polyA(i).Y + rB(j)) * (deltaBY(j) * polyA(i + 1).X - deltaBX(j) * polyA(i + 1).Y + rB(j)) < -0.000000001 Then Return True
+                            If (deltaAY(i) * polyB(j).X - deltaAX(i) * polyB(j).Y + rA(i)) * (deltaAY(i) * polyB(j + 1).X - deltaAX(i) * polyB(j + 1).Y + rA(i)) < -0.000000001 AndAlso
+                                (deltaBY(j) * polyA(i).X - deltaBX(j) * polyA(i).Y + rB(j)) * (deltaBY(j) * polyA(i + 1).X - deltaBX(j) * polyA(i + 1).Y + rB(j)) < -0.000000001 Then
+                                Return True
+                            End If
                         End If
                     Next j
-                Next i
+                Next
 
                 For i = 0 To lengthPolyA - 2
                     ___point = polyA(i)
-                    If isPointInPoly(polyB, ___point.X, ___point.Y) Then Return True
-                Next i
+                    If isPointInPoly(polyB, ___point.X, ___point.Y) Then
+                        Return True
+                    End If
+                Next
                 For i = 0 To lengthPolyB - 2
                     ___point = polyB(i)
-                    If isPointInPoly(polyA, ___point.X, ___point.Y) Then Return True
-                Next i
+                    If isPointInPoly(polyA, ___point.X, ___point.Y) Then
+                        Return True
+                    End If
+                Next
 
                 Return False
             Else

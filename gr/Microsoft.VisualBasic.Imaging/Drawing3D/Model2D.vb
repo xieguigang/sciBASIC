@@ -6,11 +6,19 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 Namespace Drawing3D
 
     Public Class Model2D
+
+        ''' <summary>
+        ''' 实际的模型数据
+        ''' </summary>
         Friend path As Path3D
         Friend baseColor As Color
         Friend paint As SolidBrush
         Friend drawn As Integer
         Friend transformedPoints As Point3D()
+
+        ''' <summary>
+        ''' 经过模型数据<see cref="path"/>转换之后所得到的绘图所使用的对象模型
+        ''' </summary>
         Friend drawPath As Path2D
 
         Friend Sub New(item As Model2D)

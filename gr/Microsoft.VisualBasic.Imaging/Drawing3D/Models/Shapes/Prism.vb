@@ -3,13 +3,10 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 
 Namespace Drawing3D.IsoMetric.Shapes
 
-
     ''' <summary>
     ''' Created by fabianterhorst on 01.04.17.
     ''' </summary>
-
-    Public Class Prism
-        Inherits Shape3D
+    Public Class Prism : Inherits Shape3D
 
         Public Sub New(origin As Point3D)
             Me.New(origin, 1, 1, 1)

@@ -35,6 +35,11 @@ Namespace Drawing3D.IsoMetric
             Me.Points = New List(Of Point3D)(points)
         End Sub
 
+        Public Overrides Function ToString() As String
+            Dim pts$() = Points.Select(Function(p) $"({p.X},{p.Y},{p.Z})")
+            Return $"depth={Depth}, [{pts.JoinBy(" ")}]"
+        End Function
+
         Public Sub Push(point As Point3D)
             Call Points.Add(point)
         End Sub
