@@ -32,9 +32,9 @@ Namespace Drawing3D
         End Sub
 
         ''' <summary>
-        ''' X rides along the angle extended from the origin
-        ''' Y rides perpendicular to this angle (in isometric view: PI - angle)
-        ''' Z affects the y coordinate of the drawn point
+        ''' + X rides along the angle extended from the origin
+        ''' + Y rides perpendicular to this angle (in isometric view: PI - angle)
+        ''' + Z affects the y coordinate of the drawn point
         ''' </summary>
         Public Function TranslatePoint(point As Point3D) As Point3D
             Return New Point3D(
@@ -85,33 +85,33 @@ Namespace Drawing3D
             Me.originX = width \ 2
             Me.originY = height * 0.9
 
-            For Each item As Model2D In models
+            For Each model As Model2D In models
 
-                item.transformedPoints = New Point3D(item.path.Points.Count - 1) {}
+                model.TransformedPoints = New Point3D(model.path.Points.Count - 1) {}
 
-                If Not item.DrawPath Is Nothing Then
-                    item.DrawPath.Rewind() 'Todo: test if .reset is not needed and rewind is enough
+                If Not model.DrawPath Is Nothing Then
+                    model.DrawPath.Rewind() 'Todo: test if .reset is not needed and rewind is enough
                 End If
 
                 Dim i As Integer = 0
                 Dim point As Point3D
 
-                For i% = 0 To item.path.Points.Count - 1
-                    point = item.path.Points(i)
-                    item.transformedPoints(i) = TranslatePoint(point)
+                For i% = 0 To model.path.Points.Count - 1
+                    point = model.path.Points(i)
+                    model.TransformedPoints(i) = TranslatePoint(point)
                 Next
 
-                Dim length As Integer = item.transformedPoints.Length
+                Dim length As Integer = model.TransformedPoints.Length
 
-                Call item.DrawPath.MoveTo(CSng(item.transformedPoints(0).X), CSng(item.transformedPoints(0).Y))
+                Call model.DrawPath.MoveTo(CSng(model.TransformedPoints(0).X), CSng(model.TransformedPoints(0).Y))
 
                 i = 1
                 Do While i < length
-                    item.DrawPath.LineTo(CSng(item.transformedPoints(i).X), CSng(item.transformedPoints(i).Y))
+                    model.DrawPath.LineTo(CSng(model.TransformedPoints(i).X), CSng(model.TransformedPoints(i).Y))
                     i += 1
                 Loop
 
-                item.DrawPath.CloseAllFigures()
+                model.DrawPath.CloseAllFigures()
             Next
 
             If sort Then
@@ -136,7 +136,7 @@ Namespace Drawing3D
                 itemA = models(i)
                 For j As Integer = 0 To i - 1
                     itemB = models(j)
-                    If IntersectionWith(itemA.transformedPoints, itemB.transformedPoints) Then
+                    If IntersectionWith(itemA.TransformedPoints, itemB.TransformedPoints) Then
                         Dim cmpPath As Integer = itemA.path.CloserThan(itemB.path, observer)
                         If cmpPath < 0 Then
                             drawBefore(i).Add(j)
@@ -217,14 +217,14 @@ Namespace Drawing3D
             'Todo: reverse sorting for click detection, because hidden object is getting drawed first und will be returned as the first as well
             'Items are already sorted for depth sort so break should not be a problem here
             For Each m2 As Model2D In Me.models
-                If m2.transformedPoints Is Nothing Then
+                If m2.TransformedPoints Is Nothing Then
                     Continue For
                 End If
 
                 Dim items As New List(Of Point3D)
                 Dim top As Point3D = Nothing, bottom As Point3D = Nothing, left As Point3D = Nothing, right As Point3D = Nothing
 
-                For Each point As Point3D In m2.transformedPoints
+                For Each point As Point3D In m2.TransformedPoints
                     If top = 0! OrElse point.Y > top.Y Then
                         If top = 0! Then
                             top = New Point3D(point.X, point.Y)
@@ -265,7 +265,7 @@ Namespace Drawing3D
                 items.Add(bottom)
 
                 'search for equal points that are above or below for left and right or left and right for bottom and top
-                For Each point As Point3D In m2.transformedPoints
+                For Each point As Point3D In m2.TransformedPoints
                     If point.X = left.X Then
                         If point.Y <> left.Y Then items.Add(point)
                     End If
