@@ -13,11 +13,11 @@ Namespace Drawing3D.IsoMetric.Shapes
     Public Class Pyramid
         Inherits Shape3D
 
-        Public Sub New(ByVal origin As Point3D)
+        Public Sub New(origin As Point3D)
             Me.New(origin, 1, 1, 1)
         End Sub
 
-        Public Sub New(ByVal origin As Point3D, ByVal dx As Double, ByVal dy As Double, ByVal dz As Double)
+        Public Sub New(origin As Point3D, dx As Double, dy As Double, dz As Double)
             MyBase.New()
 
             Dim ___paths As Path3D() = New Path3D(3) {}

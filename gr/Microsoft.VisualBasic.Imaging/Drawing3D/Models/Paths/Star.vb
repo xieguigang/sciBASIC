@@ -12,7 +12,7 @@ Namespace Drawing3D.IsoMetric.Paths
     Public Class Star
         Inherits Path3D
 
-        Public Sub New(ByVal origin As Point3D, ByVal outerRadius As Double, ByVal innerRadius As Double, ByVal points As Integer)
+        Public Sub New(origin As Point3D, outerRadius As Double, innerRadius As Double, points As Integer)
             MyBase.New()
             Dim r As Double
             For i As Integer = 0 To points * 2 - 1

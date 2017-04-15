@@ -13,7 +13,7 @@ Namespace Drawing3D.IsoMetric.Shapes
     Public Class Octahedron
         Inherits Shape3D
 
-        Public Sub New(ByVal origin As Point3D)
+        Public Sub New(origin As Point3D)
             MyBase.New()
             Dim center As Point3D = origin.Translate(0.5, 0.5, 0.5)
             Dim upperTriangle As New Path3D(New Point3D() {origin.translate(0, 0, 0.5), origin.translate(0.5, 0.5, 1), origin.translate(0, 1, 0.5)})

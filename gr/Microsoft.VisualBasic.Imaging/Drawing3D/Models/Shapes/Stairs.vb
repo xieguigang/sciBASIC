@@ -12,7 +12,7 @@ Namespace Drawing3D.IsoMetric.Shapes
 
     Public Class Stairs : Inherits Shape3D
 
-        Public Sub New(ByVal origin As Point3D, ByVal stepCount As Double)
+        Public Sub New(origin As Point3D, stepCount As Double)
             Dim ___paths As Path3D() = New Path3D(CInt(Fix(stepCount)) * 2 + 2 - 1) {}
             Dim zigzag As New Path3D
             Dim points As Point3D() = New Point3D(CInt(Fix(stepCount)) * 2 + 2 - 1) {}

@@ -13,7 +13,7 @@ Namespace Drawing3D
         Friend transformedPoints As Point3D()
         Friend drawPath As Path2D
 
-        Friend Sub New(ByVal item As Model2D)
+        Friend Sub New(item As Model2D)
             transformedPoints = item.transformedPoints
             drawPath = item.drawPath
             drawn = item.drawn
@@ -22,7 +22,7 @@ Namespace Drawing3D
             Me.baseColor = item.baseColor
         End Sub
 
-        Friend Sub New(ByVal ___path As Path3D, ByVal baseColor As Color)
+        Friend Sub New(___path As Path3D, baseColor As Color)
             drawPath = New Path2D
             drawn = 0
             Me.baseColor = baseColor

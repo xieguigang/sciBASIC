@@ -1,5 +1,4 @@
 ﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
@@ -15,7 +14,7 @@ Namespace Drawing3D
 
         Private originX, originY As Double
 
-        Private items As IList(Of Model2D) = New List(Of Model2D)
+        Dim models As New List(Of Model2D)
 
         Private ReadOnly lightAngle As Point3D
 
@@ -41,23 +40,23 @@ Namespace Drawing3D
         ''' Y rides perpendicular to this angle (in isometric view: PI - angle)
         ''' Z affects the y coordinate of the drawn point
         ''' </summary>
-        Public Overridable Function translatePoint(ByVal ___point As Point3D) As Point3D
+        Public Function translatePoint(___point As Point3D) As Point3D
             Return New Point3D(
                 Me.originX + ___point.X * Me.transformation(0)(0) + ___point.Y * Me.transformation(1)(0),
                 Me.originY - ___point.X * Me.transformation(0)(1) - ___point.Y * Me.transformation(1)(1) - (___point.Z * Me.scale))
         End Function
 
-        Public Overridable Sub add(ByVal ___path As Path3D, ByVal color As HSLColor)
+        Public Sub add(___path As Path3D, color As HSLColor)
             addPath(___path, color)
         End Sub
 
-        Public Overridable Sub add(ByVal paths As Path3D(), ByVal color As HSLColor)
+        Public Sub add(paths As Path3D(), color As HSLColor)
             For Each ___path As Path3D In paths
                 add(___path, color)
             Next ___path
         End Sub
 
-        Public Overridable Sub add(ByVal ___shape As Shape3D, ByVal color As HSLColor)
+        Public Sub add(___shape As Shape3D, color As HSLColor)
             ' Fetch paths ordered by distance to prevent overlaps 
             Dim paths As Path3D() = ___shape.orderedPath3Ds()
 
@@ -66,15 +65,15 @@ Namespace Drawing3D
             Next ___path
         End Sub
 
-        Public Overridable Sub clear()
-            items.Clear()
+        Public Sub clear()
+            models.Clear()
         End Sub
 
-        Private Sub addPath(ByVal ___path As Path3D, ByVal color As HSLColor)
-            Me.items.Add(New Model2D(___path, transformColor(___path, color)))
+        Private Sub addPath(___path As Path3D, color As HSLColor)
+            Me.models.Add(New Model2D(___path, transformColor(___path, color)))
         End Sub
 
-        Private Function transformColor(ByVal ___path As Path3D, ByVal color As HSLColor) As Color
+        Private Function transformColor(___path As Path3D, color As HSLColor) As Color
             Dim p1 As Point3D = ___path.Points(1)
             Dim p2 As Point3D = ___path.Points(0)
             Dim i As Double = p2.X - p1.X
@@ -96,11 +95,11 @@ Namespace Drawing3D
             Return color.Lighten(brightness * Me.colorDifference, Me.lightColor)
         End Function
 
-        Public Overridable Sub measure(ByVal width As Integer, ByVal height As Integer, ByVal sort As Boolean)
+        Public Sub measure(width As Integer, height As Integer, sort As Boolean)
             Me.originX = width \ 2
             Me.originY = height * 0.9
 
-            For Each item As Model2D In items
+            For Each item As Model2D In models
 
                 item.transformedPoints = New Point3D(item.path.Points.Count - 1) {}
 
@@ -127,23 +126,23 @@ Namespace Drawing3D
                 item.drawPath.CloseAllFigures()
             Next item
 
-            If sort Then Me.items = sortPaths()
+            If sort Then Me.models = sortPaths()
         End Sub
 
         Private Function sortPaths() As IList(Of Model2D)
             Dim sortedItems As New List(Of Model2D)
             Dim observer As New Point3D(-10, -10, 20)
-            Dim length As Integer = items.Count
-            Dim drawBefore As IList(Of IList(Of Integer?)) = New List(Of IList(Of Integer?))(length)
+            Dim length As Integer = models.Count
+            Dim drawBefore As New List(Of IList(Of Integer))(length)
             For i As Integer = 0 To length - 1
-                drawBefore.Insert(i, New List(Of Integer?))
+                drawBefore.Insert(i, New List(Of Integer))
             Next i
             Dim itemA As Model2D
             Dim itemB As Model2D
             For i As Integer = 0 To length - 1
-                itemA = items(i)
+                itemA = models(i)
                 For j As Integer = 0 To i - 1
-                    itemB = items(j)
+                    itemB = models(j)
                     If hasIntersection(itemA.transformedPoints, itemB.transformedPoints) Then
                         Dim cmpPath As Integer = itemA.path.CloserThan(itemB.path, observer)
                         If cmpPath < 0 Then
@@ -156,18 +155,18 @@ Namespace Drawing3D
             Next i
             Dim drawThisTurn As Integer = 1
             Dim currItem As Model2D
-            Dim integers As IList(Of Integer?)
+            Dim integers As List(Of Integer)
             Do While drawThisTurn = 1
                 drawThisTurn = 0
                 For i As Integer = 0 To length - 1
-                    currItem = items(i)
+                    currItem = models(i)
                     integers = drawBefore(i)
                     If currItem.drawn = 0 Then
                         Dim canDraw As Integer = 1
                         Dim j As Integer = 0
                         Dim lengthIntegers As Integer = integers.Count
                         Do While j < lengthIntegers
-                            If items(integers(j)).drawn = 0 Then
+                            If models(integers(j)).drawn = 0 Then
                                 canDraw = 0
                                 Exit Do
                             End If
@@ -177,7 +176,7 @@ Namespace Drawing3D
                             Dim item As New Model2D(currItem)
                             sortedItems.Add(item)
                             currItem.drawn = 1
-                            items(i) = currItem
+                            models(i) = currItem
                             drawThisTurn = 1
                         End If
                     End If
@@ -185,20 +184,24 @@ Namespace Drawing3D
             Loop
 
             For i As Integer = 0 To length - 1
-                currItem = items(i)
+                currItem = models(i)
                 If currItem.drawn = 0 Then sortedItems.Add(New Model2D(currItem))
             Next i
             Return sortedItems
         End Function
 
-        Public Overridable Sub draw(ByVal canvas As IGraphics)
-            For Each item As Model2D In items
+        ''' <summary>
+        ''' 进行三维图形绘图操作
+        ''' </summary>
+        ''' <param name="canvas"></param>
+        Public Sub Draw(ByRef canvas As IGraphics)
+            For Each model2D As Model2D In models
                 '            this.ctx.globalAlpha = color.a;
                 '            this.ctx.fillStyle = this.ctx.strokeStyle = color.toHex();
                 '            this.ctx.stroke();
                 '            this.ctx.fill();
                 '            this.ctx.restore();
-                With item
+                With model2D
                     Call canvas.DrawPath(.paint, .drawPath.Path)
                 End With
             Next
@@ -206,11 +209,10 @@ Namespace Drawing3D
 
         'Todo: use android.grphics region object to check if point is inside region
         'Todo: use path.op to check if the path intersects with another path
-        'JAVA TO VB CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-        Public Overridable Function findItemForPosition(ByVal position As Point3D) As Model2D
+        Public Function findItemForPosition(position As Point3D) As Model2D
             'Todo: reverse sorting for click detection, because hidden object is getting drawed first und will be returned as the first as well
             'Items are already sorted for depth sort so break should not be a problem here
-            For Each item As Model2D In Me.items
+            For Each item As Model2D In Me.models
                 If item.transformedPoints Is Nothing Then Continue For
                 Dim items As IList(Of Point3D) = New List(Of Point3D)
                 Dim top As Point3D = Nothing, bottom As Point3D = Nothing, left As Point3D = Nothing, right As Point3D = Nothing
@@ -275,7 +277,7 @@ Namespace Drawing3D
             Return Nothing
         End Function
 
-        Private Function isPointInPoly(ByVal poly As IList(Of Point3D), ByVal x As Double, ByVal y As Double) As Boolean
+        Private Function isPointInPoly(poly As IList(Of Point3D), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
             Dim i As int = 0
             Dim l As Integer = poly.Count
@@ -291,7 +293,7 @@ Namespace Drawing3D
             Return c
         End Function
 
-        Private Function isPointInPoly(ByVal poly As Point3D(), ByVal x As Double, ByVal y As Double) As Boolean
+        Private Function isPointInPoly(poly As Point3D(), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
             Dim i As int = 0
             Dim l As Integer = poly.Length
@@ -306,7 +308,7 @@ Namespace Drawing3D
             Return c
         End Function
 
-        Private Function hasIntersection(ByVal pointsA As Point3D(), ByVal pointsB As Point3D()) As Boolean
+        Private Function hasIntersection(pointsA As Point3D(), pointsB As Point3D()) As Boolean
             Dim i As Integer, j As Integer, lengthA As Integer = pointsA.Length, lengthB As Integer = pointsB.Length, lengthPolyA As Integer, lengthPolyB As Integer
             Dim AminX As Double = pointsA(0).X
             Dim AminY As Double = pointsA(0).Y

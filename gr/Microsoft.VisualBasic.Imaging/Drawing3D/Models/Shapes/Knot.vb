@@ -6,7 +6,7 @@ Namespace Drawing3D.IsoMetric.Shapes
     Public Class Knot
         Inherits Shape3D
 
-        Public Sub New(ByVal origin As Point3D)
+        Public Sub New(origin As Point3D)
             push((New Prism(Math3D.ORIGIN, 5, 1, 1)).paths)
             push((New Prism(New Point3D(4, 1, 0), 1, 4, 1)).paths)
             push((New Prism(New Point3D(4, 4, -2), 1, 1, 3)).paths)

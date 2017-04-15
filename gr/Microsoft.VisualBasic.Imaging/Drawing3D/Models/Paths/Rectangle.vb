@@ -11,7 +11,7 @@ Namespace Drawing3D.IsoMetric.Paths
     Public Class Rectangle
         Inherits Path3D
 
-        Public Sub New(ByVal origin As Point3D, ByVal width As Integer, ByVal height As Integer)
+        Public Sub New(origin As Point3D, width As Integer, height As Integer)
             MyBase.New()
             Push(origin)
             Push(New Point3D(origin.X + width, origin.Y, origin.Z))
