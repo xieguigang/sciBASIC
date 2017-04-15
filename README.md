@@ -102,9 +102,7 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 
 <hr/>
 
-<img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400"> <img src="./gr/3DEngineTest/example/Metadata/thumbnail.png" width="250">
-
-![](./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png)
+<img src="./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png" width="450"> <img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400">
 ![](./gr/build_3DEngine/images/screenshot.png)
 
 ## Microsoft VisualBasic Data Science & Data Plots System
