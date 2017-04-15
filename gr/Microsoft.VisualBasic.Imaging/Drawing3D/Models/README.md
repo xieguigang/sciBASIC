@@ -1,6 +1,24 @@
 # Isometric
 Isometric drawing library for Android
 
+```vbnet
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
+Imports IsometricView = Microsoft.VisualBasic.Imaging.Drawing3D.IsometricEngine
+
+Dim isometricView As New IsometricView
+
+' Add 3D models
+' blablabla
+Call isometricView.Add(...)
+
+Using g As Graphics2D = New Size(width, height).CreateGDIDevice
+    Call isometricView.Draw(g)
+    Call g.ImageResource.SaveAs($"./{filename}.png")
+End Using
+```
+
 ### Drawing a simple cube
 
 ```java
