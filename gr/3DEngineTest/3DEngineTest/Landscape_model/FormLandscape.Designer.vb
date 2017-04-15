@@ -26,6 +26,9 @@ Partial Class FormLandscape
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Load3mfToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.IsometricComplexExampleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoRotateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RotateXToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RotateYToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -39,6 +42,8 @@ Partial Class FormLandscape
         Me.trbFOV = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.IsometricKnotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.IsometricGridToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.trbFOV, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -62,9 +67,27 @@ Partial Class FormLandscape
         '
         'LoadModelToolStripMenuItem
         '
+        Me.LoadModelToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Load3mfToolStripMenuItem, Me.ToolStripMenuItem2, Me.IsometricComplexExampleToolStripMenuItem, Me.IsometricKnotToolStripMenuItem, Me.IsometricGridToolStripMenuItem})
         Me.LoadModelToolStripMenuItem.Name = "LoadModelToolStripMenuItem"
         Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
         Me.LoadModelToolStripMenuItem.Text = "Load Model"
+        '
+        'Load3mfToolStripMenuItem
+        '
+        Me.Load3mfToolStripMenuItem.Name = "Load3mfToolStripMenuItem"
+        Me.Load3mfToolStripMenuItem.Size = New System.Drawing.Size(226, 22)
+        Me.Load3mfToolStripMenuItem.Text = "Load *.3mf"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(223, 6)
+        '
+        'IsometricComplexExampleToolStripMenuItem
+        '
+        Me.IsometricComplexExampleToolStripMenuItem.Name = "IsometricComplexExampleToolStripMenuItem"
+        Me.IsometricComplexExampleToolStripMenuItem.Size = New System.Drawing.Size(226, 22)
+        Me.IsometricComplexExampleToolStripMenuItem.Text = "Isometric - complex Example"
         '
         'AutoRotateToolStripMenuItem
         '
@@ -82,7 +105,7 @@ Partial Class FormLandscape
         Me.RotateXToolStripMenuItem.CheckOnClick = True
         Me.RotateXToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.RotateXToolStripMenuItem.Name = "RotateXToolStripMenuItem"
-        Me.RotateXToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.RotateXToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RotateXToolStripMenuItem.Text = "rotate X"
         '
         'RotateYToolStripMenuItem
@@ -91,7 +114,7 @@ Partial Class FormLandscape
         Me.RotateYToolStripMenuItem.CheckOnClick = True
         Me.RotateYToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.RotateYToolStripMenuItem.Name = "RotateYToolStripMenuItem"
-        Me.RotateYToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.RotateYToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RotateYToolStripMenuItem.Text = "rotate Y"
         '
         'RotateZToolStripMenuItem
@@ -100,18 +123,18 @@ Partial Class FormLandscape
         Me.RotateZToolStripMenuItem.CheckOnClick = True
         Me.RotateZToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.RotateZToolStripMenuItem.Name = "RotateZToolStripMenuItem"
-        Me.RotateZToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.RotateZToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RotateZToolStripMenuItem.Text = "rotate Z"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(112, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(149, 6)
         '
         'ResetToolStripMenuItem1
         '
         Me.ResetToolStripMenuItem1.Name = "ResetToolStripMenuItem1"
-        Me.ResetToolStripMenuItem1.Size = New System.Drawing.Size(115, 22)
+        Me.ResetToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
         Me.ResetToolStripMenuItem1.Text = "Reset"
         '
         'LightToolStripMenuItem
@@ -166,6 +189,7 @@ Partial Class FormLandscape
         '
         'Label1
         '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.LightBlue
         Me.Label1.Location = New System.Drawing.Point(506, 437)
@@ -176,6 +200,7 @@ Partial Class FormLandscape
         '
         'Label2
         '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.LightBlue
         Me.Label2.Location = New System.Drawing.Point(459, 462)
@@ -183,6 +208,18 @@ Partial Class FormLandscape
         Me.Label2.Size = New System.Drawing.Size(78, 13)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "View Distance:"
+        '
+        'IsometricKnotToolStripMenuItem
+        '
+        Me.IsometricKnotToolStripMenuItem.Name = "IsometricKnotToolStripMenuItem"
+        Me.IsometricKnotToolStripMenuItem.Size = New System.Drawing.Size(226, 22)
+        Me.IsometricKnotToolStripMenuItem.Text = "Isometric - knot"
+        '
+        'IsometricGridToolStripMenuItem
+        '
+        Me.IsometricGridToolStripMenuItem.Name = "IsometricGridToolStripMenuItem"
+        Me.IsometricGridToolStripMenuItem.Size = New System.Drawing.Size(226, 22)
+        Me.IsometricGridToolStripMenuItem.Text = "Isometric - Grid"
         '
         'FormLandscape
         '
@@ -223,4 +260,9 @@ Partial Class FormLandscape
     Friend WithEvents trbFOV As TrackBar
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents IsometricComplexExampleToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Load3mfToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents IsometricKnotToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents IsometricGridToolStripMenuItem As ToolStripMenuItem
 End Class

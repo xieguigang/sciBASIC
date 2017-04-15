@@ -136,12 +136,18 @@ Namespace Drawing3D
         End Sub
 
         Public Function Lighting(surface As Surface) As Color
-            Dim color As Color = surface _
-                .vertices.Lighting(
-                    lightAngle,
-                    DirectCast(surface.brush, SolidBrush).Color,
-                    colorDifference,
-                    lightColor)
+            Dim color As Color = DirectCast(surface.brush, SolidBrush).Color
+            Try
+                color = surface _
+                    .vertices _
+                    .Lighting(lightAngle,
+                              color,
+                              colorDifference,
+                              lightColor)
+            Catch ex As Exception
+
+            End Try
+
             Return color
         End Function
 

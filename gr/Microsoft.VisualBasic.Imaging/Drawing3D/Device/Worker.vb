@@ -120,7 +120,7 @@ Namespace Drawing3D.Device
             With device
                 If Not buffer Is Nothing Then
                     Call canvas.Clear(device.bg)
-                    Call canvas.BufferPainting(buffer, .drawPath)
+                    Call canvas.BufferPainting(buffer, .DrawPath)
                 End If
                 If Not .Plot Is Nothing Then
                     Call .Plot()(canvas, ._camera)
