@@ -100,8 +100,6 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 + **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
 + **[Isometric 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/README.md)**
 
-<hr/>
-
 <img src="./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png" width="450"> <img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400">
 ![](./gr/build_3DEngine/images/screenshot.png)
 
