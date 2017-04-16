@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports ColorsPalette = Microsoft.VisualBasic.ComponentModel.Map(Of System.Drawing.Rectangle, System.Drawing.Color)
 
 Namespace Drawing2D.Colors
@@ -29,21 +30,26 @@ Namespace Drawing2D.Colors
                 .Where(Function(x) (+x).IsInside(e.X)) _
                 .Select(Function(x) x.i) _
                 .DefaultFirst(-1)
+#If DEBUG Then
+            ParentForm.Text = $"pointer={e.Location.GetJson}, index={i}"
+#End If
+            If i = -1 OrElse ly < 10 OrElse (ly > half AndAlso ly < half + 10) Then
+                Return
+            End If
 
             If ly > half + 10 Then
                 ' 选二级颜色
-                If i > -1 Then
-                    RaiseEvent SelectColor(level2Colors(i).Maps)
-                End If
+                RaiseEvent SelectColor(level2Colors(i).Maps)
             ElseIf ly > 10 Then
                 ' 设置一级颜色
+                current = i
                 ' 进行界面刷新
-                Call Me.Invalidate()
+                Call ColorPaletteRInit()
             Else
             End If
         End Sub
 
-        Private Sub ColorPalette_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Private Sub ColorPaletteRInit() Handles Me.Resize
             Call __colorsPaletteModels()
             Call Me.Invalidate()
         End Sub
@@ -119,9 +125,8 @@ Namespace Drawing2D.Colors
         ''' <summary>
         ''' 大小改变了之后或者选择了新的颜色之后在这里进行界面重绘
         ''' </summary>
-        ''' <param name="sender"></param>
         ''' <param name="e"></param>
-        Private Sub ColorPalette_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim g As Graphics = e.Graphics
 
             For Each block As Map(Of Rectangle, Color) In level1Colors.JoinIterates(level2Colors)
