@@ -64,6 +64,8 @@ Public Class FormLandscape
         canvas.LightIllumination = False
         canvas.FOV = 256
         canvas.ViewDistance = 0
+        canvas.LightColor = Color.White
+        canvas.DrawPath = False
     End Sub
 
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
@@ -166,5 +168,13 @@ Public Class FormLandscape
         Call __isometricLoad(isometricView)
 
         canvas.DrawPath = True
+    End Sub
+
+    Private Sub SetLightColorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SetLightColorToolStripMenuItem.Click
+        Call New Form1 With {
+            .setColor = Sub(c)
+                            canvas.LightColor = c
+                        End Sub
+        }.ShowDialog()
     End Sub
 End Class

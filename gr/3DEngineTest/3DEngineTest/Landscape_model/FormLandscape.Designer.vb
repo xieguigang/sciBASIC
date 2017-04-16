@@ -44,6 +44,7 @@ Partial Class FormLandscape
         Me.trbFOV = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.SetLightColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.trbFOV, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -154,6 +155,7 @@ Partial Class FormLandscape
         Me.LightToolStripMenuItem.Checked = True
         Me.LightToolStripMenuItem.CheckOnClick = True
         Me.LightToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.LightToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetLightColorToolStripMenuItem})
         Me.LightToolStripMenuItem.Name = "LightToolStripMenuItem"
         Me.LightToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
         Me.LightToolStripMenuItem.Text = "Light"
@@ -221,6 +223,12 @@ Partial Class FormLandscape
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "View Distance:"
         '
+        'SetLightColorToolStripMenuItem
+        '
+        Me.SetLightColorToolStripMenuItem.Name = "SetLightColorToolStripMenuItem"
+        Me.SetLightColorToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SetLightColorToolStripMenuItem.Text = "Set LightColor"
+        '
         'FormLandscape
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -265,4 +273,5 @@ Partial Class FormLandscape
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
     Friend WithEvents IsometricKnotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents IsometricGridToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SetLightColorToolStripMenuItem As ToolStripMenuItem
 End Class

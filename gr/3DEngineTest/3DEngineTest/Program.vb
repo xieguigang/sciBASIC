@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Module Program
 
     Sub Main()
-        Call New FormTest().ShowDialog()
+        ' Call New FormTest().ShowDialog()
         Call New FormLandscape().ShowDialog()
         Call App.Exit()
     End Sub
