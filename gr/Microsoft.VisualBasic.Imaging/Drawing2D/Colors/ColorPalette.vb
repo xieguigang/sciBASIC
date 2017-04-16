@@ -15,24 +15,7 @@ Namespace Drawing2D.Colors
         Dim half!
 
         Private Sub ColorPalette_Load(sender As Object, e As EventArgs) Handles Me.Load
-            Dim dw! = Width / n
-            Dim dh! = Height / 2 - 10
-            Dim colors As Color() = {}
-
-            For i As Integer = 0 To n - 1
-                level1Colors += New Map(Of Rectangle, Color) With {
-                    .Key = New Rectangle With {
-                        .X = i * dw,
-                        .Y = 10,
-                        .Width = dw,
-                        .Height = dh
-                    },
-                    .Maps = colors(i)
-                }
-            Next
-
-            half = Height / 2
-
+            Call __colorsPaletteModels()
             Call Me.Invalidate()
         End Sub
 
@@ -49,7 +32,7 @@ Namespace Drawing2D.Colors
         End Sub
 
         Private Sub ColorPalette_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-            half = Height / 2
+            Call __colorsPaletteModels()
             Call Me.Invalidate()
         End Sub
 
@@ -57,7 +40,23 @@ Namespace Drawing2D.Colors
         ''' 大小或者选择了新颜色之后需要重新生成模型
         ''' </summary>
         Private Sub __colorsPaletteModels()
+            Dim dw! = Width / n
+            Dim dh! = Height / 2 - 10
+            Dim colors As Color() = Designer.TSF
 
+            For i As Integer = 0 To n - 1
+                level1Colors += New Map(Of Rectangle, Color) With {
+                    .Key = New Rectangle With {
+                        .X = i * dw,
+                        .Y = 10,
+                        .Width = dw,
+                        .Height = dh
+                    },
+                    .Maps = colors(i)
+                }
+            Next
+
+            half = Height / 2
         End Sub
 
         ''' <summary>
@@ -66,7 +65,12 @@ Namespace Drawing2D.Colors
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub ColorPalette_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+            Dim g As Graphics = e.Graphics
 
+            For Each block In level1Colors
+                Dim b As New SolidBrush(block.Maps)
+                Call g.FillRectangle(b, block.Key)
+            Next
         End Sub
     End Class
 End Namespace
