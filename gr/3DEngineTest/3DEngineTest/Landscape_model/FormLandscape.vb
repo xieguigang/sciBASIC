@@ -139,7 +139,7 @@ Public Class FormLandscape
     Private Sub __isometricLoad(modelData As IEnumerable(Of Surface))
         Dim models = modelData.Centra.Offsets(modelData).ToArray
         canvas.LightIllumination = True
-        canvas.DrawPath = True
+        canvas.DrawPath = False
         canvas.Model = Function() models
     End Sub
 
@@ -160,5 +160,7 @@ Public Class FormLandscape
         isometricView += New Path3D({Math3D.ORIGIN, New Point3D(0, 0, 10), Math3D.ORIGIN}).Model3D(Color.FromArgb(160, 50, 60))
 
         Call __isometricLoad(isometricView)
+
+        canvas.DrawPath = True
     End Sub
 End Class
