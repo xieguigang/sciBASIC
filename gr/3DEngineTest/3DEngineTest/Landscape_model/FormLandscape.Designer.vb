@@ -38,13 +38,16 @@ Partial Class FormLandscape
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ResetToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.LightToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SetLightColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ResetToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveTexturesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.trbFOV = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.SetLightColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SetBackgroundColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.trbFOV, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,7 +64,7 @@ Partial Class FormLandscape
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadModelToolStripMenuItem, Me.AutoRotateToolStripMenuItem, Me.LightToolStripMenuItem, Me.RemoveTexturesToolStripMenuItem, Me.ResetToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadModelToolStripMenuItem, Me.AutoRotateToolStripMenuItem, Me.LightToolStripMenuItem, Me.RemoveTexturesToolStripMenuItem, Me.SetBackgroundColorToolStripMenuItem, Me.ToolStripMenuItem3, Me.ResetToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -70,7 +73,7 @@ Partial Class FormLandscape
         '
         Me.LoadModelToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Load3mfToolStripMenuItem, Me.ToolStripMenuItem2, Me.IsometricComplexExampleToolStripMenuItem, Me.IsometricKnotToolStripMenuItem, Me.IsometricGridToolStripMenuItem})
         Me.LoadModelToolStripMenuItem.Name = "LoadModelToolStripMenuItem"
-        Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.LoadModelToolStripMenuItem.Text = "Load Model"
         '
         'Load3mfToolStripMenuItem
@@ -109,7 +112,7 @@ Partial Class FormLandscape
         Me.AutoRotateToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.AutoRotateToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RotateXToolStripMenuItem, Me.RotateYToolStripMenuItem, Me.RotateZToolStripMenuItem, Me.ToolStripMenuItem1, Me.ResetToolStripMenuItem1})
         Me.AutoRotateToolStripMenuItem.Name = "AutoRotateToolStripMenuItem"
-        Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.AutoRotateToolStripMenuItem.Text = "Auto Rotate"
         '
         'RotateXToolStripMenuItem
@@ -155,21 +158,33 @@ Partial Class FormLandscape
         Me.LightToolStripMenuItem.Checked = True
         Me.LightToolStripMenuItem.CheckOnClick = True
         Me.LightToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.LightToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetLightColorToolStripMenuItem})
+        Me.LightToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetLightColorToolStripMenuItem, Me.ResetToolStripMenuItem2})
         Me.LightToolStripMenuItem.Name = "LightToolStripMenuItem"
-        Me.LightToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.LightToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.LightToolStripMenuItem.Text = "Light"
+        '
+        'SetLightColorToolStripMenuItem
+        '
+        Me.SetLightColorToolStripMenuItem.Name = "SetLightColorToolStripMenuItem"
+        Me.SetLightColorToolStripMenuItem.Size = New System.Drawing.Size(149, 22)
+        Me.SetLightColorToolStripMenuItem.Text = "Set LightColor"
+        '
+        'ResetToolStripMenuItem2
+        '
+        Me.ResetToolStripMenuItem2.Name = "ResetToolStripMenuItem2"
+        Me.ResetToolStripMenuItem2.Size = New System.Drawing.Size(149, 22)
+        Me.ResetToolStripMenuItem2.Text = "Reset"
         '
         'RemoveTexturesToolStripMenuItem
         '
         Me.RemoveTexturesToolStripMenuItem.Name = "RemoveTexturesToolStripMenuItem"
-        Me.RemoveTexturesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.RemoveTexturesToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.RemoveTexturesToolStripMenuItem.Text = "Remove Textures"
         '
         'ResetToolStripMenuItem
         '
         Me.ResetToolStripMenuItem.Name = "ResetToolStripMenuItem"
-        Me.ResetToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.ResetToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.ResetToolStripMenuItem.Text = "Reset"
         '
         'TrackBar1
@@ -223,11 +238,16 @@ Partial Class FormLandscape
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "View Distance:"
         '
-        'SetLightColorToolStripMenuItem
+        'SetBackgroundColorToolStripMenuItem
         '
-        Me.SetLightColorToolStripMenuItem.Name = "SetLightColorToolStripMenuItem"
-        Me.SetLightColorToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.SetLightColorToolStripMenuItem.Text = "Set LightColor"
+        Me.SetBackgroundColorToolStripMenuItem.Name = "SetBackgroundColorToolStripMenuItem"
+        Me.SetBackgroundColorToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.SetBackgroundColorToolStripMenuItem.Text = "Set BackgroundColor"
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(183, 6)
         '
         'FormLandscape
         '
@@ -274,4 +294,7 @@ Partial Class FormLandscape
     Friend WithEvents IsometricKnotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents IsometricGridToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SetLightColorToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ResetToolStripMenuItem2 As ToolStripMenuItem
+    Friend WithEvents SetBackgroundColorToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
 End Class

@@ -14,7 +14,8 @@ Namespace Drawing2D.Colors
         Dim level1Colors As ColorsPalette()
         Dim level2Colors As ColorsPalette()
         Dim half!
-        Dim current% = 0
+        Dim current1% = 0
+        Dim current2% = 0
         Dim index As SeqValue(Of IntRange)()
 
         Public Event SelectColor(c As Color)
@@ -39,14 +40,17 @@ Namespace Drawing2D.Colors
 
             If ly > half + 10 Then
                 ' 选二级颜色
+                current2 = i
                 RaiseEvent SelectColor(level2Colors(i).Maps)
             ElseIf ly > 10 Then
                 ' 设置一级颜色
-                current = i
-                ' 进行界面刷新
-                Call ColorPaletteRInit()
+                current1 = i
             Else
+                Return
             End If
+
+            ' 进行界面刷新
+            Call ColorPaletteRInit()
         End Sub
 
         Private Sub ColorPaletteRInit() Handles Me.Resize
@@ -87,13 +91,13 @@ Namespace Drawing2D.Colors
 
             Dim c As Color()
 
-            If current = 0 Then
+            If current1 = 0 Then
                 c = {
                     colors.Last,
                     colors(0),
                     colors(1)
                 }
-            ElseIf current = colors.Length - 1 Then
+            ElseIf current1 = colors.Length - 1 Then
                 c = {
                     colors(colors.Length - 2),
                     colors.Last,
@@ -101,9 +105,9 @@ Namespace Drawing2D.Colors
                 }
             Else
                 c = {
-                    colors(current - 1),
-                    colors(current),
-                    colors(current + 1)
+                    colors(current1 - 1),
+                    colors(current1),
+                    colors(current1 + 1)
                 }
             End If
 
@@ -128,11 +132,21 @@ Namespace Drawing2D.Colors
         ''' <param name="e"></param>
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim g As Graphics = e.Graphics
+            Dim p As New Pen(Color.White, 1.5)
+            Dim size As New Size(Width / level1Colors.Length, 10)
 
             For Each block As Map(Of Rectangle, Color) In level1Colors.JoinIterates(level2Colors)
                 Dim b As New SolidBrush(block.Maps)
                 Call g.FillRectangle(b, block.Key)
             Next
+
+            ' Dim rect As New Rectangle(New Point(level1Colors(current1).Key.X, 0), size)
+            'Call g.FillRectangle(Brushes.Black, rect)
+            Call g.DrawRectangle(p, level1Colors(current1).Key)
+
+            'rect = New Rectangle(New Point(level2Colors(current2).Key.X, half), size)
+            ' Call g.FillRectangle(Brushes.Black, rect)
+            Call g.DrawRectangle(p, level2Colors(current2).Key)
         End Sub
     End Class
 End Namespace

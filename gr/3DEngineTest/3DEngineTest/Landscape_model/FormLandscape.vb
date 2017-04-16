@@ -47,8 +47,7 @@ Public Class FormLandscape
             .Model = Function() surfaces.faces,
             .Dock = DockStyle.Fill,
             .AutoRotation = True,
-            .ShowDebugger = True,
-            .LightColor = Color.Red
+            .ShowDebugger = True
         }
         Controls.Add(canvas)
         canvas.Run()
@@ -66,6 +65,7 @@ Public Class FormLandscape
         canvas.ViewDistance = 0
         canvas.LightColor = Color.White
         canvas.DrawPath = False
+        canvas.bg = Color.LightBlue
     End Sub
 
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
@@ -174,6 +174,18 @@ Public Class FormLandscape
         Call New Form1 With {
             .setColor = Sub(c)
                             canvas.LightColor = c
+                        End Sub
+        }.ShowDialog()
+    End Sub
+
+    Private Sub ResetToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ResetToolStripMenuItem2.Click
+        canvas.LightColor = Color.White
+    End Sub
+
+    Private Sub SetBackgroundColorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SetBackgroundColorToolStripMenuItem.Click
+        Call New Form1 With {
+            .setColor = Sub(c)
+                            canvas.bg = c
                         End Sub
         }.ShowDialog()
     End Sub
