@@ -22,6 +22,13 @@ The Isometric graphics model is a 3D graphics generator on the Android platform.
 
 > https://github.com/FabianTerhorst/Isometric
 
+By using the Isometric 3D graphics engine, then you can creates some ``Low Poly`` style 3D object model by using VisualBasic programming in some small code:
+
+![](./images/doScreenshotThree.png)
+![](./images/doScreenshotTwo.png)
+![](./images/doScreenshotPath3D.png)
+
+Here I have already add this isometric graphics supports into the sciBASIC environment, and the 
 By click on the menu from: ``File -> Load Model -> Isometric *`` to view the demo isometric engine generated 3D model:
 
 ![](../isometric/images/isometric-model-test.png)
