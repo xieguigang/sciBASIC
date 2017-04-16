@@ -186,6 +186,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="d3js\CSSModel.vb" />
+    <Compile Include="Drawing2D\Colors\ColorPalette.Designer.vb">
+      <DependentUpon>ColorPalette.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Drawing2D\Colors\ColorPalette.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Drawing2D\Path2D.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
@@ -274,6 +280,9 @@
     <Compile Include="TextureResourceLoader.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Drawing2D\Colors\ColorPalette.resx">
+      <DependentUpon>ColorPalette.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Drawing3D\Device\GDIDevice.resx">
       <DependentUpon>GDIDevice.vb</DependentUpon>
     </EmbeddedResource>
@@ -387,7 +396,9 @@
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
