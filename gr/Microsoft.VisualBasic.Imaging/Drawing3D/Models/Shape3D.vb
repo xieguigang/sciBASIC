@@ -1,4 +1,4 @@
-﻿Namespace Drawing3D.Isometric
+﻿Namespace Drawing3D.Models.Isometric
 
     ''' <summary>
     ''' A collection of the path3D data.

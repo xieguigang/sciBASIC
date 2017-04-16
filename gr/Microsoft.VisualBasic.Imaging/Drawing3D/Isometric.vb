@@ -1,16 +1,23 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing3D
 
+    ''' <summary>
+    ''' Isometric 3d graphics painter
+    ''' </summary>
     Public Class IsometricEngine
 
         Dim transformation As Double()()
         Dim originX, originY As Double
+
+        ''' <summary>
+        ''' The 3D models
+        ''' </summary>
         Dim models As New List(Of Model2D)
 
         ReadOnly lightAngle As Point3D
@@ -76,7 +83,8 @@ Namespace Drawing3D
         End Sub
 
         ''' <summary>
-        ''' 在绘图前面需要调用这个方法进行图形合成
+        ''' The 3D projection and model matrix transformation.
+        ''' (在绘图前面需要调用这个方法进行图形合成)
         ''' </summary>
         ''' <param name="width"></param>
         ''' <param name="height"></param>
@@ -188,7 +196,7 @@ Namespace Drawing3D
         End Function
 
         ''' <summary>
-        ''' 进行三维图形绘图操作
+        ''' Draw the 3D graphics onto the canvas device object.(进行三维图形绘图操作)
         ''' </summary>
         ''' <param name="canvas"></param>
         Public Sub Draw(ByRef canvas As IGraphics)

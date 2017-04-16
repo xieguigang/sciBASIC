@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
 
-Namespace Drawing3D
+Namespace Drawing3D.Models
 
     Public Class Cube : Implements I3DModel
 

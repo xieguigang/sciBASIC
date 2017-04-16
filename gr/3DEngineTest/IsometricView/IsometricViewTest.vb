@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports IsometricView = Microsoft.VisualBasic.Imaging.Drawing3D.IsometricEngine
 
 Public Class IsometricViewTest

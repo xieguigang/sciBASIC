@@ -28,9 +28,10 @@
 
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 

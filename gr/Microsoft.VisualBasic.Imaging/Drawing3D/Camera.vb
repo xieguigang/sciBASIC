@@ -44,8 +44,17 @@ Namespace Drawing3D
         ''' </summary>
         Public offset As Point
 
+        ''' <summary>
+        ''' Light
+        ''' </summary>
         Public lightAngle As Point3D
+        ''' <summary>
+        ''' Light
+        ''' </summary>
         Public colorDifference As Double
+        ''' <summary>
+        ''' Light, default using <see cref="Color.White"/> as the light color
+        ''' </summary>
         Public lightColor As Color
 
         Public Sub New()

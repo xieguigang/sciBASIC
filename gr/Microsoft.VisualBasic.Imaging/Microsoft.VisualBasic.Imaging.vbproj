@@ -233,13 +233,13 @@
     <Compile Include="Drawing3D\Painter.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />
-    <Compile Include="Drawing3D\Models\Surface.vb" />
+    <Compile Include="Drawing3D\Surface.vb" />
     <Compile Include="Drawing3D\Models\Cube.vb" />
     <Compile Include="Drawing3D\Device\GDIDevice.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Drawing3D\Point3D.vb" />
-    <Compile Include="Drawing3D\Projection.vb" />
+    <Compile Include="Drawing3D\Math3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
     <Compile Include="Drivers\GraphicsData.vb" />

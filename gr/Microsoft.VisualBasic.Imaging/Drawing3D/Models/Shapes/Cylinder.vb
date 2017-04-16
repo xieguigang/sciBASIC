@@ -1,7 +1,4 @@
-Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
-
-Namespace Drawing3D.Isometric.Shapes
+Namespace Drawing3D.Models.Isometric.Shapes
 
     ''' <summary>
     ''' Created by fabianterhorst on 01.04.17.

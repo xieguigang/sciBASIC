@@ -1,10 +1,6 @@
-Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
+Namespace Drawing3D.Models.Isometric.Shapes
 
-Namespace Drawing3D.Isometric.Shapes
-
-    Public Class Knot
-        Inherits Shape3D
+    Public Class Knot : Inherits Shape3D
 
         Public Sub New(origin As Point3D)
             Push((New Prism(Math3D.ORIGIN, 5, 1, 1)).paths)
@@ -17,5 +13,4 @@ Namespace Drawing3D.Isometric.Shapes
             TranslatePath3Ds(origin.X, origin.Y, origin.Z)
         End Sub
     End Class
-
 End Namespace

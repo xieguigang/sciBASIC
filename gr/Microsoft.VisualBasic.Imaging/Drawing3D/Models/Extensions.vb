@@ -1,8 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 
-Namespace Drawing3D
+Namespace Drawing3D.Models
 
     Public Module Extensions
 

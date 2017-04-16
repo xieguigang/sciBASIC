@@ -1,7 +1,7 @@
 ﻿
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
-Namespace Drawing3D.Isometric
+Namespace Drawing3D.Models.Isometric
 
     Public Class Path3D
 
