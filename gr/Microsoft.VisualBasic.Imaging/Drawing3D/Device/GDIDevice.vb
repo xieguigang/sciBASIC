@@ -65,6 +65,16 @@ Namespace Drawing3D.Device
         ''' <returns></returns>
         Public Property DrawPath As Boolean
         Public Property LightIllumination As Boolean
+
+        Public Property LightColor As Color
+            Get
+                Return _camera.lightColor
+            End Get
+            Set(value As Color)
+                _camera.lightColor = value
+            End Set
+        End Property
+
         Public Property ViewDistance As Single
             Get
                 Return _camera.ViewDistance

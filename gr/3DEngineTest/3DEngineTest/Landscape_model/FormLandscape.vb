@@ -47,7 +47,8 @@ Public Class FormLandscape
             .Model = Function() surfaces.faces,
             .Dock = DockStyle.Fill,
             .AutoRotation = True,
-            .ShowDebugger = True
+            .ShowDebugger = True,
+            .LightColor = Color.Red
         }
         Controls.Add(canvas)
         canvas.Run()
@@ -138,6 +139,9 @@ Public Class FormLandscape
 
     Private Sub __isometricLoad(modelData As IEnumerable(Of Surface))
         Dim models = modelData.Centra.Offsets(modelData).ToArray
+
+        canvas.bg = Color.White
+
         canvas.LightIllumination = True
         canvas.DrawPath = False
         canvas.Model = Function() models
