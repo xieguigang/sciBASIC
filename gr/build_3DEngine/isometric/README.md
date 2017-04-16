@@ -1,16 +1,32 @@
 # Isometric 3D model Engine
 
+You can install the latest sciBASIC environment from nuget:
+
+```bash
+# https://www.nuget.org/packages/sciBASIC#
+PM> Install-Package sciBASIC -Pre
+```
+
 ![](../isometric/images/linux-3D-test.png)
+> Testing the VB.NET 3D graphics engine on the latest Ubuntu platform.
+
+And I hope this post can help on your linux-Game Development.
+
 
 ![](../isometric/images/mono-zip-errors.png)
 > But unfortunatly, the zip library in mono runtime didn't works correctly on the linux platform, so that the 3mf 3D model can not be load by the 3D engine currently
 
 ### Introduct Isometric
 
-The Isometric graphics model is a 3D graphics generator on the Android platform.
+The Isometric graphics model is a 3D graphics generator on the Android platform. And you can download the original isometric code for Android in java language from github:
+
+> https://github.com/FabianTerhorst/Isometric
+
+By click on the menu from: ``File -> Load Model -> Isometric *`` to view the demo isometric engine generated 3D model:
 
 ![](../isometric/images/isometric-model-test.png)
 
+And this demo application running well on the Linux platform.
 
 ## Using the code & Demo
 
