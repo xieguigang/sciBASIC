@@ -186,6 +186,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="d3js\CSSModel.vb" />
+    <Compile Include="Drawing2D\Colors\ColorPalette.Designer.vb">
+      <DependentUpon>ColorPalette.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Drawing2D\Colors\ColorPalette.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Drawing2D\Path2D.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
     <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
@@ -193,6 +200,7 @@
     <Compile Include="Drawing2D\Colors\Legend.vb" />
     <Compile Include="Drawing2D\g.vb" />
     <Compile Include="Drawing2D\GraphicsRegion.vb" />
+    <Compile Include="Drawing2D\Extensions.vb" />
     <Compile Include="Drawing2D\Shapes\Arrow.vb" />
     <Compile Include="Drawing2D\Shapes\RoundRect.vb" />
     <Compile Include="Drawing2D\Shapes\Pentacle.vb" />
@@ -206,12 +214,15 @@
     <Compile Include="Drawing2D\Shapes\Line.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
     <Compile Include="Drawing3D\Camera.vb" />
+    <Compile Include="Drawing3D\Model2D.vb" />
+    <Compile Include="Drawing3D\Isometric.vb" />
     <Compile Include="Drawing3D\Device\AutoRotation.vb" />
     <Compile Include="Drawing3D\Device\IDevice.vb" />
     <Compile Include="Drawing3D\Device\Debugger.vb" />
     <Compile Include="Drawing3D\Device\Mouse.vb" />
     <Compile Include="Drawing3D\Device\Light.vb" />
     <Compile Include="Drawing3D\Device\Worker.vb" />
+    <Compile Include="Drawing3D\Models\Extensions.vb" />
     <Compile Include="Drawing3D\Models\Paths\Circle.vb" />
     <Compile Include="Drawing3D\Models\Paths\Rectangle.vb" />
     <Compile Include="Drawing3D\Models\Paths\Star.vb" />
@@ -228,13 +239,13 @@
     <Compile Include="Drawing3D\Painter.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />
-    <Compile Include="Drawing3D\Models\Surface.vb" />
+    <Compile Include="Drawing3D\Surface.vb" />
     <Compile Include="Drawing3D\Models\Cube.vb" />
     <Compile Include="Drawing3D\Device\GDIDevice.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Drawing3D\Point3D.vb" />
-    <Compile Include="Drawing3D\Transformation.vb" />
+    <Compile Include="Drawing3D\Math3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
     <Compile Include="Drivers\GraphicsData.vb" />
@@ -269,6 +280,9 @@
     <Compile Include="TextureResourceLoader.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Drawing2D\Colors\ColorPalette.resx">
+      <DependentUpon>ColorPalette.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Drawing3D\Device\GDIDevice.resx">
       <DependentUpon>GDIDevice.vb</DependentUpon>
     </EmbeddedResource>
@@ -295,14 +309,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
-      <Project>{9a887064-ec7a-4936-98a5-b483e891366a}</Project>
+      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\mime\MIME_Markups\MIME_Markups.vbproj">
+    <ProjectReference Include="..\..\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME_Markups</Name>
     </ProjectReference>
@@ -382,7 +396,9 @@
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_GrayScale.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

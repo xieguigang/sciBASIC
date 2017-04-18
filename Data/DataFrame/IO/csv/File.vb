@@ -195,6 +195,19 @@ B21,B22,B23,...
             End Get
         End Property
 
+        ''' <summary>
+        ''' 删除空白的列
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Trim() As File
+            Dim columns$()() = Me _
+                .Columns _
+                .Where(Function(c) Not c.EmptyStringVector) _
+                .ToArray
+            Dim df As File = columns.JoinColumns
+            Return df
+        End Function
+
         Public ReadOnly Property EstimatedFileSize As Double
             Get
                 Dim LQuery = (From row As RowObject

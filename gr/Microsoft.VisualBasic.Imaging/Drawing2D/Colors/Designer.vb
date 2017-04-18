@@ -101,6 +101,36 @@ Namespace Drawing2D.Colors
             Color.FromArgb(202, 161, 169)
         }
 
+        ''' <summary>
+        ''' From TSF launcher on Android
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property TSF As Color() = {
+            {247, 69, 58},
+            {230, 28, 99},
+            {156, 36, 173},
+            {107, 57, 181},
+            {66, 81, 181},
+            {33, 150, 238},
+            {8, 170, 247},
+            {0, 190, 214},
+            {0, 150, 132},
+            {74, 174, 82},
+            {132, 194, 74},
+            {206, 223, 58},
+            {255, 235, 58},
+            {255, 190, 0},
+            {255, 150, 0},
+            {255, 85, 33},
+            {115, 85, 66},
+            {156, 158, 156},
+            {99, 125, 140}
+        }.RowIterator _
+         .Select(Function(c)
+                     Return Color.FromArgb(c(0), c(1), c(2))
+                 End Function) _
+         .ToArray
+
         Sub New()
             Dim colors As Dictionary(Of String, String()) = My.Resources _
                 .designer_colors _
@@ -182,6 +212,8 @@ Namespace Drawing2D.Colors
 
             If term.TextEquals("material") Then
                 Return MaterialPalette
+            ElseIf term.TextEquals("TSF") Then
+                Return TSF
             ElseIf term.TextEquals("rainbow") Then
                 Return Rainbow
             ElseIf term.TextEquals("dotnet.colors") Then

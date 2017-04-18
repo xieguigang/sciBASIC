@@ -69,7 +69,7 @@ Namespace Drawing3D.Math3D
         ''' </summary>
         ''' <param name="v">经过转换之后的向量，例如旋转或者位移，在这个函数值中会利用摄像机进行投影</param>
         ''' <returns></returns>
-        Public Function TranslateBuffer(camera As Camera, v As Vector3D) As IEnumerable(Of Polygon)
+        Public Function TranslateBuffer(camera As Camera, v As Vector3D, illumination As Boolean) As IEnumerable(Of Polygon)
             Dim surfaces As New List(Of Surface)
 
             For Each s As SurfaceVector In Me.surfaces
@@ -79,7 +79,7 @@ Namespace Drawing3D.Math3D
                 }
             Next
 
-            Return camera.PainterBuffer(surfaces)
+            Return camera.PainterBuffer(surfaces, illumination)
         End Function
 
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator

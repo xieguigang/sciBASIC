@@ -1,7 +1,7 @@
 ﻿
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
-Namespace Drawing3D.IsoMetric
+Namespace Drawing3D.Models.Isometric
 
     Public Class Path3D
 
@@ -29,11 +29,17 @@ Namespace Drawing3D.IsoMetric
         End Property
 
         Public Sub New()
+            Points = New List(Of Point3D)
         End Sub
 
         Public Sub New(points As IEnumerable(Of Point3D))
             Me.Points = New List(Of Point3D)(points)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Dim pts$() = Points.Select(Function(p) $"({p.X},{p.Y},{p.Z})")
+            Return $"depth={Depth}, [{pts.JoinBy(" ")}]"
+        End Function
 
         Public Sub Push(point As Point3D)
             Call Points.Add(point)
@@ -177,5 +183,9 @@ Namespace Drawing3D.IsoMetric
                 Return ((result + result0) \ length)
             End If
         End Function
+
+        Public Shared Widening Operator CType(points As Point3D()) As Path3D
+            Return New Path3D(points)
+        End Operator
     End Class
 End Namespace

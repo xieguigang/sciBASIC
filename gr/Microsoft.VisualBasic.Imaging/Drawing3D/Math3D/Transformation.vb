@@ -4,6 +4,10 @@ Namespace Drawing3D.Math3D
 
     Public Module Transformation
 
+        ''' <summary>
+        ''' 三维坐标系的原点``(0, 0, 0)``
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ORIGIN As New Point3D(0, 0, 0)
 
 #Region "3D rotation around a specific point"
@@ -18,10 +22,10 @@ Namespace Drawing3D.Math3D
             Dim pZ As Double = [Me].Z - origin.Z
             Dim cos As Double = Math.Cos(angle)
             Dim sin As Double = Math.Sin(angle)
-            Dim ___z As Double = pZ * cos - pY * sin
-            Dim ___y As Double = pZ * sin + pY * cos
-            pZ = ___z
-            pY = ___y
+            Dim z As Double = pZ * cos - pY * sin
+            Dim y As Double = pZ * sin + pY * cos
+            pZ = z
+            pY = y
             Return New Point3D([Me].X, pY + origin.Y, pZ + origin.Z)
         End Function
 
@@ -35,10 +39,10 @@ Namespace Drawing3D.Math3D
             Dim pZ As Double = [Me].Z - origin.Z
             Dim cos As Double = Math.Cos(angle)
             Dim sin As Double = Math.Sin(angle)
-            Dim ___x As Double = pX * cos - pZ * sin
-            Dim ___z As Double = pX * sin + pZ * cos
-            pX = ___x
-            pZ = ___z
+            Dim x As Double = pX * cos - pZ * sin
+            Dim z As Double = pX * sin + pZ * cos
+            pX = x
+            pZ = z
             Return New Point3D(pX + origin.X, [Me].Y, pZ + origin.Z)
         End Function
 
@@ -52,10 +56,10 @@ Namespace Drawing3D.Math3D
             Dim pY As Double = [Me].Y - origin.Y
             Dim cos As Double = Math.Cos(angle)
             Dim sin As Double = Math.Sin(angle)
-            Dim ___x As Double = pX * cos - pY * sin
-            Dim ___y As Double = pX * sin + pY * cos
-            pX = ___x
-            pY = ___y
+            Dim x As Double = pX * cos - pY * sin
+            Dim y As Double = pX * sin + pY * cos
+            pX = x
+            pY = y
             Return New Point3D(pX + origin.X, pY + origin.Y, [Me].Z)
         End Function
 #End Region
@@ -98,7 +102,7 @@ Namespace Drawing3D.Math3D
         ''' <summary>
         ''' Distance between two points
         ''' </summary>
-        <Extension> Public Function distance(p1 As Point3D, p2 As Point3D) As Double
+        <Extension> Public Function Distance(p1 As Point3D, p2 As Point3D) As Double
             Dim dx As Double = p2.X - p1.X
             Dim dy As Double = p2.Y - p1.Y
             Dim dz As Double = p2.Z - p1.Z
