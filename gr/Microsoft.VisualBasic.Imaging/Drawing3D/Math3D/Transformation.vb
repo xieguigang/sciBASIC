@@ -102,7 +102,7 @@ Namespace Drawing3D.Math3D
         ''' <summary>
         ''' Distance between two points
         ''' </summary>
-        <Extension> Public Function distance(p1 As Point3D, p2 As Point3D) As Double
+        <Extension> Public Function Distance(p1 As Point3D, p2 As Point3D) As Double
             Dim dx As Double = p2.X - p1.X
             Dim dy As Double = p2.Y - p1.Y
             Dim dz As Double = p2.Z - p1.Z

@@ -31,7 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Drawing3D
+Namespace Drawing3D.Math3D
 
     ''' <summary>
     ''' 3D coordinate transformation tools.

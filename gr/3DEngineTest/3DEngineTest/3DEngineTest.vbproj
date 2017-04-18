@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2C5B56A6-7A48-457F-B347-3E15CF82D579}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>_3DEngineTest.My.MyApplication</StartupObject>
+    <StartupObject>_3DEngineTest.Program</StartupObject>
     <RootNamespace>_3DEngineTest</RootNamespace>
     <AssemblyName>3DEngineTest</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -75,6 +75,9 @@
   <PropertyGroup>
     <ApplicationIcon>3mf.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -101,6 +104,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Landscape_model\Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Landscape_model\Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Landscape_model\LandscapeModel.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="Simple\CubeModel.vb">
@@ -135,6 +144,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Landscape_model\Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Landscape_model\FormLandscape.resx">
       <DependentUpon>FormLandscape.vb</DependentUpon>
     </EmbeddedResource>
@@ -149,6 +161,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
