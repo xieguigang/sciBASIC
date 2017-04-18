@@ -93,7 +93,7 @@ Public Class CartesianCoordinateSystem
         If lineText Is Nothing AndAlso mLineBuilder IsNot Nothing Then lineText = mLineBuilder.Build()
 
         If lineText IsNot Nothing Then
-            Dim text$ = "y = " & Math.Round(lineText.Increase * 100) / 100.0R & " * x + " & Math.Round(lineText.Offset * 100) / 100.0R
+            Dim text$ = lineText.ToString
             With canvas.MeasureString(text, f)
                 canvas.DrawString(text, f, Brushes.Black, width - textPadding - .Width(), textPadding + .Height())
             End With
