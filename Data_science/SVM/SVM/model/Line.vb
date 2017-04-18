@@ -22,8 +22,8 @@
         End Sub
 
         Public Sub New(vector As NormalVector, offset As Double)
-            NormalVector = vector
-            offset = offset
+            Me.NormalVector = vector
+            Me.Offset = offset
         End Sub
 
         ''' <summary>
