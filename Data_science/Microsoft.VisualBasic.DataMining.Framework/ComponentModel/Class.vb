@@ -28,12 +28,20 @@ Namespace ComponentModel
             Return Me.GetJson
         End Function
 
-        Public Shared Function FromEnums(Of T)() As ColorClass()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="colors$">Using the user custom colors</param>
+        ''' <returns></returns>
+        Public Shared Function FromEnums(Of T)(Optional colors$() = Nothing) As ColorClass()
             Dim values As T() = Enums(Of T)()
-            Dim colors$() = Imaging _
-                .ChartColors _
-                .Select(AddressOf Imaging.RGB2Hexadecimal) _
-                .ToArray
+            If colors.IsNullOrEmpty OrElse colors.Length < values.Length Then
+                colors$ = Imaging _
+                    .ChartColors _
+                    .Select(AddressOf Imaging.RGB2Hexadecimal) _
+                    .ToArray
+            End If
             Dim out As ColorClass() = values _
                 .SeqIterator _
                 .Select(Function(v)
