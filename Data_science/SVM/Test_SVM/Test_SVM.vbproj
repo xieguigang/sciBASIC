@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F710CD47-84A6-495C-97E9-2B169416F754}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test_SVM.Module1</StartupObject>
+    <StartupObject>Test_SVM.Program</StartupObject>
     <RootNamespace>Test_SVM</RootNamespace>
     <AssemblyName>Test_SVM</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -51,6 +51,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\..\..\..\GCModeller\GCModeller\bin\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,7 +72,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Module1.vb" />
+    <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

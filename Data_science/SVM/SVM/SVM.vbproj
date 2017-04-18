@@ -71,8 +71,8 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Optimizers.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
-    <Compile Include="view\MainActivity.vb" />
     <Compile Include="method\AbstractOptimizer.vb" />
     <Compile Include="method\GradientDescent.vb" />
     <Compile Include="method\NewtonMethod.vb" />
@@ -84,6 +84,7 @@
     <Compile Include="model\NormalVector.vb" />
     <Compile Include="OptimizerCalculator.vb" />
     <Compile Include="view\CartesianCoordinateSystem.vb" />
+    <Compile Include="view\State.vb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\..\..\..\..\sciBASIC\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">

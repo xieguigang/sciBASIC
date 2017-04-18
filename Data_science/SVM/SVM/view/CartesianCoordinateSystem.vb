@@ -15,7 +15,7 @@ Public Class CartesianCoordinateSystem
 
     Private mPaint As Brush
     Private mTextBounds As Rectangle
-    Private mState As __State
+    Private mState As State
     Private mLineBuilder As LineBuilder
 
     Public Property Line As Line
@@ -35,13 +35,19 @@ Public Class CartesianCoordinateSystem
 
     Public ReadOnly Property Points As IList(Of LabeledPoint)
         Get
-            Return mState.mPoints
+            Return mState.Points
+        End Get
+    End Property
+
+    Public ReadOnly Property State As State
+        Get
+            Return New State(Me, mState.Points, mState.Line)
         End Get
     End Property
 
     Sub New()
         mPaint = New SolidBrush(Color.White)
-        mState = New __State(Me)
+        mState = New State(Me)
         mTextBounds = New Rectangle
     End Sub
 
@@ -86,13 +92,12 @@ Public Class CartesianCoordinateSystem
         canvas.DrawString(text, f, Brushes.Black, textPadding, mTextBounds.Height())
         canvas.DrawString(text, f, Brushes.Black, mwidth - mTextBounds.Width() - 3, mheight - textPadding)
 
-        For Each p As LabeledPoint In mState.mPoints
+        For Each p As LabeledPoint In mState.Points
             If p.ColorClass = ColorClass.RED Then
                 canvas.DrawCircle(Pens.Red, CSng(p.X1) * mwidth, CSng(1 - p.X2) * mheight, CIRCLE_RADIUS, fill:=False)
             Else
                 canvas.DrawCircle(Pens.Blue, CSng(p.X1) * mwidth, CSng(1 - p.X2) * mheight, CIRCLE_RADIUS, fill:=False)
             End If
-
         Next
 
         Dim lineText As Line = mState.Line
@@ -124,64 +129,4 @@ Public Class CartesianCoordinateSystem
     Public Sub RemovePoint(point As LabeledPoint)
         mState.removePoint(point)
     End Sub
-
-    Public ReadOnly Property State As __State
-        Get
-            Return New __State(Me, mState.mPoints, mState.Line)
-        End Get
-    End Property
-
-    Public Class __State
-        Friend ReadOnly outerInstance As CartesianCoordinateSystem
-
-        Friend mPoints As New List(Of LabeledPoint)
-
-        Sub New(outerInstance As CartesianCoordinateSystem)
-            Me.New(outerInstance, New List(Of LabeledPoint)(), Nothing)
-        End Sub
-
-        Sub New(outerInstance As CartesianCoordinateSystem, points As IList(Of LabeledPoint), line As Line)
-            Me.outerInstance = outerInstance
-            mPoints = New List(Of LabeledPoint)(points.Count)
-            For Each p As LabeledPoint In points
-                mPoints.Add(p.clone())
-            Next
-
-            If line IsNot Nothing Then Me.Line = line.clone()
-        End Sub
-
-        Public Property Line As Line
-
-
-        Public ReadOnly Property Points As IList(Of LabeledPoint)
-            Get
-                Return mPoints
-            End Get
-        End Property
-
-        Sub addPoint(point As LabeledPoint)
-            mPoints.Add(point)
-        End Sub
-
-        Sub removePoint(point As LabeledPoint)
-            mPoints.Remove(point)
-        End Sub
-
-        Sub clearPoints()
-            mPoints.Clear()
-        End Sub
-
-        Public Overrides Function Equals(o As Object) As Boolean
-            If TypeOf o Is __State Then
-                Dim state As __State = CType(o, __State)
-                If Not LabeledPoint.ListEqual(state.mPoints, mPoints) Then Return False
-                If Me.Line Is Nothing AndAlso state.Line Is Nothing Then Return True
-                If Me.Line IsNot Nothing AndAlso state.Line IsNot Nothing Then Return state.Line.Equals(Me.Line)
-
-                Return False
-            End If
-
-            Return MyBase.Equals(o)
-        End Function
-    End Class
 End Class
