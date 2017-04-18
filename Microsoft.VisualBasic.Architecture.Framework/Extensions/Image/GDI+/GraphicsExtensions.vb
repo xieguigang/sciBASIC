@@ -116,6 +116,20 @@ Namespace Imaging
             End With
         End Sub
 
+        ''' <summary>
+        ''' 模仿Java之中的``DrawCircle``方法
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="color"></param>
+        ''' <param name="x!"></param>
+        ''' <param name="y!"></param>
+        ''' <param name="r!"></param>
+        ''' <param name="fill"></param>
+        <Extension>
+        Public Sub DrawCircle(ByRef g As Graphics, color As Pen, x!, y!, r!, Optional fill As Boolean = True)
+            Call g.DrawCircle(New PointF(x, y), r, color, fill)
+        End Sub
+
         <Extension>
         Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As SolidBrush)
             Dim d = r * 2
