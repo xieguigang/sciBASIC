@@ -25,6 +25,10 @@ Namespace Model
         ''' <returns></returns>
         Public Property X2 As Double
         Public ReadOnly Property Y As Integer
+            Get
+                Return ColorClass
+            End Get
+        End Property
 
         Public Overrides Function ToString() As String
             Return $"[{ColorClass}] ({X1}, {1 - X2})"
