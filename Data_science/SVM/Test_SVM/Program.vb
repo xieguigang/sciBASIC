@@ -12,12 +12,11 @@ Module Program
         With New Size(500, 500).CreateGDIDevice
             Call cs.Draw(.Graphics, .Width, .Height)
             Call .ImageResource _
-                 .SaveAs("./SVM-plot.png")
+                 .SaveAs("../../../SVM-plot.png")
         End With
     End Sub
 
     Function InsertDefault() As CartesianCoordinateSystem
-        Dim cartesianCoordinateSystem As New CartesianCoordinateSystem
         Dim toAdd As New List(Of LabeledPoint)
         toAdd.Add(New LabeledPoint(0.4, 0.4, ColorClass.RED))
         toAdd.Add(New LabeledPoint(0.7, 0.6, ColorClass.RED))
@@ -29,10 +28,9 @@ Module Program
         toAdd.Add(New LabeledPoint(0.14, 0.5, ColorClass.RED))
 
         Dim line As New Line(0, 0.4, 1, 0.9)
-
-        If Not line.Equals(cartesianCoordinateSystem.Line) Then
-            cartesianCoordinateSystem.Line = (line)
-        End If
+        Dim cartesianCoordinateSystem As New CartesianCoordinateSystem(points:=toAdd) With {
+            .Line = line
+        }
 
         Return cartesianCoordinateSystem
     End Function

@@ -45,10 +45,16 @@ Public Class CartesianCoordinateSystem
         End Get
     End Property
 
-    Sub New()
+    Sub New(Optional points As IEnumerable(Of LabeledPoint) = Nothing)
         mPaint = New SolidBrush(Color.White)
         mState = New State(Me)
         mTextBounds = New Rectangle
+
+        If Not points Is Nothing Then
+            For Each x In points
+                Call mState.AddPoint(x)
+            Next
+        End If
     End Sub
 
     Sub Draw(canvas As Canvas, mwidth!, mheight!)

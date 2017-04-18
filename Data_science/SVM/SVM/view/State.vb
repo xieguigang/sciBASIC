@@ -13,9 +13,10 @@ Public Class State
 
     Sub New(outerInstance As CartesianCoordinateSystem, points As IList(Of LabeledPoint), line As Line)
         Me.outerInstance = outerInstance
-        points = New List(Of LabeledPoint)(points.Count)
+        Me.Points = New List(Of LabeledPoint)(points.Count)
+
         For Each p As LabeledPoint In points
-            points.Add(p.Clone())
+            Me.Points.Add(p.Clone())
         Next
 
         If line IsNot Nothing Then
