@@ -177,7 +177,8 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 这个函数只建议读取小文本文件的时候使用
+    ''' This function is recommend using for the small(probably smaller than 300MB) text file reading.
+    ''' (这个函数只建议读取小文本文件的时候使用)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="Encoding">Default value is UTF8</param>
