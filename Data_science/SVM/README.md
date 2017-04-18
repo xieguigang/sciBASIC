@@ -1,5 +1,7 @@
 # SVM(Support Vector Machine)
 
+> From the original works: [Android SVM](https://github.com/vRallev/SVM)
+
 #### Support Vector Machines for classification
 
 ![](./svm_3d_cropped-750x410.png)
