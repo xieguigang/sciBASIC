@@ -1,4 +1,5 @@
 Imports System.Linq
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 
 Namespace Model
 
@@ -26,7 +27,7 @@ Namespace Model
         Public Property X2 As Double
         Public ReadOnly Property Y As Integer
             Get
-                Return ColorClass
+                Return ColorClass.int
             End Get
         End Property
 
@@ -70,7 +71,7 @@ Namespace Model
         End Function
 
         Private Function ICloneable_Clone() As Object Implements ICloneable.Clone
-            Return clone()
+            Return Clone()
         End Function
     End Class
 End Namespace

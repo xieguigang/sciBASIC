@@ -82,11 +82,11 @@ Public Class CartesianCoordinateSystem
         Next
 
         For Each p As LabeledPoint In mState.Points
-            If p.ColorClass = ColorClass.RED Then
-                canvas.DrawCircle(Pens.Red, CSng(p.X1) * width, CSng(1 - p.X2) * height, CIRCLE_RADIUS)
-            Else
-                canvas.DrawCircle(Pens.Blue, CSng(p.X1) * width, CSng(1 - p.X2) * height, CIRCLE_RADIUS)
-            End If
+            canvas.DrawCircle(
+                New Pen(p.ColorClass.Color.TranslateColor),
+                CSng(p.X1) * width,
+                CSng(1 - p.X2) * height,
+                CIRCLE_RADIUS)
         Next
 
         Dim lineText As Line = mState.Line

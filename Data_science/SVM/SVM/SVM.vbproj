@@ -78,7 +78,6 @@
     <Compile Include="method\NewtonMethod.vb" />
     <Compile Include="method\SubGradientDescent.vb" />
     <Compile Include="method\SvmArgument.vb" />
-    <Compile Include="model\ColorClass.vb" />
     <Compile Include="model\LabeledPoint.vb" />
     <Compile Include="model\Line.vb" />
     <Compile Include="model\NormalVector.vb" />

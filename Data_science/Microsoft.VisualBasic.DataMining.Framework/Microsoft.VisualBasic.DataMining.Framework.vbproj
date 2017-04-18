@@ -216,6 +216,7 @@
   <ItemGroup>
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
     <Compile Include="ComponentModel\Class.vb" />
+    <Compile Include="ComponentModel\Extensions.vb" />
     <Compile Include="FuzzyCMeans\AlgorithmsUtils.vb" />
     <Compile Include="FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb" />
     <Compile Include="FuzzyCMeans\Algorithm\Utils.vb" />

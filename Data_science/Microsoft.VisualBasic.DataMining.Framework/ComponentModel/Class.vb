@@ -1,11 +1,12 @@
 ﻿Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel
 
     ''' <summary>
     ''' Object entity classification class
     ''' </summary>
-    Public Class [Class]
+    Public Class ColorClass
 
         ''' <summary>
         ''' Using for the data visualization.(RGB表达式, html颜色值或者名称)
@@ -13,7 +14,7 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public Property Color As String
         ''' <summary>
-        ''' <see cref="Integer"/> encoding for this class
+        ''' <see cref="Integer"/> encoding for this class.(即枚举类型)
         ''' </summary>
         ''' <returns></returns>
         Public Property int As Integer
@@ -26,5 +27,32 @@ Namespace ComponentModel
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
+
+        Public Shared Function FromEnums(Of T)() As ColorClass()
+            Dim values As T() = Enums(Of T)()
+            Dim colors$() = Imaging _
+                .ChartColors _
+                .Select(AddressOf Imaging.RGB2Hexadecimal) _
+                .ToArray
+            Dim out As ColorClass() = values _
+                .SeqIterator _
+                .Select(Function(v)
+                            Return New ColorClass With {
+                                .int = CInt(DirectCast(+v, Object)),
+                                .Color = colors(v),
+                                .Name = DirectCast(CObj((+v)), [Enum]).Description
+                            }
+                        End Function) _
+                .ToArray
+            Return out
+        End Function
+
+        Public Shared Operator =(a As ColorClass, b As ColorClass) As Boolean
+            Return a.Color = b.Color AndAlso a.int = b.int AndAlso a.Name = b.Name
+        End Operator
+
+        Public Shared Operator <>(a As ColorClass, b As ColorClass) As Boolean
+            Return Not a = b
+        End Operator
     End Class
 End Namespace
