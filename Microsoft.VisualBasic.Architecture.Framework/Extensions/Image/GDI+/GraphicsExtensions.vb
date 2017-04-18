@@ -105,13 +105,14 @@ Namespace Imaging
 
         <Extension>
         Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As Pen, Optional fill As Boolean = True)
-            Dim d = r * 2
-
             With centra
+                Dim d! = r * 2
+                Dim rect As New Rectangle(.X - r, .Y - r, d, d)
+
                 If fill Then
-                    Call g.FillPie(New SolidBrush(color.Color), .X - r, .Y - r, d, d, 0, 360)
+                    Call g.FillPie(New SolidBrush(color.Color), rect, 0, 360)
                 Else
-                    Call g.DrawPie(color, .X - r, .Y - r, d, d, 0, 360)
+                    Call g.DrawEllipse(color, rect)
                 End If
             End With
         End Sub
