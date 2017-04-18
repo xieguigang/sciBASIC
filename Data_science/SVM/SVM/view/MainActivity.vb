@@ -8,7 +8,7 @@ Public Class MainActivity
         Dim line As Line = CartesianCoordinateSystem.Line
         If line Is Nothing Then
             line = New Line(New NormalVector(-1, 1), 0)
-            CartesianCoordinateSystem.setLine(line)
+            CartesianCoordinateSystem.Line = (line)
         End If
 
         line.NormalVector.W1 = line.NormalVector.W1 / line.NormalVector.W2
@@ -27,42 +27,38 @@ Public Class MainActivity
         End Select
 
         Dim result = optimizer.Calculate
-        CartesianCoordinateSystem.setLine(result)
+        CartesianCoordinateSystem.Line = (result)
 
         Return (CartesianCoordinateSystem.Points.ToArray, result)
     End Function
 
     Function insertDefault() As CartesianCoordinateSystem
-        Dim mCartesianCoordinateSystem As New CartesianCoordinateSystem
-        Dim points As IList(Of LabeledPoint) = mCartesianCoordinateSystem.Points
+        Dim cartesianCoordinateSystem As New CartesianCoordinateSystem
+        Dim points As IList(Of LabeledPoint) = cartesianCoordinateSystem.Points
         Dim toAdd As IList(Of LabeledPoint) = New List(Of LabeledPoint)
-        toAdd.Add(LabeledPoint.GetInstance(0.4, 0.4, ColorClass.RED))
-        toAdd.Add(LabeledPoint.GetInstance(0.7, 0.6, ColorClass.RED))
-        toAdd.Add(LabeledPoint.GetInstance(0.2, 0.6, ColorClass.BLUE))
-        toAdd.Add(LabeledPoint.GetInstance(0.4, 0.9, ColorClass.BLUE))
-        toAdd.Add(Model.LabeledPoint.GetInstance(1, 1, ColorClass.BLUE))
-        toAdd.Add(Model.LabeledPoint.GetInstance(1, 0.75, ColorClass.BLUE))
-        toAdd.Add(Model.LabeledPoint.GetInstance(0.6, 0.59, ColorClass.BLUE))
-        toAdd.Add(Model.LabeledPoint.GetInstance(0.14, 0.5, ColorClass.RED))
+        toAdd.Add(New LabeledPoint(0.4, 0.4, ColorClass.RED))
+        toAdd.Add(New LabeledPoint(0.7, 0.6, ColorClass.RED))
+        toAdd.Add(New LabeledPoint(0.2, 0.6, ColorClass.BLUE))
+        toAdd.Add(New LabeledPoint(0.4, 0.9, ColorClass.BLUE))
+        toAdd.Add(New LabeledPoint(1, 1, ColorClass.BLUE))
+        toAdd.Add(New LabeledPoint(1, 0.75, ColorClass.BLUE))
+        toAdd.Add(New LabeledPoint(0.6, 0.59, ColorClass.BLUE))
+        toAdd.Add(New LabeledPoint(0.14, 0.5, ColorClass.RED))
 
         If Not LabeledPoint.ListEqual(points, toAdd) Then
-            mCartesianCoordinateSystem.clearPoints()
+            cartesianCoordinateSystem.ClearPoints()
             For Each p As LabeledPoint In toAdd
-                mCartesianCoordinateSystem.addPoint(p)
+                cartesianCoordinateSystem.AddPoint(p)
             Next
         Else
-            For Each p As LabeledPoint In toAdd
-                p.release()
-            Next
         End If
 
         Dim line As New Line(0, 0.4, 1, 0.9)
-        If Not line.Equals(mCartesianCoordinateSystem.Line) Then
-            mCartesianCoordinateSystem.setLine(line)
+
+        If Not line.Equals(cartesianCoordinateSystem.Line) Then
+            cartesianCoordinateSystem.Line = (line)
         End If
 
-        Console.WriteLine(mCartesianCoordinateSystem.Line.ToString)
-
-        Return mCartesianCoordinateSystem
+        Return cartesianCoordinateSystem
     End Function
 End Class
