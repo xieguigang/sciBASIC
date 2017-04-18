@@ -4,7 +4,7 @@ Namespace Model
     ''' @author Ralf Wondratschek
     ''' </summary>
     Public Enum ColorClass
-        RED = 1 '(1, android.graphics.Color.parseColor("#FF4444")),
-        BLUE = -1 '(-1, android.graphics.Color.parseColor("#33B5E5"));
+        RED = 1
+        BLUE = -1
     End Enum
 End Namespace

@@ -27,7 +27,7 @@ Public Class CartesianCoordinateSystem
 
 
     Private mState As __State
-    Private mLineBuilder As Line.Builder
+    Private mLineBuilder As LineBuilder
 
 
     '  Private mObjectAnimator As ObjectAnimator
@@ -121,7 +121,7 @@ Public Class CartesianCoordinateSystem
         Next
 
         Dim lineText As Line = mState.Line
-        If lineText Is Nothing AndAlso mLineBuilder IsNot Nothing Then lineText = mLineBuilder.build()
+        If lineText Is Nothing AndAlso mLineBuilder IsNot Nothing Then lineText = mLineBuilder.Build()
 
         If lineText IsNot Nothing Then
             text = "y = " & Math.Round(lineText.Increase * 100) / 100.0R & " * x + " & Math.Round(lineText.Offset * 100) / 100.0R
@@ -138,8 +138,8 @@ Public Class CartesianCoordinateSystem
 
         ElseIf mState.Line IsNot Nothing Then
             ' mPaint.Color = android.graphics.Color.WHITE
-            Dim p1 As New Point(0, CSng(1 - mState.Line.getY(0)) * mheight)
-            Dim p2 As New Point(mwidth, CSng(1 - mState.Line.getY(1)) * mheight)
+            Dim p1 As New Point(0, CSng(1 - mState.Line.CalcY(0)) * mheight)
+            Dim p2 As New Point(mwidth, CSng(1 - mState.Line.CalcY(1)) * mheight)
             canvas.DrawLine(pen, p1, p2)
         End If
     End Sub
@@ -245,7 +245,7 @@ Public Class CartesianCoordinateSystem
             If mState.Line IsNot Nothing Then
                 Return mState.Line
             ElseIf mLineBuilder IsNot Nothing Then
-                Return mLineBuilder.build()
+                Return mLineBuilder.Build()
             End If
             Return Nothing
         End Get
@@ -376,7 +376,7 @@ Public Class CartesianCoordinateSystem
         Public Overrides Function Equals(o As Object) As Boolean
             If TypeOf o Is __State Then
                 Dim state As __State = CType(o, __State)
-                If Not LabeledPoint.listEqual(state.mPoints, mPoints) Then Return False
+                If Not LabeledPoint.ListEqual(state.mPoints, mPoints) Then Return False
                 If Me.Line Is Nothing AndAlso state.Line Is Nothing Then Return True
                 If Me.Line IsNot Nothing AndAlso state.Line IsNot Nothing Then Return state.Line.Equals(Me.Line)
 

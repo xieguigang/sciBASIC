@@ -8,6 +8,9 @@ Namespace Model
     Public Class NormalVector
         Implements ICloneable
 
+        Public Property W1 As Double
+        Public Property W2 As Double
+
         Public Sub New(w1 As Double, w2 As Double)
             Me.W1 = w1
             Me.W2 = w2
@@ -15,11 +18,6 @@ Namespace Model
 
         Sub New()
         End Sub
-
-        Public Property W2 As Double
-
-
-        Public Property W1 As Double
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -30,12 +28,12 @@ Namespace Model
                 Dim vector As NormalVector = CType(o, NormalVector)
                 Dim res As Double = (vector.W2 / vector.W1) / (W2 / W1)
                 Return res < 1.0001 AndAlso res > 0.999
+            Else
+                Return MyBase.Equals(o)
             End If
-
-            Return MyBase.Equals(o)
         End Function
 
-        Public Function clone() As NormalVector
+        Public Function Clone() As NormalVector
             Return New NormalVector(W1, W2)
         End Function
 
@@ -43,5 +41,4 @@ Namespace Model
             Return clone()
         End Function
     End Class
-
 End Namespace

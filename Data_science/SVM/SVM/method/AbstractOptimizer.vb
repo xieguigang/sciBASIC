@@ -7,39 +7,31 @@ Namespace Method
     ''' </summary>
     Public MustInherit Class Optimizer
 
-        Protected Friend mLine As Line
-        Protected Friend mPoints As LabeledPoint()
-        Protected Friend mIterations As Integer
-
-        Protected Friend mCancelled As Boolean
+        Protected Friend _line As Line
+        Protected Friend _points As LabeledPoint()
+        Protected Friend _iterations As Integer
+        Protected Friend _cancelled As Boolean
 
         Public Sub New(line As Line, points As IList(Of LabeledPoint), iterations As Integer)
-            mLine = line.clone()
-            mPoints = New LabeledPoint(points.Count - 1) {}
-            For i As Integer = 0 To mPoints.Length - 1
-                mPoints(i) = points(i).clone()
+            _line = line.Clone()
+            _points = New LabeledPoint(points.Count - 1) {}
+            For i As Integer = 0 To _points.Length - 1
+                _points(i) = points(i).Clone()
             Next
 
-            mIterations = iterations
-            mCancelled = False
+            _iterations = iterations
+            _cancelled = False
         End Sub
 
-        Public Function optimize() As Line
-
+        Public Function Optimize() As Line
             Dim result As Line = innerOptimize()
-
-            For Each p As LabeledPoint In mPoints
-                p.release()
-            Next
-
             Return result
         End Function
 
         Protected Friend MustOverride Function innerOptimize() As Line
 
-        Public Sub cancel()
-            mCancelled = True
+        Public Sub Cancel()
+            _cancelled = True
         End Sub
     End Class
-
 End Namespace

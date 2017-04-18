@@ -26,7 +26,7 @@ Public Class MainActivity
                 optimizer = Nothing
         End Select
 
-        Dim result = optimizer.calculate
+        Dim result = optimizer.Calculate
         CartesianCoordinateSystem.setLine(result)
 
         Return (CartesianCoordinateSystem.Points.ToArray, result)
@@ -36,16 +36,16 @@ Public Class MainActivity
         Dim mCartesianCoordinateSystem As New CartesianCoordinateSystem
         Dim points As IList(Of LabeledPoint) = mCartesianCoordinateSystem.Points
         Dim toAdd As IList(Of LabeledPoint) = New List(Of LabeledPoint)
-        toAdd.Add(LabeledPoint.getInstance(0.4, 0.4, ColorClass.RED))
-        toAdd.Add(LabeledPoint.getInstance(0.7, 0.6, ColorClass.RED))
-        toAdd.Add(LabeledPoint.getInstance(0.2, 0.6, ColorClass.BLUE))
-        toAdd.Add(LabeledPoint.getInstance(0.4, 0.9, ColorClass.BLUE))
-        toAdd.Add(Model.LabeledPoint.getInstance(1, 1, ColorClass.BLUE))
-        toAdd.Add(Model.LabeledPoint.getInstance(1, 0.75, ColorClass.BLUE))
-        toAdd.Add(Model.LabeledPoint.getInstance(0.6, 0.59, ColorClass.BLUE))
-        toAdd.Add(Model.LabeledPoint.getInstance(0.14, 0.5, ColorClass.RED))
+        toAdd.Add(LabeledPoint.GetInstance(0.4, 0.4, ColorClass.RED))
+        toAdd.Add(LabeledPoint.GetInstance(0.7, 0.6, ColorClass.RED))
+        toAdd.Add(LabeledPoint.GetInstance(0.2, 0.6, ColorClass.BLUE))
+        toAdd.Add(LabeledPoint.GetInstance(0.4, 0.9, ColorClass.BLUE))
+        toAdd.Add(Model.LabeledPoint.GetInstance(1, 1, ColorClass.BLUE))
+        toAdd.Add(Model.LabeledPoint.GetInstance(1, 0.75, ColorClass.BLUE))
+        toAdd.Add(Model.LabeledPoint.GetInstance(0.6, 0.59, ColorClass.BLUE))
+        toAdd.Add(Model.LabeledPoint.GetInstance(0.14, 0.5, ColorClass.RED))
 
-        If Not LabeledPoint.listEqual(points, toAdd) Then
+        If Not LabeledPoint.ListEqual(points, toAdd) Then
             mCartesianCoordinateSystem.clearPoints()
             For Each p As LabeledPoint In toAdd
                 mCartesianCoordinateSystem.addPoint(p)

@@ -1,15 +1,13 @@
+Imports System.Linq
 Imports Microsoft.VisualBasic.DataMining.SVM.Model
 
 Namespace Method
-
-
 
     ''' <summary>
     ''' @author Peter Grube
     ''' @author Ralf Wondratschek
     ''' </summary>
-    Public Class NewtonMethod
-        Inherits Optimizer
+    Public Class NewtonMethod : Inherits Optimizer
 
         Private Const FIRST_DERIVATE_W1 As String = "firstDerivateW1"
         Private Const FIRST_DERIVATE_W2 As String = "firstDerivateW2"
@@ -33,34 +31,37 @@ Namespace Method
         End Sub
 
         Protected Friend Overrides Function innerOptimize() As Line
-            Dim argument As New SvmArgument(mLine.NormalVector, mLine.Offset)
-
+            Dim argument As New SvmArgument(_line.NormalVector, _line.Offset)
             Dim derivation As New Dictionary(Of String, Double)
 
-            For i As Integer = 0 To mIterations - 1
+            For i As Integer = 0 To _iterations - 1
+                If _cancelled Then
+                    Return Nothing
+                End If
 
-                If mCancelled Then Return Nothing
-
-                derivation(FIRST_DERIVATE_W1) = firstDerivateW1(argument.Offset, C, mPoints, argument.NormalVector)
-                derivation(FIRST_DERIVATE_W2) = firstDerivateW2(argument.Offset, C, mPoints, argument.NormalVector)
-                derivation(FIRST_DERIVATE_B) = firstDerivateB(argument.Offset, C, mPoints, argument.NormalVector)
-                derivation(SECOND_DERIVATE_W1) = secondDerivateW1(argument.Offset, C, mPoints, argument.NormalVector)
-                derivation(SECOND_DERIVATE_W2) = secondDerivateW2(argument.Offset, C, mPoints, argument.NormalVector)
-                derivation(SECOND_DERIVATE_B) = secondDerivateB(argument.Offset, C, mPoints, argument.NormalVector)
-                derivation(SECOND_DERIVATE_W1W2) = secondDerivateW2W1(argument.Offset, C, mPoints, argument.NormalVector)
-                derivation(SECOND_DERIVATE_W1B) = secondDerivateW1B(argument.Offset, C, mPoints, argument.NormalVector)
-                derivation(SECOND_DERIVATE_W2B) = secondDerivateW2B(argument.Offset, C, mPoints, argument.NormalVector)
+                derivation(FIRST_DERIVATE_W1) = firstDerivateW1(argument.Offset, C, _points, argument.NormalVector)
+                derivation(FIRST_DERIVATE_W2) = firstDerivateW2(argument.Offset, C, _points, argument.NormalVector)
+                derivation(FIRST_DERIVATE_B) = firstDerivateB(argument.Offset, C, _points, argument.NormalVector)
+                derivation(SECOND_DERIVATE_W1) = secondDerivateW1(argument.Offset, C, _points, argument.NormalVector)
+                derivation(SECOND_DERIVATE_W2) = secondDerivateW2(argument.Offset, C, _points, argument.NormalVector)
+                derivation(SECOND_DERIVATE_B) = secondDerivateB(argument.Offset, C, _points, argument.NormalVector)
+                derivation(SECOND_DERIVATE_W1W2) = secondDerivateW2W1(argument.Offset, C, _points, argument.NormalVector)
+                derivation(SECOND_DERIVATE_W1B) = secondDerivateW1B(argument.Offset, C, _points, argument.NormalVector)
+                derivation(SECOND_DERIVATE_W2B) = secondDerivateW2B(argument.Offset, C, _points, argument.NormalVector)
 
                 Dim newArg As SvmArgument = newtonMethod(argument, derivation)
-                If [stop](argument, newArg) Then Return newArg.toLine()
 
-                argument = newArg
+                If [stop](argument, newArg) Then
+                    Return newArg.ToLine()
+                Else
+                    argument = newArg
+                End If
             Next
-            Return argument.toLine()
+
+            Return argument.ToLine()
         End Function
 
         Private Shared Function invertHesse(dw1up2 As Double, dw2up2 As Double, dbup2 As Double, dw2db As Double, dw1db As Double, dw1dw2 As Double) As Double()()
-
             Dim h11 As Double = dw2up2 * dbup2 - dw2db * dw2db
             Dim h12 As Double = dw1db * dw2db - dw1dw2 * dbup2
             Dim h13 As Double = dw1dw2 * dw2db - dw1db * dw2up2
@@ -70,12 +71,15 @@ Namespace Method
             Dim h31 As Double = h13
             Dim h32 As Double = h23
             Dim h33 As Double = dw1up2 * dw2up2 - dw1dw2 * dw1dw2
-
-            Dim invHesse As Double()() = {New Double() {h11, h12, h13}, New Double() {h21, h22, h23}, New Double() {h31, h32, h33}}
+            Dim invHesse As Double()() = {
+                {h11, h12, h13},
+                {h21, h22, h23},
+                {h31, h32, h33}
+            }.RowIterator _
+             .ToArray
 
             Dim det As Double = dw1up2 * dw2up2 * dbup2 + dw1dw2 * dw2db * dw1db + dw1db * dw1dw2 * dw2db - dw1db * dw2up2 * dw1db - dw2db * dw2db * dw1up2 - dbup2 * dw1dw2 * dw1dw2
             Dim detHesse As Double = 1 / det
-
             Dim ___invertHesse As Double()() = MAT(Of Double)(3, 3)
 
             For i As Integer = 0 To 2
@@ -99,7 +103,7 @@ Namespace Method
         End Function
 
         Private Shared Function newtonMethod(normVecOffset As SvmArgument, derivates As Dictionary(Of String, Double)) As SvmArgument
-            Dim vecOffs As SvmArgument = normVecOffset.clone()
+            Dim vecOffs As SvmArgument = normVecOffset.Clone()
 
             Dim firstDerivates As Double() = {derivates(FIRST_DERIVATE_W1), derivates(FIRST_DERIVATE_W2), derivates(FIRST_DERIVATE_B)}
             Dim functionProduct As Double() = secondDerTimesfirstDer(invertHesse(derivates(SECOND_DERIVATE_W1), derivates(SECOND_DERIVATE_W2), derivates(SECOND_DERIVATE_B), derivates(SECOND_DERIVATE_W2B), derivates(SECOND_DERIVATE_W1B), derivates(SECOND_DERIVATE_W1W2)), firstDerivates)
@@ -260,7 +264,9 @@ Namespace Method
         End Function
 
         Private Function [stop](before As SvmArgument, after As SvmArgument) As Boolean
-            Return Math.Abs(Math.Abs(before.NormalVector.W1) - Math.Abs(after.NormalVector.W1)) < STOP_DIFFERENCE AndAlso Math.Abs(Math.Abs(before.NormalVector.W2) - Math.Abs(after.NormalVector.W2)) < STOP_DIFFERENCE AndAlso Math.Abs(Math.Abs(before.Offset) - Math.Abs(after.Offset)) < STOP_DIFFERENCE
+            Return Math.Abs(Math.Abs(before.NormalVector.W1) - Math.Abs(after.NormalVector.W1)) < STOP_DIFFERENCE AndAlso
+                Math.Abs(Math.Abs(before.NormalVector.W2) - Math.Abs(after.NormalVector.W2)) < STOP_DIFFERENCE AndAlso
+                Math.Abs(Math.Abs(before.Offset) - Math.Abs(after.Offset)) < STOP_DIFFERENCE
         End Function
     End Class
 

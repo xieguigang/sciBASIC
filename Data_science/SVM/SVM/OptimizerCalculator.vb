@@ -9,9 +9,14 @@ Public Module OptimizerCalculator
 
     Public C As Double = 100.0
 
+    ''' <summary>
+    ''' SVM caller
+    ''' </summary>
+    ''' <param name="optimizer"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function calculate(optimizer As Optimizer) As Line
-        Dim result As Line = optimizer.optimize()
+    Public Function Calculate(optimizer As Optimizer) As Line
+        Dim result As Line = optimizer.Optimize()
 
         ''            
         '' + Sometimes a method diverges, so we need to catch this case
