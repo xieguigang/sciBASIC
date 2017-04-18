@@ -28,7 +28,7 @@
 
 Imports System.Drawing
 
-Namespace Drawing3D
+Namespace Drawing3D.Models
 
     Public Interface I3DModel : Inherits IEnumerable(Of Point3D)
 

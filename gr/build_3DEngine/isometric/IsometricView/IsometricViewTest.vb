@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports IsometricView = Microsoft.VisualBasic.Imaging.Drawing3D.IsometricEngine
 
 Public Class IsometricViewTest
@@ -15,7 +15,11 @@ Public Class IsometricViewTest
     Private Shared ReadOnly LIGHT_GREEN As Color = Color.FromArgb(40, 180, 40)
     Private Shared ReadOnly PURPLE As Color = Color.FromArgb(180, 0, 180)
 
-    Private Sub measureAndScreenshotView(view As IsometricView, width%, height%, <CallerMemberName> Optional name$ = Nothing)
+    Private Sub measureAndScreenshotView(view As IsometricView,
+                                         width%,
+                                         height%,
+                                         <CallerMemberName> Optional name$ = Nothing)
+
         Using g As Graphics2D = New Size(width, height).CreateGDIDevice
             Call view.Draw(g)
             Call g.ImageResource.SaveAs($"./{name}.png")

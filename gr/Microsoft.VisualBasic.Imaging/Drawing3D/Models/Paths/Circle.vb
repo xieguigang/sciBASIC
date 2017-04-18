@@ -1,13 +1,8 @@
-Imports System
-Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Isometric
-
-Namespace Drawing3D.Isometric.Paths
+Namespace Drawing3D.Models.Isometric.Paths
 
     ''' <summary>
     ''' Created by fabianterhorst on 01.04.17.
     ''' </summary>
-
     Public Class Circle : Inherits Path3D
 
         <Obsolete>
