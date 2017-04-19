@@ -178,6 +178,7 @@
     <Compile Include="3D\ScatterHeatmap.vb" />
     <Compile Include="3D\Scatter.vb" />
     <Compile Include="3D\Data.vb" />
+    <Compile Include="BarPlot\AlignmentPlot.vb" />
     <Compile Include="BarPlot\Histogram\Extensions.vb" />
     <Compile Include="BarPlot\StyledBarplot.vb" />
     <Compile Include="csv\Extensions.vb" />

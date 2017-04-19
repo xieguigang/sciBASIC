@@ -31,7 +31,7 @@ Imports System.Data.Linq.Mapping
 Namespace StorageProvider.Reflection
 
     ''' <summary>
-    ''' This is a column in the csv document. 
+    ''' This is a column(or Field) in the csv document. 
     ''' </summary>
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Property,
@@ -53,13 +53,13 @@ Namespace StorageProvider.Reflection
         Public ReadOnly Property CustomParser As Type
 
         ''' <summary>
-        ''' 
+        ''' 构建一个列的别名属性值，也可以在这个构造函数之中指定自定义的解析器用来存储非基本类型
         ''' </summary>
         ''' <param name="Name"></param>
         ''' <param name="customParser">The type should implements the interface <see cref="IParser"/>.
         ''' (对于基本类型，这个参数是可以被忽略掉的，但是对于复杂类型，这个参数是不能够被忽略的，否则会报错)
         ''' </param>
-        Sub New(Name As String, Optional customParser As Type = Nothing)
+        Sub New(Name$, Optional customParser As Type = Nothing)
             Me.Name = Name
             Me.CustomParser = customParser
 
@@ -109,6 +109,9 @@ Namespace StorageProvider.Reflection
         End Operator
     End Class
 
+    ''' <summary>
+    ''' Custom user object parser
+    ''' </summary>
     Public Interface IParser
 
         ''' <summary>

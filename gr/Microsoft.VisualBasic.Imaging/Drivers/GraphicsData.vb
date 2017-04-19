@@ -44,7 +44,17 @@ Namespace Driver
             Me.Size = size
         End Sub
 
+        ''' <summary>
+        ''' Save the image graphics to file
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <returns></returns>
         Public MustOverride Function Save(path$) As Boolean
+        ''' <summary>
+        ''' Save the image graphics to a specific output stream
+        ''' </summary>
+        ''' <param name="out"></param>
+        ''' <returns></returns>
         Public MustOverride Function Save(out As Stream) As Boolean
 
     End Class
@@ -54,6 +64,10 @@ Namespace Driver
     ''' </summary>
     Public Class ImageData : Inherits GraphicsData
 
+        ''' <summary>
+        ''' GDI+ image
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Image As Drawing.Image
 
         Public Sub New(img As Object, size As Size)
@@ -78,6 +92,11 @@ Namespace Driver
             End Get
         End Property
 
+        ''' <summary>
+        ''' Save the image as png
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         Public Overrides Function Save(path As String) As Boolean
             If path.ExtensionSuffix.TextEquals("svg") Then
                 Call $"The gdi+ image file save path: {path.ToFileURL} ending with *.svg file extension suffix!".Warning
@@ -118,6 +137,11 @@ Namespace Driver
             End Get
         End Property
 
+        ''' <summary>
+        ''' Save the image as svg file.
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         Public Overrides Function Save(path As String) As Boolean
             If Not path.ExtensionSuffix.TextEquals("svg") Then
                 Call $"The SVG image file save path: {path.ToFileURL} not ending with *.svg file extension suffix!".Warning
