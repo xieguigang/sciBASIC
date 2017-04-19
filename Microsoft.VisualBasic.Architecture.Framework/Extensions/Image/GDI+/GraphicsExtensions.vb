@@ -105,15 +105,30 @@ Namespace Imaging
 
         <Extension>
         Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As Pen, Optional fill As Boolean = True)
-            Dim d = r * 2
-
             With centra
+                Dim d! = r * 2
+                Dim rect As New Rectangle(.X - r, .Y - r, d, d)
+
                 If fill Then
-                    Call g.FillPie(New SolidBrush(color.Color), .X - r, .Y - r, d, d, 0, 360)
+                    Call g.FillPie(New SolidBrush(color.Color), rect, 0, 360)
                 Else
-                    Call g.DrawPie(color, .X - r, .Y - r, d, d, 0, 360)
+                    Call g.DrawEllipse(color, rect)
                 End If
             End With
+        End Sub
+
+        ''' <summary>
+        ''' 模仿Java之中的``DrawCircle``方法
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="color"></param>
+        ''' <param name="x!"></param>
+        ''' <param name="y!"></param>
+        ''' <param name="r!"></param>
+        ''' <param name="fill"></param>
+        <Extension>
+        Public Sub DrawCircle(ByRef g As Graphics, color As Pen, x!, y!, r!, Optional fill As Boolean = True)
+            Call g.DrawCircle(New PointF(x, y), r, color, fill)
         End Sub
 
         <Extension>

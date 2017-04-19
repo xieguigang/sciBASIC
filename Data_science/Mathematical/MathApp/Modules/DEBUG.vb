@@ -1,56 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::504af027306159e2f50ccfe6ea3de640, ..\sciBASIC#\Data_science\Mathematical\MathApp\Modules\DEBUG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.EstimatesProtocol
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo.Example
+Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DocumentStream
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Mathematical.Logical.FuzzyLogic
-Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.Mathematical.StatisticsMathExtensions
+Imports Microsoft.VisualBasic.Mathematical.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -84,7 +83,7 @@ Module DEBUG
         Next
 
         Call test.SaveTo("G:\GCModeller\src\runtime\visualbasic_App\DataSciences\Math\images\BubbleTest.csv")
-        Call Bubble.Plot(csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\DataSciences\Math\images\BubbleTest.csv"), legend:=False).SaveAs("./Bubble.png")
+        Call Bubble.Plot(csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\DataSciences\Math\images\BubbleTest.csv"), legend:=False).Save("./Bubble.png")
     End Sub
 
 
@@ -137,7 +136,7 @@ Module DEBUG
             .DataAnnotations = {New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Pentacle, .Text = "就是这2", .X = 2, .color = "yellow"}, New Annotation With {.Font = CSSFont.Win10Normal, .Legend = LegendStyles.Diamond, .Text = "就是这", .X = 5}}
         }
 
-        Call Scatter.Plot({s}).SaveAs("x:\ffff.png")
+        Call Scatter.Plot({s}).Save("x:\ffff.png")
 
     End Sub
 
@@ -192,7 +191,7 @@ Module DEBUG
             New NamedValue(Of Integer)("s8", 499)
         }.FromData(schema:="Set1:c8") _
          .Plot(reorder:=0, size:=New Size(1500, 1000)) _
-         .SaveAs("./pie_chart.png")
+         .Save("./pie_chart.png")
 
         Pause()
     End Sub
@@ -204,15 +203,15 @@ Module DEBUG
             "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Excels\FigurePlot-Reference-Unigenes.absolute.level1.csv",
             "Paired:c8")
 
-        Call BarPlot.Plot(bdata, New Size(2000, 1400), stacked:=True, legendFont:=New Font(FontFace.BookmanOldStyle, 18)) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\FigurePlot-Reference-Unigenes.absolute.level1.png")
+        Call BarPlot.BarPlotAPI.Plot(bdata, New Size(2000, 1400), stacked:=True, legendFont:=New Font(FontFace.BookmanOldStyle, 18)) _
+            .Save("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\FigurePlot-Reference-Unigenes.absolute.level1.png")
 
         Pause()
 
-        Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
-        Call ddddd.CorrelatesNormalized() _
-            .Plot(mapName:="PRGn:c6", mapLevels:=20, legendFont:=New Font(FontFace.BookmanOldStyle, 32)) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap.png")
+        'Dim ddddd = DataSet.LoadDataSet("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
+        'Call ddddd.CorrelatesNormalized() _
+        '    .Plot(mapName:="PRGn:c6", mapLevels:=20, legendFont:=New Font(FontFace.BookmanOldStyle, 32)) _
+        '    .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap.png")
 
         Pause()
 
@@ -224,10 +223,10 @@ Module DEBUG
                 "gray"
             })
 
-        Call BarPlot.Plot(data, New Size(1500, 1000)) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption-bar.png")
+        Call BarPlot.BarPlotAPI.Plot(data, New Size(1500, 1000)) _
+            .Save("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption-bar.png")
         Call BarPlot.Plot2(data, New Size(1500, 1000)) _
-            .SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption-bar2.png")
+            .Save("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption-bar2.png")
 
         Call Pyramid.Plot(
             {
@@ -237,7 +236,7 @@ Module DEBUG
                 New NamedValue(Of Integer)("Engaged", 235),
                 New NamedValue(Of Integer)("Monster Met", 340)
             }.FromData(schema:="office2010")) _
-             .SaveAs("./Pyramid.png")
+             .Save("./Pyramid.png")
 
         Call TreeMap.Plot(
             {
@@ -247,7 +246,7 @@ Module DEBUG
                 New NamedValue(Of Integer)("Engaged", 235),
                 New NamedValue(Of Integer)("Monster Met", 340)
             }.FromData(schema:="office2010")) _
-             .SaveAs("./treemap.png")
+             .Save("./treemap.png")
 
 
 
@@ -268,7 +267,7 @@ Module DEBUG
 
         Dim serials = {ode.FromODE("red"), ode2.FromODE("lime", DashStyle.Solid)}
 
-        Call Scatter.Plot(serials).SaveAs("./cos.png")
+        Call Scatter.Plot(serials).Save("./cos.png")
         'Call Histogram.Plot(
         '    FromODE({ode2, ode}, {"green", "yellow"}), alpha:=210) _
         '    .SaveAs("./cos.hist.png")
@@ -294,7 +293,7 @@ Module DEBUG
         '  Call QQPlot.Plot(dadasdasdasdasXXXXXX, dadasdasdasdasYYYYYY, xcol:="red").SaveAs("x:\asfsdfsdfsd.png")
         '   Pause()
         ' Pause()
-        Call Scatter.Plot(New TestObservation().Solve(100, 0, 10).FromODEs, fill:=True, fillPie:=False).SaveAs("x:\fsdfsfsdfds.png")
+        Call Scatter.Plot(New TestObservation().Solve(100, 0, 10).FromODEs, fill:=True, fillPie:=False).Save("x:\fsdfsfsdfds.png")
 
         '  Dim ava As Dictionary(Of String, String()) = (From x In AllDotNetPrefixColors.AsParallel Select c = ColorTranslator.ToHtml(x), vd = avadsfdsfds(x)).ToDictionary(Function(x) x.c, Function(x) x.vd.ToArray(AddressOf ColorTranslator.ToHtml))
 
@@ -303,7 +302,7 @@ Module DEBUG
 
         Dim dddddserew = Designer.Colors({Color.Red, Color.Green, Color.Blue})
 
-        Call Colors.ColorMapLegend(dddddserew, "ffffff", "sfsdf", "wrwerew").SaveAs("x:\hhhh.png")
+        Call Colors.ColorMapLegend(dddddserew, "ffffff", "sfsdf", "wrwerew").Save("x:\hhhh.png")
         Pause()
 
 
@@ -318,7 +317,7 @@ Module DEBUG
         Console.WriteLine(ttttdsfsd.IsInheritsFrom(GetType(MonteCarlo.Model)) AndAlso Not ttttdsfsd.IsAbstract)
         Dim iiisddsfd = 1
         For Each sfsdfsds In TestObservation.Compares(100, 0, 10, New Dictionary(Of String, Double) From {{"a", 18.689678431519159}, {"f", 1.0614939771775227}, {"sin", -56.777710793912966}})
-            Call sfsdfsds.Plot().SaveAs($"x:\{iiisddsfd}.png")
+            Call sfsdfsds.Plot().Save($"x:\{iiisddsfd}.png")
             iiisddsfd += 1
         Next
 
@@ -354,10 +353,10 @@ Module DEBUG
         }
 
         Call GraphicsPlots(
-            New Size(350, 600), New Size, "white",
+            New Size(350, 600), g.DefaultPadding, "white",
             Sub(ByRef g, grect)
                 Call LegendPlotExtensions.DrawLegends(g, New Point(20, 60), legends, New SizeF(200, 50),)
-            End Sub).SaveAs("./legends_test.png")
+            End Sub).Save("./legends_test.png")
 
         Dim vars = {
             New NamedValue(Of DoubleRange) With {.Name = "a", .Value = New DoubleRange(-1, 1)},
@@ -375,7 +374,7 @@ Module DEBUG
 
         Dim xxxx = Mathematical.SyntaxAPI.MathExtension.Normal.rnorm(130, 0, 1)
 
-        Call Scatter.Plot(xxxx).SaveAs("x:\dddd.png")
+        Call Scatter.Plot(xxxx).Save("x:\dddd.png")
 
         xxxx = New Vector(Sample(20).OrderBy(Function(ddd) ddd))
 
@@ -410,7 +409,7 @@ Module DEBUG
             New NamedValue(Of Integer)("s3", 99),
             New NamedValue(Of Integer)("s4", 499),
             New NamedValue(Of Integer)("s5", 499)
-        }.FromData(schema:="paper").Plot(minRadius:=100).SaveAs("./pie_chart_vars.png")
+        }.FromData(schema:="paper").Plot(minRadius:=100).Save("./pie_chart_vars.png")
 
 
 
@@ -448,10 +447,10 @@ Module DEBUG
 
 
         Dim f As String = "f(x,y,z,aa) x+y+z!+2*aa"
-        Dim func = Mathematical.FuncParser.TryParse(f)
+        Dim func = FuncParser.TryParse(f)
 
-        Call Mathematical.Expression.DefaultEngine.Functions.Add(f)
-        Call Mathematical.Expression.Evaluate("f(1,2,3,3)").__DEBUG_ECHO
+        Call Expression.DefaultEngine.Functions.Add(f)
+        Call Expression.Evaluate("f(1,2,3,3)").__DEBUG_ECHO
 
         Dim ls As String = "a and not (andb xor 99>2)"
         ls = "(Water IS Cold) OR (Water IS Tepid)"
@@ -475,7 +474,7 @@ Module DEBUG
 
         Dim s2 As String = "((0+69sdfss+fs*(d+f)*w+efsd+f)+sdfs*(dfsdf+w)*e+f+sdf+sd(dd+f,rt)+fsd)"
         s2 = "f(-10,6)+f2(f(0,0),2)"
-        Dim expr = Scripting.TokenIcer.MathExpression(s2)
+        Dim expr = MathExpression(s2)
         Call expr.PrintStack
     End Function
 End Module
