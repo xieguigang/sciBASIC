@@ -804,7 +804,12 @@ Public Module App
     ''' </summary>
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
-    '''
+    ''' <param name="executeFile">
+    ''' 函数指针：
+    ''' ```vbnet
+    ''' Function ExecuteFile(path As <see cref="String"/>, args As <see cref="CommandLine"/>) As <see cref="Integer"/>
+    ''' ```
+    ''' </param>
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type,
                                        args As CommandLine.CommandLine,
