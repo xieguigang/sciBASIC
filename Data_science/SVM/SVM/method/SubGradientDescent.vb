@@ -31,12 +31,17 @@ Namespace Method
             arguments(0) = New SvmArgument(_line.NormalVector.clone(), _line.Offset)
 
             For i As Integer = 1 To arguments.Length - 1
-                If _cancelled Then Return Nothing
+                If _cancelled Then
+                    Return Nothing
+                End If
 
                 Dim ___subGradient As SvmArgument = getSubGradient(arguments(i - 1), 1.0R / 2.0R)
-
                 Dim ___stepSize As Double = getStepSize(i, mStepParameter)
-                arguments(i) = arguments(i - 1).Minus(___subGradient.Multipy(1.0R / ___subGradient.Norm()).Multipy(___stepSize))
+
+                arguments(i) = arguments(i - 1) _
+                    .Minus(___subGradient _
+                           .Multipy(1.0R / ___subGradient.Norm()) _
+                           .Multipy(___stepSize))
 
                 If [stop](arguments(i - 1), arguments(i)) Then
                     Return arguments(i).ToLine()

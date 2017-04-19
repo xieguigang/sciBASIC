@@ -1,4 +1,3 @@
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.SVM.Method
 Imports Microsoft.VisualBasic.DataMining.SVM.Model

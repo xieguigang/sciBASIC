@@ -38,7 +38,9 @@ Public Class State
 
     Public Overrides Function Equals(o As Object) As Boolean
         If TypeOf o Is State Then
+
             Dim state As State = CType(o, State)
+
             If Not LabeledPoint.ListEqual(state.Points, Points) Then Return False
             If Me.Line Is Nothing AndAlso state.Line Is Nothing Then Return True
             If Me.Line IsNot Nothing AndAlso state.Line IsNot Nothing Then

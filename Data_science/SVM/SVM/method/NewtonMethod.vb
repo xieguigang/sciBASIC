@@ -105,10 +105,23 @@ Namespace Method
         Private Shared Function newtonMethod(normVecOffset As SvmArgument, derivates As Dictionary(Of String, Double)) As SvmArgument
             Dim vecOffs As SvmArgument = normVecOffset.Clone()
 
-            Dim firstDerivates As Double() = {derivates(FIRST_DERIVATE_W1), derivates(FIRST_DERIVATE_W2), derivates(FIRST_DERIVATE_B)}
-            Dim functionProduct As Double() = secondDerTimesfirstDer(invertHesse(derivates(SECOND_DERIVATE_W1), derivates(SECOND_DERIVATE_W2), derivates(SECOND_DERIVATE_B), derivates(SECOND_DERIVATE_W2B), derivates(SECOND_DERIVATE_W1B), derivates(SECOND_DERIVATE_W1W2)), firstDerivates)
+            Dim firstDerivates As Double() = {
+                derivates(FIRST_DERIVATE_W1),
+                derivates(FIRST_DERIVATE_W2),
+                derivates(FIRST_DERIVATE_B)
+            }
+            Dim functionProduct As Double() = secondDerTimesfirstDer(
+                invertHesse(derivates(SECOND_DERIVATE_W1),
+                            derivates(SECOND_DERIVATE_W2),
+                            derivates(SECOND_DERIVATE_B),
+                            derivates(SECOND_DERIVATE_W2B),
+                            derivates(SECOND_DERIVATE_W1B),
+                            derivates(SECOND_DERIVATE_W1W2)),
+                firstDerivates)
 
-            vecOffs.NormalVector = New NormalVector(normVecOffset.NormalVector.W1 - functionProduct(0), normVecOffset.NormalVector.W2 - functionProduct(1))
+            vecOffs.NormalVector = New NormalVector(
+                normVecOffset.NormalVector.W1 - functionProduct(0),
+                normVecOffset.NormalVector.W2 - functionProduct(1))
             vecOffs.Offset = normVecOffset.Offset - functionProduct(2)
 
             Return vecOffs
