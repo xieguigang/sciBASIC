@@ -5,8 +5,7 @@ Namespace Model
     ''' <summary>
     ''' @author Ralf Wondratschek
     ''' </summary>
-    Public Class NormalVector
-        Implements ICloneable
+    Public Class NormalVector : Implements ICloneable
 
         Public Property W1 As Double
         Public Property W2 As Double
