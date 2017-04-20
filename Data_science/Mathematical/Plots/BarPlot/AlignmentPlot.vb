@@ -10,13 +10,16 @@ Imports Microsoft.VisualBasic.Scripting
 
 Namespace BarPlot
 
+    ''' <summary>
+    ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形
+    ''' </summary>
     Public Module AlignmentPlot
 
         ''' <summary>
-        ''' 
+        ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形
         ''' </summary>
-        ''' <param name="query"></param>
-        ''' <param name="subject"></param>
+        ''' <param name="query">The query signals</param>
+        ''' <param name="subject">The subject signal values</param>
         ''' <param name="cla$">Color expression for <paramref name="query"/></param>
         ''' <param name="clb$">Color expression for <paramref name="subject"/></param>
         ''' <returns></returns>
