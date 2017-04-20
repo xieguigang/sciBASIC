@@ -67,7 +67,7 @@ Namespace BarPlot
                         Dim y!
                         Dim gridPen As New Pen(Color.Gray, 1) With {
                             .DashStyle = DashStyle.Dot,
-                            .DashPattern = {5.0!, 5.0!}
+                            .DashPattern = {10.0!, 10.0!}
                         }
                         Dim dt! = 15
                         Dim tickPen As New Pen(Color.Black, 1)
@@ -103,12 +103,12 @@ Namespace BarPlot
 
                         ' Y 坐标轴
                         Call g.DrawLine(axisPen, .Location, New Point(.Left, .Bottom))
-                        Call g.DrawImageUnscaled(Axis.DrawLabel(ylab, labelCSS, ), New Point(.Left, .Top))
+                        Call g.DrawImage(Axis.DrawLabel(ylab, labelCSS, ), New Point(.Left + 3, .Top))
 
                         ' X 坐标轴
                         Dim fWidth! = g.MeasureString(xlab, labelFont).Width
                         Call g.DrawLine(axisPen, New Point(.Left, ymid), New Point(.Right, ymid))
-                        Call g.DrawString(xlab, labelFont, Brushes.Black, New Point(.Right - fWidth, ymid))
+                        Call g.DrawString(xlab, labelFont, Brushes.Black, New Point(.Right - fWidth, ymid + 2))
 
                         Dim left!
                         Dim ba As New SolidBrush(cla.TranslateColor)
@@ -147,13 +147,15 @@ Namespace BarPlot
                         Dim legendFont As Font = CSSFont.TryParse(legendFontCSS).GDIObject
                         Dim fHeight! = g.MeasureString("1", legendFont).Height
 
+                        y = 7
+
                         box = New Rectangle(New Point(rect.Right - 300, rect.Top + 20), New Size(20, 20))
                         Call g.FillRectangle(ba, box)
-                        Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -fHeight / 3))
+                        Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -y))
 
                         box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
                         Call g.FillRectangle(bb, box)
-                        Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -fHeight / 3))
+                        Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -y))
 
                         Dim titleFont As Font = CSSFont.TryParse(titleCSS).GDIObject
                         Dim titleSize = g.MeasureString(title, titleFont)

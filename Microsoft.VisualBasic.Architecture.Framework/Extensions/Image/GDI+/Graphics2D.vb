@@ -1297,7 +1297,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, rect As RectangleF)
-
+            Call Graphics.DrawImage(image, rect)
         End Sub
         '
         ' Summary:
@@ -1316,7 +1316,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, rect As Rectangle)
-
+            Call Graphics.DrawImage(image, rect)
         End Sub
         '
         ' Summary:
@@ -1334,7 +1334,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, destPoints() As Point)
-
+            Call Graphics.DrawImage(image, destPoints)
         End Sub
         '
         ' Summary:
@@ -1352,7 +1352,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, destPoints() As PointF)
-
+            Call Graphics.DrawImage(image, destPoints)
         End Sub
         '
         ' Summary:
@@ -1371,7 +1371,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, point As Point)
-
+            Call Graphics.DrawImage(image, point)
         End Sub
         '
         ' Summary:
@@ -1390,7 +1390,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, point As PointF)
-
+            Call Graphics.DrawImage(image, point)
         End Sub
         '
         ' Summary:
