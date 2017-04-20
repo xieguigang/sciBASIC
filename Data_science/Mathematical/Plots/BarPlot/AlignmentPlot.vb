@@ -45,6 +45,14 @@ Namespace BarPlot
                                       Optional legendFontCSS$ = CSSFont.Win10NormalLarger,
                                       Optional bw! = 8,
                                       Optional format$ = "F2") As GraphicsData
+
+            If xrange Is Nothing Then
+                xrange = New DoubleRange(query.Keys.Join(subject.Keys).ToArray)
+            End If
+            If yrange Is Nothing Then
+                yrange = New DoubleRange(query.Values.Join(subject.Values).ToArray)
+            End If
+
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
@@ -71,7 +79,7 @@ Namespace BarPlot
                         }
                         Dim dt! = 15
                         Dim tickPen As New Pen(Color.Black, 1)
-                        Dim tickFont As Font = CSSFont.TryParse(tickCSS).GDIObject
+                        Dim tickFont As Font = CSSFont.TryParse(tickCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!)).GDIObject
                         Dim drawlabel = Sub(c As IGraphics, label$)
                                             Dim tsize = c.MeasureString(label, tickFont)
                                             Call c.DrawString(label, tickFont, Brushes.Black, New Point(.Left - dt - tsize.Width, y - tsize.Height / 2))
@@ -99,11 +107,11 @@ Namespace BarPlot
                             Call drawlabel(g, label)
                         Next
 
-                        Dim labelFont As Font = CSSFont.TryParse(labelCSS).GDIObject
+                        Dim labelFont As Font = CSSFont.TryParse(labelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!, FontStyle.Bold)).GDIObject
 
                         ' Y 坐标轴
                         Call g.DrawLine(axisPen, .Location, New Point(.Left, .Bottom))
-                        Call g.DrawImage(Axis.DrawLabel(ylab, labelCSS, ), New Point(.Left + 3, .Top))
+                        Call g.DrawImage(Axis.DrawLabel(ylab, labelFont, ), New Point(.Left + 3, .Top))
 
                         ' X 坐标轴
                         Dim fWidth! = g.MeasureString(xlab, labelFont).Width
@@ -144,7 +152,7 @@ Namespace BarPlot
                             })
 
                         Dim box As Rectangle
-                        Dim legendFont As Font = CSSFont.TryParse(legendFontCSS).GDIObject
+                        Dim legendFont As Font = CSSFont.TryParse(legendFontCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)).GDIObject
                         Dim fHeight! = g.MeasureString("1", legendFont).Height
 
                         y = 7
@@ -157,7 +165,7 @@ Namespace BarPlot
                         Call g.FillRectangle(bb, box)
                         Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -y))
 
-                        Dim titleFont As Font = CSSFont.TryParse(titleCSS).GDIObject
+                        Dim titleFont As Font = CSSFont.TryParse(titleCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)).GDIObject
                         Dim titleSize = g.MeasureString(title, titleFont)
                         Dim tl As New Point(
                             rect.Left + (rect.Width - titleSize.Width) / 2,
@@ -166,13 +174,6 @@ Namespace BarPlot
                         Call g.DrawString(title, titleFont, Brushes.Black, tl)
                     End With
                 End Sub
-
-            If xrange Is Nothing Then
-                xrange = New DoubleRange(query.Keys.Join(subject.Keys).ToArray)
-            End If
-            If yrange Is Nothing Then
-                yrange = New DoubleRange(query.Values.Join(subject.Values).ToArray)
-            End If
 
             Return g.GraphicsPlots(
                 size.SizeParser, padding,

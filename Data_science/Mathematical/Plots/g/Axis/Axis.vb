@@ -253,9 +253,14 @@ Namespace Graphic.Axis
         ''' <returns></returns>
         <Extension>
         Public Function DrawLabel(label$, css$, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
+            Dim font As Font = CSSFont.TryParse(css, [default]:=New Font(FontFace.MicrosoftYaHei, 12)).GDIObject
+            Return label.DrawLabel(font, fcolor, size)
+        End Function
+
+        <Extension>
+        Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
             Using g As Graphics2D = size.SizeParser.CreateGDIDevice(Color.Transparent)
                 With g
-                    Dim font As Font = CSSFont.TryParse(css).GDIObject
                     Dim b As Brush = fcolor.GetBrush
 
                     Call .DrawString(label, font, b, New Point)
