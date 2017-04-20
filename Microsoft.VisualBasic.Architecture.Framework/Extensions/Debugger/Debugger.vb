@@ -367,8 +367,11 @@ Public Module VBDebugger
         End If
     End Sub
 
-    <Extension>
-    Public Sub EchoLine(s$)
+    ''' <summary>
+    ''' Alias for <see cref="Console.WriteLine"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    <Extension> Public Sub EchoLine(s$)
         If Not Mute Then
             Call Console.WriteLine(s)
         End If
