@@ -118,7 +118,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 
 ![](./Data_science/algorithms/CMeans/CMeans.png)
 ![](./Data_science/Mathematical/images/295022-plots-plots.png)
-![](https://raw.githubusercontent.com/xieguigang/spectrum/master/spectrum/Plot.png)
+[![](./Data_science/Mathematical/images/alignment/L26369_%255BM%252BH%255D%252B%2523.%252Flxy-CID30.mzXML%2523294-alignment.png)](./Data_science/Mathematical/Plots/BarPlot/AlignmentPlot.vb)
 
 ###### 3D heatmap
 

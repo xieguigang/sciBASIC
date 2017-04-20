@@ -551,7 +551,7 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' 将图像的多余的空白处给剪裁掉，确定边界，然后进行剪裁
+        ''' 将图像的多余的空白处给剪裁掉，确定边界，然后进行剪裁，使用这个函数需要注意下设置空白色，默认使用的空白色为<see cref="Color.White"/>
         ''' </summary>
         ''' <param name="res"></param>
         ''' <param name="margin"></param>

@@ -51,14 +51,27 @@ Namespace Drawing2D
     ''' </summary>
     Public Module g
 
+        ''' <summary>
+        ''' 默认的页边距大小都是100个像素
+        ''' </summary>
         Public Const DefaultPadding$ = "padding:100px 100px 100px 100px;"
 
         ''' <summary>
         ''' 与<see cref="DefaultPadding"/>相比而言，这个padding的值在坐标轴Axis的label的绘制上空间更加大
         ''' </summary>
         Public Const DefaultLargerPadding$ = "padding:100px 100px 150px 150px;"
+        ''' <summary>
+        ''' 所有的页边距都是零
+        ''' </summary>
         Public Const ZeroPadding$ = "padding: 0px 0px 0px 0px;"
 
+        ''' <summary>
+        ''' 在这个模块的构造函数之中，程序会自动根据命令行所设置的环境参数来设置默认的图形引擎
+        ''' 
+        ''' ```
+        ''' /@set graphic_driver=svg|gdi
+        ''' ```
+        ''' </summary>
         Sub New()
             Dim type$ = App.GetVariable("graphic_driver")
 
@@ -72,7 +85,8 @@ Namespace Drawing2D
         End Sub
 
         ''' <summary>
-        ''' 用户所指定的图形引擎驱动程序类型，但是这个值会被开发人员设定的驱动程序类型的值所覆盖
+        ''' 用户所指定的图形引擎驱动程序类型，但是这个值会被开发人员设定的驱动程序类型的值所覆盖，
+        ''' 通常情况下，默认引擎选用的是``gdi+``引擎
         ''' </summary>
         ReadOnly __defaultDriver As Drivers = Drivers.Default
 
@@ -99,7 +113,7 @@ Namespace Drawing2D
         ''' (用户可以通过命令行设置环境变量``graphic_driver``来切换图形引擎)
         ''' </summary>
         ''' <param name="size"></param>
-        ''' <param name="padding"></param>
+        ''' <param name="padding">页边距</param>
         ''' <param name="bg">颜色值或者图片资源文件的url或者文件路径</param>
         ''' <param name="plotAPI"></param>
         ''' <param name="driver">驱动程序是默认与当前的环境参数设置相关的</param>
@@ -157,7 +171,7 @@ Namespace Drawing2D
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 自动根据表达式的类型来进行纯色绘制或者图形纹理画刷绘制
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="bg$">

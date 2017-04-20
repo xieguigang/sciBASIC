@@ -84,10 +84,11 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
 
-    Public ReadOnly Property RunTimeDirectory As String = FileIO.FileSystem _
-        .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
-        .FullName _
-        .Replace("/", "\")
+    ''' <summary>
+    ''' 运行时环境所安装的文件夹的位置
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property RunTimeDirectory As String
 
     ''' <summary>
     ''' Gets the number of ticks that represent the date and time of this instance.
@@ -119,28 +120,12 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property References As New Lazy(Of String())(Function() ReferenceSolver.ExecutingReferences)
-
-    Sub New()
-        On Error Resume Next
-
-        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
-        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
-
-        _preDIR = App.StartupDirectory
-    End Sub
-
     ''' <summary>
     ''' Gets a path name pointing to the Desktop directory.
     ''' </summary>
     ''' <returns>The path to the Desktop directory.</returns>
     Public ReadOnly Property Desktop As String
-        Get
-            Return My.Computer.FileSystem.SpecialDirectories.Desktop
-        End Get
-    End Property
-
-    Public ReadOnly Property StdErr As StreamWriter =
-        New StreamWriter(Console.OpenStandardError)
+    Public ReadOnly Property StdErr As New StreamWriter(Console.OpenStandardError)
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
@@ -189,31 +174,26 @@ Public Module App
     ''' The file path of the current running program executable file.(本应用程序的可执行文件的文件路径)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ExecutablePath As String =
-        FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    '(Process.GetCurrentProcess.StartInfo.FileName).FullName
-    Public ReadOnly Property Info As ApplicationDetails =
-        ApplicationDetails.CurrentExe()
+    Public ReadOnly Property ExecutablePath As String
+    Public ReadOnly Property Info As ApplicationDetails
 
     ''' <summary>
     ''' Gets the name, without the extension, of the assembly file for the application.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property AssemblyName As String =
-        BaseName(App.ExecutablePath)
-
-    Public ReadOnly Property ProductName As String =
-        If(String.IsNullOrEmpty(Application.ProductName.Trim), AssemblyName, Application.ProductName.Trim)
+    Public ReadOnly Property AssemblyName As String
+    Public ReadOnly Property ProductName As String
 
     ''' <summary>
     ''' The program directory of the current running program.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property HOME As String = FileIO.FileSystem.GetParentPath(ExecutablePath)
+    Public ReadOnly Property HOME As String
     ''' <summary>
     ''' Getting the path of the home directory
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property UserHOME As String = PathMapper.HOME.GetDirectoryFullPath
+    Public ReadOnly Property UserHOME As String
 
     ''' <summary>
     ''' The currrent working directory of this application.(应用程序的当前的工作目录)
@@ -268,15 +248,50 @@ Public Module App
     ''' The repository root of the product application program data.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ProductProgramData As String =
-        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath
+    Public ReadOnly Property ProductProgramData As String
 
     ''' <summary>
     ''' The shared program data directory for a group of app which have the same product series name.
     ''' (同一產品程序集所共享的數據文件夾)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared".GetDirectoryFullPath
+    Public ReadOnly Property ProductSharedDIR As String
+
+    Sub New()
+        On Error Resume Next
+
+        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
+
+        _preDIR = App.StartupDirectory
+
+#Region "公共模块内的所有的文件路径初始化"
+        ' 因为vb的基础运行时环境在Linux平台上面对文件系统的支持还不是太完善，所以不能够放在属性的位置直接赋值，否则比较难处理异常
+        ' 现在放在这个构造函数之中，强制忽略掉错误继续执行，提升一些稳定性，防止出现程序无法启动的情况出现。
+
+        ' 请注意，这里的变量都是有先后的初始化顺序的
+
+        App.RunTimeDirectory = FileIO.FileSystem _
+            .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
+            .FullName _
+            .Replace("/", "\")
+        App.Desktop = My.Computer.FileSystem.SpecialDirectories.Desktop
+        App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
+        App.Info = ApplicationDetails.CurrentExe()
+        App.AssemblyName = BaseName(App.ExecutablePath)
+        App.ProductName = If(
+            String.IsNullOrEmpty(Application.ProductName.Trim),
+            AssemblyName,
+            Application.ProductName.Trim)
+        App.HOME = FileIO.FileSystem.GetParentPath(App.ExecutablePath)
+        App.UserHOME = PathMapper.HOME.GetDirectoryFullPath
+        App.ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath
+        App.ProductSharedDIR = $"{ProductProgramData}/.shared".GetDirectoryFullPath
+        App.LocalData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath
+        App.CurrentProcessTemp = GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath
+        App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
+#End Region
+    End Sub
 
 #Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
 
@@ -415,8 +430,7 @@ Public Module App
     ''' The local data dir of the application in the %user%/&lt;CurrentUser>/Local/Product/App
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property LocalData As String =
-        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath
+    Public ReadOnly Property LocalData As String
 
     ''' <summary>
     ''' The temp directory in the application local data.
@@ -903,8 +917,7 @@ Public Module App
         Return tmp
     End Function
 
-    Public ReadOnly Property CurrentProcessTemp As String =
-        GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath
+    Public ReadOnly Property CurrentProcessTemp As String
 
     ''' <summary>
     '''
@@ -935,7 +948,7 @@ Public Module App
         Return Temp
     End Function
 
-    Public ReadOnly Property ProductSharedTemp As String = App.ProductSharedDIR & "/tmp/"
+    Public ReadOnly Property ProductSharedTemp As String
 
     ''' <summary>
     ''' Gets a <see cref="System.PlatformID"/> enumeration value that identifies the operating system
