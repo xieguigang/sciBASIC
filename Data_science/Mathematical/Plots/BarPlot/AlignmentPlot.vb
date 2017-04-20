@@ -2,6 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector
@@ -35,13 +36,15 @@ Namespace BarPlot
                                       Optional clb$ = "brown",
                                       Optional xlab$ = "X",
                                       Optional ylab$ = "Y",
+                                      Optional labelCSS$ = CSSFont.Win7Bold,
                                       Optional queryName$ = "query",
                                       Optional subjectName$ = "subject",
                                       Optional title$ = "Alignments Plot",
                                       Optional tickCSS$ = CSSFont.Win7Normal,
-                                      Optional titleCSS$ = CSSFont.Win7Large,
+                                      Optional titleCSS$ = CSSFont.Win10NormalLarger,
                                       Optional legendFontCSS$ = CSSFont.Win10NormalLarger,
-                                      Optional bw! = 8) As GraphicsData
+                                      Optional bw! = 8,
+                                      Optional format$ = "F2") As GraphicsData
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
@@ -79,7 +82,7 @@ Namespace BarPlot
                         End If
 
                         For i As Integer = 0 To 5
-                            Dim label$ = (i * dy).ToString("F2") & "%"
+                            Dim label$ = (i * dy).ToString(format) & "%"
 
                             y = ymid - yscale(i * dy) ' 上半部分
                             Call g.DrawLine(tickPen, New PointF(.Left, y), New Point(.Left - dt, y))
@@ -96,10 +99,16 @@ Namespace BarPlot
                             Call drawlabel(g, label)
                         Next
 
+                        Dim labelFont As Font = CSSFont.TryParse(labelCSS).GDIObject
+
                         ' Y 坐标轴
                         Call g.DrawLine(axisPen, .Location, New Point(.Left, .Bottom))
+                        Call g.DrawImageUnscaled(Axis.DrawLabel(ylab, labelCSS, ), New Point(.Left, .Top))
+
                         ' X 坐标轴
+                        Dim fWidth! = g.MeasureString(xlab, labelFont).Width
                         Call g.DrawLine(axisPen, New Point(.Left, ymid), New Point(.Right, ymid))
+                        Call g.DrawString(xlab, labelFont, Brushes.Black, New Point(.Right - fWidth, ymid))
 
                         Dim left!
                         Dim ba As New SolidBrush(cla.TranslateColor)
