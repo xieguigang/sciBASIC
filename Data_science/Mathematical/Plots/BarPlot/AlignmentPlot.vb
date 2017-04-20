@@ -4,6 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
@@ -28,15 +29,18 @@ Namespace BarPlot
                                       subject As Dictionary(Of Double, Double),
                                       Optional xrange As DoubleRange = Nothing,
                                       Optional yrange As DoubleRange = Nothing,
-                                      Optional size$ = "960,600",
-                                      Optional padding$ = g.DefaultPadding,
+                                      Optional size$ = "1200,800",
+                                      Optional padding$ = "padding: 70 30 50 100;",
                                       Optional cla$ = "steelblue",
                                       Optional clb$ = "brown",
                                       Optional xlab$ = "X",
                                       Optional ylab$ = "Y",
+                                      Optional queryName$ = "query",
+                                      Optional subjectName$ = "subject",
                                       Optional title$ = "Alignments Plot",
                                       Optional tickCSS$ = CSSFont.Win7Normal,
                                       Optional titleCSS$ = CSSFont.Win7Large,
+                                      Optional legendFontCSS$ = CSSFont.Win10NormalLarger,
                                       Optional bw! = 8) As GraphicsData
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -59,7 +63,8 @@ Namespace BarPlot
                         Dim dy = yrange.Length / 5
                         Dim y!
                         Dim gridPen As New Pen(Color.Gray, 1) With {
-                            .DashStyle = DashStyle.Dot
+                            .DashStyle = DashStyle.Dot,
+                            .DashPattern = {5.0!, 5.0!}
                         }
                         Dim dt! = 15
                         Dim tickPen As New Pen(Color.Black, 1)
@@ -103,27 +108,43 @@ Namespace BarPlot
                         For Each o In query
                             y = o.Value
                             y = ymid - yscale(y)
-                            left = .Left + xscale(o.Key)
-                            rect = Rectangle(y, left, left + bw, ymid)
+                            left = region.Padding.Left + xscale(o.Key)
+                            rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.Value)))
                             g.FillRectangle(ba, rect)
                         Next
                         For Each o In subject
                             y = o.Value
                             y = ymid + yscale(y)
-                            left = .Left + xscale(o.Key)
+                            left = region.Padding.Left + xscale(o.Key)
                             rect = Rectangle(ymid, left, left + bw, y)
                             g.FillRectangle(bb, rect)
                         Next
 
                         rect = region.PlotRegion
 
+                        ' legend 的圆角矩形
+                        Call Shapes.RoundRect.Draw(
+                            g,
+                            New Point(rect.Right - 320, rect.Top + 6),
+                            New Size(300, 80), 8,
+                            Brushes.White,
+                            New Stroke With {
+                                .dash = DashStyle.Solid,
+                                .fill = "black",
+                                .width = 2
+                            })
+
                         Dim box As Rectangle
+                        Dim legendFont As Font = CSSFont.TryParse(legendFontCSS).GDIObject
+                        Dim fHeight! = g.MeasureString("1", legendFont).Height
 
                         box = New Rectangle(New Point(rect.Right - 300, rect.Top + 20), New Size(20, 20))
                         Call g.FillRectangle(ba, box)
+                        Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -fHeight / 3))
 
-                        box = New Rectangle(New Point(box.Left, box.Top + 20), box.Size)
-                        Call g.FillRectangle(ba, box)
+                        box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
+                        Call g.FillRectangle(bb, box)
+                        Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -fHeight / 3))
 
                         Dim titleFont As Font = CSSFont.TryParse(titleCSS).GDIObject
                         Dim titleSize = g.MeasureString(title, titleFont)
