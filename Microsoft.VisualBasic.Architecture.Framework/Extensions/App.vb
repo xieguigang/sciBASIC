@@ -175,8 +175,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ExecutablePath As String
-    Public ReadOnly Property Info As ApplicationDetails =
-        ApplicationDetails.CurrentExe()
+    Public ReadOnly Property Info As ApplicationDetails
 
     ''' <summary>
     ''' Gets the name, without the extension, of the assembly file for the application.
@@ -278,6 +277,7 @@ Public Module App
             .Replace("/", "\")
         App.Desktop = My.Computer.FileSystem.SpecialDirectories.Desktop
         App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
+        App.Info = ApplicationDetails.CurrentExe()
         App.AssemblyName = BaseName(App.ExecutablePath)
         App.ProductName = If(
             String.IsNullOrEmpty(Application.ProductName.Trim),
