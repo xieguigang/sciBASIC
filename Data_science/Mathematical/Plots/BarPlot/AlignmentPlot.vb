@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
+Imports signals = System.ValueTuple(Of Double, Double)
 
 Namespace BarPlot
 
@@ -16,6 +17,16 @@ Namespace BarPlot
     ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形
     ''' </summary>
     Public Module AlignmentPlot
+
+        <Extension>
+        Private Function Keys(signals As signals()) As Double()
+            Return signals.Select(Function(t) t.Item1).ToArray
+        End Function
+
+        <Extension>
+        Private Function Values(signals As signals()) As Double()
+            Return signals.Select(Function(t) t.Item2).ToArray
+        End Function
 
         ''' <summary>
         ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形
@@ -26,8 +37,7 @@ Namespace BarPlot
         ''' <param name="clb$">Color expression for <paramref name="subject"/></param>
         ''' <returns></returns>
         <Extension>
-        Public Function PlotAlignment(query As Dictionary(Of Double, Double),
-                                      subject As Dictionary(Of Double, Double),
+        Public Function PlotAlignment(query As (X#, value#)(), subject As (X#, value#)(),
                                       Optional xrange As DoubleRange = Nothing,
                                       Optional yrange As DoubleRange = Nothing,
                                       Optional size$ = "1200,800",
@@ -123,16 +133,16 @@ Namespace BarPlot
                         Dim bb As New SolidBrush(clb.TranslateColor)
 
                         For Each o In query
-                            y = o.Value
+                            y = o.value
                             y = ymid - yscale(y)
-                            left = region.Padding.Left + xscale(o.Key)
-                            rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.Value)))
+                            left = region.Padding.Left + xscale(o.X)
+                            rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
                             g.FillRectangle(ba, rect)
                         Next
                         For Each o In subject
-                            y = o.Value
+                            y = o.value
                             y = ymid + yscale(y)
-                            left = region.Padding.Left + xscale(o.Key)
+                            left = region.Padding.Left + xscale(o.X)
                             rect = Rectangle(ymid, left, left + bw, y)
                             g.FillRectangle(bb, rect)
                         Next
