@@ -35,6 +35,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Quantile
 
+    ''' <summary>
+    ''' GK quantile extensions method
+    ''' </summary>
     Public Module Extensions
 
         Public Const epsilon As Double = 0.001
