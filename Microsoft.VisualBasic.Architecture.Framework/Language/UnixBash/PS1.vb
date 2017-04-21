@@ -116,6 +116,10 @@ Namespace Language.UnixBash
                 {"\$", AddressOf r}
             }
 
+        ''' <summary>
+        ''' Display the commandline prompt.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return __ps1()
         End Function

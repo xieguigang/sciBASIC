@@ -1141,7 +1141,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawEllipse(pen As Pen, rect As Rectangle)
-
+            Call Graphics.DrawEllipse(pen, rect)
         End Sub
         '
         ' Summary:
@@ -1158,7 +1158,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawEllipse(pen As Pen, rect As RectangleF)
-
+            Call Graphics.DrawEllipse(pen, rect)
         End Sub
         '
         ' Summary:
@@ -1187,7 +1187,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
-
+            Call Graphics.DrawEllipse(pen, x, y, width, height)
         End Sub
         '
         ' Summary:
@@ -1216,7 +1216,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-
+            Call Graphics.DrawEllipse(pen, x, y, width, height)
         End Sub
         '
         ' Summary:
@@ -1236,7 +1236,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     icon is null.
         Public Overrides Sub DrawIcon(icon As Icon, targetRect As Rectangle)
-
+            Call Graphics.DrawIcon(icon, targetRect)
         End Sub
         '
         ' Summary:
@@ -1257,7 +1257,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     icon is null.
         Public Overrides Sub DrawIcon(icon As Icon, x As Integer, y As Integer)
-
+            Call Graphics.DrawIcon(icon, x, y)
         End Sub
         '
         ' Summary:
@@ -1278,7 +1278,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     icon is null.
         Public Overrides Sub DrawIconUnstretched(icon As Icon, targetRect As Rectangle)
-
+            Call Graphics.DrawIconUnstretched(icon, targetRect)
         End Sub
         '
         ' Summary:
@@ -1411,7 +1411,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer)
-
+            Call Graphics.DrawImage(image, x, y)
         End Sub
         '
         ' Summary:
@@ -1432,7 +1432,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, x As Single, y As Single)
-
+            Call Graphics.DrawImage(image, x, y)
         End Sub
         '
         ' Summary:

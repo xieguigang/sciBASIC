@@ -140,6 +140,14 @@ Namespace Imaging
             End With
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="centra">圆心的坐标，这个函数之中会自动转换为<see cref="Rectangle"/>的左上角位置坐标</param>
+        ''' <param name="r!"></param>
+        ''' <param name="color"></param>
+        ''' <param name="fill"></param>
         <Extension>
         Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As Pen, Optional fill As Boolean = True)
             Dim d = r * 2
@@ -148,7 +156,7 @@ Namespace Imaging
                 If fill Then
                     Call g.FillPie(New SolidBrush(color.Color), .X - r, .Y - r, d, d, 0, 360)
                 Else
-                    Call g.DrawPie(color, .X - r, .Y - r, d, d, 0, 360)
+                    Call g.DrawEllipse(color, .X - r, .Y - r, d, d)
                 End If
             End With
         End Sub
@@ -276,8 +284,8 @@ Namespace Imaging
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension> Public Function ImageAddFrame(Handle As Graphics2D,
-                                              Optional pen As Drawing.Pen = Nothing,
-                                              Optional offset As Integer = 0) As Graphics2D
+                                                  Optional pen As Pen = Nothing,
+                                                  Optional offset As Integer = 0) As Graphics2D
 
             Dim TopLeft As New Point(offset, offset)
             Dim TopRight As New Point(Handle.Width - offset, 1 + offset)
