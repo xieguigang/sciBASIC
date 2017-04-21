@@ -46,17 +46,17 @@ Namespace Quantile
 
     Public Structure Quantile
 
-        Public ReadOnly ___quantile#, error#, u#, v#
+        Public ReadOnly quantile#, error#, u#, v#
 
         Public Sub New(quantile#, error#)
-            Me.___quantile = quantile
+            Me.quantile = quantile
             Me.error = [error]
             Me.u = 2.0 * [error] / (1.0 - quantile)
             Me.v = 2.0 * [error] / quantile
         End Sub
 
         Public Overrides Function ToString() As String
-            Return String.Format("Q{{q={0:F3}, eps={1:F3}}})", ___quantile, [error])
+            Return String.Format("Q{{q={0:F3}, eps={1:F3}}})", quantile, [error])
         End Function
     End Structure
 End Namespace
