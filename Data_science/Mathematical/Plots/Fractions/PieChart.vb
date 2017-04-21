@@ -42,7 +42,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Public Module PieChart
 
     ''' <summary>
-    ''' 
+    ''' Plot pie chart
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="size"></param>
