@@ -53,6 +53,9 @@
 
                 Call Push(p)
             Next
+
+            ' push圆心
+            Call Push(origin)
         End Sub
 
         ''' <summary>
