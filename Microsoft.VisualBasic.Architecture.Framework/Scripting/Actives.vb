@@ -159,7 +159,7 @@ Namespace Scripting
 
         <Extension>
         Private Function __activeDictionary(type As Type) As Object
-            With type.GenericTypeArguments.ToList
+            With type.GenericTypeArguments.AsList
                 Dim baseKey As Type = .Item(0)
                 Dim baseValue As Type = .Item(1)
                 Dim k As Object = baseKey.__active

@@ -272,7 +272,7 @@ Namespace ComponentModel.DataSourceModel
                            Where Not attrs.IsNullOrEmpty
                            Select colMaps =
                                DirectCast(attrs.First, DataFrameColumnAttribute), [property]
-                           Order By colMaps.Index Ascending).ToList
+                           Order By colMaps.Index Ascending).AsList
 
             For Each column In Columns
                 If String.IsNullOrEmpty(column.colMaps.Name) Then

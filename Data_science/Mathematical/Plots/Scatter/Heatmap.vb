@@ -1,36 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::6cc4dd47b46e9b9349f33f69af95e0b6, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Heatmap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 
@@ -67,7 +69,7 @@ Partial Module Scatter
                                 Optional xlabel$ = Nothing,
                                 Optional ylabel$ = Nothing,
                                 Optional legendTitle$ = Nothing,
-                                Optional ptSize% = 8) As Image
+                                Optional ptSize% = 8) As GraphicsData
 
         Dim colors As Color() = Designer.GetColors(colorSchema, n:=levels)
 
@@ -97,7 +99,7 @@ Partial Module Scatter
     End Function
 
     <Extension>
-    Private Sub __plotInternal(g As Graphics, rect As GraphicsRegion, data As DataSet(), colors As Color(),
+    Private Sub __plotInternal(g As IGraphics, rect As GraphicsRegion, data As DataSet(), colors As Color(),
                                fieldX$, fieldY$, fieldValue$,
                                labelX$, labelY$, legendTitle$,
                                ptSize%)
@@ -108,8 +110,8 @@ Partial Module Scatter
             .GenerateMapping(Level:=colors.Length)
         Dim valueGroups = points _
             .SeqIterator _
-            .Select(Function(p) (p.value.pt, p.value.value,seq:=levels (p))) _
-            .GroupBy(Function (o)o.seq  )
+            .Select(Function(p) (p.value.pt, p.value.value, seq:=levels(p))) _
+            .GroupBy(Function(o) o.seq)
         Dim colorHelper = colors.MapHelper
         Dim serials As SerialData() = valueGroups _
             .Select(Function(o) New SerialData() With {
@@ -121,10 +123,10 @@ Partial Module Scatter
             .ToArray
         Dim leftWidth% = rect.Size.Width * 0.9
         Dim scatterPlotSize As New Size(width:=leftWidth, height:=rect.Size.Height)
-        Dim left As Image = Scatter.Plot(
+        Dim left As GraphicsData = Scatter.Plot(
             serials, scatterPlotSize,
             Xlabel:=labelX, Ylabel:=labelY, drawLine:=False, showLegend:=False)
-        Dim legend As Image = Legends.ColorMapLegend(
+        Dim legend As GraphicsData = Legends.ColorMapLegend(
             designer:=colors,
             title:=legendTitle,
             min:=points.Min(Function(pt) pt.value),

@@ -88,8 +88,13 @@ Public Module ProgramPathSearchTool
     ''' Make directory
     ''' </summary>
     ''' <param name="DIR"></param>
-    <Extension> Public Sub MkDIR(DIR As String)
-        Call FileIO.FileSystem.CreateDirectory(DIR)
+    <Extension> Public Sub MkDIR(DIR$)
+        Try
+            Call FileIO.FileSystem.CreateDirectory(DIR)
+        Catch ex As Exception
+            ex = New Exception("DIR value is: " & DIR, ex)
+            Throw ex
+        End Try
     End Sub
 
     <Extension>
@@ -124,9 +129,12 @@ Public Module ProgramPathSearchTool
     ''' <param name="DIR$"></param>
     ''' <param name="keyword$"></param>
     ''' <param name="opt"></param>
-    ''' <returns></returns>
+    ''' <returns>当查找不到目标文件或者文件夹不存在的时候会返回空值</returns>
     <Extension>
     Public Function TheFile(DIR$, keyword$, Optional opt As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As String
+        If Not DIR.DirectoryExists Then
+            Return Nothing
+        End If
         Return FileIO.FileSystem.GetFiles(DIR, opt, keyword).FirstOrDefault
     End Function
 
@@ -395,6 +403,7 @@ Public Module ProgramPathSearchTool
             End If
         End If
 
+        ' 前面的代码已经处理好了空字符串的情况了，在这里不会出现空字符串的错误
         Dim t$() = fsObj.Trim("\"c, "/"c).Replace("\", "/").Split("/"c)
         t = t.Last.Split("."c)
         If t.Length > 1 Then
@@ -435,35 +444,35 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     ''' <remarks>这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
     <ExportAPI(NameOf(ParentPath))>
-    <Extension> Public Function ParentPath(file As String, Optional full As Boolean = True) As String
+    <Extension> Public Function ParentPath(file$, Optional full As Boolean = True) As String
         file = file.Replace("\", "/")
 
-        Dim Parent As String = ""
-        Dim Tokens As String() = file.Split("/"c)
+        Dim parent As String = ""
+        Dim t As String() = file.Split("/"c)
 
         If full Then
             If InStr(file, "../") = 1 Then
-                Parent = FileIO.FileSystem.GetParentPath(App.CurrentDirectory)
-                Tokens = Tokens.Skip(1).ToArray
-                Parent &= "/"
+                parent = FileIO.FileSystem.GetParentPath(App.CurrentDirectory)
+                t = t.Skip(1).ToArray
+                parent &= "/"
             ElseIf InStr(file, "./") = 1 Then
-                Parent = App.CurrentDirectory
-                Tokens = Tokens.Skip(1).ToArray
-                Parent &= "/"
+                parent = App.CurrentDirectory
+                t = t.Skip(1).ToArray
+                parent &= "/"
             Else
 
             End If
 
             If file.Last = "/"c Then ' 是一个文件夹
-                Parent &= String.Join("/", Tokens.Take(Tokens.Length - 2).ToArray)
+                parent &= String.Join("/", t.Take(t.Length - 2).ToArray)
             Else
-                Parent &= String.Join("/", Tokens.Take(Tokens.Length - 1).ToArray)
+                parent &= String.Join("/", t.Take(t.Length - 1).ToArray)
             End If
         Else
-            Parent = String.Join("/", Tokens.Take(Tokens.Length - 1).ToArray)
+            parent = String.Join("/", t.Take(t.Length - 1).ToArray)
         End If
 
-        Return Parent
+        Return parent
     End Function
 
     ''' <summary>
@@ -922,7 +931,21 @@ Public Module ProgramPathSearchTool
     '''
     <ExportAPI("Dir.FullPath", Info:="Gets the full path of the directory.")>
     <Extension> Public Function GetDirectoryFullPath(dir As String) As String
-        Return FileIO.FileSystem.GetDirectoryInfo(dir).FullName.Replace("\", "/")
+        Try
+            Return FileIO.FileSystem _
+                .GetDirectoryInfo(dir) _
+                .FullName _
+                .Replace("\", "/")
+        Catch ex As Exception
+            If dir = "/" AndAlso Not App.IsMicrosoftPlatform Then
+                Return "/"  ' Linux上面已经是全路径了，root
+            Else
+                ex = New Exception(dir, ex)
+                Call App.LogException(ex)
+                Call ex.PrintException
+                Return dir
+            End If
+        End Try
     End Function
 
     ''' <summary>

@@ -59,8 +59,22 @@ Namespace Drawing3D.Device
         Dim worker As New Worker(Me)
         Dim mouse As New Mouse(Me)
 
-        Public Property drawPath As Boolean
+        ''' <summary>
+        ''' 是否绘制出模型的边界线
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property DrawPath As Boolean
         Public Property LightIllumination As Boolean
+
+        Public Property LightColor As Color
+            Get
+                Return _camera.lightColor
+            End Get
+            Set(value As Color)
+                _camera.lightColor = value
+            End Set
+        End Property
+
         Public Property ViewDistance As Single
             Get
                 Return _camera.ViewDistance

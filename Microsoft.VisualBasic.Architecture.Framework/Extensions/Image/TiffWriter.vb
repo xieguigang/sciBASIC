@@ -44,7 +44,7 @@ Namespace Imaging
         Dim _imageLayers As List(Of Image)
 
         Sub New(ParamArray Image As Image())
-            _imageLayers = Image.ToList
+            _imageLayers = Image.AsList
         End Sub
 
 #Region "Implements Generic.IEnumerable(Of Image)"

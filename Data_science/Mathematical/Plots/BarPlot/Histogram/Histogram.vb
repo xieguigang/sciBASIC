@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::327e20accd5ecce6052529ad53e7ce10, ..\sciBASIC#\Data_science\Mathematical\Plots\BarPlot\Histogram\Histogram.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -65,7 +66,7 @@ Namespace BarPlot.Histogram
                              Optional bg$ = "white",
                              Optional size As Size = Nothing,
                              Optional padding$ = g.DefaultPadding,
-                             Optional showGrid As Boolean = True) As Bitmap
+                             Optional showGrid As Boolean = True) As GraphicsData
 
             Return New HistogramGroup With {
                 .Serials = {
@@ -105,7 +106,7 @@ Namespace BarPlot.Histogram
                              Optional bg$ = "white",
                              Optional size As Size = Nothing,
                              Optional padding$ = g.DefaultPadding,
-                             Optional showGrid As Boolean = True) As Bitmap
+                             Optional showGrid As Boolean = True) As GraphicsData
 
             Dim hist As New HistProfile(data, xrange)
             Return Plot(hist.data, color, bg, size, padding, showGrid)
@@ -117,7 +118,7 @@ Namespace BarPlot.Histogram
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
                          Optional padding$ = g.DefaultPadding,
-                         Optional showGrid As Boolean = True) As Bitmap
+                         Optional showGrid As Boolean = True) As GraphicsData
             Dim data As IEnumerable(Of Double) =
                 xrange _
                 .seq(steps) _
@@ -142,7 +143,7 @@ Namespace BarPlot.Histogram
                              Optional bg$ = "white",
                              Optional size As Size = Nothing,
                              Optional padding$ = g.DefaultPadding,
-                             Optional showGrid As Boolean = True) As Bitmap
+                             Optional showGrid As Boolean = True) As GraphicsData
             Dim data As New List(Of Double)
             Dim engine As New Expression
 
@@ -178,11 +179,11 @@ Namespace BarPlot.Histogram
                              Optional showTagChartLayer As Boolean = False,
                              Optional xlabel$ = "X",
                              Optional axisLabelFontStyle$ = CSSFont.Win7LargerBold,
-                             Optional xAxis$ = Nothing) As Bitmap
+                             Optional xAxis$ = Nothing) As GraphicsData
 
             Dim margin As Padding = padding
             Dim plotInternal =
-                Sub(ByRef g As Graphics, region As GraphicsRegion)
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
                     Dim scalerData As New Scaling(groups, False)
                     Dim mapper As Mapper ' 这里也不是使用y值来表示数量的，也用相对值
@@ -228,7 +229,7 @@ Namespace BarPlot.Histogram
                             serials += (+hist).GetLine(groups.Serials(hist).Value, 2, 5)
                         Next
 
-                        Dim chart As Bitmap = Scatter.Plot(
+                        Dim chart As GraphicsData = Scatter.Plot(
                             serials,
                             size:=size,
                             padding:=margin,
@@ -280,7 +281,7 @@ Namespace BarPlot.Histogram
                                       Optional showGrid As Boolean = True,
                                       Optional ByRef histData As IntegerTagged(Of Double)() = Nothing,
                                       Optional xlabel$ = "X",
-                                      Optional xAxis$ = Nothing) As Bitmap
+                                      Optional xAxis$ = Nothing) As GraphicsData
 
             With data.ToArray.Hist([step])
 

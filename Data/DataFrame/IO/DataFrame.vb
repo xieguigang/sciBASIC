@@ -293,7 +293,7 @@ Namespace IO
 
         Private Shared Function __createObject(file As File) As DataFrame
             Dim df As New DataFrame With {
-                ._innerTable = file._innerTable.Skip(1).ToList,
+                ._innerTable = file._innerTable.Skip(1).AsList,
                 .FilePath = file.FilePath
             }
             df.__columnList = __getColumnList(file._innerTable)
@@ -385,9 +385,9 @@ Namespace IO
         ''' <param name="source"></param>
         ''' <remarks></remarks>
         Public Sub CopyFrom(source As File)
-            _innerTable = source._innerTable.Skip(1).ToList
+            _innerTable = source._innerTable.Skip(1).AsList
             FilePath = source.FilePath
-            __columnList = source._innerTable.First.ToList
+            __columnList = source._innerTable.First.AsList
         End Sub
 
         Public Overrides Function ToString() As String
@@ -408,7 +408,7 @@ Namespace IO
             Loop
 
             Return New DataFrame With {
-                .__columnList = columnList.ToList,
+                .__columnList = columnList.AsList,
                 .FilePath = FilePath,
                 ._innerTable = newTable
             }

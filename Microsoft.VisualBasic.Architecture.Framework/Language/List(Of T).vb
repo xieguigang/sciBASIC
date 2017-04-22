@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::a63d76923e137aa3fa4a0f6d33eb0412, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\List(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
@@ -47,6 +48,20 @@ Namespace Language
         Dim __index As Pointer
 
 #Region "Improvements Index"
+
+        ''' <summary>
+        ''' 这个是为了ODEs计算模块所准备的一个数据接口
+        ''' </summary>
+        ''' <param name="address"></param>
+        ''' <returns></returns>
+        Default Public Overloads Property Item(address As IAddress(Of Integer)) As T
+            Get
+                Return Item(address.Address)
+            End Get
+            Set(value As T)
+                Item(address.Address) = value
+            End Set
+        End Property
 
         Default Public Overloads Property Item(index%) As T
             Get
@@ -134,7 +149,7 @@ Namespace Language
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the List`1 class that
+        ''' Initializes a new instance of the <see cref="List(Of T)"/> class that
         ''' contains elements copied from the specified collection and has sufficient capacity
         ''' to accommodate the number of elements copied.
         ''' </summary>
@@ -144,15 +159,15 @@ Namespace Language
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the List`1 class that
-        ''' is empty and has the default initial capacity.
+        ''' Initializes a new instance of the Microsoft VisualBasic language <see cref="List(Of T)"/> class 
+        ''' that is empty and has the default initial capacity.
         ''' </summary>
         Public Sub New()
             Call MyBase.New
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the List`1 class that
+        ''' Initializes a new instance of the <see cref="List(Of T)"/> class that
         ''' is empty and has the specified initial capacity.
         ''' </summary>
         ''' <param name="capacity">The number of elements that the new list can initially store.</param>
@@ -165,6 +180,11 @@ Namespace Language
                 Call Add(fill)
             Next
         End Sub
+
+        ' 这个Add方法会导致一些隐式转换的类型匹配失败，所以删除掉这个方法
+        'Public Overloads Sub Add(data As IEnumerable(Of T))
+        '    Call MyBase.AddRange(data.SafeQuery)
+        'End Sub
 
         ''' <summary>
         ''' Pop all of the elements value in to array from the list object and then clear all of the list data.
@@ -186,11 +206,13 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds an object to the end of the List`1.
+        ''' Adds an object to the end of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
-        ''' <param name="x">The object to be added to the end of the List`1. The
-        ''' value can be null for reference types.</param>
+        ''' <param name="x">
+        ''' The object to be added to the end of the <see cref="List(Of T)"/>. 
+        ''' The value can be null for reference types.
+        ''' </param>
         ''' <returns></returns>
         Public Shared Operator +(list As List(Of T), x As T) As List(Of T)
             If list Is Nothing Then
@@ -202,7 +224,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds an object to the end of the List`1.
+        ''' Adds an object to the end of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
         ''' <param name="x">The object to be added to the end of the List`1. The
@@ -283,7 +305,7 @@ Namespace Language
         ''' <param name="list"></param>
         ''' <returns></returns>
         Public Shared Operator +(vals As IEnumerable(Of T), list As List(Of T)) As List(Of T)
-            Dim all As List(Of T) = vals.ToList
+            Dim all As List(Of T) = vals.AsList
             Call all.AddRange(list)
             Return all
         End Operator

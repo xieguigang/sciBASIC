@@ -59,7 +59,7 @@ Namespace Scripting.TokenIcer
 
             parser.InputString = expr
             Do While Not (tmp = parser.GetToken) Is Nothing
-                Call lstToken.Add(tmp)
+                Call lstToken.Add(+tmp)
             Loop
 
             Return lstToken.ToArray

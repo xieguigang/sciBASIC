@@ -311,12 +311,12 @@ Public Module XmlExtensions
     ''' 使用一个XML文本内容的一个片段创建一个XML映射对象
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Xml">是Xml文件的文件内容而非文件路径</param>
+    ''' <param name="xml">是Xml文件的文件内容而非文件路径</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function CreateObjectFromXmlFragment(Of T As Class)(Xml As String) As T
-        Using Stream As New StringReader(s:="<?xml version=""1.0""?>" & vbCrLf & Xml)
-            Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(Stream), T)
+    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(xml As String) As T
+        Using s As New StringReader(s:="<?xml version=""1.0""?>" & ASCII.LF & xml)
+            Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
         End Using
     End Function
 

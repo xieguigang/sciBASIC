@@ -34,7 +34,7 @@ Namespace Net.Protocols.ContentTypes
     ''' <summary>
     ''' MIME types / Internet Media Types
     ''' </summary>
-    Public Class ContentType
+    Public Structure ContentType
 
         ''' <summary>
         ''' Type name or brief info
@@ -60,6 +60,10 @@ Namespace Net.Protocols.ContentTypes
         ''' <returns></returns>
         <Column(Name:="More Details")> Public Property Details As String
 
+        Public Function IsEmpty() As Boolean
+            Return Name Is Nothing AndAlso MIMEType Is Nothing AndAlso FileExt Is Nothing AndAlso Details Is Nothing
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{MIMEType} (*{FileExt})"
         End Function
@@ -80,5 +84,5 @@ Namespace Net.Protocols.ContentTypes
                 Return mime
             End If
         End Function
-    End Class
+    End Structure
 End Namespace

@@ -1,34 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::0ce172356f426b452004f147d62981e4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -46,17 +46,22 @@ Namespace Drawing3D
         ''' <param name="camera"></param>
         ''' <param name="surfaces"></param>
         <Extension>
-        Public Sub SurfacePainter(ByRef canvas As Graphics, camera As Camera, surfaces As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
-            Call canvas.BufferPainting(camera.PainterBuffer(surfaces), drawPath)
+        Public Sub SurfacePainter(ByRef canvas As Graphics,
+                                  camera As Camera,
+                                  surfaces As IEnumerable(Of Surface),
+                                  Optional drawPath As Boolean = False,
+                                  Optional illumination As Boolean = True)
+            Dim buf = camera.PainterBuffer(
+                surfaces,
+                illumination)
+            Call canvas.BufferPainting(buf, drawPath)
         End Sub
 
         <Extension>
-        Public Sub BufferPainting(ByRef canvas As Graphics, buf As IEnumerable(Of Polygon),
-                                  Optional drawPath As Boolean = False,
-                                  Optional illumination As Boolean = False)
-            If illumination Then
-                buf = buf.Illumination
-            End If
+        Public Sub BufferPainting(ByRef canvas As Graphics, buf As IEnumerable(Of Polygon), Optional drawPath As Boolean = False)
+            'If illumination Then
+            '    buf = buf.Illumination
+            'End If
             For Each polygon As Polygon In buf
                 With polygon
                     If drawPath Then
@@ -72,19 +77,24 @@ Namespace Drawing3D
         ''' </summary>
         ''' <param name="camera"></param>
         ''' <param name="surfaces"></param>
+        ''' <param name="illumination">是否需要对每一个表面进行光照处理？</param>
         ''' <returns></returns>
         <Extension>
-        Public Function PainterBuffer(camera As Camera, surfaces As IEnumerable(Of Surface)) As IEnumerable(Of Polygon)
+        Public Function PainterBuffer(camera As Camera, surfaces As IEnumerable(Of Surface), illumination As Boolean) As IEnumerable(Of Polygon)
             Dim sv As New List(Of Surface)
 
             For Each s As Surface In surfaces
                 Dim v As Point3D() = camera _
                     .Project(s.vertices) _
                     .ToArray
+                Dim color As Color = If(
+                    illumination,
+                    camera.Lighting(s),
+                    DirectCast(s.brush, SolidBrush).Color)
 
                 sv += New Surface With {
                     .vertices = v,
-                    .brush = s.brush
+                    .brush = New SolidBrush(color)
                 }
             Next
 

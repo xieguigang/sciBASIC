@@ -52,7 +52,7 @@ Namespace Dijkstra
         End Sub
 
         Public Shared Function UndirectFinder(net As IEnumerable(Of Connection), nodes As IEnumerable(Of FileStream.Node)) As DijkstraRouteFind
-            Dim source = net.ToList
+            Dim source = net.AsList
             Dim rev = (From x In source Select New Connection(x.B, x.A, x.Weight)).ToArray
             Call source.AddRange(rev)
             Return New DijkstraRouteFind(source, nodes)
@@ -80,7 +80,7 @@ Namespace Dijkstra
             'If all locations are handled, stop the engine and return the result
             While _handledLocations.Count <> _Locations.Length
                 'Order the locations
-                Dim _shortestLocations As List(Of FileStream.Node) = (From s In _shortestPaths Order By s.Value.Cost Select s.Key).ToList()
+                Dim _shortestLocations As List(Of FileStream.Node) = (From s In _shortestPaths Order By s.Value.Cost Select s.Key).AsList()
                 Dim _locationToProcess As FileStream.Node = Nothing
 
                 'Search for the nearest location that isn't handled

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::dd1a4cf1aea349912a72f2493b78fe67, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\PriorityQueue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -64,10 +64,7 @@
 '
 '
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Collections
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Collection
 
@@ -76,41 +73,60 @@ Namespace ComponentModel.Collection
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Class PriorityQueue(Of T As IComparable)
+        Implements IEnumerable(Of T)
 
-        Dim m_data As List(Of T)
+        Dim list As New List(Of T)
 
-        Public Sub New()
-            Me.m_data = New List(Of T)()
-        End Sub
+        Public ReadOnly Property Count() As Integer
+            Get
+                Return list.Count
+            End Get
+        End Property
 
         Public Sub Enqueue(queueItem As T)
-            m_data.Add(queueItem)
-            m_data.Sort()
+            Call list.Add(queueItem)
+            Call list.Sort()
         End Sub
 
         Public Sub Clear()
-            m_data.Clear()
+            Call list.Clear()
         End Sub
 
+        Public Sub Remove(o As T)
+            Call list.Remove(o)
+        End Sub
+
+        ''' <summary>
+        ''' Poll
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Dequeue() As T
-            Dim frontItem As T = m_data(0)
-            m_data.RemoveAt(0)
+            Dim frontItem As T = list(0)
+            list.RemoveAt(0)
             Return frontItem
         End Function
 
         Public Function Peek() As T
-            Dim frontItem As T = m_data(0)
+            Dim frontItem As T = list(0)
             Return frontItem
         End Function
 
-        Public Function Contains(queueItem As T) As Boolean
-            Return m_data.Contains(queueItem)
+        Public Overrides Function ToString() As String
+            Return $"Queue {list.Count} items, 1st_item:={Peek.GetJson}"
         End Function
 
-        Public ReadOnly Property Count() As Integer
-            Get
-                Return m_data.Count
-            End Get
-        End Property
+        Public Function Contains(queueItem As T) As Boolean
+            Return list.Contains(queueItem)
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each x As T In list
+                Yield x
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Class
 End Namespace

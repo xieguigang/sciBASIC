@@ -64,7 +64,7 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
     End Sub
 
     Public Function GetValueList() As List(Of V)
-        Return Values.ToList
+        Return Values.AsList
     End Function
 
     ''' <summary>

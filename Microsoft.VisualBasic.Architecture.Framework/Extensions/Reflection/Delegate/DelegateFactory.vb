@@ -51,7 +51,7 @@ Namespace Emit.Delegates
             If constructorInfo Is Nothing Then
                 Return Nothing
             End If
-            Dim parameters = ctrArgs.[Select](AddressOf Expression.Parameter).ToList()
+            Dim parameters = ctrArgs.[Select](AddressOf Expression.Parameter).AsList()
             Return TryCast(Expression.Lambda(Expression.[New](constructorInfo, parameters), parameters).Compile(), TDelegate)
         End Function
 
@@ -81,7 +81,7 @@ Namespace Emit.Delegates
             If constructorInfo Is Nothing Then
                 Return Nothing
             End If
-            Dim parameters = ctrArgs.[Select](AddressOf Expression.Parameter).ToList()
+            Dim parameters = ctrArgs.[Select](AddressOf Expression.Parameter).AsList()
             Dim returnExpression As Expression = Expression.[New](constructorInfo, parameters)
             If Not source.IsClass Then
                 returnExpression = Expression.Convert(returnExpression, GetType(Object))

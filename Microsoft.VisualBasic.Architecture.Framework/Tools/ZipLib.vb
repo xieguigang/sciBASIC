@@ -42,8 +42,8 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 ''' <remarks></remarks>
 ''' 
 <PackageNamespace("IO.ZIP", Description:="Creating Zip Files Easily in .NET 4.6",
-                      Publisher:="Tim Corey",
-                      Url:="http://www.codeproject.com/Articles/381661/Creating-Zip-Files-Easily-in-NET")>
+                  Publisher:="Tim Corey",
+                  Url:="http://www.codeproject.com/Articles/381661/Creating-Zip-Files-Easily-in-NET")>
 Public Module GZip
 
     ''' <summary>
@@ -179,7 +179,7 @@ Public Module GZip
                                 Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
                                 Optional compression As CompressionLevel = CompressionLevel.Optimal)
         Dim files = FileIO.FileSystem.GetFiles(DIR)
-        Call AddToArchive(saveZip, files.ToList, action, fileOverwrite, compression)
+        Call AddToArchive(saveZip, files.AsList, action, fileOverwrite, compression)
     End Sub
 
     ''' <summary>

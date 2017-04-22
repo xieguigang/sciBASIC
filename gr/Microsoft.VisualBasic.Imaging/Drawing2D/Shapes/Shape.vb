@@ -75,7 +75,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="OverridesLoci">假若需要进行绘制到的时候复写当前的元素的位置，则请使用这个参数</param>
         ''' <returns>函数返回当前元素在绘制之后所占据的区域</returns>
         ''' <remarks></remarks>
-        Public Overridable Function Draw(ByRef g As Graphics, Optional overridesLoci As Point = Nothing) As RectangleF
+        Public Overridable Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             If Not overridesLoci.IsEmpty Then
                 Me.Location = overridesLoci
             End If

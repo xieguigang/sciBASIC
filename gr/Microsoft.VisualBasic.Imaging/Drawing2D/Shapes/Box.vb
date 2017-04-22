@@ -39,7 +39,7 @@ Namespace Drawing2D.Vector.Shapes
 
         Public Overrides ReadOnly Property Size As Size
 
-        Public Shared Sub DrawRectangle(ByRef g As Graphics,
+        Public Shared Sub DrawRectangle(ByRef g As IGraphics,
                                         topLeft As Point,
                                         size As Size,
                                         Optional br As Brush = Nothing,

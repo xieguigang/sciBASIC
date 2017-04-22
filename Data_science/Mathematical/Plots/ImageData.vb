@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::446f3898944e086f71b720472b6c1443, ..\sciBASIC#\Data_science\Mathematical\Plots\ImageData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 Public Module ImageDataExtensions
 
@@ -69,7 +70,7 @@ Public Module ImageDataExtensions
     End Function
 
     <Extension>
-    Public Function Image2DMap(img As Image, Optional steps% = 1) As Bitmap
+    Public Function Image2DMap(img As Image, Optional steps% = 1) As GraphicsData
         Dim color = img.PointZProvider
         Dim xrange As DoubleRange = $"0 -> {img.Width}"
         Dim yrange As DoubleRange = $"0 -> {img.Height}"
@@ -82,7 +83,7 @@ Public Module ImageDataExtensions
     End Function
 
     <Extension>
-    Public Function Image3DMap(img As Image, camera As Camera, Optional steps% = 1) As Bitmap
+    Public Function Image3DMap(img As Image, camera As Camera, Optional steps% = 1) As GraphicsData
         Dim Z = img.SurfaceProvider
         Dim xrange As DoubleRange = $"0 -> {img.Width}"
         Dim yrange As DoubleRange = $"0 -> {img.Height}"
