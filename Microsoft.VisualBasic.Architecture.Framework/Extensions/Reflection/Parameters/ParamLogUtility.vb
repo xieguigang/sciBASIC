@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c51d4a2dc511464c83231556e1b6b84, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Parameters\ParamLogUtility.vb"
+﻿#Region "Microsoft.VisualBasic::3472725fcc1f638dd9dedbb3e3b81ed6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Parameters\ParamLogUtility.vb"
 
     ' Author:
     ' 
@@ -80,7 +80,7 @@ Namespace Emit.Parameters
             '      Select New With {
             '          .Name = aParamater.Name,
             '          .DataType = aParamater.ParameterType
-            '}).ToList() _
+            '}).AsList() _
             '  .ForEach(Sub(obj) _methodParamaters.Add(obj.Name, obj.DataType))
 
             ' Get provided methods paramaters
@@ -148,4 +148,3 @@ Namespace Emit.Parameters
         End Function
     End Module
 End Namespace
-

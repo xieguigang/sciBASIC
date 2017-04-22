@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c768083fcac42c909dbb967e85d1f1d2, ..\sciBASIC#\Data_science\Mathematical\Plots\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::5ae2fafa1ee07f5dd6f304b404782c1d, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Axis\Axis.vb"
 
 ' Author:
 ' 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text.HtmlParser
 
 Namespace Graphic.Axis
@@ -41,7 +42,7 @@ Namespace Graphic.Axis
     Public Module Axis
 
         <Extension>
-        Public Sub DrawAxis(ByRef g As Graphics, region As GraphicsRegion,
+        Public Sub DrawAxis(ByRef g As IGraphics, region As GraphicsRegion,
                             scaler As Mapper,
                             showGrid As Boolean,
                             Optional offset As Point = Nothing,
@@ -76,7 +77,7 @@ Namespace Graphic.Axis
         ''' <param name="xlayout">修改y属性</param>
         ''' <param name="ylayout">修改x属性</param>
         <Extension>
-        Public Sub DrawAxis(ByRef g As Graphics,
+        Public Sub DrawAxis(ByRef g As IGraphics,
                             size As Size,
                             padding As Padding,
                             scaler As Mapper,
@@ -137,13 +138,47 @@ Namespace Graphic.Axis
             End If
         End Sub
 
+        <Extension>
+        Public Sub DrawYGrid(scaler As Mapper, g As IGraphics, region As GraphicsRegion,
+                             pen As Pen,
+                             label$,
+                             Optional offset As Point = Nothing,
+                             Optional labelFont$ = CSSFont.Win7Large,
+                             Optional tickFont$ = CSSFont.Win10NormalLarger,
+                             Optional gridStroke$ = Stroke.AxisGridStroke)
+            With region
+                Dim sy = scaler.YScaler(.Size, .Padding)
+                Dim rect As Rectangle = .Padding.GetCanvasRegion(.Size)
+                Dim gridPen As Pen = Stroke.TryParse(css:=gridStroke)
+
+                For Each tick As Double In scaler.yAxis
+                    Dim y = sy(tick) + offset.Y
+                    Dim left As New Point(rect.Left, y)
+                    Dim right As New Point(rect.Right, y)
+
+                    ' 绘制y网格线
+                    Call g.DrawLine(gridPen, left, right)
+                Next
+
+                Call g.DrawY(.Size, .Padding,
+                             pen, label,
+                             scaler,
+                             YAxisLayoutStyles.Left,
+                             offset,
+                             labelFont, CSSFont.TryParse(tickFont),
+                             False)
+            End With
+        End Sub
+
         Public Property delta As Integer = 10
 
-        <Extension> Private Sub DrawY(ByRef g As Graphics, size As Size, padding As Padding,
-                                      pen As Pen, label$,
-                                      scaler As Mapper,
-                                      layout As YAxisLayoutStyles, offset As Point,
-                                      labelFont$, tickFont As Font)
+        <Extension> Public Sub DrawY(ByRef g As IGraphics, size As Size, padding As Padding,
+                                     pen As Pen, label$,
+                                     scaler As Mapper,
+                                     layout As YAxisLayoutStyles, offset As Point,
+                                     labelFont$,
+                                     tickFont As Font,
+                                     Optional showAxisLine As Boolean = True)
 
             Dim X%  ' y轴的layout的变化只需要变换x的值即可
 
@@ -162,21 +197,25 @@ Namespace Graphic.Axis
             Dim top As New Point(X, padding.Top + offset.Y)                   ' Y轴
             Dim sy As Func(Of Single, Single) = scaler.YScaler(size, padding)
 
-            Call g.DrawLine(pen, ZERO, top)     ' y轴
+            If showAxisLine Then
+                Call g.DrawLine(pen, ZERO, top)     ' y轴
+            End If
 
             For Each tick# In scaler.yAxis
 
                 If scaler.dy <> 0R Then
-
                     Dim y! = sy(tick) + offset.Y
                     Dim axisY As New PointF(ZERO.X, y)
 
-                    Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                    If showAxisLine Then
+                        Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                    End If
 
                     Dim labelText = (tick).FormatNumeric(2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
+                    Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
 
-                    g.DrawString(labelText, tickFont, Brushes.Black, New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2))
+                    g.DrawString(labelText, tickFont, Brushes.Black, p)
                 End If
             Next
 
@@ -201,32 +240,46 @@ Namespace Graphic.Axis
         ''' <param name="css$"></param>
         ''' <returns></returns>
         <Extension> Private Function __plotLabel(label$, css$) As Image
-            Return DrawLabel(label, css)
+            Return TextRender.DrawHtmlText(label, css)
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 这个函数不是将文本作为html来进行渲染，而是直接使用gdi进行绘图，如果需要将文本
+        ''' 作为html渲染出来，则需要使用<see cref="TextRender.DrawHtmlText"/>方法
         ''' </summary>
-        ''' <param name="label$">HTML</param>
-        ''' <param name="cssFont$">For html ``&lt;p>...&lt;/p>`` css style</param>
-        ''' <param name="maxSize$"></param>
+        ''' <param name="label$"></param>
+        ''' <param name="css$"><see cref="CssFont"/></param>
+        ''' <param name="fcolor">Brush color or texture.</param>
         ''' <returns></returns>
-        Public Function DrawLabel(label$, cssFont$, Optional maxSize$ = "1600,600") As Image
-            Dim g As GDIPlusDeviceHandle = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
-            Dim out As Image
-
-            TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
-            out = g.ImageResource
-            out = out.CorpBlank(blankColor:=Color.Transparent)
-
-            Return out
+        <Extension>
+        Public Function DrawLabel(label$, css$, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
+            Dim font As Font = CSSFont.TryParse(css, [default]:=New Font(FontFace.MicrosoftYaHei, 12)).GDIObject
+            Return label.DrawLabel(font, fcolor, size)
         End Function
 
-        <Extension> Private Sub DrawX(ByRef g As Graphics, size As Size, padding As Padding,
-                                      pen As Pen, label$,
-                                      scaler As Mapper,
-                                      layout As XAxisLayoutStyles, offset As Point,
-                                      labelFont$, tickFont As Font)
+        <Extension>
+        Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
+            Using g As Graphics2D = size.SizeParser.CreateGDIDevice(Color.Transparent)
+                With g
+                    Dim b As Brush = fcolor.GetBrush
+
+                    Call .DrawString(label, font, b, New Point)
+
+                    Dim img As Image = .ImageResource _
+                        .CorpBlank(blankColor:=Color.Transparent) _
+                        .RotateImage(-90)
+                    Return img
+                End With
+            End Using
+        End Function
+
+        <Extension> Public Sub DrawX(ByRef g As IGraphics, size As Size, padding As Padding,
+                                     pen As Pen, label$,
+                                     scaler As Mapper,
+                                     layout As XAxisLayoutStyles, offset As Point,
+                                     labelFont$,
+                                     tickFont As Font,
+                                     Optional overridesTickLine% = -1)
             Dim Y%
 
             Select Case layout
@@ -241,6 +294,7 @@ Namespace Graphic.Axis
             Dim ZERO As New Point(padding.Left + offset.X, Y)                       ' 坐标轴原点
             Dim right As New Point(size.Width - padding.Right + offset.X, Y)        ' X轴
             Dim sx = scaler.XScaler(size, padding)
+            Dim d! = If(overridesTickLine <= 0, padding.Bottom * 0.18, overridesTickLine)
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
@@ -253,8 +307,8 @@ Namespace Graphic.Axis
                     Dim labelText = (tick).FormatNumeric(2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
-                    Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + padding.Top * 0.2))
-                    Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + padding.Top * 0.3))
+                    Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
+                    Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
                 End If
             Next
 

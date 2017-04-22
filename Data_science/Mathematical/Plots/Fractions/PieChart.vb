@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c7cc02d87cac814baff1dacd03b5df6, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::59dc0509df443ce8f1482d4ea2424e98, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\PieChart.vb"
 
 ' Author:
 ' 
@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -42,7 +42,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Public Module PieChart
 
     ''' <summary>
-    ''' 
+    ''' Plot pie chart
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="size"></param>
@@ -70,7 +70,7 @@ Public Module PieChart
                          Optional legendFont$ = CSSFont.Win7LargeBold,
                          Optional legendBorder As Stroke = Nothing,
                          Optional minRadius As Single = -1,
-                         Optional reorder% = 0) As Bitmap
+                         Optional reorder% = 0) As GraphicsData
 
         Dim margin As Padding = padding
 
@@ -85,8 +85,8 @@ Public Module PieChart
             End If
         End If
 
-        Dim __plot As Action(Of Graphics) =
-            Sub(g As Graphics)
+        Dim __plot As Action(Of IGraphics) =
+            Sub(g As IGraphics)
                 Dim r# = (Math.Min(size.Width, size.Height) - margin.LayoutVector.Max) / 2  ' 最大的半径值
                 Dim topLeft As New Point(size.Width / 2 - r, size.Height / 2 - r)
                 Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)

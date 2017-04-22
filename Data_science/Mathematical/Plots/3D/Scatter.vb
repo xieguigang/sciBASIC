@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9c71fb030a192dc25dec73aadd75415, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::5468a67bc0ba0abbb89abaccdc2d8f46, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Scatter.vb"
 
 ' Author:
 ' 
@@ -32,6 +32,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -65,7 +67,7 @@ Namespace Plot3D
                              Optional lineColor$ = "red",
                              Optional font As Font = Nothing,
                              Optional bg$ = "white",
-                             Optional padding As Padding = Nothing) As Bitmap
+                             Optional padding As Padding = Nothing) As GraphicsData
 
             Dim data As Point3D() = func _
                 .Evaluate(x, y, xsteps, ysteps) _
@@ -80,10 +82,8 @@ Namespace Plot3D
                 padding = "padding: 5px 5px 5px 5px;"
             End If
 
-            Return GraphicsPlots(
-                camera.screen, padding,
-                bg,
-                Sub(ByRef g, region)
+            Dim plotInternal =
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Call AxisDraw.DrawAxis(g, data, camera, font)
 
                     With camera
@@ -102,7 +102,9 @@ Namespace Plot3D
                             previous = cur
                         Next
                     End With
-                End Sub)
+                End Sub
+
+            Return camera.screen.GraphicsPlots(padding, bg, plotInternal)
         End Function
     End Module
 End Namespace

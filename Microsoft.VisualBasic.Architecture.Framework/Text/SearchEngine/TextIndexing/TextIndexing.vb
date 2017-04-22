@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ef67ef9a3bae1648490af531f31a347, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\TextIndexing.vb"
+﻿#Region "Microsoft.VisualBasic::0be2e8c67480fb6db7fac87b54a2dc20, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\SearchEngine\TextIndexing\TextIndexing.vb"
 
 ' Author:
 ' 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text.Levenshtein
 
 Namespace Text.Search
 

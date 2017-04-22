@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::6593dd6f84cc3cb84a05df5c81dc0885, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
+﻿#Region "Microsoft.VisualBasic::7a140200366deed9bfc782f1ced33be0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -84,10 +84,11 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
 
-    Public ReadOnly Property RunTimeDirectory As String = FileIO.FileSystem _
-        .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
-        .FullName _
-        .Replace("/", "\")
+    ''' <summary>
+    ''' 运行时环境所安装的文件夹的位置
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property RunTimeDirectory As String
 
     ''' <summary>
     ''' Gets the number of ticks that represent the date and time of this instance.
@@ -119,28 +120,12 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property References As New Lazy(Of String())(Function() ReferenceSolver.ExecutingReferences)
-
-    Sub New()
-        On Error Resume Next
-
-        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
-        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
-
-        _preDIR = App.StartupDirectory
-    End Sub
-
     ''' <summary>
     ''' Gets a path name pointing to the Desktop directory.
     ''' </summary>
     ''' <returns>The path to the Desktop directory.</returns>
     Public ReadOnly Property Desktop As String
-        Get
-            Return My.Computer.FileSystem.SpecialDirectories.Desktop
-        End Get
-    End Property
-
-    Public ReadOnly Property StdErr As StreamWriter =
-        New StreamWriter(Console.OpenStandardError)
+    Public ReadOnly Property StdErr As New StreamWriter(Console.OpenStandardError)
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
@@ -189,31 +174,26 @@ Public Module App
     ''' The file path of the current running program executable file.(本应用程序的可执行文件的文件路径)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ExecutablePath As String =
-        FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    '(Process.GetCurrentProcess.StartInfo.FileName).FullName
-    Public ReadOnly Property Info As ApplicationDetails =
-        ApplicationDetails.CurrentExe()
+    Public ReadOnly Property ExecutablePath As String
+    Public ReadOnly Property Info As ApplicationDetails
 
     ''' <summary>
     ''' Gets the name, without the extension, of the assembly file for the application.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property AssemblyName As String =
-        BaseName(App.ExecutablePath)
-
-    Public ReadOnly Property ProductName As String =
-        If(String.IsNullOrEmpty(Application.ProductName.Trim), AssemblyName, Application.ProductName.Trim)
+    Public ReadOnly Property AssemblyName As String
+    Public ReadOnly Property ProductName As String
 
     ''' <summary>
     ''' The program directory of the current running program.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property HOME As String = FileIO.FileSystem.GetParentPath(ExecutablePath)
+    Public ReadOnly Property HOME As String
     ''' <summary>
     ''' Getting the path of the home directory
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property UserHOME As String = PathMapper.HOME.GetDirectoryFullPath
+    Public ReadOnly Property UserHOME As String
 
     ''' <summary>
     ''' The currrent working directory of this application.(应用程序的当前的工作目录)
@@ -225,11 +205,13 @@ Public Module App
         End Get
         Set(value As String)
             If String.Equals(value, "-") Then  ' 切换到前一个工作目录
-                FileIO.FileSystem.CurrentDirectory = _preDIR
+                value = _preDIR
             Else
                 _preDIR = FileIO.FileSystem.CurrentDirectory
-                FileIO.FileSystem.CurrentDirectory = value
             End If
+
+            FileIO.FileSystem.CreateDirectory(value)
+            FileIO.FileSystem.CurrentDirectory = value
         End Set
     End Property
 
@@ -266,15 +248,51 @@ Public Module App
     ''' The repository root of the product application program data.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ProductProgramData As String =
-        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath
+    Public ReadOnly Property ProductProgramData As String
 
     ''' <summary>
     ''' The shared program data directory for a group of app which have the same product series name.
     ''' (同一產品程序集所共享的數據文件夾)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property ProductSharedDIR As String = $"{ProductProgramData}/.shared".GetDirectoryFullPath
+    Public ReadOnly Property ProductSharedDIR As String
+
+    Sub New()
+        On Error Resume Next
+
+        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
+
+        _preDIR = App.StartupDirectory
+
+#Region "公共模块内的所有的文件路径初始化"
+        ' 因为vb的基础运行时环境在Linux平台上面对文件系统的支持还不是太完善，所以不能够放在属性的位置直接赋值，否则比较难处理异常
+        ' 现在放在这个构造函数之中，强制忽略掉错误继续执行，提升一些稳定性，防止出现程序无法启动的情况出现。
+
+        ' 请注意，这里的变量都是有先后的初始化顺序的
+
+        App.RunTimeDirectory = FileIO.FileSystem _
+            .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
+            .FullName _
+            .Replace("/", "\")
+        App.Desktop = My.Computer.FileSystem.SpecialDirectories.Desktop
+        App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
+        App.Info = ApplicationDetails.CurrentExe()
+        App.AssemblyName = BaseName(App.ExecutablePath)
+        App.ProductName = If(
+            String.IsNullOrEmpty(Application.ProductName.Trim),
+            AssemblyName,
+            Application.ProductName.Trim)
+        App.HOME = FileIO.FileSystem.GetParentPath(App.ExecutablePath)
+        App.UserHOME = PathMapper.HOME.GetDirectoryFullPath
+        App.ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath
+        App.ProductSharedDIR = $"{ProductProgramData}/.shared".GetDirectoryFullPath
+        App.LocalData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath
+        App.CurrentProcessTemp = GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath
+        App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
+        App.LogErrDIR = App.LocalData & $"/.logs/err/"
+#End Region
+    End Sub
 
 #Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
 
@@ -413,8 +431,7 @@ Public Module App
     ''' The local data dir of the application in the %user%/&lt;CurrentUser>/Local/Product/App
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property LocalData As String =
-        $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath
+    Public ReadOnly Property LocalData As String
 
     ''' <summary>
     ''' The temp directory in the application local data.
@@ -514,17 +531,21 @@ Public Module App
     ''' Is this application running on a Microsoft OS platform.(是否是运行于微软的操作系统平台？)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property IsMicrosoftPlatform As Boolean
-        Get
-            Dim pt As PlatformID = Platform
+    Public ReadOnly Property IsMicrosoftPlatform As Boolean = App.__isMicrosoftPlatform
 
-            Return pt = PlatformID.Win32NT OrElse
-                pt = PlatformID.Win32S OrElse
-                pt = PlatformID.Win32Windows OrElse
-                pt = PlatformID.WinCE OrElse
-                pt = PlatformID.Xbox
-        End Get
-    End Property
+    ''' <summary>
+    ''' 这个主要是判断一个和具体的操作系统平台相关的Win32 API是否能够正常的工作？
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function __isMicrosoftPlatform() As Boolean
+        Dim pt As PlatformID = Platform
+
+        Return pt = PlatformID.Win32NT OrElse
+            pt = PlatformID.Win32S OrElse
+            pt = PlatformID.Win32Windows OrElse
+            pt = PlatformID.WinCE OrElse
+            pt = PlatformID.Xbox
+    End Function
 
     ''' <summary>
     ''' Example: ``tmp2A10.tmp``
@@ -559,7 +580,7 @@ Public Module App
     ''' Error default log fie location from function <see cref="App.LogException(Exception, String)"/>.(存放自动存储的错误日志的文件夹)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property LogErrDIR As String = App.LocalData & $"/.logs/err/"
+    Public ReadOnly Property LogErrDIR As String
 
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at a user defined location parameter: <paramref name="FileName"/>.
@@ -798,7 +819,12 @@ Public Module App
     ''' </summary>
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
-    '''
+    ''' <param name="executeFile">
+    ''' 函数指针：
+    ''' ```vbnet
+    ''' Function ExecuteFile(path As <see cref="String"/>, args As <see cref="CommandLine"/>) As <see cref="Integer"/>
+    ''' ```
+    ''' </param>
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type,
                                        args As CommandLine.CommandLine,
@@ -892,8 +918,7 @@ Public Module App
         Return tmp
     End Function
 
-    Public ReadOnly Property CurrentProcessTemp As String =
-        GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath
+    Public ReadOnly Property CurrentProcessTemp As String
 
     ''' <summary>
     '''
@@ -924,7 +949,7 @@ Public Module App
         Return Temp
     End Function
 
-    Public ReadOnly Property ProductSharedTemp As String = App.ProductSharedDIR & "/tmp/"
+    Public ReadOnly Property ProductSharedTemp As String
 
     ''' <summary>
     ''' Gets a <see cref="System.PlatformID"/> enumeration value that identifies the operating system
@@ -1025,6 +1050,15 @@ Public Module App
         New UpdateThread(10 * 60 * 1000, AddressOf App.__GCThreadInvoke)
 
     Dim _CLIAutoClean As Boolean = False
+    Dim __exitHooks As New List(Of Action)
+
+    ''' <summary>
+    ''' 这里添加在应用程序退出执行的时候所需要完成的任务
+    ''' </summary>
+    ''' <param name="hook"></param>
+    Public Sub AddExitCleanHook(hook As Action)
+        Call __exitHooks.Add(hook)
+    End Sub
 
     ''' <summary>
     ''' 自动停止GC当前程序的线程
@@ -1038,6 +1072,22 @@ Public Module App
             Call StopGC()
         End If
 
+        ' 在这里等待终端的内部线程输出工作完毕，防止信息的输出错位
+
+        Call Terminal.WaitQueue()
+        Call Console.WriteLine()
+
+        For Each hook As Action In __exitHooks
+            Call hook()
+        Next
+
+        Call Terminal.WaitQueue()
+        Call Console.WriteLine()
+
+#If DEBUG Then
+        ' 应用程序在 debug 模式下会自动停止在这里
+        Call Pause()
+#End If
         Return state
     End Function
 

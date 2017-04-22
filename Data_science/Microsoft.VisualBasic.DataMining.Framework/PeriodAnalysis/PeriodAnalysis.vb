@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef8edf99fdb73138d77310baa2a796d0, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::1928a2f3d177ce0b2f8d80e7ece6af4b, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
 
     ' Author:
     ' 
@@ -132,11 +132,11 @@ Namespace Serials.PeriodAnalysis
 
         Private Function FilteringData(Peaks As List(Of TimePoint), Trough As List(Of TimePoint), OriginalTimePoints As Integer) As SamplingData
             Dim PeaksId = (From p In Peaks Select p.Time Distinct).ToArray, TroughsId = (From p In Trough Select p.Time Distinct).ToArray
-            Dim Sample As SamplingData = New SamplingData With {.Peaks = (From p In PeaksId Select TimePoint.GetData(Peaks, p)).ToList, .Trough = (From p In TroughsId Select TimePoint.GetData(Trough, p)).ToList}
+            Dim Sample As SamplingData = New SamplingData With {.Peaks = (From p In PeaksId Select TimePoint.GetData(Peaks, p)).AsList, .Trough = (From p In TroughsId Select TimePoint.GetData(Trough, p)).AsList}
             Dim Chunkbuffer As List(Of TimePoint) = New List(Of TimePoint)
             Call Chunkbuffer.AddRange(Sample.Peaks)
             Call Chunkbuffer.AddRange(Sample.Trough)
-            Sample.FiltedData = (From p In Chunkbuffer Select p Order By p.Time Ascending).ToList
+            Sample.FiltedData = (From p In Chunkbuffer Select p Order By p.Time Ascending).AsList
 
             Dim PeaksBuffer = TimePoint.CreateBufferObject(Sample.Peaks), TroughBuffer = TimePoint.CreateBufferObject(Sample.Trough)
             Dim PreData = Sample.FiltedData.First

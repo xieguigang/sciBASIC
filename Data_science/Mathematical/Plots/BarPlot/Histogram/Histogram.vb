@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2fcc6f580c8bb43bd7659f2cd5c8f7b, ..\sciBASIC#\Data_science\Mathematical\Plots\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::327e20accd5ecce6052529ad53e7ce10, ..\sciBASIC#\Data_science\Mathematical\Plots\BarPlot\Histogram\Histogram.vb"
 
 ' Author:
 ' 
@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -65,7 +66,7 @@ Namespace BarPlot.Histogram
                              Optional bg$ = "white",
                              Optional size As Size = Nothing,
                              Optional padding$ = g.DefaultPadding,
-                             Optional showGrid As Boolean = True) As Bitmap
+                             Optional showGrid As Boolean = True) As GraphicsData
 
             Return New HistogramGroup With {
                 .Serials = {
@@ -105,7 +106,7 @@ Namespace BarPlot.Histogram
                              Optional bg$ = "white",
                              Optional size As Size = Nothing,
                              Optional padding$ = g.DefaultPadding,
-                             Optional showGrid As Boolean = True) As Bitmap
+                             Optional showGrid As Boolean = True) As GraphicsData
 
             Dim hist As New HistProfile(data, xrange)
             Return Plot(hist.data, color, bg, size, padding, showGrid)
@@ -117,7 +118,7 @@ Namespace BarPlot.Histogram
                          Optional bg$ = "white",
                          Optional size As Size = Nothing,
                          Optional padding$ = g.DefaultPadding,
-                         Optional showGrid As Boolean = True) As Bitmap
+                         Optional showGrid As Boolean = True) As GraphicsData
             Dim data As IEnumerable(Of Double) =
                 xrange _
                 .seq(steps) _
@@ -142,7 +143,7 @@ Namespace BarPlot.Histogram
                              Optional bg$ = "white",
                              Optional size As Size = Nothing,
                              Optional padding$ = g.DefaultPadding,
-                             Optional showGrid As Boolean = True) As Bitmap
+                             Optional showGrid As Boolean = True) As GraphicsData
             Dim data As New List(Of Double)
             Dim engine As New Expression
 
@@ -178,11 +179,11 @@ Namespace BarPlot.Histogram
                              Optional showTagChartLayer As Boolean = False,
                              Optional xlabel$ = "X",
                              Optional axisLabelFontStyle$ = CSSFont.Win7LargerBold,
-                             Optional xAxis$ = Nothing) As Bitmap
+                             Optional xAxis$ = Nothing) As GraphicsData
 
             Dim margin As Padding = padding
             Dim plotInternal =
-                Sub(ByRef g As Graphics, region As GraphicsRegion)
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
                     Dim scalerData As New Scaling(groups, False)
                     Dim mapper As Mapper ' 这里也不是使用y值来表示数量的，也用相对值
@@ -228,7 +229,7 @@ Namespace BarPlot.Histogram
                             serials += (+hist).GetLine(groups.Serials(hist).Value, 2, 5)
                         Next
 
-                        Dim chart As Bitmap = Scatter.Plot(
+                        Dim chart As GraphicsData = Scatter.Plot(
                             serials,
                             size:=size,
                             padding:=margin,
@@ -280,7 +281,7 @@ Namespace BarPlot.Histogram
                                       Optional showGrid As Boolean = True,
                                       Optional ByRef histData As IntegerTagged(Of Double)() = Nothing,
                                       Optional xlabel$ = "X",
-                                      Optional xAxis$ = Nothing) As Bitmap
+                                      Optional xAxis$ = Nothing) As GraphicsData
 
             With data.ToArray.Hist([step])
 

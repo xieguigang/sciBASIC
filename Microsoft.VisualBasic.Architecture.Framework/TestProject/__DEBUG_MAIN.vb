@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76a28836a93d259d5252ad4aec168509, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::a9d7b3494d4b6ec5cf6e7bf56228de99, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\__DEBUG_MAIN.vb"
 
 ' Author:
 ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.Serialization
+Imports System.Text
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -46,6 +47,7 @@ Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Levenshtein
 'Imports Microsoft.VisualBasic.Webservices
 'Imports System.Windows.Forms
 
@@ -135,6 +137,14 @@ Public Module __DEBUG_MAIN
     End Sub
 
     Function Main() As Integer
+
+        Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("123233123", "a1bc").HTMLVisualize.SaveWithHTMLEncoding("x:\test223.html")
+
+
+        Pause()
+        Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("123233123", "123233123").MatchSimilarity.__DEBUG_ECHO
+
+
 
         Call ListTest()
         Pause()
@@ -254,7 +264,7 @@ Public Module __DEBUG_MAIN
 
         Dim type As Type = GetType(dddddFile)
 
-        Call Scripting.Actives.DisplType(type).__DEBUG_ECHO
+        Call Scripting.Actives.DisplayType(type).__DEBUG_ECHO
 
         Call Pause()
 

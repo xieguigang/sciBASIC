@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::118b5b1c4c57c094e84b2e58d193c215, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::0001392a7e574292e31858e37e8699b7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace Scripting
                 {GetType(CommandLine.CommandLine), AddressOf Casting.CastCommandLine},
                 {GetType(Image), AddressOf Casting.CastImage},
                 {GetType(FileInfo), AddressOf Casting.CastFileInfo},
-                {GetType(GDIPlusDeviceHandle), AddressOf Casting.CastGDIPlusDeviceHandle},
+                {GetType(Graphics2D), AddressOf Casting.CastGDIPlusDeviceHandle},
                 {GetType(Color), AddressOf ToColor},
                 {GetType(Font), AddressOf Casting.CastFont},
                 {GetType(System.Net.IPEndPoint), AddressOf Casting.CastIPEndPoint},
@@ -175,7 +175,7 @@ Namespace Scripting
                 {"fileinfo", GetType(IO.FileInfo)},
                 {"ipaddress", GetType(System.Net.IPAddress)},
                 {"commandline", GetType(CommandLine.CommandLine)},
-                {"gdi+", GetType(GDIPlusDeviceHandle)},
+                {"gdi+", GetType(Graphics2D)},
                 {"stringbuilder", GetType(StringBuilder)},
                 {"boolean", GetType(Boolean)},
                 {"char()", GetType(Char())},
@@ -228,7 +228,8 @@ Namespace Scripting
         Public ReadOnly Property [String] As Type = GetType(String)
 
         ''' <summary>
-        ''' Does the <paramref name="inputtype"/> type can be cast to type <paramref name="DefType"/>.(主要为了方便减少脚本编程模块的代码)
+        ''' Does the <paramref name="inputtype"/> type can be cast to type <paramref name="DefType"/>.
+        ''' (主要为了方便减少脚本编程模块的代码)
         ''' </summary>
         ''' <param name="inputType"></param>
         ''' <param name="DefType"></param>
@@ -238,12 +239,12 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' <seealso cref="ComponentModel.DataSourceModel.__toStringInternal"/>, 出现错误的时候总是会返回空字符串的
+        ''' <seealso cref="CStrSafe"/>, 出现错误的时候总是会返回空字符串的
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
         Public Function ToString(obj As Object, Optional null As String = "") As String
-            Return __toStringInternal(obj, null)
+            Return CStrSafe(obj, null)
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a251ffdbdef54e26ac191131aebea90, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::2b8d2621a04a8045b1862638f763cfe7, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\Contour.vb"
 
 ' Author:
 ' 
@@ -33,8 +33,10 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -95,7 +97,7 @@ Public Module Contour
                          Optional legendFont As Font = Nothing,
                          Optional xsteps! = Single.NaN,
                          Optional ysteps! = Single.NaN,
-                         Optional ByRef matrix As List(Of DataSet) = Nothing) As Bitmap
+                         Optional ByRef matrix As List(Of DataSet) = Nothing) As GraphicsData
 
         Dim fun As Func(Of Double, Double, Double) = Compile(exp)
 
@@ -151,7 +153,7 @@ Public Module Contour
                          Optional xlabel$ = "X",
                          Optional ylabel$ = "Y",
                          Optional logbase# = -1.0R,
-                         Optional scale# = 1.0#) As Bitmap
+                         Optional scale# = 1.0#) As GraphicsData
 
         Dim margin As Padding = padding
 
@@ -197,7 +199,7 @@ Public Module Contour
                          Optional xlabel$ = "X",
                          Optional ylabel$ = "Y",
                          Optional minZ# = Double.MinValue,
-                         Optional maxZ# = Double.MaxValue) As Bitmap
+                         Optional maxZ# = Double.MaxValue) As GraphicsData
 
         Dim margin As Padding = padding
 
@@ -311,7 +313,7 @@ Public Module Contour
                    End Function
         End Function
 
-        Public Sub Plot(ByRef g As Graphics, region As GraphicsRegion)
+        Public Sub Plot(ByRef g As IGraphics, region As GraphicsRegion)
             Dim data = GetData(region.PlotRegion.Size)
             Dim scaler As New Mapper(New Scaling(data))
             Dim xf = scaler.XScaler(region.Size, region.Padding)
@@ -345,7 +347,7 @@ Public Module Contour
                     z >= minZ AndAlso
                     z <= maxZ) _
                 .ToArray
-            Dim legend As Bitmap = colorDatas.ColorMapLegend(
+            Dim legend As GraphicsData = colorDatas.ColorMapLegend(
                 haveUnmapped:=False,
                 min:=realData.Min.FormatNumeric(1),
                 max:=realData.Max.FormatNumeric(1),

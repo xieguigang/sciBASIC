@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a72f378291d49db2b37937db4182461, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::d77a22d08655bebc4759e76e6f064450, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
 ' Author:
 ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -56,7 +57,7 @@ Namespace Drawing2D.Colors
                                        Optional lsize As Size = Nothing,
                                        Optional padding$ = DefaultPadding,
                                        Optional titleFont As Font = Nothing,
-                                       Optional legendWidth! = -1) As Bitmap
+                                       Optional legendWidth! = -1) As GraphicsData
             Dim br As SolidBrush() =
                 designer.ToArray(Function(c) New SolidBrush(c))
             Return br.ColorMapLegend(
@@ -92,7 +93,7 @@ Namespace Drawing2D.Colors
                                        Optional lsize As Size = Nothing,
                                        Optional padding$ = DefaultPadding,
                                        Optional titleFont As Font = Nothing,
-                                       Optional legendWidth! = -1) As Bitmap
+                                       Optional legendWidth! = -1) As GraphicsData
             If lsize.IsEmpty Then
                 lsize = New Size(800, 1000)
             End If
@@ -103,7 +104,7 @@ Namespace Drawing2D.Colors
                 Sub(ByRef g, region)
                     Dim graphicsRegion As Rectangle = region.PlotRegion
                     Dim size As Size = region.Size
-                    Dim margin As padding = region.Padding
+                    Dim margin As Padding = region.Padding
                     Dim grayHeight As Integer = size.Height * 0.05
                     Dim y As Single
                     Dim font As Font = If(titleFont Is Nothing,

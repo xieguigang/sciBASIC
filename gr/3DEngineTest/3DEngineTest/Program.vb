@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbd8e59dd309cb9a5ad156e8d4085aa6, ..\sciBASIC#\gr\3DEngineTest\3DEngineTest\Program.vb"
+﻿#Region "Microsoft.VisualBasic::ebc0e34767f9bd5eeb85df89d3ab7e9d, ..\sciBASIC#\gr\3DEngineTest\3DEngineTest\Program.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,8 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Module Program
 
     Sub Main()
-
-        Dim err& = rm - rf <= $"C:/*"
-
-        'Dim model = Landscape.IO.Load3DModel("G:\GCModeller\src\runtime\sciBASIC#\gr\3DEngineTest\example\3D\3dmodel.model").GetSurfaces.ToArray
-
-        'Dim dddd = "X:\[Content_Types].xml".LoadXml(Of Types)
-
-        'Dim types As New Types With {.Defaults = {New ContentTypes.Type With {.ContentType = "123", .Extension = "png"}}}
-        'Call types.SaveAsXml("x:\dddd.xml")
+        ' Call New FormTest().ShowDialog()
+        Call New FormLandscape().ShowDialog()
+        Call App.Exit()
     End Sub
 End Module
-

@@ -123,7 +123,7 @@ Namespace AprioriAlgorithm
                                                                      Where support / transactionsCount >= minSupport
                                                                      Select New TransactionTokensItem() With {
                                                                          .Name = item,
-                                                                         .Support = support}).ToList
+                                                                         .Support = support}).AsList
             Call frequentItemsL1.Sort()
             Return frequentItemsL1
         End Function
@@ -205,7 +205,7 @@ Namespace AprioriAlgorithm
                                                                    Select New TransactionTokensItem() With {
                                                                        .Name = item.Key,
                                                                        .Support = item.Value
-                                                                       }).ToList
+                                                                       }).AsList
             Return frequentItems
         End Function
 

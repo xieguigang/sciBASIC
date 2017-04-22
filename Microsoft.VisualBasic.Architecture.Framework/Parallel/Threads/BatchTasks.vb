@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::409f2e289aaa13a7e06ffb3f631ff29c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\BatchTasks.vb"
+﻿#Region "Microsoft.VisualBasic::8dc998ed567ab4eb0d7e886d46b61b59, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\BatchTasks.vb"
 
     ' Author:
     ' 
@@ -111,7 +111,7 @@ Namespace Parallel.Threads
         ''' You can controls the parallel tasks number from this parameter, smaller or equals to ZERO means auto 
         ''' config the thread number, If want single thread, not parallel, set this value to 1, and positive 
         ''' value greater than 1 will makes the tasks parallel.
-        ''' (可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量)
+        ''' (可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量, 1为单线程)
         ''' </param>
         ''' <param name="TimeInterval">The task run loop sleep time, unit is **ms**</param>
         ''' <param name="smart">
@@ -161,7 +161,9 @@ Namespace Parallel.Threads
                     Call resultList.Add(completeTask.GetValue)  '  将完成的任务从任务池之中移除然后获取返回值
                 Next
 
-                Call Thread.Sleep(TimeInterval)
+                If TimeInterval > 0 Then
+                    Call Thread.Sleep(TimeInterval)
+                End If
             Loop
 
             Dim WaitForExit As T() =

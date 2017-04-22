@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe2fb65883e5e5d0b7da69a761e76041, ..\sciBASIC#\Data\DataFrame\IO\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::fe2fb65883e5e5d0b7da69a761e76041, ..\sciBASIC#\Data\DataFrame\IO\csv\Tokenizer.vb"
 
     ' Author:
     ' 
@@ -67,7 +67,7 @@ Namespace IO
                 Row(i) = s
             Next
 
-            Return Row.ToList
+            Return Row.AsList
         End Function
 
         ''' <summary>

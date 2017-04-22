@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4e9899c151d3f2bff40ae04987560e4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::9f4bb42500b3bbbe690853653334b2a0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -325,15 +325,16 @@ Namespace Mathematical
         End Function
 
         ''' <summary>
-        ''' 多位坐标的欧几里得距离
+        ''' 多位坐标的欧几里得距离，与坐标点0进行比较
         ''' </summary>
-        ''' <param name="Vector"></param>
+        ''' <param name="vector"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Double)) As Double
-            Return Math.Sqrt((From n In Vector Select n ^ 2).Sum)
+        <Extension> Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
+            ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
+            Return Math.Sqrt((From n In vector Select n ^ 2).Sum)
         End Function
 
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>

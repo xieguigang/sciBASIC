@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd2a1c6dc0e77a9edba124a64d5e838b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
+﻿#Region "Microsoft.VisualBasic::5cee66f39b50b9ebbddfaa7ecda3c0f4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
 
     ' Author:
     ' 
@@ -90,7 +90,7 @@ Namespace Parallel.Linq
         End Property
 
         ''' <summary>
-        ''' 将大量的短时间的任务进行分区，合并，然后再执行并行化
+        ''' 将大量的短时间的任务进行分区，合并，然后再执行并行化，请注意，<paramref name="task"/>参数不能够使lambda表达式，否则会出现EntryNotFound的错误
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <typeparam name="TOut"></typeparam>

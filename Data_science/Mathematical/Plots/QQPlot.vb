@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d923c82f023d9b80d35f44f5c2ad4ee8, ..\sciBASIC#\Data_science\Mathematical\Plots\QQPlot.vb"
+﻿#Region "Microsoft.VisualBasic::938926f5e09ba060f409d344612d0789, ..\sciBASIC#\Data_science\Mathematical\Plots\QQPlot.vb"
 
 ' Author:
 ' 
@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -84,7 +85,7 @@ Public Module QQPlot
                          Optional ptSize! = 35,
                          Optional lv% = 100000,
                          Optional epsilon# = epsilon,
-                         Optional compact_size% = 1000) As Bitmap
+                         Optional compact_size% = 1000) As GraphicsData
 
         Dim data As Double() = x.Join(y).Distinct.ToArray
         Dim maps As Integer() = data.GenerateMapping(lv)

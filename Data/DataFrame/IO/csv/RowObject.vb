@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::856348c6fc0dfa7791e535f48030b096, ..\sciBASIC#\Data\DataFrame\IO\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::e3c98836f7e19c350f379f7f2ae409e6, ..\sciBASIC#\Data\DataFrame\IO\csv\RowObject.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@ Namespace IO
 
         Sub New(Optional Columns As IEnumerable(Of String) = Nothing)
             If Not Columns Is Nothing Then
-                Me._innerColumns = Columns.ToList
+                Me._innerColumns = Columns.AsList
             End If
         End Sub
 
@@ -174,7 +174,9 @@ Namespace IO
         ''' insert the data into a spercific column  
         ''' </summary>
         ''' <param name="value"></param>
-        ''' <param name="column"></param>
+        ''' <param name="column">
+        ''' 假若列的位置超过了当前的行所具有的列的数量，那么这个方法还会自动补齐空格
+        ''' </param>
         ''' <returns>仅为LINQ查询使用的一个无意义的值</returns>
         ''' <remarks></remarks>
         Public Function InsertAt(value As String, column As Integer) As Integer
@@ -350,7 +352,7 @@ Namespace IO
 
         Public Shared Widening Operator CType(Tokens As String()) As RowObject
             Return New RowObject With {
-                ._innerColumns = Tokens.ToList
+                ._innerColumns = Tokens.AsList
             }
         End Operator
 
@@ -362,7 +364,7 @@ Namespace IO
 
         Public Shared Function CreateObject(DataTokens As IEnumerable(Of String)) As RowObject
             Return New RowObject With {
-                ._innerColumns = DataTokens.ToList
+                ._innerColumns = DataTokens.AsList
             }
         End Function
 
@@ -475,6 +477,11 @@ Namespace IO
             Return _innerColumns.IndexOf(item)
         End Function
 
+        ''' <summary>
+        ''' 直接使用list对象的Insert方法插入目标值，这个方法不像<see cref="RowObject.InsertAt(String, Integer)"/>，这个方法不会自动补齐空格的
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="item"></param>
         Public Sub Insert(index As Integer, item As String) Implements IList(Of String).Insert
             Call _innerColumns.Insert(index, item)
         End Sub

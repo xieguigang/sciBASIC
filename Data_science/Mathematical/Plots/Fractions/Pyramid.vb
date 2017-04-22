@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69909920a03a2652b2d302f2115c5f21, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::a03b8b08e5b7b40808954ebd8a5fe3e5, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\Pyramid.vb"
 
 ' Author:
 ' 
@@ -28,15 +28,14 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.g
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 
 Public Module Pyramid
 
@@ -55,7 +54,7 @@ Public Module Pyramid
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional legendBorder As Stroke = Nothing,
-                         Optional wp# = 0.8) As Bitmap
+                         Optional wp# = 0.8) As GraphicsData
 
         Dim array As Fractions() =
             data _
@@ -68,7 +67,7 @@ Public Module Pyramid
         End If
 
         Dim plotInternal =
-            Sub(ByRef g As Graphics, region As GraphicsRegion)
+            Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim height% = region.PlotRegion.Height
                 Dim width% = region.PlotRegion.Width * wp
                 Dim left! = (region.PlotRegion.Width - width) / 2 + margin.Left
@@ -103,7 +102,7 @@ Public Module Pyramid
                 Next
 
                 Dim font As New Font(FontFace.MicrosoftYaHei, 32)
-                Dim gr As Graphics = g
+                Dim gr As IGraphics = g
                 Dim maxL = data.Select(Function(x) gr.MeasureString(x.Name, font).Width).Max
                 left = size.Width - (margin.Horizontal) - maxL
                 Dim top = margin.Top

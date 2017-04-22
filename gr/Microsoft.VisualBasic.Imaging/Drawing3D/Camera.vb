@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f74cfc0985efcf3898983483fc6adae, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::84457c11813b4d17e2d29cacc40addd0, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
 ' Author:
 ' 
@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 
 Namespace Drawing3D
 
@@ -42,6 +43,27 @@ Namespace Drawing3D
         ''' Using for the project result 
         ''' </summary>
         Public offset As Point
+
+        ''' <summary>
+        ''' Light
+        ''' </summary>
+        Public lightAngle As Point3D
+        ''' <summary>
+        ''' Light
+        ''' </summary>
+        Public colorDifference As Double
+        ''' <summary>
+        ''' Light, default using <see cref="Color.White"/> as the light color
+        ''' </summary>
+        Public lightColor As Color
+
+        Public Sub New()
+            Dim lightPosition As New Point3D(2, -1, 3)
+
+            Me.lightAngle = lightPosition.Normalize()
+            Me.colorDifference = 0.2
+            Me.lightColor = Color.FromArgb(255, 255, 255)
+        End Sub
 
 #Region "Rotation"
 
@@ -121,6 +143,22 @@ Namespace Drawing3D
 
             Call canvas.SurfacePainter(Me, faces, drawPath)
         End Sub
+
+        Public Function Lighting(surface As Surface) As Color
+            Dim color As Color = DirectCast(surface.brush, SolidBrush).Color
+            Try
+                color = surface _
+                    .vertices _
+                    .Lighting(lightAngle,
+                              color,
+                              colorDifference,
+                              lightColor)
+            Catch ex As Exception
+
+            End Try
+
+            Return color
+        End Function
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8828cc6c19f48d66435eb5a603df45cf, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\ManhattanStatics.vb"
+﻿#Region "Microsoft.VisualBasic::6d3104dad161ec825f5263738d4c9478, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\ManhattanStatics.vb"
 
 ' Author:
 ' 
@@ -29,13 +29,12 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base.SlideWindow
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 
 Public Module ManhattanStatics
 
@@ -56,7 +55,7 @@ Public Module ManhattanStatics
                          Optional errMinusColor$ = "red",
                          Optional errInner$ = "black",
                          Optional errPtSize! = 3,
-                         Optional absoluteScaling As Boolean = True) As Bitmap
+                         Optional absoluteScaling As Boolean = True) As GraphicsData
 
         Dim fillColor As Color = If(
             String.IsNullOrEmpty(fill) OrElse fill = "none",

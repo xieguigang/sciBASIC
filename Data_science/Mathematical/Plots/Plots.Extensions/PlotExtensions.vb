@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf827e422f9c2cdbc25e574b48e944f2, ..\sciBASIC#\Data_science\Mathematical\Plots\Plots.Extensions\PlotExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1f40e80ed25d7a57982c1831230d77c3, ..\sciBASIC#\Data_science\Mathematical\Plots\Plots.Extensions\PlotExtensions.vb"
 
 ' Author:
 ' 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Calculus
@@ -197,7 +198,7 @@ Public Module PlotExtensions
     ''' <param name="bg"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional padding$ = g.DefaultPadding, Optional bg As String = "white") As Bitmap
+    Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional padding$ = g.DefaultPadding, Optional bg As String = "white") As GraphicsData
         Return Scatter.Plot({ode.FromODE("cyan")}, size, padding, bg)
     End Function
 
@@ -216,7 +217,7 @@ Public Module PlotExtensions
                          Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional ptSize As Single = 30,
-                         Optional width As Single = 5) As Bitmap
+                         Optional width As Single = 5) As GraphicsData
         Return Scatter.Plot(ode.FromODEs(, ptSize, width), size, padding, bg)
     End Function
 

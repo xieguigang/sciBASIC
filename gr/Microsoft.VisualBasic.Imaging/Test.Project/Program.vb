@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e120bfc7be2a5f3661b47bae6923a993, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
+﻿#Region "Microsoft.VisualBasic::07d5a2cacd7ac15dfe92cef201d916ae, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
 
 ' Author:
 ' 
@@ -31,12 +31,36 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.IsoMetric.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 
 Module Program
 
+    Sub test3Dmodels()
+
+        Dim isometricView As New IsometricEngine
+        isometricView.add(
+    New Prism(
+        New Point3D(0, 0, 0),
+         1, 1, 1
+    ),
+     Color.FromArgb(33, 150, 243)
+)
+        Using g As Graphics2D = New Size(1000, 1000).CreateGDIDevice
+
+            Call isometricView.Draw(g)
+            Call g.ImageResource.SaveAs("x:\out.png")
+        End Using
+
+        Pause()
+    End Sub
+
+
     Sub Main()
+        Call test3Dmodels()
+        Call SVGTest.Test()
 
         Dim html As String = "
 <html>
@@ -94,19 +118,19 @@ log<sub>2</sub> ratio
         'Next
 
 
-        '    Call TextureResourceLoader.AdjustColor(Microsoft.VisualBasic.Drawing.TextureResourceLoader.LoadInternalDefaultResource.First, Color.SeaGreen).Save("x:\reddddd.bmp")
+        ''    Call TextureResourceLoader.AdjustColor(Microsoft.VisualBasic.Drawing.TextureResourceLoader.LoadInternalDefaultResource.First, Color.SeaGreen).Save("x:\reddddd.bmp")
 
-        Dim vec = New Vectogram(1000, 1000)
+        'Dim vec = New Vectogram(1000, 1000)
 
-        Call vec.AddTextElement("1234", New Font(FontFace.MicrosoftYaHei, 20), System.Drawing.Color.DarkCyan, vec.GDIDevice.Center)
+        'Call vec.AddTextElement("1234", New Font(FontFace.MicrosoftYaHei, 20), System.Drawing.Color.DarkCyan, vec.GDIDevice.Center)
 
-        Call vec.AddCircle(Color.Red, New Point(100, 20), 100)
+        'Call vec.AddCircle(Color.Red, New Point(100, 20), 100)
 
-        Dim res = vec.ToImage
+        'Dim res = vec.ToImage
 
-        Call res.Save("x:\ffff.png")
+        'Call res.Save("x:\ffff.png")
 
-        Call New DrawingScript(vec).ToScript.SaveTo("script.txt")
+        'Call New DrawingScript(vec).ToScript.SaveTo("script.txt")
 
     End Sub
 

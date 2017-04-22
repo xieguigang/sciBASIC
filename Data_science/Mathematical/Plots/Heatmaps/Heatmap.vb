@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::d4e1c0065e5ab1206c285bf2f39923d0, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::da6e31e3674e6764283313c1fc632540, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\Heatmap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
@@ -151,7 +152,7 @@ Public Module Heatmap
                          Optional valuelabelFont As Font = Nothing,
                          Optional legendWidth! = -1,
                          Optional legendHasUnmapped As Boolean = True,
-                         Optional legendLayout As Rectangle = Nothing) As Bitmap
+                         Optional legendLayout As Rectangle = Nothing) As GraphicsData
 
         If valuelabelFont Is Nothing Then
             valuelabelFont = New Font(FontFace.CambriaMath, 16, Drawing.FontStyle.Bold)
@@ -221,7 +222,7 @@ Public Module Heatmap
     ''' 一些共同的绘图元素过程
     ''' </summary>
     <Extension>
-    Friend Function __plotInterval(plot As Action(Of Graphics, GraphicsRegion, NamedValue(Of Dictionary(Of String, Double))(), Value(Of Single), Font, Single, Dictionary(Of Double, Integer), Value(Of Single), Color()),
+    Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, NamedValue(Of Dictionary(Of String, Double))(), Value(Of Single), Font, Single, Dictionary(Of Double, Integer), Value(Of Single), Color()),
                                    array As NamedValue(Of Dictionary(Of String, Double))(),
                                    Optional colors As Color() = Nothing,
                                    Optional mapLevels% = 100,
@@ -238,7 +239,7 @@ Public Module Heatmap
                                    Optional titleFont As Font = Nothing,
                                    Optional legendWidth! = -1,
                                    Optional legendHasUnmapped As Boolean = True,
-                                   Optional legendLayout As Rectangle = Nothing) As Bitmap
+                                   Optional legendLayout As Rectangle = Nothing) As GraphicsData
 
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim angle! = 45.0F
@@ -261,10 +262,8 @@ Public Module Heatmap
             colors = Designer.GetColors(mapName, mapLevels)
         End If
 
-        Return GraphicsPlots(
-            size, padding,
-            bg$,
-            Sub(ByRef g, region)
+        Dim plotInternal =
+            Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim dw!? = CSng((size.Height - padding.Horizontal) / array.Length)
                 Dim correl#() = array _
                     .Select(Function(x) x.Value.Values) _
@@ -300,7 +299,7 @@ Public Module Heatmap
                 Next
 
                 ' Draw legends
-                Dim legend As Bitmap = colors.ColorMapLegend(
+                Dim legend As GraphicsData = colors.ColorMapLegend(
                     haveUnmapped:=legendHasUnmapped,
                     min:=Math.Round(correl.Min, 1),
                     max:=Math.Round(correl.Max, 1),
@@ -333,7 +332,9 @@ Public Module Heatmap
                 Dim titlePosi As New PointF((left - titleSize.Width) / 2, (padding.Top - titleSize.Height) / 2)
 
                 Call g.DrawString(mainTitle, titleFont, Brushes.Black, titlePosi)
-            End Sub)
+            End Sub
+
+        Return GraphicsPlots(size, padding, bg$, plotInternal)
     End Function
 
     ''' <summary>
@@ -347,7 +348,7 @@ Public Module Heatmap
     ''' <param name="y!"></param>
     ''' <param name="angle!"></param>
     <Extension>
-    Public Sub DrawString(g As Graphics, text$, font As Font, brush As Brush, x!, y!, angle!)
+    Public Sub DrawString(g As IGraphics, text$, font As Font, brush As Brush, x!, y!, angle!)
         g.TranslateTransform(x, y)     ' 先转换坐标系原点
         g.RotateTransform(angle)
         g.DrawString(text, font, brush, New PointF)

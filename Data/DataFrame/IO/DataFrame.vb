@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11da719da20d5fb1b9f463d41de3bf1e, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::cc523c213f958b82374673916cf650b0, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
 
     ' Author:
     ' 
@@ -292,9 +292,9 @@ Namespace IO
         End Function
 
         Private Shared Function __createObject(file As File) As DataFrame
-            Dim df As DataFrame = New DataFrame With {
-                  ._innerTable = file._innerTable.Skip(1).ToList,
-                  .FilePath = file.FilePath
+            Dim df As New DataFrame With {
+                ._innerTable = file._innerTable.Skip(1).AsList,
+                .FilePath = file.FilePath
             }
             df.__columnList = __getColumnList(file._innerTable)
             df._SchemaOridinal = __createSchemaOridinal(df)
@@ -385,9 +385,9 @@ Namespace IO
         ''' <param name="source"></param>
         ''' <remarks></remarks>
         Public Sub CopyFrom(source As File)
-            _innerTable = source._innerTable.Skip(1).ToList
+            _innerTable = source._innerTable.Skip(1).AsList
             FilePath = source.FilePath
-            __columnList = source._innerTable.First.ToList
+            __columnList = source._innerTable.First.AsList
         End Sub
 
         Public Overrides Function ToString() As String
@@ -408,7 +408,7 @@ Namespace IO
             Loop
 
             Return New DataFrame With {
-                .__columnList = columnList.ToList,
+                .__columnList = columnList.AsList,
                 .FilePath = FilePath,
                 ._innerTable = newTable
             }

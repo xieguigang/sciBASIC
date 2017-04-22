@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::38322294e7a51ff6e0e5061b89a1cc36, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Interpreter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -40,6 +40,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Levenshtein
 
 #Const NET_45 = 0
 
@@ -53,8 +54,7 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    <[Namespace]("Interpreter")>
-    Public Class Interpreter
+    <[Namespace]("Interpreter")> Public Class Interpreter
 
         Implements IDisposable
         Implements IDictionary(Of String, APIEntryPoint)
@@ -107,7 +107,7 @@ Namespace CommandLine
             If Not args.IsNullOrEmpty Then
                 Dim i As Integer = __methodInvoke(args.Name.ToLower, {args}, args.Parameters)
 #If DEBUG Then
-                Call Pause()
+
 #Else
                 If Stack.TextEquals("Main") Then
                     If AutoPaused Then
@@ -160,6 +160,14 @@ Namespace CommandLine
                 Call Console.WriteLine()
                 Call Console.WriteLine($"Print environment variables for {GetType(App).FullName}:")
                 Call Console.WriteLine(ConfigEngine.Prints(vars))
+
+                Return 0
+
+            ElseIf "??history".TextEquals(commandName) Then
+
+                Call Console.WriteLine()
+                Call (App.LogErrDIR.ParentPath & "/.shells.log").ReadAllText.EchoLine
+                Call Console.WriteLine()
 
                 Return 0
 

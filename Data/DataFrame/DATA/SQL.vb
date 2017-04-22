@@ -1,4 +1,32 @@
-﻿Option Strict Off
+﻿#Region "Microsoft.VisualBasic::eeb86ec67e444bd83973e4ba52115371, ..\sciBASIC#\Data\DataFrame\DATA\SQL.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Option Strict Off
 Option Explicit On
 
 Imports System.Runtime.CompilerServices
@@ -7,8 +35,32 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 
+''' <summary>
+''' MySQL data extensions
+''' </summary>
 Public Module SQL
+
+    ''' <summary>
+    ''' 提供了一个与SQL DUMP功能类似的拓展方法，这个函数会自动的将目标集合写入所指定的文件夹之中的某一个csv文件。
+    ''' 这个csv文件的文件名为泛型类型的Class名称
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="handle$">Directory or file name(``*.csv``)</param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function DumpToTable(Of T)(data As IEnumerable(Of T),
+                                      handle$,
+                                      Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Dim path$ = If(
+            handle.Split("."c).Last.TextEquals("csv"),
+            handle,
+            $"{handle}/{GetType(T).Name}.csv")
+        Return data.SaveTo(path,, encoding.CodePage)
+    End Function
 
     ''' <summary>
     ''' 将SQL脚本之中的数据转换为Excel数据框模型，这个函数仅对简单的SQL脚本有效，
@@ -65,6 +117,11 @@ Public Module SQL
         Next
     End Function
 
+    ''' <summary>
+    ''' Parse the ``VALUES`` data from the INSERT INTo SQL statement.
+    ''' </summary>
+    ''' <param name="insertSQL$"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function SQLValues(insertSQL$) As String()
         Dim values$ = Regex.Split(insertSQL, "\)\s*VALUES\s*\(", RegexICSng).Last
@@ -74,6 +131,11 @@ Public Module SQL
         Return t
     End Function
 
+    ''' <summary>
+    ''' Gets the fields list from INSERT INTO SQL.
+    ''' </summary>
+    ''' <param name="insertSQL$"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function SQLFields(insertSQL$) As IndexOf(Of String)
         Dim fields$ = Regex _
@@ -89,3 +151,4 @@ Public Module SQL
         Return New IndexOf(Of String)(names)
     End Function
 End Module
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0b4319beaafd4279e24e46e16cc8169, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::0037282aeb9a3bfaa0834d5238d35e52, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace Net.Protocols.ContentTypes
                 .List_of_MIME_types___Internet_Media_Types_ _
                 .lTokens _
                 .__loadContents _
-                .Where(Function(x) Not x Is Nothing) _
+                .Where(Function(x) Not x.IsEmpty) _
                 .GroupBy(Function(x) x.FileExt.ToLower) _
                 .ToDictionary(Function(x) x.Key,
                               Function(x) x.First)

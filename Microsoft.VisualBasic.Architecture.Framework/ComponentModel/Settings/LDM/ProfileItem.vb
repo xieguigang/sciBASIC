@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d493d88dee4d7c4a7fdbfc53b03c14d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ProfileItem.vb"
+﻿#Region "Microsoft.VisualBasic::bfc066dc0ba5e93e074aaa5eb3bd2d2a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ProfileItem.vb"
 
     ' Author:
     ' 

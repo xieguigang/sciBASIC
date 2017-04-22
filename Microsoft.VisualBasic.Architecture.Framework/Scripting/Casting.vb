@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::136f896b009f03384ebbb76465a2373a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::d2ac82bd916b995c57d272a1b1e7af61, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
 
     ' Author:
     ' 
@@ -113,6 +113,8 @@ Namespace Scripting
         ''' 
         <Extension>
         Public Function ParseNumeric(s As String) As Double
+            s = Strings.Trim(s)
+
             If String.IsNullOrEmpty(s) Then
                 Return 0R
             ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) OrElse
@@ -193,7 +195,7 @@ Namespace Scripting
             Return FileIO.FileSystem.GetFileInfo(path)
         End Function
 
-        Public Function CastGDIPlusDeviceHandle(path As String) As GDIPlusDeviceHandle
+        Public Function CastGDIPlusDeviceHandle(path As String) As Graphics2D
             Return GDIPlusDeviceHandleFromImageFile(path)
         End Function
 

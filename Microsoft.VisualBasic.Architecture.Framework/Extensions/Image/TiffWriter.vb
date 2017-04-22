@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afe5d420842b90a26d6873e2049bc268, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::d332d6554210a24b683f75ae43147f45, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\TiffWriter.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@ Namespace Imaging
         Dim _imageLayers As List(Of Image)
 
         Sub New(ParamArray Image As Image())
-            _imageLayers = Image.ToList
+            _imageLayers = Image.AsList
         End Sub
 
 #Region "Implements Generic.IEnumerable(Of Image)"

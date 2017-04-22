@@ -119,7 +119,8 @@ Namespace StorageProvider.Reflection
         ''' <remarks>在这里查找所有具有写属性的属性对象即可</remarks>
         Public Function Convert(Of ItemType As Class)(DataFrame As DataFrame, Optional explicit As Boolean = True) As List(Of ItemType)
             Dim type As Type = GetType(ItemType)
-            Return DataFrame.LoadDataToObject(type, explicit) _
+            Return DataFrame _
+                .LoadDataToObject(type, explicit) _
                 .ToList(Function(x) DirectCast(x, ItemType))
         End Function
 
@@ -181,13 +182,13 @@ Namespace StorageProvider.Reflection
         ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
         ''' </summary>
         ''' <param name="___source"></param>
-        ''' <param name="explicit"></param>
+        ''' <param name="strict"></param>
         ''' <param name="schemaOut">请注意，Key是Csv文件之中的标题，不是属性名称了</param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         Public Iterator Function __save(___source As IEnumerable,
                                           typeDef As Type,
-                                         explicit As Boolean,
+                                         strict As Boolean,
                                         schemaOut As Dictionary(Of String, Type),
                                Optional metaBlank As String = "",
                                Optional maps As Dictionary(Of String, String) = Nothing,
@@ -196,7 +197,7 @@ Namespace StorageProvider.Reflection
 
             Dim source As Object() = ___source.ToVector  ' 结束迭代器，防止Linq表达式重新计算
             Dim Schema As SchemaProvider =
-                SchemaProvider.CreateObject(typeDef, explicit).CopyReadDataFromObject
+                SchemaProvider.CreateObject(typeDef, strict).CopyReadDataFromObject
             Dim rowWriter As RowWriter = New RowWriter(Schema, metaBlank) _
                 .CacheIndex(source, reorderKeys)
 
@@ -251,12 +252,12 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="explicit"></param>
+        ''' <param name="strict"></param>
         ''' <param name="schemaOut">``ByRef``反向输出的Schema参数</param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         Public Function Save(Of T)(source As IEnumerable(Of T),
-                                   Optional explicit As Boolean = True,
+                                   Optional strict As Boolean = True,
                                    Optional metaBlank As String = "",
                                    Optional maps As Dictionary(Of String, String) = Nothing,
                                    Optional parallel As Boolean = True,
@@ -265,7 +266,7 @@ Namespace StorageProvider.Reflection
 
             Dim type As Type = GetType(T)
             Dim file As New File(
-                __save(source, type, explicit,
+                __save(source, type, strict,
                        schemaOut,
                        metaBlank,
                        maps,

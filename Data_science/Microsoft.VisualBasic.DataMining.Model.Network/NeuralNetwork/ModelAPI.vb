@@ -72,7 +72,7 @@ Namespace NeuralNetwork.Models
                           In neuron.InputSynapses
                           Where c.Weight <> 0R  ' 忽略掉没有链接强度的神经元链接
                           Let itName As String = $"{type}-{NameOf(neuron.InputSynapses)}"
-                          Select c.__synapse(itName, uidHash)).ToList +
+                          Select c.__synapse(itName, uidHash)).AsList +
                           (From c As Synapse
                            In neuron.OutputSynapses
                            Where c.Weight <> 0R

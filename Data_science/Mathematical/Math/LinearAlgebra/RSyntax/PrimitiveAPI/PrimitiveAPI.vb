@@ -125,7 +125,7 @@ Namespace SyntaxAPI
         End Function
 
         Public Function C(Of T)(ParamArray argvs As GenericVector(Of T)()) As GenericVector(Of T)
-            Dim ChunkBuffer = argvs(0).ToList
+            Dim ChunkBuffer = argvs(0).AsList
             For Each Vector As GenericVector(Of T) In argvs.Skip(1)
                 Call ChunkBuffer.AddRange(Vector)
             Next

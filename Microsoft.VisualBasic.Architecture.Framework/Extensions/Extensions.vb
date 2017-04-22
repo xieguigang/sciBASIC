@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::145c8a742c214ab8874de94669811569, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4517300726090b063413dc244e9e8fd7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -38,6 +38,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -45,6 +46,7 @@ Imports Microsoft.VisualBasic.SecurityString
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports Microsoft.VisualBasic.Text.Similarity
 
 #Const FRAMEWORD_CORE = 1
@@ -83,7 +85,7 @@ Public Module Extensions
     ''' <param name="s$"></param>
     ''' <param name="args"></param>
     Public Sub println(s$, ParamArray args As Object())
-        Dim out As String = STDIO__.CLangStringFormatProvider.sprintf(s, args)
+        Dim out As String = sprintf(s, args)
         Call Console.WriteLine(out)
     End Sub
 
@@ -207,7 +209,7 @@ Public Module Extensions
         If source.IsNullOrEmpty Then
             Return -1
         Else
-            Return source.ToList.IndexOf(x)
+            Return source.AsList.IndexOf(x)
         End If
     End Function
 
@@ -230,17 +232,23 @@ Public Module Extensions
     ''' Function pointer of the task work that needs to be tested.(需要测试性能的工作对象)
     ''' </param>
     ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
-    Public Function Time(work As Action) As Long
-        Dim sw As Stopwatch = Stopwatch.StartNew
+    Public Function Time(work As Action, Optional echo As Boolean = True) As Long
+        Dim startTick As Long = App.NanoTime
         Call work()
-        Call $"Work takes {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
-        Return sw.ElapsedMilliseconds
+        Dim endTick As Long = App.NanoTime
+        Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
+        If echo Then
+            Call $"Work takes {t}ms...".__DEBUG_ECHO
+        End If
+        Return t
     End Function
 
     Public Function Time(Of T)(work As Func(Of T)) As T
-        Dim sw As Stopwatch = Stopwatch.StartNew
+        Dim startTick As Long = App.NanoTime
         Dim value As T = work()
-        Call $"Work takes {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
+        Dim endTick As Long = App.NanoTime
+        Dim ms& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
+        Call $"Work takes {ms}ms...".__DEBUG_ECHO
         Return value
     End Function
 
@@ -665,7 +673,8 @@ Public Module Extensions
     ''' <summary>
     ''' Data partitioning function.
     ''' (将目标集合之中的数据按照<paramref name="parTokens"></paramref>参数分配到子集合之中，
-    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序)
+    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序，
+    ''' 每一个子集和之中的元素数量为<paramref name="parTokens"/>)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -723,7 +732,7 @@ Public Module Extensions
     ''' <param name="target"></param>
     ''' <returns></returns>
     <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), target As IEnumerable(Of T)) As List(Of T)
-        Dim srcList As List(Of T) = If(source.IsNullOrEmpty, New List(Of T), source.ToList)
+        Dim srcList As List(Of T) = If(source.IsNullOrEmpty, New List(Of T), source.AsList)
         If Not target.IsNullOrEmpty Then
             Call srcList.AddRange(target)
         End If
@@ -1384,19 +1393,21 @@ Public Module Extensions
 
     ''' <summary>
     ''' Fuzzy match two string, this is useful for the text query or searching.
+    ''' (请注意，这个函数是不会自动转换大小写的，如果是需要字符大小写不敏感，
+    ''' 请先将query以及subject都转换为小写)
     ''' </summary>
-    ''' <param name="Query"></param>
+    ''' <param name="query"></param>
     ''' <param name="Subject"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("FuzzyMatch",
                Info:="Fuzzy match two string, this is useful for the text query or searching.")>
-    <Extension> Public Function FuzzyMatching(Query As String, Subject As String, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
+    <Extension> Public Function FuzzyMatching(query$, subject$, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
         If tokenbased Then
-            Dim similarity# = Evaluate(Query, Subject,,, )
+            Dim similarity# = Evaluate(query, subject,,, )
             Return similarity >= cutoff
         Else
-            Dim dist = LevenshteinDistance.ComputeDistance(Query, Subject)
+            Dim dist = LevenshteinDistance.ComputeDistance(query, subject)
             If dist Is Nothing Then
                 Return False
             Else
@@ -1668,16 +1679,13 @@ Public Module Extensions
     '''
     <ExportAPI("Shuffles")>
     <Extension> Public Function Shuffles(Of T)(source As IEnumerable(Of T)) As T()
-        Call VBMath.Randomize()
-
         Dim tmp As New List(Of T)(source)
         Dim buf As T() = New T(tmp.Count - 1) {}
-        Dim Seeds As Integer = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / CLng(Integer.MaxValue) * 2
-        Dim Rand As New Random(Seed:=Seeds)
+        Dim rand As New Random(Seed:=Mathematical.Seed)
         Dim l As Integer = tmp.Count - 1
 
         For i As Integer = 0 To buf.Length - 1
-            Dim index As Integer = Rand.Next(minValue:=0, maxValue:=l)
+            Dim index As Integer = rand.Next(minValue:=0, maxValue:=l)
             buf(i) = tmp(index)
             Call tmp.RemoveAt(index)
             l -= 1
@@ -1686,9 +1694,15 @@ Public Module Extensions
         Return buf
     End Function
 
+    ''' <summary>
+    ''' 返回n长度的序列数值，这些序列数值是打乱顺序的，但是升序排序之后会得到1:n的序列
+    ''' 请注意，这个序列并不是随机数，而是将n长度的序列之中的元素打乱顺序的结果
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
     <ExportAPI("Sequence.Random")>
     <Extension> Public Function SeqRandom(n As Integer) As Integer()
-        Dim source As Integer() = n.Sequence
+        Dim source As Integer() = n.Sequence.ToArray
         Dim Random As Integer() = source.Shuffles
         Return Random
     End Function
@@ -2101,6 +2115,16 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function IsNullOrEmpty(Of T)(array As T()) As Boolean
         Return array Is Nothing OrElse array.Length = 0
+    End Function
+
+    ''' <summary>
+    ''' 这个字符串数组之中的所有的元素都是空字符串？
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function EmptyStringVector(s$()) As Boolean
+        Return s.Where(Function(c) Not c.StringEmpty).Count = 0
     End Function
 
     <ExportAPI("CopyFile", Info:="kernel32.dll!CopyFileW")>

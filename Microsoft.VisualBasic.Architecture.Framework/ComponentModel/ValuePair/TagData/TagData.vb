@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::f5b1e6f603e42074c2829d7ad34bce42, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::b5e6a6fbf4ac2ff284bcba0e945f079b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\TagData\TagData.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,9 +33,18 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.TagData
 
+    ''' <summary>
+    ''' Target value have a specific tag key.
+    ''' </summary>
+    ''' <typeparam name="T">The type of the tag key</typeparam>
+    ''' <typeparam name="V">The type of the value data</typeparam>
     Public Class TagData(Of T, V) : Inherits Value(Of V)
         Implements INamedValue
 
+        ''' <summary>
+        ''' ``<see cref="Tag"/> -> <see cref="GetJson"/>``
+        ''' </summary>
+        ''' <returns></returns>
         Private Property Key As String Implements IKeyedEntity(Of String).Key
             Get
                 Return Tag.GetJson
@@ -45,10 +54,14 @@ Namespace ComponentModel.TagData
             End Set
         End Property
 
+        ''' <summary>
+        ''' Target value have this specific tag data.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Tag As T
 
         ''' <summary>
-        ''' 默认都有一个字符串类型的标签用于保存其他的数据，但是主要还是使用<see cref="Tag"/>属性来进行标记
+        ''' 默认都有一个字符串类型的标签用于保存其他的数据，但是主要还是使用``<see cref="Tag"/>``属性来进行标记
         ''' </summary>
         ''' <returns></returns>
         Public Property TagStr As String
@@ -56,10 +69,20 @@ Namespace ComponentModel.TagData
         Public Overloads Shared Narrowing Operator CType(t As TagData(Of T, V)) As KeyValuePair(Of T, V)
             Return New KeyValuePair(Of T, V)(t.Tag, t.value)
         End Operator
+
+        ''' <summary>
+        ''' 将这个标签数据转换为``元组``类型
+        ''' </summary>
+        ''' <param name="r"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Narrowing Operator CType(r As TagData(Of T, V)) As Tuple(Of T, V)
+            Return New Tuple(Of T, V)(r.Tag, r.value)
+        End Operator
     End Class
 
     ''' <summary>
-    ''' 作用几乎等同于<see cref="DoubleTagged(Of T)"/>，只不过这个是Structure类型，开销会小一些
+    ''' Almost equals to <see cref="DoubleTagged(Of T)"/>, but this object is a structure type. 
+    ''' (作用几乎等同于<see cref="DoubleTagged(Of T)"/>，只不过这个是Structure类型，开销会小一些)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Structure NumericTagged(Of T)
@@ -72,14 +95,26 @@ Namespace ComponentModel.TagData
         End Function
     End Structure
 
+    ''' <summary>
+    ''' 使用一个整形数作为目标对象值的标签信息
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class IntegerTagged(Of T) : Inherits TagData(Of Integer, T)
 
     End Class
 
+    ''' <summary>
+    ''' 使用一个实数作为目标对象值的标签信息
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class DoubleTagged(Of T) : Inherits TagData(Of Double, T)
 
     End Class
 
+    ''' <summary>
+    ''' 使用一个长整形数作为目标对象值的标签信息
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class LongTagged(Of T) : Inherits TagData(Of Long, T)
 
     End Class

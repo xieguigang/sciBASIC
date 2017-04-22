@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80ff37214b0b01484b16c8e9a34538b2, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::2fd8a39a415fcfef8517cc48ddb59d24, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\Annotation.vb"
 
 ' Author:
 ' 
@@ -31,6 +31,7 @@ Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -59,7 +60,7 @@ Public Structure Annotation
     ''' </summary>
     Const PointNull$ = "The target annotation data point is null!"
 
-    Public Sub Draw(ByRef g As Graphics, scaler As Mapper, s As SerialData, r As GraphicsRegion)
+    Public Sub Draw(ByRef g As IGraphics, scaler As Mapper, s As SerialData, r As GraphicsRegion)
         Dim pt As PointData = s.GetPointByX(X)
 
         If pt.pt.IsEmpty Then

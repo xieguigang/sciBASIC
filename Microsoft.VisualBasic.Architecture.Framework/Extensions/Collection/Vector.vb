@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::f7e2f29bf69a097626c970532f88c956, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::a000b8c4c7dde87caa736b8399686715, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -173,7 +173,8 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' 取出在判定条件成立的元素之后的所有元素
+    ''' Returns all of the elements which is after the element that detected by a specific evaluation function <paramref name="predicate"/>.
+    ''' (取出在判定条件成立的元素之后的所有元素)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -194,6 +195,13 @@ Public Module VectorExtensions
         Next
     End Function
 
+    ''' <summary>
+    ''' Replace target array data by using specific object value.(替换目标向量为指定的对象的填充数据)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="array"></param>
+    ''' <param name="o"></param>
+    ''' <param name="len"></param>
     <Extension>
     Public Sub Memset(Of T)(ByRef array As T(), o As T, len As Integer)
         If array Is Nothing OrElse array.Length < len Then
@@ -205,6 +213,12 @@ Public Module VectorExtensions
         Next
     End Sub
 
+    ''' <summary>
+    ''' 替换<paramref name="s"/>字符串变量数据为新的字符填充数据
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="c"></param>
+    ''' <param name="len"></param>
     <Extension>
     Public Sub Memset(ByRef s As String, c As Char, len As Integer)
         s = New String(c, len)
@@ -238,18 +252,22 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Each line in the text file should be a <see cref="Double"/> type numeric value.
+    ''' Load the text file as a numeric vector. Each line in the text file 
+    ''' should be a <see cref="Double"/> type numeric value.
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <Extension> Public Function LoadDblArray(path As String) As Double()
+    <Extension> Public Function LoadAsNumericVector(path As String) As Double()
         Dim array As String() = IO.File.ReadAllLines(path)
         Dim n As Double() = array.ToArray(AddressOf Val)
         Return n
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Split the object array using a specific evaluation function.
+    ''' (Please note that, all of the object in the <paramref name="source"/> array 
+    ''' that match the <paramref name="delimiter"/> evaluation, will not includes 
+    ''' in the returned tokens.)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cf41f314fb8685eb4e6c1f1c9ee4bbf, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Mouse.vb"
+﻿#Region "Microsoft.VisualBasic::7dca567cb938b866b6bee4640c32a6ce, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Mouse.vb"
 
     ' Author:
     ' 

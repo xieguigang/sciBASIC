@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8c8f345db15bc3e5b68217d0bd6ba22, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::e6616df3f37be4824f71d5718f5e916d, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network(Of T).vb"
 
     ' Author:
     ' 
@@ -70,7 +70,7 @@ Namespace FileStream
                 If value Is Nothing Then
                     __edges = New List(Of T_Edge)
                 Else
-                    __edges = value.ToList
+                    __edges = value.AsList
                 End If
             End Set
         End Property

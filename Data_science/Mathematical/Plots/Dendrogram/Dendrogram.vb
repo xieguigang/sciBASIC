@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c55f07d7b217780d84c04359700c9cc0, ..\sciBASIC#\Data_science\Mathematical\Plots\Dendrogram\Dendrogram.vb"
+﻿#Region "Microsoft.VisualBasic::2d1e37b9353bbc5178a246fce915c028, ..\sciBASIC#\Data_science\Mathematical\Plots\Dendrogram\Dendrogram.vb"
 
 ' Author:
 ' 
@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 Namespace Dendrogram
 
@@ -52,9 +53,9 @@ Namespace Dendrogram
     ''' </summary>
     Public Module Dendrogram
 
-        <Extension> Public Function Plot(tree As Tree, Optional size As Size = Nothing, Optional padding$ = g.DefaultPadding, Optional bg$ = "white") As Image
+        <Extension> Public Function Plot(tree As Tree, Optional size As Size = Nothing, Optional padding$ = g.DefaultPadding, Optional bg$ = "white") As GraphicsData
             Dim plotInternal =
-                Sub(ByRef g As Graphics, region As GraphicsRegion)
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     With region.Padding
                         Call g.__drawVisits(tree, New PointF(.Left * 2, .Top))
                     End With
@@ -68,7 +69,7 @@ Namespace Dendrogram
         ''' <param name="g"></param>
         ''' <param name="tree"></param>
         <Extension>
-        Private Sub __drawVisits(g As Graphics, tree As Tree, location As PointF)
+        Private Sub __drawVisits(g As IGraphics, tree As Tree, location As PointF)
             Dim y! = location.Y + 100
             Dim x! = location.X
             Dim pen As Pen = Pens.Black
@@ -98,7 +99,7 @@ Namespace Dendrogram
         End Sub
 
         <Extension>
-        Private Sub __drawNode(node As Tree, g As Graphics, location As PointF)
+        Private Sub __drawNode(node As Tree, g As IGraphics, location As PointF)
             Call g.DrawCircle(location, 5, Brushes.Red)
         End Sub
     End Module

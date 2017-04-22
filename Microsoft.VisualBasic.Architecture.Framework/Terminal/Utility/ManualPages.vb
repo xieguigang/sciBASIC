@@ -36,11 +36,11 @@ Namespace Terminal.Utility
         Public Const MANUAL_PAGE_PROMPTED As String = "Press [ENTER] or [DONW_ARROW] to continute the next page, press [Q] or [ESC] to exit manual...."
 
         Sub New(strManual As String)
-            Me._manualData = Strings.Split(strManual, vbCr).ToList
+            Me._manualData = Strings.Split(strManual, vbCr).AsList
         End Sub
 
         Sub New(strManual As IEnumerable(Of String))
-            _manualData = strManual.ToList
+            _manualData = strManual.AsList
         End Sub
 
         Public Overrides Function ToString() As String
@@ -66,7 +66,7 @@ Namespace Terminal.Utility
             Call PrintPrompted()
 
             p = initLines
-            _manualData = _manualData.Skip(initLines).ToList
+            _manualData = _manualData.Skip(initLines).AsList
 
             Do While _manualData.Count > 0
                 Dim c As ConsoleKeyInfo = Console.ReadKey
@@ -74,7 +74,7 @@ Namespace Terminal.Utility
                 If c.Key = ConsoleKey.Enter OrElse c.Key = ConsoleKey.DownArrow Then
                     p += printLines
                     s = String.Join(vbCrLf, _manualData.Take(printLines).ToArray)
-                    _manualData = _manualData.Skip(printLines).ToList
+                    _manualData = _manualData.Skip(printLines).AsList
 
                     Console.CursorTop -= 1
                     Call Console.WriteLine(New String(" "c, Console.BufferWidth))

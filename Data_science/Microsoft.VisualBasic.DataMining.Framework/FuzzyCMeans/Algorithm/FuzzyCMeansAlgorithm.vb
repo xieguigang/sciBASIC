@@ -152,7 +152,7 @@ Namespace FuzzyCMeans
                 Dim distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)) = coordinates.DistanceToClusterCenters(clusterCenters)
                 Dim newMembershipMatrix As Dictionary(Of Entity, List(Of Double)) = CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
 
-                Dim differences As List(Of List(Of Double)) = newMembershipMatrix.Values.DifferenceMatrix(membershipMatrix.Values.ToList())
+                Dim differences As List(Of List(Of Double)) = newMembershipMatrix.Values.DifferenceMatrix(membershipMatrix.Values.AsList())
                 Dim maxElement As Double = GetMaxElement(differences)
 
                 Call $"Max element: {maxElement}".__DEBUG_ECHO

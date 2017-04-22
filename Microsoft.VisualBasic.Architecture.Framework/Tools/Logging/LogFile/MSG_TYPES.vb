@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1be151d1eae00fa91502736187dd9239, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\MSG_TYPES.vb"
+﻿#Region "Microsoft.VisualBasic::2a7a6e2b0d6841e09d16f3df93b34282, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\MSG_TYPES.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,7 @@
 
 #End Region
 
-Imports System.Text
+Imports System.ComponentModel
 
 Namespace Logging
 
@@ -40,22 +40,21 @@ Namespace Logging
         ''' The normal information message.[WHITE]
         ''' </summary>
         ''' <remarks></remarks>
-        INF
+        <Description("INFOM")> INF
         ''' <summary>
         ''' The program error information message.[RED]
         ''' </summary>
         ''' <remarks></remarks>
-        ERR
+        <Description("ERROR")> ERR
         ''' <summary>
         ''' Warnning message from the program.[YELLOW]
         ''' </summary>
         ''' <remarks></remarks>
-        WRN
+        <Description("WARNG")> WRN
         ''' <summary>
         ''' The program debug information message.[BLUE]
         ''' </summary>
         ''' <remarks></remarks>
-        DEBUG
+        <Description("DEBUG")> DEBUG
     End Enum
-
 End Namespace

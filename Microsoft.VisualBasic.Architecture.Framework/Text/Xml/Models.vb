@@ -31,6 +31,7 @@ Imports System.Xml.Serialization
 Namespace Text.Xml.Models
 
     Public Class StringValue
+
         <XmlAttribute> Public Property value As String
 
         Public Overrides Function ToString() As String

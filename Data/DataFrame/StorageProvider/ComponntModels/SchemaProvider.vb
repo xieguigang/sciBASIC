@@ -1,37 +1,37 @@
-﻿#Region "Microsoft.VisualBasic::997ff7784fd8aebd817257931ae3589b, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::d7ccc6002ad634e43309946a8097731c, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -41,7 +41,7 @@ Namespace StorageProvider.ComponentModels
     ''' 从目标对象解析出来的Csv文件的结构组织数据
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class SchemaProvider
+    Public Class SchemaProvider : Implements IEnumerable(Of StorageProvider)
 
         ''' <summary>
         ''' 基本数据类型的列
@@ -68,6 +68,7 @@ Namespace StorageProvider.ComponentModels
                 End If
             End Set
         End Property
+
         ''' <summary>
         ''' 基本数据类型的数组形式的列
         ''' </summary>
@@ -93,6 +94,7 @@ Namespace StorageProvider.ComponentModels
                 End If
             End Set
         End Property
+
         Public Property EnumColumns As [Enum]()
             Get
                 Return _enumColumns
@@ -113,6 +115,7 @@ Namespace StorageProvider.ComponentModels
                 End If
             End Set
         End Property
+
         Public Property KeyValuePairColumns As KeyValuePair()
             Get
                 Return _keyMeta
@@ -158,6 +161,28 @@ Namespace StorageProvider.ComponentModels
         Dim _dictEnumColumns As Dictionary(Of String, [Enum])
         Dim _dictKeyMeta As Dictionary(Of String, KeyValuePair)
 #End Region
+
+        ''' <summary>
+        ''' 从Schema之中移除一个绑定的域
+        ''' </summary>
+        ''' <param name="name$"></param>
+        Public Sub Remove(name$)
+            If _dictCollectionColumns.ContainsKey(name) Then
+                _dictCollectionColumns.Remove(name)
+                _collectionColumns = _dictCollectionColumns.Values.ToArray
+            ElseIf _dictColumns.ContainsKey(name) Then
+                _dictColumns.Remove(name)
+                _columns = _dictColumns.Values.ToArray
+            ElseIf _dictEnumColumns.ContainsKey(name) Then
+                _dictEnumColumns.Remove(name)
+                _enumColumns = _dictEnumColumns.Values.ToArray
+            ElseIf _dictKeyMeta.ContainsKey(name) Then
+                _dictKeyMeta.Remove(name)
+                _keyMeta = _dictKeyMeta.Values.ToArray
+            Else
+                ' 没有找到相应的键名，则不做进一步的处理了
+            End If
+        End Sub
 
         Public ReadOnly Property HasMetaAttributes As Boolean
             Get
@@ -275,7 +300,7 @@ Namespace StorageProvider.ComponentModels
         ''' <summary>
         ''' 从域名称来判断
         ''' </summary>
-        ''' <param name="Name"></param>
+        ''' <param name="Name">从csv文件的header行数据之中所得到的列名称</param>
         ''' <returns></returns>
         Public Function ContainsField(Name As String) As Boolean
             Dim LQuery As StorageProvider =
@@ -298,6 +323,27 @@ Namespace StorageProvider.ComponentModels
                 Select p
 
             Return Not LQuery Is Nothing
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="row">The csv header row.</param>
+        ''' <returns></returns>
+        Public Function CheckFieldConsistent(row As RowObject) As String
+            Dim sb As New StringBuilder
+
+            For Each field As String In row
+                If Not ContainsField(field) Then
+                    If HasMetaAttributes Then
+                        Call sb.AppendLine($"Field: `{field}` probably exists in meta field data.")
+                    Else
+                        Call sb.AppendLine($"Field: `{field}` can not be found!")
+                    End If
+                End If
+            Next
+
+            Return sb.ToString
         End Function
 
         ''' <summary>
@@ -353,10 +399,10 @@ Namespace StorageProvider.ComponentModels
         ''' ``CreateObject(GetType(T), Explicit)``
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="Explicit"></param>
+        ''' <param name="strict">是否严格解析？严格的意思就是说只解析出经过自定义属性所定义的属性为列</param>
         ''' <returns></returns>
-        Public Shared Function CreateObject(Of T As Class)(Explicit As Boolean) As SchemaProvider
-            Return CreateObject(GetType(T), Explicit)
+        Public Shared Function CreateObject(Of T As Class)(strict As Boolean) As SchemaProvider
+            Return CreateObject(GetType(T), strict)
         End Function
 
         Private Shared Function GetKeyValuePairColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As KeyValuePair()
@@ -434,6 +480,16 @@ Namespace StorageProvider.ComponentModels
         Private Shared Function __columnType(type As ProviderIds) As Boolean
             Return type = Reflection.ProviderIds.Column OrElse
                 type = Reflection.ProviderIds.NullMask
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of StorageProvider) Implements IEnumerable(Of StorageProvider).GetEnumerator
+            For Each field As StorageProvider In Properties
+                Yield field
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

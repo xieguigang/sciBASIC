@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dff7e1376e86469990ad209ddccc9bb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::7b7f5bcc5483a0656ab9cf423dedc35e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -218,18 +218,18 @@ Public Module XmlExtensions
     ''' <param name="obj"></param>
     ''' <param name="saveXml"></param>
     ''' <param name="throwEx"></param>
-    ''' <param name="encoding"></param>
+    ''' <param name="encoding">VB.NET的XML文件的默认编码格式为``utf-16``</param>
     ''' <returns></returns>
     <Extension> Public Function SaveAsXml(Of T As Class)(
                                     obj As T,
                                 saveXml As String,
                        Optional throwEx As Boolean = True,
-                       Optional encoding As Encoding = Nothing,
+                       Optional encoding As Encodings = Encodings.UTF16,
     <CallerMemberName> Optional caller As String = "") As Boolean
 
         Dim xmlDoc As String = obj.GetXml(throwEx)
         Try
-            Return xmlDoc.SaveTo(saveXml, encoding)
+            Return xmlDoc.SaveTo(saveXml, encoding.CodePage)
         Catch ex As Exception
             ex = New Exception(caller, ex)
             If throwEx Then
@@ -311,12 +311,12 @@ Public Module XmlExtensions
     ''' 使用一个XML文本内容的一个片段创建一个XML映射对象
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Xml">是Xml文件的文件内容而非文件路径</param>
+    ''' <param name="xml">是Xml文件的文件内容而非文件路径</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function CreateObjectFromXmlFragment(Of T As Class)(Xml As String) As T
-        Using Stream As New StringReader(s:="<?xml version=""1.0""?>" & vbCrLf & Xml)
-            Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(Stream), T)
+    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(xml As String) As T
+        Using s As New StringReader(s:="<?xml version=""1.0""?>" & ASCII.LF & xml)
+            Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
         End Using
     End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::877379416b55b165ff06468c08060df8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::e426106dda980cd47bd8c8dbde4c821b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@ Namespace ComponentModel.Ranges
     ''' Represents a double range with minimum and maximum values
     ''' </summary>
     Public Class DoubleRange : Implements IRanges(Of Double)
+        Implements IEnumerable(Of Double)
 
         ''' <summary>
         ''' Minimum value
@@ -156,6 +157,16 @@ Namespace ComponentModel.Ranges
             Dim percent# = (x - Min) / Length
             Dim value# = percent * valueRange.Length + valueRange.Min
             Return value
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Double) Implements IEnumerable(Of Double).GetEnumerator
+            For Each x In Me.Enumerate(100)
+                Yield x
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

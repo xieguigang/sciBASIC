@@ -80,9 +80,15 @@ Public Module MatrixExtensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToVectorList(Of T)(MAT As T(,)) As List(Of T())
-        Return MAT.RowIterator.ToList
+        Return MAT.RowIterator.AsList
     End Function
 
+    ''' <summary>
+    ''' Iterates each row data in a matrix type array.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="MAT"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function RowIterator(Of T)(MAT As T(,)) As IEnumerable(Of T())
         Dim width As Integer = MAT.GetLength(1)

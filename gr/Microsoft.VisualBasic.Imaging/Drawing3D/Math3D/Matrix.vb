@@ -1,4 +1,32 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::3bb8573701c42c858f6e5baf9813258f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Matrix.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
@@ -41,7 +69,7 @@ Namespace Drawing3D.Math3D
         ''' </summary>
         ''' <param name="v">经过转换之后的向量，例如旋转或者位移，在这个函数值中会利用摄像机进行投影</param>
         ''' <returns></returns>
-        Public Function TranslateBuffer(camera As Camera, v As Vector3D) As IEnumerable(Of Polygon)
+        Public Function TranslateBuffer(camera As Camera, v As Vector3D, illumination As Boolean) As IEnumerable(Of Polygon)
             Dim surfaces As New List(Of Surface)
 
             For Each s As SurfaceVector In Me.surfaces
@@ -51,7 +79,7 @@ Namespace Drawing3D.Math3D
                 }
             Next
 
-            Return camera.PainterBuffer(surfaces)
+            Return camera.PainterBuffer(surfaces, illumination)
         End Function
 
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator

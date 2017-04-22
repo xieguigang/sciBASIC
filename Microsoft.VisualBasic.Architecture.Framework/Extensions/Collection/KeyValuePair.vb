@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::dc970315c583e3f0093a530c58d1ff1f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::46f89fcd593d9663e5b6da1f21047c39, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,8 +34,62 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' KeyValue pair data related extensions API.
+''' </summary>
 Public Module KeyValuePairExtensions
 
+    ''' <summary>
+    ''' Removes the target key in the dictionary table, and then gets the removed value.
+    ''' (删除字典之中的指定的键值对，然后返回被删除的数据值)
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="key"></param>
+    ''' <returns>The value of the removed <paramref name="key"/></returns>
+    <Extension>
+    Public Function RemoveAndGet(Of K, V)(table As Dictionary(Of K, V), key As K) As V
+        Dim item As V = table(key)
+        Call table.Remove(key)
+        Return item
+    End Function
+
+    ''' <summary>
+    ''' Iterates all of the values in the <paramref name="source"/> collection data.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IteratesAll(Of T As INamedValue)(source As IEnumerable(Of NamedCollection(Of T))) As T()
+        Return source.Select(Function(c) c.Value).IteratesALL.ToArray
+    End Function
+
+    ''' <summary>
+    ''' Groups source by <see cref="INamedValue.Key"/>
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GroupByKey(Of T As INamedValue)(source As IEnumerable(Of T)) As NamedCollection(Of T)()
+        Return source _
+            .GroupBy(Function(o) o.Key) _
+            .ToArray(Function(g)
+                         Return New NamedCollection(Of T) With {
+                             .Name = g.Key,
+                             .Value = g.ToArray
+                         }
+                     End Function)
+    End Function
+
+    ''' <summary>
+    ''' Retrieve all items' value data.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Values(Of T)(source As IEnumerable(Of NamedValue(Of T))) As T()
         Return source.Select(Function(x) x.Value).ToArray
@@ -57,23 +111,45 @@ Public Module KeyValuePairExtensions
         Return list.ToArray
     End Function
 
+    ''' <summary>
+    ''' Dictionary object contains the specific <see cref="NamedValue(Of T).Name"/>?
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="k"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ContainsKey(Of T As INamedValue)(table As Dictionary(Of T), k As NamedValue(Of T)) As Boolean
         Return table.ContainsKey(k.Name)
     End Function
 
+    ''' <summary>
+    ''' Dictionary object contains the specific <see cref="NamedValue(Of T).Name"/>?
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="k"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ContainsKey(Of T)(table As Dictionary(Of String, T), k As NamedValue(Of T)) As Boolean
         Return table.ContainsKey(k.Name)
     End Function
 
+    ''' <summary>
+    ''' Converts the interface object into a Dictionary object.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function DictionaryData(Of T, V)(source As IReadOnlyDictionary(Of T, V)) As Dictionary(Of T, V)
         Return source.ToDictionary(Function(x) x.Key, Function(x) x.Value)
     End Function
 
     ''' <summary>
-    ''' 类型必须是枚举类型
+    ''' Creates the dictionary for string converts to enum value.
+    ''' (接受的泛型类型必须是枚举类型)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="lcaseKey"></param>

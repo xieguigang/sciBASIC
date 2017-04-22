@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef10186931ee7307962bc35c9ab99fc4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\GDIDevice.vb"
+﻿#Region "Microsoft.VisualBasic::221b50cef5332fb081066f0db4e83255, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\GDIDevice.vb"
 
     ' Author:
     ' 
@@ -59,8 +59,22 @@ Namespace Drawing3D.Device
         Dim worker As New Worker(Me)
         Dim mouse As New Mouse(Me)
 
-        Public Property drawPath As Boolean
+        ''' <summary>
+        ''' 是否绘制出模型的边界线
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property DrawPath As Boolean
         Public Property LightIllumination As Boolean
+
+        Public Property LightColor As Color
+            Get
+                Return _camera.lightColor
+            End Get
+            Set(value As Color)
+                _camera.lightColor = value
+            End Set
+        End Property
+
         Public Property ViewDistance As Single
             Get
                 Return _camera.ViewDistance

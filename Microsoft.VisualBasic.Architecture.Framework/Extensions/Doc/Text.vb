@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::f762dec2e9f1fe5c9a98cf0c85f16f08, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::7a48d91588f36eb09bb11f7889443d1b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -43,7 +43,7 @@ Public Module TextDoc
     ''' 
     ''' </summary>
     ''' <param name="handle$">
-    ''' + 当这个参数为文件路径的时候会返回<see cref="IteratesALL(Of T)(IEnumerable(Of IEnumerable(Of T)))"/>函数的结果
+    ''' + 当这个参数为文件路径的时候会返回<see cref="Linq.IteratesALL(Of T)(IEnumerable(Of IEnumerable(Of T)))"/>函数的结果
     ''' + 当这个参数只是为文本字符串的时候，则会返回<see cref="lTokens"/>函数的结果
     ''' </param>
     ''' <returns></returns>
@@ -136,7 +136,7 @@ Public Module TextDoc
     ''' <returns></returns>
     <Extension> Public Function ReadFirstLine(path As String) As String
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
-            Using reader As StreamReader = New StreamReader(file)
+            Using reader As StreamReader = New StreamReader(file, DefaultEncoding)
                 Dim first As String = reader.ReadLine
                 Return first
             End Using
@@ -156,7 +156,7 @@ Public Module TextDoc
     <Extension>
     Public Function ReadAllText(path As String, Optional encoding As Encoding = Nothing, Optional throwEx As Boolean = True, Optional suppress As Boolean = False) As String
         If encoding Is Nothing Then
-            encoding = Encoding.UTF8
+            encoding = DefaultEncoding
         End If
         Try
             Return FileIO.FileSystem.ReadAllText(path, encoding:=encoding)
@@ -177,7 +177,8 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 这个函数只建议读取小文本文件的时候使用
+    ''' This function is recommend using for the small(probably smaller than 300MB) text file reading.
+    ''' (这个函数只建议读取小文本文件的时候使用)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="Encoding">Default value is UTF8</param>
@@ -188,13 +189,42 @@ Public Module TextDoc
     <Extension>
     Public Function ReadAllLines(path As String, Optional Encoding As Encoding = Nothing) As String()
         If Encoding Is Nothing Then
-            Encoding = System.Text.Encoding.UTF8
+            Encoding = DefaultEncoding
         End If
         If path.FileExists Then
             Return IO.File.ReadAllLines(path, encoding:=Encoding)
         Else
             Return New String() {}
         End If
+    End Function
+
+    ''' <summary>
+    ''' Default is <see cref="Encoding.Default"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property DefaultEncoding As Encoding
+
+    Sub New()
+        Dim codepage$ = App.GetVariable("default_encoding")
+
+        If codepage.StringEmpty Then
+            DefaultEncoding = Encoding.Default
+        Else
+            DefaultEncoding = Text _
+                .ParseEncodingsName(codepage, Encodings.Default) _
+                .CodePage
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 使用html文本的默认编码格式<see cref="Encodings.UTF8"/>来保存这个文本文件
+    ''' </summary>
+    ''' <param name="html$"></param>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SaveWithHTMLEncoding(html$, path$) As Boolean
+        Return html.SaveTo(path, Encoding.UTF8)
     End Function
 
     ''' <summary>
@@ -220,7 +250,7 @@ Public Module TextDoc
         End If
 
         If encoding Is Nothing Then
-            encoding = Encoding.Default
+            encoding = DefaultEncoding
         End If
 
         Dim DIR As String
