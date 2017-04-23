@@ -60,12 +60,6 @@ Public Class Fractions
         Return Me.GetJson
     End Function
 
-    Public Enum ValueLabels
-        None
-        Percentage
-        Value
-    End Enum
-
     Public Function GetValueLabel(type As ValueLabels) As String
         Select Case type
             Case ValueLabels.None
@@ -73,7 +67,7 @@ Public Class Fractions
             Case ValueLabels.Value
                 Return Value.FormatNumeric(2)
             Case ValueLabels.Percentage
-                Return (Percentage * 100).FormatNumeric(2) & "%"
+                Return (Percentage * 100).ToString("F2") & "%"
             Case Else
                 Return Value
         End Select

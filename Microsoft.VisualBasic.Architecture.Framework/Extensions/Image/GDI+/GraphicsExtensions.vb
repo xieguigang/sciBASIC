@@ -182,11 +182,23 @@ Namespace Imaging
             Return New Rectangle(New Point, size)
         End Function
 
+        ''' <summary>
+        ''' Is target point in the target region?
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function InRegion(x As Point, rect As Rectangle) As Boolean
             Return New PointF(x.X, x.Y).InRegion(rect)
         End Function
 
+        ''' <summary>
+        ''' Is target point in the target region?
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function InRegion(x As PointF, rect As Rectangle) As Boolean
             If x.X < rect.Left OrElse x.X > rect.Right Then
@@ -199,15 +211,30 @@ Namespace Imaging
             Return True
         End Function
 
+        ''' <summary>
+        ''' Calculate the center location of the target sized region
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
         <Extension> Public Function GetCenter(size As Size) As Point
             Return New Point(size.Width / 2, size.Height / 2)
         End Function
 
+        ''' <summary>
+        ''' Convert image to icon
+        ''' </summary>
+        ''' <param name="res"></param>
+        ''' <returns></returns>
         <ExportAPI("To.Icon")>
         <Extension> Public Function GetIcon(res As Image) As Icon
             Return Drawing.Icon.FromHandle(New Bitmap(res).GetHicon)
         End Function
 
+        ''' <summary>
+        ''' Convert image to icon
+        ''' </summary>
+        ''' <param name="res"></param>
+        ''' <returns></returns>
         <ExportAPI("To.Icon")>
         <Extension> Public Function GetIcon(res As Bitmap) As Icon
             Return Drawing.Icon.FromHandle(res.GetHicon)
