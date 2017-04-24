@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F7FFC43B-0372-4C3B-A271-0DCAA05DB07D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>LanguageSyntax.Module1</StartupObject>
+    <StartupObject>LanguageSyntax.Program</StartupObject>
     <RootNamespace>LanguageSyntax</RootNamespace>
     <AssemblyName>LanguageSyntax</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -69,7 +69,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Module1.vb" />
+    <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -107,8 +107,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
-      <Project>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</Project>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
   </ItemGroup>

@@ -3,7 +3,7 @@
 ## Code Architecture of a VisualBasic CLI program
 
 There is a VisualBasic application helper module that define in the namespace:
-[Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb)
+[Microsoft.VisualBasic.App](../../Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb)
 
 **A special function named _main_ is the starting point of execution for all VisualBasic programs**. A VisualBasic CLI application should define the **Main** entry point in a Module which is named _Program_ and running from a ``Integer`` state code returns Function ``Main``. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
 

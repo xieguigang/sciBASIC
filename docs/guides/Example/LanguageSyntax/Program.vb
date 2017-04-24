@@ -29,7 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Module Module1
+Module Program
 
     Sub Main()
         Dim i As int = 0
