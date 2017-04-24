@@ -41,7 +41,7 @@ Namespace Plot3D
 
             Dim plot3DInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Call DirectCast(g, Graphics2D).Graphics.SurfacePainter(camera, pieChart)
+                    Call g.SurfacePainter(camera, pieChart)
                 End Sub
 
             Return g.GraphicsPlots(
