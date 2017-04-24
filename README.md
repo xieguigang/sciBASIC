@@ -48,8 +48,8 @@ PM> Install-Package sciBASIC -Pre
 
 ###### 2. docs for User
 
-+ **[/guides](./guides/)** : This framework code usage example and manual documents
-+ **[/vb_codestyle](./vb_codestyle/)** : sciBASIC# Coding style standard document
++ **[/guides](./docs/guides/)** : This framework code usage example and manual documents
++ **[/vb_codestyle](./docs/vb_codestyle/)** : sciBASIC# Coding style standard document
 
 ---------------------------------------------------------------------------------------------------------------
 
