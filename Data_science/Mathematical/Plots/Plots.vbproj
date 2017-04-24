@@ -183,6 +183,7 @@
     <Compile Include="BarPlot\Histogram\Extensions.vb" />
     <Compile Include="BarPlot\StyledBarplot.vb" />
     <Compile Include="csv\Extensions.vb" />
+    <Compile Include="Fractions\LabelStyles.vb" />
     <Compile Include="g\Axis\Axis.vb" />
     <Compile Include="BarPlot\BarPlot2.vb" />
     <Compile Include="BarPlot\Histogram\DataModel.vb" />
