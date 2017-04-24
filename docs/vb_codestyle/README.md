@@ -30,6 +30,8 @@ int main(int argc, char *argv[]) {
 
 In the above example, Where, the type **CLI** is the CLI interface which it is a module that contains all of the CLI command of your application. And the extension function **RunCLI** is a CLI extension method from the VisualBasic App helper: [Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb). The property value of **App.CommandLine** is the commandline argument of current application that user used for start this application and calling for some _CLI_ command which is exposed in your application's **CLI** module.
 
+![](./CLI_programming.png)
+
 ### How to define the CLI module?
 
 A **Module** is a static _Class_ type in the VisualBasic, and it usually used for _the API exportation and common method definition for a set of similarity or functional correlated utility functions_.
@@ -62,7 +64,7 @@ Partial Module CLI
 End Module
 ```
 
-This example code can be found at: [github](https://github.com/SMRUCC/ncbi-localblast/tree/master/Tools/CLI)
+This example code can be found at: [github](../../docs/guides/Example/Language.sln)
 
 ### How to expose the CLI interface API in your application?
 
