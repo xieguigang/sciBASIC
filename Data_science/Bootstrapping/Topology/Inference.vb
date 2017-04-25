@@ -45,7 +45,7 @@ Namespace Topology
         ''' <returns></returns>
         <Extension>
         Public Function GAFInference(obs As ODEsOut, Optional popSize% = 500) As NamedValue(Of (alpha As Double(), beta As Double()))
-
+            Throw New NotImplementedException
         End Function
     End Module
 End Namespace
