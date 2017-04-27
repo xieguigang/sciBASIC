@@ -290,6 +290,7 @@ Public Module App
         App.LocalData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath
         App.CurrentProcessTemp = GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath
         App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
+        App.LogErrDIR = App.LocalData & $"/.logs/err/"
 #End Region
     End Sub
 
@@ -579,7 +580,7 @@ Public Module App
     ''' Error default log fie location from function <see cref="App.LogException(Exception, String)"/>.(存放自动存储的错误日志的文件夹)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property LogErrDIR As String = App.LocalData & $"/.logs/err/"
+    Public ReadOnly Property LogErrDIR As String
 
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at a user defined location parameter: <paramref name="FileName"/>.

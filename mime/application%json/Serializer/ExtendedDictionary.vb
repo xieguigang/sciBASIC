@@ -46,6 +46,7 @@ Public Module ExtendedDictionary
                 Dim j$ = o.BuildJsonString
                 Dim entry As PropertyInfo = defines(key$)
                 Dim value = LoadObject(j$, entry.PropertyType)
+
                 Call entry.SetValue(obj, value)
                 Call model.Remove(key)
             End If

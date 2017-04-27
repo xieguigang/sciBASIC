@@ -172,5 +172,9 @@ Namespace Drawing3D
         Public Shared Operator <>(p As Point3D, n!) As Boolean
             Return Not p = n
         End Operator
+
+        Public Shared Widening Operator CType(pt As Point) As Point3D
+            Return New Point3D(pt)
+        End Operator
     End Structure
 End Namespace

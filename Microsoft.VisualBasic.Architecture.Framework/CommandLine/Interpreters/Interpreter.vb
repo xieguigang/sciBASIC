@@ -54,8 +54,7 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    <[Namespace]("Interpreter")>
-    Public Class Interpreter
+    <[Namespace]("Interpreter")> Public Class Interpreter
 
         Implements IDisposable
         Implements IDictionary(Of String, APIEntryPoint)
@@ -161,6 +160,14 @@ Namespace CommandLine
                 Call Console.WriteLine()
                 Call Console.WriteLine($"Print environment variables for {GetType(App).FullName}:")
                 Call Console.WriteLine(ConfigEngine.Prints(vars))
+
+                Return 0
+
+            ElseIf "??history".TextEquals(commandName) Then
+
+                Call Console.WriteLine()
+                Call (App.LogErrDIR.ParentPath & "/.shells.log").ReadAllText.EchoLine
+                Call Console.WriteLine()
 
                 Return 0
 

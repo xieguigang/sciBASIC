@@ -41,13 +41,14 @@ Partial Class FormLandscape
         Me.SetLightColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResetToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveTexturesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SetBackgroundColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ResetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.trbFOV = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.SetBackgroundColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.IsometricPieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.trbFOV, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -71,7 +72,7 @@ Partial Class FormLandscape
         '
         'LoadModelToolStripMenuItem
         '
-        Me.LoadModelToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Load3mfToolStripMenuItem, Me.ToolStripMenuItem2, Me.IsometricComplexExampleToolStripMenuItem, Me.IsometricKnotToolStripMenuItem, Me.IsometricGridToolStripMenuItem})
+        Me.LoadModelToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Load3mfToolStripMenuItem, Me.ToolStripMenuItem2, Me.IsometricComplexExampleToolStripMenuItem, Me.IsometricKnotToolStripMenuItem, Me.IsometricGridToolStripMenuItem, Me.IsometricPieToolStripMenuItem})
         Me.LoadModelToolStripMenuItem.Name = "LoadModelToolStripMenuItem"
         Me.LoadModelToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.LoadModelToolStripMenuItem.Text = "Load Model"
@@ -181,6 +182,17 @@ Partial Class FormLandscape
         Me.RemoveTexturesToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.RemoveTexturesToolStripMenuItem.Text = "Remove Textures"
         '
+        'SetBackgroundColorToolStripMenuItem
+        '
+        Me.SetBackgroundColorToolStripMenuItem.Name = "SetBackgroundColorToolStripMenuItem"
+        Me.SetBackgroundColorToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.SetBackgroundColorToolStripMenuItem.Text = "Set BackgroundColor"
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(183, 6)
+        '
         'ResetToolStripMenuItem
         '
         Me.ResetToolStripMenuItem.Name = "ResetToolStripMenuItem"
@@ -238,16 +250,11 @@ Partial Class FormLandscape
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "View Distance:"
         '
-        'SetBackgroundColorToolStripMenuItem
+        'IsometricPieToolStripMenuItem
         '
-        Me.SetBackgroundColorToolStripMenuItem.Name = "SetBackgroundColorToolStripMenuItem"
-        Me.SetBackgroundColorToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
-        Me.SetBackgroundColorToolStripMenuItem.Text = "Set BackgroundColor"
-        '
-        'ToolStripMenuItem3
-        '
-        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(183, 6)
+        Me.IsometricPieToolStripMenuItem.Name = "IsometricPieToolStripMenuItem"
+        Me.IsometricPieToolStripMenuItem.Size = New System.Drawing.Size(226, 22)
+        Me.IsometricPieToolStripMenuItem.Text = "Isometric - Pie"
         '
         'FormLandscape
         '
@@ -297,4 +304,5 @@ Partial Class FormLandscape
     Friend WithEvents ResetToolStripMenuItem2 As ToolStripMenuItem
     Friend WithEvents SetBackgroundColorToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
+    Friend WithEvents IsometricPieToolStripMenuItem As ToolStripMenuItem
 End Class
