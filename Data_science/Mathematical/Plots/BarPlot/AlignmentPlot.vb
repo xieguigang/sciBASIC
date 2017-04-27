@@ -52,7 +52,7 @@ Namespace BarPlot
                                       Optional title$ = "Alignments Plot",
                                       Optional tickCSS$ = CSSFont.Win7Normal,
                                       Optional titleCSS$ = CSSFont.Win10NormalLarger,
-                                      Optional legendFontCSS$ = CSSFont.Win10NormalLarger,
+                                      Optional legendFontCSS$ = CSSFont.Win10Normal,
                                       Optional bw! = 8,
                                       Optional format$ = "F2") As GraphicsData
 
@@ -152,8 +152,8 @@ Namespace BarPlot
                         ' legend 的圆角矩形
                         Call Shapes.RoundRect.Draw(
                             g,
-                            New Point(rect.Right - 320, rect.Top + 6),
-                            New Size(300, 80), 8,
+                            New Point(rect.Right - 340, rect.Top + 6),
+                            New Size(320, 80), 8,
                             Brushes.White,
                             New Stroke With {
                                 .dash = DashStyle.Solid,
@@ -167,7 +167,7 @@ Namespace BarPlot
 
                         y = 7
 
-                        box = New Rectangle(New Point(rect.Right - 300, rect.Top + 20), New Size(20, 20))
+                        box = New Rectangle(New Point(rect.Right - 330, rect.Top + 20), New Size(20, 20))
                         Call g.FillRectangle(ba, box)
                         Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -y))
 
