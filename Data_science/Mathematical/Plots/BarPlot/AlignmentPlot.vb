@@ -146,7 +146,7 @@ Namespace BarPlot
                             rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
                             g.FillRectangle(ba, rect)
 
-                            If displayX AndAlso o.value / yLength >= 0.65 Then
+                            If displayX AndAlso o.value / yLength >= 0.25 Then
                                 xlabel = o.X.ToString("F2")
                                 xsz = g.MeasureString(xlabel, xCSSFont)
                                 xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
@@ -160,7 +160,7 @@ Namespace BarPlot
                             rect = Rectangle(ymid, left, left + bw, y)
                             g.FillRectangle(bb, rect)
 
-                            If displayX AndAlso o.value / yLength >= 0.65 Then
+                            If displayX AndAlso o.value / yLength >= 0.25 Then
                                 xlabel = o.X.ToString("F2")
                                 xsz = g.MeasureString(xlabel, xCSSFont)
                                 xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
