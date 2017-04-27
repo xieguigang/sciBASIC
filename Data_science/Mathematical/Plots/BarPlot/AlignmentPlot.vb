@@ -35,6 +35,7 @@ Namespace BarPlot
         ''' <param name="subject">The subject signal values</param>
         ''' <param name="cla$">Color expression for <paramref name="query"/></param>
         ''' <param name="clb$">Color expression for <paramref name="subject"/></param>
+        ''' <param name="displayX">是否在信号的柱子上面显示出X坐标的信息</param>
         ''' <returns></returns>
         <Extension>
         Public Function PlotAlignment(query As (X#, value#)(), subject As (X#, value#)(),
@@ -54,7 +55,9 @@ Namespace BarPlot
                                       Optional titleCSS$ = CSSFont.Win10NormalLarger,
                                       Optional legendFontCSS$ = CSSFont.Win10Normal,
                                       Optional bw! = 8,
-                                      Optional format$ = "F2") As GraphicsData
+                                      Optional format$ = "F2",
+                                      Optional displayX As Boolean = True,
+                                      Optional X_CSS$ = CSSFont.Win10Normal) As GraphicsData
 
             If xrange Is Nothing Then
                 xrange = New DoubleRange(query.Keys.Join(subject.Keys).ToArray)
@@ -131,6 +134,10 @@ Namespace BarPlot
                         Dim left!
                         Dim ba As New SolidBrush(cla.TranslateColor)
                         Dim bb As New SolidBrush(clb.TranslateColor)
+                        Dim xCSSFont As Font = CSSFont.TryParse(X_CSS).GDIObject
+                        Dim xsz As SizeF
+                        Dim xpos As PointF
+                        Dim xlabel$
 
                         For Each o In query
                             y = o.value
@@ -138,6 +145,13 @@ Namespace BarPlot
                             left = region.Padding.Left + xscale(o.X)
                             rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
                             g.FillRectangle(ba, rect)
+
+                            If displayX Then
+                                xlabel = o.X.ToString("F2")
+                                xsz = g.MeasureString(xlabel, xCSSFont)
+                                xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
+                                g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                            End If
                         Next
                         For Each o In subject
                             y = o.value
@@ -145,6 +159,13 @@ Namespace BarPlot
                             left = region.Padding.Left + xscale(o.X)
                             rect = Rectangle(ymid, left, left + bw, y)
                             g.FillRectangle(bb, rect)
+
+                            If displayX Then
+                                xlabel = o.X.ToString("F2")
+                                xsz = g.MeasureString(xlabel, xCSSFont)
+                                xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
+                                g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                            End If
                         Next
 
                         rect = region.PlotRegion
