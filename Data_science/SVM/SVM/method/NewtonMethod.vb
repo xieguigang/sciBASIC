@@ -120,8 +120,10 @@ Namespace Method
                 firstDerivates)
 
             vecOffs.NormalVector = New NormalVector(
+                {
                 normVecOffset.NormalVector.W1 - functionProduct(0),
-                normVecOffset.NormalVector.W2 - functionProduct(1))
+                normVecOffset.NormalVector.W2 - functionProduct(1)
+            })
             vecOffs.Offset = normVecOffset.Offset - functionProduct(2)
 
             Return vecOffs

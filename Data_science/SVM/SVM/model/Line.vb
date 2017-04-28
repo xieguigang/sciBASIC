@@ -23,7 +23,7 @@
         Public Sub New(startX As Double, startY As Double, endX As Double, endY As Double)
             Dim m As Double = (endY - startY) / (endX - startX)
 
-            NormalVector = New NormalVector(-1 * m, 1)
+            NormalVector = New NormalVector({-1 * m, 1})
             Offset = startY - m * startX
         End Sub
 
@@ -68,7 +68,7 @@
         End Function
 
         Public Function Clone() As Line
-            Return New Line(New NormalVector(NormalVector.W1, NormalVector.W2), Offset)
+            Return New Line(New NormalVector({NormalVector.W1, NormalVector.W2}), Offset)
         End Function
 
         Private Function ICloneable_Clone() As Object Implements ICloneable.Clone

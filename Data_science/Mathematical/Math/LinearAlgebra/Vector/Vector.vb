@@ -149,7 +149,7 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' 向量减法算符重载，分量分别想减
+        ''' 向量减法算符重载，分量分别相减
         ''' </summary>
         ''' <param name="v1"></param>
         ''' <param name="v2"></param>

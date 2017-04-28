@@ -1,29 +1,33 @@
+Imports System.Linq
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports [Class] = Microsoft.VisualBasic.DataMining.ComponentModel.ColorClass
 
 Namespace Model
 
     ''' <summary>
+    ''' 一个待分类对象的实例
+    ''' 
     ''' @author Ralf Wondratschek
     ''' </summary>
     Public Class LabeledPoint : Implements ICloneable
 
+        Sub New(color As [Class])
+        End Sub
+
         Sub New(x As Double, y As Double, clazz As [Class])
-            X1 = x
-            X2 = y
-            ColorClass = clazz
+            Me.X = New Vector({x, y})
+            Me.ColorClass = clazz
         End Sub
 
         Public ReadOnly Property ColorClass As [Class]
+
         ''' <summary>
         ''' x
         ''' </summary>
         ''' <returns></returns>
-        Public Property X1 As Double
-        ''' <summary>
-        ''' y
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property X2 As Double
+        Public Property X As Vector
+
         Public ReadOnly Property Y As Integer
             Get
                 Return ColorClass.int
@@ -31,7 +35,7 @@ Namespace Model
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"[{ColorClass}] ({X1}, {1 - X2})"
+            Return $"[{ColorClass}] ({X.ToArray.GetJson})"
         End Function
 
         Public Shared Function ListEqual(list1 As IList(Of LabeledPoint), list2 As IList(Of LabeledPoint)) As Boolean
@@ -56,17 +60,18 @@ Namespace Model
 
         Public Overrides Function Equals(o As Object) As Boolean
             If TypeOf o Is LabeledPoint Then
-                Dim point As LabeledPoint = CType(o, LabeledPoint)
-                Return point.ColorClass = ColorClass AndAlso
-                    point.X1 = X1 AndAlso
-                    point.X2 = X2
+                With TryCast(o, LabeledPoint)
+                    Return .ColorClass = ColorClass AndAlso (.X = X).All(Function(t) t)
+                End With
             End If
 
             Return MyBase.Equals(o)
         End Function
 
         Public Function Clone() As LabeledPoint
-            Return New LabeledPoint(X1, X2, ColorClass)
+            Return New LabeledPoint(ColorClass) With {
+                .X = X
+            }
         End Function
 
         Private Function ICloneable_Clone() As Object Implements ICloneable.Clone
