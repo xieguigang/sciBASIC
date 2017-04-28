@@ -257,6 +257,15 @@ Namespace Graphic.Axis
             Return label.DrawLabel(font, fcolor, size)
         End Function
 
+        ''' <summary>
+        ''' 这个函数不是将文本作为html来进行渲染，而是直接使用gdi进行绘图，如果需要将文本
+        ''' 作为html渲染出来，则需要使用<see cref="TextRender.DrawHtmlText"/>方法
+        ''' </summary>
+        ''' <param name="label$"></param>
+        ''' <param name="font"></param>
+        ''' <param name="fcolor$"></param>
+        ''' <param name="size$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
             Using g As Graphics2D = size.SizeParser.CreateGDIDevice(Color.Transparent)

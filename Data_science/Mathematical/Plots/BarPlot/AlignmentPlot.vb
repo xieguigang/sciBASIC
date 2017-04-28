@@ -19,7 +19,7 @@ Namespace BarPlot
     Public Module AlignmentPlot
 
         <Extension>
-        Private Function Keys(signals As signals()) As Double()
+        Public Function Keys(signals As signals()) As Double()
             Return signals.Select(Function(t) t.Item1).ToArray
         End Function
 
@@ -57,7 +57,9 @@ Namespace BarPlot
                                       Optional bw! = 8,
                                       Optional format$ = "F2",
                                       Optional displayX As Boolean = True,
-                                      Optional X_CSS$ = CSSFont.Win10Normal) As GraphicsData
+                                      Optional X_CSS$ = CSSFont.Win10Normal,
+                                      Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
+                                      Optional labelPlotStrength# = 0.25) As GraphicsData
 
             If xrange Is Nothing Then
                 xrange = New DoubleRange(query.Keys.Join(subject.Keys).ToArray)
@@ -124,7 +126,18 @@ Namespace BarPlot
 
                         ' Y 坐标轴
                         Call g.DrawLine(axisPen, .Location, New Point(.Left, .Bottom))
-                        Call g.DrawImage(Axis.DrawLabel(ylab, labelFont, ), New Point(.Left + 3, .Top))
+                        Select Case yAxislabelPosition
+                            Case YlabelPosition.InsidePlot
+                                Call g.DrawImageUnscaled(Axis.DrawLabel(ylab, labelFont, ), New Point(.Left + 3, .Top))
+                            Case YlabelPosition.LeftCenter
+                                Dim labelImage = Axis.DrawLabel(ylab, labelFont, )
+                                Dim yLabelPoint As New Point(
+                                    (.Left - labelImage.Width) / 3,
+                                    .Top + (.Height - labelImage.Height) / 2)
+                                Call g.DrawImageUnscaled(labelImage, yLabelPoint)
+                            Case Else
+                                ' 不进行标签的绘制
+                        End Select
 
                         ' X 坐标轴
                         Dim fWidth! = g.MeasureString(xlab, labelFont).Width
@@ -139,14 +152,31 @@ Namespace BarPlot
                         Dim xpos As PointF
                         Dim xlabel$
 
+#Region "绘制柱状图"
                         For Each o In query
                             y = o.value
                             y = ymid - yscale(y)
                             left = region.Padding.Left + xscale(o.X)
                             rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
                             g.FillRectangle(ba, rect)
+                        Next
+                        For Each o In subject
+                            y = o.value
+                            y = ymid + yscale(y)
+                            left = region.Padding.Left + xscale(o.X)
+                            rect = Rectangle(ymid, left, left + bw, y)
+                            g.FillRectangle(bb, rect)
+                        Next
+#End Region
+                        ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
+#Region "绘制横坐标轴"
+                        For Each o In query
+                            y = o.value
+                            y = ymid - yscale(y)
+                            left = region.Padding.Left + xscale(o.X)
+                            rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
 
-                            If displayX AndAlso o.value / yLength >= 0.25 Then
+                            If displayX AndAlso o.value / yLength >= labelPlotStrength Then
                                 xlabel = o.X.ToString("F2")
                                 xsz = g.MeasureString(xlabel, xCSSFont)
                                 xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
@@ -158,16 +188,15 @@ Namespace BarPlot
                             y = ymid + yscale(y)
                             left = region.Padding.Left + xscale(o.X)
                             rect = Rectangle(ymid, left, left + bw, y)
-                            g.FillRectangle(bb, rect)
 
-                            If displayX AndAlso o.value / yLength >= 0.25 Then
+                            If displayX AndAlso o.value / yLength >= labelPlotStrength Then
                                 xlabel = o.X.ToString("F2")
                                 xsz = g.MeasureString(xlabel, xCSSFont)
                                 xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
                                 g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
                             End If
                         Next
-
+#End Region
                         rect = region.PlotRegion
 
                         ' legend 的圆角矩形
