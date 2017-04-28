@@ -212,21 +212,25 @@ Namespace BarPlot
                             })
 
                         Dim box As Rectangle
-                        Dim legendFont As Font = CSSFont.TryParse(legendFontCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)).GDIObject
+                        Dim legendFont As Font = CSSFont _
+                            .TryParse(legendFontCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
+                            .GDIObject
                         Dim fHeight! = g.MeasureString("1", legendFont).Height
 
-                        y = 7
+                        y = 3
 
                         box = New Rectangle(New Point(rect.Right - 330, rect.Top + 20), New Size(20, 20))
                         Call g.FillRectangle(ba, box)
-                        Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -y))
+                        Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
                         box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
                         Call g.FillRectangle(bb, box)
-                        Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -y))
+                        Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
-                        Dim titleFont As Font = CSSFont.TryParse(titleCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)).GDIObject
-                        Dim titleSize = g.MeasureString(title, titleFont)
+                        Dim titleFont As Font = CSSFont _
+                            .TryParse(titleCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
+                            .GDIObject
+                        Dim titleSize As SizeF = g.MeasureString(title, titleFont)
                         Dim tl As New Point(
                             rect.Left + (rect.Width - titleSize.Width) / 2,
                             (region.Padding.Top - titleSize.Height) / 2)
