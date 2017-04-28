@@ -430,6 +430,14 @@ Namespace LinearAlgebra
         End Function
 
         ''' <summary>
+        ''' 返回这个向量之中的所有的元素的乘积
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Product() As Double
+            Return Me.PI
+        End Function
+
+        ''' <summary>
         ''' 负向量 
         ''' </summary>
         ''' <param name="v1"></param>
