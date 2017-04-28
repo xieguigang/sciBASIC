@@ -1,5 +1,4 @@
-Imports System.Linq
-Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports [Class] = Microsoft.VisualBasic.DataMining.ComponentModel.ColorClass
 
 Namespace Model
 
@@ -8,13 +7,13 @@ Namespace Model
     ''' </summary>
     Public Class LabeledPoint : Implements ICloneable
 
-        Sub New(x As Double, y As Double, clazz As ColorClass)
+        Sub New(x As Double, y As Double, clazz As [Class])
             X1 = x
             X2 = y
             ColorClass = clazz
         End Sub
 
-        Public ReadOnly Property ColorClass As ColorClass
+        Public ReadOnly Property ColorClass As [Class]
         ''' <summary>
         ''' x
         ''' </summary>

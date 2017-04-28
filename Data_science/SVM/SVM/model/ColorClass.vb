@@ -1,7 +1,7 @@
 Namespace Model
 
     ''' <summary>
-    ''' @author Ralf Wondratschek
+    ''' http://blog.csdn.net/v_july_v/article/details/7624837
     ''' </summary>
     Public Enum ColorClass As Integer
         RED = 1
