@@ -49,10 +49,10 @@ Namespace Method
             Dim offsetSum As Double = 0
 
             For Each point As LabeledPoint In _points
-                Dim factor As Double = 1 - point.Y * ((argVector.Vector * point.X).Sum + argOffset)
+                Dim factor As Double = 1 - point.Y * ((argVector.W * point.X).Sum + argOffset)
                 factor = Math.Max(0, factor) * point.Y
 
-                sum.Vector = sum.Vector + point.X * factor
+                sum.W = sum.W + point.X * factor
                 offsetSum += factor
             Next
 

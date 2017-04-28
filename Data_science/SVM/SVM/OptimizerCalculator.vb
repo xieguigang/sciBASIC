@@ -43,8 +43,8 @@ Public Module OptimizerCalculator
                 .Line = (line)
             End If
 
-            line.NormalVector.Vector(0) = line.NormalVector.W1 / line.NormalVector.W2
-            line.NormalVector.Vector(1) = 1
+            line.NormalVector.W(0) = line.NormalVector.W1 / line.NormalVector.W2
+            line.NormalVector.W(1) = 1
 
             Dim optimizer As Optimizer
 

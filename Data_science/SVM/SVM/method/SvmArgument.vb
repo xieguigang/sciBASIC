@@ -17,14 +17,14 @@ Namespace Method
 
         Public Function Multipy(factor As Double) As SvmArgument
             Dim res As SvmArgument = Me.Clone()
-            res.NormalVector.Vector = res.NormalVector.Vector * factor
+            res.NormalVector.W = res.NormalVector.W * factor
             res.Offset = res.Offset * factor
             Return res
         End Function
 
         Public Function Minus(arg As SvmArgument) As SvmArgument
             Dim res As SvmArgument = Me.Clone()
-            res.NormalVector.Vector = res.NormalVector.Vector - arg.NormalVector.Vector
+            res.NormalVector.W = res.NormalVector.W - arg.NormalVector.W
             res.Offset = res.Offset - arg.Offset
             Return res
         End Function

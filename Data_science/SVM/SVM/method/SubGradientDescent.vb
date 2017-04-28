@@ -65,13 +65,13 @@ Namespace Method
 
             For Each point As LabeledPoint In _points
 
-                Dim factor As Double = 1 - point.Y * ((argVector.Vector * point.X).Sum + argOffset)
+                Dim factor As Double = 1 - point.Y * ((argVector.W * point.X).Sum + argOffset)
 
                 If factor > 0 Then
-                    sum.Vector = sum.Vector + -1 * point.Y * point.X
+                    sum.W = sum.W + -1 * point.Y * point.X
                     offsetSum += -1 * point.Y
                 ElseIf factor = 0 Then
-                    sum.Vector = sum.Vector + (1 - t) * -1 * point.Y * point.X
+                    sum.W = sum.W + (1 - t) * -1 * point.Y * point.X
                     offsetSum += (1 - t) * -1 * point.Y
                 End If
             Next

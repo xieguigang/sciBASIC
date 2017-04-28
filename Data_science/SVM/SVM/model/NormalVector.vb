@@ -11,26 +11,26 @@ Namespace Model
     ''' </summary>
     Public Class NormalVector : Implements ICloneable
 
-        Public Property Vector As Vector
+        Public Property W As Vector
 
         Public ReadOnly Property W1 As Double
             Get
-                Return Vector(0)
+                Return W(0)
             End Get
         End Property
 
         Public ReadOnly Property W2 As Double
             Get
-                Return Vector(1)
+                Return W(1)
             End Get
         End Property
 
         Public Sub New(v As IEnumerable(Of Double))
-            Vector = New Vector(v)
+            W = New Vector(v)
         End Sub
 
         Sub New()
-            Vector = New Vector(2)
+            W = New Vector(2)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -40,15 +40,15 @@ Namespace Model
         Public Overrides Function Equals(o As Object) As Boolean
             If Not TypeOf o Is NormalVector Then Return MyBase.Equals(o)
 
-            Dim vector As Vector = TryCast(o, NormalVector).Vector
+            Dim vector As Vector = TryCast(o, NormalVector).W
             Dim ppm#
 
-            If vector.Dim <> Me.Vector.Dim Then
+            If vector.Dim <> Me.W.Dim Then
                 Return False
             End If
 
             For Each x In vector.SeqIterator
-                ppm = x.value / Me.Vector(x)
+                ppm = x.value / Me.W(x)
 
                 If Not (ppm < 1.0001 AndAlso ppm > 0.999) Then
                     Return False
