@@ -203,7 +203,7 @@ Namespace BarPlot
                         Call Shapes.RoundRect.Draw(
                             g,
                             New Point(rect.Right - 340, rect.Top + 6),
-                            New Size(320, 80), 8,
+                            New Size(330, 80), 8,
                             Brushes.White,
                             New Stroke With {
                                 .dash = DashStyle.Solid,
