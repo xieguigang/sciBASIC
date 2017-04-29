@@ -32,10 +32,32 @@ Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Quantile
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports System.Linq.Expressions
+Imports System.Numerics
+Imports Microsoft.VisualBasic.Mathematical.HashMaps
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.SecurityString
 
 Module Program
 
+    Public Function Hash(key$) As Long
+        Return key.MD5.ToLong
+    End Function
+
     Sub Main()
+        Dim l As New List(Of String)
+        Dim uid As New Uid(False)
+
+        For i As Integer = 0 To 5000
+            Dim KEGG = "C" & i.FormatZero("00000")
+            l.Add(KEGG.MD5)
+        Next
+
+        Dim g1 = l.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).Select(Function(x) (x.Key, x.ToArray)).ToArray
+
+
+        Pause()
+
+        Pause()
 
         Dim aaa = 23
         Dim bbb = 4.5
