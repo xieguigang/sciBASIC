@@ -1,3 +1,4 @@
+Imports System.Linq
 Imports Microsoft.VisualBasic.DataMining.SVM.Model
 
 Namespace Method
@@ -28,7 +29,7 @@ Namespace Method
 
         Protected Friend Overrides Function innerOptimize() As Line
             Dim arguments As SvmArgument() = New SvmArgument(_iterations) {}
-            arguments(0) = New SvmArgument(_line.NormalVector.clone(), _line.Offset)
+            arguments(0) = New SvmArgument(_line.NormalVector.Clone(), _line.Offset)
 
             For i As Integer = 1 To arguments.Length - 1
                 If _cancelled Then
@@ -59,27 +60,23 @@ Namespace Method
                 Throw New System.ArgumentException
             End If
 
-            Dim sum As New NormalVector(0, 0)
+            Dim sum As New NormalVector({0, 0})
             Dim offsetSum As Double = 0
 
             For Each point As LabeledPoint In _points
 
-                Dim factor As Double = 1 - point.Y * (argVector.W1 * point.X1 + argVector.W2 * point.X2 + argOffset)
+                Dim factor As Double = 1 - point.Y * ((argVector.W * point.X).Sum + argOffset)
 
                 If factor > 0 Then
-                    sum.W1 = sum.W1 + -1 * point.Y * point.X1
-                    sum.W2 = sum.W2 + -1 * point.Y * point.X2
+                    sum.W = sum.W + -1 * point.Y * point.X
                     offsetSum += -1 * point.Y
-
                 ElseIf factor = 0 Then
-                    sum.W1 = sum.W1 + (1 - t) * -1 * point.Y * point.X1
-                    sum.W2 = sum.W2 + (1 - t) * -1 * point.Y * point.X2
+                    sum.W = sum.W + (1 - t) * -1 * point.Y * point.X
                     offsetSum += (1 - t) * -1 * point.Y
-
                 End If
             Next
 
-            Dim resVec As New NormalVector(argVector.W1 + C * sum.W1, argVector.W2 + C * sum.W2)
+            Dim resVec As New NormalVector({argVector.W1 + C * sum.W1, argVector.W2 + C * sum.W2})
             Dim resOffset As Double = C * offsetSum
 
             Return New SvmArgument(resVec, resOffset)
@@ -95,5 +92,4 @@ Namespace Method
                 Math.Abs(Math.Abs(before.Offset) - Math.Abs(after.Offset)) < STOP_DIFFERENCE
         End Function
     End Class
-
 End Namespace

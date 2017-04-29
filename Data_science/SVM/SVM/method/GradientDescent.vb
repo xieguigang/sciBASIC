@@ -1,3 +1,4 @@
+Imports System.Linq
 Imports Microsoft.VisualBasic.DataMining.SVM.Model
 
 Namespace Method
@@ -21,7 +22,7 @@ Namespace Method
 
         Protected Friend Overrides Function innerOptimize() As Line
             Dim arguments As SvmArgument() = New SvmArgument(_iterations) {}
-            Dim stepSize As Double = 1.0R / getLipschitzConstant(_points)
+            Dim stepSize As Double = 1.0R / __lipschitzConstant(_points)
 
             arguments(0) = New SvmArgument(_line.NormalVector.Clone(), _line.Offset)
 
@@ -44,30 +45,29 @@ Namespace Method
         Private Function calcDerivation(arg As SvmArgument) As SvmArgument
             Dim argOffset As Double = arg.Offset
             Dim argVector As NormalVector = arg.NormalVector
-            Dim sum As New NormalVector(0, 0)
+            Dim sum As New NormalVector({0, 0})
             Dim offsetSum As Double = 0
 
             For Each point As LabeledPoint In _points
-                Dim factor As Double = 1 - point.Y * (argVector.W1 * point.X1 + argVector.W2 * point.X2 + argOffset)
+                Dim factor As Double = 1 - point.Y * ((argVector.W * point.X).Sum + argOffset)
                 factor = Math.Max(0, factor) * point.Y
 
-                sum.W1 = sum.W1 + point.X1 * factor
-                sum.W2 = sum.W2 + point.X2 * factor
+                sum.W = sum.W + point.X * factor
                 offsetSum += factor
             Next
 
-            Dim resVec As New NormalVector(argVector.W1 - 2 * C * sum.W1, argVector.W2 - 2 * C * sum.W2)
+            Dim resVec As New NormalVector({argVector.W1 - 2 * C * sum.W1, argVector.W2 - 2 * C * sum.W2})
             Dim resOffset As Double = -2 * C * offsetSum
 
             Return New SvmArgument(resVec, resOffset)
         End Function
 
-        Private Shared Function getLipschitzConstant(points As LabeledPoint()) As Double
+        Private Shared Function __lipschitzConstant(points As LabeledPoint()) As Double
             Dim sum As Double = 0
             Dim sum2 As Double = 0
 
             For Each p As LabeledPoint In points
-                Dim norm As Double = Math.Sqrt(Math.Pow(p.X1, 2) + Math.Pow(p.X2, 2))
+                Dim norm As Double = p.X.SumMagnitude
                 sum += Math.Pow(norm, 2)
                 sum2 += norm
             Next

@@ -43,12 +43,20 @@ Module CLI
                Info:="Puts the brief description of this API command at here.",
                Usage:="/API1 /msg ""Puts the CLI usage syntax at here""",
                Example:="/API1 /msg ""Hello world!!!""")>
+    <Argument("/msg", False, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The output message text.",
+              Example:="""Hello world!""",
+              Out:=False)>
+    <Group(CLIGrouping.TestGroup1)>
     Public Function API1(args As CommandLine) As Integer
         Call Console.WriteLine(args("/msg"))
         Return 0
     End Function
 
-    <ExportAPI("/Test.CLI_Scripting", Usage:="/Test.CLI_Scripting </var> <value> /@set <var=value>;<var=value>")>
+    <ExportAPI("/Test.CLI_Scripting",
+               Usage:="/Test.CLI_Scripting </var> <value> /@set <var=value>;<var=value>")>
+    <Group(CLIGrouping.TestGroup2)>
     Public Function ScriptingTest(args As CommandLine) As Integer
         For Each var$ In args.Keys
             Call $"{var} --> {args(var)}".__DEBUG_ECHO
@@ -60,3 +68,10 @@ Module CLI
         Return 0
     End Function
 End Module
+
+Public Class CLIGrouping
+
+    Public Const TestGroup1 As String = "Test Group1"
+    Public Const TestGroup2 As String = "Test Group2"
+
+End Class

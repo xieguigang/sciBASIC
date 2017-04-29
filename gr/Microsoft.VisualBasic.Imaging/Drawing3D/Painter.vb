@@ -57,6 +57,51 @@ Namespace Drawing3D
             Call canvas.BufferPainting(buf, drawPath)
         End Sub
 
+        ''' <summary>
+        ''' 这个函数主要是应用于函数绘图的。请注意，这个并没有rotate，只会利用camera进行project
+        ''' </summary>
+        ''' <param name="canvas"></param>
+        ''' <param name="camera"></param>
+        ''' <param name="surfaces"></param>
+        <Extension>
+        Public Sub SurfacePainter(ByRef canvas As IGraphics,
+                                  camera As Camera,
+                                  surfaces As IEnumerable(Of Surface),
+                                  Optional drawPath As Boolean = False,
+                                  Optional illumination As Boolean = True)
+            Dim buf = camera.PainterBuffer(
+                surfaces,
+                illumination)
+            Call canvas.BufferPainting(buf, drawPath)
+        End Sub
+
+        ''' <summary>
+        ''' 应用于GDI+/SVG的兼容方法
+        ''' </summary>
+        ''' <param name="canvas"></param>
+        ''' <param name="buf"></param>
+        ''' <param name="drawPath"></param>
+        <Extension>
+        Public Sub BufferPainting(ByRef canvas As IGraphics, buf As IEnumerable(Of Polygon), Optional drawPath As Boolean = False)
+            'If illumination Then
+            '    buf = buf.Illumination
+            'End If
+            For Each polygon As Polygon In buf
+                With polygon
+                    If drawPath Then
+                        Call canvas.DrawPolygon(Pens.Black, .points)
+                    End If
+                    Call canvas.FillPolygon(.brush, .points)
+                End With
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 应用于WinForm的原生方法
+        ''' </summary>
+        ''' <param name="canvas"></param>
+        ''' <param name="buf"></param>
+        ''' <param name="drawPath"></param>
         <Extension>
         Public Sub BufferPainting(ByRef canvas As Graphics, buf As IEnumerable(Of Polygon), Optional drawPath As Boolean = False)
             'If illumination Then

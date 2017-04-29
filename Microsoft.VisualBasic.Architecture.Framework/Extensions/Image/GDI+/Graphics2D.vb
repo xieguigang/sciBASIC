@@ -2597,7 +2597,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawPolygon(pen As Pen, points() As Point)
-
+            Call Graphics.DrawPolygon(pen, points)
         End Sub
         '
         ' Summary:
@@ -2658,7 +2658,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
-
+            Call Graphics.DrawRectangle(pen, x, y, width, height)
         End Sub
         '
         ' Summary:
@@ -2684,7 +2684,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-
+            Call Graphics.DrawRectangle(pen, x, y, width, height)
         End Sub
         '
         ' Summary:
