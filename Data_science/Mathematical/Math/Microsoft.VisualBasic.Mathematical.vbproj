@@ -220,6 +220,7 @@
     <Compile Include="UncheckInteger.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />
+    <Compile Include="HashMaps\Unchecked.vb" />
     <Compile Include="LinearAlgebra\Vector\Extensions.vb" />
     <Compile Include="Matrix.NET\Extensions.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />

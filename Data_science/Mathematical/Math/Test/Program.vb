@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Quantile
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports System.Linq.Expressions
 Imports System.Numerics
 Imports Microsoft.VisualBasic.Mathematical.HashMaps
 Imports Microsoft.VisualBasic.Language
@@ -55,6 +56,14 @@ Module Program
 
 
         Pause()
+
+        Pause()
+
+        Dim aaa = 23
+        Dim bbb = 4.5
+
+        Dim func As Expression(Of Func(Of Double)) = Function() 2 + 3 * aaa / bbb
+
 
         Pause()
 
@@ -84,7 +93,7 @@ Module Program
 
         Dim before = {a, b, c, x, y, z}
 
-        Call ParameterExpression.Apply(Function() {a, b, x, y, z})
+        '    Call ParameterExpression.Apply(Function() {a, b, x, y, z})
 
         Dim after = {a, b, c, x, y, z}
 
