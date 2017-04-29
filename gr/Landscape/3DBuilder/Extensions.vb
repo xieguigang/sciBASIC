@@ -34,29 +34,6 @@ Namespace Vendor_3mf
 
     Public Module Extensions
 
-        <Extension> Public Function Centra(surfaces As IEnumerable(Of Surface)) As Point3D
-            Dim vertices = surfaces.Select(Function(s) s.vertices).ToVector
-            Dim x = vertices.Select(Function(p3D) p3D.X).Average
-            Dim y = vertices.Select(Function(p3D) p3D.Y).Average
-            Dim z = vertices.Select(Function(p3D) p3D.Z).Average
 
-            Return New Point3D(x, y, z)
-        End Function
-
-        <Extension>
-        Public Function Offsets(offset As Point3D, model As IEnumerable(Of Surface)) As IEnumerable(Of Surface)
-            Dim out As New List(Of Surface)
-
-            For Each surface As Surface In model
-                out += New Surface With {
-                    .brush = surface.brush,
-                    .vertices = surface _
-                        .vertices _
-                        .ToArray(Function(p3D) p3D - offset)
-                }
-            Next
-
-            Return out
-        End Function
     End Module
 End Namespace
