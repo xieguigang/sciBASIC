@@ -186,9 +186,15 @@
             Return Extrude(shape, path, 1)
         End Function
 
+        ''' <summary>
+        ''' 将一个面平移一段距离，最后和通过平移新的到的平面，构成一个三维物体
+        ''' </summary>
+        ''' <param name="shape"></param>
+        ''' <param name="path"></param>
+        ''' <param name="height"></param>
+        ''' <returns></returns>
         Public Shared Function Extrude(shape As Shape3D, path As Path3D, height As Double) As Shape3D
             Dim topPath3D As Path3D = path.Translate(0, 0, height)
-            Dim i As Integer
             Dim length As Integer = path.Points.Count
             Dim paths As Path3D() = New Path3D(length + 2 - 1) {}
 
@@ -199,7 +205,7 @@
             ' Push each side face 
             Dim points As Point3D()
 
-            For i = 0 To length - 1
+            For i As Integer = 0 To length - 1
                 points = New Point3D(3) {}
                 points(0) = topPath3D.Points(i)
                 points(1) = path.Points(i)

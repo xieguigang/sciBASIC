@@ -189,4 +189,13 @@ Public Class FormLandscape
                         End Sub
         }.ShowDialog()
     End Sub
+
+    Private Sub IsometricPieToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IsometricPieToolStripMenuItem.Click
+        Dim view As New List(Of Surface)
+
+        view += New Shapes.Pie(Math3D.ORIGIN, 10, 0, 280, 80, 4).Model3D(Color.Yellow)
+        view += New Shapes.Cylinder(Math3D.ORIGIN - New Point3D(-4, 4, 0), 20, 4).Model3D(Color.Green)
+
+        Call __isometricLoad(view)
+    End Sub
 End Class

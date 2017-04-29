@@ -62,4 +62,10 @@ Namespace Graphic.Axis
         ZERO
         None
     End Enum
+
+    Public Enum YlabelPosition
+        None
+        InsidePlot
+        LeftCenter
+    End Enum
 End Namespace

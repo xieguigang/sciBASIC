@@ -90,7 +90,7 @@ Namespace Quantile
 
         Dim sample As New List(Of X)
 
-        Private Sub printList()
+        Public Sub printList()
             Dim buf As New StringBuilder
 
             For Each i As X In sample
@@ -152,6 +152,11 @@ Namespace Quantile
             Next
         End Sub
 
+        ''' <summary>
+        ''' 使用数量百分比来获取得到对应的阈值
+        ''' </summary>
+        ''' <param name="quantile#">0-1之间的百分比值</param>
+        ''' <returns>阈值</returns>
         Public Function Query(quantile#) As Double
             Dim rankMin As Integer = 0
             Dim desired As Integer = CInt(Fix(quantile * count))

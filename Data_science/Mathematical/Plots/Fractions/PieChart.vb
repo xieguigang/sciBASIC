@@ -42,12 +42,12 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Public Module PieChart
 
     ''' <summary>
-    ''' 
+    ''' Plot pie chart
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="size"></param>
     ''' <param name="bg"></param>
-    ''' <param name="legend"></param>
+    ''' <param name="legendAlt">不再绘制出传统的legend，而是将标签信息跟随pie的位置而变化</param>
     ''' <param name="legendBorder"></param>
     ''' <param name="minRadius">
     ''' 当这个参数值大于0的时候，除了扇形的面积会不同外，半径也会不同，这个参数指的是最小的半径
@@ -59,20 +59,31 @@ Public Module PieChart
     ''' + -1 : 从大到小排序 
     ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' ''' 生成饼图的文本的布局位置
+    ''' 
+    ''' + 根据startAngle + 0.5 * sweepAngle来判断文本的位置
+    ''' +   0 -  90  右下
+    ''' +  90 - 180  左下
+    ''' + 180 - 270  左上
+    ''' + 270 - 360  右上
+    ''' + 文本的位置应该是startAngle + 0.5 * sweepAngle的更加大的半径的一个园的位置
+    ''' </remarks>
     <Extension>
     Public Function Plot(data As IEnumerable(Of Fractions),
                          Optional size As Size = Nothing,
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
-                         Optional valueLabel As Fractions.ValueLabels = Fractions.ValueLabels.Percentage,
+                         Optional valueLabel As ValueLabels = ValueLabels.Percentage,
                          Optional valueLabelStyle$ = CSSFont.Win7Bold,
-                         Optional legend As Boolean = True,
+                         Optional legendAlt As Boolean = True,
                          Optional legendFont$ = CSSFont.Win7LargeBold,
                          Optional legendBorder As Stroke = Nothing,
                          Optional minRadius As Single = -1,
                          Optional reorder% = 0) As GraphicsData
 
         Dim margin As Padding = padding
+        Dim font As Font = CSSFont.TryParse(legendFont)
 
 #Const DEBUG = 0
         If reorder <> 0 Then
@@ -93,29 +104,41 @@ Public Module PieChart
 
                 If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
                     Dim rect As New Rectangle(topLeft, New Size(r * 2, r * 2))
-                    Dim start As New Value(Of Single)
-                    Dim sweep As New Value(Of Single)
+                    Dim start As New float
+                    Dim sweep As New float
                     Dim alpha As Double, pt As PointF
                     Dim centra As Point = rect.Centre
                     Dim labelSize As SizeF
                     Dim label$
+                    Dim br As SolidBrush
 
                     Call g.FillPie(Brushes.LightGray, rect, 0, 360)
 
                     For Each x As Fractions In data
-                        Call g.FillPie(New SolidBrush(x.Color), rect, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
+                        br = New SolidBrush(x.Color)
+                        Call g.FillPie(br, rect, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
 
                         alpha = (+start) - (+sweep / 2)
-                        pt = (r / 1.5).ToPoint(alpha)
+                        pt = (r / 1.5).ToPoint(alpha)  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
                         pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
                         label = x.GetValueLabel(valueLabel)
                         labelSize = g.MeasureString(label, valueLabelFont)
-
-                        '   If alpha > 90 AndAlso alpha < 270 Then
                         pt = New Point(pt.X - labelSize.Width / 2, pt.Y)
-                        '  End If
 
                         Call g.DrawString(label, valueLabelFont, Brushes.White, pt)
+
+                        If legendAlt Then
+                            ' 标签文本信息跟随pie的值而变化的
+                            Dim layout As New PointF(
+                            (r * Math.Cos((start / 360) * (2 * Math.PI))) + centra.X,
+                            (r * Math.Sin((start / 360) * (2 * Math.PI))) + centra.Y)
+
+                            Call g.DrawString(x.Name, font, Brushes.Black, layout)
+                            ' 还需要绘制标签文本和pie的连接线
+                            pt = (r).ToPoint(alpha)
+                            ' 绘制pt和layout之间的连接线
+
+                        End If
                     Next
                 Else  ' 半径也会有变化
                     Dim a As New Value(Of Single)
@@ -142,9 +165,8 @@ Public Module PieChart
 #End If
                 End If
 
-                If legend Then
-                    Dim font As Font = CSSFont.TryParse(legendFont)
-                    Dim maxL = data.Select(Function(x) g.MeasureString(x.Name, font).Width).Max
+                If legendAlt Then
+                    Dim maxL = data.Select(Function(x) g.MeasureString(x.Name, Font).Width).Max
                     Dim left = size.Width - (margin.Horizontal) - maxL
                     Dim top = margin.Top
                     Dim legends As New List(Of Legend)

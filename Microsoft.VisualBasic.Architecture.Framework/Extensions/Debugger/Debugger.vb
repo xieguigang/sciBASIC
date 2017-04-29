@@ -357,6 +357,12 @@ Public Module VBDebugger
         Call String.Join(", ", array.ToArray(Function(obj) Scripting.ToString(obj))).__DEBUG_ECHO
     End Sub
 
+    <Extension> Public Sub Echo(lines As IEnumerable(Of String))
+        For Each line$ In lines
+            Call Console.WriteLine(line)
+        Next
+    End Sub
+
     ''' <summary>
     ''' Alias for <see cref="Console.Write"/>
     ''' </summary>
@@ -367,8 +373,11 @@ Public Module VBDebugger
         End If
     End Sub
 
-    <Extension>
-    Public Sub EchoLine(s$)
+    ''' <summary>
+    ''' Alias for <see cref="Console.WriteLine"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    <Extension> Public Sub EchoLine(s$)
         If Not Mute Then
             Call Console.WriteLine(s)
         End If

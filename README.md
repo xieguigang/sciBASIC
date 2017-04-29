@@ -48,8 +48,8 @@ PM> Install-Package sciBASIC -Pre
 
 ###### 2. docs for User
 
-+ **[/guides](./guides/)** : This framework code usage example and manual documents
-+ **[/vb_codestyle](./vb_codestyle/)** : sciBASIC# Coding style standard document
++ **[/guides](./docs/guides/)** : This framework code usage example and manual documents
++ **[/vb_codestyle](./docs/vb_codestyle/)** : sciBASIC# Coding style standard document
 
 ---------------------------------------------------------------------------------------------------------------
 
@@ -58,10 +58,10 @@ PM> Install-Package sciBASIC -Pre
 A visualbasic language feature runtime library for data science CLI architecture applications which is running on Windows/Linux/macOS Desktop/server platform or supercomputer platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences programming in VisualBasic language, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
 
 > Abount VisualBasic code style guidelines:
-> + https://github.com/xieguigang/sciBASIC/tree/master/vb_codestyle
+> + https://github.com/xieguigang/sciBASIC/tree/master/docs/vb_codestyle
 
 > Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
-> + https://github.com/xieguigang/sciBASIC/blob/master/guides/
+> + https://github.com/xieguigang/sciBASIC/tree/master/docs/guides
 
 <hr/>
 
@@ -118,7 +118,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 
 ![](./Data_science/algorithms/CMeans/CMeans.png)
 ![](./Data_science/Mathematical/images/295022-plots-plots.png)
-![](https://raw.githubusercontent.com/xieguigang/spectrum/master/spectrum/Plot.png)
+[![](./Data_science/Mathematical/images/alignment/L26369_%255BM%252BH%255D%252B%2523.%252Flxy-CID30.mzXML%2523294-alignment.png)](./Data_science/Mathematical/Plots/BarPlot/AlignmentPlot.vb)
 
 ###### 3D heatmap
 

@@ -175,12 +175,15 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="3D\Device\Display.vb" />
+    <Compile Include="3D\PieChart3D.vb" />
     <Compile Include="3D\ScatterHeatmap.vb" />
     <Compile Include="3D\Scatter.vb" />
     <Compile Include="3D\Data.vb" />
+    <Compile Include="BarPlot\AlignmentPlot.vb" />
     <Compile Include="BarPlot\Histogram\Extensions.vb" />
     <Compile Include="BarPlot\StyledBarplot.vb" />
     <Compile Include="csv\Extensions.vb" />
+    <Compile Include="Fractions\LabelStyles.vb" />
     <Compile Include="g\Axis\Axis.vb" />
     <Compile Include="BarPlot\BarPlot2.vb" />
     <Compile Include="BarPlot\Histogram\DataModel.vb" />

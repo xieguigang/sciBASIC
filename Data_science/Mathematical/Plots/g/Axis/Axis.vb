@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::5ae2fafa1ee07f5dd6f304b404782c1d, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Axis\Axis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text.HtmlParser
 
 Namespace Graphic.Axis
@@ -240,6 +241,45 @@ Namespace Graphic.Axis
         ''' <returns></returns>
         <Extension> Private Function __plotLabel(label$, css$) As Image
             Return TextRender.DrawHtmlText(label, css)
+        End Function
+
+        ''' <summary>
+        ''' 这个函数不是将文本作为html来进行渲染，而是直接使用gdi进行绘图，如果需要将文本
+        ''' 作为html渲染出来，则需要使用<see cref="TextRender.DrawHtmlText"/>方法
+        ''' </summary>
+        ''' <param name="label$"></param>
+        ''' <param name="css$"><see cref="CssFont"/></param>
+        ''' <param name="fcolor">Brush color or texture.</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function DrawLabel(label$, css$, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
+            Dim font As Font = CSSFont.TryParse(css, [default]:=New Font(FontFace.MicrosoftYaHei, 12)).GDIObject
+            Return label.DrawLabel(font, fcolor, size)
+        End Function
+
+        ''' <summary>
+        ''' 这个函数不是将文本作为html来进行渲染，而是直接使用gdi进行绘图，如果需要将文本
+        ''' 作为html渲染出来，则需要使用<see cref="TextRender.DrawHtmlText"/>方法
+        ''' </summary>
+        ''' <param name="label$"></param>
+        ''' <param name="font"></param>
+        ''' <param name="fcolor$"></param>
+        ''' <param name="size$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
+            Using g As Graphics2D = size.SizeParser.CreateGDIDevice(Color.Transparent)
+                With g
+                    Dim b As Brush = fcolor.GetBrush
+
+                    Call .DrawString(label, font, b, New Point)
+
+                    Dim img As Image = .ImageResource _
+                        .CorpBlank(blankColor:=Color.Transparent) _
+                        .RotateImage(-90)
+                    Return img
+                End With
+            End Using
         End Function
 
         <Extension> Public Sub DrawX(ByRef g As IGraphics, size As Size, padding As Padding,

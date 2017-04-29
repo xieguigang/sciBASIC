@@ -117,9 +117,9 @@ Module PDFTest
             alpha:=150)
 
         Dim canvasSize As New Size(1600, 1200)
-        Dim png As Bitmap = Scatter.Plot({s1, s2, s3, s4, s5}, canvasSize)
+        Dim png = Scatter.Plot({s1, s2, s3, s4, s5}, canvasSize)
 
-        Call png.SaveAs("./beta_PDF.png")
+        Call png.Save("./beta_PDF.png")
 
         Pause()
     End Sub

@@ -9,10 +9,21 @@ Namespace Drawing3D.Models.Isometric.Shapes
             Me.New(origin, 1, vertices, height)
         End Sub
 
-        Public Sub New(origin As Point3D, radius As Double, vertices As Double, height As Double)
-            MyBase.New()
+        Public Sub New(origin As Point3D, radius#, vertices#, height#)
+            Call MyBase.New()
+
             Dim circle As New Paths.Circle(origin, radius, vertices)
-            Extrude(Me, circle, height)
+            Call Extrude(Me, circle, height)
+        End Sub
+    End Class
+
+    Public Class Pie : Inherits Shape3D
+
+        Public Sub New(origin As Point3D, radius#, startAngle#, sweepAngle#, vertices#, height#)
+            Call MyBase.New
+
+            Dim arc As New Paths.Arc(origin, radius, startAngle, sweepAngle, vertices)
+            Call Extrude(Me, arc, height)
         End Sub
     End Class
 End Namespace
