@@ -84,8 +84,8 @@ Public Class CartesianCoordinateSystem
         For Each p As LabeledPoint In mState.Points
             canvas.DrawCircle(
                 New Pen(p.ColorClass.Color.TranslateColor),
-                CSng(p.X1) * width,
-                CSng(1 - p.X2) * height,
+                CSng(p.X(0)) * width,
+                CSng(1 - p.X(1)) * height,
                 CIRCLE_RADIUS)
         Next
 

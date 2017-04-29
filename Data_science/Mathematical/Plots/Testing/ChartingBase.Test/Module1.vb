@@ -27,11 +27,14 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.StyledBarplot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Dendrogram
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -50,8 +53,49 @@ Module Module1
         Pause()
     End Sub
 
+    Sub __3dPie()
+        Dim pie = {
+            New NamedValue(Of Integer) With {
+                .Name = "p1", .Value = 100
+            },
+            New NamedValue(Of Integer) With {
+                .Name = "p2", .Value = 12
+            },
+              New NamedValue(Of Integer) With {
+                .Name = "p2", .Value = 22
+            },
+              New NamedValue(Of Integer) With {
+                .Name = "p2", .Value = 32
+            },
+                   New NamedValue(Of Integer) With {
+                .Name = "p2", .Value = 42
+            },
+                   New NamedValue(Of Integer) With {
+                .Name = "p2", .Value = 72
+            },
+                 New NamedValue(Of Integer) With {
+                .Name = "p2", .Value = 72
+            },
+                  New NamedValue(Of Integer) With {
+                .Name = "p2", .Value = 72
+            }
+        }
+
+        Call pie.Plot3D(
+            New Camera With {
+                .ViewDistance = -2,
+                .screen = New Size(1200, 1200),
+                .angleZ = 120,
+                .angleX = 1,
+                .angleY = 2
+            }).Save("X:\test3D.png")
+
+        Pause()
+    End Sub
+
     Sub Main()
 
+        Call __3dPie()
         Call alignment()
 
         For Each i% In (1, 1000).Iterates

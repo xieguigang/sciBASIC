@@ -1,6 +1,12 @@
 ﻿Namespace Model
 
     ''' <summary>
+    ''' ###### 线性可分的情况下的一个超平面
+    ''' 
+    ''' 在进行分类的时候，遇到一个新的数据点``x``，将``x``代入``f(x)``中，
+    ''' 如果``f(x)``小于``0``则将x的类别赋为``-1``，如果``f(x)``大于``0``
+    ''' 则将``x``的类别赋为``1``。
+    ''' 
     ''' @author Ralf Wondratschek
     ''' </summary>
     Public Class Line : Implements ICloneable
@@ -17,7 +23,7 @@
         Public Sub New(startX As Double, startY As Double, endX As Double, endY As Double)
             Dim m As Double = (endY - startY) / (endX - startX)
 
-            NormalVector = New NormalVector(-1 * m, 1)
+            NormalVector = New NormalVector({-1 * m, 1})
             Offset = startY - m * startX
         End Sub
 
@@ -62,12 +68,29 @@
         End Function
 
         Public Function Clone() As Line
-            Return New Line(New NormalVector(NormalVector.W1, NormalVector.W2), Offset)
+            Return New Line(New NormalVector({NormalVector.W1, NormalVector.W2}), Offset)
         End Function
 
         Private Function ICloneable_Clone() As Object Implements ICloneable.Clone
             Return Clone()
         End Function
+
+        ''' <summary>
+        ''' 将这个超平面对象转换为分类器
+        ''' </summary>
+        ''' <param name="l"></param>
+        ''' <returns></returns>
+        Public Shared Narrowing Operator CType(l As Line) As Func(Of Double, ColorClass)
+            Return Function(x#)
+                       Dim y# = l.CalcY(x)
+
+                       If y > 0 Then
+                           Return 1
+                       Else
+                           Return -1
+                       End If
+                   End Function
+        End Operator
     End Class
 
     ''' <summary>

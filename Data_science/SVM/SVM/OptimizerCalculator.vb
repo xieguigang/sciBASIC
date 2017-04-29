@@ -27,7 +27,7 @@ Public Module OptimizerCalculator
             Double.IsNaN(result.NormalVector().W2())
 
         If (diverged) Then
-            result = New Line(New NormalVector(-1, 1), 0)
+            result = New Line(New NormalVector({-1, 1}), 0)
         End If
 
         Return result
@@ -39,12 +39,12 @@ Public Module OptimizerCalculator
             Dim line As Line = .Line
 
             If line Is Nothing Then
-                line = New Line(New NormalVector(-1, 1), 0)
+                line = New Line(New NormalVector({-1, 1}), 0)
                 .Line = (line)
             End If
 
-            line.NormalVector.W1 = line.NormalVector.W1 / line.NormalVector.W2
-            line.NormalVector.W2 = 1
+            line.NormalVector.W(0) = line.NormalVector.W1 / line.NormalVector.W2
+            line.NormalVector.W(1) = 1
 
             Dim optimizer As Optimizer
 

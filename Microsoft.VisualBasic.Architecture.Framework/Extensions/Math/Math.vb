@@ -394,6 +394,7 @@ Namespace Mathematical
         <ExportAPI("PI")>
         <Extension> Public Function PI(data As IEnumerable(Of Double)) As Double
             Dim value As Double = 1
+
             For Each n In data
                 value = value * n
             Next

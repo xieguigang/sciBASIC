@@ -3,7 +3,7 @@
 ## Code Architecture of a VisualBasic CLI program
 
 There is a VisualBasic application helper module that define in the namespace:
-[Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb)
+[Microsoft.VisualBasic.App](../../Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb)
 
 **A special function named _main_ is the starting point of execution for all VisualBasic programs**. A VisualBasic CLI application should define the **Main** entry point in a Module which is named _Program_ and running from a ``Integer`` state code returns Function ``Main``. By using the name of Program for the entry point module, this will makes more easily recognize of your program's entry point.
 
@@ -29,6 +29,8 @@ int main(int argc, char *argv[]) {
 ```
 
 In the above example, Where, the type **CLI** is the CLI interface which it is a module that contains all of the CLI command of your application. And the extension function **RunCLI** is a CLI extension method from the VisualBasic App helper: [Microsoft.VisualBasic.App](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb). The property value of **App.CommandLine** is the commandline argument of current application that user used for start this application and calling for some _CLI_ command which is exposed in your application's **CLI** module.
+
+![](./CLI_programming.png)
 
 ### How to define the CLI module?
 
@@ -62,7 +64,7 @@ Partial Module CLI
 End Module
 ```
 
-This example code can be found at: [github](https://github.com/SMRUCC/ncbi-localblast/tree/master/Tools/CLI)
+This example code can be found at: [github](../../docs/guides/Example/Language.sln)
 
 ### How to expose the CLI interface API in your application?
 

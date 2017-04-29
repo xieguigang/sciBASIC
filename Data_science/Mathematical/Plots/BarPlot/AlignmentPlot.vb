@@ -19,7 +19,7 @@ Namespace BarPlot
     Public Module AlignmentPlot
 
         <Extension>
-        Private Function Keys(signals As signals()) As Double()
+        Public Function Keys(signals As signals()) As Double()
             Return signals.Select(Function(t) t.Item1).ToArray
         End Function
 
@@ -35,6 +35,7 @@ Namespace BarPlot
         ''' <param name="subject">The subject signal values</param>
         ''' <param name="cla$">Color expression for <paramref name="query"/></param>
         ''' <param name="clb$">Color expression for <paramref name="subject"/></param>
+        ''' <param name="displayX">是否在信号的柱子上面显示出X坐标的信息</param>
         ''' <returns></returns>
         <Extension>
         Public Function PlotAlignment(query As (X#, value#)(), subject As (X#, value#)(),
@@ -52,9 +53,13 @@ Namespace BarPlot
                                       Optional title$ = "Alignments Plot",
                                       Optional tickCSS$ = CSSFont.Win7Normal,
                                       Optional titleCSS$ = CSSFont.Win10NormalLarger,
-                                      Optional legendFontCSS$ = CSSFont.Win10NormalLarger,
+                                      Optional legendFontCSS$ = CSSFont.Win10Normal,
                                       Optional bw! = 8,
-                                      Optional format$ = "F2") As GraphicsData
+                                      Optional format$ = "F2",
+                                      Optional displayX As Boolean = True,
+                                      Optional X_CSS$ = CSSFont.Win10Normal,
+                                      Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
+                                      Optional labelPlotStrength# = 0.25) As GraphicsData
 
             If xrange Is Nothing Then
                 xrange = New DoubleRange(query.Keys.Join(subject.Keys).ToArray)
@@ -121,7 +126,18 @@ Namespace BarPlot
 
                         ' Y 坐标轴
                         Call g.DrawLine(axisPen, .Location, New Point(.Left, .Bottom))
-                        Call g.DrawImage(Axis.DrawLabel(ylab, labelFont, ), New Point(.Left + 3, .Top))
+                        Select Case yAxislabelPosition
+                            Case YlabelPosition.InsidePlot
+                                Call g.DrawImageUnscaled(Axis.DrawLabel(ylab, labelFont, ), New Point(.Left + 3, .Top))
+                            Case YlabelPosition.LeftCenter
+                                Dim labelImage = Axis.DrawLabel(ylab, labelFont, )
+                                Dim yLabelPoint As New Point(
+                                    (.Left - labelImage.Width) / 3,
+                                    .Top + (.Height - labelImage.Height) / 2)
+                                Call g.DrawImageUnscaled(labelImage, yLabelPoint)
+                            Case Else
+                                ' 不进行标签的绘制
+                        End Select
 
                         ' X 坐标轴
                         Dim fWidth! = g.MeasureString(xlab, labelFont).Width
@@ -131,7 +147,12 @@ Namespace BarPlot
                         Dim left!
                         Dim ba As New SolidBrush(cla.TranslateColor)
                         Dim bb As New SolidBrush(clb.TranslateColor)
+                        Dim xCSSFont As Font = CSSFont.TryParse(X_CSS).GDIObject
+                        Dim xsz As SizeF
+                        Dim xpos As PointF
+                        Dim xlabel$
 
+#Region "绘制柱状图"
                         For Each o In query
                             y = o.value
                             y = ymid - yscale(y)
@@ -146,14 +167,43 @@ Namespace BarPlot
                             rect = Rectangle(ymid, left, left + bw, y)
                             g.FillRectangle(bb, rect)
                         Next
+#End Region
+                        ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
+#Region "绘制横坐标轴"
+                        For Each o In query
+                            y = o.value
+                            y = ymid - yscale(y)
+                            left = region.Padding.Left + xscale(o.X)
+                            rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
 
+                            If displayX AndAlso o.value / yLength >= labelPlotStrength Then
+                                xlabel = o.X.ToString("F2")
+                                xsz = g.MeasureString(xlabel, xCSSFont)
+                                xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
+                                g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                            End If
+                        Next
+                        For Each o In subject
+                            y = o.value
+                            y = ymid + yscale(y)
+                            left = region.Padding.Left + xscale(o.X)
+                            rect = Rectangle(ymid, left, left + bw, y)
+
+                            If displayX AndAlso o.value / yLength >= labelPlotStrength Then
+                                xlabel = o.X.ToString("F2")
+                                xsz = g.MeasureString(xlabel, xCSSFont)
+                                xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
+                                g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                            End If
+                        Next
+#End Region
                         rect = region.PlotRegion
 
                         ' legend 的圆角矩形
                         Call Shapes.RoundRect.Draw(
                             g,
-                            New Point(rect.Right - 320, rect.Top + 6),
-                            New Size(300, 80), 8,
+                            New Point(rect.Right - 340, rect.Top + 6),
+                            New Size(330, 80), 8,
                             Brushes.White,
                             New Stroke With {
                                 .dash = DashStyle.Solid,
@@ -162,21 +212,25 @@ Namespace BarPlot
                             })
 
                         Dim box As Rectangle
-                        Dim legendFont As Font = CSSFont.TryParse(legendFontCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)).GDIObject
+                        Dim legendFont As Font = CSSFont _
+                            .TryParse(legendFontCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
+                            .GDIObject
                         Dim fHeight! = g.MeasureString("1", legendFont).Height
 
-                        y = 7
+                        y = 3
 
-                        box = New Rectangle(New Point(rect.Right - 300, rect.Top + 20), New Size(20, 20))
+                        box = New Rectangle(New Point(rect.Right - 330, rect.Top + 20), New Size(20, 20))
                         Call g.FillRectangle(ba, box)
-                        Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -y))
+                        Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
                         box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
                         Call g.FillRectangle(bb, box)
-                        Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(30, -y))
+                        Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
-                        Dim titleFont As Font = CSSFont.TryParse(titleCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)).GDIObject
-                        Dim titleSize = g.MeasureString(title, titleFont)
+                        Dim titleFont As Font = CSSFont _
+                            .TryParse(titleCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
+                            .GDIObject
+                        Dim titleSize As SizeF = g.MeasureString(title, titleFont)
                         Dim tl As New Point(
                             rect.Left + (rect.Width - titleSize.Width) / 2,
                             (region.Padding.Top - titleSize.Height) / 2)

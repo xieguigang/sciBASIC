@@ -2,8 +2,9 @@
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.SVM
 Imports Microsoft.VisualBasic.DataMining.SVM.Model
+Imports Microsoft.VisualBasic.DataMining.SVM.Model.ColorClass
 Imports Microsoft.VisualBasic.Imaging
-Imports Test_SVM.Model.ColorClass
+Imports [Class] = Microsoft.VisualBasic.DataMining.ComponentModel.ColorClass
 
 Module Program
 
@@ -20,7 +21,7 @@ Module Program
 
     Function InsertDefault() As CartesianCoordinateSystem
         Dim toAdd As New List(Of LabeledPoint)
-        Dim colors As Dictionary(Of Test_SVM.Model.ColorClass, ColorClass) = ColorClass _
+        Dim colors As Dictionary(Of Model.ColorClass, [Class]) = [Class] _
             .FromEnums(Of Model.ColorClass) _
             .ToEnumsTable(Of Model.ColorClass)
 
