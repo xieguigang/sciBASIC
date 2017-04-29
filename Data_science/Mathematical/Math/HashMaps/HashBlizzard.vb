@@ -52,7 +52,7 @@ Namespace HashMaps
             Next
         End Sub
 
-        ReadOnly __hashBlizzard_seed2 As ULong = unchecked(&HEEEEEEEE).uncheckedULong
+        ReadOnly __hashBlizzard_seed2 As BigInteger = &HEEEEEEEE
 
         ''' <summary>
         ''' 暴雪公司出名的哈希码.
@@ -84,7 +84,7 @@ Namespace HashMaps
             Dim LoopID% = 0
 
             While (LoopID < L)
-                Dim ascCode As Int32 = KeyByte(LoopID)
+                Dim ascCode% = KeyByte(LoopID)
                 seed1 = cryptTable((HasType << 8) + ascCode) Xor (seed1 + seed2)
                 seed2 = ascCode + seed1 + seed2 + (seed2 << 5) + 3
                 LoopID += 1

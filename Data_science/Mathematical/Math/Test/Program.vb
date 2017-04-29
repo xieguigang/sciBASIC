@@ -50,14 +50,30 @@ Module Program
         '  Pause()
 
         Dim blizzard As New HashMaps.HashBlizzard
-        Dim l As New List(Of ULong)
+        Dim l1 As New List(Of ULong)
+        Dim l2 As New List(Of ULong)
+        Dim l3 As New List(Of ULong)
         Dim uid As New Uid
 
-        For i As Integer = 0 To Integer.MaxValue
-            l.Add(blizzard.HashBlizzard((++Uid).ToString))
+
+        Call blizzard.HashBlizzard("XC_1183").ToString.__INFO_ECHO
+        Call blizzard.HashBlizzard("XC_1184").ToString.__INFO_ECHO
+        Call blizzard.HashBlizzard("XC_2252").ToString.__INFO_ECHO
+
+        Pause()
+
+
+        For i As Integer = 0 To 200000
+            Dim ID = "C" & i.FormatZero("00000")
+            l1.Add(blizzard.HashBlizzard(ID, HashBlizzard.dwHashTypes.Position))
+            l2.Add(blizzard.HashBlizzard(ID, HashBlizzard.dwHashTypes.Validate1))
+            l3.Add(blizzard.HashBlizzard(ID, HashBlizzard.dwHashTypes.Validate2))
         Next
 
-        Dim g = l.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).ToArray
+
+        Dim g1 = l1.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).ToArray
+        Dim g2 = l2.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).ToArray
+        Dim g3 = l3.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).ToArray
 
         Pause()
 
