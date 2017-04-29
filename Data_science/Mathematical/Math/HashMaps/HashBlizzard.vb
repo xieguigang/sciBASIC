@@ -1,4 +1,6 @@
-﻿Namespace HashMaps
+﻿Imports System.Numerics
+
+Namespace HashMaps
 
     ''' <summary>
     ''' Blizzard hash algorithm code
@@ -50,7 +52,7 @@
             Next
         End Sub
 
-        ReadOnly __hashBlizzard_seed2& = &HEEEEEEEE
+        ReadOnly __hashBlizzard_seed2 As ULong = unchecked(&HEEEEEEEE).uncheckedULong
 
         ''' <summary>
         ''' 暴雪公司出名的哈希码.
@@ -76,10 +78,10 @@
         ''' <param name="HasType">HasType =[0 ,1 ,2] </param>
         ''' <returns></returns>
         Public Function HashBlizzard(KeyByte() As Byte, Optional HasType As dwHashTypes = dwHashTypes.Position) As ULong
-            Dim L As Int32 = KeyByte.Length - 1
-            Dim seed1 As ULong = &H7FED7FED
-            Dim seed2 As ULong = unchecked(__hashBlizzard_seed2).uncheckedULong
-            Dim LoopID As Int32 = 0
+            Dim L% = KeyByte.Length - 1
+            Dim seed1 As BigInteger = &H7FED7FED
+            Dim seed2 As BigInteger = __hashBlizzard_seed2
+            Dim LoopID% = 0
 
             While (LoopID < L)
                 Dim ascCode As Int32 = KeyByte(LoopID)
@@ -88,7 +90,7 @@
                 LoopID += 1
             End While
 
-            Return seed1
+            Return seed1.uncheckedULong
         End Function
     End Class
 End Namespace

@@ -54,7 +54,7 @@ Module Program
         Dim uid As New Uid
 
         For i As Integer = 0 To Integer.MaxValue
-            l.Add(blizzard.HashBlizzard((++uid).ToString))
+            l.Add(blizzard.HashBlizzard((++Uid).ToString))
         Next
 
         Dim g = l.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).ToArray
@@ -63,7 +63,7 @@ Module Program
 
         Dim hash = blizzard.HashBlizzard("unitneutralacritter.grp")
 
-        Call &HA26067F3.ToString.__INFO_ECHO
+        Call unchecked(&HA26067F3).uncheckedULong.ToString.__INFO_ECHO
         Call hash.ToString.__INFO_ECHO
 
         Pause()
