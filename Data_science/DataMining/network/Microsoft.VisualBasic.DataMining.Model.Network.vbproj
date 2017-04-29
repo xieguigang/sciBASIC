@@ -4,32 +4,37 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A903B744-C08D-4869-BC35-3DD25E36AA16}</ProjectGuid>
+    <ProjectGuid>{3A114030-D9FD-4913-8E85-A78C032E9000}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming</RootNamespace>
-    <AssemblyName>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+    <RootNamespace>Microsoft.VisualBasic.DataMining</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.DataMining.Model.Network</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -47,39 +52,40 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
-    <OutputPath>bin\nuget_publish\VB_APP\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
+    <OutputPath>..\..\..\sdk\bin\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
-    <OutputPath>X:\nuget_publish\VB_APP\x64\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
+    <OutputPath>..\..\sdk\bin\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -87,45 +93,60 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
-    <OutputPath>X:\nuget_publish\VB_APP\x86\</OutputPath>
-    <PlatformTarget>x86</PlatformTarget>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
-    <OutputPath>..\..\..\sdk\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
-    <OutputPath>..\..\sdk\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <OutputPath>bin\x86\docs\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>41999,42016</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <OutputPath>X:\nuget_publish\VB_APP\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <DefineTrace>true</DefineTrace>
+    <NoWarn>41999,42016</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
+    <OutputPath>bin\x64\Publish\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
+    <OutputPath>bin\x86\Publish\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
     <OutputPath>bin\Release2\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
     <OutputPath>bin\x64\Release2\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
     <OutputPath>bin\x86\Release2\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.Model.Network.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -144,8 +165,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SmithWaterman\GSW.vb" />
-    <Compile Include="SmithWaterman\Match.vb" />
+    <Compile Include="BinaryTree\EntityNode.vb" />
+    <Compile Include="BinaryTree\NodeTrees.vb" />
+    <Compile Include="BinaryTree\TreeClustering.vb" />
+    <Compile Include="BinaryTree\Partition.vb" />
+    <Compile Include="Extensions.vb" />
+    <Compile Include="KMeansNetwork.vb" />
+    <Compile Include="NeuralNetwork\ModelAPI.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -161,8 +187,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="NeedlemanWunsch\GNW.vb" />
-    <Compile Include="NeedlemanWunsch\NeedlemanWunschArguments.vb" />
+    <Compile Include="BinaryTree\Tree.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -182,11 +207,28 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
-      <Project>{7c6804b7-3359-4ce0-b636-1aaed52c1aa0}</Project>
+    <ProjectReference Include="..\..\..\Data\DataFrame\+VB_DataFrame.vbproj">
+      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
+      <Name>+VB_DataFrame</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\gr\Datavisualization.Network\Datavisualization.Network\Datavisualization.Network.vbproj">
+      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
+      <Name>Datavisualization.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
+      <Project>{E3367B88-5D0C-495A-8273-331656D4B5AA}</Project>
+      <Name>Microsoft.VisualBasic.Mathematical</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj">
+      <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
+      <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
