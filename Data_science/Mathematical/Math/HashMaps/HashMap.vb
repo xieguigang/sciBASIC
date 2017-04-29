@@ -26,6 +26,8 @@
 
 #End Region
 
+Imports UncheckedUInt64 = Microsoft.VisualBasic.Mathematical.UInt128
+
 Namespace HashMaps
 
     ''' <summary>

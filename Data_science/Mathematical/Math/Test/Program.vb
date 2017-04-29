@@ -36,6 +36,20 @@ Module Program
 
     Sub Main()
 
+
+
+
+        Dim blizzard As New HashMaps.HashBlizzard
+
+        Dim hash = blizzard.HashBlizzard("unitneutralacritter.grp")
+
+        Call (&HA26067F3).ToString.__INFO_ECHO
+        Call ULong.MaxValue.ToString.__INFO_ECHO
+
+        Call hash.ToString.__INFO_ECHO
+
+        Pause()
+
         Call (0#, 100000.0#).DoubleRange.rand(2000).Summary.EchoLine
         Call {0#, 569.0#, 63.0#, 59, 345.0#, 456, 423}.Summary.EchoLine
 
