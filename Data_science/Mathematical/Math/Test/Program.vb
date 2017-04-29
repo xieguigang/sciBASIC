@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Mathematical.Quantile
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports System.Numerics
 Imports Microsoft.VisualBasic.Mathematical.HashMaps
+Imports Microsoft.VisualBasic.Language
 
 Module Program
 
@@ -42,13 +43,23 @@ Module Program
 
         Dim int1%
         Dim int2%
-        Dim variableMax As UncheckInteger = 2147483647
+        Dim variableMax As Integer = 2147483647
 
-        int1 = variableMax + 10
+        int1 = (unchecked(variableMax) + 10).uncheckedInteger
 
         '  Pause()
 
         Dim blizzard As New HashMaps.HashBlizzard
+        Dim l As New List(Of ULong)
+        Dim uid As New Uid
+
+        For i As Integer = 0 To Integer.MaxValue
+            l.Add(blizzard.HashBlizzard((++uid).ToString))
+        Next
+
+        Dim g = l.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).ToArray
+
+        Pause()
 
         Dim hash = blizzard.HashBlizzard("unitneutralacritter.grp")
 

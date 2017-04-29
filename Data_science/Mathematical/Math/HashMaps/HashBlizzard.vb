@@ -77,8 +77,8 @@
         ''' <returns></returns>
         Public Function HashBlizzard(KeyByte() As Byte, Optional HasType As dwHashTypes = dwHashTypes.Position) As ULong
             Dim L As Int32 = KeyByte.Length - 1
-            Dim seed1 As UncheckInteger = &H7FED7FED
-            Dim seed2 As UncheckInteger = __hashBlizzard_seed2
+            Dim seed1 As ULong = &H7FED7FED
+            Dim seed2 As ULong = unchecked(__hashBlizzard_seed2).uncheckedULong
             Dim LoopID As Int32 = 0
 
             While (LoopID < L)
