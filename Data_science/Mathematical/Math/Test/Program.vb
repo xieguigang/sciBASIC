@@ -31,21 +31,28 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Quantile
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports System.Numerics
+Imports Microsoft.VisualBasic.Mathematical.HashMaps
 
 Module Program
 
     Sub Main()
 
+        Const ConstantMax% = Integer.MaxValue
 
+        Dim int1%
+        Dim int2%
+        Dim variableMax As UncheckInteger = 2147483647
 
+        int1 = variableMax + 10
+
+        '  Pause()
 
         Dim blizzard As New HashMaps.HashBlizzard
 
         Dim hash = blizzard.HashBlizzard("unitneutralacritter.grp")
 
-        Call (&HA26067F3).ToString.__INFO_ECHO
-        Call ULong.MaxValue.ToString.__INFO_ECHO
-
+        Call &HA26067F3.ToString.__INFO_ECHO
         Call hash.ToString.__INFO_ECHO
 
         Pause()

@@ -1,6 +1,4 @@
-﻿Imports UncheckedUInt64 = Microsoft.VisualBasic.Mathematical.UInt128
-
-Namespace HashMaps
+﻿Namespace HashMaps
 
     ''' <summary>
     ''' Blizzard hash algorithm code
@@ -25,23 +23,23 @@ Namespace HashMaps
             Validate2 = 2
         End Enum
 
-        ReadOnly cryptTable(&H100 * 5 - 1) As UncheckedUInt64
+        ReadOnly cryptTable(&H100 * 5 - 1) As ULong
 
         Sub New()
             Call HashBlizzardInit()
         End Sub
 
         Private Sub HashBlizzardInit()
-            Dim seed As UInt64 = &H100001
-            Dim index1 As UInt64 = 0
-            Dim index2 As UInt64 = 0
-            Dim I As UInt64
-            Dim KKK As UInt64 = 0
+            Dim seed As ULong = &H100001
+            Dim index1 As ULong = 0
+            Dim index2 As ULong = 0
+            Dim I As ULong
+            Dim KKK As ULong = 0
 
             For index1 = 0 To &H100 - 1
                 index2 = index1
                 For I = 0 To 4
-                    Dim temp1, temp2 As UInt64
+                    Dim temp1, temp2 As ULong
                     seed = (seed * 125 + 3) Mod &H2AAAAB
                     temp1 = (seed And &HFFFF) << &H10
                     seed = (seed * 125 + 3) Mod &H2AAAAB
@@ -66,21 +64,8 @@ Namespace HashMaps
         ''' 
         ''' ``"unitneutralacritter.grp" -> 0xA26067F3``
         ''' </remarks>
-        Public Function HashBlizzard(Key$, Optional HasType As dwHashTypes = dwHashTypes.Position) As UInt64
-            Dim L% = Key.Length - 1
-            Dim KeyCharArr() As Char = Key.ToArray
-            Dim seed1 As UncheckedUInt64 = &H7FED7FED
-            Dim seed2 As UncheckedUInt64 = __hashBlizzard_seed2
-            Dim LoopID% = 0
-
-            While (LoopID < L)
-                Dim ascCode% = Asc(KeyCharArr(LoopID))
-                seed1 = cryptTable((HasType << 8) + ascCode) Xor (seed1 + seed2)
-                seed2 = ascCode + seed1 + seed2 + (seed2 << 5) + 3
-                LoopID += 1
-            End While
-
-            Return seed1
+        Public Function HashBlizzard(Key$, Optional HasType As dwHashTypes = dwHashTypes.Position) As ULong
+            Return HashBlizzard(Key.Select(Function(c) CByte(Asc(c))).ToArray, HasType)
         End Function
 
         ''' <summary>
@@ -90,10 +75,10 @@ Namespace HashMaps
         ''' <param name="KeyByte"></param>
         ''' <param name="HasType">HasType =[0 ,1 ,2] </param>
         ''' <returns></returns>
-        Public Function HashBlizzard(KeyByte() As Byte, Optional HasType As dwHashTypes = dwHashTypes.Position) As UInt64
+        Public Function HashBlizzard(KeyByte() As Byte, Optional HasType As dwHashTypes = dwHashTypes.Position) As ULong
             Dim L As Int32 = KeyByte.Length - 1
-            Dim seed1 As UncheckedUInt64 = &H7FED7FED
-            Dim seed2 As UncheckedUInt64 = __hashBlizzard_seed2
+            Dim seed1 As UncheckInteger = &H7FED7FED
+            Dim seed2 As UncheckInteger = __hashBlizzard_seed2
             Dim LoopID As Int32 = 0
 
             While (LoopID < L)
