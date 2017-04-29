@@ -29,7 +29,6 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf.XML
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 
 Namespace Vendor_3mf
 
