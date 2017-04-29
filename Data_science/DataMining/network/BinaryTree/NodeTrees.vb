@@ -117,12 +117,12 @@ Namespace KMeans
                 getID:=Function(x) x.EntityID)
             Call childsDistribute.SortByKey(desc:=True)
 
-            Dim q As Integer = childsDistribute _
+            Dim q# = childsDistribute _
                 .Values _
                 .QuantileThreshold(quantile:=min)
 
             For Each child As EntityNode In tree.ChildNodes
-                For Each part As Partition In child.__cutTrees(childsDistribute, min:=q)
+                For Each part As Partition In child.__cutTrees(childsDistribute, min:=CInt(q))
                     If part.members.Length > 0 Then
                         Yield part
                     End If

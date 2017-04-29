@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.25914.0
+VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "Math\Microsoft.VisualBasic.Mathematical.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
@@ -21,7 +21,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bootstrapping", "..\Bootstr
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Framework", "..\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj", "{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Markups", "..\..\mime\Markups\Markups.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "mime-htmls", "..\..\mime\text%html\mime-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Model.Network", "..\Microsoft.VisualBasic.DataMining.Model.Network\Microsoft.VisualBasic.DataMining.Model.Network.vbproj", "{3A114030-D9FD-4913-8E85-A78C032E9000}"
 EndProject
@@ -34,6 +34,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ODEsSolver", "ODE\ODEsSolver.vbproj", "{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "math_tools", "math_tools", "{6217B1E2-2990-44C2-BA99-159D982C1D4C}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "..\MachineLearning\MachineLearning.vbproj", "{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -474,6 +476,36 @@ Global
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.Release2|x64.Build.0 = Release2|x64
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.Release2|x86.ActiveCfg = Release2|x86
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.Release2|x86.Build.0 = Release2|x86
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Debug|x64.ActiveCfg = Debug|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Debug|x64.Build.0 = Debug|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Debug|x86.Build.0 = Debug|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.docs|Any CPU.ActiveCfg = docs|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.docs|Any CPU.Build.0 = docs|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.docs|x64.ActiveCfg = docs|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.docs|x64.Build.0 = docs|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.docs|x86.ActiveCfg = docs|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.docs|x86.Build.0 = docs|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Publish|Any CPU.ActiveCfg = Publish|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Publish|Any CPU.Build.0 = Publish|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Publish|x64.ActiveCfg = Publish|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Publish|x64.Build.0 = Publish|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Publish|x86.ActiveCfg = Publish|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Publish|x86.Build.0 = Publish|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x64.ActiveCfg = Release|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x64.Build.0 = Release|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x86.ActiveCfg = Release|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x86.Build.0 = Release|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release2|x64.ActiveCfg = Release|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release2|x64.Build.0 = Release|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release2|x86.ActiveCfg = Release|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release2|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -492,5 +524,6 @@ Global
 		{076315EE-B598-40DC-9280-C71CDF9B6A48} = {502430AD-9C24-4969-B189-D44BF3E1C196}
 		{18D52656-A280-484B-838A-9D536C9D37EE} = {6217B1E2-2990-44C2-BA99-159D982C1D4C}
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30} = {6217B1E2-2990-44C2-BA99-159D982C1D4C}
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577} = {6217B1E2-2990-44C2-BA99-159D982C1D4C}
 	EndGlobalSection
 EndGlobal

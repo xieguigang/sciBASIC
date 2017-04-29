@@ -1,4 +1,4 @@
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.DataMining.SVM.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Canvas = System.Drawing.Graphics
@@ -11,10 +11,8 @@ Imports Canvas = System.Drawing.Graphics
 Public Class CartesianCoordinateSystem
 
     Private Const STROKE_WIDTH As Integer = 4
-    Private Const CIRCLE_RADIUS As Integer = 20
+    Private Const CIRCLE_RADIUS As Integer = 12
 
-    Private mPaint As Brush
-    Private mTextBounds As Rectangle
     Private mState As State
     Private mLineBuilder As LineBuilder
 
@@ -33,7 +31,7 @@ Public Class CartesianCoordinateSystem
         End Set
     End Property
 
-    Public ReadOnly Property Points As IList(Of LabeledPoint)
+    Public ReadOnly Property Points As List(Of LabeledPoint)
         Get
             Return mState.Points
         End Get
@@ -46,9 +44,7 @@ Public Class CartesianCoordinateSystem
     End Property
 
     Sub New(Optional points As IEnumerable(Of LabeledPoint) = Nothing)
-        mPaint = New SolidBrush(Color.White)
         mState = New State(Me)
-        mTextBounds = New Rectangle
 
         If Not points Is Nothing Then
             For Each x In points
@@ -57,82 +53,70 @@ Public Class CartesianCoordinateSystem
         End If
     End Sub
 
-    Sub Draw(canvas As Canvas, mwidth!, mheight!)
+    ''' <summary>
+    ''' 可视化SVM结果
+    ''' </summary>
+    ''' <param name="canvas"></param>
+    ''' <param name="width!"></param>
+    ''' <param name="height!"></param>
+    Sub Draw(canvas As Canvas, Optional width! = 1440, Optional height! = 900)
         Dim pen As Pen = Pens.Black
 
-        canvas.DrawLine(pen, 0, 0, 0, mheight)
-        canvas.DrawLine(pen, 0, mheight, mwidth, mheight)
+        canvas.DrawLine(pen, 0, 0, 0, height)
+        canvas.DrawLine(pen, 0, height, width, height)
 
         Dim textLineWidth As Integer = 10
         Dim textPadding As Integer = textLineWidth + 6
-
-        canvas.DrawLine(pen, 0, 0, textLineWidth, 0)
-        canvas.DrawLine(pen, 0, mheight \ 4 * 3, textLineWidth, mheight \ 4 * 3)
-        canvas.DrawLine(pen, 0, mheight \ 2, textLineWidth, mheight \ 2)
-        canvas.DrawLine(pen, 0, mheight \ 4, textLineWidth, mheight \ 4)
-
-
-        canvas.DrawLine(pen, mwidth, mheight, mwidth, mheight - textLineWidth)
-        canvas.DrawLine(pen, mwidth \ 4, mheight, mwidth \ 4, mheight - textLineWidth)
-        canvas.DrawLine(pen, mwidth \ 2, mheight, mwidth \ 2, mheight - textLineWidth)
-        canvas.DrawLine(pen, mwidth \ 4 * 3, mheight, mwidth \ 4 * 3, mheight - textLineWidth)
-
-        Dim text As String = "0.25"
         Dim f As New Font("Microsoft YaHei", 12)
-        Dim mTextBounds = canvas.MeasureString(text, f)
-        canvas.DrawString(text, f, Brushes.Black, textPadding, mheight \ 4 * 3 + mTextBounds.Height() \ 2)
-        canvas.DrawString(text, f, Brushes.Black, mwidth \ 4 - mTextBounds.Width() \ 2, mheight - textPadding)
 
-        text = "0.5"
-        mTextBounds = canvas.MeasureString(text, f)
-        canvas.DrawString(text, f, Brushes.Black, textPadding, mheight \ 2 + mTextBounds.Height() \ 2)
-        canvas.DrawString(text, f, Brushes.Black, mwidth \ 2 - mTextBounds.Width() \ 2, mheight - textPadding)
+        For Each text As String In {"0.25", "0.5", "0.75", "1.0"}
+            With canvas.MeasureString(text, f)
+                Dim y! = height * (1 - Val(text))
+                Dim x! = width * Val(text)
 
-        text = "0.75"
-        mTextBounds = canvas.MeasureString(text, f)
-        canvas.DrawString(text, f, Brushes.Black, textPadding, mheight \ 4 + mTextBounds.Height() \ 2)
-        canvas.DrawString(text, f, Brushes.Black, mwidth \ 4 * 3 - mTextBounds.Width() \ 2, mheight - textPadding)
-
-        text = "1.0"
-        mTextBounds = canvas.MeasureString(text, f)
-        canvas.DrawString(text, f, Brushes.Black, textPadding, mTextBounds.Height())
-        canvas.DrawString(text, f, Brushes.Black, mwidth - mTextBounds.Width() - 3, mheight - textPadding)
+                canvas.DrawString(text, f, Brushes.Black, textPadding, y - .Height() \ 2)         ' Y
+                canvas.DrawString(text, f, Brushes.Black, x - .Width() \ 2, height - .Height - textPadding / 2) ' X
+                canvas.DrawLine(pen, 0, y, textPadding, y)
+                canvas.DrawLine(pen, x, height, x, height - textPadding)
+            End With
+        Next
 
         For Each p As LabeledPoint In mState.Points
-            If p.ColorClass = ColorClass.RED Then
-                canvas.DrawCircle(Pens.Red, CSng(p.X1) * mwidth, CSng(1 - p.X2) * mheight, CIRCLE_RADIUS, fill:=False)
-            Else
-                canvas.DrawCircle(Pens.Blue, CSng(p.X1) * mwidth, CSng(1 - p.X2) * mheight, CIRCLE_RADIUS, fill:=False)
-            End If
+            canvas.DrawCircle(
+                New Pen(p.ColorClass.Color.TranslateColor),
+                CSng(p.X(0)) * width,
+                CSng(1 - p.X(1)) * height,
+                CIRCLE_RADIUS)
         Next
 
         Dim lineText As Line = mState.Line
         If lineText Is Nothing AndAlso mLineBuilder IsNot Nothing Then lineText = mLineBuilder.Build()
 
         If lineText IsNot Nothing Then
-            text = "y = " & Math.Round(lineText.Increase * 100) / 100.0R & " * x + " & Math.Round(lineText.Offset * 100) / 100.0R
-            mTextBounds = canvas.MeasureString(text, f)
-            canvas.DrawString(text, f, Brushes.Black, mwidth - textPadding - mTextBounds.Width(), textPadding + mTextBounds.Height())
+            Dim text$ = lineText.ToString
+            With canvas.MeasureString(text, f)
+                canvas.DrawString(text, f, Brushes.Black, width - textPadding - .Width(), textPadding + .Height())
+            End With
         End If
 
         If mLineBuilder IsNot Nothing Then
-            canvas.DrawLine(pen, mLineBuilder.StartX * mwidth, (1 - mLineBuilder.StartY) * mheight, mLineBuilder.EndX * mwidth, (1 - mLineBuilder.EndY) * mheight)
+            canvas.DrawLine(pen, mLineBuilder.StartX * width, (1 - mLineBuilder.StartY) * height, mLineBuilder.EndX * width, (1 - mLineBuilder.EndY) * height)
         ElseIf mState.Line IsNot Nothing Then
-            Dim p1 As New Point(0, CSng(1 - mState.Line.CalcY(0)) * mheight)
-            Dim p2 As New Point(mwidth, CSng(1 - mState.Line.CalcY(1)) * mheight)
+            Dim p1 As New Point(0, CSng(1 - mState.Line.CalcY(0)) * height)
+            Dim p2 As New Point(width, CSng(1 - mState.Line.CalcY(1)) * height)
             canvas.DrawLine(pen, p1, p2)
         End If
     End Sub
 
     Public Sub AddPoint(point As LabeledPoint)
-        mState.addPoint(point)
+        Call mState.AddPoint(point)
     End Sub
 
     Public Sub ClearPoints()
-        mState.clearPoints()
+        Call mState.ClearPoints()
     End Sub
 
     Public Sub RemovePoint(point As LabeledPoint)
-        mState.removePoint(point)
+        Call mState.RemovePoint(point)
     End Sub
 End Class

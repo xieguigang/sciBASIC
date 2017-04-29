@@ -106,7 +106,7 @@ Public Module Bubble
                         Call g.FillPie(b, rect, 0, 360)
 
                         If Not bubblePen Is Nothing Then
-                            Call g.DrawPie(bubblePen, rect, 0, 360)
+                            Call g.DrawCircle(pt.pt, r, bubblePen, fill:=False)
                         End If
 
                         If Not pt.Tag.StringEmpty Then
