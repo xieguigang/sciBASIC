@@ -215,6 +215,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HashMaps\HashBlizzard.vb" />
+    <Compile Include="HashMaps\UncheckedUInt64.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />
     <Compile Include="LinearAlgebra\Vector\Extensions.vb" />
     <Compile Include="Matrix.NET\Extensions.vb" />
