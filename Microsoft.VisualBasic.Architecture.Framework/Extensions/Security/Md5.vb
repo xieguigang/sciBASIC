@@ -56,7 +56,6 @@ Namespace SecurityString
             SyncLock __hashProvider
                 Return __hashProvider.GetMd5Hash(input)
             End SyncLock
-            '  Return New Md5HashProvider().GetMd5Hash(input)
         End Function
 
         ''' <summary>

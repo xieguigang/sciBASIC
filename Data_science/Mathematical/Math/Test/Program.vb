@@ -31,10 +31,41 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Quantile
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports System.Linq.Expressions
+Imports System.Numerics
+Imports Microsoft.VisualBasic.Mathematical.HashMaps
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.SecurityString
 
 Module Program
 
+    Public Function Hash(key$) As Long
+        Return key.MD5.ToLong
+    End Function
+
     Sub Main()
+        Dim l As New List(Of String)
+        Dim uid As New Uid(False)
+
+        For i As Integer = 0 To 5000
+            Dim KEGG = "C" & i.FormatZero("00000")
+            l.Add(KEGG.MD5)
+        Next
+
+        Dim g1 = l.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).Select(Function(x) (x.Key, x.ToArray)).ToArray
+
+
+        Pause()
+
+        Pause()
+
+        Dim aaa = 23
+        Dim bbb = 4.5
+
+        Dim func As Expression(Of Func(Of Double)) = Function() 2 + 3 * aaa / bbb
+
+
+        Pause()
 
         Call (0#, 100000.0#).DoubleRange.rand(2000).Summary.EchoLine
         Call {0#, 569.0#, 63.0#, 59, 345.0#, 456, 423}.Summary.EchoLine
@@ -62,7 +93,7 @@ Module Program
 
         Dim before = {a, b, c, x, y, z}
 
-        Call ParameterExpression.Apply(Function() {a, b, x, y, z})
+        '    Call ParameterExpression.Apply(Function() {a, b, x, y, z})
 
         Dim after = {a, b, c, x, y, z}
 

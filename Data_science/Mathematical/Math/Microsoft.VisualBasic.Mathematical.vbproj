@@ -195,6 +195,8 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
     <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\Plots\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -215,7 +217,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UncheckInteger.vb" />
+    <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />
+    <Compile Include="HashMaps\Unchecked.vb" />
     <Compile Include="LinearAlgebra\Vector\Extensions.vb" />
     <Compile Include="Matrix.NET\Extensions.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />
