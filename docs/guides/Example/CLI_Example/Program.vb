@@ -38,6 +38,7 @@ Module Program
     End Function
 End Module
 
+<[Namespace]("testName", Description:="Test code comments...")>
 Module CLI
 
     <ExportAPI("/API1",

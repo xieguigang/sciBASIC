@@ -6,7 +6,14 @@ Imports Microsoft.VisualBasic.CommandLine.InteropService
 
 Namespace TestApp
 
+
+    ''' <summary>
+    ''' Test code comments...
+    ''' </summary>
+    '''
     Public Class CLI_Example : Inherits InteropService
+
+
         Sub New(App$)
             MyBase._executableAssembly = App$
         End Sub

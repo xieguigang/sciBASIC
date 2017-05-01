@@ -24,6 +24,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine()
             Call vb.AppendLine("Namespace " & [namespace])
             Call vb.AppendLine()
+            Call vb.AppendLine(__xmlComments(App.Type.NamespaceEntry.Description))
             Call vb.AppendLine($"Public Class {MyBase.exe} : Inherits {GetType(InteropService).Name}")
             Call vb.AppendLine()
             Call vb.AppendLine()
@@ -41,6 +42,14 @@ Namespace CommandLine.InteropService.SharedORM
             Return vb.ToString
         End Function
 
+        Private Shared Function __xmlComments(description$) As String
+            Return $"
+''' <summary>
+''' {description}
+''' </summary>
+'''"
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -53,11 +62,7 @@ Namespace CommandLine.InteropService.SharedORM
             ' Return proc.Run()
             ' End Function
             Dim func$ = __normalizedAsIdentifier(API.Name).Trim("_"c)
-            Dim xmlComments$ = $"
-''' <summary>
-''' {API.Description}
-''' </summary>
-'''"
+            Dim xmlComments$ = __xmlComments(API.Description)
             Dim params$()
 
             Try
