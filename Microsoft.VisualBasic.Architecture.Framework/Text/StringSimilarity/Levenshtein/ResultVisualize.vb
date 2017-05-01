@@ -96,11 +96,11 @@ Namespace Text.Levenshtein
                 Return ""
             End If
 
-            If matrix.CSS.IsNullOrEmpty Then
+            If matrix.Path.IsNullOrEmpty Then
                 dict = New Dictionary(Of Integer, Integer())
             Else
                 Dim g = From cell As Point
-                        In matrix.CSS
+                        In matrix.Path
                         Select cell
                         Group cell By cell.X Into Group
 

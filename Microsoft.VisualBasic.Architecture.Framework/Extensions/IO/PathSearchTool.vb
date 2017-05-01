@@ -264,19 +264,12 @@ Public Module ProgramPathSearchTool
 
         Dim fileName As String = tokens.Last
 
+        ' 由于这里是判断文件是否合法，所以之判断文件名就行了，即token列表的最后一个元素
         For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
             If fileName.IndexOf(ch) > -1 Then
                 Return True
             End If
         Next
-
-        'For Each DIRBase As String In tokens.Takes(tokens.Length - 1)
-        '    For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
-        '        If fileName.IndexOf(ch) > -1 Then
-        '            Return True
-        '        End If
-        '    Next
-        'Next
 
         Return False
     End Function

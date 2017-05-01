@@ -66,6 +66,7 @@ Namespace HTML.CSS
 
         Public Const UbuntuLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.Ubuntu & ";"
         Public Const UbuntuNormal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
+        Public Const UbuntuBold$ = "font-style: strong; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
 
         ''' <summary>
         ''' The System.Drawing.FontStyle of the new font.
