@@ -28,6 +28,14 @@
                 AddressOf ChrW)
         End Operator
 
+        Public Shared Operator Like(query As LevenshteinString, subject As LevenshteinString) As DistResult
+            Return Levenshtein.ComputeDistance(
+                query._chars,
+                subject._chars,
+                Function(a, b) a = b,
+                AddressOf ChrW)
+        End Operator
+
         Public Shared Narrowing Operator CType(s As LevenshteinString) As String
             Return s._string
         End Operator
