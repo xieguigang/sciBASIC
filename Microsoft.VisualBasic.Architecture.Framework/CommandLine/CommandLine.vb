@@ -51,7 +51,7 @@ Namespace CommandLine
         Implements ICollection(Of NamedValue(Of String))
         Implements INamedValue
 
-        Friend __lstParameter As New List(Of NamedValue(Of String))
+        Friend __listArguments As New List(Of NamedValue(Of String))
         ''' <summary>
         ''' 原始的命令行字符串
         ''' </summary>
@@ -90,7 +90,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public ReadOnly Property ParameterList As NamedValue(Of String)()
             Get
-                Return __lstParameter.ToArray
+                Return __listArguments.ToArray
             End Get
         End Property
 
@@ -100,7 +100,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public ReadOnly Property Keys As String()
             Get
-                Return __lstParameter.ToArray(Function(v) v.Name)
+                Return __listArguments.ToArray(Function(v) v.Name)
             End Get
         End Property
 
@@ -146,7 +146,7 @@ Namespace CommandLine
         Default Public ReadOnly Property Item(paramName As String) As String
             Get
                 Dim LQuery As NamedValue(Of String) =
-                    __lstParameter _
+                    __listArguments _
                         .Where(Function(x) String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)) _
                         .FirstOrDefault
 
@@ -228,15 +228,15 @@ Namespace CommandLine
             Call sBuilder.AppendLine("---------------------------------------------------------")
             Call sBuilder.AppendLine()
 
-            If __lstParameter.Count = 0 Then
+            If __listArguments.Count = 0 Then
                 Call sBuilder.AppendLine("No parameter was define in this commandline.")
                 Return sBuilder.ToString
             End If
 
             Dim MaxSwitchName As Integer = (From item As NamedValue(Of String)
-                                            In __lstParameter
+                                            In __listArguments
                                             Select Len(item.Name)).Max
-            For Each sw As NamedValue(Of String) In __lstParameter
+            For Each sw As NamedValue(Of String) In __listArguments
                 Call sBuilder.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.Value}"";")
             Next
 
@@ -302,7 +302,7 @@ Namespace CommandLine
             Dim namer As String = If(trim, parameterName.TrimParamPrefix, parameterName)
             Dim LQuery As Integer =
                 LinqAPI.DefaultFirst(Of Integer) <= From para As NamedValue(Of String)
-                                                    In Me.__lstParameter  '  名称都是没有处理过的
+                                                    In Me.__listArguments  '  名称都是没有处理过的
                                                     Where String.Equals(namer, para.Name, StringComparison.OrdinalIgnoreCase)
                                                     Select 100
             Return LQuery > 50
@@ -543,9 +543,9 @@ Namespace CommandLine
             Dim i As Integer =
                 LinqAPI.DefaultFirst(Of Integer)(-1) <=
                 From entry As NamedValue(Of String)
-                In Me.__lstParameter
+                In Me.__listArguments
                 Where String.Equals(parameter, entry.Name, StringComparison.OrdinalIgnoreCase)
-                Select __lstParameter.IndexOf(entry)
+                Select __listArguments.IndexOf(entry)
 
             Return i
         End Function
@@ -628,7 +628,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements IEnumerable(Of NamedValue(Of String)).GetEnumerator
-            Dim source As New List(Of NamedValue(Of String))(Me.__lstParameter)
+            Dim source As New List(Of NamedValue(Of String))(Me.__listArguments)
 
             If Not Me.BoolFlags.IsNullOrEmpty Then
                 source += From name As String
@@ -650,7 +650,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="item"></param>
         Public Sub Add(item As NamedValue(Of String)) Implements ICollection(Of NamedValue(Of String)).Add
-            Call __lstParameter.Add(item)
+            Call __listArguments.Add(item)
         End Sub
 
         ''' <summary>
@@ -659,14 +659,14 @@ Namespace CommandLine
         ''' <param name="key"></param>
         ''' <param name="value"></param>
         Public Sub Add(key As String, value As String)
-            Call __lstParameter.Add(New NamedValue(Of String)(key.ToLower, value))
+            Call __listArguments.Add(New NamedValue(Of String)(key.ToLower, value))
         End Sub
 
         ''' <summary>
         ''' Clear the inner list buffer
         ''' </summary>
         Public Sub Clear() Implements ICollection(Of NamedValue(Of String)).Clear
-            Call __lstParameter.Clear()
+            Call __listArguments.Clear()
         End Sub
 
         ''' <summary>
@@ -677,14 +677,14 @@ Namespace CommandLine
         Public Function Contains(item As NamedValue(Of String)) As Boolean Implements ICollection(Of NamedValue(Of String)).Contains
             Dim LQuery As Integer =
                 LinqAPI.DefaultFirst(-1) <= From obj As NamedValue(Of String)
-                                            In Me.__lstParameter
+                                            In Me.__listArguments
                                             Where String.Equals(obj.Name, item.Name, StringComparison.OrdinalIgnoreCase)
                                             Select 100
             Return LQuery > 50
         End Function
 
         Public Sub CopyTo(array() As NamedValue(Of String), arrayIndex As Integer) Implements ICollection(Of NamedValue(Of String)).CopyTo
-            Call __lstParameter.ToArray.CopyTo(array, arrayIndex)
+            Call __listArguments.ToArray.CopyTo(array, arrayIndex)
         End Sub
 
         ''' <summary>
@@ -695,7 +695,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property Count As Integer Implements ICollection(Of NamedValue(Of String)).Count
             Get
-                Return Me.__lstParameter.Count
+                Return Me.__listArguments.Count
             End Get
         End Property
 
@@ -714,14 +714,14 @@ Namespace CommandLine
             Dim LQuery As NamedValue(Of String) =
                 LinqAPI.DefaultFirst(Of NamedValue(Of String)) <=
                     From obj As NamedValue(Of String)
-                    In Me.__lstParameter
+                    In Me.__listArguments
                     Where String.Equals(obj.Name, paramName, StringComparison.OrdinalIgnoreCase)
                     Select obj
 
             If LQuery.IsEmpty Then
                 Return False
             Else
-                Call __lstParameter.Remove(LQuery)
+                Call __listArguments.Remove(LQuery)
                 Return True
             End If
         End Function
@@ -743,9 +743,9 @@ Namespace CommandLine
         Public Function GetValueArray() As NamedValue(Of String)()
             Dim lst As New List(Of NamedValue(Of String))
 
-            If Not Me.__lstParameter.IsNullOrEmpty Then
+            If Not Me.__listArguments.IsNullOrEmpty Then
                 lst += From obj As NamedValue(Of String)
-                       In __lstParameter
+                       In __listArguments
                        Select New NamedValue(Of String)(obj.Name, obj.Value)
             End If
 
