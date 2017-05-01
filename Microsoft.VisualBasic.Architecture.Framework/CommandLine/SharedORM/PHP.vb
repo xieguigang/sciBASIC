@@ -1,6 +1,13 @@
 ﻿Namespace CommandLine.SharedORM
 
-    Public Class PHP
+    Public Class PHP : Inherits CodeGenerator
 
+        Public Sub New(CLI As Type)
+            MyBase.New(CLI)
+        End Sub
+
+        Public Overrides Function GetSourceCode() As String
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace
