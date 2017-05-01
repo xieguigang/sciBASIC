@@ -26,10 +26,11 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace Text.Levenshtein
 
@@ -43,7 +44,7 @@ Namespace Text.Levenshtein
         ''' </summary>
         ''' <returns></returns>
         Public Property DistEdits As String
-        Public Property CSS As Coords()
+        Public Property Path As Coordinate()
         Public Property Matches As String
 
         Public Overrides Function ToString() As String
@@ -51,7 +52,11 @@ Namespace Text.Levenshtein
         End Function
 
         Public Function IsPath(i As Integer, j As Integer) As Boolean
-            Dim LQuery = (From x In CSS Where x.X = i AndAlso x.Y = j Select 100).FirstOrDefault
+            Dim pt As New Point With {.X = i, .Y = j}
+            Dim LQuery% = (From c As Coordinate
+                           In Path
+                           Where c = pt
+                           Select 100).FirstOrDefault
             Return LQuery > 50
         End Function
 
@@ -63,7 +68,9 @@ Namespace Text.Levenshtein
 
                 Dim reference As String = __getReference()
                 Dim hypotheses As String = __getSubject()
-                Return DistTable(reference.Length).Values(hypotheses.Length)
+
+                Return DistTable(reference.Length) _
+                    .Values(hypotheses.Length)
             End Get
         End Property
 
@@ -124,7 +131,7 @@ Namespace Text.Levenshtein
         End Property
 
         Public Function CopyTo(Of T As DistResult)(ByRef obj As T) As T
-            obj.CSS = CSS
+            obj.Path = Path
             obj.DistEdits = DistEdits
             obj.DistTable = DistTable
             obj.Hypotheses = Hypotheses
