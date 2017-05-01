@@ -76,8 +76,10 @@ Namespace CommandLine.InteropService.SharedORM
         Public Sub Tokenize(usage$, ByRef name$, ByRef arguments$(), ByRef optionals$())
             Dim opts$ = Regex.Match(usage, "\[.+\]").Value
 
-            usage = usage.Replace(opts, "")
-            opts = opts.GetStackValue("[", "]")
+            If opts.Length > 0 Then
+                usage = usage.Replace(opts, "")
+                opts = opts.GetStackValue("[", "]")
+            End If
             name = usage.Split.First ' 命令的名称肯定是没有空格的，所以在里直接split取第一个元素
             usage = Mid(usage, name.Length + 1).Trim
 
@@ -130,7 +132,11 @@ Namespace CommandLine.InteropService.SharedORM
                 End If
             Loop
 
-            Return out + New String(tmp)
+            If tmp.Count > 0 Then
+                Return out + New String(tmp)
+            Else
+                Return out
+            End If
         End Function
     End Module
 End Namespace

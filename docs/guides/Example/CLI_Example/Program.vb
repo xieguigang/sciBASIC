@@ -56,7 +56,7 @@ Module CLI
     End Function
 
     <ExportAPI("/Test.CLI_Scripting",
-               Usage:="/Test.CLI_Scripting </var> <value> /@set <var=value>;<var=value>")>
+               Usage:="/Test.CLI_Scripting /var <value> [/@set <var=value>;<var=value>]")>
     <Group(CLIGrouping.TestGroup2)>
     Public Function ScriptingTest(args As CommandLine) As Integer
         For Each var$ In args.Keys
@@ -70,9 +70,9 @@ Module CLI
     End Function
 
     <ExportAPI("/Code.vb",
-               Usage:="/Code.vb [/out <code.vb>]")>
+               Usage:="/Code.vb /namespace <vb_class.namespace> [/booleanTest /boolean2.test /out <default=code.vb>]")>
     Public Function vbCode(args As CommandLine) As Integer
-        Dim vb As New VisualBasic(GetType(CLI))
+        Dim vb As New VisualBasic(GetType(CLI), args <= "/namespace")
         Dim out = args.GetValue("/out", "./code.vb")
         Return vb.GetSourceCode _
             .SaveTo(out) _

@@ -16,9 +16,17 @@ Namespace CommandLine.InteropService.SharedORM
         Public Overrides Function GetSourceCode() As String
             Dim vb As New StringBuilder
 
+            Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
+            Call vb.AppendLine("Imports " & GetType(InteropService).Namespace)
+            Call vb.AppendLine()
+            Call vb.AppendLine("' Microsoft VisualBasic CommandLine Code AutoGenerator")
+            Call vb.AppendLine("' assembly: " & App.Type.Assembly.Location.GetFullPath)
+            Call vb.AppendLine()
             Call vb.AppendLine("Namespace " & [namespace])
-            Call vb.AppendLine($"Public Class {MyBase.exe} : Inherits {GetType(InteropService).FullName}")
-
+            Call vb.AppendLine()
+            Call vb.AppendLine($"Public Class {MyBase.exe} : Inherits {GetType(InteropService).Name}")
+            Call vb.AppendLine()
+            Call vb.AppendLine()
             Call vb.AppendLine("Sub New(App$)")
             Call vb.AppendLine($"MyBase.{NameOf(InteropService._executableAssembly)} = App$")
             Call vb.AppendLine("End Sub")
@@ -44,16 +52,23 @@ Namespace CommandLine.InteropService.SharedORM
             ' Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
             ' Return proc.Run()
             ' End Function
-            Dim func$ = __normalizedAsIdentifier(API.Name)
+            Dim func$ = __normalizedAsIdentifier(API.Name).Trim("_"c)
             Dim xmlComments$ = $"
 ''' <summary>
 ''' {API.Description}
 ''' </summary>
 '''"
-            Dim params$() = __vbParameters(API.Value)
+            Dim params$()
+
+            Try
+                params = __vbParameters(API.Value)
+            Catch ex As Exception
+                ex = New Exception("Check for your CLI Usage definition: " & API.Value.ToString, ex)
+                Throw ex
+            End Try
 
             Call vb.AppendLine(xmlComments)
-            Call vb.AppendLine($"Public Function CommandName({params.JoinBy(", ")}) As Integer")
+            Call vb.AppendLine($"Public Function {func}({params.JoinBy(", ")}) As Integer")
             Call vb.AppendLine($"Dim CLI$ = $""{__CLI(API.Value)}""")
             Call vb.AppendLine($"Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI$)")
             Call vb.AppendLine($"Return proc.{NameOf(IIORedirectAbstract.Run)}()")
@@ -83,8 +98,10 @@ Namespace CommandLine.InteropService.SharedORM
 
         Private Shared Function __defaultValue(value$) As String
             value = value.GetStackValue("<", ">")
-            value = Strings.Split(value, "default=").Last
-            Return $"""{value}"""
+            If InStr(value, "default=") > 0 Then
+                value = Strings.Split(value, "default=").Last
+            End If
+            Return value
         End Function
 
         Private Shared Function __CLI(API As CommandLine) As String
@@ -92,10 +109,10 @@ Namespace CommandLine.InteropService.SharedORM
             Dim args As New List(Of String)
 
             For Each param In API.ParameterList
-                args += $"{param.Name} ""{"{" & __normalizedAsIdentifier(param.Name) & "}"}"""
+                args += $"{param.Name} """"{"{" & __normalizedAsIdentifier(param.Name) & "}"}"""""
             Next
             For Each b In API.BoolFlags
-                args += "{" & $"If({__normalizedAsIdentifier(b)}, {b}, """")" & "}"
+                args += "{" & $"If({__normalizedAsIdentifier(b)}, ""{b}"", """")" & "}"
             Next
             CLI &= args.JoinBy(" ")
 
@@ -106,6 +123,10 @@ Namespace CommandLine.InteropService.SharedORM
             Dim s As Char() = arg.ToArray
             Dim upper As Char() = arg.ToUpper.ToArray
             Dim c As Char
+
+            If s.First = "<"c OrElse s.Last = ">"c Then
+                Throw New SyntaxErrorException("'<' or '>' is using for the IO redirect in your terminal, unavailable for your commandline argument name!")
+            End If
 
             For i As Integer = 0 To s.Length - 1
                 c = upper(i)
