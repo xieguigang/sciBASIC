@@ -275,7 +275,7 @@ Public Module __DEBUG_MAIN
         Call VBDebugger.__DEBUG_ECHO("sfsdddddddddddddddd")
 
         Dim files As String() = LinqAPI.Exec(Of String) <= From path As String
-                                                           In ls - l - r - wildcards("*.txt") <= "D:\MyDocuments"
+                                                           In ls - l - ShellSyntax.r - wildcards("*.txt") <= "D:\MyDocuments"
                                                            Where (grep * "/\*.../\*" <= path).IsNullOrEmpty
                                                            Select path
 
