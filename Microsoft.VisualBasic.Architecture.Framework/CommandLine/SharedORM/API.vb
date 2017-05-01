@@ -66,7 +66,7 @@ Namespace CommandLine.SharedORM
 
             booleans = GetLogicalArguments(optionals, Nothing)
             out += optionals _
-                .CreateParameterValues(False) _
+                .CreateParameterValues(False, note:=NameOf(optionals)) _
                 .As(Of IEnumerable(Of NamedValue(Of String)))
 
             Return out
@@ -101,7 +101,7 @@ Namespace CommandLine.SharedORM
             Dim tmp As New List(Of Char)
             Dim out As New List(Of String)
 
-            Do While True
+            Do While Not t.EndRead
                 c = +t
 
                 If c = " "c Then
@@ -113,6 +113,7 @@ Namespace CommandLine.SharedORM
                         If tmp.Last = ">"c Then
                             ' 则这个空格表示value的结束
                             out += New String(tmp)
+                            valueEscape = False
                             tmp *= 0
                         Else
                             ' 这个空格是value值之中的一部分，则添加到临时列表
@@ -129,7 +130,7 @@ Namespace CommandLine.SharedORM
                 End If
             Loop
 
-            Return out
+            Return out + New String(tmp)
         End Function
     End Module
 End Namespace

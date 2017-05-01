@@ -55,7 +55,10 @@ Namespace CommandLine
         ''' <param name="IncludeLogicSW">返回来的列表之中是否包含有逻辑开关</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function CreateParameterValues(tokens$(), IncludeLogicSW As Boolean) As List(Of NamedValue(Of String))
+        <Extension> Public Function CreateParameterValues(tokens$(),
+                                                          IncludeLogicSW As Boolean,
+                                                          Optional note$ = Nothing) As List(Of NamedValue(Of String))
+
             Dim list As New List(Of NamedValue(Of String))
 
             If tokens.IsNullOrEmpty Then
@@ -65,7 +68,7 @@ Namespace CommandLine
                 If IsPossibleLogicFlag(tokens(Scan0)) AndAlso
                     IncludeLogicSW Then
 
-                    list += New NamedValue(Of String)(tokens(Scan0), CStr(True))
+                    list += New NamedValue(Of String)(tokens(Scan0), CStr(True), note)
                 Else
                     Return list
                 End If
@@ -79,7 +82,7 @@ Namespace CommandLine
 
                 If [Next] = tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
                     If IsPossibleLogicFlag(tokens(i)) AndAlso IncludeLogicSW Then
-                        list += New NamedValue(Of String)(tokens(i), True)
+                        list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
 
                     Exit For
@@ -89,12 +92,12 @@ Namespace CommandLine
 
                 If IsPossibleLogicFlag(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
                     If IncludeLogicSW Then
-                        list += New NamedValue(Of String)(tokens(i), True)
+                        list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
                     Continue For
                 Else  '下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
                     Dim key As String = tokens(i).ToLower
-                    list += New NamedValue(Of String)(key, s)
+                    list += New NamedValue(Of String)(key, s, note)
 
                     i += 1
                 End If
