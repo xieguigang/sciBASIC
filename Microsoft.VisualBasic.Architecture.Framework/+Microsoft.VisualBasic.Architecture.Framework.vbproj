@@ -332,6 +332,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLine\SharedORM\API.vb" />
+    <Compile Include="CommandLine\SharedORM\R.vb" />
+    <Compile Include="CommandLine\SharedORM\PHP.vb" />
+    <Compile Include="CommandLine\SharedORM\VisualBasic.vb" />
     <Compile Include="CommandLine\Parsers\CLIParser.vb" />
     <Compile Include="CommandLine\Parsers\DictionaryParser.vb" />
     <Compile Include="CommandLine\CLIMapper.vb" />
