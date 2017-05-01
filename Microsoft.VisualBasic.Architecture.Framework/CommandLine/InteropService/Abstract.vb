@@ -11,7 +11,7 @@
         ''' Assembly path for the target invoked program.
         ''' </summary>
         ''' <remarks></remarks>
-        Protected _executableAssembly As String
+        Protected Friend _executableAssembly As String
 
         Public Function RunDotNetApp(args$) As IIORedirectAbstract
             Return App.Shell(_executableAssembly, args, CLR:=True)
