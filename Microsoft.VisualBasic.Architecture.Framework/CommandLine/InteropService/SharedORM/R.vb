@@ -1,6 +1,6 @@
-﻿Namespace CommandLine.SharedORM
+﻿Namespace CommandLine.InteropService.SharedORM
 
-    Public Class PHP : Inherits CodeGenerator
+    Public Class R : Inherits CodeGenerator
 
         Public Sub New(CLI As Type)
             MyBase.New(CLI)

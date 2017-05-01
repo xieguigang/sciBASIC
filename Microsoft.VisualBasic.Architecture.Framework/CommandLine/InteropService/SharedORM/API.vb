@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting
 
-Namespace CommandLine.SharedORM
+Namespace CommandLine.InteropService.SharedORM
 
     ''' <summary>
     ''' CommandLine source code mapper API
@@ -24,7 +24,7 @@ Namespace CommandLine.SharedORM
         ''' + 对于可选参数的默认值，默认值的解析形式为``default=...``，如果没有这个表达式，则默认为Nothing空值为默认值
         ''' </param>
         ''' <returns></returns>
-        Public Function CommandLineModel(usage$) As CommandLine
+        <Extension> Public Function CommandLineModel(usage$) As CommandLine
             Dim name$ = Nothing
             Dim arguments$() = Nothing
             Dim optionals$() = Nothing

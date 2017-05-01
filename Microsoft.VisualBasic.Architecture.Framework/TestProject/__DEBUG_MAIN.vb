@@ -138,7 +138,7 @@ Public Module __DEBUG_MAIN
 
     Function Main() As Integer
 
-        Dim model = Microsoft.VisualBasic.CommandLine.SharedORM.CommandLineModel("/command1 /param1 <value1, means a string value?> /param2 <value2> [/boolean1 /boolean2 /opt <blabla, default=value233>]")
+        Dim model = Microsoft.VisualBasic.CommandLine.InteropService.SharedORM.CommandLineModel("/command1 /param1 <value1, means a string value?> /param2 <value2> [/boolean1 /boolean2 /opt <blabla, default=value233>]")
 
 
         Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("123233123", "a1bc").HTMLVisualize.SaveWithHTMLEncoding("x:\test223.html")
