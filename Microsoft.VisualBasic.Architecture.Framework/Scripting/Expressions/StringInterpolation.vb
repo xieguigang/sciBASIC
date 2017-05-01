@@ -42,7 +42,7 @@ Namespace Scripting.Expressions
         Const VB_str$ = "&VB_str"
 
         ''' <summary>
-        ''' 
+        ''' 对于<paramref name="getValue"/>方法而言，是不需要``$``前缀了的
         ''' </summary>
         ''' <param name="expr$">
         ''' 只有当变量的值不为空值的时候才会进行替换，但是当<paramref name="nullAsEmpty"/>为真的时候会被强行替换为空字符串进行替换
@@ -56,11 +56,24 @@ Namespace Scripting.Expressions
         Public Function Interpolate(expr$, getValue As Func(Of String, String),
                                     Optional nullAsEmpty As Boolean = False,
                                     Optional escape As Boolean = True) As String
+            Dim sb As New StringBuilder(expr)
+            Call sb.Interpolate(getValue, nullAsEmpty, escape)
+            Return sb.ToString
+        End Function
 
-            Dim sb As New StringBuilder(expr.Replace("\$", VB_str))
-            Dim t = Regex.Matches(sb.ToString, "[$][a-z][a-z0-9]*", RegexICSng).ToArray
+        <Extension>
+        Public Sub Interpolate(ByRef sb As StringBuilder, getValue As Func(Of String, String),
+                               Optional nullAsEmpty As Boolean = False,
+                               Optional escape As Boolean = True)
 
-            For Each v$ In t
+            Call sb.Replace("\$", VB_str)
+
+            For Each v$ In Regex _
+                .Matches(sb.ToString, "[$][a-z][a-z0-9]*", RegexICSng) _
+                .ToArray _
+                .OrderByDescending(Function(s) s.Length) _
+                .ToArray
+
                 Dim value$ = getValue(Mid(v, 2))
 
                 If value Is Nothing AndAlso nullAsEmpty Then
@@ -74,7 +87,6 @@ Namespace Scripting.Expressions
             Next
 
             With sb
-
                 ' 这个必须要转义
                 .Replace(VB_str, "$")
 
@@ -84,12 +96,8 @@ Namespace Scripting.Expressions
                     Call .Replace("\n", vbLf)
                     Call .Replace("\t", vbTab)
                 End If
-
-                expr = .ToString
             End With
-
-            Return expr
-        End Function
+        End Sub
 
         <Extension>
         Public Function Interpolate(expr$, table As Dictionary(Of String, String), Optional nullAsEmpty As Boolean = False) As String

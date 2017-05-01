@@ -18,8 +18,12 @@ Public Module GZStream
         Return ms
     End Function
 
-    <Extension>
-    Public Function ZipAsBase64(stream As Stream) As String
+    ''' <summary>
+    ''' 将目标流对象之中的数据进行zip压缩，然后转换为base64字符串
+    ''' </summary>
+    ''' <param name="stream"></param>
+    ''' <returns></returns>
+    <Extension> Public Function ZipAsBase64(stream As Stream) As String
         Dim ms As New MemoryStream
         Dim gz As New GZipStream(ms, CompressionMode.Compress)
         Call stream.CopyTo(gz)
