@@ -154,7 +154,6 @@ Namespace ComponentModel
         ''' <param name="Handle">Object handle value that specify the target object</param>
         ''' <remarks></remarks>
         Public Sub RemoveAt(Handle As Long)
-            Call _ListData(Handle).Dispose()
             Call _EmptyListStack.Push(Handle)
             Call _HandleList.Remove(Handle)
         End Sub

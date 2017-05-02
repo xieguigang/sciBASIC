@@ -38,7 +38,7 @@ Namespace ComponentModel
     ''' (这个对象具有一个用于指明该对象在列表对象中的位置的对象句柄值)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface IAddressHandle : Inherits IDisposable, IAddress(Of Integer)
+    Public Interface IAddressHandle : Inherits IAddress(Of Integer)
     End Interface
 
     ''' <summary>
@@ -75,9 +75,6 @@ Namespace ComponentModel
                 obj.Key = value
             End Set
         End Property
-
-        Public Sub Dispose() Implements IDisposable.Dispose
-        End Sub
     End Class
 
     Public Module AddressedValueExtensions

@@ -99,9 +99,5 @@ Namespace ComponentModel.Algorithm.base
         Private Iterator Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
-
-        Public Sub Dispose() Implements IDisposable.Dispose
-            Elements = Nothing
-        End Sub
     End Structure
 End Namespace

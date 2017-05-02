@@ -138,9 +138,6 @@ Namespace Linq
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
-
-        Public Sub Dispose() Implements IDisposable.Dispose
-        End Sub
     End Structure
 
     Public Structure SeqValue(Of T) : Implements IAddressHandle
@@ -195,9 +192,6 @@ Namespace Linq
         Public Shared Operator +(x As SeqValue(Of T)) As T
             Return x.value
         End Operator
-
-        Public Sub Dispose() Implements IDisposable.Dispose
-        End Sub
     End Structure
 
     ''' <summary>
