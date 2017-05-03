@@ -39,7 +39,7 @@ Namespace ComponentModel.Algorithm.base
     ''' <typeparam name="T"></typeparam>
     ''' <remarks></remarks>
     Public Structure SlideWindowHandle(Of T)
-        Implements IEnumerable(Of T), IAddressHandle
+        Implements IEnumerable(Of T), IAddressOf
         Implements IGrouping(Of Integer, T)
 
         ''' <summary>
@@ -48,7 +48,7 @@ Namespace ComponentModel.Algorithm.base
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property p As Integer Implements IAddressHandle.Address, IGrouping(Of Integer, T).Key
+        Public Property p As Integer Implements IAddressOf.Address, IGrouping(Of Integer, T).Key
         ''' <summary>
         ''' The elements in this slide window.(这个划窗之中的元素的列表)
         ''' </summary>

@@ -38,7 +38,7 @@ Namespace ComponentModel
     ''' (这个对象具有一个用于指明该对象在列表对象中的位置的对象句柄值)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Interface IAddressHandle : Inherits IAddress(Of Integer)
+    Public Interface IAddressOf : Inherits IAddress(Of Integer)
     End Interface
 
     ''' <summary>
@@ -59,14 +59,14 @@ Namespace ComponentModel
         Property Address As T
     End Interface
 
-    Public Interface IHashHandle : Inherits IAddressHandle, INamedValue
+    Public Interface IHashHandle : Inherits IAddressOf, INamedValue
     End Interface
 
     Public Class IHashValue(Of T As INamedValue) : Inherits ClassObject
         Implements IHashHandle
 
         Public Property obj As T
-        Public Property Address As Integer Implements IAddressHandle.Address
+        Public Property Address As Integer Implements IAddressOf.Address
         Public Property ID As String Implements INamedValue.Key
             Get
                 Return obj.Key

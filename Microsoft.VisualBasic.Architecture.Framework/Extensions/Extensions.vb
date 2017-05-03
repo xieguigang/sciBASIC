@@ -1940,11 +1940,12 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' 为列表中的对象添加对象句柄值
+    ''' Add array location index value for the <see cref="IAddressOf"/> elements in the sequence.
+    ''' (为列表中的对象添加对象句柄值)
     ''' </summary>
     ''' <param name="source"></param>
     ''' <remarks></remarks>
-    <Extension> Public Function [AddHandle](Of T As IAddressHandle)(ByRef source As IEnumerable(Of T), Optional offset As Integer = 0) As T()
+    <Extension> Public Function WriteAddress(Of T As IAddressOf)(ByRef source As IEnumerable(Of T), Optional offset As Integer = 0) As T()
         Dim list As New List(Of T)
         Dim i As Integer = offset
 
