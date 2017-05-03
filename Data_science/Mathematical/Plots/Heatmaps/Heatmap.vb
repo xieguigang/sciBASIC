@@ -223,7 +223,7 @@ Public Module Heatmap
             font, True,
             customColors, mapLevels, mapName,
             size, margin, bg,
-            legendTitle, legendFont,
+            legendTitle, legendFont, Nothing,
             min, max,
             mainTitle, titleFont,
             legendWidth, legendHasUnmapped, legendLayout)
@@ -233,6 +233,7 @@ Public Module Heatmap
     ''' 一些共同的绘图元素过程
     ''' </summary>
     ''' <param name="drawLabel2">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
+    ''' <param name="legendLayout">这个对象定义了图示的大小和位置</param>
     <Extension>
     Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, Value(Of Single), Single, Dictionary(Of Double, Integer), Value(Of Single), Color()),
                                    array As NamedValue(Of Dictionary(Of String, Double))(),
@@ -246,6 +247,7 @@ Public Module Heatmap
                                    Optional bg$ = "white",
                                    Optional legendTitle$ = "Heatmap Color Legend",
                                    Optional legendFont As Font = Nothing,
+                                   Optional legendLabelFont As Font = Nothing,
                                    Optional min# = -1,
                                    Optional max# = 1,
                                    Optional mainTitle$ = "heatmap",
@@ -318,6 +320,7 @@ Public Module Heatmap
                     max:=Math.Round(correl.Max, 1),
                     title:=legendTitle,
                     titleFont:=legendFont,
+                    labelFont:=legendLabelFont,
                     legendWidth:=legendWidth,
                     lsize:=legendLayout.Size)
                 Dim lsize As Size = legend.Size

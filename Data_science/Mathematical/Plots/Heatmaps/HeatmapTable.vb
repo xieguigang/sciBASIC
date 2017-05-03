@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting
 
 Public Module HeatmapTable
 
@@ -51,13 +52,14 @@ Public Module HeatmapTable
     Public Function Plot(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))),
                          Optional mapLevels% = 20,
                          Optional mapName$ = ColorMap.PatternJet,
-                         Optional size As Size = Nothing,
+                         Optional size$ = "1600,1600",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional triangularStyle As Boolean = True,
                          Optional fontStyle$ = CSSFont.Win10Normal,
                          Optional legendTitle$ = "Heatmap Color Legend",
-                         Optional legendFont As Font = Nothing,
+                         Optional legendFont$ = CSSFont.Win7Large,
+                         Optional legendLabelFont$ = CSSFont.PlotSubTitle,
                          Optional range As DoubleRange = Nothing,
                          Optional mainTitle$ = "heatmap",
                          Optional titleFont As Font = Nothing,
@@ -103,15 +105,12 @@ Public Module HeatmapTable
                                 colors.Length - 1,
                                 level))
                             Dim b As New SolidBrush(color)
-                            Dim r As Single = Math.Abs(c) * dw / 2 ' 计算出半径的大小
-
-                            r *= 2
 
                             If drawValueLabel Then
                                 labelbrush = Brushes.White
                             End If
 
-                            Call g.FillPie(b, rect.Left, rect.Top, r, r, 0, 360)
+                            Call g.FillPie(b, rect.Left, rect.Top, dw, dw, 0, 360)
                         End If
 
                         If gridDraw Then
@@ -193,15 +192,22 @@ Public Module HeatmapTable
                 .MaxLengthString _
                 .MeasureString(font) _
                 .Width * 1.5
+            .Bottom = 50
         End With
+        Dim gsize As Size = size.SizeParser
+        Dim llayout As New Rectangle With {
+            .Size = New Size(gsize.Width / 3, gsize.Height / 3),
+            .Location = New Point(gsize.Width - .Size.Width - 50, margin.Top)
+        }
 
         Return Heatmap.__plotInterval(
             plotInternal, data.ToArray,
             font, Not triangularStyle,,
             mapLevels, mapName,
-            size, margin, bg,
+            gsize, margin, bg,
             legendTitle,
-            legendFont, min, max,
-            mainTitle, titleFont, 120)
+            CSSFont.TryParse(legendFont), CSSFont.TryParse(legendLabelFont), min, max,
+            mainTitle, titleFont,
+            120, legendLayout:=llayout)
     End Function
 End Module
