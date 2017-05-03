@@ -61,6 +61,7 @@ Public Module HeatmapTable
                          Optional mainTitle$ = "heatmap",
                          Optional titleFont As Font = Nothing,
                          Optional drawGrid As Boolean = False,
+                         Optional gridColor$ = NameOf(Color.Gray),
                          Optional drawValueLabel As Boolean = True,
                          Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal) As GraphicsData
 
@@ -68,16 +69,22 @@ Public Module HeatmapTable
         Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
         Dim array = data.ToArray
         Dim min#, max#
+        Dim gridBrush As New Pen(gridColor.TranslateColor, 2)
         Dim plotInternal =
-            Sub(g As IGraphics, region As GraphicsRegion, left As Value(Of Single), font As Font, dw As Single, levels As Dictionary(Of Double, Integer), top As Value(Of Single), colors As Color())
+            Sub(g As IGraphics, region As GraphicsRegion,
+                left As Value(Of Single),
+                font As Font,
+                dw As Single,
+                levels As Dictionary(Of Double, Integer),
+                top As Value(Of Single),
+                colors As Color())
+
                 ' 在绘制上三角的时候假设每一个对象的keys的顺序都是相同的
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小
+                Dim i% = 1
 
                 For Each x As SeqValue(Of NamedValue(Of Dictionary(Of String, Double))) In array.SeqIterator(offset:=1)  ' 在这里绘制具体的矩阵
-
-                    Dim i% = 1
-
                     For Each key$ In keys
                         Dim c# = (+x).Value(key)
                         Dim rect As New RectangleF(New PointF(left, top), blockSize)
@@ -105,12 +112,15 @@ Public Module HeatmapTable
                         End If
 
                         If drawGrid Then
-                            Call g.DrawRectangles(Pens.WhiteSmoke, {rect})
+                            Call g.DrawRectangle(gridBrush, rect)
                         End If
                         If Not labelbrush Is Nothing Then
                             key = c.FormatNumeric(2)
                             Dim ksz As SizeF = g.MeasureString(key, valuelabelFont)
-                            Dim kpos As New PointF(rect.Left + (rect.Width - ksz.Width) / 2, rect.Top + (rect.Height - ksz.Height) / 2)
+                            Dim kpos As New PointF With {
+                                .X = rect.Left + (rect.Width - ksz.Width) / 2,
+                                .Y = rect.Top + (rect.Height - ksz.Height) / 2
+                            }
                             Call g.DrawString(key, valuelabelFont, labelbrush, kpos)
                         End If
 
@@ -120,6 +130,7 @@ Public Module HeatmapTable
 
                     left.value = margin.Left
                     top.value += dw!
+                    i = 1
 
                     Dim sz As SizeF = g.MeasureString((+x).Name, font)
                     Dim y As Single = top.value - dw - (sz.Height - dw) / 2
