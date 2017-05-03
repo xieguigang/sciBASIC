@@ -42,7 +42,7 @@ Public Module HeatmapTable
     ''' 只能够用来表示两两变量之间的相关度
     ''' </summary>
     ''' <param name="triangularStyle">
-    ''' 是否上部分显示圆，下部分显示数值？默认是本三角样式
+    ''' 是否下三角部分显示圆，默认是本三角样式
     ''' 圆的半径大小用来表示相关度的绝对值，颜色则是和普通的heatmap一样用来表示相关度的大小和方向
     ''' </param>
     ''' <returns></returns>
@@ -84,10 +84,10 @@ Public Module HeatmapTable
                     For Each key$ In keys
                         Dim c# = (+x).Value(key)
                         Dim rect As New RectangleF(New PointF(left, top), blockSize)
-                        Dim labelbrush As SolidBrush
+                        Dim labelbrush As SolidBrush = Nothing
 
-                        If triangularStyle AndAlso i <= x.i Then  ' 只显示数值，而不绘制圆圈
-                            labelbrush = Brushes.Black
+                        If triangularStyle AndAlso i > x.i Then ' 上三角部分不绘制任何图形
+                            ' labelbrush = Brushes.Black
                         Else
                             Dim level% = levels(c#)  '  得到等级
                             Dim color As Color = colors(   ' 得到当前的方格的颜色
@@ -108,7 +108,7 @@ Public Module HeatmapTable
                         If drawGrid Then
                             Call g.DrawRectangles(Pens.WhiteSmoke, {rect})
                         End If
-                        If drawValueLabel Then
+                        If drawValueLabel AndAlso Not labelbrush Is Nothing Then
                             key = c.FormatNumeric(2)
                             Dim ksz As SizeF = g.MeasureString(key, valuelabelFont)
                             Dim kpos As New PointF(rect.Left + (rect.Width - ksz.Width) / 2, rect.Top + (rect.Height - ksz.Height) / 2)
