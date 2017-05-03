@@ -46,6 +46,7 @@ Public Module HeatmapTable
     ''' 是否下三角部分显示圆，默认是本三角样式
     ''' 圆的半径大小用来表示相关度的绝对值，颜色则是和普通的heatmap一样用来表示相关度的大小和方向
     ''' </param>
+    ''' <param name="fontStyle">对象标签的字体</param>
     ''' <returns></returns>
     Public Function Plot(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))),
                          Optional mapLevels% = 20,
@@ -62,7 +63,7 @@ Public Module HeatmapTable
                          Optional titleFont As Font = Nothing,
                          Optional drawGrid As Boolean = False,
                          Optional gridColor$ = NameOf(Color.Gray),
-                         Optional drawValueLabel As Boolean = True,
+                         Optional drawValueLabel As Boolean = False,
                          Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal) As GraphicsData
 
         Dim margin As Padding = padding
@@ -70,10 +71,10 @@ Public Module HeatmapTable
         Dim array = data.ToArray
         Dim min#, max#
         Dim gridBrush As New Pen(gridColor.TranslateColor, 2)
+        Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim plotInternal =
             Sub(g As IGraphics, region As GraphicsRegion,
                 left As Value(Of Single),
-                font As Font,
                 dw As Single,
                 levels As Dictionary(Of Double, Integer),
                 top As Value(Of Single),
@@ -85,13 +86,16 @@ Public Module HeatmapTable
                 Dim i% = 1
 
                 For Each x As SeqValue(Of NamedValue(Of Dictionary(Of String, Double))) In array.SeqIterator(offset:=1)  ' 在这里绘制具体的矩阵
-                    For Each key$ In keys
+                    ' X为矩阵之中的行数据
+                    ' 下面的循环为横向绘制出三角形的每一行的图形
+                    For Each key As String In keys
                         Dim c# = (+x).Value(key)
                         Dim rect As New RectangleF(New PointF(left, top), blockSize)
                         Dim labelbrush As SolidBrush = Nothing
+                        Dim gridDraw As Boolean = drawGrid
 
                         If triangularStyle AndAlso i > x.i Then ' 上三角部分不绘制任何图形
-                            ' labelbrush = Brushes.Black
+                            gridDraw = False
                         Else
                             Dim level% = levels(c#)  '  得到等级
                             Dim color As Color = colors(   ' 得到当前的方格的颜色
@@ -100,18 +104,17 @@ Public Module HeatmapTable
                                 level))
                             Dim b As New SolidBrush(color)
                             Dim r As Single = Math.Abs(c) * dw / 2 ' 计算出半径的大小
-                            Dim d = dw / 2
-
+                          
                             r *= 2
 
                             If drawValueLabel Then
                                 labelbrush = Brushes.White
                             End If
 
-                            Call g.FillPie(b, rect.Left + d, rect.Top + d, r, r, 0, 360)
+                            Call g.FillPie(b, rect.Left, rect.Top, r, r, 0, 360)
                         End If
 
-                        If drawGrid Then
+                        If gridDraw Then
                             Call g.DrawRectangle(gridBrush, rect)
                         End If
                         If Not labelbrush Is Nothing Then
@@ -138,6 +141,27 @@ Public Module HeatmapTable
 
                     Call g.DrawString((+x).Name, font, Brushes.Black, New PointF(lx, y))
                 Next
+
+                If triangularStyle Then
+                    Dim maxSize = g.MeasureString(keys.MaxLengthString, font)
+                    Dim y! = 0
+
+                    Using g2 As Graphics2D = New Size With {
+                        .Width = maxSize.Width,
+                        .Height = maxSize.Height * keys.Length
+                    }.CreateGDIDevice(Color.Transparent)
+
+                        For Each key As String In keys
+                            Call g2.DrawString(key, font, Brushes.Black, New PointF(0, y))
+                            y += dw!
+                        Next
+
+                        Dim labels As Image = g2.ImageResource.RotateImage(-45)
+                        Call g.DrawImageUnscaled(
+                            labels,
+                            New Point(margin.Left, margin.Top))
+                    End Using
+                End If
             End Sub
 
         If range Is Nothing Then
@@ -152,13 +176,21 @@ Public Module HeatmapTable
             min = .Min
             max = .Max
         End With
+        With margin
+            .Left = array _
+                .Keys _
+                .MaxLengthString _
+                .MeasureString(font) _
+                .Width * 1.5
+        End With
 
         Return Heatmap.__plotInterval(
-            plotInternal, data.ToArray,,
+            plotInternal, data.ToArray,
+            font, Not triangularStyle,,
             mapLevels, mapName,
             size, margin, bg,
-            fontStyle, legendTitle,
+            legendTitle,
             legendFont, min, max,
-            mainTitle, titleFont)
+            mainTitle, titleFont, 120)
     End Function
 End Module

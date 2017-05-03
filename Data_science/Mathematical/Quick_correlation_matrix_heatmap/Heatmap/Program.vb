@@ -13,7 +13,7 @@ Module Program
         Dim data = DataSet.LoadDataSet("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
         Dim spcc = data.Vectors.CorrelationMatrix(AddressOf Spearman)
 
-        Call HeatmapTable.Plot(spcc,) _
+        Call HeatmapTable.Plot(spcc, drawGrid:=True) _
             .Save("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
     End Sub
 End Module

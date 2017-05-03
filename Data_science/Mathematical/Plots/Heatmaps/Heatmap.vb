@@ -161,16 +161,21 @@ Public Module Heatmap
         Dim legendFont As Font = CSSFont.TryParse(legendFontStyle)
         Dim margin As Padding = padding
         Dim array = data.ToArray
+        Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim plotInternal =
-            Sub(g As IGraphics, region As GraphicsRegion, left As Value(Of Single), font As Font, dw As Single, levels As Dictionary(Of Double, Integer), top As Value(Of Single), colors As Color())
+            Sub(g As IGraphics, region As GraphicsRegion,
+                left As Value(Of Single),
+                dw As Single,
+                levels As Dictionary(Of Double, Integer),
+                top As Value(Of Single),
+                colors As Color())
+
                 If Not kmeans Is Nothing Then
                     array = kmeans(array)  ' 因为可能会重新进行排序了，所以这里要在keys的申明之前完成
                 End If
 
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim blockSize As New SizeF(dw, dw)
-
-                ' margin = region.Margin
 
                 For Each x As NamedValue(Of Dictionary(Of String, Double)) In array   ' 在这里绘制具体的矩阵
                     For Each key As String In keys
@@ -191,7 +196,10 @@ Public Module Heatmap
                         If drawValueLabel Then
                             key = c.FormatNumeric(2)
                             Dim ksz As SizeF = g.MeasureString(key, valuelabelFont)
-                            Dim kpos As New PointF(rect.Left + (rect.Width - ksz.Width) / 2, rect.Top + (rect.Height - ksz.Height) / 2)
+                            Dim kpos As New PointF With {
+                                .X = rect.Left + (rect.Width - ksz.Width) / 2,
+                                .Y = rect.Top + (rect.Height - ksz.Height) / 2
+                            }
                             Call g.DrawString(key, valuelabelFont, Brushes.White, kpos)
                         End If
 
@@ -212,9 +220,10 @@ Public Module Heatmap
         Return __plotInterval(
             plotInternal,
             data.ToArray,
+            font, True,
             customColors, mapLevels, mapName,
             size, margin, bg,
-            fontStyle, legendTitle, legendFont,
+            legendTitle, legendFont,
             min, max,
             mainTitle, titleFont,
             legendWidth, legendHasUnmapped, legendLayout)
@@ -223,16 +232,18 @@ Public Module Heatmap
     ''' <summary>
     ''' 一些共同的绘图元素过程
     ''' </summary>
+    ''' <param name="drawLabel2">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
     <Extension>
-    Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, Value(Of Single), Font, Single, Dictionary(Of Double, Integer), Value(Of Single), Color()),
+    Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, Value(Of Single), Single, Dictionary(Of Double, Integer), Value(Of Single), Color()),
                                    array As NamedValue(Of Dictionary(Of String, Double))(),
+                                   font As Font,
+                                   drawLabel2 As Boolean,
                                    Optional colors As Color() = Nothing,
                                    Optional mapLevels% = 100,
                                    Optional mapName$ = ColorMap.PatternJet,
                                    Optional size As Size = Nothing,
                                    Optional padding As Padding = Nothing,
                                    Optional bg$ = "white",
-                                   Optional fontStyle$ = CSSFont.Win10Normal,
                                    Optional legendTitle$ = "Heatmap Color Legend",
                                    Optional legendFont As Font = Nothing,
                                    Optional min# = -1,
@@ -242,8 +253,6 @@ Public Module Heatmap
                                    Optional legendWidth! = -1,
                                    Optional legendHasUnmapped As Boolean = True,
                                    Optional legendLayout As Rectangle = Nothing) As GraphicsData
-
-        Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim angle! = 45.0F
 
         If padding.IsEmpty Then
@@ -285,20 +294,22 @@ Public Module Heatmap
                 Dim getLeft As New Value(Of Single)(left)
                 Dim getTop As New Value(Of Single)(top)
 
-                Call plot(g, region, getLeft, font, dw, lvs, getTop, colors)
+                Call plot(g, region, getLeft, dw, lvs, getTop, colors)
 
                 left = getLeft
                 top = getTop
                 angle = -angle
                 left += dw / 2
 
-                For Each key$ In keys
-                    Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
-                    Dim dx! = sz.Width * Math.Cos(angle)
-                    Dim dy! = sz.Width * Math.Sin(angle)
-                    Call g.DrawString(key$, font, Brushes.Black, left - dx, top - dy, angle)
-                    left += dw
-                Next
+                If drawLabel2 Then
+                    For Each key$ In keys
+                        Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
+                        Dim dx! = sz.Width * Math.Cos(angle)
+                        Dim dy! = sz.Width * Math.Sin(angle)
+                        Call g.DrawString(key$, font, Brushes.Black, left - dx, top - dy, angle)
+                        left += dw
+                    Next
+                End If
 
                 ' Draw legends
                 Dim legend As GraphicsData = colors.ColorMapLegend(
@@ -351,9 +362,14 @@ Public Module Heatmap
     ''' <param name="angle!"></param>
     <Extension>
     Public Sub DrawString(g As IGraphics, text$, font As Font, brush As Brush, x!, y!, angle!)
-        g.TranslateTransform(x, y)     ' 先转换坐标系原点
-        g.RotateTransform(angle)
-        g.DrawString(text, font, brush, New PointF)
-        g.ResetTransform()
+        With g
+            Call g.TranslateTransform(.Size.Width / 2, .Size.Height / 2)
+            Call g.RotateTransform(angle)
+
+            ' 不清楚旋转之后会不会对字符串的大小产生影响，所以measureString放在旋转之后
+            Dim textSize As SizeF = g.MeasureString(text, font)
+            Call g.DrawString(text, font, brush, -(textSize.Width / 2), -(textSize.Height / 2))
+            Call g.ResetTransform()
+        End With
     End Sub
 End Module
