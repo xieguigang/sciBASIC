@@ -160,10 +160,9 @@ Public Module Heatmap
 
         Dim legendFont As Font = CSSFont.TryParse(legendFontStyle)
         Dim margin As Padding = padding
-
-        Return __plotInterval(
-            Sub(g, region, array, left, font, dw, levels, top, colors)
-
+        Dim array = data.ToArray
+        Dim plotInternal =
+            Sub(g As IGraphics, region As GraphicsRegion, left As Value(Of Single), font As Font, dw As Single, levels As Dictionary(Of Double, Integer), top As Value(Of Single), colors As Color())
                 If Not kmeans Is Nothing Then
                     array = kmeans(array)  ' 因为可能会重新进行排序了，所以这里要在keys的申明之前完成
                 End If
@@ -174,13 +173,13 @@ Public Module Heatmap
                 ' margin = region.Margin
 
                 For Each x As NamedValue(Of Dictionary(Of String, Double)) In array   ' 在这里绘制具体的矩阵
-                    For Each key$ In keys
+                    For Each key As String In keys
                         Dim c# = x.Value(key)
                         Dim level% = levels(c#)  '  得到等级
                         Dim color As Color = colors(
-                                              If(level% > colors.Length - 1,
-                                              colors.Length - 1,
-                                              level))
+                            If(level% > colors.Length - 1,
+                               colors.Length - 1,
+                               level))
                         Dim rect As New RectangleF(New PointF(left, top), blockSize)
                         Dim b As New SolidBrush(color)
 
@@ -208,7 +207,10 @@ Public Module Heatmap
 
                     Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
                 Next
-            End Sub,
+            End Sub
+
+        Return __plotInterval(
+            plotInternal,
             data.ToArray,
             customColors, mapLevels, mapName,
             size, margin, bg,
@@ -222,7 +224,7 @@ Public Module Heatmap
     ''' 一些共同的绘图元素过程
     ''' </summary>
     <Extension>
-    Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, NamedValue(Of Dictionary(Of String, Double))(), Value(Of Single), Font, Single, Dictionary(Of Double, Integer), Value(Of Single), Color()),
+    Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, Value(Of Single), Font, Single, Dictionary(Of Double, Integer), Value(Of Single), Color()),
                                    array As NamedValue(Of Dictionary(Of String, Double))(),
                                    Optional colors As Color() = Nothing,
                                    Optional mapLevels% = 100,
@@ -283,7 +285,7 @@ Public Module Heatmap
                 Dim getLeft As New Value(Of Single)(left)
                 Dim getTop As New Value(Of Single)(top)
 
-                Call plot(g, region, array, getLeft, font, dw, lvs, getTop, colors)
+                Call plot(g, region, getLeft, font, dw, lvs, getTop, colors)
 
                 left = getLeft
                 top = getTop
