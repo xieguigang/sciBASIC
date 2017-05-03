@@ -104,7 +104,7 @@ Public Module HeatmapTable
                                 level))
                             Dim b As New SolidBrush(color)
                             Dim r As Single = Math.Abs(c) * dw / 2 ' 计算出半径的大小
-                          
+
                             r *= 2
 
                             If drawValueLabel Then
@@ -146,9 +146,13 @@ Public Module HeatmapTable
                     Dim maxSize = g.MeasureString(keys.MaxLengthString, font)
                     Dim y! = 0
 
+                    ' |\
+                    ' ----
+                    dw = Math.Sqrt(dw ^ 2 + dw ^ 2)
+
                     Using g2 As Graphics2D = New Size With {
                         .Width = maxSize.Width,
-                        .Height = maxSize.Height * keys.Length
+                        .Height = (maxSize.Height + dw!) * keys.Length
                     }.CreateGDIDevice(Color.Transparent)
 
                         For Each key As String In keys
@@ -157,9 +161,16 @@ Public Module HeatmapTable
                         Next
 
                         Dim labels As Image = g2.ImageResource.RotateImage(-45)
+                        Dim offset! = Math.Sqrt(maxSize.Width ^ 2 / 2)
+
                         Call g.DrawImageUnscaled(
                             labels,
-                            New Point(margin.Left, margin.Top))
+                            New Point(margin.Left + offset / 2, margin.Top - offset - maxSize.Height))
+#Const DEBUG = False
+#If DEBUG Then
+                        Call g2.ImageResource.SaveAs("./labels.png")
+                        Call labels.SaveAs("./labels-r45_degrees.png")
+#End If
                     End Using
                 End If
             End Sub

@@ -193,7 +193,7 @@ Namespace Imaging
 
             Dim rotatedBmp As New Bitmap(nWidth, nHeight)
 
-            Using Gr As Graphics = Graphics.FromImage(rotatedBmp)
+            Using g As Graphics = Graphics.FromImage(rotatedBmp)
                 ' This array will be used to pass in the three points that 
                 ' make up the rotated image
                 Dim points As Point()
@@ -236,7 +236,7 @@ Namespace Imaging
                 }
                 End If
 
-                Call Gr.DrawImage(image, points)
+                Call g.DrawImage(image, points)
             End Using
 
             Return rotatedBmp
