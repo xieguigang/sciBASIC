@@ -38,7 +38,7 @@ Namespace IO
     Public Module HTMLWriter
 
         <Extension> Public Function ToHTML(Of T As Class)(source As Generic.IEnumerable(Of T), Optional Title As String = "", Optional describ As String = "", Optional css As String = "") As String
-            Dim Csv As IO.File = source.ToCsvDoc(False)
+            Dim csv As IO.File = source.ToCsvDoc(False)
 
             If String.IsNullOrEmpty(describ) Then
                 describ = GetType(T).Description
@@ -47,7 +47,7 @@ Namespace IO
                 Title = $"Document for {GetType(T).FullName}"
             End If
 
-            Return Csv.ToHTML(Title, describ, css)
+            Return csv.ToHTML(Title, describ, css)
         End Function
 
         <ExportAPI("ToHTML")>
@@ -60,7 +60,7 @@ Namespace IO
             Call html.Replace("{Title}", Title)
             Call html.Replace("{CSS}", css)
 
-            Dim innerDoc As StringBuilder = New StringBuilder($"<p>{describ}</p>")
+            Dim innerDoc As New StringBuilder($"<p>{describ}</p>")
             Call innerDoc.AppendLine(doc.ToHTMLTable)
 
             Call html.Replace("{doc}", innerDoc.ToString)
@@ -94,7 +94,7 @@ Namespace IO
             Call innerDoc.Append(">")
             Call innerDoc.AppendLine(doc.First.__titleRow)
             For Each row As RowObject In doc.Skip(1)
-                Call innerDoc.AppendLine(row.__contentRow)
+                Call row.__contentRow(innerDoc)
             Next
             Call innerDoc.AppendLine("</table>")
 
@@ -111,14 +111,10 @@ Namespace IO
             Return doc.ToString
         End Function
 
-        <Extension> Private Function __contentRow(row As RowObject) As String
-            Dim doc As StringBuilder = New StringBuilder
-
+        <Extension> Private Sub __contentRow(row As RowObject, ByRef doc As StringBuilder)
             Call doc.AppendLine("<tr>")
             Call doc.AppendLine(row.ToArray(Function(x) $"<td>{x}</td>").JoinBy(vbCrLf))
             Call doc.AppendLine("</tr>")
-
-            Return doc.ToString
-        End Function
+        End Sub
     End Module
 End Namespace

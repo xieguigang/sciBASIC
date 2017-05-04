@@ -53,6 +53,10 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         <XmlElement> Public Property Value As T Implements IKeyValuePairObject(Of String, T).Value
 
+        ''' <summary>
+        ''' Additional description text about this variable <see cref="Value"/>
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute>
         Public Property Description As String
 

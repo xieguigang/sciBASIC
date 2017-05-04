@@ -332,10 +332,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLine\InteropService\Abstract.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\API.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\CodeGenerator.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\R.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\PHP.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\VisualBasic.vb" />
     <Compile Include="CommandLine\Parsers\CLIParser.vb" />
     <Compile Include="CommandLine\Parsers\DictionaryParser.vb" />
     <Compile Include="CommandLine\CLIMapper.vb" />
-    <Compile Include="CommandLine\CLIBuilder.vb" />
+    <Compile Include="CommandLine\InteropService\CLIBuilder.vb" />
     <Compile Include="CommandLine\CLI\IIORedirectAbstract.vb" />
     <Compile Include="CommandLine\CLI\IORedirectFile.vb" />
     <Compile Include="CommandLine\CLITools.vb" />
@@ -412,7 +418,8 @@
     <Compile Include="Language\Java\Collections.vb" />
     <Compile Include="Language\Java\Reflection.vb" />
     <Compile Include="Language\List%28Of T%29.vb" />
-    <Compile Include="ComponentModel\Coords.vb" />
+    <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
+    <Compile Include="Text\Xml\Models\Coordinate.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode%28Of T%29.vb" />
@@ -542,7 +549,7 @@
     <Compile Include="Text\Xml\OpenXml\Content_Types.vb" />
     <Compile Include="Text\Xml\XmlBuilder.vb" />
     <Compile Include="Text\Xml\Linq\Linq.vb" />
-    <Compile Include="Text\Xml\Models.vb" />
+    <Compile Include="Text\Xml\Models\Models.vb" />
     <Compile Include="Text\Xml\Extensions.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />

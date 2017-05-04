@@ -114,13 +114,13 @@ Namespace Linq
         End Function
     End Module
 
-    Public Structure SeqValue(Of T1, T2) : Implements IAddressHandle
+    Public Structure SeqValue(Of T1, T2) : Implements IAddressOf
 
         Public Property i As Integer
         Public Property value As T1
         Public Property Follows As T2
 
-        Private Property Address As Integer Implements IAddressHandle.Address
+        Private Property Address As Integer Implements IAddressOf.Address
             Get
                 Return CLng(i)
             End Get
@@ -138,12 +138,9 @@ Namespace Linq
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
-
-        Public Sub Dispose() Implements IDisposable.Dispose
-        End Sub
     End Structure
 
-    Public Structure SeqValue(Of T) : Implements IAddressHandle
+    Public Structure SeqValue(Of T) : Implements IAddressOf
 
         ''' <summary>
         ''' The position of this object value in the original sequence.
@@ -156,7 +153,7 @@ Namespace Linq
         ''' <returns></returns>
         Public Property value As T
 
-        Private Property Address As Integer Implements IAddressHandle.Address
+        Private Property Address As Integer Implements IAddressOf.Address
             Get
                 Return CLng(i)
             End Get
@@ -195,9 +192,6 @@ Namespace Linq
         Public Shared Operator +(x As SeqValue(Of T)) As T
             Return x.value
         End Operator
-
-        Public Sub Dispose() Implements IDisposable.Dispose
-        End Sub
     End Structure
 
     ''' <summary>

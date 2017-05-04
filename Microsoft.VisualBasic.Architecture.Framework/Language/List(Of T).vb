@@ -395,6 +395,10 @@ Namespace Language
             Throw New NotImplementedException
         End Operator
 
+        ''' <summary>
+        ''' Enums all of the elements in this collection list object by return a value reference type
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function ValuesEnumerator() As IEnumerable(Of Value(Of T))
             Dim o As New Value(Of T)
 

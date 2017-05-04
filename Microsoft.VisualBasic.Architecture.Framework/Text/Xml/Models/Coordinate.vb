@@ -29,21 +29,21 @@
 Imports System.Drawing
 Imports System.Xml.Serialization
 
-Namespace ComponentModel
+Namespace Text.Xml.Models
 
-    Public Class Coords
+    ''' <summary>
+    ''' Improvements on the xml format layout compare with <see cref="Point"/> type.
+    ''' </summary>
+    Public Structure Coordinate
 
         <XmlAttribute("x")> Public Property X As Integer
         <XmlAttribute("y")> Public Property Y As Integer
-
-        Sub New()
-        End Sub
 
         Sub New(pt As Point)
             Call Me.New(pt.X, pt.Y)
         End Sub
 
-        Sub New(x As Integer, y As Integer)
+        Sub New(x%, y%)
             Me.X = x
             Me.Y = y
         End Sub
@@ -52,16 +52,24 @@ Namespace ComponentModel
             Return $"[{X}, {Y}]"
         End Function
 
-        Public Shared Widening Operator CType(pt As Point) As Coords
-            Return New Coords With {.X = pt.X, .Y = pt.Y}
+        Public Shared Operator =(c As Coordinate, pt As Point) As Boolean
+            Return c.X = pt.X AndAlso c.Y = pt.Y
         End Operator
 
-        Public Shared Narrowing Operator CType(x As Coords) As Point
+        Public Shared Operator <>(c As Coordinate, pt As Point) As Boolean
+            Return Not c = pt
+        End Operator
+
+        Public Shared Widening Operator CType(pt As Point) As Coordinate
+            Return New Coordinate With {.X = pt.X, .Y = pt.Y}
+        End Operator
+
+        Public Shared Narrowing Operator CType(x As Coordinate) As Point
             Return New Point(x.X, x.Y)
         End Operator
 
-        Public Shared Widening Operator CType(pt As Integer()) As Coords
-            Return New Coords(pt.FirstOrDefault, pt.LastOrDefault)
+        Public Shared Widening Operator CType(pt As Integer()) As Coordinate
+            Return New Coordinate(pt.FirstOrDefault, pt.LastOrDefault)
         End Operator
-    End Class
+    End Structure
 End Namespace

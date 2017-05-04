@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::3997c0c86d8ddaba711ceeb23ce787bc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -82,7 +82,7 @@ Namespace Mathematical.Correlations
         ''' <remarks>
         ''' https://github.com/felipebravom/RankCorrelation
         ''' </remarks>
-        Public Function rankKendallTauBeta( x As Double(),  y As Double()) As Double
+        Public Function rankKendallTauBeta(x As Double(), y As Double()) As Double
             Debug.Assert(x.Length = y.Length)
             Dim x_n As Integer = x.Length
             Dim y_n As Integer = y.Length
@@ -149,7 +149,7 @@ Namespace Mathematical.Correlations
         ''' <remarks>
         ''' https://github.com/felipebravom/RankCorrelation
         ''' </remarks>
-        Public Function kendallTauBeta( x As Double(),  y As Double()) As Double
+        Public Function kendallTauBeta(x As Double(), y As Double()) As Double
             Debug.Assert(x.Length = y.Length)
 
             Dim c As Integer = 0
@@ -390,14 +390,20 @@ Namespace Mathematical.Correlations
             End Structure
         End Structure
 
+        ''' <summary>
+        ''' 输入的数据为一个对象属性的集合
+        ''' </summary>
+        ''' <param name="data">``[ID, properties]``</param>
+        ''' <param name="compute">默认的计算形式为<see cref="GetPearson"/></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CorrelationMatrix(data As IEnumerable(Of NamedValue(Of Double())), Optional compute As ICorrelation = Nothing) As NamedValue(Of Dictionary(Of String, Double))()
+            Dim array As NamedValue(Of Double())() = data.ToArray
+            Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
+
             If compute Is Nothing Then
                 compute = AddressOf GetPearson
             End If
-
-            Dim array = data.ToArray
-            Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
 
             For Each a In array
                 Dim ca As New Dictionary(Of String, Double)

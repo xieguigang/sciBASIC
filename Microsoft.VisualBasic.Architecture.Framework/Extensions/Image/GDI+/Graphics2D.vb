@@ -5360,6 +5360,10 @@ Namespace Imaging
         Public Overrides Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
             Call Graphics.DrawBezier(pen, pt1, pt2, pt3, pt4)
         End Sub
+
+        Public Overrides Sub DrawRectangle(pen As Pen, rect As RectangleF)
+            Call Graphics.DrawRectangles(pen, {rect})
+        End Sub
 #End Region
     End Class
 End Namespace

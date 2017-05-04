@@ -264,19 +264,12 @@ Public Module ProgramPathSearchTool
 
         Dim fileName As String = tokens.Last
 
+        ' 由于这里是判断文件是否合法，所以之判断文件名就行了，即token列表的最后一个元素
         For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
             If fileName.IndexOf(ch) > -1 Then
                 Return True
             End If
         Next
-
-        'For Each DIRBase As String In tokens.Takes(tokens.Length - 1)
-        '    For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
-        '        If fileName.IndexOf(ch) > -1 Then
-        '            Return True
-        '        End If
-        '    Next
-        'Next
 
         Return False
     End Function
@@ -552,7 +545,7 @@ Public Module ProgramPathSearchTool
 
         Dim LQuery = (From path As String
                       In If(topLevel, ls - l, ls - l - r) - wildcards(ext) <= source
-                      Select ID = basename(path),
+                      Select ID = BaseName(path),
                           path
                       Group By ID Into Group).ToArray
 
@@ -615,7 +608,7 @@ Public Module ProgramPathSearchTool
     <Extension> Public Function LoadEntryList(<Parameter("Dir.Source")> DIR As String, ParamArray exts As String()) As NamedValue(Of String)()
         Dim LQuery As NamedValue(Of String)() =
             LinqAPI.Exec(Of NamedValue(Of String)) <= From path As String
-                                                      In ls - l - r - wildcards(exts) <= DIR
+                                                      In ls - l - ShellSyntax.r - wildcards(exts) <= DIR
                                                       Select New NamedValue(Of String)(path.BaseName, path)
         Return LQuery
     End Function

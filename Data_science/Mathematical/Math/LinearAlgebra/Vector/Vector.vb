@@ -514,9 +514,23 @@ Namespace LinearAlgebra
             Return New BooleanVector(From d As Double In x Select d <= n)
         End Operator
 
+#Region "Syntax support for: Dim v As Vector = {1, 2, 3, 4, 5, 6}"
         Public Shared Widening Operator CType(v As Double()) As Vector
             Return New Vector(v)
         End Operator
+
+        Public Shared Widening Operator CType(v%()) As Vector
+            Return New Vector(v.Select(Function(x) CDbl(x)))
+        End Operator
+
+        Public Shared Widening Operator CType(v&()) As Vector
+            Return New Vector(v.Select(Function(x) CDbl(x)))
+        End Operator
+
+        Public Shared Widening Operator CType(v!()) As Vector
+            Return New Vector(v.Select(Function(x) CDbl(x)))
+        End Operator
+#End Region
 
         Public Overloads Shared Narrowing Operator CType(v As Vector) As Double()
             Return v.ToArray
