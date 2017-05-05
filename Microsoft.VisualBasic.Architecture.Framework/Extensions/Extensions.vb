@@ -1848,11 +1848,16 @@ Public Module Extensions
     ''' Convert target object type collection into a string array using the Object.ToString() interface function.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToStringArray(Of T)(Collection As Generic.IEnumerable(Of T)) As String()
-        Dim LQuery = (From item In Collection Let strItem As String = item.ToString Select strItem).ToArray
+    <Extension> Public Function ToStringArray(Of T)(source As IEnumerable(Of T)) As String()
+        Dim LQuery$() = LinqAPI.Exec(Of String) <=
+            From item As T
+            In source
+            Let strItem As String = item.ToString
+            Select strItem
+
         Return LQuery
     End Function
 
@@ -1940,11 +1945,12 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' 为列表中的对象添加对象句柄值
+    ''' Add array location index value for the <see cref="IAddressOf"/> elements in the sequence.
+    ''' (为列表中的对象添加对象句柄值)
     ''' </summary>
     ''' <param name="source"></param>
     ''' <remarks></remarks>
-    <Extension> Public Function [AddHandle](Of T As IAddressHandle)(ByRef source As IEnumerable(Of T), Optional offset As Integer = 0) As T()
+    <Extension> Public Function WriteAddress(Of T As IAddressOf)(ByRef source As IEnumerable(Of T), Optional offset As Integer = 0) As T()
         Dim list As New List(Of T)
         Dim i As Integer = offset
 

@@ -190,7 +190,16 @@ Namespace StorageProvider.ComponentModels
             End Get
         End Property
 
-        Public ReadOnly Property DeclaringType As Type
+        Dim __type As Type
+
+        Public Property DeclaringType As Type
+            Get
+                Return __type
+            End Get
+            Private Set(value As Type)
+                __type = value
+            End Set
+        End Property
 
         Public ReadOnly Iterator Property Properties As IEnumerable(Of StorageProvider)
             Get
@@ -248,6 +257,7 @@ Namespace StorageProvider.ComponentModels
                 .Columns = (From p In Columns Where p.CanReadDataFromObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanReadDataFromObject Select p).ToArray,
                 .KeyValuePairColumns = (From p In KeyValuePairColumns Where p.CanReadDataFromObject Select p).ToArray,
+                .DeclaringType = __type,
                 ._Raw = Me,
                 .MetaAttributes =
                     If(MetaAttributes IsNot Nothing AndAlso
@@ -379,20 +389,18 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="strict"></param>
         ''' <returns></returns>
         Public Shared Function CreateObject(type As Type, Optional strict As Boolean = False) As SchemaProvider
-            Dim Properties As Dictionary(Of PropertyInfo, StorageProvider) =
-                TypeSchemaProvider.GetProperties(type, strict)
-
-            Dim Schema As New SchemaProvider With {
-                .Columns = GetColumns(Properties),
-                .CollectionColumns = GetCollectionColumns(Properties),
-                .EnumColumns = GetEnumColumns(Properties),
-                .MetaAttributes = GetMetaAttributeColumn(Properties, strict),
-                .KeyValuePairColumns = GetKeyValuePairColumn(Properties),
-                ._DeclaringType = type
+            Dim properties = TypeSchemaProvider.GetProperties(type, strict)
+            Dim schema As New SchemaProvider With {
+                .Columns = GetColumns(properties),
+                .CollectionColumns = GetCollectionColumns(properties),
+                .EnumColumns = GetEnumColumns(properties),
+                .MetaAttributes = GetMetaAttributeColumn(properties, strict),
+                .KeyValuePairColumns = GetKeyValuePairColumn(properties),
+                .DeclaringType = type
             }
-            Schema._Raw = Schema
+            schema._Raw = schema
 
-            Return Schema
+            Return schema
         End Function
 
         ''' <summary>

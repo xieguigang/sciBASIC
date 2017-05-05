@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::91abd1c9ce044689f01547084fd1c747, ..\sciBASIC#\mime\MIME_Markups\HTML\CSS\FontStyle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -51,22 +51,24 @@ Namespace HTML.CSS
     ''' </summary>
     Public Class CSSFont : Inherits ICSSValue
 
-        Public Const Win10Normal As String = "font-style: normal; font-size: 12; font-family: " & FontFace.SegoeUI & ";"
-        Public Const Win10NormalLarger As String = "font-style: normal; font-size: 16; font-family: " & FontFace.SegoeUI & ";"
+        Public Const Win10Normal$       = "font-style: normal; font-size: 12; font-family: " & FontFace.SegoeUI & ";"
+        Public Const Win10NormalLarger$ = "font-style: normal; font-size: 16; font-family: " & FontFace.SegoeUI & ";"
 
-        Public Const Win7Normal As String = "font-style: normal; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
-        Public Const Win7Bold As String = "font-style: strong; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
-        Public Const Win7LargerBold As String = "font-style: strong; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";"
-        Public Const Win7LargeBold As String = "font-style: strong; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
-        Public Const Win7Large As String = "font-style: strong; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7Normal$        = "font-style: normal; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7Bold$          = "font-style: strong; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7LargerBold$    = "font-style: strong; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7LargeBold$     = "font-style: strong; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7Large$         = "font-style: strong; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7VeryLarge$     = "font-style: normal; font-size: 36; font-family: " & FontFace.MicrosoftYaHei & ";"
 
-        Public Const PlotTitle$ = "font-style: strong; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
-        Public Const PlotSubTitle$ = "font-style: normal; font-size: 20; font-family: " & FontFace.BookmanOldStyle & ";"
-        Public Const PlotSmallTitle$ = "font-style: normal; font-size: 16; font-family: " & FontFace.BookmanOldStyle & ";"
+        Public Const PlotTitle$         = "font-style: strong; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
+        Public Const PlotSubTitle$      = "font-style: normal; font-size: 20; font-family: " & FontFace.BookmanOldStyle & ";"
+        Public Const PlotSmallTitle$    = "font-style: normal; font-size: 16; font-family: " & FontFace.BookmanOldStyle & ";"
+        Public Const PlotLabelNormal$   = "font-style: normal; font-size: 12; font-family: " & FontFace.BookmanOldStyle & ";"
 
-        Public Const UbuntuLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.Ubuntu & ";"
-        Public Const UbuntuNormal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
-        Public Const UbuntuBold$ = "font-style: strong; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
+        Public Const UbuntuLarge$       = "font-style: normal; font-size: 20; font-family: " & FontFace.Ubuntu & ";"
+        Public Const UbuntuNormal$      = "font-style: normal; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
+        Public Const UbuntuBold$        = "font-style: strong; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
 
         ''' <summary>
         ''' The System.Drawing.FontStyle of the new font.
