@@ -1,35 +1,37 @@
-﻿#Region "Microsoft.VisualBasic::31175fbb7610f46cb46a5ad290952c37, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿Option Strict Off
+#Region "Microsoft.VisualBasic::31175fbb7610f46cb46a5ad290952c37, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Option Strict Off
-
+Imports System.Reflection
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 
@@ -44,6 +46,12 @@ Namespace StorageProvider.ComponentModels
         Public ReadOnly Property SchemaProvider As SchemaProvider
         Public ReadOnly Property MetaRow As MetaAttribute
 
+        ''' <summary>
+        ''' 由于集合类型的数据会比较长，所以一般是将集合类型放在最后面
+        ''' 故而这里只对单个的column类型做原始排序
+        ''' </summary>
+        ''' <param name="SchemaProvider"></param>
+        ''' <param name="metaBlank"></param>
         Sub New(SchemaProvider As SchemaProvider, metaBlank As String)
             Me.SchemaProvider = SchemaProvider
             Me.Columns =
@@ -69,6 +77,37 @@ Namespace StorageProvider.ComponentModels
             Else
                 __buildRow = AddressOf __buildRowMeta
             End If
+
+            Dim properties$() = SchemaProvider _
+                .DeclaringType _
+                .GetProperties(BindingFlags.Public Or BindingFlags.Instance) _
+                .Where(Function(d) d.GetIndexParameters.IsNullOrEmpty) _
+                .Select(Function(d) d.Name) _
+                .ToArray
+            Dim rawOrders As New IndexOf(Of String)(properties)
+            Dim ordered As StorageProvider() = New StorageProvider(rawOrders.Count - 1) {}
+
+            ' 只对column类型进行原始排序
+            With Columns _
+                .Where(Function(c) c.ProviderId = ProviderIds.Column) _
+                .ToDictionary(Function(c) c.BindProperty.Name)
+
+                For Each c As KeyValuePair(Of String, StorageProvider) In .AsEnumerable
+                    ordered(rawOrders(c.Key)) = c.Value
+                Next
+            End With
+
+            ordered = ordered.Where(Function(c) Not c Is Nothing).ToArray
+            Columns = ordered.AsList +
+            Columns.Where(Function(c)
+                              For Each rc In ordered
+                                  If rc Is c Then
+                                      Return False ' 是前面经过重新排序的column，则不考虑了      
+                                  End If
+                              Next
+
+                              Return True
+                          End Function)
         End Sub
 
         Public Function GetRowNames(Optional maps As Dictionary(Of String, String) = Nothing) As RowObject
