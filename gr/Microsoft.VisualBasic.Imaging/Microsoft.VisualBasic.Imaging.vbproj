@@ -185,6 +185,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="d3js\ScaleChromatic.vb" />
     <Compile Include="d3js\CSSModel.vb" />
     <Compile Include="Drawing2D\Colors\ColorPalette.Designer.vb">
       <DependentUpon>ColorPalette.vb</DependentUpon>
