@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::bb90fc16af3e8a15be798d78d3353456, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\UnixBash\Shell\ls.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -35,6 +35,9 @@ Namespace Language.UnixBash
 
     Public Class Search : Implements ICloneable
 
+        ''' <summary>
+        ''' The search options
+        ''' </summary>
         Dim __opts As New Dictionary(Of SearchOpt.Options, SearchOpt)
 
         Public Overrides Function ToString() As String
@@ -173,6 +176,10 @@ Namespace Language.UnixBash
     Public Structure wildcardsCompatible
 
         Dim regexp As String()
+        ''' <summary>
+        ''' Using the regexp engine instead of the wildcard match engine?
+        ''' </summary>
+        Dim usingRegexp As Boolean
 
         ''' <summary>
         ''' Windows系统上面文件路径不区分大小写，但是Linux、Mac系统却区分大小写
@@ -180,9 +187,9 @@ Namespace Language.UnixBash
         ''' </summary>
         Shared ReadOnly opt As RegexOptions =
             If(App.Platform = PlatformID.MacOSX OrElse
-            App.Platform = PlatformID.Unix,
-            RegexOptions.Singleline,
-            RegexICSng)
+               App.Platform = PlatformID.Unix,
+               RegexOptions.Singleline, RegexICSng)
+        Shared ReadOnly pathIgnoreCase As Boolean = App.IsMicrosoftPlatform
 
         ''' <summary>
         ''' Linux/Mac系统不支持Windows系统的通配符，所以在这里是用正则表达式来保持代码的兼容性
@@ -197,11 +204,19 @@ Namespace Language.UnixBash
 
             Dim name As String = path.Replace("\", "/").Split("/"c).Last
 
-            For Each r As String In regexp
-                If Regex.Match(name, r, opt).Success Then
-                    Return True
-                End If
-            Next
+            If usingRegexp Then
+                For Each r As String In regexp
+                    If Regex.Match(name, r, opt).Success Then
+                        Return True
+                    End If
+                Next
+            Else
+                For Each r As String In regexp
+                    If WildcardsExtension.WildcardMatch(r, name, pathIgnoreCase) Then
+                        Return True
+                    End If
+                Next
+            End If
 
             Return False
         End Function

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B2A662BA-4F2F-4FCA-B882-F5B18146F666}</ProjectGuid>
+    <ProjectGuid>{076315EE-B598-40DC-9280-C71CDF9B6A48}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network</AssemblyName>
