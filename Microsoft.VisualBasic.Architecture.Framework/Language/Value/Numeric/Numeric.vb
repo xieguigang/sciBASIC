@@ -142,7 +142,7 @@ Namespace Language
         End Function
 
         ''' <summary>
-        ''' &lt;=
+        ''' ``<paramref name="a"/> &lt;= <paramref name="b"/>``
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="a"></param>
