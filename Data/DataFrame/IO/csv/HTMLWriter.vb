@@ -150,7 +150,7 @@ Namespace IO
             Dim rowText$ = row _
                 .Where(Function(t) removes(t) = -1) _
                 .ToArray(Function(x)
-                             Return $"<td id=""{x}""><strong>{If(theadSpace, x & "&nbsp;&nbsp;", x)}</strong></td>"
+                             Return $"<td id=""{x}""><strong>{If(theadSpace, x & "&nbsp;&nbsp;&nbsp;", x)}</strong></td>"
                          End Function) _
                 .JoinBy("")
 
