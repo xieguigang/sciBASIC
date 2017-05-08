@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::539e328230a368e9eaccaba5fd82920f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -38,6 +38,43 @@ Imports Microsoft.VisualBasic.Linq
 ''' to accommodate the number of elements copied.
 ''' </summary>
 Public Module ListExtensions
+
+    ''' <summary>
+    ''' 根据对象的键名来进行重排序，请注意，要确保对象<paramref name="getKey"/>能够从泛型对象之中获取得到唯一的键名
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <param name="getKey"></param>
+    ''' <param name="customOrder">可能会出现大小写不对的情况？</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ReorderByKeys(Of T)(list As IEnumerable(Of T), getKey As Func(Of T, String), customOrder$()) As List(Of T)
+        Dim ls As List(Of T) = list.AsList
+        Dim list2 As New List(Of T)
+        Dim internalGet_geneObj =
+            Function(id As String)
+                Dim query = From x
+                            In ls.AsParallel
+                            Let key As String = getKey(x)
+                            Where key.TextEquals(id) OrElse
+                                InStr(key, id, CompareMethod.Text) > 0 ' 假若是对基因组进行排序，可能getkey函数只获取得到的是编号，而customOrder之中还会包含有全称，所以用InStr判断一下？
+                            Select x '
+                Return query.FirstOrDefault
+            End Function
+
+        For Each ID As String In customOrder
+            Dim selectedItem As T = internalGet_geneObj(ID)
+
+            If Not selectedItem Is Nothing Then ' 由于是倒序的，故而将对象移动到最后一个元素即可
+                Call list2.Add(selectedItem)
+                Call ls.Remove(selectedItem)
+            End If
+        Next
+
+        Call list2.AddRange(ls) ' 添加剩余的没有在customOrder之中找到的数据
+
+        Return list2
+    End Function
 
     ''' <summary>
     '''
