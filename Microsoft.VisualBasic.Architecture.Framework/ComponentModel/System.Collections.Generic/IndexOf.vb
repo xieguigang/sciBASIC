@@ -88,6 +88,15 @@ Namespace ComponentModel.Collection
         End Property
 
         ''' <summary>
+        ''' For Linq ``where``
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function NotExists(x As T) As Boolean
+            Return IndexOf(x) = -1
+        End Function
+
+        ''' <summary>
         ''' 这个函数是线程不安全的
         ''' </summary>
         ''' <param name="x"></param>
