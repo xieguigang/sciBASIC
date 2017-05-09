@@ -195,6 +195,8 @@
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
+    <Compile Include="LDM\Analysis\Extensions.vb" />
+    <Compile Include="LDM\Analysis\Statistics.vb" />
     <Compile Include="LDM\FileStream\Cytoscape.vb" />
     <Compile Include="LDM\FileStream\Network.vb" />
     <Compile Include="LDM\FileStream\INetComponent.vb" />
@@ -229,8 +231,8 @@
     <Compile Include="LDM\Extensions.vb" />
     <Compile Include="NetworkAPI.vb" />
     <Compile Include="FindPath\PathFinder.vb" />
-    <Compile Include="PageRank\GraphMatrix.vb" />
-    <Compile Include="PageRank\PageRank.vb" />
+    <Compile Include="LDM\Analysis\PageRank\GraphMatrix.vb" />
+    <Compile Include="LDM\Analysis\PageRank\PageRank.vb" />
     <Compile Include="TreeAPI\TREE.vb" />
     <Compile Include="TreeAPI\Operations.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

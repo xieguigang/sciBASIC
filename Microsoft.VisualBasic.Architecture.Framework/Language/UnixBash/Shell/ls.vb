@@ -124,17 +124,18 @@ Namespace Language.UnixBash
         ''' <returns></returns>
         Public Overloads Shared Operator <=(ls As Search, DIR As String) As IEnumerable(Of String)
             Dim l As Boolean = ls.__opts.ContainsKey(SearchOpt.Options.LongName)
-            Dim wc As String() =
-                ls.wildcards.ToArray(Function(x) x.Replace(".", "\."))
-            For i As Integer = 0 To wc.Length - 1
-                If wc(i).Last <> "*"c Then
-                    wc(i) = wc(i) & "$"
-                End If
-                wc(i) = wc(i).Replace("*", ".+")
-            Next
+            'Dim wc As String() =
+            '    ls.wildcards.ToArray(Function(x) x.Replace(".", "\."))
+            'For i As Integer = 0 To wc.Length - 1
+            '    If wc(i).Last <> "*"c Then
+            '        wc(i) = wc(i) & "$"
+            '    End If
+            '    wc(i) = wc(i).Replace("*", ".+")
+            'Next
+            Dim wc$() = ls.wildcards
             Dim isMatch As Func(Of String, Boolean) =
                 AddressOf New wildcardsCompatible With {
-                    .regexp = If(wc.Length = 0, {".+"}, wc)
+                    .regexp = If(wc.Length = 0, {"*"}, wc)
                 }.IsMatch
 
             If ls.__opts.ContainsKey(SearchOpt.Options.Directory) Then
