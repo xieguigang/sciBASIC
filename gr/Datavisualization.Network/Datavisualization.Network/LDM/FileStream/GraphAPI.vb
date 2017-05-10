@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -127,12 +128,14 @@ Namespace FileStream
                 LinqAPI.Exec(Of Graph.Node) <= From n As Node
                                                In net.Nodes
                                                Let id = n.ID
+                                               Let pos As AbstractVector = New FDGVector2(Val(n("x")), Val(n("y")))
                                                Let data As NodeData = New NodeData With {
                                                    .Color = Brushes.Red,
                                                    .radius = 20,
                                                    .Properties = New Dictionary(Of String, String) From {
                                                        {NameOf(Type), n.NodeType}
-                                                   }
+                                                   },
+                                                   .initialPostion = pos
                                                }
                                                Select New Graph.Node(id, data)
 
