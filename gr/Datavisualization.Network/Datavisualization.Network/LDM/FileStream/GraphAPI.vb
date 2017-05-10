@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::9e74e302b5da5eee71d0afe6ddac7ce6, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\GraphAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -77,15 +77,24 @@ Namespace FileStream
             Dim edges As New List(Of NetworkEdge)
 
             For Each n In g.nodes
+                Dim data As New Dictionary(Of String, String)
+
+                data("x") = n.Data.initialPostion.x
+                data("y") = n.Data.initialPostion.y
+                ' data("z") = n.Data.initialPostion.z
+
                 nodes += New Node With {
-                    .ID = n.ID
+                    .ID = n.ID,
+                    .NodeType = n.Data(NameOf(Type)),
+                    .Properties = data
                 }
             Next
 
             For Each l As Edge In g.edges
                 edges += New NetworkEdge With {
                     .FromNode = l.Source.ID,
-                    .ToNode = l.Target.ID
+                    .ToNode = l.Target.ID,
+                    .InteractionType = l.Data(NameOf(Type))
                 }
             Next
 
@@ -95,8 +104,12 @@ Namespace FileStream
             }
         End Function
 
-        <Extension>
-        Public Function CreateGraph(net As Network) As NetworkGraph
+        ''' <summary>
+        ''' Create a <see cref="NetworkGraph"/> model from csv table data
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <returns></returns>
+        <Extension> Public Function CreateGraph(net As Network) As NetworkGraph
             Return CreateGraph(Of Node, NetworkEdge)(net)
         End Function
 
@@ -116,7 +129,10 @@ Namespace FileStream
                                                Let id = n.ID
                                                Let data As NodeData = New NodeData With {
                                                    .Color = Brushes.Red,
-                                                   .radius = 20
+                                                   .radius = 20,
+                                                   .Properties = New Dictionary(Of String, String) From {
+                                                       {NameOf(Type), n.NodeType}
+                                                   }
                                                }
                                                Select New Graph.Node(id, data)
 
@@ -128,7 +144,12 @@ Namespace FileStream
                                          Let a = nodehash(edge.FromNode)
                                          Let b = nodehash(edge.ToNode)
                                          Let id = edge.GetNullDirectedGuid
-                                         Select New Edge(id, a, b, New EdgeData)
+                                         Let data As EdgeData = New EdgeData With {
+                                             .Properties = New Dictionary(Of String, String) From {
+                                                 {NameOf(Type), edge.InteractionType}
+                                             }
+                                         }
+                                         Select New Edge(id, a, b, data)
 
             Dim graph As New NetworkGraph With {
                 .nodes = New List(Of Graph.Node)(nodes),
@@ -180,7 +201,7 @@ Namespace FileStream
                 .nodes = gNodes
             }
         End Function
-        
+
         ''' <summary>
         ''' 默认移除degree少于10% quantile的节点
         ''' </summary>
