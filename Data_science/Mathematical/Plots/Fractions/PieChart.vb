@@ -67,7 +67,7 @@ Public Module PieChart
     ''' +  90 - 180  左下
     ''' + 180 - 270  左上
     ''' + 270 - 360  右上
-    ''' + 文本的位置应该是startAngle + 0.5 * sweepAngle的更加大的半径的一个园的位置
+    ''' + 文本的位置应该是startAngle + 0.5 * sweepAngle的更加大的半径的一个圆的位置
     ''' </remarks>
     <Extension>
     Public Function Plot(data As IEnumerable(Of Fractions),
@@ -98,8 +98,8 @@ Public Module PieChart
 
         Dim __plot As Action(Of IGraphics) =
             Sub(g As IGraphics)
-                Dim r# = (Math.Min(size.Width, size.Height) - margin.LayoutVector.Max) / 2  ' 最大的半径值
-                Dim topLeft As New Point(size.Width / 2 - r, size.Height / 2 - r)
+                Dim r# = (Math.Min(size.Width, size.Height) - margin.LayoutVector.Max) / 2 - 15 ' 最大的半径值
+                Dim topLeft As New Point(margin.Left, size.Height / 2 - r)
                 Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
 
                 If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
@@ -127,17 +127,26 @@ Public Module PieChart
 
                         Call g.DrawString(label, valueLabelFont, Brushes.White, pt)
 
-                        If legendAlt Then
+                        If Not legendAlt Then
+
                             ' 标签文本信息跟随pie的值而变化的
                             Dim layout As New PointF(
-                            (r * Math.Cos((start / 360) * (2 * Math.PI))) + centra.X,
-                            (r * Math.Sin((start / 360) * (2 * Math.PI))) + centra.Y)
+                            (r * 1.15 * Math.Cos((start / 360) * (2 * Math.PI))) + centra.X,
+                            (r * 1.15 * Math.Sin((start / 360) * (2 * Math.PI))) + centra.Y)
 
-                            Call g.DrawString(x.Name, font, Brushes.Black, layout)
+                            labelSize = g.MeasureString(x.Name, font)
+                            If layout.X < centra.X Then
+                                ' 在左边，则需要剪掉size的width
+                                layout = New PointF(layout.X - labelSize.Width, layout.Y)
+                            End If
+                            g.DrawString(x.Name, font, Brushes.Black, layout)
+
                             ' 还需要绘制标签文本和pie的连接线
-                            pt = (r).ToPoint(alpha)
+                            With (r).ToPoint(alpha)
+                                pt = New PointF(centra.X + .X, centra.Y + .Y)
+                            End With
                             ' 绘制pt和layout之间的连接线
-
+                            g.DrawLine(Pens.Gray, pt, layout)
                         End If
                     Next
                 Else  ' 半径也会有变化
@@ -166,21 +175,24 @@ Public Module PieChart
                 End If
 
                 If legendAlt Then
-                    Dim maxL = data.Select(Function(x) g.MeasureString(x.Name, Font).Width).Max
+                    Dim maxL = g.MeasureString(data.MaxLengthString(Function(x) x.Name), font).Width
                     Dim left = size.Width - (margin.Horizontal) - maxL
-                    Dim top = margin.Top
                     Dim legends As New List(Of Legend)
+                    Dim d = font.Size
+                    Dim height! = (d + g.MeasureString("1", font).Height) * data.Count
+                    ' Excel之中的饼图的示例样式位置为默认右居中的
+                    Dim top = (size.Height - height) / 2 - margin.Top
 
                     For Each x As Fractions In data
                         legends += New Legend With {
-                                .color = x.Color.RGBExpression,
-                                .style = LegendStyles.Square,
-                                .title = x.Name,
-                                .fontstyle = legendFont
-                             }
+                            .color = x.Color.RGBExpression,
+                            .style = LegendStyles.Square,
+                            .title = x.Name,
+                            .fontstyle = legendFont
+                        }
                     Next
 
-                    Call g.DrawLegends(New Point(left, top), legends, ,, legendBorder)
+                    Call g.DrawLegends(New Point(left, top), legends, , d, legendBorder)
                 End If
             End Sub
 

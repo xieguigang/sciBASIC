@@ -87,19 +87,6 @@ Module Module1
     .Save("./3d-heatmap.png")
     End Sub
 
-    Public Sub heatmap2()
-
-        Dim data = LoadData("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.csv", True)
-        Dim spcc = data.CorrelationMatrix(AddressOf Spearman)
-
-        Call HeatmapTable.Plot(spcc,) _
-            .Save("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
-        Call Heatmap.Plot(spcc, mapLevels:=25) _
-            .Save("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.heatmap.png")
-
-    End Sub
-
-
     Sub axisScallingTest()
         Call AxisScalling.GetAxisByTick(1, 0.1,).FormatNumeric.GetJson.__DEBUG_ECHO
         Call AxisScalling.GetAxisValues(1).FormatNumeric.GetJson.__DEBUG_ECHO

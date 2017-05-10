@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Where is the Min() or Max() or first TRUE or FALSE ?
@@ -36,5 +37,39 @@ Public NotInheritable Class Which
     ''' <returns></returns>
     Public Shared Function Min(Of T As IComparable)(x As IEnumerable(Of T)) As Integer
         Return x.MinIndex
+    End Function
+
+    ''' <summary>
+    ''' Return all of the indices which is True
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
+    Public Shared Function IsTrue(v As IEnumerable(Of Boolean)) As Integer()
+        Return v _
+            .SeqIterator _
+            .Where(Function(b) True = +b) _
+            .Select(Function(i) CInt(i)) _
+            .ToArray
+    End Function
+
+    ''' <summary>
+    ''' Returns all of the indices which is False
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
+    Public Shared Function IsFalse(v As IEnumerable(Of Boolean)) As Integer()
+        Return v _
+           .SeqIterator _
+           .Where(Function(b) False = +b) _
+           .Select(Function(i) CInt(i)) _
+           .ToArray
+    End Function
+
+    Public Shared Function IsTrue([operator] As Func(Of Boolean())) As Integer()
+        Return Which.IsTrue([operator]())
+    End Function
+
+    Public Shared Function IsFalse([operator] As Func(Of Boolean())) As Integer()
+        Return Which.IsFalse([operator]())
     End Function
 End Class

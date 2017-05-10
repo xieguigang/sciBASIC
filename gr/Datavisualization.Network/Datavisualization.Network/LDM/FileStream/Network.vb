@@ -61,7 +61,12 @@ Namespace FileStream
                 .Count
             Return count
         End Function
-
+        
+        ''' <summary>
+        ''' Load network graph data from a saved network data direcotry.
+        ''' </summary>
+        ''' <param name="DIR"></param>
+        ''' <returns></returns>
         Public Overloads Shared Function Load(DIR As String) As Network
             Dim list As New List(Of String)(ls - l - r - "*.csv" <= DIR)
             Dim edgeFile$ = $"{DIR}/network-edges.csv"

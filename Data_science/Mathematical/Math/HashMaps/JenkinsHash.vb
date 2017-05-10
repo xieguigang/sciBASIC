@@ -26,6 +26,8 @@
 
 #End Region
 
+Imports System.Text
+
 Namespace HashMaps
 
     ''' <summary>
@@ -39,17 +41,12 @@ Namespace HashMaps
     ''' if SELF_TEST is defined.  You can use this free for any purpose.  It's in
     ''' the public domain.  It has no warranty.
     ''' </summary>
-    Public Class JenkinsHash
+    Public Module JenkinsHash
 
         ''' <summary>
         ''' max value to limit it to 4 bytes
         ''' </summary>
         Const MAX_VALUE As Long = &HFFFFFFFFL
-
-        ' internal variables used in the various calculations
-        Friend a As Long
-        Friend b As Long
-        Friend c As Long
 
         ''' <summary>
         ''' Convert a byte into a long value without making it negative. </summary>
@@ -109,7 +106,7 @@ Namespace HashMaps
         ''' <summary>
         ''' Mix up the values in the hash function.
         ''' </summary>
-        Private Sub hashMix()
+        Private Sub hashMix(ByRef a&, ByRef b&, ByRef c&)
             a = subtract(a, b)
             a = subtract(a, c)
             a = [xor](a, c >> 13)
@@ -148,8 +145,12 @@ Namespace HashMaps
         ''' <param name="initialValue"> Initial value of the hash if we are continuing from
         '''                     a previous run.  0 if none. </param>
         ''' <returns> Hash value for the buffer. </returns>
-        Public Overridable Function hash(buffer As SByte(), initialValue As Long) As Long
+        Public Function hash(buffer As SByte(), initialValue As Long) As Long
             Dim len, pos As Integer
+            ' internal variables used in the various calculations
+            Dim a As Long
+            Dim b As Long
+            Dim c As Long
 
             ' set up the internal state
             ' the golden ratio; an arbitrary value
@@ -165,7 +166,7 @@ Namespace HashMaps
                 a = add(a, fourByteToLong(buffer, pos))
                 b = add(b, fourByteToLong(buffer, pos + 4))
                 c = add(c, fourByteToLong(buffer, pos + 8))
-                hashMix()
+                hashMix(a, b, c)
                 pos += 12
             Next len
 
@@ -209,7 +210,7 @@ Namespace HashMaps
                     ' case 0: nothing left to add
             End Select
 
-            hashMix()
+            hashMix(a, b, c)
 
             Return c
         End Function
@@ -219,8 +220,21 @@ Namespace HashMaps
         ''' </summary>
         ''' <param name="buffer"> Byte array that we are hashing on. </param>
         ''' <returns> Hash value for the buffer. </returns>
-        Public Overridable Function hash(buffer As SByte()) As Long
+        Public Function hash(buffer As SByte()) As Long
             Return hash(buffer, 0)
         End Function
-    End Class
+
+        ''' <summary>
+        ''' 只允许ASCII字符串
+        ''' </summary>
+        ''' <param name="key$"></param>
+        ''' <returns></returns>
+        Public Function hash(key$) As Long
+            Dim bytes As SByte() = Encoding.ASCII _
+                .GetBytes(key) _
+                .Select(Function(b) CSByte(b)) _
+                .ToArray
+            Return hash(bytes)
+        End Function
+    End Module
 End Namespace

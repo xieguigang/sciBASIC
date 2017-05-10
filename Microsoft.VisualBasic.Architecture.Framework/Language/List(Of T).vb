@@ -49,6 +49,40 @@ Namespace Language
 
 #Region "Improvements Index"
 
+        Public Property Last As T
+            Get
+                If Count = 0 Then
+                    Return Nothing
+                Else
+                    Return MyBase.Item(Count - 1)
+                End If
+            End Get
+            Set(value As T)
+                If Count = 0 Then
+                    Call Add(value)
+                Else
+                    MyBase.Item(Count - 1) = value
+                End If
+            End Set
+        End Property
+
+        Public Property First As T
+            Get
+                If Count = 0 Then
+                    Return Nothing
+                Else
+                    Return MyBase.Item(0)
+                End If
+            End Get
+            Set(value As T)
+                If Count = 0 Then
+                    Call Add(value)
+                Else
+                    MyBase.Item(Scan0) = value
+                End If
+            End Set
+        End Property
+
         ''' <summary>
         ''' 这个是为了ODEs计算模块所准备的一个数据接口
         ''' </summary>
@@ -395,6 +429,10 @@ Namespace Language
             Throw New NotImplementedException
         End Operator
 
+        ''' <summary>
+        ''' Enums all of the elements in this collection list object by return a value reference type
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function ValuesEnumerator() As IEnumerable(Of Value(Of T))
             Dim o As New Value(Of T)
 
