@@ -195,6 +195,7 @@
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
+    <Compile Include="Layouts\forceNetwork.vb" />
     <Compile Include="LDM\Analysis\Extensions.vb" />
     <Compile Include="LDM\Analysis\Statistics.vb" />
     <Compile Include="LDM\FileStream\Cytoscape.vb" />
