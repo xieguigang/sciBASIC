@@ -27,11 +27,24 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace IO
 
     Public Module Extensions
+
+        <Extension>
+        Public Function NamedMatrix(data As IEnumerable(Of DataSet)) As NamedValue(Of Dictionary(Of String, Double))()
+            Return data _
+                .Select(Function(x)
+                            Return New NamedValue(Of Dictionary(Of String, Double)) With {
+                                .Name = x.ID, 
+                                .Value = x.Properties
+                            }
+                        End Function) _
+                .ToArray
+        End Function
 
         ''' <summary>
         ''' Convert the property value collection data like <see cref="PropertyValue"/> as the csv table value.

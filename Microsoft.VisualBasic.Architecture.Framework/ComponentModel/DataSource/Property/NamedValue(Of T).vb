@@ -64,7 +64,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Does this object have value?
         ''' </summary>
         ''' <returns></returns>
-        <XmlIgnore, ScriptIgnore>
+        <XmlIgnore, ScriptIgnore, DataIgnored>
         Public ReadOnly Property IsEmpty As Boolean
             Get
                 Return String.IsNullOrEmpty(Name) AndAlso Value Is Nothing
