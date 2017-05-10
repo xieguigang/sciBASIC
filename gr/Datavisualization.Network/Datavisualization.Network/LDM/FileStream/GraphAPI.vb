@@ -81,9 +81,11 @@ Namespace FileStream
 
                 data("x") = n.Data.initialPostion.x
                 data("y") = n.Data.initialPostion.y
-                data("z") = n.Data.initialPostion.z
+                ' data("z") = n.Data.initialPostion.z
+
                 nodes += New Node With {
                     .ID = n.ID,
+                    .NodeType = n.Data(NameOf(Type)),
                     .Properties = data
                 }
             Next
@@ -91,7 +93,8 @@ Namespace FileStream
             For Each l As Edge In g.edges
                 edges += New NetworkEdge With {
                     .FromNode = l.Source.ID,
-                    .ToNode = l.Target.ID
+                    .ToNode = l.Target.ID,
+                    .InteractionType = l.Data(NameOf(Type))
                 }
             Next
 
@@ -126,7 +129,10 @@ Namespace FileStream
                                                Let id = n.ID
                                                Let data As NodeData = New NodeData With {
                                                    .Color = Brushes.Red,
-                                                   .radius = 20
+                                                   .radius = 20,
+                                                   .Properties = New Dictionary(Of String, String) From {
+                                                       {NameOf(Type), n.NodeType}
+                                                   }
                                                }
                                                Select New Graph.Node(id, data)
 
@@ -138,7 +144,12 @@ Namespace FileStream
                                          Let a = nodehash(edge.FromNode)
                                          Let b = nodehash(edge.ToNode)
                                          Let id = edge.GetNullDirectedGuid
-                                         Select New Edge(id, a, b, New EdgeData)
+                                         Let data As EdgeData = New EdgeData With {
+                                             .Properties = New Dictionary(Of String, String) From {
+                                                 {NameOf(Type), edge.InteractionType}
+                                             }
+                                         }
+                                         Select New Edge(id, a, b, data)
 
             Dim graph As New NetworkGraph With {
                 .nodes = New List(Of Graph.Node)(nodes),
