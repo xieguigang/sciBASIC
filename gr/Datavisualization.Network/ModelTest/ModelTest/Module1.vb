@@ -35,13 +35,13 @@ Module Module1
 
     Sub Main()
 
-        Call DrawTest()
-        Call Pause()
+        'Call DrawTest()
+        'Call Pause()
 
         Dim graph = CytoscapeExportAsGraph("C:\Users\xieguigang\Source\Repos\sciBASIC\gr\Datavisualization.Network\net_test\xcb-main-Edges.csv", "C:\Users\xieguigang\Source\Repos\sciBASIC\gr\Datavisualization.Network\net_test\xcb-main-Nodes.csv")
-        Call graph.doForceLayout(iterations:=100)
+        Call graph.doForceLayout(iterations:=100, showProgress:=True)
         Call graph.Tabular.Save("./")
-        Call graph.DrawImage(New Size(2000, 2000)).Save("./test.png")
+        Call graph.DrawImage(New Size(2000, 2000), scale:=3.5).Save("./test.png")
         Call vbnet.Save(graph.Tabular, "./network.vbnet")
     End Sub
 
