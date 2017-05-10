@@ -60,9 +60,21 @@ Public Module NetworkVisualizer
     End Function
 
     <Extension>
-    Private Function __calOffsets(net As NetworkGraph, size As Size) As Point
-        Dim nodes As Point() = net.nodes.ToArray(Function(n) n.Data.initialPostion.Point2D)
-        Return nodes.CentralOffset(size)
+    Private Function __calOffsets(nodes As Dictionary(Of Node, Point), size As Size) As Point
+        Return nodes.Values.CentralOffset(size)
+    End Function
+
+    <Extension>
+    Private Function __scale(nodes As Node(), scale!) As Dictionary(Of Node, Point)
+        Dim table As New Dictionary(Of Node, Point)
+
+        For Each n As Node In nodes
+            With n.Data.initialPostion.Point2D
+                Call table.Add(n, New Point(.X * scale, .Y * scale))
+            End With
+        Next
+
+        Return table
     End Function
 
     ''' <summary>
@@ -81,11 +93,13 @@ Public Module NetworkVisualizer
                               Optional padding$ = g.DefaultPadding,
                               Optional background$ = "white",
                               Optional defaultColor As Color = Nothing,
-                              Optional displayId As Boolean = True) As GraphicsData
+                              Optional displayId As Boolean = True,
+                              Optional scale! = 1) As GraphicsData
         Dim br As Brush
         Dim rect As Rectangle
         Dim cl As Color
-        Dim offset As Point = net.__calOffsets(frameSize)
+        Dim scalePos = net.nodes.ToArray.__scale(scale)
+        Dim offset As Point = scalePos.__calOffsets(frameSize)
         Dim margin As Padding = padding
 
         Dim plotInternal =
@@ -105,12 +119,15 @@ Public Module NetworkVisualizer
 
                     Dim w As Integer = 5 * edge.Data.weight
                     w = If(w < 1.5, 1.5, w)
-                    Dim LineColor As New Pen(cl, w)
+                    Dim lineColor As New Pen(cl, w)
 
-                    Call g.DrawLine(   ' 在这里绘制的是节点之间相连接的边
-                    LineColor,
-                    n.Data.initialPostion.Point2D.OffSet2D(offset),
-                    otherNode.Data.initialPostion.Point2D.OffSet2D(offset))
+                    ' 在这里绘制的是节点之间相连接的边
+                    Dim a = scalePos(n), b = scalePos(otherNode)
+
+                    Call g.DrawLine(
+                        lineColor,
+                        a.OffSet2D(offset),
+                        b.OffSet2D(offset))
                 Next
 
                 defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
@@ -126,7 +143,10 @@ Public Module NetworkVisualizer
                     End If
 
                     br = If(n.Data.Color Is Nothing, New SolidBrush(defaultColor), n.Data.Color)
-                    pt = New Point(n.Data.initialPostion.x - r / 2, n.Data.initialPostion.y - r / 2)
+                    pt = scalePos(n)
+                    With pt
+                        pt = New Point(.X - r / 2, .Y - r / 2)
+                    End With
                     pt = pt.OffSet2D(offset)
                     rect = New Rectangle(pt, New Size(r, r))
 
