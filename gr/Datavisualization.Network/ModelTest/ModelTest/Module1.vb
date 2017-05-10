@@ -48,6 +48,6 @@ Module Module1
     Private Function DrawTest()
         Dim net = vbnet.Load("C:\Users\xieguigang\Source\Repos\sciBASIC\gr\Datavisualization.Network\ModelTest\ModelTest\bin\Debug\network.vbnet")
         Dim graph = net.CreateGraph
-        Call graph.DrawImage(New Size(2000, 2000)).Save("./test.png")
+        Call graph.DrawImage(New Size(2000, 2000), scale:=3).Save("./test.png")
     End Function
 End Module
