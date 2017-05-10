@@ -57,6 +57,7 @@ Namespace Drawing2D.Colors
                                        Optional lsize As Size = Nothing,
                                        Optional padding$ = DefaultPadding,
                                        Optional titleFont As Font = Nothing,
+                                       Optional labelFont As Font = Nothing,
                                        Optional legendWidth! = -1) As GraphicsData
             Dim br As SolidBrush() =
                 designer.ToArray(Function(c) New SolidBrush(c))
@@ -66,7 +67,7 @@ Namespace Drawing2D.Colors
                 bg,
                 haveUnmapped,
                 lsize, padding,
-                titleFont,
+                titleFont, labelFont,
                 legendWidth)
         End Function
 
@@ -93,23 +94,26 @@ Namespace Drawing2D.Colors
                                        Optional lsize As Size = Nothing,
                                        Optional padding$ = DefaultPadding,
                                        Optional titleFont As Font = Nothing,
+                                       Optional labelFont As Font = Nothing,
                                        Optional legendWidth! = -1) As GraphicsData
+            Dim margin As Padding = padding
+
             If lsize.IsEmpty Then
                 lsize = New Size(800, 1000)
             End If
+            If titleFont Is Nothing Then
+                titleFont = New Font(FontFace.MicrosoftYaHei, 36)
+            End If
+            If labelFont Is Nothing Then
+                labelFont = New Font(FontFace.BookmanOldStyle, 24)
+            End If
 
-            Return GraphicsPlots(
-                lsize, CSS.Padding.op_Implicit(padding),
-                bg,
-                Sub(ByRef g, region)
+            Dim plotInternal =
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim graphicsRegion As Rectangle = region.PlotRegion
                     Dim size As Size = region.Size
-                    Dim margin As Padding = region.Padding
                     Dim grayHeight As Integer = size.Height * 0.05
                     Dim y As Single
-                    Dim font As Font = If(titleFont Is Nothing,
-                        New Font(FontFace.MicrosoftYaHei, 36),
-                        titleFont)
                     Dim fSize As SizeF
                     Dim pt As Point
                     Dim rectWidth As Integer = If(legendWidth <= 0, size.Width - margin.Horizontal, legendWidth)
@@ -117,37 +121,46 @@ Namespace Drawing2D.Colors
                     Dim d As Single = legendsHeight / designer.Length
                     Dim left As Integer = margin.Left + 30 + rectWidth
 
-                    Call g.DrawString(title, font, Brushes.Black, New Point(margin.Left, 0))
+                    Call g.DrawString(title, titleFont, Brushes.Black, New Point(margin.Left, 0))
 
-                    font = New Font(FontFace.BookmanOldStyle, 24)
+                    fSize = g.MeasureString(max, labelFont)
                     y = margin.Top * 2
 
-                    Call g.DrawString(max, font, Brushes.Black, New Point(left, y))
+                    Call g.DrawString(max, labelFont, Brushes.Black, New Point(left, y - fSize.Height / 2))
 
                     For i As Integer = designer.Length - 1 To 0 Step -1
                         Call g.FillRectangle(
-                        designer(i),
-                        New RectangleF(New PointF(margin.Left, y),
-                                       New SizeF(rectWidth, d)))
+                            brush:=designer(i),
+                            rect:=New RectangleF With {
+                                .Location = New PointF(margin.Left, y),
+                                .Size = New SizeF(rectWidth, d)
+                            })
                         y += d
                     Next
 
-                    fSize = g.MeasureString(min, font)
+                    fSize = g.MeasureString(min, labelFont)
                     Call g.DrawString(
-                    min, font,
-                    Brushes.Black,
-                    New Point(left, If(designer.Length > 100, d, 0) + y - fSize.Height))
+                        min, labelFont, Brushes.Black,
+                        New Point With {
+                            .X = left,
+                            .Y = If(designer.Length > 100, d, 0) + y - fSize.Height / 2
+                        })
 
                     If haveUnmapped Then
                         y = size.Height - margin.Top - grayHeight
-                        fSize = g.MeasureString("Unknown", font)
-                        pt = New Point(left, y - (grayHeight - fSize.Height) / 2)
-                        graphicsRegion = New Rectangle(New Point(margin.Left, y), New Size(rectWidth, grayHeight))
+                        fSize = g.MeasureString("Unknown", labelFont)
+                        pt = New Point(left, y + (grayHeight - fSize.Height) / 2)
+                        graphicsRegion = New Rectangle With {
+                            .Location = New Point(margin.Left, y),
+                            .Size = New Size(rectWidth, grayHeight)
+                        }
 
-                        Call g.DrawString("Unknown", font, Brushes.Black, pt)
+                        Call g.DrawString("Unknown", labelFont, Brushes.Black, pt)
                         Call g.FillRectangle(Brushes.LightGray, graphicsRegion)
                     End If
-                End Sub)
+                End Sub
+
+            Return GraphicsPlots(lsize, margin, bg, plotInternal)
         End Function
     End Module
 End Namespace

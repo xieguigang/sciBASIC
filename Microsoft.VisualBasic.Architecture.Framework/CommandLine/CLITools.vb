@@ -28,9 +28,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -53,21 +51,24 @@ Namespace CommandLine
         ''' Parsing parameters from a specific tokens.
         ''' (从给定的词组之中解析出参数的结构)
         ''' </summary>
-        ''' <param name="Tokens">个数为偶数的，但是假若含有开关的时候，则可能为奇数了</param>
+        ''' <param name="tokens">个数为偶数的，但是假若含有开关的时候，则可能为奇数了</param>
         ''' <param name="IncludeLogicSW">返回来的列表之中是否包含有逻辑开关</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function CreateParameterValues(Tokens As String(), IncludeLogicSW As Boolean) As List(Of NamedValue(Of String))
+        <Extension> Public Function CreateParameterValues(tokens$(),
+                                                          IncludeLogicSW As Boolean,
+                                                          Optional note$ = Nothing) As List(Of NamedValue(Of String))
+
             Dim list As New List(Of NamedValue(Of String))
 
-            If Tokens.IsNullOrEmpty Then
+            If tokens.IsNullOrEmpty Then
                 Return list
-            ElseIf Tokens.Length = 1 Then
+            ElseIf tokens.Length = 1 Then
 
-                If IsPossibleLogicFlag(Tokens(Scan0)) AndAlso
+                If IsPossibleLogicFlag(tokens(Scan0)) AndAlso
                     IncludeLogicSW Then
 
-                    list += New NamedValue(Of String)(Tokens(Scan0), CStr(True))
+                    list += New NamedValue(Of String)(tokens(Scan0), CStr(True), note)
                 Else
                     Return list
                 End If
@@ -75,28 +76,28 @@ Namespace CommandLine
 
             '下面都是多余或者等于两个元素的情况
 
-            For i As Integer = 0 To Tokens.Length - 1 '数目多于一个的
+            For i As Integer = 0 To tokens.Length - 1 '数目多于一个的
 
                 Dim [Next] As Integer = i + 1
 
-                If [Next] = Tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
-                    If IsPossibleLogicFlag(Tokens(i)) AndAlso IncludeLogicSW Then
-                        list += New NamedValue(Of String)(Tokens(i), True)
+                If [Next] = tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
+                    If IsPossibleLogicFlag(tokens(i)) AndAlso IncludeLogicSW Then
+                        list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
 
                     Exit For
                 End If
 
-                Dim s As String = Tokens([Next])
+                Dim s As String = tokens([Next])
 
                 If IsPossibleLogicFlag(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
                     If IncludeLogicSW Then
-                        list += New NamedValue(Of String)(Tokens(i), True)
+                        list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
                     Continue For
                 Else  '下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
-                    Dim key As String = Tokens(i).ToLower
-                    list += New NamedValue(Of String)(key, s)
+                    Dim key As String = tokens(i).ToLower
+                    list += New NamedValue(Of String)(key, s, note)
 
                     i += 1
                 End If
@@ -108,38 +109,38 @@ Namespace CommandLine
         ''' <summary>
         ''' Get all of the logical parameters from the input tokens
         ''' </summary>
-        ''' <param name="Tokens">要求第一个对象不能够是命令的名称</param>
+        ''' <param name="tokens">要求第一个对象不能够是命令的名称</param>
         ''' <returns></returns>
-        Public Function GetLogicSWs(Tokens As String(), ByRef SingleValue As String) As String()
-            If Tokens.IsNullOrEmpty Then
+        Public Function GetLogicalArguments(tokens As String(), ByRef SingleValue$) As String()
+            If tokens.IsNullOrEmpty Then
                 Return New String() {}
-            ElseIf Tokens.Length = 1 Then  '只有一个元素，则肯定为开关
-                Return {Tokens(0)}
+            ElseIf tokens.Length = 1 Then  '只有一个元素，则肯定为开关
+                Return {tokens(0)}
             End If
 
             Dim tkList As New List(Of String)
 
-            For i As Integer = 0 To Tokens.Length - 1 '数目多于一个的
+            For i As Integer = 0 To tokens.Length - 1 '数目多于一个的
 
                 Dim [Next] As Integer = i + 1
 
-                If [Next] = Tokens.Length Then
-                    If IsPossibleLogicFlag(obj:=Tokens(i)) Then
-                        tkList += Tokens(i)  '
+                If [Next] = tokens.Length Then
+                    If IsPossibleLogicFlag(obj:=tokens(i)) Then
+                        tkList += tokens(i)  '
                     End If
 
                     Exit For
                 End If
 
-                Dim s As String = Tokens([Next])
+                Dim s As String = tokens([Next])
 
                 If IsPossibleLogicFlag(obj:=s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
-                    If IsPossibleLogicFlag(obj:=Tokens(i)) Then
-                        tkList += Tokens(i)
+                    If IsPossibleLogicFlag(obj:=tokens(i)) Then
+                        tkList += tokens(i)
                     Else
 
                         If i = 0 Then
-                            SingleValue = Tokens(i)
+                            SingleValue = tokens(i)
                         End If
 
                     End If
@@ -172,7 +173,7 @@ Namespace CommandLine
             Dim CLI As New CommandLine With {
                 .Name = args(Scan0).ToLower,
                 .Tokens = args.ToArray,
-                .BoolFlags = GetLogicSWs(args.Skip(1).ToArray, SingleValue),
+                .BoolFlags = GetLogicalArguments(args.Skip(1).ToArray, SingleValue),
                 ._CLICommandArgvs = Join(args)
             }
 
@@ -183,8 +184,8 @@ Namespace CommandLine
             End If
 
             If args.Count > 1 Then
-                CLI.__lstParameter = CreateParameterValues(args.Skip(1).ToArray, False)
-                Dim Dk As String() = __checkKeyDuplicated(CLI.__lstParameter)
+                CLI.__listArguments = CreateParameterValues(args.Skip(1).ToArray, False)
+                Dim Dk As String() = __checkKeyDuplicated(CLI.__listArguments)
                 If Not DuplicatedAllowed AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key As String = String.Join(", ", Dk)
                     Dim msg As String = String.Format(EX_KEY_DUPLICATED, Key, String.Join(" ", args.Skip(1).ToArray))
@@ -214,8 +215,7 @@ Namespace CommandLine
         ''' Gets the commandline object for the current program.
         ''' </summary>
         ''' <returns></returns>
-        <ExportAPI("args",
-                   Info:="Gets the commandline object for the current program.")>
+        <ExportAPI("args", Info:="Gets the commandline object for the current program.")>
         Public Function Args() As CommandLine
             Return App.CommandLine
         End Function
@@ -349,17 +349,21 @@ Namespace CommandLine
             '    End If
             'End If
 
-            Dim Tokens = Regex.Split(CLI, SPLIT_REGX_EXPRESSION)
-            Tokens = Tokens.TakeWhile(Function(Token) Not String.IsNullOrEmpty(Token.Trim)).ToArray
+            Dim tokens$() = Regex.Split(CLI, SPLIT_REGX_EXPRESSION)
+            tokens = tokens _
+                .TakeWhile(Function(Token)
+                               Return Not String.IsNullOrEmpty(Token.Trim)
+                           End Function) _
+                .ToArray
 
-            For i As Integer = 0 To Tokens.Length - 1
-                Dim s As String = Tokens(i)
+            For i As Integer = 0 To tokens.Length - 1
+                Dim s As String = tokens(i)
                 If s.First = QUOT AndAlso s.Last = QUOT Then    '消除单词单元中的双引号
-                    Tokens(i) = Mid(s, 2, Len(s) - 2)
+                    tokens(i) = Mid(s, 2, Len(s) - 2)
                 End If
             Next
 
-            Return Tokens
+            Return tokens
         End Function
 
         ''' <summary>
@@ -416,7 +420,7 @@ Namespace CommandLine
 
             Return New CommandLine With {
                 .Name = Name,
-                .__lstParameter = parameters,
+                .__listArguments = parameters,
                 .Tokens = Tokens.Join(bFlags).ToArray,
                 .BoolFlags = If(bFlags.IsNullOrEmpty, New String() {}, bFlags.ToArray)
             }
@@ -458,7 +462,7 @@ Namespace CommandLine
                 End If
             Next
 
-            For Each arg As NamedValue(Of String) In args1.__lstParameter
+            For Each arg As NamedValue(Of String) In args1.__listArguments
                 Dim value2 As String = args2(arg.Name)
                 If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then
                     Return False

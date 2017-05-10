@@ -138,6 +138,15 @@ Public Module __DEBUG_MAIN
 
     Function Main() As Integer
 
+
+        Dim s1 = "1234567"
+        Dim s2 As LevenshteinString = "456"
+
+        Dim view = (s1 Like s2).HTMLVisualize
+
+        Dim model = Microsoft.VisualBasic.CommandLine.InteropService.SharedORM.CommandLineModel("/command1 /param1 <value1, means a string value?> /param2 <value2> [/boolean1 /boolean2 /opt <blabla, default=value233>]")
+
+
         Call Microsoft.VisualBasic.Text.Levenshtein.ComputeDistance("123233123", "a1bc").HTMLVisualize.SaveWithHTMLEncoding("x:\test223.html")
 
 
@@ -275,7 +284,7 @@ Public Module __DEBUG_MAIN
         Call VBDebugger.__DEBUG_ECHO("sfsdddddddddddddddd")
 
         Dim files As String() = LinqAPI.Exec(Of String) <= From path As String
-                                                           In ls - l - r - wildcards("*.txt") <= "D:\MyDocuments"
+                                                           In ls - l - ShellSyntax.r - wildcards("*.txt") <= "D:\MyDocuments"
                                                            Where (grep * "/\*.../\*" <= path).IsNullOrEmpty
                                                            Select path
 

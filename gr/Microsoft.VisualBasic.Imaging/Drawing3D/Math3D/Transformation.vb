@@ -6,6 +6,11 @@ Namespace Drawing3D.Math3D
 
     Public Module Transformation
 
+        ''' <summary>
+        ''' Gets the centra location of the target model which is consist with a set of surface
+        ''' </summary>
+        ''' <param name="surfaces"></param>
+        ''' <returns></returns>
         <Extension> Public Function Centra(surfaces As IEnumerable(Of Surface)) As Point3D
             Dim vertices = surfaces.Select(Function(s) s.vertices).ToVector
             Dim x = vertices.Select(Function(p3D) p3D.X).Average
