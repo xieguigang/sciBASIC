@@ -106,12 +106,30 @@ Public Module NetworkVisualizer
         Dim cl As Color
         Dim scalePos = net.nodes.ToArray.__scale(scale)
         Dim offset As Point = scalePos.__calOffsets(frameSize)
-        Dim margin As Padding = padding
+
+        Call "Initialize gdi objects...".__INFO_ECHO
+
+        Dim margin As Padding = CSS.Padding.TryParse(
+            padding, New Padding With {
+                .Bottom = 100,
+                .Left = 100,
+                .Right = 100,
+                .Top = 100
+            })
         Dim stroke As Pen = CSS.Stroke.TryParse(nodeStroke).GDIObject
-        Dim baseFont As Font = CSSFont.TryParse(labelFontBase).GDIObject
+        Dim baseFont As Font = CSSFont.TryParse(
+            labelFontBase, New CSSFont With {
+                .family = FontFace.MicrosoftYaHei, 
+                .size = 12, 
+                .style = FontStyle.Regular
+            }).GDIObject
+
+        Call "Initialize variables, done!".__INFO_ECHO
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
+
+                Call "Render network edges...".__INFO_ECHO
 
                 For Each edge As Edge In net.edges
                     Dim n As Node = edge.Source
@@ -141,6 +159,8 @@ Public Module NetworkVisualizer
                 defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
 
                 Dim pt As Point
+
+                Call "Render network nodes...".__INFO_ECHO
 
                 For Each n As Node In net.nodes  ' 在这里进行节点的绘制
                     Dim r As Single = n.Data.radius
@@ -190,6 +210,8 @@ Public Module NetworkVisualizer
                     End If
                 Next
             End Sub
+
+        Call "Start Render...".__INFO_ECHO
 
         Return GraphicsPlots(frameSize, margin, background, plotInternal)
     End Function

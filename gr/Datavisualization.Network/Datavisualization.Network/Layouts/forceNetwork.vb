@@ -23,27 +23,37 @@ Namespace Layouts
                                  Optional showProgress As Boolean = False)
 
             Dim physicsEngine As New ForceDirected2D(net, Stiffness, Repulsion, Damping)
+            Dim tick As Action
+            Dim progress As ProgressBar = Nothing
 
-            Using progress As New ProgressBar("Do Force Directed Layout...", cls:=showProgress)
-                Dim tick As New ProgressProvider(iterations)
+            If showProgress Then
+                Dim ticking As New ProgressProvider(iterations)
                 Dim ETA$
 
-                For i As Integer = 0 To iterations
-                    Call physicsEngine.Calculate(0.05F)
+                progress = New ProgressBar("Do Force Directed Layout...", cls:=showProgress)
+                tick = Sub()
+                           ETA = "ETA=" & ticking _
+                               .ETA(progress.ElapsedMilliseconds) _
+                               .FormatTime
+                           progress.SetProgress(ticking.StepProgress, ETA)
+                       End Sub
+            Else
+                tick = Sub()
+                       End Sub
+            End If
 
-                    If showProgress Then
-                        ETA = "ETA=" & tick _
-                            .ETA(progress.ElapsedMilliseconds) _
-                            .FormatTime
-                        progress.SetProgress(tick.StepProgress, ETA)
-                    End If
-                Next
-            End Using
+            For i As Integer = 0 To iterations
+                Call physicsEngine.Calculate(0.05F)
+            Next
 
             Call physicsEngine.EachNode(
                 Sub(node, point)
                     node.Data.initialPostion = point.position
                 End Sub)
+
+            If Not progress Is Nothing Then
+                Call progress.Dispose()
+            End If
         End Sub
 
         <Extension>
