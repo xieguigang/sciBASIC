@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -109,8 +110,8 @@ Namespace FileStream
         ''' </summary>
         ''' <param name="net"></param>
         ''' <returns></returns>
-        <Extension> Public Function CreateGraph(net As Network) As NetworkGraph
-            Return CreateGraph(Of Node, NetworkEdge)(net)
+        <Extension> Public Function CreateGraph(net As Network, Optional nodeColor As Func(Of Node, Brush) = Nothing) As NetworkGraph
+            Return CreateGraph(Of Node, NetworkEdge)(net, nodeColor)
         End Function
 
         ''' <summary>
@@ -121,20 +122,28 @@ Namespace FileStream
         ''' <param name="net"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function CreateGraph(Of TNode As Node, TEdge As NetworkEdge)(net As Network(Of TNode, TEdge)) As NetworkGraph
-            Dim nodes As Graph.Node() =
+        Public Function CreateGraph(Of TNode As Node, TEdge As NetworkEdge)(net As Network(Of TNode, TEdge), Optional nodeColor As Func(Of Node, Brush) = Nothing) As NetworkGraph
+            If nodeColor Is Nothing Then
+                nodeColor = Function(n) Brushes.Red
+            End If
+
+
+            Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
  _
-                LinqAPI.Exec(Of Graph.Node) <= From n As Node
-                                               In net.Nodes
-                                               Let id = n.ID
-                                               Let data As NodeData = New NodeData With {
-                                                   .Color = Brushes.Red,
-                                                   .radius = 20,
-                                                   .Properties = New Dictionary(Of String, String) From {
-                                                       {NameOf(Type), n.NodeType}
-                                                   }
-                                               }
-                                               Select New Graph.Node(id, data)
+                From n As Node
+                In net.Nodes
+                Let id = n.ID
+                Let pos As AbstractVector = New FDGVector2(Val(n("x")), Val(n("y")))
+                Let c As Brush = nodeColor(n)
+                Let data As NodeData = New NodeData With {
+                    .Color = c,
+                    .radius = 20,
+                    .Properties = New Dictionary(Of String, String) From {
+                        {NameOf(Type), n.NodeType}
+                    },
+                    .initialPostion = pos
+                }
+                Select New Graph.Node(id, data)
 
             Dim nodehash As New Dictionary(Of Graph.Node)(nodes)
             Dim edges As Edge() =

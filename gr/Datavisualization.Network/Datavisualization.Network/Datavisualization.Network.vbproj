@@ -198,6 +198,7 @@
     <Compile Include="Layouts\forceNetwork.vb" />
     <Compile Include="LDM\Analysis\Extensions.vb" />
     <Compile Include="LDM\Analysis\Statistics.vb" />
+    <Compile Include="LDM\FileStream\vbnet.vb" />
     <Compile Include="LDM\FileStream\Cytoscape.vb" />
     <Compile Include="LDM\FileStream\Network.vb" />
     <Compile Include="LDM\FileStream\INetComponent.vb" />
