@@ -48,8 +48,8 @@ Public Module NetworkVisualizer
     ''' This background color was picked from https://github.com/whichlight/reddit-network-vis
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property BackgroundColor As Color = Color.FromArgb(219, 243, 255)
-    Public ReadOnly Property DefaultEdgeColor As Color = Color.FromArgb(131, 131, 131)
+    Public Property BackgroundColor As Color = Color.FromArgb(219, 243, 255)
+    Public Property DefaultEdgeColor As Color = Color.FromArgb(131, 131, 131)
 
     <Extension>
     Public Function GetDisplayText(n As Node) As String
