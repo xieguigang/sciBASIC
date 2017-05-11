@@ -99,7 +99,8 @@ Public Module NetworkVisualizer
                               Optional displayId As Boolean = True,
                               Optional labelColorAsNodeColor As Boolean = False,
                               Optional nodeStroke$ = WhiteStroke,
-                              Optional scale! = 1) As GraphicsData
+                              Optional scale! = 1,
+                              Optional labelFontBase$ = CSSFont.Win7Normal) As GraphicsData
         Dim br As Brush
         Dim rect As Rectangle
         Dim cl As Color
@@ -107,6 +108,7 @@ Public Module NetworkVisualizer
         Dim offset As Point = scalePos.__calOffsets(frameSize)
         Dim margin As Padding = padding
         Dim stroke As Pen = CSS.Stroke.TryParse(nodeStroke).GDIObject
+        Dim baseFont As Font = CSSFont.TryParse(labelFontBase).GDIObject
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -160,10 +162,14 @@ Public Module NetworkVisualizer
                     Call g.DrawEllipse(stroke, rect)
 
                     If displayId Then
-                        Dim Font As Font = New Font(FontFace.Ubuntu, 12 + n.Data.Neighborhoods)
+
+                        Dim font As New Font(baseFont.Name, baseFont.Size + n.Data.Neighborhoods)
                         Dim s As String = n.GetDisplayText
-                        Dim size As SizeF = g.MeasureString(s, Font)
-                        Dim sloci As New Point(pt.X - size.Width / 2, pt.Y + r / 2 + 2)
+                        Dim size As SizeF = g.MeasureString(s, font)
+                        Dim sloci As New Point With {
+                            .X = pt.X + r * 1.25,
+                            .Y = pt.Y - (r - size.Height) / 2
+                        }
 
                         If sloci.X < margin.Left Then
                             sloci = New Point(margin.Left, sloci.Y)
@@ -179,7 +185,8 @@ Public Module NetworkVisualizer
                             br = Brushes.Black
                         End If
 
-                        Call g.DrawString(s, Font, br, sloci)
+                        Call g.DrawString(s, font, br, sloci)
+
                     End If
                 Next
             End Sub
