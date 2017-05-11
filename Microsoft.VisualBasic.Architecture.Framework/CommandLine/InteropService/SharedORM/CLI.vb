@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine.InteropService.SharedORM
 
-    <AttributeUsage(AttributeTargets.Module)>
+    <AttributeUsage(AttributeTargets.Class)>
     Public Class CLIAttribute : Inherits Attribute
 
         Public Shared Function ParseAssembly(dll$) As Type

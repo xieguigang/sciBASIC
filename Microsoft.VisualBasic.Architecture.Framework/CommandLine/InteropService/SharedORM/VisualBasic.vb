@@ -43,9 +43,18 @@ Namespace CommandLine.InteropService.SharedORM
         End Function
 
         Private Shared Function __xmlComments(description$) As String
+            If description.StringEmpty Then
+                description = "'''"
+            Else
+                description = description _
+                    .lTokens _
+                    .Select(Function(s) "'''" & s) _
+                    .JoinBy(vbCrLf)
+            End If
+
             Return $"
 ''' <summary>
-''' {description}
+{description}
 ''' </summary>
 '''"
         End Function
@@ -101,10 +110,17 @@ Namespace CommandLine.InteropService.SharedORM
             Return out
         End Function
 
+        ''' <summary>
+        ''' 必须是以``default=``来作为前缀的，否则默认使用空字符串
+        ''' </summary>
+        ''' <param name="value$"></param>
+        ''' <returns></returns>
         Private Shared Function __defaultValue(value$) As String
             value = value.GetStackValue("<", ">")
             If InStr(value, "default=") > 0 Then
-                value = Strings.Split(value, "default=").Last
+                value = Strings.Split(value, "default=").Last.Trim(""""c)
+            Else
+                value = "" ' 没有表达式前缀，则使用默认的空字符串
             End If
             Return value
         End Function
