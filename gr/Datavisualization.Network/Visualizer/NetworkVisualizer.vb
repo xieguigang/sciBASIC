@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -77,6 +78,8 @@ Public Module NetworkVisualizer
         Return table
     End Function
 
+    Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
+
     ''' <summary>
     ''' 假若属性是空值的话，在绘图之前可以调用<see cref="ApplyAnalysis"/>拓展方法进行一些分析
     ''' </summary>
@@ -94,6 +97,8 @@ Public Module NetworkVisualizer
                               Optional background$ = "white",
                               Optional defaultColor As Color = Nothing,
                               Optional displayId As Boolean = True,
+                              Optional labelColorAsNodeColor As Boolean = False,
+                              Optional nodeStroke$ = WhiteStroke,
                               Optional scale! = 1) As GraphicsData
         Dim br As Brush
         Dim rect As Rectangle
@@ -101,6 +106,7 @@ Public Module NetworkVisualizer
         Dim scalePos = net.nodes.ToArray.__scale(scale)
         Dim offset As Point = scalePos.__calOffsets(frameSize)
         Dim margin As Padding = padding
+        Dim stroke As Pen = CSS.Stroke.TryParse(nodeStroke).GDIObject
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -151,6 +157,7 @@ Public Module NetworkVisualizer
                     rect = New Rectangle(pt, New Size(r, r))
 
                     Call g.FillPie(br, rect, 0, 360)
+                    Call g.DrawEllipse(stroke, rect)
 
                     If displayId Then
                         Dim Font As Font = New Font(FontFace.Ubuntu, 12 + n.Data.Neighborhoods)
@@ -168,7 +175,11 @@ Public Module NetworkVisualizer
                             sloci = New Point(frameSize.Width - margin.Right - size.Width, sloci.Y)
                         End If
 
-                        Call g.DrawString(s, Font, Brushes.Black, sloci)
+                        If Not labelColorAsNodeColor Then
+                            br = Brushes.Black
+                        End If
+
+                        Call g.DrawString(s, Font, br, sloci)
                     End If
                 Next
             End Sub

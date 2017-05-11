@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network.Visualize</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network.Visualizer</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
