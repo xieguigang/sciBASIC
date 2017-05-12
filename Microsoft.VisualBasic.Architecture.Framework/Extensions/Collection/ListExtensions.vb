@@ -39,6 +39,13 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Module ListExtensions
 
+    <Extension>
+    Public Function Random(Of T)(v As T()) As T
+        Dim l% = v.Length
+        l = Fix(Rnd() * l)
+        Return v(l)
+    End Function
+
     ''' <summary>
     ''' 根据对象的键名来进行重排序，请注意，要确保对象<paramref name="getKey"/>能够从泛型对象之中获取得到唯一的键名
     ''' </summary>
