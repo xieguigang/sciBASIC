@@ -43,8 +43,8 @@ Module CLI
 
     <ExportAPI("/API1",
                Info:="Puts the brief description of this API command at here.",
-               Usage:="/API1 /msg <""Puts the CLI usage syntax at here"">",
-               Example:="/API1 /msg ""Hello world!!!""")>
+               Usage:="/API1 /msg ""Puts the CLI usage syntax at here"" [/msg2 <test default value, default=2333 yes or not?>]",
+               Example:="/API1 /msg ""Hello world!!!"" /msg2 ""test default value, default=2333 yes "" or not?""")>
     <Argument("/msg", False, CLITypes.String,
               AcceptTypes:={GetType(String)},
               Description:="The output message text.",
@@ -71,7 +71,7 @@ Module CLI
     End Function
 
     <ExportAPI("/Code.vb",
-               Usage:="/Code.vb /namespace <vb_class.namespace> [/booleanTest /boolean2.test /out <default=code.vb>]")>
+               Usage:="/Code.vb /namespace <vb_class.namespace> [/booleanTest /boolean2.test /out <test output file, default=code.vb>]")>
     Public Function vbCode(args As CommandLine) As Integer
         Dim vb As New VisualBasic(GetType(CLI), args <= "/namespace")
         Dim out = args.GetValue("/out", "./code.vb")

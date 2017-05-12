@@ -2,13 +2,13 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService
 
 ' Microsoft VisualBasic CommandLine Code AutoGenerator
-' assembly: G:/GCModeller/src/runtime/sciBASIC#/docs/guides/Example/CLI_Example/bin/Debug/CLI_Example.exe
+' assembly: D:/GCModeller/src/runtime/sciBASIC#/docs/guides/Example/CLI_Example/bin/Debug/CLI_Example.exe
 
-Namespace TestApp
+Namespace a2333
 
 
     ''' <summary>
-    ''' Test code comments...
+    '''Test code comments...
     ''' </summary>
     '''
     Public Class CLI_Example : Inherits InteropService
@@ -19,17 +19,17 @@ Namespace TestApp
         End Sub
 
         ''' <summary>
-        ''' Puts the brief description of this API command at here.
+        '''Puts the brief description of this API command at here.
         ''' </summary>
         '''
-        Public Function API1(_msg As String) As Integer
-            Dim CLI$ = $"/API1 /msg ""{_msg}"""
+        Public Function API1(_msg As String, Optional _msg2 As String = "2333 yes or not?") As Integer
+            Dim CLI$ = $"/API1 /msg ""{_msg}"" /msg2 ""{_msg2}"""
             Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
             Return proc.Run()
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         '''
         Public Function Code_vb(_namespace As String, Optional _out As String = "code.vb", Optional _booleantest As Boolean = False, Optional _boolean2_test As Boolean = False) As Integer
@@ -39,10 +39,10 @@ Namespace TestApp
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         '''
-        Public Function Test_CLI_Scripting(_var As String, Optional __set As String = "var=value>;<var=value") As Integer
+        Public Function Test_CLI_Scripting(_var As String, Optional __set As String = "") As Integer
             Dim CLI$ = $"/Test.CLI_Scripting /var ""{_var}"" /@set ""{__set}"""
             Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
             Return proc.Run()
