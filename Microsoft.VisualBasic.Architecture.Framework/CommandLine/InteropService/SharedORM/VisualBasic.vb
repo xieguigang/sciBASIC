@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.InteropService.SharedORM
 
@@ -106,6 +107,16 @@ Namespace CommandLine.InteropService.SharedORM
             If InStr(value, "default=") > 0 Then
                 value = Strings.Split(value, "default=").Last
             End If
+
+            If value.First = """"c AndAlso value.Last = """"c Then
+                ' 如果是直接使用双引号包裹而不是使用<>尖括号进行包裹，则认为双引号所包裹的值都是默认值
+                value = value.GetStackValue(ASCII.Quot, ASCII.Quot)
+            ElseIf value.First = "<"c AndAlso value.Last = ">"c Then
+                ' 而如果是使用尖括号的时候，则判断是否存在default=表达式，不存在则是空值
+            Else
+                ' 其他情况都认为是使用空值为默认值
+            End If
+
             Return value
         End Function
 
