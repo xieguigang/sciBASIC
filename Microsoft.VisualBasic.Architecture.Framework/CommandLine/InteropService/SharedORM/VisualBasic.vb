@@ -76,6 +76,9 @@ Namespace CommandLine.InteropService.SharedORM
             Dim params$()
 
             Try
+                If func.First <= "9" AndAlso func.First >= "0"c Then
+                    func = "_" & func  ' 有些命令行开关是以数字开头的？
+                End If
                 params = __vbParameters(API.Value)
             Catch ex As Exception
                 ex = New Exception("Check for your CLI Usage definition: " & API.Value.ToString, ex)
@@ -154,13 +157,15 @@ Namespace CommandLine.InteropService.SharedORM
             Return CLI
         End Function
 
+        Const SyntaxError$ = "'<' or '>' is using for the IO redirect in your terminal, unavailable for your commandline argument name!"
+
         Private Shared Function __normalizedAsIdentifier(arg$) As String
             Dim s As Char() = arg.ToArray
             Dim upper As Char() = arg.ToUpper.ToArray
             Dim c As Char
 
             If s.First = "<"c OrElse s.Last = ">"c Then
-                Throw New SyntaxErrorException("'<' or '>' is using for the IO redirect in your terminal, unavailable for your commandline argument name!")
+                Throw New SyntaxErrorException(SyntaxError)
             End If
 
             For i As Integer = 0 To s.Length - 1
@@ -174,7 +179,11 @@ Namespace CommandLine.InteropService.SharedORM
                 End If
             Next
 
-            Return New String(s)
+            If s.First >= "0"c AndAlso s.First <= "9"c Then
+                Return "_" & New String(s)
+            Else
+                Return New String(s)
+            End If
         End Function
     End Class
 End Namespace
