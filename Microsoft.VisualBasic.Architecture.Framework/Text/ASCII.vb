@@ -234,7 +234,7 @@ Namespace Text
         Public Const TAB As Char = CChar(vbTab)
 
         ''' <summary>
-        ''' 双引号
+        ''' 双引号``"``
         ''' </summary>
         Public Const Quot As Char = Chr(34)
         Public Shared ReadOnly QuotBegin_ZHCN As Char = Convert.ToChar(8220)
