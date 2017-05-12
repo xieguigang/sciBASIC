@@ -44,7 +44,7 @@ Module CLI
     <ExportAPI("/API1",
                Info:="Puts the brief description of this API command at here.",
                Usage:="/API1 /msg ""Puts the CLI usage syntax at here"" [/msg2 <test default value, default=2333 yes or not?>]",
-               Example:="/API1 /msg ""Hello world!!!"" /msg2 ""test default value, default=2333 yes or not?""")>
+               Example:="/API1 /msg ""Hello world!!!"" /msg2 ""test default value, default=2333 yes "" or not?""")>
     <Argument("/msg", False, CLITypes.String,
               AcceptTypes:={GetType(String)},
               Description:="The output message text.",
