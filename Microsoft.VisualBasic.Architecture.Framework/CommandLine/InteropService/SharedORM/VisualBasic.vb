@@ -115,7 +115,10 @@ Namespace CommandLine.InteropService.SharedORM
                 ' 而如果是使用尖括号的时候，则判断是否存在default=表达式，不存在则是空值
             Else
                 ' 其他情况都认为是使用空值为默认值
+                value = ""
             End If
+
+            value = value.Replace(""""c, New String(ASCII.Quot, 2))
 
             Return value
         End Function
