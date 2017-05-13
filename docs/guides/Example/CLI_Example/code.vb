@@ -2,9 +2,9 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService
 
 ' Microsoft VisualBasic CommandLine Code AutoGenerator
-' assembly: D:/GCModeller/src/runtime/sciBASIC#/docs/guides/Example/CLI_Example/bin/Debug/CLI_Example.exe
+' assembly: G:/sciBASIC/docs/guides/Example/CLI_Example/bin/Debug/CLI_Example.exe
 
-Namespace a2333
+Namespace test
 
 
     ''' <summary>
