@@ -95,7 +95,8 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine(xmlComments)
 
             Call vb.AppendLine($"Public Function {func}({params.JoinBy(", ")}) As Integer")
-            Call vb.AppendLine($"Dim CLI As New StringBuilder(""{API.Name}"")")
+            Call vb.AppendLine($"Dim CLI As New StringBuilder(""{API.Value.Name}"")")
+            Call vb.AppendLine("Call CLI.Append("" "")") ' 插入命令名称和参数值之间的一个必须的空格
             Call vb.AppendLine(__CLI(+API))
             Call vb.AppendLine()
             Call vb.AppendLine($"Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI.ToString())")
