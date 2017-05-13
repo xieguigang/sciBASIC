@@ -332,15 +332,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLine\SharedORM\API.vb" />
-    <Compile Include="CommandLine\SharedORM\CodeGenerator.vb" />
-    <Compile Include="CommandLine\SharedORM\R.vb" />
-    <Compile Include="CommandLine\SharedORM\PHP.vb" />
-    <Compile Include="CommandLine\SharedORM\VisualBasic.vb" />
+    <Compile Include="CommandLine\InteropService\Abstract.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\API.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\CLI.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\CodeGenerator.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\R.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\PHP.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\VisualBasic.vb" />
     <Compile Include="CommandLine\Parsers\CLIParser.vb" />
     <Compile Include="CommandLine\Parsers\DictionaryParser.vb" />
     <Compile Include="CommandLine\CLIMapper.vb" />
-    <Compile Include="CommandLine\CLIBuilder.vb" />
+    <Compile Include="CommandLine\InteropService\CLIBuilder.vb" />
     <Compile Include="CommandLine\CLI\IIORedirectAbstract.vb" />
     <Compile Include="CommandLine\CLI\IORedirectFile.vb" />
     <Compile Include="CommandLine\CLITools.vb" />
@@ -411,12 +413,14 @@
     <Compile Include="Extensions\Math\ScientificNotation.vb" />
     <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
     <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
+    <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Extensions\WebServices\GZStream.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
     <Compile Include="Language\C\Vector.vb" />
     <Compile Include="Language\Java\Collections.vb" />
     <Compile Include="Language\Java\Reflection.vb" />
     <Compile Include="Language\List%28Of T%29.vb" />
+    <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />

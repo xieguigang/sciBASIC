@@ -95,7 +95,7 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"x={x}, y={y}, z={z}"
         End Function
 
         Public MustOverride Function Add(v2 As AbstractVector) As AbstractVector Implements IVector.Add

@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Delegate Function ISimilarity(Of T)(x As T, y As T) As Integer
 
@@ -383,16 +384,16 @@ Public Class GSW(Of T)
     ''' As the article states, the decision at that point depends largely On context (you have several options).
     ''' </summary>
     ''' <returns></returns>
-    Public Function GetTraceback() As Coords()
-        Dim path As New List(Of Coords)
-        Call path.Add(New Coords(queryLength, subjectLength))
+    Public Function GetTraceback() As Coordinate()
+        Dim path As New List(Of Coordinate)
+        Call path.Add(New Coordinate(queryLength, subjectLength))
         Call __getTrackback(path, queryLength, subjectLength)
         Return path.ToArray
     End Function
 
-    Private Sub __getTrackback(ByRef path As List(Of Coords), i As Integer, j As Integer)
+    Private Sub __getTrackback(ByRef path As List(Of Coordinate), i As Integer, j As Integer)
         If i = 0 OrElse j = 0 Then
-            Call path.Add(New Coords(i, j))
+            Call path.Add(New Coordinate(i, j))
             Return
         End If
 
@@ -404,15 +405,15 @@ Public Class GSW(Of T)
         If s = diagScore Then
             i -= 1
             j -= 1
-            Call path.Add(New Coords(i, j))
+            Call path.Add(New Coordinate(i, j))
         End If
         If s = upScore Then
             j -= 1
-            Call path.Add(New Coords(i, j))
+            Call path.Add(New Coordinate(i, j))
         End If
         If s = leftScore Then
             i -= 1
-            Call path.Add(New Coords(i, j))
+            Call path.Add(New Coordinate(i, j))
         End If
 
         If s = 0 Then

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::9e8834e8230661102662b6c7c387833f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -114,13 +114,13 @@ Namespace Linq
         End Function
     End Module
 
-    Public Structure SeqValue(Of T1, T2) : Implements IAddressHandle
+    Public Structure SeqValue(Of T1, T2) : Implements IAddressOf
 
         Public Property i As Integer
         Public Property value As T1
         Public Property Follows As T2
 
-        Private Property Address As Integer Implements IAddressHandle.Address
+        Private Property Address As Integer Implements IAddressOf.Address
             Get
                 Return CLng(i)
             End Get
@@ -138,12 +138,9 @@ Namespace Linq
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
-
-        Public Sub Dispose() Implements IDisposable.Dispose
-        End Sub
     End Structure
 
-    Public Structure SeqValue(Of T) : Implements IAddressHandle
+    Public Structure SeqValue(Of T) : Implements IAddressOf
 
         ''' <summary>
         ''' The position of this object value in the original sequence.
@@ -156,7 +153,7 @@ Namespace Linq
         ''' <returns></returns>
         Public Property value As T
 
-        Private Property Address As Integer Implements IAddressHandle.Address
+        Private Property Address As Integer Implements IAddressOf.Address
             Get
                 Return CLng(i)
             End Get
@@ -187,6 +184,10 @@ Namespace Linq
             Return list
         End Operator
 
+        Public Shared Operator Mod(i As SeqValue(Of T), n%) As Integer
+            Return i.i Mod n
+        End Operator
+
         ''' <summary>
         ''' Get value from <see cref="value"/> property.
         ''' </summary>
@@ -195,9 +196,6 @@ Namespace Linq
         Public Shared Operator +(x As SeqValue(Of T)) As T
             Return x.value
         End Operator
-
-        Public Sub Dispose() Implements IDisposable.Dispose
-        End Sub
     End Structure
 
     ''' <summary>

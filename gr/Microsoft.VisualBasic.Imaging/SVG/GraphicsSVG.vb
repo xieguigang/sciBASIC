@@ -1119,6 +1119,10 @@ Namespace SVG
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
             Return __graphics.MeasureString(text, font, layoutArea, stringFormat, charactersFitted, linesFilled)
         End Function
+
+        Public Overrides Sub DrawRectangle(pen As Pen, rect As RectangleF)
+            Call Me.DrawRectangles(pen, {rect})
+        End Sub
     End Class
 End Namespace
 

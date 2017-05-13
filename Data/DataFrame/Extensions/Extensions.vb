@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::baddd1cf128745180a85040ca7de20c1, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -433,18 +433,20 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     End Function
 
     ''' <summary>
-    ''' Generate a csv document from a object collection.(从一个特定类型的数据集合之中生成一个Csv文件，非并行化的以保持数据原有的顺序)
+    ''' Generate a csv document from a object collection.
+    ''' (从一个特定类型的数据集合之中生成一个Csv文件，非并行化的以保持数据原有的顺序)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="explicit">默认导出所有的可用属性</param>
+    ''' <param name="metaBlank">对于字典对象之中，空缺下来的域键名的值使用什么来替代？默认使用空白字符串</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function ToCsvDoc(Of T As Class)(source As IEnumerable(Of T),
-                                                        Optional explicit As Boolean = False,
-                                                        Optional maps As Dictionary(Of String, String) = Nothing,
-                                                        Optional metaBlank As String = "",
-                                                        Optional reorderKeys As Integer = 0) As IO.File
+    <Extension> Public Function ToCsvDoc(Of T)(source As IEnumerable(Of T),
+                                               Optional explicit As Boolean = False,
+                                               Optional maps As Dictionary(Of String, String) = Nothing,
+                                               Optional metaBlank$ = "",
+                                               Optional reorderKeys% = 0) As IO.File
         Return Reflector.Save(
             source, explicit,
             maps:=maps,

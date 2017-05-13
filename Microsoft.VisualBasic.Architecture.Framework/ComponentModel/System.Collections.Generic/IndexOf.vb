@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::a608b60079024d3abfde990a310f71bf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,11 +32,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace ComponentModel.Collection
 
     ''' <summary>
-    ''' Mappings of ``key -> index``
+    ''' Mappings of ``key As String -> index As Integer``
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class IndexOf(Of T)
-        Implements IEnumerable(Of SeqValue(Of T))
+    Public Class IndexOf(Of T) : Implements IEnumerable(Of SeqValue(Of T))
 
         Dim maps As New Dictionary(Of T, Integer)
         Dim index As List(Of SeqValue(Of T))
@@ -56,6 +55,10 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="source"></param>
         Sub New(source As IEnumerable(Of T))
+            If source Is Nothing Then
+                source = {}
+            End If
+
             For Each x As SeqValue(Of T) In source.SeqIterator
                 If Not maps.ContainsKey(x) Then
                     Call maps.Add(+x, x.i)
@@ -83,6 +86,15 @@ Namespace ComponentModel.Collection
                 End If
             End Get
         End Property
+
+        ''' <summary>
+        ''' For Linq ``where``
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function NotExists(x As T) As Boolean
+            Return IndexOf(x) = -1
+        End Function
 
         ''' <summary>
         ''' 这个函数是线程不安全的

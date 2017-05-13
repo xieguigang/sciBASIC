@@ -1,9 +1,0 @@
-﻿------ Build started: Project: Microsoft.VisualBasic.Architecture.Framework, Configuration: Release Any CPU ------
-  Microsoft.VisualBasic.Architecture.Framework -> E:\GCModeller\GCI Project\Reference\Architecture\bin\Release\Microsoft.VisualBasic.Architecture.Framework.dll
------- Build started: Project: dev2, Configuration: Release Any CPU ------
-  dev2 -> E:\GCModeller\CompiledAssembly\dev2.exe
------- Build started: Project: Biopax, Configuration: Release Any CPU ------
-  Biopax -> E:\GCModeller\GCI Project\GCModeller\Biopax\bin\Release\Biopax.exe
------- Build started: Project: gchost (IDE\PlugIns\gchost), Configuration: Release Any CPU ------
-  gchost -> E:\GCModeller\CompiledAssembly\plugins\gchost_dll.dll
-========== Build: 4 succeeded, 0 failed, 49 up-to-date, 0 skipped ==========
