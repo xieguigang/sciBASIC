@@ -95,7 +95,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine($"Dim CLI As New StringBuilder(""{API.Name}"")")
             Call vb.AppendLine(__CLI(+API))
             Call vb.AppendLine()
-            Call vb.AppendLine($"Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI$)")
+            Call vb.AppendLine($"Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI.ToString())")
             Call vb.AppendLine($"Return proc.{NameOf(IIORedirectAbstract.Run)}()")
             Call vb.AppendLine("End Function")
         End Sub
@@ -163,14 +163,14 @@ Namespace CommandLine.InteropService.SharedORM
                 Dim var$ = __normalizedAsIdentifier(param.Name)
 
                 ' 注意：在这句代码的最后有一个空格，是间隔参数所必需的，不可以删除
-                vbcode = $"Call CLI.Append(""{param.Name} "" & """" & {var} & """" "")"
+                vbcode = $"Call CLI.Append(""{param.Name} "" & """""""" & {var} & """""" "")"
 
                 If param.Description.StringEmpty Then
                     ' 必须参数不需要进一步判断，直接添加                    
                     Call CLI.AppendLine(vbcode)
                 Else
                     ' 可选参数还需要IF判断是否存在                  
-                    Call CLI.AppendLine($"If Not var.{NameOf(StringEmpty)} Then")
+                    Call CLI.AppendLine($"If Not {var}.{NameOf(StringEmpty)} Then")
                     Call CLI.AppendLine(vbcode)
                     Call CLI.AppendLine("End If")
                 End If
@@ -180,7 +180,7 @@ Namespace CommandLine.InteropService.SharedORM
                 Dim var$ = __normalizedAsIdentifier(b)
 
                 Call CLI.AppendLine($"If {var} Then")
-                Call CLI.AppendLine($"Call CLI.Append(""{b}"")")
+                Call CLI.AppendLine($"Call CLI.Append(""{b} "")") ' 逻辑参数后面有一个空格，是正确的生成CLI所必需的
                 Call CLI.AppendLine("End If")
             Next
 
