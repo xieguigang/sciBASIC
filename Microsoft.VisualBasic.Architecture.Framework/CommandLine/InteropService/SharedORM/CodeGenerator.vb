@@ -6,6 +6,9 @@ Namespace CommandLine.InteropService.SharedORM
     Public MustInherit Class CodeGenerator
 
         Protected ReadOnly App As Interpreter
+        ''' <summary>
+        ''' 目标应用程序模块的文件名，不包含有文件拓展名
+        ''' </summary>
         Protected ReadOnly exe$
 
         Sub New(CLI As Type)

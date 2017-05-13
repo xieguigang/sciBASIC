@@ -30,6 +30,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine(__xmlComments(App.Type.NamespaceEntry.Description))
             Call vb.AppendLine($"Public Class {MyBase.exe} : Inherits {GetType(InteropService).Name}")
             Call vb.AppendLine()
+            Call vb.AppendLine($"Public Const App$ = ""{exe}.exe""")
             Call vb.AppendLine()
             Call vb.AppendLine("Sub New(App$)")
             Call vb.AppendLine($"MyBase.{NameOf(InteropService._executableAssembly)} = App$")
