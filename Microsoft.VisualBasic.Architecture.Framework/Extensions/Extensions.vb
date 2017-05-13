@@ -28,6 +28,7 @@
 
 Imports System.ComponentModel
 Imports System.Drawing
+Imports System.Globalization
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
@@ -73,6 +74,19 @@ Imports Microsoft.VisualBasic.Text.Similarity
 ''' <remarks></remarks>
 Public Module Extensions
 #End If
+
+    ''' <summary>
+    ''' 将16进制的数字转换为10进制数
+    ''' </summary>
+    ''' <param name="hex$"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 因为直接使用vb的<see cref="Val"/>函数转换，在Linux上面可能会出错，所以需要在这里用.NET自己的方法来转换
+    ''' </remarks>
+    Public Function GetHexInteger(hex$) As Integer
+        Dim num% = Integer.Parse(hex, NumberStyles.HexNumber)
+        Return num
+    End Function
 
     <Extension>
     Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean

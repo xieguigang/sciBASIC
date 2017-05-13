@@ -153,6 +153,8 @@ Namespace HTML.CSS
 
         ''' <summary>
         ''' Parsing font style data from the css expression string.
+        ''' (假若你在使用这个函数在Linux环境之中无缘无故的出现空引用错误，需要考虑一下
+        ''' 是不是因为Linux服务器之中没有按照所指定的字体文件？)
         ''' </summary>
         ''' <param name="css"></param>
         ''' <param name="[default]">On failure return this default value</param>

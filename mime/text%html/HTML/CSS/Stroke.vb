@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::918581ba7af4cb0c93b00a9869477a71, ..\sciBASIC#\mime\MIME_Markups\HTML\CSS\Stroke.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -96,7 +96,7 @@ Namespace HTML.CSS
             End If
         End Function
 
-        Public Shared Function TryParse(css$) As Stroke
+        Public Shared Function TryParse(css$, Optional [default] As Stroke = Nothing) As Stroke
             Dim t As Dictionary(Of String, String) = css _
                 .Trim(";"c) _
                 .Split(";"c) _
@@ -105,11 +105,17 @@ Namespace HTML.CSS
                 .ToDictionary(Function(x) x.Name,
                               Function(x) x.Value)
 
-            Return New Stroke With {
+            Dim st As New Stroke With {
                 .dash = GetDashStyle(t.TryGetValue("stroke-dash")),
                 .fill = t.TryGetValue("stroke"),
                 .width = Val(t.TryGetValue("stroke-width"))
             }
+
+            If st.fill.StringEmpty Then
+                st.fill = "black"
+            End If
+
+            Return st
         End Function
 
         Public Shared Narrowing Operator CType(stroke As Stroke) As Pen

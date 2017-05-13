@@ -37,7 +37,7 @@ Imports v = System.Array
 Namespace Scripting
 
     ''' <summary>
-    ''' <see cref="Activator"/>
+    ''' Display the object instance object json from the type definition by using <see cref="Activator"/>.
     ''' </summary>
     Public Module Actives
 

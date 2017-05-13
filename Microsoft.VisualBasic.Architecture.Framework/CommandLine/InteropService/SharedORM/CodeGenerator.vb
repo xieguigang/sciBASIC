@@ -17,11 +17,16 @@ Namespace CommandLine.InteropService.SharedORM
 
         Public Iterator Function EnumeratesAPI() As IEnumerable(Of NamedValue(Of CommandLine))
             For Each api As APIEntryPoint In App.APIList
-                Yield New NamedValue(Of CommandLine) With {
-                    .Name = api.Name,
-                    .Description = api.Info,
-                    .Value = api.Usage.CommandLineModel
-                }
+                Try
+                    Yield New NamedValue(Of CommandLine) With {
+                        .Name = api.Name,
+                        .Description = api.Info,
+                        .Value = api.Usage.CommandLineModel
+                    }
+                Catch ex As Exception
+                    ex = New Exception(api.EntryPointFullName(False))
+                    Throw ex
+                End Try
             Next
         End Function
     End Class
