@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.InteropService.SharedORM
@@ -17,6 +18,7 @@ Namespace CommandLine.InteropService.SharedORM
         Public Overrides Function GetSourceCode() As String
             Dim vb As New StringBuilder
 
+            Call vb.AppendLine("Imports " & GetType(StringBuilder).Namespace)
             Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
             Call vb.AppendLine("Imports " & GetType(InteropService).Namespace)
             Call vb.AppendLine()
@@ -78,6 +80,9 @@ Namespace CommandLine.InteropService.SharedORM
             Try
                 If func.First <= "9" AndAlso func.First >= "0"c Then
                     func = "_" & func  ' 有些命令行开关是以数字开头的？
+                Else
+                    ' 不是以数字开头的，则尝试解决关键词的问题
+                    func = VBLanguage.AutoEscapeVBKeyword(func)
                 End If
                 params = __vbParameters(API.Value)
             Catch ex As Exception
@@ -87,12 +92,20 @@ Namespace CommandLine.InteropService.SharedORM
 
             Call vb.AppendLine(xmlComments)
             Call vb.AppendLine($"Public Function {func}({params.JoinBy(", ")}) As Integer")
-            Call vb.AppendLine($"Dim CLI$ = $""{__CLI(API.Value)}""")
+            Call vb.AppendLine($"Dim CLI As New StringBuilder(""{API.Name}"")")
+            Call vb.AppendLine(__CLI(+API))
+            Call vb.AppendLine()
             Call vb.AppendLine($"Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI$)")
             Call vb.AppendLine($"Return proc.{NameOf(IIORedirectAbstract.Run)}()")
             Call vb.AppendLine("End Function")
         End Sub
 
+
+        ''' <summary>
+        ''' 在这个函数之中会生成函数的参数列表
+        ''' </summary>
+        ''' <param name="API"></param>
+        ''' <returns></returns>
         Private Shared Function __vbParameters(API As CommandLine) As String()
             Dim out As New List(Of String)
             Dim param$
@@ -143,18 +156,35 @@ Namespace CommandLine.InteropService.SharedORM
         End Function
 
         Private Shared Function __CLI(API As CommandLine) As String
-            Dim CLI$ = $"{API.Name} "
-            Dim args As New List(Of String)
+            Dim CLI As New StringBuilder
+            Dim vbcode$
 
             For Each param In API.ParameterList
-                args += $"{param.Name} """"{"{" & __normalizedAsIdentifier(param.Name) & "}"}"""""
-            Next
-            For Each b In API.BoolFlags
-                args += "{" & $"If({__normalizedAsIdentifier(b)}, ""{b}"", """")" & "}"
-            Next
-            CLI &= args.JoinBy(" ")
+                Dim var$ = __normalizedAsIdentifier(param.Name)
 
-            Return CLI
+                ' 注意：在这句代码的最后有一个空格，是间隔参数所必需的，不可以删除
+                vbcode = $"Call CLI.Append(""{param.Name} "" & """" & {var} & """" "")"
+
+                If param.Description.StringEmpty Then
+                    ' 必须参数不需要进一步判断，直接添加                    
+                    Call CLI.AppendLine(vbcode)
+                Else
+                    ' 可选参数还需要IF判断是否存在                  
+                    Call CLI.AppendLine($"If Not var.{NameOf(StringEmpty)} Then")
+                    Call CLI.AppendLine(vbcode)
+                    Call CLI.AppendLine("End If")
+                End If
+            Next
+
+            For Each b In API.BoolFlags
+                Dim var$ = __normalizedAsIdentifier(b)
+
+                Call CLI.AppendLine($"If {var} Then")
+                Call CLI.AppendLine($"Call CLI.Append(""{b}"")")
+                Call CLI.AppendLine("End If")
+            Next
+
+            Return CLI.ToString
         End Function
 
         Const SyntaxError$ = "'<' or '>' is using for the IO redirect in your terminal, unavailable for your commandline argument name!"

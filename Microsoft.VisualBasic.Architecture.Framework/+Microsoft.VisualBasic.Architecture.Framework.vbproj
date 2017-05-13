@@ -420,6 +420,7 @@
     <Compile Include="Language\Java\Collections.vb" />
     <Compile Include="Language\Java\Reflection.vb" />
     <Compile Include="Language\List%28Of T%29.vb" />
+    <Compile Include="Scripting\VBLanguage.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
