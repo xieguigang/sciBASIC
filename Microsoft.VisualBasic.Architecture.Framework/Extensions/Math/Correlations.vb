@@ -391,7 +391,7 @@ Namespace Mathematical.Correlations
         End Structure
 
         ''' <summary>
-        ''' 输入的数据为一个对象属性的集合
+        ''' 输入的数据为一个对象属性的集合，默认的<paramref name="compute"/>计算方法为<see cref="GetPearson"/>
         ''' </summary>
         ''' <param name="data">``[ID, properties]``</param>
         ''' <param name="compute">默认的计算形式为<see cref="GetPearson"/></param>

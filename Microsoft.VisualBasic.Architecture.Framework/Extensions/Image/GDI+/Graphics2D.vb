@@ -1656,32 +1656,18 @@ Namespace Imaging
         Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
 
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn image.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn image.
-        '
-        '   width:
-        '     Width of the drawn image.
-        '
-        '   height:
-        '     Height of the drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
 
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image at the specified location and with the
+        ''' specified size.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the drawn image.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the drawn image.</param>
+        ''' <param name="width">Width of the drawn image.</param>
+        ''' <param name="height">Height of the drawn image.</param>
+        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
+            Call Graphics.DrawImage(image, x, y, width, height)
         End Sub
         '
         ' Summary:
@@ -4344,20 +4330,12 @@ Namespace Imaging
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
             Call Graphics.FillPolygon(brush, points, fillMode)
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of a rectangle specified by a System.Drawing.Rectangle structure.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   rect:
-        '     System.Drawing.Rectangle structure that represents the rectangle to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of a rectangle specified by a System.Drawing.Rectangle structure.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="rect">System.Drawing.Rectangle structure that represents the rectangle to fill.</param>
         Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
             Call Graphics.FillRectangle(brush, rect)
         End Sub

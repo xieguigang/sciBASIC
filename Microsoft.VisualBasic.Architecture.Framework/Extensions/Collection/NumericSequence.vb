@@ -1,4 +1,16 @@
-﻿Public Module NumericSequence
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
+
+Public Module NumericSequence
+
+    <Extension>
+    Public Function InRange(Of T As IComparable)(x As T, min As T, max As T) As Boolean
+        If x.LessThanOrEquals(max) AndAlso x.GreaterThanOrEquals(min) Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 
     Public Iterator Function Range(from%, to%, Optional step% = 1) As IEnumerable(Of Integer)
         For i As Integer = from To [to] Step [step]

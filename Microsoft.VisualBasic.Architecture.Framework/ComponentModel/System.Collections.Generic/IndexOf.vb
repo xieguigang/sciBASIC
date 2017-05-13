@@ -32,11 +32,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace ComponentModel.Collection
 
     ''' <summary>
-    ''' Mappings of ``key -> index``
+    ''' Mappings of ``key As String -> index As Integer``
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class IndexOf(Of T)
-        Implements IEnumerable(Of SeqValue(Of T))
+    Public Class IndexOf(Of T) : Implements IEnumerable(Of SeqValue(Of T))
 
         Dim maps As New Dictionary(Of T, Integer)
         Dim index As List(Of SeqValue(Of T))
@@ -87,6 +86,15 @@ Namespace ComponentModel.Collection
                 End If
             End Get
         End Property
+
+        ''' <summary>
+        ''' For Linq ``where``
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function NotExists(x As T) As Boolean
+            Return IndexOf(x) = -1
+        End Function
 
         ''' <summary>
         ''' 这个函数是线程不安全的

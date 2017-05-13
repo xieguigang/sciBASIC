@@ -394,9 +394,9 @@ Namespace Imaging
                 ex = New Exception(caller, ex)
                 Throw ex
             End Try
-            Dim Gr As Graphics2D = res.Size.CreateGDIDevice
-            Call Gr.Graphics.DrawImage(res, 0, 0, Gr.Width, Gr.Height)
-            Return Gr
+            Dim g As Graphics2D = res.Size.CreateGDIDevice
+            Call g.Graphics.DrawImage(res, 0, 0, g.Width, g.Height)
+            Return g
         End Function
 
         <Extension> Public Function BackgroundGraphics(ctrl As Control) As Graphics2D

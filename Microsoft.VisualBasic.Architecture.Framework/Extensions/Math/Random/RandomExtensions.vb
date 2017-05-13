@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b5c9290f6fc5d69ac95ed45bdb92405d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\RandomExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -69,12 +69,18 @@ Namespace Mathematical
             Return CInt(seeds)
         End Function
 
+        ''' <summary>
+        ''' 返回<paramref name="min"/>到<paramref name="max"/>区间之内的一个和实数
+        ''' </summary>
+        ''' <param name="min"></param>
+        ''' <param name="max"></param>
+        ''' <returns></returns>
         Public Function randf(min As Double, max As Double) As Double
-            Dim minInteger As Integer = CInt(Math.Truncate(min * 10000))
-            Dim maxInteger As Integer = CInt(Math.Truncate(max * 10000))
-            Dim randInteger As Integer = RandomNumbers.rand() * RandomNumbers.rand()
-            Dim diffInteger As Integer = maxInteger - minInteger
-            Dim resultInteger As Integer = randInteger Mod diffInteger + minInteger
+            Dim minInteger& = CLng(Math.Truncate(min * 10000))
+            Dim maxInteger& = CLng(Math.Truncate(max * 10000))
+            Dim randInteger& = CLng(RandomNumbers.rand()) * CLng(RandomNumbers.rand())
+            Dim diffInteger& = maxInteger - minInteger
+            Dim resultInteger& = randInteger Mod diffInteger + minInteger
             Return resultInteger / 10000.0
         End Function
 
