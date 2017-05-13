@@ -30,6 +30,9 @@ Imports System.Text
 
 Namespace Scripting.SymbolBuilder
 
+    ''' <summary>
+    ''' 对<see cref="StringBuilder"/>对象的拓展，添加了操作符凭借字符串，从而能够让生成代码的操作更加的方便
+    ''' </summary>
     Public Class ScriptBuilder
 
         Public ReadOnly Property Script As StringBuilder
@@ -46,6 +49,10 @@ Namespace Scripting.SymbolBuilder
             Call Me.New(capacity:=1024)
         End Sub
 
+        ''' <summary>
+        ''' Display the string text in the <see cref="StringBuilder"/> object.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return Script.ToString
         End Function
