@@ -51,7 +51,7 @@ Namespace CommandLine.InteropService.SharedORM
             Else
                 description = description _
                     .lTokens _
-                    .Select(Function(s) "'''" & s) _
+                    .Select(Function(s) "''' " & s.Trim(" "c, ASCII.TAB)) _
                     .JoinBy(vbCrLf)
             End If
 
@@ -67,13 +67,15 @@ Namespace CommandLine.InteropService.SharedORM
         ''' </summary>
         ''' <param name="vb"></param>
         ''' <param name="API"></param>
+        ''' <remarks>
+        ''' </remarks>
         Private Sub __calls(vb As StringBuilder, API As NamedValue(Of CommandLine))
             ' Public Function CommandName(args$,....Optional args$....) As Integer
             ' Dim CLI$ = "commandname arguments"
             ' Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
             ' Return proc.Run()
             ' End Function
-            Dim func$ = __normalizedAsIdentifier(API.Name).Trim("_"c)
+            Dim func$ = API.Name ' 直接使用函数原型的名字了，会比较容易辨别一些
             Dim xmlComments$ = __xmlComments(API.Description)
             Dim params$()
 
@@ -91,6 +93,7 @@ Namespace CommandLine.InteropService.SharedORM
             End Try
 
             Call vb.AppendLine(xmlComments)
+
             Call vb.AppendLine($"Public Function {func}({params.JoinBy(", ")}) As Integer")
             Call vb.AppendLine($"Dim CLI As New StringBuilder(""{API.Name}"")")
             Call vb.AppendLine(__CLI(+API))

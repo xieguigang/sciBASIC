@@ -19,8 +19,10 @@ Namespace CommandLine.InteropService.SharedORM
             For Each api As APIEntryPoint In App.APIList
                 Try
                     Yield New NamedValue(Of CommandLine) With {
-                        .Name = api.Name,
-                        .Description = api.Info,
+                        .Name = api.EntryPoint.Name,
+                        .Description = $"```
+                        {api.Usage.Replace("<", "&lt;")}
+                        ```" & vbCrLf & api.Info,
                         .Value = api.Usage.CommandLineModel
                     }
                 Catch ex As Exception
