@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Abstract
+Namespace Graph.Abstract
 
     ''' <summary>
     ''' Node model in the network
