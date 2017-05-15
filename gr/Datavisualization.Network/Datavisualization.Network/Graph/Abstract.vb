@@ -44,8 +44,8 @@ Namespace Graph.Abstract
     End Interface
 
     Public Interface INetworkEdge : Inherits IInteraction
-        Property Confidence As Double
-        Property InteractionType As String
+        Property value As Double
+        Property Interaction As String
     End Interface
 
     Public Module ExtensionsAPI

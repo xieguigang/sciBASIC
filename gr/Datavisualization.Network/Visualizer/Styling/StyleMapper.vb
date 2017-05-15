@@ -41,6 +41,9 @@ Imports Microsoft.VisualBasic.Scripting
 
 Namespace Styling
 
+    ''' <summary>
+    ''' 这个模块之中的API是为node和edge进行styling所提供的基于<see cref="MapperTypes"/>这三种映射类型的结果
+    ''' </summary>
     Public Module StyleMapper
 
         Public Enum MapperTypes

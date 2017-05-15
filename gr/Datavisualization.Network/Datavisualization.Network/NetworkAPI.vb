@@ -183,8 +183,8 @@ Public Module NetworkAPI
                 edges += New FileStream.NetworkEdge With {
                     .FromNode = var.ID,
                     .ToNode = k,
-                    .Confidence = c,
-                    .InteractionType = interact,
+                    .value = c,
+                    .Interaction = interact,
                     .Properties = New Dictionary(Of String, String) From {
                         {"type", If(c# > 0, "positive", "negative")},
                         {"abs", Math.Abs(c#)}
