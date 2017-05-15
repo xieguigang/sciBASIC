@@ -39,6 +39,24 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Module ListExtensions
 
+    Private Function rand(min%, max%) As Integer
+        Static rnd As New Random
+        SyncLock rnd
+            Return rnd.Next(min, max)
+        End SyncLock
+    End Function
+
+    ''' <summary>
+    ''' 返回数组集合之中的一个随机位置的元素
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Random(Of T)(v As T()) As T
+        Dim l% = rand(0, v.Length)
+        Return v(l)
+    End Function
+
     ''' <summary>
     ''' 根据对象的键名来进行重排序，请注意，要确保对象<paramref name="getKey"/>能够从泛型对象之中获取得到唯一的键名
     ''' </summary>
