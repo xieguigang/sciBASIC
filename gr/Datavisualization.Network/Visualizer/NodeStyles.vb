@@ -30,5 +30,8 @@ Namespace Styling
 
     Public Module NodeStyles
 
+        Public Function DegreeAsSize()
+
+        End Function
     End Module
 End Namespace

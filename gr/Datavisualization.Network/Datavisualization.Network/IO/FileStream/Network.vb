@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace FileStream

@@ -29,7 +29,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
-Namespace FileStream
+Namespace FileStream.Generic
 
     Public MustInherit Class INetComponent : Inherits DynamicPropertyBase(Of String)
 

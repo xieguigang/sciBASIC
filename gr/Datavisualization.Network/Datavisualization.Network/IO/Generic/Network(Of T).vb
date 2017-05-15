@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.Language
 
-Namespace FileStream
+Namespace FileStream.Generic
 
     ''' <summary>
     ''' The network csv data information with specific type of the datamodel

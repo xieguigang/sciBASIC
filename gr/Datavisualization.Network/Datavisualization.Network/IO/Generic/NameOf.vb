@@ -26,7 +26,7 @@
 
 #End Region
 
-Namespace FileStream
+Namespace FileStream.Generic
 
     ''' <summary>
     ''' The names value for edge type <see cref="NetworkEdge"/> and node type <see cref="Node"/>
