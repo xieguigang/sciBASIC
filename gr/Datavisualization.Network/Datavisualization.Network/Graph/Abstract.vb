@@ -34,7 +34,7 @@ Namespace Graph.Abstract
     ''' Node model in the network
     ''' </summary>
     Public Interface INode
-        Property Identifier As String
+        Property ID As String
         Property NodeType As String
     End Interface
 

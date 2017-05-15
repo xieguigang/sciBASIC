@@ -44,7 +44,7 @@ Namespace FileStream
         ''' 这个节点的标识符
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property ID As String Implements INamedValue.Key, INode.Identifier
+        Public Overridable Property ID As String Implements INamedValue.Key, INode.ID
         ''' <summary>
         ''' Node data groups identifier.(这个节点的分组类型的定义)
         ''' </summary>
