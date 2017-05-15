@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::e426106dda980cd47bd8c8dbde4c821b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -78,8 +78,24 @@ Namespace ComponentModel.Ranges
             Me.Max = max
         End Sub
 
+        ''' <summary>
+        ''' 从一个任意的实数数组之中构建出一个实数区间范围
+        ''' </summary>
+        ''' <param name="data"></param>
         Sub New(data As Double())
             Call Me.New(data.Min, data.Max)
+        End Sub
+
+        ''' <summary>
+        ''' 从一个任意的实数向量之中构建出一个实数区间范围
+        ''' </summary>
+        ''' <param name="vector"></param>
+        Sub New(vector As IEnumerable(Of Double))
+            Call Me.New(data:=vector.ToArray)
+        End Sub
+
+        Sub New(range As IntRange)
+            Call Me.New(range.Min, range.Max)
         End Sub
 
         Sub New()
@@ -142,6 +158,11 @@ Namespace ComponentModel.Ranges
             Return r
         End Operator
 
+        ''' <summary>
+        ''' 这个函数需要通过一个返回结果的元素个数参数来计算出step步长
+        ''' </summary>
+        ''' <param name="n%">所返回来的数组的元素的个数</param>
+        ''' <returns></returns>
         Public Function Enumerate(n%) As Double()
             Dim delta# = Length / n
             Dim out As New List(Of Double)
@@ -153,6 +174,14 @@ Namespace ComponentModel.Ranges
             Return out
         End Function
 
+        ''' <summary>
+        ''' Transform a numeric value in this <see cref="DoubleRange"/> into 
+        ''' target numeric range: ``<paramref name="valueRange"/>``.
+        ''' (将当前的范围内的一个实数映射到另外的一个范围内的实数区间之中)
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <param name="valueRange"></param>
+        ''' <returns></returns>
         Public Function ScaleMapping(x#, valueRange As DoubleRange) As Double
             Dim percent# = (x - Min) / Length
             Dim value# = percent * valueRange.Length + valueRange.Min

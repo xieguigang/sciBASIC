@@ -52,7 +52,7 @@ Namespace Dijkstra
         End Function
 
         Public Shared Function CreateObject(DataModel As FileStream.NetworkEdge) As Connection
-            Return CreateObject(DataModel, DataModel.Confidence)
+            Return CreateObject(DataModel, DataModel.value)
         End Function
 
         Public Shared Function CreateObject(edge As FileStream.NetworkEdge, weight As Integer) As Connection

@@ -28,13 +28,13 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Abstract
+Namespace Graph.Abstract
 
     ''' <summary>
     ''' Node model in the network
     ''' </summary>
     Public Interface INode
-        Property Identifier As String
+        Property ID As String
         Property NodeType As String
     End Interface
 
@@ -44,8 +44,8 @@ Namespace Abstract
     End Interface
 
     Public Interface INetworkEdge : Inherits IInteraction
-        Property Confidence As Double
-        Property InteractionType As String
+        Property value As Double
+        Property Interaction As String
     End Interface
 
     Public Module ExtensionsAPI

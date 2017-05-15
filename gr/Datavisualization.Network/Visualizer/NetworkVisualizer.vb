@@ -30,12 +30,14 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 ''' <summary>
@@ -84,7 +86,7 @@ Public Module NetworkVisualizer
     ''' 假若属性是空值的话，在绘图之前可以调用<see cref="ApplyAnalysis"/>拓展方法进行一些分析
     ''' </summary>
     ''' <param name="net"></param>
-    ''' <param name="frameSize"></param>
+    ''' <param name="canvasSize">画布的大小</param>
     ''' <param name="padding">上下左右的边距分别为多少？</param>
     ''' <param name="background">背景色或者背景图片的文件路径</param>
     ''' <param name="defaultColor"></param>
@@ -92,8 +94,9 @@ Public Module NetworkVisualizer
     <ExportAPI("Draw.Image")>
     <Extension>
     Public Function DrawImage(net As NetworkGraph,
-                              frameSize As Size,
+                              Optional canvasSize$ = "1024,1024",
                               Optional padding$ = g.DefaultPadding,
+                              Optional styling As StyleMapper = Nothing,
                               Optional background$ = "white",
                               Optional defaultColor As Color = Nothing,
                               Optional displayId As Boolean = True,
@@ -101,6 +104,7 @@ Public Module NetworkVisualizer
                               Optional nodeStroke$ = WhiteStroke,
                               Optional scale! = 1,
                               Optional labelFontBase$ = CSSFont.Win7Normal) As GraphicsData
+        Dim frameSize As Size = canvasSize.SizeParser
         Dim br As Brush
         Dim rect As Rectangle
         Dim cl As Color
@@ -119,8 +123,8 @@ Public Module NetworkVisualizer
         Dim stroke As Pen = CSS.Stroke.TryParse(nodeStroke).GDIObject
         Dim baseFont As Font = CSSFont.TryParse(
             labelFontBase, New CSSFont With {
-                .family = FontFace.MicrosoftYaHei, 
-                .size = 12, 
+                .family = FontFace.MicrosoftYaHei,
+                .size = 12,
                 .style = FontStyle.Regular
             }).GDIObject
 

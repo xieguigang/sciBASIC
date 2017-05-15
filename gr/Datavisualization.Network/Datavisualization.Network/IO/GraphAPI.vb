@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Imaging
@@ -38,6 +39,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.Quantile
+Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
 
 Namespace FileStream
 
@@ -46,8 +48,7 @@ Namespace FileStream
     ''' </summary>
     Public Module GraphAPI
 
-        <Extension>
-        Public Sub AddEdges(net As Network, from$, targets$())
+        <Extension> Public Sub AddEdges(net As Network, from$, targets$())
             If Not net.HaveNode(from) Then
                 net += New Node With {
                     .ID = from
@@ -86,7 +87,7 @@ Namespace FileStream
 
                 nodes += New Node With {
                     .ID = n.ID,
-                    .NodeType = n.Data(NameOf(Type)),
+                    .NodeType = n.Data(names.REFLECTION_ID_MAPPING_NODETYPE),
                     .Properties = data
                 }
             Next
@@ -95,7 +96,7 @@ Namespace FileStream
                 edges += New NetworkEdge With {
                     .FromNode = l.Source.ID,
                     .ToNode = l.Target.ID,
-                    .InteractionType = l.Data(NameOf(Type))
+                    .Interaction = l.Data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
                 }
             Next
 
@@ -122,11 +123,13 @@ Namespace FileStream
         ''' <param name="net"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function CreateGraph(Of TNode As Node, TEdge As NetworkEdge)(net As Network(Of TNode, TEdge), Optional nodeColor As Func(Of Node, Brush) = Nothing) As NetworkGraph
+        Public Function CreateGraph(Of TNode As Node, TEdge As NetworkEdge)(net As Network(Of TNode, TEdge),
+                                                                            Optional nodeColor As Func(Of Node, Brush) = Nothing,
+                                                                            Optional defaultBrush$ = "black") As NetworkGraph
             If nodeColor Is Nothing Then
-                nodeColor = Function(n) Brushes.Red
+                Dim br As New SolidBrush(defaultBrush.TranslateColor)
+                nodeColor = Function(n) br
             End If
-
 
             Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
  _
@@ -139,7 +142,7 @@ Namespace FileStream
                     .Color = c,
                     .radius = 20,
                     .Properties = New Dictionary(Of String, String) From {
-                        {NameOf(Type), n.NodeType}
+                        {names.REFLECTION_ID_MAPPING_NODETYPE, n.NodeType}
                     },
                     .initialPostion = pos
                 }
@@ -155,7 +158,7 @@ Namespace FileStream
                                          Let id = edge.GetNullDirectedGuid
                                          Let data As EdgeData = New EdgeData With {
                                              .Properties = New Dictionary(Of String, String) From {
-                                                 {NameOf(Type), edge.InteractionType}
+                                                 {names.REFLECTION_ID_MAPPING_INTERACTION_TYPE, edge.Interaction}
                                              }
                                          }
                                          Select New Edge(id, a, b, data)
@@ -221,7 +224,7 @@ Namespace FileStream
         Public Function RemovesByDegreeQuantile(net As Network, Optional quantile# = 0.1, Optional ByRef removeIDs$() = Nothing) As Network
             Dim qCut& = net _
                 .Nodes _
-                .Select(Function(n) n("Degree")) _
+                .Select(Function(n) n(names.REFLECTION_ID_MAPPING_DEGREE)) _
                 .Select(Function(d) CLng(Val(d))) _
                 .GKQuantile() _
                 .Query(quantile)
@@ -244,7 +247,7 @@ Namespace FileStream
             Dim removes As New List(Of String)
 
             For Each node As Node In net.Nodes
-                Dim ndg As Integer = CInt(Val(node("Degree")))
+                Dim ndg As Integer = CInt(Val(node(names.REFLECTION_ID_MAPPING_DEGREE)))
 
                 If ndg > degree Then
                     nodes += node

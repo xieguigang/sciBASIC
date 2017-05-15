@@ -1,35 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::67dbfce3c228916799d188c3918f105d, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Edge.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports Microsoft.VisualBasic.Data.csv.Extensions
-Imports Microsoft.VisualBasic.Data.visualize.Network.Abstract
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 
 Namespace FileStream
 
@@ -52,7 +53,7 @@ Namespace FileStream
         Sub New(from As String, target As String, confi As Double)
             Me.FromNode = from
             Me.ToNode = target
-            Me.Confidence = confi
+            Me.value = confi
         End Sub
 
         ''' <summary>
@@ -61,9 +62,9 @@ Namespace FileStream
         ''' <param name="clone"></param>
         Sub New(clone As NetworkEdge)
             With Me
-                .Confidence = clone.Confidence
+                .value = clone.value
                 .FromNode = clone.FromNode
-                .InteractionType = clone.InteractionType
+                .Interaction = clone.Interaction
                 .Properties = New Dictionary(Of String, String)(clone.Properties)
                 .ToNode = clone.ToNode
             End With
@@ -73,10 +74,14 @@ Namespace FileStream
         Public Overridable Property FromNode As String Implements IInteraction.source
         <Column("toNode")> <XmlAttribute("target")>
         Public Overridable Property ToNode As String Implements IInteraction.target
-        <XmlAttribute("confidence")>
-        Public Overridable Property Confidence As Double Implements INetworkEdge.Confidence
-        <Column("InteractionType")>
-        Public Overridable Property InteractionType As String Implements INetworkEdge.InteractionType
+        ''' <summary>
+        ''' 与当前的这个边对象所相关联的一个数值对象，可以为置信度，相关度，强度之类的
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute("value")>
+        Public Overridable Property value As Double Implements INetworkEdge.value
+        <Column("interaction_type"), XmlText>
+        Public Overridable Property Interaction As String Implements INetworkEdge.Interaction
 
         Public Iterator Function Nodes() As IEnumerable(Of String)
             Yield FromNode
@@ -96,7 +101,7 @@ Namespace FileStream
             If ignoreTypes Then
                 Return array(0) & " + " & array(1)
             Else
-                Return String.Format("[{0}] {1};{2}", InteractionType, array(0), array(1))
+                Return String.Format("[{0}] {1};{2}", Interaction, array(0), array(1))
             End If
         End Function
 
@@ -106,7 +111,7 @@ Namespace FileStream
         ''' <returns></returns>
         Public Function GetDirectedGuid(Optional ignoreTypes As Boolean = False) As String
             If Not ignoreTypes Then
-                Return $"{FromNode} {InteractionType} {ToNode}"
+                Return $"{FromNode} {Interaction} {ToNode}"
             Else
                 Return $"{FromNode} + {ToNode}"
             End If
@@ -142,18 +147,18 @@ Namespace FileStream
         Public Function IsEqual(OtherNode As NetworkEdge) As Boolean
             Return String.Equals(FromNode, OtherNode.FromNode) AndAlso
                 String.Equals(ToNode, OtherNode.ToNode) AndAlso
-                String.Equals(InteractionType, OtherNode.InteractionType) AndAlso
-                Confidence = OtherNode.Confidence
+                String.Equals(Interaction, OtherNode.Interaction) AndAlso
+                value = OtherNode.value
         End Function
 
         Public Overrides Function ToString() As String
             If String.IsNullOrEmpty(ToNode) Then
                 Return FromNode
             Else
-                If String.IsNullOrEmpty(InteractionType) Then
+                If String.IsNullOrEmpty(Interaction) Then
                     Return String.Format("{0} --> {1}", FromNode, ToNode)
                 Else
-                    Return String.Format("{0} {1} {2}", FromNode, InteractionType, ToNode)
+                    Return String.Format("{0} {1} {2}", FromNode, Interaction, ToNode)
                 End If
             End If
         End Function

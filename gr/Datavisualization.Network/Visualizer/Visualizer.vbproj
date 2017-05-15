@@ -86,6 +86,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Styling\EdgeStyles.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -102,7 +103,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="NetworkVisualizer.vb" />
-    <Compile Include="StyleMappings.vb" />
+    <Compile Include="Styling\NodeStyles.vb" />
+    <Compile Include="Styling\StyleMapper.vb" />
+    <Compile Include="Styling\StyleMappings.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
