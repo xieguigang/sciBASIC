@@ -8,6 +8,16 @@
     Public MustInherit Class InteropService : Inherits CLIBuilder
 
         ''' <summary>
+        ''' App path
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Path As String
+            Get
+                Return _executableAssembly
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Assembly path for the target invoked program.
         ''' </summary>
         ''' <remarks></remarks>

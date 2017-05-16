@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Data.visualize.Network.Visualize.NetworkVisualizer
+Imports Microsoft.VisualBasic.Data.visualize.Network
 
 Module Module1
 

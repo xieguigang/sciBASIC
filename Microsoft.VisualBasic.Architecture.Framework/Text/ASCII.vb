@@ -185,13 +185,13 @@ Namespace Text
         ''' |字符|含义|
         ''' |---|----|
         ''' |\cx|匹配 x 指示的控制字符。例如，\cM 匹配 Control-M 或回车符。x 的值必须在 A-Z 或 a-z 之间。如果不是这样，则假定 c 就是“c”字符本身。|
-        ''' |\f|换页符匹配。等效于 \x0c 和 \cL。|
-        ''' |\n|换行符匹配。等效于 \x0a 和 \cJ。|
-        ''' |\r|匹配一个回车符。等效于 \x0d 和 \cM。|
-        ''' |\s|匹配任何空白字符，包括空格、制表符、换页符等。与 [\f\n\r\t\v] 等效。|
-        ''' |\S|匹配任何非空白字符。与 [^ \f\n\r\t\v] 等效。|
-        ''' |\t|制表符匹配。与 \x09 和 \cI 等效。|
-        ''' |\v|垂直制表符匹配。与 \x0b 和 \cK 等效。|
+        ''' |\f |换页符匹配。等效于 \x0c 和 \cL。|
+        ''' |\n |换行符匹配。等效于 \x0a 和 \cJ。|
+        ''' |\r |匹配一个回车符。等效于 \x0d 和 \cM。|
+        ''' |\s |匹配任何空白字符，包括空格、制表符、换页符等。与 [\f\n\r\t\v] 等效。|
+        ''' |\S |匹配任何非空白字符。与 [^ \f\n\r\t\v] 等效。|
+        ''' |\t |制表符匹配。与 \x09 和 \cI 等效。|
+        ''' |\v |垂直制表符匹配。与 \x0b 和 \cK 等效。|
         ''' </summary>
         ''' <returns></returns>
         Public Shared ReadOnly Property Nonprintings As Char() = {
@@ -233,11 +233,17 @@ Namespace Text
         ''' </summary>
         Public Const TAB As Char = CChar(vbTab)
 
+        ''' <summary>
+        ''' 双引号``"``
+        ''' </summary>
         Public Const Quot As Char = Chr(34)
         Public Shared ReadOnly QuotBegin_ZHCN As Char = Convert.ToChar(8220)
         Public Shared ReadOnly QuotEnds_ZHCN As Char = Convert.ToChar(8221)
         Public Const QuotUnknown As Char = "″"c
 
+        ''' <summary>
+        ''' 单引号
+        ''' </summary>
         Public Const Mark As Char = "'"c
 
         ''' <summary>

@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.InteropService.SharedORM
 
@@ -43,9 +44,18 @@ Namespace CommandLine.InteropService.SharedORM
         End Function
 
         Private Shared Function __xmlComments(description$) As String
+            If description.StringEmpty Then
+                description = "'''"
+            Else
+                description = description _
+                    .lTokens _
+                    .Select(Function(s) "'''" & s) _
+                    .JoinBy(vbCrLf)
+            End If
+
             Return $"
 ''' <summary>
-''' {description}
+{description}
 ''' </summary>
 '''"
         End Function
@@ -66,6 +76,9 @@ Namespace CommandLine.InteropService.SharedORM
             Dim params$()
 
             Try
+                If func.First <= "9" AndAlso func.First >= "0"c Then
+                    func = "_" & func  ' 有些命令行开关是以数字开头的？
+                End If
                 params = __vbParameters(API.Value)
             Catch ex As Exception
                 ex = New Exception("Check for your CLI Usage definition: " & API.Value.ToString, ex)
@@ -101,11 +114,31 @@ Namespace CommandLine.InteropService.SharedORM
             Return out
         End Function
 
+        ''' <summary>
+        ''' 必须是以``default=``来作为前缀的，否则默认使用空字符串
+        ''' </summary>
+        ''' <param name="value$"></param>
+        ''' <returns></returns>
         Private Shared Function __defaultValue(value$) As String
-            value = value.GetStackValue("<", ">")
-            If InStr(value, "default=") > 0 Then
-                value = Strings.Split(value, "default=").Last
+            If value.First = """"c AndAlso value.Last = """"c Then
+                ' 如果是直接使用双引号包裹而不是使用<>尖括号进行包裹，则认为双引号所包裹的值都是默认值
+                value = value.GetStackValue(ASCII.Quot, ASCII.Quot)
+            ElseIf value.First = "<"c AndAlso value.Last = ">"c Then
+                ' 而如果是使用尖括号的时候，则判断是否存在default=表达式，不存在则是空值
+                value = value.GetStackValue("<", ">")
+
+                If InStr(value, "default=") > 0 Then
+                    value = Strings.Split(value, "default=").Last.Trim(""""c)
+                Else
+                    value = "" ' 没有表达式前缀，则使用默认的空字符串
+                End If
+            Else
+                ' 其他情况都认为是使用空值为默认值
+                value = ""
             End If
+
+            value = value.Replace(""""c, New String(ASCII.Quot, 2))
+
             Return value
         End Function
 
@@ -124,13 +157,15 @@ Namespace CommandLine.InteropService.SharedORM
             Return CLI
         End Function
 
+        Const SyntaxError$ = "'<' or '>' is using for the IO redirect in your terminal, unavailable for your commandline argument name!"
+
         Private Shared Function __normalizedAsIdentifier(arg$) As String
             Dim s As Char() = arg.ToArray
             Dim upper As Char() = arg.ToUpper.ToArray
             Dim c As Char
 
             If s.First = "<"c OrElse s.Last = ">"c Then
-                Throw New SyntaxErrorException("'<' or '>' is using for the IO redirect in your terminal, unavailable for your commandline argument name!")
+                Throw New SyntaxErrorException(SyntaxError)
             End If
 
             For i As Integer = 0 To s.Length - 1
@@ -144,7 +179,11 @@ Namespace CommandLine.InteropService.SharedORM
                 End If
             Next
 
-            Return New String(s)
+            If s.First >= "0"c AndAlso s.First <= "9"c Then
+                Return "_" & New String(s)
+            Else
+                Return New String(s)
+            End If
         End Function
     End Class
 End Namespace
