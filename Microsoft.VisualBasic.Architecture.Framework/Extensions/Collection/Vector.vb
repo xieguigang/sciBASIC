@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::a000b8c4c7dde87caa736b8399686715, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -272,24 +272,60 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="delimiter">和字符串的Split函数一样，这里作为delimiter的元素都不会出现在结果之中</param>
+    ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
-    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), delimiter As Func(Of T, Boolean)) As T()()
+    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), delimiter As Func(Of T, Boolean), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As T()()
         Dim array As T() = source.ToArray
-        Dim list As New List(Of T())
+        Dim blocks As New List(Of T())  ' The returned split blocks
         Dim tmp As New List(Of T)
 
         For i As Integer = 0 To array.Length - 1
             Dim x As T = array(i)
+
+            ' 当前的x元素是分隔符对象
             If delimiter(x) = True Then
-                Call list.Add(tmp.ToArray)
-                Call tmp.Clear()
+                ' 是否将这个分隔符也包含在分组内
+                ' 如果是，则包含在下一个分组内
+                If deliPosition <> DelimiterLocation.NotIncludes Then
+                    If deliPosition = DelimiterLocation.NextFirst Then
+                        Call blocks.Add(tmp.ToArray)
+                        Call tmp.Clear()
+                        Call tmp.Add(x)
+                    Else
+                        ' 包含在上一个分块的末尾
+                        Call tmp.Add(x)
+                        Call blocks.Add(tmp.ToArray)
+                        Call tmp.Clear()
+                    End If
+                Else
+                    Call blocks.Add(tmp.ToArray)
+                    Call tmp.Clear()
+                End If
             Else
                 Call tmp.Add(x)
             End If
         Next
 
-        Return list.ToArray
+        Return blocks.ToArray
     End Function
+
+    ''' <summary>
+    ''' 分隔符对象在分块之中的位置
+    ''' </summary>
+    Public Enum DelimiterLocation As Integer
+        ''' <summary>
+        ''' 上一个分块的最末尾
+        ''' </summary>
+        PreviousLast
+        ''' <summary>
+        ''' 不会再任何分块之中包含有分隔符
+        ''' </summary>
+        NotIncludes
+        ''' <summary>
+        ''' 包含在下一个分块之中的最开始的位置
+        ''' </summary>
+        NextFirst
+    End Enum
 
     ''' <summary>
     ''' 查找出列表之中符合条件的所有的索引编号

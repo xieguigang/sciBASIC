@@ -187,7 +187,7 @@ Public Module NetworkVisualizer
 
                     If displayId Then
 
-                        Dim font As New Font(baseFont.Name, baseFont.Size + n.Data.Neighborhoods)
+                        Dim font As New Font(baseFont.Name, (baseFont.Size + r) / 2)
                         Dim s As String = n.GetDisplayText
                         Dim size As SizeF = g.MeasureString(s, font)
                         Dim sloci As New Point With {

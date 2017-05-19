@@ -125,11 +125,24 @@ Namespace FileStream
         <Extension>
         Public Function CreateGraph(Of TNode As Node, TEdge As NetworkEdge)(net As Network(Of TNode, TEdge),
                                                                             Optional nodeColor As Func(Of Node, Brush) = Nothing,
-                                                                            Optional defaultBrush$ = "black") As NetworkGraph
+                                                                            Optional defaultBrush$ = "black",
+                                                                            Optional defaultRadius! = 20) As NetworkGraph
+
+            Dim getRadius = Function(node As Node) As Single
+                                Dim s$ = node(names.REFLECTION_ID_MAPPING_DEGREE)
+
+                                If s.StringEmpty Then
+                                    Return defaultRadius
+                                Else
+                                    Return Val(s)
+                                End If
+                            End Function
+
             If nodeColor Is Nothing Then
                 Dim br As New SolidBrush(defaultBrush.TranslateColor)
                 nodeColor = Function(n) br
             End If
+
 
             Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
  _
@@ -138,9 +151,10 @@ Namespace FileStream
                 Let id = n.ID
                 Let pos As AbstractVector = New FDGVector2(Val(n("x")), Val(n("y")))
                 Let c As Brush = nodeColor(n)
+                Let r As Single = getRadius(node:=n)
                 Let data As NodeData = New NodeData With {
                     .Color = c,
-                    .radius = 20,
+                    .radius = r,
                     .Properties = New Dictionary(Of String, String) From {
                         {names.REFLECTION_ID_MAPPING_NODETYPE, n.NodeType}
                     },

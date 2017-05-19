@@ -131,7 +131,7 @@ Namespace Language
         End Function
 
         ''' <summary>
-        ''' >
+        ''' a > b
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="a"></param>
