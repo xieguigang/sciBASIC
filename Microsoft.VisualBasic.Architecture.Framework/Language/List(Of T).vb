@@ -350,9 +350,15 @@ Namespace Language
         '    Return list
         'End Operator
 
-        Public Shared Operator -(list As List(Of T), vals As IEnumerable(Of T)) As List(Of T)
-            If Not vals Is Nothing Then
-                For Each x As T In vals
+        ''' <summary>
+        ''' 批量的从目标列表之中移除<paramref name="removes"/>集合之中的对象
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="removes"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(list As List(Of T), removes As IEnumerable(Of T)) As List(Of T)
+            If Not removes Is Nothing Then
+                For Each x As T In removes
                     Call list.Remove(x)
                 Next
             End If
