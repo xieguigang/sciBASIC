@@ -18,7 +18,7 @@ Namespace CommandLine.InteropService
         ''' <param name="prefix$"></param>
         ''' <returns></returns>
         Public Function CLIUsage(api As MethodInfo, Optional prefix$ = "/") As String
-            ' Dim isGeneric  = (not api .GetGenericArguments .IsNullOrEmpty) Or die("")
+            Dim isGeneric = (Not api.GetGenericArguments.IsNullOrEmpty) Or die($"Function abstract tool not working on a generic method: {api.DeclaringType.FullName}::{api.Name}!")
             Dim name$ = prefix & api.Name
             Dim args As New List(Of ParameterInfo)(api.GetParameters)
             Dim optionalArguments = args.Where(Function(param) param.IsOptional).ToArray
