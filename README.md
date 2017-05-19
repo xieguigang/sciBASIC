@@ -14,6 +14,18 @@
 + ![Microsoft VisualBasic logo](./logo.jpg)
 + ![](./etc/README/nodes.gif)
 
+## Scientific Computing runtime for VisualBasic.NET
+
+``sciBASIC#``(read as scientific visualbasic or just ``sciBASIC sharp``) is a Microsoft VisualBasic language feature runtime for your data science application which is running in the CLI environment on Windows/Linux/macOS **Desktop/Server** platform or **supercomputer** platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences programming in VisualBasic language, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
+
+> Abount VisualBasic code style guidelines:
+> + https://github.com/xieguigang/sciBASIC/tree/master/docs/vb_codestyle
+
+> Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
+> + https://github.com/xieguigang/sciBASIC/tree/master/docs/guides
+
+<hr/>
+
 ### Runtime Installation
 
 + Compile &amp; Application Development on this runtime required the latest VisualStudio 2017.
@@ -52,18 +64,6 @@ PM> Install-Package sciBASIC -Pre
 + **[/vb_codestyle](./docs/vb_codestyle/)** : sciBASIC# Coding style standard document
 
 ---------------------------------------------------------------------------------------------------------------
-
-### Scientific Computing Tools for VisualBasic.NET
-
-A visualbasic language feature runtime library for data science CLI architecture applications which is running on Windows/Linux/macOS Desktop/server platform or supercomputer platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences programming in VisualBasic language, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
-
-> Abount VisualBasic code style guidelines:
-> + https://github.com/xieguigang/sciBASIC/tree/master/docs/vb_codestyle
-
-> Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
-> + https://github.com/xieguigang/sciBASIC/tree/master/docs/guides
-
-<hr/>
 
 ## Microsoft VisualBasic Trinity Natural Language Processor
 
