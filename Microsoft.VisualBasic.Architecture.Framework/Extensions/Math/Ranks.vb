@@ -33,6 +33,7 @@ Namespace Mathematical
     Public Module Ranks
 
         Public Class Ranking(Of T)
+
             Public Property Evaluate As Func(Of T, Double)
             ''' <summary>
             ''' The sort direction
@@ -52,9 +53,15 @@ Namespace Mathematical
                 Dim weights As Double() = _Weight.CopyVector(LQuery.Length)
 
                 If Max Then   ' 由于后面需要进行加权计算，所以在这里是反过来求最大的
-                    result = (From x In LQuery Select x Order By x.v Ascending).Select(Function(x) x.x).SeqIterator(weights).ToArray
+                    result = (From x In LQuery Select x Order By x.v Ascending) _
+                        .Select(Function(x) x.x) _
+                        .SeqIterator(weights) _
+                        .ToArray
                 Else
-                    result = (From x In LQuery Select x Order By x.v Descending).Select(Function(x) x.x).SeqIterator(weights).ToArray
+                    result = (From x In LQuery Select x Order By x.v Descending) _
+                        .Select(Function(x) x.x) _
+                        .SeqIterator(weights) _
+                        .ToArray
                 End If
 
                 Return result
