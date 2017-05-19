@@ -31,7 +31,7 @@ Namespace CommandLine.InteropService
                 .JoinBy(" ")
             Dim optionals = optionalArguments _
                 .Select(Function(param)
-                            If param.ParameterType = GetType(Boolean) Then
+                            If param.ParameterType Is GetType(Boolean) Then
                                 Return $"{prefix}{param.Name}"
                             Else
                                 Dim default$ = $"<default={Scripting.CStrSafe(param.DefaultValue)}>"
