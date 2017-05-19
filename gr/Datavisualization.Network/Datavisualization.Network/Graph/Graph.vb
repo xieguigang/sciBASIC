@@ -64,8 +64,6 @@
 '
 '
 
-Imports System.Linq
-Imports System.Text
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Language
@@ -73,6 +71,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Graph
 
+    ''' <summary>
+    ''' The network graph object model, corresponding network csv table data model is <see cref="FileStream.Network"/> 
+    ''' </summary>
     Public Class NetworkGraph : Inherits ClassObject
         Implements IGraph
 

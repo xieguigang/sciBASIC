@@ -84,10 +84,10 @@ Namespace NeuralNetwork.Models
         <Extension>
         Private Function __synapse(synapse As Synapse, type As String, uidHash As Dictionary(Of Neuron, Integer)) As FileStream.NetworkEdge
             Return New FileStream.NetworkEdge With {
-                .Confidence = synapse.Weight,
+                .value = synapse.Weight,
                 .FromNode = CStr(uidHash(synapse.InputNeuron)),
                 .ToNode = CStr(uidHash(synapse.OutputNeuron)),
-                .InteractionType = type
+                .Interaction = type
             }
         End Function
     End Module

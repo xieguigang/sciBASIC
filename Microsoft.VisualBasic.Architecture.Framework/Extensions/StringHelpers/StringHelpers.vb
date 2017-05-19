@@ -48,6 +48,24 @@ Imports r = System.Text.RegularExpressions.Regex
 Public Module StringHelpers
 
     ''' <summary>
+    ''' https://github.com/darkskyapp/string-hash
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function StringHash(s$) As Long
+        Dim hash& = 5381
+        Dim chars%() = s.Select(AddressOf Convert.ToInt32).ToArray
+
+        For i As Integer = s.Length - 1 To 0 Step -1
+            hash = (hash * 33) Xor chars(i)
+        Next
+
+        hash = hash >> 0
+
+        Return hash
+    End Function
+
+    ''' <summary>
     ''' 常用于gdi+绘图操作，和<see cref="Graphics.MeasureString"/>共同使用
     ''' </summary>
     ''' <param name="source"></param>

@@ -45,6 +45,11 @@ Namespace LinearAlgebra
             Return New Vector(v.Takes(indices.ToArray))
         End Function
 
+        ''' <summary>
+        ''' 返回目标长度的[0-1]之间的随机数向量
+        ''' </summary>
+        ''' <param name="size%"></param>
+        ''' <returns></returns>
         Public Function rand(size%) As Vector
             Dim rnd As New Random
             Dim list As New List(Of Double)
@@ -56,18 +61,21 @@ Namespace LinearAlgebra
             Return New Vector(list)
         End Function
 
+        ''' <summary>
+        ''' 获取一个指定长度的由目标区间范围内的随机数所构成的向量
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <param name="size%">函数所返回的向量的长度</param>
+        ''' <returns></returns>
         <Extension>
         Public Function rand(range As DoubleRange, size%) As Vector
-            Dim rnd As New Random
-            Dim list As New List(Of Double)
-            Dim min# = range.Min
-            Dim len% = range.Length
+            Dim v#() = rand(size).RangeTransform([to]:=range)
+            Return New Vector(v)
+        End Function
 
-            For i As Integer = 0 To size - 1
-                list += (rnd.NextDouble * len) + min
-            Next
-
-            Return New Vector(list)
+        <Extension>
+        Public Function AsVector(range As DoubleRange, Optional counts% = 1000) As Vector
+            Return New Vector(range.Enumerate(counts))
         End Function
     End Module
 End Namespace
