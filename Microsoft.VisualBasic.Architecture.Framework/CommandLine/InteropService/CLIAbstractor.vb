@@ -49,8 +49,17 @@ Namespace CommandLine.InteropService
         End Function
 
         <Extension> Public Function CLICaller(api As MethodInfo, args As CommandLine) As Integer
-            Dim paramValues As New List(Of Object)
-            Dim names As Dictionary(Of String, String) = args _
+            Dim paramValues As List(Of Object)
+            Dim names As Dictionary(Of String, String)
+            Dim parameters = api.GetParameters
+
+            If parameters.Length = 1 AndAlso parameters(Scan0).ParameterType Is GetType(CommandLine) Then
+                Return DirectCast(api.Invoke(Nothing, {args}), Integer)
+            Else
+                paramValues = New List(Of Object)
+            End If
+
+            names = args _
                 .Keys _
                 .ToDictionary(Function(k)
                                   Return k.Trim("/"c, "-"c).Trim.ToLower
@@ -63,7 +72,7 @@ Namespace CommandLine.InteropService
                     paramValues += names.ContainsKey(name)
                 Else
                     paramValues += Scripting.CTypeDynamic(
-                        args(names(name)), 
+                        args(names(name)),
                         param.ParameterType)
                 End If
             Next
