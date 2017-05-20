@@ -45,6 +45,8 @@ Namespace Scripting.Expressions
         ''' 1. ``a = b``
         ''' 2. ``a > b``
         ''' 3. ``a &lt; b``
+        ''' 4. ``a => b``
+        ''' 5. ``a &lt;= b``
         ''' 4. ``a IN b``
         ''' </param>
         ''' <returns></returns>
@@ -63,22 +65,32 @@ Namespace Scripting.Expressions
             With expr
                 If .Description = "=" Then
                     compare = Function(o) o.Equals(value)
-                ElseIf .Description = ">" Then
-                    Dim icompareValue = DirectCast(value, IComparable)
-                    compare = Function(o)
-                                  Return DirectCast(o, IComparable).GreaterThan(icompareValue)
-                              End Function
-                ElseIf .Description = "<" Then
-                    Dim icompareValue = DirectCast(value, IComparable)
-                    compare = Function(o)
-                                  Return DirectCast(o, IComparable).LessThan(icompareValue)
-                              End Function
                 ElseIf .Description.TextEquals("IN") Then
                     ' 字符串查找
                     Dim s$ = CStrSafe(value)
                     compare = Function(o) InStr(s, CStrSafe(o)) > 0
                 Else
-                    Throw New NotSupportedException(expression)
+                    Dim icompareValue = DirectCast(value, IComparable)
+
+                    If .Description = ">" Then
+                        compare = Function(o)
+                                      Return DirectCast(o, IComparable).GreaterThan(icompareValue)
+                                  End Function
+                    ElseIf .Description = "<" Then
+                        compare = Function(o)
+                                      Return DirectCast(o, IComparable).LessThan(icompareValue)
+                                  End Function
+                    ElseIf .Description = "=>" Then
+                        compare = Function(o)
+                                      Return DirectCast(o, IComparable).GreaterThanOrEquals(icompareValue)
+                                  End Function
+                    ElseIf .Description = "<=" Then
+                        compare = Function(o)
+                                      Return DirectCast(o, IComparable).LessThanOrEquals(icompareValue)
+                                  End Function
+                    Else
+                        Throw New NotSupportedException(expression)
+                    End If
                 End If
             End With
 
@@ -112,8 +124,8 @@ Namespace Scripting.Expressions
             End If
 
             Return New NamedValue(Of String) With {
-                .Name = l(Scan0), 
-                .Description = l(1), 
+                .Name = l(Scan0),
+                .Description = l(1),
                 .Value = l.Last
             }
         End Function
