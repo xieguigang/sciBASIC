@@ -36,11 +36,17 @@ Namespace Styling
     ''' </summary>
     Public Structure StyleMapper
 
-        Dim nodeSize As Func(Of Node, Double)
-        Dim nodePaints As Func(Of Node, Color)
-        Dim nodeLabelSize As Func(Of Node, Double)
-        Dim nodeLabelPaints As Func(Of Node, Color)
-        Dim nodeLabels As Func(Of Node, String)
+        Dim nodeStyles As StyleCreator()
+        Dim edgeStyles As StyleCreator()
+        Dim labelStyles As StyleCreator()
 
+    End Structure
+
+    Public Structure StyleCreator
+        Dim stroke As Pen
+        Dim font As Font
+        Dim fill As Brush
+        Dim size As Func(Of Object, Single)
+        Dim label As Func(Of Object, String)
     End Structure
 End Namespace

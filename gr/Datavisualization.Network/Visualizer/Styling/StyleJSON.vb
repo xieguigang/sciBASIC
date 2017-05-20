@@ -2,6 +2,9 @@
 
 Namespace Styling
 
+    ''' <summary>
+    ''' 字典之中的键名都是一个条件表达式
+    ''' </summary>
     Public Class StyleJSON
 
         Public Property nodes As Dictionary(Of String, Style)
@@ -10,6 +13,9 @@ Namespace Styling
 
     End Class
 
+    ''' <summary>
+    ''' 网络模型对象的绘图样式
+    ''' </summary>
     Public Structure Style
 
         Public Property stroke As String
