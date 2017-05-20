@@ -28,11 +28,20 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.PageRank
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Module Module1
+Module Test
 
     Sub Main()
+        Call TestStyling()
+        Call TestPageRank()
+
+        Pause()
+    End Sub
+
+    Sub TestPageRank()
         Dim g As New Network
 
         Call g.AddEdges("B", {"C"})
@@ -52,7 +61,28 @@ Module Module1
         Dim result = matrix.TranslateVector(pr.ComputePageRank)
 
         Call result.GetJson(True).EchoLine
+    End Sub
 
-        Pause()
+    Sub TestStyling()
+        Dim json As New StyleJSON With {
+            .nodes = New Dictionary(Of String, Style) From {
+            {
+                "*", New Style With {
+                    .fill = "black",
+                    .fontCSS = CSSFont.Win10Normal,
+                    .label = "label",
+                    .size = "size",
+                    .stroke = Stroke.AxisStroke
+                }
+            },
+            {
+                "type = example", New Style With {
+                    .fill = "red",
+                    .size = "scale(size, 5, 30)"
+                }
+            }
+            }
+        }
+        Dim styles As StyleMapper = StyleMapper.FromJSON(json)
     End Sub
 End Module
