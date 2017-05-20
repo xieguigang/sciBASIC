@@ -148,27 +148,25 @@ Namespace Styling
                     .Split(","c)
                 Dim range As DoubleRange = $"{t(1)},{t(2)}"
                 Dim property$ = t(Scan0)
-                Dim getValue = Function(node As Node) Val(node.Data([property]))
+                Dim selector = expression.SelectNodeValue
+                Dim getValue = Function(node As Node) Val(selector(node))
                 Return Function(nodes)
                            Return nodes.ValDegreeAsSize(getValue, range)
                        End Function
             Else
                 ' 单词
+                Dim selector = expression.SelectNodeValue
                 Return Function(nodes)
                            Return nodes _
                                .Select(Function(n)
                                            Return New Map(Of Node, Double) With {
                                                .Key = n,
-                                               .Maps = Val(n.Data(expression))
+                                               .Maps = Val(selector(n))
                                            }
                                        End Function) _
                                .ToArray
                        End Function
             End If
-        End Function
-
-        Public Function PropertySelector(name$) As Func(Of GraphData, String)
-            Return Function(n) n(name)
         End Function
     End Module
 End Namespace
