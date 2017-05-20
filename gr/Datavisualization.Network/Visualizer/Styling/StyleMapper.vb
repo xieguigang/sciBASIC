@@ -28,6 +28,9 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Styling
 
@@ -38,11 +41,51 @@ Namespace Styling
 
         Dim nodeStyles As StyleCreator()
         Dim edgeStyles As StyleCreator()
+
+        ''' <summary>
+        ''' node label styling
+        ''' </summary>
         Dim labelStyles As StyleCreator()
 
+        Public Shared Function FromJSON(json$) As StyleMapper
+            If json.FileExists Then
+                json = json.ReadAllText
+            End If
+
+            Dim styleJSON As StyleJSON = json.LoadObject(Of StyleJSON)
+            Return FromJSON(styleJSON)
+        End Function
+
+        Public Shared Function FromJSON(json As StyleJSON) As StyleMapper
+            Return New StyleMapper With {
+                .edgeStyles = StyleMapper.__createSelector(json.edge),
+                .labelStyles = StyleMapper.__createSelector(json.labels),
+                .nodeStyles = StyleMapper.__createSelector(json.nodes)
+            }
+        End Function
+
+        Private Shared Function __createSelector(styles As Dictionary(Of String, Style)) As StyleCreator()
+            Return styles _
+                .Select(Function(x) __createSelector(x.Key, x.Value)) _
+                .ToArray
+        End Function
+
+        Private Shared Function __createSelector(selector$, style As Style) As StyleCreator
+            Dim mapper As New StyleCreator With {
+                .selector = selector,
+                .fill = style.fill.GetBrush,
+                .font = CSSFont.TryParse(style.fontCSS),
+                .stroke = Stroke.TryParse(style.stroke)
+            }
+
+
+
+            Return mapper 
+        End Function
     End Structure
 
     Public Structure StyleCreator
+        Dim selector$
         Dim stroke As Pen
         Dim font As Font
         Dim fill As Brush

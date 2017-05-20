@@ -9,6 +9,10 @@ Namespace Styling
 
         Public Property nodes As Dictionary(Of String, Style)
         Public Property edge As Dictionary(Of String, Style)
+        ''' <summary>
+        ''' 这个指的是node label
+        ''' </summary>
+        ''' <returns></returns>
         Public Property labels As Dictionary(Of String, Style)
 
     End Class
