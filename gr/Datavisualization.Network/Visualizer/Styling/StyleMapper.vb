@@ -27,22 +27,12 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Reflection
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Quantile
-Imports Microsoft.VisualBasic.Scripting
 
 Namespace Styling
 
     ''' <summary>
-    ''' 
+    ''' Network object visualize styling object model
     ''' </summary>
     Public Structure StyleMapper
 

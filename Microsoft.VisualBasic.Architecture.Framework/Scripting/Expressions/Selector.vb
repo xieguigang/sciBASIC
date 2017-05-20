@@ -55,7 +55,7 @@ Namespace Scripting.Expressions
         <Extension>
         Public Function [Select](Of T)(source As IEnumerable(Of T), expression$) As IEnumerable(Of T)
             Dim type As Type = GetType(T)
-            Dim expr As NamedValue(Of String) = expression.parseExpression
+            Dim expr As NamedValue(Of String) = expression.ParseExpression
             Dim [property] As PropertyInfo =
                 type _
                 .GetProperties(BindingFlags.Public Or BindingFlags.Instance) _
@@ -112,7 +112,7 @@ Namespace Scripting.Expressions
         End Function
 
         <Extension>
-        Private Function parseExpression(expression$) As NamedValue(Of String)
+        Public Function ParseExpression(expression$) As NamedValue(Of String)
             Dim tmp As New List(Of Char)
             Dim l As New List(Of String)
             Dim source As New Pointer(Of Char)(expression)
