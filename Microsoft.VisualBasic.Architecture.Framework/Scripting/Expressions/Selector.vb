@@ -48,6 +48,8 @@ Namespace Scripting.Expressions
         ''' 4. ``a => b``
         ''' 5. ``a &lt;= b``
         ''' 4. ``a IN b``
+        ''' 
+        ''' ``$``符号表示对象自身
         ''' </param>
         ''' <returns></returns>
         <Extension>
@@ -59,34 +61,46 @@ Namespace Scripting.Expressions
                 .GetProperties(BindingFlags.Public Or BindingFlags.Instance) _
                 .Where(Function(prop) prop.Name.TextEquals(expr.Name)) _
                 .FirstOrDefault
-            Dim value As Object = CTypeDynamic(expr.Value, [property].PropertyType)
-            Dim compare As Func(Of Object, Boolean)
+            Dim value As Object
+            Dim compare As Func(Of T, Boolean)
 
             With expr
+                Dim getValue As Func(Of T, Object)
+
+                If .Name = "$" Then
+                    getValue = Function(x) x
+                    value = .Value.CTypeDynamic(type)
+                Else
+                    getValue = Function(x)
+                                   Return [property].GetValue(x)
+                               End Function
+                    value = .Value.CTypeDynamic([property].PropertyType)
+                End If
+
                 If .Description = "=" Then
-                    compare = Function(o) o.Equals(value)
+                    compare = Function(o) getValue(o).Equals(value)
                 ElseIf .Description.TextEquals("IN") Then
                     ' 字符串查找
                     Dim s$ = CStrSafe(value)
-                    compare = Function(o) InStr(s, CStrSafe(o)) > 0
+                    compare = Function(o) InStr(s, CStrSafe(getValue(o))) > 0
                 Else
                     Dim icompareValue = DirectCast(value, IComparable)
 
                     If .Description = ">" Then
                         compare = Function(o)
-                                      Return DirectCast(o, IComparable).GreaterThan(icompareValue)
+                                      Return DirectCast(getValue(o), IComparable).GreaterThan(icompareValue)
                                   End Function
                     ElseIf .Description = "<" Then
                         compare = Function(o)
-                                      Return DirectCast(o, IComparable).LessThan(icompareValue)
+                                      Return DirectCast(getValue(o), IComparable).LessThan(icompareValue)
                                   End Function
                     ElseIf .Description = "=>" Then
                         compare = Function(o)
-                                      Return DirectCast(o, IComparable).GreaterThanOrEquals(icompareValue)
+                                      Return DirectCast(getValue(o), IComparable).GreaterThanOrEquals(icompareValue)
                                   End Function
                     ElseIf .Description = "<=" Then
                         compare = Function(o)
-                                      Return DirectCast(o, IComparable).LessThanOrEquals(icompareValue)
+                                      Return DirectCast(getValue(o), IComparable).LessThanOrEquals(icompareValue)
                                   End Function
                     Else
                         Throw New NotSupportedException(expression)
