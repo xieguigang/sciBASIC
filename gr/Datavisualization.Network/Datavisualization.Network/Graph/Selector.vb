@@ -13,6 +13,11 @@ Namespace Graph
             Property Data As T
         End Interface
 
+        ''' <summary>
+        ''' Create a node value selector from a property name
+        ''' </summary>
+        ''' <param name="property$"></param>
+        ''' <returns></returns>
         <Extension> Public Function SelectNodeValue(property$) As Func(Of Node, Object)
             Return [property].GenericSelector(Of NodeData, Node)
         End Function

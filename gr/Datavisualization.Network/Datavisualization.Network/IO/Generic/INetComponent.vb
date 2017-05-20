@@ -31,6 +31,9 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
 Namespace FileStream.Generic
 
+    ''' <summary>
+    ''' The network graph object contains the dynamics property for contains the extra information of the object.
+    ''' </summary>
     Public MustInherit Class INetComponent : Inherits DynamicPropertyBase(Of String)
 
         ''' <summary>

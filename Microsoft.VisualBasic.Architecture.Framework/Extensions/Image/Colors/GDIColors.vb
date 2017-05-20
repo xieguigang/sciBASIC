@@ -41,6 +41,21 @@ Namespace Imaging
     Public Module GDIColors
 
         ''' <summary>
+        ''' ``<paramref name="x"/> -> <paramref name="y"/>``：返回两个颜色之间的中间的颜色，这个函数是某些插值操作所需要的
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Middle(x As Color, y As Color) As Color
+            Dim r% = (y.R - x.R) / 2 + x.R
+            Dim g% = (y.G - x.G) / 2 + x.G
+            Dim b% = (y.B - x.B) / 2 + x.B
+            Dim a% = (y.A - x.A) / 2 + x.A
+            Dim c As Color = Color.FromArgb(a, r, g, b)
+            Return c
+        End Function
+
+        ''' <summary>
         ''' 调整所输入的这一组颜色的alpha值
         ''' </summary>
         ''' <param name="colors"></param>
@@ -174,7 +189,8 @@ Namespace Imaging
         ''' <summary>
         ''' Regex expression for parsing the rgb(a,r,g,b) expression of the color.(解析颜色表达式里面的RGB的正则表达式)
         ''' </summary>
-        Const RGB_EXPRESSION As String = "\d+,\d+,\d+(,\d+)?"
+        Public Const rgbExprValues$ = "\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*\d+)?"
+        Public Const rgbExpr$ = "rgb\(" & rgbExprValues & "\)"
 
         ''' <summary>
         ''' <see cref="Color"/>.Name, rgb(a,r,g,b)
@@ -190,7 +206,7 @@ Namespace Imaging
                 Return Color.Transparent
             End If
 
-            Dim s As String = Regex.Match(str, RGB_EXPRESSION).Value
+            Dim s As String = Regex.Match(str, rgbExprValues).Value
 
             If String.IsNullOrEmpty(s) Then ' Color from name/known color
                 Dim key As String = str.ToLower
@@ -256,7 +272,7 @@ Namespace Imaging
 
         <Extension>
         Public Function IsColorExpression(expression$) As Boolean
-            If expression.MatchPattern($"rgb\({RGB_EXPRESSION}\)") Then
+            If expression.MatchPattern(rgbExpr, RegexICSng) Then
                 Return True
             ElseIf __allDotNETPrefixColors.ContainsKey(expression.ToLower) Then
                 Return True

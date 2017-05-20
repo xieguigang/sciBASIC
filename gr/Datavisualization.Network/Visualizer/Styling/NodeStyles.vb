@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Styling
 
@@ -134,7 +135,22 @@ Namespace Styling
                                .ToArray
                        End Function
             ElseIf expression.MatchPattern("map\(.+\)", RegexICSng) Then
-
+                ' 先match rgb表达式，再执行替换之后，再正常的解析
+                Dim rgbs = r.Matches(expression, rgbExpr, RegexICSng) _
+                    .ToArray _
+                    .Distinct _
+                    .ToDictionary(Function(key) key.MD5)
+                For Each hashValue In rgbs
+                    With hashValue
+                        expression = expression.Replace(.Value, .Key)
+                    End With
+                Next
+                Dim t = expression.MapExpressionParser
+                Dim startColor = If(rgbs.ContainsKey(t.min), rgbs(t.min), t.min).TranslateColor
+                Dim endColor = If(rgbs.ContainsKey(t.max), rgbs(t.max), t.max).TranslateColor
+                Dim selector = t.var.SelectNodeValue
+                Dim middle = GDIColors.Middle(startColor, endColor)
+                ' 进行颜色插值
             Else
                 ' 单词
                 Dim selector = expression.SelectNodeValue
@@ -149,6 +165,20 @@ Namespace Styling
                                .ToArray
                        End Function
             End If
+        End Function
+
+        ''' <summary>
+        ''' 表达式之中的值不可以有逗号或者括号
+        ''' </summary>
+        ''' <param name="expression$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function MapExpressionParser(expression$) As (var$, min$, max$)
+            Dim t$() = expression _
+                .GetStackValue("(", ")") _
+                .Trim("("c, ")"c) _
+                .Split(","c)
+            Return (t(0), t(1), t(2))
         End Function
 
         ''' <summary>
@@ -174,13 +204,9 @@ Namespace Styling
                                .ToArray
                        End Function
             ElseIf expression.MatchPattern("map\(.+\)", RegexICSng) Then
-                Dim t$() = expression _
-                    .GetStackValue("(", ")") _
-                    .Trim("("c, ")"c) _
-                    .Split(","c)
-                Dim range As DoubleRange = $"{t(1)},{t(2)}"
-                Dim property$ = t(Scan0)
-                Dim selector = expression.SelectNodeValue
+                Dim t = expression.MapExpressionParser
+                Dim range As DoubleRange = $"{t.min},{t.max}"
+                Dim selector = t.var.SelectNodeValue
                 Dim getValue = Function(node As Node) Val(selector(node))
                 Return Function(nodes)
                            Return nodes.ValDegreeAsSize(getValue, range)

@@ -66,9 +66,8 @@
 
 Imports System.Drawing
 Imports System.Web.Script.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -144,12 +143,16 @@ Namespace Graph
         End Function
     End Class
 
-    Public Class GraphData : Inherits DynamicPropertyBase(Of String)
+    Public Class GraphData : Inherits INetComponent
 
         Public Sub New()
             label = ""
         End Sub
 
+        ''' <summary>
+        ''' The graph object display label
+        ''' </summary>
+        ''' <returns></returns>
         Public Property label() As String
 
         Public Overrides Function ToString() As String
