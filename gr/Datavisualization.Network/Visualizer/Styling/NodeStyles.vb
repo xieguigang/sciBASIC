@@ -122,7 +122,32 @@ Namespace Styling
 
         Public Function ColorExpression(expression$) As Func(Of Node(), Map(Of Node, Color)())
             If expression.IsColorExpression Then
+                Dim color As Color = expression.TranslateColor
+                Return Function(nodes)
+                           Return nodes _
+                               .Select(Function(n)
+                                           Return New Map(Of Node, Color) With {
+                                               .Key = n,
+                                               .Maps = color
+                                           }
+                                       End Function) _
+                               .ToArray
+                       End Function
+            ElseIf expression.MatchPattern("map\(.+\)", RegexICSng) Then
 
+            Else
+                ' 单词
+                Dim selector = expression.SelectNodeValue
+                Return Function(nodes)
+                           Return nodes _
+                               .Select(Function(n)
+                                           Return New Map(Of Node, Color) With {
+                                               .Key = n,
+                                               .Maps = CStrSafe(selector(n)).TranslateColor
+                                           }
+                                       End Function) _
+                               .ToArray
+                       End Function
             End If
         End Function
 
