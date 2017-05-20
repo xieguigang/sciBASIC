@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
@@ -117,6 +118,12 @@ Namespace Styling
                 .ToArray
 
             Return out
+        End Function
+
+        Public Function ColorExpression(expression$) As Func(Of Node(), Map(Of Node, Color)())
+            If expression.IsColorExpression Then
+
+            End If
         End Function
 
         ''' <summary>

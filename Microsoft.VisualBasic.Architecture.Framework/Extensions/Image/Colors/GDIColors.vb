@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::98913cea4beb95bcad7533df426de50f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\GDIColors.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -99,7 +99,9 @@ Namespace Imaging
         ''' <returns></returns>
         <Extension>
         Public Function RGBExpression(c As Color) As String
-            Return $"rgb({c.R},{c.G},{c.B})"
+            With c
+                Return $"rgb({ .R},{ .G},{ .B})"
+            End With
         End Function
 
         ''' <summary>
@@ -109,7 +111,9 @@ Namespace Imaging
         ''' <returns></returns>
         <Extension>
         Public Function ARGBExpression(c As Color) As String
-            Return $"rgb({c.A},{c.R},{c.G},{c.B})"
+            With c
+                Return $"rgb({ .A},{ .R},{ .G},{ .B})"
+            End With
         End Function
 
 #If NET_40 = 0 Then
@@ -248,6 +252,21 @@ Namespace Imaging
             End If
 
             Return exp.ToColor
+        End Function
+
+        <Extension>
+        Public Function IsColorExpression(expression$) As Boolean
+            If expression.MatchPattern($"rgb\({RGB_EXPRESSION}\)") Then
+                Return True
+            ElseIf __allDotNETPrefixColors.ContainsKey(expression.ToLower) Then
+                Return True
+            ElseIf expression.MatchPattern("\d+") Then
+                Return True
+            ElseIf expression.MatchPattern("#[a-z0-9]+", RegexICSng) Then
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
         ''' <summary>
