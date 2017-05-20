@@ -69,8 +69,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Edge : Inherits ClassObject
-        Implements IInteraction
+    Public Class Edge : Implements IInteraction
 
         Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
             ID = iId

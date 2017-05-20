@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting
 Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
 
 Namespace Styling
@@ -118,8 +119,56 @@ Namespace Styling
             Return out
         End Function
 
-        Public Function SizeExpression(expression$) As Func(Of Object, Single)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="expression$">
+        ''' + 单词
+        ''' + 数字
+        ''' + map表达式：``map(单词, min, max)``
+        ''' </param>
+        ''' <returns></returns>
+        Public Function SizeExpression(expression$) As Func(Of Node(), Map(Of Node, Double)())
+            If expression.MatchPattern(Casting.RegexpDouble) Then
+                Dim r# = Val(expression)
+                Return Function(nodes)
+                           Return nodes _
+                               .Select(Function(n)
+                                           Return New Map(Of Node, Double) With {
+                                               .Key = n,
+                                               .Maps = r
+                                           }
+                                       End Function) _
+                               .ToArray
+                       End Function
+            ElseIf expression.MatchPattern("map\(.+\)", RegexICSng) Then
+                Dim t$() = expression _
+                    .GetStackValue("(", ")") _
+                    .Trim("("c, ")"c) _
+                    .Split(","c)
+                Dim range As DoubleRange = $"{t(1)},{t(2)}"
+                Dim property$ = t(Scan0)
+                Dim getValue = Function(node As Node) Val(node.Data([property]))
+                Return Function(nodes)
+                           Return nodes.ValDegreeAsSize(getValue, range)
+                       End Function
+            Else
+                ' 单词
+                Return Function(nodes)
+                           Return nodes _
+                               .Select(Function(n)
+                                           Return New Map(Of Node, Double) With {
+                                               .Key = n,
+                                               .Maps = Val(n.Data(expression))
+                                           }
+                                       End Function) _
+                               .ToArray
+                       End Function
+            End If
+        End Function
 
+        Public Function PropertySelector(name$) As Func(Of GraphData, String)
+            Return Function(n) n(name)
         End Function
     End Module
 End Namespace

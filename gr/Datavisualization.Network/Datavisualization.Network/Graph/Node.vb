@@ -65,12 +65,10 @@
 '
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Node : Inherits ClassObject
-        Implements INamedValue
+    Public Class Node : Implements INamedValue
 
         ''' <summary>
         ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置

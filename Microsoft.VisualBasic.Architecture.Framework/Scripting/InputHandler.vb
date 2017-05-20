@@ -251,7 +251,7 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' The parameter <paramref name="obj"/> should implements a <see cref="System.Collections.IEnumerable"/> interface on the type. and then DirectCast object to target type.
+        ''' The parameter <paramref name="obj"/> should implements a <see cref="IEnumerable"/> interface on the type. and then DirectCast object to target type.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
