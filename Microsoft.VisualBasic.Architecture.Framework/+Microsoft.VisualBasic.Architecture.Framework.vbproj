@@ -605,7 +605,7 @@
     <Compile Include="Extensions\CodeDOM\CodeDOM.vb" />
     <Compile Include="Extensions\CodeDOM\CodeDOMExpressions.vb" />
     <Compile Include="Extensions\CodeDOM\VBC.vb" />
-    <Compile Include="Extensions\Controls.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\Controls.vb" />
     <Compile Include="Extensions\Collection\ListExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
     <Compile Include="Extensions\Collection\KeyValuePair.vb" />
