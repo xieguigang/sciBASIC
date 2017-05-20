@@ -117,5 +117,9 @@ Namespace Styling
 
             Return out
         End Function
+
+        Public Function SizeExpression(expression$) As Func(Of Object, Single)
+
+        End Function
     End Module
 End Namespace

@@ -65,20 +65,25 @@ Module Test
 
     Sub TestStyling()
         Dim json As New StyleJSON With {
-            .nodes = New Dictionary(Of String, Style) From {
+            .nodes = New Dictionary(Of String, NodeStyle) From {
             {
-                "*", New Style With {
+                "*", New NodeStyle With {
                     .fill = "black",
-                    .fontCSS = CSSFont.Win10Normal,
-                    .label = "label",
                     .size = "size",
                     .stroke = Stroke.AxisStroke
                 }
             },
             {
-                "type = example", New Style With {
+                "type = example", New NodeStyle With {
                     .fill = "red",
                     .size = "scale(size, 5, 30)"
+                }
+            }
+            },
+            .labels = New Dictionary(Of String, LabelStyle) From {
+            {
+                "degree > 2", New LabelStyle With {
+                    .fill = "brown"
                 }
             }
             }

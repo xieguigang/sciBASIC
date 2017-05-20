@@ -57,30 +57,29 @@ Namespace Styling
         End Function
 
         Public Shared Function FromJSON(json As StyleJSON) As StyleMapper
-            Return New StyleMapper With {
-                .edgeStyles = StyleMapper.__createSelector(json.edge),
-                .labelStyles = StyleMapper.__createSelector(json.labels),
+            Return New StyleMapper With {               
                 .nodeStyles = StyleMapper.__createSelector(json.nodes)
             }
         End Function
 
-        Private Shared Function __createSelector(styles As Dictionary(Of String, Style)) As StyleCreator()
+        Private Shared Function __createSelector(styles As Dictionary(Of String, NodeStyle)) As StyleCreator()
             Return styles _
                 .Select(Function(x) __createSelector(x.Key, x.Value)) _
                 .ToArray
         End Function
 
-        Private Shared Function __createSelector(selector$, style As Style) As StyleCreator
+        Private Shared Function __createSelector(selector$, style As NodeStyle) As StyleCreator
             Dim mapper As New StyleCreator With {
                 .selector = selector,
-                .fill = style.fill.GetBrush,
-                .font = CSSFont.TryParse(style.fontCSS),
+                .fill = style.fill.GetBrush,                
                 .stroke = Stroke.TryParse(style.stroke)
             }
 
+            With mapper
+                .size = Styling.NodeStyles.SizeExpression(style.size)
+            End With
 
-
-            Return mapper 
+            Return mapper
         End Function
     End Structure
 
