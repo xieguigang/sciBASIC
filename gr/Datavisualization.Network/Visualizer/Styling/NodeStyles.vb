@@ -136,7 +136,7 @@ Namespace Styling
                        End Function
             ElseIf expression.MatchPattern("map\(.+\)", RegexICSng) Then
                 ' 先match rgb表达式，再执行替换之后，再正常的解析
-                '
+                ' 网络之中的graph模型对象的颜色映射有三种类型：
                 ' map(property, Continuous, schemaName, 250)，连续的数值型的映射
                 ' map(property, Continuous, levels, startColor, endColor), 连续数值型的渐变映射
                 ' map(property, Discrete, color1, color2, color3, color4, ...)，分类型的颜色离散映射
@@ -150,13 +150,15 @@ Namespace Styling
                         expression = expression.Replace(.Value, .Key)
                     End With
                 Next
-                Dim t = expression.MapExpressionParser
+
+                Dim t = expression.MapExpressionParser ' 解析映射表达式字符串
 
                 If t.type.TextEquals("Continuous") Then
                     Dim colors As Color()
 
                     If (Not t.values(0).IsColorExpression) AndAlso t.values(1).MatchPattern(RegexpDouble) Then
                         ' map(property, Continuous, schemaName, 250)
+                        ' 使用colorbrewer生成颜色谱
                         colors = Designer.GetColors(t.values(Scan0), Val(t.values(1)))
                     Else
                         Dim colorValues$() = t _
@@ -165,13 +167,13 @@ Namespace Styling
                                         Return If(rgbs.ContainsKey(c), rgbs(c), c)
                                     End Function) _
                             .ToArray
-                        Dim min$ = colorValues(1), max$ = colorValues(2)
+                        Dim min$ = colorValues(1), max$ = colorValues(2)  ' 和graph对象的属性值等级相关的连续渐变映射
                         Dim levels% = Val(colorValues(0))
                         Dim startColor = min.TranslateColor
                         Dim endColor = max.TranslateColor
                         Dim middle = GDIColors.Middle(startColor, endColor)
 
-                        ' 进行颜色插值
+                        ' 进行颜色三次插值获取渐变结果
                         colors = {startColor, middle, endColor}.CubicSpline(levels)
                     End If
 
@@ -179,12 +181,12 @@ Namespace Styling
                     Dim selector = t.var.SelectNodeValue
                     Dim getValue = Function(node As Node) Val(selector(node))
                     Return Function(nodes)
-                               Dim index = nodes.ValDegreeAsSize(getValue, range)
+                               Dim index = nodes.ValDegreeAsSize(getValue, range) ' 在这里将属性值映射为等级的index，后面就可以直接引用颜色谱之中的结果了
                                Dim out = index _
                                    .Select(Function(map)
                                                Return New Map(Of Node, Color) With {
                                                    .Key = map.Key,
-                                                   .Maps = colors(map.Maps)
+                                                   .Maps = colors(map.Maps) ' 将等级映射为网络之中的节点或者边的颜色
                                                }
                                            End Function) _
                                    .ToArray
