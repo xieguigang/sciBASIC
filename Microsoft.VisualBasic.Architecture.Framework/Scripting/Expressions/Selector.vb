@@ -35,7 +35,16 @@ Namespace Scripting.Expressions
         End Function
 
         ''' <summary>
-        ''' Where selector
+        ''' The object value selector function pointer template
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="property$"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Delegate Function Selector(Of T)(property$, ByRef type As Type) As Func(Of T, Object)
+
+        ''' <summary>
+        ''' Where selector.(这个函数之中只有数字和字符串的比较)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
@@ -53,29 +62,34 @@ Namespace Scripting.Expressions
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function [Select](Of T)(source As IEnumerable(Of T), expression$) As IEnumerable(Of T)
+        Public Function [Select](Of T)(source As IEnumerable(Of T), expression$, Optional selector As Selector(Of T) = Nothing) As IEnumerable(Of T)
             Dim type As Type = GetType(T)
             Dim expr As NamedValue(Of String) = expression.ParseExpression
-            Dim [property] As PropertyInfo =
-                type _
-                .GetProperties(BindingFlags.Public Or BindingFlags.Instance) _
-                .Where(Function(prop) prop.Name.TextEquals(expr.Name)) _
-                .FirstOrDefault
             Dim value As Object
             Dim compare As Func(Of T, Boolean)
 
             With expr
                 Dim getValue As Func(Of T, Object)
 
-                If .Name = "$" Then
-                    getValue = Function(x) x
-                    value = .Value.CTypeDynamic(type)
+                If selector Is Nothing Then
+                    If .Name = "$" Then
+                        getValue = Function(x) x
+                    Else
+                        Dim [property] As PropertyInfo =
+                            type _
+                            .GetProperties(BindingFlags.Public Or BindingFlags.Instance) _
+                            .Where(Function(prop) prop.Name.TextEquals(expr.Name)) _
+                            .FirstOrDefault
+                        type = [property].PropertyType
+                        getValue = Function(x)
+                                       Return [property].GetValue(x)
+                                   End Function
+                    End If
                 Else
-                    getValue = Function(x)
-                                   Return [property].GetValue(x)
-                               End Function
-                    value = .Value.CTypeDynamic([property].PropertyType)
+                    getValue = selector(.Name, type)
                 End If
+
+                value = .Value.CTypeDynamic(type)
 
                 If .Description = "=" Then
                     compare = Function(o) getValue(o).Equals(value)
@@ -84,23 +98,23 @@ Namespace Scripting.Expressions
                     Dim s$ = CStrSafe(value)
                     compare = Function(o) InStr(s, CStrSafe(getValue(o))) > 0
                 Else
-                    Dim icompareValue = DirectCast(value, IComparable)
+                    Dim icompareValue = Val(value) ' DirectCast(value, IComparable)
 
                     If .Description = ">" Then
                         compare = Function(o)
-                                      Return DirectCast(getValue(o), IComparable).GreaterThan(icompareValue)
+                                      Return Val(getValue(o)) > (icompareValue)
                                   End Function
                     ElseIf .Description = "<" Then
                         compare = Function(o)
-                                      Return DirectCast(getValue(o), IComparable).LessThan(icompareValue)
+                                      Return Val(getValue(o)) < (icompareValue)
                                   End Function
                     ElseIf .Description = "=>" Then
                         compare = Function(o)
-                                      Return DirectCast(getValue(o), IComparable).GreaterThanOrEquals(icompareValue)
+                                      Return Val(getValue(o)) >= (icompareValue)
                                   End Function
                     ElseIf .Description = "<=" Then
                         compare = Function(o)
-                                      Return DirectCast(getValue(o), IComparable).LessThanOrEquals(icompareValue)
+                                      Return Val(getValue(o)) <= (icompareValue)
                                   End Function
                     Else
                         Throw New NotSupportedException(expression)

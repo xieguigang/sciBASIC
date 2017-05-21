@@ -29,8 +29,8 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Styling
@@ -72,14 +72,10 @@ Namespace Styling
         Private Shared Function __createSelector(selector$, style As NodeStyle) As StyleCreator
             Dim mapper As New StyleCreator With {
                 .selector = selector,
-                .fill = style.fill.GetBrush,
-                .stroke = Stroke.TryParse(style.stroke)
+                .fill = Styling.ColorExpression(style.fill),
+                .stroke = Stroke.TryParse(style.stroke),
+                .size = Styling.SizeExpression(style.size)
             }
-
-            With mapper
-                .size = Styling.NodeStyles.SizeExpression(style.size)
-            End With
-
             Return mapper
         End Function
     End Structure
@@ -88,8 +84,15 @@ Namespace Styling
         Dim selector$
         Dim stroke As Pen
         Dim font As Font
-        Dim fill As Brush
+        Dim fill As Func(Of Node(), Map(Of Node, Color)())
         Dim size As Func(Of Node(), Map(Of Node, Double)())
         Dim label As Func(Of Object, String)
+
+        Public Function CompileSelector() As Func(Of IEnumerable(Of Node), IEnumerable(Of Node))
+            Dim expression$ = selector
+            Return Function(nodes)
+                       Return nodes.[Select](expression, AddressOf SelectNodeValue)
+                   End Function
+        End Function
     End Structure
 End Namespace
