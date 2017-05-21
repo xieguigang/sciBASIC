@@ -21,13 +21,13 @@ Public Module IsometricContributions
 
         Dim contributions = userName.GetUserContributions
         Dim max% = contributions.Values.Max
-        Dim colors As Color() = Designer.GetColors(schema, max)
+        Dim colors As List(Of Color) = Designer.GetColors(schema, max).AsList
         Dim weeks = contributions.Split(7)
         Dim view As New IsometricView
         Dim maxZ = rectWidth * 2.5
         Dim x%, y%
 
-        colors(Scan0) = noColor.TranslateColor
+        Call colors.Insert(Scan0, noColor.TranslateColor)
 
         For Each week In weeks
             For Each day As KeyValuePair(Of Date, Integer) In week
@@ -35,8 +35,13 @@ Public Module IsometricContributions
                 Dim o As New Point3D(x, y, 0)
                 Dim model3D As New Prism(o, rectWidth, rectWidth, height)
 
+                x += rectWidth
+
                 Call view.Add(model3D, colors(day.Value))
             Next
+
+            x = 0
+            y += rectWidth
         Next
 
         Using g As Graphics2D = size.SizeParser.CreateGDIDevice
