@@ -40,7 +40,7 @@ Module Module1
 
         '   Call "xieguigang".GetUserContributions .GetJson .SaveTo ("x:\xieguigang_contributions.json")
 
-        Call IsometricContributions.Plot("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.json".ReadAllText.LoadObject(Of Dictionary(Of Date, Integer))).Save("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.png")
+        Call IsometricContributions.Plot("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.json".ReadAllText.LoadObject(Of Dictionary(Of Date, Integer)), schema:="Spectral:c8").Save("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.png")
 
         Pause()
 

@@ -32,13 +32,14 @@ Public Module IsometricContributions
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
-                         Optional noColor$ = NameOf(Color.Gray)) As GraphicsData
+                         Optional noColor$ = NameOf(Color.Gray), 
+                         Optional statNumberColor$ = Nothing) As GraphicsData
 
         Dim max% = contributions.Values.Max
         Dim colors As List(Of Color) = Designer.GetColors(schema, max).AsList
         Dim weeks = contributions.Split(7)
         Dim view As New IsometricView
-        Dim maxZ = rectWidth * 4
+        Dim maxZ = rectWidth * 5.5
         Dim x!, y!
 
         Call colors.Insert(Scan0, noColor.TranslateColor)
@@ -62,6 +63,11 @@ Public Module IsometricContributions
             Call view.Measure(.Width, .Height, False)
         End With
 
+        Dim streak = contributions.Split(Function(day) day.Value = 0, )
+        Dim LongestStreak = streak.OrderByDescending(Function(days) days.Length).First
+        Dim currentStreak = streak.Last
+        Dim total = contributions.Sum(Function(day) day.Value)
+        Dim busiestDay = contributions.OrderByDescending(Function(day) day.Value).FirstOrDefault
         Dim model As Surface() = view.ToArray
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)

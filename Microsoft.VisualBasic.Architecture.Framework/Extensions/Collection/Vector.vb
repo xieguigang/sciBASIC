@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
@@ -306,6 +307,9 @@ Public Module VectorExtensions
             End If
         Next
 
+        If Not tmp.Count = 0 Then
+            blocks += tmp.ToArray
+        End If
         Return blocks.ToArray
     End Function
 
