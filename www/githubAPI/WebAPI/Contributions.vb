@@ -16,7 +16,10 @@ Namespace WebAPI
             Dim svg$ = url.GET
             Dim xml As New XmlDocument
             Call xml.LoadXml("<?xml version=""1.0"" encoding=""utf-8""?>" & vbCrLf & svg)
-            Dim g = xml.SelectSingleNode("g").SelectNodes("g")
+            Dim g As XmlNodeList = xml _
+                .SelectSingleNode("svg") _
+                .SelectSingleNode("g") _
+                .SelectNodes("g")
             Dim contributions As New Dictionary(Of Date, Integer)
 
             For Each week As XmlNode In g
