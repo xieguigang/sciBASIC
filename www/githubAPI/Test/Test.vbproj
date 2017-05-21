@@ -107,6 +107,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
+      <Project>{85E71B4B-9276-4EC8-AADC-C849205F1EA8}</Project>
+      <Name>Microsoft.VisualBasic.Imaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
@@ -114,6 +118,10 @@
     <ProjectReference Include="..\GithubAPI.vbproj">
       <Project>{f296b483-7de4-4d62-9399-6fe0e110ec42}</Project>
       <Name>GithubAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Visualizer\Visualizer.vbproj">
+      <Project>{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}</Project>
+      <Name>Visualizer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

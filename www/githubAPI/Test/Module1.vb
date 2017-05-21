@@ -29,6 +29,7 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Webservices.Github
 Imports Microsoft.VisualBasic.Webservices.Github.Class
+Imports Microsoft.VisualBasic.Webservices.Github.Visualizer
 Imports Microsoft.VisualBasic.Webservices.Github.WebAPI
 
 Module Module1
@@ -36,6 +37,9 @@ Module Module1
     Sub Main()
 
         ' WebAPI.Proxy = "http://127.0.0.1:8087"
+
+
+        Call IsometricContributions.Plot("xieguigang").Save("x:\text.png")
 
         Dim contributions = "xieguigang".GetUserContributions
 

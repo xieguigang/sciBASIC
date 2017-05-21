@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Visualizer</RootNamespace>
-    <AssemblyName>Visualizer</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Webservices.Github.Visualizer</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Webservices.Github.Visualizer</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -18,7 +18,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Visualizer.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Webservices.Github.Visualizer.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -27,7 +27,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Visualizer.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Webservices.Github.Visualizer.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -45,6 +45,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
