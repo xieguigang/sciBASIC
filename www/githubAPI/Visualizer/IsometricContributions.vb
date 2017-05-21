@@ -67,9 +67,9 @@ Public Module IsometricContributions
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim camera As New Camera With {
                     .screen = region.Size,
-                    .fov = 2000,
-                    .ViewDistance = -20,
-                    .angleX = 0,
+                    .fov = 10000,
+                    .ViewDistance = -75,
+                    .angleX = 30,
                     .angleY = 30,
                     .angleZ = 120
                 }
