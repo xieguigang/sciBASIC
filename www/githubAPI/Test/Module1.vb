@@ -38,6 +38,11 @@ Module Module1
 
         ' WebAPI.Proxy = "http://127.0.0.1:8087"
 
+        '   Call "xieguigang".GetUserContributions .GetJson .SaveTo ("x:\xieguigang_contributions.json")
+
+        Call IsometricContributions.Plot("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.json".ReadAllText.LoadObject(Of Dictionary(Of Date, Integer))).Save("x:\text.png")
+
+         Pause 
 
         Call IsometricContributions.Plot("xieguigang").Save("x:\text.png")
 

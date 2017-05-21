@@ -28,12 +28,12 @@ Public Module IsometricContributions
     <Extension>
     Public Function Plot(contributions As Dictionary(Of Date, Integer),
                          Optional schema$ = "Jet",
-                         Optional size$ = "1440,900",
+                         Optional size$ = "3440,2400",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
                          Optional noColor$ = NameOf(Color.Gray)) As GraphicsData
-        
+
         Dim max% = contributions.Values.Max
         Dim colors As List(Of Color) = Designer.GetColors(schema, max).AsList
         Dim weeks = contributions.Split(7)
@@ -67,10 +67,11 @@ Public Module IsometricContributions
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim camera As New Camera With {
                     .screen = region.Size,
+                    .fov = 2000,
                     .ViewDistance = -20,
-                    .angleX = 60,
-                    .angleY = -60,
-                    .angleZ = -90
+                    .angleX = 0,
+                    .angleY = 30,
+                    .angleZ = 120
                 }
                 model = model _
                     .Centra _
