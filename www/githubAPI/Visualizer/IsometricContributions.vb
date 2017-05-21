@@ -16,7 +16,7 @@ Public Module IsometricContributions
                          Optional size$ = "1440,900",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
-                         Optional rectWidth% = 10,
+                         Optional rectWidth! = 0.25,
                          Optional noColor$ = NameOf(Color.Gray)) As Image
 
         Dim contributions = userName.GetUserContributions
@@ -25,13 +25,13 @@ Public Module IsometricContributions
         Dim weeks = contributions.Split(7)
         Dim view As New IsometricView
         Dim maxZ = rectWidth * 2.5
-        Dim x%, y%
+        Dim x!, y!
 
         Call colors.Insert(Scan0, noColor.TranslateColor)
 
         For Each week In weeks
             For Each day As KeyValuePair(Of Date, Integer) In week
-                Dim height$ = day.Value / max * maxZ
+                Dim height! = day.Value / max * maxZ
                 Dim o As New Point3D(x, y, 0)
                 Dim model3D As New Prism(o, rectWidth, rectWidth, height)
 

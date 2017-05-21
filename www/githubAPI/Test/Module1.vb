@@ -41,6 +41,8 @@ Module Module1
 
         Call IsometricContributions.Plot("xieguigang").Save("x:\text.png")
 
+        Pause()
+
         Dim contributions = "xieguigang".GetUserContributions
 
 
