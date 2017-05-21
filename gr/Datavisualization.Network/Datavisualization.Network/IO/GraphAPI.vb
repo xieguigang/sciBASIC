@@ -193,6 +193,24 @@ Namespace FileStream
         Public Function CytoscapeExportAsGraph(edgesDf As String, nodesDf As String) As NetworkGraph
             Dim edges As Edges() = edgesDf.LoadCsv(Of Edges)
             Dim nodes As Nodes() = nodesDf.LoadCsv(Of Nodes)
+            Return CytoscapeExportAsGraph(edges, nodes)
+        End Function
+
+        <Extension>
+        Public Function CytoscapeNetworkFromEdgeTable(edgesData As IEnumerable(Of Edges)) As NetworkGraph
+            Dim edges = edgesData.ToArray
+            Dim nodes = edges _
+                .Select(Function(x) x.GetConnectNodes) _
+                .IteratesALL _
+                .Distinct _
+                .Select(Function(id) New Nodes With {
+                    .name = id
+                }).ToArray
+            Dim graph As NetworkGraph = CytoscapeExportAsGraph(edges, nodes)
+            Return graph
+        End Function
+
+        Public Function CytoscapeExportAsGraph(edges As Edges(), nodes As Nodes()) As NetworkGraph
             Dim colors As Color() = AllDotNetPrefixColors
             Dim randColor As Func(Of Color) =
                 Function() Color.FromArgb(
@@ -210,13 +228,13 @@ Namespace FileStream
                                                    }
                                                    Select New Graph.Node(n.name, nd)
 
-            Dim nodehash As New Dictionary(Of Graph.Node)(gNodes)
+            Dim nodesTable As New Dictionary(Of Graph.Node)(gNodes)
             Dim gEdges As List(Of Graph.Edge) =
  _
                 LinqAPI.MakeList(Of Edge) <= From edge As Edges
                                              In edges
                                              Let geNodes As Graph.Node() =
-                                                 edge.GetNodes(nodehash).ToArray
+                                                 edge.GetNodes(nodesTable).ToArray
                                              Select New Edge(
                                                  edge.SUID,
                                                  geNodes(0),

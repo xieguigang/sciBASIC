@@ -68,6 +68,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Graph
 
+    ''' <summary>
+    ''' <see cref="Node.ID"/> -> <see cref="INamedValue.Key"/>
+    ''' </summary>
     Public Class Node : Implements INamedValue
         Implements IGraphValueContainer(Of NodeData)
 
