@@ -11,6 +11,7 @@ Namespace Drawing3D
     ''' Isometric 3d graphics painter
     ''' </summary>
     Public Class IsometricEngine
+        Implements IEnumerable(Of Surface)
 
         Dim transformation As Double()()
         Dim originX, originY As Double
@@ -436,6 +437,21 @@ Namespace Drawing3D
             Else
                 Return False
             End If
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Surface) Implements IEnumerable(Of Surface).GetEnumerator
+            For Each model As Model2D In models
+                Yield New Surface With {
+                    .vertices = model.path _
+                        .Points _
+                        .ToArray,
+                    .brush = model.Paint
+                }
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
