@@ -35,7 +35,7 @@ Public Module IsometricContributions
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
                          Optional noColor$ = NameOf(Color.Gray),
-                         Optional statNumberColor$ = "Green",
+                         Optional statNumberColor$ = "DarkGreen",
                          Optional labelItemCSS$ = CSSFont.Win7VeryLarge,
                          Optional user As User = Nothing,
                          Optional avatarWidth% = 350) As GraphicsData
@@ -167,14 +167,14 @@ Public Module IsometricContributions
                     With region.Padding
                         Call g.DrawImage(user.GetAvatar, .Left, .Top, avatarWidth, avatarWidth)
 
-                        x = .Left + avatarWidth + 10
+                        x = .Left + avatarWidth + 25
                         y = .Top - 10
 
                         With user
                             fsize = g.MeasureString(.bio, labelItemFont)
                             statNumberFont = New Font(labelItemFont.Name, labelItemFont.Size * 2.5)
 
-                            Dim y1 = y + statNumberFont.Height + 20
+                            Dim y1 = y + statNumberFont.Height + 25
                             Dim y2 = y1 + fsize.Height + 5
 
                             Call g.DrawString($"{ .login} ({ .name})", statNumberFont, Brushes.Black, New Point(x, y))
