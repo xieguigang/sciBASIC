@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports Microsoft.VisualBasic.Webservices.Github.WebAPI
 Imports IsometricView = Microsoft.VisualBasic.Imaging.Drawing3D.IsometricEngine
 
@@ -29,14 +30,15 @@ Public Module IsometricContributions
     <Extension>
     Public Function Plot(contributions As Dictionary(Of Date, Integer),
                          Optional schema$ = "Jet",
-                         Optional size$ = "3000,2200",
+                         Optional size$ = "3400,2200",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
                          Optional noColor$ = NameOf(Color.Gray),
                          Optional statNumberColor$ = Nothing,
-                         Optional labelItemCSS$ = CSSFont.Win7VeryLarge, 
-                         Optional avatar As Image = Nothing) As GraphicsData
+                         Optional labelItemCSS$ = CSSFont.Win7VeryLarge,
+                         Optional user As User = Nothing,
+                         Optional avatarWidth% = 350) As GraphicsData
 
         Dim max% = contributions.Values.Max
         Dim colors As List(Of Color) = Designer.GetColors(schema, max).AsList
@@ -105,7 +107,7 @@ Public Module IsometricContributions
 
                 With region
                     x = .Size.Width - .Padding.Right - fsize.Width
-                    y = .Padding.Top
+                    y = .Padding.Top + fsize.Height
                 End With
 
                 Dim dev = g
@@ -157,6 +159,30 @@ Public Module IsometricContributions
 
                     Call plotLabelContent("Current streak", "days", period, .Length)
                 End With
+
+                If Not user Is Nothing Then
+                    ' avatar userName (altName)
+                    '        bio
+                    '        github_url
+                    With region.Padding
+                        Call g.DrawImage(user.GetAvatar, .Left, .Top, avatarWidth, avatarWidth)
+
+                        x = .Left + avatarWidth + 10
+                        y = .Top - 10
+
+                        With user
+                            fsize = g.MeasureString(.bio, labelItemFont)
+                            statNumberFont = New Font(labelItemFont.Name, labelItemFont.Size * 2.5)
+
+                            Dim y1 = y + statNumberFont.Height + 5
+                            Dim y2 = y1 + fsize.Height + 5
+
+                            Call g.DrawString($"{ .login} ({ .name})", statNumberFont, Brushes.Black, New Point(x, y))
+                            Call g.DrawString(.bio, labelItemFont, Brushes.Gray, New Point(x, y1))
+                            Call g.DrawString(.url, labelItemFont, Brushes.Black, New Point(x, y2))
+                        End With
+                    End With
+                End If
             End Sub
 
         Return g.GraphicsPlots(size.SizeParser, padding, bg, plotInternal)

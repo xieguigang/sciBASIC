@@ -30,8 +30,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace WebAPI
@@ -99,7 +99,7 @@ Namespace WebAPI
 
             url = String.Format(url, user, page)
             sp = Splitter.Replace(" /", "")
-            html = url.GET(proxy:=WebAPI.Proxy)
+            html = url.GET
             html = Strings.Split(html, sp).Last
             sp = UserSplitter.Replace(" /", "")
 
