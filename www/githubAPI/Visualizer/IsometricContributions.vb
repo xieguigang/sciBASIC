@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Webservices.Github.WebAPI
 Imports IsometricView = Microsoft.VisualBasic.Imaging.Drawing3D.IsometricEngine
@@ -32,8 +33,9 @@ Public Module IsometricContributions
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
-                         Optional noColor$ = NameOf(Color.Gray), 
-                         Optional statNumberColor$ = Nothing) As GraphicsData
+                         Optional noColor$ = NameOf(Color.Gray),
+                         Optional statNumberColor$ = Nothing,
+                         Optional labelItemCSS$ = CSSFont.Win7VeryLarge) As GraphicsData
 
         Dim max% = contributions.Values.Max
         Dim colors As List(Of Color) = Designer.GetColors(schema, max).AsList
@@ -66,9 +68,18 @@ Public Module IsometricContributions
         Dim streak = contributions.Split(Function(day) day.Value = 0, )
         Dim LongestStreak = streak.OrderByDescending(Function(days) days.Length).First
         Dim currentStreak = streak.Last
-        Dim total = contributions.Sum(Function(day) day.Value)
+        Dim total$ = contributions.Sum(Function(day) day.Value).ToString("N")
         Dim busiestDay = contributions.OrderByDescending(Function(day) day.Value).FirstOrDefault
+        Dim oneYear$
+
+        With contributions.Keys.OrderBy(Function(day) day).ToArray
+            oneYear = $"{ .First.ToString("MMM dd, yyyy")} - { .Last.ToString("MMM dd, yyyy")}"
+        End With
+
         Dim model As Surface() = view.ToArray
+        Dim labelItemFont As Font = CSSFont.TryParse(labelItemCSS).GDIObject
+        Dim statNumberFont As New Font(labelItemFont.Name, labelItemFont.Size * 3, FontStyle.Bold)
+        Dim statNumberPen As Brush = statNumberColor.GetBrush
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim camera As New Camera With {
@@ -88,6 +99,42 @@ Public Module IsometricContributions
                 Call DirectCast(g, Graphics2D) _
                     .Graphics _
                     .SurfacePainter(camera, model)
+
+                Dim fsize As SizeF = g.MeasureString(oneYear, labelItemFont)
+
+                With region
+                    x = .Size.Width - .Padding.Right - fsize.Width
+                    y = .Padding.Top
+                End With
+
+                ' 右上角的整年的贡献值
+                Call g.DrawString("contributions", labelItemFont, Brushes.Black, New PointF(x, y))
+                Call g.DrawString(oneYear, labelItemFont, Brushes.Gray, New PointF(x, y + fsize.Height + 5))
+
+                Dim s$
+
+                s = "1 year total"
+                fsize = g.MeasureString(s, labelItemFont)
+                Call g.DrawString(s, labelItemFont, Brushes.Black, New PointF(x - fsize.Width, y - fsize.Height - 5))
+
+                fsize = g.MeasureString(total, statNumberFont)
+                Call g.DrawString(total, statNumberFont, statNumberPen, New Point(x - fsize.Width, y))
+
+                y += fsize.Height * 1.5
+
+                With busiestDay
+                    Call g.DrawString("contributions", labelItemFont, Brushes.Black, New PointF(x, y))
+                    Call g.DrawString(.Key.ToString("MMM dd"), labelItemFont, Brushes.Gray, New PointF(x, y + labelItemFont.Height))
+
+                    s = "Busiest day"
+                    fsize = g.MeasureString(s, labelItemFont)
+                    Call g.DrawString(s, labelItemFont, Brushes.Black, New PointF(x - fsize.Width, y - fsize.Height - 5))
+
+                    fsize = g.MeasureString(.Value, statNumberFont)
+                    Call g.DrawString(.Value, statNumberFont, statNumberPen, New Point(x - fsize.Width, y))
+                End With
+
+
             End Sub
 
         Return g.GraphicsPlots(size.SizeParser, padding, bg, plotInternal)
