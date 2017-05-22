@@ -34,6 +34,14 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 
 Public Module VectorExtensions
 
+    ''' <summary>
+    ''' Determine that is all of the collection <paramref name="array"/> have the same size? 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="n%">collection size Length</param>
+    ''' <param name="any">Is required all of the sequence must be the length equals</param>
+    ''' <param name="array"></param>
+    ''' <returns></returns>
     Public Function LengthEquals(Of T)(n%, any As Boolean, ParamArray array As IEnumerable(Of T)()) As Boolean
         Dim c%() = array.Select(Function(s) s.Count).ToArray
         Dim equals = c.Where(Function(x) x = n).ToArray
@@ -115,20 +123,6 @@ Public Module VectorExtensions
         Next
 
         Return minIndex
-    End Function
-
-    <Extension>
-    Public Function GetMaxIndex(values As List(Of Double)) As Integer
-        Dim max As Double = Double.MinValue
-        Dim maxIndex As Integer = 0
-        For i As Integer = 0 To values.Count - 1
-            If values(i) > max Then
-                max = values(i)
-                maxIndex = i
-            End If
-        Next
-
-        Return maxIndex
     End Function
 
     ''' <summary>
@@ -226,7 +220,7 @@ Public Module VectorExtensions
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' String mid function like operation on any type collection data.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
