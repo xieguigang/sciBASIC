@@ -68,16 +68,36 @@ Public Module NetworkVisualizer
     End Function
 
     <Extension>
-    Private Function __scale(nodes As Node(), scale!) As Dictionary(Of Node, Point)
+    Private Function __scale(nodes As IEnumerable(Of Node), scale As SizeF) As Dictionary(Of Node, Point)
         Dim table As New Dictionary(Of Node, Point)
 
         For Each n As Node In nodes
             With n.Data.initialPostion.Point2D
-                Call table.Add(n, New Point(.X * scale, .Y * scale))
+                Call table.Add(n, New Point(.X * scale.Width, .Y * scale.Height))
             End With
         Next
 
         Return table
+    End Function
+
+    <Extension>
+    Public Function GetBounds(graph As NetworkGraph) As Rectangle
+        Dim points As Point() = graph _
+            .nodes _
+            .__scale(scale:=New SizeF(1, 1)) _
+            .Values _
+            .ToArray
+        Dim rect = points.GetBounds
+        Return rect
+    End Function
+
+    <Extension>
+    Public Function AutoScaler(graph As NetworkGraph, frameSize As Size) As SizeF
+        With graph.GetBounds
+            Return New SizeF(
+                frameSize.Width / .Width, 
+                frameSize.Height / .Height)
+        End With
     End Function
 
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
@@ -102,13 +122,13 @@ Public Module NetworkVisualizer
                               Optional displayId As Boolean = True,
                               Optional labelColorAsNodeColor As Boolean = False,
                               Optional nodeStroke$ = WhiteStroke,
-                              Optional scale! = 1,
+                              Optional scale$ = "1,1",
                               Optional labelFontBase$ = CSSFont.Win7Normal) As GraphicsData
         Dim frameSize As Size = canvasSize.SizeParser
         Dim br As Brush
         Dim rect As Rectangle
         Dim cl As Color
-        Dim scalePos = net.nodes.ToArray.__scale(scale)
+        Dim scalePos = net.nodes.ToArray.__scale(scale.FloatSizeParser)
         Dim offset As Point = scalePos.__calOffsets(frameSize)
 
         Call "Initialize gdi objects...".__INFO_ECHO

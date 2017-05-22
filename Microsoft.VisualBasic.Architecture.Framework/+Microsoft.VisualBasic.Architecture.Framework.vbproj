@@ -422,6 +422,7 @@
     <Compile Include="Language\Java\Reflection.vb" />
     <Compile Include="Language\List%28Of T%29.vb" />
     <Compile Include="Language\Perl\die.vb" />
+    <Compile Include="Scripting\Expressions\Selector.vb" />
     <Compile Include="Scripting\VBLanguage.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
@@ -604,7 +605,7 @@
     <Compile Include="Extensions\CodeDOM\CodeDOM.vb" />
     <Compile Include="Extensions\CodeDOM\CodeDOMExpressions.vb" />
     <Compile Include="Extensions\CodeDOM\VBC.vb" />
-    <Compile Include="Extensions\Controls.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\Controls.vb" />
     <Compile Include="Extensions\Collection\ListExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
     <Compile Include="Extensions\Collection\KeyValuePair.vb" />

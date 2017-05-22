@@ -26,16 +26,29 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Webservices.Github.API
-Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Webservices.Github
+Imports Microsoft.VisualBasic.Webservices.Github.Class
+Imports Microsoft.VisualBasic.Webservices.Github.Visualizer
+Imports Microsoft.VisualBasic.Webservices.Github.WebAPI
 
 Module Module1
 
     Sub Main()
 
         ' WebAPI.Proxy = "http://127.0.0.1:8087"
+
+        '   Call "xieguigang".GetUserContributions .GetJson .SaveTo ("x:\xieguigang_contributions.json")
+
+        Call IsometricContributions.Plot("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.json".ReadAllText.LoadObject(Of Dictionary(Of Date, Integer)), schema:="Spectral:c8").Save("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.png")
+
+        Pause()
+
+        Call IsometricContributions.Plot("xieguigang").Save("x:\text.png")
+
+        Pause()
+
+        Dim contributions = "xieguigang".GetUserContributions
 
 
         Dim followers As User() = WebAPI.Users.Followers("xieguigang") '= "J:\GCModeller\src\runtime\sciBASIC#\www\data\github\followers.json".ReadAllText.LoadObject(Of User()) '"xieguigang".Followers

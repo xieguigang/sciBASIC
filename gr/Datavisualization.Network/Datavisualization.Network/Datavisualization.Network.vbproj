@@ -192,6 +192,7 @@
     <Compile Include="FindPath\Dijkstra\LDM.vb" />
     <Compile Include="FindPath\Dijkstra\DijkstraAPI.vb" />
     <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
+    <Compile Include="Graph\Selector.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />

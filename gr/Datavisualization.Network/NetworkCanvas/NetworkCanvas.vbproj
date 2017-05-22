@@ -272,10 +272,6 @@
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
       <Name>Datavisualization.Network</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Visualizer\Visualizer.vbproj">
-      <Project>{45b726ac-d3b8-476d-89ea-1ff7243a4fa5}</Project>
-      <Name>Visualizer</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

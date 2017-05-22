@@ -27,30 +27,72 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Reflection
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Quantile
-Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Styling
 
     ''' <summary>
-    ''' 
+    ''' Network object visualize styling object model
     ''' </summary>
     Public Structure StyleMapper
 
-        Dim nodeSize As Func(Of Node, Double)
-        Dim nodePaints As Func(Of Node, Color)
-        Dim nodeLabelSize As Func(Of Node, Double)
-        Dim nodeLabelPaints As Func(Of Node, Color)
-        Dim nodeLabels As Func(Of Node, String)
+        Dim nodeStyles As StyleCreator()
+        Dim edgeStyles As StyleCreator()
 
+        ''' <summary>
+        ''' node label styling
+        ''' </summary>
+        Dim labelStyles As StyleCreator()
+
+        Public Shared Function FromJSON(json$) As StyleMapper
+            If json.FileExists Then
+                json = json.ReadAllText
+            End If
+
+            Dim styleJSON As StyleJSON = json.LoadObject(Of StyleJSON)
+            Return FromJSON(styleJSON)
+        End Function
+
+        Public Shared Function FromJSON(json As StyleJSON) As StyleMapper
+            Return New StyleMapper With {
+                .nodeStyles = StyleMapper.__createSelector(json.nodes)
+            }
+        End Function
+
+        Private Shared Function __createSelector(styles As Dictionary(Of String, NodeStyle)) As StyleCreator()
+            Return styles _
+                .Select(Function(x) __createSelector(x.Key, x.Value)) _
+                .ToArray
+        End Function
+
+        Private Shared Function __createSelector(selector$, style As NodeStyle) As StyleCreator
+            Dim mapper As New StyleCreator With {
+                .selector = selector,
+                .fill = Styling.ColorExpression(style.fill),
+                .stroke = Stroke.TryParse(style.stroke),
+                .size = Styling.SizeExpression(style.size)
+            }
+            Return mapper
+        End Function
+    End Structure
+
+    Public Structure StyleCreator
+        Dim selector$
+        Dim stroke As Pen
+        Dim font As Font
+        Dim fill As Func(Of Node(), Map(Of Node, Color)())
+        Dim size As Func(Of Node(), Map(Of Node, Double)())
+        Dim label As Func(Of Object, String)
+
+        Public Function CompileSelector() As Func(Of IEnumerable(Of Node), IEnumerable(Of Node))
+            Dim expression$ = selector
+            Return Function(nodes)
+                       Return nodes.[Select](expression, AddressOf SelectNodeValue)
+                   End Function
+        End Function
     End Structure
 End Namespace

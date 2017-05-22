@@ -2,6 +2,8 @@
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports NetGraph = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network
 Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Analysis
 
@@ -39,12 +41,31 @@ Namespace Analysis
             Dim degrees As Dictionary(Of String, Integer) = net.GetDegrees
             Dim d%
 
-            For Each node As Node In net.Nodes
+            For Each node As FileStream.Node In net.Nodes
                 d = degrees(node.ID)
                 node.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
             Next
 
             Return degrees
+        End Function
+
+        <Extension>
+        Public Function ComputeNodeDegrees(ByRef net As NetworkGraph) As Dictionary(Of String, Integer)
+            Dim connectNodes = net _
+                .edges _
+                .Select(Function(link) {link.Source.ID, link.Target.ID}) _
+                .IteratesALL _
+                .GroupBy(Function(id) id) _
+                .ToDictionary(Function(ID) ID.Key,
+                              Function(list) list.Count)
+            Dim d%
+
+            For Each node In net.nodes
+                d = connectNodes(node.ID)
+                node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
+            Next
+
+            Return connectNodes
         End Function
 
         ''' <summary>

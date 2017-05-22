@@ -87,7 +87,11 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return $"{Name} --> {Value.GetJson}"
+            Try
+                Return $"{Name} --> {Value.GetJson}"
+            Catch ex As Exception
+                Return Name
+            End Try
         End Function
 
         Public Function FixValue(h As Func(Of T, T)) As NamedValue(Of T)

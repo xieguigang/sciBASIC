@@ -69,8 +69,8 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Edge : Inherits ClassObject
-        Implements IInteraction
+    Public Class Edge : Implements IInteraction
+        Implements IGraphValueContainer(Of EdgeData)
 
         Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
             ID = iId
@@ -85,7 +85,7 @@ Namespace Graph
         End Sub
 
         Public Property ID() As String
-        Public Property Data() As EdgeData
+        Public Property Data() As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).Data
         Public Property Source() As Node
         Public Property Target() As Node
         Public Property Directed() As Boolean
