@@ -35,7 +35,7 @@ Public Module IsometricContributions
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
                          Optional noColor$ = NameOf(Color.Gray),
-                         Optional statNumberColor$ = Nothing,
+                         Optional statNumberColor$ = "Green",
                          Optional labelItemCSS$ = CSSFont.Win7VeryLarge,
                          Optional user As User = Nothing,
                          Optional avatarWidth% = 350) As GraphicsData
@@ -174,7 +174,7 @@ Public Module IsometricContributions
                             fsize = g.MeasureString(.bio, labelItemFont)
                             statNumberFont = New Font(labelItemFont.Name, labelItemFont.Size * 2.5)
 
-                            Dim y1 = y + statNumberFont.Height + 5
+                            Dim y1 = y + statNumberFont.Height + 20
                             Dim y2 = y1 + fsize.Height + 5
 
                             Call g.DrawString($"{ .login} ({ .name})", statNumberFont, Brushes.Black, New Point(x, y))
