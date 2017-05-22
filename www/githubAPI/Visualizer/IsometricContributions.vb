@@ -107,34 +107,55 @@ Public Module IsometricContributions
                     y = .Padding.Top
                 End With
 
+                Dim dev = g
+                Dim plotLabelContent =
+                    Sub(title$, item$, date$, value$)
+                        Call dev.DrawString(item, labelItemFont, Brushes.Black, New PointF(x, y))
+                        Call dev.DrawString([date], labelItemFont, Brushes.Gray, New PointF(x, y + labelItemFont.Height + 5))
+
+                        With dev.MeasureString(title, labelItemFont)
+                            Call dev.DrawString(title, labelItemFont, Brushes.Black, New PointF(x - .Width, y - .Height - 5))
+                        End With
+
+                        fsize = dev.MeasureString(value, statNumberFont)
+                        Call dev.DrawString(value, statNumberFont, statNumberPen, New Point(x - fsize.Width, y))
+                    End Sub
+
                 ' 右上角的整年的贡献值
-                Call g.DrawString("contributions", labelItemFont, Brushes.Black, New PointF(x, y))
-                Call g.DrawString(oneYear, labelItemFont, Brushes.Gray, New PointF(x, y + fsize.Height + 5))
+                Call plotLabelContent("1 year total", "contributions", oneYear, total)
 
-                Dim s$
-
-                s = "1 year total"
-                fsize = g.MeasureString(s, labelItemFont)
-                Call g.DrawString(s, labelItemFont, Brushes.Black, New PointF(x - fsize.Width, y - fsize.Height - 5))
-
-                fsize = g.MeasureString(total, statNumberFont)
-                Call g.DrawString(total, statNumberFont, statNumberPen, New Point(x - fsize.Width, y))
-
-                y += fsize.Height * 1.5
+                y += statNumberFont.Height * 1.5
 
                 With busiestDay
-                    Call g.DrawString("contributions", labelItemFont, Brushes.Black, New PointF(x, y))
-                    Call g.DrawString(.Key.ToString("MMM dd"), labelItemFont, Brushes.Gray, New PointF(x, y + labelItemFont.Height))
-
-                    s = "Busiest day"
-                    fsize = g.MeasureString(s, labelItemFont)
-                    Call g.DrawString(s, labelItemFont, Brushes.Black, New PointF(x - fsize.Width, y - fsize.Height - 5))
-
-                    fsize = g.MeasureString(.Value, statNumberFont)
-                    Call g.DrawString(.Value, statNumberFont, statNumberPen, New Point(x - fsize.Width, y))
+                    Call plotLabelContent("Busiest day", "contributions", .Key.ToString("MMM dd"), .Value)
                 End With
 
+                With region
+                    y = .Size.Height * 2 / 3
+                    x = .Padding.Left + g.MeasureString("Longest streak", labelItemFont).Width
+                End With
 
+                With LongestStreak
+                    Dim period$
+
+                    With .Select(Function(day) day.Key).OrderBy(Function(day) day).ToArray
+                        period = $"{ .First.ToString("MMM dd")} - { .Last.ToString("MMM dd")}"
+                    End With
+
+                    Call plotLabelContent("Longest streak", "days", period, .Length)
+                End With
+
+                y += statNumberFont.Height * 1.5
+
+                With currentStreak
+                    Dim period$
+
+                    With .Select(Function(day) day.Key).OrderBy(Function(day) day).ToArray
+                        period = $"{ .First.ToString("MMM dd")} - { .Last.ToString("MMM dd")}"
+                    End With
+
+                    Call plotLabelContent("Current streak", "days", period, .Length)
+                End With
             End Sub
 
         Return g.GraphicsPlots(size.SizeParser, padding, bg, plotInternal)
