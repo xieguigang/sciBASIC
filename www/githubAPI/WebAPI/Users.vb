@@ -32,6 +32,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace WebAPI
 
@@ -68,7 +69,25 @@ Namespace WebAPI
         End Function
 
         Public Function GetUserData(usrName$) As User
+            Dim url$ = "https://github.com/" & usrName
+            Dim html$ = url.GET
+            Dim avatar$ = r.Match(html, "<img [^<]+ class=""avatar width-full rounded-2"" .*? />", RegexICSng).Value
+            avatar = avatar.ImageSource
 
+            Dim vcardNames = r.Match(html, "<h1 class=""vcard-names"">.+?</h1>", RegexICSng).Value
+            Dim names = Regex.Matches(vcardNames, "<span .+?>.+?</span>", RegexICSng).ToArray(Function(s) s.GetValue)
+            Dim bio$ = r.Match(html, "<div class[=]""user-profile-bio"">.+?</div>", RegexICSng) _
+                .Value _
+                .GetValue _
+                .Substring(5)
+
+            Return New User With {
+                .login = usrName,
+                .avatar_url = avatar,
+                .name = names(Scan0),
+                .bio = bio,
+                .url = url
+            }
         End Function
 
         ReadOnly UserSplitter$ = (<div class="d-table col-12 width-full py-4 border-bottom border-gray-light"/>).ToString

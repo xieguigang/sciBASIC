@@ -36,12 +36,14 @@ Module Module1
 
     Sub Main()
 
+        Dim my = WebAPI.Users.GetUserData("xieguigang")
+
         ' WebAPI.Proxy = "http://127.0.0.1:8087"
 
         '   Call "xieguigang".GetUserContributions .GetJson .SaveTo ("x:\xieguigang_contributions.json")
 
         Call IsometricContributions.Plot(
-            "G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.json".ReadAllText.LoadObject(Of Dictionary(Of Date, Integer)), 
+            "G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.json".ReadAllText.LoadObject(Of Dictionary(Of Date, Integer)),
             schema:="Spectral:c8").Save("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.png")
 
         Pause()
