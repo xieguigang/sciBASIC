@@ -17,7 +17,7 @@ Public Module IsometricContributions
     <Extension>
     Public Function Plot(userName$,
                          Optional schema$ = "Jet",
-                         Optional size$ = "1440,900",
+                         Optional size$ = "3000,2200",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
@@ -29,13 +29,14 @@ Public Module IsometricContributions
     <Extension>
     Public Function Plot(contributions As Dictionary(Of Date, Integer),
                          Optional schema$ = "Jet",
-                         Optional size$ = "3440,2400",
+                         Optional size$ = "3000,2200",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
                          Optional noColor$ = NameOf(Color.Gray),
                          Optional statNumberColor$ = Nothing,
-                         Optional labelItemCSS$ = CSSFont.Win7VeryLarge) As GraphicsData
+                         Optional labelItemCSS$ = CSSFont.Win7VeryLarge, 
+                         Optional avatar As Image = Nothing) As GraphicsData
 
         Dim max% = contributions.Values.Max
         Dim colors As List(Of Color) = Designer.GetColors(schema, max).AsList
@@ -68,7 +69,7 @@ Public Module IsometricContributions
         Dim streak = contributions.Split(Function(day) day.Value = 0, )
         Dim LongestStreak = streak.OrderByDescending(Function(days) days.Length).First
         Dim currentStreak = streak.Last
-        Dim total$ = contributions.Sum(Function(day) day.Value).ToString("N")
+        Dim total$ = contributions.Sum(Function(day) day.Value).ToString("N").Replace(".00", "")
         Dim busiestDay = contributions.OrderByDescending(Function(day) day.Value).FirstOrDefault
         Dim oneYear$
 
@@ -85,7 +86,7 @@ Public Module IsometricContributions
                 Dim camera As New Camera With {
                     .screen = region.Size,
                     .fov = 10000,
-                    .ViewDistance = -75,
+                    .ViewDistance = -85,
                     .angleX = 30,
                     .angleY = 30,
                     .angleZ = 120
