@@ -318,6 +318,6 @@ BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
 <hr/>
 
-![](./www/data/github/xieguigang_contributions.png)
+![](./docs/xieguigang_github-vcard.png)
 
 > Copyleft ! 2017, [I@xieguigang.me](mailto://I@xieguigang.me) (http://scibasic.cool/)

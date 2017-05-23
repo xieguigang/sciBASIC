@@ -7,7 +7,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports Microsoft.VisualBasic.Webservices.Github.WebAPI
 Imports IsometricView = Microsoft.VisualBasic.Imaging.Drawing3D.IsometricEngine
 
@@ -16,7 +18,7 @@ Public Module IsometricContributions
     <Extension>
     Public Function Plot(userName$,
                          Optional schema$ = "Jet",
-                         Optional size$ = "1440,900",
+                         Optional size$ = "3000,2200",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
@@ -28,12 +30,15 @@ Public Module IsometricContributions
     <Extension>
     Public Function Plot(contributions As Dictionary(Of Date, Integer),
                          Optional schema$ = "Jet",
-                         Optional size$ = "3440,2400",
+                         Optional size$ = "3400,2200",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional rectWidth! = 0.5,
-                         Optional noColor$ = NameOf(Color.Gray), 
-                         Optional statNumberColor$ = Nothing) As GraphicsData
+                         Optional noColor$ = NameOf(Color.Gray),
+                         Optional statNumberColor$ = "DarkGreen",
+                         Optional labelItemCSS$ = CSSFont.Win7VeryLarge,
+                         Optional user As User = Nothing,
+                         Optional avatarWidth% = 350) As GraphicsData
 
         Dim max% = contributions.Values.Max
         Dim colors As List(Of Color) = Designer.GetColors(schema, max).AsList
@@ -66,15 +71,24 @@ Public Module IsometricContributions
         Dim streak = contributions.Split(Function(day) day.Value = 0, )
         Dim LongestStreak = streak.OrderByDescending(Function(days) days.Length).First
         Dim currentStreak = streak.Last
-        Dim total = contributions.Sum(Function(day) day.Value)
+        Dim total$ = contributions.Sum(Function(day) day.Value).ToString("N").Replace(".00", "")
         Dim busiestDay = contributions.OrderByDescending(Function(day) day.Value).FirstOrDefault
+        Dim oneYear$
+
+        With contributions.Keys.OrderBy(Function(day) day).ToArray
+            oneYear = $"{ .First.ToString("MMM dd, yyyy")} - { .Last.ToString("MMM dd, yyyy")}"
+        End With
+
         Dim model As Surface() = view.ToArray
+        Dim labelItemFont As Font = CSSFont.TryParse(labelItemCSS).GDIObject
+        Dim statNumberFont As New Font(labelItemFont.Name, labelItemFont.Size * 3, FontStyle.Bold)
+        Dim statNumberPen As Brush = statNumberColor.GetBrush
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim camera As New Camera With {
                     .screen = region.Size,
                     .fov = 10000,
-                    .ViewDistance = -75,
+                    .ViewDistance = -85,
                     .angleX = 30,
                     .angleY = 30,
                     .angleZ = 120
@@ -88,6 +102,87 @@ Public Module IsometricContributions
                 Call DirectCast(g, Graphics2D) _
                     .Graphics _
                     .SurfacePainter(camera, model)
+
+                Dim fsize As SizeF = g.MeasureString(oneYear, labelItemFont)
+
+                With region
+                    x = .Size.Width - .Padding.Right - fsize.Width
+                    y = .Padding.Top + fsize.Height
+                End With
+
+                Dim dev = g
+                Dim plotLabelContent =
+                    Sub(title$, item$, date$, value$)
+                        Call dev.DrawString(item, labelItemFont, Brushes.Black, New PointF(x, y))
+                        Call dev.DrawString([date], labelItemFont, Brushes.Gray, New PointF(x, y + labelItemFont.Height + 5))
+
+                        With dev.MeasureString(title, labelItemFont)
+                            Call dev.DrawString(title, labelItemFont, Brushes.Black, New PointF(x - .Width, y - .Height - 5))
+                        End With
+
+                        fsize = dev.MeasureString(value, statNumberFont)
+                        Call dev.DrawString(value, statNumberFont, statNumberPen, New Point(x - fsize.Width, y))
+                    End Sub
+
+                ' 右上角的整年的贡献值
+                Call plotLabelContent("1 year total", "contributions", oneYear, total)
+
+                y += statNumberFont.Height * 1.5
+
+                With busiestDay
+                    Call plotLabelContent("Busiest day", "contributions", .Key.ToString("MMM dd"), .Value)
+                End With
+
+                With region
+                    y = .Size.Height * 2 / 3
+                    x = .Padding.Left + g.MeasureString("Longest streak", labelItemFont).Width
+                End With
+
+                With LongestStreak
+                    Dim period$
+
+                    With .Select(Function(day) day.Key).OrderBy(Function(day) day).ToArray
+                        period = $"{ .First.ToString("MMM dd")} - { .Last.ToString("MMM dd")}"
+                    End With
+
+                    Call plotLabelContent("Longest streak", "days", period, .Length)
+                End With
+
+                y += statNumberFont.Height * 1.5
+
+                With currentStreak
+                    Dim period$
+
+                    With .Select(Function(day) day.Key).OrderBy(Function(day) day).ToArray
+                        period = $"{ .First.ToString("MMM dd")} - { .Last.ToString("MMM dd")}"
+                    End With
+
+                    Call plotLabelContent("Current streak", "days", period, .Length)
+                End With
+
+                If Not user Is Nothing Then
+                    ' avatar userName (altName)
+                    '        bio
+                    '        github_url
+                    With region.Padding
+                        Call g.DrawImage(user.GetAvatar, .Left, .Top, avatarWidth, avatarWidth)
+
+                        x = .Left + avatarWidth + 25
+                        y = .Top - 10
+
+                        With user
+                            fsize = g.MeasureString(.bio, labelItemFont)
+                            statNumberFont = New Font(labelItemFont.Name, labelItemFont.Size * 2.5)
+
+                            Dim y1 = y + statNumberFont.Height + 25
+                            Dim y2 = y1 + fsize.Height + 5
+
+                            Call g.DrawString($"{ .login} ({ .name})", statNumberFont, Brushes.Black, New Point(x, y))
+                            Call g.DrawString(.bio, labelItemFont, Brushes.Gray, New Point(x, y1))
+                            Call g.DrawString(.url, labelItemFont, Brushes.Black, New Point(x, y2))
+                        End With
+                    End With
+                End If
             End Sub
 
         Return g.GraphicsPlots(size.SizeParser, padding, bg, plotInternal)
