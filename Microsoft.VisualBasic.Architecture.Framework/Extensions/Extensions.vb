@@ -40,6 +40,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -49,6 +50,7 @@ Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports Microsoft.VisualBasic.Text.Similarity
+Imports v = System.Array
 
 #Const FRAMEWORD_CORE = 1
 #Const Yes = 1
@@ -310,10 +312,32 @@ Public Module Extensions
     ''' <param name="array"></param>
     ''' <param name="value"></param>
     <Extension> Public Sub Add(Of T)(ByRef array As T(), value As T)
-        Dim chunkBuffer As T() = New T(array.Length) {}
-        Call System.Array.ConstrainedCopy(array, Scan0, chunkBuffer, Scan0, array.Length)
-        chunkBuffer(array.Length) = value
-        array = chunkBuffer
+        Dim appendBuffer As T() = New T(array.Length) {}
+        Call v.ConstrainedCopy(array, Scan0, appendBuffer, Scan0, array.Length)
+        appendBuffer(array.Length) = value
+        array = appendBuffer
+    End Sub
+
+    ''' <summary>
+    ''' Append value collection to the end of the target <paramref name="array"/>
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="array"></param>
+    ''' <param name="values"></param>
+    <Extension> Public Sub Add(Of T)(ByRef array As T(), values As IEnumerable(Of T))
+        Dim data = values.SafeQuery.ToArray
+        Dim appendBuffer As T() = New T(array.Length + data.Length - 1) {}
+
+        With array
+            Call v.ConstrainedCopy(
+                array, Scan0, appendBuffer, Scan0, .Length)
+
+            For Each x As SeqValue(Of T) In data.SeqIterator
+                appendBuffer(.Length + x.i) = x.value
+            Next
+        End With
+
+        array = appendBuffer
     End Sub
 
     ''' <summary>
