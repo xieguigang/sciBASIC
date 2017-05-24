@@ -146,3 +146,54 @@ Dim colors As List(Of Color) = Designer.GetColors(schema, max).AsList
 ' The first color is the color for No github contribution
 Call colors.Insert(Scan0, noColor.TranslateColor)
 ```
+
+We can creates the github contributions 3D Isometric graphics model by uisng the ``VisualBasic`` internal 3D API:
+
+```vbnet
+' Imports Microsoft.VisualBasic.Imaging.Drawing3D
+' Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+' Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
+
+Dim view As New IsometricView
+Dim weeks = contributions.Split(7)
+Dim x!, y!
+
+For Each week In weeks
+    For Each day As KeyValuePair(Of Date, Integer) In week
+        Dim height! = day.Value / max * maxZ
+        Dim o As New Point3D(x, y, 0)
+        Dim model3D As New Prism(o, rectWidth, rectWidth, height)
+
+        x += rectWidth
+
+        Call view.Add(model3D, colors(day.Value))
+    Next
+
+    x = 0
+    y += rectWidth
+Next
+```
+
+By creates the box object for each day's contribution value, we just simply using the ``Prism`` 3D model.
+And then we can convert the ``Prism`` 3D model in the Isometric engine into the 3D surface model with a simple Linq method:
+
+```vbnet
+Dim model As Surface() = view.ToArray
+model = model _
+    .Centra _
+    .Offsets(model) _
+    .ToArray
+
+' Rotate the 3D model to our view window
+model = camera.Rotate(model).ToArray
+```
+
+At last drawing 3D model and output onto a graphics canvas:
+
+```vbnet
+Call DirectCast(g, Graphics2D) _
+    .Graphics _
+    .SurfacePainter(camera, model)
+```
+
+![](../../../docs/xieguigang_github-vcard.png)
