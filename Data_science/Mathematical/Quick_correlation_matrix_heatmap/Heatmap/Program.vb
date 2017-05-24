@@ -23,6 +23,6 @@ Module Program
         Dim spcc = data.Vectors.CorrelationMatrix(AddressOf Spearman)
 
         Call HeatmapTable.Plot(spcc, legendTitle:="", mainTitle:="", drawGrid:=True) _
-            .Save("../../../../\images\heatmap\Sample.SPCC.png")
+            .Save("D:\Sample.SPCC.png")
     End Sub
 End Module
