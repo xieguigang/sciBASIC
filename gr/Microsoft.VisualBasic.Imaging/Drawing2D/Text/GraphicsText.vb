@@ -34,7 +34,7 @@ Namespace Drawing2D.Vector.Text
             }  ' 重设布局方式都为Center
 
             ' 绘制旋转后文本
-            Call DrawString(s, font, brush, rotatePt, newFormat, angle)
+            Call DrawString(s, font, brush, rotatePt, angle, newFormat)
         End Sub
 
         ''' <summary>
@@ -46,7 +46,11 @@ Namespace Drawing2D.Vector.Text
         ''' <param name="point">旋转点</param>
         ''' <param name="format">布局方式</param>
         ''' <param name="angle">角度</param>
-        Public Sub DrawString(s$, font As Font, brush As Brush, point As PointF, format As StringFormat, angle!)
+        Public Sub DrawString(s$, font As Font, brush As Brush, point As PointF, angle!, Optional format As StringFormat = Nothing)
+            If format Is Nothing Then
+                format = New StringFormat
+            End If
+
             SyncLock _graphics
                 Call DrawStringInternal(s, font, brush, point, format, angle)
             End SyncLock

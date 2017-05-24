@@ -103,7 +103,7 @@ Public Module HeatmapTable
                             gridDraw = False
                             ' 绘制标签
                             If i = x.i + 1 Then
-                                Call text.DrawString(key, font, Brushes.Black, rect.Location, format:=New StringFormat(), angle:=-45)
+                                Call text.DrawString(key, font, Brushes.Black, rect.Location, angle:=-45)
                             End If
                         Else
                             Dim level% = levels(c#)  '  得到等级
