@@ -59,4 +59,33 @@ Next
 
 ##### Streak
 
-A streak on github is define as 
+A streak on github contribution is define as the day range **without** ``ZERO`` contribution day. So that we can simple split the date ordered contribution result by condition expression: ``day.Value = 0``, here is how and in a very easy way:
+
+```vbnet
+Dim streak = contributions.Split(Function(day) day.Value = 0, )
+```
+
+So that the longest streak can be calculation by the splited block elements count descending ordering:
+
+```vbnet
+Dim LongestStreak = streak _
+    .OrderByDescending(Function(days) days.Length) _
+    .First
+```
+
+And the current streak is the nearest block, the last block is the nearest:
+
+```vbnet
+Dim currentStreak = streak.Last
+```
+
+##### Contributions
+
+When we add all of the contribution values in the result, then we get all of the contribution values:
+
+```vbnet
+Dim total$ = contributions _
+    .Sum(Function(day) day.Value) _
+    .ToString("N") _
+    .Replace(".00", "")
+```
