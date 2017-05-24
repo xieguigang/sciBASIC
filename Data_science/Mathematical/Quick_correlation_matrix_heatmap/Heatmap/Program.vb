@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Mathematical.Correlations
 Module Program
 
     Sub Main()
-      '  Call rotateImageTest()
+        '  Call rotateImageTest()
         Call heatmap2()
     End Sub
 
@@ -21,6 +21,8 @@ Module Program
     Public Sub heatmap2()
         Dim data = DataSet.LoadDataSet("../../../../\Quick_correlation_matrix_heatmap\mtcars.csv")
         Dim spcc = data.Vectors.CorrelationMatrix(AddressOf Spearman)
+
+        spcc = spcc.KmeansReorder
 
         Call HeatmapTable.Plot(spcc, legendTitle:="", mainTitle:="", drawGrid:=True) _
             .Save("D:\Sample.SPCC.png")
