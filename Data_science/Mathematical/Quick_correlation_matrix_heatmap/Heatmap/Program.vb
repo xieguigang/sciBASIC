@@ -11,6 +11,7 @@ Module Program
     Sub Main()
         '  Call rotateImageTest()
         Call heatmap1()
+        Pause()
         Call heatmap2()
     End Sub
 
@@ -27,17 +28,17 @@ Module Program
         spcc = spcc.KmeansReorder
 
         Call HeatmapTable.Plot(spcc, legendTitle:="", mainTitle:="", drawGrid:=True) _
-            .Save("D:\Sample.SPCC.png")
+            .Save("X:\Sample.SPCC.png")
     End Sub
 
     Public Sub heatmap1()
-        Dim datahm = Heatmap.LoadDataSet("../../../../\Quick_correlation_matrix_heatmap\mtcars.csv", normalization:=True)
+        Dim datahm = Heatmap.LoadDataSet("../../../../../Quick_correlation_matrix_heatmap\mtcars.csv", normalization:=True)
         Call Heatmap.Plot(datahm, mapName:=ColorMap.PatternJet,
                           kmeans:=AddressOf KmeansReorder,
                           mapLevels:=20,
                           size:=New Size(2000, 2000),
                           padding:="padding: 300",
                           legendTitle:="Spearman correlations",
-                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("D:\spcc.png")
+                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("X:\spcc.png")
     End Sub
 End Module

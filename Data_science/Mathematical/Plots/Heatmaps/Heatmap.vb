@@ -256,7 +256,7 @@ Public Module Heatmap
                                    Optional legendWidth! = -1,
                                    Optional legendHasUnmapped As Boolean = True,
                                    Optional legendLayout As Rectangle = Nothing) As GraphicsData
-        Dim angle! = 90 + 45.0F
+        Dim angle! = -45
 
         If padding.IsEmpty Then
             Dim maxLabel As String = LinqAPI.DefaultFirst(Of String) <=
@@ -311,7 +311,7 @@ Public Module Heatmap
                         Dim dx! = sz.Width * Math.Cos(angle)
                         Dim dy! = sz.Width * Math.Sin(angle)
 
-                        Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle)
+                        Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, New StringFormat() With {.FormatFlags = StringFormatFlags.MeasureTrailingSpaces})
 
                         left += dw
                     Next
