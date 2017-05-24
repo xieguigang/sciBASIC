@@ -98,7 +98,7 @@ Public Module PieChart
 
         Dim __plot As Action(Of IGraphics) =
             Sub(g As IGraphics)
-                Dim r# = (Math.Min(size.Width, size.Height) - margin.LayoutVector.Max) / 2 - 15 ' 最大的半径值
+                Dim r# = (Math.Min(size.Width, size.Height) - margin.LayoutVector.Max * 2) / 2 - 15 ' 最大的半径值
                 Dim topLeft As New Point(margin.Left, size.Height / 2 - r)
                 Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
 

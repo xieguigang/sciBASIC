@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -86,8 +87,10 @@ Public Module HeatmapTable
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小
                 Dim i% = 1
+                Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
 
                 For Each x As SeqValue(Of NamedValue(Of Dictionary(Of String, Double))) In array.SeqIterator(offset:=1)  ' 在这里绘制具体的矩阵
+
                     ' X为矩阵之中的行数据
                     ' 下面的循环为横向绘制出三角形的每一行的图形
                     For Each key As String In keys
@@ -98,6 +101,10 @@ Public Module HeatmapTable
 
                         If triangularStyle AndAlso i > x.i Then ' 上三角部分不绘制任何图形
                             gridDraw = False
+                            ' 绘制标签
+                            If i = x.i + 1 Then
+                                Call text.DrawString(key, font, Brushes.Black, rect.Location, angle:=-45)
+                            End If
                         Else
                             Dim level% = levels(c#)  '  得到等级
                             Dim color As Color = colors(   ' 得到当前的方格的颜色
@@ -140,38 +147,6 @@ Public Module HeatmapTable
 
                     Call g.DrawString((+x).Name, font, Brushes.Black, New PointF(lx, y))
                 Next
-
-                If triangularStyle Then
-                    Dim maxSize = g.MeasureString(keys.MaxLengthString, font)
-                    Dim y! = 0
-
-                    ' |\
-                    ' ----
-                    dw = Math.Sqrt(dw ^ 2 + dw ^ 2)
-
-                    Using g2 As Graphics2D = New Size With {
-                        .Width = maxSize.Width,
-                        .Height = (maxSize.Height + dw!) * keys.Length
-                    }.CreateGDIDevice(Color.Transparent)
-
-                        For Each key As String In keys
-                            Call g2.DrawString(key, font, Brushes.Black, New PointF(0, y))
-                            y += dw!
-                        Next
-
-                        Dim labels As Image = g2.ImageResource.RotateImage(-45)
-                        Dim offset! = Math.Sqrt(maxSize.Width ^ 2 / 2)
-
-                        Call g.DrawImageUnscaled(
-                            labels,
-                            New Point(margin.Left + offset / 2, margin.Top - offset - maxSize.Height))
-#Const DEBUG = False
-#If DEBUG Then
-                        Call g2.ImageResource.SaveAs("./labels.png")
-                        Call labels.SaveAs("./labels-r45_degrees.png")
-#End If
-                    End Using
-                End If
             End Sub
 
         If range Is Nothing Then

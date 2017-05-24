@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
@@ -161,6 +162,43 @@ Namespace Drawing2D.Colors
                 End Sub
 
             Return GraphicsPlots(lsize, margin, bg, plotInternal)
+        End Function
+
+        <Extension>
+        Public Function ColorLegend2(designer As SolidBrush(),
+                                     range As DoubleRange,
+                                     size As Size,
+                                     Optional padding$ = g.ZeroPadding,
+                                     Optional labelFontCSS$ = CSSFont.Win7Normal) As GraphicsData
+            Dim font As Font = CSSFont.TryParse(labelFontCSS)
+            Dim plotInternal =
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    Dim l = designer.Length
+                    Dim dx = (region.Size.Width - region.Padding.Horizontal) / l
+                    Dim h = region.Size.Height - region.Padding.Vertical * (2 / 3)
+                    Dim x = region.Padding.Left, y = region.Padding.Top + h + 10
+                    Dim labels$() = range _
+                        .Enumerate(l) _
+                        .Select(Function(n) n.ToString("F2")) _
+                        .ToArray
+
+                    For i As Integer = 0 To l - 1
+                        Dim b = designer(i)
+                        Dim rect As New Rectangle(x, region.Padding.Top, dx, h)
+                        Dim s$ = labels(i)
+                        Dim fsize = g.MeasureString(s, font)
+
+                        Call g.FillRectangle(b, rect)
+                        Call g.DrawString(s, font, Brushes.Black, New PointF(x - fsize.Width / 2, y))
+
+                        x += dx
+                    Next
+                End Sub
+
+            Return g.GraphicsPlots(
+                size, padding,
+                "transparent",
+                plotInternal)
         End Function
     End Module
 End Namespace
