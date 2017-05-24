@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Mathematical.Correlations
 Module Program
 
     Sub Main()
-        Call rotateImageTest()
+      '  Call rotateImageTest()
         Call heatmap2()
     End Sub
 
@@ -19,10 +19,10 @@ Module Program
     End Sub
 
     Public Sub heatmap2()
-        Dim data = DataSet.LoadDataSet("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\Quick_correlation_matrix_heatmap\mtcars.csv")
+        Dim data = DataSet.LoadDataSet("../../../../\Quick_correlation_matrix_heatmap\mtcars.csv")
         Dim spcc = data.Vectors.CorrelationMatrix(AddressOf Spearman)
 
         Call HeatmapTable.Plot(spcc, legendTitle:="", mainTitle:="", drawGrid:=True) _
-            .Save("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\heatmap\Sample.SPCC.png")
+            .Save("../../../../\images\heatmap\Sample.SPCC.png")
     End Sub
 End Module
