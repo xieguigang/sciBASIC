@@ -346,7 +346,7 @@ Public Module Heatmap
                     legend, CInt(left), CInt(top), lmargin, lh)
 
                 If titleFont Is Nothing Then
-                    titleFont = New Font(FontFace.BookmanOldStyle, 30, Drawing.FontStyle.Bold)
+                    titleFont = New Font(FontFace.BookmanOldStyle, 30, FontStyle.Bold)
                 End If
 
                 Dim titleSize = g.MeasureString(mainTitle, titleFont)
