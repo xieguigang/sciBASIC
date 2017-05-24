@@ -89,3 +89,60 @@ Dim total$ = contributions _
     .ToString("N") _
     .Replace(".00", "")
 ```
+
+The busiest day is the day that have the max contribution counts, just simply Descending ordering the day contribution count:
+
+```vbnet
+Dim busiestDay = contributions _
+    .OrderByDescending(Function(day) day.Value) _
+    .FirstOrDefault
+```
+
+For getting the one year range, then we can ordering the date value and then the first and last element in the result sequence is what we want:
+
+```vbnet
+Dim oneYear$
+
+With contributions _
+    .Keys _
+    .OrderBy(Function(day) day) _
+    .ToArray
+
+    oneYear = $"{ .First.ToString("MMM dd, yyyy")} - { .Last.ToString("MMM dd, yyyy")}"
+End With
+```
+
+
+#### Isometric 3D graphing
+
+```vbnet
+' Imports Microsoft.VisualBasic.Imaging.Drawing3D
+
+Dim camera As New Camera With {
+    .screen = region.Size,
+    .fov = 10000,
+    .ViewDistance = -85,
+    .angleX = 30,
+    .angleY = 30,
+    .angleZ = 120
+}
+```
+
+###### The height
+
+We should mapping the contribution count in each day as the Z height in the 3D graphic:
+
+```
+z = (current / Max) * maxZ
+```
+
+##### Using the VisualBasic internal Color Designer
+
+```vbnet
+' Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+
+Dim colors As List(Of Color) = Designer.GetColors(schema, max).AsList
+
+' The first color is the color for No github contribution
+Call colors.Insert(Scan0, noColor.TranslateColor)
+```
