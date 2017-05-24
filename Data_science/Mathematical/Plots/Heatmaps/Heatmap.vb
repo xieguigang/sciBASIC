@@ -255,7 +255,7 @@ Public Module Heatmap
                                    Optional legendWidth! = -1,
                                    Optional legendHasUnmapped As Boolean = True,
                                    Optional legendLayout As Rectangle = Nothing) As GraphicsData
-        Dim angle! = 45.0F
+        Dim angle! = 90 + 45.0F
 
         If padding.IsEmpty Then
             Dim maxLabel As String = LinqAPI.DefaultFirst(Of String) <=
@@ -300,7 +300,6 @@ Public Module Heatmap
 
                 left = getLeft
                 top = getTop
-                angle = -angle
                 left += dw / 2
 
                 If drawLabel2 Then
