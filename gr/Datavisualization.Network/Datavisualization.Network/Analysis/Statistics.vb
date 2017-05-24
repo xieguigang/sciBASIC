@@ -1,9 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports NetGraph = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network
-Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
+Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
+Imports NetGraph = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network
 
 Namespace Analysis
 
@@ -16,18 +17,17 @@ Namespace Analysis
         ''' <returns></returns>
         <Extension> Public Function GetDegrees(net As NetGraph) As Dictionary(Of String, Integer)
             Dim degree As New Dictionary(Of String, Integer)
-            Dim counts As Action(Of String) =
- _
-                Sub(node$) _
- _
-                    If degree.ContainsKey(node) Then _
-                        degree(node) += 1 _
-                    Else _
-                        Call degree.Add(node, 1)
+            Dim counts = Sub(node$)
+                             If degree.ContainsKey(node) Then
+                                 degree(node) += 1
+                             Else
+                                 Call degree.Add(node, 1)
+                             End If
+                         End Sub
 
             For Each edge As NetworkEdge In net.Edges
-                Call counts(edge.FromNode)
-                Call counts(edge.ToNode)
+                Call counts(node:=edge.FromNode)
+                Call counts(node:=edge.ToNode)
             Next
 
             Return degree
@@ -41,12 +41,45 @@ Namespace Analysis
             Dim degrees As Dictionary(Of String, Integer) = net.GetDegrees
             Dim d%
 
-            For Each node As FileStream.Node In net.Nodes
-                d = degrees(node.ID)
-                node.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
-            Next
+            With net.Edges.ComputeDegreeData
+                For Each node As FileStream.Node In net.Nodes
+                    d = degrees(node.ID)
+                    node.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
+
+                    If .in.ContainsKey(node.ID) Then
+                        d = .in(node.ID)
+                        node.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
+                    End If
+                    If .out.ContainsKey(node.ID) Then
+                        d = .out(node.ID)
+                        node.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
+                    End If
+                Next
+            End With
 
             Return degrees
+        End Function
+
+        <Extension>
+        Public Function ComputeDegreeData(Of T As IInteraction)(edges As IEnumerable(Of T)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
+            Dim [in] As New Dictionary(Of String, Integer)
+            Dim out As New Dictionary(Of String, Integer)
+            Dim count = Sub(node$, ByRef table As Dictionary(Of String, Integer))
+                            If table.ContainsKey(node) Then
+                                table(node) += 1
+                            Else
+                                table.Add(node, 1)
+                            End If
+                        End Sub
+            Dim countIn = Sub(node$) Call count(node, [in])
+            Dim countOut = Sub(node$) Call count(node, out)
+
+            For Each edge As T In edges
+                Call countIn(edge.target)
+                Call countOut(edge.source)
+            Next
+
+            Return ([in], out)
         End Function
 
         <Extension>
@@ -60,10 +93,21 @@ Namespace Analysis
                               Function(list) list.Count)
             Dim d%
 
-            For Each node In net.nodes
-                d = connectNodes(node.ID)
-                node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
-            Next
+            With net.edges.ComputeDegreeData
+                For Each node In net.nodes
+                    d = connectNodes(node.ID)
+                    node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
+
+                    If .in.ContainsKey(node.ID) Then
+                        d = .in(node.ID)
+                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
+                    End If
+                    If .out.ContainsKey(node.ID) Then
+                        d = .out(node.ID)
+                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
+                    End If
+                Next
+            End With
 
             Return connectNodes
         End Function
