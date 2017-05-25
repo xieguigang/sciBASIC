@@ -10,7 +10,11 @@ Module Program
     End Function
 
     <ExportAPI("/write",
+               Info:="Draw user github vcard.",
                Usage:="/write /user <userName, example: xieguigang> [/schema$ <default=YlGnBu:c8> /out <vcard.png>]")>
+    <Argument("/user", Description:="The user github account name.")>
+    <Argument("/schema", Description:="The color schema name of the user contributions 3D plot data.")>
+    <Argument("/out", Description:="The png image output path.")>
     Public Function vcard(args As CommandLine) As Integer
         Dim user$ = args <= "/user"
         Dim schema$ = args.GetValue("/schema", "YlGnBu:c8")

@@ -199,4 +199,35 @@ Call DirectCast(g, Graphics2D) _
     .SurfacePainter(camera, model)
 ```
 
+### Code Demo
+
+The example CLI tool:
+
+```vbnet
+<ExportAPI("/write",
+           Info:="Draw user github vcard.",
+           Usage:="/write /user <userName, example: xieguigang> [/schema$ <default=YlGnBu:c8> /out <vcard.png>]")>
+<Argument("/user", Description:="The user github account name.")>
+<Argument("/schema", Description:="The color schema name of the user contributions 3D plot data.")>
+<Argument("/out", Description:="The png image output path.")>
+Public Function vcard(args As CommandLine) As Integer
+    Dim user$ = args <= "/user"
+    Dim schema$ = args.GetValue("/schema", "YlGnBu:c8")
+    Dim out$ = args.GetValue("/out", $"./{user}_github-vcard.png")
+
+    Return IsometricContributions.Plot(
+        user.GetUserContributions,
+        schema:=schema,
+        user:=Users.GetUserData(user)) _
+        .Save(out) _
+        .CLICode
+End Function
+```
+
+Running this demo tool on Linux
+
+```bash
+github-vcard /write /user "xieguigang"
+```
+
 ![](../../../docs/xieguigang_github-vcard.png)
