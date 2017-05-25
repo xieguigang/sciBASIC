@@ -35,12 +35,12 @@ Namespace Scripting.Expressions
         ''' <typeparam name="T"></typeparam>
         ''' <typeparam name="V"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="propertyName$">如果属性名称为``$``，即引用自身，则这个函数的作用只是进行强制的``DirectCast``类型转换</param>
+        ''' <param name="propertyName$">如果属性名称为``$``，即引用自身，则这个函数的作用只是进行强制的``CType``类型转换</param>
         ''' <returns></returns>
         <Extension>
         Public Function [Select](Of T, V)(source As IEnumerable(Of T), propertyName$) As IEnumerable(Of V)
             If propertyName = "$" Then
-                Return source.Select(Function(o) DirectCast(CObj(o), V))
+                Return source.Select(Function(o) CType(CObj(o), V))
             Else
                 Return source.Select(GetType(T), propertyName).Select(Function(o) DirectCast(o, V))
             End If
