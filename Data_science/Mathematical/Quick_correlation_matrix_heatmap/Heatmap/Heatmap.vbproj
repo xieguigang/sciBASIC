@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BF3E287A-BFBF-4FF9-B985-DA61F140CA22}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Heatmap.Program</StartupObject>
-    <RootNamespace>Heatmap</RootNamespace>
+    <StartupObject>HeatmapTesting.Program</StartupObject>
+    <RootNamespace>HeatmapTesting</RootNamespace>
     <AssemblyName>Heatmap</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::98913cea4beb95bcad7533df426de50f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\GDIColors.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -39,6 +39,21 @@ Namespace Imaging
     ''' Extensions function for the gdi+ color type.
     ''' </summary>
     Public Module GDIColors
+
+        ''' <summary>
+        ''' ``<paramref name="x"/> -> <paramref name="y"/>``：返回两个颜色之间的中间的颜色，这个函数是某些插值操作所需要的
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Middle(x As Color, y As Color) As Color
+            Dim r% = (y.R - x.R) / 2 + x.R
+            Dim g% = (y.G - x.G) / 2 + x.G
+            Dim b% = (y.B - x.B) / 2 + x.B
+            Dim a% = (y.A - x.A) / 2 + x.A
+            Dim c As Color = Color.FromArgb(a, r, g, b)
+            Return c
+        End Function
 
         ''' <summary>
         ''' 调整所输入的这一组颜色的alpha值
@@ -99,7 +114,9 @@ Namespace Imaging
         ''' <returns></returns>
         <Extension>
         Public Function RGBExpression(c As Color) As String
-            Return $"rgb({c.R},{c.G},{c.B})"
+            With c
+                Return $"rgb({ .R},{ .G},{ .B})"
+            End With
         End Function
 
         ''' <summary>
@@ -109,7 +126,9 @@ Namespace Imaging
         ''' <returns></returns>
         <Extension>
         Public Function ARGBExpression(c As Color) As String
-            Return $"rgb({c.A},{c.R},{c.G},{c.B})"
+            With c
+                Return $"rgb({ .A},{ .R},{ .G},{ .B})"
+            End With
         End Function
 
 #If NET_40 = 0 Then
@@ -170,7 +189,8 @@ Namespace Imaging
         ''' <summary>
         ''' Regex expression for parsing the rgb(a,r,g,b) expression of the color.(解析颜色表达式里面的RGB的正则表达式)
         ''' </summary>
-        Const RGB_EXPRESSION As String = "\d+,\d+,\d+(,\d+)?"
+        Public Const rgbExprValues$ = "\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*\d+)?"
+        Public Const rgbExpr$ = "rgb\(" & rgbExprValues & "\)"
 
         ''' <summary>
         ''' <see cref="Color"/>.Name, rgb(a,r,g,b)
@@ -186,7 +206,7 @@ Namespace Imaging
                 Return Color.Transparent
             End If
 
-            Dim s As String = Regex.Match(str, RGB_EXPRESSION).Value
+            Dim s As String = Regex.Match(str, rgbExprValues).Value
 
             If String.IsNullOrEmpty(s) Then ' Color from name/known color
                 Dim key As String = str.ToLower
@@ -248,6 +268,21 @@ Namespace Imaging
             End If
 
             Return exp.ToColor
+        End Function
+
+        <Extension>
+        Public Function IsColorExpression(expression$) As Boolean
+            If expression.MatchPattern(rgbExpr, RegexICSng) Then
+                Return True
+            ElseIf __allDotNETPrefixColors.ContainsKey(expression.ToLower) Then
+                Return True
+            ElseIf expression.MatchPattern("\d+") Then
+                Return True
+            ElseIf expression.MatchPattern("#[a-z0-9]+", RegexICSng) Then
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
         ''' <summary>

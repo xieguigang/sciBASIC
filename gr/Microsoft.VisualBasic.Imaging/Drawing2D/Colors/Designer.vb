@@ -88,6 +88,10 @@ Namespace Drawing2D.Colors
             Color.Violet
         }
 
+        ''' <summary>
+        ''' 10 category colors for the data object cluster result
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ClusterColour As Color() = {
             Color.FromArgb(128, 200, 180),
             Color.FromArgb(135, 70, 194),
@@ -167,6 +171,10 @@ Namespace Drawing2D.Colors
             ColorMap.PatternWinter
         }.ToArray(AddressOf LCase)
 
+        ''' <summary>
+        ''' Google material design colors
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property MaterialPalette As Color() = {
             Color.Red, Color.Pink, Color.Black, Color.Purple, Color.DarkViolet,
             Color.Indigo, Color.Blue, Color.LightBlue, Color.Cyan, Color.Teal,

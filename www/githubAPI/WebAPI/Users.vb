@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::2534234169bff3f304c8624df7fff631, ..\sciBASIC#\www\githubAPI\WebAPI\Users.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,8 +30,9 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Webservices.Github.Class
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace WebAPI
 
@@ -67,6 +68,28 @@ Namespace WebAPI
             Return out
         End Function
 
+        Public Function GetUserData(usrName$) As User
+            Dim url$ = "https://github.com/" & usrName
+            Dim html$ = url.GET
+            Dim avatar$ = r.Match(html, "<img [^<]+ class=""avatar width-full rounded-2"" .*? />", RegexICSng).Value
+            avatar = avatar.ImageSource
+
+            Dim vcardNames = r.Match(html, "<h1 class=""vcard-names"">.+?</h1>", RegexICSng).Value
+            Dim names = Regex.Matches(vcardNames, "<span .+?>.+?</span>", RegexICSng).ToArray(Function(s) s.GetValue)
+            Dim bio$ = r.Match(html, "<div class[=]""user-profile-bio"">.+?</div>", RegexICSng) _
+                .Value _
+                .GetValue _
+                .Substring(5)
+
+            Return New User With {
+                .login = usrName,
+                .avatar_url = avatar,
+                .name = names(Scan0),
+                .bio = bio,
+                .url = url
+            }
+        End Function
+
         ReadOnly UserSplitter$ = (<div class="d-table col-12 width-full py-4 border-bottom border-gray-light"/>).ToString
         ReadOnly Splitter$ = (<div class="js-repo-filter position-relative"/>).ToString
 
@@ -76,7 +99,7 @@ Namespace WebAPI
 
             url = String.Format(url, user, page)
             sp = Splitter.Replace(" /", "")
-            html = url.GET(proxy:=WebAPI.Proxy)
+            html = url.GET
             html = Strings.Split(html, sp).Last
             sp = UserSplitter.Replace(" /", "")
 

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d2ac82bd916b995c57d272a1b1e7af61, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Casting.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -43,6 +43,20 @@ Namespace Scripting
     ''' </summary>
     Public Module Casting
 
+        <Extension>
+        Public Function Expression(size As Size) As String
+            With size
+                Return $"{ .Width},{ .Height}"
+            End With
+        End Function
+
+        <Extension>
+        Public Function Expression(size As SizeF) As String
+            With size
+                Return $"{ .Width},{ .Height}"
+            End With
+        End Function
+
         Public Function PointParser(pt$) As Point
             Dim x, y As Double
             Call Ranges.Parser(pt, x, y)
@@ -61,6 +75,7 @@ Namespace Scripting
             Return New Size(x, y)
         End Function
 
+        <Extension>
         Public Function FloatSizeParser(pt$) As SizeF
             Dim x, y As Double
             Call Ranges.Parser(pt, x, y)

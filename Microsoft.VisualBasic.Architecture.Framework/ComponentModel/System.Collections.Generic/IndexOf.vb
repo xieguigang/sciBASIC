@@ -72,6 +72,10 @@ Namespace ComponentModel.Collection
                 }).AsList
         End Sub
 
+        Sub New(ParamArray vector As T())
+            Call Me.New(source:=DirectCast(vector, IEnumerable(Of T)))
+        End Sub
+
         ''' <summary>
         ''' 获取目标对象在本索引之中的位置编号，不存在则返回-1
         ''' </summary>

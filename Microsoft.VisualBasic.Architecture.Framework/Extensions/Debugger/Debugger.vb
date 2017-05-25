@@ -30,6 +30,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Debugging
+Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Logging
 Imports Microsoft.VisualBasic.Terminal
@@ -39,6 +40,17 @@ Imports Microsoft.VisualBasic.Terminal.Utility
 ''' Debugger helper module for VisualBasic Enterprises System.
 ''' </summary>
 Public Module VBDebugger
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="message$"></param>
+    ''' <returns></returns>
+    Public Function die(message$, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandler
+        Return New ExceptionHandler With {
+            .Message = message
+        }
+    End Function
 
     ''' <summary>
     ''' 当在执行大型的数据集合的时候怀疑linq里面的某一个任务进入了死循环状态，可以使用这个方法来检查是否如此
@@ -295,15 +307,13 @@ Public Module VBDebugger
     ''' <param name="test"></param>
     ''' <param name="msg"></param>
     Public Sub Assertion(test As Boolean, msg As String, <CallerMemberName> Optional calls As String = "")
-        If False = test Then
-            Throw VisualBasicAppException.Creates(msg, calls)
-        End If
+        Dim null = test Or die(message:=msg, caller:=calls)
     End Sub
 
     Public Function Assert(test As Boolean,
                            failed$,
                            Optional success$ = Nothing,
-                           Optional failedLevel As Logging.MSG_TYPES = Logging.MSG_TYPES.ERR,
+                           Optional failedLevel As MSG_TYPES = MSG_TYPES.ERR,
                            <CallerMemberName> Optional calls As String = "") As Boolean
         If test Then
             If Not String.IsNullOrEmpty(success) Then
