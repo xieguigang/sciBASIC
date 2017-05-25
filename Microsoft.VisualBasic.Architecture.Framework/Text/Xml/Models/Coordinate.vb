@@ -50,9 +50,13 @@ Namespace Text.Xml.Models
 
         Public Shared Function FromPointF(x!, y!, multiply%) As Coordinate
             Return New Coordinate With {
-                .X = x * multiply, 
+                .X = x * multiply,
                 .Y = y * multiply
             }
+        End Function
+
+        Public Function ToPointF(multiply%) As PointF
+            Return New PointF(X / multiply, Y / multiply)
         End Function
 
         Public Overrides Function ToString() As String
