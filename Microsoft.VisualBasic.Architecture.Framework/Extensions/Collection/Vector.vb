@@ -31,8 +31,24 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
 Public Module VectorExtensions
+
+    ''' <summary>
+    ''' Returns the collection element its index where the test expression <paramref name="predicate"/> result is TRUE
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="predicate"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Which(Of T)(source As IEnumerable(Of T), predicate As Func(Of T, Boolean)) As IEnumerable(Of Integer)
+        Return source _
+            .SeqIterator _
+            .Where(Function(i) predicate(i.value)) _
+            .Select(Function(o) o.i)
+    End Function
 
     ''' <summary>
     ''' Determine that is all of the collection <paramref name="array"/> have the same size? 
