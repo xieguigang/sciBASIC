@@ -129,6 +129,15 @@ Namespace Drawing3D
 
 #End Region
 
+        Public Iterator Function Rotate(model As IEnumerable(Of Surface)) As IEnumerable(Of Surface)
+            For Each f As Surface In model
+                Yield New Surface With {
+                    .brush = f.brush,
+                    .vertices = Rotate(f.vertices).ToArray
+                }
+            Next
+        End Function
+
         Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
             Dim faces As New List(Of Surface)
 

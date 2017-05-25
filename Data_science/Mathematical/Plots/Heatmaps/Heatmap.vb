@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -255,7 +256,7 @@ Public Module Heatmap
                                    Optional legendWidth! = -1,
                                    Optional legendHasUnmapped As Boolean = True,
                                    Optional legendLayout As Rectangle = Nothing) As GraphicsData
-        Dim angle! = 45.0F
+        Dim angle! = -45
 
         If padding.IsEmpty Then
             Dim maxLabel As String = LinqAPI.DefaultFirst(Of String) <=
@@ -300,15 +301,18 @@ Public Module Heatmap
 
                 left = getLeft
                 top = getTop
-                angle = -angle
                 left += dw / 2
 
                 If drawLabel2 Then
+                    Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+
                     For Each key$ In keys
                         Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
                         Dim dx! = sz.Width * Math.Cos(angle)
                         Dim dy! = sz.Width * Math.Sin(angle)
-                        Call g.DrawString(key$, font, Brushes.Black, left - dx, top - dy, angle)
+
+                        Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, New StringFormat() With {.FormatFlags = StringFormatFlags.MeasureTrailingSpaces})
+
                         left += dw
                     Next
                 End If
@@ -341,7 +345,7 @@ Public Module Heatmap
                     legend, CInt(left), CInt(top), lmargin, lh)
 
                 If titleFont Is Nothing Then
-                    titleFont = New Font(FontFace.BookmanOldStyle, 30, Drawing.FontStyle.Bold)
+                    titleFont = New Font(FontFace.BookmanOldStyle, 30, FontStyle.Bold)
                 End If
 
                 Dim titleSize = g.MeasureString(mainTitle, titleFont)

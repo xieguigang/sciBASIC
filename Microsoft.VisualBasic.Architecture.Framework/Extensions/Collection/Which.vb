@@ -72,4 +72,23 @@ Public NotInheritable Class Which
     Public Shared Function IsFalse([operator] As Func(Of Boolean())) As Integer()
         Return Which.IsFalse([operator]())
     End Function
+
+    ''' <summary>
+    ''' 枚举出所有大于目标的顶点编号
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="compareTo"></param>
+    ''' <returns></returns>
+    ''' <remarks>因为这个返回的是一个迭代器，所以可以和First结合产生FirstGreaterThan表达式</remarks>
+    Public Shared Function IsGreaterThan(Of T As IComparable)(source As IEnumerable(Of T), compareTo As T) As IEnumerable(Of Integer)
+        Return source _
+            .SeqIterator _
+            .Where(Function(o) Language.GreaterThan(o.value, compareTo)) _
+            .Select(Function(i) i.i) ' 因为返回的是linq表达式，所以这里就不加ToArray了
+    End Function
+
+    Public Shared Function IsGreaterThan(Of T, C As IComparable)(source As IEnumerable(Of T), getValue As Func(Of T, C), compareTo As C) As IEnumerable(Of Integer)
+        Return Which.IsGreaterThan(source.Select(getValue), compareTo)
+    End Function
 End Class

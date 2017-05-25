@@ -1,10 +1,15 @@
-Namespace Drawing3D.Models.Isometric.Shapes
+﻿Namespace Drawing3D.Models.Isometric.Shapes
 
     ''' <summary>
     ''' Created by fabianterhorst on 01.04.17.
+    ''' (立方体)
     ''' </summary>
     Public Class Prism : Inherits Shape3D
 
+        ''' <summary>
+        ''' x,y,z的边长分别为1
+        ''' </summary>
+        ''' <param name="origin"></param>
         Public Sub New(origin As Point3D)
             Me.New(origin, 1, 1, 1)
         End Sub
