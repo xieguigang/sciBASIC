@@ -53,6 +53,7 @@ Namespace SVG.XML
         ''' <returns></returns>
         <XmlAttribute> Public Property [class] As String
         <XmlAttribute> Public Property id As String
+        <XmlAttribute> Public Property attributes As Dictionary(Of String, String)
 
         Public Overrides Function ToString() As String
             Return MyClass.GetJson
