@@ -113,13 +113,14 @@ Namespace Scripting
         ''' Converts a string expression which was input from the console or script file to the specified type.
         ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值)
         ''' </summary>
-        ''' <param name="Expression">The string expression to convert.</param>
+        ''' <param name="expr">The string expression to convert.</param>
         ''' <typeparam name="T">The type to which to convert the object.</typeparam>
         ''' <returns>An object whose type at run time is the requested target type.</returns>
-        <Extension> Public Function CTypeDynamic(Of T)(Expression As String) As T
-            Dim value As Object = CTypeDynamic(Expression, GetType(T))
+        <Extension> Public Function CTypeDynamic(Of T)(expr$, Optional [default] As T = Nothing) As T
+            Dim value As Object = CTypeDynamic(expr, GetType(T))
+
             If value Is Nothing Then
-                Return Nothing
+                Return [default]
             Else
                 Return DirectCast(value, T)
             End If
