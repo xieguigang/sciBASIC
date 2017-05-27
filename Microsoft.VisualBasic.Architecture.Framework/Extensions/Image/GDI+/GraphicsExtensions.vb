@@ -435,6 +435,12 @@ Namespace Imaging
             Return New Point(offset.X + p.X, offset.Y + p.Y)
         End Function
 
+        <Extension> Public Function OffSet2D(pt As PointF, offset As PointF) As PointF
+            With pt
+                Return New PointF(offset.X + .X, offset.Y + .Y)
+            End With
+        End Function
+
         <Extension> Public Function IsValidGDIParameter(size As Size) As Boolean
             Return size.Width > 0 AndAlso size.Height > 0
         End Function
