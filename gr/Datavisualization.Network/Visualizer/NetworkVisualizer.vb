@@ -63,7 +63,7 @@ Public Module NetworkVisualizer
     End Function
 
     <Extension>
-    Private Function __calOffsets(nodes As Dictionary(Of Node, Point), size As Size) As Point
+    Private Function __calOffsets(nodes As Dictionary(Of Node, Point), size As Size) As PointF
         Return nodes.Values.CentralOffset(size)
     End Function
 
@@ -81,7 +81,7 @@ Public Module NetworkVisualizer
     End Function
 
     <Extension>
-    Public Function GetBounds(graph As NetworkGraph) As Rectangle
+    Public Function GetBounds(graph As NetworkGraph) As RectangleF
         Dim points As Point() = graph _
             .nodes _
             .__scale(scale:=New SizeF(1, 1)) _
@@ -95,7 +95,7 @@ Public Module NetworkVisualizer
     Public Function AutoScaler(graph As NetworkGraph, frameSize As Size) As SizeF
         With graph.GetBounds
             Return New SizeF(
-                frameSize.Width / .Width, 
+                frameSize.Width / .Width,
                 frameSize.Height / .Height)
         End With
     End Function
@@ -129,7 +129,7 @@ Public Module NetworkVisualizer
         Dim rect As Rectangle
         Dim cl As Color
         Dim scalePos = net.nodes.ToArray.__scale(scale.FloatSizeParser)
-        Dim offset As Point = scalePos.__calOffsets(frameSize)
+        Dim offset As Point = scalePos.__calOffsets(frameSize).ToPoint
 
         Call "Initialize gdi objects...".__INFO_ECHO
 

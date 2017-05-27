@@ -44,11 +44,16 @@ Public Module VBDebugger
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="message$"></param>
+    ''' <param name="message$">The exception message</param>
+    ''' <param name="failure">If this expression test is True, then die expression will raise an exception</param>
     ''' <returns></returns>
-    Public Function die(message$, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandler
+    Public Function die(message$, Optional failure As Func(Of Object, Boolean) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandler
+        If failure Is Nothing Then
+            failure = Function(o) o Is Nothing
+        End If
         Return New ExceptionHandler With {
-            .Message = message
+            .Message = message,
+            .failure = failure
         }
     End Function
 
