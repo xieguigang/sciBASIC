@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::31b233f87479a372b8b1fb124ded7844, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
@@ -222,25 +223,25 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function GetCommandsOverview() As String
-            Dim sBuilder As StringBuilder = New StringBuilder(vbCrLf, 1024)
-            Call sBuilder.AppendLine($"Commandline arguments overviews{vbCrLf}Command Name  --  ""{Me.Name}""")
-            Call sBuilder.AppendLine()
-            Call sBuilder.AppendLine("---------------------------------------------------------")
-            Call sBuilder.AppendLine()
+            Dim sb As New StringBuilder(vbCrLf, 1024)
+            Call sb.AppendLine($"Commandline arguments overviews{vbCrLf}Command Name  --  ""{Me.Name}""")
+            Call sb.AppendLine()
+            Call sb.AppendLine("---------------------------------------------------------")
+            Call sb.AppendLine()
 
             If __listArguments.Count = 0 Then
-                Call sBuilder.AppendLine("No parameter was define in this commandline.")
-                Return sBuilder.ToString
+                Call sb.AppendLine("No parameter was define in this commandline.")
+                Return sb.ToString
             End If
 
             Dim MaxSwitchName As Integer = (From item As NamedValue(Of String)
                                             In __listArguments
                                             Select Len(item.Name)).Max
             For Each sw As NamedValue(Of String) In __listArguments
-                Call sBuilder.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.Value}"";")
+                Call sb.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.Value}"";")
             Next
 
-            Return sBuilder.ToString
+            Return sb.ToString
         End Function
 
         ''' <summary>
@@ -587,10 +588,11 @@ Namespace CommandLine
         ''' If the given parameter is not exists in the user input arguments, then a developer specific default value will be return.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="name"></param>
+        ''' <param name="name">The optional argument parameter name</param>
         ''' <param name="[default]">The default value for returns when the parameter is not exists in the user input.</param>
+        ''' <param name="__ctype">The custom string parser for the CLI argument value</param>
         ''' <returns></returns>
-        Public Function GetValue(Of T)(name As String, [default] As T, Optional __ctype As Func(Of String, T) = Nothing) As T
+        Public Function GetValue(Of T)(name$, [default] As T, Optional __ctype As Func(Of String, T) = Nothing) As T
             If Not Me.ContainsParameter(name, False) Then
                 If GetType(T).Equals(GetType(Boolean)) Then
                     If HavebFlag(name) Then
@@ -604,15 +606,20 @@ Namespace CommandLine
             Dim str As String = Me(name)
 
             If __ctype Is Nothing Then
-                Dim value As Object =
-                    Scripting.InputHandler.CTypeDynamic(str, GetType(T))
+                Dim value As Object = InputHandler.CTypeDynamic(str, GetType(T))
                 Return DirectCast(value, T)
             Else
                 Return __ctype(str)
             End If
         End Function
 
-        Public Function OpenHandle(name As String, Optional [default] As String = "") As int
+        ''' <summary>
+        ''' Open a file handle by using the parameter value
+        ''' </summary>
+        ''' <param name="name">The parameter name, and its argument value should be a valid file path</param>
+        ''' <param name="[default]">Default file path if the argument value is not exists</param>
+        ''' <returns></returns>
+        Public Function OpenHandle(name$, Optional default$ = "") As int
             Dim file As String = Me(name)
             If String.IsNullOrEmpty(file) Then
                 file = [default]
@@ -624,7 +631,7 @@ Namespace CommandLine
 #Region "Implements IReadOnlyCollection(Of KeyValuePair(Of String, String))"
 
         ''' <summary>
-        ''' 这个枚举函数也会将开关给包含进来，与<see cref="GetValueArray"/>方法所不同的是，这个函数里面的逻辑值开关的名称没有被修饰剪裁
+        ''' 这个枚举函数也会将开关给包含进来，与<see cref="ToArgumentVector"/>方法所不同的是，这个函数里面的逻辑值开关的名称没有被修饰剪裁
         ''' </summary>
         ''' <returns></returns>
         Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements IEnumerable(Of NamedValue(Of String)).GetEnumerator
@@ -737,25 +744,27 @@ Namespace CommandLine
 #End Region
 
         ''' <summary>
-        ''' ToArray拓展好像是有BUG的，所以请使用这个函数来获取所有的参数信息，请注意，逻辑值开关的名称会被去掉前缀
+        ''' 将当前的这个命令行对象之中的所有的参数值都合并到一个向量之中返回.
+        ''' (``ToArray``拓展好像是有BUG的，所以请使用这个函数来获取所有的参数信息。
+        ''' 请注意，逻辑值开关的名称会被去掉前缀)
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValueArray() As NamedValue(Of String)()
-            Dim lst As New List(Of NamedValue(Of String))
+        Public Function ToArgumentVector() As NamedValue(Of String)()
+            Dim list As New List(Of NamedValue(Of String))
 
             If Not Me.__listArguments.IsNullOrEmpty Then
-                lst += From obj As NamedValue(Of String)
-                       In __listArguments
-                       Select New NamedValue(Of String)(obj.Name, obj.Value)
+                list += From obj As NamedValue(Of String)
+                        In __listArguments
+                        Select New NamedValue(Of String)(obj.Name, obj.Value)
             End If
 
             If Not Me.BoolFlags.IsNullOrEmpty Then
-                lst += From bs As String
-                       In Me.BoolFlags
-                       Select New NamedValue(Of String)(TrimParamPrefix(bs), "True")
+                list += From bs As String
+                        In Me.BoolFlags
+                        Select New NamedValue(Of String)(TrimParamPrefix(bs), "True")
             End If
 
-            Return lst.ToArray
+            Return list.ToArray
         End Function
 
         ''' <summary>

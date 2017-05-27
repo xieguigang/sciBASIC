@@ -61,7 +61,7 @@ Vladimir I",
         ''' <param name="cost"></param>
         ''' <returns></returns>
         Private Function __createTable(reference As Integer(), hypotheses As Integer(), cost As Double) As Double(,)
-            Return CreateTable(Of Integer)(reference, hypotheses, cost, AddressOf __int32Equals)
+            Return CreateTable(Of Integer)(reference, hypotheses, LevenshteinDistance.Cost(Of Integer).DefaultCost(cost), AddressOf __int32Equals)
         End Function
 
         Private Function __int32Equals(a As Integer, b As Integer) As Boolean
@@ -69,6 +69,25 @@ Vladimir I",
         End Function
 
         Public Delegate Function Equals(Of T)(a As T, b As T) As Boolean
+
+        Public Structure Cost(Of T)
+
+            Dim insert As Func(Of T, Double)
+            Dim delete As Func(Of T, Double)
+            Dim substitute As Func(Of T, T, Double)
+
+            Public Shared Function DefaultSubstituteCost(a As T, b As T, equals As Equals(Of T)) As Double
+                Return If(equals(a, b), 0, 1)
+            End Function
+
+            Public Shared Function DefaultCost(cost#) As Cost(Of T)
+                Return New Cost(Of T) With {
+                    .insert = Function(x) cost,
+                    .delete = Function(x) cost,
+                    .substitute = Function(a, b) cost
+                }
+            End Function
+        End Structure
 
         ''' <summary>
         ''' 用于泛型的序列相似度比较
@@ -79,16 +98,20 @@ Vladimir I",
         ''' <param name="cost"></param>
         ''' <param name="equals">泛型化的元素等价性的比较方法</param>
         ''' <returns></returns>
-        Public Function CreateTable(Of T)(reference As T(), hypotheses As T(), cost As Double, equals As Equals(Of T)) As Double(,)
+        Public Function CreateTable(Of T)(reference As T(), hypotheses As T(), cost As Cost(Of T), equals As Equals(Of T)) As Double(,)
             Dim distTable As Double(,) = New Double(reference.Length, hypotheses.Length) {}
 
             For i As Integer = 0 To reference.Length
-                distTable(i, 0) = i * cost
+                distTable(i, 0) = i * cost.insert(reference(i))
             Next
 
             For j As Integer = 0 To hypotheses.Length
-                distTable(0, j) = j * cost
+                distTable(0, j) = j * cost.delete(hypotheses(j))
             Next
+
+            'd[i,j] <- min( d[i-1,j] + delete.fun(source.vec[i-1]),
+            'd[i,j-1] + insert.fun(target.vec[j-1]),
+            'd[i-1,j-1] + substitute.fun(source.vec[i-1], target.vec[j-1]) );
 
             For i As Integer = 1 To reference.Length
                 For j As Integer = 1 To hypotheses.Length
@@ -97,8 +120,10 @@ Vladimir I",
                         '  if the letters are same
                         distTable(i, j) = distTable(i - 1, j - 1)
                     Else ' if not add 1 to its neighborhoods and assign minumun of its neighborhoods
-                        Dim n As Double = Math.Min(distTable(i - 1, j - 1) + 1, distTable(i - 1, j) + cost)
-                        distTable(i, j) = Math.Min(n, distTable(i, j - 1) + cost)
+                        Dim n As Double = Math.Min(
+                            distTable(i - 1, j - 1) + cost.substitute(reference(i - 1), hypotheses(j - 1)),
+                            distTable(i - 1, j) + cost.delete(reference(i - 1)))
+                        distTable(i, j) = Math.Min(n, distTable(i, j - 1) + cost.insert(hypotheses(j - 1)))
                     End If
                 Next
             Next
@@ -119,7 +144,7 @@ Vladimir I",
             If hypotheses Is Nothing Then hypotheses = New T() {}
             If reference Is Nothing Then reference = New T() {}
 
-            Dim distTable As Double(,) = CreateTable(reference, hypotheses, cost, equals)
+            Dim distTable As Double(,) = CreateTable(reference, hypotheses, Levenshtein.Cost(Of T).DefaultCost(cost), equals)
             Dim i As Integer = reference.Length, j As Integer = hypotheses.Length
 
             Return distTable(i, j)
@@ -140,7 +165,7 @@ Vladimir I",
             If reference Is Nothing Then reference = New T() {}
 
             Dim distTable As Double(,) =
-                CreateTable(reference, hypotheses, cost, equals)
+                CreateTable(reference, hypotheses, Levenshtein.Cost(Of T).DefaultCost(cost), equals)
             Dim i As Integer = reference.Length,
                 j As Integer = hypotheses.Length
             Dim sHyp As String = New String(hypotheses.ToArray(Function(x) asChar(x)))
