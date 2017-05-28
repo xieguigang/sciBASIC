@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Text
 
 Namespace Terminal
@@ -168,23 +169,23 @@ Namespace Terminal
 
             Call Console.WriteLine(prompt)
 
-            If style.HasFlag(MsgBoxStyle.AbortRetryIgnore) Then
+            If style = MsgBoxStyle.AbortRetryIgnore Then
                 Call Console.Write("Abort/Retry/Ignore?(a/r/i) [R]")
                 [default] = "R"
-            ElseIf style.HasFlag(MsgBoxStyle.OkCancel) Then
+            ElseIf style = MsgBoxStyle.OkCancel Then
                 Call Console.Write("Ok/Cancel?(o/c) [O]")
                 [default] = "O"
-            ElseIf style.HasFlag(MsgBoxStyle.OkOnly) Then
+            ElseIf style = MsgBoxStyle.OkOnly Then
                 Call Console.WriteLine("Press any key to continute...")
                 Call Console.ReadKey()
                 Return MsgBoxResult.Ok
-            ElseIf style.HasFlag(MsgBoxStyle.RetryCancel) Then
+            ElseIf style = MsgBoxStyle.RetryCancel Then
                 Call Console.Write("Retry/Cancel?(r/c) [R]")
                 [default] = "R"
-            ElseIf style.HasFlag(MsgBoxStyle.YesNo) Then
+            ElseIf style = MsgBoxStyle.YesNo Then
                 Call Console.Write("Yes/No?(y/n) [Y]")
                 [default] = "Y"
-            ElseIf style.HasFlag(MsgBoxStyle.YesNoCancel) Then
+            ElseIf style = MsgBoxStyle.YesNoCancel Then
                 Call Console.Write("Yes/No/Cancel?(y/n/c) [Y]")
                 [default] = "Y"
             End If
@@ -198,7 +199,7 @@ Namespace Terminal
                 input = input.ToUpper
             End If
 
-            If style.HasFlag(MsgBoxStyle.AbortRetryIgnore) Then
+            If style = MsgBoxStyle.AbortRetryIgnore Then
                 If __testEquals(input, "A"c) Then
                     Return MsgBoxResult.Abort
                 ElseIf __testEquals(input, "R"c) Then
@@ -208,7 +209,7 @@ Namespace Terminal
                 Else
                     Return MsgBoxResult.Retry
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.OkCancel) Then
+            ElseIf style = MsgBoxStyle.OkCancel Then
 
                 If __testEquals(input, "O"c) Then
                     Return MsgBoxResult.Ok
@@ -217,9 +218,9 @@ Namespace Terminal
                 Else
                     Return MsgBoxResult.Ok
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.OkOnly) Then
+            ElseIf style = MsgBoxStyle.OkOnly Then
                 Return MsgBoxResult.Ok
-            ElseIf style.HasFlag(MsgBoxStyle.RetryCancel) Then
+            ElseIf style = MsgBoxStyle.RetryCancel Then
 
                 If __testEquals(input, "R"c) Then
                     Return MsgBoxResult.Retry
@@ -228,7 +229,7 @@ Namespace Terminal
                 Else
                     Return MsgBoxResult.Retry
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.YesNo) Then
+            ElseIf style = MsgBoxStyle.YesNo Then
 
                 If __testEquals(input, "Y"c) Then
                     Return MsgBoxResult.Yes
@@ -237,7 +238,7 @@ Namespace Terminal
                 Else
                     Return MsgBoxResult.Yes
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.YesNoCancel) Then
+            ElseIf style = MsgBoxStyle.YesNoCancel Then
 
                 If __testEquals(input, "Y"c) Then
                     Return MsgBoxResult.Yes
@@ -282,12 +283,20 @@ Namespace Terminal
         ''' <param name="parser"></param>
         ''' <param name="_default"></param>
         ''' <returns></returns>
-        Public Function Read(Of T)(msg$, parser As TryParseDelegate(Of T), Optional _default As T = Nothing) As T
+        Public Function Read(Of T)(msg$, parser As TryParseDelegate(Of T), Optional _default$ = Nothing) As T
             Dim line As String
             Dim value As T
             Do
-                Console.Write(msg & ": ")
+                Call Console.Write(msg)
+
+                If Not _default.StringEmpty Then
+                    Call Console.Write($"<default={_default}>")
+                End If
+
+                Call Console.Write(": ")
+
                 line = Console.ReadLine()
+
                 If String.IsNullOrWhiteSpace(line) Then
                     line = _default?.ToString()
                 End If
@@ -320,5 +329,12 @@ Namespace Terminal
                 Call Console.WriteLine(o)
             End If
         End Sub
+
+        Public Function InputPassword(Optional prompt$ = "Please input your password:", Optional maxLength% = 20) As String
+            Dim pass$ = Nothing
+            Call Console.WriteLine(prompt)
+            Call New ConsolePasswordInput().PasswordInput(pass, maxLength)
+            Return pass
+        End Function
     End Module
 End Namespace
