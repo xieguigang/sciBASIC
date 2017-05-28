@@ -495,14 +495,12 @@ Namespace CommandLine
         Public Shared Function CreateInstance(assmPath As String) As Interpreter
             Dim assembly As Assembly = Assembly.LoadFrom(assmPath)
             Dim dllMain As Type = GetType(RunDllEntryPoint)
-            Dim main As Type =
-                LinqAPI.DefaultFirst(Of Type) <= From [mod] As Type
-                                                 In assembly.DefinedTypes
-                                                 Let attributes As Object() =
-                                                     [mod].GetCustomAttributes(dllMain, inherit:=False)
-                                                 Where Not attributes Is Nothing AndAlso
-                                                     attributes.Length = 1
-                                                 Select [mod]
+            Dim main As Type = LinqAPI.DefaultFirst(Of Type) <= From [mod] As Type
+                                                                In assembly.DefinedTypes
+                                                                Let attributes As Object() = [mod].GetCustomAttributes(dllMain, inherit:=False)
+                                                                Where Not attributes Is Nothing AndAlso
+                                                                    attributes.Length = 1
+                                                                Select [mod]
             If main Is Nothing Then
                 Return Nothing  ' 没有找到执行入口点
             Else

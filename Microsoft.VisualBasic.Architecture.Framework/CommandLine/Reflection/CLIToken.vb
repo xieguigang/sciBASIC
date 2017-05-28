@@ -26,8 +26,10 @@
 
 #End Region
 
+Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine.Reflection
 
@@ -50,10 +52,29 @@ Namespace CommandLine.Reflection
         ''' </returns>
         Public Shared Function GetPoint(entrypoint$) As NamedValue(Of String)
             Dim entry = entrypoint.GetTagValue("::", trim:=True)
-            If entry .Value .StringEmpty
+            If entry.Value.StringEmpty Then
                 entry.Value = "Main"
             End If
-            Return entry 
+            Return entry
+        End Function
+
+        Public Shared Function GetDllMethod(assembly As Assembly, entryPoint$) As MethodInfo
+            Dim entry As NamedValue(Of String) = GetPoint(entryPoint)
+            Dim dll As Type = LinqAPI.DefaultFirst(Of Type) <= From type As Type
+                                                               In assembly.GetTypes
+                                                               Let load = type.GetCustomAttribute(Of RunDllEntryPoint)
+                                                               Let name = load?.Namespace
+                                                               Where Not load Is Nothing AndAlso name.TextEquals(entry.Name)
+                                                               Select type
+            If dll Is Nothing Then
+                Return Nothing
+            Else
+                Dim method As MethodInfo = dll _
+                    .GetMethods(PublicProperty) _
+                    .Where(Function(m) m.Name.TextEquals(entry.Value)) _
+                    .FirstOrDefault
+                Return method
+            End If
         End Function
     End Class
 
