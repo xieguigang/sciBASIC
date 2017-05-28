@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 Namespace Terminal
 
@@ -50,20 +51,18 @@ Namespace Terminal
         ''' A dictionary list of the escape characters.(转义字符列表)
         ''' </summary>
         ''' <remarks></remarks>
-        Dim Eschs As Dictionary(Of String, String) =
-            New Dictionary(Of String, String) From
-            {
-                {"\o", String.Empty},
-                {"\n", vbCrLf},
-                {"\r", vbCr},
-                {"\t", vbTab},
-                {"\v", String.Empty},
-                {"\b", vbBack},
-                {"\f", vbFormFeed},
-                {"\'", QUOT_CHAR},
-                {"\" & QUOT_CHAR, QUOT_CHAR}}
-
-        Public Const QUOT_CHAR As Char = Chr(34)
+        Dim escapings As New Dictionary(Of String, String) From {
+ _
+            {"\o", String.Empty},
+            {"\n", vbCrLf},
+            {"\r", vbCr},
+            {"\t", vbTab},
+            {"\v", String.Empty},
+            {"\b", vbBack},
+            {"\f", vbFormFeed},
+            {"\'", ASCII.Quot},
+            {"\" & ASCII.Quot, ASCII.Quot}
+        }
 
 #Region "printf"
 
@@ -267,7 +266,7 @@ Namespace Terminal
             Return Asc(input.First) = Asc(compare)
         End Function
 
-        Public Delegate Function TryParseDelegate(Of T)(str As String, ByRef val As T) As Boolean
+        Public Delegate Function TryParseDelegate(Of T)(str$, ByRef val As T) As Boolean
 
         ''' <summary>
         ''' Read Method with Generics &amp; Delegate
@@ -283,7 +282,7 @@ Namespace Terminal
         ''' <param name="parser"></param>
         ''' <param name="_default"></param>
         ''' <returns></returns>
-        Public Function Read(Of T)(msg As String, parser As TryParseDelegate(Of T), Optional _default As T = Nothing) As T
+        Public Function Read(Of T)(msg$, parser As TryParseDelegate(Of T), Optional _default As T = Nothing) As T
             Dim line As String
             Dim value As T
             Do
