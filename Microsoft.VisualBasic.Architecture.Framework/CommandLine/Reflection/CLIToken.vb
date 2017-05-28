@@ -70,7 +70,7 @@ Namespace CommandLine.Reflection
                 Return Nothing
             Else
                 Dim method As MethodInfo = dll _
-                    .GetMethods(PublicProperty) _
+                    .GetMethods(PublicShared) _
                     .Where(Function(m) m.Name.TextEquals(entry.Value)) _
                     .FirstOrDefault
                 Return method
