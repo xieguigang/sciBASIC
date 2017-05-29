@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e84da21a637793fd85ff25fc85c42ced, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\YamlDirective.vb"
+﻿#Region "Microsoft.VisualBasic::f035499f3da55ee4ebf1e5ca504d181d, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\YamlDirective.vb"
 
     ' Author:
     ' 

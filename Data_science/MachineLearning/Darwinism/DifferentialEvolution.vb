@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3839a315ba7ecf0241e811fe0b3c42d8, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\DifferentialEvolution.vb"
+﻿#Region "Microsoft.VisualBasic::efceb749da8e912cfdaa16d7233d1034, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
     ' Author:
     ' 

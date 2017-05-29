@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f3bc8d275a7175a49e1a99b96abaef9, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\TreeAPI\Operations.vb"
+﻿#Region "Microsoft.VisualBasic::668a12bc35549ae0f9aaf1919ecd7b71, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\TreeAPI\Operations.vb"
 
     ' Author:
     ' 

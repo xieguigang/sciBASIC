@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d70f1f5ae2ac22871c58440d846f790, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\FuzzyCmeansVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::2e207c72f798d06958e312d46f305aec, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\FuzzyCmeansVisualize.vb"
 
     ' Author:
     ' 
@@ -161,4 +161,3 @@ Module FuzzyCMeansVisualize
             .Save("./CMeans.png")
     End Sub
 End Module
-

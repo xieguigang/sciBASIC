@@ -34,7 +34,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\x86\Debug\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -417,11 +417,11 @@
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Extensions\WebServices\GZStream.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
-    <Compile Include="Language\C\Vector.vb" />
-    <Compile Include="Language\Java\Collections.vb" />
-    <Compile Include="Language\Java\Reflection.vb" />
-    <Compile Include="Language\List%28Of T%29.vb" />
-    <Compile Include="Language\Perl\die.vb" />
+    <Compile Include="Language\lang\C\Vector.vb" />
+    <Compile Include="Language\lang\Java\Collections.vb" />
+    <Compile Include="Language\lang\Java\Reflection.vb" />
+    <Compile Include="Language\Linq\List%28Of T%29.vb" />
+    <Compile Include="Language\lang\Perl\die.vb" />
     <Compile Include="Scripting\Expressions\Selector.vb" />
     <Compile Include="Scripting\VBLanguage.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
@@ -449,9 +449,9 @@
     <Compile Include="ComponentModel\ValuePair\Binding.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="ComponentModel\ValuePair\Triple.vb" />
-    <Compile Include="Language\UnixBash\ShellSyntax.vb" />
-    <Compile Include="Language\UnixBash\Shell\tree.vb" />
-    <Compile Include="Language\UnixBash\Shell\rm.vb" />
+    <Compile Include="Language\lang\UnixBash\ShellSyntax.vb" />
+    <Compile Include="Language\lang\UnixBash\Shell\tree.vb" />
+    <Compile Include="Language\lang\UnixBash\Shell\rm.vb" />
     <Compile Include="Language\Value\IfValue.vb" />
     <Compile Include="Language\Value\Numeric\int.vb" />
     <Compile Include="Language\Value\Numeric\float.vb" />
@@ -495,33 +495,33 @@
     <Compile Include="Extensions\StringHelpers\Wildcards.vb" />
     <Compile Include="Extensions\WebServices\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
-    <Compile Include="Language\C\RandomNumbers.vb" />
-    <Compile Include="Language\Java\Arrays.vb" />
-    <Compile Include="Language\LanguageExtensions.vb" />
-    <Compile Include="Language\Python\Array.vb" />
-    <Compile Include="Language\Python\Regexp.vb" />
+    <Compile Include="Language\lang\C\RandomNumbers.vb" />
+    <Compile Include="Language\lang\Java\Arrays.vb" />
+    <Compile Include="Language\Linq\LanguageExtensions.vb" />
+    <Compile Include="Language\lang\Python\Array.vb" />
+    <Compile Include="Language\lang\Python\Regexp.vb" />
     <Compile Include="Language\Value\Value.vb" />
-    <Compile Include="Language\Python\Collection.vb" />
-    <Compile Include="Language\Python\NamedTuple.vb" />
+    <Compile Include="Language\lang\Python\Collection.vb" />
+    <Compile Include="Language\lang\Python\NamedTuple.vb" />
     <Compile Include="Parallel\Threads\ThreadPool.vb" />
     <Compile Include="Serialization\JSON\SchemaProvider\Markdown.vb" />
     <Compile Include="Serialization\JSON\SchemaProvider\Extensions.vb" />
     <Compile Include="Serialization\JSON\SchemaProvider\VisualBasicCode.vb" />
     <Compile Include="Serialization\JSON\SchemaProvider\Schema.vb" />
     <Compile Include="Text\ASCII.vb" />
-    <Compile Include="Language\Perl\Tools.vb" />
+    <Compile Include="Language\lang\Perl\Tools.vb" />
     <Compile Include="Language\Value\Pointer.vb" />
-    <Compile Include="Language\Java\JavaMath.vb" />
-    <Compile Include="Language\Java\LogTricks.vb" />
-    <Compile Include="Language\Java\MathUtils.vb" />
-    <Compile Include="Language\Java\MersenneTwisterFast.vb" />
+    <Compile Include="Language\lang\Java\JavaMath.vb" />
+    <Compile Include="Language\lang\Java\LogTricks.vb" />
+    <Compile Include="Language\lang\Java\MathUtils.vb" />
+    <Compile Include="Language\lang\Java\MersenneTwisterFast.vb" />
     <Compile Include="Language\Value\Uid.vb" />
-    <Compile Include="Language\C\CString.vb" />
-    <Compile Include="Language\C\File.vb" />
+    <Compile Include="Language\lang\C\CString.vb" />
+    <Compile Include="Language\lang\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
     <None Include="Extensions\Reflection\Delegate\README.md" />
     <None Include="Parallel\Threads\LQuerySchedule\ParallelLinq.md" />
-    <Compile Include="Language\UnixBash\PS1.vb" />
+    <Compile Include="Language\lang\UnixBash\PS1.vb" />
     <Compile Include="Parallel\Tasks\IParallelTask.vb" />
     <Compile Include="Parallel\Tasks\__backgroundTask%28Of T%29.vb" />
     <Compile Include="Parallel\Threads\BatchTasks.vb" />
@@ -568,8 +568,8 @@
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
     <Compile Include="Language\NET40_Compatible.vb" />
-    <Compile Include="Language\UnixBash\FileSystem\PathMapper.vb" />
-    <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
+    <Compile Include="Language\lang\UnixBash\FileSystem\PathMapper.vb" />
+    <Compile Include="Language\lang\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
     <Compile Include="Scripting\MetaData\Author.vb" />
     <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
@@ -600,7 +600,7 @@
     <None Include="app.config" />
     <None Include="Terminal\xConsole\TestProgram.txt" />
     <Compile Include="Terminal\xConsole\xConsole.vb" />
-    <Compile Include="Language\UnixBash\Cowsay.vb" />
+    <Compile Include="Language\lang\UnixBash\Cowsay.vb" />
     <Compile Include="Extensions\App.vb" />
     <Compile Include="Extensions\CodeDOM\CodeDOM.vb" />
     <Compile Include="Extensions\CodeDOM\CodeDOMExpressions.vb" />
@@ -638,15 +638,15 @@
     <Compile Include="Extensions\Reflection\Marshal\Pointer%28Of T%29.vb" />
     <Compile Include="Extensions\Security\Md5HashProvider.vb" />
     <Compile Include="Extensions\StringHelpers\Parser.vb" />
-    <Compile Include="Language\Linq.vb" />
+    <Compile Include="Language\Linq\Linq.vb" />
     <Compile Include="Text\IO\UnbufferedStringReader.vb" />
     <Compile Include="Text\Parser\HtmlParser\Table.vb" />
     <Compile Include="Language\Class.vb" />
-    <Compile Include="Language\UnixBash\Shell\ls.vb" />
-    <Compile Include="Language\UnixBash\FileSystem\File.vb" />
+    <Compile Include="Language\lang\UnixBash\Shell\ls.vb" />
+    <Compile Include="Language\lang\UnixBash\FileSystem\File.vb" />
     <Compile Include="Language\ClassObject.vb" />
     <Compile Include="Language\Value\Numeric\Numeric.vb" />
-    <Compile Include="Language\UnixBash\Shell\Text\Grep.vb" />
+    <Compile Include="Language\lang\UnixBash\Shell\Text\Grep.vb" />
     <Compile Include="Tools\MMFProtocol\WorkFlow.vb" />
     <Compile Include="Parallel\Tasks\CallbackTask.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
@@ -839,7 +839,7 @@
     <Compile Include="Tools\MMFProtocol\ProcessLock.vb" />
     <Compile Include="Terminal\STDIO__\Shell.vb" />
     <Compile Include="Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
-    <Compile Include="Language\C\CFormatProvider.vb" />
+    <Compile Include="Language\lang\C\CFormatProvider.vb" />
     <Compile Include="Terminal\STDIO__\STDIO.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cea49925c31a060e3065bf17e855ff0, ..\sciBASIC#\mime\JSON\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0cea49925c31a060e3065bf17e855ff0, ..\sciBASIC#\mime\application%json\Extensions.vb"
 
     ' Author:
     ' 

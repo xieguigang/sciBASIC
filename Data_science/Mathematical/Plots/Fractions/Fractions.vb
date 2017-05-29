@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b8d717c3fa6be24340d8ae1da09efb4, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\Fractions.vb"
+﻿#Region "Microsoft.VisualBasic::87d9289a9682e7e33711b6da07412296, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\Fractions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a604fc0fa89272a9fbed5be6af7ae996, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\BinaryTree\NodeTrees.vb"
+﻿#Region "Microsoft.VisualBasic::2cdcecd241e5281ced053e49a3ec3456, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\NodeTrees.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream

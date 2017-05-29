@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c6d2b2ed235cf6c0f3b51fbf35c8a2c, ..\R.Bioconductor\RDotNET.Extensions.VisualBasic\ScriptBuilder\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::53abe4e5e4d64ffa5e3c46fc18990178, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 

@@ -1,13 +1,41 @@
+ï»¿#Region "Microsoft.VisualBasic::87c5003ac44f8c8b74c1bf521f75f530, ..\sciBASIC#\Data_science\SVM\SVM\model\ColorClass.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Namespace Model
 
     ''' <summary>
     ''' http://blog.csdn.net/v_july_v/article/details/7624837
     ''' 
-    ''' ###### ÏßÐÔ·ÖÀà
+    ''' ###### ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½
     ''' 
-    ''' ÏÖÔÚÓÐÒ»¸ö¶þÎ¬Æ½Ãæ£¬Æ½ÃæÉÏÓÐÁ½ÖÖ²»Í¬µÄÊý¾Ý£¬·Ö±ðÓÃÈ¦ºÍ²æ±íÊ¾¡£ÓÉÓÚÕâÐ©Êý¾ÝÊÇÏßÐÔ¿É·ÖµÄ£¬
-    ''' ËùÒÔ¿ÉÒÔÓÃÒ»ÌõÖ±Ïß½«ÕâÁ½ÀàÊý¾Ý·Ö¿ª£¬ÕâÌõÖ±Ïß¾ÍÏàµ±ÓÚÒ»¸ö³¬Æ½Ãæ£¬³¬Æ½ÃæÒ»±ßµÄÊý¾ÝµãËù
-    ''' ¶ÔÓ¦µÄyÈ«ÊÇ-1 £¬ÁíÒ»±ßËù¶ÔÓ¦µÄyÈ«ÊÇ1
+    ''' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Î¬Æ½ï¿½æ£¬Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½Ö±ï¿½ï¿½ï¿½È¦ï¿½Í²ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿É·ÖµÄ£ï¿½
+    ''' ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ö±ï¿½ß½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ß¾ï¿½ï¿½àµ±ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Æ½ï¿½æ£¬ï¿½ï¿½Æ½ï¿½ï¿½Ò»ï¿½ßµï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½
+    ''' ï¿½ï¿½Ó¦ï¿½ï¿½yÈ«ï¿½ï¿½-1 ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½yÈ«ï¿½ï¿½1
     ''' </summary>
     Public Enum ColorClass As Integer
         RED = 1

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbd797200e10bd66542121d9ab6a2cbd, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\MarginalLikelihoodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::fbd797200e10bd66542121d9ab6a2cbd, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\MarginalLikelihoodAnalysis.vb"
 
     ' Author:
     ' 

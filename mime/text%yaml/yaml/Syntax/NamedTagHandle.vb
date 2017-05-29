@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81cd4785f6cade6f9c2e768169583430, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\NamedTagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::e405bac50dde3a087f4cb30b181b5f9b, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\NamedTagHandle.vb"
 
     ' Author:
     ' 

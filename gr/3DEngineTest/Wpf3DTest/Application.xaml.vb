@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0eaeb3999dc46e91f89dc89bc13e0060, ..\sciBASIC#\gr\3DEngineTest\Wpf3DTest\Application.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::fa2210cd5c3560f714e02e69336d201f, ..\sciBASIC#\gr\3DEngineTest\Wpf3DTest\Application.xaml.vb"
 
     ' Author:
     ' 
@@ -32,4 +32,3 @@ Class Application
     ' can be handled in this file.
 
 End Class
-
