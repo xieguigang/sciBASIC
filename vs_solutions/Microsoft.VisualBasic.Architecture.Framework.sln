@@ -19,7 +19,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathe
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots", "..\Data_science\Mathematical\Plots\Plots.vbproj", "{17F8E821-0A01-4975-9CAA-AC95251226D5}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Framework", "..\Data_science\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj", "{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Framework", "..\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj", "{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{AD648A47-8288-4CD1-87BA-B249EDEEC545}"
 EndProject
@@ -47,11 +47,11 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Landscape", "..\gr\Landscap
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataMining", "DataMining", "{A91588CF-3CD5-42B2-9EBE-A5C428DB8A9E}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Model.Network", "..\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\Microsoft.VisualBasic.DataMining.Model.Network.vbproj", "{3A114030-D9FD-4913-8E85-A78C032E9000}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Model.Network", "..\Data_science\DataMining\Network\Microsoft.VisualBasic.DataMining.Model.Network.vbproj", "{3A114030-D9FD-4913-8E85-A78C032E9000}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "..\Data_science\MachineLearning\MachineLearning.vbproj", "{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "hierarchical-clustering", "..\Data_science\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj", "{6CA54AF6-CADC-457E-94B9-384F2990F07E}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "hierarchical-clustering", "..\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj", "{6CA54AF6-CADC-457E-94B9-384F2990F07E}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "yaml", "..\mime\text%yaml\yaml\yaml.vbproj", "{FB637DE6-6BEB-4722-968A-F76DEB851DFC}"
 EndProject
