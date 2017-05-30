@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::8121b0734fb0ac171015b7fdbb22534e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\STDIO__\STDIO.vb"
+﻿#Region "Microsoft.VisualBasic::4453fc282c91f519c82f5a208f0eec10, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\STDIO__\STDIO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -290,7 +290,7 @@ Namespace Terminal
                 Call Console.Write(msg)
 
                 If Not _default.StringEmpty Then
-                    Call Console.Write($"<default={_default}>")
+                    Call Console.Write($" <default={_default}>")
                 End If
 
                 Call Console.Write(": ")
@@ -330,9 +330,9 @@ Namespace Terminal
             End If
         End Sub
 
-        Public Function InputPassword(Optional prompt$ = "Please input your password:", Optional maxLength% = 20) As String
+        Public Function InputPassword(Optional prompt$ = "input your password", Optional maxLength% = 20) As String
             Dim pass$ = Nothing
-            Call Console.WriteLine(prompt)
+            Call Console.Write(prompt & ": ")
             Call New ConsolePasswordInput().PasswordInput(pass, maxLength)
             Return pass
         End Function

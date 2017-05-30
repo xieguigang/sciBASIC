@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ac283efbb1401b537605e1965db8693, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\InnerQueue.vb"
+﻿#Region "Microsoft.VisualBasic::2e4ef405a11f4c7ee556a4b74a1706cf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\InnerQueue.vb"
 
     ' Author:
     ' 

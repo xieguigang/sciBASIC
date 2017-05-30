@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::171f0f403593ccfac826092a76774329, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::171f0f403593ccfac826092a76774329, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
 
     ' Author:
     ' 

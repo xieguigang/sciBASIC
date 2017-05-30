@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::937dd30bf5ef1fa39dab083c62a539c5, ..\sciBASIC#\mime\MIME_Markups\HTML\CSS\Render\CssBoxWordSplitter.vb"
+﻿#Region "Microsoft.VisualBasic::937dd30bf5ef1fa39dab083c62a539c5, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBoxWordSplitter.vb"
 
     ' Author:
     ' 

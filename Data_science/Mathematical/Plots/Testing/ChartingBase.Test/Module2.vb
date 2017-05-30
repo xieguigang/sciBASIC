@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef23829691d0416610543b6f77068c75, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\ChartingBase.Test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::87a4d0e58d678ca46a41c0205cf00704, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\ChartingBase.Test\Module2.vb"
 
     ' Author:
     ' 
@@ -62,4 +62,3 @@ Module Module2
             .Save("x:\scatter.plotHeatmap.png")
     End Sub
 End Module
-

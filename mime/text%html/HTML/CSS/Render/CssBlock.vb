@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c76cfbb8b4e52680e26c6b0f6b195e3, ..\sciBASIC#\mime\MIME_Markups\HTML\CSS\Render\CssBlock.vb"
+﻿#Region "Microsoft.VisualBasic::0c76cfbb8b4e52680e26c6b0f6b195e3, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBlock.vb"
 
     ' Author:
     ' 

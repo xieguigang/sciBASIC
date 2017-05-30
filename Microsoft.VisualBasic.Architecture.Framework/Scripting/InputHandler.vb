@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::0001392a7e574292e31858e37e8699b7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::7f6ca784c115cd5b02e32d8026e9f076, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -55,33 +55,33 @@ Namespace Scripting
         ''' Object为字符串类型，这个字典可以讲字符串转为目标类型
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property CasterString As Dictionary(Of Type, Func(Of String, Object)) =
-            New Dictionary(Of Type, Func(Of String, Object)) From {
-                {GetType(String), Function(s$) s},
-                {GetType(Char), AddressOf Casting.CastChar},
-                {GetType(Integer), AddressOf Casting.CastInteger},
-                {GetType(Double), AddressOf Casting.ParseNumeric},
-                {GetType(Long), AddressOf Casting.CastLong},
-                {GetType(Boolean), AddressOf getBoolean},
-                {GetType(Char()), AddressOf Casting.CastCharArray},
-                {GetType(Date), AddressOf Casting.CastDate},
-                {GetType(StringBuilder), AddressOf Casting.CastStringBuilder},
-                {GetType(CommandLine.CommandLine), AddressOf Casting.CastCommandLine},
-                {GetType(Image), AddressOf Casting.CastImage},
-                {GetType(FileInfo), AddressOf Casting.CastFileInfo},
-                {GetType(Graphics2D), AddressOf Casting.CastGDIPlusDeviceHandle},
-                {GetType(Color), AddressOf ToColor},
-                {GetType(Font), AddressOf Casting.CastFont},
-                {GetType(System.Net.IPEndPoint), AddressOf Casting.CastIPEndPoint},
-                {GetType(Logging.LogFile), AddressOf Casting.CastLogFile},
-                {GetType(Process), AddressOf Casting.CastProcess},
-                {GetType(RegexOptions), AddressOf Casting.CastRegexOptions},
-                {GetType(Single), AddressOf Casting.CastSingle},
-                {GetType(Decimal), Function(x) CDec(x)},
-                {GetType(Point), AddressOf PointParser},
-                {GetType(PointF), AddressOf FloatPointParser},
-                {GetType(Size), AddressOf SizeParser},
-                {GetType(SizeF), AddressOf FloatSizeParser}
+        Public ReadOnly Property CasterString As New Dictionary(Of Type, Func(Of String, Object)) From {
+ _
+            {GetType(String), Function(s$) s},
+            {GetType(Char), AddressOf Casting.CastChar},
+            {GetType(Integer), AddressOf Casting.CastInteger},
+            {GetType(Double), AddressOf Casting.ParseNumeric},
+            {GetType(Long), AddressOf Casting.CastLong},
+            {GetType(Boolean), AddressOf getBoolean},
+            {GetType(Char()), AddressOf Casting.CastCharArray},
+            {GetType(Date), AddressOf Casting.CastDate},
+            {GetType(StringBuilder), AddressOf Casting.CastStringBuilder},
+            {GetType(CommandLine.CommandLine), AddressOf Casting.CastCommandLine},
+            {GetType(Image), AddressOf Casting.CastImage},
+            {GetType(FileInfo), AddressOf Casting.CastFileInfo},
+            {GetType(Graphics2D), AddressOf Casting.CastGDIPlusDeviceHandle},
+            {GetType(Color), AddressOf ToColor},
+            {GetType(Font), AddressOf Casting.CastFont},
+            {GetType(System.Net.IPEndPoint), AddressOf Casting.CastIPEndPoint},
+            {GetType(Logging.LogFile), AddressOf Casting.CastLogFile},
+            {GetType(Process), AddressOf Casting.CastProcess},
+            {GetType(RegexOptions), AddressOf Casting.CastRegexOptions},
+            {GetType(Single), AddressOf Casting.CastSingle},
+            {GetType(Decimal), Function(x) CDec(x)},
+            {GetType(Point), AddressOf PointParser},
+            {GetType(PointF), AddressOf FloatPointParser},
+            {GetType(Size), AddressOf SizeParser},
+            {GetType(SizeF), AddressOf FloatSizeParser}
         }
 
         ''' <summary>
@@ -136,9 +136,9 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' Dynamics updates the capability of function <see cref="InputHandler.CTypeDynamic(String, System.Type)"/>, 
-        ''' <see cref="InputHandler.CTypeDynamic(Of T)(String)"/> and 
-        ''' <see cref="InputHandler.IsPrimitive(System.Type)"/>
+        ''' Dynamics updates the capability of function <see cref="InputHandler.CTypeDynamic(String, Type)"/>, 
+        ''' <see cref="InputHandler.CTypeDynamic(Of T)(String, T)"/> and 
+        ''' <see cref="InputHandler.IsPrimitive(Type)"/>
         ''' </summary>
         ''' <param name="briefName"></param>
         ''' <param name="stringConvertType"></param>
