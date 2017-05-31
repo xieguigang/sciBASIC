@@ -834,8 +834,8 @@ Public Module Extensions
     <Extension> Public Function GetMIMEDescrib(ext$) As ContentType
         Dim key$ = LCase(ext).Trim("*"c)
 
-        If MIME.ExtDict.ContainsKey(key) Then
-            Return MIME.ExtDict(key)
+        If MIME.SuffixTable.ContainsKey(key) Then
+            Return MIME.SuffixTable(key)
         Else
             Return MIME.UnknownType
         End If
