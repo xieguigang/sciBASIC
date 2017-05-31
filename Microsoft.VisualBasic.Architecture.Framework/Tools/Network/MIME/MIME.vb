@@ -43,7 +43,7 @@ Namespace Net.Protocols.ContentTypes
         ''' 枚举出所有已知的文件拓展名列表，Key全部都是小写的 (格式: ``.ext``)
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ExtDict As IReadOnlyDictionary(Of String, ContentType)
+        Public ReadOnly Property SuffixTable As IReadOnlyDictionary(Of String, ContentType)
         ''' <summary>
         ''' 根据类型来枚举，Key全部都是小写的
         ''' </summary>
@@ -65,7 +65,7 @@ Namespace Net.Protocols.ContentTypes
         }
 
         Sub New()
-            ExtDict = My.Resources _
+            SuffixTable = My.Resources _
                 .List_of_MIME_types___Internet_Media_Types_ _
                 .lTokens _
                 .__loadContents _
@@ -73,7 +73,7 @@ Namespace Net.Protocols.ContentTypes
                 .GroupBy(Function(x) x.FileExt.ToLower) _
                 .ToDictionary(Function(x) x.Key,
                               Function(x) x.First)
-            ContentTypes = ExtDict.Values _
+            ContentTypes = SuffixTable.Values _
                 .ToDictionary(Function(x) x.MIMEType.ToLower)
         End Sub
 

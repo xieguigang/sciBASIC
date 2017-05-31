@@ -43,7 +43,7 @@ Namespace IO.Linq
     ''' (文件写入流，这个一般是在遇到非常大的文件流的时候才需要使用)
     ''' </summary>
     Public Class WriteStream(Of T As Class)
-        Implements System.IDisposable
+        Implements IDisposable
 
         ReadOnly handle As String
 

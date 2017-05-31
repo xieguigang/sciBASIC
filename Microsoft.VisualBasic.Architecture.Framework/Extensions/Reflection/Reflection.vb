@@ -524,7 +524,7 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     End Function
 
     <ExportAPI("Get.FullName")>
-    <Extension> Public Function FullName(Method As System.Reflection.MethodInfo, Optional IncludeAssembly As Boolean = False) As String
+    <Extension> Public Function FullName(Method As MethodInfo, Optional IncludeAssembly As Boolean = False) As String
         Return GetFullName(Method, IncludeAssembly)
     End Function
 
