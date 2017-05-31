@@ -909,14 +909,18 @@ Public Module Extensions
     ''' 假若这个集合是空值或者空的，则返回0，其他情况则返回Count拓展函数的结果)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="collection"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function GetElementCounts(Of T)(Collection As Generic.IEnumerable(Of T)) As Integer
-        If Collection.IsNullOrEmpty Then
+    <Extension> Public Function DataCounts(Of T)(collection As IEnumerable(Of T)) As Integer
+        If collection.IsNullOrEmpty Then
             Return 0
+        ElseIf TypeOf collection Is T() Then
+            Return DirectCast(collection, T()).Length
+        ElseIf TypeOf collection Is System.Collections.Generic.List(Of T) Then
+            Return DirectCast(collection, System.Collections.Generic.List(Of T)).Count
         Else
-            Return System.Linq.Enumerable.Count(Collection)
+            Return Enumerable.Count(collection)
         End If
     End Function
 
@@ -929,9 +933,9 @@ Public Module Extensions
     <Extension> Public Sub Free(Of T As Class)(ByRef obj As T)
         If Not obj Is Nothing Then
             Dim TypeInfo As Type = obj.GetType
-            If Array.IndexOf(TypeInfo.GetInterfaces, GetType(System.IDisposable)) > -1 Then
+            If Array.IndexOf(TypeInfo.GetInterfaces, GetType(IDisposable)) > -1 Then
                 Try
-                    Call DirectCast(obj, System.IDisposable).Dispose()
+                    Call DirectCast(obj, IDisposable).Dispose()
                 Catch ex As Exception
 
                 End Try
@@ -939,7 +943,11 @@ Public Module Extensions
         End If
 
         obj = Nothing
-        Call FlushMemory()
+
+        ' Will not working on Linux platform
+        If App.IsMicrosoftPlatform Then
+            Call FlushMemory()
+        End If
     End Sub
 
     ''' <summary>
