@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::e33a3586a2558a9eaa0ada6e2de0b238, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -42,6 +42,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
@@ -788,7 +789,7 @@ Public Module Extensions
     ''' <param name="tokens"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(tokens As IEnumerable(Of String), delimiter As String) As String
+    <Extension> Public Function JoinBy(tokens As IEnumerable(Of String), delimiter$) As String
         If tokens Is Nothing Then
             Return ""
         End If
@@ -801,7 +802,7 @@ Public Module Extensions
     ''' <param name="values"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(values As IEnumerable(Of Integer), delimiter As String) As String
+    <Extension> Public Function JoinBy(values As IEnumerable(Of Integer), delimiter$) As String
         If values Is Nothing Then
             Return ""
         End If
@@ -825,15 +826,40 @@ Public Module Extensions
         Return list
     End Function
 
-#If FRAMEWORD_CORE Then
-    <ExportAPI("File.Select", Info:="Open the file open dialog to gets the file")>
-    Public Function SelectFile(Optional ext As String = "*.*") As String
-        Using Open = New OpenFileDialog With {.Filter = $"{ext}|{ext}"}
+    ''' <summary>
+    ''' *.txt -> text
+    ''' </summary>
+    ''' <param name="ext$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function GetMIMEDescrib(ext$) As ContentType
+        Dim key$ = LCase(ext).Trim("*"c)
 
+        If MIME.ExtDict.ContainsKey(key) Then
+            Return MIME.ExtDict(key)
+        Else
+            Return MIME.UnknownType
+        End If
+    End Function
+
+#If FRAMEWORD_CORE Then
+    ''' <summary>
+    ''' Show open file dialog and return the selected file path.
+    ''' </summary>
+    ''' <param name="ext$"></param>
+    ''' <returns></returns>
+    <ExportAPI("File.Select",
+               Info:="Open the file open dialog to gets the file")>
+    Public Function SelectFile(Optional ext$ = "*.*", Optional title$ = Nothing) As String
+        Dim mime$ = ext.GetMIMEDescrib.Details
+
+        Using Open As New OpenFileDialog With {
+            .Filter = $"{ext}|{ext}",
+            .Title = If(title.StringEmpty, $"Open {mime}", title)
+        }
             If Open.ShowDialog = DialogResult.OK Then
                 Return Open.FileName
             Else
-                Return ""
+                Return Nothing
             End If
         End Using
     End Function
