@@ -103,10 +103,14 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Field = attr
             [Property] = prop
 
-            With prop
+            With prop ' Compile the property get/set as the delegate
                 __setValue = .DeclaringType.PropertySet(.Name)
                 __getValue = .DeclaringType.PropertyGet(.Name)
             End With
+        End Sub
+
+        Sub New([property] As PropertyInfo)
+            Call Me.New(Nothing, [property])
         End Sub
 
         ' Exceptions:
