@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::8a4a9a7d54908ccf4d7e2b8cd44a9b3a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Emit.Delegates
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
@@ -48,6 +49,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' The flag for this field binding.
         ''' </summary>
         Dim Field As T
+
+        ReadOnly __setValue As Action(Of Object, Object)
+        ReadOnly __getValue As Func(Of Object, Object)
+
+#Region "Property List"
 
         ''' <summary>
         ''' Gets the type of this property.
@@ -91,10 +97,20 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                 Return Scripting.IsPrimitive([Property].PropertyType)
             End Get
         End Property
+#End Region
 
         Sub New(attr As T, prop As PropertyInfo)
             Field = attr
             [Property] = prop
+
+            With prop ' Compile the property get/set as the delegate
+                __setValue = .DeclaringType.PropertySet(.Name)
+                __getValue = .DeclaringType.PropertyGet(.Name)
+            End With
+        End Sub
+
+        Sub New([property] As PropertyInfo)
+            Call Me.New(Nothing, [property])
         End Sub
 
         ' Exceptions:
@@ -128,7 +144,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <param name="obj">The object whose property value will be set.</param>
         ''' <param name="value">The new property value.</param>
         Public Sub SetValue(obj As Object, value As Object) Implements IProperty.SetValue
-            Call [Property].SetValue(obj, value, Nothing)
+            Call __setValue(obj, value)
         End Sub
 
         ' Exceptions:
@@ -162,7 +178,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <param name="x">The object whose property value will be returned.</param>
         ''' <returns>The property value of the specified object.</returns>
         Public Function GetValue(x As Object) As Object Implements IProperty.GetValue
-            Return [Property].GetValue(x, Nothing)
+            Return __getValue(x)
         End Function
 
         ''' <summary>
@@ -173,12 +189,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return $"Dim {[Property].Name} As {[Property].PropertyType.ToString}"
         End Function
 
-        Public Shared Function FromHash(x As KeyValuePair(Of T, PropertyInfo)) As BindProperty(Of T)
+        Public Shared Function FromSchemaTable(x As KeyValuePair(Of T, PropertyInfo)) As BindProperty(Of T)
             Return New BindProperty(Of T) With {
                 .Field = x.Key,
                 .Property = x.Value
             }
         End Function
-
     End Structure
 End Namespace
