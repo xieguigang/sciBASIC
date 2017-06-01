@@ -64,7 +64,7 @@ Namespace Emit.Delegates
         '            .Select(Function(x) DirectCast([property].__getValue(x), V)) _
         '            .ToArray
         '    End Get
-        '    Set(value As V())
+        '    Set(ParamArray value As V())
         '        Dim [property] As New BindProperty(Of DataFrameColumnAttribute)(properties(name))
 
         '        If value.IsNullorEmpty Then  
@@ -103,9 +103,9 @@ Namespace Emit.Delegates
 
         Private Shared Sub TestDEMO()
             Dim vector As NamedValue(Of String)() = {}
-            Dim previousData As String() = Linq.DATA(vector).Evaluate("Value")
+            Dim previousData() = Linq.DATA(vector).Evaluate("Value")
 
-            Linq.DATA(vector).Evaluate("Value") = {} ' set all value property to nothing
+            Linq.DATA(vector).Evaluate("Value") = {}    ' set all value property to nothing
             Linq.DATA(vector).Evaluate("Value") = {"1"} ' set all value property to a specifc value "1"
             Linq.DATA(vector).Evaluate("Value") = {"1", "2", "3"}
         End Sub
