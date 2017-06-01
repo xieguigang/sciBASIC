@@ -2,7 +2,7 @@
 
 Easy way to create delegates for obtaining/using all member types (fields, properties, indexers, methods, constructors and events) of all types (public and non public) and all visibilities (public, internal, protected and private)
 
-Github: https://github.com/npodbielski/Delegates
+> Original works from Github: https://github.com/npodbielski/Delegates
 
 Code is written as an example for articles:
 
@@ -16,11 +16,11 @@ Articles are also available on CodeProject:
 + http://www.codeproject.com/Articles/1124966/Faster-than-Reflection-Delegates-Part - part 2
 + http://www.codeproject.com/Articles/1124863/Faster-than-Reflection-Delegates-Part - part 3
 
-##Examples
+## Examples
 
 Below few examples of use of DelegateFactory
 
-###Constructors
+### Constructors
 
 ```vbnet
 Dim cd = DelegateFactory.DefaultContructor(Of TestClass)()
@@ -29,9 +29,9 @@ Dim c2 = DelegateFactory.Contructor(Of Func(Of int, TestClass))()
 Dim c3 = Type.Contructor(GetType(Microsoft.VisualBasic.Language.int))
 ```
 
-###Static Properties
+### Static Properties
 
-####Getters
+#### Getters
 
 ```vbnet
 Dim spg1 = DelegateFactory.StaticPropertyGet(Of TestClass, String)("StaticPublicProperty")
@@ -39,7 +39,7 @@ Dim spg2 = Type.StaticPropertyGet(Of String)("StaticPublicProperty")
 Dim spg3 = Type.StaticPropertyGet("StaticPublicProperty")
 ```
 
-####Setters
+#### Setters
 
 ```vbnet
 Dim sps1 = DelegateFactory.StaticPropertySet(Of TestClass, String)("StaticPublicProperty")
@@ -47,9 +47,9 @@ Dim sps2 = Type.StaticPropertySet(Of String)("StaticPublicProperty")
 Dim sps3 = Type.StaticPropertySet("StaticPublicProperty")
 ```
 
-###Instance Properties
+### Instance Properties
 
-####Getters
+#### Getters
 
 ```vbnet
 Dim pg1 = DelegateFactory.PropertyGet(Of TestClass, String)("PublicProperty")
@@ -57,7 +57,7 @@ Dim pg2 = Type.PropertyGet(Of String)("PublicProperty")
 Dim pg3 = Type.PropertyGet("PublicProperty")
 ```
 
-####Setters
+#### Setters
 
 ```vbnet
 Dim ps1 = DelegateFactory.PropertySet(Of TestClass, String)("PublicProperty")
@@ -65,9 +65,9 @@ Dim ps2 = Type.PropertySet(Of String)("PublicProperty")
 Dim ps3 = Type.PropertySet("PublicProperty")
 ```
 
-###Indexers
+### Indexers
 
-####Getters
+#### Getters
 
 ```vbnet
 Dim ig1 = DelegateFactory.IndexerGet(Of TestClass, int, int)()
@@ -75,7 +75,7 @@ Dim ig2 = Type.IndexerGet(Of int, int)()
 Dim ig3 = Type.IndexerGet(GetType(int), GetType(int))
 ```
 
-####Setters
+#### Setters
 
 ```vbnet
 Dim is1 = DelegateFactory.IndexerSet(Of TestClass, int, int)()
@@ -83,9 +83,9 @@ Dim is2 = Type.IndexerSet(GetType(int), GetType(int))
 Dim is3 = Type.IndexerSet(Of int, int)()
 ```
 
-###Static Fields
+### Static Fields
 
-####Get value
+#### Get value
 
 ```vbnet
 Dim sfg1 = DelegateFactory.StaticFieldGet(Of TestClass, String)("StaticPublicField")
@@ -93,7 +93,7 @@ Dim sfg2 = Type.StaticFieldGet(Of String)("StaticPublicField")
 Dim sfg3 = Type.StaticFieldGet("StaticPublicField")
 ```
 
-####Set value
+#### Set value
 
 ```vbnet
 Dim sfs1 = DelegateFactory.StaticFieldSet(Of TestClass, String)("StaticPublicField")
@@ -101,9 +101,9 @@ Dim sfs2 = Type.StaticFieldSet(Of String)("StaticPublicField")
 Dim sfs3 = Type.StaticFieldSet("StaticPublicField")
 ```
 
-###Instance Fields
+### Instance Fields
 
-####Get value
+#### Get value
 
 ```vbnet
 Dim fg1 = DelegateFactory.FieldGet(Of TestClass, String)("PublicField")
@@ -111,7 +111,7 @@ Dim fg2 = Type.FieldGet(Of String)("PublicField")
 Dim fg3 = Type.FieldGet("PublicField")
 ```
 
-####Set value
+#### Set value
 
 ```vbnet
 Dim fs1 = DelegateFactory.FieldSet(Of TestClass, String)("PublicField")
@@ -119,7 +119,7 @@ Dim fs2 = Type.FieldSet(Of String)("PublicField")
 Dim fs3 = Type.FieldSet("PublicField")
 ```
 
-###Static Methods
+### Static Methods
 
 ```vbnet
 Dim sm1 = DelegateFactory.StaticMethod(Of TestClass, Func(Of String, String))("StaticPublicMethod")
@@ -128,7 +128,7 @@ Dim sm3 = Type.StaticMethod("StaticPublicMethod", GetType(String))
 Dim sm4 = Type.StaticMethodVoid("StaticPublicMethodVoid", GetType(String))
 ```
 
-###Instance Methods
+### Instance Methods
 
 ```vbnet
 Dim m1 = DelegateFactory.InstanceMethod(Of Func(Of TestClass, String, String))("PublicMethod")
@@ -137,9 +137,9 @@ Dim m3 = Type.InstanceMethod("PublicMethod", GetType(String))
 Dim m4 = Type.InstanceMethodVoid("PublicMethodVoid", GetType(String))
 ```
 
-###Generic Methods
+### Generic Methods
 
-####Static
+#### Static
 
 ```vbnet
 Dim sg1 = DelegateFactory.StaticMethod(Of TestClass, Func(Of TestClass, TestClass), TestClass)("StaticGenericMethod")
@@ -148,7 +148,7 @@ Dim sg3 = Type.StaticGenericMethod("StaticGenericMethod", { Type }, { Type })
 Dim sg4 = Type.StaticGenericMethodVoid("StaticGenericMethodVoid", { Type }, { Type })
 ```
 
-####Instance
+#### Instance
 
 ```vbnet
 Dim ig1 = DelegateFactory.InstanceMethod(Of Func(Of TestClass, TestClass, TestClass), TestClass)("GenericMethod")
@@ -158,9 +158,9 @@ Dim ig4 = Type.InstanceGenericMethod("GenericMethod", { Type }, { Type })
 Dim ig5 = Type.InstanceGenericMethodVoid("GenericMethodVoid", { Type }, { Type })
 ```
 
-###Events
+### Events
 
-####Add Accessors
+#### Add Accessors
 
 ```vbnet
 Dim ea1 = DelegateFactory.EventAdd(Of TestClass, TestClass.PublicEventArgs)("PublicEvent")
@@ -168,7 +168,7 @@ Dim ea2 = Type.EventAdd(Of TestClass.PublicEventArgs)("PublicEvent")
 Dim ea3 = Type.EventAdd("PrivateEvent")
 ```
 
-####Remove Accessors
+#### Remove Accessors
 
 ```vbnet
 Dim er1 = DelegateFactory.EventRemove(Of TestClass, TestClass.PublicEventArgs)("PublicEvent")
