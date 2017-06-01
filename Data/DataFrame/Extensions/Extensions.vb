@@ -355,7 +355,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="path"></param>
-    ''' <param name="explicit">
+    ''' <param name="strict">
     ''' If true then all of the simple data type property its value will be save to the data file,
     ''' if not then only save the property with the <see cref="ColumnAttribute"></see>
     ''' </param>
@@ -365,7 +365,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <remarks></remarks>
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
                                              path$,
-                                             Optional explicit As Boolean = False,
+                                             Optional strict As Boolean = False,
                                              Optional encoding As Encoding = Nothing,
                                              Optional metaBlank As String = "",
                                              Optional nonParallel As Boolean = False,
@@ -383,7 +383,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source.Select(Function(o) DirectCast(o, Object)),
             GetType(T),
-            explicit,
+            strict,
             maps,
             Not nonParallel,
             metaBlank, reorderKeys)
