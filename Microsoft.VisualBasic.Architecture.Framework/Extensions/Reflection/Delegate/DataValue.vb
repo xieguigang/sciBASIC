@@ -6,7 +6,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Namespace Emit.Delegates
 
     ''' <summary>
-    ''' 将属性的<see cref="PropertyInfo.SetValue(Object, Object)"/>编译为方法调用
+    ''' .NET object collection data property value ``get/set`` helper.
+    ''' (将属性的<see cref="PropertyInfo.SetValue(Object, Object)"/>编译为方法调用)
     ''' </summary>
     Public Class DataValue(Of T)
 
