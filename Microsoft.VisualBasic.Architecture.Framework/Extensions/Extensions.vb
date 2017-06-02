@@ -1593,63 +1593,6 @@ Public Module Extensions
     ''' </summary>
     Public Const Scan0 As Integer = 0
 
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
-    ''' then function will return the string value from the ToString() function.
-    ''' </summary>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("Get.Description",
-               Info:="Get the description data from a enum type value, if the target have no <see cref=""DescriptionAttribute""></see> attribute data then function will return the string value from the ToString() function.")>
-    <Extension> Public Function Description(value As [Enum]) As String
-#Else
-    ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
-    ''' then function will return the string value from the ToString() function.
-    ''' </summary>
-    ''' <param name="e"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function Description(value As [Enum]) As String
-#End If
-        Dim type As Type = value.GetType()
-        Dim s As String = value.ToString
-        Dim memInfos As MemberInfo() = type.GetMember(name:=s)
-
-        If memInfos.IsNullOrEmpty Then
-            Return s
-        End If
-
-        Dim customAttrs As Object() =
-            memInfos(Scan0).GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
-
-        If Not customAttrs.IsNullOrEmpty Then
-            Return DirectCast(customAttrs(Scan0), DescriptionAttribute).Description
-        Else
-            Return s
-        End If
-    End Function
-
-    ''' <summary>
-    ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.(只允许枚举类型，其他的都返回空集合)
-    ''' </summary>
-    ''' <typeparam name="T">泛型类型约束只允许枚举类型，其他的都返回空集合</typeparam>
-    ''' <returns></returns>
-    Public Function Enums(Of T)() As T()
-        Dim EnumType As Type = GetType(T)
-        If Not EnumType.IsInheritsFrom(GetType(System.Enum)) Then
-            Return Nothing
-        End If
-
-        Dim EnumValues As Object() =
-            Scripting.CastArray(Of System.Enum)(EnumType.GetEnumValues).ToArray(Of Object)(
-                Function(ar) DirectCast(ar, Object))
-        Dim values As T() = EnumValues.ToArray(Of T)(Function([enum]) DirectCast([enum], T))
-        Return values
-    End Function
-
     ''' <summary>
     ''' 函数只返回有重复的数据
     ''' </summary>
