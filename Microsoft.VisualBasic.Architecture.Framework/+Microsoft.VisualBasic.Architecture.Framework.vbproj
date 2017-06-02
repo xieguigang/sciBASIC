@@ -410,6 +410,7 @@
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
     <Compile Include="Extensions\Image\GDI+\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
+    <Compile Include="Extensions\Math\Correlations\Ranking.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
     <Compile Include="Extensions\Math\ScientificNotation.vb" />
     <Compile Include="Extensions\Reflection\Delegate\DataValue.vb" />
@@ -630,8 +631,8 @@
     <Compile Include="Extensions\Image\TiffWriter.vb" />
     <Compile Include="Extensions\Image\ImageFormat.vb" />
     <Compile Include="Extensions\IO\NetFile.vb" />
-    <Compile Include="Extensions\Math\Correlations.vb" />
-    <Compile Include="Extensions\Math\Ranks.vb" />
+    <Compile Include="Extensions\Math\Correlations\Correlations.vb" />
+    <Compile Include="Extensions\Math\Correlations\Ranks.vb" />
     <Compile Include="Extensions\Math\Random\RandomExtensions.vb" />
     <Compile Include="Extensions\Math\ScaleMaps.vb" />
     <Compile Include="ComponentModel\DataStructures\Pointer.vb" />
