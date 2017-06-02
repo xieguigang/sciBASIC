@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::44aad776ffc1cd8473882bdf1130f9fa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -376,7 +376,7 @@ NULL:       If Not strict Then
         End If
     End Function
 
-    #If FRAMEWORD_CORE Then
+#If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
     ''' then function will return the string value from the ToString() function.
@@ -405,13 +405,20 @@ NULL:       If Not strict Then
             Return s
         End If
 
-        Dim customAttrs As Object() =
-            memInfos(Scan0).GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
+        Return memInfos _
+            .First _
+            .Description([default]:=s)
+    End Function
+
+    <Extension> Public Function Description(m As MemberInfo, Optional default$ = Nothing) As String
+        Dim customAttrs() = m.GetCustomAttributes(
+            GetType(DescriptionAttribute),
+            inherit:=False)
 
         If Not customAttrs.IsNullOrEmpty Then
             Return DirectCast(customAttrs(Scan0), DescriptionAttribute).Description
         Else
-            Return s
+            Return [default]
         End If
     End Function
 
@@ -427,8 +434,11 @@ NULL:       If Not strict Then
         End If
 
         Dim EnumValues As Object() =
-            Scripting.CastArray(Of System.Enum)(EnumType.GetEnumValues).ToArray(Of Object)(
-                Function(ar) DirectCast(ar, Object))
+            Scripting _
+            .CastArray(Of System.Enum)(EnumType.GetEnumValues) _
+            .ToArray(Of Object)(Function(ar)
+                                    Return DirectCast(ar, Object)
+                                End Function)
         Dim values As T() = EnumValues.ToArray(Of T)(Function([enum]) DirectCast([enum], T))
         Return values
     End Function
@@ -440,7 +450,7 @@ NULL:       If Not strict Then
     ''' <returns></returns>
 #If FRAMEWORD_CORE Then
     <ExportAPI("Get.Properties")>
-    <Extension> Public Function GetReadWriteProperties(type As System.Type) As System.Reflection.PropertyInfo()
+    <Extension> Public Function GetReadWriteProperties(type As System.Type) As PropertyInfo()
 #Else
     <Extension> Public Function GetReadWriteProperties(type As System.Type) As System.Reflection.PropertyInfo()
 #End If

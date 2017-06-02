@@ -440,7 +440,7 @@ Namespace CommandLine
                 cmdAttr = DirectCast(attrs(0), ExportAPIAttribute)
                 commandInfo = New APIEntryPoint(cmdAttr, methodInfo, [throw]) ' 在这里将外部的属性标记和所属的函数的入口点进行连接
                 If cmdAttr.Info.StringEmpty Then
-                    cmdAttr.Info = methodInfo.description ' 帮助信息的获取兼容系统的Description方法
+                    cmdAttr.Info = methodInfo.Description ' 帮助信息的获取兼容系统的Description方法
                 End If
 
                 Return commandInfo
