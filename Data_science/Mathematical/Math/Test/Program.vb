@@ -38,10 +38,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module Program
 
     Sub RankingTest()
-        Dim A = 1, B = 2, C = 2, D = 3
-
-        Call {A, B, C, D}.OrdinalRanking.GetJson.__DEBUG_ECHO
-
+        Call {1, 2, 2, 3}.OrdinalRanking.GetJson.__DEBUG_ECHO
+        Call {1.0, 1.0, 2.0, 3.0, 3.0, 4.0, 5.0, 5.0, 5.0}.FractionalRanking.GetJson.__DEBUG_ECHO
     End Sub
 
     Public Function Hash(key$) As Long
