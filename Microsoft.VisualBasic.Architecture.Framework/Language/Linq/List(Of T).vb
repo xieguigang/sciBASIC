@@ -43,10 +43,7 @@ Namespace Language
     ''' </summary>
     ''' <typeparam name="T">The type of elements in the list.</typeparam>
     Public Class List(Of T) : Inherits Generic.List(Of T)
-        ' Implements IEnumerable(Of Value(Of T))
-
-        Dim __index As Pointer
-
+        
 #Region "Improvements Index"
 
         Public Property Last As T
@@ -172,7 +169,7 @@ Namespace Language
 #End Region
 
         ''' <summary>
-        ''' Initializes a new instance of the <see cref="List"/>`1 class that
+        ''' Initializes a new instance of the <see cref="List(Of T)"/> class that
         ''' contains elements copied from the specified collection and has sufficient capacity
         ''' to accommodate the number of elements copied.
         ''' (这是一个安全的构造函数，假若输入的参数为空值，则只会创建一个空的列表，而不会抛出错误)
@@ -221,7 +218,8 @@ Namespace Language
         'End Sub
 
         ''' <summary>
-        ''' Pop all of the elements value in to array from the list object and then clear all of the list data.
+        ''' Pop all of the elements value in to array from the list object 
+        ''' and then clear all of the <see cref="List(Of T)"/> data.
         ''' </summary>
         ''' <returns></returns>
         Public Function PopAll() As T()
@@ -229,15 +227,6 @@ Namespace Language
             Call Clear()
             Return array
         End Function
-
-        ''' <summary>
-        ''' Move Next
-        ''' </summary>
-        ''' <param name="list"></param>
-        ''' <returns></returns>
-        Public Overloads Shared Operator +(list As List(Of T)) As T
-            Return list(+list.__index)
-        End Operator
 
         ''' <summary>
         ''' Adds an object to the end of the <see cref="List(Of T)"/>.
@@ -261,7 +250,7 @@ Namespace Language
         ''' Adds an object to the end of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
-        ''' <param name="x">The object to be added to the end of the List`1. The
+        ''' <param name="x">The object to be added to the end of the <see cref="List(Of T)"/>. The
         ''' value can be null for reference types.</param>
         ''' <returns></returns>
         Public Shared Operator +(x As T, list As List(Of T)) As List(Of T)
@@ -293,10 +282,10 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Removes the first occurrence of a specific object from the List`1.
+        ''' Removes the first occurrence of a specific object from the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
-        ''' <param name="x">The object to remove from the List`1. The value can
+        ''' <param name="x">The object to remove from the <see cref="List(Of T)"/>. The value can
         ''' be null for reference types.</param>
         ''' <returns></returns>
         Public Shared Operator -(list As List(Of T), x As T) As List(Of T)
@@ -305,7 +294,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds the elements of the specified collection to the end of the System.Collections.Generic.List`1.
+        ''' Adds the elements of the specified collection to the end of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
         ''' <param name="vals"></param>
@@ -319,7 +308,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds the elements of the specified collection to the end of the System.Collections.Generic.List`1.
+        ''' Adds the elements of the specified collection to the end of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
         ''' <param name="vals"></param>
@@ -333,7 +322,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds the elements of the specified collection to the end of the System.Collections.Generic.List`1.
+        ''' Adds the elements of the specified collection to the end of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="vals"></param>
         ''' <param name="list"></param>
@@ -400,7 +389,7 @@ Namespace Language
         'End Operator
 
         ''' <summary>
-        ''' Find a item in the list
+        ''' Find a item in the <see cref="List(Of T)"/>
         ''' </summary>
         ''' <param name="list"></param>
         ''' <param name="find"></param>
