@@ -450,12 +450,32 @@ NULL:       If Not strict Then
     ''' <returns></returns>
 #If FRAMEWORD_CORE Then
     <ExportAPI("Get.Properties")>
-    <Extension> Public Function GetReadWriteProperties(type As System.Type) As PropertyInfo()
+    <Extension> Public Function GetReadWriteProperties(type As Type) As PropertyInfo()
 #Else
     <Extension> Public Function GetReadWriteProperties(type As System.Type) As System.Reflection.PropertyInfo()
 #End If
-        Dim LQuery = (From p In type.GetProperties Where p.CanRead AndAlso p.CanWrite Select p).ToArray
+        Dim LQuery = LinqAPI.Exec(Of PropertyInfo) <=
+ _
+            From p As PropertyInfo
+            In type.GetProperties
+            Where p.CanRead AndAlso p.CanWrite
+            Select p
+
         Return LQuery
+    End Function
+
+    ''' <summary>
+    ''' Get object usage information
+    ''' </summary>
+    ''' <param name="m"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Usage(m As MemberInfo) As String
+        Try
+            Dim attr As UsageAttribute = m.GetCustomAttribute(Of UsageAttribute)
+            Return attr.UsageInfo
+        Catch ex As Exception
+            Return Nothing
+        End Try
     End Function
 
     ''' <summary>

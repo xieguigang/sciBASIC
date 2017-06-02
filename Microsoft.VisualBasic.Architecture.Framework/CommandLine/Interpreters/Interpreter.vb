@@ -442,6 +442,9 @@ Namespace CommandLine
                 If cmdAttr.Info.StringEmpty Then
                     cmdAttr.Info = methodInfo.Description ' 帮助信息的获取兼容系统的Description方法
                 End If
+                If cmdAttr.Usage.StringEmpty Then
+                    cmdAttr.Usage = methodInfo.Usage
+                End If
 
                 Return commandInfo
             Catch ex As Exception
