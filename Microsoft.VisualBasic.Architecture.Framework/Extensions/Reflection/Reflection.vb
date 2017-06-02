@@ -479,6 +479,20 @@ NULL:       If Not strict Then
     End Function
 
     ''' <summary>
+    ''' Get example code of the <see cref="Usage"/>
+    ''' </summary>
+    ''' <param name="m"></param>
+    ''' <returns></returns>
+    <Extension> Public Function ExampleInfo(m As MemberInfo) As String
+        Try
+            Dim attr As ExampleAttribute = m.GetCustomAttribute(Of ExampleAttribute)
+            Return attr.ExampleInfo
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
     ''' 只对属性有效，出错会返回空值
     ''' </summary>
     ''' <param name="obj"></param>

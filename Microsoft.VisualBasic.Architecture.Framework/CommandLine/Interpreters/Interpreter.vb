@@ -445,6 +445,9 @@ Namespace CommandLine
                 If cmdAttr.Usage.StringEmpty Then
                     cmdAttr.Usage = methodInfo.Usage
                 End If
+                If cmdAttr.Example.StringEmpty Then
+                    cmdAttr.Example = methodInfo.ExampleInfo
+                End If
 
                 Return commandInfo
             Catch ex As Exception
