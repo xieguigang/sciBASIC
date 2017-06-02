@@ -68,11 +68,11 @@ Namespace Mathematical.Correlations
         <Extension> Public Function OrdinalRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
             Dim array = list _
                 .SeqIterator _
-                .ToDictionary(Function(x) x.value,
+                .ToDictionary(Function(x) x,
                               Function(i) i.i)
-            Dim desc As C() = array _
+            Dim desc() = array _
                 .Keys _
-                .OrderByDescending(Function(x) x) _
+                .OrderByDescending(Function(x) x.value) _
                 .ToArray
             Dim ranks#() = New Double(desc.Length - 1) {}
             Dim rank% = 1

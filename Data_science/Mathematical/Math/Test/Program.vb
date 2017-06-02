@@ -26,20 +26,21 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.Scripting
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Quantile
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports System.Linq.Expressions
-Imports System.Numerics
-Imports Microsoft.VisualBasic.Mathematical.HashMaps
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.Correlations
+Imports Microsoft.VisualBasic.Mathematical.HashMaps
+Imports Microsoft.VisualBasic.Mathematical.Scripting
 Imports Microsoft.VisualBasic.SecurityString
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
 
     Sub RankingTest()
+        Dim A = 1, B = 2, C = 2, D = 3
+
+        Call {A, B, C, D}.OrdinalRanking.GetJson.__DEBUG_ECHO
 
     End Sub
 
