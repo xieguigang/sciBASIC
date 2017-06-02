@@ -72,7 +72,7 @@ Namespace Mathematical.Correlations
                               Function(i) i.i)
             Dim desc() = array _
                 .Keys _
-                .OrderByDescending(Function(x) x.value) _
+                .OrderBy(Function(x) x.value) _
                 .ToArray
             Dim ranks#() = New Double(desc.Length - 1) {}
             Dim rank% = 1
@@ -81,6 +81,49 @@ Namespace Mathematical.Correlations
                 ' obj -> original_i -> rank
                 ranks(array(desc(i))) = rank
                 rank += 1
+            Next
+
+            Return ranks
+        End Function
+
+        ''' <summary>
+        ''' ###### Fractional ranking ("1 2.5 2.5 4" ranking)
+        ''' 
+        ''' Items that compare equal receive the same ranking number, which is the mean 
+        ''' of what they would have under ordinal rankings. Equivalently, the ranking 
+        ''' number of 1 plus the number of items ranked above it plus half the number 
+        ''' of items equal to it. This strategy has the property that the sum of the 
+        ''' ranking numbers is the same as under ordinal ranking. For this reason, it 
+        ''' is used in computing Borda counts and in statistical tests (see below).
+        ''' 
+        ''' Thus if A ranks ahead of B and C (which compare equal) which are both ranked 
+        ''' ahead of D, then A gets ranking number 1 ("first"), B and C each get ranking 
+        ''' number 2.5 (average of "joint second/third") and D gets ranking number 4 
+        ''' ("fourth").
+        ''' 
+        ''' Here is an example: Suppose you have the data set 1.0, 1.0, 2.0, 3.0, 3.0, 4.0, 5.0, 5.0, 5.0.
+        ''' The ordinal ranks are 1, 2, 3, 4, 5, 6, 7, 8, 9.
+        ''' For v = 1.0, the fractional rank is the average of the ordinal ranks: (1 + 2) / 2 = 1.5. 
+        ''' In a similar manner, for v = 5.0, the fractional rank is (7 + 8 + 9) / 3 = 8.0.
+        ''' Thus the fractional ranks are: 1.5, 1.5, 3.0, 4.5, 4.5, 6.0, 8.0, 8.0, 8.0
+        ''' </summary>
+        ''' <typeparam name="C"></typeparam>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        <Extension> Public Function FractionalRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
+            Dim vector As C() = list.ToArray
+            Dim array As SeqValue(Of C)() = vector.SeqIterator.ToArray
+            Dim ranks#() = vector.OrdinalRanking
+            Dim equals = array.GroupBy(Function(x) x.value)
+
+            For Each g As IGrouping(Of C, SeqValue(Of C)) In equals
+                Dim avgRanks# = g _
+                    .Select(Function(i) ranks(i.i)) _
+                    .Average
+
+                For Each i As SeqValue(Of C) In g
+                    ranks(i.i) = avgRanks
+                Next
             Next
 
             Return ranks

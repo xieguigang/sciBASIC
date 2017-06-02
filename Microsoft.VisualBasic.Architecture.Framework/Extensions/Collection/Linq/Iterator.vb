@@ -143,6 +143,7 @@ Namespace Linq
     Public Structure SeqValue(Of T) : Implements IAddressOf
         Implements IComparable(Of Integer)
         Implements IComparable
+        Implements Value(Of T).IValueOf
 
         ''' <summary>
         ''' The position of this object value in the original sequence.
@@ -153,7 +154,7 @@ Namespace Linq
         ''' The Object data
         ''' </summary>
         ''' <returns></returns>
-        Public Property value As T
+        Public Property value As T Implements Value(Of T).IValueOf.value
 
         Private Property Address As Integer Implements IAddressOf.Address
             Get
