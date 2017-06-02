@@ -46,6 +46,10 @@ Namespace Language
         
 #Region "Improvements Index"
 
+        ''' <summary>
+        ''' The last elements in the collection <see cref="List(Of T)"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Last As T
             Get
                 If Count = 0 Then
@@ -63,6 +67,10 @@ Namespace Language
             End Set
         End Property
 
+        ''' <summary>
+        ''' The first elements in the collection <see cref="List(Of T)"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Property First As T
             Get
                 If Count = 0 Then
@@ -81,7 +89,8 @@ Namespace Language
         End Property
 
         ''' <summary>
-        ''' 这个是为了ODEs计算模块所准备的一个数据接口
+        ''' This indexer property is using for the ODEs-system computing.
+        ''' (这个是为了ODEs计算模块所准备的一个数据接口)
         ''' </summary>
         ''' <param name="address"></param>
         ''' <returns></returns>
@@ -94,6 +103,12 @@ Namespace Language
             End Set
         End Property
 
+        ''' <summary>
+        ''' Can accept negative number as the index value, negative value means ``<see cref="Count"/> - n``, 
+        ''' example as ``list(-1)``: means the last element in this list: ``list(list.Count -1)``
+        ''' </summary>
+        ''' <param name="index%"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(index%) As T
             Get
                 If index < 0 Then
@@ -110,7 +125,7 @@ Namespace Language
         End Property
 
         ''' <summary>
-        ''' 
+        ''' Using a index vector expression to select/update many elements from this list collection.
         ''' </summary>
         ''' <param name="exp$">
         ''' + ``1``, index=1
@@ -161,6 +176,11 @@ Namespace Language
             End Set
         End Property
 
+        ''' <summary>
+        ''' Select all of the elements from this list collection is any of them match the condition expression: <paramref name="where"/>
+        ''' </summary>
+        ''' <param name="[where]"></param>
+        ''' <returns></returns>
         Default Public Overloads ReadOnly Property Item([where] As Predicate(Of T)) As T()
             Get
                 Return MyBase.Where(Function(o) where(o)).ToArray
