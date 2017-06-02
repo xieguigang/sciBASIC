@@ -5,23 +5,23 @@ VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{AF43BE16-2B66-4DE6-92A9-AD520503972F}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\..\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Datavisualization.Network", "..\gr\Datavisualization.Network\Datavisualization.Network\Datavisualization.Network.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Datavisualization.Network", "..\..\gr\Datavisualization.Network\Datavisualization.Network\Datavisualization.Network.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Framework", "Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj", "{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Model.Network", "Microsoft.VisualBasic.DataMining.Model.Network\Microsoft.VisualBasic.DataMining.Model.Network.vbproj", "{3A114030-D9FD-4913-8E85-A78C032E9000}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Model.Network", "Network\Microsoft.VisualBasic.DataMining.Model.Network.vbproj", "{3A114030-D9FD-4913-8E85-A78C032E9000}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "..\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Testing", "Microsoft.VisualBasic.DataMining.Framework\Testing\Testing.vbproj", "{B8D9B266-355C-42C3-9669-457B3874E5D7}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "MachineLearning\MachineLearning.vbproj", "{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "..\MachineLearning\MachineLearning.vbproj", "{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Maze-Q-Learning", "MachineLearning\QLearning\Maze-Q-Learning\Maze-Q-Learning.vbproj", "{04F3D095-69B9-4547-8088-82A499DB67C0}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Maze-Q-Learning", "..\MachineLearning\QLearning\Maze-Q-Learning\Maze-Q-Learning.vbproj", "{04F3D095-69B9-4547-8088-82A499DB67C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
