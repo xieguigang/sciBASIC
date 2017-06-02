@@ -40,9 +40,120 @@ Namespace Mathematical.Correlations
         Public Function Ranking(Of C As IComparable)(list As IEnumerable(Of C), Optional strategy As Strategies = Strategies.OrdinalRanking) As Double()
             If strategy = Strategies.OrdinalRanking Then
                 Return list.OrdinalRanking
+            ElseIf strategy = Strategies.DenseRanking Then
+                Return list.DenseRanking
+            ElseIf strategy = Strategies.FractionalRanking Then
+                Return list.FractionalRanking
+            ElseIf strategy = Strategies.StandardCompetition Then
+                Return list.StandardCompetitionRanking
+            ElseIf strategy = Strategies.ModifiedCompetition Then
+                Return list.ModifiedCompetitionRanking
             Else
                 Throw New NotImplementedException
             End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="C"></typeparam>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        <Extension> Public Function ModifiedCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
+            Throw New NotImplementedException
+        End Function
+
+        ''' <summary>
+        ''' ###### Standard competition ranking ("1224" ranking)
+        ''' 
+        ''' In competition ranking, items that compare equal receive the same ranking number, and then a gap 
+        ''' is left in the ranking numbers. The number of ranking numbers that are left out in this gap is 
+        ''' one less than the number of items that compared equal. Equivalently, each item's ranking number 
+        ''' is 1 plus the number of items ranked above it. This ranking strategy is frequently adopted for 
+        ''' competitions, as it means that if two (or more) competitors tie for a position in the ranking, 
+        ''' the position of all those ranked below them is unaffected (i.e., a competitor only comes second if 
+        ''' exactly one person scores better than them, third if exactly two people score better than them, 
+        ''' fourth if exactly three people score better than them, etc.).
+        ''' 
+        ''' Thus if A ranks ahead of B and C (which compare equal) which are both ranked ahead of D, then A 
+        ''' gets ranking number 1 ("first"), B gets ranking number 2 ("joint second"), C also gets ranking 
+        ''' number 2 ("joint second") and D gets ranking number 4 ("fourth").
+        ''' </summary>
+        ''' <typeparam name="C"></typeparam>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        <Extension> Public Function StandardCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
+            Dim array = list _
+                .SeqIterator _
+                .ToDictionary(Function(x) x,
+                              Function(i) i.i)
+            Dim asc() = array _
+                .Keys _
+                .OrderBy(Function(x) x.value) _
+                .ToArray
+            Dim ranks#() = New Double(asc.Length - 1) {}
+            Dim rank% = 1
+            Dim gap% = 1
+
+            For i As Integer = 0 To asc.Length - 2
+                With asc(i)
+                    ' obj -> original_i -> rank
+                    ranks(array(asc(i))) = rank
+
+                    If .value.CompareTo(asc(i + 1).value) <> 0 Then
+                        rank += gap
+                        gap = 1
+                    Else
+                        gap += 1
+                    End If
+                End With
+            Next
+
+            ranks(array(asc.Last)) = rank
+
+            Return ranks
+        End Function
+
+        ''' <summary>
+        ''' ###### Dense ranking ("1223" ranking)
+        ''' 
+        ''' In dense ranking, items that compare equal receive the same ranking number, and the next item(s) 
+        ''' receive the immediately following ranking number. Equivalently, each item's ranking number is 1 
+        ''' plus the number of items ranked above it that are distinct with respect to the ranking order.
+        ''' 
+        ''' Thus if A ranks ahead of B and C (which compare equal) which are both ranked ahead of D, then A 
+        ''' gets ranking number 1 ("first"), B gets ranking number 2 ("joint second"), C also gets ranking 
+        ''' number 2 ("joint second") and D gets ranking number 3 ("third").
+        ''' </summary>
+        ''' <typeparam name="C"></typeparam>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        <Extension> Public Function DenseRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
+            Dim array = list _
+                .SeqIterator _
+                .ToDictionary(Function(x) x,
+                              Function(i) i.i)
+            Dim asc() = array _
+                .Keys _
+                .OrderBy(Function(x) x.value) _
+                .ToArray
+            Dim ranks#() = New Double(asc.Length - 1) {}
+            Dim rank% = 1
+
+            For i As Integer = 0 To asc.Length - 2
+                With asc(i)
+                    ' obj -> original_i -> rank
+                    ranks(array(asc(i))) = rank
+
+                    If .value.CompareTo(asc(i + 1).value) <> 0 Then
+                        rank += 1
+                    End If
+                End With
+            Next
+
+            ranks(array(asc.Last)) = rank
+
+            Return ranks
         End Function
 
         ''' <summary>
@@ -70,16 +181,16 @@ Namespace Mathematical.Correlations
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
                               Function(i) i.i)
-            Dim desc() = array _
+            Dim asc() = array _
                 .Keys _
                 .OrderBy(Function(x) x.value) _
                 .ToArray
-            Dim ranks#() = New Double(desc.Length - 1) {}
+            Dim ranks#() = New Double(asc.Length - 1) {}
             Dim rank% = 1
 
-            For i As Integer = 0 To desc.Length - 1
+            For i As Integer = 0 To asc.Length - 1
                 ' obj -> original_i -> rank
-                ranks(array(desc(i))) = rank
+                ranks(array(asc(i))) = rank
                 rank += 1
             Next
 
@@ -117,9 +228,7 @@ Namespace Mathematical.Correlations
             Dim equals = array.GroupBy(Function(x) x.value)
 
             For Each g As IGrouping(Of C, SeqValue(Of C)) In equals
-                Dim avgRanks# = g _
-                    .Select(Function(i) ranks(i.i)) _
-                    .Average
+                Dim avgRanks# = Aggregate i In g Into Average(ranks(i))
 
                 For Each i As SeqValue(Of C) In g
                     ranks(i.i) = avgRanks
