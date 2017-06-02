@@ -39,6 +39,7 @@ Module Program
 
     Sub RankingTest()
         Call {1, 2, 2, 3}.StandardCompetitionRanking.GetJson.__DEBUG_ECHO
+        Call {1, 2, 2, 3}.ModifiedCompetitionRanking.GetJson.__DEBUG_ECHO
         Call {1, 2, 2, 3}.OrdinalRanking.GetJson.__DEBUG_ECHO
         Call {1, 2, 2, 3}.DenseRanking.GetJson.__DEBUG_ECHO
         Call {1.0, 1.0, 2.0, 3.0, 3.0, 4.0, 5.0, 5.0, 5.0}.FractionalRanking.GetJson.__DEBUG_ECHO

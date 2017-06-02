@@ -54,13 +54,58 @@ Namespace Mathematical.Correlations
         End Function
 
         ''' <summary>
+        ''' ###### Modified competition ranking ("1334" ranking)
         ''' 
+        ''' Sometimes, competition ranking is done by leaving the gaps in the ranking numbers before the sets 
+        ''' of equal-ranking items (rather than after them as in standard competition ranking).[where?] The 
+        ''' number of ranking numbers that are left out in this gap remains one less than the number of items that 
+        ''' compared equal. Equivalently, each item's ranking number is equal to the number of items ranked equal 
+        ''' to it or above it. This ranking ensures that a competitor only comes second if they score higher than 
+        ''' all but one of their opponents, third if they score higher than all but two of their opponents, etc.
+        ''' 
+        ''' Thus if A ranks ahead of B and C (which compare equal) which are both ranked head of D, then A gets 
+        ''' ranking number 1 ("first"), B gets ranking number 3 ("joint third"), C also gets ranking number 3 
+        ''' ("joint third") and D gets ranking number 4 ("fourth"). In this case, nobody would get ranking number 
+        ''' 2 ("second") and that would be left as a gap.
         ''' </summary>
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
         <Extension> Public Function ModifiedCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
-            Throw New NotImplementedException
+            Dim array = list _
+                .SeqIterator _
+                .ToDictionary(Function(x) x,
+                              Function(i) i.i)
+            Dim asc() = array _
+                .Keys _
+                .OrderBy(Function(x) x.value) _
+                .ToArray
+            Dim ranks#() = New Double(asc.Length - 1) {}
+            Dim rank% = 0
+            Dim gaps = array _
+                .Keys _
+                .GroupBy(Function(x) x.value) _
+                .ToDictionary(Function(x) x.First.value,
+                              Function(g) g.Count)
+            Dim previous As C = asc.Last.value ' 使用Nothing的时候，对于数字而言，会是0，则会和0冲突，使用最大的值则完全可以避免这个问题了
+
+            For i As Integer = 0 To asc.Length - 1
+                ' obj -> original_i -> rank
+                With asc(i)
+                    If .value.CompareTo(previous) = 0 Then
+                        ' rank += 0
+                    ElseIf gaps.ContainsKey(.value) Then
+                        previous = .value
+                        rank += gaps(.value)
+                    Else
+                        rank += 1
+                    End If
+                End With
+
+                ranks(array(asc(i))) = rank
+            Next
+
+            Return ranks
         End Function
 
         ''' <summary>
