@@ -37,17 +37,17 @@ Namespace Mathematical.Correlations
         End Enum
 
         <Extension>
-        Public Function Ranking(Of C As IComparable)(list As IEnumerable(Of C), Optional strategy As Strategies = Strategies.OrdinalRanking) As Double()
+        Public Function Ranking(Of C As IComparable)(list As IEnumerable(Of C), Optional strategy As Strategies = Strategies.OrdinalRanking, Optional desc As Boolean = False) As Double()
             If strategy = Strategies.OrdinalRanking Then
-                Return list.OrdinalRanking
+                Return list.OrdinalRanking(desc)
             ElseIf strategy = Strategies.DenseRanking Then
-                Return list.DenseRanking
+                Return list.DenseRanking(desc)
             ElseIf strategy = Strategies.FractionalRanking Then
-                Return list.FractionalRanking
+                Return list.FractionalRanking(desc)
             ElseIf strategy = Strategies.StandardCompetition Then
-                Return list.StandardCompetitionRanking
+                Return list.StandardCompetitionRanking(desc)
             ElseIf strategy = Strategies.ModifiedCompetition Then
-                Return list.ModifiedCompetitionRanking
+                Return list.ModifiedCompetitionRanking(desc)
             Else
                 Throw New NotImplementedException
             End If
@@ -71,14 +71,14 @@ Namespace Mathematical.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function ModifiedCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
+        <Extension> Public Function ModifiedCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
                               Function(i) i.i)
             Dim asc() = array _
                 .Keys _
-                .OrderBy(Function(x) x.value) _
+                .Sort(Function(x) x.value, desc) _
                 .ToArray
             Dim ranks#() = New Double(asc.Length - 1) {}
             Dim rank% = 0
@@ -127,14 +127,14 @@ Namespace Mathematical.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function StandardCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
+        <Extension> Public Function StandardCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
                               Function(i) i.i)
             Dim asc() = array _
                 .Keys _
-                .OrderBy(Function(x) x.value) _
+                .Sort(Function(x) x.value, desc) _
                 .ToArray
             Dim ranks#() = New Double(asc.Length - 1) {}
             Dim rank% = 1
@@ -173,14 +173,14 @@ Namespace Mathematical.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function DenseRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
+        <Extension> Public Function DenseRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
                               Function(i) i.i)
             Dim asc() = array _
                 .Keys _
-                .OrderBy(Function(x) x.value) _
+                .Sort(Function(x) x.value, desc) _
                 .ToArray
             Dim ranks#() = New Double(asc.Length - 1) {}
             Dim rank% = 1
@@ -221,14 +221,14 @@ Namespace Mathematical.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function OrdinalRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
+        <Extension> Public Function OrdinalRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
                               Function(i) i.i)
             Dim asc() = array _
                 .Keys _
-                .OrderBy(Function(x) x.value) _
+                .Sort(Function(x) x.value, desc) _
                 .ToArray
             Dim ranks#() = New Double(asc.Length - 1) {}
             Dim rank% = 1
@@ -266,10 +266,10 @@ Namespace Mathematical.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function FractionalRanking(Of C As IComparable)(list As IEnumerable(Of C)) As Double()
+        <Extension> Public Function FractionalRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
             Dim vector As C() = list.ToArray
             Dim array As SeqValue(Of C)() = vector.SeqIterator.ToArray
-            Dim ranks#() = vector.OrdinalRanking
+            Dim ranks#() = vector.OrdinalRanking(desc)
             Dim equals = array.GroupBy(Function(x) x.value)
 
             For Each g As IGrouping(Of C, SeqValue(Of C)) In equals

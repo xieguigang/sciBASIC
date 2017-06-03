@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::46b13b2abf82831ddbb8a0a1f43ee057, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,36 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
 Public Module VectorExtensions
+
+    ''' <summary>
+    ''' 对目标序列进行排序生成新的序列
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="desc"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Sort(Of T)(source As IEnumerable(Of T), Optional by As Func(Of T, IComparable) = Nothing, Optional desc As Boolean = False) As IEnumerable(Of T)
+        If by Is Nothing Then
+            If Not desc Then
+                Return From x As T
+                       In source
+                       Select x
+                       Order By x Ascending
+            Else
+                Return From x As T
+                       In source
+                       Select x
+                       Order By x Descending
+            End If
+        Else
+            If Not desc Then
+                Return source.OrderBy(by)
+            Else
+                Return source.OrderByDescending(by)
+            End If
+        End If
+    End Function
 
     ''' <summary>
     ''' Returns the collection element its index where the test expression <paramref name="predicate"/> result is TRUE
