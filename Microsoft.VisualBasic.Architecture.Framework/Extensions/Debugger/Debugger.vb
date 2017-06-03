@@ -42,7 +42,7 @@ Imports Microsoft.VisualBasic.Terminal.Utility
 Public Module VBDebugger
 
     ''' <summary>
-    ''' 
+    ''' Assert that the expression value is correctly or not?
     ''' </summary>
     ''' <param name="message$">The exception message</param>
     ''' <param name="failure">If this expression test is True, then die expression will raise an exception</param>
