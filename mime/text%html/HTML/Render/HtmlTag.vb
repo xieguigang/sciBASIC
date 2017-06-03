@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df7a98a8b9f030d4822048d9abd98797, ..\sciBASIC#\mime\MIME_Markups\HTML\Render\HtmlTag.vb"
+﻿#Region "Microsoft.VisualBasic::df7a98a8b9f030d4822048d9abd98797, ..\sciBASIC#\mime\text%html\HTML\Render\HtmlTag.vb"
 
     ' Author:
     ' 

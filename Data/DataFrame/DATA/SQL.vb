@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eeb86ec67e444bd83973e4ba52115371, ..\sciBASIC#\Data\DataFrame\DATA\SQL.vb"
+﻿#Region "Microsoft.VisualBasic::f5fd99ef0d5f12624023bcdd9561c626, ..\sciBASIC#\Data\DataFrame\DATA\SQL.vb"
 
     ' Author:
     ' 
@@ -151,4 +151,3 @@ Public Module SQL
         Return New IndexOf(Of String)(names)
     End Function
 End Module
-

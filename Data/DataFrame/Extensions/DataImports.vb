@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22821b92e92b377c1454937b600d86c1, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::d3f7abdffaf578804cee96cc0ecb1a8a, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -169,7 +169,8 @@ Public Module DataImports
     ''' 
     <ExportAPI("Imports.FixLength", Info:="Imports the data in a well formatted text file using the fix length as the data separate method.")>
     Public Function FixLengthImports(txtPath$,
-                                     <Parameter("Length", "The string length width of the data row.")> Optional length% = 10,
+                                     <Parameter("Length", "The string length width of the data row.")>
+                                     Optional length% = 10,
                                      Optional encoding As Encoding = Nothing) As IO.File
         If encoding Is Nothing Then
             encoding = Encoding.Default

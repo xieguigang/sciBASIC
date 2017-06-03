@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b44ef374288e436d10476fd891aa110e, ..\sciBASIC#\mime\MIME_Markups\HTML\CSS\Render\CssDefaults.vb"
+﻿#Region "Microsoft.VisualBasic::b44ef374288e436d10476fd891aa110e, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssDefaults.vb"
 
     ' Author:
     ' 

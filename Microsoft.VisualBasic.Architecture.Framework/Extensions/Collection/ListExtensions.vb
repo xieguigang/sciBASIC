@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::539e328230a368e9eaccaba5fd82920f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::c9b7bfe47a9a0edb8e9bfba67f713c04, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
 
 ' Author:
 ' 
@@ -38,6 +38,18 @@ Imports Microsoft.VisualBasic.Linq
 ''' to accommodate the number of elements copied.
 ''' </summary>
 Public Module ListExtensions
+
+    ''' <summary>
+    ''' ForEach拓展的简化版本
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="collection"></param>
+    ''' <param name="[do]"></param>
+    <Extension> Public Sub DoEach(Of T)(collection As IEnumerable(Of T), [do] As Action(Of T))
+        For Each x As T In collection
+            Call [do](x)
+        Next
+    End Sub
 
     Private Function rand(min%, max%) As Integer
         Static rnd As New Random

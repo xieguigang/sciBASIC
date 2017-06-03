@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf1e8c8a4cd67845d3cac8128fc9a70c, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\NonSpecificTag.vb"
+﻿#Region "Microsoft.VisualBasic::5f4b7022d46a4c71f55d77f40a987aea, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\NonSpecificTag.vb"
 
     ' Author:
     ' 

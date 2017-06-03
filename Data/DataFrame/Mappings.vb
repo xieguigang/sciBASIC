@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dc53359e6f746f4c9048c5abb4eea99, ..\sciBASIC#\Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::900a73bd0e97581c170ddd6f4d37b227, ..\sciBASIC#\Data\DataFrame\Mappings.vb"
 
 ' Author:
 ' 
@@ -54,6 +54,21 @@ Public Class MappingsHelper
         Next
 
         Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' Gets property name to column name mapping table.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <returns></returns>
+    Public Shared Function PropertyNames(Of T)() As Dictionary(Of String, String)
+        Dim schemaTable = SchemaProvider.CreateObject(GetType(T))
+        Dim table = schemaTable _
+            .ToDictionary(Function(prop)
+                              Return prop.BindProperty.Name
+                          End Function,
+                          Function(field) field.Name)
+        Return table
     End Function
 
     ''' <summary>

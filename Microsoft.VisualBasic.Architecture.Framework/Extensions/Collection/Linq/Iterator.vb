@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e8834e8230661102662b6c7c387833f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::b7172bdd6aebd1396a765edd95c0952f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
 
 ' Author:
 ' 
@@ -141,6 +141,9 @@ Namespace Linq
     End Structure
 
     Public Structure SeqValue(Of T) : Implements IAddressOf
+        Implements IComparable(Of Integer)
+        Implements IComparable
+        Implements Value(Of T).IValueOf
 
         ''' <summary>
         ''' The position of this object value in the original sequence.
@@ -151,7 +154,7 @@ Namespace Linq
         ''' The Object data
         ''' </summary>
         ''' <returns></returns>
-        Public Property value As T
+        Public Property value As T Implements Value(Of T).IValueOf.value
 
         Private Property Address As Integer Implements IAddressOf.Address
             Get
@@ -196,6 +199,22 @@ Namespace Linq
         Public Shared Operator +(x As SeqValue(Of T)) As T
             Return x.value
         End Operator
+
+        Public Function CompareTo(other As Integer) As Integer Implements IComparable(Of Integer).CompareTo
+            Return i.CompareTo(other)
+        End Function
+
+        Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+            If obj Is Nothing Then
+                Return 1
+            End If
+
+            If Not obj.GetType Is Me.GetType Then
+                Return 10
+            End If
+
+            Return i.CompareTo(DirectCast(obj, SeqValue(Of T)).i)
+        End Function
     End Structure
 
     ''' <summary>

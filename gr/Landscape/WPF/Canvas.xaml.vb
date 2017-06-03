@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6bc6bb12269231f7f9ceb3880d13960, ..\sciBASIC#\gr\Landscape\WPF\Canvas.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::224537f80bca1150a00490644172ed74, ..\sciBASIC#\gr\Landscape\WPF\Canvas.xaml.vb"
 
     ' Author:
     ' 
@@ -137,4 +137,3 @@ Public Class Canvas
         __drag = False
     End Sub
 End Class
-

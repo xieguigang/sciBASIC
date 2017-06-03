@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20935a2e73eab6da7823820aa2c04079, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Levenshtein\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::96fea611f61a30f522a170c0af342eb9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Levenshtein\LevenshteinDistance.vb"
 
 ' Author:
 ' 
@@ -101,13 +101,16 @@ Vladimir I",
         Public Function CreateTable(Of T)(reference As T(), hypotheses As T(), cost As Cost(Of T), equals As Equals(Of T)) As Double(,)
             Dim distTable As Double(,) = New Double(reference.Length, hypotheses.Length) {}
 
-            For i As Integer = 0 To reference.Length
+            For i As Integer = 0 To reference.Length - 1
                 distTable(i, 0) = i * cost.insert(reference(i))
             Next
 
-            For j As Integer = 0 To hypotheses.Length
+            For j As Integer = 0 To hypotheses.Length - 1
                 distTable(0, j) = j * cost.delete(hypotheses(j))
             Next
+
+            distTable(reference.Length, 0) = cost.insert(Nothing)
+            distTable(0, hypotheses.Length) = cost.delete(Nothing)
 
             'd[i,j] <- min( d[i-1,j] + delete.fun(source.vec[i-1]),
             'd[i,j-1] + insert.fun(target.vec[j-1]),

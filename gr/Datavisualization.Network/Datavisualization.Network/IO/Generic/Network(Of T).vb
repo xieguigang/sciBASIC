@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6616df3f37be4824f71d5718f5e916d, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::d9ff50f6aa234c6c9daebe365230f98c, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\Generic\Network(Of T).vb"
 
     ' Author:
     ' 

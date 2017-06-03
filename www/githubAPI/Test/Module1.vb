@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4899f1daaca5d29acd6ff4224872ecdb, ..\sciBASIC#\www\githubAPI\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::f04c7c5429e7adbbf0ab98e3bf55e159, ..\sciBASIC#\www\githubAPI\Test\Module1.vb"
 
 ' Author:
 ' 
@@ -36,23 +36,23 @@ Module Module1
 
     Sub Main()
 
-        Dim my As User = WebAPI.Users.GetUserData("xieguigang")
+        'Dim my As User = WebAPI.Users.GetUserData("xieguigang")
 
-        ' WebAPI.Proxy = "http://127.0.0.1:8087"
+        WebServiceUtils.Proxy = "http://127.0.0.1:8087"
 
-        '   Call "xieguigang".GetUserContributions .GetJson .SaveTo ("x:\xieguigang_contributions.json")
+        ''   Call "xieguigang".GetUserContributions .GetJson .SaveTo ("x:\xieguigang_contributions.json")
 
-        Call IsometricContributions.Plot(
-            "xieguigang".GetUserContributions,
-            schema:="Spectral:c8", user:=my).Save("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.png")
+        'Call IsometricContributions.Plot(
+        '    "xieguigang".GetUserContributions,
+        '    schema:="Spectral:c8", user:=my).Save("G:\GCModeller\src\runtime\sciBASIC#\www\data\github\xieguigang_contributions.png")
 
-        Pause()
+        'Pause()
 
-        Call IsometricContributions.Plot("xieguigang").Save("x:\text.png")
+        'Call IsometricContributions.Plot("xieguigang").Save("x:\text.png")
 
-        Pause()
+        'Pause()
 
-        Dim contributions = "xieguigang".GetUserContributions
+        'Dim contributions = "xieguigang".GetUserContributions
 
 
         Dim followers As User() = WebAPI.Users.Followers("xieguigang") '= "J:\GCModeller\src\runtime\sciBASIC#\www\data\github\followers.json".ReadAllText.LoadObject(Of User()) '"xieguigang".Followers

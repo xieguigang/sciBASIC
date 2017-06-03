@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1fa87228b48d2c17017726539adf886, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Axis\Styles.vb"
+﻿#Region "Microsoft.VisualBasic::8be9815d4f7dbd9b9c50f5739a3511f6, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Axis\Styles.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Graphic.Axis
 

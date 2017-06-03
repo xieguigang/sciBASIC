@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d276fd000755bc7e3fd26bcfdf1ba64, ..\sciBASIC#\Data_science\Mathematical\Plots\g\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::587a3a8b6592301e7edc972a2cddfc1a, ..\sciBASIC#\Data_science\Mathematical\Plots\g\DataScaler.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Graphic
 

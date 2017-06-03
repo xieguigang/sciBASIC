@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b62f295c5bf766da4bb320963b7b3224, ..\sciBASIC#\Data_science\Mathematical\Math\Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::6702b887c58eb79692d0a25a65edd6d2, ..\sciBASIC#\Data_science\Mathematical\Math\Test\Program.vb"
 
 ' Author:
 ' 
@@ -26,24 +26,35 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.Scripting
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Quantile
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports System.Linq.Expressions
-Imports System.Numerics
-Imports Microsoft.VisualBasic.Mathematical.HashMaps
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Mathematical.Correlations
+Imports Microsoft.VisualBasic.Mathematical.HashMaps
+Imports Microsoft.VisualBasic.Mathematical.Scripting
 Imports Microsoft.VisualBasic.SecurityString
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
+
+    Sub RankingTest()
+        Call {1, 2, 2, 3}.StandardCompetitionRanking.GetJson.__DEBUG_ECHO
+        Call {1, 2, 2, 3}.ModifiedCompetitionRanking.GetJson.__DEBUG_ECHO
+        Call {1, 2, 2, 3}.OrdinalRanking.GetJson.__DEBUG_ECHO
+        Call {1, 2, 2, 3}.DenseRanking.GetJson.__DEBUG_ECHO
+        Call {1.0, 1.0, 2.0, 3.0, 3.0, 4.0, 5.0, 5.0, 5.0}.FractionalRanking.GetJson.__DEBUG_ECHO
+    End Sub
 
     Public Function Hash(key$) As Long
         Return key.MD5.ToLong
     End Function
 
     Sub Main()
+
+        Call RankingTest()
+
+        Pause()
+
         Dim l As New List(Of String)
         Dim uid As New Uid(False)
 
@@ -66,7 +77,7 @@ Module Program
         Dim l1 As New List(Of ULong)
         Dim l2 As New List(Of ULong)
         Dim l3 As New List(Of ULong)
-        Dim uid As New Uid
+        ' Dim uid As New Uid
 
 
         Call blizzard.HashBlizzard("XC_1183").ToString.__INFO_ECHO
@@ -97,7 +108,7 @@ Module Program
 
         Pause()
 
-        Dim g1 = l.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).Select(Function(x) (x.Key, x.ToArray)).ToArray
+        '  Dim g1 = l.GroupBy(Function(u) u).Where(Function(gg) gg.Count > 1).Select(Function(x) (x.Key, x.ToArray)).ToArray
 
 
         Pause()
@@ -112,8 +123,8 @@ Module Program
 
         Pause()
 
-        Call (0#, 100000.0#).DoubleRange.rand(2000).Summary.EchoLine
-        Call {0#, 569.0#, 63.0#, 59, 345.0#, 456, 423}.Summary.EchoLine
+        ' Call (0#, 100000.0#).DoubleRange.rand(2000).Summary.EchoLine
+        ' Call {0#, 569.0#, 63.0#, 59, 345.0#, 456, 423}.Summary.EchoLine
 
         Pause()
 

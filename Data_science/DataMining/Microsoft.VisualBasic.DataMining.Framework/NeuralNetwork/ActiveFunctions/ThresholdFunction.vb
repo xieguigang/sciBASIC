@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6554acae71280bcbf7b6d9fb0964db0b, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\ThresholdFunction.vb"
+﻿#Region "Microsoft.VisualBasic::6554acae71280bcbf7b6d9fb0964db0b, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\ThresholdFunction.vb"
 
     ' Author:
     ' 

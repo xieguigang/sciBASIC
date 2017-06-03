@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9e257045619f80cc39de20da93053ef, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Styling\EdgeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::e9e257045619f80cc39de20da93053ef, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\EdgeStyles.vb"
 
     ' Author:
     ' 

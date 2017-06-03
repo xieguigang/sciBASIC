@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::124e7d1c1eda27d4112fca9f569cbafe, ..\sciBASIC#\mime\RTF\FormatedRegion.vb"
+﻿#Region "Microsoft.VisualBasic::124e7d1c1eda27d4112fca9f569cbafe, ..\sciBASIC#\mime\application%rtf\FormatedRegion.vb"
 
     ' Author:
     ' 
