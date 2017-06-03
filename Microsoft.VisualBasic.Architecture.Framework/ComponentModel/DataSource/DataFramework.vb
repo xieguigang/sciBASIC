@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e00c7047e7cbdbcc8be00776f3cd8f17, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::2291ca4bb50dcdbe7e64acc4e4b82796, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
 
 ' Author:
 ' 
@@ -53,6 +53,7 @@ Namespace ComponentModel.DataSourceModel
     Public Module DataFramework
 
         Public Enum PropertyAccess As Byte
+            NotSure = 0
             Readable = 2
             Writeable = 4
             ReadWrite = Readable And Writeable

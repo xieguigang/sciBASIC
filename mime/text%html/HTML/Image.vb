@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5429fa032d17dbcf818de4985a724fea, ..\sciBASIC#\mime\MIME_Markups\HTML\Image.vb"
+﻿#Region "Microsoft.VisualBasic::5429fa032d17dbcf818de4985a724fea, ..\sciBASIC#\mime\text%html\HTML\Image.vb"
 
     ' Author:
     ' 

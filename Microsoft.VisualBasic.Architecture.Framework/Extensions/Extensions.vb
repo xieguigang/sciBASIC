@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4517300726090b063413dc244e9e8fd7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e33a3586a2558a9eaa0ada6e2de0b238, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
 ' Author:
 ' 
@@ -42,6 +42,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
@@ -788,7 +789,7 @@ Public Module Extensions
     ''' <param name="tokens"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(tokens As IEnumerable(Of String), delimiter As String) As String
+    <Extension> Public Function JoinBy(tokens As IEnumerable(Of String), delimiter$) As String
         If tokens Is Nothing Then
             Return ""
         End If
@@ -801,7 +802,7 @@ Public Module Extensions
     ''' <param name="values"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(values As IEnumerable(Of Integer), delimiter As String) As String
+    <Extension> Public Function JoinBy(values As IEnumerable(Of Integer), delimiter$) As String
         If values Is Nothing Then
             Return ""
         End If
@@ -825,15 +826,40 @@ Public Module Extensions
         Return list
     End Function
 
-#If FRAMEWORD_CORE Then
-    <ExportAPI("File.Select", Info:="Open the file open dialog to gets the file")>
-    Public Function SelectFile(Optional ext As String = "*.*") As String
-        Using Open = New OpenFileDialog With {.Filter = $"{ext}|{ext}"}
+    ''' <summary>
+    ''' *.txt -> text
+    ''' </summary>
+    ''' <param name="ext$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function GetMIMEDescrib(ext$) As ContentType
+        Dim key$ = LCase(ext).Trim("*"c)
 
+        If MIME.SuffixTable.ContainsKey(key) Then
+            Return MIME.SuffixTable(key)
+        Else
+            Return MIME.UnknownType
+        End If
+    End Function
+
+#If FRAMEWORD_CORE Then
+    ''' <summary>
+    ''' Show open file dialog and return the selected file path.
+    ''' </summary>
+    ''' <param name="ext$"></param>
+    ''' <returns></returns>
+    <ExportAPI("File.Select",
+               Info:="Open the file open dialog to gets the file")>
+    Public Function SelectFile(Optional ext$ = "*.*", Optional title$ = Nothing) As String
+        Dim mime$ = ext.GetMIMEDescrib.Details
+
+        Using Open As New OpenFileDialog With {
+            .Filter = $"{ext}|{ext}",
+            .Title = If(title.StringEmpty, $"Open {mime}", title)
+        }
             If Open.ShowDialog = DialogResult.OK Then
                 Return Open.FileName
             Else
-                Return ""
+                Return Nothing
             End If
         End Using
     End Function
@@ -883,14 +909,18 @@ Public Module Extensions
     ''' 假若这个集合是空值或者空的，则返回0，其他情况则返回Count拓展函数的结果)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Collection"></param>
+    ''' <param name="collection"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function GetElementCounts(Of T)(Collection As Generic.IEnumerable(Of T)) As Integer
-        If Collection.IsNullOrEmpty Then
+    <Extension> Public Function DataCounts(Of T)(collection As IEnumerable(Of T)) As Integer
+        If collection.IsNullOrEmpty Then
             Return 0
+        ElseIf TypeOf collection Is T() Then
+            Return DirectCast(collection, T()).Length
+        ElseIf TypeOf collection Is System.Collections.Generic.List(Of T) Then
+            Return DirectCast(collection, System.Collections.Generic.List(Of T)).Count
         Else
-            Return System.Linq.Enumerable.Count(Collection)
+            Return Enumerable.Count(collection)
         End If
     End Function
 
@@ -903,9 +933,9 @@ Public Module Extensions
     <Extension> Public Sub Free(Of T As Class)(ByRef obj As T)
         If Not obj Is Nothing Then
             Dim TypeInfo As Type = obj.GetType
-            If Array.IndexOf(TypeInfo.GetInterfaces, GetType(System.IDisposable)) > -1 Then
+            If Array.IndexOf(TypeInfo.GetInterfaces, GetType(IDisposable)) > -1 Then
                 Try
-                    Call DirectCast(obj, System.IDisposable).Dispose()
+                    Call DirectCast(obj, IDisposable).Dispose()
                 Catch ex As Exception
 
                 End Try
@@ -913,7 +943,11 @@ Public Module Extensions
         End If
 
         obj = Nothing
-        Call FlushMemory()
+
+        ' Will not working on Linux platform
+        If App.IsMicrosoftPlatform Then
+            Call FlushMemory()
+        End If
     End Sub
 
     ''' <summary>
@@ -1558,63 +1592,6 @@ Public Module Extensions
     ''' The first element in a collection.
     ''' </summary>
     Public Const Scan0 As Integer = 0
-
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
-    ''' then function will return the string value from the ToString() function.
-    ''' </summary>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("Get.Description",
-               Info:="Get the description data from a enum type value, if the target have no <see cref=""DescriptionAttribute""></see> attribute data then function will return the string value from the ToString() function.")>
-    <Extension> Public Function Description(value As [Enum]) As String
-#Else
-    ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
-    ''' then function will return the string value from the ToString() function.
-    ''' </summary>
-    ''' <param name="e"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function Description(value As [Enum]) As String
-#End If
-        Dim type As Type = value.GetType()
-        Dim s As String = value.ToString
-        Dim memInfos As MemberInfo() = type.GetMember(name:=s)
-
-        If memInfos.IsNullOrEmpty Then
-            Return s
-        End If
-
-        Dim customAttrs As Object() =
-            memInfos(Scan0).GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
-
-        If Not customAttrs.IsNullOrEmpty Then
-            Return DirectCast(customAttrs(Scan0), DescriptionAttribute).Description
-        Else
-            Return s
-        End If
-    End Function
-
-    ''' <summary>
-    ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.(只允许枚举类型，其他的都返回空集合)
-    ''' </summary>
-    ''' <typeparam name="T">泛型类型约束只允许枚举类型，其他的都返回空集合</typeparam>
-    ''' <returns></returns>
-    Public Function Enums(Of T)() As T()
-        Dim EnumType As Type = GetType(T)
-        If Not EnumType.IsInheritsFrom(GetType(System.Enum)) Then
-            Return Nothing
-        End If
-
-        Dim EnumValues As Object() =
-            Scripting.CastArray(Of System.Enum)(EnumType.GetEnumValues).ToArray(Of Object)(
-                Function(ar) DirectCast(ar, Object))
-        Dim values As T() = EnumValues.ToArray(Of T)(Function([enum]) DirectCast([enum], T))
-        Return values
-    End Function
 
     ''' <summary>
     ''' 函数只返回有重复的数据

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74ae05b1f1e5aeae60ff9e78fcd59496, ..\sciBASIC#\mime\MIME_Markups\HTML\Render\HtmlConstants.vb"
+﻿#Region "Microsoft.VisualBasic::74ae05b1f1e5aeae60ff9e78fcd59496, ..\sciBASIC#\mime\text%html\HTML\Render\HtmlConstants.vb"
 
     ' Author:
     ' 

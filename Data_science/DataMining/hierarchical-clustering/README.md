@@ -8,6 +8,9 @@ Implementation of an agglomerative hierarchical clustering algorithm in Java. Di
 * Single Linkage
 * Complete Linkage
 
+OTU classification approaches
+hierarchical clustering algorithms (HCA): uclust & cd-hit & ESPRIT
+
 What you put in
 ---------------
 

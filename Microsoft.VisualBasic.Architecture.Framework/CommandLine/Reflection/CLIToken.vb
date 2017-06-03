@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d09ca8c2de71d46452c8b1c80afe127, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLIToken.vb"
+﻿#Region "Microsoft.VisualBasic::ee77daa83b68abd4b2bb6a692e59d315, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLIToken.vb"
 
     ' Author:
     ' 
@@ -26,15 +26,56 @@
 
 #End Region
 
+Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine.Reflection
 
     Public Class RunDllEntryPoint : Inherits [Namespace]
 
+        ''' <summary>
+        ''' rundll namespace::api
+        ''' </summary>
+        ''' <param name="Name"></param>
         Sub New(Name As String)
             Call MyBase.New(Name, "")
         End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="entrypoint$"></param>
+        ''' <returns>
+        ''' 假若没有api的名称的话，是默认使用一个名字为``Main``的主函数来运行的
+        ''' </returns>
+        Public Shared Function GetPoint(entrypoint$) As NamedValue(Of String)
+            Dim entry = entrypoint.GetTagValue("::", trim:=True)
+            If entry.Value.StringEmpty Then
+                entry.Value = "Main"
+            End If
+            Return entry
+        End Function
+
+        Public Shared Function GetDllMethod(assembly As Assembly, entryPoint$) As MethodInfo
+            Dim entry As NamedValue(Of String) = GetPoint(entryPoint)
+            Dim dll As Type = LinqAPI.DefaultFirst(Of Type) <= From type As Type
+                                                               In assembly.GetTypes
+                                                               Let load = type.GetCustomAttribute(Of RunDllEntryPoint)
+                                                               Let name = load?.Namespace
+                                                               Where Not load Is Nothing AndAlso name.TextEquals(entry.Name)
+                                                               Select type
+            If dll Is Nothing Then
+                Return Nothing
+            Else
+                Dim method As MethodInfo = dll _
+                    .GetMethods(PublicShared) _
+                    .Where(Function(m) m.Name.TextEquals(entry.Value)) _
+                    .FirstOrDefault
+                Return method
+            End If
+        End Function
     End Class
 
     ''' <summary>

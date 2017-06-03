@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b698da8c3a786595ef3d996ed0d8374d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\base\SlideWindow\SlideWindowHandle.vb"
+﻿#Region "Microsoft.VisualBasic::e8bb7ad6559fa4370f6f818b4e7c7a95, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\base\SlideWindow\SlideWindowHandle.vb"
 
     ' Author:
     ' 

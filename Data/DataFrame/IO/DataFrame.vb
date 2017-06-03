@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc523c213f958b82374673916cf650b0, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::f2007ae4c00ce61aa495497285ff8c72, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
 
     ' Author:
     ' 

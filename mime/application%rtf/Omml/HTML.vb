@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dff8b8855b823b9787546b54b5850aca, ..\sciBASIC#\mime\RTF\Omml\HTML.vb"
+﻿#Region "Microsoft.VisualBasic::dff8b8855b823b9787546b54b5850aca, ..\sciBASIC#\mime\application%rtf\Omml\HTML.vb"
 
     ' Author:
     ' 

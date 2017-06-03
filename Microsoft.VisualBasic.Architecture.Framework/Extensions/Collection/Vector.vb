@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a000b8c4c7dde87caa736b8399686715, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::46b13b2abf82831ddbb8a0a1f43ee057, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
 ' Author:
 ' 
@@ -34,6 +34,36 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
 Public Module VectorExtensions
+
+    ''' <summary>
+    ''' 对目标序列进行排序生成新的序列
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="desc"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Sort(Of T)(source As IEnumerable(Of T), Optional by As Func(Of T, IComparable) = Nothing, Optional desc As Boolean = False) As IEnumerable(Of T)
+        If by Is Nothing Then
+            If Not desc Then
+                Return From x As T
+                       In source
+                       Select x
+                       Order By x Ascending
+            Else
+                Return From x As T
+                       In source
+                       Select x
+                       Order By x Descending
+            End If
+        Else
+            If Not desc Then
+                Return source.OrderBy(by)
+            Else
+                Return source.OrderByDescending(by)
+            End If
+        End If
+    End Function
 
     ''' <summary>
     ''' Returns the collection element its index where the test expression <paramref name="predicate"/> result is TRUE

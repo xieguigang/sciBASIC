@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::babcfbeec82ffc780cf5c167eccbf06e, ..\sciBASIC#\mime\MIME_Markups\HTML\Xml\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::3603efd000b6b0836c64833e79a8a125, ..\sciBASIC#\mime\text%html\HTML\Xml\Meta.vb"
 
     ' Author:
     ' 

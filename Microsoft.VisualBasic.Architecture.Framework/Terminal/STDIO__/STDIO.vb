@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::8121b0734fb0ac171015b7fdbb22534e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\STDIO__\STDIO.vb"
+﻿#Region "Microsoft.VisualBasic::4453fc282c91f519c82f5a208f0eec10, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\STDIO__\STDIO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Terminal.Utility
+Imports Microsoft.VisualBasic.Text
 
 Namespace Terminal
 
@@ -50,20 +52,18 @@ Namespace Terminal
         ''' A dictionary list of the escape characters.(转义字符列表)
         ''' </summary>
         ''' <remarks></remarks>
-        Dim Eschs As Dictionary(Of String, String) =
-            New Dictionary(Of String, String) From
-            {
-                {"\o", String.Empty},
-                {"\n", vbCrLf},
-                {"\r", vbCr},
-                {"\t", vbTab},
-                {"\v", String.Empty},
-                {"\b", vbBack},
-                {"\f", vbFormFeed},
-                {"\'", QUOT_CHAR},
-                {"\" & QUOT_CHAR, QUOT_CHAR}}
-
-        Public Const QUOT_CHAR As Char = Chr(34)
+        Dim escapings As New Dictionary(Of String, String) From {
+ _
+            {"\o", String.Empty},
+            {"\n", vbCrLf},
+            {"\r", vbCr},
+            {"\t", vbTab},
+            {"\v", String.Empty},
+            {"\b", vbBack},
+            {"\f", vbFormFeed},
+            {"\'", ASCII.Quot},
+            {"\" & ASCII.Quot, ASCII.Quot}
+        }
 
 #Region "printf"
 
@@ -169,23 +169,23 @@ Namespace Terminal
 
             Call Console.WriteLine(prompt)
 
-            If style.HasFlag(MsgBoxStyle.AbortRetryIgnore) Then
+            If style = MsgBoxStyle.AbortRetryIgnore Then
                 Call Console.Write("Abort/Retry/Ignore?(a/r/i) [R]")
                 [default] = "R"
-            ElseIf style.HasFlag(MsgBoxStyle.OkCancel) Then
+            ElseIf style = MsgBoxStyle.OkCancel Then
                 Call Console.Write("Ok/Cancel?(o/c) [O]")
                 [default] = "O"
-            ElseIf style.HasFlag(MsgBoxStyle.OkOnly) Then
+            ElseIf style = MsgBoxStyle.OkOnly Then
                 Call Console.WriteLine("Press any key to continute...")
                 Call Console.ReadKey()
                 Return MsgBoxResult.Ok
-            ElseIf style.HasFlag(MsgBoxStyle.RetryCancel) Then
+            ElseIf style = MsgBoxStyle.RetryCancel Then
                 Call Console.Write("Retry/Cancel?(r/c) [R]")
                 [default] = "R"
-            ElseIf style.HasFlag(MsgBoxStyle.YesNo) Then
+            ElseIf style = MsgBoxStyle.YesNo Then
                 Call Console.Write("Yes/No?(y/n) [Y]")
                 [default] = "Y"
-            ElseIf style.HasFlag(MsgBoxStyle.YesNoCancel) Then
+            ElseIf style = MsgBoxStyle.YesNoCancel Then
                 Call Console.Write("Yes/No/Cancel?(y/n/c) [Y]")
                 [default] = "Y"
             End If
@@ -199,7 +199,7 @@ Namespace Terminal
                 input = input.ToUpper
             End If
 
-            If style.HasFlag(MsgBoxStyle.AbortRetryIgnore) Then
+            If style = MsgBoxStyle.AbortRetryIgnore Then
                 If __testEquals(input, "A"c) Then
                     Return MsgBoxResult.Abort
                 ElseIf __testEquals(input, "R"c) Then
@@ -209,7 +209,7 @@ Namespace Terminal
                 Else
                     Return MsgBoxResult.Retry
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.OkCancel) Then
+            ElseIf style = MsgBoxStyle.OkCancel Then
 
                 If __testEquals(input, "O"c) Then
                     Return MsgBoxResult.Ok
@@ -218,9 +218,9 @@ Namespace Terminal
                 Else
                     Return MsgBoxResult.Ok
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.OkOnly) Then
+            ElseIf style = MsgBoxStyle.OkOnly Then
                 Return MsgBoxResult.Ok
-            ElseIf style.HasFlag(MsgBoxStyle.RetryCancel) Then
+            ElseIf style = MsgBoxStyle.RetryCancel Then
 
                 If __testEquals(input, "R"c) Then
                     Return MsgBoxResult.Retry
@@ -229,7 +229,7 @@ Namespace Terminal
                 Else
                     Return MsgBoxResult.Retry
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.YesNo) Then
+            ElseIf style = MsgBoxStyle.YesNo Then
 
                 If __testEquals(input, "Y"c) Then
                     Return MsgBoxResult.Yes
@@ -238,7 +238,7 @@ Namespace Terminal
                 Else
                     Return MsgBoxResult.Yes
                 End If
-            ElseIf style.HasFlag(MsgBoxStyle.YesNoCancel) Then
+            ElseIf style = MsgBoxStyle.YesNoCancel Then
 
                 If __testEquals(input, "Y"c) Then
                     Return MsgBoxResult.Yes
@@ -267,7 +267,7 @@ Namespace Terminal
             Return Asc(input.First) = Asc(compare)
         End Function
 
-        Public Delegate Function TryParseDelegate(Of T)(str As String, ByRef val As T) As Boolean
+        Public Delegate Function TryParseDelegate(Of T)(str$, ByRef val As T) As Boolean
 
         ''' <summary>
         ''' Read Method with Generics &amp; Delegate
@@ -283,12 +283,20 @@ Namespace Terminal
         ''' <param name="parser"></param>
         ''' <param name="_default"></param>
         ''' <returns></returns>
-        Public Function Read(Of T)(msg As String, parser As TryParseDelegate(Of T), Optional _default As T = Nothing) As T
+        Public Function Read(Of T)(msg$, parser As TryParseDelegate(Of T), Optional _default$ = Nothing) As T
             Dim line As String
             Dim value As T
             Do
-                Console.Write(msg & ": ")
+                Call Console.Write(msg)
+
+                If Not _default.StringEmpty Then
+                    Call Console.Write($" <default={_default}>")
+                End If
+
+                Call Console.Write(": ")
+
                 line = Console.ReadLine()
+
                 If String.IsNullOrWhiteSpace(line) Then
                     line = _default?.ToString()
                 End If
@@ -321,5 +329,12 @@ Namespace Terminal
                 Call Console.WriteLine(o)
             End If
         End Sub
+
+        Public Function InputPassword(Optional prompt$ = "input your password", Optional maxLength% = 20) As String
+            Dim pass$ = Nothing
+            Call Console.Write(prompt & ": ")
+            Call New ConsolePasswordInput().PasswordInput(pass, maxLength)
+            Return pass
+        End Function
     End Module
 End Namespace

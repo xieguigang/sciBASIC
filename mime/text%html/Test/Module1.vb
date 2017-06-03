@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71db8c6f183875fff6fc34ae5673e9c8, ..\sciBASIC#\mime\MIME_Markups\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::71db8c6f183875fff6fc34ae5673e9c8, ..\sciBASIC#\mime\text%html\Test\Module1.vb"
 
     ' Author:
     ' 
