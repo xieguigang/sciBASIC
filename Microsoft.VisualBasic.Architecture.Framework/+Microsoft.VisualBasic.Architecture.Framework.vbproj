@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7C6804B7-3359-4CE0-B636-1AAED52C1AA0}</ProjectGuid>
+    <ProjectGuid>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a</AssemblyName>
