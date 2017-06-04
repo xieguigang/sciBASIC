@@ -362,7 +362,8 @@
     <Compile Include="CommandLine\Reflection\Attributes\ExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
     <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
-    <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\DynamicProgramming.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
     <Compile Include="ComponentModel\DataSource\Tsv.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedCollection%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
@@ -434,7 +435,7 @@
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
-    <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindowHandle.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb" />
     <Compile Include="ComponentModel\File\FileSaveHandle.vb" />
     <Compile Include="ComponentModel\IO\ReadStream.vb" />
     <Compile Include="ComponentModel\IO\WriteStream.vb" />
