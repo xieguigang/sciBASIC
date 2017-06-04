@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::558a45048a9c7f17eb70c0e193287017, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::b8ee6bb568fde771fd4162efbee6ae5c, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Edge.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -69,8 +69,8 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Edge : Inherits ClassObject
-        Implements IInteraction
+    Public Class Edge : Implements IInteraction
+        Implements IGraphValueContainer(Of EdgeData)
 
         Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
             ID = iId
@@ -85,7 +85,7 @@ Namespace Graph
         End Sub
 
         Public Property ID() As String
-        Public Property Data() As EdgeData
+        Public Property Data() As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).Data
         Public Property Source() As Node
         Public Property Target() As Node
         Public Property Directed() As Boolean

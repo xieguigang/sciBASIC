@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4d3a91356dd5561df28014ccd219817, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GDITransform.vb"
+﻿#Region "Microsoft.VisualBasic::3de5825866652d97f3559642bbe6def1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,23 @@ Namespace Imaging
     <PackageNamespace("GDI.Transform")> Public Module GeomTransform
 
         <Extension>
-        Public Function ToPoint(pf As PointF) As Point
+        Public Function GetBounds(points As IEnumerable(Of Point)) As RectangleF
+            Return points.Select(Function(pt) pt.PointF).GetBounds
+        End Function
+
+        <Extension>
+        Public Function GetBounds(points As IEnumerable(Of PointF)) As RectangleF
+            Dim array = points.ToArray
+            Dim xmin = array.Min(Function(pt) pt.X)
+            Dim xmax = array.Max(Function(pt) pt.X)
+            Dim ymin = array.Min(Function(pt) pt.Y)
+            Dim ymax = array.Max(Function(pt) pt.Y)
+            Dim topLeft As New PointF(xmin, ymin)
+            Dim size As New SizeF(xmax - xmin, ymax - ymin)
+            Return New RectangleF(topLeft, size)
+        End Function
+
+        <Extension> Public Function ToPoint(pf As PointF) As Point
             Return New Point(pf.X, pf.Y)
         End Function
 
@@ -62,10 +78,20 @@ Namespace Imaging
         End Function
 
         <Extension>
-        Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As Point
-            Dim xOffset As Integer() = pts.ToArray(Function(x) x.X)
-            Dim yOffset As Integer() = pts.ToArray(Function(x) x.Y)
-            Dim xo, yo As Integer
+        Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As PointF
+            Return pts.Select(Function(pt) pt.PointF).ToArray.CentralOffset(frameSize.SizeF)
+        End Function
+
+        <Extension>
+        Public Function SizeF(size As Size) As SizeF
+            Return New SizeF(size.Width, size.Height)
+        End Function
+
+        <Extension>
+        Public Function CentralOffset(pts As IEnumerable(Of PointF), frameSize As SizeF) As PointF
+            Dim xOffset!() = pts.ToArray(Function(x) x.X)
+            Dim yOffset!() = pts.ToArray(Function(x) x.Y)
+            Dim xo, yo As Single
 
             If xOffset.Length > 0 Then
                 xo = xOffset.Min
@@ -74,11 +100,11 @@ Namespace Imaging
                 yo = yOffset.Min
             End If
 
-            Dim size As New Size(xOffset.Max - xOffset.Min, yOffset.Max - yOffset.Min)
-            Dim left As Integer = (frameSize.Width - size.Width) / 2
-            Dim top As Integer = (frameSize.Height - size.Height) / 2
+            Dim size As New SizeF(xOffset.Max - xOffset.Min, yOffset.Max - yOffset.Min)
+            Dim left! = (frameSize.Width - size.Width) / 2
+            Dim top! = (frameSize.Height - size.Height) / 2
 
-            Return New Point(left - xo, top - yo)
+            Return New PointF(left - xo, top - yo)
         End Function
 
         Const pi2 As Double = Math.PI / 2.0

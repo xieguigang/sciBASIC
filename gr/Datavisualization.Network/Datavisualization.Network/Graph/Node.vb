@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::1eeedebee7d0ef2488f7ba865abb398b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\Graph\Node.vb"
+﻿#Region "Microsoft.VisualBasic::c78409e20a75733985d1fc69466e6268, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Node.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -65,12 +65,14 @@
 '
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Node : Inherits ClassObject
-        Implements INamedValue
+    ''' <summary>
+    ''' <see cref="Node.ID"/> -> <see cref="INamedValue.Key"/>
+    ''' </summary>
+    Public Class Node : Implements INamedValue
+        Implements IGraphValueContainer(Of NodeData)
 
         ''' <summary>
         ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置
@@ -95,7 +97,7 @@ Namespace Graph
         ''' </summary>
         ''' <returns></returns>
         Public Property ID As String Implements INamedValue.Key
-        Public Property Data As NodeData
+        Public Property Data As NodeData Implements IGraphValueContainer(Of NodeData).Data
         Public Property Pinned As Boolean
 
         Public Overrides Function GetHashCode() As Integer

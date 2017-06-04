@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::850f05baadcea20dacbadf73ddf1f79b, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Abundance.vb"
+﻿#Region "Microsoft.VisualBasic::850f05baadcea20dacbadf73ddf1f79b, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Abundance.vb"
 
     ' Author:
     ' 

@@ -1,33 +1,34 @@
-﻿#Region "Microsoft.VisualBasic::d77a22d08655bebc4759e76e6f064450, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::8224a4cac2a315d5ef14a92af9cf071c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
@@ -161,6 +162,43 @@ Namespace Drawing2D.Colors
                 End Sub
 
             Return GraphicsPlots(lsize, margin, bg, plotInternal)
+        End Function
+
+        <Extension>
+        Public Function ColorLegend2(designer As SolidBrush(),
+                                     range As DoubleRange,
+                                     size As Size,
+                                     Optional padding$ = g.ZeroPadding,
+                                     Optional labelFontCSS$ = CSSFont.Win7Normal) As GraphicsData
+            Dim font As Font = CSSFont.TryParse(labelFontCSS)
+            Dim plotInternal =
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    Dim l = designer.Length
+                    Dim dx = (region.Size.Width - region.Padding.Horizontal) / l
+                    Dim h = region.Size.Height - region.Padding.Vertical * (2 / 3)
+                    Dim x = region.Padding.Left, y = region.Padding.Top + h + 10
+                    Dim labels$() = range _
+                        .Enumerate(l) _
+                        .Select(Function(n) n.ToString("F2")) _
+                        .ToArray
+
+                    For i As Integer = 0 To l - 1
+                        Dim b = designer(i)
+                        Dim rect As New Rectangle(x, region.Padding.Top, dx, h)
+                        Dim s$ = labels(i)
+                        Dim fsize = g.MeasureString(s, font)
+
+                        Call g.FillRectangle(b, rect)
+                        Call g.DrawString(s, font, Brushes.Black, New PointF(x - fsize.Width / 2, y))
+
+                        x += dx
+                    Next
+                End Sub
+
+            Return g.GraphicsPlots(
+                size, padding,
+                "transparent",
+                plotInternal)
         End Function
     End Module
 End Namespace

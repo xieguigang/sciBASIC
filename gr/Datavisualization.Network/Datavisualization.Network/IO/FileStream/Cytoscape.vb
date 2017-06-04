@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d8daf2e5052d88424512977261e066b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\LDM\FileStream\Cytoscape.vb"
+﻿#Region "Microsoft.VisualBasic::de0c8b3fec529b2a1645c10cd9d8e45f, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\Cytoscape.vb"
 
     ' Author:
     ' 
@@ -47,12 +47,17 @@ Namespace FileStream.Cytoscape
         Public Property Data As Dictionary(Of String, String)
 
         Public Iterator Function GetNodes(nodeHash As Dictionary(Of Graph.Node)) As IEnumerable(Of Graph.Node)
-            Dim tokens As String() =
-                Strings.Split(name, $"({interaction})") _
-                .ToArray(Function(s) s.Trim)
+            With GetConnectNodes()
+                Yield nodeHash(.First)
+                Yield nodeHash(.Last)
+            End With
+        End Function
 
-            Yield nodeHash(tokens.First)
-            Yield nodeHash(tokens.Last)
+        Public Function GetConnectNodes() As String()
+            Dim tokens$() = Strings _
+                .Split(name, $"({interaction})") _
+                .ToArray(Function(s) s.Trim)
+            Return tokens
         End Function
 
         Public Overrides Function ToString() As String

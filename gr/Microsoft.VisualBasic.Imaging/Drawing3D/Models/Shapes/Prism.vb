@@ -1,10 +1,43 @@
+﻿#Region "Microsoft.VisualBasic::9c8842e10b589bb981836a7bb2dfd69b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Prism.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Namespace Drawing3D.Models.Isometric.Shapes
 
     ''' <summary>
     ''' Created by fabianterhorst on 01.04.17.
+    ''' (立方体)
     ''' </summary>
     Public Class Prism : Inherits Shape3D
 
+        ''' <summary>
+        ''' x,y,z的边长分别为1
+        ''' </summary>
+        ''' <param name="origin"></param>
         Public Sub New(origin As Point3D)
             Me.New(origin, 1, 1, 1)
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d6cf2000cad1a0e9acf9e6ce057d254, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\xConsole\xConsole.vb"
+﻿#Region "Microsoft.VisualBasic::138ebe5e66d8e279c5a5f645cc99bad2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\xConsole\xConsole.vb"
 
     ' Author:
     ' 

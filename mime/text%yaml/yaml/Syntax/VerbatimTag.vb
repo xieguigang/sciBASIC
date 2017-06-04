@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe2ed2e1cf5eb46c4d269a2d786d6b30, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\VerbatimTag.vb"
+﻿#Region "Microsoft.VisualBasic::f5c05dce7d826832945d9a7a6a2ea9cf, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\VerbatimTag.vb"
 
     ' Author:
     ' 

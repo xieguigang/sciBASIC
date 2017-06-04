@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbd4c957db9e1539c078b0e70bc13f5f, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb"
+﻿#Region "Microsoft.VisualBasic::cbd4c957db9e1539c078b0e70bc13f5f, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb"
 
     ' Author:
     ' 

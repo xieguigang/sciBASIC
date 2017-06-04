@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e45b3dc880d2673cc7d37f966bfa187, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Population.vb"
+﻿#Region "Microsoft.VisualBasic::e9e1e2fb4282d28b91e1937979c28f61, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
 
     ' Author:
     ' 

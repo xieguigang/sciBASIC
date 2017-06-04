@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2d749f01506c88d078a05e62622c4d4, ..\sciBASIC#\mime\RDF\TestProject\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b2d749f01506c88d078a05e62622c4d4, ..\sciBASIC#\mime\application%rdf+xml\TestProject\Module1.vb"
 
     ' Author:
     ' 

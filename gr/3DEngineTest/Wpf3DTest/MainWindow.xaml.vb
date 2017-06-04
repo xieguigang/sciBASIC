@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::237f6481d4786f7c9d18d8acdba609bd, ..\sciBASIC#\gr\3DEngineTest\Wpf3DTest\MainWindow.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::24742b9c4b7c6c1a832dde7cba05ef92, ..\sciBASIC#\gr\3DEngineTest\Wpf3DTest\MainWindow.xaml.vb"
 
     ' Author:
     ' 
@@ -29,4 +29,3 @@
 Class MainWindow
 
 End Class
-

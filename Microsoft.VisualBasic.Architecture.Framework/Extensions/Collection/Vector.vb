@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a000b8c4c7dde87caa736b8399686715, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::46b13b2abf82831ddbb8a0a1f43ee057, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
 ' Author:
 ' 
@@ -29,10 +29,65 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
 Public Module VectorExtensions
 
+    ''' <summary>
+    ''' 对目标序列进行排序生成新的序列
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="desc"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Sort(Of T)(source As IEnumerable(Of T), Optional by As Func(Of T, IComparable) = Nothing, Optional desc As Boolean = False) As IEnumerable(Of T)
+        If by Is Nothing Then
+            If Not desc Then
+                Return From x As T
+                       In source
+                       Select x
+                       Order By x Ascending
+            Else
+                Return From x As T
+                       In source
+                       Select x
+                       Order By x Descending
+            End If
+        Else
+            If Not desc Then
+                Return source.OrderBy(by)
+            Else
+                Return source.OrderByDescending(by)
+            End If
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Returns the collection element its index where the test expression <paramref name="predicate"/> result is TRUE
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="predicate"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Which(Of T)(source As IEnumerable(Of T), predicate As Func(Of T, Boolean)) As IEnumerable(Of Integer)
+        Return source _
+            .SeqIterator _
+            .Where(Function(i) predicate(i.value)) _
+            .Select(Function(o) o.i)
+    End Function
+
+    ''' <summary>
+    ''' Determine that is all of the collection <paramref name="array"/> have the same size? 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="n%">collection size Length</param>
+    ''' <param name="any">Is required all of the sequence must be the length equals</param>
+    ''' <param name="array"></param>
+    ''' <returns></returns>
     Public Function LengthEquals(Of T)(n%, any As Boolean, ParamArray array As IEnumerable(Of T)()) As Boolean
         Dim c%() = array.Select(Function(s) s.Count).ToArray
         Dim equals = c.Where(Function(x) x = n).ToArray
@@ -114,20 +169,6 @@ Public Module VectorExtensions
         Next
 
         Return minIndex
-    End Function
-
-    <Extension>
-    Public Function GetMaxIndex(values As List(Of Double)) As Integer
-        Dim max As Double = Double.MinValue
-        Dim maxIndex As Integer = 0
-        For i As Integer = 0 To values.Count - 1
-            If values(i) > max Then
-                max = values(i)
-                maxIndex = i
-            End If
-        Next
-
-        Return maxIndex
     End Function
 
     ''' <summary>
@@ -225,7 +266,7 @@ Public Module VectorExtensions
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' String mid function like operation on any type collection data.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -306,6 +347,9 @@ Public Module VectorExtensions
             End If
         Next
 
+        If Not tmp.Count = 0 Then
+            blocks += tmp.ToArray
+        End If
         Return blocks.ToArray
     End Function
 

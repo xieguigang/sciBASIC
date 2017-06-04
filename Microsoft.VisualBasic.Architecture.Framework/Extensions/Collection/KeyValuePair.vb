@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46f89fcd593d9663e5b6da1f21047c39, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::d8714067ba1a2e49af6a8c4635342bca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
 
 ' Author:
 ' 
@@ -92,8 +92,17 @@ Public Module KeyValuePairExtensions
     ''' <returns></returns>
     <Extension>
     Public Function Values(Of T)(source As IEnumerable(Of NamedValue(Of T))) As T()
-        Return source.Select(Function(x) x.Value).ToArray
+        Return source _
+            .Select(Function(x) x.Value) _
+            .ToArray
     End Function
+
+    '<Extension>
+    'Public Function Values(Of T, V As Value(Of T).IValueOf)(source As IEnumerable(Of V)) As T()
+    '    Return source _
+    '        .Select(Function(x) x.value) _
+    '        .ToArray
+    'End Function
 
     ''' <summary>
     ''' gets all <see cref="INamedValue.Key"/> values
@@ -188,11 +197,11 @@ Public Module KeyValuePairExtensions
         Return table _
             .Select(Function(k)
                         Return New NamedValue(Of T) With {
-                            .Name = k.Key, 
+                            .Name = k.Key,
                             .Value = k.Value
                         }
                     End Function) _
-            .ToArray 
+            .ToArray
     End Function
 
     <Extension>
@@ -303,21 +312,6 @@ Public Module KeyValuePairExtensions
         Next
 
         Return hash
-    End Function
-
-    <Extension>
-    Public Function Sort(Of T)(source As IEnumerable(Of T), Optional desc As Boolean = False) As IEnumerable(Of T)
-        If Not desc Then
-            Return From x As T
-                   In source
-                   Select x
-                   Order By x Ascending
-        Else
-            Return From x As T
-                   In source
-                   Select x
-                   Order By x Descending
-        End If
     End Function
 
     ''' <summary>

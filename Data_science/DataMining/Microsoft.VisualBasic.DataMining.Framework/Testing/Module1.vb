@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::689df78dbbd681c80954121780472d65, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Testing\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3f6fb1e9256954b0f56a0e0dccb18b5a, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\Module1.vb"
 
     ' Author:
     ' 
@@ -44,4 +44,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-

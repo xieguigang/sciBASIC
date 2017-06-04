@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e26bb131b8fa6908cf10e42344f2e060, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\RSyntax\Vectors\BooleanVector.vb"
+﻿#Region "Microsoft.VisualBasic::9a192a5998f88a2d7fb2ae618a881c2c, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\RSyntax\Vectors\BooleanVector.vb"
 
     ' Author:
     ' 
@@ -129,6 +129,22 @@ Namespace SyntaxAPI.Vectors
         ''' <returns></returns>
         Public Overloads Shared Narrowing Operator CType(x As BooleanVector) As Boolean()
             Return x.ToArray
+        End Operator
+
+        Public Shared Operator IsTrue(b As BooleanVector) As Boolean
+            If b.IsNullOrEmpty Then
+                Return False
+            Else
+                Return Not b.Any(Function(x) x = False)
+            End If
+        End Operator
+
+        Public Shared Operator IsFalse(b As BooleanVector) As Boolean
+            If b Then
+                Return True
+            Else
+                Return False
+            End If
         End Operator
     End Class
 End Namespace

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::da6e31e3674e6764283313c1fc632540, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::529e298d3925aafc788fabac7729be7a, ..\sciBASIC#\Data_science\Mathematical\Plots\Heatmaps\Heatmap.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -255,7 +256,7 @@ Public Module Heatmap
                                    Optional legendWidth! = -1,
                                    Optional legendHasUnmapped As Boolean = True,
                                    Optional legendLayout As Rectangle = Nothing) As GraphicsData
-        Dim angle! = 45.0F
+        Dim angle! = -45
 
         If padding.IsEmpty Then
             Dim maxLabel As String = LinqAPI.DefaultFirst(Of String) <=
@@ -300,15 +301,18 @@ Public Module Heatmap
 
                 left = getLeft
                 top = getTop
-                angle = -angle
                 left += dw / 2
 
                 If drawLabel2 Then
+                    Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+
                     For Each key$ In keys
                         Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
                         Dim dx! = sz.Width * Math.Cos(angle)
                         Dim dy! = sz.Width * Math.Sin(angle)
-                        Call g.DrawString(key$, font, Brushes.Black, left - dx, top - dy, angle)
+
+                        Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, New StringFormat() With {.FormatFlags = StringFormatFlags.MeasureTrailingSpaces})
+
                         left += dw
                     Next
                 End If
@@ -341,7 +345,7 @@ Public Module Heatmap
                     legend, CInt(left), CInt(top), lmargin, lh)
 
                 If titleFont Is Nothing Then
-                    titleFont = New Font(FontFace.BookmanOldStyle, 30, Drawing.FontStyle.Bold)
+                    titleFont = New Font(FontFace.BookmanOldStyle, 30, FontStyle.Bold)
                 End If
 
                 Dim titleSize = g.MeasureString(mainTitle, titleFont)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c789c5458203acb65a91cdd9c5f60775, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\QLearning\QState.vb"
+﻿#Region "Microsoft.VisualBasic::c789c5458203acb65a91cdd9c5f60775, ..\sciBASIC#\Data_science\MachineLearning\QLearning\QState.vb"
 
     ' Author:
     ' 

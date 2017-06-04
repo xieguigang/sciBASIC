@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0001392a7e574292e31858e37e8699b7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::7f6ca784c115cd5b02e32d8026e9f076, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -55,43 +55,46 @@ Namespace Scripting
         ''' Object为字符串类型，这个字典可以讲字符串转为目标类型
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property CasterString As Dictionary(Of Type, Func(Of String, Object)) =
-            New Dictionary(Of Type, Func(Of String, Object)) From {
-                {GetType(String), Function(s$) s},
-                {GetType(Char), AddressOf Casting.CastChar},
-                {GetType(Integer), AddressOf Casting.CastInteger},
-                {GetType(Double), AddressOf Casting.ParseNumeric},
-                {GetType(Long), AddressOf Casting.CastLong},
-                {GetType(Boolean), AddressOf getBoolean},
-                {GetType(Char()), AddressOf Casting.CastCharArray},
-                {GetType(Date), AddressOf Casting.CastDate},
-                {GetType(StringBuilder), AddressOf Casting.CastStringBuilder},
-                {GetType(CommandLine.CommandLine), AddressOf Casting.CastCommandLine},
-                {GetType(Image), AddressOf Casting.CastImage},
-                {GetType(FileInfo), AddressOf Casting.CastFileInfo},
-                {GetType(Graphics2D), AddressOf Casting.CastGDIPlusDeviceHandle},
-                {GetType(Color), AddressOf ToColor},
-                {GetType(Font), AddressOf Casting.CastFont},
-                {GetType(System.Net.IPEndPoint), AddressOf Casting.CastIPEndPoint},
-                {GetType(Logging.LogFile), AddressOf Casting.CastLogFile},
-                {GetType(Process), AddressOf Casting.CastProcess},
-                {GetType(RegexOptions), AddressOf Casting.CastRegexOptions},
-                {GetType(Single), AddressOf Casting.CastSingle},
-                {GetType(Decimal), Function(x) CDec(x)},
-                {GetType(Point), AddressOf PointParser},
-                {GetType(PointF), AddressOf FloatPointParser},
-                {GetType(Size), AddressOf SizeParser},
-                {GetType(SizeF), AddressOf FloatSizeParser}
+        Public ReadOnly Property CasterString As New Dictionary(Of Type, Func(Of String, Object)) From {
+ _
+            {GetType(String), Function(s$) s},
+            {GetType(Char), AddressOf Casting.CastChar},
+            {GetType(Integer), AddressOf Casting.CastInteger},
+            {GetType(Double), AddressOf Casting.ParseNumeric},
+            {GetType(Long), AddressOf Casting.CastLong},
+            {GetType(Boolean), AddressOf getBoolean},
+            {GetType(Char()), AddressOf Casting.CastCharArray},
+            {GetType(Date), AddressOf Casting.CastDate},
+            {GetType(StringBuilder), AddressOf Casting.CastStringBuilder},
+            {GetType(CommandLine.CommandLine), AddressOf Casting.CastCommandLine},
+            {GetType(Image), AddressOf Casting.CastImage},
+            {GetType(FileInfo), AddressOf Casting.CastFileInfo},
+            {GetType(Graphics2D), AddressOf Casting.CastGDIPlusDeviceHandle},
+            {GetType(Color), AddressOf ToColor},
+            {GetType(Font), AddressOf Casting.CastFont},
+            {GetType(System.Net.IPEndPoint), AddressOf Casting.CastIPEndPoint},
+            {GetType(Logging.LogFile), AddressOf Casting.CastLogFile},
+            {GetType(Process), AddressOf Casting.CastProcess},
+            {GetType(RegexOptions), AddressOf Casting.CastRegexOptions},
+            {GetType(Single), AddressOf Casting.CastSingle},
+            {GetType(Decimal), Function(x) CDec(x)},
+            {GetType(Point), AddressOf PointParser},
+            {GetType(PointF), AddressOf FloatPointParser},
+            {GetType(Size), AddressOf SizeParser},
+            {GetType(SizeF), AddressOf FloatSizeParser}
         }
 
         ''' <summary>
         ''' Converts a string expression which was input from the console or script file to the specified type.
-        ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值)
+        ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值，空字符串也会返回空值)
         ''' </summary>
         ''' <param name="expression">The string expression to convert.</param>
         ''' <param name="target">The type to which to convert the object.</param>
         ''' <returns>An object whose type at run time is the requested target type.</returns>
-        <Extension> Public Function CTypeDynamic(expression As String, target As Type) As Object
+        <Extension> Public Function CTypeDynamic(expression$, target As Type) As Object
+            If expression.StringEmpty Then
+                Return Nothing
+            End If
             If _CasterString.ContainsKey(target) Then
                 Dim Caster As Func(Of String, Object) = _CasterString(target)
                 Return Caster(expression$)
@@ -110,13 +113,14 @@ Namespace Scripting
         ''' Converts a string expression which was input from the console or script file to the specified type.
         ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值)
         ''' </summary>
-        ''' <param name="Expression">The string expression to convert.</param>
+        ''' <param name="expr">The string expression to convert.</param>
         ''' <typeparam name="T">The type to which to convert the object.</typeparam>
         ''' <returns>An object whose type at run time is the requested target type.</returns>
-        <Extension> Public Function CTypeDynamic(Of T)(Expression As String) As T
-            Dim value As Object = CTypeDynamic(Expression, GetType(T))
+        <Extension> Public Function CTypeDynamic(Of T)(expr$, Optional [default] As T = Nothing) As T
+            Dim value As Object = CTypeDynamic(expr, GetType(T))
+
             If value Is Nothing Then
-                Return Nothing
+                Return [default]
             Else
                 Return DirectCast(value, T)
             End If
@@ -132,9 +136,9 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' Dynamics updates the capability of function <see cref="InputHandler.CTypeDynamic(String, System.Type)"/>, 
-        ''' <see cref="InputHandler.CTypeDynamic(Of T)(String)"/> and 
-        ''' <see cref="InputHandler.IsPrimitive(System.Type)"/>
+        ''' Dynamics updates the capability of function <see cref="InputHandler.CTypeDynamic(String, Type)"/>, 
+        ''' <see cref="InputHandler.CTypeDynamic(Of T)(String, T)"/> and 
+        ''' <see cref="InputHandler.IsPrimitive(Type)"/>
         ''' </summary>
         ''' <param name="briefName"></param>
         ''' <param name="stringConvertType"></param>
@@ -248,7 +252,7 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' The parameter <paramref name="obj"/> should implements a <see cref="System.Collections.IEnumerable"/> interface on the type. and then DirectCast object to target type.
+        ''' The parameter <paramref name="obj"/> should implements a <see cref="IEnumerable"/> interface on the type. and then DirectCast object to target type.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>

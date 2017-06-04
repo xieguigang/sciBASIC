@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60f66b87dd2e94d2457f6481173a12b8, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\FuzzyCMeans\Algorithm\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::5d3962fe7190a7a242007583976cb64e, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\FuzzyCMeans\Algorithm\Utils.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@ Namespace FuzzyCMeans
     Partial Public Module FuzzyCMeansAlgorithm
 
         ''' <summary>
-        ''' ����Ӧ���ڿ��ӻ�
+        ''' 
         ''' </summary>
         ''' <param name="clusterCenterPoint"></param>
         ''' <param name="color"></param>
@@ -63,7 +63,7 @@ Namespace FuzzyCMeans
             membershipMatrix = CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
 
             For Each value As KeyValuePair(Of Entity, List(Of Double)) In membershipMatrix
-                Dim clusterNumber As Integer = GetMaxIndex(value.Value)
+                Dim clusterNumber As Integer = Which.Max(value.Value)
                 clusters.Add(value.Key, clusterCenters(clusterNumber))
             Next
 

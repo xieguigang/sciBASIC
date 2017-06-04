@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b65683a0d57164d6346c9ca0d86d56e, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
+﻿#Region "Microsoft.VisualBasic::9ac84b7ab58db6510e0334835e1258d5, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
     ' Author:
     ' 

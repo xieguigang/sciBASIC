@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c04b4abb63084ebc54ed6982119b27b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Tree\TreeNodeBase.vb"
+﻿#Region "Microsoft.VisualBasic::a7b0ff0289fdaeb9cc94c1bcf1591575, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Tree\TreeNodeBase.vb"
 
     ' Author:
     ' 

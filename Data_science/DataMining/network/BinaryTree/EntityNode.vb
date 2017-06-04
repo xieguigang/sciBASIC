@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5407a51a92a6ecca194ff19686faf21e, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\BinaryTree\EntityNode.vb"
+﻿#Region "Microsoft.VisualBasic::3dd1841a0382106fceb96b1dd0cddac6, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\EntityNode.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.Tree

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c368c7bf45da76706d7f7becf6acc2c, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\Models\Chromosome.vb"
+﻿#Region "Microsoft.VisualBasic::5c368c7bf45da76706d7f7becf6acc2c, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\Models\Chromosome.vb"
 
     ' Author:
     ' 

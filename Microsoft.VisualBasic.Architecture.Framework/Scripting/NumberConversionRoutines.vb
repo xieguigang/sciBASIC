@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f83c4fd37ca00863517144f45b4bb07, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\NumberConversionRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::d89ba21b3b3f94c5c7dade336702c478, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\NumberConversionRoutines.vb"
 
     ' Author:
     ' 

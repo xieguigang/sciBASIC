@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fda6bede1af41f260a3ecc3fb9b4b18, ..\sciBASIC#\mime\MIME_Markups\HTML\CSS\Render\CssDrawingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::7fda6bede1af41f260a3ecc3fb9b4b18, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssDrawingHelper.vb"
 
     ' Author:
     ' 

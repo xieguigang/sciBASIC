@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8aa77d16354696a534331686c7ae3023, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
+﻿#Region "Microsoft.VisualBasic::511687152f8b848c9ef084e0792f3dde, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
 
     ' Author:
     ' 
@@ -64,8 +64,7 @@ Namespace Language
     ''' <summary>
     ''' The base class object in VisualBasic
     ''' </summary>
-    Public Class ClassObject
-        Implements IClassObject, IMySelf(Of ClassObject)
+    Public Class ClassObject : Implements IClassObject, IMySelf(Of ClassObject)
 
         ''' <summary>
         ''' The extension property.(为了节省内存的需要，这个附加属性尽量不要被自动初始化)

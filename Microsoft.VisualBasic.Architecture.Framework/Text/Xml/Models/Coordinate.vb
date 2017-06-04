@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65e4cf08042bc58db0e0fe6cc6f1da97, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Coords.vb"
+﻿#Region "Microsoft.VisualBasic::b11fa38f5bf8be23371d77736a3dd836, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Models\Coordinate.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,17 @@ Namespace Text.Xml.Models
             Me.X = x
             Me.Y = y
         End Sub
+
+        Public Shared Function FromPointF(x!, y!, multiply%) As Coordinate
+            Return New Coordinate With {
+                .X = x * multiply,
+                .Y = y * multiply
+            }
+        End Function
+
+        Public Function ToPointF(multiply%) As PointF
+            Return New PointF(X / multiply, Y / multiply)
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"[{X}, {Y}]"

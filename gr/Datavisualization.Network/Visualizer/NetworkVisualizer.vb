@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::67d848cf0dfdbbce09d09dff553b0fd0, ..\sciBASIC#\gr\Datavisualization.Network\VisualizationExtensions\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::c90127b23bddfca6d72716059309743f, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\NetworkVisualizer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -63,21 +63,41 @@ Public Module NetworkVisualizer
     End Function
 
     <Extension>
-    Private Function __calOffsets(nodes As Dictionary(Of Node, Point), size As Size) As Point
+    Private Function __calOffsets(nodes As Dictionary(Of Node, Point), size As Size) As PointF
         Return nodes.Values.CentralOffset(size)
     End Function
 
     <Extension>
-    Private Function __scale(nodes As Node(), scale!) As Dictionary(Of Node, Point)
+    Private Function __scale(nodes As IEnumerable(Of Node), scale As SizeF) As Dictionary(Of Node, Point)
         Dim table As New Dictionary(Of Node, Point)
 
         For Each n As Node In nodes
             With n.Data.initialPostion.Point2D
-                Call table.Add(n, New Point(.X * scale, .Y * scale))
+                Call table.Add(n, New Point(.X * scale.Width, .Y * scale.Height))
             End With
         Next
 
         Return table
+    End Function
+
+    <Extension>
+    Public Function GetBounds(graph As NetworkGraph) As RectangleF
+        Dim points As Point() = graph _
+            .nodes _
+            .__scale(scale:=New SizeF(1, 1)) _
+            .Values _
+            .ToArray
+        Dim rect = points.GetBounds
+        Return rect
+    End Function
+
+    <Extension>
+    Public Function AutoScaler(graph As NetworkGraph, frameSize As Size) As SizeF
+        With graph.GetBounds
+            Return New SizeF(
+                frameSize.Width / .Width,
+                frameSize.Height / .Height)
+        End With
     End Function
 
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
@@ -102,14 +122,14 @@ Public Module NetworkVisualizer
                               Optional displayId As Boolean = True,
                               Optional labelColorAsNodeColor As Boolean = False,
                               Optional nodeStroke$ = WhiteStroke,
-                              Optional scale! = 1,
+                              Optional scale$ = "1,1",
                               Optional labelFontBase$ = CSSFont.Win7Normal) As GraphicsData
         Dim frameSize As Size = canvasSize.SizeParser
         Dim br As Brush
         Dim rect As Rectangle
         Dim cl As Color
-        Dim scalePos = net.nodes.ToArray.__scale(scale)
-        Dim offset As Point = scalePos.__calOffsets(frameSize)
+        Dim scalePos = net.nodes.ToArray.__scale(scale.FloatSizeParser)
+        Dim offset As Point = scalePos.__calOffsets(frameSize).ToPoint
 
         Call "Initialize gdi objects...".__INFO_ECHO
 

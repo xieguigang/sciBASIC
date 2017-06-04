@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::6c7c31aaa870db3b829bf8b126935adb, ..\sciBASIC#\gr\Datavisualization.Network\VisualizationExtensions\StyleMappings.vb"
+﻿#Region "Microsoft.VisualBasic::2fd3a71fbd2b7f785b1ab628ea64ba1a, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\StyleMappings.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,9 +30,11 @@ Imports System.Drawing
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -47,9 +49,21 @@ Namespace Styling
     ''' </summary>
     Public Module StyleMappings
 
+        ''' <summary>
+        ''' 从graph的属性值到相应的图形属性(节点大小，颜色，字体，形状)的映射操作类型
+        ''' </summary>
         Public Enum MapperTypes
+            ''' <summary>
+            ''' 连续的数值型的映射
+            ''' </summary>
             Continuous
+            ''' <summary>
+            ''' 离散的分类映射
+            ''' </summary>
             Discrete
+            ''' <summary>
+            ''' 直接映射
+            ''' </summary>
             Passthrough
         End Enum
 
@@ -92,6 +106,48 @@ Namespace Styling
                 out += New Map(Of T, Double) With {
                     .Key = array(i),
                     .Maps = range.Min + range.Length * quantiles(i)
+                }
+            Next
+
+            Return out
+        End Function
+
+        <Extension>
+        Public Function NumericMapping(source As IEnumerable(Of Node), property$, range As DoubleRange) As Map(Of Node, Double)()
+            Dim selector = [property].SelectNodeValue
+            Dim array As Node() = source.ToArray
+            Dim quantiles#() = array _
+                .Select(Function(n)
+                            Return Val(selector(n))
+                        End Function) _
+                .QuantileLevels
+            Dim out As New List(Of Map(Of Node, Double))
+
+            For i As Integer = 0 To quantiles.Length - 1
+                out += New Map(Of Node, Double) With {
+                    .Key = array(i),
+                    .Maps = range.Min + range.Length * quantiles(i)
+                }
+            Next
+
+            Return out
+        End Function
+
+        <Extension>
+        Public Function DiscreteMapping(source As IEnumerable(Of Node), property$) As Map(Of Node, Integer)()
+            Dim selector = [property].SelectNodeValue
+            Dim array As Node() = source.ToArray
+            Dim values$() = array _
+                .Select(selector) _
+                .Select(AddressOf CStrSafe) _
+                .ToArray
+            Dim catagory As New Index(Of String)(values.Distinct)
+            Dim out As New List(Of Map(Of Node, Integer))
+
+            For i As Integer = 0 To array.Length - 1
+                out += New Map(Of Node, Integer) With {
+                    .Key = array(i), 
+                    .Maps = catagory(values(i))
                 }
             Next
 

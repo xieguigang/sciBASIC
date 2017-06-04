@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4135dc8e62a3b7837559f051b0884a9, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Framework\Darwinism\Models\FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::b4135dc8e62a3b7837559f051b0884a9, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
     ' Author:
     ' 

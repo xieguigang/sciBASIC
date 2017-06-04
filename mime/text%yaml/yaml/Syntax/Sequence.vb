@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c394eb436db38ba2532bdb4e341faea, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\Sequence.vb"
+﻿#Region "Microsoft.VisualBasic::723df8ee07d222b05bc4ca4ff23dc4fd, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\Sequence.vb"
 
     ' Author:
     ' 

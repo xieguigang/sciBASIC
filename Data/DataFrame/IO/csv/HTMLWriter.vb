@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::e3c083c7adb19571cc01940f95e6c755, ..\sciBASIC#\Data\DataFrame\IO\csv\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::7f151a5d56c0cfae8c675f665c839c21, ..\sciBASIC#\Data\DataFrame\IO\csv\HTMLWriter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -107,8 +107,8 @@ Namespace IO
             Optional alt$ = Nothing) As String
 
             Dim innerDoc As New StringBuilder("<table", 4096)
-            Dim removeList As New IndexOf(Of String)(removes)
-            Dim removeIndex As New IndexOf(Of Integer)(
+            Dim removeList As New Index(Of String)(removes)
+            Dim removeIndex As New Index(Of Integer)(
                 removes _
                 .SafeQuery _
                 .Select(Function(name)
@@ -145,7 +145,7 @@ Namespace IO
             Return innerDoc.ToString
         End Function
 
-        <Extension> Private Function __titleRow(row As RowObject, removes As IndexOf(Of String), theadSpace As Boolean) As String
+        <Extension> Private Function __titleRow(row As RowObject, removes As Index(Of String), theadSpace As Boolean) As String
             Dim doc As New StringBuilder
             Dim rowText$ = row _
                 .Where(Function(t) removes(t) = -1) _
@@ -161,7 +161,7 @@ Namespace IO
             Return doc.ToString
         End Function
 
-        <Extension> Private Sub __contentRow(row As RowObject, ByRef doc As StringBuilder, removes As IndexOf(Of Integer), alt$)
+        <Extension> Private Sub __contentRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), alt$)
             Dim rowText$ = row.ToArray _
                 .SeqIterator _
                 .Where(Function(i) removes(i.i) = -1) _
