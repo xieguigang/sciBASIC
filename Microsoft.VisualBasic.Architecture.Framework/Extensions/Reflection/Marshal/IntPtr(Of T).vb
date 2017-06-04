@@ -61,8 +61,8 @@ Namespace Emit.Marshal
         Sub New(p As System.IntPtr, chunkSize As Integer, unsafeCopys As UnsafeCopys(Of T), unsafeWrite As UnsafeWrite(Of T))
             __writeMemory = unsafeWrite
             Scan0 = p
-            __innerRaw = New T(chunkSize - 1) {}
-            Call unsafeCopys(Scan0, __innerRaw, 0, __innerRaw.Length)
+            buffer = New T(chunkSize - 1) {}
+            Call unsafeCopys(Scan0, buffer, 0, buffer.Length)
         End Sub
 
         ''' <summary>
@@ -81,7 +81,7 @@ Namespace Emit.Marshal
         Dim __writeMemory As UnsafeWrite(Of T)
 
         Private Sub __unsafeWrite(p As System.IntPtr)
-            Call __writeMemory(__innerRaw, 0, p, __innerRaw.Length)
+            Call __writeMemory(buffer, 0, p, buffer.Length)
         End Sub
 
         ''' <summary>
