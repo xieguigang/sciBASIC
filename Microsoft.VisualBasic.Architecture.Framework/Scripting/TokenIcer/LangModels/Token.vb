@@ -1,38 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::f46a6d56938ad6c9413401160c725fc7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LDM\LDM.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-' This file was Auto Generated with TokenIcer
-Imports System.Collections.Generic
-Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Language
 
 Namespace Scripting.TokenIcer
 
     ' This defines the PeekToken object
+
     ''' <summary>
     ''' A PeekToken object class
     ''' </summary>
@@ -63,19 +62,19 @@ Namespace Scripting.TokenIcer
     ''' <remarks>
     ''' A Token object holds the token and token value.
     ''' </remarks>
-    Public Class Token(Of Tokens)
+    Public Class Token(Of Tokens) : Implements Value(Of String).IValueOf
 
         ''' <summary>
         ''' Token type
         ''' </summary>
         ''' <returns></returns>
-        Public Property TokenName As Tokens
+        Public Property Name As Tokens
 
         ''' <summary>
         ''' The text that makes up the token.
         ''' </summary>
         ''' <returns></returns>
-        Public Property TokenValue As String
+        Public Property Value As String Implements Value(Of String).IValueOf.value
 
         ''' <summary>
         ''' 务必要保持0为未定义
@@ -83,28 +82,28 @@ Namespace Scripting.TokenIcer
         ''' <returns></returns>
         Public ReadOnly Property UNDEFINED As Boolean
             Get
-                If TypeOf TokenName Is [Enum] OrElse TypeOf TokenName Is Integer Then
-                    Dim o As Object = TokenName
+                If TypeOf Name Is [Enum] OrElse TypeOf Name Is Integer Then
+                    Dim o As Object = Name
                     Dim i As Integer = CInt(o)
                     If i = 0 Then
                         Return True
                     End If
                 End If
 
-                Return TokenName Is Nothing OrElse
-                    String.IsNullOrEmpty(TokenValue)
+                Return Name Is Nothing OrElse
+                    String.IsNullOrEmpty(Value)
             End Get
         End Property
 
         Public ReadOnly Property Type As Tokens
             Get
-                Return TokenName
+                Return Name
             End Get
         End Property
 
         Public ReadOnly Property Text As String
             Get
-                Return TokenValue
+                Return Value
             End Get
         End Property
 
@@ -119,13 +118,13 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
-        Public Sub New(name As Tokens, value As String)
-            TokenName = name
-            TokenValue = value
+        Public Sub New(name As Tokens, value$)
+            Me.Name = name
+            Me.Value = value
         End Sub
 
         Sub New(name As Tokens)
-            TokenName = name
+            Me.Name = name
         End Sub
 
         Sub New()
@@ -133,9 +132,9 @@ Namespace Scripting.TokenIcer
 
         Public Overrides Function ToString() As String
             If UNDEFINED Then
-                Return "UNDEFINED --> " & TokenValue
+                Return "UNDEFINED --> " & Value
             End If
-            Return $"[{TokenName}]" & vbTab & TokenValue
+            Return $"[{Name}]" & vbTab & Value
         End Function
 
         Public Function GetValue() As Object

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d0c83ff5d8905603369d7ee68bb0f7b7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\ParserAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,15 @@ Imports Microsoft.VisualBasic.Language
 Namespace Scripting.TokenIcer
 
     Public Module ParserAPI
+
+        <Extension>
+        Public Function StartEscaping(buffer As List(Of Char), Optional escape As Char = "\"c) As Boolean
+            If buffer.IsNullOrEmpty Then
+                Return False
+            Else
+                Return buffer.Last = escape
+            End If
+        End Function
 
         ''' <summary>
         ''' 假若返回来的是空字符串，则说明不是注释行
@@ -84,7 +93,7 @@ Namespace Scripting.TokenIcer
  _
                 From x As Token(Of Tokens)
                 In lstToken
-                Where Not stackT.Equals(x.TokenName, whiteSpace)
+                Where Not stackT.Equals(x.Name, whiteSpace)
                 Select x
 
             Dim func As Func(Of Tokens) =
@@ -93,12 +102,12 @@ Namespace Scripting.TokenIcer
         End Function
 
         <Extension> Public Function [As](Of Tokens, T)(x As Token(Of Tokens)) As T
-            Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.TokenValue)
+            Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.Value)
             Return obj
         End Function
 
         <Extension> Public Function [CType](Of Tokens)(x As Token(Of Tokens), type As Type) As Object
-            Dim obj As Object = InputHandler.CTypeDynamic(x.TokenValue, type)
+            Dim obj As Object = InputHandler.CTypeDynamic(x.Value, type)
             Return obj
         End Function
 
@@ -109,13 +118,13 @@ Namespace Scripting.TokenIcer
         ''' <param name="x"></param>
         ''' <returns></returns>
         <Extension> Public Function [TryCast](Of Tokens)(x As Token(Of Tokens)) As Object
-            Dim typeName As String = Scripting.ToString(x.TokenName)
+            Dim typeName As String = Scripting.ToString(x.Name)
             Dim type As New Value(Of Type)
 
             If type = Scripting.GetType(typeName, False) Is Nothing Then
-                Return x.TokenValue
+                Return x.Value
             Else
-                Return CTypeDynamic(x.TokenValue, +type)
+                Return CTypeDynamic(x.Value, +type)
             End If
         End Function
     End Module
