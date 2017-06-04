@@ -191,9 +191,6 @@
     <Compile Include="IGraphicsEngine.vb" />
     <Compile Include="Config.vb" />
     <Compile Include="InputDevice.vb" />
-    <Compile Include="Styling\NodeStyles.vb" />
-    <Compile Include="Styling\EdgeStyles.vb" />
-    <Compile Include="Styling\StyleMapper.vb" />
     <Compile Include="Styling\UI\ColorMaps.Designer.vb">
       <DependentUpon>ColorMaps.vb</DependentUpon>
     </Compile>

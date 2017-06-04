@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e66224e31a1cc4d43b1a9eb5b59bbd7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::92d5e890fa74de3ae9a93c718af0dc03, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -37,6 +37,15 @@ Imports Microsoft.VisualBasic.Language
 Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of String, V)
     ' Implements IEnumerable(Of V)
 
+    Default Public Overloads Property Item(o As V) As V
+        Get
+            Return MyBase.Item(o.Key)
+        End Get
+        Set(value As V)
+            MyBase.Item(o.Key) = value
+        End Set
+    End Property
+    
     Sub New()
         Call MyBase.New
     End Sub

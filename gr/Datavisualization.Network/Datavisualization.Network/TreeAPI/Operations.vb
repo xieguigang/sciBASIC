@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f3bc8d275a7175a49e1a99b96abaef9, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\TreeAPI\Operations.vb"
+﻿#Region "Microsoft.VisualBasic::668a12bc35549ae0f9aaf1919ecd7b71, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\TreeAPI\Operations.vb"
 
     ' Author:
     ' 
@@ -54,10 +54,10 @@ Namespace TreeAPI
         End Function
 
         Private Sub __buildTREE(ByRef tree As BinaryTree(Of NodeTypes), node As String, ByRef netList As List(Of FileStream.NetworkEdge))
-            Dim nexts = (From x In netList.GetNextConnects(node) Select x Group x By x.InteractionType Into Group)
+            Dim nexts = (From x In netList.GetNextConnects(node) Select x Group x By x.Interaction Into Group)
 
             For Each part In nexts
-                Dim type = __getTypes(part.InteractionType)
+                Dim type = __getTypes(part.Interaction)
                 Dim nextNodes = part.Group.ToArray
 
                 If type <> NodeTypes.Path Then
@@ -87,7 +87,7 @@ Namespace TreeAPI
                 Else ' 这个是Path，则继续建树
                     For Each nxode As FileStream.NetworkEdge In nextNodes
                         Call netList.Remove(nxode)
-                        Call tree.Add(node, New TreeNode(Of NodeTypes)(nxode.ToNode, __getTypes(nxode.InteractionType)))
+                        Call tree.Add(node, New TreeNode(Of NodeTypes)(nxode.ToNode, __getTypes(nxode.Interaction)))
                         Call __buildTREE(tree, nxode.ToNode, netList)
                     Next
                 End If

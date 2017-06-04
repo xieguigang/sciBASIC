@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3c36d4f6ecc503bb5c027a1977c3134, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\NamedCollection(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::5fb75b8224f3d99331bb34c319d7a81a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\NamedCollection(Of T).vb"
 
     ' Author:
     ' 
@@ -142,7 +142,7 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Overrides Function ToString() As String
-            Return Name & " --> " & Value.GetJson
+            Return Name 
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator

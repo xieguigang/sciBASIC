@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::207eed71847a499753f649ed8336050b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::d62ac1453223425487417908bfddec42, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -28,16 +28,16 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.Extensions
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports ______NETWORK__ =
-Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network(Of
-Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node,
-Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge)
+    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.Network(Of
+    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node,
+    Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge)
 
 <[PackageNamespace]("DataVisualization.Network", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkAPI
@@ -183,8 +183,8 @@ Public Module NetworkAPI
                 edges += New FileStream.NetworkEdge With {
                     .FromNode = var.ID,
                     .ToNode = k,
-                    .Confidence = c,
-                    .InteractionType = interact,
+                    .value = c,
+                    .Interaction = interact,
                     .Properties = New Dictionary(Of String, String) From {
                         {"type", If(c# > 0, "positive", "negative")},
                         {"abs", Math.Abs(c#)}

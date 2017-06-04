@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ba96e261c73db48d78c5c1d2b36124a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Expressions\ArrayIndex.vb"
+﻿#Region "Microsoft.VisualBasic::3c6bef0f23b57f048f4baf25ee389bf3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Expressions\ArrayIndex.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,18 @@ Imports Microsoft.VisualBasic.Language
 Namespace Scripting.Expressions
 
     Public Module ArrayIndex
+
+        ''' <summary>
+        ''' 表达式字符串只允许：``1, 2, 3, 4, 5``
+        ''' </summary>
+        ''' <param name="exp$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function AsVector(exp$) As Double()
+            Return exp.Split(","c) _
+                .Select(AddressOf Trim) _
+                .Select(Function(s) Val(s)) _
+                .ToArray
+        End Function
 
         ''' <summary>
         ''' 

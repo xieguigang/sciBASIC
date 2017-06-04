@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f6180cbcc1a7c17d3f58233f94ddab1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::a2d2faceb59ff4c8f1a75b8fc07be51d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\PropertyValue.vb"
 
     ' Author:
     ' 
@@ -78,8 +78,8 @@ Namespace ComponentModel.DataSourceModel
         ''' Tag property value.(默认是将数据写入到基本类型的值之中)
         ''' </summary>
         Sub New()
-            __get = Function() MyBase.Value
-            __set = Sub(v) MyBase.Value = v
+            __get = Function() MyBase.value
+            __set = Sub(v) MyBase.value = v
         End Sub
 
         ''' <summary>
@@ -110,13 +110,13 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Shared Function GetValue(Of Cls As IClassObject)(x As Cls, name As String) As PropertyValue(Of T)
-            Dim value As Object = x.Extension.DynamicHash(name)
+            Dim value As Object = x.Extension.DynamicHashTable(name)
             Dim pv As PropertyValue(Of T) = DirectCast(value, PropertyValue(Of T))
             Return pv
         End Function
 
         Public Shared Sub SetValue(Of Cls As IClassObject)(x As Cls, name As String, value As T)
-            Dim pvo As Object = x.Extension.DynamicHash(name)
+            Dim pvo As Object = x.Extension.DynamicHashTable(name)
             Dim pv As PropertyValue(Of T) = DirectCast(pvo, PropertyValue(Of T))
             pv.value = value
         End Sub
@@ -130,7 +130,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         Public Shared Function [New](Of Cls As IClassObject)(x As Cls, name As String) As PropertyValue(Of T)
             Dim value As New PropertyValue(Of T)()
-            x.Extension.DynamicHash.Value(name) = value
+            x.Extension.DynamicHashTable(name) = value
             value.obj = x
             Return value
         End Function
@@ -146,7 +146,7 @@ Namespace ComponentModel.DataSourceModel
             If x.Extension Is Nothing Then
                 x.Extension = New ExtendedProps
             End If
-            Dim prop As Object = x.Extension.DynamicHash(name)
+            Dim prop As Object = x.Extension.DynamicHashTable(name)
             If prop Is Nothing Then
                 prop = PropertyValue(Of T).[New](Of Cls)(x, name)
             End If

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59b62960f9139186393d4cec0ec1b1fb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::390e6e3ed2e0408420376ce27471b3a4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\Extensions.vb"
 
     ' Author:
     ' 
@@ -67,5 +67,52 @@ Namespace ComponentModel.Ranges
             min = Casting.ParseNumeric(t(Scan0))
             max = Casting.ParseNumeric(t(1))
         End Sub
+
+        ''' <summary>
+        ''' 返回一个实数区间的范围百分比的生成函数：``[0-1]``之间
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetScaler(range As DoubleRange) As Func(Of Double, Double)
+            Dim length# = range.Length
+            Dim min# = range.Min
+
+            Return Function(x#)
+                       Return (x - min) / length
+                   End Function
+        End Function
+
+        ''' <summary>
+        ''' 将目标区间内的任意实数全部转换为<paramref name="to"/>区间内的实数
+        ''' </summary>
+        ''' <param name="from"></param>
+        ''' <param name="[to]"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RangeTransform(from As IEnumerable(Of Double), [to] As DoubleRange) As Double()
+            Dim vector#() = from.ToArray
+            Dim scale = New DoubleRange(vector).GetScaler
+            Dim percentages#() = vector.Select(scale).ToArray
+            Dim length# = [to].Length
+            Dim min# = [to].Min
+            Dim maps#() = percentages.Select(Function(x) x * length + min).ToArray
+            Return maps
+        End Function
+
+        ''' <summary>
+        ''' 将目标区间内的任意实数全部转换为<paramref name="to"/>区间内的实数
+        ''' </summary>
+        ''' <param name="from"></param>
+        ''' <param name="[to]"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RangeTransform(from As IEnumerable(Of Integer), [to] As IntRange) As Integer()
+            Return from _
+                   .Select(Function(x) CDbl(x)) _
+                   .RangeTransform(New DoubleRange([to])) _
+                   .Select(Function(x) CInt(x)) _
+                   .ToArray
+        End Function
     End Module
 End Namespace

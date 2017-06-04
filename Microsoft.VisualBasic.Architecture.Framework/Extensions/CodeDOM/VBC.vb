@@ -36,6 +36,9 @@ Namespace Emit.CodeDOM_VBC
     ''' <summary>
     ''' Extension wrappers for VisualBasic compiler
     ''' </summary>
+    ''' <remarks>
+    ''' https://www.codeproject.com/articles/113169/c-as-a-scripting-language-in-your-net-applications
+    ''' </remarks>
     Public Module VBC
 
         ''' <summary>

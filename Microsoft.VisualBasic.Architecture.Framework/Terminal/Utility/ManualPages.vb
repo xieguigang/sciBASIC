@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::229f2e437346d237a9fa802495eeea31, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\Utility\ManualPages.vb"
+﻿#Region "Microsoft.VisualBasic::99b1b33f6cf63347d67429a934b23495, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\Utility\ManualPages.vb"
 
     ' Author:
     ' 

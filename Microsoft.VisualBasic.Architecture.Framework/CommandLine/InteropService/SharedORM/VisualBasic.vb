@@ -1,6 +1,35 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::08565f0b738670ae33d6243462734658, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\SharedORM\VisualBasic.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.InteropService.SharedORM
@@ -17,6 +46,7 @@ Namespace CommandLine.InteropService.SharedORM
         Public Overrides Function GetSourceCode() As String
             Dim vb As New StringBuilder
 
+            Call vb.AppendLine("Imports " & GetType(StringBuilder).Namespace)
             Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
             Call vb.AppendLine("Imports " & GetType(InteropService).Namespace)
             Call vb.AppendLine()
@@ -28,6 +58,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine(__xmlComments(App.Type.NamespaceEntry.Description))
             Call vb.AppendLine($"Public Class {MyBase.exe} : Inherits {GetType(InteropService).Name}")
             Call vb.AppendLine()
+            Call vb.AppendLine($"Public Const App$ = ""{exe}.exe""")
             Call vb.AppendLine()
             Call vb.AppendLine("Sub New(App$)")
             Call vb.AppendLine($"MyBase.{NameOf(InteropService._executableAssembly)} = App$")
@@ -49,7 +80,7 @@ Namespace CommandLine.InteropService.SharedORM
             Else
                 description = description _
                     .lTokens _
-                    .Select(Function(s) "'''" & s) _
+                    .Select(Function(s) "''' " & s.Trim(" "c, ASCII.TAB)) _
                     .JoinBy(vbCrLf)
             End If
 
@@ -65,19 +96,24 @@ Namespace CommandLine.InteropService.SharedORM
         ''' </summary>
         ''' <param name="vb"></param>
         ''' <param name="API"></param>
+        ''' <remarks>
+        ''' </remarks>
         Private Sub __calls(vb As StringBuilder, API As NamedValue(Of CommandLine))
             ' Public Function CommandName(args$,....Optional args$....) As Integer
             ' Dim CLI$ = "commandname arguments"
             ' Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
             ' Return proc.Run()
             ' End Function
-            Dim func$ = __normalizedAsIdentifier(API.Name).Trim("_"c)
+            Dim func$ = API.Name ' 直接使用函数原型的名字了，会比较容易辨别一些
             Dim xmlComments$ = __xmlComments(API.Description)
             Dim params$()
 
             Try
                 If func.First <= "9" AndAlso func.First >= "0"c Then
                     func = "_" & func  ' 有些命令行开关是以数字开头的？
+                Else
+                    ' 不是以数字开头的，则尝试解决关键词的问题
+                    func = VBLanguage.AutoEscapeVBKeyword(func)
                 End If
                 params = __vbParameters(API.Value)
             Catch ex As Exception
@@ -86,13 +122,23 @@ Namespace CommandLine.InteropService.SharedORM
             End Try
 
             Call vb.AppendLine(xmlComments)
+
             Call vb.AppendLine($"Public Function {func}({params.JoinBy(", ")}) As Integer")
-            Call vb.AppendLine($"Dim CLI$ = $""{__CLI(API.Value)}""")
-            Call vb.AppendLine($"Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI$)")
+            Call vb.AppendLine($"Dim CLI As New StringBuilder(""{API.Value.Name}"")")
+            Call vb.AppendLine("Call CLI.Append("" "")") ' 插入命令名称和参数值之间的一个必须的空格
+            Call vb.AppendLine(__CLI(+API))
+            Call vb.AppendLine()
+            Call vb.AppendLine($"Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI.ToString())")
             Call vb.AppendLine($"Return proc.{NameOf(IIORedirectAbstract.Run)}()")
             Call vb.AppendLine("End Function")
         End Sub
 
+
+        ''' <summary>
+        ''' 在这个函数之中会生成函数的参数列表
+        ''' </summary>
+        ''' <param name="API"></param>
+        ''' <returns></returns>
         Private Shared Function __vbParameters(API As CommandLine) As String()
             Dim out As New List(Of String)
             Dim param$
@@ -143,18 +189,35 @@ Namespace CommandLine.InteropService.SharedORM
         End Function
 
         Private Shared Function __CLI(API As CommandLine) As String
-            Dim CLI$ = $"{API.Name} "
-            Dim args As New List(Of String)
+            Dim CLI As New StringBuilder
+            Dim vbcode$
 
             For Each param In API.ParameterList
-                args += $"{param.Name} """"{"{" & __normalizedAsIdentifier(param.Name) & "}"}"""""
-            Next
-            For Each b In API.BoolFlags
-                args += "{" & $"If({__normalizedAsIdentifier(b)}, ""{b}"", """")" & "}"
-            Next
-            CLI &= args.JoinBy(" ")
+                Dim var$ = __normalizedAsIdentifier(param.Name)
 
-            Return CLI
+                ' 注意：在这句代码的最后有一个空格，是间隔参数所必需的，不可以删除
+                vbcode = $"Call CLI.Append(""{param.Name} "" & """""""" & {var} & """""" "")"
+
+                If param.Description.StringEmpty Then
+                    ' 必须参数不需要进一步判断，直接添加                    
+                    Call CLI.AppendLine(vbcode)
+                Else
+                    ' 可选参数还需要IF判断是否存在                  
+                    Call CLI.AppendLine($"If Not {var}.{NameOf(StringEmpty)} Then")
+                    Call CLI.AppendLine(vbcode)
+                    Call CLI.AppendLine("End If")
+                End If
+            Next
+
+            For Each b In API.BoolFlags
+                Dim var$ = __normalizedAsIdentifier(b)
+
+                Call CLI.AppendLine($"If {var} Then")
+                Call CLI.AppendLine($"Call CLI.Append(""{b} "")") ' 逻辑参数后面有一个空格，是正确的生成CLI所必需的
+                Call CLI.AppendLine("End If")
+            Next
+
+            Return CLI.ToString
         End Function
 
         Const SyntaxError$ = "'<' or '>' is using for the IO redirect in your terminal, unavailable for your commandline argument name!"

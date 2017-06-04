@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcc2145e54b8baa9708bfa31737b6b76, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::69c862c0321bc991919841f78d6184c9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -60,24 +60,28 @@ Namespace ComponentModel.DataSourceModel
         ''' <remarks>Can not serialize the dictionary object in to xml document.</remarks>
         <XmlIgnore> Public Overridable Property Properties As Dictionary(Of String, T) Implements IDynamicMeta(Of T).Properties
             Get
-                If _propHash Is Nothing Then
-                    _propHash = New Dictionary(Of String, T)
+                If propertyTable Is Nothing Then
+                    propertyTable = New Dictionary(Of String, T)
                 End If
-                Return _propHash
+                Return propertyTable
             End Get
             Set(value As Dictionary(Of String, T))
-                _propHash = value
+                propertyTable = value
             End Set
         End Property
 
-        Dim _propHash As Dictionary(Of String, T)
+        ''' <summary>
+        ''' 动态属性表
+        ''' </summary>
+        Dim propertyTable As Dictionary(Of String, T)
 
         ''' <summary>
-        ''' Get value by property name.
+        ''' Gets/sets item value by using property name.
+        ''' (这个函数为安全的函数，当目标属性不存在的时候，会返回空值)
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Default Public Property Value(name$) As T
+        Default Public Property ItemValue(name$) As T
             Get
                 If Properties.ContainsKey(name) Then
                     Return Properties(name)
@@ -100,10 +104,10 @@ Namespace ComponentModel.DataSourceModel
         ''' the specified key; otherwise, false.
         ''' </returns>
         Public Function HasProperty(name$) As Boolean
-            If _propHash Is Nothing Then
+            If propertyTable Is Nothing Then
                 Return False
             Else
-                Return _propHash.ContainsKey(name)
+                Return propertyTable.ContainsKey(name)
             End If
         End Function
 
@@ -123,8 +127,8 @@ Namespace ComponentModel.DataSourceModel
                     .ToArray
             End If
 
-            If Not _propHash Is Nothing Then
-                out += _propHash.Keys
+            If Not propertyTable Is Nothing Then
+                out += propertyTable.Keys
             End If
 
             Return out.Distinct.ToArray

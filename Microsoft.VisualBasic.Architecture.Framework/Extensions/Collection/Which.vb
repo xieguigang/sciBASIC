@@ -1,4 +1,32 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿#Region "Microsoft.VisualBasic::d21c8e0804da585e3ed504b49061e92f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Which.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -72,4 +100,24 @@ Public NotInheritable Class Which
     Public Shared Function IsFalse([operator] As Func(Of Boolean())) As Integer()
         Return Which.IsFalse([operator]())
     End Function
+
+    ''' <summary>
+    ''' 枚举出所有大于目标的顶点编号
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="compareTo"></param>
+    ''' <returns></returns>
+    ''' <remarks>因为这个返回的是一个迭代器，所以可以和First结合产生FirstGreaterThan表达式</remarks>
+    Public Shared Function IsGreaterThan(Of T As IComparable)(source As IEnumerable(Of T), compareTo As T) As IEnumerable(Of Integer)
+        Return source _
+            .SeqIterator _
+            .Where(Function(o) Language.GreaterThan(o.value, compareTo)) _
+            .Select(Function(i) i.i) ' 因为返回的是linq表达式，所以这里就不加ToArray了
+    End Function
+
+    Public Shared Function IsGreaterThan(Of T, C As IComparable)(source As IEnumerable(Of T), getValue As Func(Of T, C), compareTo As C) As IEnumerable(Of Integer)
+        Return Which.IsGreaterThan(source.Select(getValue), compareTo)
+    End Function
 End Class
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b5e83b5683426c79efe3798adb03f80, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\KMeansNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::7007eddf40ff53bb06a9a700cebe37af, ..\sciBASIC#\Data_science\DataMining\network\KMeansNetwork.vb"
 
     ' Author:
     ' 
@@ -29,10 +29,10 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.visualize.Network.Abstract
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Extensions
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 
 Namespace KMeans
 
@@ -105,10 +105,10 @@ Namespace KMeans
                     End If
 
                     edges += New NetworkEdge With {
-                        .Confidence = hit.Value,
+                        .value = hit.Value,
                         .FromNode = from,
                         .ToNode = hit.Key,
-                        .InteractionType = clusters.JoinBy("|"),
+                        .Interaction = clusters.JoinBy("|"),
                         .Properties = New Dictionary(Of String, String) From {
                             {"color", color}
                         }

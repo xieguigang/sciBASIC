@@ -1,43 +1,35 @@
-﻿#Region "Microsoft.VisualBasic::baddd1cf128745180a85040ca7de20c1, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7d0bec86b429fbdef91556138a3ea3a1, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.ComponentModel
 Imports System.Data.Common
-Imports System.IO
-Imports System.Net
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
-Imports System.Runtime.Serialization
-Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Text
-Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -363,7 +355,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="path"></param>
-    ''' <param name="explicit">
+    ''' <param name="strict">
     ''' If true then all of the simple data type property its value will be save to the data file,
     ''' if not then only save the property with the <see cref="ColumnAttribute"></see>
     ''' </param>
@@ -373,7 +365,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <remarks></remarks>
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
                                              path$,
-                                             Optional explicit As Boolean = False,
+                                             Optional strict As Boolean = False,
                                              Optional encoding As Encoding = Nothing,
                                              Optional metaBlank As String = "",
                                              Optional nonParallel As Boolean = False,
@@ -391,7 +383,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source.Select(Function(o) DirectCast(o, Object)),
             GetType(T),
-            explicit,
+            strict,
             maps,
             Not nonParallel,
             metaBlank, reorderKeys)

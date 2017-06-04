@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eeb86ec67e444bd83973e4ba52115371, ..\sciBASIC#\Data\DataFrame\DATA\SQL.vb"
+﻿#Region "Microsoft.VisualBasic::f5fd99ef0d5f12624023bcdd9561c626, ..\sciBASIC#\Data\DataFrame\DATA\SQL.vb"
 
     ' Author:
     ' 
@@ -96,7 +96,7 @@ Public Module SQL
     ''' <returns></returns>
     <Extension>
     Public Iterator Function SQLData(handle$, Optional dumpMode As Boolean = True) As IEnumerable(Of Dictionary(Of String, String))
-        Dim firstHeader As IndexOf(Of String) = handle.LineIterators.First.SQLFields
+        Dim firstHeader As Index(Of String) = handle.LineIterators.First.SQLFields
         Dim getHeader = Function(SQL$) firstHeader
 
         If Not dumpMode Then
@@ -105,7 +105,7 @@ Public Module SQL
 
         ' 在这里不需要跳过第一行的数据，因为第一行不是标题行，也是数据的一部分
         For Each rowSQL As String In handle.LineIterators
-            Dim fields As IndexOf(Of String) = getHeader(SQL:=rowSQL)
+            Dim fields As Index(Of String) = getHeader(SQL:=rowSQL)
             Dim values As String() = rowSQL.SQLValues
             Dim row As New Dictionary(Of String, String)
 
@@ -137,7 +137,7 @@ Public Module SQL
     ''' <param name="insertSQL$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function SQLFields(insertSQL$) As IndexOf(Of String)
+    Public Function SQLFields(insertSQL$) As Index(Of String)
         Dim fields$ = Regex _
             .Match(insertSQL, "INSERT INTO .+?\)\s*VALUES\s*\(", RegexICSng) _
             .Value _
@@ -148,7 +148,6 @@ Public Module SQL
             .CharsParser(fields) _
             .Select(Function(s) s.GetStackValue("`", "`")) _
             .ToArray
-        Return New IndexOf(Of String)(names)
+        Return New Index(Of String)(names)
     End Function
 End Module
-

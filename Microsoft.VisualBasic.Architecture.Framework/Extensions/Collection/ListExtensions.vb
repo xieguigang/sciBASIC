@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::539e328230a368e9eaccaba5fd82920f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::c9b7bfe47a9a0edb8e9bfba67f713c04, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
 
 ' Author:
 ' 
@@ -38,6 +38,18 @@ Imports Microsoft.VisualBasic.Linq
 ''' to accommodate the number of elements copied.
 ''' </summary>
 Public Module ListExtensions
+
+    ''' <summary>
+    ''' ForEach拓展的简化版本
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="collection"></param>
+    ''' <param name="[do]"></param>
+    <Extension> Public Sub DoEach(Of T)(collection As IEnumerable(Of T), [do] As Action(Of T))
+        For Each x As T In collection
+            Call [do](x)
+        Next
+    End Sub
 
     Private Function rand(min%, max%) As Integer
         Static rnd As New Random
@@ -114,7 +126,7 @@ Public Module ListExtensions
         End If
 
         Dim result As T() = New T(indexs.Length - 1) {}
-        Dim indices As New IndexOf(Of Integer)(
+        Dim indices As New Index(Of Integer)(
             indexs.Select(Function(oi) oi + offSet))
 
         For Each x As SeqValue(Of T) In source.SeqIterator
@@ -139,7 +151,7 @@ Public Module ListExtensions
     ''' 
     <Extension>
     Private Function __reversedTake(Of T)(collection As IEnumerable(Of T), indexs As Integer()) As T()
-        Dim indices As New IndexOf(Of Integer)(indexs)
+        Dim indices As New Index(Of Integer)(indexs)
         Dim out As New List(Of T)
 
         For Each x As SeqValue(Of T) In collection.SeqIterator
@@ -152,8 +164,8 @@ Public Module ListExtensions
     End Function
 
     <Extension>
-    Public Function Indexing(Of T)(source As IEnumerable(Of T)) As IndexOf(Of T)
-        Return New IndexOf(Of T)(source)
+    Public Function Indexing(Of T)(source As IEnumerable(Of T)) As Index(Of T)
+        Return New Index(Of T)(source)
     End Function
 
     <Extension>

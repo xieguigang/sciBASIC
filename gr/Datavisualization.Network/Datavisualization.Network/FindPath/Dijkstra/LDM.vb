@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d63737a15523d166ac4757f944fc5883, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::12307f099c6a33cc3c421d6118a32839, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\Dijkstra\LDM.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Namespace Dijkstra
         End Function
 
         Public Shared Function CreateObject(DataModel As FileStream.NetworkEdge) As Connection
-            Return CreateObject(DataModel, DataModel.Confidence)
+            Return CreateObject(DataModel, DataModel.value)
         End Function
 
         Public Shared Function CreateObject(edge As FileStream.NetworkEdge, weight As Integer) As Connection

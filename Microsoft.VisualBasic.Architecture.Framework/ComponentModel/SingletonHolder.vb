@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c093ee5fde4d874a8732f63f38fee9aa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::eeaab3e083022b22b66c242ae8b58f58, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\SingletonHolder.vb"
 
     ' Author:
     ' 
@@ -64,31 +64,29 @@
 '
 '
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Collections
-
-
 Namespace ComponentModel
 
     ''' <summary>
-    ''' An Interface for the SingletonHolder Class.
+    ''' An Interface for the SingletonHolder Class.(存储单体模式的对象实例)
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    Public Class SingletonHolder(Of T As New)
+    ''' <typeparam name="T">泛型T必须是含有一个无参数的构造函数的</typeparam>
+    Public NotInheritable Class SingletonHolder(Of T As New)
 
-        Shared m_instance As T
+        Shared _instance As T
 
         Private Sub New()
         End Sub
 
+        ''' <summary>
+        ''' 目标类型的唯一单个实例
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property Instance() As T
             Get
-                If m_instance Is Nothing Then
-                    m_instance = New T()
+                If _instance Is Nothing Then
+                    _instance = New T()
                 End If
-                Return m_instance
+                Return _instance
             End Get
         End Property
     End Class

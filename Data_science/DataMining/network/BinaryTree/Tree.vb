@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62ee916562a090c810903a9ccfe63326, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\BinaryTree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::e68bf3d93255edefb2980ae2ebd7dc0c, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\Tree.vb"
 
     ' Author:
     ' 
@@ -198,7 +198,7 @@ Namespace KMeans
                     Function(x) New NetworkEdge With {
                         .FromNode = parent.ID,
                         .ToNode = x.node.Name,
-                        .InteractionType = "Leaf-X"
+                        .Interaction = "Leaf-X"
                     })
             End If
 
@@ -218,7 +218,7 @@ Namespace KMeans
                     edges += New NetworkEdge With {
                         .FromNode = parent.ID,
                         .ToNode = leaf.node.Name,
-                        .InteractionType = "Leaf"
+                        .Interaction = "Leaf"
                     }
                 Else     ' 继续递归
                     Dim uid As String = $"[{part.cur}]" & parts.First.path.Take(depth).JoinBy(".")
@@ -227,7 +227,7 @@ Namespace KMeans
                         .NodeType = "Virtual"
                     }
                     Call nodes.Add(virtual)
-                    Call edges.Add(New NetworkEdge With {.FromNode = parent.ID, .ToNode = uid, .InteractionType = "Path"})
+                    Call edges.Add(New NetworkEdge With {.FromNode = parent.ID, .ToNode = uid, .Interaction = "Path"})
                     Call edges.Add(__buildNET(parts, virtual, [next], nodes))
                 End If
             Next

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e91c593ca1b22d939116cd1046604e9c, ..\sciBASIC#\mime\MIME_Markups\Markups\StreamWriter\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::e91c593ca1b22d939116cd1046604e9c, ..\sciBASIC#\mime\text%html\Markups\StreamWriter\HTMLWriter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66325088871437e0ed5ff5f5becf39c4, ..\sciBASIC#\Data_science\Microsoft.VisualBasic.DataMining.Model.Network\NeuralNetwork\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::a9e8b241c63ae574a9427a12347f0701, ..\sciBASIC#\Data_science\DataMining\network\NeuralNetwork\ModelAPI.vb"
 
     ' Author:
     ' 
@@ -84,10 +84,10 @@ Namespace NeuralNetwork.Models
         <Extension>
         Private Function __synapse(synapse As Synapse, type As String, uidHash As Dictionary(Of Neuron, Integer)) As FileStream.NetworkEdge
             Return New FileStream.NetworkEdge With {
-                .Confidence = synapse.Weight,
+                .value = synapse.Weight,
                 .FromNode = CStr(uidHash(synapse.InputNeuron)),
                 .ToNode = CStr(uidHash(synapse.OutputNeuron)),
-                .InteractionType = type
+                .Interaction = type
             }
         End Function
     End Module

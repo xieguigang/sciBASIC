@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a980a352657197b9ed4df403b0591b01, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Class.vb"
+﻿#Region "Microsoft.VisualBasic::b31ee620d61dd1cee4e43d0f1e76a02c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Class.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem

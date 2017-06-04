@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::746f061fc0b077d01ee247eee2be8e0f, ..\sciBASIC#\mime\MIME_Markups\YAML\Syntax\SecondaryTagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::5f8f0d3c1faf1f3d82df391eeae95bb8, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\SecondaryTagHandle.vb"
 
     ' Author:
     ' 

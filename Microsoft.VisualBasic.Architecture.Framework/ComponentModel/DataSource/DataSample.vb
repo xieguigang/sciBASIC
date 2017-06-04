@@ -68,7 +68,7 @@ Namespace ComponentModel.DataSourceModel
 
         Public Function SlideWindows(winSize As Integer,
                                      Optional offset As Integer = 1,
-                                     Optional extendTails As Boolean = False) As SlideWindowHandle(Of T)()
+                                     Optional extendTails As Boolean = False) As SlideWindow(Of T)()
             Return data.CreateSlideWindows(winSize, offset, extendTails)
         End Function
 
