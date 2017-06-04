@@ -107,8 +107,8 @@ Namespace IO
             Optional alt$ = Nothing) As String
 
             Dim innerDoc As New StringBuilder("<table", 4096)
-            Dim removeList As New IndexOf(Of String)(removes)
-            Dim removeIndex As New IndexOf(Of Integer)(
+            Dim removeList As New Index(Of String)(removes)
+            Dim removeIndex As New Index(Of Integer)(
                 removes _
                 .SafeQuery _
                 .Select(Function(name)
@@ -145,7 +145,7 @@ Namespace IO
             Return innerDoc.ToString
         End Function
 
-        <Extension> Private Function __titleRow(row As RowObject, removes As IndexOf(Of String), theadSpace As Boolean) As String
+        <Extension> Private Function __titleRow(row As RowObject, removes As Index(Of String), theadSpace As Boolean) As String
             Dim doc As New StringBuilder
             Dim rowText$ = row _
                 .Where(Function(t) removes(t) = -1) _
@@ -161,7 +161,7 @@ Namespace IO
             Return doc.ToString
         End Function
 
-        <Extension> Private Sub __contentRow(row As RowObject, ByRef doc As StringBuilder, removes As IndexOf(Of Integer), alt$)
+        <Extension> Private Sub __contentRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), alt$)
             Dim rowText$ = row.ToArray _
                 .SeqIterator _
                 .Where(Function(i) removes(i.i) = -1) _

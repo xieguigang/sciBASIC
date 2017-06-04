@@ -62,9 +62,9 @@ Public Module TextDoc
     ''' <param name="path$">``*.tsv``文件路径</param>
     ''' <returns></returns>
     <Extension>
-    Public Function TsvHeaders(path$) As IndexOf(Of String)
+    Public Function TsvHeaders(path$) As Index(Of String)
         Dim header$() = path.ReadFirstLine.Split(ASCII.TAB)
-        Dim index As New IndexOf(Of String)(header)
+        Dim index As New Index(Of String)(header)
         Return index
     End Function
 

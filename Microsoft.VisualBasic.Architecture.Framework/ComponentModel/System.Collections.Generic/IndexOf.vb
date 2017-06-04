@@ -35,7 +35,7 @@ Namespace ComponentModel.Collection
     ''' Mappings of ``key As String -> index As Integer``
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class IndexOf(Of T) : Implements IEnumerable(Of SeqValue(Of T))
+    Public Class Index(Of T) : Implements IEnumerable(Of SeqValue(Of T))
 
         Dim maps As New Dictionary(Of T, Integer)
         Dim index As List(Of SeqValue(Of T))
@@ -132,7 +132,7 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
-        Public Shared Narrowing Operator CType(index As IndexOf(Of T)) As Dictionary(Of T, Integer)
+        Public Shared Narrowing Operator CType(index As Index(Of T)) As Dictionary(Of T, Integer)
             Return New Dictionary(Of T, Integer)(index.maps)
         End Operator
 

@@ -56,7 +56,7 @@ Namespace ComponentModel.DataSourceModel
             Dim data As RowTokens() = TsvFileIO.LoadFile(path, encoding.CodePage)
             Dim tableSchema = DataFramework.Schema(Of T)(PropertyAccess.ReadWrite, True)
             Dim type As Type = GetType(T)
-            Dim schemaOrdinals As IndexOf(Of String) = path _
+            Dim schemaOrdinals As Index(Of String) = path _
                 .OpenReader(encoding.CodePage) _
                 .GetTsvHeader(False)
 
@@ -86,7 +86,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Linux平台上面的mono这里有bug，为什么<see cref="StreamReader.ReadLine()"/>一直都输出空值？
         ''' </remarks>
         <Extension>
-        Public Function GetTsvHeader(stream As StreamReader, Optional lower As Boolean = False, Optional process As Func(Of String, String) = Nothing) As IndexOf(Of String)
+        Public Function GetTsvHeader(stream As StreamReader, Optional lower As Boolean = False, Optional process As Func(Of String, String) = Nothing) As Index(Of String)
             Dim t As Func(Of String, String) = If(process Is Nothing, Function(s$) s, process)
             Dim line$ = stream.ReadLine
             Dim headers$() = line _
@@ -96,7 +96,7 @@ Namespace ComponentModel.DataSourceModel
             Dim source = If(lower,
                 headers.Select(AddressOf Strings.LCase),
                 TryCast(headers, IEnumerable(Of String)))
-            Return New IndexOf(Of String)(source)
+            Return New Index(Of String)(source)
         End Function
 
         ''' <summary>

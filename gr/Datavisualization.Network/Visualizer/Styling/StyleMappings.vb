@@ -141,7 +141,7 @@ Namespace Styling
                 .Select(selector) _
                 .Select(AddressOf CStrSafe) _
                 .ToArray
-            Dim catagory As New IndexOf(Of String)(values.Distinct)
+            Dim catagory As New Index(Of String)(values.Distinct)
             Dim out As New List(Of Map(Of Node, Integer))
 
             For i As Integer = 0 To array.Length - 1
