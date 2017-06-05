@@ -44,11 +44,17 @@ Namespace Terminal
         Dim colorBack As ConsoleColor = Console.BackgroundColor
         Dim colorFore As ConsoleColor = Console.ForegroundColor
 
-        Dim current As Integer
-        Dim y As Integer
+        Dim current%
+        Dim y%
 
-        Sub New(title As String, Optional Y As Integer = 1, Optional cls As Boolean = False)
-            If cls AndAlso App.IsConsoleApp Then
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="title"></param>
+        ''' <param name="Y"></param>
+        ''' <param name="CLS">Clear the console screen?</param>
+        Sub New(title$, Optional Y As Integer = 1, Optional CLS As Boolean = False)
+            If CLS AndAlso App.IsConsoleApp Then
                 Call Console.Clear()
             End If
 
