@@ -181,7 +181,7 @@ Namespace Scripting.Expressions
                     tmp *= 0
 
                     If l.Count = 2 Then
-                        l += New String(source.Raw.Skip(source.Pointer).ToArray)
+                        l += New String(source.Raw.Skip(source.Position).ToArray)
                         Exit Do
                     End If
                 End If

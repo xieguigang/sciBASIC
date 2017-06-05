@@ -109,7 +109,7 @@ Namespace Scripting.TokenIcer
 
         Public Overrides Function ToString() As String
             If InnerStack.IsNullOrEmpty Then
-                Return obj.TokenValue
+                Return obj.Value
             Else
                 Dim inner As String() = InnerStack.ToArray(Function(x) x.ToString)
                 Dim s As String = String.Join(" ", inner)
@@ -118,7 +118,7 @@ Namespace Scripting.TokenIcer
         End Function
 
         Public Overrides Function ToArray(stackT As StackTokens(Of Tokens)) As Token(Of Tokens)()
-            If stackT.Equals(obj.TokenName, stackT.Pretend) Then
+            If stackT.Equals(obj.Name, stackT.Pretend) Then
                 Dim list As New List(Of Token(Of Tokens))
                 For Each x In InnerStack
                     Call list.AddRange(x.ToArray(stackT))
