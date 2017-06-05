@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::7d0bec86b429fbdef91556138a3ea3a1, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -377,8 +377,8 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             Throw New Exception(path, ex)
         End Try
 
-        Call Console.WriteLine("[CSV.Reflector::{0}]" & vbCrLf & "Save data to file:///{1}", GetType(T).FullName, path)
-        Call Console.WriteLine("[CSV.Reflector] Reflector have {0} lines of data to write.", source.Count)
+        Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]" & vbCrLf & "Save data to file:///{path}")
+        Call EchoLine($"[CSV.Reflector] Reflector have {source.Count} lines of data to write.")
 
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source.Select(Function(o) DirectCast(o, Object)),
@@ -394,7 +394,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             encoding:=encoding)
 
         If success Then
-            Call "CSV saved!".__DEBUG_ECHO
+            Call "CSV saved!".EchoLine
         End If
 
         Return success

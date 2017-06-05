@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::4aca9a90e146be603b6840251a737508, ..\sciBASIC#\Data\DataFrame\Linq\DataStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -149,7 +149,7 @@ Namespace IO.Linq
                 If EndRead Then
                     Exit Do
                 Else
-                    Call Console.WriteLine("Process next block....")
+                    Call EchoLine("Process next block....")
                 End If
             Loop
         End Sub
@@ -192,15 +192,14 @@ Namespace IO.Linq
                         Let data = RowBuilder.FillData(row, obj)
                         Select DirectCast(data, T)
 
-                    Call "Start processing block...".__DEBUG_ECHO
                     Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
-                    Call Console.Write(".")
+                    Call cat(".")
                 Next
 
                 If EndRead Then
                     Exit Do
                 Else
-                    Call Console.WriteLine("Process next block....")
+                    Call "Process next block....".__INFO_ECHO
                 End If
             Loop
         End Sub
