@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::83877ce9e6078f7ba2b5496f9d4e34fa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -379,22 +379,15 @@ Public Module VBDebugger
     End Sub
 
     ''' <summary>
-    ''' Alias for <see cref="Console.Write"/>
-    ''' </summary>
-    ''' <param name="s"></param>
-    <Extension> Public Sub Echo(s As String, <CallerMemberName> Optional memberName As String = "")
-        If Not Mute Then
-            Call Console.Write($"[{memberName}] {s}")
-        End If
-    End Sub
-
-    ''' <summary>
     ''' Alias for <see cref="Console.WriteLine"/>
     ''' </summary>
     ''' <param name="s$"></param>
     <Extension> Public Sub EchoLine(s$)
         If Not Mute Then
-            Call Console.WriteLine(s)
+            Call Terminal.AddToQueue(
+                Sub()
+                    Call Console.WriteLine(s)
+                End Sub)
         End If
     End Sub
 
@@ -405,6 +398,19 @@ Public Module VBDebugger
     <Extension> Public Sub Echo(c As Char)
         If Not Mute Then
             Call Console.Write(c)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' print message, alias for <see cref="Console.Write(String)"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    Public Sub cat(s$)
+        If Not Mute Then
+            Call Terminal.AddToQueue(
+                Sub()
+                    Call Console.Write(s)
+                End Sub)
         End If
     End Sub
 End Module
