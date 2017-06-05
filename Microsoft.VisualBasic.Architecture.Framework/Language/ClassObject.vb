@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::511687152f8b848c9ef084e0792f3dde, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\ClassObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -50,21 +50,22 @@ Namespace Language
             ' Just copy this statement without any big modification. just modify the generics type constraint.
             Return PropertyValue(Of Long).Read(Of T)(x, MethodBase.GetCurrentMethod)
         End Function
-    End Module
-
-    Public Interface IMySelf(Of T As IMySelf(Of T))
 
         ''' <summary>
-        ''' With keyword in VisualBasic
+        ''' VisualBasic ``With`` source reference helper
         ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
         ''' <returns></returns>
-        ReadOnly Property MySelf As T
-    End Interface
+        <Extension> Public Function ref(Of T)(x As T) As T
+            Return x
+        End Function
+    End Module
 
     ''' <summary>
     ''' The base class object in VisualBasic
     ''' </summary>
-    Public Class ClassObject : Implements IClassObject, IMySelf(Of ClassObject)
+    Public Class ClassObject : Implements IClassObject
 
         ''' <summary>
         ''' The extension property.(为了节省内存的需要，这个附加属性尽量不要被自动初始化)
@@ -85,12 +86,6 @@ Namespace Language
         <ScriptIgnore>
         <SoapIgnore>
         Public Overridable Property Extension As ExtendedProps Implements IClassObject.Extension
-
-        Public Overridable ReadOnly Property this As ClassObject Implements IMySelf(Of ClassObject).MySelf
-            Get
-                Return Me
-            End Get
-        End Property
 
         ''' <summary>
         ''' Get dynamics property value.
