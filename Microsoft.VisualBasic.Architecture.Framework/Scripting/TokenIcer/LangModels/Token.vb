@@ -26,14 +26,13 @@
 
 #End Region
 
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 
 Namespace Scripting.TokenIcer
 
-    ' This defines the PeekToken object
-
     ''' <summary>
-    ''' A PeekToken object class
+    ''' A PeekToken object class, This defines the PeekToken object
     ''' </summary>
     ''' <remarks>
     ''' A PeekToken is a special pointer object that can be used to Peek() several
@@ -54,9 +53,8 @@ Namespace Scripting.TokenIcer
         End Function
     End Class
 
-    ' This defines the Token object
     ''' <summary>
-    ''' a Token object class
+    ''' a Token object class, This defines the Token object
     ''' </summary>
     ''' <typeparam name="Tokens">应该是枚举类型</typeparam>
     ''' <remarks>
@@ -68,13 +66,13 @@ Namespace Scripting.TokenIcer
         ''' Token type
         ''' </summary>
         ''' <returns></returns>
-        Public Property Name As Tokens
+        <XmlAttribute> Public Property Name As Tokens
 
         ''' <summary>
         ''' The text that makes up the token.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Value As String Implements Value(Of String).IValueOf.value
+        <XmlText> Public Property Value As String Implements Value(Of String).IValueOf.value
 
         ''' <summary>
         ''' 务必要保持0为未定义
