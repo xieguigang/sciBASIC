@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A903B744-C08D-4869-BC35-3DD25E36AA16}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming</RootNamespace>
-    <AssemblyName>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.DataMining.DynamicProgramming</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.DataMining.DynamicProgramming</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +48,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -57,7 +57,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -66,19 +66,19 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <OutputPath>bin\nuget_publish\VB_APP\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <OutputPath>X:\nuget_publish\VB_APP\x64\</OutputPath>
     <PlatformTarget>x64</PlatformTarget>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -87,7 +87,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -97,31 +97,31 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <OutputPath>X:\nuget_publish\VB_APP\x86\</OutputPath>
     <PlatformTarget>x86</PlatformTarget>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <OutputPath>..\..\..\sdk\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <OutputPath>..\..\sdk\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <OutputPath>bin\x86\docs\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
     <OutputPath>bin\Release2\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
     <OutputPath>bin\x64\Release2\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
     <OutputPath>bin\x86\Release2\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

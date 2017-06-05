@@ -314,21 +314,6 @@ Public Module KeyValuePairExtensions
         Return hash
     End Function
 
-    <Extension>
-    Public Function Sort(Of T)(source As IEnumerable(Of T), Optional desc As Boolean = False) As IEnumerable(Of T)
-        If Not desc Then
-            Return From x As T
-                   In source
-                   Select x
-                   Order By x Ascending
-        Else
-            Return From x As T
-                   In source
-                   Select x
-                   Order By x Descending
-        End If
-    End Function
-
     ''' <summary>
     ''' Creates a <see cref="System.Collections.Generic.Dictionary"/>`2 from an <see cref="System.Collections.Generic.IEnumerable"/>`1
     ''' according to a specified key selector function.

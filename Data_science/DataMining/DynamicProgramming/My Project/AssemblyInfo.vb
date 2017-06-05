@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming")> 
+<Assembly: AssemblyTitle("DynamicProgramming for compare the sequence similarity")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Microsoft.VisualBasic.DataMining.Framework.DynamicProgramming")> 
+<Assembly: AssemblyProduct("sciBASIC DynamicProgramming")> 
 <Assembly: AssemblyCopyright("Copyright ©  2016")> 
 <Assembly: AssemblyTrademark("")> 
 

@@ -291,7 +291,7 @@ Namespace FileStream
             removeIDs = removes
 
             Dim edges As New List(Of NetworkEdge)
-            Dim index As New IndexOf(Of String)(removes)
+            Dim index As New Index(Of String)(removes)
 
             For Each edge As NetworkEdge In net.Edges
 

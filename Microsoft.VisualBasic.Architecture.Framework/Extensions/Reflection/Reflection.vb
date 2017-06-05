@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::44aad776ffc1cd8473882bdf1130f9fa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -376,6 +376,73 @@ NULL:       If Not strict Then
         End If
     End Function
 
+#If FRAMEWORD_CORE Then
+    ''' <summary>
+    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
+    ''' then function will return the string value from the ToString() function.
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <ExportAPI("Get.Description",
+               Info:="Get the description data from a enum type value, if the target have no <see cref=""DescriptionAttribute""></see> attribute data then function will return the string value from the ToString() function.")>
+    <Extension> Public Function Description(value As [Enum]) As String
+#Else
+    ''' <summary>
+    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
+    ''' then function will return the string value from the ToString() function.
+    ''' </summary>
+    ''' <param name="e"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <Extension> Public Function Description(value As [Enum]) As String
+#End If
+        Dim type As Type = value.GetType()
+        Dim s As String = value.ToString
+        Dim memInfos As MemberInfo() = type.GetMember(name:=s)
+
+        If memInfos.IsNullOrEmpty Then
+            Return s
+        End If
+
+        Return memInfos _
+            .First _
+            .Description([default]:=s)
+    End Function
+
+    <Extension> Public Function Description(m As MemberInfo, Optional default$ = Nothing) As String
+        Dim customAttrs() = m.GetCustomAttributes(
+            GetType(DescriptionAttribute),
+            inherit:=False)
+
+        If Not customAttrs.IsNullOrEmpty Then
+            Return DirectCast(customAttrs(Scan0), DescriptionAttribute).Description
+        Else
+            Return [default]
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.(只允许枚举类型，其他的都返回空集合)
+    ''' </summary>
+    ''' <typeparam name="T">泛型类型约束只允许枚举类型，其他的都返回空集合</typeparam>
+    ''' <returns></returns>
+    Public Function Enums(Of T)() As T()
+        Dim EnumType As Type = GetType(T)
+        If Not EnumType.IsInheritsFrom(GetType(System.Enum)) Then
+            Return Nothing
+        End If
+
+        Dim EnumValues As Object() =
+            Scripting _
+            .CastArray(Of System.Enum)(EnumType.GetEnumValues) _
+            .ToArray(Of Object)(Function(ar)
+                                    Return DirectCast(ar, Object)
+                                End Function)
+        Dim values As T() = EnumValues.ToArray(Of T)(Function([enum]) DirectCast([enum], T))
+        Return values
+    End Function
+
     ''' <summary>
     ''' Gets all of the can read and write access property from a type define.
     ''' </summary>
@@ -383,12 +450,46 @@ NULL:       If Not strict Then
     ''' <returns></returns>
 #If FRAMEWORD_CORE Then
     <ExportAPI("Get.Properties")>
-    <Extension> Public Function GetReadWriteProperties(type As System.Type) As System.Reflection.PropertyInfo()
+    <Extension> Public Function GetReadWriteProperties(type As Type) As PropertyInfo()
 #Else
     <Extension> Public Function GetReadWriteProperties(type As System.Type) As System.Reflection.PropertyInfo()
 #End If
-        Dim LQuery = (From p In type.GetProperties Where p.CanRead AndAlso p.CanWrite Select p).ToArray
+        Dim LQuery = LinqAPI.Exec(Of PropertyInfo) <=
+ _
+            From p As PropertyInfo
+            In type.GetProperties
+            Where p.CanRead AndAlso p.CanWrite
+            Select p
+
         Return LQuery
+    End Function
+
+    ''' <summary>
+    ''' Get object usage information
+    ''' </summary>
+    ''' <param name="m"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Usage(m As MemberInfo) As String
+        Try
+            Dim attr As UsageAttribute = m.GetCustomAttribute(Of UsageAttribute)
+            Return attr.UsageInfo
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Get example code of the <see cref="Usage"/>
+    ''' </summary>
+    ''' <param name="m"></param>
+    ''' <returns></returns>
+    <Extension> Public Function ExampleInfo(m As MemberInfo) As String
+        Try
+            Dim attr As ExampleAttribute = m.GetCustomAttribute(Of ExampleAttribute)
+            Return attr.ExampleInfo
+        Catch ex As Exception
+            Return Nothing
+        End Try
     End Function
 
     ''' <summary>

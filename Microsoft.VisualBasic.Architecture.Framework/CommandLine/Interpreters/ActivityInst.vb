@@ -54,7 +54,7 @@ Namespace CommandLine
                     .GetSet(NameOf(EntryPoints.APIEntryPoint.target))
 
             Call (From api As EntryPoints.APIEntryPoint
-                  In Me.__API_InfoHash.Values
+                  In Me.__API_table.Values
                   Where api.IsInstanceMethod  ' 只联系实例方法
                   Select setValue(api, api)).ToArray
 

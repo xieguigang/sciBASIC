@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::9e7d3681bc112ef9e381aa4b94de6e0c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Tsv.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -56,7 +56,7 @@ Namespace ComponentModel.DataSourceModel
             Dim data As RowTokens() = TsvFileIO.LoadFile(path, encoding.CodePage)
             Dim tableSchema = DataFramework.Schema(Of T)(PropertyAccess.ReadWrite, True)
             Dim type As Type = GetType(T)
-            Dim schemaOrdinals As IndexOf(Of String) = path _
+            Dim schemaOrdinals As Index(Of String) = path _
                 .OpenReader(encoding.CodePage) _
                 .GetTsvHeader(False)
 
@@ -86,7 +86,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Linux平台上面的mono这里有bug，为什么<see cref="StreamReader.ReadLine()"/>一直都输出空值？
         ''' </remarks>
         <Extension>
-        Public Function GetTsvHeader(stream As StreamReader, Optional lower As Boolean = False, Optional process As Func(Of String, String) = Nothing) As IndexOf(Of String)
+        Public Function GetTsvHeader(stream As StreamReader, Optional lower As Boolean = False, Optional process As Func(Of String, String) = Nothing) As Index(Of String)
             Dim t As Func(Of String, String) = If(process Is Nothing, Function(s$) s, process)
             Dim line$ = stream.ReadLine
             Dim headers$() = line _
@@ -95,8 +95,8 @@ Namespace ComponentModel.DataSourceModel
                 .ToArray
             Dim source = If(lower,
                 headers.Select(AddressOf Strings.LCase),
-                headers.As(Of IEnumerable(Of String)))
-            Return New IndexOf(Of String)(source)
+                TryCast(headers, IEnumerable(Of String)))
+            Return New Index(Of String)(source)
         End Function
 
         ''' <summary>

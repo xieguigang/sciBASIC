@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::76f8936942e7068df4556a500cc02723, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Interpreter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -62,8 +62,8 @@ Namespace CommandLine
         ''' <summary>
         ''' 在添加之前请确保键名是小写的字符串
         ''' </summary>
-        Protected __API_InfoHash As New Dictionary(Of String, APIEntryPoint)
-        Protected _nsRoot As String
+        Protected __API_table As New Dictionary(Of String, APIEntryPoint)
+        Protected __root_Namespace$
 
 #Region "Optional delegates"
 
@@ -90,11 +90,11 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function ToDictionary() As Dictionary(Of String, APIEntryPoint)
-            Return __API_InfoHash
+            Return __API_table
         End Function
 
         Public Overrides Function ToString() As String
-            Return "Cli://" & _nsRoot
+            Return "CLI://" & __root_Namespace
         End Function
 
         ''' <summary>
@@ -149,8 +149,8 @@ Namespace CommandLine
         ''' <returns></returns>
         Private Function __methodInvoke(commandName As String, argvs As Object(), help_argvs As String()) As Integer
 
-            If __API_InfoHash.ContainsKey(commandName) Then _
-                Return __API_InfoHash(commandName).Execute(argvs)
+            If __API_table.ContainsKey(commandName) Then _
+                Return __API_table(commandName).Execute(argvs)
 
             If "??vars".TextEquals(commandName) Then
                 Dim vars = App.GetAppVariables
@@ -229,9 +229,9 @@ Namespace CommandLine
 
                     Return -1000
                 Else
-                    Dim lst As String() = Me.ListPossible(commandName)
+                    Dim list$() = Me.ListPossible(commandName)
 
-                    If lst.IsNullOrEmpty Then
+                    If list.IsNullOrEmpty Then
 
                         Call Console.WriteLine(BAD_COMMAND_NAME, commandName)
                         Call Console.WriteLine()
@@ -240,7 +240,7 @@ Namespace CommandLine
                     Else
                         Call Console.WriteLine(BAD_COMMAND_MAN, commandName)
 
-                        For Each name As String In lst
+                        For Each name As String In list
                             Call Console.WriteLine("    " & name)
                         Next
                     End If
@@ -296,10 +296,10 @@ Namespace CommandLine
         ''' <param name="Command"></param>
         ''' <remarks></remarks>
         Public Sub AddCommand(Command As APIEntryPoint)
-            Dim NameId As String = Command.Name.ToLower
+            Dim key$ = Command.Name.ToLower
 
-            If Not __API_InfoHash.ContainsKey(NameId) Then
-                Call __API_InfoHash.Add(NameId, Command)
+            If Not __API_table.ContainsKey(key) Then
+                Call __API_table.Add(key, Command)
             End If
         End Sub
 
@@ -317,19 +317,19 @@ Namespace CommandLine
             Else ' listing the help for specific command name
                 Dim name As New Value(Of String)
 
-                If __API_InfoHash.ContainsKey(name = CommandName.ToLower) Then
-                    Call __API_InfoHash(name).PrintHelp
+                If __API_table.ContainsKey(name = CommandName.ToLower) Then
+                    Call __API_table(name).PrintHelp
                 Else
-                    Dim lst As String() = Me.ListPossible(CommandName)
+                    Dim list$() = Me.ListPossible(CommandName)
 
-                    If lst.IsNullOrEmpty Then
+                    If list.IsNullOrEmpty Then
                         Call Console.WriteLine($"Bad command, no such a command named ""{CommandName}"", ? for command list.")
                         Call Console.WriteLine()
                         Call Console.WriteLine(PS1.Fedora12.ToString & " ?" & CommandName)
                     Else
                         Call Console.WriteLine(BAD_COMMAND_MAN, CommandName)
 
-                        For Each cName As String In lst
+                        For Each cName As String In list
                             Call Console.WriteLine("    " & cName)
                         Next
                     End If
@@ -349,7 +349,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property ListCommandInfo As EntryPoints.APIEntryPoint()
             Get
-                Return __API_InfoHash.Values.ToArray
+                Return __API_table.Values.ToArray
             End Get
         End Property
 
@@ -365,14 +365,14 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Sub New(type As Type, <CallerMemberName> Optional caller As String = Nothing)
             For Each cInfo As APIEntryPoint In __getsAllCommands(type, False)
-                If __API_InfoHash.ContainsKey(cInfo.Name.ToLower) Then
+                If __API_table.ContainsKey(cInfo.Name.ToLower) Then
                     Throw New Exception(cInfo.Name & " is duplicated with other command!")
                 Else
-                    Call __API_InfoHash.Add(cInfo.Name.ToLower, cInfo)
+                    Call __API_table.Add(cInfo.Name.ToLower, cInfo)
                 End If
             Next
 
-            Me._nsRoot = type.Namespace
+            Me.__root_Namespace = type.Namespace
             Me._Stack = caller
             Me._Type = type
             Me._Info = type.NamespaceEntry
@@ -397,24 +397,22 @@ Namespace CommandLine
         ''' <summary>
         ''' 导出所有符合条件的静态方法，请注意，在这里已经将外部的属性标记和所属的函数的入口点进行连接了
         ''' </summary>
-        ''' <param name="Type"></param>
+        ''' <param name="type"></param>
         ''' <param name="[Throw]"></param>
         ''' <returns></returns>
-        Public Shared Function GetAllCommands(Type As Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
-            If Type Is Nothing Then
-                Return New List(Of EntryPoints.APIEntryPoint)
+        Public Shared Function GetAllCommands(type As Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
+            If type Is Nothing Then
+                Return New List(Of APIEntryPoint)
             End If
 
-            Dim Methods As MethodInfo() = Type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
+            Dim methods As MethodInfo() = type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
             Dim commandAttribute As Type = GetType(ExportAPIAttribute)
-
-            Dim commandsInfo As List(Of APIEntryPoint) =
-                LinqAPI.MakeList(Of APIEntryPoint) <=
+            Dim commandsInfo = LinqAPI.MakeList(Of APIEntryPoint) <=
  _
                 From methodInfo As MethodInfo
-                In Methods
+                In methods
                 Let commandInfo As APIEntryPoint =
-                    __getsAPI(methodInfo, commandAttribute, [Throw])
+                    getAPI(methodInfo, commandAttribute, [Throw])
                 Where Not commandInfo Is Nothing
                 Select commandInfo
                 Order By commandInfo.Name Ascending
@@ -422,16 +420,35 @@ Namespace CommandLine
             Return commandsInfo
         End Function
 
-        Private Shared Function __getsAPI(methodInfo As MethodInfo, commandAttribute As System.Type, [throw] As Boolean) As EntryPoints.APIEntryPoint
+        ''' <summary>
+        ''' 从方法定义<see cref="MethodInfo"/>之中解析出命令行的定义
+        ''' </summary>
+        ''' <param name="methodInfo"></param>
+        ''' <param name="commandAttribute"></param>
+        ''' <param name="[throw]"></param>
+        ''' <returns></returns>
+        Private Shared Function getAPI(methodInfo As MethodInfo, commandAttribute As Type, [throw] As Boolean) As APIEntryPoint
             Dim cmdAttr As ExportAPIAttribute = Nothing
             Dim commandInfo As APIEntryPoint
 
             Try
                 Dim attrs As Object() = methodInfo.GetCustomAttributes(commandAttribute, False)
-                If attrs.IsNullOrEmpty Then Return Nothing
+                If attrs.IsNullOrEmpty Then
+                    Return Nothing
+                End If
 
                 cmdAttr = DirectCast(attrs(0), ExportAPIAttribute)
-                commandInfo = New APIEntryPoint(cmdAttr, methodInfo, [throw]) '在这里将外部的属性标记和所属的函数的入口点进行连接
+                commandInfo = New APIEntryPoint(cmdAttr, methodInfo, [throw]) ' 在这里将外部的属性标记和所属的函数的入口点进行连接
+                If cmdAttr.Info.StringEmpty Then
+                    cmdAttr.Info = methodInfo.Description ' 帮助信息的获取兼容系统的Description方法
+                End If
+                If cmdAttr.Usage.StringEmpty Then
+                    cmdAttr.Usage = methodInfo.Usage
+                End If
+                If cmdAttr.Example.StringEmpty Then
+                    cmdAttr.Example = methodInfo.ExampleInfo
+                End If
+
                 Return commandInfo
             Catch ex As Exception
                 If Not cmdAttr Is Nothing Then
@@ -543,8 +560,8 @@ Namespace CommandLine
 #Region "Implements System.Collections.Generic.IReadOnlyDictionary(Of String, CommandInfo)"
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)) Implements IEnumerable(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).GetEnumerator
-            For Each key As String In Me.__API_InfoHash.Keys
-                Yield New KeyValuePair(Of String, EntryPoints.APIEntryPoint)(key, Me.__API_InfoHash(key))
+            For Each key As String In Me.__API_table.Keys
+                Yield New KeyValuePair(Of String, EntryPoints.APIEntryPoint)(key, Me.__API_table(key))
             Next
         End Function
 
@@ -553,7 +570,7 @@ Namespace CommandLine
         End Function
 
         Public Sub Add(item As KeyValuePair(Of String, EntryPoints.APIEntryPoint)) Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Add
-            Call __API_InfoHash.Add(item.Key, item.Value)
+            Call __API_table.Add(item.Key, item.Value)
         End Sub
 
         ''' <summary>
@@ -561,15 +578,15 @@ Namespace CommandLine
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub Clear() Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Clear
-            Call __API_InfoHash.Clear()
+            Call __API_table.Clear()
         End Sub
 
         Public Function Contains(item As KeyValuePair(Of String, EntryPoints.APIEntryPoint)) As Boolean Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Contains
-            Return __API_InfoHash.Contains(item)
+            Return __API_table.Contains(item)
         End Function
 
         Public Sub CopyTo(array() As KeyValuePair(Of String, EntryPoints.APIEntryPoint), arrayIndex As Integer) Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).CopyTo
-            Call __API_InfoHash.ToArray.CopyTo(array, arrayIndex)
+            Call __API_table.ToArray.CopyTo(array, arrayIndex)
         End Sub
 
         ''' <summary>
@@ -580,7 +597,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Count
             Get
-                Return Me.__API_InfoHash.Count
+                Return Me.__API_table.Count
             End Get
         End Property
 
@@ -591,11 +608,11 @@ Namespace CommandLine
         End Property
 
         Public Function Remove(item As KeyValuePair(Of String, EntryPoints.APIEntryPoint)) As Boolean Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Remove
-            Return __API_InfoHash.Remove(item.Key)
+            Return __API_table.Remove(item.Key)
         End Function
 
         Public Sub Add(key As String, value As EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Add
-            Call __API_InfoHash.Add(key, value)
+            Call __API_table.Add(key, value)
         End Sub
 
         ''' <summary>
@@ -605,7 +622,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function ExistsCommand(CommandName As String) As Boolean Implements IDictionary(Of String, EntryPoints.APIEntryPoint).ContainsKey
-            Return Me.__API_InfoHash.ContainsKey(CommandName.ToLower)
+            Return Me.__API_table.ContainsKey(CommandName.ToLower)
         End Function
 
         ''' <summary>
@@ -615,7 +632,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Default Public Overloads Property Item(key As String) As EntryPoints.APIEntryPoint Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Item
             Get
-                Return Me.__API_InfoHash(key)
+                Return Me.__API_table(key)
             End Get
             Set(value As EntryPoints.APIEntryPoint)
                 'DO NOTHING
@@ -623,11 +640,11 @@ Namespace CommandLine
         End Property
 
         Public Function GetPossibleCommand(name As Value(Of String)) As EntryPoints.APIEntryPoint
-            If Me.__API_InfoHash.ContainsKey(name = (+name).ToLower) Then
-                Return __API_InfoHash(+name)
+            If Me.__API_table.ContainsKey(name = (+name).ToLower) Then
+                Return __API_table(+name)
             Else
                 Dim LQuery = (From x As KeyValuePair(Of String, APIEntryPoint)
-                              In __API_InfoHash
+                              In __API_table
                               Let similarity = LevenshteinDistance.ComputeDistance(x.Key, name)
                               Where Not similarity Is Nothing
                               Select similarity.Score,
@@ -650,7 +667,7 @@ Namespace CommandLine
         Public Function ListPossible(Name As String) As String()
             Dim key As String = Name.ToLower
             Dim LQuery = From x As String
-                         In __API_InfoHash.Keys.AsParallel
+                         In __API_table.Keys.AsParallel
                          Let lev = LevenshteinDistance.ComputeDistance(x, key)
                          Where Not lev Is Nothing AndAlso
                               lev.Score > 0.3
@@ -670,16 +687,16 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property APINameList As ICollection(Of String) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Keys
             Get
-                Return Me.__API_InfoHash.Keys
+                Return Me.__API_table.Keys
             End Get
         End Property
 
         Public Function Remove(CommandName As String) As Boolean Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Remove
-            Return __API_InfoHash.Remove(CommandName)
+            Return __API_table.Remove(CommandName)
         End Function
 
         Public Function TryGetValue(key As String, ByRef value As EntryPoints.APIEntryPoint) As Boolean Implements IDictionary(Of String, EntryPoints.APIEntryPoint).TryGetValue
-            Return Me.__API_InfoHash.TryGetValue(key, value)
+            Return Me.__API_table.TryGetValue(key, value)
         End Function
 
         ''' <summary>
@@ -688,7 +705,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public ReadOnly Property APIList As ICollection(Of EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Values
             Get
-                Return Me.__API_InfoHash.Values
+                Return Me.__API_table.Values
             End Get
         End Property
 #End Region

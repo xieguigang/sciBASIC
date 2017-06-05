@@ -55,7 +55,7 @@ Namespace Analysis.PageRank
             nodes = net.Nodes
             edges = net.Edges
 
-            Dim index As New IndexOf(Of String)(nodes.Select(Function(x) x.ID))
+            Dim index As New Index(Of String)(nodes.Select(Function(x) x.ID))
 
             For Each node As FileStream.Node In nodes
                 Call indices.Add(
