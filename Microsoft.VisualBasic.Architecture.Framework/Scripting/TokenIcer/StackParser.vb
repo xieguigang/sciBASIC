@@ -69,9 +69,9 @@ Namespace Scripting.TokenIcer
             Do While Not source.IsNullOrEmpty
                 Dim x As Token(Of Tokens) = source.Dequeue
 
-                If Not stackT.Equals(x.TokenName, stackT.ParamDeli) Then
+                If Not stackT.Equals(x.Name, stackT.ParamDeli) Then
                     ' 例如 test3( (3+-5.66)  +  6^4.5,7!)
-                    If stackT.Equals(x.TokenName, stackT.LPair) Then ' 连续的两个左括号进行堆栈
+                    If stackT.Equals(x.Name, stackT.LPair) Then ' 连续的两个左括号进行堆栈
                         Dim stack As Func(Of Tokens)() = __parsing(source, stackT)
                         Dim inner As New InnerToken(Of Tokens)(New Token(Of Tokens)(stackT.Pretend, "Pretend"), stack)
                         Call current.Caller.Add(inner)
@@ -87,18 +87,18 @@ Namespace Scripting.TokenIcer
 
                 Dim peek As Token(Of Tokens) = source.Peek
 
-                If stackT.Equals(peek.TokenName, stackT.LPair) Then  ' 向下一层堆栈
+                If stackT.Equals(peek.Name, stackT.LPair) Then  ' 向下一层堆栈
                     Call source.Dequeue()
 
                     Dim currStack As New Func(Of Tokens)(current.Caller.Last)
                     Call current.Caller.RemoveLast
                     currStack.Args = __parsing(source, stackT)
                     Call current.Caller.Add(New InnerToken(Of Tokens)(stackT.Pretend, currStack))
-                ElseIf stackT.Equals(peek.TokenName, stackT.RPair) Then  ' 向上一层退栈
+                ElseIf stackT.Equals(peek.Name, stackT.RPair) Then  ' 向上一层退栈
                     Call source.Dequeue()
                     Call list.Add(current)
                     Exit Do
-                ElseIf stackT.Equals(x.TokenName, stackT.ParamDeli) Then
+                ElseIf stackT.Equals(x.Name, stackT.ParamDeli) Then
                     Call list.Add(current)
 
                     current = New Func(Of Tokens) With {

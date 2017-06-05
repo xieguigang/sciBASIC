@@ -685,9 +685,9 @@
     <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\MetaData\Type.vb" />
     <Compile Include="Scripting\TokenIcer\ParserAPI.vb" />
-    <Compile Include="Scripting\TokenIcer\LDM\StackTokens%28Of Tokens%29.vb" />
-    <Compile Include="Scripting\TokenIcer\LDM\Func.vb" />
-    <Compile Include="Scripting\TokenIcer\LDM\LDM.vb" />
+    <Compile Include="Scripting\TokenIcer\LangModels\StackTokens%28Of Tokens%29.vb" />
+    <Compile Include="Scripting\TokenIcer\LangModels\Func.vb" />
+    <Compile Include="Scripting\TokenIcer\LangModels\Token.vb" />
     <Compile Include="Scripting\TokenIcer\Prefix.vb" />
     <Compile Include="Scripting\TokenIcer\StackParser.vb" />
     <Compile Include="Scripting\TokenIcer\TokenParser.vb" />

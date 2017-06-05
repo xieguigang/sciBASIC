@@ -93,9 +93,9 @@ Namespace Imaging
         ''' <returns>A System.Drawing.Color structure that represents the color of the specified pixel.</returns>
         Public Function GetPixel(x As Integer, y As Integer) As Color
             Dim i As Integer = GetIndex(x, y)
-            Dim iR As Byte = __innerRaw(i + 2)
-            Dim iG As Byte = __innerRaw(i + 1)
-            Dim iB As Byte = __innerRaw(i + 0)
+            Dim iR As Byte = buffer(i + 2)
+            Dim iG As Byte = buffer(i + 1)
+            Dim iB As Byte = buffer(i + 0)
 
             Return Color.FromArgb(CInt(iR), CInt(iG), CInt(iB))
         End Function
@@ -110,9 +110,9 @@ Namespace Imaging
         ''' pixel.</param>
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
-            __innerRaw(i + 2) = color.R
-            __innerRaw(i + 1) = color.G
-            __innerRaw(i + 0) = color.B
+            buffer(i + 2) = color.R
+            buffer(i + 1) = color.G
+            buffer(i + 0) = color.B
         End Sub
 
         ''' <summary>
@@ -143,7 +143,7 @@ Namespace Imaging
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Color) Implements IEnumerable(Of Color).GetEnumerator
-            For Each x As Color In __innerRaw.Colors
+            For Each x As Color In buffer.Colors
                 Yield x
             Next
         End Function
