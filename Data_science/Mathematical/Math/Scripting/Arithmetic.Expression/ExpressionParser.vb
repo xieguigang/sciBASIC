@@ -163,7 +163,7 @@ Namespace Scripting
                         If tokens.EndRead Then
                             pre = Nothing
                         Else
-                            If tokens.Current.TokenName = Mathematical.Scripting.Tokens.Operator Then
+                            If tokens.Current.Name = Mathematical.Scripting.Tokens.Operator Then
                                 pre = Nothing
                             Else
                                 pre = e ' probably is a function name
