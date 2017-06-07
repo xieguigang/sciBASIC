@@ -426,6 +426,7 @@
     <Compile Include="Language\Linq\List%28Of T%29.vb" />
     <Compile Include="Language\lang\Perl\die.vb" />
     <Compile Include="Scripting\Expressions\Selector.vb" />
+    <Compile Include="Scripting\TokenIcer\LangModels\PeekToken.vb" />
     <Compile Include="Scripting\VBLanguage.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
