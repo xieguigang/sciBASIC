@@ -54,6 +54,16 @@ Namespace Scripting.TokenIcer
     End Class
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    Public Class Statement(Of T As IComparable)
+
+        <XmlElement("t")>
+        Public Property Tokens As Token(Of T)()
+
+    End Class
+
+    ''' <summary>
     ''' a Token object class, This defines the Token object
     ''' </summary>
     ''' <typeparam name="Tokens">应该是枚举类型</typeparam>
@@ -116,6 +126,9 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
+        Public Property Arguments As Statement(Of Tokens)()
+        Public Property Closure As Main(Of Tokens)
+
         Public Sub New(name As Tokens, value$)
             Me.name = name
             Me.Value = value
@@ -138,5 +151,9 @@ Namespace Scripting.TokenIcer
         Public Function GetValue() As Object
             Return Me.TryCast
         End Function
+    End Class
+
+    Public Class Main(Of T As IComparable)
+        Public Property program As Statement(Of T)()
     End Class
 End Namespace
