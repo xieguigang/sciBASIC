@@ -38,7 +38,7 @@ Namespace Scripting.TokenIcer
     ''' A PeekToken is a special pointer object that can be used to Peek() several
     ''' tokens ahead in the GetToken() queue.
     ''' </remarks>
-    Public Class PeekToken(Of Tokens)
+    Public Class PeekToken(Of Tokens As IComparable)
 
         Public Property TokenIndex As Integer
         Public Property TokenPeek As Token(Of Tokens)
@@ -60,13 +60,13 @@ Namespace Scripting.TokenIcer
     ''' <remarks>
     ''' A Token object holds the token and token value.
     ''' </remarks>
-    Public Class Token(Of Tokens) : Implements Value(Of String).IValueOf
+    Public Class Token(Of Tokens As IComparable) : Implements Value(Of String).IValueOf
 
         ''' <summary>
         ''' Token type
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property Name As Tokens
+        <XmlAttribute("name")> Public Property name As Tokens
 
         ''' <summary>
         ''' The text that makes up the token.
@@ -80,22 +80,22 @@ Namespace Scripting.TokenIcer
         ''' <returns></returns>
         Public ReadOnly Property UNDEFINED As Boolean
             Get
-                If TypeOf Name Is [Enum] OrElse TypeOf Name Is Integer Then
-                    Dim o As Object = Name
+                If TypeOf name Is [Enum] OrElse TypeOf name Is Integer Then
+                    Dim o As Object = name
                     Dim i As Integer = CInt(o)
                     If i = 0 Then
                         Return True
                     End If
                 End If
 
-                Return Name Is Nothing OrElse
+                Return name Is Nothing OrElse
                     String.IsNullOrEmpty(Value)
             End Get
         End Property
 
         Public ReadOnly Property Type As Tokens
             Get
-                Return Name
+                Return name
             End Get
         End Property
 
@@ -117,12 +117,12 @@ Namespace Scripting.TokenIcer
         End Property
 
         Public Sub New(name As Tokens, value$)
-            Me.Name = name
+            Me.name = name
             Me.Value = value
         End Sub
 
         Sub New(name As Tokens)
-            Me.Name = name
+            Me.name = name
         End Sub
 
         Sub New()
@@ -132,7 +132,7 @@ Namespace Scripting.TokenIcer
             If UNDEFINED Then
                 Return "UNDEFINED --> " & Value
             End If
-            Return $"[{Name}]" & vbTab & Value
+            Return $"[{name}]" & vbTab & Value
         End Function
 
         Public Function GetValue() As Object

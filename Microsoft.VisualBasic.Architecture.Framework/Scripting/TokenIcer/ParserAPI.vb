@@ -62,7 +62,7 @@ Namespace Scripting.TokenIcer
         End Function
 
         <Extension>
-        Public Function GetTokens(Of Tokens)(parser As TokenParser(Of Tokens), expr As String) As Token(Of Tokens)()
+        Public Function GetTokens(Of Tokens As IComparable)(parser As TokenParser(Of Tokens), expr As String) As Token(Of Tokens)()
             Dim lstToken As New List(Of Token(Of Tokens))
             Dim tmp As New Value(Of Token(Of Tokens))
 
@@ -83,8 +83,8 @@ Namespace Scripting.TokenIcer
         ''' <param name="stackT"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function TokenParser(Of Tokens)(parser As TokenParser(Of Tokens),
-                                               expr As String,
+        Public Function TokenParser(Of Tokens As IComparable)(parser As TokenParser(Of Tokens),
+                                               expr$,
                                                stackT As StackTokens(Of Tokens)) As Func(Of Tokens)
 
             Dim lstToken As Token(Of Tokens)() = parser.GetTokens(expr)
@@ -93,7 +93,7 @@ Namespace Scripting.TokenIcer
  _
                 From x As Token(Of Tokens)
                 In lstToken
-                Where Not stackT.Equals(x.Name, whiteSpace)
+                Where Not stackT.Equals(x.name, whiteSpace)
                 Select x
 
             Dim func As Func(Of Tokens) =
@@ -101,12 +101,12 @@ Namespace Scripting.TokenIcer
             Return func
         End Function
 
-        <Extension> Public Function [As](Of Tokens, T)(x As Token(Of Tokens)) As T
+        <Extension> Public Function [As](Of Tokens As IComparable, T)(x As Token(Of Tokens)) As T
             Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.Value)
             Return obj
         End Function
 
-        <Extension> Public Function [CType](Of Tokens)(x As Token(Of Tokens), type As Type) As Object
+        <Extension> Public Function [CType](Of Tokens As IComparable)(x As Token(Of Tokens), type As Type) As Object
             Dim obj As Object = InputHandler.CTypeDynamic(x.Value, type)
             Return obj
         End Function
@@ -117,8 +117,8 @@ Namespace Scripting.TokenIcer
         ''' <typeparam name="Tokens"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        <Extension> Public Function [TryCast](Of Tokens)(x As Token(Of Tokens)) As Object
-            Dim typeName As String = Scripting.ToString(x.Name)
+        <Extension> Public Function [TryCast](Of Tokens As IComparable)(x As Token(Of Tokens)) As Object
+            Dim typeName As String = Scripting.ToString(x.name)
             Dim type As New Value(Of Type)
 
             If type = Scripting.GetType(typeName, False) Is Nothing Then
