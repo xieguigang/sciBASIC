@@ -26,55 +26,32 @@
 
 #End Region
 
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Scripting.TokenIcer
 
-    ' This defines the PeekToken object
-
     ''' <summary>
-    ''' A PeekToken object class
-    ''' </summary>
-    ''' <remarks>
-    ''' A PeekToken is a special pointer object that can be used to Peek() several
-    ''' tokens ahead in the GetToken() queue.
-    ''' </remarks>
-    Public Class PeekToken(Of Tokens)
-
-        Public Property TokenIndex As Integer
-        Public Property TokenPeek As Token(Of Tokens)
-
-        Public Sub New(index As Integer, value As Token(Of Tokens))
-            TokenIndex = index
-            TokenPeek = value
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"[{TokenIndex}]  {TokenPeek.ToString}"
-        End Function
-    End Class
-
-    ' This defines the Token object
-    ''' <summary>
-    ''' a Token object class
+    ''' a Token object class, This defines the Token object
     ''' </summary>
     ''' <typeparam name="Tokens">应该是枚举类型</typeparam>
     ''' <remarks>
     ''' A Token object holds the token and token value.
     ''' </remarks>
-    Public Class Token(Of Tokens) : Implements Value(Of String).IValueOf
+    Public Class Token(Of Tokens As IComparable) : Implements Value(Of String).IValueOf
 
         ''' <summary>
         ''' Token type
         ''' </summary>
         ''' <returns></returns>
-        Public Property Name As Tokens
+        <XmlAttribute("name")> Public Property name As Tokens
 
         ''' <summary>
         ''' The text that makes up the token.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Value As String Implements Value(Of String).IValueOf.value
+        <XmlText> Public Property Value As String Implements Value(Of String).IValueOf.value
 
         ''' <summary>
         ''' 务必要保持0为未定义
@@ -82,22 +59,22 @@ Namespace Scripting.TokenIcer
         ''' <returns></returns>
         Public ReadOnly Property UNDEFINED As Boolean
             Get
-                If TypeOf Name Is [Enum] OrElse TypeOf Name Is Integer Then
-                    Dim o As Object = Name
+                If TypeOf name Is [Enum] OrElse TypeOf name Is Integer Then
+                    Dim o As Object = name
                     Dim i As Integer = CInt(o)
                     If i = 0 Then
                         Return True
                     End If
                 End If
 
-                Return Name Is Nothing OrElse
+                Return name Is Nothing OrElse
                     String.IsNullOrEmpty(Value)
             End Get
         End Property
 
         Public ReadOnly Property Type As Tokens
             Get
-                Return Name
+                Return name
             End Get
         End Property
 
@@ -118,13 +95,16 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
+        Public Property Arguments As Statement(Of Tokens)()
+        Public Property Closure As Main(Of Tokens)
+
         Public Sub New(name As Tokens, value$)
-            Me.Name = name
+            Me.name = name
             Me.Value = value
         End Sub
 
         Sub New(name As Tokens)
-            Me.Name = name
+            Me.name = name
         End Sub
 
         Sub New()
@@ -134,11 +114,30 @@ Namespace Scripting.TokenIcer
             If UNDEFINED Then
                 Return "UNDEFINED --> " & Value
             End If
-            Return $"[{Name}]" & vbTab & Value
+            Return $"[{name}]" & vbTab & Value
         End Function
 
         Public Function GetValue() As Object
             Return Me.TryCast
         End Function
+    End Class
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Public Class Statement(Of T As IComparable)
+        <XmlElement("t")> Public Property tokens As Token(Of T)()
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' inner closure or program main
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public Class Main(Of T As IComparable)
+        Public Property program As Statement(Of T)()
     End Class
 End Namespace
