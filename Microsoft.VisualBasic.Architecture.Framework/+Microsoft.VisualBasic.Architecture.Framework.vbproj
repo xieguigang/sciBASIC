@@ -684,7 +684,7 @@
     <Compile Include="Tools\MMFProtocol\Pipeline\Pipeline.vb" />
     <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\MetaData\Type.vb" />
-    <Compile Include="Scripting\TokenIcer\ParserAPI.vb" />
+    <Compile Include="Scripting\TokenIcer\ParserCommon.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\StackTokens%28Of Tokens%29.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\Func.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\Token.vb" />

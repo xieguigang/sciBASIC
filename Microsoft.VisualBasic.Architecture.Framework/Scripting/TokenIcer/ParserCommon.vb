@@ -31,8 +31,17 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Scripting.TokenIcer
 
-    Public Module ParserAPI
+    ''' <summary>
+    ''' Generally expression parser codes
+    ''' </summary>
+    Public Module ParserCommon
 
+        ''' <summary>
+        ''' 当前的token对象之中是否是转义的起始，即当前的token之中的最后一个符号是否是转移符<paramref name="escape"/>?
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        ''' <param name="escape"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function StartEscaping(buffer As List(Of Char), Optional escape As Char = "\"c) As Boolean
             If buffer.IsNullOrEmpty Then
@@ -46,7 +55,7 @@ Namespace Scripting.TokenIcer
         ''' 假若返回来的是空字符串，则说明不是注释行
         ''' </summary>
         ''' <param name="line$"></param>
-        ''' <param name="prefix$"></param>
+        ''' <param name="prefix$">The prefix of the code comment character/string</param>
         ''' <returns></returns>
         <Extension>
         Public Function GetCodeComment(line$, ParamArray prefix$()) As String
@@ -101,11 +110,25 @@ Namespace Scripting.TokenIcer
             Return func
         End Function
 
+        ''' <summary>
+        ''' Dynamics casting the token value expression as target type object.
+        ''' </summary>
+        ''' <typeparam name="Tokens"></typeparam>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         <Extension> Public Function [As](Of Tokens, T)(x As Token(Of Tokens)) As T
             Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.Value)
             Return obj
         End Function
 
+        ''' <summary>
+        ''' Dynamics casting the token value expression as target type object.
+        ''' </summary>
+        ''' <typeparam name="Tokens"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <Extension> Public Function [CType](Of Tokens)(x As Token(Of Tokens), type As Type) As Object
             Dim obj As Object = InputHandler.CTypeDynamic(x.Value, type)
             Return obj
