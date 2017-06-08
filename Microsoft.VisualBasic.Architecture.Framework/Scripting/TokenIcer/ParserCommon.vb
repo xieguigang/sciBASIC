@@ -117,7 +117,7 @@ Namespace Scripting.TokenIcer
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        <Extension> Public Function [As](Of Tokens, T)(x As Token(Of Tokens)) As T
+        <Extension> Public Function [As](Of Tokens As IComparable, T)(x As Token(Of Tokens)) As T
             Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.Value)
             Return obj
         End Function
@@ -129,7 +129,7 @@ Namespace Scripting.TokenIcer
         ''' <param name="x"></param>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        <Extension> Public Function [CType](Of Tokens)(x As Token(Of Tokens), type As Type) As Object
+        <Extension> Public Function [CType](Of Tokens As IComparable)(x As Token(Of Tokens), type As Type) As Object
             Dim obj As Object = InputHandler.CTypeDynamic(x.Value, type)
             Return obj
         End Function
