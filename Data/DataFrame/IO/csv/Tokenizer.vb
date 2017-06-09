@@ -82,8 +82,8 @@ Namespace IO
             Dim preToken As Boolean = False
             Dim deliExit As Boolean = False
 
-            s = s.Replace(","""",", ",,")
-            s = s.Replace(","""",", ",,")
+            ' s = s.Replace(","""",", ",,")
+            ' s = s.Replace(","""",", ",,")
             s = s.Replace("""""", "\""")
 
             For Each c As Char In s
