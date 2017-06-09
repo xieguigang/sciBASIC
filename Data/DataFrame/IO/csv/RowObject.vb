@@ -197,13 +197,7 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overrides Function ToString() As String
-            Return $"{{{NumbersOfColumn}}} " &
-                Me.Select(Function(s)
-                              s = Mid(s, 1, 3)
-                              s &= New String("+"c, 3 - s.Length)
-                              Return s
-                          End Function) _
-                  .JoinBy(", ")
+            Return Me.AsLine
         End Function
 
         ''' <summary>
