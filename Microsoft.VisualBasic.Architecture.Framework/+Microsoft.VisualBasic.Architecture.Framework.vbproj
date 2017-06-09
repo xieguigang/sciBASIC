@@ -425,6 +425,7 @@
     <Compile Include="Language\lang\Java\Reflection.vb" />
     <Compile Include="Language\Linq\List%28Of T%29.vb" />
     <Compile Include="Language\lang\Perl\die.vb" />
+    <Compile Include="Scripting\Abstract.vb" />
     <Compile Include="Scripting\Expressions\Selector.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\PeekToken.vb" />
     <Compile Include="Scripting\VBLanguage.vb" />
