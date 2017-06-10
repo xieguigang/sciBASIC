@@ -100,6 +100,10 @@ Namespace CommandLine.Reflection.EntryPoints
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' 这个构造函数只设置目标实例对象，其他的数据从属性进行设置
+        ''' </summary>
+        ''' <param name="invokeOn"></param>
         Public Sub New(invokeOn As Object)
             Me.target = invokeOn
         End Sub

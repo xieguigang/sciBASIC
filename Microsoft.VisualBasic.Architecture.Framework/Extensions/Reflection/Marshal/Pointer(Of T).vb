@@ -32,10 +32,10 @@ Namespace Emit.Marshal
 
     Public Class Pointer(Of T) : Inherits DataStructures.Pointer(Of T)
 
-        Protected __innerRaw As T()
+        Protected buffer As T()
 
         ''' <summary>
-        ''' <see cref="Pointer"/> -> its current value
+        ''' <see cref="Position"/> -> its current value
         ''' </summary>
         ''' <returns></returns>
         Public Property Current As T
@@ -53,13 +53,13 @@ Namespace Emit.Marshal
         ''' <returns></returns>
         Public ReadOnly Property Length As Integer
             Get
-                Return __innerRaw.Length
+                Return buffer.Length
             End Get
         End Property
 
         Public ReadOnly Property UBound As Integer
             Get
-                Return Information.UBound(__innerRaw)
+                Return Information.UBound(buffer)
             End Get
         End Property
 
@@ -72,19 +72,19 @@ Namespace Emit.Marshal
             Get
                 p += __index
 
-                If p < 0 OrElse p >= __innerRaw.Length Then
+                If p < 0 OrElse p >= buffer.Length Then
                     Return Nothing
                 Else
-                    Return __innerRaw(p)
+                    Return buffer(p)
                 End If
             End Get
             Set(value As T)
                 p += __index
 
-                If p < 0 OrElse p >= __innerRaw.Length Then
+                If p < 0 OrElse p >= buffer.Length Then
                     Throw New MemberAccessException(p & " reference to invalid memory region!")
                 Else
-                    __innerRaw(p) = value
+                    buffer(p) = value
                 End If
             End Set
         End Property
@@ -95,13 +95,13 @@ Namespace Emit.Marshal
         ''' <returns></returns>
         Public ReadOnly Property Raw As T()
             Get
-                Return __innerRaw
+                Return buffer
             End Get
         End Property
 
         Public ReadOnly Property NullEnd(Optional offset As Integer = 0) As Boolean
             Get
-                Return __index >= (__innerRaw.Length - 1 - offset)
+                Return __index >= (buffer.Length - 1 - offset)
             End Get
         End Property
 
@@ -111,7 +111,7 @@ Namespace Emit.Marshal
         ''' <returns></returns>
         Public ReadOnly Property EndRead As Boolean
             Get
-                Return __index >= __innerRaw.Length
+                Return __index >= buffer.Length
             End Get
         End Property
 
@@ -119,22 +119,26 @@ Namespace Emit.Marshal
         ''' Current read position
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Pointer As Integer
+        Public ReadOnly Property Position As Integer
             Get
                 Return __index
             End Get
         End Property
 
         Sub New(ByRef array As T())
-            __innerRaw = array
+            buffer = array
         End Sub
 
         Sub New(array As List(Of T))
-            __innerRaw = array.ToArray
+            buffer = array.ToArray
         End Sub
 
+        ''' <summary>
+        ''' Create a collection wrapper from a <paramref name="source"/> buffer.
+        ''' </summary>
+        ''' <param name="source">The collection source buffer</param>
         Sub New(source As IEnumerable(Of T))
-            __innerRaw = source.ToArray
+            buffer = source.ToArray
         End Sub
 
         Sub New()
@@ -219,7 +223,7 @@ Namespace Emit.Marshal
         Public Overloads Shared Operator +(ptr As Pointer(Of T)) As T
             Dim i As Integer = ptr.__index
             ptr.__index += 1
-            Return ptr.__innerRaw(i)
+            Return ptr.buffer(i)
         End Operator
 
         ''' <summary>
@@ -230,7 +234,7 @@ Namespace Emit.Marshal
         Public Overloads Shared Operator -(ptr As Pointer(Of T)) As T
             Dim i As Integer = ptr.__index
             ptr.__index -= 1
-            Return ptr.__innerRaw(i)
+            Return ptr.buffer(i)
         End Operator
 
         Public Overloads Shared Operator <=(a As Pointer(Of T), b As Pointer(Of T)) As SwapHelper(Of T)
