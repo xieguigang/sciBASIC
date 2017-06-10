@@ -1,34 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::492fb17d062e34b1d07bd6c49171a33e, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Arithmetic.Expression\ExpressionParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Mathematical.Scripting.Expression
 Imports Microsoft.VisualBasic.Mathematical.Scripting.Helpers.Arithmetic
 Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
@@ -41,7 +40,7 @@ Namespace Scripting
     ''' </summary>
     Public Module ExpressionParser
 
-        Public Function GetTokens(s As String) As List(Of Token(Of Tokens))
+        Public Function GetTokens(s As String) As List(Of Token(Of ExpressionTokens))
             Return TokenIcer.TryParse(s.ClearOverlapOperator)
         End Function
 
@@ -67,7 +66,7 @@ Namespace Scripting
         ''' <param name="tokens"></param>
         ''' <param name="engine">The expression engine.</param>
         ''' <returns></returns>
-        <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens)), engine As Expression) As SimpleExpression
+        <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of ExpressionTokens)), engine As Expression) As SimpleExpression
             Return tokens.TryParse(AddressOf engine.GetValue, AddressOf engine.Functions.Evaluate, False)
         End Function
 
@@ -79,14 +78,14 @@ Namespace Scripting
         ''' 这个解析器还需要考虑Stack的问题
         ''' </summary>
         ''' <returns></returns>
-        <Extension> Public Function TryParse(s As String, getValue As GetValue, evaluate As IFuncEvaluate) As SimpleExpression
-            Dim tokens As List(Of Token(Of Tokens)) =        ' Get all of the number that appears in this
-            TokenIcer.TryParse(s.ClearOverlapOperator)   ' expression including factoral operator.
+        <Extension> Public Function TryParse(s$, getValue As GetValue, evaluate As IFuncEvaluate) As SimpleExpression
+            Dim tokens As List(Of Token(Of ExpressionTokens)) =        ' Get all of the number that appears in this
+                TokenIcer.TryParse(s.ClearOverlapOperator)   ' expression including factoral operator.
 
             If tokens.Count = 1 Then
-                Dim token As Token(Of Tokens) = tokens.First
+                Dim token As Token(Of ExpressionTokens) = tokens.First
 
-                If token.Type = Mathematical.Scripting.Tokens.Number Then
+                If token.Type = ExpressionTokens.Number Then
                     Return New SimpleExpression(Val(token.Text))
                 Else  ' Syntax error
                     Throw New SyntaxErrorException(s)
@@ -95,9 +94,9 @@ Namespace Scripting
 #If Not DEBUG Then
                 Try
 #End If
-                    ' 2017-1-26
-                    ' 可能有些错误没有被发现，所以在调试模式下就不进行错误处理的，因为错误处理会吞掉原来的错误，增加调试难度
-                    Return New Pointer(Of Token(Of Tokens))(tokens).TryParse(getValue, evaluate, False)
+                ' 2017-1-26
+                ' 可能有些错误没有被发现，所以在调试模式下就不进行错误处理的，因为错误处理会吞掉原来的错误，增加调试难度
+                Return New Pointer(Of Token(Of ExpressionTokens))(tokens).TryParse(getValue, evaluate, False)
 #If Not DEBUG Then
                 Catch ex As Exception
                     ex = New Exception(s, ex)
@@ -112,11 +111,11 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="tokens"></param>
         ''' <returns></returns>
-        <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of Tokens)), getValue As GetValue, evaluate As IFuncEvaluate, ByRef funcStack As Boolean) As SimpleExpression
+        <Extension> Public Function TryParse(tokens As Pointer(Of Token(Of ExpressionTokens)), getValue As GetValue, evaluate As IFuncEvaluate, ByRef funcStack As Boolean) As SimpleExpression
             Dim sep As New SimpleExpression
-            Dim e As Token(Of Tokens)
+            Dim e As Token(Of ExpressionTokens)
             Dim o As Char
-            Dim pre As Token(Of Tokens) = Nothing
+            Dim pre As Token(Of ExpressionTokens) = Nothing
             Dim func As FuncCaller = Nothing
 
             Do While Not tokens.EndRead
@@ -125,7 +124,7 @@ Namespace Scripting
                 e = +tokens
 
                 Select Case e.Type
-                    Case Mathematical.Scripting.Tokens.OpenBracket, Mathematical.Scripting.Tokens.OpenStack
+                    Case ExpressionTokens.OpenBracket, ExpressionTokens.OpenStack
                         If pre Is Nothing Then  ' 前面不是一个未定义的标识符，则在这里是一个括号表达式
                             meta = New MetaExpression(TryParse(tokens, getValue, evaluate, False))
                         Else
@@ -151,11 +150,11 @@ Namespace Scripting
 
                             ' Continue Do
                         End If
-                    Case Mathematical.Scripting.Tokens.CloseStack, Mathematical.Scripting.Tokens.CloseBracket, Mathematical.Scripting.Tokens.Delimiter
+                    Case ExpressionTokens.CloseStack, ExpressionTokens.CloseBracket, ExpressionTokens.Delimiter
                         Return sep ' 退出递归栈
-                    Case Mathematical.Scripting.Tokens.Number
+                    Case ExpressionTokens.Number
                         meta = New Types.MetaExpression(Val(e.Text))
-                    Case Mathematical.Scripting.Tokens.UNDEFINE
+                    Case ExpressionTokens.UNDEFINE
 
                         Dim x As String = e.Text
                         meta = New Types.MetaExpression(Function() getValue(x))
@@ -163,18 +162,18 @@ Namespace Scripting
                         If tokens.EndRead Then
                             pre = Nothing
                         Else
-                            If tokens.Current.Name = Mathematical.Scripting.Tokens.Operator Then
+                            If tokens.Current.name = ExpressionTokens.Operator Then
                                 pre = Nothing
                             Else
                                 pre = e ' probably is a function name
                             End If
                         End If
 
-                    Case Mathematical.Scripting.Tokens.Operator
+                    Case ExpressionTokens.Operator
                         If String.Equals(e.Text, "-") Then
 
                             If Not sep.IsNullOrEmpty Then
-                                If tokens.Current.Type = Mathematical.Scripting.Tokens.Number Then
+                                If tokens.Current.Type = ExpressionTokens.Number Then
                                     meta = New Types.MetaExpression(-1 * Val((+tokens).Text))
                                 Else
                                     Throw New SyntaxErrorException

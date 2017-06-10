@@ -608,13 +608,13 @@ B21,B22,B23,...
                             In cache.AsParallel
                             Let __innerList As List(Of String) = line.value.Split(","c).AsList
                             Select i = line.i,
-                                data = New RowObject With {._innerColumns = __innerList}
+                                data = New RowObject With {.buffer = __innerList}
                             Order By i Ascending)
                 cData._innerTable = (From item In Rows Select item.data).AsList
             Else
                 Dim Rows = (From strLine As String In lines
                             Let InternalList As List(Of String) = strLine.Split(","c).AsList
-                            Select New RowObject With {._innerColumns = InternalList}).AsList
+                            Select New RowObject With {.buffer = InternalList}).AsList
                 cData._innerTable = Rows
             End If
 
@@ -635,11 +635,11 @@ B21,B22,B23,...
                 encoding = Encoding.Default
             End If
             Dim buf As List(Of RowObject) = __loads(Path, encoding, trimBlanks)
-            Dim Csv As New File With {
+            Dim csv As New File With {
                 .FilePath = Path,
                 ._innerTable = buf
             }
-            Return Csv
+            Return csv
         End Function
 
         Public Shared Function LoadTsv(path$, Optional encoding As Encodings = Encodings.UTF8) As File
@@ -769,7 +769,7 @@ B21,B22,B23,...
                 From row As RowObject
                 In df
                 Select row
-                Order By row.NotNullColumns.Count Descending '
+                Order By row.GetALLNonEmptys.Count Descending '
 
             For Each mrow As SeqValue(Of RowObject) In innerTable.ToArray.SeqIterator
                 Dim LQuery As IEnumerable(Of RowObject) =

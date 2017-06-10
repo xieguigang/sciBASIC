@@ -197,7 +197,7 @@ Public Module DataImports
         Next
 
         Return New RowObject With {
-            ._innerColumns = cols.AsList
+            .buffer = cols.AsList
         }
     End Function
 
