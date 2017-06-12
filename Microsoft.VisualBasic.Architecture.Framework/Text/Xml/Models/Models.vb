@@ -45,6 +45,11 @@ Namespace Text.Xml.Models
         <XmlAttribute> Public Property name As String
         <XmlText> Public Property text As String
 
+        Sub New(name$, value$)
+            Me.name = name
+            Me.text = value
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
