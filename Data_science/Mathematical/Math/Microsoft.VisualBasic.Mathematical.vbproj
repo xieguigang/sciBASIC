@@ -218,6 +218,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LinearAlgebra\Vector\NumericsOperator.vb" />
+    <Compile Include="LinearAlgebra\Vector\NumericsVector.vb" />
     <Compile Include="UncheckInteger.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />
