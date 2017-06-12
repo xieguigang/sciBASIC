@@ -29,6 +29,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace Scripting.TokenIcer
 
@@ -123,10 +124,16 @@ Namespace Scripting.TokenIcer
     End Class
 
     ''' <summary>
-    ''' 
+    ''' The statement line that parsing from the script text
     ''' </summary>
     Public Class Statement(Of T As IComparable)
+
         <XmlElement("t")> Public Property tokens As Token(Of T)()
+        ''' <summary>
+        ''' The script text raw data?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Trace As LineValue
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
