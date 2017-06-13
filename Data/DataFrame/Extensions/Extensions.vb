@@ -377,7 +377,8 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             Throw New Exception(path, ex)
         End Try
 
-        Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]" & vbCrLf & "Save data to file:///{path}")
+        Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
+        Call EchoLine($"Save data to file:///{path}")
         Call EchoLine($"[CSV.Reflector] Reflector have {source.Count} lines of data to write.")
 
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
