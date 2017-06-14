@@ -1,4 +1,5 @@
-Imports System.Drawing
+﻿Imports System.Drawing
+Imports Vertex = Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
 
 Namespace Drawing2D.Math2D.ConcaveHull
 
@@ -7,10 +8,14 @@ Namespace Drawing2D.Math2D.ConcaveHull
     ''' </summary>
     Public Class DelaunayTriangulation
 
-        Public Const MaxVertices As Integer = 500
-        Public Const MaxTriangles As Integer = 1000
-        Public Vertex As dVertex() = New dVertex(MaxVertices - 1) {}
-        Public Triangle As dTriangle() = New dTriangle(MaxTriangles - 1) {}
+        Dim Vertex As Vertex(), Triangle As dTriangle()
+        Dim maxTriangles%
+
+        Sub New(vertex As IEnumerable(Of Vertex), Optional MaxTriangles% = 1000)
+            Me.Vertex = vertex.ToArray
+            Me.Triangle = New dTriangle(MaxTriangles - 1) {}
+            Me.maxTriangles = MaxTriangles
+        End Sub
 
         Private Function InCircle(xp As Long, yp As Long, x1 As Long, y1 As Long, x2 As Long, y2 As Long,
             x3 As Long, y3 As Long, xc As Double, yc As Double, r As Double) As Boolean
@@ -75,9 +80,15 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 Return 1
             End If
         End Function
+
+        ''' <summary>
+        ''' <paramref name="nvert"/>值必须要小于<see cref="Vertex"/>的数量
+        ''' </summary>
+        ''' <param name="nvert"></param>
+        ''' <returns></returns>
         Public Function Triangulate(nvert As Integer) As Integer
-            Dim Complete As Boolean() = New Boolean(MaxTriangles - 1) {}
-            Dim Edges As Long(,) = New Long(2, MaxTriangles * 3) {}
+            Dim Complete As Boolean() = New Boolean(maxTriangles - 1) {}
+            Dim Edges As Long(,) = New Long(2, maxTriangles * 3) {}
             Dim Nedge As Long
             Dim xmin As Long
             Dim xmax As Long
@@ -96,22 +107,22 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Dim yc As Double = 0.0
             Dim r As Double = 0.0
             Dim inc As Boolean
-            xmin = Vertex(1).x
-            ymin = Vertex(1).y
+            xmin = Vertex(1).X
+            ymin = Vertex(1).Y
             xmax = xmin
             ymax = ymin
             For i = 2 To nvert
-                If Vertex(i).x < xmin Then
-                    xmin = Vertex(i).x
+                If Vertex(i).X < xmin Then
+                    xmin = Vertex(i).X
                 End If
-                If Vertex(i).x > xmax Then
-                    xmax = Vertex(i).x
+                If Vertex(i).X > xmax Then
+                    xmax = Vertex(i).X
                 End If
-                If Vertex(i).y < ymin Then
-                    ymin = Vertex(i).y
+                If Vertex(i).Y < ymin Then
+                    ymin = Vertex(i).Y
                 End If
-                If Vertex(i).y > ymax Then
-                    ymax = Vertex(i).y
+                If Vertex(i).Y > ymax Then
+                    ymax = Vertex(i).Y
                 End If
             Next
             dx = Convert.ToDouble(xmax) - Convert.ToDouble(xmin)
@@ -123,12 +134,12 @@ Namespace Drawing2D.Math2D.ConcaveHull
             End If
             xmid = (xmax + xmin) \ 2
             ymid = (ymax + ymin) \ 2
-            Vertex(nvert + 1).x = Convert.ToInt64(xmid - 2 * dmax)
-            Vertex(nvert + 1).y = Convert.ToInt64(ymid - dmax)
-            Vertex(nvert + 2).x = xmid
-            Vertex(nvert + 2).y = Convert.ToInt64(ymid + 2 * dmax)
-            Vertex(nvert + 3).x = Convert.ToInt64(xmid + 2 * dmax)
-            Vertex(nvert + 3).y = Convert.ToInt64(ymid - dmax)
+            Vertex(nvert + 1).X = Convert.ToInt64(xmid - 2 * dmax)
+            Vertex(nvert + 1).Y = Convert.ToInt64(ymid - dmax)
+            Vertex(nvert + 2).X = xmid
+            Vertex(nvert + 2).Y = Convert.ToInt64(ymid + 2 * dmax)
+            Vertex(nvert + 3).X = Convert.ToInt64(xmid + 2 * dmax)
+            Vertex(nvert + 3).Y = Convert.ToInt64(ymid - dmax)
             Triangle(1).vv0 = nvert + 1
             Triangle(1).vv1 = nvert + 2
             Triangle(1).vv2 = nvert + 3
@@ -140,8 +151,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 Do
                     j = j + 1
                     If Complete(j) <> True Then
-                        inc = InCircle(Vertex(i).x, Vertex(i).y, Vertex(Triangle(j).vv0).x, Vertex(Triangle(j).vv0).y, Vertex(Triangle(j).vv1).x, Vertex(Triangle(j).vv1).y,
-                            Vertex(Triangle(j).vv2).x, Vertex(Triangle(j).vv2).y, xc, yc, r)
+                        inc = InCircle(Vertex(i).X, Vertex(i).Y, Vertex(Triangle(j).vv0).X, Vertex(Triangle(j).vv0).Y, Vertex(Triangle(j).vv1).X, Vertex(Triangle(j).vv1).Y,
+                            Vertex(Triangle(j).vv2).X, Vertex(Triangle(j).vv2).Y, xc, yc, r)
                         If inc Then
                             Edges(1, Nedge + 1) = Triangle(j).vv0
                             Edges(2, Nedge + 1) = Triangle(j).vv1
@@ -223,15 +234,14 @@ Namespace Drawing2D.Math2D.ConcaveHull
         End Function
     End Class
 
-    Public Structure dVertex
-        Public x As Long
-        Public y As Long
-        Public z As Long
-    End Structure
     Public Structure dTriangle
         Public vv0 As Long
         Public vv1 As Long
         Public vv2 As Long
+
+        Public Overrides Function ToString() As String
+            Return {vv0, vv1, vv2}.JoinBy(" - ")
+        End Function
     End Structure
     Public Structure OrTriangle
         Public p0 As Point
@@ -482,25 +492,25 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
             Return min
         End Function
-        'Public Function GetConcave_Ball(radius As Double) As List(Of Point)
-        '	Dim ret As New List(Of Point)()
-        '	Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
-        '	ret.Add(points(0))
-        '	'flags[0] = true;
-        '	Dim i As Integer = 0, j As Integer = -1, prev As Integer = -1
-        '	While True
-        '		j = GetNextPoint_BallPivoting(prev, i, adjs(i), radius)
-        '		If j = -1 Then
-        '			Exit While
-        '		End If
-        '		Dim p As Point = BallConcave.GetCircleCenter(points(i), points(j), radius)
-        '		ret.Add(points(j))
-        '		flags(j) = True
-        '		prev = i
-        '		i = j
-        '	End While
-        '	Return ret
-        'End Function
+        Public Function GetConcave_Ball(radius As Double) As List(Of Point)
+            Dim ret As New List(Of Point)()
+            Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
+            ret.Add(points(0))
+            'flags[0] = true;
+            Dim i As Integer = 0, j As Integer = -1, prev As Integer = -1
+            While True
+                j = GetNextPoint_BallPivoting(prev, i, adjs(i), radius)
+                If j = -1 Then
+                    Exit While
+                End If
+                Dim p As Point = BallConcave.GetCircleCenter(points(i), points(j), radius)
+                ret.Add(points(j))
+                flags(j) = True
+                prev = i
+                i = j
+            End While
+            Return ret
+        End Function
         Public Function GetConcave_Edge(radius As Double) As List(Of Point)
             Dim ret As New List(Of Point)()
             Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
@@ -579,22 +589,22 @@ Namespace Drawing2D.Math2D.ConcaveHull
             'main.ShowMessage("seek P" + points[min].Index);
             Return min
         End Function
-        'Public Function GetNextPoint_BallPivoting(prev As Integer, current As Integer, list As List(Of Integer), radius As Double) As Integer
-        '	SortAdjListByAngel(list, prev, current)
-        '	For j As Integer = 0 To list.Count - 1
-        '		If flags(list(j)) Then
-        '			Continue For
-        '		End If
-        '		Dim adjIndex As Integer = list(j)
-        '		Dim xianp As Point = points(adjIndex)
-        '		Dim rightCirleCenter As Point = GetCircleCenter(points(current), xianp, radius)
-        '		If Not HasPointsInCircle(list, rightCirleCenter, radius, adjIndex) Then
-        '			main.DrawCircleWithXian(rightCirleCenter, points(current), points(adjIndex), radius)
-        '			Return list(j)
-        '		End If
-        '	Next
-        '	Return -1
-        'End Function
+        Public Function GetNextPoint_BallPivoting(prev As Integer, current As Integer, list As List(Of Integer), radius As Double) As Integer
+            SortAdjListByAngel(list, prev, current)
+            For j As Integer = 0 To list.Count - 1
+                If flags(list(j)) Then
+                    Continue For
+                End If
+                Dim adjIndex As Integer = list(j)
+                Dim xianp As Point = points(adjIndex)
+                Dim rightCirleCenter As Point = GetCircleCenter(points(current), xianp, radius)
+                If Not HasPointsInCircle(list, rightCirleCenter, radius, adjIndex) Then
+                    ' main.DrawCircleWithXian(rightCirleCenter, points(current), points(adjIndex), radius)
+                    Return list(j)
+                End If
+            Next
+            Return -1
+        End Function
         Private Sub SortAdjListByAngel(list As List(Of Integer), prev As Integer, current As Integer)
             Dim origin As Point = points(current)
             Dim df As Point
