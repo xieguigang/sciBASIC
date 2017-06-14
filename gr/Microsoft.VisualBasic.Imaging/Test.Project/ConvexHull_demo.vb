@@ -32,7 +32,7 @@ Module ConvexHull_demo
     End Sub
 
     <Extension>
-    Private Sub Draw(points As IEnumerable(Of Point), vex As Point(), <CallerMemberName> Optional method$ = Nothing)
+    Public Sub Draw(points As IEnumerable(Of Point), vex As Point(), <CallerMemberName> Optional method$ = Nothing)
         Using g As Graphics2D = vex.GetBounds.Size.Enlarge(1.25).CreateGDIDevice
 
             For Each p In points.AsList
