@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math.ConvexHull
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 
 Module ConvexHull_demo
 

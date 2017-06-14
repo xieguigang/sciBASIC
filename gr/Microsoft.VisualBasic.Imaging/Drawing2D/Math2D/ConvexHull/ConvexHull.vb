@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 
-Namespace Drawing2D.Math.ConvexHull
+Namespace Drawing2D.Math2D.ConvexHull
 
     ''' <summary>
     ''' In mathematics, the convex hull or convex envelope of a set X of points in the Euclidean plane 
@@ -19,11 +19,11 @@ Namespace Drawing2D.Math.ConvexHull
         End Function
 
         Public Function JarvisMatch(points As IEnumerable(Of Point)) As Point()
-            Return Math.ConvexHull.JarvisMatch.ConvexHull(points)
+            Return Math2D.ConvexHull.JarvisMatch.ConvexHull(points)
         End Function
 
         Public Function GrahamScan(points As IEnumerable(Of Point)) As Point()
-            Return Math.ConvexHull.GrahamScan.ConvexHull(points)
+            Return Math2D.ConvexHull.GrahamScan.ConvexHull(points)
         End Function
     End Module
 End Namespace

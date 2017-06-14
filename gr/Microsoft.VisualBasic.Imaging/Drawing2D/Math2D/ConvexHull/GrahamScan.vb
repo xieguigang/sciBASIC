@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 
-Namespace Drawing2D.Math.ConvexHull
+Namespace Drawing2D.Math2D.ConvexHull
 
     Public Module GrahamScan
 
