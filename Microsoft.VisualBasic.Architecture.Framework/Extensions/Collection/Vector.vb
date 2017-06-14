@@ -37,7 +37,7 @@ Public Module VectorExtensions
 
     <Extension> Public Function GetRange(Of T)(vector As T(), index%, count%) As T()
         Dim fill As T() = New T(count - 1) {}
-        Dim ends% = index + count
+        Dim ends% = index + count - 1
 
         For i As Integer = index To ends
             fill(i - index) = vector(i)

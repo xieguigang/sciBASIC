@@ -1,8 +1,12 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Module ConvexHull_demo
 
@@ -29,10 +33,13 @@ Module ConvexHull_demo
 
     <Extension>
     Private Sub Draw(points As IEnumerable(Of Point), vex As Point(), <CallerMemberName> Optional method$ = Nothing)
-        Using g As Graphics2D = vex.GetBounds.Size.CreateGDIDevice
+        Using g As Graphics2D = vex.GetBounds.Size.Enlarge(1.25).CreateGDIDevice
 
-            For Each p In points.AsList + vex
-                Call g.FillPie(Brushes.Black, New Rectangle(p, New Size(3, 3)), 0, 360)
+            For Each p In points.AsList
+                Call g.FillPie(Brushes.Black, New Rectangle(p, New Size(8, 8)), 0, 360)
+            Next
+            For Each p In vex
+                Call g.FillPie(Brushes.Blue, New Rectangle(p, New Size(5, 5)), 0, 360)
             Next
 
             For Each pair In vex.SlideWindows(2)
@@ -49,27 +56,10 @@ Module ConvexHull_demo
     End Sub
 
     Public Sub Main()
-        Dim points As New List(Of Point)()
-        points.Add(New Point(9, 1))
-        points.Add(New Point(4, 3))
-        points.Add(New Point(4, 5))
-        points.Add(New Point(3, 2))
-        points.Add(New Point(14, 2))
-        points.Add(New Point(4, 12))
-        points.Add(New Point(4, 10))
-        points.Add(New Point(5, 6))
-        points.Add(New Point(10, 2))
-        points.Add(New Point(1, 2))
-        points.Add(New Point(1, 10))
-        points.Add(New Point(5, 2))
-        points.Add(New Point(11, 2))
-        points.Add(New Point(4, 11))
-        points.Add(New Point(12, 4))
-        points.Add(New Point(3, 1))
-        points.Add(New Point(2, 6))
-        points.Add(New Point(2, 4))
-        points.Add(New Point(7, 8))
-        points.Add(New Point(5, 5))
+        Dim size = 50
+        Dim x = New DoubleRange(100, 900).rand(size)
+        Dim y = New DoubleRange(100, 800).rand(size)
+        Dim points = size.Sequence.Select(Function(i) New Point(x(i), y(i))).AsList
 
         Call points.GrahamScanDemo()
         Call points.JarvisMarchDemo()
