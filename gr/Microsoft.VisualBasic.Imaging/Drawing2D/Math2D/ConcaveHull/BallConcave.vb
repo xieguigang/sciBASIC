@@ -2,6 +2,10 @@
 
 Namespace Drawing2D.Math2D.ConcaveHull
 
+    ''' <summary>
+    ''' + http://www.tuicool.com/articles/iUvMjm
+    ''' + http://www.ian-ko.com/ET_GeoWizards/UserGuide/concaveHull.htm
+    ''' </summary>
     Public Class BallConcave
 
         Private Structure Point2dInfo : Implements IComparable(Of Point2dInfo)
@@ -24,8 +28,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
         End Structure
 
         Public Sub New(list As List(Of Point))
-            Me.points = list
-            points.Sort()
+            Me.points = list.OrderBy(Function(p) p.X * CDbl(p.Y)).ToList
+            '  points.Sort()
             flags = New Boolean(points.Count - 1) {}
             For i As Integer = 0 To flags.Length - 1
                 flags(i) = False
@@ -53,15 +57,19 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 Next
             Next
         End Sub
-        Public Function GetRecomandedR() As Double
-            Dim r As Double = Double.MinValue
-            For i As Integer = 0 To points.Count - 1
-                If distanceMap(i, rNeigbourList(i)(1)) > r Then
-                    r = distanceMap(i, rNeigbourList(i)(1))
-                End If
-            Next
-            Return r
-        End Function
+
+        Public ReadOnly Property RecomandedRadius() As Double
+            Get
+                Dim r As Double = Double.MinValue
+                For i As Integer = 0 To points.Count - 1
+                    If distanceMap(i, rNeigbourList(i)(1)) > r Then
+                        r = distanceMap(i, rNeigbourList(i)(1))
+                    End If
+                Next
+                Return r
+            End Get
+        End Property
+
         Public Function GetMinEdgeLength() As Double
             Dim min As Double = Double.MaxValue
             For i As Integer = 0 To points.Count - 1

@@ -56,14 +56,14 @@ Module ConvexHull_demo
     End Sub
 
     Public Sub Main()
-        Dim size = 50
-        Dim x = New DoubleRange(100, 900).rand(size)
-        Dim y = New DoubleRange(100, 800).rand(size)
+        Dim size = 30
+        Dim x = New DoubleRange(50, 2000).rand(size)
+        Dim y = New DoubleRange(50, 1200).rand(size)
         Dim points = size.Sequence.Select(Function(i) New Point(x(i), y(i))).AsList
 
         Call points.GrahamScanDemo()
         Call points.JarvisMarchDemo()
-        Call Run_ConcaveHull_demo
+        Call points.Run_ConcaveHull_demo
 
         Pause()
     End Sub
