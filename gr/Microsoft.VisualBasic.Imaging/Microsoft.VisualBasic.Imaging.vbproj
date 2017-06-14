@@ -193,6 +193,9 @@
     <Compile Include="Drawing2D\Colors\ColorPalette.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Drawing2D\Math\ConvexHull\ConvexHull.vb" />
+    <Compile Include="Drawing2D\Math\ConvexHull\GrahamScan.vb" />
+    <Compile Include="Drawing2D\Math\ConvexHull\JarvisMatch.vb" />
     <Compile Include="Drawing2D\Path2D.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
