@@ -38,11 +38,19 @@ Namespace ComponentModel.Algorithm.base
     ''' <remarks></remarks>
     Public Module Combination
 
+        ''' <summary>
+        ''' 生成两个序列的两两组合 ``{<paramref name="seq_1"/> -> <paramref name="seq_2"/>}()``
+        ''' </summary>
+        ''' <typeparam name="TA"></typeparam>
+        ''' <typeparam name="TB"></typeparam>
+        ''' <param name="seq_1"></param>
+        ''' <param name="seq_2"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Iterator Function CreateCombos(Of TA, TB)(sourceA As IEnumerable(Of TA), sourceB As IEnumerable(Of TB)) As IEnumerable(Of Tuple(Of TA, TB))
-            Dim b As TB() = sourceB.ToArray
+        Public Iterator Function CreateCombos(Of TA, TB)(seq_1 As IEnumerable(Of TA), seq_2 As IEnumerable(Of TB)) As IEnumerable(Of Tuple(Of TA, TB))
+            Dim b As TB() = seq_2.ToArray
 
-            For Each i As TA In sourceA
+            For Each i As TA In seq_1
                 For Each j As TB In b
                     Yield New Tuple(Of TA, TB)(i, j)
                 Next
