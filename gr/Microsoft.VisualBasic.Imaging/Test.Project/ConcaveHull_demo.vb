@@ -16,7 +16,7 @@ Module ConcaveHull_demo
         'Call engine.Triangulate(150)
 
         With points
-            Call .Draw(.ConcaveHull)
+            Call .Draw(.ConcaveHull(500))
         End With
     End Sub
 End Module
