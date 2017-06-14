@@ -63,6 +63,7 @@ Module ConvexHull_demo
 
         Call points.GrahamScanDemo()
         Call points.JarvisMarchDemo()
+        Call Run_ConcaveHull_demo
 
         Pause()
     End Sub

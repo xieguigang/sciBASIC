@@ -1,22 +1,20 @@
-﻿Imports System.Drawing
+﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConcaveHull
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Language
-Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Module ConcaveHull_demo
 
-    <Extension>
-    Sub Run_ConcaveHull_demo(points As List(Of Point))
-        Dim mm As New DelaunayMesh2d With {
-            .Points = points
-        }
+    Sub Run_ConcaveHull_demo()
+        Dim size = 50
+        Dim x = New DoubleRange(100, 900).rand(size)
+        Dim y = New DoubleRange(100, 800).rand(size)
+        Dim z = New DoubleRange(100, 850).rand(size)
+        Dim v = size.Sequence.Select(Function(i) New dVertex With {.x = x(i), .y = y(i), .z = z(i)}).ToArray
+        Dim engine As New DelaunayTriangulation With {.Vertex = v}
 
-        mm.InitEdgesInfo()
+        Call engine.Triangulate(10)
 
-        Dim edges = mm.GetBoundaryEdges
-        Dim vex = mm.Points.AsList(edges.Select(Function(l) {l.P0Index, l.P1Index}).IteratesALL.Distinct.ToArray)
-
-        Call ConvexHull_demo.Draw(points, vex)
+        Pause()
     End Sub
 End Module
