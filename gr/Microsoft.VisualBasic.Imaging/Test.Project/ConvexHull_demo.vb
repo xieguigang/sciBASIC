@@ -50,6 +50,18 @@ Module ConvexHull_demo
             Next
 
             Call g.DrawLine(Pens.Red, vex.First, vex.Last)
+
+            Dim enlarge = vex.Enlarge(1.25)
+
+            For Each pair In enlarge.SlideWindows(2)
+                Dim a = pair.First
+                Dim b = pair.Last
+
+                Call g.DrawLine(Pens.Blue, a, b)
+            Next
+
+            Call g.DrawLine(Pens.Blue, enlarge.First, enlarge.Last)
+
             Call g.Save(App.HOME & $"/{method}.png", ImageFormats.Png)
 
         End Using
