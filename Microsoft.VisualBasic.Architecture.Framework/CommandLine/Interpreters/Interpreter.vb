@@ -179,7 +179,7 @@ Namespace CommandLine
                 End If
 
             ElseIf InStr(commandName, "??") = 1 Then  ' 支持类似于R语言里面的 ??帮助命令
-                commandName = Mid(commandName, 3)
+                commandName = Mid(commandName, 3)     ' 去除前面的两个??问号，得到查询的term
                 Return Help(commandName)
 
             ElseIf String.Equals(commandName, "~") Then  ' 打印出应用程序的位置，linux里面的HOME
@@ -229,7 +229,7 @@ Namespace CommandLine
 
                     Return -1000
                 Else
-                    Dim list$() = Me.ListPossible(commandName)
+                    Dim list$() = Me.ListingRelated(commandName)
 
                     If list.IsNullOrEmpty Then
 
@@ -320,7 +320,7 @@ Namespace CommandLine
                 If __API_table.ContainsKey(name = CommandName.ToLower) Then
                     Call __API_table(name).PrintHelp
                 Else
-                    Dim list$() = Me.ListPossible(CommandName)
+                    Dim list$() = Me.ListingRelated(CommandName)
 
                     If list.IsNullOrEmpty Then
                         Call Console.WriteLine($"Bad command, no such a command named ""{CommandName}"", ? for command list.")
@@ -639,43 +639,44 @@ Namespace CommandLine
             End Set
         End Property
 
-        Public Function GetPossibleCommand(name As Value(Of String)) As EntryPoints.APIEntryPoint
-            If Me.__API_table.ContainsKey(name = (+name).ToLower) Then
-                Return __API_table(+name)
-            Else
-                Dim LQuery = (From x As KeyValuePair(Of String, APIEntryPoint)
-                              In __API_table
-                              Let similarity = LevenshteinDistance.ComputeDistance(x.Key, name)
-                              Where Not similarity Is Nothing
-                              Select similarity.Score,
-                                  x.Value
-                              Order By Score Descending).ToArray
+        Public Function GetPossibleCommand(name As Value(Of String)) As APIEntryPoint
+            Dim commands = ListingRelated(name)
 
-                If LQuery.IsNullOrEmpty Then
-                    Return Nothing
-                Else
-                    Return LQuery.First.Value
-                End If
+            If commands.Length = 0 Then
+                Return Nothing
+            Else
+                Return __API_table(commands.First.ToLower)
             End If
         End Function
 
         ''' <summary>
         ''' 列举出所有可能的命令
         ''' </summary>
-        ''' <param name="Name">模糊匹配</param>
+        ''' <param name="query">模糊匹配</param>
         ''' <returns></returns>
-        Public Function ListPossible(Name As String) As String()
-            Dim key As String = Name.ToLower
+        Public Function ListingRelated(query$) As String()
+            Dim key As New LevenshteinString(query.ToLower)
             Dim LQuery = From x As String
                          In __API_table.Keys.AsParallel
-                         Let lev = LevenshteinDistance.ComputeDistance(x, key)
-                         Where Not lev Is Nothing AndAlso
-                              lev.Score > 0.3
-                         Select lev.Score,
+                         Let compare = key Like x
+                         Where Not compare Is Nothing AndAlso
+                             compare.Score > 0.3
+                         Select compare.Score,
                              x
                          Order By Score Descending
 
-            Return LQuery.ToArray(Function(x) x.x)
+            Dim levenshteins = LQuery _
+                .Select(Function(x) x.x) _
+                .AsList
+
+            levenshteins += __API_table _
+                .Keys _
+                .Where(Function(s)
+                           Return InStr(s, query, CompareMethod.Text) > 0 OrElse
+                                  InStr(query, s, CompareMethod.Text) > 0
+                       End Function)
+
+            Return levenshteins
         End Function
 
         ''' <summary>
