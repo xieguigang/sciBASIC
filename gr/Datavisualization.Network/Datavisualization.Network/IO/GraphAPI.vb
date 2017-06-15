@@ -162,13 +162,13 @@ Namespace FileStream
                 }
                 Select New Graph.Node(id, data)
 
-            Dim nodehash As New Dictionary(Of Graph.Node)(nodes)
+            Dim nodeTable As New Dictionary(Of Graph.Node)(nodes)
             Dim edges As Edge() =
  _
                 LinqAPI.Exec(Of Edge) <= From edge As NetworkEdge
                                          In net.Edges
-                                         Let a = nodehash(edge.FromNode)
-                                         Let b = nodehash(edge.ToNode)
+                                         Let a = nodeTable(edge.FromNode)
+                                         Let b = nodeTable(edge.ToNode)
                                          Let id = edge.GetNullDirectedGuid
                                          Let data As EdgeData = New EdgeData With {
                                              .Properties = New Dictionary(Of String, String) From {
