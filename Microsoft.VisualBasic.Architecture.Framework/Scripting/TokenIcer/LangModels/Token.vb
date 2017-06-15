@@ -48,6 +48,9 @@ Namespace Scripting.TokenIcer
         ''' <returns></returns>
         <XmlAttribute("name")> Public Property name As Tokens
 
+        Public Property Arguments As Statement(Of Tokens)()
+        Public Property Closure As Main(Of Tokens)
+
         ''' <summary>
         ''' The text that makes up the token.
         ''' </summary>
@@ -95,9 +98,6 @@ Namespace Scripting.TokenIcer
                 Return Information.IsNumeric(Text)
             End Get
         End Property
-
-        Public Property Arguments As Statement(Of Tokens)()
-        Public Property Closure As Main(Of Tokens)
 
         Public Sub New(name As Tokens, value$)
             Me.name = name

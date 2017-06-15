@@ -193,6 +193,13 @@
     <Compile Include="Drawing2D\Colors\ColorPalette.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Drawing2D\Math2D\ConcaveHull\BallConcave.vb" />
+    <Compile Include="Drawing2D\Math2D\ConcaveHull\DelaunayMesh2d.vb" />
+    <Compile Include="Drawing2D\Math2D\ConcaveHull\ConcaveHull.vb" />
+    <Compile Include="Drawing2D\Math2D\ConcaveHull\Extensions.vb" />
+    <Compile Include="Drawing2D\Math2D\ConvexHull\ConvexHull.vb" />
+    <Compile Include="Drawing2D\Math2D\ConvexHull\GrahamScan.vb" />
+    <Compile Include="Drawing2D\Math2D\ConvexHull\JarvisMatch.vb" />
     <Compile Include="Drawing2D\Path2D.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
