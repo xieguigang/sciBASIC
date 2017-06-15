@@ -37,7 +37,7 @@ Namespace SyntaxAPI.Vectors
         Implements IDisposable
 
         ''' <summary>
-        ''' 向量维数
+        ''' 向量维数，就是向量的长度（元素的个数）
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property Dim%
