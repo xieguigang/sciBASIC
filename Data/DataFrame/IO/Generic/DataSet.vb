@@ -40,6 +40,14 @@ Namespace IO
 
         Public Property ID As String Implements INamedValue.Key
 
+        Sub New()
+        End Sub
+
+        Sub New(id$)
+            Me.ID = id
+            Me.Properties = New Dictionary(Of String, Double)
+        End Sub
+
         ''' <summary>
         ''' Copy prop[erty value
         ''' </summary>
