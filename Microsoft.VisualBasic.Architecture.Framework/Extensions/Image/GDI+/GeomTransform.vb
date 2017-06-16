@@ -29,8 +29,9 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Imaging
 
@@ -71,6 +72,19 @@ Namespace Imaging
         <ExportAPI("Center")>
         <Extension> Public Function Centre(rect As Rectangle) As Point
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
+        End Function
+
+        <Extension>
+        Public Function Centre(shape As IEnumerable(Of Point)) As Point
+            Dim x As New List(Of Integer)
+            Dim y As New List(Of Integer)
+
+            Call shape.DoEach(Sub(pt)
+                                  x += pt.X
+                                  y += pt.Y
+                              End Sub)
+
+            Return New Point(x.Average, y.Average)
         End Function
 
         ''' <summary>

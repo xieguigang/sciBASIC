@@ -28,6 +28,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
+Imports Vec = Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector
 
 Namespace Drawing2D
 
@@ -38,6 +40,35 @@ Namespace Drawing2D
             With size
                 Return New SizeF(.Width * fold, .Height * fold)
             End With
+        End Function
+
+        ''' <summary>
+        ''' 将一个多边形放大指定的倍数<paramref name="scale"/>
+        ''' </summary>
+        ''' <param name="shape">矢量图形的点集合</param>
+        ''' <param name="scale#"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Enlarge(shape As IEnumerable(Of Point), scale#) As Point()
+            Dim vector = shape.ToArray
+            Dim center = vector.Centre
+            Dim x As New Vec(vector.Select(Function(pt) pt.X))
+            Dim y As New Vec(vector.Select(Function(pt) pt.Y))
+            Dim b = x - CDbl(center.X)
+            Dim a = y - CDbl(center.Y)
+            Dim c = VectorMath.Sqrt(b ^ 2 + a ^ 2)
+            Dim cs = c * scale
+            Dim dc = cs - c
+            Dim dx = (b / c) * dc
+            Dim dy = (a / c) * dc
+
+            x = x + dx
+            y = y + dy
+
+            ' 返回放大之后的矢量图形向量
+            Return vector _
+                .Sequence _
+                .Select(Function(i) New Point(x(i), y(i))) _
+                .ToArray
         End Function
     End Module
 End Namespace

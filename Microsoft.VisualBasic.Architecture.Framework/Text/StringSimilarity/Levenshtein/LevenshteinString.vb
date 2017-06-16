@@ -47,6 +47,12 @@ Namespace Text.Levenshtein
             Return _string
         End Function
 
+        ''' <summary>
+        ''' String similarity compares
+        ''' </summary>
+        ''' <param name="s$"></param>
+        ''' <param name="subject"></param>
+        ''' <returns></returns>
         Public Shared Operator Like(s$, subject As LevenshteinString) As DistResult
             Return Levenshtein.ComputeDistance(
                 s.CharCodes,
@@ -55,6 +61,12 @@ Namespace Text.Levenshtein
                 AddressOf ChrW)
         End Operator
 
+        ''' <summary>
+        ''' String similarity compares
+        ''' </summary>
+        ''' <param name="query"></param>
+        ''' <param name="s$"></param>
+        ''' <returns></returns>
         Public Shared Operator Like(query As LevenshteinString, s$) As DistResult
             Return Levenshtein.ComputeDistance(
                 query._chars,
@@ -63,6 +75,12 @@ Namespace Text.Levenshtein
                 AddressOf ChrW)
         End Operator
 
+        ''' <summary>
+        ''' String similarity compares
+        ''' </summary>
+        ''' <param name="query"></param>
+        ''' <param name="subject"></param>
+        ''' <returns></returns>
         Public Shared Operator Like(query As LevenshteinString, subject As LevenshteinString) As DistResult
             Return Levenshtein.ComputeDistance(
                 query._chars,
