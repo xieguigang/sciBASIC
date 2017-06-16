@@ -30,6 +30,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace IO
 
@@ -75,19 +76,27 @@ Namespace IO
             Return $"{ID} => ({Properties.Count}) {Properties.Keys.ToArray.GetJson}"
         End Function
 
-        Public Shared Function LoadDataSet(path As String, Optional uidMap As String = Nothing) As IEnumerable(Of EntityObject)
-            Return LoadDataSet(Of EntityObject)(path, uidMap)
+        Public Shared Function LoadDataSet(path As String, Optional uidMap As String = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of EntityObject)
+            Return LoadDataSet(Of EntityObject)(path, uidMap, tsv)
         End Function
 
-        Public Shared Function LoadDataSet(Of T As EntityObject)(path As String, Optional uidMap As String = Nothing) As IEnumerable(Of T)
+        Public Shared Function LoadDataSet(Of T As EntityObject)(path As String, Optional uidMap As String = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of T)
             If uidMap.StringEmpty Then
-                Dim first As New RowObject(path.ReadFirstLine)
-                uidMap = first.First
+                If Not tsv Then
+                    Dim first As New RowObject(path.ReadFirstLine)
+                    uidMap = first.First
+                Else
+                    uidMap = path.ReadFirstLine.Split(ASCII.TAB).First
+                End If
             End If
             Dim map As New Dictionary(Of String, String) From {
                 {uidMap, NameOf(EntityObject.ID)}
             }
-            Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
+            If tsv Then
+                Return path.LoadTsv(Of T)(nameMaps:=map)
+            Else
+                Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
+            End If
         End Function
     End Class
 End Namespace
