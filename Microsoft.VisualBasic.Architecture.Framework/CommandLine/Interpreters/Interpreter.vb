@@ -29,15 +29,12 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.Settings
-Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
@@ -330,7 +327,7 @@ Namespace CommandLine
                         Call Console.WriteLine(BAD_COMMAND_MAN, CommandName)
 
                         For Each cName As String In list
-                            Call Console.WriteLine("    " & cName)
+                            Call Console.WriteLine("    " & cName & ASCII.TAB & __API_table(cName).Info)
                         Next
                     End If
 
