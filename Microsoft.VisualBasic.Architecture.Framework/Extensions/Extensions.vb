@@ -79,6 +79,15 @@ Public Module Extensions
 #End If
 
     ''' <summary>
+    ''' ``Math.Log(x, newBase:=2)``
+    ''' </summary>
+    ''' <param name="x#"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Log2(x#) As Double
+        Return Math.Log(x, newBase:=2)
+    End Function
+
+    ''' <summary>
     ''' 将16进制的数字转换为10进制数
     ''' </summary>
     ''' <param name="hex$"></param>
