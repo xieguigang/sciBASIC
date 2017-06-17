@@ -74,6 +74,10 @@ Namespace Imaging
             Return New Point(pf.X, pf.Y)
         End Function
 
+        <Extension> Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
+            Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
+        End Function
+
         ''' <summary>
         ''' Gets the center location of the region rectangle.
         ''' </summary>

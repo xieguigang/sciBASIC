@@ -32,7 +32,6 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.Settings
-Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
