@@ -40,7 +40,17 @@ Namespace Layouts
         ''' (如果有些时候这个函数不起作用的话，考虑一下在调用这个函数之前，先使用<see cref="doRandomLayout"/>初始化随机位置)
         ''' </summary>
         ''' <param name="net"></param>
-        ''' <param name="iterations"></param>
+        ''' <param name="iterations">网络的布局layout的计算迭代次数</param>
+        ''' <param name="Stiffness">
+        ''' 密度：影响网络的节点的距离，这个参数值越小，则网络节点的相互之间的距离越大，即这个密度参数值越小，则单位面积内的节点数量越少
+        ''' </param>
+        ''' <param name="Damping">
+        ''' 阻尼：这个参数值越小，则在计算layout的时候，某一个节点所能够影响到的节点数量也越少。即某一个节点的位置调整之后，被影响的其他节点的数量也越少。
+        ''' 这个参数值介于0-1之间，超过1的时候网络永远也不会处于稳定的状态
+        ''' </param>
+        ''' <param name="Repulsion">
+        ''' 排斥力：节点之间的排斥力的大小，当这个参数值越大的时候，节点之间的排斥力也会越大，则节点之间的距离也越远。反之节点之间的距离也越近
+        ''' </param>
         <ExportAPI("Layout.ForceDirected")>
         <Extension>
         Public Sub doForceLayout(ByRef net As NetworkGraph,
