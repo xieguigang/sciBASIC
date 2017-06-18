@@ -390,6 +390,15 @@ Public Module KeyValuePairExtensions
         End If
     End Function
 
+    ''' <summary>
+    ''' 一次性地使用一个键名的集合从字典之中选出一组数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="d"></param>
+    ''' <param name="keys"></param>
+    ''' <param name="skipNonExist"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Selects(Of T, V)(d As Dictionary(Of T, V), keys As IEnumerable(Of T), Optional skipNonExist As Boolean = False) As V()
         If skipNonExist Then
