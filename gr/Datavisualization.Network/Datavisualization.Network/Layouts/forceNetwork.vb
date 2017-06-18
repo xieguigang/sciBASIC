@@ -36,7 +36,21 @@ Namespace Layouts
     Public Module forceNetwork
 
         ''' <summary>
-        ''' Applies the force directed layout.
+        ''' <see cref="Parameters.Load"/>
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="parameters"></param>
+        ''' <param name="showProgress"></param>
+        <ExportAPI("Layout.ForceDirected")>
+        <Extension>
+        Public Sub doForceLayout(ByRef net As NetworkGraph, parameters As ForceDirectedArgs, Optional showProgress As Boolean = False)
+            With parameters
+                Call net.doForceLayout(.Stiffness, .Repulsion, .Damping, .Iterations, showProgress:=showProgress)
+            End With
+        End Sub
+
+        ''' <summary>
+        ''' Applies the force directed layout. Parameter can be read from a ``*.ini`` profile file by using <see cref="Parameters.Load"/>
         ''' (如果有些时候这个函数不起作用的话，考虑一下在调用这个函数之前，先使用<see cref="doRandomLayout"/>初始化随机位置)
         ''' </summary>
         ''' <param name="net"></param>

@@ -35,7 +35,7 @@ Namespace Layouts
     ''' <summary>
     ''' The network graph layout parameters
     ''' </summary>
-    <IniMapIO("@ForceDirectedArgs.ini")>
+    <IniMapIO("@" & Parameters.DefaultFileName)>
     Public Class Parameters
 
         Public Property ForceDirectedArgs As ForceDirectedArgs
@@ -43,6 +43,8 @@ Namespace Layouts
         Public Const DefaultStiffness As Single = 81.76!
         Public Const DefaultRepulsion As Single = 20000.0!
         Public Const DefaultDamping As Single = 0.5!
+
+        Public Const DefaultFileName$ = "ForceDirectedArgs.ini"
 
         Public Shared Function Load() As ForceDirectedArgs
             Dim b As Boolean = False
@@ -70,7 +72,16 @@ Namespace Layouts
         <DataFrameColumn> Public Property Stiffness As Single = 41.76!
         <DataFrameColumn> Public Property Repulsion As Single = 10000.0!
         <DataFrameColumn> Public Property Damping As Single = 0.4!
-        <DataFrameColumn> Public Property Interations As Integer = 1000%
+        <DataFrameColumn> Public Property Iterations As Integer = 1000%
+
+        Public Shared Function DefaultNew() As ForceDirectedArgs
+            Return New ForceDirectedArgs With {
+                .Damping = Parameters.DefaultDamping,
+                .Iterations = 1500,
+                .Repulsion = Parameters.DefaultRepulsion,
+                .Stiffness = Parameters.DefaultStiffness
+            }
+        End Function
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
