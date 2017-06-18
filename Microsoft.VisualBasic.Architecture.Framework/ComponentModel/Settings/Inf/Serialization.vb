@@ -54,6 +54,9 @@ Namespace ComponentModel.Settings.Inf
         End Function
     End Class
 
+    ''' <summary>
+    ''' The path parameter can be shortcut by method <see cref="PathMapper.GetMapPath"/>
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
     Public Class IniMapIO : Inherits Attribute
 
