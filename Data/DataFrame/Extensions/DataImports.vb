@@ -73,7 +73,7 @@ Public Module DataImports
     End Function
 
     ''' <summary>
-    ''' Imports data source by using specific delimiter
+    ''' Imports data source by using specific delimiter.(这个函数是一个安全的函数，当目标文件不存在的时候，返回的是一个空集合)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path"></param>
