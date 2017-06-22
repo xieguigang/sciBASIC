@@ -163,6 +163,14 @@ Public Module DocumentExtensions
         Return out
     End Function
 
+    ''' <summary>
+    ''' Load a .NET collection from a tsv file which is specific by <paramref name="path"/> value.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="nameMaps"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$,
                                            Optional encoding As Encodings = Encodings.Default,

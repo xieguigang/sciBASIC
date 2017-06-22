@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::066610c10224779b7b7d3817103c0f3c, ..\sciBASIC#\www\githubAPI\WebAPI\Users.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -76,10 +76,11 @@ Namespace WebAPI
 
             Dim vcardNames = r.Match(html, "<h1 class=""vcard-names"">.+?</h1>", RegexICSng).Value
             Dim names = Regex.Matches(vcardNames, "<span .+?>.+?</span>", RegexICSng).ToArray(Function(s) s.GetValue)
-            Dim bio$ = r.Match(html, "<div class[=]""user-profile-bio"">.+?</div>", RegexICSng) _
+            Dim bio$ = r.Match(html, "<div class[=]""(p-note )?user-profile-bio"">.+?</div>", RegexICSng) _
                 .Value _
                 .GetValue _
-                .Substring(5)
+                .Substring(5) _
+                .TrimNewLine
 
             Return New User With {
                 .login = usrName,
