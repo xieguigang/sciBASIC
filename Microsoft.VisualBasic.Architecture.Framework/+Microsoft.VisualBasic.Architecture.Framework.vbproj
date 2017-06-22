@@ -395,7 +395,7 @@
     <Compile Include="ComponentModel\Ranges\IntRange.vb" />
     <Compile Include="ComponentModel\Settings\Inf\IniFile.vb" />
     <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
-    <Compile Include="ComponentModel\Settings\LDM\ProfileTable.vb" />
+    <Compile Include="ComponentModel\Settings\DataModels\ProfileTable.vb" />
     <Compile Include="ComponentModel\SingletonHolder.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
@@ -444,9 +444,9 @@
     <Compile Include="ComponentModel\LazyLoader.vb" />
     <Compile Include="ComponentModel\Settings\ConfigEngine.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Serialization.vb" />
-    <Compile Include="ComponentModel\Settings\LDM\BindMapping.vb" />
-    <Compile Include="ComponentModel\Settings\LDM\ModelBase.vb" />
-    <Compile Include="ComponentModel\Settings\LDM\ProfileItem.vb" />
+    <Compile Include="ComponentModel\Settings\DataModels\BindMapping.vb" />
+    <Compile Include="ComponentModel\Settings\DataModels\ModelBase.vb" />
+    <Compile Include="ComponentModel\Settings\DataModels\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
     <Compile Include="Extensions\IO\CollectionIO.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue.vb" />

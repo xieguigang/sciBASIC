@@ -32,6 +32,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.Settings
+Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -60,7 +61,7 @@ Namespace CommandLine
         ''' 在添加之前请确保键名是小写的字符串
         ''' </summary>
         Protected __API_table As New Dictionary(Of String, APIEntryPoint)
-        Protected __root_Namespace$
+        Protected __rootNamespace$
 
 #Region "Optional delegates"
 
@@ -91,7 +92,7 @@ Namespace CommandLine
         End Function
 
         Public Overrides Function ToString() As String
-            Return "CLI://" & __root_Namespace
+            Return "CLI://" & __rootNamespace
         End Function
 
         ''' <summary>
@@ -107,7 +108,7 @@ Namespace CommandLine
 
 #Else
                 If Stack.TextEquals("Main") Then
-                    If AutoPaused Then
+                    If DebuggerArgs.AutoPaused Then
                         Call Pause()
                     End If
                 End If
@@ -369,7 +370,7 @@ Namespace CommandLine
                 End If
             Next
 
-            Me.__root_Namespace = type.Namespace
+            Me.__rootNamespace = type.Namespace
             Me._Stack = caller
             Me._Type = type
             Me._Info = type.NamespaceEntry

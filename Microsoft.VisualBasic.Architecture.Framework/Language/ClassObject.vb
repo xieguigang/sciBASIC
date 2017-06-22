@@ -52,7 +52,7 @@ Namespace Language
         End Function
 
         ''' <summary>
-        ''' VisualBasic ``With`` source reference helper
+        ''' Extension method for VisualBasic ``With`` anonymous variable syntax source reference helper
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>

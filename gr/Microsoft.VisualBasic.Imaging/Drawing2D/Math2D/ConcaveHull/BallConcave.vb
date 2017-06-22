@@ -27,8 +27,10 @@ Namespace Drawing2D.Math2D.ConcaveHull
             End Function
         End Structure
 
-        Public Sub New(list As List(Of Point))
-            Me.points = list.OrderBy(Function(p) p.X * CDbl(p.Y)).ToList
+        Public Sub New(list As IEnumerable(Of Point))
+            Me.points = list _
+                .OrderBy(Function(p) p.X * CDbl(p.Y)) _
+                .ToList
             '  points.Sort()
             flags = New Boolean(points.Count - 1) {}
             For i As Integer = 0 To flags.Length - 1

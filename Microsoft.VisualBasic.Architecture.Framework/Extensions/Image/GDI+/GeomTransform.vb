@@ -43,11 +43,21 @@ Namespace Imaging
             Return Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI
         End Function
 
+        ''' <summary>
+        ''' 获取目标多边形对象的边界结果，包括左上角的位置以及所占的矩形区域的大小
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetBounds(points As IEnumerable(Of Point)) As RectangleF
             Return points.Select(Function(pt) pt.PointF).GetBounds
         End Function
 
+        ''' <summary>
+        ''' 获取目标多边形对象的边界结果，包括左上角的位置以及所占的矩形区域的大小
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetBounds(points As IEnumerable(Of PointF)) As RectangleF
             Dim array = points.ToArray
@@ -64,6 +74,10 @@ Namespace Imaging
             Return New Point(pf.X, pf.Y)
         End Function
 
+        <Extension> Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
+            Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
+        End Function
+
         ''' <summary>
         ''' Gets the center location of the region rectangle.
         ''' </summary>
@@ -74,6 +88,11 @@ Namespace Imaging
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
         End Function
 
+        ''' <summary>
+        ''' 获取目标多边形对象的中心点的坐标位置
+        ''' </summary>
+        ''' <param name="shape"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Centre(shape As IEnumerable(Of Point)) As Point
             Dim x As New List(Of Integer)
@@ -97,6 +116,12 @@ Namespace Imaging
             Return New PointF(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
         End Function
 
+        ''' <summary>
+        ''' 获取将目标多边形置于区域的中央位置的位置偏移量
+        ''' </summary>
+        ''' <param name="pts"></param>
+        ''' <param name="frameSize"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As PointF
             Return pts.Select(Function(pt) pt.PointF).ToArray.CentralOffset(frameSize.SizeF)
@@ -107,6 +132,12 @@ Namespace Imaging
             Return New SizeF(size.Width, size.Height)
         End Function
 
+        ''' <summary>
+        ''' 获取将目标多边形置于区域的中央位置的位置偏移量
+        ''' </summary>
+        ''' <param name="pts"></param>
+        ''' <param name="frameSize"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of PointF), frameSize As SizeF) As PointF
             Dim xOffset!() = pts.ToArray(Function(x) x.X)
