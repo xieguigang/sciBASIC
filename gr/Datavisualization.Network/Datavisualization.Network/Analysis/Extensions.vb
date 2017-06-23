@@ -36,7 +36,7 @@ Namespace Analysis
     Public Module Extensions
 
         <Extension>
-        Public Function SearchIndex(net As NetGraph, from As Boolean) As Dictionary(Of String, IndexOf(Of String))
+        Public Function SearchIndex(net As NetGraph, from As Boolean) As Dictionary(Of String, Index(Of String))
             Dim getKey = Function(e As NetworkEdge)
                              If from Then
                                  Return e.FromNode
@@ -57,7 +57,7 @@ Namespace Analysis
                         End Function) _
                 .GroupBy(Function(t) t.key) _
                 .ToDictionary(Function(k) k.Key,
-                              Function(g) New IndexOf(Of String)(g.Select(Function(o) o.value).Distinct))
+                              Function(g) New Index(Of String)(g.Select(Function(o) o.value).Distinct))
             Return index
         End Function
     End Module

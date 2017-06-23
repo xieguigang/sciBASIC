@@ -96,6 +96,8 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 
 ## sciBASIC# Graphics Artist
 
+[![](./gr/Datavisualization.Network/KEGG-pathway-network-clusters.png)](https://github.com/SMRUCC/GCModeller/blob/master/src/GCModeller/models/Networks/STRING/FunctionalEnrichmentPlot.vb)
+
 + **[Network Visualization Interface](./gr/Datavisualization.Network/)**
 + **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
 + **[Isometric 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/README.md)**
@@ -319,6 +321,6 @@ BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
 <hr/>
 
-![](./docs/xieguigang_github-vcard.png)
+![](./www/data/github/xieguigang_github-vcard.png)
 
 > Copyleft ! 2017, [I@xieguigang.me](mailto://I@xieguigang.me) (http://scibasic.cool/)

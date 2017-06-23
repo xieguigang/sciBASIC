@@ -98,8 +98,8 @@ Namespace Hierarchy
             End If
 
             Dim cluster As New Cluster(name) With {
-            .Distance = New Distance(LinkageDistance)
-        }
+                .Distance = New Distance(LinkageDistance)
+            }
             ' New clusters will track their children's leaf names; i.e. each cluster knows what part of the original data it contains
             cluster.AppendLeafNames(lCluster.LeafNames)
             cluster.AppendLeafNames(rCluster.LeafNames)

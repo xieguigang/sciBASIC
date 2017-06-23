@@ -36,10 +36,22 @@ Imports Microsoft.VisualBasic.Terminal
 
 Namespace CommandLine.Reflection
 
+    ''' <summary>
+    ''' Defines the url or e-mail information for the exceptions.
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public Class ExceptionHelp : Inherits Attribute
+
+        ''' <summary>
+        ''' CLI tools' docs url
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Documentation As String
         Public Property Debugging As String
+        ''' <summary>
+        ''' The author e-mail
+        ''' </summary>
+        ''' <returns></returns>
         Public Property EMailLink As String
 
         Public Overrides Function ToString() As String

@@ -51,7 +51,7 @@ Public Module Extensions
 
     <Extension>
     Private Function __subExcludes(list$(), users As User()) As IEnumerable(Of User)
-        Dim indexOf As New IndexOf(Of String)(list)
+        Dim indexOf As New Index(Of String)(list)
         Dim out As New List(Of User)
 
         For Each u As User In users

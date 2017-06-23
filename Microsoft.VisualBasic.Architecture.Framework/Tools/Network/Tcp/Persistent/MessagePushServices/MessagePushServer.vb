@@ -28,7 +28,7 @@
 
 Imports System.Reflection
 Imports System.Threading
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Http
@@ -45,7 +45,7 @@ Namespace Net.Persistent.Application
     <Protocol(GetType(ServicesProtocol.Protocols))>
     Public Class MessagePushServer : Inherits ServicesSocket
         Implements IEnumerable(Of KeyValuePair(Of Long, WorkSocket))
-        Implements IObjectModel_Driver, IDataRequestHandler
+        Implements ITaskDriver, IDataRequestHandler
 
         Public ReadOnly Property ProtocolHandler As ProtocolHandler
 
@@ -128,7 +128,7 @@ Namespace Net.Persistent.Application
             Call MyBase.Run(localEndPoint)
         End Sub
 
-        Public Overrides Function Run() As Integer Implements IObjectModel_Driver.Run
+        Public Overrides Function Run() As Integer Implements ITaskDriver.Run
             Return MyBase.Run()
         End Function
 

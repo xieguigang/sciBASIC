@@ -52,7 +52,7 @@ Namespace ComponentModel.Triggers
 
     End Class
 
-    Public Interface ITimer : Inherits IObjectModel_Driver, ICallbackTask
+    Public Interface ITimer : Inherits ITaskDriver, ICallbackTask
         Property Interval As Integer
 
         Sub [Stop]()
@@ -105,7 +105,7 @@ Namespace ComponentModel.Triggers
     ''' 在指定的日期和时间呗触发，因此这个触发器只会运行一次
     ''' </summary>
     Public Class TimerTrigger : Inherits ITrigger
-        Implements IObjectModel_Driver
+        Implements ITaskDriver
         Implements ITimer
 
         ''' <summary>
@@ -171,7 +171,7 @@ Namespace ComponentModel.Triggers
         ''' 启动计时器线程，这个方法不会阻塞当前的线程
         ''' </summary>
         ''' <returns></returns>
-        Public Function Start() As Integer Implements IObjectModel_Driver.Run
+        Public Function Start() As Integer Implements ITaskDriver.Run
             Return __timer.Start
         End Function
 

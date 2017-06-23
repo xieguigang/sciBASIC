@@ -125,10 +125,6 @@
       <Project>{5914e529-39f5-4e1a-a70f-050ab1df934b}</Project>
       <Name>+VB_DataFrame</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SearchEngine\SearchEngine\SearchEngine.vbproj">
-      <Project>{8afbc715-5eb6-4eaf-a967-d29a5667709f}</Project>
-      <Name>SearchEngine</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

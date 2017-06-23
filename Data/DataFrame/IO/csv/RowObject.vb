@@ -1,36 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::69f631fc45d22d69295e1aeddc4c3c3e, ..\sciBASIC#\Data\DataFrame\IO\csv\RowObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Text
-Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace IO
 
@@ -45,31 +42,31 @@ Namespace IO
         ''' 本行对象中的所有的单元格的数据集合
         ''' </summary>
         ''' <remarks></remarks>
-        Protected Friend _innerColumns As New List(Of String)
+        Protected Friend buffer As New List(Of String)
 
-        Sub New(Optional Columns As IEnumerable(Of String) = Nothing)
-            If Not Columns Is Nothing Then
-                Me._innerColumns = Columns.AsList
+        Sub New(Optional columns As IEnumerable(Of String) = Nothing)
+            If Not columns Is Nothing Then
+                Me.buffer = columns.AsList
             End If
         End Sub
 
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="raw">using <see cref="Scripting.Tostring"/> to converts the objects into a string array.</param>
-        Sub New(raw As IEnumerable(Of Object))
-            Call Me.New(raw.ToArray(Function(x) Scripting.ToString(x)))
+        ''' <param name="objs">using <see cref="Scripting.Tostring"/> to converts the objects into a string array.</param>
+        Sub New(objs As IEnumerable(Of Object))
+            Call Me.New(objs.ToArray(Function(x) Scripting.ToString(x)))
         End Sub
 
         ''' <summary>
         ''' 这个构造函数会使用<see cref="Tokenizer.CharsParser"/>解析所输入的字符串为列数据的集合
         ''' </summary>
-        ''' <param name="raw">A raw string line which read from the Csv text file.</param>
-        Sub New(raw As String)
+        ''' <param name="rawString">A raw string line which read from the Csv text file.</param>
+        Sub New(rawString As String)
             Try
-                _innerColumns = Tokenizer.CharsParser(raw)
+                buffer = Tokenizer.CharsParser(rawString)
             Catch ex As Exception
-                ex = New Exception(raw)
+                ex = New Exception(rawString)
                 Throw ex
             End Try
         End Sub
@@ -82,7 +79,7 @@ Namespace IO
         ''' <returns></returns>
         Public ReadOnly Property DirectGet(index As Integer) As String
             Get
-                Return _innerColumns(index)
+                Return buffer(index)
             End Get
         End Property
 
@@ -99,21 +96,21 @@ Namespace IO
                     Return ""
                 End If
 
-                If Index < _innerColumns.Count Then
-                    Return _innerColumns(Index)
+                If Index < buffer.Count Then
+                    Return buffer(Index)
                 Else
                     Return ""
                 End If
             End Get
             Set(value As String)
-                If Index < _innerColumns.Count Then
-                    _innerColumns(Index) = value
+                If Index < buffer.Count Then
+                    buffer(Index) = value
                 Else
-                    Dim d As Integer = Index - _innerColumns.Count  '当前行的数目少于指定的索引号的时候，进行填充
+                    Dim d As Integer = Index - buffer.Count  '当前行的数目少于指定的索引号的时候，进行填充
                     For i As Integer = 0 To d - 1
-                        _innerColumns.Add("")
+                        buffer.Add("")
                     Next
-                    Call _innerColumns.Add(value)
+                    Call buffer.Add(value)
                 End If
             End Set
         End Property
@@ -128,29 +125,28 @@ Namespace IO
             Get
                 Dim LQuery As Integer() =
                     LinqAPI.Exec(Of Integer) <= From c As String
-                                                In _innerColumns
+                                                In buffer
                                                 Where String.IsNullOrEmpty(c)
                                                 Select 1 '
-                Return _innerColumns.Count - LQuery.Length
+                Return buffer.Count - LQuery.Length
             End Get
         End Property
 
         ''' <summary>
         ''' 返回本行中的非空白数据
         ''' </summary>
-        ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property NotNullColumns As String()
-            Get
-                Dim LQuery As String() =
-                    LinqAPI.Exec(Of String) <= From s As String
-                                               In _innerColumns
-                                               Where Not String.IsNullOrEmpty(s)
-                                               Select s '
-                Return LQuery
-            End Get
-        End Property
+        Public Function GetALLNonEmptys() As String()
+            Dim LQuery = LinqAPI.Exec(Of String) <=
+ _
+                From s As String
+                In buffer
+                Where Not String.IsNullOrEmpty(s)
+                Select s '
+
+            Return LQuery
+        End Function
 
         ''' <summary>
         ''' is this row object contains any data?
@@ -160,12 +156,17 @@ Namespace IO
         ''' <remarks></remarks>
         Public ReadOnly Property IsNullOrEmpty As Boolean
             Get
-                If _innerColumns.Count = 0 Then Return True
-                Dim LQuery As Integer =
-                    LinqAPI.DefaultFirst(Of Integer) <= From colum As String
-                                                        In _innerColumns
-                                                        Where Len(Strings.Trim(colum)) > 0
-                                                        Select 100 '
+                If buffer.Count = 0 Then
+                    Return True
+                End If
+
+                Dim LQuery = LinqAPI.DefaultFirst(Of Integer) <=
+ _
+                    From colum As String
+                    In buffer
+                    Where Len(Strings.Trim(colum)) > 0
+                    Select 100 '
+
                 Return Not LQuery > 50
             End Get
         End Property
@@ -180,13 +181,13 @@ Namespace IO
         ''' <returns>仅为LINQ查询使用的一个无意义的值</returns>
         ''' <remarks></remarks>
         Public Function InsertAt(value As String, column As Integer) As Integer
-            Dim d As Integer = column - _innerColumns.Count - 1
+            Dim d As Integer = column - buffer.Count - 1
             If d > 0 Then
                 For i As Integer = 0 To d
-                    Call _innerColumns.Add("")
+                    Call buffer.Add("")
                 Next
             End If
-            Call _innerColumns.Insert(column, value)
+            Call buffer.Insert(column, value)
             Return 0
         End Function
 
@@ -196,7 +197,7 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overrides Function ToString() As String
-            Return String.Join(", ", _innerColumns.ToArray(Of String)(Function(col) $"[{col}]"))
+            Return Me.AsLine
         End Function
 
         ''' <summary>
@@ -206,13 +207,13 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Takes(Count As Integer) As String()
-            Dim d As Integer = Count - _innerColumns.Count
+            Dim d As Integer = Count - buffer.Count
 
             If d < 0 Then
-                Return _innerColumns.Take(Count).ToArray
+                Return buffer.Take(Count).ToArray
             Else
                 Dim List As List(Of String) = New List(Of String)
-                List.AddRange(_innerColumns)
+                List.AddRange(buffer)
                 For i As Integer = 0 To d
                     List.Add("")
                 Next
@@ -249,18 +250,18 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Function GetColumn(Idx As Integer, ByRef retStr As String) As Boolean
-            If Idx > Me._innerColumns.Count - 1 Then
+            If Idx > Me.buffer.Count - 1 Then
                 retStr = Nothing
                 Return True
             Else
-                retStr = _innerColumns(Idx)
+                retStr = buffer(Idx)
                 Return False
             End If
         End Function
 
         Public Function AddRange(values As IEnumerable(Of String)) As Integer
-            Call _innerColumns.AddRange(values)
-            Return _innerColumns.Count
+            Call buffer.AddRange(values)
+            Return buffer.Count
         End Function
 
         ''' <summary>
@@ -270,33 +271,34 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function LocateKeyWord(KeyWord As String, Optional CaseSensitive As Boolean = True) As Integer
-            Dim cpMethod As CompareMethod = If(
+            Dim compare As CompareMethod = If(
                 CaseSensitive,
                 CompareMethod.Binary,
                 CompareMethod.Text)
-            Dim LQuery As String = LinqAPI.DefaultFirst(Of String) <=
+            Dim LQuery = LinqAPI.DefaultFirst(Of String) <=
  _
                 From str As String
-                In _innerColumns.AsParallel
-                Where InStr(str, KeyWord, cpMethod) > 0
+                In buffer.AsParallel
+                Where InStr(str, KeyWord, compare) > 0
                 Select str
 
             If Not String.IsNullOrEmpty(LQuery) Then
-                Return _innerColumns.IndexOf(LQuery)
+                Return buffer.IndexOf(LQuery)
             Else
                 Return -1
             End If
         End Function
 
         ''' <summary>
-        ''' Generate a line of the string data in the csv document.(将当前的行对象转换为文件中的一行字符串)
+        ''' Generate a line of the string data in the csv document.
+        ''' (将当前的行对象转换为文件中的一行字符串)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property AsLine(Optional delimiter$ = ",") As String
             Get
-                Dim array$() = _innerColumns.ToArray(AddressOf __mask)
+                Dim array$() = buffer.ToArray(AddressOf __mask)
                 Dim line As String = String.Join(delimiter, array)
                 Return line
             End Get
@@ -318,7 +320,7 @@ Namespace IO
         End Function
 
         Public Sub Trim(lefts%)
-            _innerColumns = New List(Of String)(_innerColumns.Take(lefts))
+            buffer = New List(Of String)(buffer.Take(lefts))
         End Sub
 
         ''' <summary>
@@ -350,21 +352,21 @@ Namespace IO
             Return CType(Line, RowObject)
         End Function
 
-        Public Shared Widening Operator CType(Tokens As String()) As RowObject
+        Public Shared Widening Operator CType(tokens As String()) As RowObject
             Return New RowObject With {
-                ._innerColumns = Tokens.AsList
+                .buffer = tokens.AsList
             }
         End Operator
 
-        Public Shared Widening Operator CType(Tokens As List(Of String)) As RowObject
+        Public Shared Widening Operator CType(tokens As List(Of String)) As RowObject
             Return New RowObject With {
-                ._innerColumns = Tokens
+                .buffer = tokens
             }
         End Operator
 
-        Public Shared Function CreateObject(DataTokens As IEnumerable(Of String)) As RowObject
+        Public Shared Function CreateObject(tokens As IEnumerable(Of String)) As RowObject
             Return New RowObject With {
-                ._innerColumns = DataTokens.AsList
+                .buffer = tokens.AsList
             }
         End Function
 
@@ -386,8 +388,8 @@ Namespace IO
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator
-            For i As Integer = 0 To _innerColumns.Count - 1
-                Yield _innerColumns(i)
+            For i As Integer = 0 To buffer.Count - 1
+                Yield buffer(i)
             Next
         End Function
 
@@ -410,10 +412,10 @@ Namespace IO
             End If
 
             For i As Integer = 0 To Row.Count - 1
-                If String.IsNullOrEmpty(Row._innerColumns(i)) Then
+                If String.IsNullOrEmpty(Row.buffer(i)) Then
                     Continue For '目标行的空元素被看作为相同元素
                 End If
-                If Not String.Equals(_innerColumns(i), Row._innerColumns(i)) Then
+                If Not String.Equals(buffer(i), Row.buffer(i)) Then
                     Return False '相对应的位置有不同的元素，则认为不包含
                 End If
             Next
@@ -433,24 +435,24 @@ Namespace IO
 
         Public Sub Add(columnValue As String) Implements ICollection(Of String).Add
             If String.IsNullOrEmpty(columnValue) Then
-                Call _innerColumns.Add("")
+                Call buffer.Add("")
                 Return
             ElseIf columnValue.First = """"c AndAlso columnValue.Last = """"c Then
                 columnValue = Mid(columnValue, 2, Len(columnValue) - 2)
             End If
-            Call _innerColumns.Add(columnValue)
+            Call buffer.Add(columnValue)
         End Sub
 
         Public Sub Clear() Implements ICollection(Of String).Clear
-            Call _innerColumns.Clear()
+            Call buffer.Clear()
         End Sub
 
         Public Overloads Function Contains(item As String) As Boolean Implements ICollection(Of String).Contains
-            Return _innerColumns.Contains(item)
+            Return buffer.Contains(item)
         End Function
 
         Public Sub CopyTo(array() As String, arrayIndex As Integer) Implements ICollection(Of String).CopyTo
-            Call _innerColumns.CopyTo(array, arrayIndex)
+            Call buffer.CopyTo(array, arrayIndex)
         End Sub
 
         ''' <summary>
@@ -459,7 +461,7 @@ Namespace IO
         ''' <returns></returns>
         Public ReadOnly Property NumbersOfColumn As Integer Implements ICollection(Of String).Count
             Get
-                Return _innerColumns.Count
+                Return buffer.Count
             End Get
         End Property
 
@@ -470,11 +472,11 @@ Namespace IO
         End Property
 
         Public Function Remove(item As String) As Boolean Implements ICollection(Of String).Remove
-            Return _innerColumns.Remove(item)
+            Return buffer.Remove(item)
         End Function
 
         Public Function IndexOf(item As String) As Integer Implements IList(Of String).IndexOf
-            Return _innerColumns.IndexOf(item)
+            Return buffer.IndexOf(item)
         End Function
 
         ''' <summary>
@@ -483,11 +485,11 @@ Namespace IO
         ''' <param name="index"></param>
         ''' <param name="item"></param>
         Public Sub Insert(index As Integer, item As String) Implements IList(Of String).Insert
-            Call _innerColumns.Insert(index, item)
+            Call buffer.Insert(index, item)
         End Sub
 
         Public Sub RemoveAt(index As Integer) Implements IList(Of String).RemoveAt
-            Call _innerColumns.RemoveAt(index)
+            Call buffer.RemoveAt(index)
         End Sub
 #End Region
 
@@ -503,12 +505,12 @@ Namespace IO
         End Operator
 
         Public Shared Operator +(row As RowObject, col As String) As RowObject
-            Call row._innerColumns.Add(col)
+            Call row.buffer.Add(col)
             Return row
         End Operator
 
         Public Shared Operator +(row As RowObject, col As IEnumerable(Of String)) As RowObject
-            Call row._innerColumns.AddRange(col.ToArray)
+            Call row.buffer.AddRange(col.ToArray)
             Return row
         End Operator
 #End Region

@@ -50,7 +50,7 @@ Namespace Mathematical
                 Dim Evaluate As Func(Of T, Double) = Me.Evaluate
                 Dim LQuery = (From x As T In source Select x, v = Evaluate(x)).ToArray
                 Dim result As SeqValue(Of T, Double)()
-                Dim weights As Double() = _Weight.CopyVector(LQuery.Length)
+                Dim weights As Double() = _Weight.Repeats(LQuery.Length)
 
                 If Max Then   ' 由于后面需要进行加权计算，所以在这里是反过来求最大的
                     result = (From x In LQuery Select x Order By x.v Ascending) _

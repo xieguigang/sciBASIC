@@ -44,22 +44,22 @@ Namespace Scripting
             Dim tokens = TokenIcer.TryParse(s.ClearOverlapOperator) 'Get all of the number that appears in this expression including factoral operator.
 
             If tokens.Count = 1 Then
-                Dim token As Token(Of Tokens) = tokens.First
+                Dim token As Token(Of ExpressionTokens) = tokens.First
 
-                If token.Type = Mathematical.Scripting.Tokens.Number Then
+                If token.Type = ExpressionTokens.Number Then
                     Return New SimpleExpression(Val(token.Text))
                 Else  ' Syntax error
                     Throw New SyntaxErrorException(s)
                 End If
             Else
-                Return New Pointer(Of Token(Of Tokens))(tokens).TryParse
+                Return New Pointer(Of Token(Of ExpressionTokens))(tokens).TryParse
             End If
         End Function
 
         <Extension>
-        Public Function TryParse(tokens As Pointer(Of Token(Of Tokens))) As SimpleExpression
+        Public Function TryParse(tokens As Pointer(Of Token(Of ExpressionTokens))) As SimpleExpression
             Dim sep As New SimpleExpression 'New object to return for this function
-            Dim s As Token(Of Tokens)
+            Dim s As Token(Of ExpressionTokens)
             Dim n As Double
             Dim o As Char
 

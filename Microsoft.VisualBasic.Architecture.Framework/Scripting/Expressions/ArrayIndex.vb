@@ -46,7 +46,7 @@ Namespace Scripting.Expressions
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Translate the vector expression into a intger index vector
         ''' </summary>
         ''' <param name="exp$">
         ''' + ``1``, index=1

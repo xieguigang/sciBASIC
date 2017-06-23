@@ -16,6 +16,8 @@ local.properties
 .settings/
 .loadpath
 
+storage.ide
+
 # External tool builders
 .externalToolBuilders/
 

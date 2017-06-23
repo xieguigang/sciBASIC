@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::4553b8a60b5a6cd0ec32ff3e84245886, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\CLIBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -71,14 +71,14 @@ Namespace CommandLine.InteropService
                 Let attr As [Optional] = DirectCast(attrs.First, [Optional])
                 Select New BindProperty(Of [Optional]) With {
                     .Field = attr,
-                    .Property = [property]
+                    .member = [property]
                 }
             Dim sb As New StringBuilder(1024)
 
-            For Each argum In args
+            For Each argum As BindProperty(Of [Optional]) In args
                 Dim getCLIToken As __getCLIToken = __getMethods(argum.Field.Type)
-                Dim value As Object = argum.Property.GetValue(app, Nothing)
-                Dim cliToken As String = getCLIToken(value, argum.Field, argum.Property)
+                Dim value As Object = argum.GetValue(app)
+                Dim cliToken As String = getCLIToken(value, argum.Field, DirectCast(argum.member, PropertyInfo))
 
                 If Not String.IsNullOrEmpty(cliToken) Then
                     Call sb.Append(cliToken & " ")

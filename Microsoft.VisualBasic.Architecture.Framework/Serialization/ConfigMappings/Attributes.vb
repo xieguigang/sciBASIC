@@ -67,7 +67,7 @@ Namespace Serialization
         ''' 从数据模型映射到源的类型转换
         ''' </summary>
         ''' <remarks></remarks>
-        Dim MappingToSourceCasting As __LDMStringTypeCastHandler
+        Dim MappingToSourceCasting As StringTypeCastHandler
 
         Public Overrides Function ToString() As String
             Return Source.Name & "   --->  " & Mapping.PropertyType.FullName

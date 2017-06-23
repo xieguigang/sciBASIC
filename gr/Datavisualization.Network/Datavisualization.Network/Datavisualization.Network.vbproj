@@ -194,6 +194,7 @@
     <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Graph\Selector.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
+    <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
     <Compile Include="Layouts\forceNetwork.vb" />

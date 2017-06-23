@@ -45,6 +45,11 @@ Imports Microsoft.VisualBasic.Serialization.JSON
                   Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
+    <Extension>
+    Public Function Source(m As MemberInfo) As String
+        Return m.DeclaringType.FullName & "::" & m.Name
+    End Function
+
     ''' <summary>
     ''' Run external [.NET] Program from RAM Memory
     ''' </summary>

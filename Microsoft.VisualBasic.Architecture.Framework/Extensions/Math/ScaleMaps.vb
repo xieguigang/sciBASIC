@@ -110,7 +110,7 @@ Namespace Mathematical
             Dim d As Double = MaxValue - MinValue
 
             If d = 0R Then ' 所有的值都是一样的，则都是同等级的
-                Return 1.CopyVector(array.Length)
+                Return 1.Repeats(array.Length)
             End If
 
             Dim chunkBuf As Integer() = New Integer(array.Length - 1) {}
