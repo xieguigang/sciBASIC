@@ -61,24 +61,30 @@ Namespace CommandLine.Parsers
                 If quotOpen Then
 
                     ' 双引号是结束符，但是可以使用\"进行转义
-                    If c = ASCII.Quot AndAlso Not tmp.StartEscaping Then
-                        tmp.RemoveLast
+                    If c <> ASCII.Quot Then
                         tmp += c
-                    ElseIf c = ASCII.Quot Then
-                        ' 结束
-                        tokens += tmp.CharString
-                        tmp *= 0
-                        quotOpen = False
                     Else
-                        tmp += c
+                        If tmp.StartEscaping Then
+                            tmp.RemoveLast
+                            tmp += c
+                        Else
+                            ' 结束
+                            tokens += tmp.CharString
+                            tmp *= 0
+                            quotOpen = False
+
+                        End If
                     End If
+
                 Else
                     If c = ASCII.Quot AndAlso tmp = 0 Then
                         quotOpen = True
                     ElseIf c = " "c Then
                         ' 分隔符
-                        tokens += tmp.CharString
-                        tmp *= 0
+                        If tmp <> 0 Then
+                            tokens += tmp.CharString
+                            tmp *= 0
+                        End If
                     Else
                         tmp += c
                     End If
