@@ -58,8 +58,11 @@ Module Program
 
     Sub ASCIIArt_test()
 
-        Call Console.WriteLine("sciBASIC#".ASCIIImage)
+        Dim logo = "sciBASIC#".ASCIIImage
 
+        Call Console.WriteLine(logo)
+
+        Call logo.SaveTo("x:\sciBASIC.txt")
 
         Pause()
 

@@ -14,6 +14,33 @@
 + ![Microsoft VisualBasic logo](./logo.jpg)
 + ![](./etc/README/nodes.gif)
 
+```
+                                                                                   
+                                                                                   
+                                                                                   
+                                                                                   
+                   WM-                                                             
+                   WM- z@@@@@1      1@z      _@@@@_  z@_     W@@@B,    -B-,B1      
+                       z@_  z@1    ,B@M-    z@1  -#, z@_   _@B,  _E,   1B,-M_      
+                       z@_  -Mz    _@Q@1   ,BW       z@_  _@z          zW 1B,      
+    ,B@@B,  ,B@@B, WM- z@_  _@z    zM"BW   -MW       z@_  WB,       -M@@@@@@@B,    
+   ,BW  _I _@W  _I WM- z@_  WB,   -MW z@_  ,B@1      z@_ -Mz          ,E_ Wz       
+   _@z    ,BB,     WM- z@@@@@_    1@_ -Mz   -M@M-    z@_ _@1          -B-,B1       
+   -M@_   -Mz      WM- z@_  1@z   WW   WB,    z@@B,  z@_ _@1          _E,-M_       
+    _@@@1 _@1      WM- z@_   zM- -M@@@@@@1      z@M- z@_ _@z        W@@@@@@@@_     
+      -M@z_@z      WM- z@_   z@_ zM-   ,BW       1@1 z@_ ,BB,         Wz 1W        
+       ,BW,BB,     WM- z@_   WM-,BW     z@_      _@1 z@_  1@1        ,E_ Wz        
+   _u  -Mz 1@W  _I WM- z@_  1@z _@1     _@z-M_   WM- z@_   z@z   _E, _M-,E_        
+    z@@@z   _@@@B, WM- z@@@@@1  WM-     ,BB,-M@@@W   z@_    -M@@@B,                
+                                                                                   
+                                                                                   
+                                                                                   
+                                                                                   
+                                                                                   
+                                                                                   
+
+```
+
 ## Scientific Computing runtime for VisualBasic.NET
 
 ``sciBASIC#``(read as scientific visualbasic or just ``sciBASIC sharp``) is a Microsoft VisualBasic language feature runtime for your data science application which is running in the CLI environment on Windows/Linux/macOS **Desktop/Server** platform or **supercomputer** platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences programming in VisualBasic language, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
