@@ -33,7 +33,10 @@ Imports Microsoft.VisualBasic.Emit
 
 Namespace Imaging
 
-    Public Module hcBitmap
+    ''' <summary>
+    ''' Grayscale and binarization extensions
+    ''' </summary>
+    Public Module BitmapScale
 
         <Extension>
         Public Function GetBinaryBitmap(res As Image, Optional style As BinarizationStyles = BinarizationStyles.Binary) As Bitmap

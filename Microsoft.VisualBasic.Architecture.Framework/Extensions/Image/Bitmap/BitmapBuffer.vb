@@ -28,14 +28,13 @@
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
-Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
     ''' <summary>
     ''' 线程不安全的图片数据对象
     ''' </summary>
-    Public Class hBitmap : Inherits Emit.Marshal.Byte
+    Public Class BitmapBuffer : Inherits Emit.Marshal.Byte
         Implements IDisposable
         Implements IEnumerable(Of Color)
 
@@ -120,11 +119,11 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="res"></param>
         ''' <returns></returns>
-        Public Shared Function FromImage(res As Image) As hBitmap
-            Return hBitmap.FromBitmap(New Bitmap(res))
+        Public Shared Function FromImage(res As Image) As BitmapBuffer
+            Return BitmapBuffer.FromBitmap(New Bitmap(res))
         End Function
 
-        Public Shared Function FromBitmap(curBitmap As Bitmap) As hBitmap
+        Public Shared Function FromBitmap(curBitmap As Bitmap) As BitmapBuffer
             ' Lock the bitmap's bits.  
             Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
             Dim bmpData As BitmapData =
@@ -134,7 +133,7 @@ Namespace Imaging
             ' Declare an array to hold the bytes of the bitmap.
             Dim bytes As Integer = Math.Abs(bmpData.Stride) * curBitmap.Height
 
-            Return New hBitmap(ptr, bytes, curBitmap, bmpData)
+            Return New BitmapBuffer(ptr, bytes, curBitmap, bmpData)
         End Function
 
         Protected Overrides Sub Dispose(disposing As Boolean)
