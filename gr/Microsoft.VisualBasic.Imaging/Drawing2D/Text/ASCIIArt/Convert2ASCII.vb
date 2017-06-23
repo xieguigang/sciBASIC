@@ -1,5 +1,7 @@
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports System.Runtime.CompilerServices
+Imports System.Text
 
 Namespace Image2ASCII
 
@@ -10,7 +12,13 @@ Namespace Image2ASCII
     ''' </summary>
     Public Module HelperMethods
 
-        Public Function Convert2ASCII(BW_Image As Image, characters As List(Of WeightedChar), ByRef ResultText As List(Of List(Of String))) As Image
+        ''' <summary>
+        ''' Image input <paramref name="monoImage"/> should be processed by <see cref="Binarization"/> or <see cref="Grayscale"/>, without colors.
+        ''' </summary>
+        ''' <param name="monoImage"></param>
+        ''' <param name="characters"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Convert2ASCII(monoImage As Image, characters As List(Of WeightedChar)) As String
             '
             '             * ALGORITHM:
             '             * 
@@ -31,138 +39,28 @@ Namespace Image2ASCII
             '             *       10- Add row text string to text holding string
             '             *  11 - return resulting Image & Text
             '             
+            Dim out As New StringBuilder
+            Dim BlackAndWhite As Bitmap = DirectCast(monoImage, Bitmap)
 
-            Dim ResultImage As Image = New Bitmap(BW_Image.Width * characters(0).CharacterImage.Width, BW_Image.Height * characters(0).CharacterImage.Height)
-            Dim drawing As Graphics = Graphics.FromImage(ResultImage)
-            drawing.Clear(Color.White)
-            ResultText = New List(Of List(Of String))() From {
-            }
-            Dim BlackAndWhite As Bitmap = DirectCast(BW_Image, Bitmap)
-
-            For j As Integer = 0 To BW_Image.Height - 1
+            For j As Integer = 0 To monoImage.Height - 1
                 ' ROW
-                Dim RowText As New List(Of String)() From {
-                }
-                For i As Integer = 0 To BW_Image.Width - 1
+                Dim RowText As New List(Of String)() From {}
+
+                For i As Integer = 0 To monoImage.Width - 1
                     ' COLUMN
                     Dim pixel As Color = BlackAndWhite.GetPixel(i, j)
                     Dim targetvalue As Double = (pixel.R + pixel.G + pixel.B) \ 3
-
                     Dim closestchar As WeightedChar = characters.Where(Function(t) Math.Abs(t.Weight - targetvalue) = characters.Min(Function(e) Math.Abs(e.Weight - targetvalue))).FirstOrDefault()
                     RowText.Add(closestchar.Character)
-                    drawing.DrawImage(closestchar.CharacterImage, i * closestchar.CharacterImage.Width, j * closestchar.CharacterImage.Height)
                 Next
-                ResultText.Add(RowText)
+
+                out.AppendLine(RowText.JoinBy(""))
             Next
-            drawing.Dispose()
-            Return DirectCast(ResultImage, Image)
+
+            Return out.ToString
         End Function
 
-        Public Function Convert2ASCIIColor(ResizedImage_O As Image, characters As List(Of WeightedChar), ImageText As List(Of List(Of String))) As Image
-            '
-            '             * ALGORITHM
-            '             * 1- Create result image with white background
-            '             *  2- for (int j=0;j=target_Image_Height;j++) --> ALL ROWS 
-            '             *       for (int i=0;i=target_Image_Width;i++) --> ALL COLUMNS
-            '             *          6- Get target pixel color, get target character from string
-            '             *          7- Create Image with the correct size, color and character
-            '             *          8- Paste character image in position w = i*character_image_width
-            '             *                                               h = j*character_image_height
-            '             *            ¡¡ Be careful with coordinate system when placing Images !!
-            '             *  11 - return resulting Image
-            '             
-
-
-
-            ' Needed variables for iteration
-
-            ' Result Image and graphics object
-            Dim ResultImage As Image = New Bitmap(ResizedImage_O.Width * characters(0).CharacterImage.Width, ResizedImage_O.Height * characters(0).CharacterImage.Height)
-            Dim drawing As Graphics = Graphics.FromImage(ResultImage)
-            drawing.Clear(Color.White)
-            ' ResizedImage Bitmap data and byte-encoded pixel lenght
-            Dim bmp = DirectCast(ResizedImage_O, Bitmap)
-            Dim bitmapdata = bmp.LockBits(New Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
-            Dim PixelSize As Integer = 4
-            ' character image size
-            Dim width As Integer = characters(0).CharacterImage.Width
-            Dim height As Integer = characters(0).CharacterImage.Height
-
-
-
-            ' foreach pixel in image
-            For j As Integer = 0 To ResizedImage_O.Height - 1
-                Dim destPixels As Pointer(Of Byte) = CType(bitmapdata.Scan0, Pointer(Of Byte)) + (j * bitmapdata.Stride)
-
-                For i As Integer = 0 To ResizedImage_O.Width - 1
-                    ' get pixel color
-                    Dim B = CInt(destPixels(i * PixelSize))
-                    ' B
-                    Dim G = CInt(destPixels(i * PixelSize + 1))
-                    ' G
-                    Dim R = CInt(destPixels(i * PixelSize + 2))
-                    ' R
-                    ' get character
-                    Dim character = ImageText(j)(i)
-                    ' create char image
-                    Dim charimage = DrawText(character, Color.FromArgb(R, G, B), Color.White, New SizeF(width, height))
-                    ' paste char image 
-
-                    drawing.DrawImage(charimage, i * charimage.Width, j * charimage.Height)
-                Next
-            Next
-            bmp.UnlockBits(bitmapdata)
-            drawing.Dispose()
-            Return DirectCast(ResultImage, Image)
-        End Function
-
-        Public Sub AdjustContrast(bmp As Bitmap, contrast As Double)
-            If True Then
-                Dim contrast_lookup As Byte() = New Byte(255) {}
-                Dim newValue As Double = 0
-                Dim c As Double = (100.0 + contrast) / 100.0
-
-                c *= c
-
-                For i As Integer = 0 To 255
-                    newValue = CDbl(i)
-                    newValue /= 255.0
-                    newValue -= 0.5
-                    newValue *= c
-                    newValue += 0.5
-                    newValue *= 255
-
-                    If newValue < 0 Then
-                        newValue = 0
-                    End If
-                    If newValue > 255 Then
-                        newValue = 255
-                    End If
-                    contrast_lookup(i) = CByte(Math.Truncate(newValue))
-                Next
-
-                Dim bitmapdata = bmp.LockBits(New Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
-
-                Dim PixelSize As Integer = 4
-
-                For y As Integer = 0 To bitmapdata.Height - 1
-                    Dim destPixels As Pointer(Of Byte) = CType(bitmapdata.Scan0, Pointer(Of Byte)) + (y * bitmapdata.Stride)
-                    For x As Integer = 0 To bitmapdata.Width - 1
-                        destPixels(x * PixelSize) = contrast_lookup(destPixels(x * PixelSize))
-                        ' B
-                        destPixels(x * PixelSize + 1) = contrast_lookup(destPixels(x * PixelSize + 1))
-                        ' G
-                        ' R
-                        'destPixels[x * PixelSize + 3] = contrast_lookup[destPixels[x * PixelSize + 3]]; //A
-                        destPixels(x * PixelSize + 2) = contrast_lookup(destPixels(x * PixelSize + 2))
-                    Next
-                Next
-                bmp.UnlockBits(bitmapdata)
-            End If
-        End Sub
-
-        Public Function DrawText(text As String, textColor As Color, backColor As Color, WidthAndHeight As SizeF) As Image
-
+        <Extension> Public Function DrawText(text$, textColor As Color, backColor As Color, WidthAndHeight As SizeF) As Image
             ' Get char width for insertion point calculation purposes
             Dim dummy_img As Image = New Bitmap(1, 1)
             Dim dummy_drawing As Graphics = Graphics.FromImage(dummy_img)
