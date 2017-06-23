@@ -631,16 +631,23 @@ Public Module StringHelpers
         Return source.Split(delimiterTest, includes:=False)
     End Function
 
+    ''' <summary>
+    ''' 这个函数适合将一个很大的数组进行分割
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="assertionDelimiter">分隔符断言，判断当前的对象是不是分隔符</param>
+    ''' <param name="includes"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function Split(source As IEnumerable(Of String),
-                                   delimiterTest As Func(Of String, Boolean),
+                                   assertionDelimiter As Func(Of String, Boolean),
                                    Optional includes As Boolean = True) As IEnumerable(Of String())
 
         Dim list As New List(Of String)
         Dim first As Boolean = True  ' first line
 
         For Each line As String In source
-            If True = delimiterTest(line) Then
+            If True = assertionDelimiter(line) Then
                 If first Then
                     first = False
                 Else
