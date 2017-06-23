@@ -49,7 +49,7 @@ Namespace Net.Http
             Dim args As New List(Of NamedValue(Of String))
             Dim ps = LoadMapping(type, mapsAll:=True)
 
-            For Each p In ps.Values.Where(Function(o) IsPrimitive(o.Property.PropertyType))
+            For Each p In ps.Values.Where(Function(o) IsPrimitive(o.member.PropertyType))
                 Dim value As Object = p.GetValue(x)
 
                 If Not value Is Nothing Then

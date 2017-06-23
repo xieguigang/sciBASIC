@@ -71,14 +71,14 @@ Namespace CommandLine.InteropService
                 Let attr As [Optional] = DirectCast(attrs.First, [Optional])
                 Select New BindProperty(Of [Optional]) With {
                     .Field = attr,
-                    .Property = [property]
+                    .member = [property]
                 }
             Dim sb As New StringBuilder(1024)
 
             For Each argum In args
                 Dim getCLIToken As __getCLIToken = __getMethods(argum.Field.Type)
-                Dim value As Object = argum.Property.GetValue(app, Nothing)
-                Dim cliToken As String = getCLIToken(value, argum.Field, argum.Property)
+                Dim value As Object = argum.member.GetValue(app, Nothing)
+                Dim cliToken As String = getCLIToken(value, argum.Field, argum.member)
 
                 If Not String.IsNullOrEmpty(cliToken) Then
                     Call sb.Append(cliToken & " ")

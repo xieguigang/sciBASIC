@@ -33,7 +33,8 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
     ''' <summary>
-    ''' Schema for <see cref="Attribute"/> and its bind <see cref="PropertyInfo"/> object target
+    ''' Schema for <see cref="Attribute"/> and its bind <see cref="PropertyInfo"/>/<see cref="FieldInfo"/> object target.
+    ''' (使用这个对象将公共的域或者属性的读写统一起来)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Structure BindProperty(Of T As Attribute)
@@ -42,9 +43,9 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Implements IProperty
 
         ''' <summary>
-        ''' The property object that bind with its custom attribute <see cref="Field"/> of type <typeparamref name="T"/>
+        ''' The property/field object that bind with its custom attribute <see cref="Field"/> of type <typeparamref name="T"/>
         ''' </summary>
-        Dim [Property] As PropertyInfo
+        Dim member As MemberInfo
         ''' <summary>
         ''' The flag for this field binding.
         ''' </summary>
@@ -60,10 +61,6 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Type As Type
-            Get
-                Return [Property].PropertyType
-            End Get
-        End Property
 
         ''' <summary>
         ''' The map name or the <see cref="PropertyInfo.Name"/>
@@ -71,9 +68,9 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <returns></returns>
         Public Property Identity As String Implements IReadOnlyId.Identity, INamedValue.Key
             Get
-                Return [Property].Name
+                Return member.Name
             End Get
-            Set(value As String)
+            Private Set(value As String)
                 ' DO NOTHING
             End Set
         End Property
@@ -84,7 +81,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <returns></returns>
         Public ReadOnly Property IsNull As Boolean
             Get
-                Return [Property] Is Nothing OrElse Field Is Nothing
+                Return member Is Nothing OrElse Field Is Nothing
             End Get
         End Property
 
@@ -94,14 +91,15 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <returns>true if the <see cref="System.Type"/> is one of the primitive types; otherwise, false.</returns>
         Public ReadOnly Property IsPrimitive As Boolean
             Get
-                Return Scripting.IsPrimitive([Property].PropertyType)
+                Return Scripting.IsPrimitive(Type)
             End Get
         End Property
 #End Region
 
         Sub New(attr As T, prop As PropertyInfo)
             Field = attr
-            [Property] = prop
+            member = prop
+            Type = prop.PropertyType
 
             With prop ' Compile the property get/set as the delegate
                 __setValue = .DeclaringType.PropertySet(.Name)
@@ -111,6 +109,21 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
         Sub New([property] As PropertyInfo)
             Call Me.New(Nothing, [property])
+        End Sub
+
+        Sub New(field As FieldInfo)
+            Call Me.New(Nothing, field)
+        End Sub
+
+        Sub New(attr As T, field As FieldInfo)
+            Me.Field = attr
+            Me.member = field
+            Type = field.FieldType
+
+            With field
+                __setValue = .DeclaringType.FieldSet(.Name)
+                __getValue = .DeclaringType.FieldGet(.Name)
+            End With
         End Sub
 
         ' Exceptions:
@@ -186,13 +199,13 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return $"Dim {[Property].Name} As {[Property].PropertyType.ToString}"
+            Return $"Dim {member.Name} As {Type.FullName}"
         End Function
 
         Public Shared Function FromSchemaTable(x As KeyValuePair(Of T, PropertyInfo)) As BindProperty(Of T)
             Return New BindProperty(Of T) With {
                 .Field = x.Key,
-                .Property = x.Value
+                .member = x.Value
             }
         End Function
     End Structure

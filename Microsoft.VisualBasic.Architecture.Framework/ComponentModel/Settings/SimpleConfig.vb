@@ -84,18 +84,18 @@ Namespace ComponentModel.Settings
             Dim Schema As New List(Of BindProperty(Of TConfig))
 
             For Each line As BindProperty(Of TConfig) In LQuery
-                If line.Property.CanRead AndAlso line.Property.CanWrite Then  '同时满足可读和可写的属性直接添加
+                If line.member.CanRead AndAlso line.member.CanWrite Then  '同时满足可读和可写的属性直接添加
                     GoTo INSERT
                 End If
 
                 '从这里开始的属性都是只读属性或者只写属性
                 If canRead = True Then
-                    If line.Property.CanRead = False Then
+                    If line.member.CanRead = False Then
                         Continue For
                     End If
                 End If
                 If canWrite = True Then
-                    If line.Property.CanWrite = False Then
+                    If line.member.CanWrite = False Then
                         Continue For
                     End If
                 End If
@@ -108,7 +108,7 @@ INSERT:
                 End If
 
                 ' 这里为什么会出现重复的键名？？？
-                Schema += New BindProperty(Of TConfig)(line.Field, line.Property)
+                Schema += New BindProperty(Of TConfig)(line.Field, line.member)
             Next
 
             Return Schema.ToArray

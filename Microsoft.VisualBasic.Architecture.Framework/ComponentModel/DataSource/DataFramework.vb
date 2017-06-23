@@ -199,7 +199,7 @@ Namespace ComponentModel.DataSourceModel
             For Each column In Columns.Values
                 Call DataTable.Columns.Add(
                     column.Identity,
-                    column.Property.PropertyType)
+                    column.member.PropertyType)
             Next
 
             Dim fields As IEnumerable(Of BindProperty(Of DataFrameColumnAttribute)) =
@@ -209,7 +209,7 @@ Namespace ComponentModel.DataSourceModel
                 Dim LQuery As Object() =
                     LinqAPI.Exec(Of Object) <= From column As BindProperty(Of DataFrameColumnAttribute)
                                                In fields
-                                               Select column.Property.GetValue(row, Nothing)
+                                               Select column.member.GetValue(row, Nothing)
                 Call DataTable.Rows.Add(LQuery)
             Next
 
@@ -239,7 +239,7 @@ Namespace ComponentModel.DataSourceModel
                         Select schemaColumn
 
                 If Not LQuery.IsNull Then
-                    Call Schema.Add(New KeyValuePair(Of Integer, PropertyInfo)(column.Ordinal, LQuery.Property))
+                    Call Schema.Add(New KeyValuePair(Of Integer, PropertyInfo)(column.Ordinal, LQuery.member))
                 End If
             Next
 
