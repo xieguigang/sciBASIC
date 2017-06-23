@@ -109,6 +109,11 @@ Namespace Imaging
             Call curBitmap.UnlockBits(bmpData)
         End Sub
 
+        ''' <summary>
+        ''' 调整图像的对比度
+        ''' </summary>
+        ''' <param name="bmp"></param>
+        ''' <param name="contrast#"></param>
         <Extension> Public Sub AdjustContrast(ByRef bmp As Bitmap, contrast#)
             Dim contrastLookup As Byte() = New Byte(255) {}
             Dim newValue As Double = 0
@@ -138,7 +143,7 @@ Namespace Imaging
                 Dim PixelSize% = 4
 
                 For y As Integer = 0 To bitmapdata.Height - 1
-                    destPixels += (y * bitmapdata.Stride)
+                    destPixels += bitmapdata.Stride
 
                     For x As Integer = 0 To bitmapdata.Width - 1
                         destPixels(x * PixelSize) = contrastLookup(destPixels(x * PixelSize))

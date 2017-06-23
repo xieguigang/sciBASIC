@@ -58,11 +58,17 @@ Module Program
 
     Sub ASCIIArt_test()
 
-        Dim image = "H:\GCModeller\src\runtime\sciBASIC#\docs\logo250x135.gif".LoadImage.Grayscale
+        Dim image = "H:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg".LoadImage.Grayscale
         Dim ascii = image.Convert2ASCII
 
-        Call ascii.SaveTo("x:\fffffffffhhhhf.txt")
+        Call ascii.SaveTo("H:\GCModeller\src\runtime\sciBASIC#\etc\lena\ASCII.txt")
 
+
+
+        '     image = "H:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg".LoadImage
+        '   image.AdjustContrast(10)
+
+        '    Call image.SaveAs("x:\ggggg.png")
 
         Pause()
     End Sub
