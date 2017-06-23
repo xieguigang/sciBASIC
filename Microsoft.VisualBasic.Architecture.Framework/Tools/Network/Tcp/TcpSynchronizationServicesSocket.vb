@@ -45,7 +45,7 @@ Namespace Net
     ''' <remarks></remarks>
     Public Class TcpSynchronizationServicesSocket
         Implements IDisposable
-        Implements IObjectModel_Driver
+        Implements ITaskDriver
         Implements IServicesSocket
 
 #Region "INTERNAL FIELDS"
@@ -133,7 +133,7 @@ Namespace Net
         ''' It then disconnects from the client and waits for another client.(请注意，当服务器的代码运行到这里之后，代码将被阻塞在这里)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Function Run() As Integer Implements IObjectModel_Driver.Run, IServicesSocket.Run
+        Public Function Run() As Integer Implements ITaskDriver.Run, IServicesSocket.Run
 
             ' Establish the local endpoint for the socket.
             Dim localEndPoint As System.Net.IPEndPoint =

@@ -36,7 +36,7 @@ Namespace Net.SSL
 
     Public Class SSLSynchronizationServicesSocket
         Implements IDisposable
-        Implements IObjectModel_Driver
+        Implements ITaskDriver
         Implements IServicesSocket
         Implements SSL.SSLProtocols.ISSLServices
 
@@ -176,7 +176,7 @@ Namespace Net.SSL
         ''' It then disconnects from the client and waits for another client.(请注意，当服务器的代码运行到这里之后，代码将被阻塞在这里)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Function Run() As Integer Implements IServicesSocket.Run, IObjectModel_Driver.Run
+        Public Function Run() As Integer Implements IServicesSocket.Run, ITaskDriver.Run
             Return _ServicesSocket.Run
         End Function
 

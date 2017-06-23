@@ -151,7 +151,7 @@ Namespace Net.Persistent.Application
             Call _PushServices.WaitForRunning()
         End Sub
 
-        Public Function Run() As Integer Implements IServicesSocket.Run, IObjectModel_Driver.Run
+        Public Function Run() As Integer Implements IServicesSocket.Run, ITaskDriver.Run
             Return _PushServices.Run
         End Function
 

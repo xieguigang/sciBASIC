@@ -3,7 +3,7 @@
     ''' <summary>
     ''' Driver abstract model
     ''' </summary>
-    Public Interface IObjectModel_Driver
+    Public Interface ITaskDriver
 
         ''' <summary>
         ''' Start run this driver object.
