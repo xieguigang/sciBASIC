@@ -1,4 +1,5 @@
 Imports System.Drawing
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 
@@ -38,30 +39,44 @@ Namespace Drawing2D.Vector.Text.ASCIIArt
             '             *       10- Add row text string to text holding string
             '             *  11 - return resulting Image & Text
             '             
-            Dim out As New StringBuilder
-            Dim BlackAndWhite As Bitmap = DirectCast(monoImage, Bitmap)
+            Dim out As New MemoryStream
+
+            Using writer As New StreamWriter(out, Encoding.ASCII)
+                Call monoImage.WriteASCIIStream(writer, characters)
+            End Using
+
+            Return Encoding.ASCII.GetString(out.ToArray)
+        End Function
+
+        <Extension>
+        Public Sub WriteASCIIStream(monoImage As Image, out As StreamWriter, Optional characters As WeightedChar() = Nothing)
 
             If characters Is Nothing Then
                 characters = CharSet.GenerateFontWeights.ToArray
             End If
 
-            For j As Integer = 0 To monoImage.Height - 1
-                ' ROW
-                Dim RowText As New List(Of String)() From {}
+            Using BlackAndWhite As BitmapBuffer = BitmapBuffer.FromImage(monoImage)
+                For j As Integer = 0 To monoImage.Height - 1
+                    Dim line As New List(Of String)() From {}
 
-                For i As Integer = 0 To monoImage.Width - 1
-                    ' COLUMN
-                    Dim pixel As Color = BlackAndWhite.GetPixel(i, j)
-                    Dim targetvalue As Double = (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
-                    Dim closestchar As WeightedChar = characters.Where(Function(t) Math.Abs(t.Weight - targetvalue) = characters.Min(Function(e) Math.Abs(e.Weight - targetvalue))).FirstOrDefault()
-                    RowText.Add(closestchar.Character)
+                    For i As Integer = 0 To monoImage.Width - 1
+                        ' COLUMN
+                        Dim pixel As Color = BlackAndWhite.GetPixel(i, j)
+                        Dim targetvalue As Double = (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
+                        Dim closestchar As WeightedChar =
+                            characters _
+                            .Where(Function(t)
+                                       Return Math.Abs(t.Weight - targetvalue) = characters.Min(Function(e) Math.Abs(e.Weight - targetvalue))
+                                   End Function) _
+                            .FirstOrDefault()
+
+                        Call line.Add(closestchar.Character)
+                    Next
+
+                    Call out.WriteLine(line.JoinBy(""))
                 Next
-
-                out.AppendLine(RowText.JoinBy(""))
-            Next
-
-            Return out.ToString
-        End Function
+            End Using
+        End Sub
 
         <Extension> Public Function DrawText(text$, textColor As Color, backColor As Color, WidthAndHeight As SizeF) As Image
             ' Get char width for insertion point calculation purposes

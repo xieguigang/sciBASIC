@@ -61,7 +61,7 @@ Module Program
         Dim image = "H:\GCModeller\src\runtime\sciBASIC#\docs\logo250x135.gif".LoadImage.Grayscale
         Dim ascii = image.Convert2ASCII
 
-        Call ascii.SaveTo("x:\ffff.txt")
+        Call ascii.SaveTo("x:\fffffffffhhhhf.txt")
 
 
         Pause()
