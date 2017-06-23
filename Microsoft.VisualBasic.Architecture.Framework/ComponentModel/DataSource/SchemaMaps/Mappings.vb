@@ -1,33 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::2df7c1dac40fa6dce1aced53471e08e0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\Mappings.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Data.Linq.Mapping
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
@@ -60,15 +62,47 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <typeparam name="T"></typeparam>
         ''' <param name="type"></param>
         ''' <param name="getFieldName"></param>
-        ''' <param name="explict"></param>
+        ''' <param name="explict">
+        ''' 当自定义属性不存在的时候，隐式的使用域名或者属性名作为名称，否则会跳过该对象，默认是跳过该对象
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetFields(Of T As Attribute)(
-                                 type As Type,
+        Public Function GetFields(Of T As {Attribute})(
+                                 Type As Type,
                                  getFieldName As Func(Of T, String),
                                  Optional explict As Boolean = False) As BindProperty(Of T)()
-            Throw New NotImplementedException
+            Dim out As New List(Of BindProperty(Of T))
+
+            For Each field As FieldInfo In Type.GetFields
+                Dim attr As T = field.GetCustomAttribute(Of T)
+                If attr Is Nothing Then
+                    If explict Then
+                        out += New BindProperty(Of T)(field)
+                    End If
+                Else
+                    out += New BindProperty(Of T)(attr, field)
+                End If
+            Next
+
+            For Each [property] As PropertyInfo In Type.GetProperties
+                Dim attr As T = [property].GetCustomAttribute(Of T)
+                If attr Is Nothing Then
+                    If explict Then
+                        out += New BindProperty(Of T)([property])
+                    End If
+                Else
+                    out += New BindProperty(Of T)(attr, [property])
+                End If
+            Next
+
+            Return out
         End Function
+
+        Public Function GetFields(type As Type) As BindProperty(Of ColumnAttribute)()
+            Return type.GetFields(Of ColumnAttribute)(Function(o) o.Name, explict:=True)
+        End Function
+
+
 
         <Extension>
         Public Function GetSchema(Of TField As Attribute,
