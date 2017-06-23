@@ -122,12 +122,12 @@ Namespace SyntaxAPI.Vectors
             End Set
         End Property
 
-        Public Shared Operator <>(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
+        Public Overloads Shared Operator <>(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
             Dim LQuery = (From i In x.SeqIterator Select Not i.value.Equals(y(i.i))).ToArray
             Return New BooleanVector(LQuery)
         End Operator
 
-        Public Shared Operator =(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
+        Public Overloads Shared Operator =(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
             Return Not (x <> y)
         End Operator
 
