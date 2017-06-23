@@ -1,8 +1,20 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 
-Namespace Image2ASCII
+Namespace Drawing2D.Vector.Text.ASCIIArt
+
     Public Module CharSet
+
+        Public Class WeightedChar
+
+            Public Property Character As String
+            Public Property CharacterImage As Bitmap
+            Public Property Weight As Double
+
+            Public Overrides Function ToString() As String
+                Return $"{Character} ({Weight})"
+            End Function
+        End Class
 
         '
         '         * The methods contained in this class are executed at the inizialization
@@ -22,8 +34,6 @@ Namespace Image2ASCII
         '         * 
         '         * All the classes resulting from the calculations are stored in a List so we can access the results.
         '         
-        Public ReadOnly Property CharSet As WeightedChar() = GenerateFontWeights().ToArray
-
         Public Function GenerateFontWeights() As List(Of WeightedChar)
             ' Collect chars, their Images and weights in a list of WeightedChar
             Dim WeightedChars As New List(Of WeightedChar)()
@@ -99,7 +109,7 @@ Namespace Image2ASCII
             For i As Integer = 0 To btm.Width - 1
                 For j As Integer = 0 To btm.Height - 1
                     Dim pixel As Color = btm.GetPixel(i, j)
-                    totalsum = totalsum + (pixel.R + pixel.G + pixel.B) \ 3
+                    totalsum = totalsum + (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
                 Next
             Next
             ' Weight = (sum of (R+G+B)/3 for all pixels in image) / Area. (Where Area = Width*Height )
@@ -120,15 +130,4 @@ Namespace Image2ASCII
         End Function
 #End Region
     End Module
-
-    Public Class WeightedChar
-
-        Public Property Character As String
-        Public Property CharacterImage As Bitmap
-        Public Property Weight As Double
-
-        Public Overrides Function ToString() As String
-            Return $"{Character} ({Weight})"
-        End Function
-    End Class
 End Namespace

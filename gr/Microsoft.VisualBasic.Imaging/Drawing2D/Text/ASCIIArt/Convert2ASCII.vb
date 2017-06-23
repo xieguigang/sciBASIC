@@ -1,9 +1,8 @@
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports System.Text
 
-Namespace Image2ASCII
+Namespace Drawing2D.Vector.Text.ASCIIArt
 
     ''' <summary>
     ''' Program that converts images to ASCII art images
@@ -18,7 +17,7 @@ Namespace Image2ASCII
         ''' <param name="monoImage"></param>
         ''' <param name="characters"></param>
         ''' <returns></returns>
-        <Extension> Public Function Convert2ASCII(monoImage As Image, characters As List(Of WeightedChar)) As String
+        <Extension> Public Function Convert2ASCII(monoImage As Image, Optional characters As WeightedChar() = Nothing) As String
             '
             '             * ALGORITHM:
             '             * 
@@ -42,6 +41,10 @@ Namespace Image2ASCII
             Dim out As New StringBuilder
             Dim BlackAndWhite As Bitmap = DirectCast(monoImage, Bitmap)
 
+            If characters Is Nothing Then
+                characters = CharSet.GenerateFontWeights.ToArray
+            End If
+
             For j As Integer = 0 To monoImage.Height - 1
                 ' ROW
                 Dim RowText As New List(Of String)() From {}
@@ -49,7 +52,7 @@ Namespace Image2ASCII
                 For i As Integer = 0 To monoImage.Width - 1
                     ' COLUMN
                     Dim pixel As Color = BlackAndWhite.GetPixel(i, j)
-                    Dim targetvalue As Double = (pixel.R + pixel.G + pixel.B) \ 3
+                    Dim targetvalue As Double = (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
                     Dim closestchar As WeightedChar = characters.Where(Function(t) Math.Abs(t.Weight - targetvalue) = characters.Min(Function(e) Math.Abs(e.Weight - targetvalue))).FirstOrDefault()
                     RowText.Add(closestchar.Character)
                 Next
