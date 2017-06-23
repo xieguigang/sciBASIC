@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d731ee532a118b9c7ce74129044137c5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\SimpleConfig.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -84,18 +84,20 @@ Namespace ComponentModel.Settings
             Dim Schema As New List(Of BindProperty(Of TConfig))
 
             For Each line As BindProperty(Of TConfig) In LQuery
-                If line.member.CanRead AndAlso line.member.CanWrite Then  '同时满足可读和可写的属性直接添加
+                Dim [property] As PropertyInfo = DirectCast(line.member, PropertyInfo)
+
+                If [property].CanRead AndAlso [property].CanWrite Then  '同时满足可读和可写的属性直接添加
                     GoTo INSERT
                 End If
 
                 '从这里开始的属性都是只读属性或者只写属性
                 If canRead = True Then
-                    If line.member.CanRead = False Then
+                    If [property].CanRead = False Then
                         Continue For
                     End If
                 End If
                 If canWrite = True Then
-                    If line.member.CanWrite = False Then
+                    If [property].CanWrite = False Then
                         Continue For
                     End If
                 End If
@@ -108,7 +110,7 @@ INSERT:
                 End If
 
                 ' 这里为什么会出现重复的键名？？？
-                Schema += New BindProperty(Of TConfig)(line.Field, line.member)
+                Schema += New BindProperty(Of TConfig)(line.Field, [property])
             Next
 
             Return Schema.ToArray
