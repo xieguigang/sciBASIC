@@ -400,6 +400,7 @@
     <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
     <Compile Include="ComponentModel\Algorithm\base\DynamicProgramming.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
+    <Compile Include="ComponentModel\DriverModel.vb" />
     <Compile Include="ComponentModel\DataSource\Tsv.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedCollection%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
