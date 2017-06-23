@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::2c975c1c44d5a6ac9a5dc9ec12439f9e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\Serialization.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -54,6 +54,10 @@ Namespace ComponentModel.Settings.Inf
         End Function
     End Class
 
+    ''' <summary>
+    ''' The path parameter can be shortcut by method <see cref="PathMapper.GetMapPath"/>.
+    ''' additional, using ``@fileName`` for using <see cref="App.GetFile(String)"/> API.
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
     Public Class IniMapIO : Inherits Attribute
 
@@ -64,7 +68,11 @@ Namespace ComponentModel.Settings.Inf
         ''' </summary>
         ''' <param name="path"></param>
         Sub New(path As String)
-            Me.Path = PathMapper.GetMapPath(path)
+            If path.First = "@"c Then
+                Me.Path = App.GetFile(Mid(path, 2))
+            Else
+                Me.Path = PathMapper.GetMapPath(path)
+            End If
         End Sub
 
         Public Overrides Function ToString() As String
@@ -72,8 +80,18 @@ Namespace ComponentModel.Settings.Inf
         End Function
     End Class
 
+    ''' <summary>
+    ''' 在这个模块之中提供了.NET对象与``*.ini``配置文件之间的相互映射的序列化操作
+    ''' </summary>
     Public Module IOProvider
 
+        ''' <summary>
+        ''' 将目标对象写为``*.ini``文件
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function WriteProfile(Of T As Class)(x As T, path As String) As Boolean
             Dim ini As New IniFile(path)
@@ -118,6 +136,12 @@ Namespace ComponentModel.Settings.Inf
             Return properties
         End Function
 
+        ''' <summary>
+        ''' 从指定的``*.ini``文件之中加载配置数据
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function LoadProfile(Of T As Class)(path As String) As T
             Dim obj As Object = Activator.CreateInstance(Of T)

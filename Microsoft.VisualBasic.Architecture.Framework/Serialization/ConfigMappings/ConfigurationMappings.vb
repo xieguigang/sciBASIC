@@ -40,7 +40,7 @@ Namespace Serialization
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Delegate Function __StringTypeCaster(data As String) As Object
-    Public Delegate Function __LDMStringTypeCastHandler(data As Object) As String
+    Public Delegate Function StringTypeCastHandler(data As Object) As String
 
 #If NET_40 = 0 Then
 
@@ -159,7 +159,7 @@ Namespace Serialization
                 Select nodeMap     ' 返回映射句柄，为了简化程序设计，数据模型至源文件的映射可以不必定义。但是当需要使用本模块进行配置文件的写操作的时候，映射至源文件的方法则非常有必要要进行定义了
         End Function
 
-        Private Function __getWrite_MappingHandle(source As PropertyInfo, Model As PropertyInfo, Methods As MethodInfo()) As __LDMStringTypeCastHandler
+        Private Function __getWrite_MappingHandle(source As PropertyInfo, Model As PropertyInfo, Methods As MethodInfo()) As StringTypeCastHandler
             If DataFramework.ToStrings.ContainsKey(Model.PropertyType) Then
                 Return DataFramework.ToStrings(Model.PropertyType)
             Else

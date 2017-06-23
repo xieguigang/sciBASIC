@@ -1436,7 +1436,7 @@ Namespace MarkDown
             Dim sb = New StringBuilder(text.Length)
 
             For Each token As Token(Of TokenType) In tokens
-                Dim value As String = token.TokenValue
+                Dim value As String = token.Value
 
                 If token.Type = TokenType.Tag Then
                     value = value.Replace("\", _escapeTable("\"))

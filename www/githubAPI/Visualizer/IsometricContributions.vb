@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::9a94fd73ea1827e8583740ec5278896c, ..\sciBASIC#\www\githubAPI\Visualizer\IsometricContributions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -204,9 +204,14 @@ Public Module IsometricContributions
 
                             Dim y1 = y + statNumberFont.Height + 25
                             Dim y2 = y1 + fsize.Height + 5
+                            Dim s$ = .bio
+
+                            If s.Length > 60 Then
+                                s = Mid(.bio, 1, 56) & "..."
+                            End If
 
                             Call g.DrawString($"{ .login} ({ .name})", statNumberFont, Brushes.Black, New Point(x, y))
-                            Call g.DrawString(.bio, labelItemFont, Brushes.Gray, New Point(x, y1))
+                            Call g.DrawString(s, labelItemFont, Brushes.Gray, New Point(x, y1))
                             Call g.DrawString(.url, labelItemFont, Brushes.Black, New Point(x, y2))
                         End With
                     End With

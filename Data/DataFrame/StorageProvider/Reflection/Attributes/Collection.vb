@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::2e50a1be8c0b25441e7f74597d859e17, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\Attributes\Collection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -35,7 +35,7 @@ Namespace StorageProvider.Reflection
     ''' </summary>
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=False)>
-    Public Class CollectionAttribute : Inherits Csv.StorageProvider.Reflection.ColumnAttribute
+    Public Class CollectionAttribute : Inherits csv.StorageProvider.Reflection.ColumnAttribute
         Implements Reflection.IAttributeComponent
 
         Public ReadOnly Property Delimiter As String
@@ -47,17 +47,17 @@ Namespace StorageProvider.Reflection
         ''' <param name="Delimiter">由于受正则表达式的解析速度的影响，因为CSV文件是使用逗号进行分隔的，假若使用逗号的话，正则表达式的解析速度会比较低，故在这里优先考虑使用分号来作为分隔符</param>
         Sub New(Name As String, Optional Delimiter As String = "; ")
             Call MyBase.New(Name)
-            Me._Delimiter = Delimiter
+            Me.Delimiter = Delimiter
         End Sub
 
         Public Overrides Function ToString() As String
             Return Me.Name
         End Function
 
-        Protected Friend Shared Shadows ReadOnly Property TypeInfo As System.Type = GetType(CollectionAttribute)
+        Protected Friend Shared Shadows ReadOnly Property TypeInfo As Type = GetType(CollectionAttribute)
 
         Public Function CreateObject(cellData As String) As String()
-            Dim Tokens As String() = Strings.Split(cellData, Me._Delimiter)
+            Dim Tokens As String() = cellData.StringSplit(Delimiter & "\s*")
             Return Tokens
         End Function
 

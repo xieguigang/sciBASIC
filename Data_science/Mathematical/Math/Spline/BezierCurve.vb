@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::3f367599a5a5b7536ecf8cadd8c99b82, ..\sciBASIC#\Data_science\Mathematical\Math\Spline\BezierCurve.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -176,21 +176,21 @@ Namespace Interpolation
                     From win
                     In slideWindows.AsParallel
                     Let value = __interpolation(
-                        win.Elements, iteration)
+                        win.Items, iteration)
                     Select x = New SeqValue(Of Double()) With {
-                        .i = win.p,
+                        .i = win.Index,
                         .value = value
                     }
                     Order By x.i Ascending
             Else
                 LQuery = LinqAPI.Exec(Of SeqValue(Of Double())) <=
  _
-                    From win As SlideWindowHandle(Of Double)
+                    From win As SlideWindow(Of Double)
                     In slideWindows
                     Let value = __interpolation(
-                        win.Elements, iteration)
+                        win.Items, iteration)
                     Select x = New SeqValue(Of Double()) With {
-                        .i = win.p,
+                        .i = win.Index,
                         .value = value
                     }
                     Order By x.i Ascending

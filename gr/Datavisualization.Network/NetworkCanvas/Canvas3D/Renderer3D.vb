@@ -98,7 +98,8 @@ Public Class Renderer3D : Inherits Renderer
             .RotateX(rotate) _
             .RotateY(rotate) _
             .RotateZ(rotate) _
-            .Project(client.Width, client.Height, 256, ViewDistance).PointXY
+            .Project(client.Width, client.Height, 256, ViewDistance) _   
+            .PointXY ' 调整FOV参数的效果不太好
         Dim canvas As Graphics = __graphicsProvider()
 
         '   pos = GraphToScreen(pos, __regionProvider())

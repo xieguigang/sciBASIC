@@ -112,7 +112,7 @@ Namespace StorageProvider.ComponentModels
                 .Where(Function(d) d.GetIndexParameters.IsNullOrEmpty) _
                 .Select(Function(d) d.Name) _
                 .ToArray
-            Dim rawOrders As New IndexOf(Of String)(properties)
+            Dim rawOrders As New Index(Of String)(properties)
             Dim ordered As StorageProvider() = New StorageProvider(rawOrders.Count - 1) {}
 
             ' 只对column类型进行原始排序
@@ -278,7 +278,7 @@ Namespace StorageProvider.ComponentModels
                 MetaRow.BindProperty.GetValue(obj, Nothing)
 
             If source Is Nothing Then
-                Return _metaBlank.CopyVector(__cachedIndex.Length)
+                Return _metaBlank.Repeats(__cachedIndex.Length)
             End If
 
             Dim values As String() = New String(Me.__cachedIndex.Length - 1) {}

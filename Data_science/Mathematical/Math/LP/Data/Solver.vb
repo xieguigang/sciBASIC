@@ -40,7 +40,7 @@ Namespace LP
             Dim Z# = If(func.Z = 0R, 1, func.Z) ' 默认Z是必须存在的，所以默认是1，也可以是其他的数值
             Dim o#() = Z# _
                 .Join(func.xyz.Select(Function(x) -x)) _
-                .Join(0R.CopyVector(eqs.Length)) _
+                .Join(0R.Repeats(eqs.Length)) _
                 .Join(0R) _
                 .ToArray
             Dim matrix As New List(Of Double())

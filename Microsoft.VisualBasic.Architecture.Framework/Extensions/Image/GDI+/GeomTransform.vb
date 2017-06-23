@@ -1,46 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::3de5825866652d97f3559642bbe6def1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GeomTransform.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Imaging
 
     <PackageNamespace("GDI.Transform")> Public Module GeomTransform
 
+        <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
+            Dim xDiff As Single = p2.X - p1.X
+            Dim yDiff As Single = p2.Y - p1.Y
+            Return Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI
+        End Function
+
+        ''' <summary>
+        ''' 获取目标多边形对象的边界结果，包括左上角的位置以及所占的矩形区域的大小
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetBounds(points As IEnumerable(Of Point)) As RectangleF
             Return points.Select(Function(pt) pt.PointF).GetBounds
         End Function
 
+        ''' <summary>
+        ''' 获取目标多边形对象的边界结果，包括左上角的位置以及所占的矩形区域的大小
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetBounds(points As IEnumerable(Of PointF)) As RectangleF
             Dim array = points.ToArray
@@ -57,6 +74,10 @@ Namespace Imaging
             Return New Point(pf.X, pf.Y)
         End Function
 
+        <Extension> Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
+            Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
+        End Function
+
         ''' <summary>
         ''' Gets the center location of the region rectangle.
         ''' </summary>
@@ -65,6 +86,24 @@ Namespace Imaging
         <ExportAPI("Center")>
         <Extension> Public Function Centre(rect As Rectangle) As Point
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
+        End Function
+
+        ''' <summary>
+        ''' 获取目标多边形对象的中心点的坐标位置
+        ''' </summary>
+        ''' <param name="shape"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Centre(shape As IEnumerable(Of Point)) As Point
+            Dim x As New List(Of Integer)
+            Dim y As New List(Of Integer)
+
+            Call shape.DoEach(Sub(pt)
+                                  x += pt.X
+                                  y += pt.Y
+                              End Sub)
+
+            Return New Point(x.Average, y.Average)
         End Function
 
         ''' <summary>
@@ -77,6 +116,12 @@ Namespace Imaging
             Return New PointF(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
         End Function
 
+        ''' <summary>
+        ''' 获取将目标多边形置于区域的中央位置的位置偏移量
+        ''' </summary>
+        ''' <param name="pts"></param>
+        ''' <param name="frameSize"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As PointF
             Return pts.Select(Function(pt) pt.PointF).ToArray.CentralOffset(frameSize.SizeF)
@@ -87,6 +132,12 @@ Namespace Imaging
             Return New SizeF(size.Width, size.Height)
         End Function
 
+        ''' <summary>
+        ''' 获取将目标多边形置于区域的中央位置的位置偏移量
+        ''' </summary>
+        ''' <param name="pts"></param>
+        ''' <param name="frameSize"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of PointF), frameSize As SizeF) As PointF
             Dim xOffset!() = pts.ToArray(Function(x) x.X)

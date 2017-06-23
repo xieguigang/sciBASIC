@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::1a20a40530c8f89a324c15b8cdc47d80, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\SearchEngine\TextIndexing\TextIndexing.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -178,15 +178,15 @@ Namespace Text.Search
         End Function
 
         Private Shared Function __indexing(part As TextSegment(), keyword$, cutoff#, parallel As Boolean) As Map(Of TextSegment, DistResult)()
-            Dim source As IEnumerable(Of TextSegment) = If(parallel, part.AsParallel, part)
-            Dim LQuery = From piece As TextSegment
+            Dim source As IEnumerable(Of TextSegment) = [If](Of IEnumerable(Of TextSegment))(parallel, part.AsParallel, part)
+            Dim LQuery = From index As TextSegment
                          In source
-                         Let lev As DistResult = LevenshteinDistance.ComputeDistance(piece.Array, keyword)
-                         Where Not lev Is Nothing AndAlso
-                             lev.Score >= cutoff
+                         Let levenshtein As DistResult = index Like keyword
+                         Where Not levenshtein Is Nothing AndAlso
+                             levenshtein.Score >= cutoff
                          Select New Map(Of TextSegment, DistResult) With {
-                             .Key = piece,
-                             .Maps = lev
+                             .Key = index,
+                             .Maps = levenshtein
                          }
             Dim out As Map(Of TextSegment, DistResult)() = LQuery.ToArray
             Return out

@@ -140,7 +140,7 @@ Namespace Drawing3D
         ''' <param name="z!">Using for the painter algorithm.</param>
         ''' <param name="viewWidth%"></param>
         ''' <param name="viewHeight%"></param>
-        ''' <param name="fov%"></param>
+        ''' <param name="fov%">球度，当这个参数值非常大的时候，则产生的3D图像为isometrix类型的对称等边图形</param>
         ''' <param name="viewDistance%">View distance to the model from the view window.</param>
         Public Shared Sub Project(ByRef x!, ByRef y!, z!, viewWidth%, viewHeight%, viewDistance%, Optional fov% = 256)
             Dim factor! = fov / (viewDistance + z)

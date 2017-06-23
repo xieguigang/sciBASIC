@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::8a3810a00bf230abbaef063d79fc2306, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -62,9 +62,9 @@ Public Module TextDoc
     ''' <param name="path$">``*.tsv``文件路径</param>
     ''' <returns></returns>
     <Extension>
-    Public Function TsvHeaders(path$) As IndexOf(Of String)
+    Public Function TsvHeaders(path$) As Index(Of String)
         Dim header$() = path.ReadFirstLine.Split(ASCII.TAB)
-        Dim index As New IndexOf(Of String)(header)
+        Dim index As New Index(Of String)(header)
         Return index
     End Function
 
@@ -141,6 +141,19 @@ Public Module TextDoc
                 Return first
             End Using
         End Using
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="handle$">文本内容或者文件路径</param>
+    ''' <returns></returns>
+    <Extension> Public Function SolveStream(handle$) As String
+        If handle.FileExists(True) Then
+            Return handle.ReadAllText
+        Else
+            Return handle
+        End If
     End Function
 
     ''' <summary>

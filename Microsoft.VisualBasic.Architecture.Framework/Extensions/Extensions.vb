@@ -79,6 +79,15 @@ Public Module Extensions
 #End If
 
     ''' <summary>
+    ''' ``Math.Log(x, newBase:=2)``
+    ''' </summary>
+    ''' <param name="x#"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Log2(x#) As Double
+        Return Math.Log(x, newBase:=2)
+    End Function
+
+    ''' <summary>
     ''' 将16进制的数字转换为10进制数
     ''' </summary>
     ''' <param name="hex$"></param>
@@ -886,7 +895,7 @@ Public Module Extensions
     ''' <param name="driver"></param>
     ''' <returns></returns>
     <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
-    Public Function RunDriver(driver As IObjectModel_Driver) As Integer
+    Public Function RunDriver(driver As ITaskDriver) As Integer
         Return driver.Run
     End Function
 
@@ -895,10 +904,10 @@ Public Module Extensions
     ''' so that no needs of calling the method <see cref="Threading.Thread.Start()"/> again.
     ''' (使用线程的方式启动，在函数调用之后，线程是已经启动了的，所以不需要再次调用<see cref="Threading.Thread.Start()"/>方法了)
     ''' </summary>
-    ''' <param name="driver">The object which is implements the interface <see cref="IObjectModel_Driver"/></param>
+    ''' <param name="driver">The object which is implements the interface <see cref="ITaskDriver"/></param>
     <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
     <Extension>
-    Public Function DriverRun(driver As IObjectModel_Driver) As Threading.Thread
+    Public Function DriverRun(driver As ITaskDriver) As Threading.Thread
         Return Parallel.RunTask(AddressOf driver.Run)
     End Function
 #End If
@@ -2308,7 +2317,8 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Removes the last element in the List object.(这个拓展函数同时兼容.NET框架的list类型以及sciBASIC之中的list类型)
+    ''' Removes the last element in the List object.
+    ''' (这个拓展函数同时兼容.NET框架的list类型以及sciBASIC之中的<see cref="List(Of T)"/>类型)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>

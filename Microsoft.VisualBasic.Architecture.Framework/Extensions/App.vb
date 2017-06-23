@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f6f6385ee5ba7943985a3d6e0dd5dd97, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -194,6 +194,79 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property UserHOME As String
+
+    ''' <summary>
+    ''' Gets the ``/in`` commandline value as the input file path.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property InputFile As String
+        Get
+            Return App.CommandLine("/in")
+        End Get
+    End Property
+
+    Dim _out$
+
+    ''' <summary>
+    ''' Gets the ``/out`` commandline value as the output file path.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property OutFile As String
+        Get
+            If _out.StringEmpty Then
+                _out = App.CommandLine("/out")
+            End If
+
+            Return _out
+        End Get
+        Set(value As String)
+            _out = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 1. 直接查找(这个查找已经包含了在当前的文件夹之中查找)
+    ''' 2. 从<see cref="App.InputFile"/>所在的文件夹之中查找
+    ''' 3. 从<see cref="App.OutFile"/>所在的文件夹之中查找
+    ''' 4. 从<see cref="App.Home"/>文件夹之中查找
+    ''' 5. 从<see cref="App.UserHOME"/>文件夹之中查找
+    ''' 6. 从<see cref="App.ProductProgramData"/>文件夹之中查找
+    ''' </summary>
+    ''' <param name="fileName$"></param>
+    ''' <returns></returns>
+    Public Function GetFile(fileName$) As String
+        If fileName.FileExists Then
+            Return fileName.GetFullPath
+        End If
+
+        Dim path As New Value(Of String)
+
+        On Error Resume Next
+
+        If Not App.InputFile.StringEmpty AndAlso
+            (path = App.InputFile.ParentPath & "/" & fileName).FileExists Then
+
+            Return path
+        End If
+        If Not App.OutFile.StringEmpty AndAlso
+            (path = App.OutFile.ParentPath & "/" & fileName).FileExists Then
+
+            Return path
+        End If
+
+        For Each DIR As String In {
+            App.HOME,
+            App.UserHOME, 
+            App.ProductProgramData,
+            App.ProductSharedDIR
+        }
+            If (path = DIR & "/" & fileName).FileExists Then
+                Return path
+            End If
+        Next
+
+        Return App.CurrentDirectory & "/" & fileName
+    End Function
 
     ''' <summary>
     ''' The currrent working directory of this application.(应用程序的当前的工作目录)

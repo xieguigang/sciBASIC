@@ -1,42 +1,40 @@
 ﻿#Region "Microsoft.VisualBasic::d61ce2c193845c3a6b5cf50cceaea939, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Reflection
 Imports System.Text
 Imports System.Threading
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace Net
 
@@ -47,7 +45,7 @@ Namespace Net
     ''' <remarks></remarks>
     Public Class TcpSynchronizationServicesSocket
         Implements IDisposable
-        Implements IObjectModel_Driver
+        Implements ITaskDriver
         Implements IServicesSocket
 
 #Region "INTERNAL FIELDS"
@@ -135,7 +133,7 @@ Namespace Net
         ''' It then disconnects from the client and waits for another client.(请注意，当服务器的代码运行到这里之后，代码将被阻塞在这里)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Function Run() As Integer Implements IObjectModel_Driver.Run, IServicesSocket.Run
+        Public Function Run() As Integer Implements ITaskDriver.Run, IServicesSocket.Run
 
             ' Establish the local endpoint for the socket.
             Dim localEndPoint As System.Net.IPEndPoint =
