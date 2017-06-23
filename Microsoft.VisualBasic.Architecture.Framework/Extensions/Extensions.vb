@@ -2317,7 +2317,8 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Removes the last element in the List object.(这个拓展函数同时兼容.NET框架的list类型以及sciBASIC之中的list类型)
+    ''' Removes the last element in the List object.
+    ''' (这个拓展函数同时兼容.NET框架的list类型以及sciBASIC之中的<see cref="List(Of T)"/>类型)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>

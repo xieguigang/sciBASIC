@@ -104,6 +104,11 @@ Public Module StringHelpers
         Return sb.ToString
     End Function
 
+    ''' <summary>
+    ''' 将一个任意的目标字符集合转换为字符串对象
+    ''' </summary>
+    ''' <param name="chs"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CharString(chs As IEnumerable(Of Char)) As String
         Return New String(chs.ToArray)
