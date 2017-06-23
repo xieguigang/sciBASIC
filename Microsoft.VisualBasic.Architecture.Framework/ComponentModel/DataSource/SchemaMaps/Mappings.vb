@@ -102,7 +102,14 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return type.GetFields(Of ColumnAttribute)(Function(o) o.Name, explict:=True)
         End Function
 
-
+        <Extension>
+        Public Function GetColumnName([property] As BindProperty(Of ColumnAttribute)) As String
+            If [property].Field Is Nothing OrElse [property].Field.Name.StringEmpty Then
+                Return [property].Identity
+            Else
+                Return [property].Field.Name
+            End If
+        End Function
 
         <Extension>
         Public Function GetSchema(Of TField As Attribute,
