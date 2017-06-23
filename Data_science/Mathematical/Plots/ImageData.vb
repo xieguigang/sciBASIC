@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d6e2bb974bf0940b104ffe60ddc40367, ..\sciBASIC#\Data_science\Mathematical\Plots\ImageData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,7 +37,7 @@ Public Module ImageDataExtensions
 
     <Extension>
     Public Function PointZProvider(img As Image, Optional convert As Func(Of Color, Integer) = Nothing) As Func(Of Double, Double, Double)
-        Dim bitmap As hBitmap = hBitmap.FromImage(img)
+        Dim bitmap As BitmapBuffer = BitmapBuffer.FromImage(img)
 
         If convert Is Nothing Then
             convert = AddressOf GrayScale
@@ -54,7 +54,7 @@ Public Module ImageDataExtensions
 
     <Extension>
     Public Function SurfaceProvider(img As Image) As Func(Of Double, Double, (z#, color As Double))
-        Dim bitmap As hBitmap = hBitmap.FromImage(img)
+        Dim bitmap As BitmapBuffer = BitmapBuffer.FromImage(img)
 
         Return Function(x, y) As (Z#, Color As Double)
                    If Not bitmap.OutOfRange(x, y) Then
