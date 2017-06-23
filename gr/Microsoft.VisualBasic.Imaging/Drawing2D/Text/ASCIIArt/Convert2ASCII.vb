@@ -2,6 +2,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Vector.Text.ASCIIArt
 
@@ -11,6 +12,12 @@ Namespace Drawing2D.Vector.Text.ASCIIArt
     ''' > https://github.com/juangallostra/Image2ASCII
     ''' </summary>
     Public Module HelperMethods
+
+        <Extension>
+        Public Function ASCIIImage(text$, Optional font$ = CSSFont.Win7Normal, Optional characters As WeightedChar() = Nothing) As String
+            Dim image As Image = text.DrawText(Color.Black, Color.White, , CSSFont.TryParse(font).GDIObject)
+            Return image.Convert2ASCII
+        End Function
 
         ''' <summary>
         ''' Image input <paramref name="monoImage"/> should be processed by <see cref="Binarization"/> or <see cref="Grayscale"/>, without colors.
@@ -78,41 +85,36 @@ Namespace Drawing2D.Vector.Text.ASCIIArt
             End Using
         End Sub
 
-        <Extension> Public Function DrawText(text$, textColor As Color, backColor As Color, WidthAndHeight As SizeF) As Image
+        <Extension> Public Function DrawText(text$, textColor As Color, backColor As Color, Optional WidthAndHeight As SizeF = Nothing, Optional font As Font = Nothing) As Image
+            Dim textSize As SizeF
+
+            If font Is Nothing Then
+                font = SystemFonts.DefaultFont
+            End If
+
             ' Get char width for insertion point calculation purposes
-            Dim dummy_img As Image = New Bitmap(1, 1)
-            Dim dummy_drawing As Graphics = Graphics.FromImage(dummy_img)
-            Dim textSize As SizeF = dummy_drawing.MeasureString(text, SystemFonts.DefaultFont)
-            dummy_img.Dispose()
-            dummy_drawing.Dispose()
+            Using dummy_img As Image = New Bitmap(1, 1), dummy_drawing As Graphics = Graphics.FromImage(dummy_img)
+                textSize = dummy_drawing.MeasureString(text, font)
+            End Using
 
-            ' Create a dummy bitmap just to get a graphics object
-            Dim img As Image = New Bitmap(1, 1)
-            Dim drawing As Graphics = Graphics.FromImage(img)
-
-            ' Free up resources taken by the dummy image and old graphics object
-            img.Dispose()
-            drawing.Dispose()
+            If WidthAndHeight.IsEmpty Then
+                WidthAndHeight = textSize
+            End If
 
             ' Create a new image of the right size
-            img = New Bitmap(CInt(Math.Truncate(WidthAndHeight.Width)), CInt(Math.Truncate(WidthAndHeight.Height)))
-            ' Get a graphics object
-            drawing = Graphics.FromImage(img)
+            Dim img As New Bitmap(CInt(Math.Truncate(WidthAndHeight.Width)), CInt(Math.Truncate(WidthAndHeight.Height)))
 
-            ' Paint the background
-            drawing.Clear(backColor)
+            Using Drawing = Graphics.FromImage(img) ' Get a graphics object
 
-            ' Create a brush for the text
-            Dim textBrush As Brush = New SolidBrush(textColor)
+                ' Create a brush for the text
+                Dim textBrush As Brush = New SolidBrush(textColor)
 
-            drawing.DrawString(text, SystemFonts.DefaultFont, textBrush, (WidthAndHeight.Width - textSize.Width) / 2, 0)
-            ' El punto de inserción del carácter se puede afinar más (Trial & Error)
-            drawing.Save()
+                ' Paint the background
+                Call Drawing.Clear(backColor)
+                Call Drawing.DrawString(text, font, textBrush, (WidthAndHeight.Width - textSize.Width) / 2, 0)
 
-            textBrush.Dispose()
-            drawing.Dispose()
-
-            Return img
+                Return img
+            End Using
         End Function
     End Module
 End Namespace

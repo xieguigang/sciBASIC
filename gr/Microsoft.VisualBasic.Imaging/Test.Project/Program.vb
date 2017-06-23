@@ -58,6 +58,11 @@ Module Program
 
     Sub ASCIIArt_test()
 
+        Call Console.WriteLine("sciBASIC#".ASCIIImage)
+
+
+        Pause()
+
         Dim image = "H:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg".LoadImage.Grayscale
         Dim ascii = image.Convert2ASCII
 
