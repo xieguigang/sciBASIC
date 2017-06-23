@@ -214,6 +214,8 @@
     <Compile Include="Drawing2D\Shapes\Pentacle.vb" />
     <Compile Include="Drawing2D\Shapes\Hexagon.vb" />
     <Compile Include="Drawing2D\Shapes\Diamond.vb" />
+    <Compile Include="Drawing2D\Text\ASCIIArt\Convert2ASCII.vb" />
+    <Compile Include="Drawing2D\Text\ASCIIArt\CharSet.vb" />
     <Compile Include="Drawing2D\Text\GraphicsText.vb" />
     <Compile Include="Drawing2D\Text\FontMetrics.vb" />
     <Compile Include="Drawing2D\Text\Text.vb" />

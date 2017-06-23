@@ -749,7 +749,6 @@
     <Compile Include="Parallel\Tasks\Task.vb" />
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
-    <Compile Include="Extensions\Image\GrayBitmap.vb" />
     <Compile Include="Tools\Logging\EventLog.vb" />
     <Compile Include="Extensions\Debugger\NETDebugger.vb" />
     <Compile Include="Tools\Network\Mailto\MailConfigure.vb" />
