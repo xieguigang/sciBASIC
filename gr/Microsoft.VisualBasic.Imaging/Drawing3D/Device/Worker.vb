@@ -1,35 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::f4427f1b3200e52b7e1ca3bf14eaab0b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Worker.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -41,7 +41,7 @@ Namespace Drawing3D.Device
     ''' </summary>
     Public Class Worker : Inherits IDevice
         Implements IDisposable
-        Implements IObjectModel_Driver
+        Implements ITaskDriver
 
         Public Delegate Function ModelData() As IEnumerable(Of Surface)
         Public Delegate Sub CameraControl(ByRef camera As Camera)
@@ -133,7 +133,7 @@ Namespace Drawing3D.Device
             debugger.RenderingWorker = App.NanoTime - now
         End Sub
 
-        Public Function Run() As Integer Implements IObjectModel_Driver.Run
+        Public Function Run() As Integer Implements ITaskDriver.Run
             Return spaceThread.Start
         End Function
 
