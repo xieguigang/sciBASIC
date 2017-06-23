@@ -98,8 +98,22 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return out
         End Function
 
-        Public Function GetFields(type As Type) As BindProperty(Of ColumnAttribute)()
-            Return type.GetFields(Of ColumnAttribute)(Function(o) o.Name, explict:=True)
+        Public Function GetFields(Of T)(Optional explict As Boolean = True) As BindProperty(Of ColumnAttribute)()
+            Return GetType(T).GetFields(Of ColumnAttribute)(Function(o) o.Name, explict:=explict)
+        End Function
+
+        ''' <summary>
+        ''' 获取从域名称映射到列名称的哈希表
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="explict"></param>
+        ''' <returns></returns>
+        Public Function FieldNameMappings(Of T)(Optional explict As Boolean = False) As Dictionary(Of String, String)
+            Dim fields As BindProperty(Of ColumnAttribute)() = GetFields(Of T)(explict)
+            Dim table As Dictionary(Of String, String) = fields _
+                .ToDictionary(Function(field) field.Identity,
+                              Function(map) map.GetColumnName)
+            Return table
         End Function
 
         <Extension>
