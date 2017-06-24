@@ -1,7 +1,6 @@
-Imports System
-Imports System.Collections.Generic
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 
 ' $Id: mxOrganicLayout.java,v 1.2 2012/12/22 22:39:40 david Exp $
 ' Copyright (c) 2007-2013, JGraph Ltd
@@ -412,7 +411,7 @@ Namespace Layouts
         ''' <summary>
         ''' Constructor for mxOrganicLayout.
         ''' </summary>
-        Public Sub New(ByVal graph As NetworkGraph, ByVal bounds As RectangleF)
+        Public Sub New(ByVal graph As NetworkGraph, ByVal bounds As mxRectangle)
             MyBase.New(graph)
             boundsX = bounds.X
             boundsY = bounds.Y
@@ -454,8 +453,8 @@ Namespace Layouts
 
             ' If the bounds dimensions have not been set see if the average area
             ' per node has been
-            Dim totalBounds As Rectangle = Nothing
-            Dim bounds As Rectangle = Nothing
+            Dim totalBounds As mxRectangle = Nothing
+            Dim bounds As mxRectangle = Nothing
 
             ' Form internal model of nodes
             Dim vertexMap As IDictionary(Of Object, Integer?) = New Dictionary(Of Object, Integer?)
@@ -465,7 +464,7 @@ Namespace Layouts
                 vertexMap(vertices(i)) = New Integer?(i)
                 bounds = getVertexBounds(vertices(i))
 
-                If totalBounds.IsEmpty Then
+                If totalBounds Is Nothing Then
                     totalBounds = bounds
                 Else
                     totalBounds.add(bounds)
@@ -649,15 +648,15 @@ Namespace Layouts
                 Dim oldEdgeLength As Double = getEdgeLengthAffectedEdges(index)
                 Dim oldAdditionFactors As Double = getAdditionFactorsEnergy(index)
 
-                For j As Integer = 0 To triesPerCell - 1
+                For j As Integer = 0 To TriesPerCell - 1
                     Dim movex As Double = moveRadius * xNormTry(j)
                     Dim movey As Double = moveRadius * yNormTry(j)
 
                     ' applying new move
-                    Dim oldx As Double = v(index).x
-                    Dim oldy As Double = v(index).y
-                    v(index).x = v(index).x + movex
-                    v(index).y = v(index).y + movey
+                    Dim oldx As Double = v(index).X
+                    Dim oldy As Double = v(index).Y
+                    v(index).X = v(index).X + movex
+                    v(index).Y = v(index).Y + movey
 
                     ' calculate the energy delta from this move
                     Dim energyDelta As Double = calcEnergyDelta(index, oldNodeDistribution, oldEdgeDistance, oldEdgeCrossing, oldBorderLine, oldEdgeLength, oldAdditionFactors)
@@ -669,8 +668,8 @@ Namespace Layouts
                         Exit For ' exits loop
                     Else
                         ' Revert node coordinates
-                        v(index).x = oldx
-                        v(index).y = oldy
+                        v(index).X = oldx
+                        v(index).Y = oldy
                     End If
                 Next
             Next
@@ -684,17 +683,17 @@ Namespace Layouts
                 ' what might be an optimisation case
                 moveRadius /= 2.0
             End If
-            If unchangedEnergyRoundCount >= unchangedEnergyRoundTermination Then iteration = maxIterations
+            If unchangedEnergyRoundCount >= UnchangedEnergyRoundTermination Then iteration = MaxIterations
 
             ' decrement radius in controlled manner
-            Dim newMoveRadius As Double = moveRadius * radiusScaleFactor
+            Dim newMoveRadius As Double = moveRadius * RadiusScaleFactor
             ' Don't waste time on tiny decrements, if the final pixel resolution
             ' is 50 then there's no point doing 55,54.1, 53.2 etc
-            If moveRadius - newMoveRadius < minMoveRadius Then newMoveRadius = moveRadius - minMoveRadius
+            If moveRadius - newMoveRadius < MinMoveRadius Then newMoveRadius = moveRadius - MinMoveRadius
             ' If the temperature reaches its minimum temperature then finish
-            If newMoveRadius <= minMoveRadius Then iteration = maxIterations
+            If newMoveRadius <= MinMoveRadius Then iteration = MaxIterations
             ' Switch on fine tuning below the specified temperature
-            If newMoveRadius < fineTuningRadius Then ___isFineTuning = True
+            If newMoveRadius < FineTuningRadius Then ___isFineTuning = True
 
             moveRadius = newMoveRadius
 
@@ -761,29 +760,29 @@ Namespace Layouts
             ' This check is placed outside of the inner loop for speed, even
             ' though the code then has to be duplicated
             If ___isOptimizeNodeDistribution = True Then
-                If approxNodeDimensions Then
+                If ApproxNodeDimensions Then
                     For j As Integer = 0 To v.Length - 1
                         If i <> j Then
-                            Dim vx As Double = v(i).x - v(j).x
-                            Dim vy As Double = v(i).y - v(j).y
+                            Dim vx As Double = v(i).X - v(j).X
+                            Dim vy As Double = v(i).Y - v(j).Y
                             Dim distanceSquared As Double = vx * vx + vy * vy
-                            distanceSquared -= v(i).radiusSquared
-                            distanceSquared -= v(j).radiusSquared
+                            distanceSquared -= v(i).RadiusSquared
+                            distanceSquared -= v(j).RadiusSquared
 
                             ' prevents from dividing with Zero.
                             If distanceSquared < minDistanceLimitSquared Then distanceSquared = minDistanceLimitSquared
 
-                            energy += nodeDistributionCostFactor / distanceSquared
+                            energy += NodeDistributionCostFactor / distanceSquared
                         End If
                     Next
                 Else
                     For j As Integer = 0 To v.Length - 1
                         If i <> j Then
-                            Dim vx As Double = v(i).x - v(j).x
-                            Dim vy As Double = v(i).y - v(j).y
+                            Dim vx As Double = v(i).X - v(j).X
+                            Dim vy As Double = v(i).Y - v(j).Y
                             Dim distanceSquared As Double = vx * vx + vy * vy
-                            distanceSquared -= v(i).radiusSquared
-                            distanceSquared -= v(j).radiusSquared
+                            distanceSquared -= v(i).RadiusSquared
+                            distanceSquared -= v(j).RadiusSquared
                             ' If the height separation indicates overlap, subtract
                             ' the widths from the distance. Same for width overlap
                             ' TODO						if ()
@@ -791,7 +790,7 @@ Namespace Layouts
                             ' prevents from dividing with Zero.
                             If distanceSquared < minDistanceLimitSquared Then distanceSquared = minDistanceLimitSquared
 
-                            energy += nodeDistributionCostFactor / distanceSquared
+                            energy += NodeDistributionCostFactor / distanceSquared
                         End If
                     Next
                 End If
@@ -812,15 +811,15 @@ Namespace Layouts
             If ___isOptimizeBorderLine Then
                 ' Avoid very small distances and convert negative distance (i.e
                 ' outside the border to small positive ones )
-                Dim l As Double = v(i).x - boundsX
-                If l < minDistanceLimit Then l = minDistanceLimit
-                Dim t As Double = v(i).y - boundsY
-                If t < minDistanceLimit Then t = minDistanceLimit
-                Dim r As Double = boundsX + boundsWidth - v(i).x
-                If r < minDistanceLimit Then r = minDistanceLimit
-                Dim b As Double = boundsY + boundsHeight - v(i).y
-                If b < minDistanceLimit Then b = minDistanceLimit
-                energy += borderLineCostFactor * ((1000000.0 / (t * t)) + (1000000.0 / (l * l)) + (1000000.0 / (b * b)) + (1000000.0 / (r * r)))
+                Dim l As Double = v(i).X - boundsX
+                If l < MinDistanceLimit Then l = MinDistanceLimit
+                Dim t As Double = v(i).Y - boundsY
+                If t < MinDistanceLimit Then t = MinDistanceLimit
+                Dim r As Double = boundsX + boundsWidth - v(i).X
+                If r < MinDistanceLimit Then r = MinDistanceLimit
+                Dim b As Double = boundsY + boundsHeight - v(i).Y
+                If b < MinDistanceLimit Then b = MinDistanceLimit
+                energy += BorderLineCostFactor * ((1000000.0 / (t * t)) + (1000000.0 / (l * l)) + (1000000.0 / (b * b)) + (1000000.0 / (r * r)))
             End If
             Return energy
         End Function
@@ -835,8 +834,8 @@ Namespace Layouts
         ''' <returns> the total edge length energy of the connected edges  </returns>
         Protected Friend Overridable Function getEdgeLengthAffectedEdges(ByVal node As Integer) As Double
             Dim energy As Double = 0.0
-            For i As Integer = 0 To v(node).connectedEdges.Length - 1
-                energy += getEdgeLength(v(node).connectedEdges(i))
+            For i As Integer = 0 To v(node).ConnectedEdges.Length - 1
+                energy += getEdgeLength(v(node).ConnectedEdges(i))
             Next
             Return energy
         End Function
@@ -851,7 +850,7 @@ Namespace Layouts
         Protected Friend Overridable Function getEdgeLength(ByVal i As Integer) As Double
             If ___isOptimizeEdgeLength Then
                 Dim ___edgeLength As Double = Imaging.Distance(v(e(i).Source).X, v(e(i).Source).Y, v(e(i).Target).X, v(e(i).Target).Y)
-                Return (edgeLengthCostFactor * ___edgeLength * ___edgeLength)
+                Return (EdgeLengthCostFactor * ___edgeLength * ___edgeLength)
             Else
                 Return 0.0
             End If
@@ -867,8 +866,8 @@ Namespace Layouts
         ''' <returns> the total edge crossing energy of the connected edges  </returns>
         Protected Friend Overridable Function getEdgeCrossingAffectedEdges(ByVal node As Integer) As Double
             Dim energy As Double = 0.0
-            For i As Integer = 0 To v(node).connectedEdges.Length - 1
-                energy += getEdgeCrossing(v(node).connectedEdges(i))
+            For i As Integer = 0 To v(node).ConnectedEdges.Length - 1
+                energy += getEdgeCrossing(v(node).ConnectedEdges(i))
             Next
 
             Return energy
@@ -890,16 +889,16 @@ Namespace Layouts
             Dim minjX, minjY, miniX, miniY, maxjX, maxjY, maxiX, maxiY As Double
 
             If ___isOptimizeEdgeCrossing Then
-                Dim iP1X As Double = v(e(i).source).x
-                Dim iP1Y As Double = v(e(i).source).y
-                Dim iP2X As Double = v(e(i).target).x
-                Dim iP2Y As Double = v(e(i).target).y
+                Dim iP1X As Double = v(e(i).Source).X
+                Dim iP1Y As Double = v(e(i).Source).Y
+                Dim iP2X As Double = v(e(i).Target).X
+                Dim iP2Y As Double = v(e(i).Target).Y
 
                 For j As Integer = 0 To e.Length - 1
-                    Dim jP1X As Double = v(e(j).source).x
-                    Dim jP1Y As Double = v(e(j).source).y
-                    Dim jP2X As Double = v(e(j).target).x
-                    Dim jP2Y As Double = v(e(j).target).y
+                    Dim jP1X As Double = v(e(j).Source).X
+                    Dim jP1Y As Double = v(e(j).Source).Y
+                    Dim jP2X As Double = v(e(j).Target).X
+                    Dim jP2Y As Double = v(e(j).Target).Y
                     If j <> i Then
                         ' First check is to see if the minimum bounding rectangles
                         ' of the edges overlap at all. Since the layout tries
@@ -960,7 +959,7 @@ Namespace Layouts
                     End If
                 Next
             End If
-            Return edgeCrossingCostFactor * n
+            Return EdgeCrossingCostFactor * n
         End Function
 
         ''' <summary>
@@ -975,12 +974,12 @@ Namespace Layouts
             Dim energy As Double = 0.0
             ' This function is only performed during fine tuning for performance
             If ___isOptimizeEdgeDistance AndAlso ___isFineTuning Then
-                Dim edges As Integer() = v(i).relevantEdges
+                Dim edges As Integer() = v(i).RelevantEdges
                 For j As Integer = 0 To edges.Length - 1
                     ' Note that the distance value is squared
-                    Dim distSquare As Double = java.awt.geom.Line2D.ptSegDistSq(v(e(edges(j)).source).x, v(e(edges(j)).source).y, v(e(edges(j)).target).x, v(e(edges(j)).target).y, v(i).x, v(i).y)
+                    Dim distSquare As Double = java.awt.geom.Line2D.ptSegDistSq(v(e(edges(j)).Source).X, v(e(edges(j)).Source).Y, v(e(edges(j)).Target).X, v(e(edges(j)).Target).Y, v(i).X, v(i).Y)
 
-                    distSquare -= v(i).radiusSquared
+                    distSquare -= v(i).RadiusSquared
 
                     ' prevents from dividing with Zero. No Math.abs() call
                     ' for performance
@@ -988,7 +987,7 @@ Namespace Layouts
 
                     ' Only bother with the divide if the node and edge are
                     ' fairly close together
-                    If distSquare < maxDistanceLimitSquared Then energy += edgeDistanceCostFactor / distSquare
+                    If distSquare < maxDistanceLimitSquared Then energy += EdgeDistanceCostFactor / distSquare
                 Next
             End If
             Return energy
@@ -1004,8 +1003,8 @@ Namespace Layouts
         ''' <returns> the total edge distance energy of the connected edges  </returns>
         Protected Friend Overridable Function getEdgeDistanceAffectedNodes(ByVal node As Integer) As Double
             Dim energy As Double = 0.0
-            For i As Integer = 0 To (v(node).connectedEdges.Length) - 1
-                energy += getEdgeDistanceFromEdge(v(node).connectedEdges(i))
+            For i As Integer = 0 To (v(node).ConnectedEdges.Length) - 1
+                energy += getEdgeDistanceFromEdge(v(node).ConnectedEdges(i))
             Next
 
             Return energy
@@ -1025,10 +1024,10 @@ Namespace Layouts
             If ___isOptimizeEdgeDistance AndAlso ___isFineTuning Then
                 For j As Integer = 0 To v.Length - 1
                     ' Don't calculate for connected nodes
-                    If e(i).source <> j AndAlso e(i).target <> j Then
-                        Dim distSquare As Double = java.awt.geom.Line2D.ptSegDistSq(v(e(i).source).x, v(e(i).source).y, v(e(i).target).x, v(e(i).target).y, v(j).x, v(j).y)
+                    If e(i).Source <> j AndAlso e(i).Target <> j Then
+                        Dim distSquare As Double = java.awt.geom.Line2D.ptSegDistSq(v(e(i).Source).X, v(e(i).Source).Y, v(e(i).Target).X, v(e(i).Target).Y, v(j).X, v(j).Y)
 
-                        distSquare -= v(j).radiusSquared
+                        distSquare -= v(j).RadiusSquared
 
                         ' prevents from dividing with Zero. No Math.abs() call
                         ' for performance
@@ -1036,7 +1035,7 @@ Namespace Layouts
 
                         ' Only bother with the divide if the node and edge are
                         ' fairly close together
-                        If distSquare < maxDistanceLimitSquared Then energy += edgeDistanceCostFactor / distSquare
+                        If distSquare < maxDistanceLimitSquared Then energy += EdgeDistanceCostFactor / distSquare
                     End If
                 Next
             End If

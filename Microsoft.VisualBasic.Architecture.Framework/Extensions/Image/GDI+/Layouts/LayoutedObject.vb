@@ -119,7 +119,7 @@ Namespace Imaging.LayoutModel
         ''' <summary>
         ''' Returns a new instance of the same point.
         ''' </summary>
-        Public Function Clone() As Object Implements ICloneable.Clone
+        Public Overridable Function Clone() As Object Implements ICloneable.Clone
             Return New mxPoint(X, Y)
         End Function
 

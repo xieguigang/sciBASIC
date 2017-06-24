@@ -125,7 +125,7 @@ Namespace Layouts
                 Dim model As com.mxgraph.model.mxIGraphModel = Graph.Model
 
                 If model.isAncestor(Me.parent, parent) Then
-                    Dim parentGeo As com.mxgraph.model.mxGeometry = model.getGeometry(parent)
+                    Dim parentGeo As mxGeometry = model.getGeometry(parent)
 
                     Do While parent IsNot Me.parent
                         result.X = result.X + parentGeo.X
@@ -147,13 +147,13 @@ Namespace Layouts
         ''' </summary>
         Public Overridable Sub setEdgePoints(ByVal edge As Object, ByVal points As IList(Of mxPoint))
             Dim model As com.mxgraph.model.mxIGraphModel = Graph.Model
-            Dim geometry As com.mxgraph.model.mxGeometry = model.getGeometry(edge)
+            Dim geometry As mxGeometry = model.getGeometry(edge)
 
             If geometry Is Nothing Then
-                geometry = New com.mxgraph.model.mxGeometry
-                geometry.Relative = True
+                geometry = New mxGeometry
+                geometry.relative = True
             Else
-                geometry = CType(geometry.clone(), com.mxgraph.model.mxGeometry)
+                geometry = CType(geometry.clone(), mxGeometry)
             End If
 
             If Me.parent IsNot Nothing AndAlso points IsNot Nothing Then
@@ -168,7 +168,7 @@ Namespace Layouts
 
             End If
 
-            geometry.Points = points
+            geometry.points = points
             model.setGeometry(edge, geometry)
         End Sub
 
@@ -177,7 +177,7 @@ Namespace Layouts
         ''' or the bounding box if <useBoundingBox> is true.
         ''' </summary>
         Public Overridable Function getVertexBounds(ByVal vertex As Object) As Rectangle
-            Dim geo As com.mxgraph.util.mxRectangle = Graph.Model.getGeometry(vertex)
+            Dim geo As mxRectangle = Graph.Model.getGeometry(vertex)
 
             ' Checks for oversize label bounding box and corrects
             ' the return value accordingly
@@ -186,20 +186,20 @@ Namespace Layouts
 
                 If state IsNot Nothing Then
                     Dim scale As Double = Graph.View.Scale
-                    Dim tmp As com.mxgraph.util.mxRectangle = state.BoundingBox
+                    Dim tmp As mxRectangle = state.BoundingBox
 
                     Dim dx0 As Double = (tmp.X - state.X) / scale
                     Dim dy0 As Double = (tmp.Y - state.Y) / scale
                     Dim dx1 As Double = (tmp.X + tmp.Width - state.X - state.Width) / scale
                     Dim dy1 As Double = (tmp.Y + tmp.Height - state.Y - state.Height) / scale
 
-                    geo = New com.mxgraph.util.mxRectangle(geo.X + dx0, geo.Y + dy0, geo.Width - dx0 + dx1, geo.Height + -dy0 + dy1)
+                    geo = New mxRectangle(geo.X + dx0, geo.Y + dy0, geo.Width - dx0 + dx1, geo.Height + -dy0 + dy1)
                 End If
             End If
 
             If Me.parent IsNot Nothing Then
                 Dim parent As Object = Graph.Model.getParent(vertex)
-                geo = CType(geo.clone(), com.mxgraph.util.mxRectangle)
+                geo = CType(geo.Clone(), mxRectangle)
 
                 If parent IsNot Nothing AndAlso parent IsNot Me.parent Then
                     Dim ___parentOffset As mxPoint = getParentOffset(parent)
@@ -208,7 +208,7 @@ Namespace Layouts
                 End If
             End If
 
-            Return New com.mxgraph.util.mxRectangle(geo)
+            Return New mxRectangle(geo)
         End Function
 
         ''' <summary>
@@ -226,11 +226,11 @@ Namespace Layouts
         ''' </summary>
         Public Overridable Function setVertexLocation(ByVal vertex As Object, ByVal x As Double, ByVal y As Double) As Rectangle
             Dim model As com.mxgraph.model.mxIGraphModel = Graph.Model
-            Dim geometry As com.mxgraph.model.mxGeometry = model.getGeometry(vertex)
-            Dim result As com.mxgraph.util.mxRectangle = Nothing
+            Dim geometry As mxGeometry = model.getGeometry(vertex)
+            Dim result As mxRectangle = Nothing
 
             If geometry IsNot Nothing Then
-                result = New com.mxgraph.util.mxRectangle(x, y, geometry.Width, geometry.Height)
+                result = New mxRectangle(x, y, geometry.Width, geometry.Height)
 
                 Dim graphView As NetworkGraphView = Graph.View
 
@@ -240,7 +240,7 @@ Namespace Layouts
 
                     If state IsNot Nothing Then
                         Dim scale As Double = Graph.View.Scale
-                        Dim box As com.mxgraph.util.mxRectangle = state.BoundingBox
+                        Dim box As mxRectangle = state.BoundingBox
 
                         If state.BoundingBox.X < state.X Then
                             x += (state.X - box.X) / scale
@@ -265,7 +265,7 @@ Namespace Layouts
                 End If
 
                 If geometry.X <> x OrElse geometry.Y <> y Then
-                    geometry = CType(geometry.clone(), com.mxgraph.model.mxGeometry)
+                    geometry = CType(geometry.clone(), mxGeometry)
                     geometry.X = x
                     geometry.Y = y
 
@@ -290,21 +290,21 @@ Namespace Layouts
                 For i As Integer = groups.Length - 1 To 0 Step -1
                     Dim group As Object = groups(i)
                     Dim children As Object() = Graph.getChildVertices(group)
-                    Dim bounds As com.mxgraph.util.mxRectangle = Graph.getBoundingBoxFromGeometry(children)
+                    Dim bounds As mxRectangle = Graph.getBoundingBoxFromGeometry(children)
 
-                    Dim geometry As com.mxgraph.model.mxGeometry = Graph.getCellGeometry(group)
+                    Dim geometry As mxGeometry = Graph.getCellGeometry(group)
                     Dim left As Double = 0
                     Dim top As Double = 0
 
                     ' Adds the size of the title area for swimlanes
                     If Me.Graph.isSwimlane(group) Then
-                        Dim size As com.mxgraph.util.mxRectangle = Graph.getStartSize(group)
+                        Dim size As mxRectangle = Graph.getStartSize(group)
                         left = size.Width
                         top = size.Height
                     End If
 
                     If bounds IsNot Nothing AndAlso geometry IsNot Nothing Then
-                        geometry = CType(geometry.clone(), com.mxgraph.model.mxGeometry)
+                        geometry = CType(geometry.clone(), mxGeometry)
                         geometry.X = geometry.X + bounds.X - border - left
                         geometry.Y = geometry.Y + bounds.Y - border - top
                         geometry.Width = bounds.Width + 2 * border + left
