@@ -1,5 +1,6 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 
 Namespace Layouts
 
@@ -117,8 +118,8 @@ Namespace Layouts
             Graph.setCellStyles(com.mxgraph.util.mxConstants.STYLE_ORTHOGONAL, If(value, "1", "0"), New Object() {edge})
         End Sub
 
-        Public Overridable Function getParentOffset(ByVal parent As Object) As com.mxgraph.util.mxPoint
-            Dim result As New com.mxgraph.util.mxPoint
+        Public Overridable Function getParentOffset(ByVal parent As Object) As mxPoint
+            Dim result As New mxPoint
 
             If parent IsNot Nothing AndAlso parent IsNot Me.parent Then
                 Dim model As com.mxgraph.model.mxIGraphModel = Graph.Model
@@ -144,7 +145,7 @@ Namespace Layouts
         ''' list of mxPoints. Set the points to null to remove all
         ''' existing points for an edge.
         ''' </summary>
-        Public Overridable Sub setEdgePoints(ByVal edge As Object, ByVal points As IList(Of PointF))
+        Public Overridable Sub setEdgePoints(ByVal edge As Object, ByVal points As IList(Of mxPoint))
             Dim model As com.mxgraph.model.mxIGraphModel = Graph.Model
             Dim geometry As com.mxgraph.model.mxGeometry = model.getGeometry(edge)
 
@@ -158,9 +159,9 @@ Namespace Layouts
             If Me.parent IsNot Nothing AndAlso points IsNot Nothing Then
                 Dim parent As Object = Graph.Model.getParent(edge)
 
-                Dim ___parentOffset As com.mxgraph.util.mxPoint = getParentOffset(parent)
+                Dim ___parentOffset As mxPoint = getParentOffset(parent)
 
-                For Each point As com.mxgraph.util.mxPoint In points
+                For Each point As mxPoint In points
                     point.X = point.X - ___parentOffset.X
                     point.Y = point.Y - ___parentOffset.Y
                 Next
@@ -201,7 +202,7 @@ Namespace Layouts
                 geo = CType(geo.clone(), com.mxgraph.util.mxRectangle)
 
                 If parent IsNot Nothing AndAlso parent IsNot Me.parent Then
-                    Dim ___parentOffset As com.mxgraph.util.mxPoint = getParentOffset(parent)
+                    Dim ___parentOffset As mxPoint = getParentOffset(parent)
                     geo.X = geo.X + ___parentOffset.X
                     geo.Y = geo.Y + ___parentOffset.Y
                 End If
@@ -256,7 +257,7 @@ Namespace Layouts
                     Dim parent As Object = model.getParent(vertex)
 
                     If parent IsNot Nothing AndAlso parent IsNot Me.parent Then
-                        Dim ___parentOffset As com.mxgraph.util.mxPoint = getParentOffset(parent)
+                        Dim ___parentOffset As mxPoint = getParentOffset(parent)
 
                         x = x - ___parentOffset.X
                         y = y - ___parentOffset.Y
