@@ -28,12 +28,35 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
 Public Module VectorExtensions
+
+    <Extension>
+    Public Function Sort(Of T)(source As IEnumerable(Of NamedValue(Of T)), by As Index(Of String), Optional throwNoOrder As Boolean = False) As NamedValue(Of T)()
+        Dim out As NamedValue(Of T)() = New NamedValue(Of T)(by.Count - 1) {}
+
+        For Each x In source
+            Dim i% = by(x.Name)
+
+            If i = -1 Then
+                If throwNoOrder Then
+                    Throw New InvalidExpressionException(x.Name & " was not found in the index value.")
+                Else
+                    Continue For
+                End If
+            Else
+                out(i) = x
+            End If
+        Next
+
+        Return out
+    End Function
 
     <Extension> Public Function GetRange(Of T)(vector As T(), index%, count%) As T()
         Dim fill As T() = New T(count - 1) {}
@@ -382,5 +405,5 @@ Public Module VectorExtensions
         ''' 包含在下一个分块之中的最开始的位置
         ''' </summary>
         NextFirst
-    End Enum     
+    End Enum
 End Module

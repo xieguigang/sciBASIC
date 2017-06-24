@@ -187,7 +187,7 @@
     <Compile Include="g\Axis\Axis.vb" />
     <Compile Include="BarPlot\BarPlot2.vb" />
     <Compile Include="BarPlot\Histogram\DataModel.vb" />
-    <Compile Include="Bubble.vb" />
+    <Compile Include="Scatter\Bubble.vb" />
     <Compile Include="csv\BarData.vb" />
     <Compile Include="Dendrogram\Dendrogram.vb" />
     <Compile Include="Dendrogram\Layouts.vb" />

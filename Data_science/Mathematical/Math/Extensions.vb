@@ -61,6 +61,20 @@ Public Module Extensions
     End Function
 
     <Extension>
+    Public Function Range(data As IEnumerable(Of Double)) As (min#, max#)
+        With data.ToArray
+            Return (.Min, .Max)
+        End With
+    End Function
+
+    <Extension>
+    Public Function Range(data As IEnumerable(Of Integer)) As (min#, max#)
+        With data.ToArray
+            Return (.Min, .Max)
+        End With
+    End Function
+
+    <Extension>
     Public Function IntRange(range As (From%, To%)) As IntRange
         With range
             Return New IntRange(.From, .To)
