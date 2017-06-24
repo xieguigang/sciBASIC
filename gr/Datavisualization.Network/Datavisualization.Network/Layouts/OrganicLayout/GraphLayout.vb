@@ -26,7 +26,7 @@ Namespace Layouts
             Me.Graph = graph
         End Sub
 
-        Public Sub execute(ByVal parent As Object)
+        Public Overridable Sub execute(ByVal parent As Object)
             Me.parent = parent
         End Sub
 

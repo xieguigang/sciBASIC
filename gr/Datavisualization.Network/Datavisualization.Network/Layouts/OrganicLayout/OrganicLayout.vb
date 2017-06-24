@@ -23,18 +23,18 @@ Namespace Layouts
     ''' relatively preferable in the final layout. Most of  the criteria conflict
     ''' with the others to some extent and so the setting of the factors determines
     ''' the general look of the resulting graph.
-    ''' <p>
+    ''' 
     ''' In addition to the four aesthetic criteria the concept of a border line
     ''' which induces an energy cost to nodes in proximity to the graph bounds is
     ''' introduced to attempt to restrain the graph. All of the 5 factors can be
     ''' switched on or off using the <code>isOptimize...</code> variables.
-    ''' <p>
+    ''' 
     ''' Simulated Annealing is a force-directed layout and is one of the more
     ''' expensive, but generally effective layouts of this type. Layouts like
     ''' the spring layout only really factor in edge length and inter-node
     ''' distance being the lowest CPU intensive for the most aesthetic gain. The
     ''' additional factors are more expensive but can have very attractive results.
-    ''' <p>
+    ''' 
     ''' The main loop of the algorithm consist of processing the nodes in a 
     ''' deterministic order. During the processing of each node a circle of radius
     ''' <code>moveRadius</code> is made around the node and split into
@@ -46,7 +46,7 @@ Namespace Layouts
     ''' implementation only checks 8 points around the radius of the circle, as
     ''' opposed to the suggested 30 in the paper. Doubling the number of points
     ''' double the CPU load and 8 works almost as well as 30.
-    ''' <p>
+    ''' 
     ''' The <code>moveRadius</code> replaces the temperature as the influencing
     ''' factor in the way the graph settles in later iterations. If the user does
     ''' not set the initial move radius it is set to half the maximum dimension
@@ -58,14 +58,14 @@ Namespace Layouts
     ''' resulting graph aesthetics. When the radius hits the minimum move radius
     ''' defined, the layout terminates. The minimum move radius should be set
     ''' a value where the move distance is too minor to be of interest.
-    ''' <p>
+    ''' 
     ''' Also, the idea of a fine tuning phase is used, as described in the paper.
     ''' This involves only calculating the edge to node distance energy cost
     ''' at the end of the algorithm since it is an expensive calculation and
     ''' it really an 'optimizating' function. <code>fineTuningRadius</code>
     ''' defines the radius value that, when reached, causes the edge to node
     ''' distance to be calculated.
-    ''' <p>
+    ''' 
     ''' There are other special cases that are processed after each iteration.
     ''' <code>unchangedEnergyRoundTermination</code> defines the number of
     ''' iterations, after which the layout terminates. If nothing is being moved
@@ -256,7 +256,7 @@ Namespace Layouts
         Public Overridable Property MinDistanceLimit As Double = 2
 
         ''' <summary>
-        ''' when <seealso cref="#moveRadius"/>reaches this value, the algorithm is terminated
+        ''' when <seealso cref="moveRadius"/>reaches this value, the algorithm is terminated
         ''' </summary>
         Public Overridable Property MinMoveRadius As Double = 2
 
@@ -429,14 +429,11 @@ Namespace Layouts
             Return False
         End Function
 
-        ''' <summary>
-        ''' Implements <mxGraphLayout.execute>.
-        ''' </summary>
         Public Overrides Sub execute(ByVal parent As Object)
             Dim model As com.mxgraph.model.mxIGraphModel = Graph.Model
             Dim view As NetworkGraphView = Graph.View
             Dim vertices As Object() = Graph.getChildVertices(parent)
-            Dim vertexSet As New HashSet(Of Object)(java.util.Arrays.asList(vertices))
+            Dim vertexSet As New HashSet(Of Object)(vertices)
 
             Dim validEdges As New HashSet(Of Object)
 
@@ -468,8 +465,8 @@ Namespace Layouts
                 vertexMap(vertices(i)) = New Integer?(i)
                 bounds = getVertexBounds(vertices(i))
 
-                If totalBounds Is Nothing Then
-                    totalBounds = CType(bounds.clone(), Rectangle)
+                If totalBounds.IsEmpty Then
+                    totalBounds = bounds
                 Else
                     totalBounds.add(bounds)
                 End If
@@ -478,19 +475,19 @@ Namespace Layouts
                 ' the center point of the vertex for better positioning
                 Dim width As Double = bounds.Width
                 Dim height As Double = bounds.Height
-                v(i).x = bounds.X + width / 2.0
-                v(i).y = bounds.Y + height / 2.0
-                If approxNodeDimensions Then
-                    v(i).radiusSquared = Math.Min(width, height)
-                    v(i).radiusSquared *= v(i).radiusSquared
+                v(i).X = bounds.X + width / 2.0
+                v(i).Y = bounds.Y + height / 2.0
+                If ApproxNodeDimensions Then
+                    v(i).RadiusSquared = Math.Min(width, height)
+                    v(i).RadiusSquared *= v(i).RadiusSquared
                 Else
-                    v(i).radiusSquared = width * width
-                    v(i).heightSquared = height * height
+                    v(i).RadiusSquared = width * width
+                    v(i).HeightSquared = height * height
                 End If
             Next
 
-            If averageNodeArea = 0.0 Then
-                If boundsWidth = 0.0 AndAlso totalBounds IsNot Nothing Then
+            If AverageNodeArea = 0.0 Then
+                If boundsWidth = 0.0 AndAlso Not totalBounds.IsEmpty Then
                     ' Just use current bounds of graph
                     boundsX = totalBounds.X
                     boundsY = totalBounds.Y
@@ -500,9 +497,9 @@ Namespace Layouts
             Else
                 ' find the center point of the current graph
                 ' based the new graph bounds on the average node area set
-                Dim newArea As Double = averageNodeArea * vertices.Length
+                Dim newArea As Double = AverageNodeArea * vertices.Length
                 Dim squareLength As Double = Math.Sqrt(newArea)
-                If bounds IsNot Nothing Then
+                If Not bounds.IsEmpty Then
                     Dim centreX As Double = totalBounds.X + totalBounds.Width / 2.0
                     Dim centreY As Double = totalBounds.Y + totalBounds.Height / 2.0
                     boundsX = centreX - squareLength / 2.0
@@ -524,12 +521,12 @@ Namespace Layouts
 
             ' If the initial move radius has not been set find a suitable value.
             ' A good value is half the maximum dimension of the final graph area
-            If initialMoveRadius = 0.0 Then initialMoveRadius = Math.Max(boundsWidth, boundsHeight) / 2.0
+            If InitialMoveRadius = 0.0 Then InitialMoveRadius = Math.Max(boundsWidth, boundsHeight) / 2.0
 
-            moveRadius = initialMoveRadius
+            moveRadius = InitialMoveRadius
 
-            minDistanceLimitSquared = minDistanceLimit * minDistanceLimit
-            maxDistanceLimitSquared = maxDistanceLimit * maxDistanceLimit
+            minDistanceLimitSquared = MinDistanceLimit * MinDistanceLimit
+            maxDistanceLimitSquared = MaxDistanceLimit * MaxDistanceLimit
 
             unchangedEnergyRoundCount = 0
 
@@ -548,32 +545,32 @@ Namespace Layouts
                 If sourceCell IsNot Nothing Then source = vertexMap(sourceCell)
                 If targetCell IsNot Nothing Then target = vertexMap(targetCell)
                 If source IsNot Nothing Then
-                    e(i).source = source
+                    e(i).Source = source
                 Else
                     ' source end is not connected
-                    e(i).source = -1
+                    e(i).Source = -1
                 End If
                 If target IsNot Nothing Then
-                    e(i).target = target
+                    e(i).Target = target
                 Else
                     ' target end is not connected
-                    e(i).target = -1
+                    e(i).Target = -1
                 End If
             Next
 
             ' Set up internal nodes with information about whether edges
             ' are connected to them or not
             For i As Integer = 0 To v.Length - 1
-                v(i).relevantEdges = getRelevantEdges(i)
-                v(i).connectedEdges = getConnectedEdges(i)
+                v(i).RelevantEdges = getRelevantEdges(i)
+                v(i).ConnectedEdges = getConnectedEdges(i)
             Next
 
             ' Setup the normal vectors for the test points to move each vertex to
-            xNormTry = New Double(triesPerCell - 1) {}
-            yNormTry = New Double(triesPerCell - 1) {}
+            xNormTry = New Double(TriesPerCell - 1) {}
+            yNormTry = New Double(TriesPerCell - 1) {}
 
-            For i As Integer = 0 To triesPerCell - 1
-                Dim angle As Double = i * ((2.0 * Math.PI) / triesPerCell)
+            For i As Integer = 0 To TriesPerCell - 1
+                Dim angle As Double = i * ((2.0 * Math.PI) / TriesPerCell)
                 xNormTry(i) = Math.Cos(angle)
                 yNormTry(i) = Math.Sin(angle)
             Next
@@ -585,25 +582,25 @@ Namespace Layouts
                 Dim cell As Object = model.getChildAt(parent, i)
 
                 If Not isEdgeIgnored(cell) Then
-                    If resetEdges Then Graph.resetEdge(cell)
+                    If ResetEdges Then Graph.resetEdge(cell)
 
-                    If disableEdgeStyle Then setEdgeStyleEnabled(cell, False)
+                    If DisableEdgeStyle Then setEdgeStyleEnabled(cell, False)
                 End If
             Next
 
             ' The main layout loop
-            For iteration = 0 To maxIterations - 1
+            For iteration = 0 To MaxIterations - 1
                 performRound()
             Next
 
             ' Obtain the final positions
-            Dim result As Double()() = RectangularArrays.ReturnRectangularDoubleArray(v.Length, 2)
+            Dim result As Double()() = MAT(Of Double)(v.Length, 2)
             For i As Integer = 0 To v.Length - 1
-                vertices(i) = v(i).cell
+                vertices(i) = v(i).Cell
                 bounds = getVertexBounds(vertices(i))
 
-                result(i)(0) = v(i).x - bounds.Width / 2
-                result(i)(1) = v(i).y - bounds.Height / 2
+                result(i)(0) = v(i).X - bounds.Width / 2
+                result(i)(1) = v(i).Y - bounds.Height / 2
             Next
 
             model.beginUpdate()
@@ -853,7 +850,7 @@ Namespace Layouts
         ''' <returns> the total edge length energy of the specified edge  </returns>
         Protected Friend Overridable Function getEdgeLength(ByVal i As Integer) As Double
             If ___isOptimizeEdgeLength Then
-                Dim ___edgeLength As Double = java.awt.geom.Point2D.distance(v(e(i).source).x, v(e(i).source).y, v(e(i).target).x, v(e(i).target).y)
+                Dim ___edgeLength As Double = Imaging.Distance(v(e(i).Source).X, v(e(i).Source).Y, v(e(i).Target).X, v(e(i).Target).Y)
                 Return (edgeLengthCostFactor * ___edgeLength * ___edgeLength)
             Else
                 Return 0.0
@@ -1062,22 +1059,13 @@ Namespace Layouts
         '''            the cell index to which the edges are not connected </param>
         ''' <returns> Array of all interesting Edges </returns>
         Protected Friend Overridable Function getRelevantEdges(ByVal cellIndex As Integer) As Integer()
-            Dim relevantEdgeList As New List(Of Integer?)(e.Length)
+            Dim relevantEdgeList As New List(Of Integer)(e.Length)
 
             For i As Integer = 0 To e.Length - 1
-                If e(i).source <> cellIndex AndAlso e(i).target <> cellIndex Then relevantEdgeList.Add(New Integer?(i))
+                If e(i).Source <> cellIndex AndAlso e(i).Target <> cellIndex Then relevantEdgeList.Add(i)
             Next
 
-            Dim relevantEdgeArray As Integer() = New Integer(relevantEdgeList.Count - 1) {}
-            Dim iter As IEnumerator(Of Integer?) = relevantEdgeList.GetEnumerator()
-
-            'Reform the list into an array but replace Integer values with ints
-            For i As Integer = 0 To relevantEdgeArray.Length - 1
-                'JAVA TO VB CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-                If iter.hasNext() Then relevantEdgeArray(i) = iter.next()
-            Next
-
-            Return relevantEdgeArray
+            Return relevantEdgeList.ToArray
         End Function
 
         ''' <summary>
@@ -1087,22 +1075,13 @@ Namespace Layouts
         '''            the cell index to which the edges are connected </param>
         ''' <returns> Array of all connected Edges </returns>
         Protected Friend Overridable Function getConnectedEdges(ByVal cellIndex As Integer) As Integer()
-            Dim connectedEdgeList As New List(Of Integer?)(e.Length)
+            Dim connectedEdgeList As New List(Of Integer)(e.Length)
 
             For i As Integer = 0 To e.Length - 1
-                If e(i).source = cellIndex OrElse e(i).target = cellIndex Then connectedEdgeList.Add(New Integer?(i))
+                If e(i).Source = cellIndex OrElse e(i).Target = cellIndex Then connectedEdgeList.Add(i)
             Next
 
-            Dim connectedEdgeArray As Integer() = New Integer(connectedEdgeList.Count - 1) {}
-            Dim iter As IEnumerator(Of Integer?) = connectedEdgeList.GetEnumerator()
-
-            ' Reform the list into an array but replace Integer values with ints
-            For i As Integer = 0 To connectedEdgeArray.Length - 1
-                'JAVA TO VB CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-                If iter.hasNext() Then connectedEdgeArray(i) = iter.next()
-            Next
-
-            Return connectedEdgeArray
+            Return connectedEdgeList.ToArray
         End Function
 
         ''' <summary>
@@ -1112,5 +1091,4 @@ Namespace Layouts
             Return "Organic"
         End Function
     End Class
-
 End Namespace
