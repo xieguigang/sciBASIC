@@ -25,45 +25,7 @@ Namespace Layouts
         ''' <summary>
         ''' Global switch to translate the points in translate. Default is true.
         ''' </summary>
-        <NonSerialized>
         Public Shared TRANSLATE_CONTROL_POINTS As Boolean = True
-
-        ''' <summary>
-        ''' Stores alternate values for x, y, width and height in a rectangle.
-        ''' Default is null.
-        ''' </summary>
-        Protected Friend alternateBounds As mxRectangle
-
-        ''' <summary>
-        ''' Defines the source- and target-point of the edge. This is used if the
-        ''' corresponding edge does not have a source vertex. Otherwise it is
-        ''' ignored. Default is null.
-        ''' </summary>
-        Protected Friend sourcePoint, targetPoint As mxPoint
-
-        ''' <summary>
-        ''' List of mxPoints which specifies the control points along the edge.
-        ''' These points are the intermediate points on the edge, for the endpoints
-        ''' use targetPoint and sourcePoint or set the terminals of the edge to
-        ''' a non-null value. Default is null.
-        ''' </summary>
-        Protected Friend points As IList(Of mxPoint)
-
-        ''' <summary>
-        ''' Holds the offset of the label for edges. This is the absolute vector
-        ''' between the center of the edge and the top, left point of the label.
-        ''' Default is null.
-        ''' </summary>
-        Protected Friend offset As mxPoint
-
-        ''' <summary>
-        ''' Specifies if the coordinates in the geometry are to be interpreted as
-        ''' relative coordinates. Default is false. This is used to mark a geometry
-        ''' with an x- and y-coordinate that is used to describe an edge label
-        ''' position, or a relative location with respect to a parent cell's
-        ''' width and height.
-        ''' </summary>
-        Protected Friend relative As Boolean = False
 
         ''' <summary>
         ''' Constructs a new geometry at (0, 0) with the width and height set to 0.
@@ -84,84 +46,48 @@ Namespace Layouts
         End Sub
 
         ''' <summary>
-        ''' Returns the alternate bounds.
+        ''' Stores alternate values for x, y, width and height in a rectangle.
+        ''' Default is null.
         ''' </summary>
         Public Overridable Property AlternateBounds As mxRectangle
-            Get
-                Return AlternateBounds
-            End Get
-            Set(ByVal rect As mxRectangle)
-                alternateBounds = rect
-            End Set
-        End Property
-
 
         ''' <summary>
-        ''' Returns the source point.
+        ''' Defines the source- and target-point of the edge. This is used if the
+        ''' corresponding edge does not have a source vertex. Otherwise it is
+        ''' ignored. Default is null.
         ''' </summary>
-        ''' <returns> Returns the source point. </returns>
         Public Overridable Property SourcePoint As mxPoint
-            Get
-                Return SourcePoint
-            End Get
-            Set(ByVal sourcePoint As mxPoint)
-                Me.sourcePoint = sourcePoint
-            End Set
-        End Property
-
 
         ''' <summary>
-        ''' Returns the target point.
+        ''' Defines the source- and target-point of the edge. This is used if the
+        ''' corresponding edge does not have a source vertex. Otherwise it is
+        ''' ignored. Default is null.
         ''' </summary>
-        ''' <returns> Returns the target point. </returns>
         Public Overridable Property TargetPoint As mxPoint
-            Get
-                Return TargetPoint
-            End Get
-            Set(ByVal targetPoint As mxPoint)
-                Me.targetPoint = targetPoint
-            End Set
-        End Property
-
 
         ''' <summary>
-        ''' Returns the list of control points.
+        ''' List of mxPoints which specifies the control points along the edge.
+        ''' These points are the intermediate points on the edge, for the endpoints
+        ''' use targetPoint and sourcePoint or set the terminals of the edge to
+        ''' a non-null value. Default is null.
         ''' </summary>
         Public Overridable Property Points As IList(Of mxPoint)
-            Get
-                Return Points
-            End Get
-            Set(ByVal value As IList(Of mxPoint))
-                points = value
-            End Set
-        End Property
-
 
         ''' <summary>
-        ''' Returns the offset.
+        ''' Holds the offset of the label for edges. This is the absolute vector
+        ''' between the center of the edge and the top, left point of the label.
+        ''' Default is null.
         ''' </summary>
         Public Overridable Property Offset As mxPoint
-            Get
-                Return Offset
-            End Get
-            Set(ByVal offset As mxPoint)
-                Me.offset = offset
-            End Set
-        End Property
-
 
         ''' <summary>
-        ''' Returns true of the geometry is relative.
+        ''' Specifies if the coordinates in the geometry are to be interpreted as
+        ''' relative coordinates. Default is false. This is used to mark a geometry
+        ''' with an x- and y-coordinate that is used to describe an edge label
+        ''' position, or a relative location with respect to a parent cell's
+        ''' width and height.
         ''' </summary>
-        Public Overridable Property Relative As Boolean
-            Get
-                Return Relative
-            End Get
-            Set(ByVal value As Boolean)
-                relative = value
-            End Set
-        End Property
-
+        Public Overridable Property Relative As Boolean = False
 
         ''' <summary>
         ''' Swaps the x, y, width and height with the values stored in
