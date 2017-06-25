@@ -221,7 +221,5 @@ Namespace Layouts
 
             Return ___clone
         End Function
-
     End Class
-
 End Namespace

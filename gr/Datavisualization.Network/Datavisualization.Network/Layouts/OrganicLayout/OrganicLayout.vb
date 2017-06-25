@@ -1,6 +1,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Language.Java
 
 ' $Id: mxOrganicLayout.java,v 1.2 2012/12/22 22:39:40 david Exp $
 ' Copyright (c) 2007-2013, JGraph Ltd
@@ -486,7 +487,7 @@ Namespace Layouts
             Next
 
             If AverageNodeArea = 0.0 Then
-                If boundsWidth = 0.0 AndAlso Not totalBounds.IsEmpty Then
+                If boundsWidth = 0.0 AndAlso Not totalBounds Is Nothing Then
                     ' Just use current bounds of graph
                     boundsX = totalBounds.X
                     boundsY = totalBounds.Y
@@ -498,7 +499,7 @@ Namespace Layouts
                 ' based the new graph bounds on the average node area set
                 Dim newArea As Double = AverageNodeArea * vertices.Length
                 Dim squareLength As Double = Math.Sqrt(newArea)
-                If Not bounds.IsEmpty Then
+                If Not bounds Is Nothing Then
                     Dim centreX As Double = totalBounds.X + totalBounds.Width / 2.0
                     Dim centreY As Double = totalBounds.Y + totalBounds.Height / 2.0
                     boundsX = centreX - squareLength / 2.0
@@ -952,7 +953,7 @@ Namespace Layouts
                             ' otherwise. Because of ignoring the zero this code
                             ' below can behave like only a 1 or -1 will be
                             ' returned. See Lines2D.linesIntersects().
-                            Dim intersects As Boolean = ((java.awt.geom.Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP1X, jP1Y) <> java.awt.geom.Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP2X, jP2Y)) AndAlso (java.awt.geom.Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP1X, iP1Y) <> java.awt.geom.Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP2X, iP2Y)))
+                            Dim intersects As Boolean = ((Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP1X, jP1Y) <> Line2D.relativeCCW(iP1X, iP1Y, iP2X, iP2Y, jP2X, jP2Y)) AndAlso (Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP1X, iP1Y) <> Line2D.relativeCCW(jP1X, jP1Y, jP2X, jP2Y, iP2X, iP2Y)))
 
                             If intersects Then n += 1
                         End If
@@ -977,7 +978,7 @@ Namespace Layouts
                 Dim edges As Integer() = v(i).RelevantEdges
                 For j As Integer = 0 To edges.Length - 1
                     ' Note that the distance value is squared
-                    Dim distSquare As Double = java.awt.geom.Line2D.ptSegDistSq(v(e(edges(j)).Source).X, v(e(edges(j)).Source).Y, v(e(edges(j)).Target).X, v(e(edges(j)).Target).Y, v(i).X, v(i).Y)
+                    Dim distSquare As Double = Line2D.ptSegDistSq(v(e(edges(j)).Source).X, v(e(edges(j)).Source).Y, v(e(edges(j)).Target).X, v(e(edges(j)).Target).Y, v(i).X, v(i).Y)
 
                     distSquare -= v(i).RadiusSquared
 
@@ -1025,7 +1026,7 @@ Namespace Layouts
                 For j As Integer = 0 To v.Length - 1
                     ' Don't calculate for connected nodes
                     If e(i).Source <> j AndAlso e(i).Target <> j Then
-                        Dim distSquare As Double = java.awt.geom.Line2D.ptSegDistSq(v(e(i).Source).X, v(e(i).Source).Y, v(e(i).Target).X, v(e(i).Target).Y, v(j).X, v(j).Y)
+                        Dim distSquare As Double = Line2D.ptSegDistSq(v(e(i).Source).X, v(e(i).Source).Y, v(e(i).Target).X, v(e(i).Target).Y, v(j).X, v(j).Y)
 
                         distSquare -= v(j).RadiusSquared
 
