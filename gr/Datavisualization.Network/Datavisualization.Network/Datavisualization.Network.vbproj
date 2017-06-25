@@ -206,10 +206,10 @@
     <Compile Include="IO\Generic\INetComponent.vb" />
     <Compile Include="IO\GraphAPI.vb" />
     <Compile Include="Graph\Extensions.vb" />
-    <Compile Include="Graph\Edge.vb" />
-    <Compile Include="Graph\Graph.vb" />
-    <Compile Include="Graph\GraphData.vb" />
-    <Compile Include="Graph\Node.vb" />
+    <Compile Include="Graph\Model\Edge.vb" />
+    <Compile Include="Graph\Model\Graph.vb" />
+    <Compile Include="Graph\Model\GraphData.vb" />
+    <Compile Include="Graph\Model\Node.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IForceDirected.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IGraph.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IRenderer.vb" />
