@@ -158,15 +158,55 @@ Namespace Imaging.LayoutModel
         Public Overridable Function intersectLine(ByVal x0 As Double, ByVal y0 As Double, ByVal x1 As Double, ByVal y1 As Double) As mxPoint
             Dim result As mxPoint = Nothing
 
-            result = mxUtils.intersection(X, Y, X + width, Y, x0, y0, x1, y1)
+            result = intersection(X, Y, X + Width, Y, x0, y0, x1, y1)
 
-            If result Is Nothing Then result = mxUtils.intersection(X + width, Y, X + width, Y + height, x0, y0, x1, y1)
+            If result Is Nothing Then result = intersection(X + Width, Y, X + Width, Y + Height, x0, y0, x1, y1)
 
-            If result Is Nothing Then result = mxUtils.intersection(X + width, Y + height, X, Y + height, x0, y0, x1, y1)
+            If result Is Nothing Then result = intersection(X + Width, Y + Height, X, Y + Height, x0, y0, x1, y1)
 
-            If result Is Nothing Then result = mxUtils.intersection(X, Y, X, Y + height, x0, y0, x1, y1)
+            If result Is Nothing Then result = intersection(X, Y, X, Y + Height, x0, y0, x1, y1)
 
             Return result
+        End Function
+
+        ''' <summary>
+        ''' Returns the intersection of two lines as an mxPoint.
+        ''' </summary>
+        ''' <param name="x0">
+        '''            X-coordinate of the first line's startpoint. </param>
+        ''' <param name="y0">
+        '''            Y-coordinate of the first line's startpoint. </param>
+        ''' <param name="x1">
+        '''            X-coordinate of the first line's endpoint. </param>
+        ''' <param name="y1">
+        '''            Y-coordinate of the first line's endpoint. </param>
+        ''' <param name="x2">
+        '''            X-coordinate of the second line's startpoint. </param>
+        ''' <param name="y2">
+        '''            Y-coordinate of the second line's startpoint. </param>
+        ''' <param name="x3">
+        '''            X-coordinate of the second line's endpoint. </param>
+        ''' <param name="y3">
+        '''            Y-coordinate of the second line's endpoint. </param>
+        ''' <returns> Returns the intersection between the two lines. </returns>
+        Public Shared Function intersection(ByVal x0 As Double, ByVal y0 As Double, ByVal x1 As Double, ByVal y1 As Double, ByVal x2 As Double, ByVal y2 As Double, ByVal x3 As Double, ByVal y3 As Double) As mxPoint
+            Dim denom As Double = ((y3 - y2) * (x1 - x0)) - ((x3 - x2) * (y1 - y0))
+            Dim nume_a As Double = ((x3 - x2) * (y0 - y2)) - ((y3 - y2) * (x0 - x2))
+            Dim nume_b As Double = ((x1 - x0) * (y0 - y2)) - ((y1 - y0) * (x0 - x2))
+
+            Dim ua As Double = nume_a / denom
+            Dim ub As Double = nume_b / denom
+
+            If ua >= 0.0 AndAlso ua <= 1.0 AndAlso ub >= 0.0 AndAlso ub <= 1.0 Then
+                ' Get the intersection point
+                Dim intersectionX As Double = x0 + ua * (x1 - x0)
+                Dim intersectionY As Double = y0 + ua * (y1 - y0)
+
+                Return New mxPoint(intersectionX, intersectionY)
+            End If
+
+            ' No intersection
+            Return Nothing
         End Function
 
         ''' <summary>

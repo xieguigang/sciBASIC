@@ -318,7 +318,7 @@ Namespace Layouts
         ''' Specifies if all edge points of traversed edges should be removed.
         ''' Default is true.
         ''' </summary>
-        Public Overridable Property ResetEdges As Boolean
+        Public Overridable Property ResetEdges As Boolean = True
 
 
         ''' <summary>
