@@ -421,12 +421,27 @@ Namespace Layouts
         End Sub
 
         ''' <summary>
-        ''' Returns true if the given vertex has no connected edges.
+        ''' Returns all distinct edges connected to this cell.
         ''' </summary>
-        ''' <param name="vertex"> Object that represents the vertex to be tested. </param>
-        ''' <returns> Returns true if the vertex should be ignored. </returns>
-        Public Overrides Function isVertexIgnored(ByVal vertex As Object) As Boolean
-            Return False
+        ''' <param name="model"> Model that contains the connection information. </param>
+        ''' <param name="cell"> Cell whose connections should be returned. </param>
+        ''' <param name="incoming"> Specifies if incoming edges should be returned. </param>
+        ''' <param name="outgoing"> Specifies if outgoing edges should be returned. </param>
+        ''' <param name="includeLoops"> Specifies if loops should be returned. </param>
+        ''' <returns> Returns the array of connected edges for the given cell. </returns>
+        Public Shared Function getEdges(ByVal model As mxIGraphModel, ByVal cell As Object, ByVal incoming As Boolean, ByVal outgoing As Boolean, ByVal includeLoops As Boolean) As Object()
+            Dim ___edgeCount As Integer = model.getEdgeCount(cell)
+            Dim result As IList(Of Object) = New List(Of Object)(___edgeCount)
+
+            For i As Integer = 0 To ___edgeCount - 1
+                Dim ___edge As Object = model.getEdgeAt(cell, i)
+                Dim source As Object = model.getTerminal(___edge, True)
+                Dim target As Object = model.getTerminal(___edge, False)
+
+                If (includeLoops AndAlso source Is target) OrElse ((source IsNot target) AndAlso ((incoming AndAlso target Is cell) OrElse (outgoing AndAlso source Is cell))) Then result.Add(___edge)
+            Next
+
+            Return result.ToArray()
         End Function
 
         Public Overrides Sub execute(ByVal parent As Object)
@@ -436,10 +451,11 @@ Namespace Layouts
             Dim vertexSet As New HashSet(Of Object)(vertices)
 
             Dim validEdges As New HashSet(Of Object)
+            Dim edges As Object()
 
             ' Remove edges that do not have both source and target terminals visible
             For i As Integer = 0 To vertices.Length - 1
-                Dim edges As Object() = com.mxgraph.model.mxGraphModel.getEdges(model, vertices(i), False, True, False)
+                edges = getEdges(model, vertices(i), False, True, False)
 
                 For j As Integer = 0 To edges.Length - 1
                     ' Only deal with sources. To be valid in the layout, each edge must be attached
@@ -450,7 +466,7 @@ Namespace Layouts
 
             Next
 
-            Dim edges As Object() = validEdges.ToArray()
+            edges = validEdges.ToArray()
 
             ' If the bounds dimensions have not been set see if the average area
             ' per node has been
