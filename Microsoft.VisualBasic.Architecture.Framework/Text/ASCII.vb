@@ -241,6 +241,20 @@ Namespace Text
         Public Shared ReadOnly QuotEnds_ZHCN As Char = Convert.ToChar(8221)
         Public Const QuotUnknown As Char = "″"c
 
+        Public Const A As Integer = Asc("A"c)
+        Public Const Z As Integer = Asc("Z"c)
+        Public Const al% = Asc("a"c)
+        Public Const zl% = Asc("z"c)
+
+        ''' <summary>
+        ''' ASCII code for number ``0``
+        ''' </summary>
+        Public Const n0% = Asc("0"c)
+        ''' <summary>
+        ''' ASCII code for number ``9``
+        ''' </summary>
+        Public Const n9% = Asc("9"c)
+
         ''' <summary>
         ''' 单引号
         ''' </summary>

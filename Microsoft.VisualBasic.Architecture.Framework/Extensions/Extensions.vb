@@ -106,20 +106,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
-    ''' </summary>
-    ''' <param name="s$"></param>
-    ''' <param name="args"></param>
-    Public Sub println(s$, ParamArray args As Object())
-        Dim out As String = sprintf(s, args)
-        Call Console.WriteLine(out)
-    End Sub
-
-    Public Sub println()
-        Call Console.WriteLine()
-    End Sub
-
-    ''' <summary>
     ''' ``days, hh:mm:ss.ms``
     ''' </summary>
     ''' <param name="t"></param>
@@ -671,9 +657,6 @@ Public Module Extensions
         Return sBuilder.ToString
     End Function
 
-    Const A As Integer = Asc("A")
-    Const Z As Integer = Asc("Z")
-
 #Disable Warning
 
     ''' <summary>
@@ -934,45 +917,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Free this variable pointer in the memory.(销毁本对象类型在内存之中的指针)
-    ''' </summary>
-    ''' <typeparam name="T">假若该对象类型实现了<see cref="System.IDisposable"></see>接口，则函数还会在销毁前调用该接口的销毁函数</typeparam>
-    ''' <param name="obj"></param>
-    ''' <remarks></remarks>
-    <Extension> Public Sub Free(Of T As Class)(ByRef obj As T)
-        If Not obj Is Nothing Then
-            Dim TypeInfo As Type = obj.GetType
-            If Array.IndexOf(TypeInfo.GetInterfaces, GetType(IDisposable)) > -1 Then
-                Try
-                    Call DirectCast(obj, IDisposable).Dispose()
-                Catch ex As Exception
-
-                End Try
-            End If
-        End If
-
-        obj = Nothing
-
-        ' Will not working on Linux platform
-        If App.IsMicrosoftPlatform Then
-            Call FlushMemory()
-        End If
-    End Sub
-
-    ''' <summary>
-    ''' Pause the console program.
-    ''' </summary>
-    ''' <param name="Prompted"></param>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Pause", Info:="Pause the console program.")>
-    Public Sub Pause(Optional Prompted As String = "Press any key to continute...")
-        Call InnerQueue.WaitQueue()
-        Call Console.WriteLine(Prompted)
-        Call Console.Read()
-    End Sub
-
-    ''' <summary>
     ''' All of the number value in the target array offset a integer value.
     ''' </summary>
     ''' <param name="array"></param>
@@ -1222,38 +1166,6 @@ Public Module Extensions
         Return obj
     End Function
 #End If
-
-    Public Declare Function SetProcessWorkingSetSize Lib "kernel32.dll" (process As IntPtr, minimumWorkingSetSize As Integer, maximumWorkingSetSize As Integer) As Integer
-
-    ''' <summary>
-    ''' Rabbish collection to free the junk memory.(垃圾回收)
-    ''' </summary>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("FlushMemory", Info:="Rabbish collection To free the junk memory.")>
-    Public Sub FlushMemory()
-        Call GC.Collect()
-        Call GC.WaitForPendingFinalizers()
-
-        If (Environment.OSVersion.Platform = PlatformID.Win32NT) Then
-            Call SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1)
-        End If
-    End Sub
-
-    <Extension> Public Function VectorCollectionToMatrix(Of T)(Vectors As IEnumerable(Of Generic.IEnumerable(Of T))) As T(,)
-        Dim MAT As T(,) = New T(Vectors.Count, Vectors.First.Count) {}
-        Dim Dimension As Integer = Vectors.First.Count
-
-        For i As Integer = 0 To MAT.GetLength(Dimension)
-            Dim Vector = Vectors(i)
-
-            For j As Integer = 0 To Dimension
-                MAT(i, j) = Vector(j)
-            Next
-        Next
-
-        Return MAT
-    End Function
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
