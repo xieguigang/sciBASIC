@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::c0172c33af991fa46f14b594e5bff677, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hcBitmap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,7 +33,10 @@ Imports Microsoft.VisualBasic.Emit
 
 Namespace Imaging
 
-    Public Module hcBitmap
+    ''' <summary>
+    ''' Grayscale and binarization extensions
+    ''' </summary>
+    Public Module BitmapScale
 
         <Extension>
         Public Function GetBinaryBitmap(res As Image, Optional style As BinarizationStyles = BinarizationStyles.Binary) As Bitmap
@@ -104,6 +107,51 @@ Namespace Imaging
 
             ' Unlock the bits.
             Call curBitmap.UnlockBits(bmpData)
+        End Sub
+
+        ''' <summary>
+        ''' 调整图像的对比度
+        ''' </summary>
+        ''' <param name="bmp"></param>
+        ''' <param name="contrast#"></param>
+        <Extension> Public Sub AdjustContrast(ByRef bmp As Bitmap, contrast#)
+            Dim contrastLookup As Byte() = New Byte(255) {}
+            Dim newValue As Double = 0
+            Dim c As Double = (100.0 + contrast) / 100.0
+
+            c *= c
+
+            For i As Integer = 0 To 255
+                newValue = CDbl(i)
+                newValue /= 255.0
+                newValue -= 0.5
+                newValue *= c
+                newValue += 0.5
+                newValue *= 255
+
+                If newValue < 0 Then
+                    newValue = 0
+                End If
+                If newValue > 255 Then
+                    newValue = 255
+                End If
+                contrastLookup(i) = CByte(Math.Truncate(newValue))
+            Next
+
+            Using bitmapdata As BitmapBuffer = BitmapBuffer.FromBitmap(bmp)
+                Dim destPixels As BitmapBuffer = bitmapdata
+                Dim PixelSize% = 4
+
+                For y As Integer = 0 To bitmapdata.Height - 1
+                    destPixels += bitmapdata.Stride
+
+                    For x As Integer = 0 To bitmapdata.Width - 1
+                        destPixels(x * PixelSize) = contrastLookup(destPixels(x * PixelSize))
+                        destPixels(x * PixelSize + 1) = contrastLookup(destPixels(x * PixelSize + 1))
+                        destPixels(x * PixelSize + 2) = contrastLookup(destPixels(x * PixelSize + 2))
+                    Next
+                Next
+            End Using
         End Sub
 
         ''' <summary>

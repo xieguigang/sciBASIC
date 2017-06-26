@@ -37,6 +37,10 @@ Namespace Imaging
 
     <PackageNamespace("GDI.Transform")> Public Module GeomTransform
 
+        Public Function Distance(x1#, y1#, x2#, y2#) As Double
+            Return Math.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+        End Function
+
         <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
             Dim xDiff As Single = p2.X - p1.X
             Dim yDiff As Single = p2.Y - p1.Y

@@ -192,6 +192,7 @@
     <Compile Include="FindPath\Dijkstra\LDM.vb" />
     <Compile Include="FindPath\Dijkstra\DijkstraAPI.vb" />
     <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
+    <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Graph\Selector.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\Parameters.vb" />
@@ -206,10 +207,10 @@
     <Compile Include="IO\Generic\INetComponent.vb" />
     <Compile Include="IO\GraphAPI.vb" />
     <Compile Include="Graph\Extensions.vb" />
-    <Compile Include="Graph\Edge.vb" />
-    <Compile Include="Graph\Graph.vb" />
-    <Compile Include="Graph\GraphData.vb" />
-    <Compile Include="Graph\Node.vb" />
+    <Compile Include="Graph\Model\Edge.vb" />
+    <Compile Include="Graph\Model\Graph.vb" />
+    <Compile Include="Graph\Model\GraphData.vb" />
+    <Compile Include="Graph\Model\Node.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IForceDirected.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IGraph.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IRenderer.vb" />

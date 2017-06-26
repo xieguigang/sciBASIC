@@ -1,41 +1,40 @@
 ﻿#Region "Microsoft.VisualBasic::0f4d7632ce61e2cb36ac5c0f065d2e94, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\hBitmap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
-Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
     ''' <summary>
     ''' 线程不安全的图片数据对象
     ''' </summary>
-    Public Class hBitmap : Inherits Emit.Marshal.Byte
+    Public Class BitmapBuffer : Inherits Emit.Marshal.Byte
         Implements IDisposable
         Implements IEnumerable(Of Color)
 
@@ -52,6 +51,7 @@ Namespace Imaging
             __source = raw
             __handle = handle
 
+            Stride = handle.Stride
             Width = raw.Width
             Height = raw.Height
             Size = New Size(Width, Height)
@@ -60,6 +60,7 @@ Namespace Imaging
         Public ReadOnly Property Width As Integer
         Public ReadOnly Property Height As Integer
         Public ReadOnly Property Size As Size
+        Public ReadOnly Property Stride As Integer
 
         ''' <summary>
         ''' Gets a copy of the original raw image value that which constructed this bitmap object class
@@ -120,11 +121,11 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="res"></param>
         ''' <returns></returns>
-        Public Shared Function FromImage(res As Image) As hBitmap
-            Return hBitmap.FromBitmap(New Bitmap(res))
+        Public Shared Function FromImage(res As Image) As BitmapBuffer
+            Return BitmapBuffer.FromBitmap(New Bitmap(res))
         End Function
 
-        Public Shared Function FromBitmap(curBitmap As Bitmap) As hBitmap
+        Public Shared Function FromBitmap(curBitmap As Bitmap) As BitmapBuffer
             ' Lock the bitmap's bits.  
             Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
             Dim bmpData As BitmapData =
@@ -134,7 +135,7 @@ Namespace Imaging
             ' Declare an array to hold the bytes of the bitmap.
             Dim bytes As Integer = Math.Abs(bmpData.Stride) * curBitmap.Height
 
-            Return New hBitmap(ptr, bytes, curBitmap, bmpData)
+            Return New BitmapBuffer(ptr, bytes, curBitmap, bmpData)
         End Function
 
         Protected Overrides Sub Dispose(disposing As Boolean)
@@ -151,5 +152,16 @@ Namespace Imaging
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        ''' <summary>
+        ''' Current pointer location offset to next position
+        ''' </summary>
+        ''' <param name="bmp"></param>
+        ''' <param name="offset%"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator +(bmp As BitmapBuffer, offset%) As BitmapBuffer
+            bmp.__index += offset
+            Return bmp
+        End Operator
     End Class
 End Namespace

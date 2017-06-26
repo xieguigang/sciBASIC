@@ -1,36 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::ccb9cb31b9d34d2387b32d5f2a0f6430, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text.ASCIIArt
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -41,7 +39,7 @@ Module Program
     Sub test3Dmodels()
 
         Dim isometricView As New IsometricEngine
-        isometricView.add(
+        isometricView.Add(
     New Prism(
         New Point3D(0, 0, 0),
          1, 1, 1
@@ -58,7 +56,36 @@ Module Program
     End Sub
 
 
+    Sub ASCIIArt_test()
+
+        Dim logo = "sciBASIC#".ASCIIImage
+
+        Call Console.WriteLine(logo)
+
+        Call logo.SaveTo("x:\sciBASIC.txt")
+
+        Pause()
+
+        Dim image = "H:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg".LoadImage.Grayscale
+        Dim ascii = image.Convert2ASCII
+
+        Call ascii.SaveTo("H:\GCModeller\src\runtime\sciBASIC#\etc\lena\ASCII.txt")
+
+
+
+        '     image = "H:\GCModeller\src\runtime\sciBASIC#\etc\lena\f13e6388b975d9434ad9e1a41272d242_1_orig.jpg".LoadImage
+        '   image.AdjustContrast(10)
+
+        '    Call image.SaveAs("x:\ggggg.png")
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+
+        Call ASCIIArt_test()
+
         Call test3Dmodels()
         Call SVGTest.Test()
 
