@@ -11,5 +11,10 @@ Module Module1
 
         Dim treeModel As New GraphTree(graph)
 
+        Call graph.ToString.__DEBUG_ECHO
+        Call treeModel.ToString.__DEBUG_ECHO
+
+        Pause()
+
     End Sub
 End Module
