@@ -17,10 +17,14 @@
         Public Property Childs As List(Of GraphTreeNode)
         Public Property Node As Node
 
+        Sub New()
+            Parents = New List(Of GraphTreeNode)
+            Childs = New List(Of GraphTreeNode)
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Node.ToString
         End Function
-
     End Class
 
     Public Class GraphTree
@@ -41,9 +45,7 @@
 
             For Each node As Node In graph.nodes
                 Dim root As New GraphTreeNode With {
-                    .Node = graph _
-                        .nodes _
-                        .FirstOrDefault
+                    .Node = node
                 }
                 IterateTrees(root, graph, travels)
                 trees.Add(root)

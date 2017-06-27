@@ -375,5 +375,9 @@ Namespace Graph
                 listener.GraphChanged()
             Next
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"Network graph have {nodes.Count} nodes and {edges.Count} edges."
+        End Function
     End Class
 End Namespace
