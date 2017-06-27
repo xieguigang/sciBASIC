@@ -35,9 +35,28 @@
         ''' <returns></returns>
         Public ReadOnly Property Trees As GraphTreeNode()
 
+        ''' <summary>
+        ''' Gets the node counts and edge counts.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Count As (Nodes%, Edges%)
+            Get
+                Dim edges% = Aggregate node As GraphTreeNode
+                             In Trees
+                             Into Sum(node.Parents.Count + node.Childs.Count)
+                Return (Trees.Length, edges%)
+            End Get
+        End Property
+
         Sub New(graph As NetworkGraph)
             Trees = IterateTrees(graph)
         End Sub
+
+        Public Overrides Function ToString() As String
+            With Count
+                Return $"Graph tree have { .Nodes} nodes and { .Edges} edges."
+            End With
+        End Function
 
         Private Shared Function IterateTrees(graph As NetworkGraph) As GraphTreeNode()
             Dim trees As New List(Of GraphTreeNode)
