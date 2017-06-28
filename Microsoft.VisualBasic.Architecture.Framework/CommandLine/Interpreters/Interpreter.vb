@@ -238,11 +238,7 @@ Namespace CommandLine
                         Call Console.WriteLine(PS1.Fedora12.ToString & " " & DirectCast(argvs(Scan0), CommandLine).ToString)
 
                     Else
-                        Call Console.WriteLine(BAD_COMMAND_MAN, commandName)
-
-                        For Each name As String In list
-                            Call Console.WriteLine("    " & name & ASCII.TAB & __API_table(name.ToLower).Info.TrimNewLine)
-                        Next
+                        Call listingCommands(list, commandName)
                     End If
                 End If
             End If
@@ -250,8 +246,11 @@ Namespace CommandLine
             Return -1
         End Function
 
-        Const BAD_COMMAND_MAN As String = "Bad command, no such a command named ""{0}"", but you probably want to use commands:"
-        Const BAD_COMMAND_NAME As String = "Bad command, no such a command named ""{0}"", ? for command list or ""man"" for all of the commandline detail informations."
+        ''' <summary>
+        ''' Bad command, no such a command named ""{0}"", but you probably want to using one of these commands:
+        ''' </summary>
+        Const BAD_COMMAND_LISTING_COMMANDS$ = "Bad command, no such a command named ""{0}"", but you probably want to using one of these commands:"
+        Const BAD_COMMAND_NAME$ = "Bad command, no such a command named ""{0}"", ? for command list or ""man"" for all of the commandline detail informations."
 
         ''' <summary>
         ''' Generate the sdk document for the target program assembly.(生成目标应用程序的命令行帮助文档，markdown格式的)
@@ -303,6 +302,29 @@ Namespace CommandLine
             End If
         End Sub
 
+        Private Sub listingCommands(commands$(), commandName$)
+            Call Console.WriteLine(BAD_COMMAND_LISTING_COMMANDS, commandName)
+            Call Console.WriteLine()
+
+            Dim maxLength = commands.MaxLengthString.Length
+
+            For Each cName As String In commands
+                With cName
+                    Dim msg$
+
+                    msg$ = .ref & New String(" "c, maxLength - .Length + 3)
+
+                    With __API_table(.ToLower).Info
+                        If Not .StringEmpty Then
+                            msg$ &= Mid(.ref, 1, 60) & "..."
+                        End If
+                    End With
+
+                    Call Console.WriteLine("   " & msg)
+                End With
+            Next
+        End Sub
+
         ''' <summary>
         ''' Gets the help information of a specific command using its name property value.(获取某一个命令的帮助信息)
         ''' </summary>
@@ -327,11 +349,7 @@ Namespace CommandLine
                         Call Console.WriteLine()
                         Call Console.WriteLine(PS1.Fedora12.ToString & " ?" & CommandName)
                     Else
-                        Call Console.WriteLine(BAD_COMMAND_MAN, CommandName)
-
-                        For Each cName As String In list
-                            Call Console.WriteLine("    " & cName & ASCII.TAB & __API_table(cName).Info)
-                        Next
+                        Call listingCommands(list, CommandName)
                     End If
 
                     Return -2
@@ -375,7 +393,7 @@ Namespace CommandLine
             Me.__rootNamespace = type.Namespace
             Me._Stack = caller
             Me._Type = type
-            Me._Info = type.NamespaceEntry
+            Me._Info = type.NamespaceEntry(True)
         End Sub
 
         ''' <summary>
