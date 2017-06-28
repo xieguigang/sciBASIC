@@ -70,5 +70,34 @@ Namespace Drawing2D
                 .Select(Function(i) New Point(x(i), y(i))) _
                 .ToArray
         End Function
+
+        ''' <summary>
+        ''' Move the shape its bounds box topleft to target place
+        ''' </summary>
+        ''' <param name="shape"></param>
+        ''' <param name="topLeft"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function MoveTo(shape As IEnumerable(Of PointF), topLeft As PointF) As PointF()
+            Dim polygon = shape.ToArray
+            Dim rect As RectangleF = polygon.GetBounds
+            Dim offset As New PointF(rect.Left - topLeft.X, rect.Top - topLeft.Y)
+            Dim out = polygon _
+                .Select(Function(point)
+                            Return New PointF(point.X - offset.X,
+                                              point.Y - offset.Y)
+                        End Function) _
+                .ToArray
+            Return out
+        End Function
+
+        <Extension>
+        Public Function MoveTo(shape As IEnumerable(Of Point), topLeft As PointF) As Point()
+            Return shape _
+                .Select(Function(point) point.PointF) _
+                .MoveTo(topLeft) _
+                .Select(Function(point) point.ToPoint) _
+                .ToArray
+        End Function
     End Module
 End Namespace
