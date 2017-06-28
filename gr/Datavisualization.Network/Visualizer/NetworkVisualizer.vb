@@ -131,7 +131,8 @@ Public Module NetworkVisualizer
                               Optional nodeStroke$ = WhiteStroke,
                               Optional scale# = 1.2,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
-                              Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing) As GraphicsData
+                              Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing,
+                              Optional fontSizeFactor# = 1.5) As GraphicsData
 
         Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
         Dim br As Brush
@@ -239,7 +240,7 @@ Public Module NetworkVisualizer
 
                     If displayId Then
 
-                        Dim font As New Font(baseFont.Name, (baseFont.Size + r) / 2)
+                        Dim font As New Font(baseFont.Name, (baseFont.Size + r) / fontSizeFactor)
                         Dim s As String = n.GetDisplayText
                         Dim size As SizeF = g.MeasureString(s, font)
                         Dim sloci As New Point With {
