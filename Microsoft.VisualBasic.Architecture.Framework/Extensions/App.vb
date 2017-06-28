@@ -41,6 +41,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
@@ -48,6 +49,7 @@ Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SoftwareToolkits
+Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 
@@ -256,7 +258,7 @@ Public Module App
 
         For Each DIR As String In {
             App.HOME,
-            App.UserHOME, 
+            App.UserHOME,
             App.ProductProgramData,
             App.ProductSharedDIR
         }
@@ -470,6 +472,76 @@ Public Module App
         Dim codePage As Encoding = encoding.CodePage
         Return New StreamWriter(ms, encoding:=codePage)
     End Function
+
+    ''' <summary>
+    ''' <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="args"></param>
+    Public Sub println(s$, ParamArray args As Object())
+        Dim out As String = sprintf(s, args)
+        Call Console.WriteLine(out)
+    End Sub
+
+    Public Sub println()
+        Call Console.WriteLine()
+    End Sub
+
+    Public Declare Function SetProcessWorkingSetSize Lib "kernel32.dll" (process As IntPtr, minimumWorkingSetSize As Integer, maximumWorkingSetSize As Integer) As Integer
+
+    ''' <summary>
+    ''' Rabbish collection to free the junk memory.(垃圾回收)
+    ''' </summary>
+    ''' <remarks></remarks>
+    '''
+    <ExportAPI("FlushMemory", Info:="Rabbish collection To free the junk memory.")>
+    Public Sub FlushMemory()
+        Call GC.Collect()
+        Call GC.WaitForPendingFinalizers()
+
+        If (Environment.OSVersion.Platform = PlatformID.Win32NT) Then
+            Call SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Free this variable pointer in the memory.(销毁本对象类型在内存之中的指针)
+    ''' </summary>
+    ''' <typeparam name="T">假若该对象类型实现了<see cref="System.IDisposable"></see>接口，则函数还会在销毁前调用该接口的销毁函数</typeparam>
+    ''' <param name="obj"></param>
+    ''' <remarks></remarks>
+    <Extension> Public Sub Free(Of T As Class)(ByRef obj As T)
+        If Not obj Is Nothing Then
+            Dim TypeInfo As Type = obj.GetType
+            If Array.IndexOf(TypeInfo.GetInterfaces, GetType(IDisposable)) > -1 Then
+                Try
+                    Call DirectCast(obj, IDisposable).Dispose()
+                Catch ex As Exception
+
+                End Try
+            End If
+        End If
+
+        obj = Nothing
+
+        ' Will not working on Linux platform
+        If App.IsMicrosoftPlatform Then
+            Call FlushMemory()
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Pause the console program.
+    ''' </summary>
+    ''' <param name="Prompted"></param>
+    ''' <remarks></remarks>
+    '''
+    <ExportAPI("Pause", Info:="Pause the console program.")>
+    Public Sub Pause(Optional Prompted As String = "Press any key to continute...")
+        Call InnerQueue.WaitQueue()
+        Call Console.WriteLine(Prompted)
+        Call Console.Read()
+    End Sub
 
     ''' <summary>
     ''' 使用<see cref="ProductSharedDIR"/>的位置会变化的，则使用本函数则会使用获取当前的模块的文件夹，即使其不是exe程序而是一个dll文件

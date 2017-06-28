@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26608.5
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Datavisualization.Network", "Datavisualization.Network\Datavisualization.Network.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{2BB7D1CC-C62A-4D89-87BB-D52EC130F2A7}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GraphTesting", "Datavisualization.Network\GraphTesting\GraphTesting.vbproj", "{23A002A3-DEA8-4823-946B-D0C8CE113F67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,6 +154,36 @@ Global
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.Release2|x64.Build.0 = Release2|x64
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.Release2|x86.ActiveCfg = Release2|x86
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.Release2|x86.Build.0 = Release2|x86
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Debug|x64.Build.0 = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Debug|x86.Build.0 = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.docs|x64.ActiveCfg = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.docs|x64.Build.0 = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.docs|x86.ActiveCfg = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.docs|x86.Build.0 = Debug|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Publish|x64.ActiveCfg = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Publish|x64.Build.0 = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Publish|x86.ActiveCfg = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Publish|x86.Build.0 = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release|x64.ActiveCfg = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release|x64.Build.0 = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release|x86.ActiveCfg = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release|x86.Build.0 = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release2|x64.ActiveCfg = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release2|x64.Build.0 = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release2|x86.ActiveCfg = Release|Any CPU
+		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release2|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

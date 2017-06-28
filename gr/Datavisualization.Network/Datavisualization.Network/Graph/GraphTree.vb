@@ -1,4 +1,6 @@
-﻿Namespace Graph
+﻿Imports Microsoft.VisualBasic.Linq
+
+Namespace Graph
 
     ''' <summary>
     ''' 这是一个节点对象
@@ -17,10 +19,14 @@
         Public Property Childs As List(Of GraphTreeNode)
         Public Property Node As Node
 
+        Sub New()
+            Parents = New List(Of GraphTreeNode)
+            Childs = New List(Of GraphTreeNode)
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Node.ToString
         End Function
-
     End Class
 
     Public Class GraphTree
@@ -31,19 +37,41 @@
         ''' <returns></returns>
         Public ReadOnly Property Trees As GraphTreeNode()
 
+        Dim treeTable As New Dictionary(Of Node, GraphTreeNode)
+
+        ''' <summary>
+        ''' Gets the node counts and edge counts.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Count As (Nodes%, Edges%)
+            Get
+                Dim edges% = treeTable.Values _
+                    .Select(Function(node)
+                                Return {node.Parents, node.Childs}
+                            End Function) _
+                    .IteratesALL _
+                    .Distinct _
+                    .Count
+                Return (Trees.Length, edges%)
+            End Get
+        End Property
+
         Sub New(graph As NetworkGraph)
-            Trees = IterateTrees(graph)
+            Trees = IterateTrees(graph, treeTable)
         End Sub
 
-        Private Shared Function IterateTrees(graph As NetworkGraph) As GraphTreeNode()
+        Public Overrides Function ToString() As String
+            With Count
+                Return $"Graph tree have { .Nodes} nodes and { .Edges} edges."
+            End With
+        End Function
+
+        Private Shared Function IterateTrees(graph As NetworkGraph, ByRef travels As Dictionary(Of Node, GraphTreeNode)) As GraphTreeNode()
             Dim trees As New List(Of GraphTreeNode)
-            Dim travels As New Dictionary(Of Node, GraphTreeNode)
 
             For Each node As Node In graph.nodes
                 Dim root As New GraphTreeNode With {
-                    .Node = graph _
-                        .nodes _
-                        .FirstOrDefault
+                    .Node = node
                 }
                 IterateTrees(root, graph, travels)
                 trees.Add(root)

@@ -583,9 +583,9 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     ''' <remarks></remarks>
     '''
     <ExportAPI("Delegate.GET_Invoke", Info:="Get the method reflection entry point for a anonymous lambda expression.")>
-    Public Function GetDelegateInvokeEntryPoint(obj As Object) As System.Reflection.MethodInfo
-        Dim TypeInfo As System.Type = obj.GetType
-        Dim InvokeEntryPoint = (From MethodInfo As System.Reflection.MethodInfo
+    Public Function GetDelegateInvokeEntryPoint(obj As Object) As MethodInfo
+        Dim TypeInfo As Type = obj.GetType
+        Dim InvokeEntryPoint = (From MethodInfo As MethodInfo
                                 In TypeInfo.GetMethods
                                 Where String.Equals(MethodInfo.Name, "Invoke")
                                 Select MethodInfo).FirstOrDefault
@@ -595,19 +595,23 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     ''' <summary>
     ''' Get the scripting namespace value from <see cref="[Namespace]"/>
     ''' </summary>
-    ''' <param name="__nsType"></param>
+    ''' <param name="app"></param>
     ''' <returns></returns>
     '''
-    <ExportAPI("Get.APINamespace")>
-    <Extension> Public Function NamespaceEntry(__nsType As Type) As [Namespace]
+    <ExportAPI("Get.API.Namespace")>
+    <Extension> Public Function NamespaceEntry(app As Type, Optional nullWrapper As Boolean = False) As [Namespace]
         Dim attr As Object() = Nothing
         Try
-            attr = __nsType.GetCustomAttributes(GetType([Namespace]), True)
+            attr = app.GetCustomAttributes(GetType([Namespace]), True)
         Catch ex As Exception
-            Call App.LogException(New Exception(__nsType.FullName, ex))
+            Call LogException(New Exception(app.FullName, ex))
         End Try
         If attr.IsNullOrEmpty Then
-            Return New [Namespace](__nsType.Name, __nsType.FullName, True)
+            Dim descr$ = app.FullName
+            If nullWrapper Then
+                descr = $"< {descr} >"
+            End If
+            Return New [Namespace](app.Name, descr, True)
         Else
             Return DirectCast(attr(Scan0), [Namespace])
         End If

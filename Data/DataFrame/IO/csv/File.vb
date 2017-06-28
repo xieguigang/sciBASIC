@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::aa3122bfbf8352d00deaa6c5f5bec66b, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -534,11 +534,15 @@ B21,B22,B23,...
         ''' <summary>
         ''' Read a Csv file, default encoding is utf8
         ''' </summary>
-        ''' <param name="Path"></param>
+        ''' <param name="path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Widening Operator CType(Path As String) As File
-            Return File.Load(Path)
+        Public Overloads Shared Widening Operator CType(path$) As File
+            If Not path.FileExists Then
+                Call "Target data table is not exists on your file system!".Warning
+                Return New File
+            End If
+            Return File.Load(path)
         End Operator
 
         Public Overloads Shared Widening Operator CType(Lines As String()) As File

@@ -605,6 +605,26 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
+    ''' 将正则匹配成功的字符串替换为指定的目标字符串：<paramref name="replaceAs"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <param name="replaceAs$"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function StringReplace(s$, pattern$, replaceAs$, Optional opt As RegexOptions = RegexICSng) As String
+        Dim targets$() = r.Matches(s, pattern, opt).ToArray
+        Dim sb As New StringBuilder(s)
+
+        For Each t As String In targets
+            Call sb.Replace(t, replaceAs)
+        Next
+
+        Return sb.ToString
+    End Function
+
+    ''' <summary>
     ''' String collection tokenized by a certain delimiter string element.
     ''' </summary>
     ''' <param name="source"></param>

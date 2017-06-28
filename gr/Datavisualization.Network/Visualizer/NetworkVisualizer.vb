@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -34,6 +35,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -131,7 +133,9 @@ Public Module NetworkVisualizer
                               Optional nodeStroke$ = WhiteStroke,
                               Optional scale# = 1.2,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
-                              Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing) As GraphicsData
+                              Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing,
+                              Optional fontSizeFactor# = 1.5,
+                              Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing) As GraphicsData
 
         Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
         Dim br As Brush
@@ -186,6 +190,10 @@ Public Module NetworkVisualizer
 
         Call "Initialize variables, done!".__INFO_ECHO
 
+        If edgeDashTypes Is Nothing Then
+            edgeDashTypes = New Dictionary(Of String, DashStyle)
+        End If
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
@@ -206,6 +214,12 @@ Public Module NetworkVisualizer
                     Dim w As Integer = 5 * edge.Data.weight
                     w = If(w < 1.5, 1.5, w)
                     Dim lineColor As New Pen(cl, w)
+
+                    With edge.Data!interaction_type
+                        If edgeDashTypes.ContainsKey(.ref) Then
+                            lineColor.DashStyle = edgeDashTypes(.ref)
+                        End If
+                    End With
 
                     ' 在这里绘制的是节点之间相连接的边
                     Dim a = scalePos(n), b = scalePos(otherNode)
@@ -239,7 +253,7 @@ Public Module NetworkVisualizer
 
                     If displayId Then
 
-                        Dim font As New Font(baseFont.Name, (baseFont.Size + r) / 2)
+                        Dim font As New Font(baseFont.Name, (baseFont.Size + r) / fontSizeFactor)
                         Dim s As String = n.GetDisplayText
                         Dim size As SizeF = g.MeasureString(s, font)
                         Dim sloci As New Point With {

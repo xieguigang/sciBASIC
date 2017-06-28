@@ -135,7 +135,7 @@ Namespace StorageProvider.ComponentModels
             If HaveMetaAttribute Then
                 Dim values = From field As KeyValuePair(Of String, Integer)
                              In NonIndexed
-                             Let s = row.DirectGet(field.Value)
+                             Let s = row(field.Value)
                              Select name = field.Key,
                                   value = SchemaProvider.MetaAttributes.LoadMethod(s)
                 Dim meta As IDictionary = SchemaProvider.MetaAttributes.CreateDictionary

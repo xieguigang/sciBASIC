@@ -33,6 +33,28 @@ Imports Microsoft.VisualBasic.Language
 Public Module MatrixExtensions
 
     ''' <summary>
+    ''' 将锯齿数组转换为矩阵对象
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vectors"></param>
+    ''' <returns></returns>
+    <Extension> Public Function AsMatrix(Of T)(vectors As IEnumerable(Of IEnumerable(Of T))) As T(,)
+        Dim list = vectors.ToArray
+        Dim dimension As Integer = list(Scan0).Count
+        Dim matrix As T(,) = New T(list.Length, dimension) {}
+
+        For i As Integer = 0 To matrix.GetLength(dimension)
+            Dim v As T() = list(i).ToArray
+
+            For j As Integer = 0 To dimension
+                matrix(i, j) = v(j)
+            Next
+        Next
+
+        Return matrix
+    End Function
+
+    ''' <summary>
     ''' Gets property field data from a generic data frame
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
