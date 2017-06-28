@@ -120,7 +120,8 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 命令行是空的
+        ''' 命令行是空的话，假若<see cref="ExecuteEmptyCli"/>不是空值的话，会优先执行<see cref="ExecuteEmptyCli"/>函数指针
+        ''' 否则打印出所有的命令名称信息
         ''' </summary>
         ''' <returns></returns>
         Private Function __executeEmpty() As Integer
@@ -134,7 +135,8 @@ Namespace CommandLine
 
                 Return -100
             Else
-                Return -1
+                ' 当用户什么也不输入的时候，打印出所有的命令名称帮助信息
+                Return Help("")
             End If
         End Function
 
