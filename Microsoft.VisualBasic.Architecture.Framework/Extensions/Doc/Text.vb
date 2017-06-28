@@ -144,7 +144,7 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 
+    ''' 自动进行判断解决所读取的数据源，当<paramref name="handle"/>为文件路径的时候，会读取文件内容，反之则会直接返回<paramref name="handle"/>的内容
     ''' </summary>
     ''' <param name="handle$">文本内容或者文件路径</param>
     ''' <returns></returns>
