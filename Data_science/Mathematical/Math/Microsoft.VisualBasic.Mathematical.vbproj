@@ -218,6 +218,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factor.vb" />
     <Compile Include="LinearAlgebra\Vector\NumericsOperator.vb" />
     <Compile Include="LinearAlgebra\Vector\NumericsVector.vb" />
     <Compile Include="UncheckInteger.vb" />
