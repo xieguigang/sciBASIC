@@ -1432,7 +1432,6 @@ Public Module Extensions
             {"n", False}, {"no", False}
         }
 
-#If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
     ''' (请注意，空值字符串为False)
@@ -1440,10 +1439,7 @@ Public Module Extensions
     ''' <param name="str"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("Get.Boolean")> <Extension> Public Function getBoolean(str As String) As Boolean
-#Else
-    <Extension> Public Function get_BooleanValue(str As String) As Boolean
-#End If
+    <ExportAPI("Get.Boolean")> <Extension> Public Function ParseBoolean(str$) As Boolean
         If String.IsNullOrEmpty(str) Then
             Return False
         End If
@@ -1453,13 +1449,13 @@ Public Module Extensions
             Return BooleanValues(str)
         Else
 #If DEBUG Then
-            Call $"""{str}"" {NameOf(System.Boolean)} (null_value_definition)  ==> False".__DEBUG_ECHO
+            Call $"""{str}"" {NameOf([Boolean])} (null_value_definition)  ==> False".__DEBUG_ECHO
 #End If
             Return False
         End If
     End Function
 
-    <Extension> <ExportAPI("Get.Boolean")> Public Function getBoolean(ch As Char) As Boolean
+    <Extension> <ExportAPI("Get.Boolean")> Public Function ParseBoolean(ch As Char) As Boolean
         If ch = ASCII.NUL Then
             Return False
         End If
