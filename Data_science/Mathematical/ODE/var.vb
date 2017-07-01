@@ -80,6 +80,14 @@ Public Class var : Inherits float
         Return var
     End Operator
 
+    Public Overloads Shared Operator =(var As var, equation As Func(Of Double)) As var
+
+    End Operator
+
+    Public Overloads Shared Operator <>(var As var, equation As Func(Of Double)) As var
+        Throw New NotImplementedException
+    End Operator
+
     Public Overloads Shared Narrowing Operator CType(x As var) As Integer
         Return x.Index
     End Operator
