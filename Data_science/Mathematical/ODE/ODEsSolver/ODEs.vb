@@ -193,11 +193,11 @@ Public MustInherit Class ODEs
             Next
         Next
 
-        Dim out = LinqAPI.MakeList(Of NamedValue(Of Double())) <=
+        Dim out = LinqAPI.MakeList(Of NamedCollection(Of Double)) <=
  _
             From var As var
             In vars
-            Select New NamedValue(Of Double()) With {
+            Select New NamedCollection(Of Double) With {
                 .Name = var.Name,
                 .Value = y(var)
             }

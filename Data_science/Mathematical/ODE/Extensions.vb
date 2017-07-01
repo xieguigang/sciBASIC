@@ -46,7 +46,7 @@ Public Module Extensions
         Dim out As New List(Of DataSet)
         Dim vars$() = df.y.Keys.ToArray
 
-        For Each var As NamedValue(Of Double()) In df
+        For Each var As NamedCollection(Of Double) In df
             Dim x As New DataSet With {
                 .ID = var.Name,
                 .Properties = New Dictionary(Of String, Double)
@@ -73,7 +73,7 @@ Public Module Extensions
         Dim out As New List(Of DataSet)
         Dim vars$() = df.y.Keys.ToArray
 
-        For Each var As NamedValue(Of Double()) In df
+        For Each var As NamedCollection(Of Double) In df
             Dim x As New DataSet With {
                 .ID = var.Name,
                 .Properties = New Dictionary(Of String, Double)
