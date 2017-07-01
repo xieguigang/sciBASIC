@@ -2398,7 +2398,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
         Public Overrides Sub DrawLines(pen As Pen, points() As Point)
-
+            Call Graphics.DrawLines(pen, points)
         End Sub
         '
         ' Summary:

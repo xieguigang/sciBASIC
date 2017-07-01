@@ -16,7 +16,7 @@ Module Program
         Dim sigma# = 10
         Dim rho# = 28
         Dim beta# = 8 / 3
-        Dim t = (a:=0, b:=10, dt:=0.0001)
+        Dim t = (a:=0, b:=100, dt:=0.005)
 
         Call Let$(list:=Function() {x = 1, y = 1, z = 1})
         Call {
@@ -33,9 +33,9 @@ Module Program
             .angleX = 30,
             .angleY = 30,
             .angleZ = 30,
-            .fov = 4000,
+            .fov = 1000,
             .screen = New Size(2000, 2000),
-            .ViewDistance = 1000
+            .ViewDistance = 50
         }
         Dim result = ODEsOut.LoadFromDataFrame($"{App.HOME}/Lorenz_system.csv")
         Dim vector As Point3D() = result.x _
@@ -55,8 +55,8 @@ Module Program
             .Rotate(camera) _
             .Projection(camera)
 
-        Using g As Graphics2D = camera.CreateCanvas2D(bg:="lightblue")
-            Call g.DrawLines(Pens.Black, points)
+        Using g As Graphics2D = camera.CreateCanvas2D(bg:="blue")
+            Call g.DrawLines(Pens.White, points)
             Call g.Save($"{App.HOME}/Lorenz_system.png", ImageFormats.Png)
         End Using
     End Sub
