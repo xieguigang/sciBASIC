@@ -16,7 +16,7 @@ Module Program
         Dim sigma# = 10
         Dim rho# = 28
         Dim beta# = 8 / 3
-        Dim t = (a:=0, b:=100, dt:=0.005)
+        Dim t = (a:=0, b:=120, dt:=0.005)
 
         Call Let$(list:=Function() {x = 1, y = 1, z = 1})
         Call {
