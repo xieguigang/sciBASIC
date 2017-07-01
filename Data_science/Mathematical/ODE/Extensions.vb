@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Linq.Expressions
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -97,7 +98,21 @@ Public Module Extensions
 
     End Function
 
-    <Extension> Public Sub lapply(vars As Expression(Of Func(Of var())))
+    <Extension> Public Sub lapply(list As Expression(Of Func(Of var())))
+        Dim unaryExpression As NewArrayExpression = DirectCast(list.Body, NewArrayExpression)
+        Dim arrayData = unaryExpression _
+            .Expressions _
+            .Select(Function(e) DirectCast(e, BinaryExpression)) _
+            .ToArray
 
+        For Each expr As BinaryExpression In arrayData
+            Dim member = DirectCast(expr.Left, MemberExpression)
+            Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
+            Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
+            Dim value As Object = DirectCast(expr.Right, ConstantExpression).Value
+            Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
+
+            Call field.SetValue(constantExpression.Value, New var(name, CDbl(value)))
+        Next
     End Sub
 End Module
