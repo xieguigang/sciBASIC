@@ -33,10 +33,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' ODEs output, this object can populates the <see cref="ODEsOut.y"/> 
 ''' variables values through its enumerator interface.
 ''' </summary>
-Public Class ODEsOut : Implements IEnumerable(Of NamedValue(Of Double()))
+Public Class ODEsOut : Implements IEnumerable(Of NamedCollection(Of Double))
 
     Public Property x As Double()
-    Public Property y As Dictionary(Of NamedValue(Of Double()))
+    Public Property y As Dictionary(Of NamedCollection(Of Double))
     Public Property y0 As Dictionary(Of String, Double)
     Public Property params As Dictionary(Of String, Double)
 
@@ -61,7 +61,7 @@ Public Class ODEsOut : Implements IEnumerable(Of NamedValue(Of Double()))
     ''' <returns></returns>
     Public ReadOnly Property HaveNaN As Boolean
         Get
-            For Each val As NamedValue(Of Double()) In y.Values
+            For Each val As NamedCollection(Of Double) In y.Values
                 For Each x As Double In val.Value
                     If Double.IsNaN(x) OrElse
                         Double.IsInfinity(x) OrElse
@@ -100,8 +100,8 @@ Public Class ODEsOut : Implements IEnumerable(Of NamedValue(Of Double()))
         Return StreamExtension.LoadFromDataFrame(csv, noVars)
     End Function
 
-    Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of Double())) Implements IEnumerable(Of NamedValue(Of Double())).GetEnumerator
-        For Each var As NamedValue(Of Double()) In y.Values
+    Public Iterator Function GetEnumerator() As IEnumerator(Of NamedCollection(Of Double)) Implements IEnumerable(Of NamedCollection(Of Double)).GetEnumerator
+        For Each var As NamedCollection(Of Double) In y.Values
             Yield var
         Next
     End Function
