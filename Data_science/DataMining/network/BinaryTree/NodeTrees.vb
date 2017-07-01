@@ -42,7 +42,7 @@ Namespace KMeans
         ''' <param name="net">使用边对象的数据来构建整颗树</param>
         ''' <returns></returns>
         ''' <remarks>请注意：在这里面边是具有方向的，from到to</remarks>
-        <Extension> Public Function BuildTree(net As Network) As EntityNode
+        <Extension> Public Function BuildTree(net As NetworkTables) As EntityNode
             Dim nodesTable As Dictionary(Of String, NetworkEdge()) =
                 net.Edges _
                 .GroupBy(Function(edge) edge.FromNode) _

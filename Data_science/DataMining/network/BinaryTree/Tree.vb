@@ -132,7 +132,7 @@ Namespace KMeans
         ''' <returns></returns>
         <ExportAPI("Cluster.Trees.Network",
                    Info:="Create network model for visualize the binary tree clustering result.")>
-        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityLDM), Optional removesProperty As Boolean = True) As FileStream.Network
+        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityLDM), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
             Dim array = (From x As EntityLDM
                          In source
                          Let path As String() = x.Cluster.Split("."c)
@@ -171,7 +171,7 @@ Namespace KMeans
                 Scan0,
                 nodes)
 
-            Return New FileStream.Network With {
+            Return New FileStream.NetworkTables With {
                 .Edges = edges,
                 .Nodes = nodes.ToArray
             }

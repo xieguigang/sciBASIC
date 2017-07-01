@@ -204,8 +204,8 @@
     <Compile Include="IO\FileStream\vbnet.vb" />
     <Compile Include="IO\FileStream\Cytoscape.vb" />
     <Compile Include="IO\FileStream\Network.vb" />
-    <Compile Include="IO\Generic\INetComponent.vb" />
-    <Compile Include="IO\GraphAPI.vb" />
+    <Compile Include="IO\Generic\IDynamicsTable.vb" />
+    <Compile Include="IO\ModelExtensions.vb" />
     <Compile Include="Graph\Extensions.vb" />
     <Compile Include="Graph\Model\Edge.vb" />
     <Compile Include="Graph\Model\Graph.vb" />
