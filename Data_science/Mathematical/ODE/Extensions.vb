@@ -32,6 +32,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module Extensions
@@ -95,15 +96,32 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="system"></param>
     ''' <returns></returns>
-    <Extension> Public Function Solve(system As IEnumerable(Of var), t As (from#, to#, step#)) As ODEsOut
+    <Extension> Public Function Solve(system As IEnumerable(Of var), dt As (from#, to#, step#)) As ODEsOut
+        Dim vector As var() = system.ToArray
+        Dim df = Sub(dx#, ByRef dy As Vector)
+                     For Each x As var In vector
+                         dy(x) = x.Evaluate()
+                     Next
+                 End Sub
+        Dim ODEs As New GenericODEs(system.ToArray, df)
 
+        With dt
+            Dim result As ODEsOut = ODEs _
+                .Solve((.to - .from) / .step, .from, .to)
+            Return result
+        End With
     End Function
 
+    ''' <summary>
+    ''' Create VisualBasic variables
+    ''' </summary>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
     <Extension> Public Function Let$(list As Expression(Of Func(Of var())))
         Dim unaryExpression As NewArrayExpression = DirectCast(list.Body, NewArrayExpression)
         Dim arrayData = unaryExpression _
             .Expressions _
-            .Select(Function(e) DirectCast(e, BinaryExpression)) _
+            .Select(Function(b) DirectCast(b, BinaryExpression)) _
             .ToArray
         Dim var As New Dictionary(Of String, Double)
 
@@ -112,9 +130,9 @@ Public Module Extensions
             Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
             Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
             Dim value As Object = DirectCast(expr.Right, ConstantExpression).Value
-            Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
+            Dim obj = DirectCast(member.Expression, ConstantExpression).Value
 
-            Call field.SetValue(constantExpression.Value, New var(name, CDbl(value)))
+            Call field.SetValue(obj, New var(name, CDbl(value)))
         Next
 
         Return var.GetJson

@@ -43,6 +43,8 @@ Public Class var : Inherits float
     Public Property Name As String Implements INamedValue.Key
     Public Overrides Property value As Double Implements Ivar.value
 
+    Friend Evaluate As Func(Of Double)
+
     Public Shared ReadOnly type As Type = GetType(var)
 
     Sub New()
@@ -81,7 +83,8 @@ Public Class var : Inherits float
     End Operator
 
     Public Overloads Shared Operator =(var As var, equation As Func(Of Double)) As var
-
+        var.Evaluate = equation
+        Return var
     End Operator
 
     Public Overloads Shared Operator <>(var As var, equation As Func(Of Double)) As var

@@ -5,17 +5,17 @@ Module Program
     Sub Main()
 
         Dim x, y, z As var
-        Dim sigma#
-        Dim rho#
-        Dim beta#
-        Dim t = (a:=0, b:=1, dt:=0.01)
+        Dim sigma# = 10
+        Dim rho# = 28
+        Dim beta# = 8 / 3
+        Dim t = (a:=0, b:=10, dt:=0.0001)
 
-        Call Let$(list:=Function() {x = 1, y = 2, z = 3})
+        Call Let$(list:=Function() {x = 1, y = 1, z = 1})
         Call {
             x = Function() sigma * (y - x),
             y = Function() x * (rho - z) - y,
             z = Function() x * y - beta * z
-        }.Solve(t) _
+        }.Solve(dt:=t) _
          .DataFrame _
          .Save("./Lorenz_system.csv")
 

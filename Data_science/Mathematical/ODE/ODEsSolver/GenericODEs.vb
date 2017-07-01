@@ -33,6 +33,10 @@ Public Delegate Sub [Function](dx As Double, ByRef dy As Vector)
 
 Public Class GenericODEs : Inherits ODEs
 
+    ''' <summary>
+    ''' df(dx As <see cref="Double"/>, ByRef dy As <see cref="Vector"/>)
+    ''' </summary>
+    ''' <returns></returns>
     Public Property df As [Function]
 
     Sub New(ParamArray vars As var())
@@ -41,6 +45,11 @@ Public Class GenericODEs : Inherits ODEs
         For Each x In vars.SeqIterator
             x.value.Index = x.i
         Next
+    End Sub
+
+    Sub New(vars As var(), df As [Function])
+        Call Me.New(vars)
+        Me.df = df
     End Sub
 
     Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
