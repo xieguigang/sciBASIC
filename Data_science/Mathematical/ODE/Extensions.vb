@@ -32,6 +32,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module Extensions
 
@@ -98,12 +99,13 @@ Public Module Extensions
 
     End Function
 
-    <Extension> Public Sub lapply(list As Expression(Of Func(Of var())))
+    <Extension> Public Function Let$(list As Expression(Of Func(Of var())))
         Dim unaryExpression As NewArrayExpression = DirectCast(list.Body, NewArrayExpression)
         Dim arrayData = unaryExpression _
             .Expressions _
             .Select(Function(e) DirectCast(e, BinaryExpression)) _
             .ToArray
+        Dim var As New Dictionary(Of String, Double)
 
         For Each expr As BinaryExpression In arrayData
             Dim member = DirectCast(expr.Left, MemberExpression)
@@ -114,5 +116,7 @@ Public Module Extensions
 
             Call field.SetValue(constantExpression.Value, New var(name, CDbl(value)))
         Next
-    End Sub
+
+        Return var.GetJson
+    End Function
 End Module

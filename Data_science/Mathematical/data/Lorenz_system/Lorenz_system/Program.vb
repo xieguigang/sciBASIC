@@ -10,7 +10,7 @@ Module Program
         Dim beta#
         Dim t = (a:=0, b:=1, dt:=0.01)
 
-        Call lapply(list:=Function() {x = 1, y = 2, z = 3})
+        Call Let$(list:=Function() {x = 1, y = 2, z = 3})
         Call {
             x = Function() sigma * (y - x),
             y = Function() x * (rho - z) - y,
