@@ -250,6 +250,13 @@ Public Module KeyValuePairExtensions
         table = out
     End Sub
 
+    ''' <summary>
+    ''' 按照键名对字典进行重新排序
+    ''' </summary>
+    ''' <typeparam name="V"></typeparam>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="desc">默认为从小到大的升序排序</param>
     <Extension> Public Sub SortByKey(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
         Dim orders As V()
         Dim out As New Dictionary(Of V, T)
