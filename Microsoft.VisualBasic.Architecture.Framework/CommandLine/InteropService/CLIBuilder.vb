@@ -205,7 +205,7 @@ rtvl:           Dim strValue As String = enumValue.Description
                 b = DirectCast(value, Boolean)
             Else
                 Dim str As String = Scripting.ToString(value)
-                b = str.getBoolean
+                b = str.ParseBoolean
             End If
 
             If b Then

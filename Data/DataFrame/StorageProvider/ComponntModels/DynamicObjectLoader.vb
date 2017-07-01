@@ -406,7 +406,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Public Function GetBoolean(i As Integer) As Boolean Implements IDataRecord.GetBoolean
-            Return RowData(i).getBoolean
+            Return RowData(i).ParseBoolean
         End Function
 
         Public Function GetByte(i As Integer) As Byte Implements IDataRecord.GetByte
