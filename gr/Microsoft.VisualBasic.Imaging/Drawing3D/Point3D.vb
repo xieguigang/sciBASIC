@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace Drawing3D
 
     ''' <summary>
-    ''' Defines the Point3D class that represents points in 3D space.
+    ''' Defines the Point3D class that represents points in 3D space with <see cref="Single"/> precise.
     ''' Developed by leonelmachava &lt;leonelmachava@gmail.com>
     ''' http://codentronix.com
     '''

@@ -83,6 +83,13 @@ Namespace ComponentModel.Ranges
                    End Function
         End Function
 
+        <Extension>
+        Public Function GetScaler(vector As IEnumerable(Of Double)) As Func(Of Double, Double)
+            With vector.ToArray
+                Return New DoubleRange(.Min, .Max).GetScaler
+            End With
+        End Function
+
         ''' <summary>
         ''' 将目标区间内的任意实数全部转换为<paramref name="to"/>区间内的实数
         ''' </summary>
