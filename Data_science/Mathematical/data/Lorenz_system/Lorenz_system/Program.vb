@@ -22,7 +22,7 @@ Module Program
         Dim beta# = 8 / 3
         Dim t = (a:=0, b:=120, dt:=0.005)
 
-        Call Let$(list:=Function() {x = 1, y = 1, z = 1})
+        Call Let$(list:=Function() {x = 1, y = 1.5, z = 1}) ' Using Let$() for create these variables
         Call {
             x = Function() sigma * (y - x),
             y = Function() x * (rho - z) - y,

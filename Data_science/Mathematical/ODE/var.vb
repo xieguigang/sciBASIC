@@ -29,7 +29,6 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 ''' <summary>
 ''' Y variable in the ODE
@@ -74,7 +73,7 @@ Public Class var : Inherits float
     End Sub
 
     Public Overrides Function ToString() As String
-        Return $"[{Index}] {Name} As System.Double = {value}"
+        Return $"Dim [{Index}] {Name} As System.Double = {value}"
     End Function
 
     Public Overloads Shared Operator =(var As var, x As Double) As var

@@ -1,4 +1,45 @@
-## Solving Lorenz_system
+I would like to introducing how to solving an ODEs dynamics system in VisualBasic
+
+## Code Usage
+
+### Create VisualBasic Variable
+
+```vbnet
+Dim x, y, z As var
+```
+
+```vbnet
+''' <summary>
+''' Create VisualBasic variables
+''' </summary>
+''' <param name="list"></param>
+''' <returns></returns>
+<Extension> Public Function Let$(list As Expression(Of Func(Of var())))
+    Dim unaryExpression As NewArrayExpression = DirectCast(list.Body, NewArrayExpression)
+    Dim arrayData = unaryExpression _
+        .Expressions _
+        .Select(Function(b) DirectCast(b, BinaryExpression)) _
+        .ToArray
+    Dim var As New Dictionary(Of String, Double)
+
+    For Each expr As BinaryExpression In arrayData
+        Dim member = DirectCast(expr.Left, MemberExpression)
+        Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
+        Dim field As FieldInfo = DirectCast(member.Member, FieldInfo)
+        Dim value As Object = DirectCast(expr.Right, ConstantExpression).Value
+        Dim obj = DirectCast(member.Expression, ConstantExpression).Value
+
+        Call field.SetValue(obj, New var(name, CDbl(value)))
+    Next
+
+    Return var.GetJson
+End Function
+```
+
+
+### ODEs solver
+
+## DEMO: Solving Lorenz_system
 
 In VisualBasic, that you can using the ODEs script for solving the dynamics system simulation problem, example for the ``Lorenz_system``:
 
