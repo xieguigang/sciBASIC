@@ -115,12 +115,15 @@ Namespace Text.Xml.Linq
             Dim o As T
             Dim sb As New StringBuilder
             Dim source As IEnumerable(Of String)
+            Dim replaceXmlns As Boolean
 
             If XML.FileLength > 1024 * 1024 * 128 Then
                 ' 这是一个超大的XML文档
                 source = NodeIterator.IterateArrayNodes(XML, nodeName)
+                replaceXmlns = False
             Else
                 source = InternalIterates(XML, nodeName)
+                replaceXmlns = True
             End If
 
             For Each XML In source
@@ -129,7 +132,7 @@ Namespace Text.Xml.Linq
                 Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
                 Call sb.AppendLine(XML)
 
-                If Not xmlns.StringEmpty Then
+                If replaceXmlns AndAlso Not xmlns.StringEmpty Then
                     Call sb.Replace($"xmlns=""{xmlns}""", "")
                 End If
 
