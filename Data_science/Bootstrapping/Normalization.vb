@@ -103,7 +103,7 @@ Public Module Normalization
             .x = array(Scan0).Value _
                 .ToArray(Function(x) x.Time),
             .y = array _
-                .Select(Function(x) New NamedValue(Of Double()) With {
+                .Select(Function(x) New NamedCollection(Of Double) With {
                     .Name = x.Name,
                     .Value = x.Value _
                         .ToArray(Function(o) o.Y)

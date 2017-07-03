@@ -113,7 +113,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Create VisualBasic variables
+    ''' Create VisualBasic variables.(使用这个函数来进行初始化是为了在赋值的同时还对新创建的对象赋予名称，方便将结果写入数据集)
     ''' </summary>
     ''' <param name="list"></param>
     ''' <returns></returns>
