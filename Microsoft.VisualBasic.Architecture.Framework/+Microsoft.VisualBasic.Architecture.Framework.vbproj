@@ -469,6 +469,7 @@
     <Compile Include="Scripting\TokenIcer\LangModels\PeekToken.vb" />
     <Compile Include="Scripting\VBLanguage.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
+    <Compile Include="Text\Xml\Linq\NodeIterator.vb" />
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
