@@ -124,6 +124,44 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
+    ''' 这个函数是会直接枚举出所有的文件路径的
+    ''' </summary>
+    ''' <param name="DIR$"></param>
+    ''' <param name="[option]"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function ReadDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
+        Dim current As New DirectoryInfo(DIR)
+
+        For Each file In current.EnumerateFiles
+            Yield file.FullName
+        Next
+
+        If [option] = SearchOption.AllDirectories Then
+            For Each folder In current.EnumerateDirectories
+                For Each path In folder.FullName.ReadDirectory([option])
+                    Yield path
+                Next
+            Next
+        End If
+    End Function
+
+    <Extension>
+    Public Iterator Function ListDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
+        Dim current As New DirectoryInfo(DIR)
+
+        For Each folder In current.EnumerateDirectories
+            Yield folder.FullName
+
+            If [option] = SearchOption.AllDirectories Then
+                For Each path In folder.FullName.ListDirectory([option])
+                    Yield path
+                Next
+            End If
+        Next
+    End Function
+
+    ''' <summary>
     ''' 这个函数只会返回文件列表之中的第一个文件，故而需要提取某一个文件夹之中的某一个特定的文件，推荐使用这个函数
     ''' </summary>
     ''' <param name="DIR$"></param>
