@@ -34,9 +34,10 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Namespace FileStream
 
     ''' <summary>
-    ''' The csv table file format of the network graph object model: <see cref="NetworkGraph"/> 
+    ''' The csv table file format of the network graph object model: <see cref="NetworkGraph"/>.
+    ''' (在这个对象之中包括了一个<see cref="Node"/>和<see cref="Edges"/>节点和边列表，可以直接用于CSV文件的读写操作)
     ''' </summary>
-    Public Class Network : Inherits Network(Of Node, NetworkEdge)
+    Public Class NetworkTables : Inherits Network(Of Node, NetworkEdge)
 
         Sub New()
         End Sub
@@ -72,7 +73,7 @@ Namespace FileStream
         ''' </summary>
         ''' <param name="DIR"></param>
         ''' <returns></returns>
-        Public Overloads Shared Function Load(DIR As String) As Network
+        Public Overloads Shared Function Load(DIR As String) As NetworkTables
             Dim list As New List(Of String)(ls - l - r - "*.csv" <= DIR)
             Dim edgeFile$ = $"{DIR}/network-edges.csv"
             Dim nodeFile$ = $"{DIR}/nodes.csv"
@@ -105,7 +106,7 @@ Namespace FileStream
                 End If
             End If
 
-            Return New Network With {
+            Return New NetworkTables With {
                 .Edges = edgeFile.LoadCsv(Of NetworkEdge),
                 .Nodes = nodeFile.LoadCsv(Of Node)
             }

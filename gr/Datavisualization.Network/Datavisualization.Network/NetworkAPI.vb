@@ -138,7 +138,7 @@ Public Module NetworkAPI
                                      Optional nodeTypes As Dictionary(Of String, String) = Nothing,
                                      Optional interacts As Dictionary(Of String, String) = Nothing,
                                      Optional cut# = 0R,
-                                     Optional trim As Boolean = False) As FileStream.Network
+                                     Optional trim As Boolean = False) As FileStream.NetworkTables
 
         Dim array As DataSet() = data.ToArray
 
@@ -195,7 +195,7 @@ Public Module NetworkAPI
 
         VBDebugger.Mute = False
 
-        Dim out As New FileStream.Network With {
+        Dim out As New FileStream.NetworkTables With {
             .Edges = edges,
             .Nodes = nodes
         }

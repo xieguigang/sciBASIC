@@ -241,7 +241,7 @@ Public Module PlotExtensions
 
         Return LinqAPI.Exec(Of SerialData) <=
  _
-            From y As SeqValue(Of NamedValue(Of Double()))
+            From y As SeqValue(Of NamedCollection(Of Double))
             In odes.y.Values.SeqIterator
             Let pts As PointData() = odes.x _
                 .SeqIterator _

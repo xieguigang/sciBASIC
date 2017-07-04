@@ -34,7 +34,7 @@ Namespace FileStream.Generic
     ''' <summary>
     ''' The network graph object contains the dynamics property for contains the extra information of the object.
     ''' </summary>
-    Public MustInherit Class INetComponent : Inherits DynamicPropertyBase(Of String)
+    Public MustInherit Class IDynamicsTable : Inherits DynamicPropertyBase(Of String)
 
         ''' <summary>
         ''' The dynamics property table of this network component

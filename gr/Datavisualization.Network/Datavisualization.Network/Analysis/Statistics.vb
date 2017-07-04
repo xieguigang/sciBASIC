@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
 Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
-Imports NetGraph = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Network
+Imports NetGraph = Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkTables
 
 Namespace Analysis
 

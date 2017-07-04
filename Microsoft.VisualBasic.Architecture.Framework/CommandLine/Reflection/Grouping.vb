@@ -104,6 +104,8 @@ Namespace CommandLine
                             .Data = g.Value
                         })
                 Next
+
+                Call GroupData.SortByKey
             End If
         End Sub
 

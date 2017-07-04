@@ -150,11 +150,11 @@ Public Module EigenvectorBootstrapping
         Dim serials = data.Split(serialSize)
         Dim out As New ODEsOut With {
             .params = New Dictionary(Of String, Double),
-            .y = New Dictionary(Of NamedValue(Of Double()))
+            .y = New Dictionary(Of NamedCollection(Of Double))
         }
 
         For Each key As SeqValue(Of String) In eig.Keys.SeqIterator
-            out.y(+key) = New NamedValue(Of Double()) With {
+            out.y(+key) = New NamedCollection(Of Double) With {
                 .Name = +key,
                 .Value = serials(key.i).Split(2).ToArray(Function(o) o(0))
             }

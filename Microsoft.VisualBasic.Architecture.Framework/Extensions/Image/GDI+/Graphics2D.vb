@@ -2398,7 +2398,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
         Public Overrides Sub DrawLines(pen As Pen, points() As Point)
-
+            Call Graphics.DrawLines(pen, points)
         End Sub
         '
         ' Summary:
@@ -2568,6 +2568,7 @@ Namespace Imaging
         Public Overrides Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
 
         End Sub
+
         '
         ' Summary:
         '     Draws a polygon defined by an array of System.Drawing.Point structures.
@@ -4045,7 +4046,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillEllipse(brush As Brush, rect As Rectangle)
-
+            Call Graphics.FillEllipse(brush, rect)
         End Sub
         '
         ' Summary:
@@ -4064,7 +4065,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillEllipse(brush As Brush, rect As RectangleF)
-
+            Call Graphics.FillEllipse(brush, rect)
         End Sub
         '
         ' Summary:

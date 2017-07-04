@@ -47,10 +47,10 @@ Namespace ComponentModel.DataSourceModel
     End Interface
 
     ''' <summary>
-    ''' Has a dictionary as a dynamics property.
+    ''' This abstract object has a <see cref="propertyTable"/> dictionary keeps as a dynamics property source.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public MustInherit Class DynamicPropertyBase(Of T) ' : Inherits [Class](Of String)
+    Public MustInherit Class DynamicPropertyBase(Of T)
         Implements IDynamicMeta(Of T)
 
         ''' <summary>

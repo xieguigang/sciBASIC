@@ -101,15 +101,14 @@ Public Module StreamExtension
             noVars,
             New Dictionary(Of String, Double),
             __getArgs(params(Scan0), params(1))) ' 由于没有信息可以了解哪些变量是y0初始值，所以在这里都把这些数据放在变量参数列表里面
-        Dim yData As NamedValue(Of Double())() =
-            LinqAPI.Exec(Of NamedValue(Of Double())) <= From s As String()
-                                                        In y
-                                                        Let name As String = s(Scan0)
-                                                        Let values As Double() = s.Skip(1).ToArray(AddressOf Val)
-                                                        Select New NamedValue(Of Double()) With {
-                                                            .Name = name,
-                                                            .Value = values
-                                                        }
+        Dim yData = LinqAPI.Exec(Of NamedCollection(Of Double)) <= From s As String()
+                                                                   In y
+                                                                   Let name As String = s(Scan0)
+                                                                   Let values As Double() = s.Skip(1).ToArray(AddressOf Val)
+                                                                   Select New NamedCollection(Of Double) With {
+                                                                       .Name = name,
+                                                                       .Value = values
+                                                                   }
         Return New ODEsOut With {
             .params = args,
             .x = X.Skip(1).ToArray(AddressOf Val),
@@ -142,7 +141,7 @@ Public Module StreamExtension
         Dim data = source.ToArray
         Dim minLen% = data.Min(Function(x) x.x.Length)
         Dim vars = data.First.y.Keys
-        Dim y As New Dictionary(Of NamedValue(Of Double()))
+        Dim y As New Dictionary(Of NamedCollection(Of Double))
         Dim params As New Dictionary(Of String, Double)
         Dim y0 As New Dictionary(Of String, Double)
 
@@ -167,7 +166,7 @@ Public Module StreamExtension
         End Try
 
         For Each k In vars
-            y += New NamedValue(Of Double()) With {
+            y += New NamedCollection(Of Double) With {
                 .Name = k,
                 .Value = New Double(minLen) {}
             }

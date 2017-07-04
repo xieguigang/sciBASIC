@@ -143,7 +143,7 @@ Namespace Graph
         End Function
     End Class
 
-    Public Class GraphData : Inherits INetComponent
+    Public Class GraphData : Inherits IDynamicsTable
 
         Public Sub New()
             label = ""

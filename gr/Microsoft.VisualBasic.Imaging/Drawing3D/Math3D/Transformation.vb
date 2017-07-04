@@ -64,6 +64,11 @@ Namespace Drawing3D.Math3D
             Return out
         End Function
 
+        <Extension>
+        Public Function OffSets(polygon As IEnumerable(Of Point3D), offset As Point3D) As Point3D()
+            Return polygon.Select(Function(point) point - offset).ToArray
+        End Function
+
         ''' <summary>
         ''' 三维坐标系的原点``(0, 0, 0)``
         ''' </summary>

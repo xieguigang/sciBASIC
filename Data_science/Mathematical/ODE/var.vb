@@ -29,7 +29,6 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical.Calculus
 
 ''' <summary>
 ''' Y variable in the ODE
@@ -42,6 +41,8 @@ Public Class var : Inherits float
     Public Property Index As Integer Implements IAddress(Of Integer).Address
     Public Property Name As String Implements INamedValue.Key
     Public Overrides Property value As Double Implements Ivar.value
+
+    Friend Evaluate As Func(Of Double)
 
     Public Shared ReadOnly type As Type = GetType(var)
 
@@ -72,12 +73,21 @@ Public Class var : Inherits float
     End Sub
 
     Public Overrides Function ToString() As String
-        Return $"[{Index}] {Name} As System.Double = {value}"
+        Return $"Dim [{Index}] {Name} As System.Double = {value}"
     End Function
 
     Public Overloads Shared Operator =(var As var, x As Double) As var
         var.value = x
         Return var
+    End Operator
+
+    Public Overloads Shared Operator =(var As var, equation As Func(Of Double)) As var
+        var.Evaluate = equation
+        Return var
+    End Operator
+
+    Public Overloads Shared Operator <>(var As var, equation As Func(Of Double)) As var
+        Throw New NotImplementedException
     End Operator
 
     Public Overloads Shared Narrowing Operator CType(x As var) As Integer

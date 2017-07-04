@@ -39,6 +39,11 @@ Namespace Drawing3D
     ''' </summary>
     Public Module PainterAlgorithm
 
+        <Extension>
+        Public Function CreateCanvas2D(camera As Camera, Optional bg$ = "white") As Graphics2D
+            Return camera.screen.CreateGDIDevice(filled:=bg.TranslateColor)
+        End Function
+
         ''' <summary>
         ''' 这个函数主要是应用于函数绘图的。请注意，这个并没有rotate，只会利用camera进行project
         ''' </summary>

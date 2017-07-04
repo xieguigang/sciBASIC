@@ -51,7 +51,7 @@ Namespace Analysis.PageRank
         ''' <param name="skipCount">
         ''' 对于文本处理的时候，textrank的这部分数据可能会比较有用，这个时候这里可以设置为False.
         ''' </param>
-        Sub New(net As FileStream.Network, Optional skipCount As Boolean = True)
+        Sub New(net As FileStream.NetworkTables, Optional skipCount As Boolean = True)
             nodes = net.Nodes
             edges = net.Edges
 
@@ -108,8 +108,8 @@ Namespace Analysis.PageRank
             Call GetNetwork.Save(DIR)
         End Sub
 
-        Public Function GetNetwork() As FileStream.Network
-            Return New FileStream.Network With {
+        Public Function GetNetwork() As FileStream.NetworkTables
+            Return New FileStream.NetworkTables With {
                 .Nodes = nodes,
                 .Edges = edges
             }

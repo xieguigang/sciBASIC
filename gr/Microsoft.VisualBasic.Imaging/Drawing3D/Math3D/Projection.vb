@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::3115cb5b5de19197552fbfc04f1f6b1c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Projection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -41,6 +41,21 @@ Namespace Drawing3D.Math3D
                       Publisher:="xie.guigang@gmail.com",
                       Description:="3D coordinate transformation tools.")>
     Public Module Projection
+
+        <Extension> Public Function Projection(points As IEnumerable(Of Point3D), camera As Camera) As Point()
+            Dim result As Point() = camera _
+                .Project(points) _
+                .Select(Function(point)
+                            Return point.PointXY(camera.screen)
+                        End Function) _
+                .ToArray
+            Return result
+        End Function
+
+        <Extension>
+        Public Function Rotate(polygon As IEnumerable(Of Point3D), camera As Camera) As IEnumerable(Of Point3D)
+            Return camera.Rotate(polygon)
+        End Function
 
         ''' <summary>
         ''' Gets the projection 2D point result from this readonly property
@@ -69,8 +84,12 @@ Namespace Drawing3D.Math3D
             Return New Point(x, y)
         End Function
 
-        <Extension>
-        Public Function Center(model As IEnumerable(Of Point3D)) As Point3D
+        ''' <summary>
+        ''' 获取得到目标三维多边形的中心点
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Center(model As IEnumerable(Of Point3D)) As Point3D
             Dim array As Point3D() = model.ToArray
             Dim x As Single = array.Select(Function(p) p.X).Sum / array.Length
             Dim y As Single = array.Select(Function(p) p.Y).Sum / array.Length

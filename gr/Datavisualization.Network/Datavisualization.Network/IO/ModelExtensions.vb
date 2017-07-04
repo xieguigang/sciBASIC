@@ -49,7 +49,7 @@ Namespace FileStream
     ''' </summary>
     Public Module GraphAPI
 
-        <Extension> Public Sub AddEdges(net As Network, from$, targets$())
+        <Extension> Public Sub AddEdges(net As NetworkTables, from$, targets$())
             If Not net.HaveNode(from) Then
                 net += New Node With {
                     .ID = from
@@ -75,7 +75,7 @@ Namespace FileStream
         ''' </summary>
         ''' <param name="g"></param>
         ''' <returns></returns>
-        <Extension> Public Function Tabular(g As NetworkGraph) As Network
+        <Extension> Public Function Tabular(g As NetworkGraph) As NetworkTables
             Dim nodes As New List(Of Node)
             Dim edges As New List(Of NetworkEdge)
 
@@ -101,7 +101,7 @@ Namespace FileStream
                 }
             Next
 
-            Return New Network With {
+            Return New NetworkTables With {
                 .Edges = edges,
                 .Nodes = nodes
             }
@@ -112,7 +112,7 @@ Namespace FileStream
         ''' </summary>
         ''' <param name="net"></param>
         ''' <returns></returns>
-        <Extension> Public Function CreateGraph(net As Network, Optional nodeColor As Func(Of Node, Brush) = Nothing) As NetworkGraph
+        <Extension> Public Function CreateGraph(net As NetworkTables, Optional nodeColor As Func(Of Node, Brush) = Nothing) As NetworkGraph
             Return CreateGraph(Of Node, NetworkEdge)(net, nodeColor)
         End Function
 
@@ -268,7 +268,7 @@ Namespace FileStream
         ''' <param name="quantile#"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function RemovesByDegreeQuantile(net As Network, Optional quantile# = 0.1, Optional ByRef removeIDs$() = Nothing) As Network
+        Public Function RemovesByDegreeQuantile(net As NetworkTables, Optional quantile# = 0.1, Optional ByRef removeIDs$() = Nothing) As NetworkTables
             Dim qCut& = net _
                 .Nodes _
                 .Select(Function(n) n(names.REFLECTION_ID_MAPPING_DEGREE)) _
@@ -289,7 +289,7 @@ Namespace FileStream
         ''' <param name="removeIDs$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function RemovesByDegree(net As Network, Optional degree% = 0, Optional ByRef removeIDs$() = Nothing) As Network
+        Public Function RemovesByDegree(net As NetworkTables, Optional degree% = 0, Optional ByRef removeIDs$() = Nothing) As NetworkTables
             Dim nodes As New List(Of Node)
             Dim removes As New List(Of String)
 
@@ -317,7 +317,7 @@ Namespace FileStream
                 End If
             Next
 
-            Return New Network With {
+            Return New NetworkTables With {
                 .Edges = edges,
                 .Nodes = nodes
             }
