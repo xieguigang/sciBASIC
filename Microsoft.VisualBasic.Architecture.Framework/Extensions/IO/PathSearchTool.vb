@@ -137,7 +137,7 @@ Public Module ProgramPathSearchTool
             Yield file.FullName
         Next
 
-        If [option] = SearchOption.AllDirectories Then
+        If [option] = FileIO.SearchOption.SearchAllSubDirectories Then
             For Each folder In current.EnumerateDirectories
                 For Each path In folder.FullName.ReadDirectory([option])
                     Yield path
@@ -153,7 +153,7 @@ Public Module ProgramPathSearchTool
         For Each folder In current.EnumerateDirectories
             Yield folder.FullName
 
-            If [option] = SearchOption.AllDirectories Then
+            If [option] = FileIO.SearchOption.SearchAllSubDirectories Then
                 For Each path In folder.FullName.ListDirectory([option])
                     Yield path
                 Next
