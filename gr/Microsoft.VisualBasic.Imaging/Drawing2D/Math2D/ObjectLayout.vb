@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Math2D
@@ -17,6 +18,8 @@ Namespace Drawing2D.Math2D
 
             Dim region As Rectangle
             Dim placed As List(Of RectangleF)
+            Dim xWindows As DoubleRange()
+            Dim yWindows As DoubleRange()
 
             Public Overrides Function ToString() As String
                 Return $"{placed.Count} objects was placed in region [{region.ToString}]"
@@ -24,21 +27,49 @@ Namespace Drawing2D.Math2D
 
             Public Shared Function Create(place As Regions, center As PointF, region As GraphicsRegion) As LayoutRegion
                 Dim rect As Rectangle
+                Dim size As New Size(center.X - region.Padding.Left, center.Y - region.Padding.Top)
 
                 Select Case place
                     Case Regions.BottomLeft
-
+                        With region.Padding
+                            rect = New Rectangle(New Point(.Left, center.Y), size)
+                        End With
                     Case Regions.BottomRight
-
+                        With region.Padding
+                            rect = New Rectangle(New Point(center.X, center.Y), size)
+                        End With
                     Case Regions.TopLeft
-
+                        With region.Padding
+                            rect = New Rectangle(New Point(.Left, .Top), size)
+                        End With
                     Case Regions.TopRight
-
+                        With region.Padding
+                            rect = New Rectangle(New Point(center.X, .Top), size)
+                        End With
                 End Select
+
+                Dim xWin, yWin As DoubleRange()
+
+                With New IntRange(rect.Left, rect.Right)
+                    xWin = .Split(.Length / 10) _
+                        .Select(Function(b)
+                                    Return New DoubleRange(b.Min, b.Max)
+                                End Function) _
+                        .ToArray
+                End With
+                With New IntRange(rect.Top, rect.Bottom)
+                    yWin = .Split(.Length / 10) _
+                        .Select(Function(b)
+                                    Return New DoubleRange(b.Min, b.Max)
+                                End Function) _
+                        .ToArray
+                End With
 
                 Return New LayoutRegion With {
                     .placed = New List(Of RectangleF),
-                    .region = rect
+                    .region = rect,
+                    .xWindows = xWin,
+                    .yWindows = yWin
                 }
             End Function
         End Structure
