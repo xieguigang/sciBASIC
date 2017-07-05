@@ -51,23 +51,28 @@ Namespace Language.Java
         ''' Returns an indicator of where the specified point
         ''' {@code (px,py)} lies with respect to the line segment from
         ''' {@code (x1,y1)} to {@code (x2,y2)}.
+        ''' 
         ''' The return value can be either 1, -1, or 0 and indicates
         ''' in which direction the specified line must pivot around its
         ''' first end point, {@code (x1,y1)}, in order to point at the
         ''' specified point {@code (px,py)}.
-        ''' <p>A return value of 1 indicates that the line segment must
+        ''' 
+        ''' A return value of 1 indicates that the line segment must
         ''' turn in the direction that takes the positive X axis towards
         ''' the negative Y axis.  In the default coordinate system used by
         ''' Java 2D, this direction is counterclockwise.
-        ''' <p>A return value of -1 indicates that the line segment must
+        ''' 
+        ''' A return value of -1 indicates that the line segment must
         ''' turn in the direction that takes the positive X axis towards
         ''' the positive Y axis.  In the default coordinate system, this
         ''' direction is clockwise.
-        ''' <p>A return value of 0 indicates that the point lies
+        ''' 
+        ''' A return value of 0 indicates that the point lies
         ''' exactly on the line segment.  Note that an indicator value
         ''' of 0 is rare and not useful for determining collinearity
         ''' because of floating point rounding issues.
-        ''' <p>If the point is colinear with the line segment, but
+        ''' 
+        ''' If the point is colinear with the line segment, but
         ''' not between the end points, then the value will be -1 if the point
         ''' lies "beyond {@code (x1,y1)}" or 1 if the point lies
         ''' "beyond {@code (x2,y2)}".
@@ -169,8 +174,6 @@ Namespace Language.Java
         '''           measured against the specified line segment </param>
         ''' <returns> a double value that is the square of the distance from the
         '''                  specified point to the specified line segment. </returns>
-        ''' <seealso cref= #ptLineDistSq(double, double, double, double, double, double)
-        ''' @since 1.2 </seealso>
         Public Function ptSegDistSq(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
             ' Adjust vectors relative to x1,y1
             ' x2,y2 becomes relative vector from x1,y1 to end of segment
@@ -238,8 +241,6 @@ Namespace Language.Java
         '''           measured against the specified line segment </param>
         ''' <returns> a double value that is the distance from the specified point
         '''                          to the specified line segment. </returns>
-        ''' <seealso cref= #ptLineDist(double, double, double, double, double, double)
-        ''' @since 1.2 </seealso>
         Public Function ptSegDist(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
             Return System.Math.Sqrt(ptSegDistSq(x1, y1, x2, y2, px, py))
         End Function
@@ -261,8 +262,6 @@ Namespace Language.Java
         '''           measured against the specified line </param>
         ''' <returns> a double value that is the square of the distance from the
         '''                  specified point to the specified line. </returns>
-        ''' <seealso cref= #ptSegDistSq(double, double, double, double, double, double)
-        ''' @since 1.2 </seealso>
         Public Function ptLineDistSq(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
             ' Adjust vectors relative to x1,y1
             ' x2,y2 becomes relative vector from x1,y1 to end of segment
@@ -300,8 +299,6 @@ Namespace Language.Java
         '''           measured against the specified line </param>
         ''' <returns> a double value that is the distance from the specified
         '''                   point to the specified line. </returns>
-        ''' <seealso cref= #ptSegDist(double, double, double, double, double, double)
-        ''' @since 1.2 </seealso>
         Public Function ptLineDist(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
             Return System.Math.Sqrt(ptLineDistSq(x1, y1, x2, y2, px, py))
         End Function

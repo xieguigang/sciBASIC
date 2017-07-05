@@ -200,11 +200,11 @@ Namespace Language.C
 #Region "ReplaceMetaChars"
         ''' <summary>
         ''' Replaces the string representations of meta chars with their corresponding
-        ''' character values.
+        ''' character values..(替换掉转义字符)
         ''' </summary>
         ''' <param name="input">The input.</param>
         ''' <returns>A string with all string meta chars are replaced</returns>
-        Public Function ReplaceMetaChars(input As String) As String
+        <Extension> Public Function ReplaceMetaChars(input As String) As String
             Return Regex.Replace(input, "(\\)(\d{3}|[^\d])?", New MatchEvaluator(AddressOf ReplaceMetaCharsMatch))
         End Function
 

@@ -137,7 +137,7 @@ Public Module ProgramPathSearchTool
             Yield file.FullName
         Next
 
-        If [option] = SearchOption.AllDirectories Then
+        If [option] = FileIO.SearchOption.SearchAllSubDirectories Then
             For Each folder In current.EnumerateDirectories
                 For Each path In folder.FullName.ReadDirectory([option])
                     Yield path
@@ -153,7 +153,7 @@ Public Module ProgramPathSearchTool
         For Each folder In current.EnumerateDirectories
             Yield folder.FullName
 
-            If [option] = SearchOption.AllDirectories Then
+            If [option] = FileIO.SearchOption.SearchAllSubDirectories Then
                 For Each path In folder.FullName.ListDirectory([option])
                     Yield path
                 Next
@@ -499,6 +499,11 @@ Public Module ProgramPathSearchTool
                 parent &= String.Join("/", t.Take(t.Length - 2).ToArray)
             Else
                 parent &= String.Join("/", t.Take(t.Length - 1).ToArray)
+            End If
+
+            If parent.StringEmpty Then
+                ' 用户直接输入了一个文件名，没有包含文件夹部分，则默认是当前的文件夹
+                parent = App.CurrentDirectory
             End If
         Else
             parent = String.Join("/", t.Take(t.Length - 1).ToArray)

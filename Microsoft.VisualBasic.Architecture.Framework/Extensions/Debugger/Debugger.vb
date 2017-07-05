@@ -30,6 +30,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Debugging
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Logging
@@ -402,14 +403,14 @@ Public Module VBDebugger
     End Sub
 
     ''' <summary>
-    ''' print message, alias for <see cref="Console.Write(String)"/>
+    ''' print message, alias for <see cref="Console.Write(String)"/>.(支持``sprintf``之中的转义字符)
     ''' </summary>
     ''' <param name="s$"></param>
     Public Sub cat(s$)
         If Not Mute Then
             Call Terminal.AddToQueue(
                 Sub()
-                    Call Console.Write(s)
+                    Call Console.Write(s.ReplaceMetaChars)
                 End Sub)
         End If
     End Sub
