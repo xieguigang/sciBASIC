@@ -500,6 +500,11 @@ Public Module ProgramPathSearchTool
             Else
                 parent &= String.Join("/", t.Take(t.Length - 1).ToArray)
             End If
+
+            If parent.StringEmpty Then
+                ' 用户直接输入了一个文件名，没有包含文件夹部分，则默认是当前的文件夹
+                parent = App.CurrentDirectory
+            End If
         Else
             parent = String.Join("/", t.Take(t.Length - 1).ToArray)
         End If
