@@ -46,6 +46,16 @@ Namespace Drawing2D
         ''' </summary>
         Public Padding As Padding
 
+        Sub New(size As Size, padding As Padding)
+            Me.Size = size
+            Me.Padding = padding
+        End Sub
+
+        Sub New(padding As Padding, size As Size)
+            Me.Size = size
+            Me.Padding = padding
+        End Sub
+
         Public ReadOnly Property Bottom As Integer
             Get
                 Return Size.Height - Padding.Bottom
