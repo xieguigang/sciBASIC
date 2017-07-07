@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
 Public Module Module1
 
@@ -17,6 +18,8 @@ Public Module Module1
     ''' </summary>
     Sub Main()
 
+        Call Randomize()
+
         Dim V As New List(Of node)
         Dim E As New List(Of edge)
 
@@ -24,6 +27,10 @@ Public Module Module1
         V.Add(New node With {.ID = 2})
         V.Add(New node With {.ID = 3})
         V.Add(New node With {.ID = 4})
+        V.Add(New node With {.ID = 5})
+        V.Add(New node With {.ID = 6})
+        V.Add(New node With {.ID = 7})
+        V.Add(New node With {.ID = 8})
 
         Dim add = Sub(a%, b%)
                       E.Add(New edge With {.u = V(a - 1), .v = V(b - 1)})
@@ -32,6 +39,13 @@ Public Module Module1
         add(1, 2)
         add(2, 3)
         add(2, 4)
+        add(2, 5)
+        add(2, 6)
+        add(3, 6)
+        add(4, 5)
+        add(3, 5)
+        add(6, 7)
+        add(6, 8)
 
         For Each u In V
             Call cat(u.ToString)
@@ -87,13 +101,16 @@ Public Module Module1
     Public Sub SpringG(V As node(), E As edge())
 
 
-        For i As Integer = 0 To 100
+        For i As Integer = 0 To 1000
 
             For Each a In V
                 For Each b In V.Where(Function(x) Not x Is a)
                     ' 节点之间存在斥力
-                    Dim d = (a.pos - b.pos)
-                    a.force += repel(d)
+                    Dim d = a.pos - b.pos
+                    Dim distance = d.SumMagnitude + 1
+                    Dim direct = d.Unit
+                    a.force -= repel(direct / distance)
+                    b.force += repel(direct / distance)
                 Next
             Next
 
@@ -101,9 +118,12 @@ Public Module Module1
                 Dim a = l.u
                 Dim b = l.v
 
-                Dim d = spring(a.pos - b.pos)
-                a.force -= d
-                b.force -= d
+                Dim d = a.pos - b.pos
+                Dim displa = d.SumMagnitude
+                Dim direct = d.Unit
+
+                a.force -= spring(displa * direct)
+                b.force += spring(displa * direct)
             Next
 
             For Each u In V
@@ -111,9 +131,28 @@ Public Module Module1
                 u.force *= 0R
             Next
 
-            Call V.GetJson.__DEBUG_ECHO
+            Call V.Select(Function(n) n.ToString).JoinBy("   ").__DEBUG_ECHO
 
         Next
+
+        Using g = New Size(1000, 1000).CreateGDIDevice
+
+            Dim polygon = V.Select(Function(n) n.pos.Vector2D.ToPoint).ToArray.Enlarge(0.2)
+            Dim coffset = polygon.CentralOffset(g.Size).ToPoint
+
+
+
+            For Each u In polygon
+                Call g.DrawCircle(u.OffSet2D(coffset), 10, Brushes.Blue)
+                Call cat(u.ToString)
+            Next
+
+            For Each uv In E
+                Call g.DrawLine(Pens.Red, uv.u.pos.Vector2D.OffSet2D(coffset), uv.v.pos.Vector2D.OffSet2D(coffset))
+            Next
+
+            Call g.Save("x:\fsdfsdf.png", ImageFormats.Png)
+        End Using
 
 
         Pause()
@@ -140,7 +179,7 @@ Public Module Module1
     ''' <param name="d#">where d is the length of the spring</param>
     ''' <returns></returns>
     Public Function spring(d As Vector) As Vector
-        Return c1 * VectorMath.Log(d / c2)
+        Return c1 * VectorMath.Log(VectorMath.Abs(d) / c2)
     End Function
 
     Class edge
@@ -154,10 +193,10 @@ Public Module Module1
     Public Class node
         Public Property ID$
         Public Property force As New Vector(2)
-        Public Property pos As New Vector({Rnd() * 10, Rnd() * 10})
+        Public Property pos As New Vector({Rnd() * 100, Rnd() * 100})
 
         Public Overrides Function ToString() As String
-            Return pos.Vector2D.ToString & " --> " & force.GetJson
+            Return pos.Vector2D.ToString ' & " --> " & force.GetJson
         End Function
     End Class
 
