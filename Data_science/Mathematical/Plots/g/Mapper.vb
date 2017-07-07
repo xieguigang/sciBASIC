@@ -179,7 +179,8 @@ Namespace Graphic
                     .errPlus = p.errPlus,
                     .Tag = p.Tag,
                     .value = p.value,
-                    .Statics = p.Statics
+                    .Statics = p.Statics,
+                    .color = p.color
                 }
 
                 Yield New SerialData With {
