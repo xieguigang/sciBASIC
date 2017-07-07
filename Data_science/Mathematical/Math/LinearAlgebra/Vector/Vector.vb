@@ -516,6 +516,12 @@ Namespace LinearAlgebra
             Return New BooleanVector(From d As Double In x Select d < n)
         End Operator
 
+        ''' <summary>
+        ''' 返回一个逻辑向量，用来指示向量对象的每一个分量与目标比较的逻辑值结果
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         Public Shared Operator >=(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d >= n)
         End Operator

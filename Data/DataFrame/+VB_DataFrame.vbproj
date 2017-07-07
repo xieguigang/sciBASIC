@@ -222,6 +222,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DATA\DataFrame.vb" />
     <Compile Include="DATA\SQL.vb" />
     <Compile Include="IO\BackendWriter.vb" />
     <Compile Include="IO\Generic\Extensions.vb" />
