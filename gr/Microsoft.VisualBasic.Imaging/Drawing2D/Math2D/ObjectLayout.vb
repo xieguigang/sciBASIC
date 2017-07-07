@@ -16,10 +16,15 @@ Namespace Drawing2D.Math2D
 
         Public Structure LayoutRegion
 
+            Private placed As List(Of RectangleF)
+
             Dim region As Rectangle
-            Dim placed As List(Of RectangleF)
             Dim xWindows As DoubleRange()
             Dim yWindows As DoubleRange()
+
+            Public Sub Add(obj As RectangleF)
+                Call placed.Add(obj)
+            End Sub
 
             Public Overrides Function ToString() As String
                 Return $"{placed.Count} objects was placed in region [{region.ToString}]"
@@ -135,7 +140,7 @@ Namespace Drawing2D.Math2D
         Public Function Calculate(target As RectangleF, size As SizeF) As PointF
             Dim region As Regions = InRegion(target.Location)
 
-            occupied(region).placed.Add(target)
+            occupied(region).Add(target)
 
             ' 因为在开始的时候会将target也防止到canvas之上，
             ' 所以这个init应该定义于添加操作的后面
