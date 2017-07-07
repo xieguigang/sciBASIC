@@ -3,8 +3,9 @@ Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports Microsoft.VisualBasic.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
 
-Module Module1
+Public Module Module1
 
     <Extension>
     Public Function Vector2D(v As Vector) As PointF
@@ -37,13 +38,16 @@ Module Module1
         Next
 
 
+        Call SpringG(V.ToArray, E.ToArray)
+
+
         For i = 0 To 100
 
             For Each u In V
                 For Each u2 In V
                     If Not u Is u2 Then
                         Dim d = u2.pos - u.pos
-                        u.displacement += d.Unit * fr(d.SumMagnitude)
+                        u.force += d.Unit * fr(d.SumMagnitude)
                     End If
                 Next
             Next
@@ -51,13 +55,13 @@ Module Module1
             For Each uv In E
                 With uv
                     Dim d = .u.pos - .v.pos
-                    .v.displacement += d.Unit * fa(d.Mod)
+                    .v.force += d.Unit * fa(d.Mod)
                 End With
             Next
 
             For Each u In V
-                u.pos += u.displacement.Unit * u.displacement.SumMagnitude
-                u.displacement *= 0R
+                u.pos += u.force.Unit * u.force.SumMagnitude
+                u.force *= 0R
             Next
         Next
 
@@ -80,6 +84,65 @@ Module Module1
         Pause()
     End Sub
 
+    Public Sub SpringG(V As node(), E As edge())
+
+
+        For i As Integer = 0 To 100
+
+            For Each a In V
+                For Each b In V.Where(Function(x) Not x Is a)
+                    ' 节点之间存在斥力
+                    Dim d = (a.pos - b.pos)
+                    a.force += repel(d)
+                Next
+            Next
+
+            For Each l In E
+                Dim a = l.u
+                Dim b = l.v
+
+                Dim d = spring(a.pos - b.pos)
+                a.force -= d
+                b.force -= d
+            Next
+
+            For Each u In V
+                u.pos += c4 * u.force
+                u.force *= 0R
+            Next
+
+            Call V.GetJson.__DEBUG_ECHO
+
+        Next
+
+
+        Pause()
+    End Sub
+
+    Const c1# = 2
+    Const c2# = 1
+
+    Const c3# = 1
+    Const c4# = 0.1
+
+    ''' <summary>
+    ''' inverse square law force
+    ''' </summary>
+    ''' <param name="d#"></param>
+    ''' <returns></returns>
+    Public Function repel(d As Vector) As Vector
+        Return c3 / d ^ 2
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="d#">where d is the length of the spring</param>
+    ''' <returns></returns>
+    Public Function spring(d As Vector) As Vector
+        Return c1 * VectorMath.Log(d / c2)
+    End Function
+
     Class edge
         Public u, v As node
 
@@ -88,13 +151,13 @@ Module Module1
         End Function
     End Class
 
-    Class node
-        Public ID$
-        Public displacement As New Vector(2)
-        Public pos As New Vector({Rnd() * 10, Rnd() * 10})
+    Public Class node
+        Public Property ID$
+        Public Property force As New Vector(2)
+        Public Property pos As New Vector({Rnd() * 10, Rnd() * 10})
 
         Public Overrides Function ToString() As String
-            Return pos.Vector2D.ToString & " --> " & displacement.GetJson
+            Return pos.Vector2D.ToString & " --> " & force.GetJson
         End Function
     End Class
 

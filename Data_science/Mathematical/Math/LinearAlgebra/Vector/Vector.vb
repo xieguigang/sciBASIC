@@ -473,7 +473,13 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Me.ToArray.GetJson
+            Return "[" & Me.ToString("F2").JoinBy(", ") & "]"
+        End Function
+
+        Public Overloads Function ToString(format$) As String()
+            Return Me _
+                .Select(Function(x) x.ToString(format)) _
+                .ToArray
         End Function
 
         ''' <summary>
