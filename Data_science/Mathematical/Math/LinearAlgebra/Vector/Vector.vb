@@ -391,6 +391,8 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
+        ''' ``norm2()``
+        ''' 
         ''' 向量模的平方，``||x||``是向量``x=(x1，x2，…，xp)``的欧几里得范数
         ''' </summary>
         ''' <returns></returns>
@@ -408,12 +410,20 @@ Namespace LinearAlgebra
         End Property
 
         ''' <summary>
+        ''' ``norm()``
+        ''' 
         ''' http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property SumMagnitude As Double
             Get
                 Return Math.Sqrt(Me.Mod)
+            End Get
+        End Property
+
+        Public ReadOnly Property Unit As Vector
+            Get
+                Return Me / SumMagnitude
             End Get
         End Property
 

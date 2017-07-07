@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Datavisualization.Network", "Datavisualization.Network\Datavisualization.Network.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Network.GraphTheory", "Datavisualization.Network\Network.GraphTheory.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GraphTesting", "Datavisualization.Network\GraphTesting\GraphTesting.vbproj", "{23A002A3-DEA8-4823-946B-D0C8CE113F67}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ConsoleApp1", "ModelTest\ConsoleApp1\ConsoleApp1.vbproj", "{FD38EA38-13C0-48E4-8BDF-74F6780C4649}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -184,6 +186,36 @@ Global
 		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release2|x64.Build.0 = Release|Any CPU
 		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release2|x86.ActiveCfg = Release|Any CPU
 		{23A002A3-DEA8-4823-946B-D0C8CE113F67}.Release2|x86.Build.0 = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Debug|x64.Build.0 = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Debug|x86.Build.0 = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.docs|x64.ActiveCfg = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.docs|x64.Build.0 = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.docs|x86.ActiveCfg = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.docs|x86.Build.0 = Debug|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Publish|x64.ActiveCfg = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Publish|x64.Build.0 = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Publish|x86.ActiveCfg = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Publish|x86.Build.0 = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release|x64.ActiveCfg = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release|x64.Build.0 = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release|x86.ActiveCfg = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release|x86.Build.0 = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release2|x64.ActiveCfg = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release2|x64.Build.0 = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release2|x86.ActiveCfg = Release|Any CPU
+		{FD38EA38-13C0-48E4-8BDF-74F6780C4649}.Release2|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,5 +224,8 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99} = {2BB7D1CC-C62A-4D89-87BB-D52EC130F2A7}
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB} = {2BB7D1CC-C62A-4D89-87BB-D52EC130F2A7}
 		{E3367B88-5D0C-495A-8273-331656D4B5AA} = {2BB7D1CC-C62A-4D89-87BB-D52EC130F2A7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5C6BD75-1F8D-4135-AC3F-3A4DCBC49290}
 	EndGlobalSection
 EndGlobal

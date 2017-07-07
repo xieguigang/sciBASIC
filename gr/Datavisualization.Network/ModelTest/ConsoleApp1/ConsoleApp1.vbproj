@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{23A002A3-DEA8-4823-946B-D0C8CE113F67}</ProjectGuid>
+    <ProjectGuid>{FD38EA38-13C0-48E4-8BDF-74F6780C4649}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>GraphTesting.Module1</StartupObject>
-    <RootNamespace>GraphTesting</RootNamespace>
-    <AssemblyName>GraphTesting</AssemblyName>
+    <StartupObject>ConsoleApp1.Module1</StartupObject>
+    <RootNamespace>ConsoleApp1</RootNamespace>
+    <AssemblyName>ConsoleApp1</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,7 +21,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>GraphTesting.xml</DocumentationFile>
+    <DocumentationFile>ConsoleApp1.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +31,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>GraphTesting.xml</DocumentationFile>
+    <DocumentationFile>ConsoleApp1.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -51,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -119,9 +119,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Network.GraphTheory.vbproj">
+    <ProjectReference Include="..\..\Datavisualization.Network\Network.GraphTheory.vbproj">
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
-      <Name>Datavisualization.Network</Name>
+      <Name>Network.GraphTheory</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
