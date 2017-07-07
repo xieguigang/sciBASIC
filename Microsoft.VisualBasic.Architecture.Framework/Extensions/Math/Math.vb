@@ -271,11 +271,11 @@ Namespace Mathematical
         <Extension> Public Function Sum(bc As IEnumerable(Of Boolean)) As Double
             If bc.IsNullOrEmpty Then
                 Return 0
+            Else
+                Return bc _
+                    .Select(Function(b) If(True = b, 1.0R, 0R)) _
+                    .Sum
             End If
-
-            Dim LQuery = (From b In bc Select If(b, 1, 0)).ToArray
-            Dim value As Double = LQuery.Sum
-            Return value
         End Function
 
         ''' <summary>

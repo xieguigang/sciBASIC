@@ -34,6 +34,11 @@ Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Public Module Extensions
 
+    <Extension>
+    Public Function AsVector(data As IEnumerable(Of Double)) As Vector
+        Return New Vector(data)
+    End Function
+
     ''' <summary>
     ''' ``FDR = length(pvalue)*pvalue/rank(pvalue)``
     ''' </summary>

@@ -96,14 +96,24 @@ Public Module Bubble
                 End If
 
                 For Each s As SerialData In mapper.ForEach(size, margin)
-                    Dim b As New SolidBrush(s.color)
+                    Dim b As SolidBrush = Nothing
+
+                    If Not (s.color.IsEmpty) Then
+                        b = New SolidBrush(s.color)
+                    End If
 
                     For Each pt As PointData In s
                         Dim r As Double = scale(pt.value)
                         Dim p As New Point(CInt(pt.pt.X - r), CInt(pt.pt.Y - r))
                         Dim rect As New Rectangle(p, New Size(r * 2, r * 2))
 
-                        Call g.FillPie(b, rect, 0, 360)
+                        With pt.color
+                            If .StringEmpty Then
+                                Call g.FillPie(b, rect, 0, 360)
+                            Else
+                                Call g.FillPie(New SolidBrush(.TranslateColor), rect, 0, 360)
+                            End If
+                        End With
 
                         If Not bubblePen Is Nothing Then
                             Call g.DrawCircle(pt.pt, r, bubblePen, fill:=False)
