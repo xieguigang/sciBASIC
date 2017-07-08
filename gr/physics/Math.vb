@@ -4,10 +4,21 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports sys = System.Math
 
+''' <summary>
+''' Math provider for <see cref="Force"/>
+''' </summary>
 Public Module Math
 
+    ''' <summary>
+    ''' Vector index for XYZ
+    ''' </summary>
     Public Const X = 0, Y = 1, Z = 2
 
+    ''' <summary>
+    ''' 将力分解为水平和垂直两个方向上面的分力
+    ''' </summary>
+    ''' <param name="F"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Decomposition2D(F As Force) As Vector
         Dim v = F.Strength
@@ -20,6 +31,12 @@ Public Module Math
         Throw New NotImplementedException
     End Function
 
+    ''' <summary>
+    ''' 力的合成的平行四边形法则
+    ''' </summary>
+    ''' <param name="f1"></param>
+    ''' <param name="f2"></param>
+    ''' <returns></returns>
     Public Function ParallelogramLaw(f1 As Force, f2 As Force) As Force
         If f1 = 0 Then
             Return f2
@@ -90,6 +107,13 @@ Public Module Math
         Return k * q1 * q2 / r ^ 2
     End Function
 
+    ''' <summary>
+    ''' 两个点电荷之间的库仑力
+    ''' </summary>
+    ''' <param name="m1"></param>
+    ''' <param name="m2"></param>
+    ''' <param name="k#"></param>
+    ''' <returns></returns>
     Public Function CoulombsLaw(m1 As MassPoint, m2 As MassPoint, Optional k# = 9000000000.0) As Force
         Dim d = m1.Point - m2.Point
         Dim f = Math.CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
@@ -100,12 +124,18 @@ Public Module Math
         End With
     End Function
 
+    ''' <summary>
+    ''' 计算两个向量之间的alpha夹角的cos值
+    ''' </summary>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
     Public Function Cos(a As Vector, b As Vector) As Double
         Return a.DotProduct(b) / (a.SumMagnitude * b.SumMagnitude)
     End Function
 
     ''' <summary>
-    ''' 
+    ''' 排斥力模型
     ''' </summary>
     ''' <param name="strength#"></param>
     ''' <param name="a">空间位置坐标</param>
@@ -122,6 +152,13 @@ Public Module Math
         }
     End Function
 
+    ''' <summary>
+    ''' 吸引力模型
+    ''' </summary>
+    ''' <param name="strength#"></param>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
     Public Function AttractiveForce(strength#, a As Vector, b As Vector) As Force
         With -Math.RepulsiveForce(strength, a, b)
             .source = NameOf(AttractiveForce)
