@@ -20,6 +20,14 @@ Public Module Math
     End Function
 
     Public Function ParallelogramLaw(f1 As Force, f2 As Force) As Force
+        If f1 = 0 Then
+            Return f2
+        ElseIf f2 = 0 Then
+            Return f1
+        ElseIf f1 = 0 AndAlso f2 = 0 Then
+            Return New Force
+        End If
+
         Dim alpha = f1.Angle - f2.Angle
         Dim F = f1 ^ 2 + f2 ^ 2 + 2 * f1 * f2 * sys.Cos(alpha)
         Dim sina = Sin(alpha) * f1 / F

@@ -151,6 +151,7 @@ Public Module Module1
 
         Sub New()
             Point = New Vector({Rnd() * 100, Rnd() * 100})
+            Charge = 0.01
         End Sub
 
         Public Overrides Function ToString() As String

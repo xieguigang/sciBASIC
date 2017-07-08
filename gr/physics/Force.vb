@@ -37,6 +37,22 @@ Public Class Force
         Return x * f.Strength
     End Operator
 
+    Public Shared Operator =(f As Force, strength#) As Boolean
+        Return f.Strength = strength
+    End Operator
+
+    Public Shared Operator =(f As Force, strength%) As Boolean
+        Return Abs(f.Strength - strength) <= 0.0001
+    End Operator
+
+    Public Shared Operator <>(f As Force, strength#) As Boolean
+        Return Not f = strength
+    End Operator
+
+    Public Shared Operator <>(f As Force, strength%) As Boolean
+        Return Not f = strength
+    End Operator
+
     ''' <summary>
     ''' 这个力的反向力
     ''' </summary>
