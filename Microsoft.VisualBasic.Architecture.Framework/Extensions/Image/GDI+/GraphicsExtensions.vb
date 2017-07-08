@@ -711,12 +711,15 @@ Namespace Imaging
             res = res.ImageCrop(region.Location, region.Size)
 
             If margin > 0 Then
-                Dim gr = New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
-                Call gr.Graphics.DrawImage(res, New Point(margin, margin))
-                res = gr.ImageResource
-            End If
+                With New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
+                    Call .Clear(blankColor)
+                    Call .DrawImage(res, New Point(margin, margin))
 
-            Return res
+                    Return .ImageResource
+                End With
+            Else
+                Return res
+            End If
         End Function
     End Module
 End Namespace
