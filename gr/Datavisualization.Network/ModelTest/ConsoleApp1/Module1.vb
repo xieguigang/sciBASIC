@@ -23,8 +23,8 @@ Public Module Module1
         Dim V As New List(Of node)
         Dim E As New List(Of edge)
 
-        V.Add(New node With {.ID = 1})
-        V.Add(New node With {.ID = 2})
+        V.Add(New node With {.ID = 1, .Point = {100, 100}})
+        V.Add(New node With {.ID = 2, .Point = {-100, -100}})
         'V.Add(New node With {.ID = 3})
         'V.Add(New node With {.ID = 4})
         'V.Add(New node With {.ID = 5})
@@ -77,7 +77,7 @@ Public Module Module1
                     Dim cl = Math.CoulombsLaw(a, b)
 
 
-                    cl.Strength *= 100
+                    cl.Strength *= 5
 
                     force(a.ID).Add(cl)
                     ' force(b.ID).Add(-cl)
@@ -91,7 +91,7 @@ Public Module Module1
                 Dim d = a.Point - b.Point
                 Dim springF = spring(d.SumMagnitude)
                 Dim f = Math.AttractiveForce(springF, a.Point, b.Point)
-                f.Strength /= 2
+                f.Strength /= 15
                 force(a.ID).Add(f)
                 force(b.ID).Add(-f)
             Next

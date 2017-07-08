@@ -74,7 +74,8 @@ Public Class Force
     Public Shared Operator -(f As Force) As Force
         Return New Force With {
             .Strength = f.Strength,
-            .Angle = f.Angle + PI
+            .Angle = f.Angle + PI,
+            .source = $"Reverse({f.source})"
         }
     End Operator
 
