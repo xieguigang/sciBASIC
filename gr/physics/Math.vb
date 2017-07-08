@@ -152,6 +152,11 @@ Public Module Math
         Dim alpha = Arccos(cosA)
 
         If d(Y) < 0 Then
+            ' y 小于零的时候是第三和第4象限的
+            ' cos(170) = cos(190)
+            ' 则假设通过判断这个y坐标值知道点是在第三和第四象限
+            ' 那么 190 = 180 + (180-170)
+            '      350 = 180 + (180-10)
             alpha = PI + (PI - alpha)
         End If
 

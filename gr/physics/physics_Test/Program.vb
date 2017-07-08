@@ -9,6 +9,8 @@ Public Module Program
     Sub Main()
 
         Call cl({210, 42}, {539, 72}) ' 265???
+        Call cl({0, 0}, {100, -5})
+        Call cl({100, -5}, {0, 0})
 
         Call cl({100, 0}, {-100, 0})  ' X 轴， 0度
         Call cl({0, 100}, {0, -100})   ' Y 轴，  90度
