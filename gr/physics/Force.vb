@@ -1,6 +1,6 @@
 ﻿Imports System.Math
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Math
 
 ''' <summary>
 ''' 力
@@ -102,6 +102,6 @@ Public Class Force
     ''' <param name="f2"></param>
     ''' <returns></returns>
     Public Shared Operator +(f1 As Force, f2 As Force) As Force
-        Return sys.ParallelogramLaw(f1, f2)
+        Return Math.ParallelogramLaw(f1, f2)
     End Operator
 End Class

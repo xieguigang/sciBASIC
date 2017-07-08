@@ -1,30 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::db1b36a6fdaafe52c845802d069ab7ff, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Matrix\MatrixMath.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Math
+Imports sys = System.Math
 
 Namespace LinearAlgebra
 
@@ -623,7 +626,7 @@ Namespace LinearAlgebra
             While m <> 0
                 t = m - 1
                 While t > 0
-                    If sys.Abs(A(t, t - 1)) > erro * (Math.Abs(A(t - 1, t - 1)) + sys.Abs(A(t, t))) Then
+                    If sys.Abs(A(t, t - 1)) > erro * (Abs(A(t - 1, t - 1)) + sys.Abs(A(t, t))) Then
                         t -= 1
                     Else
                         Exit While
@@ -638,7 +641,7 @@ Namespace LinearAlgebra
                     b = -(A(m - 1, m - 1) + A(m - 2, m - 2))
                     c = A(m - 1, m - 1) * A(m - 2, m - 2) - A(m - 1, m - 2) * A(m - 2, m - 1)
                     d = b * b - 4 * c
-                    y = sys.Pow(Math.Abs(d), 0.5)
+                    y = Abs(d) ^ 0.5
                     If d > 0 Then
                         xy = 1
                         If b < 0 Then

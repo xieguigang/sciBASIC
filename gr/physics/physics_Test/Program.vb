@@ -1,6 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Imaging.Physics
-Imports System.Math
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+﻿Imports System.Math
+Imports Microsoft.VisualBasic.Imaging.Physics
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Program
 
@@ -50,7 +50,7 @@ Public Module Program
     Sub cl(a As Vector, b As Vector)
         Dim m1 As New MassPoint With {.Charge = 1, .Point = a}
         Dim m2 As New MassPoint With {.Charge = 1, .Point = b}
-        Dim f = sys.CoulombsLaw(m1, m2)
+        Dim f = Math.CoulombsLaw(m1, m2)
 
         Call $"Coulombs force between the {m1.Point.ToString} and {m2.Point.ToString} is {f.ToString}".__DEBUG_ECHO
     End Sub
@@ -60,7 +60,7 @@ Public Module Program
     End Sub
 
     Sub repl(a As Vector, b As Vector)
-        Call sys.RepulsiveForce(100, a, b).__DEBUG_ECHO
+        Call Math.RepulsiveForce(100, a, b).__DEBUG_ECHO
     End Sub
 
     Sub reverse(f As Force)

@@ -282,6 +282,22 @@ Namespace Math
         End Function
 
         ''' <summary>
+        ''' 计算出所有的数的乘积
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ProductALL([in] As IEnumerable(Of Double)) As Double
+            Dim product# = 1
+
+            For Each x As Double In [in]
+                product *= x
+            Next
+
+            Return product
+        End Function
+
+        ''' <summary>
         ''' Standard Deviation
         ''' </summary>
         ''' <returns></returns>

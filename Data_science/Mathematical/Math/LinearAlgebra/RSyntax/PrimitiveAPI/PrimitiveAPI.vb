@@ -28,8 +28,8 @@
 
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -56,7 +56,7 @@ Namespace SyntaxAPI
         ''' Currently missing can only be used in the immediate body of the function that defines the argument, not in the body of a nested function or a local call. This may change in the future.
         ''' This is a ‘special’ primitive function: it must not evaluate its argument.
         ''' </remarks>
-        Public Function Missing(Of T)(x As Generic.IEnumerable(Of T)) As Boolean
+        Public Function Missing(Of T)(x As IEnumerable(Of T)) As Boolean
             Return x.IsNullOrEmpty
         End Function
 

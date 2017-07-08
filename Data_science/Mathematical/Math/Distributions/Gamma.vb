@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports sys = System.Math
 
 Namespace Distributions
 
@@ -122,7 +123,7 @@ Namespace Distributions
         <Extension>
         Public Function gamma(z As Double) As Double
             If (z < 0.5) Then
-                Return sys.PI / (Math.Sin(Math.PI * z) * gamma(1 - z))
+                Return sys.PI / (sys.Sin(Math.PI * z) * gamma(1 - z))
             ElseIf (z > 100) Then
                 Return sys.Exp(lngamma(z))
             Else

@@ -30,8 +30,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
+Imports sys = System.Math
 
 ''' <summary>
 ''' Data sampling bootstrapping extensions
@@ -135,9 +136,9 @@ Public Module Bootstraping
     ''' <param name="x"></param>
     ''' <returns></returns>
     Public Function StandardDistribution#(x#)
-        Dim answer As Double = 1 / ((Math.Sqrt(2 * sys.PI)))
+        Dim answer As Double = 1 / ((sys.Sqrt(2 * sys.PI)))
         Dim exp1 As Double = sys.Pow(x, 2) / 2
-        Dim exp As Double = sys.Pow(Math.E, -(exp1))
+        Dim exp As Double = sys.Pow(sys.E, -(exp1))
         answer = answer * exp
         Return answer
     End Function
@@ -150,10 +151,10 @@ Public Module Bootstraping
     ''' <param name="sd"></param>
     ''' <returns></returns>
     Public Function ProbabilityDensity(x#, m#, sd#) As Double
-        Dim answer As Double = 1 / (sd * (Math.Sqrt(2 * sys.PI)))
+        Dim answer As Double = 1 / (sd * (sys.Sqrt(2 * sys.PI)))
         Dim exp As Double = sys.Pow((x - m), 2.0)
         Dim expP2 As Double = 2 * sys.Pow(sd, 2.0)
-        Dim expP3 As Double = sys.Pow(Math.E, (-(exp / expP2)))
+        Dim expP3 As Double = sys.Pow(sys.E, (-(exp / expP2)))
         answer = answer * expP3
         Return answer
     End Function

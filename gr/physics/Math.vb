@@ -1,8 +1,8 @@
 ﻿Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports sys = System.Math
 
 ''' <summary>
@@ -140,7 +140,7 @@ Public Module Math
     ''' <returns></returns>
     Public Function CoulombsLaw(m1 As MassPoint, m2 As MassPoint, Optional k# = 9000000000.0) As Force
         Dim d = m1.Point - m2.Point
-        Dim f = sys.CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
+        Dim f = Math.CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
 
         With RepulsiveForce(f, m1.Point, m2.Point)
             .source = NameOf(CoulombsLaw)
@@ -167,7 +167,7 @@ Public Module Math
     ''' <returns></returns>
     Public Function RepulsiveForce(strength#, a As Vector, b As Vector) As Force
         Dim d = a - b
-        Dim cosA = sys.Cos(a - b, {100, 0})  ' 两个向量的方向对X坐标轴的夹角才是力的方向
+        Dim cosA = Cos(a - b, {100, 0})  ' 两个向量的方向对X坐标轴的夹角才是力的方向
         Dim alpha = Arccos(cosA)
 
         If d(Y) < 0 Then

@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Class MassPoint
 

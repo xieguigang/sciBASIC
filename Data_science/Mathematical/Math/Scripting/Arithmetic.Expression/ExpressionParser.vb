@@ -28,9 +28,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
-Imports Microsoft.VisualBasic.Mathematical.Scripting.Expression
-Imports Microsoft.VisualBasic.Mathematical.Scripting.Helpers.Arithmetic
-Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
+Imports Microsoft.VisualBasic.Math.Scripting.Expression
+Imports Microsoft.VisualBasic.Math.Scripting.Helpers.Arithmetic
+Imports Microsoft.VisualBasic.Math.Scripting.Types
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Scripting

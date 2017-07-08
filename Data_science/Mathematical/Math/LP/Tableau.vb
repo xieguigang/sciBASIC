@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language.Java
+Imports sys = System.Math
 
 Namespace LP
 

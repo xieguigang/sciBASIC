@@ -28,6 +28,7 @@
 
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports sys = System.Math
 
 Namespace Scripting.Helpers
 
