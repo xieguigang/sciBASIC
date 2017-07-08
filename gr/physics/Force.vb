@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+﻿Imports System.Math
 
 ''' <summary>
 ''' 力
@@ -11,7 +11,7 @@ Public Class Force
     ''' <returns></returns>
     Public Property Strength As Double
     ''' <summary>
-    ''' 力的方向，与水平的夹角
+    ''' 力的方向，与水平的夹角，使用弧度
     ''' </summary>
     ''' <returns></returns>
     Public Property Angle As Double
@@ -30,6 +30,18 @@ Public Class Force
 
     Public Shared Operator *(x As Integer, f As Force) As Double
         Return x * f.Strength
+    End Operator
+
+    ''' <summary>
+    ''' 这个力的反向力
+    ''' </summary>
+    ''' <param name="f"></param>
+    ''' <returns></returns>
+    Public Shared Operator -(f As Force) As Force
+        Return New Force With {
+            .Strength = f.Strength,
+            .Angle = f.Angle + PI
+        }
     End Operator
 
     ''' <summary>

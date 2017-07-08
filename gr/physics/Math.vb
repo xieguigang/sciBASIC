@@ -1,4 +1,5 @@
 ﻿Imports System.Math
+Imports System.Runtime.CompilerServices
 
 Public Module Math
 
@@ -13,5 +14,20 @@ Public Module Math
             .Strength = F,
             .Angle = alpha
         }
+    End Function
+
+    <Extension>
+    Public Function Sum(F As IEnumerable(Of Force)) As Force
+        Dim result As New Force
+
+        For Each n As Force In F
+            result = result + n
+        Next
+
+        Return result
+    End Function
+
+    Public Function CoulombsLaw(q1#, q2#, r#, Optional k# = 9000000000.0) As Double
+        Return k * q1 * q2 / r ^ 2
     End Function
 End Module
