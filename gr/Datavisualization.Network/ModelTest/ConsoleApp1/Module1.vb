@@ -84,8 +84,10 @@ Public Module Module1
                     Dim cl = Math.CoulombsLaw(a, b)
 
 
-                    cl.Strength *= 5
+                    cl.Strength *= 50
 
+                    ' 斥力部分只需要添加一个就行了
+                    ' 因为这两个嵌套的for循环会出现 a-b b-a 这两种刚好互补的情况
                     force(a.ID).Add(cl)
                     ' force(b.ID).Add(-cl)
                 Next
@@ -99,7 +101,7 @@ Public Module Module1
                 Dim springF = spring(d.SumMagnitude)
                 Dim f = Math.AttractiveForce(springF, a.Point, b.Point)
                 f.Strength /= 15
-                force(a.ID).Add(f)
+                force(a.ID).Add(f)  ' 对一个是正向力，对另外一个节点就刚好反过来才会使正向力
                 force(b.ID).Add(-f)
             Next
 
