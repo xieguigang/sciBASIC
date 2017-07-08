@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::d62ac1453223425487417908bfddec42, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\NetworkAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv.Extensions
@@ -130,7 +131,7 @@ Public Module NetworkAPI
     ''' 变量的属性里面必须是包含有相关度的
     ''' </summary>
     ''' <param name="data"></param>
-    ''' <param name="cut"><see cref="Math.Abs(Double)"/></param>
+    ''' <param name="cut"><see cref="Abs(Double)"/></param>
     ''' <param name="trim">Removes the duplicated edges and self loops?</param>
     ''' <returns></returns>
     <Extension>
@@ -173,7 +174,7 @@ Public Module NetworkAPI
             For Each k$ In var.Properties.Keys
                 c# = var.Properties(k$)
 
-                If Math.Abs(c) < cut Then
+                If Abs(c) < cut Then
                     Continue For
                 End If
 
@@ -187,7 +188,7 @@ Public Module NetworkAPI
                     .Interaction = interact,
                     .Properties = New Dictionary(Of String, String) From {
                         {"type", If(c# > 0, "positive", "negative")},
-                        {"abs", Math.Abs(c#)}
+                        {"abs", Abs(c#)}
                     }
                 }
             Next

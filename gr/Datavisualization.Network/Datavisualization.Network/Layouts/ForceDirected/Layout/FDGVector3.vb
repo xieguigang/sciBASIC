@@ -65,6 +65,7 @@
 '
 
 Imports Microsoft.VisualBasic.Math
+Imports System.Math
 
 Namespace Layouts
 
@@ -87,7 +88,7 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function GetHashCode() As Integer
-            Return CInt(Math.Truncate(x)) Xor CInt(Math.Truncate(y)) Xor CInt(Math.Truncate(z))
+            Return CInt(Truncate(x)) Xor CInt(Truncate(y)) Xor CInt(Truncate(z))
         End Function
         Public Overrides Function Equals(obj As System.Object) As Boolean
             ' If parameter is null return false.
@@ -172,9 +173,8 @@ Namespace Layouts
         End Function
 
         Public Overrides Function Magnitude() As Single
-            Return CSng(Math.Sqrt(CDbl(x * x) + CDbl(y * y) + CDbl(z * z)))
+            Return CSng(Sqrt(CDbl(x * x) + CDbl(y * y) + CDbl(z * z)))
         End Function
-
 
         Public Overrides Function Normalize() As AbstractVector
             Return Me / Magnitude()
