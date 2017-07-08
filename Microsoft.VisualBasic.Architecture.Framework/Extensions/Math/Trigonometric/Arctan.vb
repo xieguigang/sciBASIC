@@ -26,11 +26,13 @@
 
 #End Region
 
+Imports sys = System.Math
+
 Namespace Math
 
     Partial Module Trigonometric
 
-        Const HalfPI# = sys.PI / 2
+        Const HalfPI# = PI / 2
         Const n1# = 1.0R
         Const n05# = 0.5R
 
@@ -47,7 +49,7 @@ Namespace Math
         ''' <remarks>Atan测试没有问题</remarks>>
         Public Function Atn(x#) As Double
             If x# = 1.0 Then
-                Return sys.PI / 4
+                Return PI / 4
             End If
             If sys.Sign(x) = sys.Sign(-1) Then
                 Return -Atn(-x)

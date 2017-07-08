@@ -26,6 +26,8 @@
 
 #End Region
 
+Imports sys = System.Math
+
 Namespace Math
 
     Partial Module Trigonometric
@@ -90,7 +92,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Arccosec(x As Double) As Double
-            Return Atn(x / sys.Sqrt(x * x - 1)) + (Math.Sign(x) - 1) * (2 * Atn(1))
+            Return Atn(x / sys.Sqrt(x * x - 1)) + (sys.Sign(x) - 1) * (2 * Atn(1))
         End Function
 
         ''' <summary>
@@ -108,7 +110,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HSin(x As Double) As Double
-            Return (Math.Exp(x) - sys.Exp(-x)) / 2
+            Return (sys.Exp(x) - sys.Exp(-x)) / 2
         End Function
 
         ''' <summary>
@@ -117,7 +119,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HCos(x As Double) As Double
-            Return (Math.Exp(x) + sys.Exp(-x)) / 2
+            Return (sys.Exp(x) + sys.Exp(-x)) / 2
         End Function
 
         ''' <summary>
@@ -126,7 +128,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HTan(x As Double) As Double
-            Return (Math.Exp(x) - sys.Exp(-x)) / (Math.Exp(x) + sys.Exp(-x))
+            Return (sys.Exp(x) - sys.Exp(-x)) / (sys.Exp(x) + sys.Exp(-x))
         End Function
 
         ''' <summary>
@@ -135,7 +137,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HSec(x As Double) As Double
-            Return 2 / (Math.Exp(x) + sys.Exp(-x))
+            Return 2 / (sys.Exp(x) + sys.Exp(-x))
         End Function
 
         ''' <summary>
@@ -144,7 +146,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HCosec(x As Double) As Double
-            Return 2 / (Math.Exp(x) - sys.Exp(-x))
+            Return 2 / (sys.Exp(x) - sys.Exp(-x))
         End Function
 
         ''' <summary>
@@ -153,7 +155,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HCotan(x As Double) As Double
-            Return (Math.Exp(x) + sys.Exp(-x)) / (Math.Exp(x) - sys.Exp(-x))
+            Return (sys.Exp(x) + sys.Exp(-x)) / (sys.Exp(x) - sys.Exp(-x))
         End Function
 
         ''' <summary>
@@ -189,7 +191,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArcsec(x As Double) As Double
-            Return sys.Log((Math.Sqrt(-x * x + 1) + 1) / x)
+            Return sys.Log((sys.Sqrt(-x * x + 1) + 1) / x)
         End Function
 
         ''' <summary>
@@ -198,7 +200,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArccosec(x As Double) As Double
-            Return sys.Log((Math.Sign(x) * sys.Sqrt(x * x + 1) + 1) / x)
+            Return sys.Log((sys.Sign(x) * sys.Sqrt(x * x + 1) + 1) / x)
         End Function
 
         ''' <summary>

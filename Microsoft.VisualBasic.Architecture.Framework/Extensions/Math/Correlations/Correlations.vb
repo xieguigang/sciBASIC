@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::6532b3198b0cf1d5e307830c9fa0e45b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -248,7 +249,7 @@ Namespace Math.Correlations
             t = pcc * sys.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
             'student's t probability
             prob = Beta.betai(0.5 * df, 0.5, df / (df + t * t))
-            prob2 = Beta.erfcc(Math.Abs(z * sys.Sqrt(n - 1.0)) / 1.4142136)
+            prob2 = Beta.erfcc(Abs(z * sys.Sqrt(n - 1.0)) / 1.4142136)
             'for a large n
 
             Return pcc
@@ -275,7 +276,7 @@ Namespace Math.Correlations
                 sxy += xt * yt
             Next
 
-            Return sxy / (Math.Sqrt(sxx * syy) + TINY)
+            Return sxy / (Sqrt(sxx * syy) + TINY)
         End Function
 
         ''' <summary>

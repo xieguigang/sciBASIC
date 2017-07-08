@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports sys = System.Math
 
 Namespace Math
 
@@ -43,7 +44,7 @@ Namespace Math
         ''' <param name="INF">当位数超过这个值之后将会被判定为非常大或者非常小的一个数</param>
         ''' <returns></returns>
         Public Function PowerLog10(x#, Optional INF% = 5) As Single
-            Dim pow# = sys.Log10(Math.Abs(x))
+            Dim pow# = sys.Log10(sys.Abs(x))
 
             If pow < -INF Then
                 Return pow
@@ -102,7 +103,7 @@ Namespace Math
                 Return "0"
             End If
 
-            Dim power = Fix(Math.Log10(n))
+            Dim power = Fix(sys.Log10(n))
             Dim s = n.ToString.Split("E"c, "e"c).First
             Dim t$() = s.Split("."c)
 

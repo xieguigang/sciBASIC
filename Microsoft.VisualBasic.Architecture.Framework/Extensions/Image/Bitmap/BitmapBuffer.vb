@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports sys = System.Math
 
 Namespace Imaging
 

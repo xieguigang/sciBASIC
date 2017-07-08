@@ -27,8 +27,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports sys = System.Math
 
 Namespace Math
 
@@ -53,10 +54,10 @@ Namespace Math
             If from > 0 Then
                 If [to] > 0 Then ' from 是正数，则to也必须是正数
                     If pf <> 0F Then  ' 如果from不是常数（极大数或者极小数），则整体当做极值数来看待
-                        Return AddressOf New PreciseRandom(pf, CSng(Math.Log10([to]))).NextNumber
+                        Return AddressOf New PreciseRandom(pf, CSng(sys.Log10([to]))).NextNumber
                     Else ' from 是常数  
                         If pt > 0 Then ' 同样的，当to也是极值数的时候，整体也将被当做极值数来看待
-                            Return AddressOf New PreciseRandom(CSng(Math.Log10(from)), pt).NextNumber
+                            Return AddressOf New PreciseRandom(CSng(sys.Log10(from)), pt).NextNumber
                         Else
                             ' to 也是常数
                             Dim range As New DoubleRange(from, [to])
@@ -77,14 +78,14 @@ Namespace Math
                 If [to] > 0 Then ' to 是正数
                     If pf <> 0F OrElse pt <> 0F Then  ' from是极值数，则整体当做极值数来看待
 
-                        pf = sys.Log10(Math.Abs(from))
-                        pt = sys.Log10(Math.Abs([to]))
+                        pf = sys.Log10(sys.Abs(from))
+                        pt = sys.Log10(sys.Abs([to]))
 
                         Dim c!() = {0F, pf}
                         Dim rf As New PreciseRandom(c.Min, c.Max)
                         c = {0F, pt}
                         Dim rt As New PreciseRandom(c.Min, c.Max)
-                        Dim ppf = sys.Abs(pf) / (Math.Abs(pf) + sys.Abs(pt))
+                        Dim ppf = sys.Abs(pf) / (sys.Abs(pf) + sys.Abs(pt))
 
                         If forceInit Then
                             Return Function()
@@ -116,8 +117,8 @@ Namespace Math
                 Else  ' to 同样也是负数的情况
                     If pf <> 0F OrElse pt <> 0F Then ' 两个都是极值数
 
-                        pf = sys.Log10(Math.Abs(from))
-                        pt = sys.Log10(Math.Abs([to]))
+                        pf = sys.Log10(sys.Abs(from))
+                        pt = sys.Log10(sys.Abs([to]))
 
                         Dim c = {pf, pt}
                         Dim rnd As New PreciseRandom(c.Min, c.Max)   ' 由于from要小于to

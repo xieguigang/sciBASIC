@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit
+Imports sys = System.Math
 
 Namespace Imaging
 

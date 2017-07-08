@@ -1,34 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::6a17bf75dd62f5a457228f7f9a2c48b6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsVarianceP.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.CompilerServices
+Imports sys = System.Math
 
 Namespace Math.StatisticsMathExtensions
 
@@ -52,7 +51,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Decimal))) As Decimal)
+        Public Function VarianceP(source As IEnumerable(Of Decimal?)) As Decimal
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
             If values.Any() Then
                 Return values.VarianceP()
@@ -100,7 +99,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Double))) As Double)
+        Public Function VarianceP(source As IEnumerable(Of Double?)) As Double
             Dim values As IEnumerable(Of Double) = source.Coalesce()
             If values.Any() Then
                 Return values.VarianceP()
@@ -150,7 +149,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Single))) As Single)
+        Public Function VarianceP(source As IEnumerable(Of Single?)) As Single
             Dim values As IEnumerable(Of Single) = source.Coalesce()
             If values.Any() Then
                 Return values.VarianceP()
@@ -198,7 +197,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Integer))) As Double)
+        Public Function VarianceP(source As IEnumerable(Of Integer?)) As Double
             Dim values As IEnumerable(Of Integer) = source.Coalesce()
             If values.Any() Then
                 Return values.VarianceP()
@@ -249,7 +248,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Long))) As Double)
+        Public Function VarianceP(source As IEnumerable(Of Long?)) As Double
             Dim values As IEnumerable(Of Long) = source.Coalesce()
             If values.Any() Then
                 Return values.VarianceP()
@@ -309,7 +308,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal))) As Decimal)
+        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
             Return source.[Select](selector).VarianceP()
         End Function
         '
@@ -369,7 +368,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double))) As Double)
+        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
             Return source.[Select](selector).VarianceP()
         End Function
         '
@@ -426,7 +425,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single))) As Single)
+        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
             Return source.[Select](selector).VarianceP()
         End Function
         '
@@ -485,7 +484,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer))) As Double)
+        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
             Return source.[Select](selector).VarianceP()
         End Function
         '
@@ -540,7 +539,7 @@ Namespace Math.StatisticsMathExtensions
         '     The VarianceP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long))) As Double)
+        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
             Return source.[Select](selector).VarianceP()
         End Function
         '

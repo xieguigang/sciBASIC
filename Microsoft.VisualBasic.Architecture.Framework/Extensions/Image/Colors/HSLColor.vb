@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports sys = System.Math
 
 Namespace Imaging
 

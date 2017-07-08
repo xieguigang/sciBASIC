@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports sys = System.Math
 
 Namespace Imaging
 

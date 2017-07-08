@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
 Namespace Math
 
@@ -74,8 +75,8 @@ Namespace Math
         ''' <param name="max"></param>
         ''' <returns></returns>
         Public Function randf(min As Double, max As Double) As Double
-            Dim minInteger& = CLng(Math.Truncate(min * 10000))
-            Dim maxInteger& = CLng(Math.Truncate(max * 10000))
+            Dim minInteger& = CLng(sys.Truncate(min * 10000))
+            Dim maxInteger& = CLng(sys.Truncate(max * 10000))
             Dim randInteger& = CLng(RandomNumbers.rand()) * CLng(RandomNumbers.rand())
             Dim diffInteger& = maxInteger - minInteger
             Dim resultInteger& = randInteger Mod diffInteger + minInteger

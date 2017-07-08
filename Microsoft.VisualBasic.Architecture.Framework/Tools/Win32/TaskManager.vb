@@ -29,6 +29,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports sys = System.Math
 
 Namespace Win32
 

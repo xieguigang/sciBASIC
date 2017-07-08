@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports sys = System.Math
 
 Namespace Text.Levenshtein
 

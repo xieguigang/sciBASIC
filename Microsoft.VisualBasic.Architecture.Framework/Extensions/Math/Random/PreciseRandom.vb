@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports sys = System.Math
 
 Namespace Math
 

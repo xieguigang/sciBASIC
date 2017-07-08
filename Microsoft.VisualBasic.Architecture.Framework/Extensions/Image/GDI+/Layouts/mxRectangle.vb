@@ -1,6 +1,5 @@
-Imports Microsoft.VisualBasic
-Imports System
 Imports System.Drawing
+Imports sys = System.Math
 
 ' $Id: mxRectangle.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
 ' Copyright (c) 2007-2010, Gaudenz Alder, David Benson

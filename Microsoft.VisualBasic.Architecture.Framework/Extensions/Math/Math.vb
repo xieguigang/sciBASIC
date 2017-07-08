@@ -33,7 +33,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports sys = System.Math
-Imports System.Math
 
 Namespace Math
 
@@ -388,22 +387,6 @@ Namespace Math
             Else
                 Return sys.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
             End If
-        End Function
-
-        ''' <summary>
-        ''' Continues multiply operations.(连续乘法)
-        ''' </summary>
-        ''' <param name="data"></param>
-        ''' <returns></returns>
-        <ExportAPI("PI")>
-        <Extension> Public Function PI(data As IEnumerable(Of Double)) As Double
-            Dim value As Double = 1
-
-            For Each n In data
-                value = value * n
-            Next
-
-            Return value
         End Function
 
         <ExportAPI("RangesAt")>
