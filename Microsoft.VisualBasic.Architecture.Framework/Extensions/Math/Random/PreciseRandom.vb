@@ -29,7 +29,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Mathematical
+Namespace Math
 
     ''' <summary>
     ''' 主要针对的是非常小的小数（仅适用于Positive Number）

@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Mathematical
+Namespace Math
 
     <PackageNamespace("VBMath", Publisher:="xie.guigang@gmail.com")>
     Public Module VBMathExtensions

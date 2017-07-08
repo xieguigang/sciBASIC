@@ -29,7 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 
-Namespace Mathematical
+Namespace Math
 
     ''' <summary>
     ''' 科学记数法

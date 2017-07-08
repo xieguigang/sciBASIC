@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
 
-Namespace Mathematical
+Namespace Math
 
     ''' <summary>
     ''' 针对负数到正数的range随机数，小数位最多精确到1E-4

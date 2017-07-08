@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 
-Namespace Mathematical
+Namespace Math
 
     Public Module Trigonometric
 

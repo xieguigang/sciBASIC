@@ -30,7 +30,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Runtime.CompilerServices
 
-Namespace Mathematical.StatisticsMathExtensions
+Namespace Math.StatisticsMathExtensions
 
     Public Module EnumerableStatsVariance
 

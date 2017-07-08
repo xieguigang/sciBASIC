@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Mathematical.Correlations
+Namespace Math.Correlations
 
     <PackageNamespace("Correlations", Category:=APICategories.UtilityTools, Publisher:="amethyst.asuka@gcmodeller.org")>
     Public Module Correlations

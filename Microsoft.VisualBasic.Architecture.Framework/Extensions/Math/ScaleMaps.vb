@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Mathematical
+Namespace Math
 
     <PackageNamespace("ScaleMaps",
                   Category:=APICategories.UtilityTools,
