@@ -64,7 +64,7 @@ Public Module Module1
             For Each a In V
                 For Each b In V.Where(Function(x) Not x Is a)
                     ' 节点之间存在斥力
-                    Dim cl = Math.CoulombsLaw(a, b)
+                    Dim cl = Math.CoulombsLaw(a, b, k:=200000)
 
                     force(a.ID) += cl
                 Next
@@ -117,7 +117,7 @@ Public Module Module1
     Const c2# = 1
 
     Const c3# = 1
-    Const c4# = 0.1
+    Const c4# = 0.000001
 
     ''' <summary>
     ''' inverse square law force
@@ -134,7 +134,7 @@ Public Module Module1
     ''' <param name="d#">where d is the length of the spring</param>
     ''' <returns></returns>
     Public Function spring(d#) As Double
-        Return c1 * Log(Abs(d) / c2)
+        Return c1 * Abs(d) / c2
     End Function
 
     Class edge
