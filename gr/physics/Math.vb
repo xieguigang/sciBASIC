@@ -1,5 +1,6 @@
 ﻿Imports System.Math
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Public Module Math
 
@@ -68,11 +69,26 @@ Public Module Math
     Public Function CoulombsLaw(m1 As MassPoint, m2 As MassPoint, Optional k# = 9000000000.0) As Force
         Dim d = m1.Point - m2.Point
         Dim f = Math.CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
-        Dim tanA = d(Y) / d(X)
-        Dim alpha = Tanh(tanA)
+        Return RepulsiveForce(f, m1.Point, m2.Point)
+    End Function
+
+    Public Function Cos(a As Vector, b As Vector) As Double
+        Return a.DotProduct(b) / (a.SumMagnitude * b.SumMagnitude)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="strength#"></param>
+    ''' <param name="a">空间位置坐标</param>
+    ''' <param name="b">空间位置坐标</param>
+    ''' <returns></returns>
+    Public Function RepulsiveForce(strength#, a As Vector, b As Vector) As Force
+        Dim cosA = Math.Cos(a, b)
+        Dim alpha = Cosh(cosA)
 
         Return New Force With {
-            .Strength = f,
+            .Strength = strength,
             .Angle = alpha
         }
     End Function

@@ -47,53 +47,7 @@ Public Module Module1
         add(6, 7)
         add(6, 8)
 
-        For Each u In V
-            Call cat(u.ToString)
-        Next
-
-
         Call SpringG(V.ToArray, E.ToArray)
-
-
-        For i = 0 To 100
-
-            For Each u In V
-                For Each u2 In V
-                    If Not u Is u2 Then
-                        Dim d = u2.pos - u.pos
-                        u.force += d.Unit * fr(d.SumMagnitude)
-                    End If
-                Next
-            Next
-
-            For Each uv In E
-                With uv
-                    Dim d = .u.pos - .v.pos
-                    .v.force += d.Unit * fa(d.Mod)
-                End With
-            Next
-
-            For Each u In V
-                u.pos += u.force.Unit * u.force.SumMagnitude
-                u.force *= 0R
-            Next
-        Next
-
-
-
-        Using g = New Size(1000, 1000).CreateGDIDevice
-
-            For Each u In V
-                Call g.DrawCircle(u.pos.Vector2D, 10, Brushes.Blue)
-                Call cat(u.ToString)
-            Next
-
-            For Each uv In E
-                Call g.DrawLine(Pens.Red, uv.u.pos.Vector2D, uv.v.pos.Vector2D)
-            Next
-
-            Call g.Save("x:\fsdfsdf.png", ImageFormats.Png)
-        End Using
 
         Pause()
     End Sub
