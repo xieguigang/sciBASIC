@@ -126,7 +126,7 @@ Namespace Math
             Dim u1 As Double = r.NextDouble()
             Dim u2 As Double = r.NextDouble()
 
-            Dim rand_std_normal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2)
+            Dim rand_std_normal = sys.Sqrt(-2.0 * sys.Log(u1)) * sys.Sin(2.0 * sys.PI * u2)
             Dim rand_normal = mu + sigma * rand_std_normal
 
             Return rand_normal
@@ -147,7 +147,7 @@ Namespace Math
         <ExportAPI("NextTriangular")>
         <Extension> Public Function NextTriangular(r As Random, a As Double, b As Double, c As Double) As Double
             Dim u As Double = r.NextDouble()
-            Return If(u < (c - a) / (b - a), a + Math.Sqrt(u * (b - a) * (c - a)), b - Math.Sqrt((1 - u) * (b - a) * (b - c)))
+            Return If(u < (c - a) / (b - a), a + sys.Sqrt(u * (b - a) * (c - a)), b - sys.Sqrt((1 - u) * (b - a) * (b - c)))
         End Function
 
         ''' <summary>

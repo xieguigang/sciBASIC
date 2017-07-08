@@ -84,7 +84,7 @@ Public Module Extensions
     ''' <param name="x#"></param>
     ''' <returns></returns>
     <Extension> Public Function Log2(x#) As Double
-        Return Math.Log(x, newBase:=2)
+        Return sys.Log(x, newBase:=2)
     End Function
 
     ''' <summary>

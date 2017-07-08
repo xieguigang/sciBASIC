@@ -52,7 +52,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function StandardDeviation(source As IEnumerable(Of System.Nullable(Of Decimal))) As System.Nullable(Of Decimal)
+        Public Function StandardDeviation(source As IEnumerable(Of Decimal))) As Decimal)
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
             If values.Any() Then
                 Return values.StandardDeviation()
@@ -100,7 +100,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function StandardDeviation(source As IEnumerable(Of System.Nullable(Of Double))) As System.Nullable(Of Double)
+        Public Function StandardDeviation(source As IEnumerable(Of Double))) As Double)
             Dim values As IEnumerable(Of Double) = source.Coalesce()
             If values.Any() Then
                 Return values.StandardDeviation()
@@ -127,7 +127,7 @@ Namespace Math.StatisticsMathExtensions
         '     source contains no elements.
         <Extension>
         Public Function StandardDeviation(source As IEnumerable(Of Double)) As Double
-            Return Math.Sqrt(source.Variance())
+            Return sys.Sqrt(source.Variance())
         End Function
         '
         ' Summary:
@@ -145,7 +145,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function StandardDeviation(source As IEnumerable(Of System.Nullable(Of Single))) As System.Nullable(Of Single)
+        Public Function StandardDeviation(source As IEnumerable(Of Single))) As Single)
             Dim values As IEnumerable(Of Single) = source.Coalesce()
             If values.Any() Then
                 Return values.StandardDeviation()
@@ -193,7 +193,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviation(source As IEnumerable(Of System.Nullable(Of Integer))) As System.Nullable(Of Double)
+        Public Function StandardDeviation(source As IEnumerable(Of Integer))) As Double)
             Dim values As IEnumerable(Of Double) = source.Where(Function(d) d.HasValue).[Select](Function(x) CDbl(x))
             If values.Any() Then
                 Return values.StandardDeviation()
@@ -244,7 +244,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviation(source As IEnumerable(Of System.Nullable(Of Long))) As System.Nullable(Of Double)
+        Public Function StandardDeviation(source As IEnumerable(Of Long))) As Double)
             Dim values As IEnumerable(Of Long) = source.Coalesce()
             If values.Any() Then
                 Return values.StandardDeviation()
@@ -304,7 +304,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Decimal))) As System.Nullable(Of Decimal)
+        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal))) As Decimal)
             Return source.[Select](selector).StandardDeviation()
         End Function
         '
@@ -364,7 +364,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Double))) As System.Nullable(Of Double)
+        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double))) As Double)
             Return source.[Select](selector).StandardDeviation()
         End Function
         '
@@ -421,7 +421,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Single))) As System.Nullable(Of Single)
+        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single))) As Single)
             Return source.[Select](selector).StandardDeviation()
         End Function
         '
@@ -480,7 +480,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Integer))) As System.Nullable(Of Double)
+        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer))) As Double)
             Return source.[Select](selector).StandardDeviation()
         End Function
         '
@@ -535,7 +535,7 @@ Namespace Math.StatisticsMathExtensions
         '     The StandardDeviation of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         <Extension>
-        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Long))) As System.Nullable(Of Double)
+        Public Function StandardDeviation(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long))) As Double)
             Return source.[Select](selector).StandardDeviation()
         End Function
         '

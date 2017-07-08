@@ -75,7 +75,7 @@ Namespace Imaging
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = Math.Abs(bmpData.Stride) * curBitmap.Height
+            Dim bytes As Integer = sys.Abs(bmpData.Stride) * curBitmap.Height
 
             Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
                 Dim byts As Marshal.Byte = rgbValues
@@ -173,7 +173,7 @@ Namespace Imaging
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = Math.Abs(bmpData.Stride) * curBitmap.Height
+            Dim bytes As Integer = sys.Abs(bmpData.Stride) * curBitmap.Height
 
             Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
                 Dim byts As Marshal.Byte = rgbValues

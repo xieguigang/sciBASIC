@@ -77,7 +77,7 @@ Namespace Imaging
                 (lightColor.G / 255.0) * base.G,
                 (lightColor.B / 255.0) * base.B)
             Dim hsl As HSLColor = HSLColor.GetHSL(newColor)
-            Dim l = Math.Min(hsl.L + percentage, 1)
+            Dim l = sys.Min(hsl.L + percentage, 1)
 
             newColor = New HSLColor(hsl.H, hsl.S, l).ToRGB
             Return newColor
@@ -137,10 +137,10 @@ Namespace Imaging
             Dim b As Double = rgb.B / 255.0
             Dim max, min As Double
 
-            max = Math.Max(r, g)
-            max = Math.Max(max, b)
-            min = Math.Min(r, g)
-            min = Math.Min(min, b)
+            max = sys.Max(r, g)
+            max = sys.Max(max, b)
+            min = sys.Min(r, g)
+            min = sys.Min(min, b)
 
             l = (min + max) / 2.0
 

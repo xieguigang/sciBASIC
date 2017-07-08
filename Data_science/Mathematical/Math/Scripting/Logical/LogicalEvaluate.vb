@@ -35,7 +35,7 @@ Namespace Scripting.Logical
  _
             {"=", Function(a, b) a = b},
             {"<>", Function(a, b) a <> b},
-            {"~=", Function(a, b) Math.Abs((a - b) / a) < 0.1},
+            {"~=", Function(a, b) sys.Abs((a - b) / a) < 0.1},
             {"<<", Function(a, b) b / a > 100},
             {"<", Function(a, b) a < b},
             {"<=", Function(a, b) a <= b},

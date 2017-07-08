@@ -631,7 +631,7 @@ Namespace Language.Java
                     v2 = 2 * ((((CLng(CInt(CUInt(a) >> 6))) << 27) + (CInt(CUInt(b) >> 5))) / CDbl(1L << 53)) - 1
                     s = v1 * v1 + v2 * v2
                 Loop While s >= 1
-                Dim multiplier As Double = Math.Sqrt(-2 * Math.Log(s) / s)
+                Dim multiplier As Double = sys.Sqrt(-2 * sys.Log(s) / s)
                 nextNextGaussian = v2 * multiplier
                 haveNextNextGaussian = True
                 Return v1 * multiplier
@@ -854,13 +854,13 @@ Namespace Language.Java
                 Do
                     p = b * nextDouble()
                     If p <= 1.0 Then ' Step 2. Case gds <= 1
-                        gds = Math.Exp(Math.Log(p) / a)
-                        If Math.Log(nextDouble()) <= -gds Then
+                        gds = sys.Exp(Math.Log(p) / a)
+                        If sys.Log(nextDouble()) <= -gds Then
                             Return (gds / lambda)
                         End If ' Step 3. Case gds > 1
                     Else
                         gds = -Math.Log((b - p) / a)
-                        If Math.Log(nextDouble()) <= ((a - 1.0) * Math.Log(gds)) Then Return (gds / lambda)
+                        If sys.Log(nextDouble()) <= ((a - 1.0) * sys.Log(gds)) Then Return (gds / lambda)
                     End If
                 Loop ' CASE B: Acceptance complement algorithm gd (gaussian
             Else
@@ -868,7 +868,7 @@ Namespace Language.Java
                 If a <> aa Then ' Step 1. Preparations
                     aa = a
                     ss = a - 0.5
-                    s = Math.Sqrt(ss)
+                    s = sys.Sqrt(ss)
                     d = 5.656854249 - 12.0 * s
                 End If
                 ' Step 2. Normal deviate
@@ -877,7 +877,7 @@ Namespace Language.Java
                     v2 = 2.0 * nextDouble() - 1.0
                     v12 = v1 * v1 + v2 * v2
                 Loop While v12 > 1.0
-                t = v1 * Math.Sqrt(-2.0 * Math.Log(v12) / v12)
+                t = v1 * sys.Sqrt(-2.0 * sys.Log(v12) / v12)
                 x = s + 0.5 * t
                 gds = x * x
                 If t >= 0.0 Then Return (gds / lambda) ' Immediate acceptance
@@ -907,12 +907,12 @@ Namespace Language.Java
                 End If
                 If x > 0.0 Then ' Step 5. Calculation of q
                     v = t / (s + s) ' Step 6.
-                    If Math.Abs(v) > 0.25 Then
-                        q = q0 - s * t + 0.25 * t * t + (ss + ss) * Math.Log(1.0 + v)
+                    If sys.Abs(v) > 0.25 Then
+                        q = q0 - s * t + 0.25 * t * t + (ss + ss) * sys.Log(1.0 + v)
                     Else
                         q = q0 + 0.5 * t * t * ((((((((a9 * v + a8) * v + a7) * v + a6) * v + a5) * v + a4) * v + a3) * v + a2) * v + a1) * v
                     End If ' Step 7. Quotient acceptance
-                    If Math.Log(1.0 - u) <= q Then Return (gds / lambda)
+                    If sys.Log(1.0 - u) <= q Then Return (gds / lambda)
                 End If
 
                 Do ' Step 8. Double exponential deviate t
@@ -924,18 +924,18 @@ Namespace Language.Java
                         t = b + (e * si) * sign_u
                     Loop While t <= -0.71874483771719 ' Step 9. Rejection of t
                     v = t / (s + s) ' Step 10. New q(t)
-                    If Math.Abs(v) > 0.25 Then
-                        q = q0 - s * t + 0.25 * t * t + (ss + ss) * Math.Log(1.0 + v)
+                    If sys.Abs(v) > 0.25 Then
+                        q = q0 - s * t + 0.25 * t * t + (ss + ss) * sys.Log(1.0 + v)
                     Else
                         q = q0 + 0.5 * t * t * ((((((((a9 * v + a8) * v + a7) * v + a6) * v + a5) * v + a4) * v + a3) * v + a2) * v + a1) * v
                     End If
                     If q <= 0.0 Then Continue Do ' Step 11.
                     If q > 0.5 Then
-                        w = Math.Exp(q) - 1.0
+                        w = sys.Exp(q) - 1.0
                     Else
                         w = ((((((e7 * q + e6) * q + e5) * q + e4) * q + e3) * q + e2) * q + e1) * q
                     End If ' Step 12. Hat acceptance
-                    If c * u * sign_u <= w * Math.Exp(e - 0.5 * t * t) Then
+                    If c * u * sign_u <= w * sys.Exp(e - 0.5 * t * t) Then
                         x = s + 0.5 * t
                         Return (x * x / lambda)
                     End If

@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
 Namespace Math.Correlations
 
@@ -67,7 +68,7 @@ Namespace Math.Correlations
             If Xa = 0R Then
                 Return 0R
             End If
-            Dim value As Double = Xa * Math.Log(Xa / Ya)  ' 0 * n = 0
+            Dim value As Double = Xa * sys.Log(Xa / Ya)  ' 0 * n = 0
             Return value
         End Function
 
@@ -204,7 +205,7 @@ Namespace Math.Correlations
                 n2 += (s * (s - 1)) / 2
             Next
 
-            denom = Math.Sqrt((n0 - n1) * (n0 - n2))
+            denom = sys.Sqrt((n0 - n1) * (n0 - n2))
 
             If denom = 0 Then
                 denom += 0.000000001
@@ -241,13 +242,13 @@ Namespace Math.Correlations
             Dim pcc As Double = GetPearson(x, y)
             Dim n As Integer = x.Length
 
-            z = 0.5 * Math.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
+            z = 0.5 * sys.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
             'fisher's z trasnformation
             df = n - 2
-            t = pcc * Math.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
+            t = pcc * sys.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
             'student's t probability
             prob = Beta.betai(0.5 * df, 0.5, df / (df + t * t))
-            prob2 = Beta.erfcc(Math.Abs(z * Math.Sqrt(n - 1.0)) / 1.4142136)
+            prob2 = Beta.erfcc(Math.Abs(z * sys.Sqrt(n - 1.0)) / 1.4142136)
             'for a large n
 
             Return pcc
@@ -436,7 +437,7 @@ Namespace Math.Correlations
             If x = 0.0 OrElse x = 1.0 Then
                 bt = 0.0
             Else
-                bt = Math.Exp(gammln(a + b) - gammln(a) - gammln(b) + a * Math.Log(x) + b * Math.Log(1.0 - x))
+                bt = sys.Exp(gammln(a + b) - gammln(a) - gammln(b) + a * sys.Log(x) + b * sys.Log(1.0 - x))
             End If
             If x < (a + 1.0) / (a + b + 2.0) Then
                 Return bt * betacf(a, b, x) / a
@@ -451,14 +452,14 @@ Namespace Math.Correlations
 
             y = x
             tmp = x + 5.5
-            tmp -= (x + 0.5) * Math.Log(tmp)
+            tmp -= (x + 0.5) * sys.Log(tmp)
             ser = 1.00000000019001
             For j = 0 To 5
                 y += 1 ' ++y
                 ser += cof(j) / y
             Next
 
-            Return -tmp + Math.Log(2.506628274631 * ser / x)
+            Return -tmp + sys.Log(2.506628274631 * ser / x)
         End Function
 
         ReadOnly cof As Double() = {
@@ -486,7 +487,7 @@ Namespace Math.Correlations
             qam = a - 1.0
             c = 1.0
             d = 1.0 - qab * x / qap
-            If Math.Abs(d) < FPMIN Then
+            If sys.Abs(d) < FPMIN Then
                 d = FPMIN
             End If
             d = 1.0 / d
@@ -496,28 +497,28 @@ Namespace Math.Correlations
                 m2 = 2 * m
                 aa = m * (b - m) * x / ((qam + m2) * (a + m2))
                 d = 1.0 + aa * d
-                If Math.Abs(d) < FPMIN Then
+                If sys.Abs(d) < FPMIN Then
                     d = FPMIN
                 End If
                 c = 1.0 + aa / c
-                If Math.Abs(c) < FPMIN Then
+                If sys.Abs(c) < FPMIN Then
                     c = FPMIN
                 End If
                 d = 1.0 / d
                 h *= d * c
                 aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
                 d = 1.0 + aa * d
-                If Math.Abs(d) < FPMIN Then
+                If sys.Abs(d) < FPMIN Then
                     d = FPMIN
                 End If
                 c = 1.0 + aa / c
-                If Math.Abs(c) < FPMIN Then
+                If sys.Abs(c) < FPMIN Then
                     c = FPMIN
                 End If
                 d = 1.0 / d
                 del = d * c
                 h *= del
-                If Math.Abs(del - 1.0) < EPS Then
+                If sys.Abs(del - 1.0) < EPS Then
                     Exit For
                 End If
             Next
@@ -532,9 +533,9 @@ Namespace Math.Correlations
         Public Function erfcc(x As Double) As Double
             Dim t As Double, z As Double, ans As Double
 
-            z = Math.Abs(x)
+            z = sys.Abs(x)
             t = 1.0 / (1.0 + 0.5 * z)
-            ans = t * Math.Exp(-z * z - 1.26551223 +
+            ans = t * sys.Exp(-z * z - 1.26551223 +
                            t * (1.00002368 +
                            t * (0.37409196 +
                            t * (0.09678418 +

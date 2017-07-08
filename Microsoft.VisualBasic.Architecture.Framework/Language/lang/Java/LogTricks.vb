@@ -69,7 +69,7 @@ Namespace Language.Java
 
         Public Function logSumNoCheck(x As Double, y As Double) As Double
             Dim temp As Double = y - x
-            If Math.Abs(temp) > NATS Then
+            If sys.Abs(temp) > NATS Then
                 Return If(x > y, x, y)
             Else
                 Return x + JavaMath.log1p(Math.Exp(temp))

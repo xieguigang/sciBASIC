@@ -30,7 +30,7 @@ Namespace Math
 
     Partial Module Trigonometric
 
-        Const HalfPI# = Math.PI / 2
+        Const HalfPI# = sys.PI / 2
         Const n1# = 1.0R
         Const n05# = 0.5R
 
@@ -47,9 +47,9 @@ Namespace Math
         ''' <remarks>Atan测试没有问题</remarks>>
         Public Function Atn(x#) As Double
             If x# = 1.0 Then
-                Return Math.PI / 4
+                Return sys.PI / 4
             End If
-            If Math.Sign(x) = Math.Sign(-1) Then
+            If sys.Sign(x) = sys.Sign(-1) Then
                 Return -Atn(-x)
             End If
             If x > n1 Then

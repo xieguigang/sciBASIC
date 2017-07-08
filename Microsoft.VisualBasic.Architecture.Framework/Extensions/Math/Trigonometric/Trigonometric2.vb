@@ -36,7 +36,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Sec(x As Double) As Double
-            Return 1 / Math.Cos(x)
+            Return 1 / sys.Cos(x)
         End Function
 
         ''' <summary>
@@ -45,7 +45,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Cosec(x As Double) As Double
-            Return 1 / Math.Sin(x)
+            Return 1 / sys.Sin(x)
         End Function
 
         ''' <summary>
@@ -54,7 +54,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Cotan(x As Double) As Double
-            Return 1 / Math.Tan(x)
+            Return 1 / sys.Tan(x)
         End Function
 
         ''' <summary>
@@ -63,7 +63,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Arcsin(x As Double) As Double
-            Return Atn(x / Math.Sqrt(-x * x + 1))
+            Return Atn(x / sys.Sqrt(-x * x + 1))
         End Function
 
         ''' <summary>
@@ -72,7 +72,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Arccos(x As Double) As Double
-            Return Atn(-x / Math.Sqrt(-x * x + 1)) + 2 * Atn(1)
+            Return Atn(-x / sys.Sqrt(-x * x + 1)) + 2 * Atn(1)
         End Function
 
         ''' <summary>
@@ -81,7 +81,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Arcsec(x As Double) As Double
-            Return Atn(x / Math.Sqrt(x * x - 1)) + Math.Sign((x) - 1) * (2 * Atn(1))
+            Return Atn(x / sys.Sqrt(x * x - 1)) + sys.Sign((x) - 1) * (2 * Atn(1))
         End Function
 
         ''' <summary>
@@ -90,7 +90,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Arccosec(x As Double) As Double
-            Return Atn(x / Math.Sqrt(x * x - 1)) + (Math.Sign(x) - 1) * (2 * Atn(1))
+            Return Atn(x / sys.Sqrt(x * x - 1)) + (Math.Sign(x) - 1) * (2 * Atn(1))
         End Function
 
         ''' <summary>
@@ -108,7 +108,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HSin(x As Double) As Double
-            Return (Math.Exp(x) - Math.Exp(-x)) / 2
+            Return (Math.Exp(x) - sys.Exp(-x)) / 2
         End Function
 
         ''' <summary>
@@ -117,7 +117,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HCos(x As Double) As Double
-            Return (Math.Exp(x) + Math.Exp(-x)) / 2
+            Return (Math.Exp(x) + sys.Exp(-x)) / 2
         End Function
 
         ''' <summary>
@@ -126,7 +126,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HTan(x As Double) As Double
-            Return (Math.Exp(x) - Math.Exp(-x)) / (Math.Exp(x) + Math.Exp(-x))
+            Return (Math.Exp(x) - sys.Exp(-x)) / (Math.Exp(x) + sys.Exp(-x))
         End Function
 
         ''' <summary>
@@ -135,7 +135,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HSec(x As Double) As Double
-            Return 2 / (Math.Exp(x) + Math.Exp(-x))
+            Return 2 / (Math.Exp(x) + sys.Exp(-x))
         End Function
 
         ''' <summary>
@@ -144,7 +144,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HCosec(x As Double) As Double
-            Return 2 / (Math.Exp(x) - Math.Exp(-x))
+            Return 2 / (Math.Exp(x) - sys.Exp(-x))
         End Function
 
         ''' <summary>
@@ -153,7 +153,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HCotan(x As Double) As Double
-            Return (Math.Exp(x) + Math.Exp(-x)) / (Math.Exp(x) - Math.Exp(-x))
+            Return (Math.Exp(x) + sys.Exp(-x)) / (Math.Exp(x) - sys.Exp(-x))
         End Function
 
         ''' <summary>
@@ -162,7 +162,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArcsin(x As Double) As Double
-            Return Math.Log(x + Math.Sqrt(x * x + 1))
+            Return sys.Log(x + sys.Sqrt(x * x + 1))
         End Function
 
         ''' <summary>
@@ -171,7 +171,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArccos(x As Double) As Double
-            Return Math.Log(x + Math.Sqrt(x * x - 1))
+            Return sys.Log(x + sys.Sqrt(x * x - 1))
         End Function
 
         ''' <summary>
@@ -180,7 +180,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Harctan(x As Double) As Double
-            Return Math.Log((1 + x) / (1 - x)) / 2
+            Return sys.Log((1 + x) / (1 - x)) / 2
         End Function
 
         ''' <summary>
@@ -189,7 +189,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArcsec(x As Double) As Double
-            Return Math.Log((Math.Sqrt(-x * x + 1) + 1) / x)
+            Return sys.Log((Math.Sqrt(-x * x + 1) + 1) / x)
         End Function
 
         ''' <summary>
@@ -198,7 +198,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArccosec(x As Double) As Double
-            Return Math.Log((Math.Sign(x) * Math.Sqrt(x * x + 1) + 1) / x)
+            Return sys.Log((Math.Sign(x) * sys.Sqrt(x * x + 1) + 1) / x)
         End Function
 
         ''' <summary>
@@ -207,7 +207,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArccotan(x As Double) As Double
-            Return Math.Log((x + 1) / (x - 1)) / 2
+            Return sys.Log((x + 1) / (x - 1)) / 2
         End Function
     End Module
 End Namespace

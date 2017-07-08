@@ -417,7 +417,7 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         Public ReadOnly Property SumMagnitude As Double
             Get
-                Return Math.Sqrt(Me.Mod)
+                Return sys.Sqrt(Me.Mod)
             End Get
         End Property
 

@@ -50,7 +50,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Range(source As IEnumerable(Of System.Nullable(Of Decimal))) As System.Nullable(Of Decimal)
+        Public Function Range(source As IEnumerable(Of Decimal))) As Decimal)
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
             If values.Any() Then
                 Return values.Range()
@@ -98,7 +98,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function Range(source As IEnumerable(Of System.Nullable(Of Double))) As System.Nullable(Of Double)
+        Public Function Range(source As IEnumerable(Of Double))) As Double)
             Dim values As IEnumerable(Of Double) = source.Coalesce()
             If values.Any() Then
                 Return values.Range()
@@ -143,7 +143,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function Range(source As IEnumerable(Of System.Nullable(Of Single))) As System.Nullable(Of Single)
+        Public Function Range(source As IEnumerable(Of Single))) As Single)
             Dim values As IEnumerable(Of Single) = source.Coalesce()
             If values.Any() Then
                 Return values.Range()
@@ -191,7 +191,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Range(source As IEnumerable(Of System.Nullable(Of Integer))) As System.Nullable(Of Integer)
+        Public Function Range(source As IEnumerable(Of Integer))) As Integer)
             Dim values As IEnumerable(Of Integer) = source.Coalesce()
             If values.Any() Then
                 Return values.Range()
@@ -242,7 +242,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Range(source As IEnumerable(Of System.Nullable(Of Long))) As System.Nullable(Of Long)
+        Public Function Range(source As IEnumerable(Of Long))) As Long)
             Dim values As IEnumerable(Of Long) = source.Coalesce()
             If values.Any() Then
                 Return values.Range()
@@ -302,7 +302,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Decimal))) As System.Nullable(Of Decimal)
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal))) As Decimal)
             Return source.[Select](selector).Range()
         End Function
         '
@@ -362,7 +362,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Double))) As System.Nullable(Of Double)
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double))) As Double)
             Return source.[Select](selector).Range()
         End Function
         '
@@ -419,7 +419,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Single))) As System.Nullable(Of Single)
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single))) As Single)
             Return source.[Select](selector).Range()
         End Function
         '
@@ -478,7 +478,7 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Integer))) As System.Nullable(Of Double)
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer))) As Double)
             Return source.[Select](selector).Range()
         End Function
         '
@@ -533,7 +533,7 @@ Namespace Math.StatisticsMathExtensions
         '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         <Extension>
-        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Long))) As System.Nullable(Of Double)
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long))) As Double)
             Return source.[Select](selector).Range()
         End Function
         '

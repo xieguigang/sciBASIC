@@ -163,7 +163,7 @@ Namespace Text.Levenshtein
                 Dim r As New XmlBuilder
 
                 For j As Integer = 0 To Len(Hypotheses) - 1
-                    Dim c = Math.Round(matrix.DistTable(i)(j), 2)
+                    Dim c = sys.Round(matrix.DistTable(i)(j), 2)
 
                     If dict.ContainsKey(i) AndAlso Array.IndexOf(dict(i), j) > -1 Then
                         r += <td style="background-color:green;color:white">

@@ -340,7 +340,7 @@ Namespace Terminal
         ''' </summary>
         ''' <param name="s">Input string</param>
         ''' <returns>👽👽👽👾</returns>
-        Private Function getColor(s As String, Optional ForeC As System.Nullable(Of ConsoleColor) = Nothing, Optional BackC As System.Nullable(Of ConsoleColor) = Nothing) As ConsoleColor
+        Private Function getColor(s As String, Optional ForeC As ConsoleColor) = Nothing, Optional BackC As ConsoleColor) = Nothing) As ConsoleColor
             Dim FC As ConsoleColor = If(ForeC, FONT_COLOR)
             Dim BC As ConsoleColor = If(BackC, BACKGROUND_COLOR)
 
@@ -783,7 +783,7 @@ Namespace Terminal
             For Each cc As ConsoleColor In [Enum].GetValues(GetType(ConsoleColor))
                 Dim n = [Enum].GetName(GetType(ConsoleColor), cc)
                 Dim c = System.Drawing.Color.FromName(If(n = "DarkYellow", "Orange", n))
-                Dim t = Math.Pow(c.R - rr, 2.0) + Math.Pow(c.G - gg, 2.0) + Math.Pow(c.B - bb, 2.0)
+                Dim t = sys.Pow(c.R - rr, 2.0) + sys.Pow(c.G - gg, 2.0) + sys.Pow(c.B - bb, 2.0)
                 If t = 0.0 Then
                     Return cc
                 End If

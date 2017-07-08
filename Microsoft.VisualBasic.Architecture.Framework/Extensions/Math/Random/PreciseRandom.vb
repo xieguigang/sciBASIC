@@ -68,8 +68,8 @@ Namespace Math
         ''' <param name="[to]"></param>
         Sub New(from#, to#, Optional seeds As IRandomSeeds = Nothing)
             Call Me.New(
-                CSng(If(from = 0R, 0F, Math.Log10(from))), ' 避免出现log(0)的情况
-                CSng(If([to] = 0R, 0F, Math.Log10([to]))),
+                CSng(If(from = 0R, 0F, sys.Log10(from))), ' 避免出现log(0)的情况
+                CSng(If([to] = 0R, 0F, sys.Log10([to]))),
                 seeds)
         End Sub
 

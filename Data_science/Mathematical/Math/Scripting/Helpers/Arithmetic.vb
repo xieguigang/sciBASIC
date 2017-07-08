@@ -47,7 +47,7 @@ Namespace Scripting.Helpers
             Function(a, b) a / b,
             Function(a, b) a \ b,
             Function(a, b) a Mod b,
-            AddressOf Math.Pow,
+            AddressOf sys.Pow,
             AddressOf Factorial
         }
 

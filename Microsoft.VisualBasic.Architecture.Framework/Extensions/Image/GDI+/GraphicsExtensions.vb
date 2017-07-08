@@ -572,7 +572,7 @@ Namespace Imaging
         <Extension> Public Function Vignette(Image As Image, y1 As Integer, y2 As Integer, Optional RenderColor As Color = Nothing) As Image
             Dim Gr = Image.CreateCanvas2D
             Dim Alpha As Integer = 0
-            Dim delta = (Math.PI / 2) / Math.Abs(y1 - y2)
+            Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
             Dim offset As Double = 0
 
             If RenderColor = Nothing OrElse RenderColor.IsEmpty Then
@@ -583,7 +583,7 @@ Namespace Imaging
                 Dim Color = System.Drawing.Color.FromArgb(Alpha, RenderColor.R, RenderColor.G, RenderColor.B)
                 Call Gr.Graphics.DrawLine(New Pen(Color), New Point(0, y), New Point(Gr.Width, y))
 
-                Alpha = CInt(255 * Math.Sin(offset) ^ 2)
+                Alpha = CInt(255 * sys.Sin(offset) ^ 2)
                 offset += delta
             Next
 

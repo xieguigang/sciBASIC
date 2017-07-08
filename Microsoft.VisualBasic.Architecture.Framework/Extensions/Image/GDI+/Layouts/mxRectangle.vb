@@ -90,10 +90,10 @@ Namespace Imaging.LayoutModel
         ''' </summary>
         Public Overridable Sub add(ByVal rect As mxRectangle)
             If rect IsNot Nothing Then
-                Dim minX As Double = Math.Min(X, rect.X)
-                Dim minY As Double = Math.Min(Y, rect.Y)
-                Dim maxX As Double = Math.Max(X + width, rect.X + rect.width)
-                Dim maxY As Double = Math.Max(Y + height, rect.Y + rect.height)
+                Dim minX As Double = sys.Min(X, rect.X)
+                Dim minY As Double = sys.Min(Y, rect.Y)
+                Dim maxX As Double = sys.Max(X + width, rect.X + rect.width)
+                Dim maxY As Double = sys.Max(Y + height, rect.Y + rect.height)
 
                 X = minX
                 Y = minY

@@ -59,7 +59,7 @@ Namespace Win32
 
                     counterList += New TaskInfo With {
                         .Memory = P.WorkingSet64,
-                        .CPU = Math.Round(pCounter.NextValue, 2),
+                        .CPU = sys.Round(pCounter.NextValue, 2),
                         .ProcessName = P.ProcessName,
                         .PID = P.Id,
                         .CommandLine = P.StartInfo.FileName & " " & P.StartInfo.Arguments

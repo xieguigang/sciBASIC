@@ -234,7 +234,7 @@ Namespace Language.Java
 
         ''' <returns> log of random variable in [0,1] </returns>
         Public Function randomLogDouble() As Double
-            Return Math.Log(nextDouble())
+            Return sys.Log(nextDouble())
         End Function
 
         ''' <summary>
@@ -242,7 +242,7 @@ Namespace Language.Java
         ''' </summary>
         Public Function nextExponential(lambda As Double) As Double
             SyncLock random
-                Return -1.0 * Math.Log(1 - random.nextDouble()) / lambda
+                Return -1.0 * sys.Log(1 - random.nextDouble()) / lambda
             End SyncLock
         End Function
 
@@ -259,7 +259,7 @@ Namespace Language.Java
                 ' distribution with a mean of 0
                 ' and 1 standard deviation
                 Dim y As Double = v * v
-                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * Math.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
+                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * sys.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
                 Dim test As Double = MathUtils.nextDouble() ' sample from a uniform
                 ' distribution between 0
                 ' and 1
@@ -384,7 +384,7 @@ Namespace Language.Java
         End Function
 
         'Public Function logHyperSphereVolume(dimension As Integer, radius As Double) As Double
-        '    Return dimension * (0.57236494292470008 + Math.Log(radius)) + -jebl.math.GammaFunction.lnGamma(dimension / 2.0 + 1.0)
+        '    Return dimension * (0.57236494292470008 + sys.Log(radius)) + -jebl.math.GammaFunction.lnGamma(dimension / 2.0 + 1.0)
         'End Function
 
         ''' <summary>
@@ -392,12 +392,12 @@ Namespace Language.Java
         ''' </summary>
         Public Function hypot(a As Double, b As Double) As Double
             Dim r As Double
-            If Math.Abs(a) > Math.Abs(b) Then
+            If sys.Abs(a) > sys.Abs(b) Then
                 r = b / a
-                r = Math.Abs(a) * Math.Sqrt(1 + r * r)
+                r = sys.Abs(a) * sys.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = Math.Abs(b) * Math.Sqrt(1 + r * r)
+                r = sys.Abs(b) * sys.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If

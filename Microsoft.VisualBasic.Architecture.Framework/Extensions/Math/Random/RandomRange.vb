@@ -77,14 +77,14 @@ Namespace Math
                 If [to] > 0 Then ' to 是正数
                     If pf <> 0F OrElse pt <> 0F Then  ' from是极值数，则整体当做极值数来看待
 
-                        pf = Math.Log10(Math.Abs(from))
-                        pt = Math.Log10(Math.Abs([to]))
+                        pf = sys.Log10(Math.Abs(from))
+                        pt = sys.Log10(Math.Abs([to]))
 
                         Dim c!() = {0F, pf}
                         Dim rf As New PreciseRandom(c.Min, c.Max)
                         c = {0F, pt}
                         Dim rt As New PreciseRandom(c.Min, c.Max)
-                        Dim ppf = Math.Abs(pf) / (Math.Abs(pf) + Math.Abs(pt))
+                        Dim ppf = sys.Abs(pf) / (Math.Abs(pf) + sys.Abs(pt))
 
                         If forceInit Then
                             Return Function()
@@ -116,8 +116,8 @@ Namespace Math
                 Else  ' to 同样也是负数的情况
                     If pf <> 0F OrElse pt <> 0F Then ' 两个都是极值数
 
-                        pf = Math.Log10(Math.Abs(from))
-                        pt = Math.Log10(Math.Abs([to]))
+                        pf = sys.Log10(Math.Abs(from))
+                        pt = sys.Log10(Math.Abs([to]))
 
                         Dim c = {pf, pt}
                         Dim rnd As New PreciseRandom(c.Min, c.Max)   ' 由于from要小于to

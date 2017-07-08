@@ -32,11 +32,15 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
+Imports System.Math
 
 Namespace Math
 
     <PackageNamespace("VBMath", Publisher:="xie.guigang@gmail.com")>
     Public Module VBMathExtensions
+
+        Public Const PI# = sys.PI
 
         ''' <summary>
         ''' 请注意,<paramref name="data"/>的元素数量必须要和<paramref name="weights"/>的长度相等
@@ -91,7 +95,7 @@ Namespace Math
         ''' <param name="N"></param>
         ''' <returns></returns>
         Public Function LogN(x As Double, N As Double) As Double
-            Return Math.Log(x) / Math.Log(N)
+            Return sys.Log(x) / sys.Log(N)
         End Function
 
         ''' <summary>
@@ -101,7 +105,7 @@ Namespace Math
         ''' <param name="c">
         ''' @return </param>
         Public Function Max(a As Integer, b As Integer, c As Integer) As Integer
-            Return Math.Max(a, Math.Max(b, c))
+            Return sys.Max(a, sys.Max(b, c))
         End Function
 
         ''' <summary>
@@ -114,12 +118,12 @@ Namespace Math
         Public Function Hypot(a As Double, b As Double) As Double
             Dim r As Double
 
-            If Math.Abs(a) > Math.Abs(b) Then
+            If sys.Abs(a) > sys.Abs(b) Then
                 r = b / a
-                r = Math.Abs(a) * Math.Sqrt(1 + r * r)
+                r = sys.Abs(a) * sys.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = Math.Abs(b) * Math.Sqrt(1 + r * r)
+                r = sys.Abs(b) * sys.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If
@@ -288,7 +292,7 @@ Namespace Math
         <Extension> Public Function STD(values As IEnumerable(Of Double)) As Double
             Dim Avg As Double = values.Average
             Dim LQuery = (From n As Double In values Select (n - Avg) ^ 2).ToArray
-            Return Math.Sqrt(LQuery.Sum / LQuery.Length)
+            Return sys.Sqrt(LQuery.Sum / LQuery.Length)
         End Function
 
         ''' <summary>
@@ -334,12 +338,12 @@ Namespace Math
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
             ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
-            Return Math.Sqrt((From n In vector Select n ^ 2).Sum)
+            Return sys.Sqrt((From n In vector Select n ^ 2).Sum)
         End Function
 
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
-            Return Math.Sqrt((From n In Vector Select n ^ 2).Sum)
+            Return sys.Sqrt((From n In Vector Select n ^ 2).Sum)
         End Function
 
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
@@ -347,7 +351,7 @@ Namespace Math
             If a.Count <> b.Count Then
                 Return -1
             Else
-                Return Math.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
+                Return sys.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
             End If
         End Function
 
@@ -367,7 +371,7 @@ Namespace Math
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
-                Return Math.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
+                Return sys.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
             End If
         End Function
 
@@ -382,7 +386,7 @@ Namespace Math
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
-                Return Math.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
+                Return sys.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
             End If
         End Function
 
@@ -425,7 +429,7 @@ Namespace Math
         <ExportAPI("RMS", Info:="Root mean square")>
         <Extension> Public Function RMS(data As IEnumerable(Of Double)) As Double
             Dim LQuery = (From n In data.AsParallel Select n ^ 2).ToArray
-            Return Math.Sqrt(LQuery.Sum / LQuery.Length)
+            Return sys.Sqrt(LQuery.Sum / LQuery.Length)
         End Function
 
         ''' <summary>
@@ -434,7 +438,7 @@ Namespace Math
         ''' 
         <ExportAPI("Poisson.PDF", Info:="Returns the PDF value at x for the specified Poisson distribution.")>
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
-            Dim result As Double = Math.Exp(-lambda)
+            Dim result As Double = sys.Exp(-lambda)
             Dim k As Integer = x
             While k >= 1
                 result *= lambda / k

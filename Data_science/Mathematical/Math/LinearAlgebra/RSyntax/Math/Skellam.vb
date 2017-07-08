@@ -110,10 +110,10 @@
 '            Dim ret As Vector
 
 '            If (terms < 1) Then
-'                ret = Exp(K - x * s) / Sqrt(2 * Math.PI * K2)  'saddlepoint density
+'                ret = Exp(K - x * s) / Sqrt(2 * sys.PI * K2)  'saddlepoint density
 '            Else
 '                Dim c = (1 - ((lambda1 * Exp(s) - lambda2 * Exp(-s)) / K2) ^ 2 * 5 / 3) / K2 * 0.125 + 1
-'                ret = Exp(K - x * s) / Sqrt(2 * Math.PI * K2) * (1 + c) * 0.5
+'                ret = Exp(K - x * s) / Sqrt(2 * sys.PI * K2) * (1 + c) * 0.5
 '            End If
 '            Return ret
 '        End Function
@@ -180,13 +180,13 @@
 '                Dim s = VectorMath.Log(0.5 * (xx + Sqrt(xx ^ 2 + 4 * L1 * L2)) / L1) '# the saddlepoint
 '                Dim K = L1 * (Exp(s) - 1) + L2 * (Exp(-s) - 1)       '# CGF(s)
 '                Dim K2 = L1 * Exp(s) + L2 * Exp(-s)              '# CGF''(s)
-'                Dim spd = Exp(K - x * s) / Sqrt(2 * Math.PI * K2)         '# saddlepoint density
+'                Dim spd = Exp(K - x * s) / Sqrt(2 * sys.PI * K2)         '# saddlepoint density
 '                Dim usp = (spd > 1.0E-308) & [Is].Finite(spd)      '# don't trust the existing result
 '                If (Length(usp(usp)) > 0) Then  '  # add another term to the saddlepoint approximation
 '                    Dim su = s(usp)
 '                    Dim K2u = K2(usp)
 '                    Dim C = (1 - ((L1(usp) * Exp(su) - L2(usp) * Exp(-su)) / K2u) ^ 2 * 5 / 3) / K2u * 0.125 + 1
-'                    ret(chk)(usp) = Exp(K(usp) - x(usp) * su) / Sqrt(2 * Math.PI * K2u) * (1 + C) * 0.5
+'                    ret(chk)(usp) = Exp(K(usp) - x(usp) * su) / Sqrt(2 * sys.PI * K2u) * (1 + C) * 0.5
 '                End If
 '            End If
 '            Return ret

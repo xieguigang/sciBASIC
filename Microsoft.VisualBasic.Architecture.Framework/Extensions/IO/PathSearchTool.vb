@@ -938,7 +938,7 @@ Public Module ProgramPathSearchTool
             End If
         Next
 
-        Dim lnDiff As Integer = Math.Abs(lnFromCnt - lnSame)
+        Dim lnDiff As Integer = sys.Abs(lnFromCnt - lnSame)
         If lnDiff > 0 AndAlso laFrom(lnFromCnt - 1).Length > 0 Then
             While lnDiff > 0
                 lnDiff -= 1

@@ -38,13 +38,13 @@ Namespace Imaging
     <PackageNamespace("GDI.Transform")> Public Module GeomTransform
 
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
-            Return Math.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+            Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
         End Function
 
         <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
             Dim xDiff As Single = p2.X - p1.X
             Dim yDiff As Single = p2.Y - p1.Y
-            Return Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI
+            Return sys.Atan2(yDiff, xDiff) * 180.0 / sys.PI
         End Function
 
         ''' <summary>
@@ -162,7 +162,7 @@ Namespace Imaging
             Return New PointF(left - xo, top - yo)
         End Function
 
-        Const pi2 As Double = Math.PI / 2.0
+        Const pi2 As Double = sys.PI / 2.0
 
         ''' <summary>
         ''' Creates a new Image containing the same image only rotated
@@ -234,12 +234,12 @@ Namespace Imaging
             Dim oldHeight As Double = CDbl(image.Height)
 
             ' Convert degrees to radians
-            Dim theta As Double = CDbl(angle) * Math.PI / 180.0
+            Dim theta As Double = CDbl(angle) * sys.PI / 180.0
             Dim locked_theta As Double = theta
 
             ' Ensure theta is now [0, 2pi)
             While locked_theta < 0.0
-                locked_theta += 2 * Math.PI
+                locked_theta += 2 * sys.PI
             End While
 
             Dim newWidth As Double, newHeight As Double
@@ -252,18 +252,18 @@ Namespace Imaging
             ' on how much rotation is being done to the bitmap.
             '   Refer to the first paragraph in the explaination above for 
             '   reasons why.
-            If (locked_theta >= 0.0 AndAlso locked_theta < pi2) OrElse (locked_theta >= Math.PI AndAlso locked_theta < (Math.PI + pi2)) Then
-                adjacentTop = Math.Abs(Math.Cos(locked_theta)) * oldWidth
-                oppositeTop = Math.Abs(Math.Sin(locked_theta)) * oldWidth
+            If (locked_theta >= 0.0 AndAlso locked_theta < pi2) OrElse (locked_theta >= sys.PI AndAlso locked_theta < (Math.PI + pi2)) Then
+                adjacentTop = sys.Abs(Math.Cos(locked_theta)) * oldWidth
+                oppositeTop = sys.Abs(Math.Sin(locked_theta)) * oldWidth
 
-                adjacentBottom = Math.Abs(Math.Cos(locked_theta)) * oldHeight
-                oppositeBottom = Math.Abs(Math.Sin(locked_theta)) * oldHeight
+                adjacentBottom = sys.Abs(Math.Cos(locked_theta)) * oldHeight
+                oppositeBottom = sys.Abs(Math.Sin(locked_theta)) * oldHeight
             Else
-                adjacentTop = Math.Abs(Math.Sin(locked_theta)) * oldHeight
-                oppositeTop = Math.Abs(Math.Cos(locked_theta)) * oldHeight
+                adjacentTop = sys.Abs(Math.Sin(locked_theta)) * oldHeight
+                oppositeTop = sys.Abs(Math.Cos(locked_theta)) * oldHeight
 
-                adjacentBottom = Math.Abs(Math.Sin(locked_theta)) * oldWidth
-                oppositeBottom = Math.Abs(Math.Cos(locked_theta)) * oldWidth
+                adjacentBottom = sys.Abs(Math.Sin(locked_theta)) * oldWidth
+                oppositeBottom = sys.Abs(Math.Cos(locked_theta)) * oldWidth
             End If
 
             newWidth = adjacentTop + oppositeBottom
@@ -297,13 +297,13 @@ Namespace Imaging
                     New Point(nWidth, CInt(Math.Truncate(oppositeTop))),
                     New Point(0, CInt(Math.Truncate(adjacentBottom)))
                 }
-                ElseIf locked_theta >= pi2 AndAlso locked_theta < Math.PI Then
+                ElseIf locked_theta >= pi2 AndAlso locked_theta < sys.PI Then
                     points = New Point() {
                     New Point(nWidth, CInt(Math.Truncate(oppositeTop))),
                     New Point(CInt(Math.Truncate(adjacentTop)), nHeight),
                     New Point(CInt(Math.Truncate(oppositeBottom)), 0)
                 }
-                ElseIf locked_theta >= Math.PI AndAlso locked_theta < (Math.PI + pi2) Then
+                ElseIf locked_theta >= sys.PI AndAlso locked_theta < (Math.PI + pi2) Then
                     points = New Point() {
                     New Point(CInt(Math.Truncate(adjacentTop)), nHeight),
                     New Point(0, CInt(Math.Truncate(adjacentBottom))),

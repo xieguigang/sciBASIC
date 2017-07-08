@@ -35,8 +35,8 @@ Namespace Scripting.Helpers
 
         Sub New(engine As Expression)
             Call MyBase.New(engine)
-            Call MyBase.Add(NameOf(Math.E), Math.E, False, True)
-            Call MyBase.Add(NameOf(Math.PI), Math.PI, False, True)
+            Call MyBase.Add(NameOf(Math.E), sys.E, False, True)
+            Call MyBase.Add(NameOf(Math.PI), sys.PI, False, True)
             Call MyBase.Add(NameOf(Scan0), Scan0, False, True)
             Call __buildCache()
         End Sub

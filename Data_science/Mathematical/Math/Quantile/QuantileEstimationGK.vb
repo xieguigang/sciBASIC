@@ -144,7 +144,7 @@ Namespace Quantile
 
                 ' Merge the items together if we don't need it to maintain the
                 ' error bound
-                If x.g + x1.g + x1.delta <= Math.Floor(2 * epsilon * count) Then
+                If x.g + x1.g + x1.delta <= sys.Floor(2 * epsilon * count) Then
                     x1.g += x.g
                     sample.RemoveAt(i)
                     removed += 1

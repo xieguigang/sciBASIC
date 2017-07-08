@@ -155,7 +155,7 @@ Namespace Language.C
                 Case TypeCode.[Double]
                     Return (If(Round, CLng(Math.Truncate(Math.Round(CDbl(Value)))), CLng(Math.Truncate(CDbl(Value)))))
                 Case TypeCode.[Decimal]
-                    Return (If(Round, Math.Round(CDec(Value)), CDec(Value)))
+                    Return (If(Round, sys.Round(CDec(Value)), CDec(Value)))
                 Case Else
 
                     Return Nothing

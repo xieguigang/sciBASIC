@@ -57,7 +57,7 @@ Namespace LinearAlgebra.Solvers
                     x(i) = (b(i) - sum) * Omiga / A(i, i) + (1.0 - Omiga) * x1(i)
                 Next
 
-                Dim dx As Vector = x - x1, err As Double = Math.Sqrt(dx.Mod)
+                Dim dx As Vector = x - x1, err As Double = sys.Sqrt(dx.Mod)
 
                 If err < e Then
                     Exit For
