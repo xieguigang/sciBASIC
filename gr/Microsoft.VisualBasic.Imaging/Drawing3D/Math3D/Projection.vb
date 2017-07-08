@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -106,16 +107,16 @@ Namespace Drawing3D.Math3D
         ''' <returns></returns>
         <ExportAPI("SpaceToGrid")>
         <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Single) As Point
-            Dim X As Single = Math.Cos(xRotate) * pt3D.X + pt3D.Y
-            Dim Y As Single = Math.Sin(xRotate) * pt3D.X - pt3D.Z
+            Dim X As Single = Cos(xRotate) * pt3D.X + pt3D.Y
+            Dim Y As Single = Sin(xRotate) * pt3D.X - pt3D.Z
 
             Return New Point(X, Y)
         End Function
 
         <ExportAPI("SpaceToGrid")>
         Public Function SpaceToGrid(px As Single, py As Single, pz As Single, xRotate As Single) As Point
-            Dim X As Single = Math.Cos(xRotate) * px + py
-            Dim Y As Single = Math.Sin(xRotate) * px - pz
+            Dim X As Single = Cos(xRotate) * px + py
+            Dim Y As Single = Sin(xRotate) * px - pz
 
             Return New Point(X, Y)
         End Function
@@ -129,8 +130,8 @@ Namespace Drawing3D.Math3D
         ''' <returns></returns>
         <ExportAPI("SpaceToGrid")>
         <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Single, offset As Point) As Point
-            Dim X As Single = Math.Cos(xRotate) * pt3D.X + pt3D.Y + offset.X
-            Dim Y As Single = Math.Sin(xRotate) * pt3D.X - pt3D.Z + offset.Y
+            Dim X As Single = Cos(xRotate) * pt3D.X + pt3D.Y + offset.X
+            Dim Y As Single = Sin(xRotate) * pt3D.X - pt3D.Z + offset.Y
 
             Return New Point(X, Y)
         End Function

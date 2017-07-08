@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device.Worker
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports System.Math
 Imports Keyboard = System.Windows.Forms.Keys
 
 Namespace Drawing3D.Device
@@ -237,7 +237,7 @@ Namespace Drawing3D.Device
         End Sub
 
         Private Sub GDIDevice_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
-            Dim d% = Math.Sign(e.Delta)
+            Dim d% = Sign(e.Delta)
             _camera.ViewDistance += d
 
 #If DEBUG Then
