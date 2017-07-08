@@ -62,13 +62,11 @@ Public Module Module1
         For i As Integer = 0 To 1000
 
             For Each a In V
-                Force.Add(a.ID, New Force)
-
                 For Each b In V.Where(Function(x) Not x Is a)
                     ' 节点之间存在斥力
                     Dim cl = Math.CoulombsLaw(a, b)
 
-                    Force(a.ID) += cl
+                    force(a.ID) += cl
                 Next
             Next
 
