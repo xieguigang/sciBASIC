@@ -38,8 +38,8 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Quantile
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
 
 Namespace FileStream

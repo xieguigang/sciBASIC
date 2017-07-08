@@ -4,7 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Physics
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Module1
 
