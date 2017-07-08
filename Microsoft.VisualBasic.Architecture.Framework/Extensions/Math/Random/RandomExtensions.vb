@@ -63,7 +63,7 @@ Namespace Math
         ''' <returns></returns>
         Public Function Seed() As Integer
             Dim seeds& = CLng(Integer.MaxValue) * 2
-            VBMath.Randomize()
+            VisualBasic.Randomize()
             seeds = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / seeds
             Return CInt(seeds)
         End Function

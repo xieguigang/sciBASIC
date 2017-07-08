@@ -179,7 +179,7 @@ Namespace Math
                               Optional isScale As Boolean = True) As Double()
 
             Dim avg As Double = data.Average
-            Dim rms As Double = VBMathExtensions.RMS(data)
+            Dim rms As Double = VBMath.RMS(data)
 
             If center Then
                 data = (From n In data Select n - avg).ToArray

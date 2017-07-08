@@ -251,7 +251,7 @@
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>+VB_DataFrame</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
+    <ProjectReference Include="..\..\..\Data_science\Mathematical\Math\math-core.vbproj">
       <Project>{E3367B88-5D0C-495A-8273-331656D4B5AA}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
