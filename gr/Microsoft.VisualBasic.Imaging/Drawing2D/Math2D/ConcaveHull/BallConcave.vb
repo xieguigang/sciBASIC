@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports sys = System.Math
 
 Namespace Drawing2D.Math2D.ConcaveHull
 
@@ -19,9 +20,11 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 Me.Index = i
                 Me.DistanceTo = dis
             End Sub
+
             Public Function CompareTo(other As Point2dInfo) As Integer Implements IComparable(Of Point2dInfo).CompareTo
                 Return DistanceTo.CompareTo(other.DistanceTo)
             End Function
+
             Public Overrides Function ToString() As String
                 Return Convert.ToString(Point) & "," & Index & "," & DistanceTo
             End Function
@@ -51,6 +54,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 rNeigbourList(i) = GetSortedNeighbours(i)
             Next
         End Sub
+
         Private Sub InitDistanceMap()
             distanceMap = New Double(points.Count - 1, points.Count - 1) {}
             For i As Integer = 0 To points.Count - 1
@@ -85,6 +89,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
             Return min
         End Function
+
         Public Function GetConcave_Ball(radius As Double) As List(Of Point)
             Dim ret As New List(Of Point)()
             Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
@@ -104,6 +109,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             End While
             Return ret
         End Function
+
         Public Function GetConcave_Edge(radius As Double) As List(Of Point)
             Dim ret As New List(Of Point)()
             Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
@@ -122,6 +128,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             End While
             Return ret
         End Function
+
         Private Function CheckValid(adjs As List(Of Integer)()) As Boolean
             For i As Integer = 0 To adjs.Length - 1
                 If adjs(i).Count < 2 Then
@@ -130,6 +137,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
             Return True
         End Function
+
         Public Function CompareAngel(a As Point, b As Point, m_origin As Point, m_dreference As Point) As Boolean
 
             Dim da As New Point(a.X - m_origin.X, a.Y - m_origin.Y)
@@ -156,6 +164,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             ' vectors "less than" zero degrees are actually large, near 2 pi
             Return deta > 0
         End Function
+
         Public Function GetNextPoint_EdgePivoting(prev As Integer, current As Integer, list As List(Of Integer), radius As Double) As Integer
             If list.Count = 2 AndAlso prev <> -1 Then
                 Return list(0) + list(1) - prev
@@ -182,6 +191,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             'main.ShowMessage("seek P" + points[min].Index);
             Return min
         End Function
+
         Public Function GetNextPoint_BallPivoting(prev As Integer, current As Integer, list As List(Of Integer), radius As Double) As Integer
             SortAdjListByAngel(list, prev, current)
             For j As Integer = 0 To list.Count - 1
@@ -198,6 +208,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
             Return -1
         End Function
+
         Private Sub SortAdjListByAngel(list As List(Of Integer), prev As Integer, current As Integer)
             Dim origin As Point = points(current)
             Dim df As Point
@@ -217,6 +228,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 Next
             Next
         End Sub
+
         Private Function HasPointsInCircle(adjPoints As List(Of Integer), center As Point, radius As Double, adjIndex As Integer) As Boolean
             For k As Integer = 0 To adjPoints.Count - 1
                 If adjPoints(k) <> adjIndex Then
@@ -228,6 +240,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
             Return False
         End Function
+
         Public Shared Function GetCircleCenter(a As Point, b As Point, r As Double) As Point
             Dim dx As Double = b.X - a.X
             Dim dy As Double = b.Y - a.Y
@@ -236,13 +249,15 @@ Namespace Drawing2D.Math2D.ConcaveHull
             If r * r / (dx * dx + dy * dy) - 0.25 < 0 Then
                 Return New Point(-1, -1)
             End If
-            Dim sqrt As Double = Math.Sqrt(r * r / (dx * dx + dy * dy) - 0.25)
+            Dim sqrt As Double = sys.Sqrt(r * r / (dx * dx + dy * dy) - 0.25)
             Return New Point(cx - dy * sqrt, cy + dx * sqrt)
         End Function
+
         Public Shared Function IsInCircle(p As Point, center As Point, r As Double) As Boolean
             Dim dis2 As Double = (p.X - center.X) * (p.X - center.X) + (p.Y - center.Y) * (p.Y - center.Y)
             Return dis2 < r * r
         End Function
+
         Public Function GetInRNeighbourList(radius As Double) As List(Of Integer)()
             Dim adjs As List(Of Integer)() = New List(Of Integer)(points.Count - 1) {}
             For i As Integer = 0 To points.Count - 1
@@ -259,6 +274,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
             Return adjs
         End Function
+
         Private Function GetSortedNeighbours(index As Integer) As List(Of Integer)
             Dim infos As New List(Of Point2dInfo)(points.Count)
             For i As Integer = 0 To points.Count - 1
@@ -271,9 +287,11 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
             Return adj
         End Function
+
         Public Shared Function GetDistance(p1 As Point, p2 As Point) As Double
-            Return Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y))
+            Return sys.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y))
         End Function
+
         Public Shared Function GetCross(a As Point, b As Point) As Double
             Return a.X * b.Y - a.Y * b.X
         End Function

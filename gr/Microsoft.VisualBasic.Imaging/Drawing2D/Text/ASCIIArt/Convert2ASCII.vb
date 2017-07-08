@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports sys = System.Math
 
 Namespace Drawing2D.Vector.Text.ASCIIArt
 
@@ -73,7 +74,7 @@ Namespace Drawing2D.Vector.Text.ASCIIArt
                         Dim closestchar As WeightedChar =
                             characters _
                             .Where(Function(t)
-                                       Return Math.Abs(t.Weight - targetvalue) = characters.Min(Function(e) Math.Abs(e.Weight - targetvalue))
+                                       Return sys.Abs(t.Weight - targetvalue) = characters.Min(Function(e) sys.Abs(e.Weight - targetvalue))
                                    End Function) _
                             .FirstOrDefault()
 
@@ -102,7 +103,7 @@ Namespace Drawing2D.Vector.Text.ASCIIArt
             End If
 
             ' Create a new image of the right size
-            Dim img As New Bitmap(CInt(Math.Truncate(WidthAndHeight.Width)), CInt(Math.Truncate(WidthAndHeight.Height)))
+            Dim img As New Bitmap(CInt(sys.Truncate(WidthAndHeight.Width)), CInt(sys.Truncate(WidthAndHeight.Height)))
 
             Using Drawing = Graphics.FromImage(img) ' Get a graphics object
 
