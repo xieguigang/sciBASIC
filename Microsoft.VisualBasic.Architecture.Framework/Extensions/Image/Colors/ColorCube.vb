@@ -80,7 +80,7 @@ While any number of complex code solutions could be created to attempt to addres
         <ExportAPI("Brightness")>
         <Extension>
         Public Function GetBrightness(target As Color) As Integer
-            Return CInt(Math.Sqrt(0.241 * target.R ^ 2 + 0.691 * target.G ^ 2 + 0.068 * target.B ^ 2))
+            Return CInt(sys.Sqrt(0.241 * target.R ^ 2 + 0.691 * target.G ^ 2 + 0.068 * target.B ^ 2))
         End Function
 
         ''' <summary>
@@ -141,9 +141,9 @@ While any number of complex code solutions could be created to attempt to addres
 
             Return Color.FromArgb(
                 alpha,
-                sys.Max(Math.Min(source.R + r, 255), 0),
-                sys.Max(Math.Min(source.G + g, 255), 0),
-                sys.Max(Math.Min(source.B + b, 255), 0))
+                sys.Max(sys.Min(source.R + r, 255), 0),
+                sys.Max(sys.Min(source.G + g, 255), 0),
+                sys.Max(sys.Min(source.B + b, 255), 0))
         End Function
 
         ''' <summary>
@@ -292,12 +292,12 @@ While any number of complex code solutions could be created to attempt to addres
 
         <ExportAPI("Azimuth")>
         Public Function GetAzimuthTo(source As Color, target As Color) As Double
-            Return WrapAngle(Math.Atan2(CDbl(target.B) - CDbl(source.B), CDbl(target.R) - CDbl(source.R)))
+            Return WrapAngle(sys.Atan2(CDbl(target.B) - CDbl(source.B), CDbl(target.R) - CDbl(source.R)))
         End Function
 
         <ExportAPI("Elevation")>
         Public Function GetElevationTo(source As Color, target As Color) As Double
-            Return WrapAngle(Math.Atan2(CDbl(target.G) - CDbl(source.G), 255))
+            Return WrapAngle(sys.Atan2(CDbl(target.G) - CDbl(source.G), 255))
         End Function
 
         <ExportAPI("WrapAngle")>

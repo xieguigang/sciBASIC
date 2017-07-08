@@ -214,10 +214,10 @@ Namespace Imaging.LayoutModel
         ''' <returns> Returns a new rectangle for the bounds. </returns>
         Public Overridable ReadOnly Property Rectangle As RectangleF
             Get
-                Dim ix As Integer = CInt(Fix(Math.Round(X)))
-                Dim iy As Integer = CInt(Fix(Math.Round(Y)))
-                Dim iw As Integer = CInt(Fix(Math.Round(Width - ix + X)))
-                Dim ih As Integer = CInt(Fix(Math.Round(Height - iy + Y)))
+                Dim ix As Integer = CInt(Fix(sys.Round(X)))
+                Dim iy As Integer = CInt(Fix(sys.Round(Y)))
+                Dim iw As Integer = CInt(Fix(sys.Round(Width - ix + X)))
+                Dim ih As Integer = CInt(Fix(sys.Round(Height - iy + Y)))
 
                 Return New RectangleF(ix, iy, iw, ih)
             End Get

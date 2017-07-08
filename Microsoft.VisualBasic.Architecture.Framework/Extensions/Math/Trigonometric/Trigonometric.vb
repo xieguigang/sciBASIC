@@ -86,7 +86,7 @@ Namespace Math
         Public Function GetAngle(p1 As Point, p2 As Point) As Double
             Dim xDiff As Double = p2.X - p1.X
             Dim yDiff As Double = p2.Y - p1.Y
-            Return 180 - (ToDegrees(Math.Atan2(yDiff, xDiff)) - 90)
+            Return 180 - (ToDegrees(sys.Atan2(yDiff, xDiff)) - 90)
         End Function
 
         <Extension>
@@ -129,7 +129,7 @@ Namespace Math
         <Extension>
         Public Function NearestPoint(points As IEnumerable(Of Point), x As Integer, y As Integer, radius As Integer) As Point
             For Each pos As Point In points
-                Dim dist As Double = sys.Sqrt(Math.Pow(x - pos.X, 2) + sys.Pow(y - pos.Y, 2))
+                Dim dist As Double = sys.Sqrt((x - pos.X) ^ 2 + sys.Pow(y - pos.Y, 2))
                 If dist <= radius Then
                     Return pos
                 End If

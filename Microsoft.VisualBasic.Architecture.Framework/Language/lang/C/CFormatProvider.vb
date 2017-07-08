@@ -112,11 +112,11 @@ Namespace Language.C
                     Return Value
 
                 Case TypeCode.[Single]
-                    Return CType(Math.Truncate(CSng(Value)), UInt32)
+                    Return CType(Truncate(CSng(Value)), UInt32)
                 Case TypeCode.[Double]
-                    Return CULng(Math.Truncate(CDbl(Value)))
+                    Return CULng(Truncate(CDbl(Value)))
                 Case TypeCode.[Decimal]
-                    Return CULng(Math.Truncate(CDec(Value)))
+                    Return CULng(Truncate(CDec(Value)))
                 Case Else
 
                     Return Nothing

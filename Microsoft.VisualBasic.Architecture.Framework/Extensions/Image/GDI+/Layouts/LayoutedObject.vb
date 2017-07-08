@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Language
+Imports sys = System.Math
 
 Namespace Imaging.LayoutModel
 
@@ -98,7 +99,7 @@ Namespace Imaging.LayoutModel
         ''' <returns> Returns a new point for the location. </returns>
         Public Overridable ReadOnly Property Point As Point
             Get
-                Return New Point(CInt(Fix(Math.Round(X))), CInt(Fix(Math.Round(Y))))
+                Return New Point(CInt(Fix(sys.Round(X))), CInt(Fix(sys.Round(Y))))
             End Get
         End Property
 
