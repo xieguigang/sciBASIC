@@ -86,7 +86,8 @@ Public Module Math
     Public Function Sum(F As IEnumerable(Of Force)) As Force
         Dim result As New Force
 
-        For Each n As Force In F
+        ' 力从小到大升序排序，可以保证最后力的方向永远是偏向于大力所指向的方向
+        For Each n As Force In F.OrderBy(Function(i) i.Strength)
             result = result + n
         Next
 
