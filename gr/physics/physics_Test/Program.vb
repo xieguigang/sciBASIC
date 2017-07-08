@@ -33,7 +33,7 @@ Public Module Program
         'Call reverse(New Force(100, PI / 3))
 
 
-        Call add(New Force(100, 1 / 2 * PI / 2), New Force(100, PI + 1 / 2 * PI / 2))  ' 45  225  -> 45
+        Call add(New Force(1000, 1 / 2 * PI / 2), New Force(100, PI + 1 / 2 * PI / 2))  ' 45  225  -> 45
 
         Call add(New Force(100, 0), New Force(100, 1 / 2 * PI))  ' 45
 

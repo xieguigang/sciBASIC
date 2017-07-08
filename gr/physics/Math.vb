@@ -56,7 +56,23 @@ Public Module Math
             alpha = Min(f2.Angle, f1.Angle)
         Else
             Dim sina = Sin(alpha) * f1 / F
-            alpha = Sinh(sina) + f2.Angle
+
+            If Abs(sina) <= 0.000000000001 Then
+                ' 要么二者相反，要么二者同向
+                If F > f1 AndAlso F > f2 Then
+                    ' 二者同向相加才会出现都大于的情况
+                    alpha = Min(f1.Angle, f2.Angle)
+                Else
+                    ' 反向，取力最大的方向
+                    If f1 > f2 Then
+                        alpha = f1.Angle
+                    Else
+                        alpha = f2.Angle
+                    End If
+                End If
+            Else
+                alpha = Sinh(sina) + f2.Angle
+            End If
         End If
 
         Return New Force With {

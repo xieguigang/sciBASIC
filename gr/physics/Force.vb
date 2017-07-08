@@ -66,6 +66,22 @@ Public Class Force
         Return Not f = strength
     End Operator
 
+    Public Shared Operator >(strength#, f As Force) As Boolean
+        Return strength > f.Strength
+    End Operator
+
+    Public Shared Operator <(strength#, f As Force) As Boolean
+        Return strength < f.Strength
+    End Operator
+
+    Public Shared Operator >(f1 As Force, f2 As Force) As Boolean
+        Return f1.Strength > f2.Strength
+    End Operator
+
+    Public Shared Operator <(f1 As Force, f2 As Force) As Boolean
+        Return f1.Strength < f2.Strength
+    End Operator
+
     ''' <summary>
     ''' 这个力的反向力
     ''' </summary>
