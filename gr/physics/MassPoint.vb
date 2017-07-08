@@ -1,9 +1,11 @@
-﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
 ''' 质点，没有体积和大小，只有质量和电荷量的理想物理对象
 ''' </summary>
-Public Class MassPoint
+Public Class MassPoint : Implements INamedValue
 
     ''' <summary>
     ''' 物体的质量，会影响重力，可能会影响摩擦力
@@ -43,6 +45,12 @@ Public Class MassPoint
             Return CType(Point.Count, World.Type)
         End Get
     End Property
+
+    ''' <summary>
+    ''' 当前的这个物体的唯一标识符
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ID As String Implements IKeyedEntity(Of String).Key
 
     ''' <summary>
     ''' 物体在dt时间段内以当前的速度<see cref="Velocity"/>之下产生一小部分的位移

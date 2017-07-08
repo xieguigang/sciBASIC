@@ -82,6 +82,11 @@ Public Module Math
         }
     End Function
 
+    ''' <summary>
+    ''' 使用平行四边形法则计算出合力
+    ''' </summary>
+    ''' <param name="F">分力</param>
+    ''' <returns></returns>
     <Extension>
     Public Function Sum(F As IEnumerable(Of Force)) As Force
         Dim result As New Force
