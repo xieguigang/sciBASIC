@@ -53,20 +53,28 @@ Public Module Module1
     End Sub
 
     Public Sub SpringG(V As node(), E As edge())
-        Dim force As New Dictionary(Of String, Force)
+        Dim force As New Dictionary(Of String, List(Of Force))
 
         For Each X As node In V
-            force.Add(X.ID, New Force)
+            force.Add(X.ID, New List(Of Force))
         Next
+
+        Try
+            Call FileSystem.RmDir("X:\fffff")
+        Catch ex As Exception
+
+        End Try
+
+
 
         For i As Integer = 0 To 1000
 
             For Each a In V
                 For Each b In V.Where(Function(x) Not x Is a)
                     ' 节点之间存在斥力
-                    Dim cl = Math.CoulombsLaw(a, b, k:=200000)
+                    Dim cl = Math.CoulombsLaw(a, b, k:=2000)
 
-                    force(a.ID) += cl
+                    force(a.ID).Add(cl)
                 Next
             Next
 
@@ -77,38 +85,51 @@ Public Module Module1
                 Dim d = a.Point - b.Point
                 Dim f = Math.AttractiveForce(spring(d.SumMagnitude), a.Point, b.Point)
 
-                force(a.ID) += f
-                force(b.ID) += -f
+                force(a.ID).Add(f)
+                force(b.ID).Add(-f)
             Next
 
-            For Each u In V
-                u.ApplyForce(force(u.ID), c4)
-                force(u.ID).void()
-            Next
+            Using g = New Size(2000, 2000).CreateGDIDevice
 
-            Call V.Select(Function(n) n.ToString).JoinBy("   ").__DEBUG_ECHO
+                Dim polygon = V.Select(Function(n)
+                                           Try
+                                               Return n.Point.Vector2D.ToPoint
+                                           Catch ex As Exception
+                                               Return New Point
+                                           End Try
+                                       End Function).ToArray
+                Dim coffset = polygon.CentralOffset(g.Size).ToPoint
 
+
+
+                For n As Integer = 0 To V.Length - 1
+                    Dim u = polygon(n)
+                    Call g.DrawCircle(u.OffSet2D(coffset), 10, Brushes.Blue)
+                    Call cat(u.ToString & " ")
+                    Try
+                        Call V(n).ShowForce(g, force(V(n).ID), coffset)
+                    Catch ex As Exception
+
+                    End Try
+                Next
+
+                For Each uv In E
+                    Try
+                        Call g.DrawLine(Pens.Green, uv.u.Point.Vector2D.OffSet2D(coffset), uv.v.Point.Vector2D.OffSet2D(coffset))
+                    Catch ex As Exception
+
+                    End Try
+                Next
+
+                Call g.Save($"x:\fffff\f{i.FormatZero("00000")}.png", ImageFormats.Png)
+                cat("\n")
+
+                For Each u In V
+                    u.ApplyForce(force(u.ID), c4)
+                    force(u.ID).void()
+                Next
+            End Using
         Next
-
-        Using g = New Size(1000, 1000).CreateGDIDevice
-
-            Dim polygon = V.Select(Function(n) n.Point.Vector2D.ToPoint).ToArray.Enlarge(0.2)
-            Dim coffset = polygon.CentralOffset(g.Size).ToPoint
-
-
-
-            For Each u In polygon
-                Call g.DrawCircle(u.OffSet2D(coffset), 10, Brushes.Blue)
-                Call cat(u.ToString)
-            Next
-
-            For Each uv In E
-                Call g.DrawLine(Pens.Red, uv.u.Point.Vector2D.OffSet2D(coffset), uv.v.Point.Vector2D.OffSet2D(coffset))
-            Next
-
-            Call g.Save("x:\fsdfsdf.png", ImageFormats.Png)
-        End Using
-
 
         Pause()
     End Sub
@@ -117,7 +138,7 @@ Public Module Module1
     Const c2# = 1
 
     Const c3# = 1
-    Const c4# = 0.000001
+    Const c4# = 0.1
 
     ''' <summary>
     ''' inverse square law force
@@ -150,7 +171,7 @@ Public Module Module1
         Public Property ID$
 
         Sub New()
-            Point = New Vector({Rnd() * 100, Rnd() * 100})
+            Point = New Vector({Rnd() * 1000, Rnd() * 1000})
             Charge = 0.01
         End Sub
 

@@ -15,6 +15,7 @@ Public Class Force
     ''' </summary>
     ''' <returns></returns>
     Public Property Angle As Double
+    Public Property source As String
 
     Public Sub void()
         Strength = 0
@@ -22,7 +23,7 @@ Public Class Force
     End Sub
 
     Public Overrides Function ToString() As String
-        Return $"alpha={Angle}, with {Strength} newton."
+        Return $"a={Angle.ToString("F2")}, {Strength.ToString("F2")}N [{source}]"
     End Function
 
     Public Shared Operator ^(f As Force, n As Double) As Double
