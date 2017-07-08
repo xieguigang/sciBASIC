@@ -239,10 +239,9 @@ Namespace Drawing3D.Device
         Private Sub GDIDevice_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
             Dim d% = Sign(e.Delta)
             _camera.ViewDistance += d
-
-#If DEBUG Then
-            Call _camera.GetJson.__DEBUG_ECHO
-#End If
+            '#If DEBUG Then
+            '            Call _camera.GetJson.__DEBUG_ECHO
+            '#End If
         End Sub
 
         Private Sub GDIDevice_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
