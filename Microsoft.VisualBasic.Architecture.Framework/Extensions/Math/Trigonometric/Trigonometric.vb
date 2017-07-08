@@ -106,7 +106,7 @@ Namespace Mathematical
         ''' <returns>  the measurement of the angle {@code angdeg}
         '''          in radians.
         ''' @since   1.2 </returns>
-        Public Function toRadians(angdeg As Double) As Double
+        <Extension> Public Function ToRadians(angdeg As Double) As Double
             Return angdeg / 180.0 * Math.PI
         End Function
 

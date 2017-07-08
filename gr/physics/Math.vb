@@ -1,6 +1,7 @@
 ﻿Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports sys = System.Math
 
@@ -146,8 +147,8 @@ Public Module Math
     ''' <param name="b">空间位置坐标</param>
     ''' <returns></returns>
     Public Function RepulsiveForce(strength#, a As Vector, b As Vector) As Force
-        Dim cosA = Math.Cos(a, b)
-        Dim alpha = Cosh(cosA)
+        Dim cosA = Math.Cos(a - b, {100, 0})  ' 两个向量的方向对X坐标轴的夹角才是力的方向
+        Dim alpha = Arccos(cosA)
 
         Return New Force With {
             .Strength = strength,

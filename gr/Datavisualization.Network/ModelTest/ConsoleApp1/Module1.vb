@@ -25,27 +25,27 @@ Public Module Module1
 
         V.Add(New node With {.ID = 1})
         V.Add(New node With {.ID = 2})
-        V.Add(New node With {.ID = 3})
-        V.Add(New node With {.ID = 4})
-        V.Add(New node With {.ID = 5})
-        V.Add(New node With {.ID = 6})
-        V.Add(New node With {.ID = 7})
-        V.Add(New node With {.ID = 8})
+        'V.Add(New node With {.ID = 3})
+        'V.Add(New node With {.ID = 4})
+        'V.Add(New node With {.ID = 5})
+        'V.Add(New node With {.ID = 6})
+        'V.Add(New node With {.ID = 7})
+        'V.Add(New node With {.ID = 8})
 
         Dim add = Sub(a%, b%)
                       E.Add(New edge With {.u = V(a - 1), .v = V(b - 1)})
                   End Sub
 
         add(1, 2)
-        add(2, 3)
-        add(2, 4)
-        add(2, 5)
-        add(2, 6)
-        add(3, 6)
-        add(4, 5)
-        add(3, 5)
-        add(6, 7)
-        add(6, 8)
+        'add(2, 3)
+        'add(2, 4)
+        'add(2, 5)
+        'add(2, 6)
+        'add(3, 6)
+        'add(4, 5)
+        'add(3, 5)
+        'add(6, 7)
+        'add(6, 8)
 
         Call SpringG(V.ToArray, E.ToArray)
 
@@ -72,9 +72,10 @@ Public Module Module1
             For Each a In V
                 For Each b In V.Where(Function(x) Not x Is a)
                     ' 节点之间存在斥力
-                    Dim cl = Math.CoulombsLaw(a, b, k:=2000)
+                    Dim cl = Math.CoulombsLaw(a, b)
 
                     force(a.ID).Add(cl)
+                    ' force(b.ID).Add(-cl)
                 Next
             Next
 
@@ -83,7 +84,8 @@ Public Module Module1
                 Dim b = l.v
 
                 Dim d = a.Point - b.Point
-                Dim f = Math.AttractiveForce(spring(d.SumMagnitude), a.Point, b.Point)
+                Dim springF = spring(d.SumMagnitude)
+                Dim f = Math.AttractiveForce(springF, a.Point, b.Point)
 
                 force(a.ID).Add(f)
                 force(b.ID).Add(-f)
