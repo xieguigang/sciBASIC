@@ -32,8 +32,14 @@ Namespace Math.StatisticsMathExtensions
 
     Public Module EnumerableStats
 
+        ''' <summary>
+        ''' 聚合，将nullable类型结构体转换为原来的值类型
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function Coalesce(Of T As Structure)(source As IEnumerable(Of T))) As IEnumerable(Of T)
+        Public Function Coalesce(Of T As Structure)(source As IEnumerable(Of T?)) As IEnumerable(Of T)
             Debug.Assert(source IsNot Nothing)
             Return source.Where(Function(x) x.HasValue).[Select](Function(x) CType(x, T))
         End Function
