@@ -44,10 +44,14 @@ Public Module Math
             Return f1
         ElseIf f1 = 0 AndAlso f2 = 0 Then
             Return New Force
+        Else
+            If f2.Angle > f1.Angle Then
+                Call f2.SwapWith(f1)
+            End If
         End If
 
         Dim alpha = f1.Angle - f2.Angle
-        Dim F = f1 ^ 2 + f2 ^ 2 + 2 * f1 * f2 * sys.Cos(alpha)
+        Dim F = Sqrt(f1 ^ 2 + f2 ^ 2 + 2 * f1 * f2 * sys.Cos(alpha))
         Dim sina = Sin(alpha) * f1 / F
 
         alpha = Sinh(sina)

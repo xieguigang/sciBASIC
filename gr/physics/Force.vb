@@ -1,4 +1,6 @@
 ﻿Imports System.Math
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Mathematical
 
 ''' <summary>
 ''' 力
@@ -17,13 +19,23 @@ Public Class Force
     Public Property Angle As Double
     Public Property source As String
 
+    Sub New()
+    End Sub
+
+    Sub New(F#, angle#, <CallerMemberName> Optional trace$ = Nothing)
+        Strength = F#
+        _Angle = angle
+        source = trace
+    End Sub
+
     Public Sub void()
         Strength = 0
         Angle = 0
     End Sub
 
     Public Overrides Function ToString() As String
-        Return $"a={Angle.ToString("F2")}, {Strength.ToString("F2")}N [{source}]"
+        Dim d$ = Angle.ToDegrees.ToString("F2")
+        Return $"a={d}, {Strength.ToString("F2")}N [{source}]"
     End Function
 
     Public Shared Operator ^(f As Force, n As Double) As Double
