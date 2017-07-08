@@ -29,7 +29,7 @@ Public Module Debugger
                            Dim b = (m.Point + v).Vector2D.OffSet2D(offset)
 
                            Call .DrawLine(pen, a, b)
-                           Call .DrawString(F.ToString, font, color, b)
+                           Call .DrawString(force.ToString, font, color, b)
                        End Sub
 
             For Each force As Force In F

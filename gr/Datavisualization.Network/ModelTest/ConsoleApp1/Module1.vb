@@ -125,8 +125,8 @@ Public Module Module1
                 cat("\n")
 
                 For Each u In V
-                    u.ApplyForce(force(u.ID), c4)
-                    force(u.ID).void()
+                    u.ApplyForce(force(u.ID).Sum, c4)
+                    force(u.ID).Clear()
                 Next
             End Using
         Next

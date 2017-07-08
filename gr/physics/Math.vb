@@ -1,5 +1,6 @@
 ﻿Imports System.Math
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 Imports sys = System.Math
 
@@ -36,7 +37,8 @@ Public Module Math
 
         Return New Force With {
             .Strength = F,
-            .Angle = alpha
+            .Angle = alpha,
+            .source = NameOf(ParallelogramLaw)
         }
     End Function
 
@@ -63,7 +65,8 @@ Public Module Math
 
         Return New Force With {
             .Strength = f,
-            .Angle = alpha
+            .Angle = alpha,
+            .source = NameOf(Gravity)
         }
     End Function
 
@@ -90,7 +93,11 @@ Public Module Math
     Public Function CoulombsLaw(m1 As MassPoint, m2 As MassPoint, Optional k# = 9000000000.0) As Force
         Dim d = m1.Point - m2.Point
         Dim f = Math.CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
-        Return RepulsiveForce(f, m1.Point, m2.Point)
+
+        With RepulsiveForce(f, m1.Point, m2.Point)
+            .source = NameOf(CoulombsLaw)
+            Return .ref
+        End With
     End Function
 
     Public Function Cos(a As Vector, b As Vector) As Double
@@ -110,11 +117,15 @@ Public Module Math
 
         Return New Force With {
             .Strength = strength,
-            .Angle = alpha
+            .Angle = alpha,
+            .source = NameOf(RepulsiveForce)
         }
     End Function
 
     Public Function AttractiveForce(strength#, a As Vector, b As Vector) As Force
-        Return -Math.RepulsiveForce(strength, a, b)
+        With -Math.RepulsiveForce(strength, a, b)
+            .source = NameOf(AttractiveForce)
+            Return .ref
+        End With
     End Function
 End Module
