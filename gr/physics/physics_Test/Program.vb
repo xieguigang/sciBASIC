@@ -8,6 +8,15 @@ Public Module Program
 
     Sub Main()
 
+        Call cl({100, 0}, {-100, 0})  ' X 轴， 0度
+        Call cl({0, 100}, {0, -100})   ' Y 轴，  90度
+        Call cl({100, 100}, {0, 0})  ' 45度
+
+        Call cl({-100, 100}, {0, 0}) '135
+        Call cl({-100, -100}, {0, 0}) '180+45
+
+        Call cl({100, -100}, {0, 0}) '360-45
+
         Call g(100)
 
         Call repl({0, 10}, {0, -10})   ' Y 轴，  90度
@@ -26,6 +35,15 @@ Public Module Program
 
         Pause()
 
+    End Sub
+
+
+    Sub cl(a As Vector, b As Vector)
+        Dim m1 As New MassPoint With {.Charge = 1, .Point = a}
+        Dim m2 As New MassPoint With {.Charge = 1, .Point = b}
+        Dim f = Math.CoulombsLaw(m1, m2)
+
+        Call $"Coulombs force between the {m1.Point.ToString} and {m2.Point.ToString} is {f.ToString}".__DEBUG_ECHO
     End Sub
 
     Sub g(m#)

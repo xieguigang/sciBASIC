@@ -147,8 +147,17 @@ Public Module Math
     ''' <param name="b">空间位置坐标</param>
     ''' <returns></returns>
     Public Function RepulsiveForce(strength#, a As Vector, b As Vector) As Force
+        Dim d = a - b
         Dim cosA = Math.Cos(a - b, {100, 0})  ' 两个向量的方向对X坐标轴的夹角才是力的方向
         Dim alpha = Arccos(cosA)
+
+        If d(Y) < 0 Then
+            If d(X) < 0 Then
+                alpha += PI / 2
+            Else
+                alpha = 2 * PI - alpha
+            End If
+        End If
 
         Return New Force With {
             .Strength = strength,

@@ -12,12 +12,12 @@ Public Module Debugger
     End Function
 
     <Extension> Public Sub ShowForce(m As MassPoint, ByRef canvas As Graphics2D, F As IEnumerable(Of Force), Optional offset As PointF = Nothing)
-        Dim pen As New Pen(Color.Red) With {
-            .EndCap = LineCap.ArrowAnchor,
-            .Width = 5
-        }
         Dim font As New Font(FontFace.MicrosoftYaHei, 12, FontStyle.Bold)
         Dim a = m.Point.Vector2D.OffSet2D(offset)
+
+#If DEBUG Then
+        Call $"Sum({F.JoinBy(", ")}) = {F.Sum}".__DEBUG_ECHO
+#End If
 
         With canvas
 
@@ -27,6 +27,10 @@ Public Module Debugger
             Dim draw = Sub(force As Force, color As SolidBrush)
                            Dim v = force.Decomposition2D
                            Dim b = (m.Point + v).Vector2D.OffSet2D(offset)
+                           Dim pen As New Pen(color.Color) With {
+                               .EndCap = LineCap.ArrowAnchor,
+                               .Width = 8
+                           }
 
                            Call .DrawLine(pen, a, b)
                            Call .DrawString(force.ToString, font, color, b)
