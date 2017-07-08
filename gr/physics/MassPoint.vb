@@ -16,4 +16,14 @@ Public Class MassPoint
     ''' <returns></returns>
     Public Property Charge As Double
 
+    ''' <summary>
+    ''' 物体受力后产生位移
+    ''' </summary>
+    Public Sub ApplyForce(F As Force, Optional c# = 1)
+        If Point.Count = 2 Then
+            Point += F.Decomposition2D * c
+        Else
+            Point += F.Decomposition3D * c
+        End If
+    End Sub
 End Class

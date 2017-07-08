@@ -1,10 +1,10 @@
 ﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Imaging
+Imports System.Math
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Physics
+Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
 
 Public Module Module1
 
@@ -53,18 +53,22 @@ Public Module Module1
     End Sub
 
     Public Sub SpringG(V As node(), E As edge())
+        Dim force As New Dictionary(Of String, Force)
 
+        For Each X As node In V
+            force.Add(X.ID, New Force)
+        Next
 
         For i As Integer = 0 To 1000
 
             For Each a In V
+                Force.Add(a.ID, New Force)
+
                 For Each b In V.Where(Function(x) Not x Is a)
                     ' 节点之间存在斥力
-                    Dim d = a.pos - b.pos
-                    Dim distance = d.SumMagnitude + 1
-                    Dim direct = d.Unit
-                    a.force -= repel(direct / distance)
-                    b.force += repel(direct / distance)
+                    Dim cl = Math.CoulombsLaw(a, b)
+
+                    Force(a.ID) += cl
                 Next
             Next
 
@@ -72,17 +76,16 @@ Public Module Module1
                 Dim a = l.u
                 Dim b = l.v
 
-                Dim d = a.pos - b.pos
-                Dim displa = d.SumMagnitude
-                Dim direct = d.Unit
+                Dim d = a.Point - b.Point
+                Dim f = Math.AttractiveForce(spring(d.SumMagnitude), a.Point, b.Point)
 
-                a.force -= spring(displa * direct)
-                b.force += spring(displa * direct)
+                force(a.ID) += f
+                force(b.ID) += -f
             Next
 
             For Each u In V
-                u.pos += c4 * u.force
-                u.force *= 0R
+                u.ApplyForce(force(u.ID), c4)
+                force(u.ID).void()
             Next
 
             Call V.Select(Function(n) n.ToString).JoinBy("   ").__DEBUG_ECHO
@@ -91,7 +94,7 @@ Public Module Module1
 
         Using g = New Size(1000, 1000).CreateGDIDevice
 
-            Dim polygon = V.Select(Function(n) n.pos.Vector2D.ToPoint).ToArray.Enlarge(0.2)
+            Dim polygon = V.Select(Function(n) n.Point.Vector2D.ToPoint).ToArray.Enlarge(0.2)
             Dim coffset = polygon.CentralOffset(g.Size).ToPoint
 
 
@@ -102,7 +105,7 @@ Public Module Module1
             Next
 
             For Each uv In E
-                Call g.DrawLine(Pens.Red, uv.u.pos.Vector2D.OffSet2D(coffset), uv.v.pos.Vector2D.OffSet2D(coffset))
+                Call g.DrawLine(Pens.Red, uv.u.Point.Vector2D.OffSet2D(coffset), uv.v.Point.Vector2D.OffSet2D(coffset))
             Next
 
             Call g.Save("x:\fsdfsdf.png", ImageFormats.Png)
@@ -132,8 +135,8 @@ Public Module Module1
     ''' </summary>
     ''' <param name="d#">where d is the length of the spring</param>
     ''' <returns></returns>
-    Public Function spring(d As Vector) As Vector
-        Return c1 * VectorMath.Log(VectorMath.Abs(d) / c2)
+    Public Function spring(d#) As Double
+        Return c1 * Log(Abs(d) / c2)
     End Function
 
     Class edge
@@ -144,34 +147,16 @@ Public Module Module1
         End Function
     End Class
 
-    Public Class node
+    Public Class node : Inherits MassPoint
+
         Public Property ID$
-        Public Property force As New Vector(2)
-        Public Property pos As New Vector({Rnd() * 100, Rnd() * 100})
+
+        Sub New()
+            Point = New Vector({Rnd() * 100, Rnd() * 100})
+        End Sub
 
         Public Overrides Function ToString() As String
-            Return pos.Vector2D.ToString ' & " --> " & force.GetJson
+            Return Point.Vector2D.ToString ' & " --> " & force.GetJson
         End Function
     End Class
-
-    Const k = 0.0000000000001
-
-    ''' <summary>
-    ''' attractive force
-    ''' </summary>
-    ''' <param name="d#"></param>
-    ''' <returns></returns>
-    Public Function fa(d#) As Double
-        Return d ^ 2 / k
-    End Function
-
-    ''' <summary>
-    ''' repulsive force
-    ''' </summary>
-    ''' <param name="d#"></param>
-    ''' <returns></returns>
-    Public Function fr(d#) As Double
-        Return -k ^ 2 / d
-    End Function
-
 End Module

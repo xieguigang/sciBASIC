@@ -7,6 +7,18 @@ Public Module Math
 
     Public Const X = 0, Y = 1, Z = 2
 
+    <Extension>
+    Public Function Decomposition2D(F As Force) As Vector
+        Dim v = F.Strength
+        Dim a = F.Angle
+        Return New Vector({v * sys.Cos(a), v * Sin(a)})
+    End Function
+
+    <Extension>
+    Public Function Decomposition3D(F As Force) As Vector
+        Throw New NotImplementedException
+    End Function
+
     Public Function ParallelogramLaw(f1 As Force, f2 As Force) As Force
         Dim alpha = f1.Angle - f2.Angle
         Dim F = f1 ^ 2 + f2 ^ 2 + 2 * f1 * f2 * sys.Cos(alpha)

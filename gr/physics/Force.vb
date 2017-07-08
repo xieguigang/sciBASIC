@@ -16,6 +16,11 @@ Public Class Force
     ''' <returns></returns>
     Public Property Angle As Double
 
+    Public Sub void()
+        Strength = 0
+        Angle = 0
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"alpha={Angle}, with {Strength} newton."
     End Function
