@@ -15,14 +15,14 @@ Public Module Debugger
         Dim font As New Font(FontFace.MicrosoftYaHei, 12, FontStyle.Bold)
         Dim a = m.Point.Vector2D.OffSet2D(offset)
 
-#If DEBUG Then
-        Call $"Sum({F.JoinBy(", ")}) = {F.Sum}".__DEBUG_ECHO
-#End If
+        '#If DEBUG Then
+        '        Call $"Sum({F.JoinBy(", ")}) = {F.Sum}".__DEBUG_ECHO
+        '#End If
 
         With canvas
 
             Call .DrawCircle(a, 10, Brushes.Black)
-            Call .DrawString(m.ToString, font, Brushes.Black, a)
+            ' Call .DrawString(m.ToString, font, Brushes.Black, a)
 
             Dim draw = Sub(force As Force, color As SolidBrush)
                            Dim v = force.Decomposition2D
@@ -40,7 +40,7 @@ Public Module Debugger
                 Call draw(force, Brushes.SkyBlue)
             Next
 
-            ' 绘制出合力
+            '            绘制出合力
             Call draw(F.Sum, Brushes.Violet)
         End With
     End Sub

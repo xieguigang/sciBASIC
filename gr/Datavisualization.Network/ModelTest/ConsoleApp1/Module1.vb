@@ -69,11 +69,16 @@ Public Module Module1
 
         For i As Integer = 0 To 1000
 
+            cat($"{i}:\n")
+
             For Each a In V
                 For Each b In V.Where(Function(x) Not x Is a)
                     ' 节点之间存在斥力
                     Dim cl = Math.CoulombsLaw(a, b)
-                    cl.Strength /= 10
+
+
+                    cl.Strength *= 100
+
                     force(a.ID).Add(cl)
                     ' force(b.ID).Add(-cl)
                 Next
@@ -86,7 +91,7 @@ Public Module Module1
                 Dim d = a.Point - b.Point
                 Dim springF = spring(d.SumMagnitude)
                 Dim f = Math.AttractiveForce(springF, a.Point, b.Point)
-                f.Strength /= 10
+                f.Strength /= 2
                 force(a.ID).Add(f)
                 force(b.ID).Add(-f)
             Next

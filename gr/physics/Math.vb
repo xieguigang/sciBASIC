@@ -152,11 +152,7 @@ Public Module Math
         Dim alpha = Arccos(cosA)
 
         If d(Y) < 0 Then
-            If d(X) < 0 Then
-                alpha += PI / 2
-            Else
-                alpha = 2 * PI - alpha
-            End If
+            alpha = PI + (PI - alpha)
         End If
 
         Return New Force With {
