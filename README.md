@@ -65,6 +65,29 @@ PM> Install-Package sciBASIC -Pre
 
 ---------------------------------------------------------------------------------------------------------------
 
+## ODEs scripting language feature
+
+Example for solving a dynamics system using VisualBasic ODEs scripting language feature, demo created for the [Lorenz system](https://en.wikipedia.org/wiki/Lorenz_system):
+
+```vbnet
+Dim x, y, z As var
+Dim sigma# = 10
+Dim rho# = 28
+Dim beta# = 8 / 3
+Dim t = (a:=0, b:=120, dt:=0.005)
+
+Call Let$(list:=Function() {x = 1, y = 1, z = 1})
+Call {
+    x = Function() sigma * (y - x),
+    y = Function() x * (rho - z) - y,
+    z = Function() x * y - beta * z
+}.Solve(dt:=t) _
+ .DataFrame _
+ .Save($"{App.HOME}/Lorenz_system.csv")
+```
+
+![](./Data_science/Mathematical/data/Lorenz_system/Lorenz_system.png)
+
 ## Microsoft VisualBasic Trinity Natural Language Processor
 
 ###### TextRank
