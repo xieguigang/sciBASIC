@@ -30,7 +30,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Language.Java
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 '
 ' * To change this license header, choose License Headers in Project Properties.

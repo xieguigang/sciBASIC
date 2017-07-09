@@ -26,9 +26,9 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Mathematical.Statistics.MomentFunctions
-Imports Microsoft.VisualBasic.Mathematical.StatisticsMathExtensions
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
+Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
 
 Namespace Hypothesis
 

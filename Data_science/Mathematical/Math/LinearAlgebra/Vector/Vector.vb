@@ -115,7 +115,7 @@ Namespace LinearAlgebra
         End Sub
 
         Sub New(from#, to#, Optional by# = 0.01)
-            Me.New(VBMathExtensions.seq(from, [to], by))
+            Me.New(VBMath.seq(from, [to], by))
         End Sub
 
         Sub New(integers As IEnumerable(Of Integer))

@@ -57,8 +57,8 @@
 'Imports Microsoft.VisualBasic.CommandLine.Reflection
 'Imports Microsoft.VisualBasic.Scripting
 'Imports Microsoft.VisualBasic.Scripting.MetaData
-'Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
-'Imports Microsoft.VisualBasic.Mathematical.BasicR
+'Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
+'Imports Microsoft.VisualBasic.Math.BasicR
 
 'Namespace SyntaxAPI.MathExtension
 

@@ -39,7 +39,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module PlotExtensions

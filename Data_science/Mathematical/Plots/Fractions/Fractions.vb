@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>

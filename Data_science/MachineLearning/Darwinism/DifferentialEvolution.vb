@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper.ListenerHelper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Math
 
 Namespace Darwinism
 

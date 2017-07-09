@@ -37,9 +37,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Correlations
-Imports Microsoft.VisualBasic.Mathematical.Correlations.Correlations
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.Correlations.Correlations
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Heatmap

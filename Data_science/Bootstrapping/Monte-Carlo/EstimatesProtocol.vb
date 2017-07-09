@@ -33,8 +33,8 @@ Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MonteCarlo
