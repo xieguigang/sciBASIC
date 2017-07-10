@@ -2,7 +2,9 @@
 Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
-''' 
+''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
+''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
+''' that Is, it has no multiple edges And no self-loops.
 ''' </summary>
 Public Class Graph
 
