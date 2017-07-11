@@ -1354,22 +1354,14 @@ Namespace Imaging
         Public Overrides Sub DrawImage(image As Image, destPoints() As PointF)
             Call Graphics.DrawImage(image, destPoints)
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image, using its original physical size, at
-        '     the specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   point:
-        '     System.Drawing.Point structure that represents the location of the upper-left
-        '     corner of the drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image, using its original physical size, at
+        ''' the specified location.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="point">System.Drawing.Point structure that represents the location of the upper-left
+        ''' corner of the drawn image.</param>
         Public Overrides Sub DrawImage(image As Image, point As Point)
             Call Graphics.DrawImage(image, point)
         End Sub

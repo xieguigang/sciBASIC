@@ -1,30 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::abe7ddeb0cc3ea84a8d9c433659ee4c2, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\SpecialFunctions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports sys = System.Math
 
 ''' <summary>
 ''' @author Will_and_Sara
@@ -44,7 +46,7 @@ Public Module SpecialFunctions
         Else
             Dim BPM1 As New MomentFunctions.BasicProductMoments(array1)
             Dim BPM2 As New MomentFunctions.BasicProductMoments(array2)
-            Dim number As Integer = Math.Min(array1.Length, array2.Length)
+            Dim number As Integer = sys.Min(array1.Length, array2.Length)
             For i As Integer = 0 To number - 1
                 tmp += (array1(i) - BPM1.Mean()) * (array2(i) * BPM2.Mean())
             Next i
@@ -60,7 +62,7 @@ Public Module SpecialFunctions
         Else
             Dim BPM1 As New MomentFunctions.BasicProductMoments(array1)
             Dim BPM2 As New MomentFunctions.BasicProductMoments(array2)
-            Dim number As Integer = Math.Min(array1.Length, array2.Length)
+            Dim number As Integer = sys.Min(array1.Length, array2.Length)
             For i As Integer = 0 To number - 1
                 tmp += (array1(i) - BPM1.Mean()) * (array2(i) * BPM2.Mean())
             Next i

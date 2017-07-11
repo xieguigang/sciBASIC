@@ -36,8 +36,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports sys = System.Math
 
 Public Module PieChart
 
@@ -98,7 +99,7 @@ Public Module PieChart
 
         Dim __plot As Action(Of IGraphics) =
             Sub(g As IGraphics)
-                Dim r# = (Math.Min(size.Width, size.Height) - margin.LayoutVector.Max * 2) / 2 - 15 ' 最大的半径值
+                Dim r# = (sys.Min(size.Width, size.Height) - margin.LayoutVector.Max * 2) / 2 - 15 ' 最大的半径值
                 Dim topLeft As New Point(margin.Left, size.Height / 2 - r)
                 Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
 

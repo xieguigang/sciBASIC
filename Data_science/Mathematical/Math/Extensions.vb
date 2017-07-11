@@ -29,8 +29,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Correlations
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports sys = System.Math
 
 Public Module Extensions
 
@@ -58,7 +59,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function Iterates(range As (From%, To%)) As IEnumerable(Of Integer)
-        Dim step% = Math.Sign(range.To - range.From)
+        Dim step% = sys.Sign(range.To - range.From)
 
         For i As Integer = range.From To range.To Step [step]
             Yield i
@@ -152,7 +153,7 @@ Public Module Extensions
     <Extension>
     Public Function Reach(data As IEnumerable(Of Double), n As Double, Optional offset As Double = 0) As Integer
         For Each x In data.SeqIterator
-            If Math.Abs(x.value - n) <= offset Then
+            If sys.Abs(x.value - n) <= offset Then
                 Return x.i
             End If
         Next

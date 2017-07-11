@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.IO
-Imports Microsoft.VisualBasic.Mathematical
 
 Namespace NeedlemanWunsch
 
@@ -166,7 +165,7 @@ Namespace NeedlemanWunsch
                     Dim a As Integer = matrix(i - 1)(j - 1) + Me.match(___sequence1(j - 1), ___sequence2(i - 1))
                     Dim b As Integer = matrix(i)(j - 1) - Me.GapPenalty
                     Dim c As Integer = matrix(i - 1)(j) - Me.GapPenalty
-                    Dim max As Integer = VBMathExtensions.Max(a, b, c)
+                    Dim max As Integer = Math.Max(a, b, c)
 
                     ' fill cell of the scoring matrix
                     matrix(i)(j) = max
@@ -195,7 +194,7 @@ Namespace NeedlemanWunsch
         ''' <param name="upper"> </param>
         ''' <returns> code for the maximizing cell(s) </returns>
         Private Function fillTracebackMatrix(upperLeft As Integer, left As Integer, upper As Integer) As Integer
-            Dim max As Integer = VBMathExtensions.Max(upperLeft, left, upper)
+            Dim max As Integer = Math.Max(upperLeft, left, upper)
 
             If upperLeft = left AndAlso left = upper Then
                 Return 7

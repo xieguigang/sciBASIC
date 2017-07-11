@@ -28,7 +28,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Drawing3D.Math3D
 

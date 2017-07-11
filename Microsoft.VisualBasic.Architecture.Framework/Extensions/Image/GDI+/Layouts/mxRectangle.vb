@@ -1,6 +1,5 @@
-Imports Microsoft.VisualBasic
-Imports System
 Imports System.Drawing
+Imports sys = System.Math
 
 ' $Id: mxRectangle.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
 ' Copyright (c) 2007-2010, Gaudenz Alder, David Benson
@@ -90,10 +89,10 @@ Namespace Imaging.LayoutModel
         ''' </summary>
         Public Overridable Sub add(ByVal rect As mxRectangle)
             If rect IsNot Nothing Then
-                Dim minX As Double = Math.Min(X, rect.X)
-                Dim minY As Double = Math.Min(Y, rect.Y)
-                Dim maxX As Double = Math.Max(X + width, rect.X + rect.width)
-                Dim maxY As Double = Math.Max(Y + height, rect.Y + rect.height)
+                Dim minX As Double = sys.Min(X, rect.X)
+                Dim minY As Double = sys.Min(Y, rect.Y)
+                Dim maxX As Double = sys.Max(X + width, rect.X + rect.width)
+                Dim maxY As Double = sys.Max(Y + height, rect.Y + rect.height)
 
                 X = minX
                 Y = minY
@@ -215,10 +214,10 @@ Namespace Imaging.LayoutModel
         ''' <returns> Returns a new rectangle for the bounds. </returns>
         Public Overridable ReadOnly Property Rectangle As RectangleF
             Get
-                Dim ix As Integer = CInt(Fix(Math.Round(X)))
-                Dim iy As Integer = CInt(Fix(Math.Round(Y)))
-                Dim iw As Integer = CInt(Fix(Math.Round(Width - ix + X)))
-                Dim ih As Integer = CInt(Fix(Math.Round(Height - iy + Y)))
+                Dim ix As Integer = CInt(Fix(sys.Round(X)))
+                Dim iy As Integer = CInt(Fix(sys.Round(Y)))
+                Dim iw As Integer = CInt(Fix(sys.Round(Width - ix + X)))
+                Dim ih As Integer = CInt(Fix(sys.Round(Height - iy + Y)))
 
                 Return New RectangleF(ix, iy, iw, ih)
             End Get

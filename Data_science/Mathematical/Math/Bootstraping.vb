@@ -30,8 +30,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
+Imports sys = System.Math
 
 ''' <summary>
 ''' Data sampling bootstrapping extensions
@@ -135,9 +136,9 @@ Public Module Bootstraping
     ''' <param name="x"></param>
     ''' <returns></returns>
     Public Function StandardDistribution#(x#)
-        Dim answer As Double = 1 / ((Math.Sqrt(2 * Math.PI)))
-        Dim exp1 As Double = Math.Pow(x, 2) / 2
-        Dim exp As Double = Math.Pow(Math.E, -(exp1))
+        Dim answer As Double = 1 / ((sys.Sqrt(2 * sys.PI)))
+        Dim exp1 As Double = sys.Pow(x, 2) / 2
+        Dim exp As Double = sys.Pow(sys.E, -(exp1))
         answer = answer * exp
         Return answer
     End Function
@@ -150,10 +151,10 @@ Public Module Bootstraping
     ''' <param name="sd"></param>
     ''' <returns></returns>
     Public Function ProbabilityDensity(x#, m#, sd#) As Double
-        Dim answer As Double = 1 / (sd * (Math.Sqrt(2 * Math.PI)))
-        Dim exp As Double = Math.Pow((x - m), 2.0)
-        Dim expP2 As Double = 2 * Math.Pow(sd, 2.0)
-        Dim expP3 As Double = Math.Pow(Math.E, (-(exp / expP2)))
+        Dim answer As Double = 1 / (sd * (sys.Sqrt(2 * sys.PI)))
+        Dim exp As Double = sys.Pow((x - m), 2.0)
+        Dim expP2 As Double = 2 * sys.Pow(sd, 2.0)
+        Dim expP3 As Double = sys.Pow(sys.E, (-(exp / expP2)))
         answer = answer * expP3
         Return answer
     End Function
@@ -237,7 +238,7 @@ Public Module Bootstraping
     ''' <param name="k#">the steepness of the curve.</param>
     ''' <returns></returns>
     Public Function Logistic(L#, x#, x0#, k#) As Double
-        Return L / (1 + Math.E ^ (-k * (x - x0)))
+        Return L / (1 + sys.E ^ (-k * (x - x0)))
     End Function
 
     ''' <summary>
@@ -270,7 +271,7 @@ Public Module Bootstraping
     Public Function Distributes(data As IEnumerable(Of Double), Optional base! = 10.0F) As Dictionary(Of Integer, DoubleTagged(Of Integer))
         Dim array As DoubleTagged(Of Double)() = data.ToArray(
             Function(x) New DoubleTagged(Of Double) With {
-                .Tag = Math.Log(x, base),
+                .Tag = sys.Log(x, base),
                 .value = x
             })
         Dim min As Integer = CInt(array.Min(Function(x) x.Tag)) - 1

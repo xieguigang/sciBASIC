@@ -1,36 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::1d2d58edd1b3aaa31d36841ce95334dd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\C\CFormatProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 #Region "Imports"
-Imports System.IO
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports sys = System.Math
 #End Region
 
 Namespace Language.C
@@ -111,11 +112,11 @@ Namespace Language.C
                     Return Value
 
                 Case TypeCode.[Single]
-                    Return CType(Math.Truncate(CSng(Value)), UInt32)
+                    Return CType(Truncate(CSng(Value)), UInt32)
                 Case TypeCode.[Double]
-                    Return CULng(Math.Truncate(CDbl(Value)))
+                    Return CULng(Truncate(CDbl(Value)))
                 Case TypeCode.[Decimal]
-                    Return CULng(Math.Truncate(CDec(Value)))
+                    Return CULng(Truncate(CDec(Value)))
                 Case Else
 
                     Return Nothing
@@ -151,11 +152,11 @@ Namespace Language.C
                     Return Value
 
                 Case TypeCode.[Single]
-                    Return (If(Round, CInt(Math.Truncate(Math.Round(CSng(Value)))), CInt(Math.Truncate(CSng(Value)))))
+                    Return (If(Round, CInt(Truncate(sys.Round(CSng(Value)))), CInt(Truncate(CSng(Value)))))
                 Case TypeCode.[Double]
-                    Return (If(Round, CLng(Math.Truncate(Math.Round(CDbl(Value)))), CLng(Math.Truncate(CDbl(Value)))))
+                    Return (If(Round, CLng(Truncate(sys.Round(CDbl(Value)))), CLng(Truncate(CDbl(Value)))))
                 Case TypeCode.[Decimal]
-                    Return (If(Round, Math.Round(CDec(Value)), CDec(Value)))
+                    Return (If(Round, sys.Round(CDec(Value)), CDec(Value)))
                 Case Else
 
                     Return Nothing
@@ -185,11 +186,11 @@ Namespace Language.C
                     Return CLng(CULng(Value))
 
                 Case TypeCode.[Single]
-                    Return (If(Round, CLng(Math.Truncate(Math.Round(CSng(Value)))), CLng(Math.Truncate(CSng(Value)))))
+                    Return (If(Round, CLng(Truncate(sys.Round(CSng(Value)))), CLng(Truncate(CSng(Value)))))
                 Case TypeCode.[Double]
-                    Return (If(Round, CLng(Math.Truncate(Math.Round(CDbl(Value)))), CLng(Math.Truncate(CDbl(Value)))))
+                    Return (If(Round, CLng(Truncate(sys.Round(CDbl(Value)))), CLng(Truncate(CDbl(Value)))))
                 Case TypeCode.[Decimal]
-                    Return (If(Round, CLng(Math.Truncate(Math.Round(CDec(Value)))), CLng(Math.Truncate(CDec(Value)))))
+                    Return (If(Round, CLng(Truncate(sys.Round(CDec(Value)))), CLng(Truncate(CDec(Value)))))
                 Case Else
 
                     Return 0

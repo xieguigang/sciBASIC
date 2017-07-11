@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Module Program
@@ -61,7 +61,9 @@ Module Program
 
         Using g As Graphics2D = camera.CreateCanvas2D(bg:="blue")
             Call g.DrawLines(Pens.White, points)
-            Call g.Save($"{App.HOME}/Lorenz_system.png", ImageFormats.Png)
+            Call g.ImageResource _
+                .CorpBlank(150, Color.Blue) _
+                .SaveAs($"{App.HOME}/Lorenz_system.png", ImageFormats.Png)
         End Using
     End Sub
 

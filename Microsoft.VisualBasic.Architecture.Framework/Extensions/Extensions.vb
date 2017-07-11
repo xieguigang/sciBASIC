@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Globalization
 Imports System.Reflection
@@ -39,7 +38,6 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
@@ -51,6 +49,7 @@ Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports Microsoft.VisualBasic.Text.Similarity
+Imports sys = System.Math
 Imports v = System.Array
 
 #Const FRAMEWORD_CORE = 1
@@ -84,7 +83,7 @@ Public Module Extensions
     ''' <param name="x#"></param>
     ''' <returns></returns>
     <Extension> Public Function Log2(x#) As Double
-        Return Math.Log(x, newBase:=2)
+        Return sys.Log(x, newBase:=2)
     End Function
 
     ''' <summary>
@@ -1553,7 +1552,7 @@ Public Module Extensions
     <Extension> Public Function Shuffles(Of T)(source As IEnumerable(Of T)) As T()
         Dim tmp As New List(Of T)(source)
         Dim buf As T() = New T(tmp.Count - 1) {}
-        Dim rand As New Random(Seed:=Mathematical.Seed)
+        Dim rand As New Random(Seed:=Math.Seed)
         Dim l As Integer = tmp.Count - 1
 
         For i As Integer = 0 To buf.Length - 1

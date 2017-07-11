@@ -28,6 +28,7 @@
 
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports sys = System.Math
 
 Namespace Scripting.Helpers
 
@@ -135,8 +136,8 @@ Namespace Scripting.Helpers
         ' (a and b) or a >b
 
         Public Shared Function SimilarTo(a As Double, b As Double) As Boolean
-            Dim E As Double = Math.Max(a, b) * (10 ^ -3)
-            Return Math.Abs(a - b) < E
+            Dim E As Double = sys.Max(a, b) * (10 ^ -3)
+            Return sys.Abs(a - b) < E
         End Function
     End Class
 End Namespace

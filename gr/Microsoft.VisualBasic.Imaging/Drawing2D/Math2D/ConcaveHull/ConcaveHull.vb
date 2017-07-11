@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Math
 Imports Vertex = Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
 
 Namespace Drawing2D.Math2D.ConcaveHull
@@ -30,17 +31,19 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Dim dy As Double
             Dim rsqr As Double
             Dim drsqr As Double
+
             eps = 0.000000001
-            If Math.Abs(y1 - y2) < eps AndAlso Math.Abs(y2 - y3) < eps Then
+
+            If Abs(y1 - y2) < eps AndAlso Abs(y2 - y3) < eps Then
                 Return False
             End If
-            If Math.Abs(y2 - y1) < eps Then
+            If Abs(y2 - y1) < eps Then
                 m2 = (-(Convert.ToDouble(x3) - Convert.ToDouble(x2)) / (Convert.ToDouble(y3) - Convert.ToDouble(y2)))
                 mx2 = Convert.ToDouble((x2 + x3) / 2.0)
                 my2 = Convert.ToDouble((y2 + y3) / 2.0)
                 xc = Convert.ToDouble((x2 + x1) / 2.0)
                 yc = Convert.ToDouble(m2 * (xc - mx2) + my2)
-            ElseIf Math.Abs(y3 - y2) < eps Then
+            ElseIf Abs(y3 - y2) < eps Then
                 m1 = (-(Convert.ToDouble(x2) - Convert.ToDouble(x1)) / (Convert.ToDouble(y2) - Convert.ToDouble(y1)))
                 mx1 = Convert.ToDouble((x1 + x2) / 2.0)
                 my1 = Convert.ToDouble((y1 + y2) / 2.0)
@@ -56,18 +59,22 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 xc = Convert.ToDouble((m1 * mx1 - m2 * mx2 + my2 - my1) / (m1 - m2))
                 yc = Convert.ToDouble(m1 * (xc - mx1) + my1)
             End If
+
             dx = (Convert.ToDouble(x2) - Convert.ToDouble(xc))
             dy = (Convert.ToDouble(y2) - Convert.ToDouble(yc))
             rsqr = Convert.ToDouble(dx * dx + dy * dy)
-            r = Convert.ToDouble(Math.Sqrt(rsqr))
+            r = Convert.ToDouble(Sqrt(rsqr))
             dx = Convert.ToDouble(xp - xc)
             dy = Convert.ToDouble(yp - yc)
             drsqr = Convert.ToDouble(dx * dx + dy * dy)
+
             If drsqr <= rsqr Then
                 Return True
             End If
+
             Return False
         End Function
+
         Private Function WhichSide(xp As Long, yp As Long, x1 As Long, y1 As Long, x2 As Long, y2 As Long) As Integer
             Dim equation As Double
             equation = ((Convert.ToDouble(yp) - Convert.ToDouble(y1)) * (Convert.ToDouble(x2) - Convert.ToDouble(x1))) - ((Convert.ToDouble(y2) - Convert.ToDouble(y1)) * (Convert.ToDouble(xp) - Convert.ToDouble(x1)))
@@ -209,6 +216,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Loop While i < ntri
             Return ntri
         End Function
+
         Public Shared Function Diameter(Ax As Double, Ay As Double, Bx As Double, By As Double, Cx As Double, Cy As Double) As Double
             Dim x As Double, y As Double
             Dim a__1 As Double = Ax
@@ -223,12 +231,13 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Dim AA As Double = b__2 * b__2 * m + m * n * n + a__1 * a__1 * k - b__2 * b__2 * k + m * m * k - n * n * k - c * c * m - m * k * k - a__1 * a__1 * n + c * c * n - m * m * n + k * k * n
             Dim BB As Double = b__2 * m + a__1 * k + c * n - b__2 * k - c * m - a__1 * n
             x = AA / BB / 2
-            Return Math.Sqrt((Ax - x) * (Ax - x) + (Ay - y) * (Ay - y))
+            Return Sqrt((Ax - x) * (Ax - x) + (Ay - y) * (Ay - y))
         End Function
+
         Public Shared Function MaxEdge(Ax As Double, Ay As Double, Bx As Double, By As Double, Cx As Double, Cy As Double) As Double
-            Dim len1 As Double = Math.Sqrt((Ax - Bx) * (Ax - Bx) + (Ay - By) * (Ay - By))
-            Dim len2 As Double = Math.Sqrt((Cx - Bx) * (Cx - Bx) + (Cy - By) * (Cy - By))
-            Dim len3 As Double = Math.Sqrt((Ax - Cx) * (Ax - Cx) + (Ay - Cy) * (Ay - Cy))
+            Dim len1 As Double = Sqrt((Ax - Bx) * (Ax - Bx) + (Ay - By) * (Ay - By))
+            Dim len2 As Double = Sqrt((Cx - Bx) * (Cx - Bx) + (Cy - By) * (Cy - By))
+            Dim len3 As Double = Sqrt((Ax - Cx) * (Ax - Cx) + (Ay - Cy) * (Ay - Cy))
             Dim len As Double = If(len1 > len2, len1, len2)
             Return If(len > len3, len, len3)
         End Function
@@ -263,6 +272,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Me.P2Index = p2index
             Me.Index = -1
         End Sub
+
         Public Sub New(p0index As Integer, p1index As Integer, p2index As Integer, index As Integer)
             Me.P0Index = p0index
             Me.P1Index = p1index
@@ -272,17 +282,21 @@ Namespace Drawing2D.Math2D.ConcaveHull
     End Structure
 
     Public Structure EdgeInfo
+
         Public P0Index As Integer
         Public P1Index As Integer
         Public AdjTriangle As List(Of Integer)
         Public Flag As Boolean
         Public Length As Double
+
         Public Function GetEdgeType() As Integer
             Return AdjTriangle.Count
         End Function
+
         Public Function IsValid() As Boolean
             Return P0Index <> -1
         End Function
+
         Public Sub New(d As Integer)
             P0Index = -1
             P1Index = -1

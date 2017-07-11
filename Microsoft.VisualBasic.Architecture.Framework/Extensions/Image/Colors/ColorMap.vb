@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
@@ -118,8 +118,7 @@ Namespace Imaging
             Me.Alpha = alpha
         End Sub
 
-        Public ReadOnly Property ColorMaps As Dictionary(Of String, MapsFunc) =
-            New Dictionary(Of String, MapsFunc) From {
+        Public ReadOnly Property ColorMaps As New Dictionary(Of String, MapsFunc) From {
  _
             {NameOf(Me.Autumn).ToLower, AddressOf Me.Autumn},
             {NameOf(Me.Cool).ToLower, AddressOf Me.Cool},
@@ -197,7 +196,7 @@ Namespace Imaging
                 spring__1(i) = 1.0F * i / (ColorMapLength - 1)
                 cmap(i, 0) = Alpha
                 cmap(i, 1) = 255
-                cmap(i, 2) = CInt(Math.Truncate(255 * spring__1(i)))
+                cmap(i, 2) = CInt(Truncate(255 * spring__1(i)))
                 cmap(i, 3) = 255 - cmap(i, 1)
             Next
             Return cmap
@@ -209,9 +208,9 @@ Namespace Imaging
             For i As Integer = 0 To ColorMapLength - 1
                 summer__1(i) = 1.0F * i / (ColorMapLength - 1)
                 cmap(i, 0) = Alpha
-                cmap(i, 1) = CInt(Math.Truncate(255 * summer__1(i)))
-                cmap(i, 2) = CInt(Math.Truncate(255 * 0.5F * (1 + summer__1(i))))
-                cmap(i, 3) = CInt(Math.Truncate(255 * 0.4F))
+                cmap(i, 1) = CInt(Truncate(255 * summer__1(i)))
+                cmap(i, 2) = CInt(Truncate(255 * 0.5F * (1 + summer__1(i))))
+                cmap(i, 3) = CInt(Truncate(255 * 0.4F))
             Next
             Return cmap
         End Function
@@ -223,7 +222,7 @@ Namespace Imaging
                 autumn__1(i) = 1.0F * i / (ColorMapLength - 1)
                 cmap(i, 0) = Alpha
                 cmap(i, 1) = 255
-                cmap(i, 2) = CInt(Math.Truncate(255 * autumn__1(i)))
+                cmap(i, 2) = CInt(Truncate(255 * autumn__1(i)))
                 cmap(i, 3) = 0
             Next
             Return cmap
@@ -236,8 +235,8 @@ Namespace Imaging
                 winter__1(i) = 1.0F * i / (ColorMapLength - 1)
                 cmap(i, 0) = Alpha
                 cmap(i, 1) = 0
-                cmap(i, 2) = CInt(Math.Truncate(255 * winter__1(i)))
-                cmap(i, 3) = CInt(Math.Truncate(255 * (1.0F - 0.5F * winter__1(i))))
+                cmap(i, 2) = CInt(Truncate(255 * winter__1(i)))
+                cmap(i, 3) = CInt(Truncate(255 * (1.0F - 0.5F * winter__1(i))))
             Next
             Return cmap
         End Function
@@ -248,9 +247,9 @@ Namespace Imaging
             For i As Integer = 0 To ColorMapLength - 1
                 gray__1(i) = 1.0F * i / (ColorMapLength - 1)
                 cmap(i, 0) = Alpha
-                cmap(i, 1) = CInt(Math.Truncate(255 * gray__1(i)))
-                cmap(i, 2) = CInt(Math.Truncate(255 * gray__1(i)))
-                cmap(i, 3) = CInt(Math.Truncate(255 * gray__1(i)))
+                cmap(i, 1) = CInt(Truncate(255 * gray__1(i)))
+                cmap(i, 2) = CInt(Truncate(255 * gray__1(i)))
+                cmap(i, 3) = CInt(Truncate(255 * gray__1(i)))
             Next
             Return cmap
         End Function
@@ -262,7 +261,7 @@ Namespace Imaging
         Public Function Jet() As Integer(,)
             Dim cmap As Integer(,) = New Integer(ColorMapLength - 1, 3) {}
             Dim cMatrix As Single(,) = New Single(ColorMapLength - 1, 2) {}
-            Dim n As Integer = CInt(Math.Truncate(Math.Ceiling(ColorMapLength / 4.0F)))
+            Dim n As Integer = CInt(Truncate(Ceiling(ColorMapLength / 4.0F)))
             Dim nMod As Integer = 0
             Dim fArray As Single() = New Single(3 * n - 2) {}
             Dim red As Integer() = New Integer(fArray.Length - 1) {}
@@ -281,7 +280,7 @@ Namespace Imaging
                 ElseIf i >= 2 * n - 1 Then
                     fArray(i) = CSng(3 * n - 1 - i) / n
                 End If
-                green(i) = CInt(Math.Truncate(Math.Ceiling(n / 2.0F))) - nMod + i
+                green(i) = CInt(Truncate(Ceiling(n / 2.0F))) - nMod + i
                 red(i) = green(i) + n
                 blue(i) = green(i) - n
             Next
@@ -314,7 +313,7 @@ Namespace Imaging
             For i As Integer = 0 To ColorMapLength - 1
                 cmap(i, 0) = Alpha
                 For j As Integer = 0 To 2
-                    cmap(i, j + 1) = CInt(Math.Truncate(cMatrix(i, j) * 255))
+                    cmap(i, j + 1) = CInt(Truncate(cMatrix(i, j) * 255))
                 Next
             Next
             Return cmap
@@ -345,9 +344,9 @@ Namespace Imaging
                     blue(i) = 1.0F * (i + 1 - 2 * n) / (ColorMapLength - 2 * n)
                 End If
                 cmap(i, 0) = Alpha
-                cmap(i, 1) = CInt(Math.Truncate(255 * red(i)))
-                cmap(i, 2) = CInt(Math.Truncate(255 * green(i)))
-                cmap(i, 3) = CInt(Math.Truncate(255 * blue(i)))
+                cmap(i, 1) = CInt(Truncate(255 * red(i)))
+                cmap(i, 2) = CInt(Truncate(255 * green(i)))
+                cmap(i, 3) = CInt(Truncate(255 * blue(i)))
             Next
             Return cmap
         End Function
@@ -358,8 +357,8 @@ Namespace Imaging
             For i As Integer = 0 To ColorMapLength - 1
                 cool__1(i) = 1.0F * i / (ColorMapLength - 1)
                 cmap(i, 0) = Alpha
-                cmap(i, 1) = CInt(Math.Truncate(255 * cool__1(i)))
-                cmap(i, 2) = CInt(Math.Truncate(255 * (1 - cool__1(i))))
+                cmap(i, 1) = CInt(Truncate(255 * cool__1(i)))
+                cmap(i, 2) = CInt(Truncate(255 * (1 - cool__1(i))))
                 cmap(i, 3) = 255
             Next
             Return cmap

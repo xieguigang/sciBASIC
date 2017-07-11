@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
+﻿Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 

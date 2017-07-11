@@ -26,9 +26,10 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports sys = System.Math
 
 Namespace LinearAlgebra
 
@@ -114,7 +115,7 @@ Namespace LinearAlgebra
         End Sub
 
         Sub New(from#, to#, Optional by# = 0.01)
-            Me.New(VBMathExtensions.seq(from, [to], by))
+            Me.New(VBMath.seq(from, [to], by))
         End Sub
 
         Sub New(integers As IEnumerable(Of Integer))
@@ -391,6 +392,8 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
+        ''' ``norm2()``
+        ''' 
         ''' 向量模的平方，``||x||``是向量``x=(x1，x2，…，xp)``的欧几里得范数
         ''' </summary>
         ''' <returns></returns>
@@ -408,12 +411,20 @@ Namespace LinearAlgebra
         End Property
 
         ''' <summary>
+        ''' ``norm()``
+        ''' 
         ''' http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property SumMagnitude As Double
             Get
-                Return Math.Sqrt(Me.Mod)
+                Return sys.Sqrt(Me.Mod)
+            End Get
+        End Property
+
+        Public ReadOnly Property Unit As Vector
+            Get
+                Return Me / SumMagnitude
             End Get
         End Property
 
@@ -438,7 +449,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Function Product() As Double
-            Return Me.PI
+            Return Me.ProductALL
         End Function
 
         ''' <summary>
@@ -463,7 +474,13 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Me.ToArray.GetJson
+            Return "[" & Me.ToString("F2").JoinBy(", ") & "]"
+        End Function
+
+        Public Overloads Function ToString(format$) As String()
+            Return Me _
+                .Select(Function(x) x.ToString(format)) _
+                .ToArray
         End Function
 
         ''' <summary>

@@ -27,9 +27,10 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
 Namespace SyntaxAPI.MathExtension
 
@@ -45,7 +46,7 @@ Namespace SyntaxAPI.MathExtension
         ''' 
         <ExportAPI("Sqrt")>
         Public Function Sqrt(x As Vector) As Vector
-            Return New Vector(From n In x Select Math.Sqrt(n))
+            Return New Vector(From n In x Select sys.Sqrt(n))
         End Function
 
         ''' <summary>
@@ -62,7 +63,7 @@ Namespace SyntaxAPI.MathExtension
         ''' 
         <ExportAPI("Exp")>
         Public Function Exp(x As Vector) As Vector
-            Return New Vector(From n As Double In x Select Math.Exp(n))
+            Return New Vector(From n As Double In x Select sys.Exp(n))
         End Function
 
         ''' <summary>
@@ -74,8 +75,8 @@ Namespace SyntaxAPI.MathExtension
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Log")>
-        Public Function Log(x As Vector, Optional base As Double = Math.E) As Vector
-            Return New Vector(From n As Double In x Select Math.Log(n, base))
+        Public Function Log(x As Vector, Optional base As Double = sys.E) As Vector
+            Return New Vector(From n As Double In x Select sys.Log(n, base))
         End Function
 
         <ExportAPI("Max")>
@@ -97,12 +98,12 @@ Namespace SyntaxAPI.MathExtension
         ''' 
         <ExportAPI("Trunc")>
         Public Function Trunc(x As Vector) As Vector
-            Return New Vector(x.Select(AddressOf Math.Truncate))
+            Return New Vector(x.Select(AddressOf sys.Truncate))
         End Function
 
         <ExportAPI("Abs")>
         Public Function Abs(x As Vector) As Vector
-            Return New Vector(From d As Double In x Select Math.Abs(d))
+            Return New Vector(From d As Double In x Select sys.Abs(d))
         End Function
 
         ''' <summary>
@@ -124,22 +125,22 @@ Namespace SyntaxAPI.MathExtension
 
         <ExportAPI("Floor")>
         Public Function floor(x As Vector) As Vector
-            Return New Vector(x.Select(AddressOf Math.Floor))
+            Return New Vector(x.Select(AddressOf sys.Floor))
         End Function
 
         <ExportAPI("Round")>
         Public Function round(x As Vector, Optional digits As Integer = 4) As Vector
-            Return New Vector(x.Select(Function(n) Math.Round(n, digits)))
+            Return New Vector(x.Select(Function(n) sys.Round(n, digits)))
         End Function
 
         <ExportAPI("Sinh")>
         Public Function Sinh(x As Vector) As Vector
-            Return New Vector(x.Select(AddressOf Math.Sinh))
+            Return New Vector(x.Select(AddressOf sys.Sinh))
         End Function
 
         <ExportAPI("Sign")>
         Public Function Sign(x As Vector) As Vector
-            Return New Vector(x.Select(AddressOf Math.Sign))
+            Return New Vector(x.Select(AddressOf sys.Sign))
         End Function
 
         <ExportAPI("pchisq")>

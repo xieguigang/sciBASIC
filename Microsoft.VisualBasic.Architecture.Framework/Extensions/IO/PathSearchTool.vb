@@ -28,6 +28,7 @@
 
 Imports System.Collections.ObjectModel
 Imports System.IO
+Imports System.Math
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -938,7 +939,7 @@ Public Module ProgramPathSearchTool
             End If
         Next
 
-        Dim lnDiff As Integer = Math.Abs(lnFromCnt - lnSame)
+        Dim lnDiff As Integer = Abs(lnFromCnt - lnSame)
         If lnDiff > 0 AndAlso laFrom(lnFromCnt - 1).Length > 0 Then
             While lnDiff > 0
                 lnDiff -= 1

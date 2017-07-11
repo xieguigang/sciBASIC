@@ -28,8 +28,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.MathExtension
-Imports Vec = Microsoft.VisualBasic.Mathematical.LinearAlgebra.Vector
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
+Imports Vec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 Namespace Drawing2D
 

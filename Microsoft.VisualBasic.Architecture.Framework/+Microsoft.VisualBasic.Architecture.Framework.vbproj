@@ -803,7 +803,6 @@
     <Compile Include="Terminal\InteractiveIODevice\Terminal.vb" />
     <Compile Include="Terminal\Utility\ManualPages.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\CPOLLicense.vb" />
-    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStats.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsMedian.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsMode.vb" />

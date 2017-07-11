@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language.Java
+Imports sys = System.Math
 
 Namespace LP
 
@@ -69,11 +70,11 @@ Namespace LP
                 Dim rhs As Double = rhsColumn(i)
                 Dim pivot As Double = ___pivotColumn(i)
 
-                If Math.Abs(pivot - 0.0) > EPSILON Then
+                If sys.Abs(pivot - 0.0) > EPSILON Then
                     Dim ratio As Double = rhs / pivot
 
                     'Bland's Rule: in case of a tie, pick up the row with a lower index
-                    If Math.Abs(ratio - minValue) < EPSILON Then
+                    If sys.Abs(ratio - minValue) < EPSILON Then
                         Continue For
                     ElseIf ratio < minValue Then
                         minValue = ratio
@@ -207,12 +208,12 @@ Namespace LP
                 For i As Integer = 0 To x - 1
                     For j As Integer = 0 To y - 1
                         Dim basic As Boolean = False
-                        If Math.Abs(Matrix(i)(j) - 1.0) < EPSILON Then
+                        If sys.Abs(Matrix(i)(j) - 1.0) < EPSILON Then
                             basic = True
                             Dim ___column As Double() = getColumn(j)
                             ' check if all other coefficients in column are 0
                             For m As Integer = 0 To ___column.Length - 1
-                                If m <> i AndAlso Math.Abs(___column(m) - 0.0) > EPSILON Then basic = False
+                                If m <> i AndAlso sys.Abs(___column(m) - 0.0) > EPSILON Then basic = False
                             Next
                         End If
                         If basic Then

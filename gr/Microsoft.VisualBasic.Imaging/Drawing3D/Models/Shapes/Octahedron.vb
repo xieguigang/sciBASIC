@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports System.Math
 
 Namespace Drawing3D.Models.Isometric.Shapes
 
@@ -60,7 +61,7 @@ Namespace Drawing3D.Models.Isometric.Shapes
             Next
 
             MyBase.paths = paths.AsList
-            ScalePath3Ds(center, Math.Sqrt(2) / 2.0, Math.Sqrt(2) / 2.0, 1)
+            ScalePath3Ds(center, Sqrt(2) / 2.0, Sqrt(2) / 2.0, 1)
         End Sub
     End Class
 End Namespace

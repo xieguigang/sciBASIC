@@ -27,24 +27,26 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
 Namespace Imaging
 
     <PackageNamespace("GDI.Transform")> Public Module GeomTransform
 
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
-            Return Math.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+            Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
         End Function
 
         <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
             Dim xDiff As Single = p2.X - p1.X
             Dim yDiff As Single = p2.Y - p1.Y
-            Return Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI
+            Return sys.Atan2(yDiff, xDiff) * 180.0 / PI
         End Function
 
         ''' <summary>
@@ -128,7 +130,9 @@ Namespace Imaging
         ''' <returns></returns>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As PointF
-            Return pts.Select(Function(pt) pt.PointF).ToArray.CentralOffset(frameSize.SizeF)
+            Return pts _
+                .Select(Function(pt) pt.PointF) _
+                .CentralOffset(frameSize.SizeF)
         End Function
 
         <Extension>
@@ -162,7 +166,7 @@ Namespace Imaging
             Return New PointF(left - xo, top - yo)
         End Function
 
-        Const pi2 As Double = Math.PI / 2.0
+        Const pi2 As Double = PI / 2.0
 
         ''' <summary>
         ''' Creates a new Image containing the same image only rotated
@@ -225,7 +229,7 @@ Namespace Imaging
         ''' 
         ''' </remarks>
         <ExportAPI("Image.Rotate", Info:="Creates a new Image containing the same image only rotated.")>
-        <Extension> Public Function RotateImage(image As Image, angle As Single) As Bitmap
+        <Extension> Public Function RotateImage(image As Image, angle!) As Bitmap
             If image Is Nothing Then
                 Throw New ArgumentNullException("image value is nothing!")
             End If
@@ -234,12 +238,12 @@ Namespace Imaging
             Dim oldHeight As Double = CDbl(image.Height)
 
             ' Convert degrees to radians
-            Dim theta As Double = CDbl(angle) * Math.PI / 180.0
+            Dim theta As Double = CDbl(angle) * sys.PI / 180.0
             Dim locked_theta As Double = theta
 
             ' Ensure theta is now [0, 2pi)
             While locked_theta < 0.0
-                locked_theta += 2 * Math.PI
+                locked_theta += 2 * sys.PI
             End While
 
             Dim newWidth As Double, newHeight As Double
@@ -252,71 +256,79 @@ Namespace Imaging
             ' on how much rotation is being done to the bitmap.
             '   Refer to the first paragraph in the explaination above for 
             '   reasons why.
-            If (locked_theta >= 0.0 AndAlso locked_theta < pi2) OrElse (locked_theta >= Math.PI AndAlso locked_theta < (Math.PI + pi2)) Then
-                adjacentTop = Math.Abs(Math.Cos(locked_theta)) * oldWidth
-                oppositeTop = Math.Abs(Math.Sin(locked_theta)) * oldWidth
+            If (locked_theta >= 0.0 AndAlso locked_theta < pi2) OrElse (locked_theta >= sys.PI AndAlso locked_theta < (Math.PI + pi2)) Then
+                adjacentTop = sys.Abs(Cos(locked_theta)) * oldWidth
+                oppositeTop = sys.Abs(Sin(locked_theta)) * oldWidth
 
-                adjacentBottom = Math.Abs(Math.Cos(locked_theta)) * oldHeight
-                oppositeBottom = Math.Abs(Math.Sin(locked_theta)) * oldHeight
+                adjacentBottom = sys.Abs(Cos(locked_theta)) * oldHeight
+                oppositeBottom = sys.Abs(Sin(locked_theta)) * oldHeight
             Else
-                adjacentTop = Math.Abs(Math.Sin(locked_theta)) * oldHeight
-                oppositeTop = Math.Abs(Math.Cos(locked_theta)) * oldHeight
+                adjacentTop = sys.Abs(Sin(locked_theta)) * oldHeight
+                oppositeTop = sys.Abs(Cos(locked_theta)) * oldHeight
 
-                adjacentBottom = Math.Abs(Math.Sin(locked_theta)) * oldWidth
-                oppositeBottom = Math.Abs(Math.Cos(locked_theta)) * oldWidth
+                adjacentBottom = sys.Abs(Sin(locked_theta)) * oldWidth
+                oppositeBottom = sys.Abs(Cos(locked_theta)) * oldWidth
             End If
 
             newWidth = adjacentTop + oppositeBottom
             newHeight = adjacentBottom + oppositeTop
 
-            nWidth = CInt(Math.Truncate(Math.Ceiling(newWidth)))
-            nHeight = CInt(Math.Truncate(Math.Ceiling(newHeight)))
+            nWidth = CInt(Truncate(Ceiling(newWidth)))
+            nHeight = CInt(Truncate(Ceiling(newHeight)))
 
             Dim rotatedBmp As New Bitmap(nWidth, nHeight)
 
+            ' This array will be used to pass in the three points that 
+            ' make up the rotated image
+            Dim points As Point()
+
+            ' The values of opposite/adjacentTop/Bottom are referring to 
+            ' fixed locations instead of in relation to the
+            ' rotating image so I need to change which values are used
+            ' based on the how much the image is rotating.
+
+            ' For each point, one of the coordinates will always be 0, 
+            ' nWidth, or nHeight.  This because the Bitmap we are drawing on
+            ' is the bounding box for the rotated bitmap.  If both of the 
+            ' corrdinates for any of the given points wasn't in the set above
+            ' then the bitmap we are drawing on WOULDN'T be the bounding box
+            ' as required.
+
+            If locked_theta >= 0.0 AndAlso locked_theta < pi2 Then
+
+                points = {
+                    New Point(CInt(Truncate(oppositeBottom)), 0),
+                    New Point(nWidth, CInt(Truncate(oppositeTop))),
+                    New Point(0, CInt(Truncate(adjacentBottom)))
+                }
+
+            ElseIf locked_theta >= pi2 AndAlso locked_theta < sys.PI Then
+
+                points = {
+                    New Point(nWidth, CInt(Truncate(oppositeTop))),
+                    New Point(CInt(Truncate(adjacentTop)), nHeight),
+                    New Point(CInt(Truncate(oppositeBottom)), 0)
+                }
+
+            ElseIf locked_theta >= sys.PI AndAlso locked_theta < (Math.PI + pi2) Then
+
+                points = {
+                    New Point(CInt(Truncate(adjacentTop)), nHeight),
+                    New Point(0, CInt(Truncate(adjacentBottom))),
+                    New Point(nWidth, CInt(Truncate(oppositeTop)))
+                }
+
+            Else
+
+                points = {
+                    New Point(0, CInt(Truncate(adjacentBottom))),
+                    New Point(CInt(Truncate(oppositeBottom)), 0),
+                    New Point(CInt(Truncate(adjacentTop)), nHeight)
+                }
+
+            End If
+
             Using g As Graphics = Graphics.FromImage(rotatedBmp)
-                ' This array will be used to pass in the three points that 
-                ' make up the rotated image
-                Dim points As Point()
-
-                ' The values of opposite/adjacentTop/Bottom are referring to 
-                ' fixed locations instead of in relation to the
-                ' rotating image so I need to change which values are used
-                ' based on the how much the image is rotating.
-
-                ' For each point, one of the coordinates will always be 0, 
-                ' nWidth, or nHeight.  This because the Bitmap we are drawing on
-                ' is the bounding box for the rotated bitmap.  If both of the 
-                ' corrdinates for any of the given points wasn't in the set above
-                ' then the bitmap we are drawing on WOULDN'T be the bounding box
-                ' as required.
-
-                If locked_theta >= 0.0 AndAlso locked_theta < pi2 Then
-                    points = New Point() {
-                    New Point(CInt(Math.Truncate(oppositeBottom)), 0),
-                    New Point(nWidth, CInt(Math.Truncate(oppositeTop))),
-                    New Point(0, CInt(Math.Truncate(adjacentBottom)))
-                }
-                ElseIf locked_theta >= pi2 AndAlso locked_theta < Math.PI Then
-                    points = New Point() {
-                    New Point(nWidth, CInt(Math.Truncate(oppositeTop))),
-                    New Point(CInt(Math.Truncate(adjacentTop)), nHeight),
-                    New Point(CInt(Math.Truncate(oppositeBottom)), 0)
-                }
-                ElseIf locked_theta >= Math.PI AndAlso locked_theta < (Math.PI + pi2) Then
-                    points = New Point() {
-                    New Point(CInt(Math.Truncate(adjacentTop)), nHeight),
-                    New Point(0, CInt(Math.Truncate(adjacentBottom))),
-                    New Point(nWidth, CInt(Math.Truncate(oppositeTop)))
-                }
-                Else
-                    points = New Point() {
-                    New Point(0, CInt(Math.Truncate(adjacentBottom))),
-                    New Point(CInt(Math.Truncate(oppositeBottom)), 0),
-                    New Point(CInt(Math.Truncate(adjacentTop)), nHeight)
-                }
-                End If
-
                 Call g.DrawImage(image, points)
             End Using
 

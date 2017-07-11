@@ -31,6 +31,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports sys = System.Math
 
 Namespace Terminal
 
@@ -63,10 +64,10 @@ Namespace Terminal
             Dim maxLens As Integer() =
                 LinqAPI.Exec(Of Integer) <= From i As SeqValue(Of String)
                                             In titles.SeqIterator
-                                            Select Math.Max(i.value.Length,
-                                                (From x As Dictionary(Of String, String)
-                                                 In table
-                                                 Select Len(x.Values(i.i))).Max)
+                                            Let maxValues = (From x As Dictionary(Of String, String)
+                                                             In table
+                                                             Select Len(x.Values(i.i))).Max
+                                            Select sys.Max(i.value.Length, maxValues)
 
             Dim hr As String = New String("="c, totalWidth)
             Dim sb As New StringBuilder
