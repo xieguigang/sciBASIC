@@ -42,6 +42,12 @@ Namespace Imaging.LayoutModel
         Property Location As PointF
     End Interface
 
+    Public Interface ILayoutCoordinate
+        Property ID As String
+        Property X As Double
+        Property Y As Double
+    End Interface
+
     ''' <summary>
     ''' Implements a 2-dimensional point with <see cref="Double"/> precision coordinates.
     ''' </summary>
