@@ -444,6 +444,7 @@
     <Compile Include="Language\lang\Java\Line2D.vb" />
     <Compile Include="Language\lang\Java\Collections.vb" />
     <Compile Include="Language\lang\Java\Reflection.vb" />
+    <Compile Include="Language\Linq\VectorShadows.vb" />
     <Compile Include="Language\Linq\List%28Of T%29.vb" />
     <Compile Include="Language\lang\Perl\die.vb" />
     <Compile Include="Scripting\Abstract.vb" />
