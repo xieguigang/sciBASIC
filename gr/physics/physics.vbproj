@@ -86,7 +86,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Reactions.vb" />
     <Compile Include="World.vb" />
     <Compile Include="MassPoint.vb" />
     <Compile Include="Force.vb" />

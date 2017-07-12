@@ -102,14 +102,17 @@ Namespace BarPlot
                     Dim rect As Rectangle = region.PlotRegion
                     Dim yLength! = yrange.Length
                     Dim xLength! = xrange.Length
+                    Dim xmin# = xrange.Min
                     Dim ymid! = rect.Height / 2 + region.Padding.Top
                     Dim width! = rect.Width
                     Dim height! = rect.Height / 2
                     Dim yscale = Function(y!)
+                                     ' 因为ymin总是0，所以在这里就不需要将减ymin写出来了
                                      Return (y / yLength) * (height)
                                  End Function
                     Dim xscale = Function(x!)
-                                     Return (x / xLength) * width
+                                     ' width 乘上百分比
+                                     Return ((x - xmin) / xLength) * width
                                  End Function
 
                     With rect

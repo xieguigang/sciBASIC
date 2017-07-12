@@ -288,7 +288,8 @@ Namespace Graphic.Axis
                                      layout As XAxisLayoutStyles, offset As Point,
                                      labelFont$,
                                      tickFont As Font,
-                                     Optional overridesTickLine% = -1)
+                                     Optional overridesTickLine% = -1,
+                                     Optional noTicks As Boolean = False)
             Dim Y%
 
             Select Case layout
@@ -308,8 +309,7 @@ Namespace Graphic.Axis
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
             For Each tick# In scaler.xAxis
-
-                If scaler.dx <> 0R Then
+                If Not noTicks AndAlso scaler.dx <> 0R Then
                     Dim x As Single = sx(tick) + offset.X
                     Dim axisX As New PointF(x, ZERO.Y)
 

@@ -31,6 +31,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
@@ -80,6 +81,19 @@ Public Module Extensions
     <Extension>
     Public Function LoadCsv(Of T As Class)(path$, template As T, Optional encoding As Encodings = Encodings.UTF8) As T()
         Return path.LoadCsv(Of T)(encoding:=encoding.CodePage).ToArray
+    End Function
+
+    ''' <summary>
+    ''' Save all of the <see cref="Dictionary(Of T).Values"/> into a csv file.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SaveTo(Of T As INamedValue)(table As Dictionary(Of T), path$, Optional encoding As Encodings = Encodings.UTF8) As Boolean
+        Return table.Values.SaveTo(path, encoding)
     End Function
 
     ''' <summary>

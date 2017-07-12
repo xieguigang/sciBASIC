@@ -28,20 +28,22 @@
 
 Imports System.Drawing
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 
 Namespace Text.Xml.Models
 
     ''' <summary>
     ''' Improvements on the xml format layout compare with <see cref="PointF"/> type.
     ''' </summary>
-    Public Structure Coordinate
+    Public Structure Coordinate : Implements ILayoutCoordinate
 
         ' 2017-6-22
         ' 因为double类型可以兼容Integer类型，所以在这里改为double类型
         ' 所以从pointf构建可以不再经过转换了
 
-        <XmlAttribute("x")> Public Property X As Double
-        <XmlAttribute("y")> Public Property Y As Double
+        <XmlAttribute("x")> Public Property X As Double Implements ILayoutCoordinate.X
+        <XmlAttribute("y")> Public Property Y As Double Implements ILayoutCoordinate.Y
+        <XmlAttribute> Public Property ID As String Implements ILayoutCoordinate.ID
 
         Sub New(pt As Point)
             Call Me.New(pt.X, pt.Y)
