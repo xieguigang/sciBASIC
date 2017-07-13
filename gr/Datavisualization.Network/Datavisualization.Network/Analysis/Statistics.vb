@@ -55,8 +55,17 @@ Namespace Analysis
                          End Sub
 
             For Each edge As NetworkEdge In net.Edges
+                ' count只会统计edge链接的两个node，故而假若node是孤立的节点，
+                ' 则在这个for循环之中是没有被包含进入结果之中的
                 Call counts(node:=edge.FromNode)
                 Call counts(node:=edge.ToNode)
+            Next
+
+            For Each node In net.Nodes
+                ' 补齐这些孤立的节点
+                If Not degree.ContainsKey(node.ID) Then
+                    degree.Add(node.ID, 0)
+                End If
             Next
 
             Return degree
@@ -72,15 +81,15 @@ Namespace Analysis
 
             With net.Edges.ComputeDegreeData
                 For Each node As FileStream.Node In net.Nodes
-                    If Not degrees.ContainsKey(node.ID) Then
-                        Dim ex As New Exception("nodes: " & net.Nodes.Keys.GetJson)
-                        ex = New Exception("degrees: " & degrees.GetJson)
-                        ex = New Exception("Current node was not found! => " & node.GetJson)
-                        Throw ex
-                    Else
-                        d = degrees(node.ID)
-                        node.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
-                    End If
+                    'If Not degrees.ContainsKey(node.ID) Then
+                    '    Dim ex As New Exception("nodes: " & net.Nodes.Keys.GetJson)
+                    '    ex = New Exception("degrees: " & degrees.GetJson, ex)
+                    '    ex = New Exception("Current node was not found! => " & node.GetJson, ex)
+                    '    Throw ex
+                    'Else
+                    d = degrees(node.ID)
+                    Call node.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
+                    'End If
 
                     If .in.ContainsKey(node.ID) Then
                         d = .in(node.ID)
