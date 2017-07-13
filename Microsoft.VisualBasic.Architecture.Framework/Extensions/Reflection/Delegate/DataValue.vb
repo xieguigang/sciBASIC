@@ -20,6 +20,14 @@ Namespace Emit.Delegates
         ''' </summary>
         ReadOnly properties As Dictionary(Of String, PropertyInfo)
 
+        Public ReadOnly Property PropertyNames As String()
+            Get
+                Return properties.Values _
+                    .Select(Function(x) x.Name) _
+                    .ToArray
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>

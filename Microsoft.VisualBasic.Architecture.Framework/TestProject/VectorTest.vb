@@ -8,7 +8,7 @@ Module VectorTest
 
         Dim vector = {
             New NamedValue With {.name = "name", .text = "dddd"},
-            New NamedValue With {.name = "name", .text = "dddd"}
+            New NamedValue With {.name = "name2222222", .text = "1234"}
         }.VectorShadows
 
         Dim textArray$() = vector.text
