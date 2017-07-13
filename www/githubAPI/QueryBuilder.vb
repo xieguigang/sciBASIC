@@ -64,7 +64,7 @@ Public Module QueryBuilder
             o = prop.GetValue(args)
 
             If Not o Is Nothing Then
-                s = If(prop.Property.PropertyType.IsEnum,
+                s = If(DirectCast(prop.member, PropertyInfo).PropertyType.IsEnum,
                     DirectCast(o, [Enum]).Description,
                     Scripting.ToString(o))
                 value.Add(prop.Field.Name, s)
