@@ -7,19 +7,21 @@ Module VectorTest
     Sub Main()
 
         Dim vector = {
-            New NamedValue With {.name = "name", .text = "dddd"},
-            New NamedValue With {.name = "name2222222", .text = "1234"}
+            New int(1),
+            New int(2),
+            New int(3),
+            New int(4)
         }.VectorShadows
 
-        Dim textArray$() = vector.text
+        Dim textArray As Integer() = vector.value
 
         Call textArray.GetJson.__DEBUG_ECHO
 
-        Dim newText$() = {"eeeed", "ffffffff"}
+        Dim newText%() = {4, 5, 6, 7}
 
-        vector.text = newText
+        vector.value = newText
 
-
+        Dim gt = vector > 3
 
         Pause()
     End Sub
