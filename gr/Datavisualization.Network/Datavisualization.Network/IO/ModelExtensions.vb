@@ -173,7 +173,8 @@ Namespace FileStream
                     .Properties = New Dictionary(Of String, String) From {
                         {names.REFLECTION_ID_MAPPING_NODETYPE, n.NodeType}
                     },
-                    .initialPostion = pos
+                    .initialPostion = pos,
+                    .label = n!name
                 }
                 Select New Graph.Node(id, data)
 

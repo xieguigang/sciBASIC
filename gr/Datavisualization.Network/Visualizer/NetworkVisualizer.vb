@@ -57,10 +57,12 @@ Public Module NetworkVisualizer
 
     <Extension>
     Public Function GetDisplayText(n As Node) As String
-        If n.Data Is Nothing OrElse n.Data.origID.StringEmpty Then
+        If n.Data Is Nothing OrElse (n.Data.origID.StringEmpty AndAlso n.Data.label.StringEmpty) Then
             Return n.ID
-        Else
+        ElseIf n.Data.label.StringEmpty Then
             Return n.Data.origID
+        Else
+            Return n.Data.label
         End If
     End Function
 
@@ -119,6 +121,7 @@ Public Module NetworkVisualizer
     ''' <param name="background">背景色或者背景图片的文件路径</param>
     ''' <param name="defaultColor"></param>
     ''' <param name="nodePoints">如果还需要获取得到节点的绘图位置的话，则可以使用这个可选参数来获取返回</param>
+    ''' <param name="fontSizeFactor">这个参数值越小，字体会越大</param>
     ''' <returns></returns>
     <ExportAPI("Draw.Image")>
     <Extension>
@@ -135,7 +138,8 @@ Public Module NetworkVisualizer
                               Optional labelFontBase$ = CSSFont.Win7Normal,
                               Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing,
                               Optional fontSizeFactor# = 1.5,
-                              Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing) As GraphicsData
+                              Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
+                              Optional getNodeLabel As Func(Of Node, String) = Nothing) As GraphicsData
 
         Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
         Dim br As Brush
@@ -192,6 +196,9 @@ Public Module NetworkVisualizer
 
         If edgeDashTypes Is Nothing Then
             edgeDashTypes = New Dictionary(Of String, DashStyle)
+        End If
+        If getNodeLabel Is Nothing Then
+            getNodeLabel = Function(node) node.GetDisplayText
         End If
 
         Dim plotInternal =

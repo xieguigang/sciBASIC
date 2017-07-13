@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -49,6 +50,23 @@ Namespace Imaging
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GraphicsExtensions
+
+        <Extension> Public Function SaveIcon(ico As Icon, path$) As Boolean
+            Call path.ParentPath.MkDIR
+
+            Try
+                Using file As New FileStream(path, FileMode.OpenOrCreate)
+                    Call ico.Save(file)
+                    Call file.Flush()
+                End Using
+
+                Return True
+            Catch ex As Exception
+                Call App.LogException(New Exception(path, ex))
+            End Try
+
+            Return False
+        End Function
 
         <Extension>
         Public Function PointF(pf As Point) As PointF

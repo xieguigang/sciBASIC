@@ -27,13 +27,16 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Xml.Models
 
     Public Class StringValue
+        Implements Value(Of String).IValueOf
 
-        <XmlAttribute> Public Property value As String
+        <XmlAttribute> Public Property value As String Implements Value(Of String).IValueOf.value
 
         Public Overrides Function ToString() As String
             Return value
@@ -41,9 +44,11 @@ Namespace Text.Xml.Models
     End Class
 
     Public Structure NamedValue
+        Implements INamedValue
+        Implements Value(Of String).IValueOf
 
-        <XmlAttribute> Public Property name As String
-        <XmlText> Public Property text As String
+        <XmlAttribute> Public Property name As String Implements INamedValue.Key
+        <XmlText> Public Property text As String Implements Value(Of String).IValueOf.value
 
         Sub New(name$, value$)
             Me.name = name
