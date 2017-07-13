@@ -34,6 +34,7 @@ Namespace Language
             Return propertyNames.Objects
         End Function
 
+#Region "Property Get/Set"
         Public Overrides Function TryGetMember(binder As GetMemberBinder, ByRef result As Object) As Boolean
             If propertyNames.IndexOf(binder.Name) = -1 Then
                 Return False
@@ -42,6 +43,16 @@ Namespace Language
                 Return True
             End If
         End Function
+
+        Public Overrides Function TrySetMember(binder As SetMemberBinder, value As Object) As Boolean
+            If propertyNames.IndexOf(binder.Name) = -1 Then
+                Return False
+            Else
+                linq.Evaluate(binder.Name) = value
+                Return True
+            End If
+        End Function
+#End Region
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each x As T In vector

@@ -15,6 +15,12 @@ Module VectorTest
 
         Call textArray.GetJson.__DEBUG_ECHO
 
+        Dim newText$() = {"eeeed", "ffffffff"}
+
+        vector.text = newText
+
+
+
         Pause()
     End Sub
 End Module
