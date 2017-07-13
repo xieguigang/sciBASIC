@@ -41,6 +41,17 @@ Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 Public Module VectorExtensions
 
     ''' <summary>
+    ''' Create a vector shadow of your data collection.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns>返回<see cref="Object"/>类型是为了简化语法</returns>
+    <Extension>
+    Public Function VectorShadows(Of T)(source As IEnumerable(Of T)) As Object
+        Return New VectorShadows(Of T)(source)
+    End Function
+
+    ''' <summary>
     ''' 聚合，将nullable类型结构体转换为原来的值类型
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

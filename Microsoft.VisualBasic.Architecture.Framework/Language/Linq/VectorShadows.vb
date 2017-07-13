@@ -1,4 +1,5 @@
 ﻿Imports System.Dynamic
+Imports Microsoft.VisualBasic.Emit.Delegates
 
 Namespace Language
 
@@ -9,7 +10,8 @@ Namespace Language
     Public Class VectorShadows(Of T) : Inherits DynamicObject
         Implements IEnumerable(Of T)
 
-        Dim vector As T()
+        ReadOnly vector As T()
+        ReadOnly linq As DataValue(Of T)
 
         Public ReadOnly Property Length As Integer
             Get
@@ -19,6 +21,7 @@ Namespace Language
 
         Sub New(source As IEnumerable(Of T))
             vector = source.ToArray
+            linq = New DataValue(Of T)(vector)
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
