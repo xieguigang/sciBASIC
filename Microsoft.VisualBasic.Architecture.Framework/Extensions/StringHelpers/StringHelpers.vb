@@ -816,36 +816,36 @@ Public Module StringHelpers
     ''' Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，
     ''' 所以可以使用这个函数来进行统一的分行操作)
     ''' </summary>
-    ''' <param name="__text"></param>
+    ''' <param name="s"></param>
     ''' <returns></returns>
     ''' <param name="trim">
     ''' Set <see cref="System.Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
     ''' </param>
     <ExportAPI("lTokens")>
-    <Extension> Public Function lTokens(__text As String, Optional trim As Boolean = True) As String()
-        If String.IsNullOrEmpty(__text) Then
+    <Extension> Public Function lTokens(s$, Optional trim As Boolean = True) As String()
+        If String.IsNullOrEmpty(s) Then
             Return New String() {}
         End If
 
-        Dim lf As Boolean = InStr(__text, vbLf) > 0
-        Dim cr As Boolean = InStr(__text, vbCr) > 0
+        Dim lf As Boolean = InStr(s, vbLf) > 0
+        Dim cr As Boolean = InStr(s, vbCr) > 0
 
         If Not (cr OrElse lf) Then  ' 没有分行符，则只有一行
-            Return New String() {__text}
+            Return New String() {s}
         End If
 
         If lf AndAlso cr Then
             If trim Then  ' 假若将这个换行替换掉，在Csv文件读取模块会出现bug。。。。。不清楚是怎么回事
-                __text = __text.Replace(vbCr, "")
+                s = s.Replace(vbCr, "")
             End If
-            Return Text.Splitter.Split(__text, vbLf, True)
+            Return Splitter.Split(s, vbLf, True)
         End If
 
         If lf Then
-            Return Text.Splitter.Split(__text, vbLf, True)
+            Return Splitter.Split(s, vbLf, True)
         End If
 
-        Return Text.Splitter.Split(__text, vbCr, True)
+        Return Splitter.Split(s, vbCr, True)
     End Function
 
     ''' <summary>

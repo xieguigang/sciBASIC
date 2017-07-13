@@ -10,7 +10,7 @@ Namespace LinearAlgebra
     ''' <typeparam name="T"></typeparam>
     Public Class NumericsVector(Of T As {IComparable, Structure}) : Inherits GenericVector(Of Double)
 
-
+        ReadOnly operators As NumericsOperator = NumericsOperator.GetOperators(GetType(T))
 
         Sub New()
             Dim i As Integer
