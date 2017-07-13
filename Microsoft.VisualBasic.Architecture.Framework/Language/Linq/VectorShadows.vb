@@ -1,4 +1,5 @@
 ﻿Imports System.Dynamic
+Imports System.Linq.Expressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Emit.Delegates
 
@@ -18,7 +19,8 @@ Namespace Language
         ''' <summary>
         ''' 运算符重载会带来重名运算符的问题
         ''' </summary>
-        ReadOnly operators As New Dictionary(Of String, Object)
+        ReadOnly operatorsUnary As New Dictionary(Of ExpressionType, Object)
+        ReadOnly operatorsBinary As New Dictionary(Of ExpressionType, Object)
 
         Public ReadOnly Property Length As Integer
             Get
@@ -35,7 +37,7 @@ Namespace Language
             Dim operators = methods.Where(Function(x) InStr(x.Name, "op_") = 1 AndAlso x.IsStatic).ToArray
 
             For Each op In operators
-                Me.operators.Add(op.Name, op)
+
             Next
         End Sub
 
@@ -71,13 +73,17 @@ Namespace Language
 
 #Region "Operator:Unary"
         Public Overrides Function TryUnaryOperation(binder As UnaryOperationBinder, ByRef result As Object) As Boolean
-            Return MyBase.TryUnaryOperation(binder, result)
+
         End Function
 #End Region
 
 #Region "Operator:Binary"
         Public Overrides Function TryBinaryOperation(binder As BinaryOperationBinder, arg As Object, ByRef result As Object) As Boolean
-            Return MyBase.TryBinaryOperation(binder, arg, result)
+            If Not operatorsBinary.ContainsKey(binder.Operation) Then
+                Return False
+            Else
+
+            End If
         End Function
 #End Region
 
