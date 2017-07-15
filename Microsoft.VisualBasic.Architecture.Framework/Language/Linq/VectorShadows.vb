@@ -61,10 +61,10 @@ Namespace Language
         End Function
 
         Public Shared Function CreateVector(data As IEnumerable, type As Type) As Object
-            type = GetType(VectorShadows(Of )).MakeGenericType(type)
-
-            Dim vector = Activator.CreateInstance(type, {data})
-            Return vector
+            With GetType(VectorShadows(Of )).MakeGenericType(type)
+                Dim vector = Activator.CreateInstance(.ref, {data})
+                Return vector
+            End With
         End Function
 
 #Region "Property Get/Set"
@@ -153,7 +153,12 @@ Namespace Language
         End Function
 #End Region
 
-        Public Shared Narrowing Operator CType(v As VectorShadows(Of T)) As T()
+        ''' <summary>
+        ''' 没用？？？
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Narrowing Operator CType(v As VectorShadows(Of T)) As T()
             Return v.ToArray
         End Operator
 
