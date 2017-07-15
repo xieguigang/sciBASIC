@@ -12,11 +12,11 @@ Module VectorTest
 
     Sub Main()
 
-        Dim strings = {"", "sdafa", "sssssss"}.VectorShadows
+        'Dim strings = {"", "sdafa", "sssssss"}.VectorShadows
 
-        Dim newStrings$() = strings & strings
+        'Dim newStrings$() = strings & strings
 
-        Call newStrings.GetJson.__DEBUG_ECHO
+        'Call newStrings.GetJson.__DEBUG_ECHO
 
 
         '  Pause()
@@ -29,6 +29,8 @@ Module VectorTest
             New int(3),
             New int(4)
         }.VectorShadows
+
+        Pause()
 
         Dim textArray As Integer() = vector.value 'As Integer()
 

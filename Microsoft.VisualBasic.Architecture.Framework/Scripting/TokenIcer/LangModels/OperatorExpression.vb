@@ -12,11 +12,33 @@ Namespace Scripting.TokenIcer
             Call __linq2Name()
         End Sub
 
+        Const op_LessThan$ = NameOf(op_LessThan)
+        Const op_GreaterThan$ = NameOf(op_GreaterThan)
+        Const op_LessThanOrEqual$ = NameOf(op_LessThanOrEqual)
+        Const op_GreaterThanOrEqual$ = NameOf(op_GreaterThanOrEqual)
+        Const op_Subtraction$ = NameOf(op_Subtraction)
+        Const op_Division$ = NameOf(op_Division)
+        Const op_Implicit$ = NameOf(op_Implicit)
+        Const op_UnaryPlus$ = NameOf(op_UnaryPlus)
+        Const op_Addition$ = NameOf(op_Addition)
+        Const op_LeftShift$ = NameOf(op_LeftShift)
+        Const op_Equality$ = NameOf(op_Equality)
+        Const op_Inequality$ = NameOf(op_Inequality)
+
         Private Sub __opName2Linq()
             With opName2Linq
-                Call .Add("op_Equality", ExpressionType.Equal)
-                Call .Add("op_Inequality", ExpressionType.NotEqual)
-
+                Call .Add(op_Equality, ExpressionType.Equal)
+                Call .Add(op_Inequality, ExpressionType.NotEqual)
+                Call .Add(op_LessThan, ExpressionType.LessThan)
+                Call .Add(op_GreaterThan, ExpressionType.GreaterThan)
+                Call .Add(op_LessThanOrEqual, ExpressionType.LessThanOrEqual)
+                Call .Add(op_GreaterThanOrEqual, ExpressionType.GreaterThanOrEqual)
+                Call .Add(op_Subtraction, ExpressionType.Subtract)
+                Call .Add(op_Division, ExpressionType.Divide)
+                Call .Add(op_Implicit, ExpressionType.Convert)
+                Call .Add(op_UnaryPlus, ExpressionType.UnaryPlus)
+                Call .Add(op_Addition, ExpressionType.Add)
+                Call .Add(op_LeftShift, ExpressionType.LeftShift)
             End With
         End Sub
 

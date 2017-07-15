@@ -48,6 +48,9 @@ Namespace Language
                 .ToArray
 
             For Each op In operators
+
+                Call op.Key.EchoLine
+
                 If op.Key = stringContract Then
                     ' 因为字符串连接操作符在Linq表达式中并没有被定义，所以在这里需要特殊处理
                 Else
