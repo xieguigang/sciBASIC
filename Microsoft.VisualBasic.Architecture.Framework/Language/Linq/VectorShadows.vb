@@ -48,7 +48,12 @@ Namespace Language
                 .ToArray
 
             For Each op In operators
+                If op.Key = stringContract Then
+                    ' 因为字符串连接操作符在Linq表达式中并没有被定义，所以在这里需要特殊处理
+                Else
+                    ' 将运算符字符串名称转换为Linq表达式类型名称
 
+                End If
             Next
         End Sub
 

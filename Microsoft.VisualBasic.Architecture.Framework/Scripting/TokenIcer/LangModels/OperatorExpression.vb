@@ -5,8 +5,22 @@ Namespace Scripting.TokenIcer
     Module OperatorExpression
 
         Public ReadOnly Property Linq2Name As New Dictionary(Of ExpressionType, String)
+        Public ReadOnly Property opName2Linq As New Dictionary(Of String, ExpressionType)
 
         Sub New()
+            Call __opName2Linq()
+            Call __linq2Name()
+        End Sub
+
+        Private Sub __opName2Linq()
+            With opName2Linq
+                Call .Add("op_Equality", ExpressionType.Equal)
+                Call .Add("op_Inequality", ExpressionType.NotEqual)
+
+            End With
+        End Sub
+
+        Private Sub __linq2Name()
             With Linq2Name
                 Call .Add(ExpressionType.Add, "+")
                 Call .Add(ExpressionType.AddAssign, "+=")
@@ -54,6 +68,5 @@ Namespace Scripting.TokenIcer
                 Call .Add(ExpressionType.UnaryPlus, "+")
             End With
         End Sub
-
     End Module
 End Namespace

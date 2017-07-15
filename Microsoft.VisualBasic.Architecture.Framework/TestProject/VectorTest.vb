@@ -30,7 +30,7 @@ Module VectorTest
             New int(4)
         }.VectorShadows
 
-        Dim textArray As Integer() = CType(vector.value, Integer())
+        Dim textArray As Integer() = vector.value 'As Integer()
 
         Call textArray.GetJson.__DEBUG_ECHO
 
