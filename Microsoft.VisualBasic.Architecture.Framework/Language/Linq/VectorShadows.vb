@@ -42,7 +42,10 @@ Namespace Language
             propertyNames = linq.PropertyNames.Indexing
 
             Dim methods = GetType(T).GetMethods()
-            Dim operators = methods.Where(Function(x) InStr(x.Name, "op_") = 1 AndAlso x.IsStatic).ToArray
+            Dim operators = methods _
+                .Where(Function(x) InStr(x.Name, "op_") = 1 AndAlso x.IsStatic) _
+                .GroupBy(Function(op) op.Name) _
+                .ToArray
 
             For Each op In operators
 
