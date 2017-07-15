@@ -28,12 +28,16 @@ Namespace Emit.Delegates
             End Get
         End Property
 
+        Public Function GetProperty(property$) As PropertyInfo
+            Return properties([property])
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="name$">The property name, using the ``nameof`` operator to get the property name!</param>
         ''' <returns></returns>
-        Public Property Evaluate(name$) As Object
+        Default Public Property Evaluate(name$) As Object
             Get
                 Dim [property] As New BindProperty(Of DataFrameColumnAttribute)(properties(name))
                 Dim vector As Array = Array.CreateInstance([property].Type, data.Length)

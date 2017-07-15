@@ -19,7 +19,7 @@ Module VectorTest
         Call newStrings.GetJson.__DEBUG_ECHO
 
 
-        Pause()
+        '  Pause()
 
 
 

@@ -60,12 +60,24 @@ Namespace Language
             Return Me.ToArray.GetJson
         End Function
 
+        Public Shared Function CreateVector(data As IEnumerable, type As Type) As Object
+            type = GetType(VectorShadows(Of )).MakeGenericType(type)
+
+            Dim vector = Activator.CreateInstance(type, {data})
+            Return vector
+        End Function
+
 #Region "Property Get/Set"
         Public Overrides Function TryGetMember(binder As GetMemberBinder, ByRef result As Object) As Boolean
             If propertyNames.IndexOf(binder.Name) = -1 Then
                 Return False
             Else
-                result = linq.Evaluate(binder.Name)
+                With linq
+                    Dim type As Type = .GetProperty(binder.Name).PropertyType
+                    Dim source As IEnumerable = DirectCast(.Evaluate(binder.Name), IEnumerable)
+                    result = CreateVector(source, type)
+                End With
+
                 Return True
             End If
         End Function
@@ -140,6 +152,10 @@ Namespace Language
             End If
         End Function
 #End Region
+
+        Public Shared Narrowing Operator CType(v As VectorShadows(Of T)) As T()
+            Return v.ToArray
+        End Operator
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each x As T In vector
