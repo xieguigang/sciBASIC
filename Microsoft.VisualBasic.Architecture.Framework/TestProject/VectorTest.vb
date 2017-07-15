@@ -4,11 +4,17 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Module VectorTest
 
+    Structure fdddd
+        Public Shared Operator &(a As fdddd, b$) As String
+
+        End Operator
+    End Structure
+
     Sub Main()
 
-        Dim strings = {"123", "dsfsdfsd", "####"}.VectorShadows
+        Dim strings = {"", "sdafa", "sssssss"}.VectorShadows
 
-        Dim newStrings$() = strings & "999"
+        Dim newStrings$() = strings & strings
 
         Call newStrings.GetJson.__DEBUG_ECHO
 
