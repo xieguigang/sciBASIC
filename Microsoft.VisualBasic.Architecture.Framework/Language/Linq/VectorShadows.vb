@@ -2,6 +2,7 @@
 Imports System.Linq.Expressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
 
@@ -45,6 +46,10 @@ Namespace Language
             Return propertyNames.Objects
         End Function
 
+        Public Function GetJson() As String
+            Return Me.ToArray.GetJson
+        End Function
+
 #Region "Property Get/Set"
         Public Overrides Function TryGetMember(binder As GetMemberBinder, ByRef result As Object) As Boolean
             If propertyNames.IndexOf(binder.Name) = -1 Then
@@ -80,6 +85,9 @@ Namespace Language
 #Region "Operator:Binary"
         Public Overrides Function TryBinaryOperation(binder As BinaryOperationBinder, arg As Object, ByRef result As Object) As Boolean
             If Not operatorsBinary.ContainsKey(binder.Operation) Then
+                If binder.Operation = ExpressionType.GreaterThan Then
+
+                End If
                 Return False
             Else
 

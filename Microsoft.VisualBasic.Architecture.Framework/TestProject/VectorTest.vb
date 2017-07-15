@@ -6,6 +6,17 @@ Module VectorTest
 
     Sub Main()
 
+        Dim strings = {"123", "dsfsdfsd", "####"}.VectorShadows
+
+        Dim newStrings$() = strings & "999"
+
+        Call newStrings.GetJson.__DEBUG_ECHO
+
+
+        Pause()
+
+
+
         Dim vector = {
             New int(1),
             New int(2),
