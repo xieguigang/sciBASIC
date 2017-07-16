@@ -61,6 +61,8 @@ Module VectorTest
         Dim dddd = vector Like 1234
         Dim fffff = vector \ 33333
 
+        Dim ddddddd = vector Or fffff
+
         Pause()
 
         Dim textArray As Integer() = vector.value 'As Integer()

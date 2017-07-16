@@ -312,40 +312,46 @@ NULL:       If Not strict Then
     End Function
 
     ''' <summary>
-    ''' Is a inherits from b
+    ''' Is type <paramref name="a"/> inherits from <paramref name="base"/> type?
     ''' </summary>
     ''' <param name="a">继承类型继承自基本类型，具备有基本类型的所有特性</param>
-    ''' <param name="b">基本类型</param>
+    ''' <param name="base">基本类型</param>
     ''' <param name="strict">
     ''' + 这个参数是为了解决比较来自不同的assembly文件之中的相同类型的比较，但是这个可能会在类型转换出现一些BUG
     ''' + 假若不严格要求的话，那么则两种类型相等的时候也会被算作为继承关系
     ''' + 假若是非严格判断，那么对于泛型而言，只要基本类型也相等也会被判断为成立的继承关系，这个是为了<see cref="Actives"/>操作设计的
     ''' 
     ''' </param>
+    ''' <param name="depth">类型继承的距离值，当这个值越大的时候，说明二者的继承越远，当进行函数重载判断的时候，选择这个距离值越小的越好</param>
     ''' <returns></returns>
     ''' <remarks>假若两个类型是来自于不同的assembly文件的话，即使这两个类型是相同的对象，也会无法判断出来</remarks>
     <ExportAPI("Is.InheritsFrom")>
-    <Extension> Public Function IsInheritsFrom(a As Type, b As Type, Optional strict As Boolean = True) As Boolean
+    <Extension> Public Function IsInheritsFrom(a As Type, base As Type, Optional strict As Boolean = True, Optional ByRef depth% = -1) As Boolean
         Dim baseType As Type = a.BaseType
 
         If Not strict Then
-            If a.Equals(b) Then
+            ' 在这里返回结果的话，depth为-1
+
+            If a Is base Then
                 Return True
             End If
-            If a.IsGenericType AndAlso b.IsGenericType Then
+
+            If a.IsGenericType AndAlso base.IsGenericType Then
                 ' 2017-3-12
                 ' GetType(Dictionary(Of String, Double)).IsInheritsFrom(GetType(Dictionary(Of ,)))
 
-                If a.GetGenericTypeDefinition.Equals(b) Then
+                If a.GetGenericTypeDefinition.Equals(base) Then
                     Return True
                 End If
             End If
         End If
 
         Do While Not baseType Is Nothing
-            If baseType.Equals(b) Then
+            depth += 1
+
+            If baseType.Equals(base) Then
                 Return True
-            ElseIf Not strict AndAlso (baseType.FullName = b.FullName) Then
+            ElseIf Not strict AndAlso (baseType.FullName = base.FullName) Then
                 Return True
             Else
                 baseType = baseType.BaseType
