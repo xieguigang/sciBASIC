@@ -165,10 +165,10 @@ Namespace Language
         ''' <param name="obj"></param>
         ''' <returns></returns>
         Public Shared Operator &(vector As VectorShadows(Of T), obj As Object) As Object
+            Dim type As Type = obj.GetType
+
             If vector.op_Concatenates Is Nothing Then
                 If vector.type Is GetType(String) Then
-                    Dim type As Type = obj.GetType
-
                     If type.ImplementsInterface(GetType(IEnumerable(Of String))) Then
                         ' 如果是字符串的集合，则分别添加字符串
                         Dim out$() = New String(vector.Length - 1) {}
@@ -189,9 +189,45 @@ Namespace Language
                     Throw New NotImplementedException
                 End If
             Else
-
+                Return binaryOperatorSelfLeft(vector, vector.op_Concatenates, obj, type)
             End If
         End Operator
+
+        Private Shared Function binaryOperatorSelfLeft(vector As VectorShadows(Of T), op As BinaryOperator, obj As Object, type As Type) As Object
+            Dim method As MethodInfo = op.MatchRight(type)
+
+            If Not method Is Nothing Then
+                Return vector _
+                    .Select(Function(self) method.Invoke(Nothing, {self, obj})) _
+                    .ToArray
+            End If
+
+            If type.ImplementsInterface(GetType(IEnumerable)) Then
+                type = type.GetInterfaces _
+                    .Where(Function(i) i.Name = NameOf(IEnumerable)) _
+                    .First _
+                    .GenericTypeArguments _
+                    .First
+
+                With op.MatchRight(type)
+                    If .IsNothing Then
+                        Throw New NotImplementedException
+                    Else
+                        method = .ref
+                    End If
+                End With
+
+                Dim out = New Object(vector.Length - 1) {}
+
+                For Each o In DirectCast(obj, IEnumerable).SeqIterator
+                    out(o) = method.Invoke(Nothing, {vector.vector(o), o.value})
+                Next
+
+                Return out
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
 
         ''' <summary>
         ''' Fix for Like operator not defined in Linq.
@@ -202,20 +238,14 @@ Namespace Language
         Public Shared Operator Like(vector As VectorShadows(Of T), obj As Object) As Object
             If vector.op_Likes Is Nothing Then
                 Throw New NotImplementedException
+            Else
+                Return binaryOperatorSelfLeft(vector, vector.op_Likes, obj, obj.GetType)
             End If
-
-            Dim type As Type = obj.GetType
-
-
         End Operator
 
         Public Shared Operator \(vector As VectorShadows(Of T), obj As Object) As Object
 
         End Operator
-
-        Private Shared Function Vectorization(obj As Object, n%) As Object()
-
-        End Function
 
         Public Overrides Function TryBinaryOperation(binder As BinaryOperationBinder, arg As Object, ByRef result As Object) As Boolean
             If Not operatorsBinary.ContainsKey(binder.Operation) Then

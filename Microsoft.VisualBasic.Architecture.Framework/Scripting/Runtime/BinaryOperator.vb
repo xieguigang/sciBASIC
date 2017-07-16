@@ -27,10 +27,20 @@ Namespace Scripting.Runtime
             End If
         End Function
 
+        ''' <summary>
+        ''' 参数在左边
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         Public Function MatchLeft(type As Type) As MethodInfo
             Return Match(type, 0)
         End Function
 
+        ''' <summary>
+        ''' 参数在右边
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         Public Function MatchRight(type As Type) As MethodInfo
             Return Match(type, 1)
         End Function
@@ -44,7 +54,7 @@ Namespace Scripting.Runtime
                 Dim parm As ParameterInfo = m.GetParameters(pos) ' base type
                 Dim depth%
 
-                If type.IsInheritsFrom(parm.ParameterType,, depth) Then
+                If type.IsInheritsFrom(parm.ParameterType, False, depth) Then
                     If depth < depthMin Then
                         depthMin = depth
                         target = m
@@ -55,6 +65,13 @@ Namespace Scripting.Runtime
             Return target
         End Function
 
+        ''' <summary>
+        ''' 参数在右边
+        ''' </summary>
+        ''' <param name="self"></param>
+        ''' <param name="obj"></param>
+        ''' <param name="result"></param>
+        ''' <returns></returns>
         Public Function InvokeSelfLeft(self As Object, obj As Object, ByRef result As Object) As Boolean
             Return __invokeInternal(self, obj, 0, result)
         End Function
@@ -76,6 +93,13 @@ Namespace Scripting.Runtime
             Return True
         End Function
 
+        ''' <summary>
+        ''' 参数在左边
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <param name="self"></param>
+        ''' <param name="result"></param>
+        ''' <returns></returns>
         Public Function InvokeSelfRight(obj As Object, self As Object, ByRef result As Object) As Boolean
             Return __invokeInternal(self, obj, 1, result)
         End Function

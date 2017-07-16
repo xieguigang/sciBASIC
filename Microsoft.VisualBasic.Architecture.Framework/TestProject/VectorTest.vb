@@ -40,6 +40,15 @@ Module VectorTest
 
     End Structure
 
+    Structure str
+
+        Dim pattern$
+
+        Public Shared Operator Like(str As str, s$) As Boolean
+            Return s.IsPattern(str.pattern, RegexICSng)
+        End Operator
+    End Structure
+
     Sub Main()
 
         'Dim strings = {"", "sdafa", "sssssss"}.VectorShadows
@@ -51,29 +60,35 @@ Module VectorTest
 
         '  Pause()
 
-
-
-        Dim vector = {
-           New fdddd
+        Dim patterns = {
+            New str With {.pattern = "\d+"},
+            New str With {.pattern = "\s+"},
+            New str With {.pattern = "\S+"}
         }.VectorShadows
 
+        Dim index%() = Which.IsTrue(patterns Like "123")
 
-        Dim dddd = vector Like 1234
-        Dim fffff = vector \ 33333
+        Call index.GetJson.__DEBUG_ECHO
 
-        Dim ddddddd = vector Or fffff
 
-        Pause()
 
-        Dim textArray As Integer() = vector.value 'As Integer()
 
-        Call textArray.GetJson.__DEBUG_ECHO
+        'Dim dddd = vector Like 1234
+        'Dim fffff = vector \ 33333
 
-        Dim newText%() = {4, 5, 6, 7}
+        'Dim ddddddd = vector Or fffff
 
-        vector.value = newText
+        'Pause()
 
-        Dim gt = vector > 3
+        'Dim textArray As Integer() = vector.value 'As Integer()
+
+        'Call textArray.GetJson.__DEBUG_ECHO
+
+        'Dim newText%() = {4, 5, 6, 7}
+
+        'vector.value = newText
+
+        'Dim gt = vector > 3
 
         Pause()
     End Sub
