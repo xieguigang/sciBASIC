@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
 
-Namespace Scripting
+Namespace Scripting.Runtime
 
     ''' <summary>
     ''' Methods for convert the <see cref="System.String"/> to some .NET data types.

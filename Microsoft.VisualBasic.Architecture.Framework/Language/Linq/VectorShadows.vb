@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Language
 
@@ -162,7 +163,7 @@ Namespace Language
                         ' 否则直接将目标对象转换为字符串，进行统一添加
                         Dim s$ = CStr(obj)
                         Return vector _
-                            .Select(Function(o) Scripting.CStrSafe(o) & s) _
+                            .Select(Function(o) CStrSafe(o) & s) _
                             .ToArray
                     End If
                 Else

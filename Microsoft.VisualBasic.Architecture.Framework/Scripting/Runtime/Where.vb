@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Scripting
+Namespace Scripting.Runtime
 
     Public Enum Logics
 

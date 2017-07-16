@@ -489,7 +489,7 @@
     <Compile Include="Parallel\Tasks\Actor%28Of T, V%29.vb" />
     <Compile Include="Scripting\Expressions\ArrayIndex.vb" />
     <Compile Include="Scripting\Expressions\StringInterpolation.vb" />
-    <Compile Include="Scripting\NumberConversionRoutines.vb" />
+    <Compile Include="Scripting\Runtime\CType\NumberConversionRoutines.vb" />
     <Compile Include="Scripting\ScriptBuilder.vb" />
     <Compile Include="Terminal\InteractiveIODevice\Shell.vb" />
     <Compile Include="Terminal\PipelineCLI.vb" />
@@ -560,7 +560,7 @@
     <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
     <Compile Include="Scripting\Actives.vb" />
-    <Compile Include="Scripting\Where.vb" />
+    <Compile Include="Scripting\Runtime\Where.vb" />
     <Compile Include="Serialization\JSON\JsonFormatter.vb" />
     <Compile Include="Serialization\JSON\Formatter\FormatterScopeState.vb" />
     <Compile Include="Serialization\JSON\Formatter\ICharacterStrategy.vb" />
@@ -727,7 +727,7 @@
     <Compile Include="Parallel\Tasks\UpdateThread.vb" />
     <Compile Include="Parallel\Threads\ParallelLoading.vb" />
     <Compile Include="Parallel\Threads\ParallelExtension.vb" />
-    <Compile Include="Scripting\Casting.vb" />
+    <Compile Include="Scripting\Runtime\CType\Casting.vb" />
     <Compile Include="Scripting\InputHandler.vb" />
     <Compile Include="Scripting\MetaData\Cite.vb" />
     <Compile Include="Scripting\MetaData\Parameter.vb" />

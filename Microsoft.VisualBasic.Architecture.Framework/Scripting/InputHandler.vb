@@ -32,9 +32,9 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
 Namespace Scripting
 
@@ -66,7 +66,7 @@ Namespace Scripting
             {GetType(Char()), AddressOf Casting.CastCharArray},
             {GetType(Date), AddressOf Casting.CastDate},
             {GetType(StringBuilder), AddressOf Casting.CastStringBuilder},
-            {GetType(CommandLine.CommandLine), AddressOf Casting.CastCommandLine},
+            {GetType(CLI), AddressOf Casting.CastCommandLine},
             {GetType(Image), AddressOf Casting.CastImage},
             {GetType(FileInfo), AddressOf Casting.CastFileInfo},
             {GetType(Graphics2D), AddressOf Casting.CastGDIPlusDeviceHandle},
@@ -178,7 +178,7 @@ Namespace Scripting
                 {"image", GetType(Image)},
                 {"fileinfo", GetType(IO.FileInfo)},
                 {"ipaddress", GetType(System.Net.IPAddress)},
-                {"commandline", GetType(CommandLine.CommandLine)},
+                {"commandline", GetType(CLI)},
                 {"gdi+", GetType(Graphics2D)},
                 {"stringbuilder", GetType(StringBuilder)},
                 {"boolean", GetType(Boolean)},

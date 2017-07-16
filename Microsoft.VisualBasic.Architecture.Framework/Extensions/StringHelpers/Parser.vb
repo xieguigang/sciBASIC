@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
@@ -62,7 +63,7 @@ Public Module PrimitiveParser
     ''' <returns></returns>
     <Extension>
     Public Function ParseDouble(s As String) As Double
-        Return Scripting.ParseNumeric(s)
+        Return ParseNumeric(s)
     End Function
 
     ''' <summary>
