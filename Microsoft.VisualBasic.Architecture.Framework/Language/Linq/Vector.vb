@@ -4,7 +4,6 @@
 
         ReadOnly buffer As T()
 
-
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each x In buffer
                 Yield x
