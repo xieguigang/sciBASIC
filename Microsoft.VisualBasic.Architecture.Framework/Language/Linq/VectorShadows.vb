@@ -36,6 +36,7 @@ Namespace Language
 #Region "VisualBasic exclusive language features"
         ReadOnly op_Concatenates As BinaryOperator
         ReadOnly op_Likes As BinaryOperator
+        ReadOnly op_IntegerDivisions As BinaryOperator
 #End Region
 
         ReadOnly methods As New Dictionary(Of String, MethodInfo())
@@ -49,6 +50,8 @@ Namespace Language
         End Property
 
         Const stringContract$ = "op_Concatenate"
+        Const objectLike$ = "op_Like"
+        Const integerDivision$ = "op_IntegerDivision"
 
         Sub New(source As IEnumerable(Of T))
             vector = source.ToArray
@@ -61,26 +64,42 @@ Namespace Language
                 .GroupBy(Function(op) op.Name) _
                 .ToArray
 
-            ' 因为字符串连接操作符在Linq表达式中并没有被定义，所以在这里需要特殊处理
-            op_Concatenates = operators _
-                .Where(Function(m) m.Key = stringContract) _
-                .FirstOrDefault _
-               ?.OverloadsBinaryOperator
+            Dim find = Function(opName$)
+                           Return operators _
+                               .Where(Function(m) m.Key = opName) _
+                               .FirstOrDefault _
+                              ?.OverloadsBinaryOperator
+                       End Function
 
-            For Each op In operators
+            ' 因为字符串连接操作符在Linq表达式中并没有被定义，所以在这里需要特殊处理
+            op_Concatenates = find(stringContract)
+            op_Likes = find(objectLike)
+            op_IntegerDivisions = find(integerDivision)
+
+            For Each op As IGrouping(Of String, MethodInfo) In operators
 #If DEBUG Then
                 Call op.Key.EchoLine
 #End If
-                If op.Key <> stringContract Then
-                    ' 前面已经被处理过了，不需要再额外处理这个运算符了
-                    ' 将运算符字符串名称转换为Linq表达式类型名称
-                    Dim type As ExpressionType = OperatorExpression.opName2Linq(op.Key)
+                With op
+                    If .Key = stringContract OrElse
+                        .Key = objectLike OrElse
+                        .Key = integerDivision Then
 
-                    If op.First.GetParameters.Length > 1 Then
-                        operatorsBinary(type) = op.OverloadsBinaryOperator
-                    Else
-                        operatorsUnary(type) = op.First.CreateDelegate(GetType(Func(Of Object, Object)))
+                        ' 前面已经被处理过了，不需要再额外处理这个运算符了
+                        Continue For
                     End If
+                End With
+
+                ' 将运算符字符串名称转换为Linq表达式类型名称
+                Dim type As ExpressionType = OperatorExpression.opName2Linq(op.Key)
+
+                If op.First.GetParameters.Length > 1 Then
+                    operatorsBinary(type) = op.OverloadsBinaryOperator
+                Else
+                    Dim method = op.First
+                    Dim invoke = Function(arg) method.Invoke(Nothing, {arg})
+
+                    operatorsUnary(type) = invoke
                 End If
             Next
         End Sub
@@ -187,6 +206,10 @@ Namespace Language
 
             Dim type As Type = obj.GetType
 
+
+        End Operator
+
+        Public Shared Operator \(vector As VectorShadows(Of T), obj As Object) As Object
 
         End Operator
 

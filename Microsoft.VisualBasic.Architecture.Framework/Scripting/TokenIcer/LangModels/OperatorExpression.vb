@@ -33,12 +33,16 @@ Namespace Scripting.TokenIcer
         Const op_BitwiseAnd$ = NameOf(op_BitwiseAnd)
         Const op_BitwiseOr$ = NameOf(op_BitwiseOr)
         Const op_IntegerDivision$ = NameOf(op_IntegerDivision)
+        Const op_UnaryNegation$ = NameOf(op_UnaryNegation)
 
         Private Sub __opName2Linq()
             With opName2Linq
                 Call .Add(op_Addition, ExpressionType.Add)
+                Call .Add(op_BitwiseAnd, ExpressionType.And)
+                Call .Add(op_BitwiseOr, ExpressionType.Or)
                 Call .Add(op_Division, ExpressionType.Divide)
                 Call .Add(op_Equality, ExpressionType.Equal)
+                Call .Add(op_ExclusiveOr, ExpressionType.ExclusiveOr)
                 Call .Add(op_Exponent, ExpressionType.Power)
                 Call .Add(op_GreaterThan, ExpressionType.GreaterThan)
                 Call .Add(op_GreaterThanOrEqual, ExpressionType.GreaterThanOrEqual)
@@ -51,7 +55,7 @@ Namespace Scripting.TokenIcer
                 Call .Add(op_Multiply, ExpressionType.Multiply)
                 Call .Add(op_Subtraction, ExpressionType.Subtract)
                 Call .Add(op_UnaryPlus, ExpressionType.UnaryPlus)
-
+                Call .Add(op_UnaryNegation, ExpressionType.Negate)
             End With
         End Sub
 

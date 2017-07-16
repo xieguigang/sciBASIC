@@ -57,6 +57,10 @@ Module VectorTest
            New fdddd
         }.VectorShadows
 
+
+        Dim dddd = vector Like 1234
+        Dim fffff = vector \ 33333
+
         Pause()
 
         Dim textArray As Integer() = vector.value 'As Integer()
