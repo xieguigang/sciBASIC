@@ -42,7 +42,7 @@ Module VectorTest
 
     Structure str
 
-        Dim pattern$
+        Public Property pattern$
 
         Public Shared Operator Like(str As str, s$) As Boolean
             Return s.IsPattern(str.pattern, RegexICSng)
@@ -58,7 +58,7 @@ Module VectorTest
         'Call newStrings.GetJson.__DEBUG_ECHO
 
 
-        '  Pause()
+        Pause()
 
         Dim patterns = {
             New str With {.pattern = "\d+"},
@@ -67,11 +67,19 @@ Module VectorTest
         }.VectorShadows
 
         Dim index%() = Which.IsTrue(patterns Like "123")
+        Dim patternList = patterns.pattern
 
         Call index.GetJson.__DEBUG_ECHO
+        Call CType(patternList, IEnumerable(Of String)).ToArray.GetJson.__DEBUG_ECHO
 
 
+        Dim vector = {1.0R, 2.0R, 3.0R, 4.0R, 5.0R, 6.0R, 7.0R, 8.0R, 9.0R, 10.0R}.VectorShadows
+        Dim list As New List(Of String) From {"A1", "B2", "C3", "D4", "E5", "F6", "G7", "H8", "I9", "J10"}
 
+
+        Dim sublist As String() = list(vector > 5.0R)
+
+        Call sublist.GetJson.__DEBUG_ECHO
 
         'Dim dddd = vector Like 1234
         'Dim fffff = vector \ 33333

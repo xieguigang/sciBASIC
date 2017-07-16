@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Who = Microsoft.VisualBasic.Which
+Imports Microsoft.VisualBasic.Emit.Delegates
 
 Namespace Language
 
@@ -88,6 +89,43 @@ Namespace Language
                 End If
             End Set
         End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="args">同时支持boolean和integer</param>
+        ''' <returns></returns>
+        Default Public Overloads Property Item(args As Object) As List(Of T)
+            Get
+                Dim type As Type = args.GetType
+
+                If type Is GetType(Integer) Then
+                    Return New List(Of T) From {Item(DirectCast(args, Integer))}
+                ElseIf type.ImplementsInterface(GetType(IEnumerable(Of Integer))) Then
+                    Return Me(DirectCast(args, IEnumerable(Of Integer)))
+                ElseIf type.ImplementsInterface(GetType(IEnumerable(Of Boolean))) Then
+                    Return Me(DirectCast(args, IEnumerable(Of Boolean))).AsList
+                ElseIf type.ImplementsInterface(GetType(IEnumerable(Of Object))) Then
+                    Dim array = DirectCast(args, IEnumerable(Of Object)).ToArray
+
+                    With array(Scan0).GetType
+                        If .ref Is GetType(Boolean) Then
+                            Return Me(array.Select(Function(o) CBool(o))).AsList
+                        ElseIf .ref Is GetType(Integer) Then
+                            Return Me(array.Select(Function(o) CInt(o)))
+                        Else
+                            Throw New NotImplementedException
+                        End If
+                    End With
+                Else
+                    Throw New NotImplementedException
+                End If
+            End Get
+            Set
+                Throw New NotImplementedException
+            End Set
+        End Property
+
 
         ''' <summary>
         ''' This indexer property is using for the ODEs-system computing.

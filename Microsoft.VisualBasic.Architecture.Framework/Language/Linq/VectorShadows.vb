@@ -78,7 +78,7 @@ Namespace Language
 
             For Each op As IGrouping(Of String, MethodInfo) In operators
 #If DEBUG Then
-                Call op.Key.EchoLine
+                ' Call op.Key.EchoLine
 #End If
                 With op
                     If .Key = stringContract OrElse
@@ -247,15 +247,86 @@ Namespace Language
 
         End Operator
 
+        Const left% = 0
+        Const right% = 1
+
         Public Overrides Function TryBinaryOperation(binder As BinaryOperationBinder, arg As Object, ByRef result As Object) As Boolean
             If Not operatorsBinary.ContainsKey(binder.Operation) Then
-                If binder.Operation = ExpressionType.GreaterThan Then
+                Return False
+            End If
 
+            Dim op As BinaryOperator = operatorsBinary(binder.Operation)
+            Dim type As Type = arg.GetType
+            Dim target As MethodInfo = Nothing
+
+            With op.MatchRight(type)
+                If Not .IsNothing AndAlso .GetParameters(left).ParameterType Is Me.type Then
+
+                    target = .ref
+                    ' me op arg
+                    result = vector _
+                        .Select(Function(self) target.Invoke(Nothing, {self, arg})) _
+                        .ToArray
+
+                    Return True
                 End If
+            End With
+
+            With op.MatchLeft(type)
+                If Not .IsNothing AndAlso .GetParameters(right).ParameterType Is Me.type Then
+
+                    target = .ref
+                    ' arg op me
+                    result = vector _
+                        .Select(Function(self) target.Invoke(Nothing, {arg, self})) _
+                        .ToArray
+
+                    Return True
+                End If
+            End With
+
+            ' target还是空值的话，则尝试将目标参数转换为集合类型
+            If Not type.ImplementsInterface(GetType(IEnumerable)) Then
                 Return False
             Else
-
+                type = type.GetInterfaces _
+                    .Where(Function(i) i.Name = NameOf(IEnumerable)) _
+                    .First _
+                    .GenericTypeArguments _
+                    .First
             End If
+
+            Dim out = New Object(vector.Length - 1) {}
+
+            With op.MatchRight(type)
+                If Not .IsNothing AndAlso .GetParameters(left).ParameterType Is Me.type Then
+
+                    target = .ref
+
+                    For Each o In DirectCast(arg, IEnumerable).SeqIterator
+                        out(o) = target.Invoke(Nothing, {vector(o), o.value})
+                    Next
+                    result = out
+
+                    Return True
+                End If
+            End With
+
+            With op.MatchLeft(type)
+                If Not .IsNothing AndAlso .GetParameters(right).ParameterType Is Me.type Then
+
+                    target = .ref
+
+                    For Each o In DirectCast(arg, IEnumerable).SeqIterator
+                        out(o) = target.Invoke(Nothing, {o.value, vector(o)})
+                    Next
+                    result = out
+
+                    Return True
+                End If
+            End With
+
+            Return False
         End Function
 #End Region
 
