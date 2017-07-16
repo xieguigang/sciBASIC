@@ -31,11 +31,11 @@ Namespace Language
         ''' <summary>
         ''' 双目运算符重载会带来重名运算符的问题
         ''' </summary>
-        ReadOnly operatorsBinary As New Dictionary(Of ExpressionType, MethodInfo())
+        ReadOnly operatorsBinary As New Dictionary(Of ExpressionType, BinaryOperator)
 
 #Region "VisualBasic exclusive language features"
-        ReadOnly op_Concatenates As MethodInfo()
-        ReadOnly op_Likes As MethodInfo()
+        ReadOnly op_Concatenates As BinaryOperator
+        ReadOnly op_Likes As BinaryOperator
 #End Region
 
         ReadOnly methods As New Dictionary(Of String, MethodInfo())
@@ -65,7 +65,7 @@ Namespace Language
             op_Concatenates = operators _
                 .Where(Function(m) m.Key = stringContract) _
                 .FirstOrDefault _
-               ?.ToArray
+               ?.OverloadsBinaryOperator
 
             For Each op In operators
 #If DEBUG Then
@@ -77,7 +77,7 @@ Namespace Language
                     Dim type As ExpressionType = OperatorExpression.opName2Linq(op.Key)
 
                     If op.First.GetParameters.Length > 1 Then
-                        operatorsBinary(type) = op.ToArray
+                        operatorsBinary(type) = op.OverloadsBinaryOperator
                     Else
                         operatorsUnary(type) = op.First.CreateDelegate(GetType(Func(Of Object, Object)))
                     End If
