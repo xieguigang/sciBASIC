@@ -58,7 +58,7 @@ Module VectorTest
         'Call newStrings.GetJson.__DEBUG_ECHO
 
 
-        Pause()
+        '        Pause()
 
         Dim patterns = {
             New str With {.pattern = "\d+"},

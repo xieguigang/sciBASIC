@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sys = System.Math
 
 Namespace LinearAlgebra

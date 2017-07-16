@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
 Imports r = System.Text.RegularExpressions.Regex
 
