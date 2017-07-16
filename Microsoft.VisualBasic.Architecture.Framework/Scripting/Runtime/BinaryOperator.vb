@@ -27,12 +27,15 @@ Namespace Scripting.Runtime
             End If
         End Function
 
-        Public Function InvokeSelfLeft(self As Object, obj As Object, ByRef result As Object) As Boolean
-            Return __invokeInternal(self, obj, 0, result)
+        Public Function MatchLeft(type As Type) As MethodInfo
+            Return Match(type, 0)
         End Function
 
-        Private Function __invokeInternal(self As Object, obj As Object, pos%, ByRef result As Object) As Boolean
-            Dim type As Type = obj.GetType
+        Public Function MatchRight(type As Type) As MethodInfo
+            Return Match(type, 1)
+        End Function
+
+        Public Function Match(type As Type, pos%) As MethodInfo
             Dim depthMin% = Integer.MaxValue
             Dim target As MethodInfo = Nothing
 
@@ -48,6 +51,17 @@ Namespace Scripting.Runtime
                     End If
                 End If
             Next
+
+            Return target
+        End Function
+
+        Public Function InvokeSelfLeft(self As Object, obj As Object, ByRef result As Object) As Boolean
+            Return __invokeInternal(self, obj, 0, result)
+        End Function
+
+        Private Function __invokeInternal(self As Object, obj As Object, pos%, ByRef result As Object) As Boolean
+            Dim type As Type = obj.GetType
+            Dim target As MethodInfo = Match(type, If(pos = 1, 0, 1))
 
             If Not target Is Nothing Then
                 If pos = 0 Then
