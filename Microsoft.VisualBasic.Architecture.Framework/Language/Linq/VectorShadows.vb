@@ -4,6 +4,7 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
@@ -16,15 +17,27 @@ Namespace Language
         Implements IEnumerable(Of T)
 
         ReadOnly vector As T()
+        ''' <summary>
+        ''' 无参数的属性
+        ''' </summary>
         ReadOnly linq As DataValue(Of T)
         ReadOnly propertyNames As Index(Of String)
 
         ''' <summary>
-        ''' 运算符重载会带来重名运算符的问题
+        ''' 单目运算符无重名的问题
         ''' </summary>
-        ReadOnly operatorsUnary As New Dictionary(Of ExpressionType, Object)
-        ReadOnly operatorsBinary As New Dictionary(Of ExpressionType, Object)
+        ReadOnly operatorsUnary As New Dictionary(Of ExpressionType, Func(Of Object, Object))
+        ''' <summary>
+        ''' 双目运算符重载会带来重名运算符的问题
+        ''' </summary>
+        ReadOnly operatorsBinary As New Dictionary(Of ExpressionType, MethodInfo())
+
+#Region "VisualBasic exclusive language features"
         ReadOnly op_Concatenates As MethodInfo()
+        ReadOnly op_Likes As MethodInfo()
+#End Region
+
+        ReadOnly methods As New Dictionary(Of String, MethodInfo())
 
         ReadOnly type As Type = GetType(T)
 
@@ -47,15 +60,26 @@ Namespace Language
                 .GroupBy(Function(op) op.Name) _
                 .ToArray
 
+            ' 因为字符串连接操作符在Linq表达式中并没有被定义，所以在这里需要特殊处理
+            op_Concatenates = operators _
+                .Where(Function(m) m.Key = stringContract) _
+                .FirstOrDefault _
+               ?.ToArray
+
             For Each op In operators
-
+#If DEBUG Then
                 Call op.Key.EchoLine
-
-                If op.Key = stringContract Then
-                    ' 因为字符串连接操作符在Linq表达式中并没有被定义，所以在这里需要特殊处理
-                Else
+#End If
+                If op.Key <> stringContract Then
+                    ' 前面已经被处理过了，不需要再额外处理这个运算符了
                     ' 将运算符字符串名称转换为Linq表达式类型名称
+                    Dim type As ExpressionType = OperatorExpression.opName2Linq(op.Key)
 
+                    If op.First.GetParameters.Length > 1 Then
+                        operatorsBinary(type) = op.ToArray
+                    Else
+                        operatorsUnary(type) = op.First.CreateDelegate(GetType(Func(Of Object, Object)))
+                    End If
                 End If
             Next
         End Sub
@@ -148,6 +172,26 @@ Namespace Language
 
             End If
         End Operator
+
+        ''' <summary>
+        ''' Fix for Like operator not defined in Linq.
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Shared Operator Like(vector As VectorShadows(Of T), obj As Object) As Object
+            If vector.op_Likes Is Nothing Then
+                Throw New NotImplementedException
+            End If
+
+            Dim type As Type = obj.GetType
+
+
+        End Operator
+
+        Private Shared Function Vectorization(obj As Object, n%) As Object()
+
+        End Function
 
         Public Overrides Function TryBinaryOperation(binder As BinaryOperationBinder, arg As Object, ByRef result As Object) As Boolean
             If Not operatorsBinary.ContainsKey(binder.Operation) Then

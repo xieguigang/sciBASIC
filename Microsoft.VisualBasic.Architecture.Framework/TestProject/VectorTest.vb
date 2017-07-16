@@ -8,6 +8,36 @@ Module VectorTest
         Public Shared Operator &(a As fdddd, b$) As String
 
         End Operator
+
+        Public Shared Operator *(a As fdddd, b$) As String
+
+        End Operator
+        Public Shared Operator ^(a As fdddd, b$) As String
+
+        End Operator
+        Public Shared Operator Mod(a As fdddd, b$) As String
+
+        End Operator
+        Public Shared Operator Like(a As fdddd, b$) As String
+
+        End Operator
+        Public Shared Operator Xor(a As fdddd, b$) As String
+
+        End Operator
+        Public Shared Operator And(a As fdddd, b$) As String
+
+        End Operator
+        Public Shared Operator Or(a As fdddd, b$) As String
+
+        End Operator
+        Public Shared Operator \(a As fdddd, b$) As String
+
+        End Operator
+
+        Public Shared Operator -(a As fdddd) As Boolean
+
+        End Operator
+
     End Structure
 
     Sub Main()
@@ -24,10 +54,7 @@ Module VectorTest
 
 
         Dim vector = {
-            New int(1),
-            New int(2),
-            New int(3),
-            New int(4)
+           New fdddd
         }.VectorShadows
 
         Pause()
