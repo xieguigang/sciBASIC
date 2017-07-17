@@ -452,6 +452,7 @@
     <Compile Include="Scripting\Abstract.vb" />
     <Compile Include="Scripting\Expressions\Selector.vb" />
     <Compile Include="Scripting\Runtime\BinaryOperator.vb" />
+    <Compile Include="Scripting\Runtime\OverloadsFunction.vb" />
     <Compile Include="Scripting\Runtime\Extensions.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\OperatorExpression.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\PeekToken.vb" />
