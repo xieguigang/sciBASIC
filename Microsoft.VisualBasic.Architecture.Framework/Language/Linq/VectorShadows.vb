@@ -38,7 +38,7 @@ Namespace Language
         ReadOnly op_IntegerDivisions As BinaryOperator
 #End Region
 
-        ReadOnly methods As New Dictionary(Of OverloadsFunction)
+        ReadOnly methods As New Dictionary(Of String, OverloadsFunction)
 
         ReadOnly type As Type = GetType(T)
 
@@ -97,11 +97,11 @@ Namespace Language
                 .Where(Function(m) Not m.IsStatic) _
                 .GroupBy(Function(func) func.Name) _
                 .Select(Function([overloads]) New OverloadsFunction([overloads].Key, [overloads])) _
-                .ToDictionary
+                .ToDictionary(Function(g) g.Name)
         End Sub
 
         Public Overrides Function GetDynamicMemberNames() As IEnumerable(Of String)
-            Return propertyNames.Objects
+            Return propertyNames.Objects.AsList + methods.Keys
         End Function
 
         Public Function GetJson() As String
