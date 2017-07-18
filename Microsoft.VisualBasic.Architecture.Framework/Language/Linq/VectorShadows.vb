@@ -27,7 +27,7 @@ Namespace Language
         ''' <summary>
         ''' 单目运算符无重名的问题
         ''' </summary>
-        ReadOnly operatorsUnary As New Dictionary(Of ExpressionType, Func(Of Object, Object))
+        ReadOnly operatorsUnary As New Dictionary(Of ExpressionType, MethodInfo)
         ''' <summary>
         ''' 双目运算符重载会带来重名运算符的问题
         ''' </summary>
@@ -96,10 +96,7 @@ Namespace Language
                 If op.First.GetParameters.Length > 1 Then
                     operatorsBinary(type) = op.OverloadsBinaryOperator
                 Else
-                    Dim method = op.First
-                    Dim invoke = Function(arg) method.Invoke(Nothing, {arg})
-
-                    operatorsUnary(type) = invoke
+                    operatorsUnary(type) = op.First
                 End If
             Next
         End Sub
@@ -156,7 +153,7 @@ Namespace Language
             If method Is Nothing Then
                 Return False
             Else
-                result = Me.Select(Function(o) method.Invoke(o, args)).ToArray
+                result = Me.Select(Function(o) method.Invoke(o, args)).CreateArray(method.ReturnType)
                 Return True
             End If
         End Function
@@ -169,8 +166,8 @@ Namespace Language
             Else
                 Dim method = operatorsUnary(binder.Operation)
                 result = Me _
-                    .Select(method) _
-                    .ToArray
+                    .Select(Function(x) method.Invoke(Nothing, {x})) _
+                    .CreateArray(method.ReturnType)
             End If
 
             Return True
@@ -255,7 +252,7 @@ Namespace Language
             If Not method Is Nothing Then
                 Return vector _
                     .Select(Function(self) method.Invoke(Nothing, {self, obj})) _
-                    .ToArray
+                    .CreateArray(method.ReturnType)
             End If
 
             If type.ImplementsInterface(GetType(IEnumerable)) Then
@@ -279,7 +276,7 @@ Namespace Language
                     out(o) = method.Invoke(Nothing, {vector.vector(o), o.value})
                 Next
 
-                Return out
+                Return out.CreateArray(method.ReturnType)
             Else
                 Throw New NotImplementedException
             End If
@@ -291,7 +288,7 @@ Namespace Language
             If Not method Is Nothing Then
                 Return vector _
                     .Select(Function(self) method.Invoke(Nothing, {obj, self})) _
-                    .ToArray
+                    .CreateArray(method.ReturnType)
             End If
 
             If type.ImplementsInterface(GetType(IEnumerable)) Then
@@ -315,7 +312,7 @@ Namespace Language
                     out(o) = method.Invoke(Nothing, {o.value, vector.vector(o)})
                 Next
 
-                Return out
+                Return out.CreateArray(method.ReturnType)
             Else
                 Throw New NotImplementedException
             End If
@@ -424,7 +421,7 @@ Namespace Language
                     ' me op arg
                     result = vector _
                         .Select(Function(self) target.Invoke(Nothing, {self, arg})) _
-                        .ToArray
+                        .CreateArray(target.ReturnType)
 
                     Return True
                 End If
@@ -437,7 +434,7 @@ Namespace Language
                     ' arg op me
                     result = vector _
                         .Select(Function(self) target.Invoke(Nothing, {arg, self})) _
-                        .ToArray
+                        .CreateArray(target.ReturnType)
 
                     Return True
                 End If
@@ -464,7 +461,7 @@ Namespace Language
                     For Each o In DirectCast(arg, IEnumerable).SeqIterator
                         out(o) = target.Invoke(Nothing, {vector(o), o.value})
                     Next
-                    result = out
+                    result = out.CreateArray(target.ReturnType)
 
                     Return True
                 End If
@@ -478,7 +475,7 @@ Namespace Language
                     For Each o In DirectCast(arg, IEnumerable).SeqIterator
                         out(o) = target.Invoke(Nothing, {o.value, vector(o)})
                     Next
-                    result = out
+                    result = out.CreateArray(target.ReturnType)
 
                     Return True
                 End If
