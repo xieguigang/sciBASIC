@@ -116,12 +116,24 @@ Public Module ProgramPathSearchTool
     ''' <param name="keyword">文件名进行匹配的关键词</param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function EnumerateFiles(DIR As String, ParamArray keyword As String()) As IEnumerable(Of String)
+    Public Function EnumerateFiles(DIR$, ParamArray keyword$()) As IEnumerable(Of String)
         Dim files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword)
+        Return files
+    End Function
 
-        For Each file As String In files
-            Yield file
-        Next
+    ''' <summary>
+    ''' ```
+    ''' ls - l - r - pattern &lt;= DIR
+    ''' ```
+    ''' 
+    ''' 的简化拓展函数模式
+    ''' </summary>
+    ''' <param name="DIR$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ListFiles(DIR$, Optional pattern$ = "*.*") As IEnumerable(Of String)
+        Return ls - l - r - pattern <= DIR
     End Function
 
     ''' <summary>
