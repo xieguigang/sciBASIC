@@ -152,7 +152,16 @@ Namespace Language
 
 #Region "Operator:Unary"
         Public Overrides Function TryUnaryOperation(binder As UnaryOperationBinder, ByRef result As Object) As Boolean
+            If Not operatorsUnary.ContainsKey(binder.Operation) Then
+                Return False
+            Else
+                Dim method = operatorsUnary(binder.Operation)
+                result = Me _
+                    .Select(method) _
+                    .ToArray
+            End If
 
+            Return True
         End Function
 #End Region
 
@@ -264,7 +273,11 @@ Namespace Language
         End Operator
 
         Public Shared Operator \(vector As VectorShadows(Of T), obj As Object) As Object
-
+            If vector.op_IntegerDivisions Is Nothing Then
+                Throw New NotImplementedException
+            Else
+                Return binaryOperatorSelfLeft(vector, vector.op_IntegerDivisions, obj, obj.GetType)
+            End If
         End Operator
 
         Const left% = 0
