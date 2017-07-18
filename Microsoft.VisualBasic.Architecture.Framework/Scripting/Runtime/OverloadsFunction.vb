@@ -13,6 +13,10 @@ Namespace Scripting.Runtime
             Me.functions = methods.ToArray
         End Sub
 
+        Public Function Match(args As Type()) As MethodInfo
+
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{Name} (+{functions.Length} Overloads)"
         End Function

@@ -39,7 +39,7 @@ Namespace Language
         ReadOnly op_IntegerDivisions As BinaryOperator
 #End Region
 
-        ReadOnly methods As New Dictionary(Of String, MethodInfo())
+        ReadOnly methods As New Dictionary(Of String, OverloadsFunction)
 
         ReadOnly type As Type = GetType(T)
 
@@ -145,8 +145,20 @@ Namespace Language
 #End Region
 
 #Region "Method/Function"
-        Public Overrides Function TryInvoke(binder As InvokeBinder, args() As Object, ByRef result As Object) As Boolean
-            Return MyBase.TryInvoke(binder, args, result)
+        Public Overrides Function TryInvokeMember(binder As InvokeMemberBinder, args() As Object, ByRef result As Object) As Boolean
+            If Not methods.ContainsKey(binder.Name) Then
+                Return False
+            End If
+
+            Dim [overloads] = methods(binder.Name)
+            Dim method As MethodInfo = [overloads].Match(args.Select(Function(o) o.GetType).ToArray)
+
+            If method Is Nothing Then
+                Return False
+            Else
+                result = Me.Select(Function(o) method.Invoke(o, args)).ToArray
+                Return True
+            End If
         End Function
 #End Region
 
