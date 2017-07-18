@@ -6,7 +6,13 @@ Imports Microsoft.VisualBasic
 Module Program
 
     Sub Main()
+        Call VectorTest()
+        Call LinqTest()
 
+        Pause()
+    End Sub
+
+    Sub VectorTest()
         Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand).RepeatCalls(200, sleep:=2).VectorShadows
 
         Dim asciiRands$() = strings.str
@@ -24,6 +30,30 @@ Module Program
 
         Dim charsCount%() = strings.Count(target)
         Dim sums%() = strings.Sum
+
+        Pause()
+    End Sub
+
+    Sub LinqTest()
+        Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand).RepeatCalls(200, sleep:=2)
+
+        Dim asciiRands$() = strings.Select(Function(s) s.str).ToArray
+        Dim strWeights#() = strings.Select(Function(s) s.weight).ToArray
+
+        Dim subsetLessThan50 As WeightString() = strings.Where(Function(s) s <= 50).ToArray
+        Dim subsetGreaterThan90 As WeightString() = strings.Where(Function(s) s >= 90).ToArray
+
+        For Each w In 200.Sequence.As(Of Double).SeqIterator
+            strings(w).weight = w.value
+        Next
+
+        subsetLessThan50 = strings.Where(Function(s) s <= 50).ToArray
+        subsetGreaterThan90 = strings.Where(Function(s) s >= 90).ToArray
+
+        Dim target As Char = RandomASCIIString(20)(10)
+
+        Dim charsCount%() = strings.Select(Function(s) s.Count(target)).ToArray
+        Dim sums%() = strings.Select(Function(s) s.Sum).ToArray
 
         Pause()
     End Sub
