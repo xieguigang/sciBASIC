@@ -6,14 +6,24 @@ Imports Microsoft.VisualBasic
 Module Program
 
     Sub Main()
-        Call VectorTest()
-        Call LinqTest()
+        ' warm up the CPU
+        For i As Integer = 0 To 200000
+            Dim j = i - 100
+        Next
+
+        Call Time(AddressOf VectorTest)
+        Call Time(AddressOf LinqTest)
+
+        ' change order
+        Call Time(AddressOf LinqTest)
+        Call Time(AddressOf VectorTest)
 
         Pause()
     End Sub
 
     Sub VectorTest()
-        Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand).RepeatCalls(200, sleep:=2).VectorShadows
+
+        Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand).RepeatCalls(2000, sleep:=2).VectorShadows
 
         Dim asciiRands$() = strings.str
         Dim strWeights#() = strings.weight
@@ -21,7 +31,7 @@ Module Program
         Dim subsetLessThan50 As WeightString() = strings(strings <= 50)
         Dim subsetGreaterThan90 As WeightString() = strings(strings >= 90)
 
-        strings.weight = 200.Sequence.As(Of Double)
+        strings.weight = 2000.Sequence.As(Of Double)
 
         subsetLessThan50 = strings(strings <= 50)
         subsetGreaterThan90 = strings(strings >= 90)
@@ -31,11 +41,11 @@ Module Program
         Dim charsCount%() = strings.Count(target)
         Dim sums%() = strings.Sum
 
-        Pause()
+        '  Pause()
     End Sub
 
     Sub LinqTest()
-        Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand).RepeatCalls(200, sleep:=2)
+        Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand).RepeatCalls(2000, sleep:=2)
 
         Dim asciiRands$() = strings.Select(Function(s) s.str).ToArray
         Dim strWeights#() = strings.Select(Function(s) s.weight).ToArray
@@ -43,7 +53,7 @@ Module Program
         Dim subsetLessThan50 As WeightString() = strings.Where(Function(s) s <= 50).ToArray
         Dim subsetGreaterThan90 As WeightString() = strings.Where(Function(s) s >= 90).ToArray
 
-        For Each w In 200.Sequence.As(Of Double).SeqIterator
+        For Each w In 2000.Sequence.As(Of Double).SeqIterator
             strings(w).weight = w.value
         Next
 
@@ -55,7 +65,7 @@ Module Program
         Dim charsCount%() = strings.Select(Function(s) s.Count(target)).ToArray
         Dim sums%() = strings.Select(Function(s) s.Sum).ToArray
 
-        Pause()
+        ' Pause()
     End Sub
 End Module
 
