@@ -1,5 +1,4 @@
 ﻿Imports System.Reflection
-Imports Microsoft.VisualBasic.Language
 
 Namespace Scripting.Runtime
 
@@ -27,7 +26,26 @@ Namespace Scripting.Runtime
         End Function
 
         Public Shared Function Align(target As MethodInfo, args As Type()) As Double
+            Dim params = target.GetParameters
 
+            If args.Length > params.Length Then
+                Return -1
+            End If
+
+            Dim score#
+            Dim tmp%
+
+            For i As Integer = 0 To args.Length - 1
+                tmp = 1000
+
+                If Not args(i).IsInheritsFrom(params(i).ParameterType, False, tmp) Then
+                    Return -1  ' 类型不符，则肯定不可以使用这个方法
+                Else
+                    score += (Short.MaxValue - tmp)
+                End If
+            Next
+
+            Return score
         End Function
 
         Public Overrides Function ToString() As String
