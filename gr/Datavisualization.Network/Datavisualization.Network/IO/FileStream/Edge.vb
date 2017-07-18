@@ -39,7 +39,7 @@ Namespace FileStream
     ''' </summary>
     ''' <remarks></remarks>
     <XmlType("VisualizeNode")>
-    Public Class NetworkEdge : Inherits INetComponent
+    Public Class NetworkEdge : Inherits IDynamicsTable
         Implements IInteraction, INetworkEdge
 
         Public Function Contains(Interactor As String) As Boolean

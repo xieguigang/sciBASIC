@@ -28,7 +28,7 @@
 
 Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Text
+Imports System.Math
 
 Namespace HTML.CSS.Render
 
@@ -151,7 +151,7 @@ Namespace HTML.CSS.Render
                         ' - word.LastMeasureOffset.Y;
                         curx = word.Right
                         ' +word.SpacesAfterWidth;
-                        maxbottom = Math.Max(maxbottom, word.Bottom)
+                        maxbottom = Max(maxbottom, word.Bottom)
                         '+ (word.IsImage ? topspacing + bottomspacing : 0));
                         _lastTreatedWord = word
 
@@ -179,12 +179,12 @@ Namespace HTML.CSS.Render
 
                 If words.Count > 0 Then
                     For Each word As CssBoxWord In words
-                        x = Math.Min(x, word.Left)
+                        x = Min(x, word.Left)
                         ' - word.SpacesBeforeWidth);
-                        r = Math.Max(r, word.Right)
+                        r = Max(r, word.Right)
                         ' + word.SpacesAfterWidth);
-                        y = Math.Min(y, word.Top)
-                        b = Math.Max(b, word.Bottom)
+                        y = Min(y, word.Top)
+                        b = Max(b, word.Bottom)
                     Next
                     line.UpdateRectangle(box, x, y, r, b)
                 End If

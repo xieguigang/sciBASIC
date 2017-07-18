@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
+Imports Microsoft.VisualBasic.Math.Scripting.Types
 
 Namespace Scripting
 
@@ -60,12 +60,12 @@ Namespace Scripting
         ''' <returns></returns>
         Public Function GetExpression(engine As Expression) As Func(Of Double(), Double)
             Dim helper As New __callerHelper(Args.ToArray(Function(x) x.ToLower)) With {
-            .__engine = engine
-        }
+                .__engine = engine
+            }
             Dim expr As SimpleExpression =
-            ExpressionParser.TryParse(Expression,
-                                      AddressOf helper.getValue,
-                                      AddressOf engine.Functions.Evaluate)
+                ExpressionParser.TryParse(Expression,
+                                          AddressOf helper.getValue,
+                                          AddressOf engine.Functions.Evaluate)
             helper.__expr = expr
             Return AddressOf helper.Evaluate
         End Function

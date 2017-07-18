@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GithubAPI", "GithubAPI.vbproj", "{F296B483-7DE4-4D62-9399-6FE0E110EC42}"
 EndProject
@@ -13,7 +13,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Visualizer", "Visualizer\Vi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{A9D0CF44-CF29-470C-924F-994BE824AA64}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "..\..\Data_science\Mathematical\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\..\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
@@ -117,8 +117,8 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|x86.Build.0 = Release2|x86
 		{7EB10443-4FCD-4948-A121-FA41C665910B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7EB10443-4FCD-4948-A121-FA41C665910B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7EB10443-4FCD-4948-A121-FA41C665910B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7EB10443-4FCD-4948-A121-FA41C665910B}.Debug|x64.Build.0 = Debug|Any CPU
+		{7EB10443-4FCD-4948-A121-FA41C665910B}.Debug|x64.ActiveCfg = Debug|x64
+		{7EB10443-4FCD-4948-A121-FA41C665910B}.Debug|x64.Build.0 = Debug|x64
 		{7EB10443-4FCD-4948-A121-FA41C665910B}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{7EB10443-4FCD-4948-A121-FA41C665910B}.Debug|x86.Build.0 = Debug|Any CPU
 		{7EB10443-4FCD-4948-A121-FA41C665910B}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -153,8 +153,8 @@ Global
 		{7EB10443-4FCD-4948-A121-FA41C665910B}.Release2|x86.Build.0 = Release|Any CPU
 		{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}.Debug|x64.Build.0 = Debug|Any CPU
+		{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}.Debug|x64.ActiveCfg = Debug|x64
+		{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}.Debug|x64.Build.0 = Debug|x64
 		{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}.Debug|x86.Build.0 = Debug|Any CPU
 		{72FDE626-BB2C-4BA3-B2B5-EBB35881063B}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -297,8 +297,8 @@ Global
 		{85E71B4B-9276-4EC8-AADC-C849205F1EA8}.Release2|x86.Build.0 = Release2|x86
 		{F998308D-2EA5-4427-9038-C157F22CACEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F998308D-2EA5-4427-9038-C157F22CACEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F998308D-2EA5-4427-9038-C157F22CACEC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F998308D-2EA5-4427-9038-C157F22CACEC}.Debug|x64.Build.0 = Debug|Any CPU
+		{F998308D-2EA5-4427-9038-C157F22CACEC}.Debug|x64.ActiveCfg = Debug|x64
+		{F998308D-2EA5-4427-9038-C157F22CACEC}.Debug|x64.Build.0 = Debug|x64
 		{F998308D-2EA5-4427-9038-C157F22CACEC}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{F998308D-2EA5-4427-9038-C157F22CACEC}.Debug|x86.Build.0 = Debug|Any CPU
 		{F998308D-2EA5-4427-9038-C157F22CACEC}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU

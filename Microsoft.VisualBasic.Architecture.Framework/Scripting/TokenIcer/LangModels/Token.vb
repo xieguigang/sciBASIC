@@ -29,6 +29,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace Scripting.TokenIcer
 
@@ -48,21 +49,33 @@ Namespace Scripting.TokenIcer
         <XmlAttribute("name")> Public Property name As Tokens
 
         ''' <summary>
+        ''' 函数参数列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Arguments As Statement(Of Tokens)()
+        ''' <summary>
+        ''' 这个token所拥有的闭包下一级代码，这个属性的值可以看作为具体的函数体
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Closure As Main(Of Tokens)
+
+        ''' <summary>
         ''' The text that makes up the token.
         ''' </summary>
         ''' <returns></returns>
         <XmlText> Public Property Value As String Implements Value(Of String).IValueOf.value
 
         ''' <summary>
-        ''' 务必要保持0为未定义
+        ''' You must keep the UNDEFINED type equals to ZERO!.
+        ''' (务必要保持0为未定义，如果不是使用零来定义未定义类型，则不能够使用这个属性来判断)
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property UNDEFINED As Boolean
+        Public ReadOnly Property UNDEFINED(Optional int% = 0) As Boolean
             Get
                 If TypeOf name Is [Enum] OrElse TypeOf name Is Integer Then
                     Dim o As Object = name
                     Dim i As Integer = CInt(o)
-                    If i = 0 Then
+                    If i = int Then
                         Return True
                     End If
                 End If
@@ -72,12 +85,21 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
+        ''' <summary>
+        ''' The token type, this property is an alias of <see cref="name"/> property
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Type As Tokens
             Get
                 Return name
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets the text value that make up this token value, this readonly property 
+        ''' is an alias of the <see cref="Value"/> property.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Text As String
             Get
                 Return Value
@@ -94,9 +116,6 @@ Namespace Scripting.TokenIcer
                 Return Information.IsNumeric(Text)
             End Get
         End Property
-
-        Public Property Arguments As Statement(Of Tokens)()
-        Public Property Closure As Main(Of Tokens)
 
         Public Sub New(name As Tokens, value$)
             Me.name = name
@@ -123,10 +142,16 @@ Namespace Scripting.TokenIcer
     End Class
 
     ''' <summary>
-    ''' 
+    ''' The statement line that parsing from the script text
     ''' </summary>
     Public Class Statement(Of T As IComparable)
+
         <XmlElement("t")> Public Property tokens As Token(Of T)()
+        ''' <summary>
+        ''' The script text raw data?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Trace As LineValue
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

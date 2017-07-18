@@ -40,8 +40,8 @@ Namespace Scripting
                 Return False
             End If
 
-            Return Tokens(c) = Mathematical.Scripting.Tokens.OpenStack OrElse
-                Tokens(c) = Mathematical.Scripting.Tokens.OpenBracket
+            Return Tokens(c) = ExpressionTokens.OpenStack OrElse
+                Tokens(c) = ExpressionTokens.OpenBracket
         End Function
 
         Public Function IsCloseStack(c As Char) As Boolean
@@ -49,45 +49,45 @@ Namespace Scripting
                 Return False
             End If
 
-            Return Tokens(c) = Mathematical.Scripting.Tokens.CloseBracket OrElse
-                Tokens(c) = Mathematical.Scripting.Tokens.CloseStack
+            Return Tokens(c) = ExpressionTokens.CloseBracket OrElse
+                Tokens(c) = ExpressionTokens.CloseStack
         End Function
 
-        Public ReadOnly Property Tokens As IReadOnlyDictionary(Of Char, Tokens) =
-            New Dictionary(Of Char, Tokens) From {
+        Public ReadOnly Property Tokens As IReadOnlyDictionary(Of Char, ExpressionTokens) =
+            New Dictionary(Of Char, ExpressionTokens) From {
  _
-                {"0"c, Mathematical.Scripting.Tokens.Number},  ' Numbers
-                {"1"c, Mathematical.Scripting.Tokens.Number},
-                {"2"c, Mathematical.Scripting.Tokens.Number},
-                {"3"c, Mathematical.Scripting.Tokens.Number},
-                {"4"c, Mathematical.Scripting.Tokens.Number},
-                {"5"c, Mathematical.Scripting.Tokens.Number},
-                {"6"c, Mathematical.Scripting.Tokens.Number},
-                {"7"c, Mathematical.Scripting.Tokens.Number},
-                {"8"c, Mathematical.Scripting.Tokens.Number},
-                {"9"c, Mathematical.Scripting.Tokens.Number},
-                {"."c, Mathematical.Scripting.Tokens.Number},
+                {"0"c, ExpressionTokens.Number},  ' Numbers
+                {"1"c, ExpressionTokens.Number},
+                {"2"c, ExpressionTokens.Number},
+                {"3"c, ExpressionTokens.Number},
+                {"4"c, ExpressionTokens.Number},
+                {"5"c, ExpressionTokens.Number},
+                {"6"c, ExpressionTokens.Number},
+                {"7"c, ExpressionTokens.Number},
+                {"8"c, ExpressionTokens.Number},
+                {"9"c, ExpressionTokens.Number},
+                {"."c, ExpressionTokens.Number},
  _
-                {"+"c, Mathematical.Scripting.Tokens.Operator},  ' Operators
-                {"-"c, Mathematical.Scripting.Tokens.Operator},
-                {"*"c, Mathematical.Scripting.Tokens.Operator},
-                {"/"c, Mathematical.Scripting.Tokens.Operator},
-                {"!"c, Mathematical.Scripting.Tokens.Operator},
-                {"%"c, Mathematical.Scripting.Tokens.Operator},
-                {"^"c, Mathematical.Scripting.Tokens.Operator},
+                {"+"c, ExpressionTokens.Operator},  ' Operators
+                {"-"c, ExpressionTokens.Operator},
+                {"*"c, ExpressionTokens.Operator},
+                {"/"c, ExpressionTokens.Operator},
+                {"!"c, ExpressionTokens.Operator},
+                {"%"c, ExpressionTokens.Operator},
+                {"^"c, ExpressionTokens.Operator},
  _
-                {"["c, Mathematical.Scripting.Tokens.OpenBracket},  ' Brackets
-                {"]"c, Mathematical.Scripting.Tokens.OpenBracket},
-                {"{"c, Mathematical.Scripting.Tokens.CloseBracket},
-                {"}"c, Mathematical.Scripting.Tokens.CloseBracket},
+                {"["c, ExpressionTokens.OpenBracket},  ' Brackets
+                {"]"c, ExpressionTokens.OpenBracket},
+                {"{"c, ExpressionTokens.CloseBracket},
+                {"}"c, ExpressionTokens.CloseBracket},
  _
-                {"("c, Mathematical.Scripting.Tokens.OpenStack},  ' Stacks 
-                {")"c, Mathematical.Scripting.Tokens.CloseStack},
+                {"("c, ExpressionTokens.OpenStack},  ' Stacks 
+                {")"c, ExpressionTokens.CloseStack},
  _
-                {" "c, Mathematical.Scripting.Tokens.WhiteSpace},    ' White Space
-                {ASCII.TAB, Mathematical.Scripting.Tokens.WhiteSpace},
+                {" "c, ExpressionTokens.WhiteSpace},    ' White Space
+                {ASCII.TAB, ExpressionTokens.WhiteSpace},
  _
-                {","c, Mathematical.Scripting.Tokens.Delimiter}
+                {","c, ExpressionTokens.Delimiter}
             }
 
         ''' <summary>
@@ -95,16 +95,16 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
-        Public Function TryParse(s As String) As List(Of Token(Of Tokens))
+        Public Function TryParse(s As String) As List(Of Token(Of ExpressionTokens))
             Dim str As CharEnumerator = s.GetEnumerator
-            Dim tokens As New List(Of Token(Of Tokens))
+            Dim tokens As New List(Of Token(Of ExpressionTokens))
             Dim ch As Char
             Dim token As New List(Of Char)
-            Dim type As Tokens = Mathematical.Scripting.Tokens.UNDEFINE
+            Dim type As ExpressionTokens = ExpressionTokens.UNDEFINE
             Dim exitb As Boolean = False
 
             If Not str.MoveNext() Then  ' Empty expression
-                Return New List(Of Token(Of Tokens))
+                Return New List(Of Token(Of ExpressionTokens))
             End If
 
             Do While True
@@ -115,19 +115,19 @@ Namespace Scripting
                     type = TokenIcer.Tokens(ch)
 
                     Select Case type
-                        Case Mathematical.Scripting.Tokens.Number
+                        Case ExpressionTokens.Number
                             exitb = str.__parseDouble(token)
-                            tokens += New Token(Of Tokens)(type, New String(token))
-                        Case Mathematical.Scripting.Tokens.WhiteSpace ' Ignore white space
+                            tokens += New Token(Of ExpressionTokens)(type, New String(token))
+                        Case ExpressionTokens.WhiteSpace ' Ignore white space
                             exitb = str.MoveNext
                         Case Else
-                            tokens += New Token(Of Tokens)(type, CStr(ch))
+                            tokens += New Token(Of ExpressionTokens)(type, CStr(ch))
                             exitb = str.MoveNext()
                     End Select
                 Else
                     exitb = str.__parseUNDEFINE(token)
-                    type = Mathematical.Scripting.Tokens.UNDEFINE
-                    tokens += New Token(Of Tokens)(type, New String(token))
+                    type = ExpressionTokens.UNDEFINE
+                    tokens += New Token(Of ExpressionTokens)(type, New String(token))
                 End If
 
                 If Not exitb Then
@@ -150,7 +150,7 @@ Namespace Scripting
             Do While str.MoveNext
                 If Not Tokens.ContainsKey(str.Current) Then
                     Return True
-                ElseIf Not Tokens(str.Current) = Mathematical.Scripting.Tokens.Number Then
+                ElseIf Not Tokens(str.Current) = ExpressionTokens.Number Then
                     Return True
                 Else
                     Call token.Add(str.Current)
@@ -167,11 +167,11 @@ Namespace Scripting
                 Else
                     ' If next is operator or white space then exit parser
                     Select Case Tokens(str.Current)
-                        Case Mathematical.Scripting.Tokens.WhiteSpace, Mathematical.Scripting.Tokens.Operator
+                        Case ExpressionTokens.WhiteSpace, ExpressionTokens.Operator
                             Return True
-                        Case Mathematical.Scripting.Tokens.OpenBracket, Mathematical.Scripting.Tokens.OpenStack,  ' Probably is a function calls
-                         Mathematical.Scripting.Tokens.CloseBracket, Mathematical.Scripting.Tokens.CloseStack,
-                         Mathematical.Scripting.Tokens.Delimiter
+                        Case ExpressionTokens.OpenBracket, ExpressionTokens.OpenStack,  ' Probably is a function calls
+                         ExpressionTokens.CloseBracket, ExpressionTokens.CloseStack,
+                         ExpressionTokens.Delimiter
                             Return True
                         Case Else
                             Call token.Add(str.Current)
@@ -183,7 +183,7 @@ Namespace Scripting
         End Function
     End Module
 
-    Public Enum Tokens
+    Public Enum ExpressionTokens
 
         ''' <summary>
         ''' Function Name, constant, variable

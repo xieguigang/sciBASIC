@@ -32,6 +32,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports sys = System.Math
 
 Namespace Graphic.Legend
 
@@ -54,7 +55,7 @@ Namespace Graphic.Legend
             Select Case l.style
 
                 Case LegendStyles.Circle
-                    Dim r As Single = Math.Min(graphicsSize.Height, graphicsSize.Width) / 2
+                    Dim r As Single = sys.Min(graphicsSize.Height, graphicsSize.Width) / 2
                     Dim c As New Point(pos.X + graphicsSize.Width / 2,
                                        pos.Y + graphicsSize.Height / 2)
 
@@ -73,7 +74,7 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Diamond
 
-                    Dim d As Integer = Math.Min(graphicsSize.Height, graphicsSize.Width)
+                    Dim d As Integer = sys.Min(graphicsSize.Height, graphicsSize.Width)
                     Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
                                              pos.Y + (graphicsSize.Height - d) / 2)
                     Dim b As New SolidBrush(l.color.ToColor)
@@ -82,7 +83,7 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Hexagon
 
-                    Dim d As Integer = Math.Min(graphicsSize.Height, graphicsSize.Width)
+                    Dim d As Integer = sys.Min(graphicsSize.Height, graphicsSize.Width)
                     Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
                                              pos.Y + (graphicsSize.Height - d) / 2)
                     Dim b As New SolidBrush(l.color.ToColor)
@@ -113,7 +114,7 @@ Namespace Graphic.Legend
                         New SolidBrush(l.color.ToColor), border)
 
                 Case LegendStyles.Square
-                    Dim r As Single = Math.Min(graphicsSize.Height, graphicsSize.Width)
+                    Dim r As Single = sys.Min(graphicsSize.Height, graphicsSize.Width)
                     Dim location As New Point(
                         pos.X + graphicsSize.Width - r,
                         pos.Y + graphicsSize.Height - r)
@@ -136,7 +137,7 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Triangle
 
-                    Dim d As Integer = Math.Min(graphicsSize.Height, graphicsSize.Width)
+                    Dim d As Integer = sys.Min(graphicsSize.Height, graphicsSize.Width)
                     Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
                                              pos.Y + (graphicsSize.Height - d) / 2)
 

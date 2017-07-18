@@ -215,6 +215,11 @@ Public Module KeyValuePairExtensions
         Return nc
     End Function
 
+    ''' <summary>
+    ''' 获取得到的集合对象是一个安全的集合对象，不存在的键名会直接返回空值
+    ''' </summary>
+    ''' <param name="maps"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function NameValueCollection(maps As IEnumerable(Of NamedValue(Of String))) As NameValueCollection
         Dim nc As New NameValueCollection
@@ -245,6 +250,13 @@ Public Module KeyValuePairExtensions
         table = out
     End Sub
 
+    ''' <summary>
+    ''' 按照键名对字典进行重新排序
+    ''' </summary>
+    ''' <typeparam name="V"></typeparam>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="desc">默认为从小到大的升序排序</param>
     <Extension> Public Sub SortByKey(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
         Dim orders As V()
         Dim out As New Dictionary(Of V, T)
@@ -390,6 +402,15 @@ Public Module KeyValuePairExtensions
         End If
     End Function
 
+    ''' <summary>
+    ''' 一次性地使用一个键名的集合从字典之中选出一组数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="d"></param>
+    ''' <param name="keys"></param>
+    ''' <param name="skipNonExist"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Selects(Of T, V)(d As Dictionary(Of T, V), keys As IEnumerable(Of T), Optional skipNonExist As Boolean = False) As V()
         If skipNonExist Then

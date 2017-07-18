@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Histogram
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Graphic
@@ -179,7 +179,8 @@ Namespace Graphic
                     .errPlus = p.errPlus,
                     .Tag = p.Tag,
                     .value = p.value,
-                    .Statics = p.Statics
+                    .Statics = p.Statics,
+                    .color = p.color
                 }
 
                 Yield New SerialData With {

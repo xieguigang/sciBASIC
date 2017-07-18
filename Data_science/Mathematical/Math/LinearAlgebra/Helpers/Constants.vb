@@ -38,8 +38,8 @@
 '        ''' </summary>
 '        ''' <remarks></remarks>
 '        Friend Constants As Dictionary(Of String, BasicR.MATRIX) = New Dictionary(Of String, BasicR.MATRIX) From {
-'            {"e", Math.E},
-'            {"pi", Math.PI}}
+'            {"e", sys.E},
+'            {"pi", sys.PI}}
 
 '        Public Const LEFT_OPERATOR_TOKENS As String = "+-*/\^(,"
 '        Public Const RIGHT_OPERATOR_TOKENS As String = "+-*/\^)!,"

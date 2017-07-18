@@ -30,12 +30,12 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Runtime.CompilerServices
 
-Namespace Mathematical.StatisticsMathExtensions
+Namespace Math.StatisticsMathExtensions
 
     Public Module EnumerableStatsMode
 
         <Extension>
-        Public Function Modes(Of T As Structure)(source As IEnumerable(Of System.Nullable(Of T))) As IEnumerable(Of T)
+        Public Function Modes(Of T As Structure)(source As IEnumerable(Of T?)) As IEnumerable(Of T)
             Dim values As IEnumerable(Of T) = source.Coalesce()
             If values.Any() Then
                 Return values.Modes
@@ -49,7 +49,7 @@ Namespace Mathematical.StatisticsMathExtensions
             Dim modes__1 As New List(Of T)()
 
             Dim current As IEnumerable(Of T) = source
-            Dim mode As System.Nullable(Of T) = current.Mode
+            Dim mode As T? = current.Mode
             While mode.HasValue AndAlso current.Count() > 1
                 modes__1.Add(CType(mode, T))
                 current = current.Where(Function(x) x.Equals(mode) = False).ToArray()
@@ -59,7 +59,7 @@ Namespace Mathematical.StatisticsMathExtensions
         End Function
 
         <Extension>
-        Public Function Mode(Of T As Structure)(source As IEnumerable(Of System.Nullable(Of T))) As System.Nullable(Of T)
+        Public Function Mode(Of T As Structure)(source As IEnumerable(Of T?)) As T
             Dim values As IEnumerable(Of T) = source.Coalesce()
             If values.Any() Then
                 Return values.Mode
@@ -69,13 +69,13 @@ Namespace Mathematical.StatisticsMathExtensions
         End Function
 
         <Extension>
-        Public Function Mode(Of T As Structure)(source As IEnumerable(Of T)) As System.Nullable(Of T)
+        Public Function Mode(Of T As Structure)(source As IEnumerable(Of T)) As T
             Dim sortedList = From number In source Order By number Select number
 
             Dim count As Integer = 0
             Dim max As Integer = 0
             Dim current As T = Nothing
-            Dim mode__1 As New System.Nullable(Of T)()
+            Dim mode__1 As New T?()
 
             For Each [next] As T In sortedList
                 If current.Equals([next]) = False Then
@@ -99,12 +99,12 @@ Namespace Mathematical.StatisticsMathExtensions
         End Function
 
         <Extension>
-        Public Function Mode(Of TSource, TMode As Structure)(source As IEnumerable(Of TSource), selector As Func(Of TSource, TMode)) As System.Nullable(Of TMode)
+        Public Function Mode(Of TSource, TMode As Structure)(source As IEnumerable(Of TSource), selector As Func(Of TSource, TMode)) As TMode
             Return source.[Select](selector).Mode
         End Function
 
         <Extension>
-        Public Function Mode(Of TSource, TMode As Structure)(source As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of TMode))) As System.Nullable(Of TMode)
+        Public Function Mode(Of TSource, TMode As Structure)(source As IEnumerable(Of TSource), selector As Func(Of TSource, TMode?)) As TMode
             Return source.[Select](selector).Mode
         End Function
     End Module

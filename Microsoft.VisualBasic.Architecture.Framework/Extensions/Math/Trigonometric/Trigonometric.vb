@@ -28,8 +28,9 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports sys = System.Math
 
-Namespace Mathematical
+Namespace Math
 
     Public Module Trigonometric
 
@@ -42,11 +43,11 @@ Namespace Mathematical
         ''' <returns></returns>
         <Extension> Public Function ToPoint(r#, alpha!, Optional fromDegree As Boolean = True) As PointF
             If fromDegree Then
-                alpha = alpha * Math.PI / 180
+                alpha = alpha * sys.PI / 180
             End If
 
-            Dim x = r * Math.Cos(alpha)
-            Dim y = r * Math.Sin(alpha)
+            Dim x = r * sys.Cos(alpha)
+            Dim y = r * sys.Sin(alpha)
 
             Return New PointF(x, y)
         End Function
@@ -57,8 +58,8 @@ Namespace Mathematical
         ''' <param name="radian">``0 -> 2*<see cref="Math.PI"/>``</param>
         ''' <returns></returns>
         Public Function GetAngleVector(radian As Single, Optional r As Double = 1) As PointF
-            Dim x = Math.Cos(radian) * r
-            Dim y = Math.Sin(radian) * r
+            Dim x = sys.Cos(radian) * r
+            Dim y = sys.Sin(radian) * r
 
             Return New PointF(x, y)
         End Function
@@ -70,29 +71,29 @@ Namespace Mathematical
         ''' <returns></returns>
         <Extension>
         Public Function Angle(p As PointF) As Double
-            Dim a As Double = Math.Atan2(p.Y, p.X)
+            Dim a As Double = sys.Atan2(p.Y, p.X)
             Return a
         End Function
 
         Public Function Distance(a As Point, b As Point) As Double
-            Return Math.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
+            Return sys.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
 
         Public Function Distance(a As PointF, b As PointF) As Double
-            Return Math.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
+            Return sys.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
 
         Public Function GetAngle(p1 As Point, p2 As Point) As Double
             Dim xDiff As Double = p2.X - p1.X
             Dim yDiff As Double = p2.Y - p1.Y
-            Return 180 - (toDegrees(Math.Atan2(yDiff, xDiff)) - 90)
+            Return 180 - (ToDegrees(sys.Atan2(yDiff, xDiff)) - 90)
         End Function
 
         <Extension>
         Public Function MovePoint(p As Point, angle As Double, distance As Integer) As Point
             p = New Point(p)
-            p.X += distance * Math.Sin(angle)
-            p.Y += distance * Math.Cos(angle)
+            p.X += distance * sys.Sin(angle)
+            p.Y += distance * sys.Cos(angle)
 
             Return p
         End Function
@@ -106,8 +107,8 @@ Namespace Mathematical
         ''' <returns>  the measurement of the angle {@code angdeg}
         '''          in radians.
         ''' @since   1.2 </returns>
-        Public Function toRadians(angdeg As Double) As Double
-            Return angdeg / 180.0 * Math.PI
+        <Extension> Public Function ToRadians(angdeg As Double) As Double
+            Return angdeg / 180.0 * sys.PI
         End Function
 
         ''' <summary>
@@ -121,14 +122,14 @@ Namespace Mathematical
         ''' <returns>  the measurement of the angle {@code angrad}
         '''          in degrees.
         ''' @since   1.2 </returns>
-        Public Function toDegrees(angrad As Double) As Double
-            Return angrad * 180.0 / Math.PI
+        <Extension> Public Function ToDegrees(angrad As Double) As Double
+            Return angrad * 180.0 / sys.PI
         End Function
 
         <Extension>
         Public Function NearestPoint(points As IEnumerable(Of Point), x As Integer, y As Integer, radius As Integer) As Point
             For Each pos As Point In points
-                Dim dist As Double = Math.Sqrt(Math.Pow(x - pos.X, 2) + Math.Pow(y - pos.Y, 2))
+                Dim dist As Double = sys.Sqrt((x - pos.X) ^ 2 + sys.Pow(y - pos.Y, 2))
                 If dist <= radius Then
                     Return pos
                 End If

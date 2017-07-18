@@ -31,6 +31,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports sys = System.Math
 
 Namespace Text.Levenshtein
 
@@ -146,7 +147,7 @@ Namespace Text.Levenshtein
                 .ToArray(Function(row)
                              Dim values#() = row _
                                  .Values _
-                                 .ToArray(Function(n) Math.Round(n, l))
+                                 .ToArray(Function(n) sys.Round(n, l))
                              Return New Streams.Array.Double With {
                                  .Values = values
                              }

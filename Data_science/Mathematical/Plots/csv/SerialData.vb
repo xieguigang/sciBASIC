@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Interpolation
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace csv

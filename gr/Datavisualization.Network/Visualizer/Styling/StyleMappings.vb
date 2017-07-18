@@ -38,8 +38,8 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Quantile
-Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Styling
 
@@ -84,7 +84,7 @@ Namespace Styling
         End Function
 
         <Extension>
-        Public Function NumericMapping(Of T As INetComponent)(source As IEnumerable(Of T), key$, range As DoubleRange) As Map(Of T, Double)()
+        Public Function NumericMapping(Of T As IDynamicsTable)(source As IEnumerable(Of T), key$, range As DoubleRange) As Map(Of T, Double)()
             Dim properties = GetProperty(Of T)()
             Dim array As T() = source.ToArray
             Dim flag As T = array(Scan0)
@@ -164,7 +164,7 @@ Namespace Styling
         ''' <param name="level%"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ColorMapping(Of T As INetComponent)(source As IEnumerable(Of T), key$, colorSchema$, Optional level% = 100) As Map(Of T, Color)()
+        Public Function ColorMapping(Of T As IDynamicsTable)(source As IEnumerable(Of T), key$, colorSchema$, Optional level% = 100) As Map(Of T, Color)()
             Dim levels As Map(Of T, Double)() = source.NumericMapping(key, "0 -> 1")
             Dim out As New List(Of Map(Of T, Color))
             Dim colors As Color() = Designer.GetColors(colorSchema, level)

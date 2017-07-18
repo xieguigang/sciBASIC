@@ -278,7 +278,7 @@ Namespace StorageProvider.ComponentModels
                 MetaRow.BindProperty.GetValue(obj, Nothing)
 
             If source Is Nothing Then
-                Return _metaBlank.CopyVector(__cachedIndex.Length)
+                Return _metaBlank.Repeats(__cachedIndex.Length)
             End If
 
             Dim values As String() = New String(Me.__cachedIndex.Length - 1) {}

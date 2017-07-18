@@ -32,8 +32,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
-Namespace Mathematical
+Namespace Math
 
     <PackageNamespace("ScaleMaps",
                   Category:=APICategories.UtilityTools,
@@ -110,7 +111,7 @@ Namespace Mathematical
             Dim d As Double = MaxValue - MinValue
 
             If d = 0R Then ' 所有的值都是一样的，则都是同等级的
-                Return 1.CopyVector(array.Length)
+                Return 1.Repeats(array.Length)
             End If
 
             Dim chunkBuf As Integer() = New Integer(array.Length - 1) {}
@@ -126,13 +127,13 @@ Namespace Mathematical
 
         <Extension>
         Public Function LogLevels(data As IEnumerable(Of Double), base%, Optional level As Integer = 100) As Integer()
-            Dim logvalues = data.ToArray(Function(x) Math.Log(x, base))
+            Dim logvalues = data.ToArray(Function(x) sys.Log(x, base))
             Return logvalues.GenerateMapping(level)
         End Function
 
         <ExportAPI("Ranks.Log2")>
         <Extension> Public Function Log2Ranks(data As IEnumerable(Of Double), Optional Level As Integer = 100) As Integer()
-            Dim log2Value = data.ToArray(Function(x) Math.Log(x, 2))
+            Dim log2Value = data.ToArray(Function(x) sys.Log(x, 2))
             Return log2Value.GenerateMapping(Level)
         End Function
 
@@ -178,7 +179,7 @@ Namespace Mathematical
                               Optional isScale As Boolean = True) As Double()
 
             Dim avg As Double = data.Average
-            Dim rms As Double = VBMathExtensions.RMS(data)
+            Dim rms As Double = VBMath.RMS(data)
 
             If center Then
                 data = (From n In data Select n - avg).ToArray

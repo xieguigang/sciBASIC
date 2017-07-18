@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Mathematical.Correlations
+Namespace Math.Correlations
 
     ''' <summary>
     ''' A **ranking** is a relationship between a set of items such that, for any two items, 

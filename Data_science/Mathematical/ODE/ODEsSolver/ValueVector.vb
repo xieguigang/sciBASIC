@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class ValueVector : Inherits int
 
-    Public Property Y As Dictionary(Of NamedValue(Of Double()))
+    Public Property Y As Dictionary(Of NamedCollection(Of Double))
 
     Default Public Overloads Property Value(name$) As Double
         Get

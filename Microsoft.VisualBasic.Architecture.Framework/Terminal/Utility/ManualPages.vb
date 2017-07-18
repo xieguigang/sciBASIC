@@ -144,7 +144,7 @@ Namespace Terminal.Utility
         ''' </summary>
         ''' <param name="Pages"></param>
         ''' <remarks></remarks>
-        Sub New(Pages As String(), title As String)
+        Sub New(Pages As IEnumerable(Of String), title$)
             Call MyBase.New(Pages)
             Me.Title = title & vbCrLf & vbCrLf & Navigations
         End Sub

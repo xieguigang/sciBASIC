@@ -125,7 +125,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>X:\nuget_publish\x86\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>
@@ -222,6 +222,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DATA\DataFrame.vb" />
     <Compile Include="DATA\SQL.vb" />
     <Compile Include="IO\BackendWriter.vb" />
     <Compile Include="IO\Generic\Extensions.vb" />

@@ -1,32 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::91dab63741c15c412773aff58df5afba, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\Function.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Text
+Imports sys = System.Math
 
 Namespace Scripting.Helpers
 
@@ -45,32 +45,32 @@ Namespace Scripting.Helpers
         Protected Shared ReadOnly SystemPrefixFunctions As Dictionary(Of String, Func(Of Double(), Double)) =
             New Dictionary(Of String, Func(Of Double(), Double)) From {
  _
-                {"abs", Function(args) Math.Abs(args(Scan0))},
-                {"acos", Function(args) Math.Acos(args(Scan0))},
-                {"asin", Function(args) Math.Asin(args(Scan0))},
-                {"atan", Function(args) Math.Atan(args(Scan0))},
-                {"atan2", Function(args) Math.Atan2(args(Scan0), args(1))},
-                {"bigmul", Function(args) Math.BigMul(args(Scan0), args(1))},
-                {"ceiling", Function(args) Math.Ceiling(args(Scan0))},
-                {"cos", Function(args) Math.Cos(args(Scan0))},
-                {"cosh", Function(args) Math.Cosh(args(Scan0))},
-                {"exp", Function(args) Math.Exp(args(Scan0))},
-                {"floor", Function(args) Math.Floor(args(Scan0))},
-                {"ieeeremainder", Function(args) Math.IEEERemainder(args(Scan0), args(1))},
-                {"log", Function(args) Math.Log(args(Scan0), newBase:=args(1))},
-                {"ln", Function(args) Math.Log(args(Scan0))},
-                {"log10", Function(args) Math.Log10(args(Scan0))},
-                {"max", Function(args) Math.Max(args(Scan0), args(1))},
-                {"min", Function(args) Math.Min(args(Scan0), args(1))},
-                {"pow", Function(args) Math.Pow(args(Scan0), args(1))},
-                {"round", Function(args) Math.Round(args(Scan0))},
-                {"sign", Function(args) Math.Sign(args(Scan0))},
-                {"sin", Function(args) Math.Sin(args(Scan0))},
-                {"sinh", Function(args) Math.Sinh(args(Scan0))},
-                {"sqrt", Function(args) Math.Sqrt(args(Scan0))},
-                {"tan", Function(args) Math.Tan(args(Scan0))},
-                {"tanh", Function(args) Math.Tanh(args(Scan0))},
-                {"truncate", Function(args) Math.Truncate(args(Scan0))},
+                {"abs", Function(args) sys.Abs(args(Scan0))},
+                {"acos", Function(args) sys.Acos(args(Scan0))},
+                {"asin", Function(args) sys.Asin(args(Scan0))},
+                {"atan", Function(args) sys.Atan(args(Scan0))},
+                {"atan2", Function(args) sys.Atan2(args(Scan0), args(1))},
+                {"bigmul", Function(args) sys.BigMul(args(Scan0), args(1))},
+                {"ceiling", Function(args) sys.Ceiling(args(Scan0))},
+                {"cos", Function(args) sys.Cos(args(Scan0))},
+                {"cosh", Function(args) sys.Cosh(args(Scan0))},
+                {"exp", Function(args) sys.Exp(args(Scan0))},
+                {"floor", Function(args) sys.Floor(args(Scan0))},
+                {"ieeeremainder", Function(args) sys.IEEERemainder(args(Scan0), args(1))},
+                {"log", Function(args) sys.Log(args(Scan0), newBase:=args(1))},
+                {"ln", Function(args) sys.Log(args(Scan0))},
+                {"log10", Function(args) sys.Log10(args(Scan0))},
+                {"max", Function(args) sys.Max(args(Scan0), args(1))},
+                {"min", Function(args) sys.Min(args(Scan0), args(1))},
+                {"pow", Function(args) sys.Pow(args(Scan0), args(1))},
+                {"round", Function(args) sys.Round(args(Scan0))},
+                {"sign", Function(args) sys.Sign(args(Scan0))},
+                {"sin", Function(args) sys.Sin(args(Scan0))},
+                {"sinh", Function(args) sys.Sinh(args(Scan0))},
+                {"sqrt", Function(args) sys.Sqrt(args(Scan0))},
+                {"tan", Function(args) sys.Tan(args(Scan0))},
+                {"tanh", Function(args) sys.Tanh(args(Scan0))},
+                {"truncate", Function(args) sys.Truncate(args(Scan0))},
                 {"rnd", Function(args) RND(args(Scan0), args(1))},
                 {"int", Function(args) CType(args(Scan0), Integer)},
                 {String.Empty, Function(args) args(Scan0)} ' If no function name, then return the paramenter a directly. 

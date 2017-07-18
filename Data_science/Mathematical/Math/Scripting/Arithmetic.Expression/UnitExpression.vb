@@ -28,7 +28,7 @@
 
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Mathematical.Scripting.Helpers
+Imports Microsoft.VisualBasic.Math.Scripting.Helpers
 
 Namespace Scripting.Types
 

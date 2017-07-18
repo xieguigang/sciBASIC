@@ -27,8 +27,8 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Mathematical.Scripting.Helpers
-Imports Microsoft.VisualBasic.Mathematical.Scripting.Types
+Imports Microsoft.VisualBasic.Math.Scripting.Helpers
+Imports Microsoft.VisualBasic.Math.Scripting.Types
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 

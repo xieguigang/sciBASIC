@@ -113,12 +113,20 @@ Namespace Language.UnixBash.FileSystem
             End If
         End Function
 
-        Public Sub Close(file As Integer)
-            If ___opendHandles.ContainsKey(file) Then
-                Call ___opendHandles.Remove(file)
-            Else
-                ' Do Nothing.
-            End If
+        ''' <summary>
+        ''' 不存在的文件句柄会在这个函数之中被忽略掉
+        ''' </summary>
+        ''' <param name="file%"></param>
+        Public Sub Close(file%)
+            SyncLock ___opendHandles
+                With ___opendHandles
+                    If .ContainsKey(file) Then
+                        Call .Remove(file)
+                    Else
+                        ' Do Nothing.
+                    End If
+                End With
+            End SyncLock
         End Sub
 
         Dim __handle As Value(Of Integer) = New Value(Of Integer)(Integer.MinValue)
@@ -129,7 +137,7 @@ Namespace Language.UnixBash.FileSystem
         ''' <param name="file"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Public Function OpenHandle(file As String, Optional encoding As Encodings = Encodings.UTF8) As Integer
+        <Extension> Public Function OpenHandle(file$, Optional encoding As Encodings = Encodings.UTF8) As Integer
             If String.IsNullOrEmpty(file) Then
                 Throw New NullReferenceException("File handle null pointer!")
             End If

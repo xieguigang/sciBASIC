@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 
@@ -109,7 +110,7 @@ Namespace Drawing3D.Device
             Dim i3 As Double = j * k2 - j2 * k
             Dim j3 As Double = -1 * (i * k2 - i2 * k)
             Dim k3 As Double = i * j2 - i2 * j
-            Dim magnitude As Double = Math.Sqrt(i3 * i3 + j3 * j3 + k3 * k3)
+            Dim magnitude As Double = Sqrt(i3 * i3 + j3 * j3 + k3 * k3)
 
             i = If(magnitude = 0, 0, i3 / magnitude)
             j = If(magnitude = 0, 0, j3 / magnitude)

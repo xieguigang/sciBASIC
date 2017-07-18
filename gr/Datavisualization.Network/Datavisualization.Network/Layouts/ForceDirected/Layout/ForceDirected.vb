@@ -170,7 +170,9 @@ Namespace Layouts
             Return m_edgeSprings(iEdge.ID)
         End Function
 
-        ' TODO: change this for group only after node grouping
+        ''' <summary>
+        ''' 库仑法则，所有的节点之间都存在着斥力
+        ''' </summary>
         Protected Sub applyCoulombsLaw()
             For Each n1 As Node In graph.nodes
                 Dim point1 As LayoutPoint = GetPoint(n1)
@@ -203,6 +205,9 @@ Namespace Layouts
             Next
         End Sub
 
+        ''' <summary>
+        ''' 弹簧力，所有的通过边连接的节点间都存在着弹簧的牵引力
+        ''' </summary>
         Protected Sub applyHookesLaw()
             For Each e As Edge In graph.edges
                 Dim spring As Spring = GetSpring(e)

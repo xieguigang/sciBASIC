@@ -39,7 +39,7 @@ Namespace Parallel.Tasks
     ''' </summary>
     Public Class UpdateThread : Inherits ICallbackInvoke
         Implements IDisposable
-        Implements IObjectModel_Driver
+        Implements ITaskDriver
         Implements ITimer
 
         ''' <summary>
@@ -90,7 +90,7 @@ Namespace Parallel.Tasks
         ''' <summary>
         ''' 运行这条线程，假若更新线程已经在运行了，则会自动忽略这次调用
         ''' </summary>
-        Public Function Start() As Integer Implements IObjectModel_Driver.Run
+        Public Function Start() As Integer Implements ITaskDriver.Run
             If Running Then
                 Return 2
             Else

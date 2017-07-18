@@ -122,11 +122,6 @@ Namespace Terminal
             Return s
         End Function
 
-        <ExportAPI("Pause")>
-        Public Function Pause() As Integer
-            Return Console.Read()
-        End Function
-
         Const ____ZERO As String =
                 "000000000000000000000000000000000000000000000000000000000000" &
                 "000000000000000000000000000000000000000000000000000000000000" &

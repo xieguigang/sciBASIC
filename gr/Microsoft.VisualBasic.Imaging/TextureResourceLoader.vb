@@ -73,7 +73,7 @@ Public Module TextureResourceLoader
 
     <ExportAPI("Texture.Color.Adjust")>
     Public Function AdjustColor(Image As Image, Color As Color) As Image
-        Dim res As hBitmap = hBitmap.FromImage(Image)
+        Dim res As BitmapBuffer = BitmapBuffer.FromImage(Image)
         Dim X, Y As Integer
 
         Do While True

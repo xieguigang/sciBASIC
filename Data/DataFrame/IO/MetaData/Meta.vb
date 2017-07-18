@@ -72,7 +72,7 @@ Namespace IO
                 Call out.Add(name, row.Value)
             Loop
 
-            i = p.Pointer
+            i = p.Position
 
             Return out
         End Function

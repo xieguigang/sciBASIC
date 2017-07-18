@@ -1,33 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::9ec4989da93c40e50357e30a5188172a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Java\MathUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic
-Imports System
+Imports sys = System.Math
 
 '
 ' * MathUtils.java
@@ -234,7 +233,7 @@ Namespace Language.Java
 
         ''' <returns> log of random variable in [0,1] </returns>
         Public Function randomLogDouble() As Double
-            Return Math.Log(nextDouble())
+            Return sys.Log(nextDouble())
         End Function
 
         ''' <summary>
@@ -242,7 +241,7 @@ Namespace Language.Java
         ''' </summary>
         Public Function nextExponential(lambda As Double) As Double
             SyncLock random
-                Return -1.0 * Math.Log(1 - random.nextDouble()) / lambda
+                Return -1.0 * sys.Log(1 - random.nextDouble()) / lambda
             End SyncLock
         End Function
 
@@ -259,7 +258,7 @@ Namespace Language.Java
                 ' distribution with a mean of 0
                 ' and 1 standard deviation
                 Dim y As Double = v * v
-                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * Math.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
+                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * sys.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
                 Dim test As Double = MathUtils.nextDouble() ' sample from a uniform
                 ' distribution between 0
                 ' and 1
@@ -384,7 +383,7 @@ Namespace Language.Java
         End Function
 
         'Public Function logHyperSphereVolume(dimension As Integer, radius As Double) As Double
-        '    Return dimension * (0.57236494292470008 + Math.Log(radius)) + -jebl.math.GammaFunction.lnGamma(dimension / 2.0 + 1.0)
+        '    Return dimension * (0.57236494292470008 + sys.Log(radius)) + -jebl.math.GammaFunction.lnGamma(dimension / 2.0 + 1.0)
         'End Function
 
         ''' <summary>
@@ -392,12 +391,12 @@ Namespace Language.Java
         ''' </summary>
         Public Function hypot(a As Double, b As Double) As Double
             Dim r As Double
-            If Math.Abs(a) > Math.Abs(b) Then
+            If sys.Abs(a) > sys.Abs(b) Then
                 r = b / a
-                r = Math.Abs(a) * Math.Sqrt(1 + r * r)
+                r = sys.Abs(a) * sys.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = Math.Abs(b) * Math.Sqrt(1 + r * r)
+                r = sys.Abs(b) * sys.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If

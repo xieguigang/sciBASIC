@@ -1,0 +1,1732 @@
+
+<!-- saved from url=(0036)https://cs.brown.edu/~rt/gdhandbook/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=macintosh">
+<meta name="Title" content="Handbook of Graph Drawing and Visualization">
+<meta name="Keywords" content="">
+
+<meta name="ProgId" content="Excel.Sheet">
+<meta name="Generator" content="Microsoft Excel 14">
+<link rel="File-List" href="https://cs.brown.edu/~rt/gdhandbook/contents_files/filelist.xml">
+<title>Handbook of Graph Drawing and Visualization</title>
+<style>
+<!--table
+	{mso-displayed-decimal-separator:"\.";
+	mso-displayed-thousand-separator:"\,";}
+@page
+	{margin:1.0in .75in 1.0in .75in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;}
+.style17
+	{mso-number-format:"_\(* \#\,\#\#0\.00_\)\;_\(* \\\(\#\,\#\#0\.00\\\)\;_\(* \0022-\0022??_\)\;_\(\@_\)";
+	mso-style-name:Comma;
+	mso-style-id:3;}
+.style16
+	{color:#0000D4;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-style-name:Hyperlink;
+	mso-style-id:8;}
+a:link
+	{color:#0000D4;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;}
+a:visited
+	{color:purple;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:Arial;
+	mso-generic-font-family:auto;
+	mso-font-charset:0;}
+.style0
+	{mso-number-format:General;
+	text-align:general;
+	vertical-align:bottom;
+	white-space:nowrap;
+	mso-rotate:0;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Arial;
+	mso-generic-font-family:auto;
+	mso-font-charset:0;
+	border:none;
+	mso-protection:locked visible;
+	mso-style-name:Normal;
+	mso-style-id:0;}
+td
+	{mso-style-parent:style0;
+	padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Arial;
+	mso-generic-font-family:auto;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:bottom;
+	border:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	mso-protection:locked visible;
+	white-space:nowrap;
+	mso-rotate:0;}
+.xl65
+	{mso-style-parent:style0;
+	text-align:center;}
+.xl66
+	{mso-style-parent:style0;
+	white-space:normal;}
+.xl67
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;}
+.xl68
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:top;
+	border:.5pt solid windowtext;
+	white-space:normal;}
+.xl69
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:top;
+	border:.5pt solid windowtext;}
+.xl70
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:top;
+	border:.5pt solid windowtext;
+	white-space:normal;}
+.xl71
+	{mso-style-parent:style0;
+	text-align:center;
+	white-space:normal;}
+.xl72
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;}
+.xl73
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;}
+.xl74
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl75
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl76
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	vertical-align:top;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;}
+.xl77
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;}
+.xl78
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;}
+.xl79
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl80
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl81
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;}
+.xl82
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl83
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;}
+.xl84
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;}
+.xl85
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl86
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:right;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl87
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;}
+.xl88
+	{mso-style-parent:style0;
+	font-size:11.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl89
+	{mso-style-parent:style16;
+	color:#0000D4;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:top;
+	border:.5pt solid windowtext;
+	white-space:normal;}
+.xl90
+	{mso-style-parent:style16;
+	color:#0000D4;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:top;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl91
+	{mso-style-parent:style16;
+	text-align:center;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	white-space:normal;}
+.xl92
+	{mso-style-parent:style16;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	white-space:normal;}
+.xl93
+	{mso-style-parent:style0;
+	mso-number-format:0;}
+.xl94
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;}
+.xl95
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;}
+.xl96
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mm\/dd\/yyyy";
+	text-align:center;}
+.xl97
+	{mso-style-parent:style17;
+	font-size:12.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"_\(* \#\,\#\#0\.00_\)\;_\(* \\\(\#\,\#\#0\.00\\\)\;_\(* \0022-\0022??_\)\;_\(\@_\)";}
+.xl98
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mm\/dd\/yyyy";
+	text-align:center;
+	background:#FCD5B4;
+	mso-pattern:black none;}
+.xl99
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mm\/dd\/yyyy";
+	text-align:center;
+	background:#D9D9D9;
+	mso-pattern:black none;}
+.xl100
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mm\/dd\/yyyy";
+	text-align:center;
+	background:#C4D79B;
+	mso-pattern:black none;}
+.xl101
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"mm\/dd\/yyyy";
+	text-align:center;
+	background:#76933C;
+	mso-pattern:black none;}
+.xl102
+	{mso-style-parent:style0;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;}
+.xl103
+	{mso-style-parent:style0;
+	color:black;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;}
+.xl104
+	{mso-style-parent:style0;
+	color:black;
+	font-size:12.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	padding-left:12px;
+	mso-char-indent-count:1;}
+.xl105
+	{mso-style-parent:style0;
+	text-align:center;
+	vertical-align:middle;}
+.xl106
+	{mso-style-parent:style0;
+	text-align:left;
+	vertical-align:middle;
+	white-space:normal;
+	padding-left:12px;
+	mso-char-indent-count:1;}
+.xl107
+	{mso-style-parent:style0;
+	text-align:left;
+	vertical-align:middle;
+	padding-left:12px;
+	mso-char-indent-count:1;}
+.xl108
+	{mso-style-parent:style0;
+	mso-number-format:"Short Date";
+	text-align:center;}
+.xl109
+	{mso-style-parent:style0;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:center;
+	vertical-align:middle;}
+.xl110
+	{mso-style-parent:style16;
+	color:#3366FF;
+	text-decoration:underline;
+	text-underline-style:single;
+	text-align:center;
+	vertical-align:middle;}
+.xl111
+	{mso-style-parent:style0;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;
+	vertical-align:middle;
+	padding-left:12px;
+	mso-char-indent-count:1;}
+.xl112
+	{mso-style-parent:style0;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:right;
+	vertical-align:middle;
+	white-space:normal;
+	padding-right:12px;
+	mso-char-indent-count:1;}
+.xl113
+	{mso-style-parent:style0;
+	text-align:center;
+	vertical-align:middle;
+	white-space:normal;}
+.xl114
+	{mso-style-parent:style16;
+	color:#C0504D;
+	text-decoration:underline;
+	text-underline-style:single;
+	text-align:center;
+	vertical-align:middle;}
+.xl115
+	{mso-style-parent:style16;
+	color:#C0504D;
+	text-decoration:underline;
+	text-underline-style:single;
+	mso-number-format:"mm\/dd\/yyyy";
+	text-align:center;
+	vertical-align:middle;}
+.xl116
+	{mso-style-parent:style0;
+	mso-number-format:"\[ENG\]\[$-409\]mmmm\\ d\\\,\\ yyyy\;\@";
+	text-align:center;}
+.xl117
+	{mso-style-parent:style0;
+	color:black;
+	text-align:center;
+	vertical-align:middle;}
+.xl118
+	{mso-style-parent:style0;
+	color:black;
+	text-align:left;
+	vertical-align:middle;
+	padding-left:12px;
+	mso-char-indent-count:1;}
+.xl119
+	{mso-style-parent:style0;
+	font-size:18.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	text-align:left;}
+.xl120
+	{mso-style-parent:style0;
+	font-size:14.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;}
+.xl121
+	{mso-style-parent:style0;
+	font-size:16.0pt;
+	font-weight:700;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"\[ENG\]\[$-409\]mmmm\\ d\\\,\\ yyyy\;\@";
+	text-align:left;}
+.xl122
+	{mso-style-parent:style0;
+	font-size:12.0pt;
+	font-family:Arial, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"\[ENG\]\[$-409\]mmmm\\ d\\\,\\ yyyy\;\@";
+	text-align:left;}
+-->
+</style>
+
+</head>
+
+<body link="#0000D4" vlink="purple">
+
+<table border="0" cellpadding="0" cellspacing="0" width="736" style="border-collapse:
+ collapse;table-layout:fixed;width:736pt">
+ <colgroup><col width="21" style="mso-width-source:userset;mso-width-alt:896;width:21pt">
+ <col class="xl65" width="243" style="mso-width-source:userset;mso-width-alt:10368;
+ width:243pt">
+ <col width="240" style="mso-width-source:userset;mso-width-alt:10240;width:240pt">
+ <col class="xl65" width="42" style="mso-width-source:userset;mso-width-alt:1792;
+ width:42pt">
+ <col class="xl65" width="41" style="mso-width-source:userset;mso-width-alt:1749;
+ width:41pt">
+ <col class="xl65" width="66" style="mso-width-source:userset;mso-width-alt:2816;
+ width:66pt">
+ <col width="83" style="mso-width-source:userset;mso-width-alt:3541;width:83pt">
+ </colgroup><tbody><tr height="24" style="mso-height-source:userset;height:24.75pt">
+  <td colspan="5" height="24" class="xl119" width="587" style="height:24.75pt;
+  width:587pt"><a name="webpage">Handbook of Graph Drawing and Visualization</a></td>
+  <td class="xl65" width="66" style="width:66pt"></td>
+  <td width="83" style="width:83pt"></td>
+ </tr>
+ <tr height="17" style="height:17.0pt">
+  <td colspan="5" height="17" class="xl120" style="height:17.0pt">Roberto Tamassia,
+  Editor</td>
+  <td class="xl65"></td>
+  <td></td>
+ </tr>
+ <tr height="15" style="height:15.0pt">
+  <td colspan="5" height="15" class="xl94" style="height:15.0pt">CRC Press</td>
+  <td class="xl65"></td>
+  <td></td>
+ </tr>
+ <tr height="15" style="mso-height-source:userset;height:15.0pt">
+  <td colspan="5" height="15" class="xl122" style="height:15.0pt">June 24, 2013</td>
+  <td class="xl65"></td>
+  <td></td>
+ </tr>
+ <tr height="19" style="mso-height-source:userset;height:19.5pt">
+  <td height="19" style="height:19.5pt"></td>
+  <td class="xl116"></td>
+  <td></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td></td>
+ </tr>
+ <tr height="18" style="height:18.0pt">
+  <td colspan="5" height="18" class="xl121" style="height:18.0pt">Chapters</td>
+  <td class="xl65"></td>
+  <td></td>
+ </tr>
+ <tr height="11" style="mso-height-source:userset;height:11.25pt">
+  <td height="11" style="height:11.25pt"></td>
+  <td class="xl65"></td>
+  <td></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td></td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl103" style="height:14.0pt;font-size:12.0pt;color:black;
+  font-weight:700;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  white;mso-pattern:black none">#</td>
+  <td class="xl104" style="font-size:12.0pt;color:black;font-weight:700;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:white;mso-pattern:black none">Title</td>
+  <td class="xl104" style="font-size:12.0pt;color:black;font-weight:700;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:white;mso-pattern:black none">Authors</td>
+  <td class="xl103" style="font-size:12.0pt;color:black;font-weight:700;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:white;mso-pattern:black none">Pages</td>
+  <td class="xl103" style="font-size:12.0pt;color:black;font-weight:700;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:white;mso-pattern:black none">Draft</td>
+  <td class="xl103" style="font-size:12.0pt;color:black;font-weight:700;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:white;mso-pattern:black none">Date</td>
+  <td class="xl104" style="font-size:12.0pt;color:black;font-weight:700;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:white;
+  mso-pattern:black none">Status</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl117" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">P</td>
+  <td class="xl118" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">Title
+  and preface</td>
+  <td class="xl118" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">Roberto
+  Tamassia</td>
+  <td class="xl117" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">10</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./preface.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/24/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl117" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">C</td>
+  <td class="xl118" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">Contents</td>
+  <td class="xl118" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">Roberto Tamassia</td>
+  <td class="xl117" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">4</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./toc.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/24/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">1</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Planarity testing and embedding</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Patrignani</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">42</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./planarity.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/24/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">2</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Crossings and
+  planarization</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Buchheim, Chimani,
+  Gutwenger, Juenger, Mutzel</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">44</td>
+  <td class="xl115" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./crossings.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">3</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Symmetric graph drawing</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Eades, Hong</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">28</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./symmetry.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">4</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Proximity drawings</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Liotta</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">40</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./proximity.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">5</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Tree drawing algorithms</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Rusu</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">38</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./trees.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">6</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Planar straight-line
+  drawing algorithms</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Vismara</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">30</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./straightline.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/18/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">7</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Planar orthogonal and polyline drawing algorithms</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Duncan, Goodrich</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">24</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./orthogonal.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">8</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Spine and Radial Drawings</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Liotta, Di Giacomo, Didimo</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">38</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./spine-radial.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">9</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Circular drawing algorithms</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Six, Tollis</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">32</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./circular.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">10</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Rectangular drawing
+  algorithms</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Nishizeki, Rahman</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">32</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./rectangular.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">11</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Simultaneous embedding of planar graphs</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Bläsius, Koburov, Rutter</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">34</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./simultaneous.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">12</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Force-directed drawing
+  algorithms</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Kobourov</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">26</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./force-directed.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">13</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Hierarchical drawing algorithms</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Healy, Nikolov</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">46</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./hierarchical.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">14</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Three-dimensional drawing
+  algorithms</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Dujmovic, Whitesides</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">34</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./3d.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">15</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Labeling algorithms</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Tollis, Kakoulis</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">28</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./labeling.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">16</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Graph Markup Language
+  (GraphML)</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Brandes, Eiglsperger,
+  Lerner, Pich</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">26</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./graphml.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">17</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">Open
+  Graph Drawing Framework (OGDF)</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Chimani, Gutwenger, Juenger, Klau, Klein, Mutzel</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">28</td>
+  <td class="xl115" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./ogdf.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">18</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">GDToolkit</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Di Battista, Didimo</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">28</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./gdtoolkit.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">19</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">PIGALE</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">de Fraysseix, Ossona de Mendez</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">22</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./pigale.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">20</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Biological networks</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Bachmaier, Brandes,
+  Schreiber</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">32</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./biology.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">21</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Computer security</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Ohrimenko, Palazzi, Papamanthou</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">28</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./security.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">22</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Graph drawing for data
+  analytics</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Eick</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">16</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./viz.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">23</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Graph drawing and cartography</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Wolff</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">40</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./cartography.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/12/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">24</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Graph drawing in education</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Bridgeman</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">26</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./education.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">25</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Computer networks</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Di Battista, Rimondini</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">42</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./networks.pdf"><span style="color:#C0504D;font-family:Arial;
+  mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7">26</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Social networks</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Brandes, Freeman, Wagner</td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">36</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"><a href="./social.pdf"><span style="color:#C0504D;font-family:Arial;mso-generic-font-family:auto;
+  mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">6/10/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none">camera ready</td>
+ </tr>
+ <tr height="14" style="mso-height-source:userset;height:14.0pt">
+  <td height="14" class="xl105" style="height:14.0pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7;background:
+  #DCE6F1;mso-pattern:#DCE6F1 none">I</td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">Index</td>
+  <td class="xl106" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none"></td>
+  <td class="xl113" width="42" style="width:42pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">12</td>
+  <td class="xl114" style="font-size:10.0pt;color:#C0504D;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none"><a href="./gdhandbook-index.pdf"><span style="color:#C0504D;font-family:
+  Arial;mso-generic-font-family:auto;mso-font-charset:0">PDF</span></a></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none;background:#DCE6F1;mso-pattern:#DCE6F1 none">6/24/13</td>
+  <td class="xl107" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none;background:#DCE6F1;
+  mso-pattern:#DCE6F1 none">camera ready</td>
+ </tr>
+ <tr height="12" style="height:12.0pt">
+  <td height="12" class="xl109" style="height:12.0pt;font-size:10.0pt;color:black;
+  font-weight:700;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:.5pt solid #95B3D7"></td>
+  <td class="xl106" width="243" style="width:243pt;font-size:10.0pt;color:black;
+  font-weight:400;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none"></td>
+  <td class="xl112" width="240" style="width:240pt;font-size:10.0pt;color:black;
+  font-weight:700;text-decoration:none;text-underline-style:none;text-line-through:
+  none;font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;
+  border-bottom:.5pt solid #95B3D7;border-left:none">Total pages</td>
+  <td class="xl102" style="font-size:10.0pt;color:black;font-weight:700;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none">866</td>
+  <td class="xl110" style="font-size:10.0pt;color:#3366FF;font-weight:400;
+  text-decoration:underline;text-underline-style:single;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"></td>
+  <td class="xl108" style="font-size:10.0pt;color:black;font-weight:400;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:none;border-bottom:
+  .5pt solid #95B3D7;border-left:none"></td>
+  <td class="xl111" style="font-size:10.0pt;color:black;font-weight:700;
+  text-decoration:none;text-underline-style:none;text-line-through:none;
+  font-family:Arial;border-top:.5pt solid #95B3D7;border-right:.5pt solid #95B3D7;
+  border-bottom:.5pt solid #95B3D7;border-left:none"></td>
+ </tr>
+ <tr height="12" style="height:12.0pt">
+  <td height="12" style="height:12.0pt"></td>
+  <td class="xl65"></td>
+  <td></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td></td>
+ </tr>
+ <tr height="12" style="height:12.0pt">
+  <td height="12" style="height:12.0pt"></td>
+  <td class="xl65"></td>
+  <td></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td></td>
+ </tr>
+ <tr height="12" style="height:12.0pt">
+  <td height="12" style="height:12.0pt"></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td class="xl65"></td>
+  <td></td>
+ </tr>
+</tbody></table>
+
+
+
+
+</body></html>

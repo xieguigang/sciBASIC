@@ -30,6 +30,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace CommandLine.InteropService
 
@@ -62,7 +63,7 @@ Namespace CommandLine.InteropService
                             If param.ParameterType Is GetType(Boolean) Then
                                 Return $"{prefix}{param.Name}"
                             Else
-                                Dim default$ = $"<default={Scripting.CStrSafe(param.DefaultValue)}>"
+                                Dim default$ = $"<default={CStrSafe(param.DefaultValue)}>"
                                 Return $"{prefix}{param.Name} {[default]}"
                             End If
                         End Function) _

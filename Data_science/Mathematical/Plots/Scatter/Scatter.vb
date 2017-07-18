@@ -38,13 +38,12 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Mathematical.Scripting
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Scatter
@@ -208,7 +207,7 @@ Public Module Scatter
         Dim y0#() = y.ToArray
 
         If xrange Is Nothing Then
-            array = VBMathExtensions.seq(0, y0.Length, 1)
+            array = Math.seq(0, y0.Length, 1)
         Else
             array = xrange.ToArray
         End If

@@ -41,10 +41,10 @@ Namespace FileStream
         ''' </summary>
         ''' <param name="vbnet$"></param>
         ''' <returns></returns>
-        Public Shared Function Load(vbnet$) As Network
+        Public Shared Function Load(vbnet$) As NetworkTables
             Dim tmp = App.GetAppSysTempFile(, sessionID:=App.PID)
             Call GZip.ImprovedExtractToDirectory(vbnet, tmp, Overwrite.Always)
-            Return Network.Load(tmp)
+            Return NetworkTables.Load(tmp)
         End Function
 
         ''' <summary>
@@ -53,7 +53,7 @@ Namespace FileStream
         ''' <param name="net"></param>
         ''' <param name="vbnet$"></param>
         ''' <returns></returns>
-        Public Shared Function Save(net As Network, vbnet$) As Boolean
+        Public Shared Function Save(net As NetworkTables, vbnet$) As Boolean
             Dim tmp$ = App.GetAppSysTempFile(, sessionID:=App.PID)
 
             Call net.Save(tmp)

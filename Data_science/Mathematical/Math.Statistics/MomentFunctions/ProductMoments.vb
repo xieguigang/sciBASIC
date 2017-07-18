@@ -26,7 +26,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.StatisticsMathExtensions
+Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 '

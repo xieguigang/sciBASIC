@@ -1,46 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::3de5825866652d97f3559642bbe6def1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GeomTransform.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
 Namespace Imaging
 
     <PackageNamespace("GDI.Transform")> Public Module GeomTransform
 
+        Public Function Distance(x1#, y1#, x2#, y2#) As Double
+            Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+        End Function
+
+        <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
+            Dim xDiff As Single = p2.X - p1.X
+            Dim yDiff As Single = p2.Y - p1.Y
+            Return sys.Atan2(yDiff, xDiff) * 180.0 / PI
+        End Function
+
+        ''' <summary>
+        ''' 获取目标多边形对象的边界结果，包括左上角的位置以及所占的矩形区域的大小
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetBounds(points As IEnumerable(Of Point)) As RectangleF
             Return points.Select(Function(pt) pt.PointF).GetBounds
         End Function
 
+        ''' <summary>
+        ''' 获取目标多边形对象的边界结果，包括左上角的位置以及所占的矩形区域的大小
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetBounds(points As IEnumerable(Of PointF)) As RectangleF
             Dim array = points.ToArray
@@ -57,6 +80,10 @@ Namespace Imaging
             Return New Point(pf.X, pf.Y)
         End Function
 
+        <Extension> Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
+            Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
+        End Function
+
         ''' <summary>
         ''' Gets the center location of the region rectangle.
         ''' </summary>
@@ -65,6 +92,24 @@ Namespace Imaging
         <ExportAPI("Center")>
         <Extension> Public Function Centre(rect As Rectangle) As Point
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
+        End Function
+
+        ''' <summary>
+        ''' 获取目标多边形对象的中心点的坐标位置
+        ''' </summary>
+        ''' <param name="shape"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Centre(shape As IEnumerable(Of Point)) As Point
+            Dim x As New List(Of Integer)
+            Dim y As New List(Of Integer)
+
+            Call shape.DoEach(Sub(pt)
+                                  x += pt.X
+                                  y += pt.Y
+                              End Sub)
+
+            Return New Point(x.Average, y.Average)
         End Function
 
         ''' <summary>
@@ -77,9 +122,17 @@ Namespace Imaging
             Return New PointF(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
         End Function
 
+        ''' <summary>
+        ''' 获取将目标多边形置于区域的中央位置的位置偏移量
+        ''' </summary>
+        ''' <param name="pts"></param>
+        ''' <param name="frameSize"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As PointF
-            Return pts.Select(Function(pt) pt.PointF).ToArray.CentralOffset(frameSize.SizeF)
+            Return pts _
+                .Select(Function(pt) pt.PointF) _
+                .CentralOffset(frameSize.SizeF)
         End Function
 
         <Extension>
@@ -87,6 +140,12 @@ Namespace Imaging
             Return New SizeF(size.Width, size.Height)
         End Function
 
+        ''' <summary>
+        ''' 获取将目标多边形置于区域的中央位置的位置偏移量
+        ''' </summary>
+        ''' <param name="pts"></param>
+        ''' <param name="frameSize"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of PointF), frameSize As SizeF) As PointF
             Dim xOffset!() = pts.ToArray(Function(x) x.X)
@@ -107,7 +166,7 @@ Namespace Imaging
             Return New PointF(left - xo, top - yo)
         End Function
 
-        Const pi2 As Double = Math.PI / 2.0
+        Const pi2 As Double = PI / 2.0
 
         ''' <summary>
         ''' Creates a new Image containing the same image only rotated
@@ -170,7 +229,7 @@ Namespace Imaging
         ''' 
         ''' </remarks>
         <ExportAPI("Image.Rotate", Info:="Creates a new Image containing the same image only rotated.")>
-        <Extension> Public Function RotateImage(image As Image, angle As Single) As Bitmap
+        <Extension> Public Function RotateImage(image As Image, angle!) As Bitmap
             If image Is Nothing Then
                 Throw New ArgumentNullException("image value is nothing!")
             End If
@@ -179,12 +238,12 @@ Namespace Imaging
             Dim oldHeight As Double = CDbl(image.Height)
 
             ' Convert degrees to radians
-            Dim theta As Double = CDbl(angle) * Math.PI / 180.0
+            Dim theta As Double = CDbl(angle) * sys.PI / 180.0
             Dim locked_theta As Double = theta
 
             ' Ensure theta is now [0, 2pi)
             While locked_theta < 0.0
-                locked_theta += 2 * Math.PI
+                locked_theta += 2 * sys.PI
             End While
 
             Dim newWidth As Double, newHeight As Double
@@ -197,71 +256,79 @@ Namespace Imaging
             ' on how much rotation is being done to the bitmap.
             '   Refer to the first paragraph in the explaination above for 
             '   reasons why.
-            If (locked_theta >= 0.0 AndAlso locked_theta < pi2) OrElse (locked_theta >= Math.PI AndAlso locked_theta < (Math.PI + pi2)) Then
-                adjacentTop = Math.Abs(Math.Cos(locked_theta)) * oldWidth
-                oppositeTop = Math.Abs(Math.Sin(locked_theta)) * oldWidth
+            If (locked_theta >= 0.0 AndAlso locked_theta < pi2) OrElse (locked_theta >= sys.PI AndAlso locked_theta < (Math.PI + pi2)) Then
+                adjacentTop = sys.Abs(Cos(locked_theta)) * oldWidth
+                oppositeTop = sys.Abs(Sin(locked_theta)) * oldWidth
 
-                adjacentBottom = Math.Abs(Math.Cos(locked_theta)) * oldHeight
-                oppositeBottom = Math.Abs(Math.Sin(locked_theta)) * oldHeight
+                adjacentBottom = sys.Abs(Cos(locked_theta)) * oldHeight
+                oppositeBottom = sys.Abs(Sin(locked_theta)) * oldHeight
             Else
-                adjacentTop = Math.Abs(Math.Sin(locked_theta)) * oldHeight
-                oppositeTop = Math.Abs(Math.Cos(locked_theta)) * oldHeight
+                adjacentTop = sys.Abs(Sin(locked_theta)) * oldHeight
+                oppositeTop = sys.Abs(Cos(locked_theta)) * oldHeight
 
-                adjacentBottom = Math.Abs(Math.Sin(locked_theta)) * oldWidth
-                oppositeBottom = Math.Abs(Math.Cos(locked_theta)) * oldWidth
+                adjacentBottom = sys.Abs(Sin(locked_theta)) * oldWidth
+                oppositeBottom = sys.Abs(Cos(locked_theta)) * oldWidth
             End If
 
             newWidth = adjacentTop + oppositeBottom
             newHeight = adjacentBottom + oppositeTop
 
-            nWidth = CInt(Math.Truncate(Math.Ceiling(newWidth)))
-            nHeight = CInt(Math.Truncate(Math.Ceiling(newHeight)))
+            nWidth = CInt(Truncate(Ceiling(newWidth)))
+            nHeight = CInt(Truncate(Ceiling(newHeight)))
 
             Dim rotatedBmp As New Bitmap(nWidth, nHeight)
 
+            ' This array will be used to pass in the three points that 
+            ' make up the rotated image
+            Dim points As Point()
+
+            ' The values of opposite/adjacentTop/Bottom are referring to 
+            ' fixed locations instead of in relation to the
+            ' rotating image so I need to change which values are used
+            ' based on the how much the image is rotating.
+
+            ' For each point, one of the coordinates will always be 0, 
+            ' nWidth, or nHeight.  This because the Bitmap we are drawing on
+            ' is the bounding box for the rotated bitmap.  If both of the 
+            ' corrdinates for any of the given points wasn't in the set above
+            ' then the bitmap we are drawing on WOULDN'T be the bounding box
+            ' as required.
+
+            If locked_theta >= 0.0 AndAlso locked_theta < pi2 Then
+
+                points = {
+                    New Point(CInt(Truncate(oppositeBottom)), 0),
+                    New Point(nWidth, CInt(Truncate(oppositeTop))),
+                    New Point(0, CInt(Truncate(adjacentBottom)))
+                }
+
+            ElseIf locked_theta >= pi2 AndAlso locked_theta < sys.PI Then
+
+                points = {
+                    New Point(nWidth, CInt(Truncate(oppositeTop))),
+                    New Point(CInt(Truncate(adjacentTop)), nHeight),
+                    New Point(CInt(Truncate(oppositeBottom)), 0)
+                }
+
+            ElseIf locked_theta >= sys.PI AndAlso locked_theta < (Math.PI + pi2) Then
+
+                points = {
+                    New Point(CInt(Truncate(adjacentTop)), nHeight),
+                    New Point(0, CInt(Truncate(adjacentBottom))),
+                    New Point(nWidth, CInt(Truncate(oppositeTop)))
+                }
+
+            Else
+
+                points = {
+                    New Point(0, CInt(Truncate(adjacentBottom))),
+                    New Point(CInt(Truncate(oppositeBottom)), 0),
+                    New Point(CInt(Truncate(adjacentTop)), nHeight)
+                }
+
+            End If
+
             Using g As Graphics = Graphics.FromImage(rotatedBmp)
-                ' This array will be used to pass in the three points that 
-                ' make up the rotated image
-                Dim points As Point()
-
-                ' The values of opposite/adjacentTop/Bottom are referring to 
-                ' fixed locations instead of in relation to the
-                ' rotating image so I need to change which values are used
-                ' based on the how much the image is rotating.
-
-                ' For each point, one of the coordinates will always be 0, 
-                ' nWidth, or nHeight.  This because the Bitmap we are drawing on
-                ' is the bounding box for the rotated bitmap.  If both of the 
-                ' corrdinates for any of the given points wasn't in the set above
-                ' then the bitmap we are drawing on WOULDN'T be the bounding box
-                ' as required.
-
-                If locked_theta >= 0.0 AndAlso locked_theta < pi2 Then
-                    points = New Point() {
-                    New Point(CInt(Math.Truncate(oppositeBottom)), 0),
-                    New Point(nWidth, CInt(Math.Truncate(oppositeTop))),
-                    New Point(0, CInt(Math.Truncate(adjacentBottom)))
-                }
-                ElseIf locked_theta >= pi2 AndAlso locked_theta < Math.PI Then
-                    points = New Point() {
-                    New Point(nWidth, CInt(Math.Truncate(oppositeTop))),
-                    New Point(CInt(Math.Truncate(adjacentTop)), nHeight),
-                    New Point(CInt(Math.Truncate(oppositeBottom)), 0)
-                }
-                ElseIf locked_theta >= Math.PI AndAlso locked_theta < (Math.PI + pi2) Then
-                    points = New Point() {
-                    New Point(CInt(Math.Truncate(adjacentTop)), nHeight),
-                    New Point(0, CInt(Math.Truncate(adjacentBottom))),
-                    New Point(nWidth, CInt(Math.Truncate(oppositeTop)))
-                }
-                Else
-                    points = New Point() {
-                    New Point(0, CInt(Math.Truncate(adjacentBottom))),
-                    New Point(CInt(Math.Truncate(oppositeBottom)), 0),
-                    New Point(CInt(Math.Truncate(adjacentTop)), nHeight)
-                }
-                End If
-
                 Call g.DrawImage(image, points)
             End Using
 

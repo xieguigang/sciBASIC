@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::6532b3198b0cf1d5e307830c9fa0e45b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,14 +32,18 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
-Namespace Mathematical.Correlations
+Namespace Math.Correlations
 
+    ''' <summary>
+    ''' 计算两个数据向量之间的相关度的大小
+    ''' </summary>
     <PackageNamespace("Correlations", Category:=APICategories.UtilityTools, Publisher:="amethyst.asuka@gcmodeller.org")>
     Public Module Correlations
 
         ''' <summary>
-        ''' 假若所有的元素都是0-1之间的话，结果除以2可以得到相似度
+        ''' Sandelin-Wasserman similarity function.(假若所有的元素都是0-1之间的话，结果除以2可以得到相似度)
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="y"></param>
@@ -54,6 +58,12 @@ Namespace Mathematical.Correlations
             Return s
         End Function
 
+        ''' <summary>
+        ''' Kullback-Leibler divergence
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
         <ExportAPI("KLD", Info:="Kullback-Leibler divergence")>
         Public Function KLD(x As Double(), y As Double()) As Double
             Dim index As Integer() = x.Sequence
@@ -67,7 +77,7 @@ Namespace Mathematical.Correlations
             If Xa = 0R Then
                 Return 0R
             End If
-            Dim value As Double = Xa * Math.Log(Xa / Ya)  ' 0 * n = 0
+            Dim value As Double = Xa * sys.Log(Xa / Ya)  ' 0 * n = 0
             Return value
         End Function
 
@@ -204,7 +214,7 @@ Namespace Mathematical.Correlations
                 n2 += (s * (s - 1)) / 2
             Next
 
-            denom = Math.Sqrt((n0 - n1) * (n0 - n2))
+            denom = sys.Sqrt((n0 - n1) * (n0 - n2))
 
             If denom = 0 Then
                 denom += 0.000000001
@@ -241,18 +251,24 @@ Namespace Mathematical.Correlations
             Dim pcc As Double = GetPearson(x, y)
             Dim n As Integer = x.Length
 
-            z = 0.5 * Math.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
+            z = 0.5 * sys.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
             'fisher's z trasnformation
             df = n - 2
-            t = pcc * Math.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
+            t = pcc * sys.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
             'student's t probability
             prob = Beta.betai(0.5 * df, 0.5, df / (df + t * t))
-            prob2 = Beta.erfcc(Math.Abs(z * Math.Sqrt(n - 1.0)) / 1.4142136)
+            prob2 = Beta.erfcc(Abs(z * sys.Sqrt(n - 1.0)) / 1.4142136)
             'for a large n
 
             Return pcc
         End Function
 
+        ''' <summary>
+        ''' Pearson correlations
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <param name="y#"></param>
+        ''' <returns></returns>
         <ExportAPI("Pearson")>
         Public Function GetPearson(x#(), y#()) As Double
             Dim j As Integer, n As Integer = x.Length
@@ -274,7 +290,7 @@ Namespace Mathematical.Correlations
                 sxy += xt * yt
             Next
 
-            Return sxy / (Math.Sqrt(sxx * syy) + TINY)
+            Return sxy / (Sqrt(sxx * syy) + TINY)
         End Function
 
         ''' <summary>
@@ -436,7 +452,7 @@ Namespace Mathematical.Correlations
             If x = 0.0 OrElse x = 1.0 Then
                 bt = 0.0
             Else
-                bt = Math.Exp(gammln(a + b) - gammln(a) - gammln(b) + a * Math.Log(x) + b * Math.Log(1.0 - x))
+                bt = sys.Exp(gammln(a + b) - gammln(a) - gammln(b) + a * sys.Log(x) + b * sys.Log(1.0 - x))
             End If
             If x < (a + 1.0) / (a + b + 2.0) Then
                 Return bt * betacf(a, b, x) / a
@@ -451,14 +467,14 @@ Namespace Mathematical.Correlations
 
             y = x
             tmp = x + 5.5
-            tmp -= (x + 0.5) * Math.Log(tmp)
+            tmp -= (x + 0.5) * sys.Log(tmp)
             ser = 1.00000000019001
             For j = 0 To 5
                 y += 1 ' ++y
                 ser += cof(j) / y
             Next
 
-            Return -tmp + Math.Log(2.506628274631 * ser / x)
+            Return -tmp + sys.Log(2.506628274631 * ser / x)
         End Function
 
         ReadOnly cof As Double() = {
@@ -486,7 +502,7 @@ Namespace Mathematical.Correlations
             qam = a - 1.0
             c = 1.0
             d = 1.0 - qab * x / qap
-            If Math.Abs(d) < FPMIN Then
+            If sys.Abs(d) < FPMIN Then
                 d = FPMIN
             End If
             d = 1.0 / d
@@ -496,28 +512,28 @@ Namespace Mathematical.Correlations
                 m2 = 2 * m
                 aa = m * (b - m) * x / ((qam + m2) * (a + m2))
                 d = 1.0 + aa * d
-                If Math.Abs(d) < FPMIN Then
+                If sys.Abs(d) < FPMIN Then
                     d = FPMIN
                 End If
                 c = 1.0 + aa / c
-                If Math.Abs(c) < FPMIN Then
+                If sys.Abs(c) < FPMIN Then
                     c = FPMIN
                 End If
                 d = 1.0 / d
                 h *= d * c
                 aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
                 d = 1.0 + aa * d
-                If Math.Abs(d) < FPMIN Then
+                If sys.Abs(d) < FPMIN Then
                     d = FPMIN
                 End If
                 c = 1.0 + aa / c
-                If Math.Abs(c) < FPMIN Then
+                If sys.Abs(c) < FPMIN Then
                     c = FPMIN
                 End If
                 d = 1.0 / d
                 del = d * c
                 h *= del
-                If Math.Abs(del - 1.0) < EPS Then
+                If sys.Abs(del - 1.0) < EPS Then
                     Exit For
                 End If
             Next
@@ -532,9 +548,9 @@ Namespace Mathematical.Correlations
         Public Function erfcc(x As Double) As Double
             Dim t As Double, z As Double, ans As Double
 
-            z = Math.Abs(x)
+            z = sys.Abs(x)
             t = 1.0 / (1.0 + 0.5 * z)
-            ans = t * Math.Exp(-z * z - 1.26551223 +
+            ans = t * sys.Exp(-z * z - 1.26551223 +
                            t * (1.00002368 +
                            t * (0.37409196 +
                            t * (0.09678418 +

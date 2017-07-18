@@ -93,7 +93,7 @@ Namespace Emit.Marshal
         ''' Raw memory of this pointer
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Raw As T()
+        Public ReadOnly Property RawBuffer As T()
             Get
                 Return buffer
             End Get
@@ -178,7 +178,7 @@ Namespace Emit.Marshal
         ''' <param name="p"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator <(p As Pointer(Of T), offset As Integer) As T
+        Public Overloads Shared Operator <<(p As Pointer(Of T), offset As Integer) As T
             Return p(-offset)
         End Operator
 
@@ -188,7 +188,7 @@ Namespace Emit.Marshal
         ''' <param name="p"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator >(p As Pointer(Of T), offset As Integer) As T
+        Public Overloads Shared Operator >>(p As Pointer(Of T), offset As Integer) As T
             Return p(offset)
         End Operator
 
@@ -196,6 +196,12 @@ Namespace Emit.Marshal
             Return New Pointer(Of T)(raw)
         End Operator
 
+        ''' <summary>
+        ''' Move steps and returns this pointer
+        ''' </summary>
+        ''' <param name="ptr"></param>
+        ''' <param name="d"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator +(ptr As Pointer(Of T), d As Integer) As Pointer(Of T)
             ptr.__index += d
             Return ptr

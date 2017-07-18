@@ -69,7 +69,7 @@ Public Module ExpressionBuilder
         If LinqAPI.IsEquals(Of Token(Of Tokens))(tks.Count) <=
             From x As Token(Of Tokens)
             In tks
-            Where x.TokenName = Tokens.AnyTerm
+            Where x.Name = Tokens.AnyTerm
             Select x Then
 
             If anyDefault <> Tokens.op_AND AndAlso
@@ -95,8 +95,8 @@ Public Module ExpressionBuilder
 
             For Each x As Token(Of Tokens) In tks.Skip(1)
                 list += New Token(Of Tokens) With {
-                    .TokenName = anyDefault,
-                    .TokenValue = anyDefault.ToString
+                    .Name = anyDefault,
+                    .Value = anyDefault.ToString
                 }
                 list += x
             Next

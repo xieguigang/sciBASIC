@@ -28,8 +28,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports sys = System.Math
 
-Namespace Mathematical
+Namespace Math
 
     ''' <summary>
     ''' 科学记数法
@@ -43,7 +44,7 @@ Namespace Mathematical
         ''' <param name="INF">当位数超过这个值之后将会被判定为非常大或者非常小的一个数</param>
         ''' <returns></returns>
         Public Function PowerLog10(x#, Optional INF% = 5) As Single
-            Dim pow# = Math.Log10(Math.Abs(x))
+            Dim pow# = sys.Log10(sys.Abs(x))
 
             If pow < -INF Then
                 Return pow
@@ -77,7 +78,7 @@ Namespace Mathematical
             If InStr(s, "E", CompareMethod.Text) > 0 Then
                 ' 科学记数法
                 Dim t$() = s.Split("e"c, "E"c)
-                t(0) = Math.Round(Val(t(0)), [decimal])
+                t(0) = sys.Round(Val(t(0)), [decimal])
                 s = t(0) & "E" & t(1)
 
                 Return s
@@ -86,7 +87,7 @@ Namespace Mathematical
             If UsingScientificNotation(n) Then
                 s = FormatScientificNotation(n, [decimal])
             Else
-                s = Math.Round(n, [decimal]).ToString
+                s = sys.Round(n, [decimal]).ToString
             End If
 
             Return s
@@ -102,7 +103,7 @@ Namespace Mathematical
                 Return "0"
             End If
 
-            Dim power = Fix(Math.Log10(n))
+            Dim power = Fix(sys.Log10(n))
             Dim s = n.ToString.Split("E"c, "e"c).First
             Dim t$() = s.Split("."c)
 
@@ -112,10 +113,10 @@ Namespace Mathematical
 
             If intpower > 0 Then  ' 整数部分不止一个字符长度，即数位大于等于2
                 int = int.First & "." & Mid(int, 1) & t(1)
-                s = Math.Round(Val(int), [decimal])
+                s = sys.Round(Val(int), [decimal])
             Else
                 s = int & "." & t(1)
-                s = Math.Round(Val(s), [decimal])
+                s = sys.Round(Val(s), [decimal])
             End If
 
             s = s & $"E{power + intpower}"

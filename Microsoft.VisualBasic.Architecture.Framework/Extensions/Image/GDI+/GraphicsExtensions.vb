@@ -1,40 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::33ddcc8a70fb941466c24d3c7a0ec091, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
 Namespace Imaging
 
@@ -47,6 +50,23 @@ Namespace Imaging
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GraphicsExtensions
+
+        <Extension> Public Function SaveIcon(ico As Icon, path$) As Boolean
+            Call path.ParentPath.MkDIR
+
+            Try
+                Using file As New FileStream(path, FileMode.OpenOrCreate)
+                    Call ico.Save(file)
+                    Call file.Flush()
+                End Using
+
+                Return True
+            Catch ex As Exception
+                Call App.LogException(New Exception(path, ex))
+            End Try
+
+            Return False
+        End Function
 
         <Extension>
         Public Function PointF(pf As Point) As PointF
@@ -298,7 +318,7 @@ Namespace Imaging
 
         <ExportAPI("GrayBitmap", Info:="Create the gray color of the target image.")>
         <Extension> Public Function CreateGrayBitmap(res As Image) As Image
-            Dim Gr = DirectCast(res.Clone, Image).GdiFromImage
+            Dim Gr = DirectCast(res.Clone, Image).CreateCanvas2D
             Call System.Windows.Forms.ControlPaint.DrawImageDisabled(Gr.Graphics, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
             Return Gr.ImageResource
         End Function
@@ -355,7 +375,7 @@ Namespace Imaging
             'ImageRes = ctrl.BackgroundImage
             'End If
 
-            Dim Device = ImageRes.GdiFromImage
+            Dim Device = ImageRes.CreateCanvas2D
 
             If ctrl.BackgroundImage Is Nothing Then
                 Call Device.Graphics.FillRectangle(Brushes.White, New Rectangle(New Point, ImageRes.Size))
@@ -380,29 +400,30 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' 无需处理图像数据，这个函数已经自动克隆了该对象，不会影响到原来的对象
+        ''' 无需处理图像数据，这个函数默认已经自动克隆了该对象，不会影响到原来的对象，
+        ''' 除非你将<paramref name="directAccess"/>参数设置为真，函数才不会自动克隆图像对象
         ''' </summary>
         ''' <param name="res"></param>
         ''' <returns></returns>
-        '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function GdiFromImage(res As Image, <CallerMemberName> Optional caller As String = "") As Graphics2D
-            Try
-                ' res = New Bitmap(DirectCast(res.Clone, Image))
-            Catch ex As Exception
-                ex = New Exception(res.Size.ToString, ex)
-                ex = New Exception(caller, ex)
-                Throw ex
-            End Try
-            Dim g As Graphics2D = res.Size.CreateGDIDevice
-            Call g.Graphics.DrawImage(res, 0, 0, g.Width, g.Height)
-            Return g
+        <Extension> Public Function CreateCanvas2D(res As Image,
+                                                   Optional directAccess As Boolean = False,
+                                                   <CallerMemberName>
+                                                   Optional caller As String = "") As Graphics2D
+            If directAccess Then
+                Return Graphics2D.CreateObject(Graphics.FromImage(res), res)
+            Else
+                With res.Size.CreateGDIDevice
+                    Call .DrawImage(res, 0, 0, .Width, .Height)
+                    Return .ref
+                End With
+            End If
         End Function
 
         <Extension> Public Function BackgroundGraphics(ctrl As Control) As Graphics2D
             If Not ctrl.BackgroundImage Is Nothing Then
                 Try
-                    Return ctrl.BackgroundImage.GdiFromImage
+                    Return ctrl.BackgroundImage.CreateCanvas2D
                 Catch ex As Exception
                     Call App.LogException(ex)
                     Return ctrl.Size.CreateGDIDevice(ctrl.BackColor)
@@ -568,9 +589,9 @@ Namespace Imaging
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension> Public Function Vignette(Image As Image, y1 As Integer, y2 As Integer, Optional RenderColor As Color = Nothing) As Image
-            Dim Gr = Image.GdiFromImage
+            Dim Gr = Image.CreateCanvas2D
             Dim Alpha As Integer = 0
-            Dim delta = (Math.PI / 2) / Math.Abs(y1 - y2)
+            Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
             Dim offset As Double = 0
 
             If RenderColor = Nothing OrElse RenderColor.IsEmpty Then
@@ -581,7 +602,7 @@ Namespace Imaging
                 Dim Color = System.Drawing.Color.FromArgb(Alpha, RenderColor.R, RenderColor.G, RenderColor.B)
                 Call Gr.Graphics.DrawLine(New Pen(Color), New Point(0, y), New Point(Gr.Width, y))
 
-                Alpha = CInt(255 * Math.Sin(offset) ^ 2)
+                Alpha = CInt(255 * sys.Sin(offset) ^ 2)
                 offset += delta
             Next
 
@@ -708,12 +729,15 @@ Namespace Imaging
             res = res.ImageCrop(region.Location, region.Size)
 
             If margin > 0 Then
-                Dim gr = New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
-                Call gr.Graphics.DrawImage(res, New Point(margin, margin))
-                res = gr.ImageResource
-            End If
+                With New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
+                    Call .Clear(blankColor)
+                    Call .DrawImage(res, New Point(margin, margin))
 
-            Return res
+                    Return .ImageResource
+                End With
+            Else
+                Return res
+            End If
         End Function
     End Module
 End Namespace

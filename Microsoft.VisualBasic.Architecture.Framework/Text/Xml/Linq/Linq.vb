@@ -71,6 +71,30 @@ Namespace Text.Xml.Linq
             End If
         End Function
 
+        Private Iterator Function InternalIterates(XML$, nodeName$) As IEnumerable(Of String)
+            Dim XmlNodeList As XmlNodeList = XML _
+                .LoadXmlDocument _
+                .GetElementsByTagName(nodeName)
+            Dim sb As New StringBuilder
+
+            For Each xmlNode As XmlNode In XmlNodeList
+                Call sb.Clear()
+                Call sb.Append($"<{nodeName} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""")
+                Call sb.Append(" ")
+
+                For Each attr As XmlAttribute In xmlNode.Attributes
+                    Call sb.Append($"{attr.Name}=""{attr.Value}""")
+                    Call sb.Append(" ")
+                Next
+
+                Call sb.AppendLine(">")
+                Call sb.AppendLine(xmlNode.InnerXml)
+                Call sb.AppendLine($"</{nodeName}>")
+
+                Yield sb.ToString
+            Next
+        End Function
+
         ''' <summary>
         ''' Only works for the xml file that contains a list or array of xml element, and then this function using this list element as linq data source.
         ''' (这个函数只建议在读取超大的XML文件的时候使用，并且这个XML文件仅仅是一个数组或者列表的序列化结果)
@@ -88,30 +112,27 @@ Namespace Text.Xml.Linq
         <Extension>
         Public Iterator Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
             Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
-            Dim XmlNodeList As XmlNodeList = XML _
-                .LoadXmlDocument _
-                .GetElementsByTagName(nodeName)
             Dim o As T
             Dim sb As New StringBuilder
+            Dim source As IEnumerable(Of String)
+            Dim replaceXmlns As Boolean
 
-            For Each xmlNode As XmlNode In XmlNodeList
-                XML = xmlNode.InnerXml
+            If XML.FileLength > 1024 * 1024 * 128 Then
+                ' 这是一个超大的XML文档
+                source = NodeIterator.IterateArrayNodes(XML, nodeName)
+                replaceXmlns = False
+            Else
+                source = InternalIterates(XML, nodeName)
+                replaceXmlns = True
+            End If
+
+            For Each XML In source
 
                 Call sb.Clear()
                 Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
-                Call sb.Append($"<{nodeName} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""")
-                Call sb.Append(" ")
-
-                For Each attr As XmlAttribute In xmlNode.Attributes
-                    Call sb.Append($"{attr.Name}=""{attr.Value}""")
-                    Call sb.Append(" ")
-                Next
-
-                Call sb.AppendLine(">")
                 Call sb.AppendLine(XML)
-                Call sb.AppendLine($"</{nodeName}>")
 
-                If Not xmlns.StringEmpty Then
+                If replaceXmlns AndAlso Not xmlns.StringEmpty Then
                     Call sb.Replace($"xmlns=""{xmlns}""", "")
                 End If
 

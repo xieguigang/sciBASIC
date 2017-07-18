@@ -29,6 +29,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports sys = System.Math
 
 Namespace Win32
 
@@ -59,7 +60,7 @@ Namespace Win32
 
                     counterList += New TaskInfo With {
                         .Memory = P.WorkingSet64,
-                        .CPU = Math.Round(pCounter.NextValue, 2),
+                        .CPU = sys.Round(pCounter.NextValue, 2),
                         .ProcessName = P.ProcessName,
                         .PID = P.Id,
                         .CommandLine = P.StartInfo.FileName & " " & P.StartInfo.Arguments

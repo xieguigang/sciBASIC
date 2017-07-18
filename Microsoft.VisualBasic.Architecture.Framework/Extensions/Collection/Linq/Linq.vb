@@ -206,7 +206,7 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <param name="n"></param>
         ''' <returns>An array consist of source with n elements.</returns>
-        <Extension> Public Function CopyVector(Of T)(source As T, n As Integer) As T()
+        <Extension> Public Function Repeats(Of T)(source As T, n As Integer) As T()
             Return n.ToArray(Function(x) source)
         End Function
 

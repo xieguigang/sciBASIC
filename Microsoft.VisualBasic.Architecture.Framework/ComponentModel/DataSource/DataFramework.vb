@@ -35,18 +35,6 @@ Imports Microsoft.VisualBasic.Serialization
 Namespace ComponentModel.DataSourceModel
 
     ''' <summary>
-    ''' Driver abstract model
-    ''' </summary>
-    Public Interface IObjectModel_Driver
-
-        ''' <summary>
-        ''' Start run this driver object.
-        ''' </summary>
-        ''' <returns></returns>
-        Function Run() As Integer
-    End Interface
-
-    ''' <summary>
     ''' 在目标对象中必须要具有一个属性有自定义属性<see cref="DataFrameColumnAttribute"></see>
     ''' </summary>
     ''' <remarks></remarks>
@@ -140,7 +128,7 @@ Namespace ComponentModel.DataSourceModel
             New Dictionary(Of Type, __StringTypeCaster) From {
  _
                 {GetType(String), Function(strValue As String) strValue},
-                {GetType(Boolean), AddressOf getBoolean},
+                {GetType(Boolean), AddressOf ParseBoolean},
                 {GetType(DateTime), Function(strValue As String) CType(strValue, DateTime)},
                 {GetType(Double), AddressOf Val},
                 {GetType(Integer), Function(strValue As String) CInt(strValue)},
@@ -153,9 +141,9 @@ Namespace ComponentModel.DataSourceModel
         ''' Object <see cref="Object.ToString"/> methods.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ToStrings As New Dictionary(Of Type, __LDMStringTypeCastHandler) From {
+        Public ReadOnly Property ToStrings As New Dictionary(Of Type, StringTypeCastHandler) From {
  _
-                {GetType(String), Function(s$) s},
+                {GetType(String), Function(s) If(s Is Nothing, "", CStr(s))},
                 {GetType(Boolean), AddressOf DataFramework.valueToString},
                 {GetType(DateTime), AddressOf DataFramework.valueToString},
                 {GetType(Double), AddressOf DataFramework.valueToString},
@@ -177,7 +165,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 这个函数是为了提供转换的方法给字典对象<see cref="ToStrings"/>
         ''' </summary>
         ''' <param name="o">
-        ''' 因为<see cref="ToStrings"/>要求的是<see cref="__LDMStringTypeCastHandler"/>，
+        ''' 因为<see cref="ToStrings"/>要求的是<see cref="StringTypeCastHandler"/>，
         ''' 即<see cref="Object"/>类型转换为字符串，所以在这里就不适用T泛型了，而是直接
         ''' 使用<see cref="Object"/>类型
         ''' </param>
@@ -211,7 +199,7 @@ Namespace ComponentModel.DataSourceModel
             For Each column In Columns.Values
                 Call DataTable.Columns.Add(
                     column.Identity,
-                    column.Property.PropertyType)
+                    DirectCast(column.member, PropertyInfo).PropertyType)
             Next
 
             Dim fields As IEnumerable(Of BindProperty(Of DataFrameColumnAttribute)) =
@@ -221,7 +209,7 @@ Namespace ComponentModel.DataSourceModel
                 Dim LQuery As Object() =
                     LinqAPI.Exec(Of Object) <= From column As BindProperty(Of DataFrameColumnAttribute)
                                                In fields
-                                               Select column.Property.GetValue(row, Nothing)
+                                               Select column.GetValue(row)
                 Call DataTable.Rows.Add(LQuery)
             Next
 
@@ -251,7 +239,7 @@ Namespace ComponentModel.DataSourceModel
                         Select schemaColumn
 
                 If Not LQuery.IsNull Then
-                    Call Schema.Add(New KeyValuePair(Of Integer, PropertyInfo)(column.Ordinal, LQuery.Property))
+                    Call Schema.Add(New KeyValuePair(Of Integer, PropertyInfo)(column.Ordinal, LQuery.member))
                 End If
             Next
 

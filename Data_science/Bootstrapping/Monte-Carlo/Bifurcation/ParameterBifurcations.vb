@@ -30,8 +30,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MonteCarlo

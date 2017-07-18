@@ -585,6 +585,13 @@ Namespace Emit.Delegates
             Return PropertySet(Of TSource, TProperty)(propertyName)
         End Function
 
+        ''' <summary>
+        ''' 为指定类型的对象实例设置属性值，返回空值表名目标属性为一个只读属性或者写过程为私有访问类型
+        ''' </summary>
+        ''' <typeparam name="TProperty"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="propertyName"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function PropertySet(Of TProperty)(source As Type, propertyName As String) As Action(Of Object, TProperty)
             Dim propertyInfo = GetPropertyInfo(source, propertyName)
@@ -601,7 +608,16 @@ Namespace Emit.Delegates
                 propertyValueParam = Expression.Parameter(GetType(TProperty))
                 valueExpression = Expression.Convert(propertyValueParam, propertyInfo.PropertyType)
             End If
-            Return DirectCast(Expression.Lambda(Expression.[Call](Expression.Convert(sourceObjectParam, source), propertyInfo.SetMethod, valueExpression), sourceObjectParam, propertyValueParam).Compile(), Action(Of Object, TProperty))
+
+            Dim method = Expression.Lambda(
+                Expression.[Call](
+                    Expression.Convert(sourceObjectParam, source),
+                    propertyInfo.SetMethod,
+                    valueExpression),
+                sourceObjectParam,
+                propertyValueParam).Compile()
+
+            Return DirectCast(method, Action(Of Object, TProperty))
         End Function
 
         <Extension>

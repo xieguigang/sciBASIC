@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f72604795f415ec7f24c701ef1c47dd8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -171,18 +171,11 @@ Public Module XmlExtensions
         Try
 
             If xmlEncoding = XmlEncodings.UTF8 Then
-                Dim serializer As New XmlSerializer(type)
-
                 ' create a MemoryStream here, we are just working
                 ' exclusively in memory
                 Dim stream As New MemoryStream()
 
-                ' The XmlTextWriter takes a stream And encoding
-                ' as one of its constructors
-                Dim xtWriter As New XmlTextWriter(stream, Encoding.UTF8)
-
-                Call serializer.Serialize(xtWriter, obj)
-                Call xtWriter.Flush()
+                Call WriteXML(obj, type, stream, xmlEncoding)
 
                 ' read back the contents of the stream And supply the encoding
                 Dim result As String = Encoding.UTF8.GetString(stream.ToArray())
@@ -211,6 +204,34 @@ Public Module XmlExtensions
         End Try
     End Function
 
+    <Extension> Public Function CodePage(XmlEncoding As XmlEncodings) As Encoding
+        Select Case XmlEncoding
+            Case XmlEncodings.GB2312
+                Return Encodings.GB2312.CodePage
+            Case XmlEncodings.UTF8
+                Return Encoding.UTF8
+            Case Else
+                Return Encodings.UTF16.CodePage
+        End Select
+    End Function
+
+    ''' <summary>
+    ''' 写入的文本文件的编码格式和XML的编码格式应该是一致的
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <param name="type"></param>
+    ''' <param name="out"></param>
+    ''' <param name="encoding"></param>
+    Public Sub WriteXML(obj As Object, type As Type, ByRef out As Stream, encoding As XmlEncodings)
+        Dim serializer As New XmlSerializer(type)
+        ' The XmlTextWriter takes a stream And encoding
+        ' as one of its constructors
+        Dim xtWriter As New XmlTextWriter(out, encoding.CodePage)
+
+        Call serializer.Serialize(xtWriter, obj)
+        Call xtWriter.Flush()
+    End Sub
+
     ''' <summary>
     ''' Save the object as the XML document.
     ''' </summary>
@@ -226,10 +247,14 @@ Public Module XmlExtensions
                        Optional throwEx As Boolean = True,
                        Optional encoding As Encodings = Encodings.UTF16,
     <CallerMemberName> Optional caller As String = "") As Boolean
-
-        Dim xmlDoc As String = obj.GetXml(throwEx)
         Try
-            Return xmlDoc.SaveTo(saveXml, encoding.CodePage)
+            Using file = saveXml.Open
+                Call WriteXML(obj, GetType(T),
+                              out:=file,
+                              encoding:=encoding)
+            End Using
+
+            Return True
         Catch ex As Exception
             ex = New Exception(caller, ex)
             If throwEx Then

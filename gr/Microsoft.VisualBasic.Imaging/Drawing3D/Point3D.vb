@@ -30,11 +30,12 @@ Imports System.Drawing
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports sys = System.Math
 
 Namespace Drawing3D
 
     ''' <summary>
-    ''' Defines the Point3D class that represents points in 3D space.
+    ''' Defines the Point3D class that represents points in 3D space with <see cref="Single"/> precise.
     ''' Developed by leonelmachava &lt;leonelmachava@gmail.com>
     ''' http://codentronix.com
     '''
@@ -82,8 +83,8 @@ Namespace Drawing3D
             Dim rad As Single, cosa As Single, sina As Single, yn As Single, zn As Single
 
             rad = angle * Math.PI / 180
-            cosa = Math.Cos(rad)
-            sina = Math.Sin(rad)
+            cosa = sys.Cos(rad)
+            sina = sys.Sin(rad)
             yn = Me.Y * cosa - Me.Z * sina
             zn = Me.Y * sina + Me.Z * cosa
             Return New Point3D(Me.X, yn, zn)
@@ -93,8 +94,8 @@ Namespace Drawing3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Zn As Single
 
             rad = angle * Math.PI / 180
-            cosa = Math.Cos(rad)
-            sina = Math.Sin(rad)
+            cosa = sys.Cos(rad)
+            sina = sys.Sin(rad)
             Zn = Me.Z * cosa - Me.X * sina
             Xn = Me.Z * sina + Me.X * cosa
 
@@ -105,8 +106,8 @@ Namespace Drawing3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Yn As Single
 
             rad = angle * Math.PI / 180
-            cosa = Math.Cos(rad)
-            sina = Math.Sin(rad)
+            cosa = sys.Cos(rad)
+            sina = sys.Sin(rad)
             Xn = Me.X * cosa - Me.Y * sina
             Yn = Me.X * sina + Me.Y * cosa
             Return New Point3D(Xn, Yn, Me.Z)
@@ -140,7 +141,7 @@ Namespace Drawing3D
         ''' <param name="z!">Using for the painter algorithm.</param>
         ''' <param name="viewWidth%"></param>
         ''' <param name="viewHeight%"></param>
-        ''' <param name="fov%"></param>
+        ''' <param name="fov%">球度，当这个参数值非常大的时候，则产生的3D图像为isometrix类型的对称等边图形</param>
         ''' <param name="viewDistance%">View distance to the model from the view window.</param>
         Public Shared Sub Project(ByRef x!, ByRef y!, z!, viewWidth%, viewHeight%, viewDistance%, Optional fov% = 256)
             Dim factor! = fov / (viewDistance + z)

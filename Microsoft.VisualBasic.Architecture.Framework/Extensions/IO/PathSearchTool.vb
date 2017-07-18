@@ -28,6 +28,7 @@
 
 Imports System.Collections.ObjectModel
 Imports System.IO
+Imports System.Math
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -115,11 +116,61 @@ Public Module ProgramPathSearchTool
     ''' <param name="keyword">文件名进行匹配的关键词</param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function EnumerateFiles(DIR As String, ParamArray keyword As String()) As IEnumerable(Of String)
+    Public Function EnumerateFiles(DIR$, ParamArray keyword$()) As IEnumerable(Of String)
         Dim files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword)
+        Return files
+    End Function
 
-        For Each file As String In files
-            Yield file
+    ''' <summary>
+    ''' ```
+    ''' ls - l - r - pattern &lt;= DIR
+    ''' ```
+    ''' 
+    ''' 的简化拓展函数模式
+    ''' </summary>
+    ''' <param name="DIR$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ListFiles(DIR$, Optional pattern$ = "*.*") As IEnumerable(Of String)
+        Return ls - l - r - pattern <= DIR
+    End Function
+
+    ''' <summary>
+    ''' 这个函数是会直接枚举出所有的文件路径的
+    ''' </summary>
+    ''' <param name="DIR$"></param>
+    ''' <param name="[option]"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function ReadDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
+        Dim current As New DirectoryInfo(DIR)
+
+        For Each file In current.EnumerateFiles
+            Yield file.FullName
+        Next
+
+        If [option] = FileIO.SearchOption.SearchAllSubDirectories Then
+            For Each folder In current.EnumerateDirectories
+                For Each path In folder.FullName.ReadDirectory([option])
+                    Yield path
+                Next
+            Next
+        End If
+    End Function
+
+    <Extension>
+    Public Iterator Function ListDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
+        Dim current As New DirectoryInfo(DIR)
+
+        For Each folder In current.EnumerateDirectories
+            Yield folder.FullName
+
+            If [option] = FileIO.SearchOption.SearchAllSubDirectories Then
+                For Each path In folder.FullName.ListDirectory([option])
+                    Yield path
+                Next
+            End If
         Next
     End Function
 
@@ -461,6 +512,11 @@ Public Module ProgramPathSearchTool
                 parent &= String.Join("/", t.Take(t.Length - 2).ToArray)
             Else
                 parent &= String.Join("/", t.Take(t.Length - 1).ToArray)
+            End If
+
+            If parent.StringEmpty Then
+                ' 用户直接输入了一个文件名，没有包含文件夹部分，则默认是当前的文件夹
+                parent = App.CurrentDirectory
             End If
         Else
             parent = String.Join("/", t.Take(t.Length - 1).ToArray)
@@ -895,7 +951,7 @@ Public Module ProgramPathSearchTool
             End If
         Next
 
-        Dim lnDiff As Integer = Math.Abs(lnFromCnt - lnSame)
+        Dim lnDiff As Integer = Abs(lnFromCnt - lnSame)
         If lnDiff > 0 AndAlso laFrom(lnFromCnt - 1).Length > 0 Then
             While lnDiff > 0
                 lnDiff -= 1

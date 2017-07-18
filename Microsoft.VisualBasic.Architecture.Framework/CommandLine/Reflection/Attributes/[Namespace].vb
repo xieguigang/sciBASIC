@@ -61,6 +61,10 @@ Namespace CommandLine.Reflection
 
         Dim _TypeAutoExtract As Boolean
 
+        ''' <summary>
+        ''' Readonly
+        ''' </summary>
+        ''' <returns></returns>
         <XmlIgnore> Public Property AutoExtract As Boolean
             Get
                 Return _TypeAutoExtract

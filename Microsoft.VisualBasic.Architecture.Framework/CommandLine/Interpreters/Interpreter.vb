@@ -29,7 +29,6 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.Settings
@@ -37,7 +36,6 @@ Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
@@ -63,7 +61,7 @@ Namespace CommandLine
         ''' 在添加之前请确保键名是小写的字符串
         ''' </summary>
         Protected __API_table As New Dictionary(Of String, APIEntryPoint)
-        Protected __root_Namespace$
+        Protected __rootNamespace$
 
 #Region "Optional delegates"
 
@@ -94,7 +92,7 @@ Namespace CommandLine
         End Function
 
         Public Overrides Function ToString() As String
-            Return "CLI://" & __root_Namespace
+            Return "CLI://" & __rootNamespace
         End Function
 
         ''' <summary>
@@ -110,7 +108,7 @@ Namespace CommandLine
 
 #Else
                 If Stack.TextEquals("Main") Then
-                    If AutoPaused Then
+                    If DebuggerArgs.AutoPaused Then
                         Call Pause()
                     End If
                 End If
@@ -122,7 +120,8 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 命令行是空的
+        ''' 命令行是空的话，假若<see cref="ExecuteEmptyCli"/>不是空值的话，会优先执行<see cref="ExecuteEmptyCli"/>函数指针
+        ''' 否则打印出所有的命令名称信息
         ''' </summary>
         ''' <returns></returns>
         Private Function __executeEmpty() As Integer
@@ -136,7 +135,8 @@ Namespace CommandLine
 
                 Return -100
             Else
-                Return -1
+                ' 当用户什么也不输入的时候，打印出所有的命令名称帮助信息
+                Return Help("")
             End If
         End Function
 
@@ -179,7 +179,7 @@ Namespace CommandLine
                 End If
 
             ElseIf InStr(commandName, "??") = 1 Then  ' 支持类似于R语言里面的 ??帮助命令
-                commandName = Mid(commandName, 3)
+                commandName = Mid(commandName, 3)     ' 去除前面的两个??问号，得到查询的term
                 Return Help(commandName)
 
             ElseIf String.Equals(commandName, "~") Then  ' 打印出应用程序的位置，linux里面的HOME
@@ -229,7 +229,7 @@ Namespace CommandLine
 
                     Return -1000
                 Else
-                    Dim list$() = Me.ListPossible(commandName)
+                    Dim list$() = Me.ListingRelated(commandName)
 
                     If list.IsNullOrEmpty Then
 
@@ -238,11 +238,7 @@ Namespace CommandLine
                         Call Console.WriteLine(PS1.Fedora12.ToString & " " & DirectCast(argvs(Scan0), CommandLine).ToString)
 
                     Else
-                        Call Console.WriteLine(BAD_COMMAND_MAN, commandName)
-
-                        For Each name As String In list
-                            Call Console.WriteLine("    " & name)
-                        Next
+                        Call listingCommands(list, commandName)
                     End If
                 End If
             End If
@@ -250,8 +246,11 @@ Namespace CommandLine
             Return -1
         End Function
 
-        Const BAD_COMMAND_MAN As String = "Bad command, no such a command named ""{0}"", but you probably want to use commands:"
-        Const BAD_COMMAND_NAME As String = "Bad command, no such a command named ""{0}"", ? for command list or ""man"" for all of the commandline detail informations."
+        ''' <summary>
+        ''' Bad command, no such a command named ""{0}"", but you probably want to using one of these commands:
+        ''' </summary>
+        Const BAD_COMMAND_LISTING_COMMANDS$ = "Bad command, no such a command named ""{0}"", but you probably want to using one of these commands:"
+        Const BAD_COMMAND_NAME$ = "Bad command, no such a command named ""{0}"", ? for command list or ""man"" for all of the commandline detail informations."
 
         ''' <summary>
         ''' Generate the sdk document for the target program assembly.(生成目标应用程序的命令行帮助文档，markdown格式的)
@@ -303,6 +302,29 @@ Namespace CommandLine
             End If
         End Sub
 
+        Private Sub listingCommands(commands$(), commandName$)
+            Call Console.WriteLine(BAD_COMMAND_LISTING_COMMANDS, commandName)
+            Call Console.WriteLine()
+
+            Dim maxLength = commands.MaxLengthString.Length
+
+            For Each cName As String In commands
+                With cName
+                    Dim msg$
+
+                    msg$ = .ref & New String(" "c, maxLength - .Length + 3)
+
+                    With __API_table(.ToLower).Info
+                        If Not .StringEmpty Then
+                            msg$ &= Mid(.ref, 1, 60) & "..."
+                        End If
+                    End With
+
+                    Call Console.WriteLine("   " & msg)
+                End With
+            Next
+        End Sub
+
         ''' <summary>
         ''' Gets the help information of a specific command using its name property value.(获取某一个命令的帮助信息)
         ''' </summary>
@@ -320,18 +342,14 @@ Namespace CommandLine
                 If __API_table.ContainsKey(name = CommandName.ToLower) Then
                     Call __API_table(name).PrintHelp
                 Else
-                    Dim list$() = Me.ListPossible(CommandName)
+                    Dim list$() = Me.ListingRelated(CommandName)
 
                     If list.IsNullOrEmpty Then
                         Call Console.WriteLine($"Bad command, no such a command named ""{CommandName}"", ? for command list.")
                         Call Console.WriteLine()
                         Call Console.WriteLine(PS1.Fedora12.ToString & " ?" & CommandName)
                     Else
-                        Call Console.WriteLine(BAD_COMMAND_MAN, CommandName)
-
-                        For Each cName As String In list
-                            Call Console.WriteLine("    " & cName)
-                        Next
+                        Call listingCommands(list, CommandName)
                     End If
 
                     Return -2
@@ -372,10 +390,10 @@ Namespace CommandLine
                 End If
             Next
 
-            Me.__root_Namespace = type.Namespace
+            Me.__rootNamespace = type.Namespace
             Me._Stack = caller
             Me._Type = type
-            Me._Info = type.NamespaceEntry
+            Me._Info = type.NamespaceEntry(True)
         End Sub
 
         ''' <summary>
@@ -639,43 +657,49 @@ Namespace CommandLine
             End Set
         End Property
 
-        Public Function GetPossibleCommand(name As Value(Of String)) As EntryPoints.APIEntryPoint
-            If Me.__API_table.ContainsKey(name = (+name).ToLower) Then
-                Return __API_table(+name)
-            Else
-                Dim LQuery = (From x As KeyValuePair(Of String, APIEntryPoint)
-                              In __API_table
-                              Let similarity = LevenshteinDistance.ComputeDistance(x.Key, name)
-                              Where Not similarity Is Nothing
-                              Select similarity.Score,
-                                  x.Value
-                              Order By Score Descending).ToArray
+        Public Function GetPossibleCommand(name As Value(Of String)) As APIEntryPoint
+            Dim commands = ListingRelated(name)
 
-                If LQuery.IsNullOrEmpty Then
-                    Return Nothing
-                Else
-                    Return LQuery.First.Value
-                End If
+            If commands.Length = 0 Then
+                Return Nothing
+            Else
+                Return __API_table(commands.First.ToLower)
             End If
         End Function
 
         ''' <summary>
         ''' 列举出所有可能的命令
         ''' </summary>
-        ''' <param name="Name">模糊匹配</param>
+        ''' <param name="query">模糊匹配</param>
         ''' <returns></returns>
-        Public Function ListPossible(Name As String) As String()
-            Dim key As String = Name.ToLower
+        Public Function ListingRelated(query$) As String()
+            Dim key As New LevenshteinString(query.ToLower)
             Dim LQuery = From x As String
                          In __API_table.Keys.AsParallel
-                         Let lev = LevenshteinDistance.ComputeDistance(x, key)
-                         Where Not lev Is Nothing AndAlso
-                              lev.Score > 0.3
-                         Select lev.Score,
+                         Let compare = key Like x
+                         Where Not compare Is Nothing AndAlso
+                             compare.Score > 0.3
+                         Select compare.Score,
                              x
                          Order By Score Descending
 
-            Return LQuery.ToArray(Function(x) x.x)
+            Dim levenshteins = LQuery _
+                .Select(Function(x) x.x) _
+                .AsList
+
+            levenshteins += __API_table _
+                .Keys _
+                .Where(Function(s)
+                           Return InStr(s, query, CompareMethod.Text) > 0 OrElse
+                                  InStr(query, s, CompareMethod.Text) > 0
+                       End Function)
+
+            Return levenshteins _
+                .Distinct _
+                .Select(Function(name)
+                            Return __API_table(name).Name
+                        End Function) _
+                .ToArray
         End Function
 
         ''' <summary>

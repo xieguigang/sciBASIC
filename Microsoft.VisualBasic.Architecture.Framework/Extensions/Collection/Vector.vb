@@ -28,12 +28,72 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
+''' <summary>
+''' Extension methods for the .NET object sequence
+''' </summary>
 Public Module VectorExtensions
+
+    ''' <summary>
+    ''' Create a vector shadow of your data collection.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns>返回<see cref="Object"/>类型是为了简化语法</returns>
+    <Extension>
+    Public Function VectorShadows(Of T)(source As IEnumerable(Of T)) As Object
+        Return New VectorShadows(Of T)(source)
+    End Function
+
+    ''' <summary>
+    ''' 聚合，将nullable类型结构体转换为原来的值类型
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Coalesce(Of T As Structure)(source As IEnumerable(Of T?)) As IEnumerable(Of T)
+        Debug.Assert(source IsNot Nothing)
+        Return source.Where(Function(x) x.HasValue).[Select](Function(x) CType(x, T))
+    End Function
+
+    <Extension>
+    Public Function Sort(Of T)(source As IEnumerable(Of NamedValue(Of T)), by As Index(Of String), Optional throwNoOrder As Boolean = False) As NamedValue(Of T)()
+        Dim out As NamedValue(Of T)() = New NamedValue(Of T)(by.Count - 1) {}
+
+        For Each x In source
+            Dim i% = by(x.Name)
+
+            If i = -1 Then
+                If throwNoOrder Then
+                    Throw New InvalidExpressionException(x.Name & " was not found in the index value.")
+                Else
+                    Continue For
+                End If
+            Else
+                out(i) = x
+            End If
+        Next
+
+        Return out
+    End Function
+
+    <Extension> Public Function GetRange(Of T)(vector As T(), index%, count%) As T()
+        Dim fill As T() = New T(count - 1) {}
+        Dim ends% = index + count - 1
+
+        For i As Integer = index To ends
+            fill(i - index) = vector(i)
+        Next
+
+        Return fill
+    End Function
 
     ''' <summary>
     ''' 对目标序列进行排序生成新的序列
@@ -100,8 +160,8 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' + False: 测试失败，不会满足<see cref="PairData(Of T)(T(), T())"/>的条件
-    ''' + True: 可以使用<see cref="PairData(Of T)(T(), T())"/>来生成Mapping匹配
+    ''' + False: 测试失败，不会满足<see cref="MappingData(Of T)(T(), T())"/>的条件
+    ''' + True: 可以使用<see cref="MappingData(Of T)(T(), T())"/>来生成Mapping匹配
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="a"></param>
@@ -115,6 +175,8 @@ Public Module VectorExtensions
         End If
     End Function
 
+    Const DimNotAgree$ = "Both a and b their length should be equals or one of them should be length=1!"
+
     ''' <summary>
     ''' 用来生成map数据的，
     ''' + 当两个向量长度相同，会不进行任何处理，即两个向量之间，元素都可以一一对应，
@@ -125,16 +187,16 @@ Public Module VectorExtensions
     ''' <param name="b"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function PairData(Of T)(a As T(), b As T()) As IEnumerable(Of Map(Of T, T))
+    Public Iterator Function MappingData(Of T)(a As T(), b As T()) As IEnumerable(Of Map(Of T, T))
         If a.Length = 1 AndAlso b.Length > 1 Then
             ' 补齐a
-            a = a(0).CopyVector(b.Length)
+            a = a(0).Repeats(b.Length)
         ElseIf a.Length > 1 AndAlso b.Length = 1 Then
             ' 补齐b
-            b = b(0).CopyVector(a.Length)
+            b = b(0).Repeats(a.Length)
         ElseIf a.Length <> b.Length Then
             ' 无法计算
-            Throw New Exception("Both a and b their length should be equals or one of them should be length=1!")
+            Throw New ArgumentException(DimNotAgree)
         End If
 
         For i As Integer = 0 To a.Length - 1
@@ -172,12 +234,11 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Any of the element in source <paramref name="sites"/> is in a specific <paramref name="range"/>??
     ''' </summary>
     ''' <param name="range"></param>
     ''' <param name="sites"></param>
     ''' <returns></returns>
-    ''' 
     <Extension>
     Public Function InsideAny(range As IntRange, sites As IEnumerable(Of Integer)) As Boolean
         For Each x% In sites
@@ -214,7 +275,8 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Returns all of the elements which is after the element that detected by a specific evaluation function <paramref name="predicate"/>.
+    ''' Returns all of the elements which is after the element that detected by a specific 
+    ''' evaluation function <paramref name="predicate"/>.
     ''' (取出在判定条件成立的元素之后的所有元素)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -266,14 +328,14 @@ Public Module VectorExtensions
     End Sub
 
     ''' <summary>
-    ''' String mid function like operation on any type collection data.
+    ''' <see cref="Strings.Mid"/> function like operation on any type collection data.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="start">0 base</param>
     ''' <param name="length"></param>
     ''' <returns></returns>
-    <Extension> Public Function Midv(Of T)(source As IEnumerable(Of T), start As Integer, length As Integer) As T()
+    <Extension> Public Function Midv(Of T)(source As IEnumerable(Of T), start%, length%) As T()
         If source.IsNullOrEmpty Then
             Return New T() {}
         ElseIf source.Count < length Then
@@ -370,20 +432,4 @@ Public Module VectorExtensions
         ''' </summary>
         NextFirst
     End Enum
-
-    ''' <summary>
-    ''' 查找出列表之中符合条件的所有的索引编号
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="array"></param>
-    ''' <param name="condi"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Iterator Function GetIndexes(Of T)(array As T(), condi As Func(Of T, Boolean)) As IEnumerable(Of Integer)
-        For i As Integer = 0 To array.Length - 1
-            If condi(array(i)) Then
-                Yield i
-            End If
-        Next
-    End Function
 End Module

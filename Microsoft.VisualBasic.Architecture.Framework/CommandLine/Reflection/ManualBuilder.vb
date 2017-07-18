@@ -102,7 +102,7 @@ Namespace CommandLine.Reflection
                     End If
 
                     Dim blank As String = New String(" "c, maxLen - l + 1)
-                    Dim descriptLines = Paragraph.Split(param.Description, 60).ToArray
+                    Dim descriptLines = Paragraph.Split(param.Description, 120).ToArray
 
                     Call Console.Write(blank)
                     Call Console.WriteLine($"Description:  {descriptLines.FirstOrDefault}")
@@ -117,7 +117,7 @@ Namespace CommandLine.Reflection
 
                     blank = New String(" "c, maxLen + 5)
 
-                    Call Console.WriteLine()
+                    ' Call Console.WriteLine()
                     Call Console.Write(blank)
 
                     blank = blank & "              "

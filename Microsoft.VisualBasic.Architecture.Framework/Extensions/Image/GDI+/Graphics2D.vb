@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::cf3c21e38c7c9a644c86a8735311e1df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Graphics2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -1354,22 +1354,14 @@ Namespace Imaging
         Public Overrides Sub DrawImage(image As Image, destPoints() As PointF)
             Call Graphics.DrawImage(image, destPoints)
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image, using its original physical size, at
-        '     the specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   point:
-        '     System.Drawing.Point structure that represents the location of the upper-left
-        '     corner of the drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image, using its original physical size, at
+        ''' the specified location.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="point">System.Drawing.Point structure that represents the location of the upper-left
+        ''' corner of the drawn image.</param>
         Public Overrides Sub DrawImage(image As Image, point As Point)
             Call Graphics.DrawImage(image, point)
         End Sub
@@ -1654,7 +1646,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
-
+            Call Graphics.DrawImage(image, x, y, srcRect, srcUnit)
         End Sub
 
         ''' <summary>
@@ -1694,7 +1686,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, width As Single, height As Single)
-
+            Call Graphics.DrawImage(image, x, y, width, height)
         End Sub
         '
         ' Summary:
@@ -2398,7 +2390,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
         Public Overrides Sub DrawLines(pen As Pen, points() As Point)
-
+            Call Graphics.DrawLines(pen, points)
         End Sub
         '
         ' Summary:
@@ -2568,6 +2560,7 @@ Namespace Imaging
         Public Overrides Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
 
         End Sub
+
         '
         ' Summary:
         '     Draws a polygon defined by an array of System.Drawing.Point structures.
@@ -2732,7 +2725,7 @@ Namespace Imaging
 
         ''' <summary>
         ''' Draws the specified text string at the specified location with the specified
-        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' <see cref="System.Drawing.Brush"/> and <see cref="System.Drawing.Font"/> objects.
         ''' </summary>
         ''' <param name="s">String to draw.</param>
         ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
@@ -4045,7 +4038,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillEllipse(brush As Brush, rect As Rectangle)
-
+            Call Graphics.FillEllipse(brush, rect)
         End Sub
         '
         ' Summary:
@@ -4064,7 +4057,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public Overrides Sub FillEllipse(brush As Brush, rect As RectangleF)
-
+            Call Graphics.FillEllipse(brush, rect)
         End Sub
         '
         ' Summary:

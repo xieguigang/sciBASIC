@@ -1,34 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::bd48f515ca3cf67e721211ac78ce525a, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\RSyntax\Vectors\GenericVector(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace SyntaxAPI.Vectors
 
@@ -37,7 +37,7 @@ Namespace SyntaxAPI.Vectors
         Implements IDisposable
 
         ''' <summary>
-        ''' 向量维数
+        ''' 向量维数，就是向量的长度（元素的个数）
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property Dim%
@@ -115,19 +115,19 @@ Namespace SyntaxAPI.Vectors
 
         Public Overloads Property [GET](a As Integer, b As Vector) As T()
             Get
-                Return [GET](New Vector({a}), b)
+                Return [GET](New Vector(integers:={a}), b)
             End Get
             Set(value As T())
-                [GET](New Vector({a}), b) = value
+                [GET](New Vector(integers:={a}), b) = value
             End Set
         End Property
 
-        Public Shared Operator <>(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
+        Public Overloads Shared Operator <>(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
             Dim LQuery = (From i In x.SeqIterator Select Not i.value.Equals(y(i.i))).ToArray
             Return New BooleanVector(LQuery)
         End Operator
 
-        Public Shared Operator =(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
+        Public Overloads Shared Operator =(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
             Return Not (x <> y)
         End Operator
 

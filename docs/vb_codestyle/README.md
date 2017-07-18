@@ -262,7 +262,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Return (ls - l - r - wildcards("*.csv") <= DIR) _
       .Select(AddressOf ODEsOut.LoadFromDataFrame) _
       .Sampling(eigenvector, partN)
-      
+
 ' Or used in For Loop
 For Each file As String In ls - l - r - wildcards("*.csv") <= DIR
     ' blablabla
@@ -277,7 +277,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Return (ls - l - r - "*.csv" <= DIR) _
       .Select(AddressOf ODEsOut.LoadFromDataFrame) _
       .Sampling(eigenvector, partN)
-      
+
 ' Or used in For Loop
 For Each file$ In ls - l - r - {"*.csv", "*.tsv"} <= DIR
     ' blablabla
@@ -293,7 +293,7 @@ Dim array As <Class>()
 
 For i% = 0 To array.Length - 1
     Dim o = array(i)
-    
+
     If <blablabla(o)> Is True Then
         Return i%
     End If
@@ -307,7 +307,7 @@ Dim array As <Class>()
 
 For i% = 0 To array.Length - 1
     With array(i)
-    
+
         If <blablabla(.Property)> Is True Then
             Return i%
         End If
@@ -331,21 +331,34 @@ Public Function IndexOf(Id As Char) As Integer
 End Function
 ```
 
-And also you can combine ``With`` with function returns value
+And also you can combine ``With`` with function returns value. And so how to reference this anonymous variable, and get itself? Just using a very simple extension method ``ref()``, which is located at namespace ``Microsoft.VisualBasic.Language``.
 
 ```vbnet
 With function_calls()
     ' blablabla
+    Return .ref
 End With
+
+''' <summary>
+''' Extension method for VisualBasic ``With`` anonymous variable syntax source reference helper
+''' </summary>
+''' <typeparam name="T"></typeparam>
+''' <param name="x"></param>
+''' <returns></returns>
+<Extension> Public Function ref(Of T)(x As T) As T
+    Return x
+End Function
 ```
 
 ## Type char coding style
 
+The type char code just working on the .NET primitive type, like ``String``, ``Integer``, ``Long``, ``Double``, ``Char``, etc. Using the type char code can makes your code more brief and readable, give your code more VisualBasic-ish.
+
 ###### Recommended
-It is recommended that using type char in the parameter declaring of a function or method
+It is recommended that using type char in the parameter declaring of a function or method, local variable in a method/function, internal module fields.
 
 ###### Not Recommended
-Not recommended that using type char for Property, Field or local variable declaring.
+Not recommended that using type char for ``Class/Structure Property``.
 
 ## VisualBasic identifer names
 

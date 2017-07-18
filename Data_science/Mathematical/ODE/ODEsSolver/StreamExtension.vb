@@ -1,37 +1,39 @@
 ﻿#Region "Microsoft.VisualBasic::7da2ab24154784c21a0694edd0e4fca5, ..\sciBASIC#\Data_science\Mathematical\ODE\ODEsSolver\StreamExtension.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports sys = System.Math
 
 Public Module StreamExtension
 
@@ -39,7 +41,7 @@ Public Module StreamExtension
     ''' Generates datafram and then can makes the result save data into a csv file.
     ''' </summary>
     ''' <param name="xDisp"></param>
-    ''' <param name="fix%">Formats output by using <see cref="Math.Round"/></param>
+    ''' <param name="fix%">Formats output by using <see cref="Round"/></param>
     ''' <returns></returns>
     ''' 
     <Extension>
@@ -52,7 +54,7 @@ Public Module StreamExtension
         If fix <= 0 Then
             round = Function(n) CStr(n)
         Else
-            round = Function(n) CStr(Math.Round(n, fix))
+            round = Function(n) CStr(sys.round(n, fix))
         End If
 
         file += head
@@ -101,15 +103,14 @@ Public Module StreamExtension
             noVars,
             New Dictionary(Of String, Double),
             __getArgs(params(Scan0), params(1))) ' 由于没有信息可以了解哪些变量是y0初始值，所以在这里都把这些数据放在变量参数列表里面
-        Dim yData As NamedValue(Of Double())() =
-            LinqAPI.Exec(Of NamedValue(Of Double())) <= From s As String()
-                                                        In y
-                                                        Let name As String = s(Scan0)
-                                                        Let values As Double() = s.Skip(1).ToArray(AddressOf Val)
-                                                        Select New NamedValue(Of Double()) With {
-                                                            .Name = name,
-                                                            .Value = values
-                                                        }
+        Dim yData = LinqAPI.Exec(Of NamedCollection(Of Double)) <= From s As String()
+                                                                   In y
+                                                                   Let name As String = s(Scan0)
+                                                                   Let values As Double() = s.Skip(1).ToArray(AddressOf Val)
+                                                                   Select New NamedCollection(Of Double) With {
+                                                                       .Name = name,
+                                                                       .Value = values
+                                                                   }
         Return New ODEsOut With {
             .params = args,
             .x = X.Skip(1).ToArray(AddressOf Val),
@@ -142,7 +143,7 @@ Public Module StreamExtension
         Dim data = source.ToArray
         Dim minLen% = data.Min(Function(x) x.x.Length)
         Dim vars = data.First.y.Keys
-        Dim y As New Dictionary(Of NamedValue(Of Double()))
+        Dim y As New Dictionary(Of NamedCollection(Of Double))
         Dim params As New Dictionary(Of String, Double)
         Dim y0 As New Dictionary(Of String, Double)
 
@@ -167,7 +168,7 @@ Public Module StreamExtension
         End Try
 
         For Each k In vars
-            y += New NamedValue(Of Double()) With {
+            y += New NamedCollection(Of Double) With {
                 .Name = k,
                 .Value = New Double(minLen) {}
             }

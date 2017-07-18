@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Scripting.TokenIcer
 

@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports sys = System.Math
 
 Namespace Distributions
 
@@ -86,7 +87,7 @@ Namespace Distributions
             Next
 
             Dim t As Double = z + g_ln + 0.5
-            Return 0.5 * Math.Log(2 * Math.PI) + (z + 0.5) * Math.Log(t) - t + Math.Log(x) - Math.Log(z)
+            Return 0.5 * sys.Log(2 * sys.PI) + (z + 0.5) * sys.Log(t) - t + sys.Log(x) - sys.Log(z)
         End Function
 
         ''' <summary>
@@ -122,9 +123,9 @@ Namespace Distributions
         <Extension>
         Public Function gamma(z As Double) As Double
             If (z < 0.5) Then
-                Return Math.PI / (Math.Sin(Math.PI * z) * gamma(1 - z))
+                Return sys.PI / (sys.Sin(Math.PI * z) * gamma(1 - z))
             ElseIf (z > 100) Then
-                Return Math.Exp(lngamma(z))
+                Return sys.Exp(lngamma(z))
             Else
                 Dim x As Double = p(0)
 
@@ -135,7 +136,7 @@ Namespace Distributions
                 Next
 
                 Dim t As Double = z + g + 0.5
-                Return Math.Sqrt(2 * Math.PI) * Math.Pow(t, z + 0.5) * Math.Exp(-t) * x
+                Return sys.Sqrt(2 * sys.PI) * sys.Pow(t, z + 0.5) * sys.Exp(-t) * x
             End If
         End Function
     End Module

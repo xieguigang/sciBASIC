@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d3f7abdffaf578804cee96cc0ecb1a8a, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -68,24 +68,28 @@ Public Module DataImports
         End If
 
         Dim lines As String() = txtPath.ReadAllLines(encoding)
-        Dim csv As New File(ImportsData(Lines, delimiter), txtPath)
+        Dim csv As New File(ImportsData(lines, delimiter), txtPath)
         Return csv
     End Function
 
     ''' <summary>
-    ''' Imports data source by using specific delimiter
+    ''' Imports data source by using specific delimiter.(这个函数是一个安全的函数，当目标文件不存在的时候，返回的是一个空集合)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path"></param>
     ''' <param name="delimiter"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <Extension> Public Function [Imports](Of T As Class)(path$, Optional delimiter$ = ",", Optional encoding As Encoding = Nothing) As T()
+    <Extension> Public Function [Imports](Of T As Class)(path$,
+                                                         Optional delimiter$ = ",",
+                                                         Optional encoding As Encoding = Nothing,
+                                                         Optional nameMaps As Dictionary(Of String, String) = Nothing) As T()
+
         Dim source As IO.File = [Imports](path, delimiter, encoding)
         If source.RowNumbers = 0 Then
             Return New T() {}
         Else
-            Return source.AsDataSource(Of T)(False)
+            Return source.AsDataSource(Of T)(False, maps:=nameMaps)
         End If
     End Function
 
@@ -197,7 +201,7 @@ Public Module DataImports
         Next
 
         Return New RowObject With {
-            ._innerColumns = cols.AsList
+            .buffer = cols.AsList
         }
     End Function
 

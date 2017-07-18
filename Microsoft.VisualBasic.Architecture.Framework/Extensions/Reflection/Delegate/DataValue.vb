@@ -20,36 +20,56 @@ Namespace Emit.Delegates
         ''' </summary>
         ReadOnly properties As Dictionary(Of String, PropertyInfo)
 
+        Public ReadOnly Property PropertyNames As String()
+            Get
+                Return properties.Values _
+                    .Select(Function(x) x.Name) _
+                    .ToArray
+            End Get
+        End Property
+
+        Public Function GetProperty(property$) As PropertyInfo
+            Return properties([property])
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="name$">The property name, using the ``nameof`` operator to get the property name!</param>
         ''' <returns></returns>
-        Public Property Evaluate(name$) As Object()
+        Default Public Property Evaluate(name$) As Object
             Get
                 Dim [property] As New BindProperty(Of DataFrameColumnAttribute)(properties(name))
-                Return data _
-                    .Select(Function(x) [property].__getValue(x)) _
-                    .ToArray
-            End Get
-            Set(value As Object())
-                Dim [property] As New BindProperty(Of DataFrameColumnAttribute)(properties(name))
+                Dim vector As Array = Array.CreateInstance([property].Type, data.Length)
 
-                If value.IsNullOrEmpty Then
+                For i As Integer = 0 To data.Length - 1
+                    Call vector.SetValue([property].__getValue(data(i)), i)
+                Next
+
+                Return vector
+            End Get
+            Set(value As Object)
+                Dim [property] As New BindProperty(Of DataFrameColumnAttribute)(properties(name))
+                Dim array As IEnumerable = TryCast(value, IEnumerable)
+
+                If value Is Nothing Then
                     For Each x In data
                         Call [property].__setValue(x, Nothing)
                     Next
-                ElseIf value.Length = 1 Then
-                    Dim v As Object = value(Scan0)
-                    For Each x In data
+                ElseIf array Is Nothing Then  ' 不是一个集合
+                    Dim v As Object = value
+
+                    For Each x As T In data
                         Call [property].__setValue(x, v)
                     Next
                 Else
-                    If value.Length <> data.Length Then
+                    Dim vector = array.Cast(Of Object).ToArray
+
+                    If vector.Length <> data.Length Then
                         Throw New InvalidExpressionException(DimNotAgree$)
                     End If
                     For i As Integer = 0 To data.Length - 1
-                        Call [property].__setValue(data(i), value(i))
+                        Call [property].__setValue(data(i), vector(i))
                     Next
                 End If
             End Set
@@ -103,7 +123,7 @@ Namespace Emit.Delegates
 
         Private Shared Sub TestDEMO()
             Dim vector As NamedValue(Of String)() = {}
-            Dim previousData() = Linq.DATA(vector).Evaluate("Value")
+            Dim previousData = Linq.DATA(vector).Evaluate("Value")
 
             Linq.DATA(vector).Evaluate("Value") = {}    ' set all value property to nothing
             Linq.DATA(vector).Evaluate("Value") = {"1"} ' set all value property to a specifc value "1"

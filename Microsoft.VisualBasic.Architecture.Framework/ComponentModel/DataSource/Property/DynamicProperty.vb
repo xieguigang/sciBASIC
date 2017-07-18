@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::69c862c0321bc991919841f78d6184c9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -47,7 +47,7 @@ Namespace ComponentModel.DataSourceModel
     End Interface
 
     ''' <summary>
-    ''' Has a dictionary as a dynamics property.
+    ''' This abstract object has a <see cref="propertyTable"/> dictionary keeps as a dynamics property source.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public MustInherit Class DynamicPropertyBase(Of T)
@@ -81,7 +81,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Default Public Property ItemValue(name$) As T
+        Default Public Overloads Property ItemValue(name$) As T
             Get
                 If Properties.ContainsKey(name) Then
                     Return Properties(name)
@@ -93,6 +93,10 @@ Namespace ComponentModel.DataSourceModel
                 Properties(name) = value
             End Set
         End Property
+
+        Public Function TakeValues(keys$()) As T()
+            Return keys.Select(Function(s) Me(s)).ToArray
+        End Function
 
         ''' <summary>
         ''' Determines whether the System.Collections.Generic.Dictionary`2 contains the specified

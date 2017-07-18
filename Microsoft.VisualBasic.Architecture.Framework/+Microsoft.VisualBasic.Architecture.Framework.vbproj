@@ -40,7 +40,8 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>Full</DebugType>
@@ -56,7 +57,8 @@
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
@@ -95,7 +97,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
@@ -109,7 +112,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -123,13 +127,14 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x86\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
@@ -137,7 +142,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -152,7 +158,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -167,7 +174,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -182,7 +190,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -197,7 +206,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -212,7 +222,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -227,23 +238,27 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
     <OutputPath>bin\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
     <OutputPath>bin\x64\Release2\</OutputPath>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
     <OutputPath>bin\x86\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -256,7 +271,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -270,7 +286,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -285,7 +302,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -364,6 +382,7 @@
     <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
     <Compile Include="ComponentModel\Algorithm\base\DynamicProgramming.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
+    <Compile Include="ComponentModel\DriverModel.vb" />
     <Compile Include="ComponentModel\DataSource\Tsv.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedCollection%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
@@ -386,7 +405,7 @@
     <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
-    <Compile Include="ComponentModel\DataSource\DataSample.vb" />
+    <Compile Include="ComponentModel\Algorithm\DataSample.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
     <Compile Include="ComponentModel\Ranges\IRanges.vb" />
@@ -395,7 +414,7 @@
     <Compile Include="ComponentModel\Ranges\IntRange.vb" />
     <Compile Include="ComponentModel\Settings\Inf\IniFile.vb" />
     <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
-    <Compile Include="ComponentModel\Settings\LDM\ProfileTable.vb" />
+    <Compile Include="ComponentModel\Settings\DataModels\ProfileTable.vb" />
     <Compile Include="ComponentModel\SingletonHolder.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
@@ -409,7 +428,8 @@
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
-    <Compile Include="Extensions\Image\GDI+\LayoutedObject.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\mxRectangle.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Correlations\Ranking.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
@@ -421,14 +441,24 @@
     <Compile Include="Extensions\WebServices\GZStream.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
     <Compile Include="Language\lang\C\Vector.vb" />
+    <Compile Include="Language\lang\Java\Line2D.vb" />
     <Compile Include="Language\lang\Java\Collections.vb" />
     <Compile Include="Language\lang\Java\Reflection.vb" />
+    <Compile Include="Language\Linq\Indexer.vb" />
+    <Compile Include="Language\Linq\Vector.vb" />
+    <Compile Include="Language\Linq\VectorShadows.vb" />
     <Compile Include="Language\Linq\List%28Of T%29.vb" />
     <Compile Include="Language\lang\Perl\die.vb" />
+    <Compile Include="Scripting\Abstract.vb" />
     <Compile Include="Scripting\Expressions\Selector.vb" />
+    <Compile Include="Scripting\Runtime\BinaryOperator.vb" />
+    <Compile Include="Scripting\Runtime\OverloadsFunction.vb" />
+    <Compile Include="Scripting\Runtime\Extensions.vb" />
+    <Compile Include="Scripting\TokenIcer\LangModels\OperatorExpression.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\PeekToken.vb" />
     <Compile Include="Scripting\VBLanguage.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
+    <Compile Include="Text\Xml\Linq\NodeIterator.vb" />
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
@@ -443,9 +473,9 @@
     <Compile Include="ComponentModel\LazyLoader.vb" />
     <Compile Include="ComponentModel\Settings\ConfigEngine.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Serialization.vb" />
-    <Compile Include="ComponentModel\Settings\LDM\BindMapping.vb" />
-    <Compile Include="ComponentModel\Settings\LDM\ModelBase.vb" />
-    <Compile Include="ComponentModel\Settings\LDM\ProfileItem.vb" />
+    <Compile Include="ComponentModel\Settings\DataModels\BindMapping.vb" />
+    <Compile Include="ComponentModel\Settings\DataModels\ModelBase.vb" />
+    <Compile Include="ComponentModel\Settings\DataModels\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
     <Compile Include="Extensions\IO\CollectionIO.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue.vb" />
@@ -463,7 +493,7 @@
     <Compile Include="Parallel\Tasks\Actor%28Of T, V%29.vb" />
     <Compile Include="Scripting\Expressions\ArrayIndex.vb" />
     <Compile Include="Scripting\Expressions\StringInterpolation.vb" />
-    <Compile Include="Scripting\NumberConversionRoutines.vb" />
+    <Compile Include="Scripting\Runtime\CType\NumberConversionRoutines.vb" />
     <Compile Include="Scripting\ScriptBuilder.vb" />
     <Compile Include="Terminal\InteractiveIODevice\Shell.vb" />
     <Compile Include="Terminal\PipelineCLI.vb" />
@@ -534,7 +564,7 @@
     <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
     <Compile Include="Scripting\Actives.vb" />
-    <Compile Include="Scripting\Where.vb" />
+    <Compile Include="Scripting\Runtime\Where.vb" />
     <Compile Include="Serialization\JSON\JsonFormatter.vb" />
     <Compile Include="Serialization\JSON\Formatter\FormatterScopeState.vb" />
     <Compile Include="Serialization\JSON\Formatter\ICharacterStrategy.vb" />
@@ -564,8 +594,8 @@
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
     <Compile Include="Text\Xml\XmlDoc.vb" />
-    <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
-    <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
+    <Compile Include="Extensions\Image\Bitmap\BitmapBuffer.vb" />
+    <Compile Include="Extensions\Image\Bitmap\BitmapScale.vb" />
     <Compile Include="Extensions\Image\GDI+\Interface.vb" />
     <Compile Include="Extensions\Image\Colors\GDIColors.vb" />
     <Compile Include="Extensions\IO\PathMatch.vb" />
@@ -685,7 +715,7 @@
     <Compile Include="Tools\MMFProtocol\Pipeline\Pipeline.vb" />
     <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\MetaData\Type.vb" />
-    <Compile Include="Scripting\TokenIcer\ParserAPI.vb" />
+    <Compile Include="Scripting\TokenIcer\ParserCommon.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\StackTokens%28Of Tokens%29.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\Func.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\Token.vb" />
@@ -701,7 +731,7 @@
     <Compile Include="Parallel\Tasks\UpdateThread.vb" />
     <Compile Include="Parallel\Threads\ParallelLoading.vb" />
     <Compile Include="Parallel\Threads\ParallelExtension.vb" />
-    <Compile Include="Scripting\Casting.vb" />
+    <Compile Include="Scripting\Runtime\CType\Casting.vb" />
     <Compile Include="Scripting\InputHandler.vb" />
     <Compile Include="Scripting\MetaData\Cite.vb" />
     <Compile Include="Scripting\MetaData\Parameter.vb" />
@@ -718,7 +748,6 @@
     <Compile Include="Parallel\Tasks\Task.vb" />
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
-    <Compile Include="Extensions\Image\GrayBitmap.vb" />
     <Compile Include="Tools\Logging\EventLog.vb" />
     <Compile Include="Extensions\Debugger\NETDebugger.vb" />
     <Compile Include="Tools\Network\Mailto\MailConfigure.vb" />
@@ -781,7 +810,6 @@
     <Compile Include="Terminal\InteractiveIODevice\Terminal.vb" />
     <Compile Include="Terminal\Utility\ManualPages.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\CPOLLicense.vb" />
-    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStats.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsMedian.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsMode.vb" />

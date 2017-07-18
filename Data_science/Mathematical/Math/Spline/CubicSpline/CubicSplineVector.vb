@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports sys = System.Math
 
 Namespace Interpolation
 
@@ -123,7 +124,7 @@ Namespace Interpolation
         Public Function GetPoint(position As Single) As Single
             position = position * _cubics.Count
 
-            Dim cubicNum As Integer = CInt(Fix(Math.Min(_cubics.Count - 1, position)))
+            Dim cubicNum As Integer = CInt(Fix(sys.Min(_cubics.Count - 1, position)))
             Dim cubicPos As Single = (position - cubicNum)
 
             Return _cubics(cubicNum).Eval(cubicPos)

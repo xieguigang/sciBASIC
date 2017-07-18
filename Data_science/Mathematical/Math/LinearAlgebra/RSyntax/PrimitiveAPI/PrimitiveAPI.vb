@@ -1,35 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::9b8cddc3e09c7dd66ca43deb03a70a85, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -56,7 +56,7 @@ Namespace SyntaxAPI
         ''' Currently missing can only be used in the immediate body of the function that defines the argument, not in the body of a nested function or a local call. This may change in the future.
         ''' This is a ‘special’ primitive function: it must not evaluate its argument.
         ''' </remarks>
-        Public Function Missing(Of T)(x As Generic.IEnumerable(Of T)) As Boolean
+        Public Function Missing(Of T)(x As IEnumerable(Of T)) As Boolean
             Return x.IsNullOrEmpty
         End Function
 
@@ -208,7 +208,7 @@ Namespace SyntaxAPI
                 Call x.Factor(value)
             End If
 
-            Return New Vector({x.Dim})
+            Return New Vector(integers:={x.Dim})
         End Function
 
         ''' <summary>
@@ -219,7 +219,7 @@ Namespace SyntaxAPI
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Length(Of T)(x As GenericVector(Of T)) As Vector
-            Return New Vector({x.Dim})
+            Return New Vector(integers:={x.Dim})
         End Function
 
         ''' <summary>

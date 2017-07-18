@@ -75,8 +75,8 @@ Namespace MonteCarlo
 
             Call code.AppendLine("Imports Microsoft.VisualBasic.Data.Bootstrapping")
             Call code.AppendLine("Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo")
-            Call code.AppendLine("Imports Microsoft.VisualBasic.Mathematical.Calculus")
-            Call code.AppendLine("Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra")
+            Call code.AppendLine("Imports Microsoft.VisualBasic.Math.Calculus")
+            Call code.AppendLine("Imports Microsoft.VisualBasic.Math.LinearAlgebra")
             Call code.AppendLine()
 
             If Not String.IsNullOrEmpty([namespace]) Then

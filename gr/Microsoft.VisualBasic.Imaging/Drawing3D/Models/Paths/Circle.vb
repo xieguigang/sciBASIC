@@ -1,30 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::4ed33fe131df81b3bf1ec2aee0f860e4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Circle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Math
 
 Namespace Drawing3D.Models.Isometric.Paths
 
@@ -51,8 +53,8 @@ Namespace Drawing3D.Models.Isometric.Paths
 
             For i As Integer = 0 To vertices - 1
                 Dim p As New Point3D(
-                    (radius * Math.Cos(i * deltaAngle)) + origin.X,
-                    (radius * Math.Sin(i * deltaAngle)) + origin.Y,
+                    (radius * Cos(i * deltaAngle)) + origin.X,
+                    (radius * Sin(i * deltaAngle)) + origin.Y,
                     origin.Z)
 
                 Call Push(p)
@@ -73,8 +75,8 @@ Namespace Drawing3D.Models.Isometric.Paths
 
             For i As Integer = 0 To vertices - 1
                 Dim p As New Point3D(
-                    (radius * Math.Cos(angle)) + origin.X,
-                    (radius * Math.Sin(angle)) + origin.Y,
+                    (radius * Cos(angle)) + origin.X,
+                    (radius * Sin(angle)) + origin.Y,
                     origin.Z)
 
                 angle += deltaAngle

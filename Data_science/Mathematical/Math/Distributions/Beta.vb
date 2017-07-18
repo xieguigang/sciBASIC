@@ -28,9 +28,9 @@
 
 Imports System.Math
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.Distributions.DirichletDistribution
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.BasicR
+Imports Microsoft.VisualBasic.Math.Distributions.DirichletDistribution
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Distributions
 

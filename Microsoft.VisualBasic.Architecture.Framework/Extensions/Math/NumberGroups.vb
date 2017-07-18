@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 
-Namespace Mathematical
+Namespace Math
 
     ''' <summary>
     ''' Simple number vector grouping

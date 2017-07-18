@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Language
 
 Namespace Interpolation

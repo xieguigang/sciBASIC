@@ -1,40 +1,39 @@
 ﻿#Region "Microsoft.VisualBasic::edb96e14230cf0f8836aff3dd04d614d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\RandomExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections
-Imports System.Collections.Generic
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
-Namespace Mathematical
+Namespace Math
 
     ''' <summary>
     ''' Generates a random number.
@@ -64,7 +63,7 @@ Namespace Mathematical
         ''' <returns></returns>
         Public Function Seed() As Integer
             Dim seeds& = CLng(Integer.MaxValue) * 2
-            VBMath.Randomize()
+            VisualBasic.Randomize()
             seeds = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / seeds
             Return CInt(seeds)
         End Function
@@ -76,8 +75,8 @@ Namespace Mathematical
         ''' <param name="max"></param>
         ''' <returns></returns>
         Public Function randf(min As Double, max As Double) As Double
-            Dim minInteger& = CLng(Math.Truncate(min * 10000))
-            Dim maxInteger& = CLng(Math.Truncate(max * 10000))
+            Dim minInteger& = CLng(sys.Truncate(min * 10000))
+            Dim maxInteger& = CLng(sys.Truncate(max * 10000))
             Dim randInteger& = CLng(RandomNumbers.rand()) * CLng(RandomNumbers.rand())
             Dim diffInteger& = maxInteger - minInteger
             Dim resultInteger& = randInteger Mod diffInteger + minInteger
@@ -128,7 +127,7 @@ Namespace Mathematical
             Dim u1 As Double = r.NextDouble()
             Dim u2 As Double = r.NextDouble()
 
-            Dim rand_std_normal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2)
+            Dim rand_std_normal = sys.Sqrt(-2.0 * sys.Log(u1)) * sys.Sin(2.0 * sys.PI * u2)
             Dim rand_normal = mu + sigma * rand_std_normal
 
             Return rand_normal
@@ -149,7 +148,7 @@ Namespace Mathematical
         <ExportAPI("NextTriangular")>
         <Extension> Public Function NextTriangular(r As Random, a As Double, b As Double, c As Double) As Double
             Dim u As Double = r.NextDouble()
-            Return If(u < (c - a) / (b - a), a + Math.Sqrt(u * (b - a) * (c - a)), b - Math.Sqrt((1 - u) * (b - a) * (b - c)))
+            Return If(u < (c - a) / (b - a), a + sys.Sqrt(u * (b - a) * (c - a)), b - sys.Sqrt((1 - u) * (b - a) * (b - c)))
         End Function
 
         ''' <summary>

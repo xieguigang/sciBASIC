@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::e6a1e3f8914a4e5d956c3a0e9cf6115f, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Vector\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.SyntaxAPI.Vectors
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports sys = System.Math
 
 Namespace LinearAlgebra
 
@@ -63,7 +64,7 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         Public Shared ReadOnly Property Zero As Vector
             Get
-                Return New Vector({0})
+                Return New Vector({0#})
             End Get
         End Property
 
@@ -114,7 +115,11 @@ Namespace LinearAlgebra
         End Sub
 
         Sub New(from#, to#, Optional by# = 0.01)
-            Me.New(VBMathExtensions.seq(from, [to], by))
+            Me.New(VBMath.seq(from, [to], by))
+        End Sub
+
+        Sub New(integers As IEnumerable(Of Integer))
+            Me.New(integers.Select(Function(n) CDbl(n)))
         End Sub
 
         ''' <summary>
@@ -387,6 +392,8 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
+        ''' ``norm2()``
+        ''' 
         ''' 向量模的平方，``||x||``是向量``x=(x1，x2，…，xp)``的欧几里得范数
         ''' </summary>
         ''' <returns></returns>
@@ -404,12 +411,20 @@ Namespace LinearAlgebra
         End Property
 
         ''' <summary>
+        ''' ``norm()``
+        ''' 
         ''' http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property SumMagnitude As Double
             Get
-                Return Math.Sqrt(Me.Mod)
+                Return sys.Sqrt(Me.Mod)
+            End Get
+        End Property
+
+        Public ReadOnly Property Unit As Vector
+            Get
+                Return Me / SumMagnitude
             End Get
         End Property
 
@@ -434,7 +449,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Function Product() As Double
-            Return Me.PI
+            Return Me.ProductALL
         End Function
 
         ''' <summary>
@@ -459,7 +474,13 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Me.ToArray.GetJson
+            Return "[" & Me.ToString("F2").JoinBy(", ") & "]"
+        End Function
+
+        Public Overloads Function ToString(format$) As String()
+            Return Me _
+                .Select(Function(x) x.ToString(format)) _
+                .ToArray
         End Function
 
         ''' <summary>
@@ -494,6 +515,12 @@ Namespace LinearAlgebra
             Return New BooleanVector(From d As Double In x Select d <> n)
         End Operator
 
+        ''' <summary>
+        ''' Power
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator ^(v As Vector, n As Integer) As Vector
             Return New Vector(From d As Double In v Select d ^ n)
         End Operator
@@ -506,6 +533,12 @@ Namespace LinearAlgebra
             Return New BooleanVector(From d As Double In x Select d < n)
         End Operator
 
+        ''' <summary>
+        ''' 返回一个逻辑向量，用来指示向量对象的每一个分量与目标比较的逻辑值结果
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         Public Shared Operator >=(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d >= n)
         End Operator
