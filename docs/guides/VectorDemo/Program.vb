@@ -7,8 +7,10 @@ Module Program
 
     Sub Main()
         ' warm up the CPU
+        Dim j%
+
         For i As Integer = 0 To 200000
-            Dim j = i - 100
+            j = i - 100
         Next
 
         Call Time(AddressOf VectorTest)
