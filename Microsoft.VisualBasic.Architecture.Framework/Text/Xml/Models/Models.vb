@@ -78,9 +78,9 @@ Namespace Text.Xml.Models
         Implements INamedValue
 
         <XmlAttribute>
-        Public Property Name As String Implements IKeyedEntity(Of String).Key
-        <XmlElement>
-        Public Property Vector As T()
+        Public Property name As String Implements IKeyedEntity(Of String).Key
+        Public Property vector As T()
+        Public Property attributes As NamedValue()
 
         Sub New(namedCollection As NamedCollection(Of T))
             With namedCollection
