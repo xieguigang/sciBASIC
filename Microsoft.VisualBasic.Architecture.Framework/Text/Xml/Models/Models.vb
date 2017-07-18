@@ -30,6 +30,8 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Text.Xml.Models
 
@@ -66,5 +68,29 @@ Namespace Text.Xml.Models
     Public Structure LineValue
         <XmlAttribute> Public Property line As Integer
         <XmlText> Public Property text As String
+    End Structure
+
+    ''' <summary>
+    ''' 在这里不实现<see cref="IEnumerable(Of T)"/>是为了方便的实现XML序列化操作
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public Structure NamedVector(Of T)
+        Implements INamedValue
+
+        <XmlAttribute>
+        Public Property name As String Implements IKeyedEntity(Of String).Key
+        Public Property vector As T()
+        Public Property attributes As NamedValue()
+
+        Sub New(namedCollection As NamedCollection(Of T))
+            With namedCollection
+                Name = .Name
+                Vector = .Value
+            End With
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return Name
+        End Function
     End Structure
 End Namespace
