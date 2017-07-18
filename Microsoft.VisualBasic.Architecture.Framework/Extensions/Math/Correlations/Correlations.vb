@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -37,11 +36,14 @@ Imports sys = System.Math
 
 Namespace Math.Correlations
 
+    ''' <summary>
+    ''' 计算两个数据向量之间的相关度的大小
+    ''' </summary>
     <PackageNamespace("Correlations", Category:=APICategories.UtilityTools, Publisher:="amethyst.asuka@gcmodeller.org")>
     Public Module Correlations
 
         ''' <summary>
-        ''' 假若所有的元素都是0-1之间的话，结果除以2可以得到相似度
+        ''' Sandelin-Wasserman similarity function.(假若所有的元素都是0-1之间的话，结果除以2可以得到相似度)
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="y"></param>
@@ -56,6 +58,12 @@ Namespace Math.Correlations
             Return s
         End Function
 
+        ''' <summary>
+        ''' Kullback-Leibler divergence
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
         <ExportAPI("KLD", Info:="Kullback-Leibler divergence")>
         Public Function KLD(x As Double(), y As Double()) As Double
             Dim index As Integer() = x.Sequence
@@ -255,6 +263,12 @@ Namespace Math.Correlations
             Return pcc
         End Function
 
+        ''' <summary>
+        ''' Pearson correlations
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <param name="y#"></param>
+        ''' <returns></returns>
         <ExportAPI("Pearson")>
         Public Function GetPearson(x#(), y#()) As Double
             Dim j As Integer, n As Integer = x.Length
