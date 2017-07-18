@@ -214,6 +214,41 @@ Namespace Language
             End If
         End Operator
 
+        ''' <summary>
+        ''' Fix for &amp; operator not defined!
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Shared Operator &(obj As Object, vector As VectorShadows(Of T)) As Object
+            Dim type As Type = obj.GetType
+
+            If vector.op_Concatenates Is Nothing Then
+                If vector.type Is GetType(String) Then
+                    If type.ImplementsInterface(GetType(IEnumerable(Of String))) Then
+                        ' 如果是字符串的集合，则分别添加字符串
+                        Dim out$() = New String(vector.Length - 1) {}
+
+                        For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
+                            out(s) = s.value & DirectCast(CObj(vector.vector(s)), String)
+                        Next
+
+                        Return out
+                    Else
+                        ' 否则直接将目标对象转换为字符串，进行统一添加
+                        Dim s$ = CStr(obj)
+                        Return vector _
+                            .Select(Function(o) s & CStrSafe(o)) _
+                            .ToArray
+                    End If
+                Else
+                    Throw New NotImplementedException
+                End If
+            Else
+                Return binaryOperatorSelfRight(vector, vector.op_Concatenates, obj, type)
+            End If
+        End Operator
+
         Private Shared Function binaryOperatorSelfLeft(vector As VectorShadows(Of T), op As BinaryOperator, obj As Object, type As Type) As Object
             Dim method As MethodInfo = op.MatchRight(type)
 
@@ -242,6 +277,42 @@ Namespace Language
 
                 For Each o In DirectCast(obj, IEnumerable).SeqIterator
                     out(o) = method.Invoke(Nothing, {vector.vector(o), o.value})
+                Next
+
+                Return out
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
+
+        Private Shared Function binaryOperatorSelfRight(vector As VectorShadows(Of T), op As BinaryOperator, obj As Object, type As Type) As Object
+            Dim method As MethodInfo = op.MatchLeft(type)
+
+            If Not method Is Nothing Then
+                Return vector _
+                    .Select(Function(self) method.Invoke(Nothing, {obj, self})) _
+                    .ToArray
+            End If
+
+            If type.ImplementsInterface(GetType(IEnumerable)) Then
+                type = type.GetInterfaces _
+                    .Where(Function(i) i.Name = NameOf(IEnumerable)) _
+                    .First _
+                    .GenericTypeArguments _
+                    .First
+
+                With op.MatchLeft(type)
+                    If .IsNothing Then
+                        Throw New NotImplementedException
+                    Else
+                        method = .ref
+                    End If
+                End With
+
+                Dim out = New Object(vector.Length - 1) {}
+
+                For Each o In DirectCast(obj, IEnumerable).SeqIterator
+                    out(o) = method.Invoke(Nothing, {o.value, vector.vector(o)})
                 Next
 
                 Return out
@@ -284,11 +355,53 @@ Namespace Language
             End If
         End Operator
 
+        ''' <summary>
+        ''' Fix for Like operator not defined in Linq.
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Shared Operator Like(obj As Object, vector As VectorShadows(Of T)) As Object
+            If vector.op_Likes Is Nothing Then
+
+                ' string like
+                If vector.type Is GetType(String) Then
+                    Dim type As Type = obj.GetType
+
+                    If type Is GetType(String) Then
+                        Dim str$ = obj.ToString
+
+                        Return vector.Select(Function(s) str Like CStrSafe(s)).ToArray
+                    ElseIf type.ImplementsInterface(GetType(IEnumerable(Of String))) Then
+                        Dim out As Boolean() = New Boolean(vector.Length - 1) {}
+
+                        For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
+                            out(s) = s.value Like DirectCast(CObj(vector.vector(s)), String)
+                        Next
+
+                        Return out
+                    End If
+                End If
+
+                Throw New NotImplementedException
+            Else
+                Return binaryOperatorSelfRight(vector, vector.op_Likes, obj, obj.GetType)
+            End If
+        End Operator
+
         Public Shared Operator \(vector As VectorShadows(Of T), obj As Object) As Object
             If vector.op_IntegerDivisions Is Nothing Then
                 Throw New NotImplementedException
             Else
                 Return binaryOperatorSelfLeft(vector, vector.op_IntegerDivisions, obj, obj.GetType)
+            End If
+        End Operator
+
+        Public Shared Operator \(obj As Object, vector As VectorShadows(Of T)) As Object
+            If vector.op_IntegerDivisions Is Nothing Then
+                Throw New NotImplementedException
+            Else
+                Return binaryOperatorSelfRight(vector, vector.op_IntegerDivisions, obj, obj.GetType)
             End If
         End Operator
 

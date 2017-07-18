@@ -47,9 +47,20 @@ Module VectorTest
         Public Shared Operator Like(str As str, s$) As Boolean
             Return s.IsPattern(str.pattern, RegexICSng)
         End Operator
+
+        Public Shared Operator *(n%, str As str) As str
+            Return New str With {.pattern = str.pattern.RepeatString(n)}
+        End Operator
+
+        Public Shared Operator *(str As str, n%) As str
+            Return New str With {.pattern = str.pattern.RepeatString(n)}
+        End Operator
     End Structure
 
     Sub Main()
+
+
+
 
         'Dim strings = {"", "sdafa", "sssssss"}.VectorShadows
 
@@ -65,6 +76,10 @@ Module VectorTest
             New str With {.pattern = "\s+"},
             New str With {.pattern = "\S+"}
         }.VectorShadows
+
+        Dim test2 As str() = patterns * 10
+
+
 
         Dim index%() = Which.IsTrue(patterns Like "123")
         Dim patternList = patterns.pattern
