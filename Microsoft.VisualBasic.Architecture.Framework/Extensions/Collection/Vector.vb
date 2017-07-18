@@ -40,6 +40,11 @@ Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 ''' </summary>
 Public Module VectorExtensions
 
+    <Extension>
+    Public Function RepeatCalls(Of T)(factory As Func(Of T), n%) As T()
+        Return n.SeqIterator.Select(Function(i) factory()).ToArray
+    End Function
+
     ''' <summary>
     ''' Create a vector shadow of your data collection.
     ''' </summary>

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel
+﻿Imports System.Dynamic
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -6,9 +7,10 @@ Imports Who = Microsoft.VisualBasic.Which
 
 Namespace Language
 
-    Public Class Vector(Of T) : Implements IEnumerable(Of T)
+    Public Class Vector(Of T) : Inherits DynamicObject
+        Implements IEnumerable(Of T)
 
-        ReadOnly buffer As T()
+        Protected buffer As T()
 
         Public Sub New()
         End Sub
@@ -205,5 +207,14 @@ Namespace Language
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        ''' <summary>
+        ''' 没用？？？
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Narrowing Operator CType(v As Vector(Of T)) As T()
+            Return v.ToArray
+        End Operator
     End Class
 End Namespace

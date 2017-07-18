@@ -14,10 +14,9 @@ Namespace Language
     ''' Vectorization programming language feature for VisualBasic
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class VectorShadows(Of T) : Inherits DynamicObject
+    Public Class VectorShadows(Of T) : Inherits Vector(Of T)
         Implements IEnumerable(Of T)
 
-        ReadOnly vector As T()
         ''' <summary>
         ''' 无参数的属性
         ''' </summary>
@@ -43,19 +42,13 @@ Namespace Language
 
         ReadOnly type As Type = GetType(T)
 
-        Public ReadOnly Property Length As Integer
-            Get
-                Return vector.Length
-            End Get
-        End Property
-
         Const stringContract$ = "op_Concatenate"
         Const objectLike$ = "op_Like"
         Const integerDivision$ = "op_IntegerDivision"
 
         Sub New(source As IEnumerable(Of T))
-            vector = source.ToArray
-            linq = New DataValue(Of T)(vector)
+            buffer = source.ToArray
+            linq = New DataValue(Of T)(buffer)
             propertyNames = linq.PropertyNames.Indexing
 
             Dim methods = GetType(T).GetMethods()
@@ -192,7 +185,7 @@ Namespace Language
                         Dim out$() = New String(vector.Length - 1) {}
 
                         For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
-                            out(s) = DirectCast(CObj(vector.vector(s)), String) & s.value
+                            out(s) = DirectCast(CObj(vector.buffer(s)), String) & s.value
                         Next
 
                         Return out
@@ -227,7 +220,7 @@ Namespace Language
                         Dim out$() = New String(vector.Length - 1) {}
 
                         For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
-                            out(s) = s.value & DirectCast(CObj(vector.vector(s)), String)
+                            out(s) = s.value & DirectCast(CObj(vector.buffer(s)), String)
                         Next
 
                         Return out
@@ -273,7 +266,7 @@ Namespace Language
                 Dim out = New Object(vector.Length - 1) {}
 
                 For Each o In DirectCast(obj, IEnumerable).SeqIterator
-                    out(o) = method.Invoke(Nothing, {vector.vector(o), o.value})
+                    out(o) = method.Invoke(Nothing, {vector.buffer(o), o.value})
                 Next
 
                 Return out.CreateArray(method.ReturnType)
@@ -309,7 +302,7 @@ Namespace Language
                 Dim out = New Object(vector.Length - 1) {}
 
                 For Each o In DirectCast(obj, IEnumerable).SeqIterator
-                    out(o) = method.Invoke(Nothing, {o.value, vector.vector(o)})
+                    out(o) = method.Invoke(Nothing, {o.value, vector.buffer(o)})
                 Next
 
                 Return out.CreateArray(method.ReturnType)
@@ -339,7 +332,7 @@ Namespace Language
                         Dim out As Boolean() = New Boolean(vector.Length - 1) {}
 
                         For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
-                            out(s) = DirectCast(CObj(vector.vector(s)), String) Like s.value
+                            out(s) = DirectCast(CObj(vector.buffer(s)), String) Like s.value
                         Next
 
                         Return out
@@ -373,7 +366,7 @@ Namespace Language
                         Dim out As Boolean() = New Boolean(vector.Length - 1) {}
 
                         For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
-                            out(s) = s.value Like DirectCast(CObj(vector.vector(s)), String)
+                            out(s) = s.value Like DirectCast(CObj(vector.buffer(s)), String)
                         Next
 
                         Return out
@@ -419,7 +412,7 @@ Namespace Language
 
                     target = .ref
                     ' me op arg
-                    result = vector _
+                    result = buffer _
                         .Select(Function(self) target.Invoke(Nothing, {self, arg})) _
                         .CreateArray(target.ReturnType)
 
@@ -432,7 +425,7 @@ Namespace Language
 
                     target = .ref
                     ' arg op me
-                    result = vector _
+                    result = buffer _
                         .Select(Function(self) target.Invoke(Nothing, {arg, self})) _
                         .CreateArray(target.ReturnType)
 
@@ -451,7 +444,7 @@ Namespace Language
                     .First
             End If
 
-            Dim out = New Object(vector.Length - 1) {}
+            Dim out = New Object(buffer.Length - 1) {}
 
             With op.MatchRight(type)
                 If Not .IsNothing AndAlso .GetParameters(left).ParameterType Is Me.type Then
@@ -459,7 +452,7 @@ Namespace Language
                     target = .ref
 
                     For Each o In DirectCast(arg, IEnumerable).SeqIterator
-                        out(o) = target.Invoke(Nothing, {vector(o), o.value})
+                        out(o) = target.Invoke(Nothing, {buffer(o), o.value})
                     Next
                     result = out.CreateArray(target.ReturnType)
 
@@ -473,7 +466,7 @@ Namespace Language
                     target = .ref
 
                     For Each o In DirectCast(arg, IEnumerable).SeqIterator
-                        out(o) = target.Invoke(Nothing, {o.value, vector(o)})
+                        out(o) = target.Invoke(Nothing, {o.value, buffer(o)})
                     Next
                     result = out.CreateArray(target.ReturnType)
 
@@ -484,24 +477,5 @@ Namespace Language
             Return False
         End Function
 #End Region
-
-        ''' <summary>
-        ''' 没用？？？
-        ''' </summary>
-        ''' <param name="v"></param>
-        ''' <returns></returns>
-        Public Overloads Shared Narrowing Operator CType(v As VectorShadows(Of T)) As T()
-            Return v.ToArray
-        End Operator
-
-        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In vector
-                Yield x
-            Next
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
-        End Function
     End Class
 End Namespace
