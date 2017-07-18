@@ -237,6 +237,26 @@ Namespace Language
         ''' <returns></returns>
         Public Shared Operator Like(vector As VectorShadows(Of T), obj As Object) As Object
             If vector.op_Likes Is Nothing Then
+
+                ' string like
+                If vector.type Is GetType(String) Then
+                    Dim type As Type = obj.GetType
+
+                    If type Is GetType(String) Then
+                        Dim str$ = obj.ToString
+
+                        Return vector.Select(Function(s) CStrSafe(s) Like str).ToArray
+                    ElseIf type.ImplementsInterface(GetType(IEnumerable(Of String))) Then
+                        Dim out As Boolean() = New Boolean(vector.Length - 1) {}
+
+                        For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
+                            out(s) = DirectCast(CObj(vector.vector(s)), String) Like s.value
+                        Next
+
+                        Return out
+                    End If
+                End If
+
                 Throw New NotImplementedException
             Else
                 Return binaryOperatorSelfLeft(vector, vector.op_Likes, obj, obj.GetType)
