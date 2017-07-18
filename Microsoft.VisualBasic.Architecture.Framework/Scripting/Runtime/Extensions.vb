@@ -1,9 +1,28 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Scripting.Runtime
 
     Module Extensions
+
+        Public ReadOnly Property Numerics As Index(Of TypeCode)
+
+        Sub New()
+            Numerics = {
+                TypeCode.Byte,
+                TypeCode.Decimal,
+                TypeCode.Double,
+                TypeCode.Int16,
+                TypeCode.Int32,
+                TypeCode.Int64,
+                TypeCode.SByte,
+                TypeCode.Single,
+                TypeCode.UInt16,
+                TypeCode.UInt32,
+                TypeCode.UInt64
+            }.Indexing
+        End Sub
 
         <Extension>
         Public Function OverloadsBinaryOperator(methods As IEnumerable(Of MethodInfo)) As BinaryOperator

@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -41,8 +42,17 @@ Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 Public Module VectorExtensions
 
     <Extension>
-    Public Function RepeatCalls(Of T)(factory As Func(Of T), n%) As T()
-        Return n.SeqIterator.Select(Function(i) factory()).ToArray
+    Public Function RepeatCalls(Of T)(factory As Func(Of T), n%, Optional sleep% = 0) As T()
+        Return n _
+            .SeqIterator _
+            .Select(Function(i)
+                        If sleep > 0 Then
+                            Call Thread.Sleep(sleep)
+                        End If
+
+                        Return factory()
+                    End Function) _
+            .ToArray
     End Function
 
     ''' <summary>

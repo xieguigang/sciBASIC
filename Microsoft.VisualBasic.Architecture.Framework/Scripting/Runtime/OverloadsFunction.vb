@@ -1,10 +1,13 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
 Namespace Scripting.Runtime
 
     Public Class OverloadsFunction
+        Implements INamedValue
 
-        Public ReadOnly Property Name As String
+        Public Property Name As String Implements IKeyedEntity(Of String).Key
 
         ReadOnly functions As MethodInfo()
 
@@ -30,6 +33,8 @@ Namespace Scripting.Runtime
 
             If args.Length > params.Length Then
                 Return -1
+            ElseIf params.Length = args.Length AndAlso args.Length = 0 Then
+                Return 100000000
             End If
 
             Dim score#

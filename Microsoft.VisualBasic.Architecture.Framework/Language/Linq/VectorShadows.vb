@@ -38,7 +38,7 @@ Namespace Language
         ReadOnly op_IntegerDivisions As BinaryOperator
 #End Region
 
-        ReadOnly methods As New Dictionary(Of String, OverloadsFunction)
+        ReadOnly methods As New Dictionary(Of OverloadsFunction)
 
         ReadOnly type As Type = GetType(T)
 
@@ -92,6 +92,12 @@ Namespace Language
                     operatorsUnary(type) = op.First
                 End If
             Next
+
+            Me.methods = methods _
+                .Where(Function(m) Not m.IsStatic) _
+                .GroupBy(Function(func) func.Name) _
+                .Select(Function([overloads]) New OverloadsFunction([overloads].Key, [overloads])) _
+                .ToDictionary
         End Sub
 
         Public Overrides Function GetDynamicMemberNames() As IEnumerable(Of String)
@@ -115,9 +121,9 @@ Namespace Language
                 Return False
             Else
                 With linq
-                    Dim type As Type = .GetProperty(binder.Name).PropertyType
-                    Dim source As IEnumerable = DirectCast(.Evaluate(binder.Name), IEnumerable)
-                    result = CreateVector(source, type)
+                    ' Dim type As Type = .GetProperty(binder.Name).PropertyType
+                    Dim source = .Evaluate(binder.Name)
+                    result = source ' CreateVector(source, type)
                 End With
 
                 Return True
