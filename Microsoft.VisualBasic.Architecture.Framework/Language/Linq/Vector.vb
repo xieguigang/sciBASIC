@@ -10,6 +10,13 @@ Namespace Language
 
         ReadOnly buffer As T()
 
+        Public Sub New()
+        End Sub
+
+        Sub New(data As IEnumerable(Of T))
+            buffer = data.ToArray
+        End Sub
+
         Public ReadOnly Property Length As Integer
             Get
                 Return buffer.Length
