@@ -25,7 +25,9 @@ Module Program
 
     Sub VectorTest()
 
-        Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand).RepeatCalls(2000, sleep:=2).VectorShadows
+        Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand) _
+            .RepeatCalls(2000, sleep:=2) _
+            .VectorShadows
 
         Dim asciiRands$() = strings.str
         Dim strWeights#() = strings.weight
