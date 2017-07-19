@@ -83,7 +83,7 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' DirectCast(obj, T)
+        ''' ``DirectCast(obj, T)``
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
@@ -100,9 +100,9 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <typeparam name="TOut"></typeparam>
-        ''' <param name="list"></param>
+        ''' <param name="list">在这里使用向量而非使用通用接口是因为和单个元素的As转换有冲突</param>
         ''' <returns></returns>
-        <Extension> Public Function [As](Of T, TOut)(list As IEnumerable(Of T)) As TOut()
+        <Extension> Public Function [As](Of T, TOut)(list As T()) As TOut()
             If list.IsNullOrEmpty Then
                 Return Nothing
             Else
