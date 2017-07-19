@@ -380,7 +380,7 @@ Public Module WebServiceUtils
         If https Then
             request = WebRequest.CreateDefault(New Uri(url))
         Else
-            request = WebRequest.Create(url).As(Of HttpWebRequest)
+            request = DirectCast(WebRequest.Create(url), HttpWebRequest)
         End If
 
         request.Method = "GET"
@@ -388,8 +388,7 @@ Public Module WebServiceUtils
         request.ServicePoint.Expect100Continue = False
         request.UserAgent = userAgent
 
-        Dim response As HttpWebResponse =
-            request.GetResponse.As(Of HttpWebResponse)
+        Dim response As HttpWebResponse = DirectCast(request.GetResponse, HttpWebResponse)
         Dim s As Stream = response.GetResponseStream()
         Return s
     End Function
@@ -465,7 +464,7 @@ Public Module WebServiceUtils
         Next
 
         Dim postData As String = postString.JoinBy("&")
-        Dim request As HttpWebRequest = WebRequest.Create(url).As(Of HttpWebRequest)
+        Dim request As HttpWebRequest = DirectCast(WebRequest.Create(url), HttpWebRequest)
 
         request.Method = "POST"
         request.Accept = "application/json"
@@ -486,7 +485,7 @@ Public Module WebServiceUtils
         End Using
 
         ' returned values are returned as a stream, then read into a string
-        Dim response = request.GetResponse().As(Of HttpWebResponse)
+        Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
         Using responseStream As New StreamReader(response.GetResponseStream())
             Dim html As New StringBuilder
             Dim s As New Value(Of String)

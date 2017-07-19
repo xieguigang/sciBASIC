@@ -29,11 +29,11 @@ Module Program
             .RepeatCalls(2000, sleep:=2) _
             .VectorShadows
 
-        Dim asciiRands$() = strings.str
-        Dim strWeights#() = strings.weight
+        Dim asciiRands As IEnumerable(Of String) = strings.str & "ABCDE"
+        Dim strWeights As IEnumerable(Of Double) = strings.weight
 
-        Dim subsetLessThan50 As WeightString() = strings(strings <= 50)
-        Dim subsetGreaterThan90 As WeightString() = strings(strings >= 90)
+        Dim subsetLessThan50 As IEnumerable(Of WeightString) = strings(strings <= 50)
+        Dim subsetGreaterThan90 As IEnumerable(Of WeightString) = strings(strings >= 90)
 
         strings.weight = 2000.Sequence.As(Of Double)
 
@@ -42,8 +42,8 @@ Module Program
 
         Dim target As Char = RandomASCIIString(20)(10)
 
-        Dim charsCount%() = strings.Count(target)
-        Dim sums%() = strings.Sum
+        Dim charsCount As IEnumerable(Of Integer) = strings.Count(target)
+        Dim sums As IEnumerable(Of Integer) = strings.Sum
 
         '  Pause()
     End Sub
@@ -51,11 +51,11 @@ Module Program
     Sub LinqTest()
         Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand).RepeatCalls(2000, sleep:=2)
 
-        Dim asciiRands$() = strings.Select(Function(s) s.str).ToArray
-        Dim strWeights#() = strings.Select(Function(s) s.weight).ToArray
+        Dim asciiRands As IEnumerable(Of String) = strings.Select(Function(s) s.str).ToArray
+        Dim strWeights As IEnumerable(Of Double) = strings.Select(Function(s) s.weight).ToArray
 
-        Dim subsetLessThan50 As WeightString() = strings.Where(Function(s) s <= 50).ToArray
-        Dim subsetGreaterThan90 As WeightString() = strings.Where(Function(s) s >= 90).ToArray
+        Dim subsetLessThan50 As IEnumerable(Of WeightString) = strings.Where(Function(s) s <= 50).ToArray
+        Dim subsetGreaterThan90 As IEnumerable(Of WeightString) = strings.Where(Function(s) s >= 90).ToArray
 
         For Each w In 2000.Sequence.As(Of Double).SeqIterator
             strings(w).weight = w.value
@@ -66,8 +66,8 @@ Module Program
 
         Dim target As Char = RandomASCIIString(20)(10)
 
-        Dim charsCount%() = strings.Select(Function(s) s.Count(target)).ToArray
-        Dim sums%() = strings.Select(Function(s) s.Sum).ToArray
+        Dim charsCount As IEnumerable(Of Integer) = strings.Select(Function(s) s.Count(target)).ToArray
+        Dim sums As IEnumerable(Of Integer) = strings.Select(Function(s) s.Sum).ToArray
 
         ' Pause()
     End Sub
