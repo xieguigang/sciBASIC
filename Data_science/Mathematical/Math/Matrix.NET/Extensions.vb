@@ -48,17 +48,19 @@ Namespace Matrix
         ''' <returns>     An m-by-n matrix with uniformly distributed random elements.
         ''' </returns>
 
-        Public Function rand(m As Integer, n As Integer) As GeneralMatrix
-            Dim random__1 As New Random()
+        Public Function rand(m%, n%) As GeneralMatrix
+            With New Random()
+                Dim A As New GeneralMatrix(m, n)
+                Dim X As Double()() = A.Array
 
-            Dim A As New GeneralMatrix(m, n)
-            Dim X As Double()() = A.Array
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    X(i)(j) = random__1.NextDouble()
+                For i As Integer = 0 To m - 1
+                    For j As Integer = 0 To n - 1
+                        X(i)(j) = .NextDouble()
+                    Next
                 Next
-            Next
-            Return A
+
+                Return A
+            End With
         End Function
     End Module
 End Namespace
