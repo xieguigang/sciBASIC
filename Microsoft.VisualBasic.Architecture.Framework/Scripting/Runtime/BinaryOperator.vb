@@ -62,6 +62,17 @@ Namespace Scripting.Runtime
                 End If
             Next
 
+            If target Is Nothing Then
+                If Runtime.Numerics.IndexOf(Type.GetTypeCode(type)) > -1 Then
+                    For Each m As MethodInfo In methods
+                        Dim parm As ParameterInfo = m.GetParameters(pos) ' base type
+                        If Runtime.Numerics.IndexOf(Type.GetTypeCode(parm.ParameterType)) > -1 Then
+                            Return m
+                        End If
+                    Next
+                End If
+            End If
+
             Return target
         End Function
 

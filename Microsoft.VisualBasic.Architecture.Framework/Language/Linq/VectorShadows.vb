@@ -14,10 +14,9 @@ Namespace Language
     ''' Vectorization programming language feature for VisualBasic
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class VectorShadows(Of T) : Inherits DynamicObject
+    Public Class VectorShadows(Of T) : Inherits Vector(Of T)
         Implements IEnumerable(Of T)
 
-        ReadOnly vector As T()
         ''' <summary>
         ''' 无参数的属性
         ''' </summary>
@@ -27,7 +26,7 @@ Namespace Language
         ''' <summary>
         ''' 单目运算符无重名的问题
         ''' </summary>
-        ReadOnly operatorsUnary As New Dictionary(Of ExpressionType, Func(Of Object, Object))
+        ReadOnly operatorsUnary As New Dictionary(Of ExpressionType, MethodInfo)
         ''' <summary>
         ''' 双目运算符重载会带来重名运算符的问题
         ''' </summary>
@@ -39,23 +38,21 @@ Namespace Language
         ReadOnly op_IntegerDivisions As BinaryOperator
 #End Region
 
-        ReadOnly methods As New Dictionary(Of String, MethodInfo())
+        ReadOnly methods As New Dictionary(Of String, OverloadsFunction)
 
         ReadOnly type As Type = GetType(T)
-
-        Public ReadOnly Property Length As Integer
-            Get
-                Return vector.Length
-            End Get
-        End Property
 
         Const stringContract$ = "op_Concatenate"
         Const objectLike$ = "op_Like"
         Const integerDivision$ = "op_IntegerDivision"
 
+        Public Function [As](Of V)() As V()
+            Return buffer.As(Of V)
+        End Function
+
         Sub New(source As IEnumerable(Of T))
-            vector = source.ToArray
-            linq = New DataValue(Of T)(vector)
+            buffer = source.ToArray
+            linq = New DataValue(Of T)(buffer)
             propertyNames = linq.PropertyNames.Indexing
 
             Dim methods = GetType(T).GetMethods()
@@ -96,16 +93,19 @@ Namespace Language
                 If op.First.GetParameters.Length > 1 Then
                     operatorsBinary(type) = op.OverloadsBinaryOperator
                 Else
-                    Dim method = op.First
-                    Dim invoke = Function(arg) method.Invoke(Nothing, {arg})
-
-                    operatorsUnary(type) = invoke
+                    operatorsUnary(type) = op.First
                 End If
             Next
+
+            Me.methods = methods _
+                .Where(Function(m) Not m.IsStatic) _
+                .GroupBy(Function(func) func.Name) _
+                .Select(Function([overloads]) New OverloadsFunction([overloads].Key, [overloads])) _
+                .ToDictionary(Function(g) g.Name)
         End Sub
 
         Public Overrides Function GetDynamicMemberNames() As IEnumerable(Of String)
-            Return propertyNames.Objects
+            Return propertyNames.Objects.AsList + methods.Keys
         End Function
 
         Public Function GetJson() As String
@@ -125,9 +125,9 @@ Namespace Language
                 Return False
             Else
                 With linq
-                    Dim type As Type = .GetProperty(binder.Name).PropertyType
-                    Dim source As IEnumerable = DirectCast(.Evaluate(binder.Name), IEnumerable)
-                    result = CreateVector(source, type)
+                    ' Dim type As Type = .GetProperty(binder.Name).PropertyType
+                    Dim source = .Evaluate(binder.Name)
+                    result = source ' CreateVector(source, type)
                 End With
 
                 Return True
@@ -145,8 +145,20 @@ Namespace Language
 #End Region
 
 #Region "Method/Function"
-        Public Overrides Function TryInvoke(binder As InvokeBinder, args() As Object, ByRef result As Object) As Boolean
-            Return MyBase.TryInvoke(binder, args, result)
+        Public Overrides Function TryInvokeMember(binder As InvokeMemberBinder, args() As Object, ByRef result As Object) As Boolean
+            If Not methods.ContainsKey(binder.Name) Then
+                Return False
+            End If
+
+            Dim [overloads] = methods(binder.Name)
+            Dim method As MethodInfo = [overloads].Match(args.Select(Function(o) o.GetType).ToArray)
+
+            If method Is Nothing Then
+                Return False
+            Else
+                result = Me.Select(Function(o) method.Invoke(o, args)).CreateArray(method.ReturnType)
+                Return True
+            End If
         End Function
 #End Region
 
@@ -157,8 +169,8 @@ Namespace Language
             Else
                 Dim method = operatorsUnary(binder.Operation)
                 result = Me _
-                    .Select(method) _
-                    .ToArray
+                    .Select(Function(x) method.Invoke(Nothing, {x})) _
+                    .CreateArray(method.ReturnType)
             End If
 
             Return True
@@ -183,7 +195,7 @@ Namespace Language
                         Dim out$() = New String(vector.Length - 1) {}
 
                         For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
-                            out(s) = DirectCast(CObj(vector.vector(s)), String) & s.value
+                            out(s) = DirectCast(CObj(vector.buffer(s)), String) & s.value
                         Next
 
                         Return out
@@ -202,13 +214,48 @@ Namespace Language
             End If
         End Operator
 
+        ''' <summary>
+        ''' Fix for &amp; operator not defined!
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Shared Operator &(obj As Object, vector As VectorShadows(Of T)) As Object
+            Dim type As Type = obj.GetType
+
+            If vector.op_Concatenates Is Nothing Then
+                If vector.type Is GetType(String) Then
+                    If type.ImplementsInterface(GetType(IEnumerable(Of String))) Then
+                        ' 如果是字符串的集合，则分别添加字符串
+                        Dim out$() = New String(vector.Length - 1) {}
+
+                        For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
+                            out(s) = s.value & DirectCast(CObj(vector.buffer(s)), String)
+                        Next
+
+                        Return out
+                    Else
+                        ' 否则直接将目标对象转换为字符串，进行统一添加
+                        Dim s$ = CStr(obj)
+                        Return vector _
+                            .Select(Function(o) s & CStrSafe(o)) _
+                            .ToArray
+                    End If
+                Else
+                    Throw New NotImplementedException
+                End If
+            Else
+                Return binaryOperatorSelfRight(vector, vector.op_Concatenates, obj, type)
+            End If
+        End Operator
+
         Private Shared Function binaryOperatorSelfLeft(vector As VectorShadows(Of T), op As BinaryOperator, obj As Object, type As Type) As Object
             Dim method As MethodInfo = op.MatchRight(type)
 
             If Not method Is Nothing Then
                 Return vector _
                     .Select(Function(self) method.Invoke(Nothing, {self, obj})) _
-                    .ToArray
+                    .CreateArray(method.ReturnType)
             End If
 
             If type.ImplementsInterface(GetType(IEnumerable)) Then
@@ -229,10 +276,46 @@ Namespace Language
                 Dim out = New Object(vector.Length - 1) {}
 
                 For Each o In DirectCast(obj, IEnumerable).SeqIterator
-                    out(o) = method.Invoke(Nothing, {vector.vector(o), o.value})
+                    out(o) = method.Invoke(Nothing, {vector.buffer(o), o.value})
                 Next
 
-                Return out
+                Return out.CreateArray(method.ReturnType)
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
+
+        Private Shared Function binaryOperatorSelfRight(vector As VectorShadows(Of T), op As BinaryOperator, obj As Object, type As Type) As Object
+            Dim method As MethodInfo = op.MatchLeft(type)
+
+            If Not method Is Nothing Then
+                Return vector _
+                    .Select(Function(self) method.Invoke(Nothing, {obj, self})) _
+                    .CreateArray(method.ReturnType)
+            End If
+
+            If type.ImplementsInterface(GetType(IEnumerable)) Then
+                type = type.GetInterfaces _
+                    .Where(Function(i) i.Name = NameOf(IEnumerable)) _
+                    .First _
+                    .GenericTypeArguments _
+                    .First
+
+                With op.MatchLeft(type)
+                    If .IsNothing Then
+                        Throw New NotImplementedException
+                    Else
+                        method = .ref
+                    End If
+                End With
+
+                Dim out = New Object(vector.Length - 1) {}
+
+                For Each o In DirectCast(obj, IEnumerable).SeqIterator
+                    out(o) = method.Invoke(Nothing, {o.value, vector.buffer(o)})
+                Next
+
+                Return out.CreateArray(method.ReturnType)
             Else
                 Throw New NotImplementedException
             End If
@@ -259,7 +342,7 @@ Namespace Language
                         Dim out As Boolean() = New Boolean(vector.Length - 1) {}
 
                         For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
-                            out(s) = DirectCast(CObj(vector.vector(s)), String) Like s.value
+                            out(s) = DirectCast(CObj(vector.buffer(s)), String) Like s.value
                         Next
 
                         Return out
@@ -272,11 +355,53 @@ Namespace Language
             End If
         End Operator
 
+        ''' <summary>
+        ''' Fix for Like operator not defined in Linq.
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Shared Operator Like(obj As Object, vector As VectorShadows(Of T)) As Object
+            If vector.op_Likes Is Nothing Then
+
+                ' string like
+                If vector.type Is GetType(String) Then
+                    Dim type As Type = obj.GetType
+
+                    If type Is GetType(String) Then
+                        Dim str$ = obj.ToString
+
+                        Return vector.Select(Function(s) str Like CStrSafe(s)).ToArray
+                    ElseIf type.ImplementsInterface(GetType(IEnumerable(Of String))) Then
+                        Dim out As Boolean() = New Boolean(vector.Length - 1) {}
+
+                        For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator
+                            out(s) = s.value Like DirectCast(CObj(vector.buffer(s)), String)
+                        Next
+
+                        Return out
+                    End If
+                End If
+
+                Throw New NotImplementedException
+            Else
+                Return binaryOperatorSelfRight(vector, vector.op_Likes, obj, obj.GetType)
+            End If
+        End Operator
+
         Public Shared Operator \(vector As VectorShadows(Of T), obj As Object) As Object
             If vector.op_IntegerDivisions Is Nothing Then
                 Throw New NotImplementedException
             Else
                 Return binaryOperatorSelfLeft(vector, vector.op_IntegerDivisions, obj, obj.GetType)
+            End If
+        End Operator
+
+        Public Shared Operator \(obj As Object, vector As VectorShadows(Of T)) As Object
+            If vector.op_IntegerDivisions Is Nothing Then
+                Throw New NotImplementedException
+            Else
+                Return binaryOperatorSelfRight(vector, vector.op_IntegerDivisions, obj, obj.GetType)
             End If
         End Operator
 
@@ -297,9 +422,9 @@ Namespace Language
 
                     target = .ref
                     ' me op arg
-                    result = vector _
+                    result = buffer _
                         .Select(Function(self) target.Invoke(Nothing, {self, arg})) _
-                        .ToArray
+                        .CreateArray(target.ReturnType)
 
                     Return True
                 End If
@@ -310,9 +435,9 @@ Namespace Language
 
                     target = .ref
                     ' arg op me
-                    result = vector _
+                    result = buffer _
                         .Select(Function(self) target.Invoke(Nothing, {arg, self})) _
-                        .ToArray
+                        .CreateArray(target.ReturnType)
 
                     Return True
                 End If
@@ -329,7 +454,7 @@ Namespace Language
                     .First
             End If
 
-            Dim out = New Object(vector.Length - 1) {}
+            Dim out = New Object(buffer.Length - 1) {}
 
             With op.MatchRight(type)
                 If Not .IsNothing AndAlso .GetParameters(left).ParameterType Is Me.type Then
@@ -337,9 +462,9 @@ Namespace Language
                     target = .ref
 
                     For Each o In DirectCast(arg, IEnumerable).SeqIterator
-                        out(o) = target.Invoke(Nothing, {vector(o), o.value})
+                        out(o) = target.Invoke(Nothing, {buffer(o), o.value})
                     Next
-                    result = out
+                    result = out.CreateArray(target.ReturnType)
 
                     Return True
                 End If
@@ -351,9 +476,9 @@ Namespace Language
                     target = .ref
 
                     For Each o In DirectCast(arg, IEnumerable).SeqIterator
-                        out(o) = target.Invoke(Nothing, {o.value, vector(o)})
+                        out(o) = target.Invoke(Nothing, {o.value, buffer(o)})
                     Next
-                    result = out
+                    result = out.CreateArray(target.ReturnType)
 
                     Return True
                 End If
@@ -362,24 +487,5 @@ Namespace Language
             Return False
         End Function
 #End Region
-
-        ''' <summary>
-        ''' 没用？？？
-        ''' </summary>
-        ''' <param name="v"></param>
-        ''' <returns></returns>
-        Public Overloads Shared Narrowing Operator CType(v As VectorShadows(Of T)) As T()
-            Return v.ToArray
-        End Operator
-
-        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In vector
-                Yield x
-            Next
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
-        End Function
     End Class
 End Namespace

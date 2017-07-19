@@ -249,7 +249,7 @@ Public Module Extensions
         Dim endTick As Long = App.NanoTime
         Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
         If echo Then
-            Call $"Work takes {t}ms...".__DEBUG_ECHO
+            Call $"[{work.Method.Name}] takes {t}ms...".__DEBUG_ECHO
         End If
         Return t
     End Function

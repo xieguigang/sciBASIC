@@ -62,6 +62,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports System.Numerics
 
 Public Module StrUtils
 
@@ -106,12 +107,14 @@ Public Module StrUtils
     ''' <param name="len%"></param>
     ''' <returns></returns>
     Public Function RandomASCIIString(len%) As String
-        Dim rnd As New Random
+        Dim rnd As New Random(BitConverter.ToInt32(New BigInteger(Now.ToBinary).ToByteArray, Scan0))
         Dim s As New List(Of Char)
 
         For i As Integer = 0 To len
             s.Add(Chr(rnd.Next(32, 127)))
         Next
+
+        Call Randomize()
 
         Return New String(s.ToArray)
     End Function
