@@ -66,6 +66,8 @@ strings.str = "123"
 
 ## Demo
 
+Demo project can be found at **>>[HERE](https://github.com/xieguigang/sciBASIC/tree/721afa366908b5d3521ba7bbe18418bc641b0fbc/docs/guides/VectorDemo)<<**: 
+
 ```vbnet
 Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand) _
     .RepeatCalls(2000, sleep:=2) _
