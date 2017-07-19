@@ -29,7 +29,10 @@ Then wen can using linq for some operation in functional programming way, exampl
 ```vbnet
 Dim isNumeric = array.Select(Function(s) s Like "\d+").ToArray
 Dim Allstrings = array.Select(Function(s) s.str).ToArray
-Dim Selects = array.Where(Function(s) s Like "\d+").Select(Function(s) s.str).ToArray
+Dim Selects = array _
+    .Where(Function(s) s Like "\d+") _
+    .Select(Function(s) s.str) _
+    .ToArray
 
 ' and then if we want to update the property value?
 With {"ABC", "CBA", "ZZz"}
