@@ -13,12 +13,18 @@ Module Program
             j = i - 100
         Next
 
-        Call Time(AddressOf VectorTest)
-        Call Time(AddressOf LinqTest)
+        Dim run = Sub()
+                      Call Time(AddressOf VectorTest)
+                      Call Time(AddressOf LinqTest)
 
-        ' change order
-        Call Time(AddressOf LinqTest)
-        Call Time(AddressOf VectorTest)
+                      ' change order
+                      Call Time(AddressOf LinqTest)
+                      Call Time(AddressOf VectorTest)
+                  End Sub
+
+        For i As Integer = 0 To 10
+            Call run()
+        Next
 
         Pause()
     End Sub
