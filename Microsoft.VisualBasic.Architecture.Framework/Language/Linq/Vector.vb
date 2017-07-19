@@ -184,7 +184,7 @@ Namespace Language
             End Get
         End Property
 
-        Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
+        Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
             Get
                 Return Me(Who.IsTrue(booleans))
             End Get

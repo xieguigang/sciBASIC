@@ -50,6 +50,17 @@ Namespace Language
             Return buffer.As(Of V)
         End Function
 
+#Region ""
+        Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As VectorShadows(Of T)
+            Get
+                Return New VectorShadows(Of T)(MyBase.Item(booleans))
+            End Get
+            Set(value As VectorShadows(Of T))
+                MyBase.Item(booleans) = value.buffer
+            End Set
+        End Property
+#End Region
+
         Sub New(source As IEnumerable(Of T))
             buffer = source.ToArray
             linq = New DataValue(Of T)(buffer)

@@ -24,6 +24,7 @@ Module Program
 
         For i As Integer = 0 To 10
             Call run()
+            Call New String("-", 100).__DEBUG_ECHO
         Next
 
         Pause()
@@ -49,7 +50,7 @@ Module Program
         Dim target As Char = RandomASCIIString(20)(10)
 
         Dim charsCount As IEnumerable(Of Integer) = strings.Count(target)
-        Dim sums As IEnumerable(Of Integer) = strings.Sum
+        Dim sums As IEnumerable(Of Integer) = strings(strings >= 1000).Sum
 
         '  Pause()
     End Sub
@@ -57,7 +58,7 @@ Module Program
     Sub LinqTest()
         Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand).RepeatCalls(2000, sleep:=2)
 
-        Dim asciiRands As IEnumerable(Of String) = strings.Select(Function(s) s.str).ToArray
+        Dim asciiRands As IEnumerable(Of String) = strings.Select(Function(s) s.str & "ABCDE").ToArray
         Dim strWeights As IEnumerable(Of Double) = strings.Select(Function(s) s.weight).ToArray
 
         Dim subsetLessThan50 As IEnumerable(Of WeightString) = strings.Where(Function(s) s <= 50).ToArray
@@ -73,7 +74,7 @@ Module Program
         Dim target As Char = RandomASCIIString(20)(10)
 
         Dim charsCount As IEnumerable(Of Integer) = strings.Select(Function(s) s.Count(target)).ToArray
-        Dim sums As IEnumerable(Of Integer) = strings.Select(Function(s) s.Sum).ToArray
+        Dim sums As IEnumerable(Of Integer) = strings.Where(Function(s) s >= 1000).Select(Function(s) s.Sum).ToArray
 
         ' Pause()
     End Sub
