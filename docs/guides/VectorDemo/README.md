@@ -26,9 +26,18 @@ Dim array = {New Foo("123"), New Foo("ABC"), New Foo("!@#")}
 
 Then wen can using linq for some functional programming like:
 
-```
+```vbnet
 Dim isNumeric = array.Select(Function(s) s Like "\d+").ToArray
 Dim Allstrings = array.Select(Function(s) s.str).ToArray
+Dim Selects = array.Where(Function(s) s Like "\d+").Select(Function(s) s.str).ToArray
+
+' and then if we want to update the property value?
+With {"ABC", "CBA", "ZZz"}
+
+    For i As Integer = 0 To .Length -1
+        array(i).str = .ref(i)
+    Next
+End With
 ```
 
 Using Linq is very brief in collection operation when comparing with the ``For...Next`` loop imperative programming, but we can makes this code more brief using Vector Shadows language feature in VisualBasic:
@@ -44,6 +53,12 @@ And then we can invoke the operator/function get/set property in a more brief wa
 ```vbnet
 Dim isNumeric = strings Like "\d+"
 Dim Allstrings = strings.str
+Dim Selects = strings(strings Like "\d+").str
+
+' and then if we want to update the property value?
+strings.str = {"ABC", "CBA", "ZZz"}
+' all of the property value was set to "123"
+strings.str = "123"
 ```
 
 ## Demo
@@ -75,8 +90,9 @@ Dim sums%() = strings.Sum
 + Brief than Linq
 + Coding in more elegant way
 + Is an functional programming language feature
++ Writing data analysis application in ``R`` language style.
 
 ## Disadvantage
 
-+ Didn't have well support from VisualStudio IntelliSense but have supports in ``notepad++`` and ``VisualStudio Code`` editor
++ Didn't have well support from VisualStudio IntelliSense currently, but have supports in ``notepad++`` and ``VisualStudio Code`` editor
 + Usually slower than Linq, but sometime even faster than Linq from the demo benchmark result
