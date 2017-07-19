@@ -95,6 +95,13 @@ Namespace Scripting.Runtime
             Return DirectCast(obj, T)
         End Function
 
+        ''' <summary>
+        ''' Cast array type
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <typeparam name="TOut"></typeparam>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
         <Extension> Public Function [As](Of T, TOut)(list As IEnumerable(Of T)) As TOut()
             If list.IsNullOrEmpty Then
                 Return Nothing

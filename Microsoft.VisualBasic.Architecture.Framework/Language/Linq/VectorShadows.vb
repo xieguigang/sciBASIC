@@ -46,6 +46,10 @@ Namespace Language
         Const objectLike$ = "op_Like"
         Const integerDivision$ = "op_IntegerDivision"
 
+        Public Function [As](Of V)() As V()
+            Return buffer.As(Of V)
+        End Function
+
         Sub New(source As IEnumerable(Of T))
             buffer = source.ToArray
             linq = New DataValue(Of T)(buffer)
