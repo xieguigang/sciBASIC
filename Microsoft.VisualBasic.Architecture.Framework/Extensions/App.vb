@@ -479,8 +479,12 @@ Public Module App
     ''' <param name="s$"></param>
     ''' <param name="args"></param>
     Public Sub println(s$, ParamArray args As Object())
-        Dim out As String = sprintf(s, args)
-        Call Console.WriteLine(out)
+        If args.IsNullOrEmpty Then
+            Call Console.WriteLine(s)
+        Else
+            Dim out As String = sprintf(s, args)
+            Call Console.WriteLine(out)
+        End If
     End Sub
 
     Public Sub println()
