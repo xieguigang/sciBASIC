@@ -1,5 +1,53 @@
 # Vector Shadows for VB.NET language
 
+Introduce the Vector Shadows language feature for VisualBasic functional programming. You can shadowing any .NET type as a generic vector object, for example:
+
+```vbnet
+Class Foo
+    Public Property str As String
+    
+    Sub New(s$)
+        str = s
+    End Sub
+    
+    Public Shared Overloads Operator Like(s As Foo, s$) As Boolean
+        Return Regex.Match(s.str, s).Success
+    End Operator
+End Class
+```
+
+A .NET example type ``Foo`` which have a property named ``str`` with ``String`` property type, and have a operator ``Like`` for determine its string value match the regular expression pattern or not.
+
+So that if we have a such ``Foo`` type array, like:
+
+```vbnet
+Dim array = {New Foo("123"), New Foo("ABC"), New Foo("!@#")}
+```
+
+Then wen can using linq for some functional programming like:
+
+```
+Dim isNumeric = array.Select(Function(s) s Like "\d+").ToArray
+Dim Allstrings = array.Select(Function(s) s.str).ToArray
+```
+
+Using Linq is very brief in collection operation when comparing with the ``For...Next`` loop imperative programming, but we can makes this code more brief using Vector Shadows language feature in VisualBasic:
+
+```vbnet
+' dynamics shadowing a vector from any .NET collection type
+' Example from the array object that we declared above
+Dim strings = {New Foo("123"), New Foo("ABC"), New Foo("!@#")}.VectorShadows
+```
+
+And then we can invoke the operator/function get/set property in a more brief way:
+
+```vbnet
+Dim isNumeric = strings Like "\d+"
+Dim Allstrings = strings.str
+```
+
+## Demo
+
 ```vbnet
 Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand) _
     .RepeatCalls(2000, sleep:=2) _
