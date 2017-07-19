@@ -108,12 +108,16 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function OpenWriter(path$, Optional encoding As Encodings = Encodings.UTF8, Optional newLine$ = ASCII.LF) As StreamWriter
-        Return FileIO.OpenWriter(path, encoding.CodePage, newLine)
+    Public Function OpenWriter(path$,
+                               Optional encoding As Encodings = Encodings.UTF8,
+                               Optional newLine$ = ASCII.LF,
+                               Optional append As Boolean = False) As StreamWriter
+        Return FileIO.OpenWriter(path, encoding.CodePage, newLine, append)
     End Function
 
     ''' <summary>
-    ''' 通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作
+    ''' Reading a super large size text file through stream method.
+    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
