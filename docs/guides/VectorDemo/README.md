@@ -68,11 +68,11 @@ Dim strings = New Func(Of WeightString)(AddressOf WeightString.Rand) _
     .RepeatCalls(2000, sleep:=2) _
     .VectorShadows
 
-Dim asciiRands$() = strings.str
-Dim strWeights#() = strings.weight
+Dim asciiRands As IEnumerable(Of String) = strings.str & "ABCDE"
+Dim strWeights As IEnumerable(Of Double) = strings.weight
 
-Dim subsetLessThan50 As WeightString() = strings(strings <= 50)
-Dim subsetGreaterThan90 As WeightString() = strings(strings >= 90)
+Dim subsetLessThan50 As IEnumerable(Of WeightString) = strings(strings <= 50)
+Dim subsetGreaterThan90 As IEnumerable(Of WeightString) = strings(strings >= 90)
 
 strings.weight = 2000.Sequence.As(Of Double)
 
@@ -81,8 +81,8 @@ subsetGreaterThan90 = strings(strings >= 90)
 
 Dim target As Char = RandomASCIIString(20)(10)
 
-Dim charsCount%() = strings.Count(target)
-Dim sums%() = strings.Sum
+Dim charsCount As IEnumerable(Of Integer) = strings.Count(target)
+Dim sums As IEnumerable(Of Integer) = strings(strings >= 1000).Sum
 ```
 
 ## Advantages
