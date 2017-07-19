@@ -64,6 +64,8 @@ strings.str = {"ABC", "CBA", "ZZz"}
 strings.str = "123"
 ```
 
+``VectorShadows`` implementation code can be found at **>>[HERE](https://github.com/xieguigang/sciBASIC/blob/721afa366908b5d3521ba7bbe18418bc641b0fbc/Microsoft.VisualBasic.Architecture.Framework/Language/Linq/VectorShadows.vb)<<**
+
 ## Demo
 
 Demo project can be found at **>>[HERE](https://github.com/xieguigang/sciBASIC/tree/721afa366908b5d3521ba7bbe18418bc641b0fbc/docs/guides/VectorDemo)<<**: 
