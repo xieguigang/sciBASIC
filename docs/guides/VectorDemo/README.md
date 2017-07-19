@@ -24,7 +24,7 @@ So that if we have a such ``Foo`` type array, like:
 Dim array = {New Foo("123"), New Foo("ABC"), New Foo("!@#")}
 ```
 
-Then wen can using linq for some functional programming like:
+Then wen can using linq for some operation in functional programming way, example like:
 
 ```vbnet
 Dim isNumeric = array.Select(Function(s) s Like "\d+").ToArray
