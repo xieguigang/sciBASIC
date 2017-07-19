@@ -82,25 +82,26 @@ Namespace Scripting.Runtime
             Return New SizeF(x, y)
         End Function
 
-        ''' <summary>
-        ''' DirectCast(obj, T)
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="obj"></param>
-        ''' <returns></returns>
-        <Extension> Public Function [As](Of T)(obj) As T
-            If obj Is Nothing Then
-                Return Nothing
-            End If
-            Return DirectCast(obj, T)
-        End Function
+        ' 因为和向量的As类型转换有冲突，所以在这里移除下面的这个As拓展
+        '''' <summary>
+        '''' ``DirectCast(obj, T)``
+        '''' </summary>
+        '''' <typeparam name="T"></typeparam>
+        '''' <param name="obj"></param>
+        '''' <returns></returns>
+        '<Extension> Public Function [As](Of T)(obj) As T
+        '    If obj Is Nothing Then
+        '        Return Nothing
+        '    End If
+        '    Return DirectCast(obj, T)
+        'End Function
 
         ''' <summary>
         ''' Cast array type
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <typeparam name="TOut"></typeparam>
-        ''' <param name="list"></param>
+        ''' <param name="list">在这里使用向量而非使用通用接口是因为和单个元素的As转换有冲突</param>
         ''' <returns></returns>
         <Extension> Public Function [As](Of T, TOut)(list As IEnumerable(Of T)) As TOut()
             If list.IsNullOrEmpty Then

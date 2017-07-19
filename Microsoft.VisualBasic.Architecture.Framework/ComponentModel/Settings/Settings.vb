@@ -42,7 +42,7 @@ Namespace ComponentModel.Settings
         ''' <returns></returns>
         Public ReadOnly Property SettingsData As T
             Get
-                Return _SettingsData.As(Of T)
+                Return DirectCast(_SettingsData, T)
             End Get
         End Property
 
@@ -91,7 +91,7 @@ Namespace ComponentModel.Settings
         ''' <param name="Data"></param>
         ''' <returns></returns>
         Public Overloads Shared Function Load(Data As T) As Settings(Of T)
-            Return New ComponentModel.Settings.Settings(Of T)(Data)
+            Return New Settings(Of T)(Data)
         End Function
 
         Public Shared Function CreateEmpty() As Settings(Of T)
@@ -99,8 +99,8 @@ Namespace ComponentModel.Settings
             Return New Settings(Of T)(x)
         End Function
 
-        Public Overloads Shared Narrowing Operator CType(Settings As Settings.Settings(Of T)) As T
-            Return Settings._SettingsData.As(Of T)
+        Public Overloads Shared Narrowing Operator CType(Settings As Settings(Of T)) As T
+            Return Settings.SettingsData
         End Operator
     End Class
 End Namespace

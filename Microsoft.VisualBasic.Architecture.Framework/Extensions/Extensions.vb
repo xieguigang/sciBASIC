@@ -1732,6 +1732,10 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToStringArray(Of T)(source As IEnumerable(Of T)) As String()
+        If source Is Nothing Then
+            Return {}
+        End If
+
         Dim LQuery$() = LinqAPI.Exec(Of String) <=
             From item As T
             In source
