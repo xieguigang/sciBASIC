@@ -30,6 +30,10 @@ Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace Emit.Marshal
 
+    ''' <summary>
+    ''' 在数组的索引基础上封装了数组本身
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class Pointer(Of T) : Inherits DataStructures.Pointer(Of T)
 
         Protected buffer As T()

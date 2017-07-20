@@ -32,6 +32,12 @@ Namespace Emit.Delegates
 
     Public Module TypeExtensions
 
+        ''' <summary>
+        ''' <paramref name="source"/>能否转换至<paramref name="destination"/>类型？
+        ''' </summary>
+        ''' <param name="destination"></param>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CanBeAssignedFrom(destination As Type, source As Type) As Boolean
             If source Is Nothing OrElse destination Is Nothing Then
@@ -54,6 +60,12 @@ Namespace Emit.Delegates
             Return constraints.All(Function(t1) t1.CanBeAssignedFrom(source))
         End Function
 
+        ''' <summary>
+        ''' 目标类型<paramref name="source"/>是否实现了制定的接口类型？
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="interfaceType">接口类型信息</param>
+        ''' <returns></returns>
         <Extension> Public Function ImplementsInterface(source As Type, interfaceType As Type) As Boolean
             While source IsNot Nothing
                 Dim interfaces = source.GetInterfaces()

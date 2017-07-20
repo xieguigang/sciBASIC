@@ -38,6 +38,9 @@ Namespace Language
         ReadOnly op_IntegerDivisions As BinaryOperator
 #End Region
 
+        ''' <summary>
+        ''' The overloads function
+        ''' </summary>
         ReadOnly methods As New Dictionary(Of String, OverloadsFunction)
 
         ReadOnly type As Type = GetType(T)
@@ -115,14 +118,28 @@ Namespace Language
                 .ToDictionary(Function(g) g.Name)
         End Sub
 
+        ''' <summary>
+        ''' Returns property names and function names
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function GetDynamicMemberNames() As IEnumerable(Of String)
             Return propertyNames.Objects.AsList + methods.Keys
         End Function
 
+        ''' <summary>
+        ''' Vector array json string
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetJson() As String
             Return Me.ToArray.GetJson
         End Function
 
+        ''' <summary>
+        ''' Create a generic vector for a specific .NET <paramref name="type"/>
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         Public Shared Function CreateVector(data As IEnumerable, type As Type) As Object
             With GetType(VectorShadows(Of )).MakeGenericType(type)
                 Dim vector = Activator.CreateInstance(.ref, {data.CreateArray(type)})
@@ -131,6 +148,13 @@ Namespace Language
         End Function
 
 #Region "Property Get/Set"
+
+        ''' <summary>
+        ''' Property Get
+        ''' </summary>
+        ''' <param name="binder"></param>
+        ''' <param name="result"></param>
+        ''' <returns></returns>
         Public Overrides Function TryGetMember(binder As GetMemberBinder, ByRef result As Object) As Boolean
             If propertyNames.IndexOf(binder.Name) = -1 Then
                 Return False
@@ -145,6 +169,12 @@ Namespace Language
             End If
         End Function
 
+        ''' <summary>
+        ''' Property Set
+        ''' </summary>
+        ''' <param name="binder"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
         Public Overrides Function TrySetMember(binder As SetMemberBinder, value As Object) As Boolean
             If propertyNames.IndexOf(binder.Name) = -1 Then
                 Return False
@@ -156,6 +186,14 @@ Namespace Language
 #End Region
 
 #Region "Method/Function"
+
+        ''' <summary>
+        ''' Function invoke
+        ''' </summary>
+        ''' <param name="binder"></param>
+        ''' <param name="args"></param>
+        ''' <param name="result"></param>
+        ''' <returns></returns>
         Public Overrides Function TryInvokeMember(binder As InvokeMemberBinder, args() As Object, ByRef result As Object) As Boolean
             If Not methods.ContainsKey(binder.Name) Then
                 Return False
