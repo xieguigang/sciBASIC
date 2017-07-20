@@ -10,6 +10,10 @@ Module Test2
             str = s
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return str
+        End Function
+
         Public Overloads Shared Operator Like(str As Foo, s$) As Boolean
             With str
                 Return Regex.Match(.str, s).Success
