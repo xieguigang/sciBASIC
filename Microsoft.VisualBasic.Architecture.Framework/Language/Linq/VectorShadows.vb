@@ -269,7 +269,8 @@ Namespace Language
 
             If Not method Is Nothing Then
                 obj = vector _
-                    .Select(Function(self) method.Invoke(Nothing, {self, obj}))
+                    .Select(Function(self) method.Invoke(Nothing, {self, obj})) _
+                    .ToArray
                 Return CreateVector(DirectCast(obj, IEnumerable), method.ReturnType)
             End If
 

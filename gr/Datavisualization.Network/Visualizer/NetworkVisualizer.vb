@@ -241,9 +241,10 @@ Public Module NetworkVisualizer
                 Call "Render network nodes...".__INFO_ECHO
 
                 For Each n As Node In net.nodes  ' 在这里进行节点的绘制
-                    Dim r As Single = n.Data.radius
+                    Dim r# = n.Data.radius
 
-                    If r = 0! Then
+                    ' 当网络之中没有任何边的时候，r的值会是NAN
+                    If r = 0# OrElse r.IsNaNImaginary Then
                         r = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
                         r = If(r = 0, 9, r)
                     End If
