@@ -98,11 +98,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <param name="data"></param>
         Sub New(data As IEnumerable(Of Double))
-            Call Me.New(0)
-
-            For Each x As Double In data
-                Add(x)
-            Next
+            Call MyBase.New(data)
         End Sub
 
         ''' <summary>
@@ -131,7 +127,7 @@ Namespace LinearAlgebra
             Call MyBase.New(capacity:=m)
 
             For i As Integer = 0 To m - 1
-                Add(init)
+                buffer(i) = init
             Next
         End Sub
 

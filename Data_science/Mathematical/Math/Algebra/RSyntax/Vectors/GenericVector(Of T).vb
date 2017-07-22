@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace SyntaxAPI.Vectors
 
-    Public Class GenericVector(Of T) : Inherits List(Of T)
+    Public Class GenericVector(Of T) : Inherits Vector(Of T)
         Implements IEnumerable(Of T)
         Implements IDisposable
 

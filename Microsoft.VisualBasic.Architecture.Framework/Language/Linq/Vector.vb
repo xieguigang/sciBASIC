@@ -12,13 +12,6 @@ Namespace Language
 
         Protected buffer As T()
 
-        Public Sub New()
-        End Sub
-
-        Sub New(data As IEnumerable(Of T))
-            buffer = data.ToArray
-        End Sub
-
         Public ReadOnly Property Length As Integer
             Get
                 Return buffer.Length
@@ -196,6 +189,19 @@ Namespace Language
                 Next
             End Set
         End Property
+#End Region
+
+#Region "Constructor"
+        Public Sub New()
+        End Sub
+
+        Sub New(capacity%)
+            buffer = New T(capacity - 1) {}
+        End Sub
+
+        Sub New(data As IEnumerable(Of T))
+            buffer = data.ToArray
+        End Sub
 #End Region
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
