@@ -127,6 +127,7 @@ Public Structure PointData
     ''' </summary>
     Public Statics#()
     Public color$
+    Public stroke$
 
     Sub New(x!, y!)
         pt = New PointF(x, y)

@@ -180,7 +180,8 @@ Namespace Graphic
                     .Tag = p.Tag,
                     .value = p.value,
                     .Statics = p.Statics,
-                    .color = p.color
+                    .color = p.color,
+                    .stroke = p.stroke
                 }
 
                 Yield New SerialData With {

@@ -75,6 +75,10 @@ Namespace HTML.CSS
             dash = style.DashStyle
         End Sub
 
+        ''' <summary>
+        ''' 生成CSS字符串值
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return $"stroke: {fill}; stroke-width: {width}px; stroke-dash: {dash};"
         End Function

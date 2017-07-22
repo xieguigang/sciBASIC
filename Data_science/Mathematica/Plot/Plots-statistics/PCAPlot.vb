@@ -1,15 +1,19 @@
 ﻿Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.DataMining.PCA
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module PCAPlot
 
-    <Extension> Public Function PC2(input As GeneralMatrix, sampleGroup%, Optional labels$() = Nothing, Optional colorSchema$ = "Set1:c12") As Image
+    <Extension> Public Function PC2(input As GeneralMatrix, sampleGroup%, Optional labels$() = Nothing, Optional colorSchema$ = "Set1:c12") As GraphicsData
         Dim result = input.PrincipalComponentAnalysis(nPC:=2)  ' x,y
         Dim x As Vector = result.ColumnVector(0)
         Dim y As Vector = result.ColumnVector(1)
@@ -35,11 +39,34 @@ Public Module PCAPlot
         ' 进行聚类获取得到分组
         Dim kmeans As ClusterCollection(Of Entity) = pts.ClusterDataSet(sampleGroup)
         ' 赋值颜色到分组上
-        Dim colors$() = Designer.GetColors(colorSchema) _
-            .Select(AddressOf Imaging.RGB2Hexadecimal) _
-            .ToArray
-
+        Dim colors() = Designer.GetColors(colorSchema)
         ' 点为黑色的，border则才是所上的颜色
+        Dim serials As New List(Of SerialData)
 
+        For Each group In kmeans.SeqIterator
+            Dim color As Color = colors(group)
+            Dim stroke$ = New Stroke With {
+                .dash = DashStyle.Solid,
+                .fill = color.RGBExpression,
+                .width = 20
+            }.ToString
+            Dim points As PointData() = group _
+                .value _
+                .Select(Function(o)
+                            Return New PointData With {
+                                .pt = New PointF(o(0), o(1)),
+                                .stroke = stroke
+                            }
+                        End Function) _
+                .ToArray
+            Dim s As New SerialData With {
+                .color = Color.Black,
+                .PointSize = 5,
+                .title = "Cluster #" & group.i,
+                .pts = points
+            }
+        Next
+
+        Return Bubble.Plot(serials)
     End Function
 End Module
