@@ -13,12 +13,20 @@ Public Module PCAPlot
         Dim result = input.PrincipalComponentAnalysis(nPC:=2)  ' x,y
         Dim x As Vector = result.ColumnVector(0)
         Dim y As Vector = result.ColumnVector(1)
+        Dim getlabel As Func(Of Integer, String)
+
+        If labels.IsNullOrEmpty Then
+            getlabel = Function(i) "#" & i.FormatZero()
+        Else
+            getlabel = Function(i) labels(i)
+        End If
+
         Dim pts As Entity() = Points(x, y) _
             .SeqIterator _
             .Select(Function(pt)
                         Dim point As PointF = pt.value
                         Return New Entity With {
-                            .uid = "#" & pt.i,
+                            .uid = getlabel(pt.i),
                             .Properties = {point.X, point.Y}
                         }
                     End Function) _
