@@ -1,9 +1,34 @@
-﻿Imports Microsoft.VisualBasic.Math.Matrix
+﻿Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Matrix
 
 Module Program
 
     Sub Main()
         ' Call Matrix.Test()
+        Dim input As GeneralMatrix = File.Load("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\flower.csv").AsMatrix
+        Dim B As GeneralMatrix = input.Transpose.CenterNormalize
+        Dim C = DataMining.PCA.Data.covarianceMatrix(B)
+        Dim SVD = C.SVD
+
+        '  Call B.Print
+        Call C.Print
+        Call Console.WriteLine()
+        Call Console.WriteLine(SVD.SingularValues)
+        Call Console.WriteLine()
+        Call SVD.V.Print
+        Call Console.WriteLine()
+        Dim n = 2
+        Dim columns = Which.IsTrue(SVD.SingularValues.Top(n))
+
+        Dim M = SVD.V(columns)
+
+        Call M.Print
+        Call Console.WriteLine()
+        Dim PCA = input * M
+
+        Call PCA.Print(out:="./PCA_result.txt".OpenWriter)
 
         Call Test()
     End Sub

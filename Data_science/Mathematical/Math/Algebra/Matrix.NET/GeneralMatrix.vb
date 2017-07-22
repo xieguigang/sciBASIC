@@ -323,13 +323,21 @@ Namespace Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Default Public Overloads Property GetElement(i As Integer, j As Integer) As Double
+        Default Public Overloads Property Value(i As Integer, j As Integer) As Double
             Get
                 Return buffer(i)(j)
             End Get
             Set(value As Double)
                 buffer(i)(j) = value
             End Set
+        End Property
+
+        Default Public Overloads ReadOnly Property value(indices As IEnumerable(Of Integer)) As GeneralMatrix
+            Get
+                Dim index = indices.ToArray
+                Dim subMatrix = buffer.Select(Function(x) index.Select(Function(i) x(i)).ToArray).ToArray
+                Return New GeneralMatrix(subMatrix)
+            End Get
         End Property
 
         ''' <summary>Get a submatrix.</summary>

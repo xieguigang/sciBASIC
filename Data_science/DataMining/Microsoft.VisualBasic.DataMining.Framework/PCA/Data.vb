@@ -189,16 +189,20 @@ Namespace PCA
         ''' </summary>
         Friend Overridable ReadOnly Property CovarianceEigenSet() As EigenSet
             Get
-                Dim data As Double()() = covarianceMatrix()
+                Dim data As Double()() = covarianceMatrix().Array
                 Return Matrix.eigenDecomposition(data)
             End Get
         End Property
+
+        Public Function covarianceMatrix() As GeneralMatrix
+            Return covarianceMatrix(matrixData)
+        End Function
 
         ''' <summary>
         ''' Constructs the covariance matrix for this data set.
         ''' @return	the covariance matrix of this data set
         ''' </summary>
-        Friend Overridable Function covarianceMatrix() As Double()()
+        Public Shared Function covarianceMatrix(matrixData As GeneralMatrix) As GeneralMatrix
             'ORIGINAL LINE: double[][] @out = new double[matrix.Length][matrix.Length];
             Dim out As Double()() = MAT(Of Double)(matrixData.Length, matrixData.Length)
             For i As Integer = 0 To out.Length - 1
