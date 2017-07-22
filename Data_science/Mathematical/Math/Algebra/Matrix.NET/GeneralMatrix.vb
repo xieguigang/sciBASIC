@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::6805d27026b5a0762371e12af4c45b93, ..\sciBASIC#\Data_science\Mathematical\Math\Matrix.NET\GeneralMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.Serialization
+Imports Microsoft.VisualBasic.Language
 
 Namespace Matrix
 
@@ -76,22 +77,18 @@ Namespace Matrix
     ''' </version>
 
     <Serializable>
-    Public Class GeneralMatrix
-        Implements System.ICloneable
-        Implements System.Runtime.Serialization.ISerializable
-        Implements System.IDisposable
-#Region "Class variables"
+    Public Class GeneralMatrix : Inherits Vector(Of Double())
+        Implements ICloneable
+        Implements ISerializable
+        Implements IDisposable
 
-        ''' <summary>Array for internal storage of elements.
-        ''' @serial internal array storage.
-        ''' </summary>
-        Private A As Double()()
+#Region "Class variables"
 
         ''' <summary>Row and column dimensions.
         ''' @serial row dimension.
         ''' @serial column dimension.
         ''' </summary>
-        Private m As Integer, n As Integer
+        Dim m As Integer, n As Integer
 
 #End Region
 
@@ -106,10 +103,13 @@ Namespace Matrix
         Public Sub New(m As Integer, n As Integer)
             Me.m = m
             Me.n = n
-            A = New Double(m - 1)() {}
+            Dim A = New Double(m - 1)() {}
+
             For i As Integer = 0 To m - 1
                 A(i) = New Double(n - 1) {}
             Next
+
+            buffer = A
         End Sub
 
         ''' <summary>Construct an m-by-n constant matrix.</summary>
@@ -123,7 +123,8 @@ Namespace Matrix
         Public Sub New(m As Integer, n As Integer, s As Double)
             Me.m = m
             Me.n = n
-            A = New Double(m - 1)() {}
+            Dim A = New Double(m - 1)() {}
+
             For i As Integer = 0 To m - 1
                 A(i) = New Double(n - 1) {}
             Next
@@ -132,6 +133,8 @@ Namespace Matrix
                     A(i)(j) = s
                 Next
             Next
+
+            buffer = A
         End Sub
 
         ''' <summary>Construct a matrix from a 2-D array.</summary>
@@ -150,7 +153,7 @@ Namespace Matrix
                     Throw New System.ArgumentException("All rows must have the same length.")
                 End If
             Next
-            Me.A = A
+            Me.buffer = A
         End Sub
 
         ''' <summary>Construct a matrix quickly without checking arguments.</summary>
@@ -162,7 +165,7 @@ Namespace Matrix
         ''' </param>
 
         Public Sub New(A As Double()(), m As Integer, n As Integer)
-            Me.A = A
+            Me.buffer = A
             Me.m = m
             Me.n = n
         End Sub
@@ -181,7 +184,7 @@ Namespace Matrix
             If m * n <> vals.Length Then
                 Throw New System.ArgumentException("Array length must be a multiple of m.")
             End If
-            A = New Double(m - 1)() {}
+            Dim A = New Double(m - 1)() {}
             For i As Integer = 0 To m - 1
                 A(i) = New Double(n - 1) {}
             Next
@@ -190,6 +193,8 @@ Namespace Matrix
                     A(i)(j) = vals(i + j * m)
                 Next
             Next
+
+            buffer = A
         End Sub
 #End Region
 
@@ -200,7 +205,7 @@ Namespace Matrix
         ''' </returns>
         Public Overridable ReadOnly Property Array() As Double()()
             Get
-                Return A
+                Return buffer
             End Get
         End Property
         ''' <summary>Copy the internal two-dimensional array.</summary>
@@ -214,7 +219,7 @@ Namespace Matrix
                 Next
                 For i As Integer = 0 To m - 1
                     For j As Integer = 0 To n - 1
-                        C(i)(j) = A(i)(j)
+                        C(i)(j) = buffer(i)(j)
                     Next
                 Next
                 Return C
@@ -229,7 +234,7 @@ Namespace Matrix
                 Dim vals As Double() = New Double(m * n - 1) {}
                 For i As Integer = 0 To m - 1
                     For j As Integer = 0 To n - 1
-                        vals(i + j * m) = A(i)(j)
+                        vals(i + j * m) = buffer(i)(j)
                     Next
                 Next
                 Return vals
@@ -245,7 +250,7 @@ Namespace Matrix
                 Dim vals As Double() = New Double(m * n - 1) {}
                 For i As Integer = 0 To m - 1
                     For j As Integer = 0 To n - 1
-                        vals(i * n + j) = A(i)(j)
+                        vals(i * n + j) = buffer(i)(j)
                     Next
                 Next
                 Return vals
@@ -302,7 +307,7 @@ Namespace Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = A(i)(j)
+                    C(i)(j) = buffer(i)(j)
                 Next
             Next
             Return X
@@ -318,10 +323,13 @@ Namespace Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Default Public ReadOnly Property GetElement(i As Integer, j As Integer) As Double
+        Default Public Overloads Property GetElement(i As Integer, j As Integer) As Double
             Get
-                Return A(i)(j)
+                Return buffer(i)(j)
             End Get
+            Set(value As Double)
+                buffer(i)(j) = value
+            End Set
         End Property
 
         ''' <summary>Get a submatrix.</summary>
@@ -344,7 +352,7 @@ Namespace Matrix
             Try
                 For i As Integer = i0 To i1
                     For j As Integer = j0 To j1
-                        B(i - i0)(j - j0) = A(i)(j)
+                        B(i - i0)(j - j0) = buffer(i)(j)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -369,7 +377,7 @@ Namespace Matrix
             Try
                 For i As Integer = 0 To r.Length - 1
                     For j As Integer = 0 To c.Length - 1
-                        B(i)(j) = A(r(i))(c(j))
+                        B(i)(j) = buffer(r(i))(c(j))
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -396,7 +404,7 @@ Namespace Matrix
             Try
                 For i As Integer = i0 To i1
                     For j As Integer = 0 To c.Length - 1
-                        B(i - i0)(j) = A(i)(c(j))
+                        B(i - i0)(j) = buffer(i)(c(j))
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -423,7 +431,7 @@ Namespace Matrix
             Try
                 For i As Integer = 0 To r.Length - 1
                     For j As Integer = j0 To j1
-                        B(i)(j - j0) = A(r(i))(j)
+                        B(i)(j - j0) = buffer(r(i))(j)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -431,20 +439,6 @@ Namespace Matrix
             End Try
             Return X
         End Function
-
-        ''' <summary>Set a single element.</summary>
-        ''' <param name="i">   Row index.
-        ''' </param>
-        ''' <param name="j">   Column index.
-        ''' </param>
-        ''' <param name="s">   A(i,j).
-        ''' </param>
-        ''' <exception cref="System.IndexOutOfRangeException">  
-        ''' </exception>
-
-        Public Overridable Sub SetElement(i As Integer, j As Integer, s As Double)
-            A(i)(j) = s
-        End Sub
 
         ''' <summary>Set a submatrix.</summary>
         ''' <param name="i0">  Initial row index
@@ -464,7 +458,7 @@ Namespace Matrix
             Try
                 For i As Integer = i0 To i1
                     For j As Integer = j0 To j1
-                        A(i)(j) = X(i - i0, j - j0)
+                        buffer(i)(j) = X(i - i0, j - j0)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -486,7 +480,7 @@ Namespace Matrix
             Try
                 For i As Integer = 0 To r.Length - 1
                     For j As Integer = 0 To c.Length - 1
-                        A(r(i))(c(j)) = X(i, j)
+                        buffer(r(i))(c(j)) = X(i, j)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -510,7 +504,7 @@ Namespace Matrix
             Try
                 For i As Integer = 0 To r.Length - 1
                     For j As Integer = j0 To j1
-                        A(r(i))(j) = X(i, j - j0)
+                        buffer(r(i))(j) = X(i, j - j0)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -534,7 +528,7 @@ Namespace Matrix
             Try
                 For i As Integer = i0 To i1
                     For j As Integer = 0 To c.Length - 1
-                        A(i)(c(j)) = X(i - i0, j)
+                        buffer(i)(c(j)) = X(i - i0, j)
                     Next
                 Next
             Catch e As System.IndexOutOfRangeException
@@ -551,7 +545,7 @@ Namespace Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(j)(i) = A(i)(j)
+                    C(j)(i) = buffer(i)(j)
                 Next
             Next
             Return X
@@ -566,7 +560,7 @@ Namespace Matrix
             For j As Integer = 0 To n - 1
                 Dim s As Double = 0
                 For i As Integer = 0 To m - 1
-                    s += System.Math.Abs(A(i)(j))
+                    s += System.Math.Abs(buffer(i)(j))
                 Next
                 f = System.Math.Max(f, s)
             Next
@@ -590,7 +584,7 @@ Namespace Matrix
             For i As Integer = 0 To m - 1
                 Dim s As Double = 0
                 For j As Integer = 0 To n - 1
-                    s += System.Math.Abs(A(i)(j))
+                    s += System.Math.Abs(buffer(i)(j))
                 Next
                 f = System.Math.Max(f, s)
             Next
@@ -605,7 +599,7 @@ Namespace Matrix
             Dim f As Double = 0
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    f = Hypot(f, A(i)(j))
+                    f = Hypot(f, buffer(i)(j))
                 Next
             Next
             Return f
@@ -614,23 +608,15 @@ Namespace Matrix
         ''' <summary>Unary minus</summary>
         ''' <returns>    -A
         ''' </returns>
-
-        Public Overridable Function UnaryMinus() As GeneralMatrix
-            Dim X As New GeneralMatrix(m, n)
+        Public Shared Operator -(m As GeneralMatrix) As GeneralMatrix
+            Dim X As New GeneralMatrix(m.m, m.n)
             Dim C As Double()() = X.Array
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = -A(i)(j)
+            For i As Integer = 0 To m.m - 1
+                For j As Integer = 0 To m.n - 1
+                    C(i)(j) = -m.buffer(i)(j)
                 Next
             Next
             Return X
-        End Function
-
-        ''' <summary>Unary minus</summary>
-        ''' <returns>    -A
-        ''' </returns>
-        Public Shared Operator -(m As GeneralMatrix) As GeneralMatrix
-            Return m.UnaryMinus
         End Operator
 
         ''' <summary>C = A + B</summary>
@@ -645,7 +631,7 @@ Namespace Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = A(i)(j) + B.A(i)(j)
+                    C(i)(j) = buffer(i)(j) + B.buffer(i)(j)
                 Next
             Next
             Return X
@@ -661,7 +647,7 @@ Namespace Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    A(i)(j) = A(i)(j) + B.A(i)(j)
+                    buffer(i)(j) = buffer(i)(j) + B.buffer(i)(j)
                 Next
             Next
             Return Me
@@ -679,7 +665,7 @@ Namespace Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = A(i)(j) - B.A(i)(j)
+                    C(i)(j) = buffer(i)(j) - B.buffer(i)(j)
                 Next
             Next
             Return X
@@ -695,7 +681,7 @@ Namespace Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    A(i)(j) = A(i)(j) - B.A(i)(j)
+                    buffer(i)(j) = buffer(i)(j) - B.buffer(i)(j)
                 Next
             Next
             Return Me
@@ -713,7 +699,7 @@ Namespace Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = A(i)(j) * B.A(i)(j)
+                    C(i)(j) = buffer(i)(j) * B.buffer(i)(j)
                 Next
             Next
             Return X
@@ -729,7 +715,7 @@ Namespace Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    A(i)(j) = A(i)(j) * B.A(i)(j)
+                    buffer(i)(j) = buffer(i)(j) * B.buffer(i)(j)
                 Next
             Next
             Return Me
@@ -747,7 +733,7 @@ Namespace Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = A(i)(j) / B.A(i)(j)
+                    C(i)(j) = buffer(i)(j) / B.buffer(i)(j)
                 Next
             Next
             Return X
@@ -763,7 +749,7 @@ Namespace Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    A(i)(j) = A(i)(j) / B.A(i)(j)
+                    buffer(i)(j) = buffer(i)(j) / B.buffer(i)(j)
                 Next
             Next
             Return Me
@@ -781,7 +767,7 @@ Namespace Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = B.A(i)(j) / A(i)(j)
+                    C(i)(j) = B.buffer(i)(j) / buffer(i)(j)
                 Next
             Next
             Return X
@@ -797,7 +783,7 @@ Namespace Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    A(i)(j) = B.A(i)(j) / A(i)(j)
+                    buffer(i)(j) = B.buffer(i)(j) / buffer(i)(j)
                 Next
             Next
             Return Me
@@ -814,7 +800,7 @@ Namespace Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = s * A(i)(j)
+                    C(i)(j) = s * buffer(i)(j)
                 Next
             Next
             Return X
@@ -829,7 +815,7 @@ Namespace Matrix
         Public Overridable Function MultiplyEquals(s As Double) As GeneralMatrix
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    A(i)(j) = s * A(i)(j)
+                    buffer(i)(j) = s * buffer(i)(j)
                 Next
             Next
             Return Me
@@ -852,10 +838,10 @@ Namespace Matrix
             Dim Bcolj As Double() = New Double(n - 1) {}
             For j As Integer = 0 To B.n - 1
                 For k As Integer = 0 To n - 1
-                    Bcolj(k) = B.A(k)(j)
+                    Bcolj(k) = B.buffer(k)(j)
                 Next
                 For i As Integer = 0 To m - 1
-                    Dim Arowi As Double() = A(i)
+                    Dim Arowi As Double() = buffer(i)
                     Dim s As Double = 0
                     For k As Integer = 0 To n - 1
                         s += Arowi(k) * Bcolj(k)
@@ -1009,7 +995,7 @@ Namespace Matrix
         Public Overridable Function Trace() As Double
             Dim t As Double = 0
             For i As Integer = 0 To System.Math.Min(m, n) - 1
-                t += A(i)(i)
+                t += buffer(i)(i)
             Next
             Return t
         End Function

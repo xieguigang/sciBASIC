@@ -542,7 +542,7 @@ Namespace Matrix
         ''' </returns>
         Public ReadOnly Property U() As GeneralMatrix
             Get
-                Return New GeneralMatrix(valueU, m, System.Math.Min(m + 1, n))
+                Return -New GeneralMatrix(valueU, m, System.Math.Min(m + 1, n))
             End Get
         End Property
 
@@ -551,7 +551,7 @@ Namespace Matrix
         ''' </returns>
         Public ReadOnly Property V() As GeneralMatrix
             Get
-                Return New GeneralMatrix(valueV, n, n)
+                Return -New GeneralMatrix(valueV, n, n)
             End Get
         End Property
 

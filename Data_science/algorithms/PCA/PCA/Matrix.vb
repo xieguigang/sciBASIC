@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Matrix
 
 Module Matrix
     Sub Test()
@@ -11,6 +12,12 @@ Module Matrix
         }
 
         Dim result = m.SVD()
+
+        Call result.S.Print
+        Call Console.WriteLine()
+        Call result.U.Print
+        Call Console.WriteLine()
+        Call result.V.Print
 
         Pause()
     End Sub
