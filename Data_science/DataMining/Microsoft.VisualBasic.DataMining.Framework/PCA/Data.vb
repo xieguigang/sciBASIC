@@ -1,3 +1,5 @@
+Imports Microsoft.VisualBasic.Math.Matrix
+
 Namespace PCA
 
     ''' <summary>
@@ -20,9 +22,10 @@ Namespace PCA
     ''' @author	Kushal Ranjan
     ''' @version	051313
     ''' </summary>
-    Friend Class Data
+    Public Class Data
 
-        Friend matrixData As Double()()
+        Public matrixData As GeneralMatrix
+
         'matrix[i] is the ith row; matrix[i][j] is the ith row, jth column
         ''' <summary>
         ''' Constructs a new data matrix. </summary>
@@ -31,44 +34,35 @@ Namespace PCA
             matrixData = Matrix.copy(vals)
         End Sub
 
-        ''' <summary>
-        ''' Test code. Constructs an arbitrary data table of 5 data points with 3 variables, normalizes
-        ''' it, and computes the covariance matrix and its eigenvalues and orthonormal eigenvectors.
-        ''' Then determines the two principal components.
-        ''' </summary>
-        Public Shared Sub Main(args As String())
-            Dim data__1 As Double()() = {New Double() {4, 4.2, 3.9, 4.3, 4.1}, New Double() {2, 2.1, 2, 2.1, 2.2}, New Double() {0.6, 0.59, 0.58, 0.62, 0.63}}
-            Console.WriteLine("Raw data:")
-            Matrix.print(data__1)
-            Dim dat As New Data(data__1)
-            dat.center()
-            Dim cov As Double()() = dat.covarianceMatrix()
-            Console.WriteLine("Covariance matrix:")
-            Matrix.print(cov)
-            Dim eigen As EigenSet = dat.CovarianceEigenSet
-            Dim vals As Double()() = {eigen.values}
-            Console.WriteLine("Eigenvalues:")
-            Matrix.print(vals)
-            Console.WriteLine("Corresponding eigenvectors:")
-            Matrix.print(eigen.vectors)
-            Console.WriteLine("Two principal components:")
-            Matrix.print(dat.buildPrincipalComponents(2, eigen))
-            Console.WriteLine("Principal component transformation:")
-            Matrix.print(Data.principalComponentAnalysis(data__1, 2))
-
-            Dim scores#()() = Data.PCANIPALS(data__1, 3)
-            Matrix.print(scores)
-
-            Pause()
-        End Sub
-
         '''' <summary>
-        '''' http://www.cnblogs.com/bigshuai/archive/2012/06/18/2553808.html
+        '''' Test code. Constructs an arbitrary data table of 5 data points with 3 variables, normalizes
+        '''' it, and computes the covariance matrix and its eigenvalues and orthonormal eigenvectors.
+        '''' Then determines the two principal components.
         '''' </summary>
-        'Private Shared Sub Test()
-        '    Dim data()() = {{-1, -1, 0.0, 2, 0}, {-2, 0R, 0, 1, 1}}.RowIterator.ToArray
-        '    Matrix.print(Global.PCA.Data.principalComponentAnalysis(data, 1))
-        '    Matrix.print({New Double() {-3 / Math.Sqrt(2), -1 / Math.Sqrt(2), 0, 3 / Math.Sqrt(2), -1 / Math.Sqrt(2)}})
+        'Public Shared Sub Main(args As String())
+        '    Dim data__1 As Double()() = {New Double() {4, 4.2, 3.9, 4.3, 4.1}, New Double() {2, 2.1, 2, 2.1, 2.2}, New Double() {0.6, 0.59, 0.58, 0.62, 0.63}}
+        '    Console.WriteLine("Raw data:")
+        '    Matrix.print(data__1)
+        '    Dim dat As New Data(data__1)
+        '    dat.matrixData = dat.matrixData.CenterNormalize
+        '    Dim cov As Double()() = dat.covarianceMatrix()
+        '    Console.WriteLine("Covariance matrix:")
+        '    Matrix.print(cov)
+        '    Dim eigen As EigenSet = dat.CovarianceEigenSet
+        '    Dim vals As Double()() = {eigen.values}
+        '    Console.WriteLine("Eigenvalues:")
+        '    Matrix.print(vals)
+        '    Console.WriteLine("Corresponding eigenvectors:")
+        '    Matrix.print(eigen.vectors)
+        '    Console.WriteLine("Two principal components:")
+        '    Matrix.print(dat.buildPrincipalComponents(2, eigen))
+        '    Console.WriteLine("Principal component transformation:")
+        '    Matrix.print(Data.principalComponentAnalysis(data__1, 2))
+
+        '    Dim scores#()() = Data.PCANIPALS(data__1, 3)
+        '    Matrix.print(scores)
+
+        '    Pause()
         'End Sub
 
         ''' <summary>
@@ -82,7 +76,7 @@ Namespace PCA
         ''' @return				the scores of the data array against the PCS </param>
         Friend Shared Function PCANIPALS(input As Double()(), numComponents As Integer) As Double()()
             Dim data As New Data(input)
-            data.center()
+            data.matrixData = data.matrixData.CenterNormalize()
             Dim PCA As Double()()() = data.NIPALSAlg(numComponents)
             'ORIGINAL LINE: double[][] scores = new double[numComponents][input[0].Length];
             Dim scores As Double()() = MAT(Of Double)(numComponents, input(0).Length)
@@ -103,16 +97,16 @@ Namespace PCA
         Friend Overridable Function NIPALSAlg(numComponents As Integer) As Double()()()
             Const THRESHOLD As Double = 0.00001
             Dim out As Double()()() = New Double(numComponents - 1)()() {}
-            Dim E As Double()() = Matrix.copy(matrixData)
+            Dim E As Double()() = Matrix.copy(matrixData.Array)
             For i As Integer = 0 To out.Length - 1
                 Dim eigenOld As Double = 0
                 Dim eigenNew As Double = 0
-                Dim p As Double() = New Double(matrixData(0).Length - 1) {}
-                Dim t As Double() = New Double(matrixData(0).Length - 1) {}
+                Dim p As Double() = New Double(matrixData.Array(0).Length - 1) {}
+                Dim t As Double() = New Double(matrixData.Array(0).Length - 1) {}
                 Dim tMatrix As Double()() = {t}
                 Dim pMatrix As Double()() = {p}
                 For j As Integer = 0 To t.Length - 1
-                    t(j) = matrixData(i)(j)
+                    t(j) = matrixData(i, j)
                 Next
                 Do
                     eigenOld = eigenNew
@@ -147,9 +141,9 @@ Namespace PCA
         ''' 						variable for each data point </param>
         ''' <param name="numComponents">	number of components desired
         ''' @return				the transformed data set </param>
-        Friend Shared Function principalComponentAnalysis(input As Double()(), numComponents As Integer) As Double()()
+        Public Shared Function principalComponentAnalysis(input As Double()(), numComponents As Integer) As GeneralMatrix
             Dim data As New Data(input)
-            data.center()
+            data.matrixData = data.matrixData.CenterNormalize()
             Dim eigen As EigenSet = data.CovarianceEigenSet
             Dim featureVector As Double()() = data.buildPrincipalComponents(numComponents, eigen)
             Dim PC As Double()() = Matrix.transpose(featureVector)
@@ -209,8 +203,8 @@ Namespace PCA
             Dim out As Double()() = MAT(Of Double)(matrixData.Length, matrixData.Length)
             For i As Integer = 0 To out.Length - 1
                 For j As Integer = 0 To out.Length - 1
-                    Dim dataA As Double() = matrixData(i)
-                    Dim dataB As Double() = matrixData(j)
+                    Dim dataA As Double() = matrixData.Array(i)
+                    Dim dataB As Double() = matrixData.Array(j)
                     out(i)(j) = covariance(dataA, dataB)
                 Next
             Next
@@ -234,29 +228,6 @@ Namespace PCA
                 sum += (a(i) - aMean) * (b(i) - bMean)
             Next
             Return sum / divisor
-        End Function
-
-        ''' <summary>
-        ''' Centers each column of the data matrix at its mean.
-        ''' </summary>
-        Friend Overridable Sub center()
-            matrixData = normalize(matrixData)
-        End Sub
-
-
-        ''' <summary>
-        ''' Normalizes the input matrix so that each column is centered at 0.
-        ''' </summary>
-        Friend Overridable Function normalize(input As Double()()) As Double()()
-            'ORIGINAL LINE: double[][] @out = new double[input.Length][input[0].Length];
-            Dim out As Double()() = MAT(Of Double)(input.Length, input(0).Length)
-            For i As Integer = 0 To input.Length - 1
-                Dim meanValue As Double = input(i).Average
-                For j As Integer = 0 To input(i).Length - 1
-                    out(i)(j) = input(i)(j) - meanValue
-                Next
-            Next
-            Return out
         End Function
     End Class
 End Namespace

@@ -68,6 +68,25 @@ Namespace Matrix
         End Function
 
         ''' <summary>
+        ''' Centers each column of the data matrix at its mean.
+        ''' Normalizes the input matrix so that each column is centered at 0.
+        ''' </summary>
+        <Extension> Public Function CenterNormalize(m As GeneralMatrix) As GeneralMatrix
+            'ORIGINAL LINE: double[][] @out = new double[input.Length][input[0].Length];
+            Dim input = m.Array
+            Dim out As Double()() = MAT(Of Double)(Input.Length, Input(0).Length)
+
+            For i As Integer = 0 To input.Length - 1
+                Dim meanValue As Double = input(i).Average
+                For j As Integer = 0 To input(i).Length - 1
+                    out(i)(j) = input(i)(j) - meanValue
+                Next
+            Next
+
+            Return out
+        End Function
+
+        ''' <summary>
         ''' Print the matrix data onto the console or a specific stream.
         ''' </summary>
         ''' <param name="m"></param>

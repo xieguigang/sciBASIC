@@ -6,33 +6,9 @@ Namespace PCA
     ''' @author	Kushal Ranjan
     ''' @version	051413
     ''' </summary>
-    Friend Class Matrix
+    Public Class Matrix
 
         Friend Shared numMults As Integer = 0
-        'Keeps track of the number of multiplications performed
-        ''' <summary>
-        ''' Test code for SVD. Uses example from MIT video: http://www.youtube.com/watch?v=cOUTpqlX-Xs
-        ''' </summary>
-        Public Shared Sub Main(args As String())
-            Console.WriteLine("Original matrix:")
-            Dim test As Double()() = {New Double() {5, -1}, New Double() {5, 7}}
-            'C
-            Matrix.print(test)
-            Dim SVD As Double()()() = Matrix.singularValueDecomposition(test)
-            Dim U As Double()() = SVD(0)
-            Dim S As Double()() = SVD(1)
-            Dim V As Double()() = SVD(2)
-            Console.WriteLine("U-matrix:")
-            Matrix.print(U)
-            Console.WriteLine("Sigma-matrix:")
-            Matrix.print(S)
-            Console.WriteLine("V-matrix:")
-            Matrix.print(V)
-            Console.WriteLine("Decomposition product (C = US(V^T)):")
-            Matrix.print(Matrix.multiply(U, Matrix.multiply(S, Matrix.transpose(V))))
-            'Should be C
-        End Sub
-
 
         ''' <summary>
         ''' Computes the singular value decomposition (SVD) of the input matrix. </summary>
@@ -40,7 +16,7 @@ Namespace PCA
         ''' @return			the SVD of input, {U,S,V}, such that input = US(V^T). U and S are
         ''' 					orthogonal matrix, and the non-zero entries of the diagonal matrix S are
         ''' 					the  </param>
-        Friend Shared Function singularValueDecomposition(input As Double()()) As Double()()()
+        Public Shared Function singularValueDecomposition(input As Double()()) As Double()()()
             Dim C As Double()() = Matrix.copy(input)
             Dim CTC As Double()() = multiply(transpose(C), C)
             '(C^T)C = V(S^T)S(V^T)
@@ -390,45 +366,25 @@ Namespace PCA
         Friend Shared Function norm(vec As Double()) As Double
             Return Math.Sqrt(dot(vec, vec))
         End Function
-
-        ''' <summary>
-        ''' Prints the input matrix with each value rounded to 4 significant figures
-        ''' </summary>
-        Public Shared Sub print(matrix As Double()())
-            For j As Integer = 0 To matrix(0).Length - 1
-                For i As Integer = 0 To matrix.Length - 1
-                    'ORIGINAL LINE: double formattedValue = Double.parseDouble(String.format("%.4g%n", matrix[i][j]));
-                    Dim formattedValue As Double = Convert.ToDouble(matrix(i)(j).ToString("F4"))
-                    If Math.Abs(formattedValue) < 0.00001 Then
-                        'Hide negligible values
-                        formattedValue = 0
-                    End If
-                    Console.Write(formattedValue & vbTab)
-                Next
-                Console.Write(vbLf)
-            Next
-            Console.WriteLine("")
-        End Sub
     End Class
-
     ''' <summary>
     ''' Exception class thrown when invalid matrix calculations are attempted
     ''' </summary>
     Friend Class MatrixException
-        Inherits Exception
-        Friend Sub New([string] As String)
-            MyBase.New([string])
-        End Sub
-    End Class
+            Inherits Exception
+            Friend Sub New([string] As String)
+                MyBase.New([string])
+            End Sub
+        End Class
 
-    ''' <summary>
-    ''' Data holder class that contains a set of eigenvalues and their corresponding eigenvectors.
-    ''' @author	Kushal Ranjan
-    ''' @version 051413
-    ''' </summary>
-    Friend Class EigenSet
-        Friend values As Double()
-        Friend vectors As Double()()
-    End Class
+        ''' <summary>
+        ''' Data holder class that contains a set of eigenvalues and their corresponding eigenvectors.
+        ''' @author	Kushal Ranjan
+        ''' @version 051413
+        ''' </summary>
+        Friend Class EigenSet
+            Friend values As Double()
+            Friend vectors As Double()()
+        End Class
 
 End Namespace
