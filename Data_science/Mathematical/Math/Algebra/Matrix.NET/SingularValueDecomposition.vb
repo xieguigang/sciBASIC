@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::937c997ee99c9d226f4293009efe25bb, ..\sciBASIC#\Data_science\Mathematical\Math\Matrix.NET\SingularValueDecomposition.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.Serialization
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Matrix
 
@@ -53,18 +54,18 @@ Namespace Matrix
         ''' @serial internal storage of U.
         ''' @serial internal storage of V.
         ''' </summary>
-        Private U As Double()(), V As Double()()
+        Dim valueU As Double()(), valueV As Double()()
 
         ''' <summary>Array for internal storage of singular values.
         ''' @serial internal storage of singular values.
         ''' </summary>
-        Private m_s As Double()
+        Dim m_s As Double()
 
         ''' <summary>Row and column dimensions.
         ''' @serial row dimension.
         ''' @serial column dimension.
         ''' </summary>
-        Private m As Integer, n As Integer
+        Dim m As Integer, n As Integer
 
 #End Region
 
@@ -79,6 +80,8 @@ Namespace Matrix
             ' Derived from LINPACK code.
             ' Initialize.
             Dim A As Double()() = Arg.ArrayCopy
+            Dim U, V As Double()()
+
             m = Arg.RowDimension
             n = Arg.ColumnDimension
             Dim nu As Integer = System.Math.Min(m, n)
@@ -357,7 +360,7 @@ Namespace Matrix
                                 End If
                             Next
                         End If
-                        
+
 
                 ' Split at negligible s(k).
 
@@ -382,7 +385,7 @@ Namespace Matrix
                                 End If
                             Next
                         End If
-                        
+
 
                 ' Perform one qr step.
 
@@ -449,7 +452,7 @@ Namespace Matrix
                             e(p - 2) = f
                             iter = iter + 1
                         End If
-                        
+
 
                 ' Convergence.
 
@@ -495,9 +498,12 @@ Namespace Matrix
                             iter = 0
                             p -= 1
                         End If
-                        
+
                 End Select
             End While
+
+            valueU = U
+            valueV = V
         End Sub
 #End Region
 
@@ -505,9 +511,9 @@ Namespace Matrix
         ''' <summary>Return the one-dimensional array of singular values</summary>
         ''' <returns>     diagonal of S.
         ''' </returns>
-        Public Overridable ReadOnly Property SingularValues() As Double()
+        Public Overridable ReadOnly Property SingularValues() As Vector
             Get
-                Return m_s
+                Return New Vector(m_s)
             End Get
         End Property
 
@@ -534,50 +540,57 @@ Namespace Matrix
         ''' <summary>Return the left singular vectors</summary>
         ''' <returns>     U
         ''' </returns>
-
-        Public Overridable Function GetU() As GeneralMatrix
-            Return New GeneralMatrix(U, m, System.Math.Min(m + 1, n))
-        End Function
+        Public ReadOnly Property U() As GeneralMatrix
+            Get
+                Return New GeneralMatrix(valueU, m, System.Math.Min(m + 1, n))
+            End Get
+        End Property
 
         ''' <summary>Return the right singular vectors</summary>
         ''' <returns>     V
         ''' </returns>
-
-        Public Overridable Function GetV() As GeneralMatrix
-            Return New GeneralMatrix(V, n, n)
-        End Function
+        Public ReadOnly Property V() As GeneralMatrix
+            Get
+                Return New GeneralMatrix(valueV, n, n)
+            End Get
+        End Property
 
         ''' <summary>Two norm</summary>
         ''' <returns>     max(S)
         ''' </returns>
-
-        Public Overridable Function Norm2() As Double
-            Return m_s(0)
-        End Function
+        ''' 
+        Public ReadOnly Property Norm2() As Double
+            Get
+                Return m_s(0)
+            End Get
+        End Property
 
         ''' <summary>Two norm condition number</summary>
         ''' <returns>     max(S)/min(S)
         ''' </returns>
-
-        Public Overridable Function Condition() As Double
-            Return m_s(0) / m_s(System.Math.Min(m, n) - 1)
-        End Function
+        Public ReadOnly Property Condition() As Double
+            Get
+                Return m_s(0) / m_s(System.Math.Min(m, n) - 1)
+            End Get
+        End Property
 
         ''' <summary>Effective numerical matrix rank</summary>
         ''' <returns>     Number of nonnegligible singular values.
         ''' </returns>
 
-        Public Overridable Function Rank() As Integer
-            Dim eps As Double = System.Math.Pow(2.0, -52.0)
-            Dim tol As Double = System.Math.Max(m, n) * m_s(0) * eps
-            Dim r As Integer = 0
-            For i As Integer = 0 To m_s.Length - 1
-                If m_s(i) > tol Then
-                    r += 1
-                End If
-            Next
-            Return r
-        End Function
+        Public ReadOnly Property Rank() As Integer
+            Get
+                Dim eps As Double = System.Math.Pow(2.0, -52.0)
+                Dim tol As Double = System.Math.Max(m, n) * m_s(0) * eps
+                Dim r As Integer = 0
+                For i As Integer = 0 To m_s.Length - 1
+                    If m_s(i) > tol Then
+                        r += 1
+                    End If
+                Next
+                Return r
+            End Get
+        End Property
 #End Region
 
         ' A method called when serializing this class.

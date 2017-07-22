@@ -1106,5 +1106,13 @@ Namespace Matrix
         ''' <param name="context"></param>
         Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
         End Sub
+
+        Public Shared Widening Operator CType(data#(,)) As GeneralMatrix
+            Return New GeneralMatrix(data.RowIterator.ToArray)
+        End Operator
+
+        Public Shared Widening Operator CType(data#()()) As GeneralMatrix
+            Return New GeneralMatrix(data)
+        End Operator
     End Class
 End Namespace

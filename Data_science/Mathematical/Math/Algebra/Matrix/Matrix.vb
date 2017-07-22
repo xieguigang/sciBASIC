@@ -95,6 +95,12 @@ Namespace LinearAlgebra
         Protected Friend Sub New()
         End Sub
 
+        Sub New(data As Double()())
+            M = data.Length
+            N = data(Scan0).Length
+            X = data.ToMatrix
+        End Sub
+
         Public Shared Widening Operator CType(array As Double(,)) As Matrix
             Return New Matrix With {
                 .X = array,
