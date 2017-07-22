@@ -195,43 +195,7 @@ Namespace PCA
         End Property
 
         Public Function covarianceMatrix() As GeneralMatrix
-            Return covarianceMatrix(matrixData)
-        End Function
-
-        ''' <summary>
-        ''' Constructs the covariance matrix for this data set.
-        ''' @return	the covariance matrix of this data set
-        ''' </summary>
-        Public Shared Function covarianceMatrix(matrixData As GeneralMatrix) As GeneralMatrix
-            'ORIGINAL LINE: double[][] @out = new double[matrix.Length][matrix.Length];
-            Dim out As Double()() = MAT(Of Double)(matrixData.Length, matrixData.Length)
-            For i As Integer = 0 To out.Length - 1
-                For j As Integer = 0 To out.Length - 1
-                    Dim dataA As Double() = matrixData.Array(i)
-                    Dim dataB As Double() = matrixData.Array(j)
-                    out(i)(j) = covariance(dataA, dataB)
-                Next
-            Next
-            Return out
-        End Function
-
-        ''' <summary>
-        ''' Returns the covariance of two data vectors. </summary>
-        ''' <param name="a">	double[] of data </param>
-        ''' <param name="b">	double[] of data
-        ''' @return	the covariance of a and b, cov(a,b) </param>
-        Friend Shared Function covariance(a As Double(), b As Double()) As Double
-            If a.Length <> b.Length Then
-                Throw New MatrixException("Cannot take covariance of different dimension vectors.")
-            End If
-            Dim divisor As Double = a.Length - 1
-            Dim sum As Double = 0
-            Dim aMean As Double = a.Average
-            Dim bMean As Double = b.Average
-            For i As Integer = 0 To a.Length - 1
-                sum += (a(i) - aMean) * (b(i) - bMean)
-            Next
-            Return sum / divisor
+            Return Microsoft.VisualBasic.Math.Matrix.Covariance(matrixData)
         End Function
     End Class
 End Namespace

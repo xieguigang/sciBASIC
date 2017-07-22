@@ -28,6 +28,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
 Imports Microsoft.VisualBasic.Text
 
 Namespace Matrix
@@ -74,7 +75,7 @@ Namespace Matrix
         <Extension> Public Function CenterNormalize(m As GeneralMatrix) As GeneralMatrix
             'ORIGINAL LINE: double[][] @out = new double[input.Length][input[0].Length];
             Dim input = m.Array
-            Dim out As Double()() = MAT(Of Double)(Input.Length, Input(0).Length)
+            Dim out As Double()() = MAT(Of Double)(input.Length, input(0).Length)
 
             For i As Integer = 0 To input.Length - 1
                 Dim meanValue As Double = input(i).Average
@@ -83,6 +84,23 @@ Namespace Matrix
                 Next
             Next
 
+            Return out
+        End Function
+
+        ''' <summary>
+        ''' Constructs the covariance matrix for this data set.
+        ''' @return	the covariance matrix of this data set
+        ''' </summary>
+        <Extension> Public Function Covariance(matrix As GeneralMatrix) As GeneralMatrix
+            'ORIGINAL LINE: double[][] @out = new double[matrix.Length][matrix.Length];
+            Dim out As Double()() = MAT(Of Double)(matrix.Length, matrix.Length)
+            For i As Integer = 0 To out.Length - 1
+                For j As Integer = 0 To out.Length - 1
+                    Dim dataA As Double() = matrix.Array(i)
+                    Dim dataB As Double() = matrix.Array(j)
+                    out(i)(j) = dataA.Covariance(dataB)
+                Next
+            Next
             Return out
         End Function
 

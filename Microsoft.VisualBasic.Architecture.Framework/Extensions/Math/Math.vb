@@ -1467,6 +1467,28 @@ Namespace Math
 #End Region
 
         ''' <summary>
+        ''' Returns the covariance of two data vectors. </summary>
+        ''' <param name="a">	double[] of data </param>
+        ''' <param name="b">	double[] of data
+        ''' @return	the covariance of a and b, cov(a,b) </param>
+        Public Function Covariance(a As Double(), b As Double()) As Double
+            If a.Length <> b.Length Then
+                Throw New ArgumentException("Cannot take covariance of different dimension vectors.")
+            End If
+
+            Dim divisor As Double = a.Length - 1
+            Dim sum As Double = 0
+            Dim aMean As Double = a.Average
+            Dim bMean As Double = b.Average
+
+            For i As Integer = 0 To a.Length - 1
+                sum += (a(i) - aMean) * (b(i) - bMean)
+            Next
+
+            Return sum / divisor
+        End Function
+
+        ''' <summary>
         ''' 请注意,<paramref name="data"/>的元素数量必须要和<paramref name="weights"/>的长度相等
         ''' </summary>
         ''' <param name="data"></param>

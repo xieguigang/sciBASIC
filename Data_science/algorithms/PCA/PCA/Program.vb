@@ -9,7 +9,7 @@ Module Program
         ' Call Matrix.Test()
         Dim input As GeneralMatrix = File.Load("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\flower.csv").AsMatrix
         Dim B As GeneralMatrix = input.Transpose.CenterNormalize
-        Dim C = DataMining.PCA.Data.covarianceMatrix(B)
+        Dim C = B.Covariance
         Dim SVD = C.SVD
 
         '  Call B.Print
