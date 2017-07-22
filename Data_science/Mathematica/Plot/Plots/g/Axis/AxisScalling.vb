@@ -35,79 +35,163 @@ Namespace Graphic.Axis
 
     Public Module AxisScalling
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="max#"></param>
+        ''' <param name="parts%"></param>
+        ''' <param name="min#"></param>
+        ''' <param name="absoluteScalling">
+        ''' 这个主要是相对于<paramref name="min"/>的计算而言的，当这个不为真的视乎，scalling函数会将较小的min值直接设置为0，反之不会
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' + 0-10
+        ''' + 0-100
+        ''' + 0-1000
+        ''' + 0-1E30
+        ''' + 0-1E-30
+        ''' + 0-1
+        ''' + 0-0.1
+        ''' </remarks>
+        Public Function GetAxisValues(max#, Optional parts% = 10, Optional min# = 0R, Optional t# = 5 / 6, Optional decimal% = -1, Optional absoluteScalling As Boolean = False) As Double()
+            Dim vmax# = __max(max, min)
+            Dim vmin#
+
+            If min < 0 Then
+                vmin = -__max(Math.Abs(min), 0)
+            Else
+                vmin = If(min < t * max, If(absoluteScalling, min, 0), min - (max - min) / 20)
+            End If
+
+            Dim d = __fix(vmax, True) - __fix(vmin, False)
+            Dim p = Math.Round(Math.Log10(d), 0)
+            Dim tick# = 2 * ((10 ^ p) / parts)
+            Dim out As List(Of Double) = GetAxisByTick(vmax, tick, vmin)
+
+            If out(-2) > max Then
+                Call out.RemoveLast
+            End If
+
+            If 0 <= [decimal] Then
+                out = New List(Of Double)(out.Select(Function(x) Math.Round(x, [decimal])))
+            End If
+
+            Return out.ToArray
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="max#">必须始终是正数</param>
+        ''' <param name="min#"></param>
+        ''' <returns></returns>
+        Private Function __max(max#, min#) As Double
+            'Dim p% = Fix(Math.Log10(max)) ' max.ToString.Split("."c).First.Length - 1
+            'Dim value#
+            'Dim upbound% = (CInt(Val(CStr(max.ToString.First)) + 1)) * 10 ^ p
+
+            'If max < upbound Then
+            '    value = upbound
+            'Else
+            '    value = max + (max - min) / 20
+            'End If
+
+            'Return value
+            Return max + (max - min) / 20
+        End Function
+
+        Private Function __fix(ByRef n#, enlarge As Boolean) As Double
+            If n = 0R Then
+                Return n
+            End If
+
+            'If enlarge Then
+            '    If n > 0 Then
+            '        n += 1
+            '    End If
+            'Else
+            '    If n < 0 Then
+            '        n -= 1
+            '    End If
+            'End If
+
+            Dim p% = Math.Round(Math.Log10(Math.Abs(n)), 0) ' Fix(Math.Log10(Math.Abs(n))) ' Math.Round(Math.Log10(Math.Abs(n)), 0)
+            Dim d = 10 ^ (p - 1)
+            Dim v#
+            Dim s = Math.Sign(n)
+            Dim l% = CInt(Val(Math.Abs(n).ToString.First))
+
+            If Not enlarge Then
+                p = 10 ^ (p - 1)
+            Else
+                p = 10 ^ p
+            End If
+
+            p *= l
+
+            For i As Double = 0 To 10 Step 0.5
+                v = s * p + s * i * d
+
+                If enlarge Then
+                    If n <= v Then
+                        n = v
+                        Exit For
+                    End If
+                Else
+                    If (n > 0 AndAlso n <= v) OrElse (n < 0 AndAlso n > v) Then
+                        n = v
+
+                        'If enlarge Then
+                        '    ' 由于v已经是比原先的数要大的值，所以在这里可以直接跳过了
+                        '    Exit For
+                        'End If
+
+                        n -= 0.5 * d
+
+                        Exit For
+                    End If
+                End If
+            Next
+
+            Return n
+        End Function
+
+        <Extension>
+        Public Function GetAxisValues(range As DoubleRange, Optional parts% = 10, Optional absoluteScalling As Boolean = False) As Double()
+            Return GetAxisValues(range.Max, parts, range.Min, absoluteScalling:=absoluteScalling)
+        End Function
+
         <Extension>
         Public Function GetAxisByTick(range As DoubleRange, tick#) As Double()
-            Dim list As New List(Of Double)
-            Dim pos# = range.Min
-
-            Do While pos < range.Max
-                pos += tick
-                list += pos
-            Loop
-
-            If list.Last > range.Max Then
-                list.RemoveLast
-            End If
-
-            Return list
+            Return GetAxisByTick(range.Max, tick, range.Min).ToArray
         End Function
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="range"></param>
-        ''' <param name="absoluteScale">range的最大值和最小值在这个参数为True的时候不会自动浮动，假若为False则会根据情况进行相对的浮动</param>
-        ''' <param name="n%"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function GetAxisValues(range As DoubleRange, Optional absoluteScale As Boolean = False, Optional n% = 10) As Double()
-            Dim tick# = New AxisAssists(range.Length, mostticks:=n).Tick
-            Return range.GetAxisByTick(tick)
+        Public Function GetAxisByTick(max#, tick#, Optional min# = 0R) As List(Of Double)
+            Dim l As New List(Of Double)
+            Dim i# = min
+
+            If tick = 0# Then
+                Throw New InvalidExpressionException($"Tick can not be ZERO! min={min}, max={max}")
+            End If
+
+            Try
+                Do While i < max
+                    l.Add(i)
+                    i += tick
+                Loop
+
+                Call l.Add(i)
+            Catch ex As Exception
+                Dim debug As New Dictionary(Of String, Double) From {
+                    {NameOf(min), min},
+                    {NameOf(max), max},
+                    {NameOf(tick), tick}
+                }
+                Throw New Exception(debug.GetJson, ex)
+            End Try
+
+            Return l
         End Function
     End Module
-
-    ''' <summary>
-    ''' https://stackoverflow.com/questions/361681/algorithm-for-nice-grid-line-intervals-on-a-graph
-    ''' </summary>
-    Public Class AxisAssists
-
-        Public Property Tick() As Double
-
-        Public Sub New(aTick As Double)
-            Tick = aTick
-        End Sub
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="range">最大值减去最小值</param>
-        ''' <param name="mostticks">Tick的个数</param>
-        Public Sub New(range#, Optional mostticks% = 10)
-            Dim minimum = range / mostticks
-            Dim magnitude = Math.Pow(10.0, (Math.Floor(Math.Log(minimum) / Math.Log(10))))
-            Dim residual = minimum / magnitude
-
-            If residual > 5 Then
-                Tick = 10 * magnitude
-            ElseIf residual > 2 Then
-                Tick = 5 * magnitude
-            ElseIf residual > 1 Then
-                Tick = 2 * magnitude
-            Else
-                Tick = magnitude
-            End If
-        End Sub
-
-        Public Function GetClosestTickBelow(v As Double) As Double
-            Return Tick * Math.Floor(v / Tick)
-        End Function
-
-        Public Function GetClosestTickAbove(v As Double) As Double
-            Return Tick * Math.Ceiling(v / Tick)
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return Tick
-        End Function
-    End Class
 End Namespace
