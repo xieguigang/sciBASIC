@@ -336,7 +336,7 @@ Namespace Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Default Public Overloads Property Value(i As Integer, j As Integer) As Double
+        Default Public Shadows Property value(i As Integer, j As Integer) As Double
             Get
                 Return buffer(i)(j)
             End Get
@@ -345,7 +345,7 @@ Namespace Matrix
             End Set
         End Property
 
-        Default Public Overloads ReadOnly Property value(indices As IEnumerable(Of Integer)) As GeneralMatrix
+        Default Public Shadows ReadOnly Property value(indices As IEnumerable(Of Integer)) As GeneralMatrix
             Get
                 Dim index = indices.ToArray
                 Dim subMatrix = buffer.Select(Function(x) index.Select(Function(i) x(i)).ToArray).ToArray
