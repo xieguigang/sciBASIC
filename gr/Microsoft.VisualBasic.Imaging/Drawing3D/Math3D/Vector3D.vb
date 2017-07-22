@@ -95,12 +95,6 @@ Namespace Drawing3D.Math3D
             End With
         End Sub
 
-        Public Sub Add(p3D As Point3D)
-            Call X.Add(p3D.X)
-            Call Y.Add(p3D.Y)
-            Call Z.Add(p3D.Z)
-        End Sub
-
         ''' <summary>
         ''' 
         ''' </summary>

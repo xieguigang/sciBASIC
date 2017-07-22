@@ -12,13 +12,6 @@ Namespace Language
 
         Protected buffer As T()
 
-        Public Sub New()
-        End Sub
-
-        Sub New(data As IEnumerable(Of T))
-            buffer = data.ToArray
-        End Sub
-
         Public ReadOnly Property Length As Integer
             Get
                 Return buffer.Length
@@ -92,34 +85,46 @@ Namespace Language
         ''' <returns></returns>
         Default Public Overloads Property Item(address As IAddress(Of Integer)) As T
             Get
-                Return Item(address.Address)
+                Return buffer(address.Address)
             End Get
             Set(value As T)
-                Item(address.Address) = value
+                buffer(address.Address) = value
             End Set
         End Property
 
-        ''' <summary>
-        ''' Can accept negative number as the index value, negative value means ``<see cref="Count"/> - n``, 
-        ''' example as ``list(-1)``: means the last element in this list: ``list(list.Count -1)``
-        ''' </summary>
-        ''' <param name="index%"></param>
-        ''' <returns></returns>
+#Region "2017-7-22 -1索引好像对向量的意义不大，而且会降低代码性能，所以在这里去除了这个索引属性"
+
+        '''' <summary>
+        '''' Can accept negative number as the index value, negative value means ``<see cref="Count"/> - n``, 
+        '''' example as ``list(-1)``: means the last element in this list: ``list(list.Count -1)``
+        '''' </summary>
+        '''' <param name="index%"></param>
+        '''' <returns></returns>
+        'Default Public Overloads Property Item(index%) As T
+        '    Get
+        '        If index < 0 Then
+        '            index = Count + index  ' -1 -> count -1
+        '        End If
+        '        Return buffer(index)
+        '    End Get
+        '    Set(value As T)
+        '        If index < 0 Then
+        '            index = Count + index  ' -1 -> count -1
+        '        End If
+
+        '        buffer(index) = value
+        '    End Set
+        'End Property
+
         Default Public Overloads Property Item(index%) As T
             Get
-                If index < 0 Then
-                    index = Count + index  ' -1 -> count -1
-                End If
                 Return buffer(index)
             End Get
             Set(value As T)
-                If index < 0 Then
-                    index = Count + index  ' -1 -> count -1
-                End If
-
                 buffer(index) = value
             End Set
         End Property
+#End Region
 
         ''' <summary>
         ''' Using a index vector expression to select/update many elements from this list collection.
@@ -137,14 +142,14 @@ Namespace Language
                 Dim list As New List(Of T)
 
                 For Each i% In exp.TranslateIndex
-                    list += Item(index:=i)
+                    list += buffer(i)
                 Next
 
                 Return list
             End Get
             Set(value As List(Of T))
                 For Each i As SeqValue(Of Integer) In exp.TranslateIndex.SeqIterator
-                    Item(index:=+i) = value(i.i)
+                    buffer(+i) = value(i.i)
                 Next
             End Set
         End Property
@@ -157,18 +162,18 @@ Namespace Language
                 Dim indices As Integer() = range.ToArray
 
                 For i As Integer = 0 To indices.Length - 1
-                    Item(index:=indices(i)) = value(i)
+                    buffer(indices(i)) = value(i)
                 Next
             End Set
         End Property
 
         Default Public Overloads Property Item(indices As IEnumerable(Of Integer)) As List(Of T)
             Get
-                Return New List(Of T)(indices.Select(Function(i) Item(index:=i)))
+                Return New List(Of T)(indices.Select(Function(i) buffer(i)))
             End Get
             Set(value As List(Of T))
                 For Each i As SeqValue(Of Integer) In indices.SeqIterator
-                    Item(index:=+i) = value(i.i)
+                    buffer(+i) = value(i.i)
                 Next
             End Set
         End Property
@@ -196,6 +201,19 @@ Namespace Language
                 Next
             End Set
         End Property
+#End Region
+
+#Region "Constructor"
+        Public Sub New()
+        End Sub
+
+        Sub New(capacity%)
+            buffer = New T(capacity - 1) {}
+        End Sub
+
+        Sub New(data As IEnumerable(Of T))
+            buffer = data.ToArray
+        End Sub
 #End Region
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
