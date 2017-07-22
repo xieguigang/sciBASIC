@@ -1,12 +1,27 @@
 Namespace PCA
 
     ''' <summary>
+    ''' Performs principal component analysis on a set of data and returns the resulting data set. The
+    ''' QR algorithm is used to find the eigenvalues and orthonormal eigenvectors of the covariance
+    ''' matrix of the data set. The eigenvectors corresponding to the largest eigenvalues are the
+    ''' principal components. The data file should be in the same directory as the PCA.class file.
+    ''' All numbers should be tab-delimited. The first line of the data should be two numbers: the 
+    ''' number of rows R followed by the number of columns C. After that, there should be R lines of 
+    ''' C tab-delimited values. The columns would most likely represent the dimensions of measure; the
+    ''' rows would each represent a single data point.
+    ''' @author	Kushal Ranjan
+    ''' @version	051513
+    ''' </summary>
+    ''' <remarks>https://github.com/kranjan94/Principal-Component-Analysis</remarks>
+
+    ''' <summary>
     ''' Holds the information of a data set. Each row contains a single data point. Primary computations
     ''' of PCA are performed by the Data object.
     ''' @author	Kushal Ranjan
     ''' @version	051313
     ''' </summary>
     Friend Class Data
+
         Friend matrixData As Double()()
         'matrix[i] is the ith row; matrix[i][j] is the ith row, jth column
         ''' <summary>
@@ -59,7 +74,9 @@ Namespace PCA
         ''' <summary>
         ''' PCA implemented using the NIPALS algorithm. The return value is a double[][], where each
         ''' double[] j is an array of the scores of the jth data point corresponding to the desired
-        ''' number of principal components. </summary>
+        ''' number of principal components. 
+        ''' (使用这个函数计算出PCA得分)
+        ''' </summary>
         ''' <param name="input">			input raw data array </param>
         ''' <param name="numComponents">	desired number of PCs
         ''' @return				the scores of the data array against the PCS </param>
@@ -123,7 +140,9 @@ Namespace PCA
         ''' </summary>
 
         ''' <summary>
-        ''' Performs principal component analysis with a specified number of principal components. </summary>
+        ''' Performs principal component analysis with a specified number of principal components. 
+        ''' (使用这个函数来进行PCA分析)
+        ''' </summary>
         ''' <param name="input">			input data; each double[] in input is an array of values of a single
         ''' 						variable for each data point </param>
         ''' <param name="numComponents">	number of components desired

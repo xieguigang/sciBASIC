@@ -258,7 +258,6 @@
     <Compile Include="NeuralNetwork\ActiveFunctions\ThresholdFunction.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\Synapse.vb" />
-    <Compile Include="PCA\PCA.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Statistics.vb" />
     <Compile Include="SVD.vb" />

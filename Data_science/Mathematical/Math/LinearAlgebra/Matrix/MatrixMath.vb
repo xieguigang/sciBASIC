@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports System.Math
 Imports sys = System.Math
 
 Namespace LinearAlgebra
@@ -761,14 +760,14 @@ Namespace LinearAlgebra
         ''' <param name="ret">化为上(Hessenberg)矩阵后的矩阵</param>
         ''' <returns>函数成功返回Ret的阶数</returns>
         ''' <remarks></remarks>
-        Public Function Hessenberg(A As MATRIX, n As Int16, ret As MATRIX) As Int16 '
+        Public Function Hessenberg(A As Matrix, n As Int16, ByRef ret As Matrix) As Int16 '
             Dim i As Int16
             Dim j As Int16
             Dim k As Int16
             Dim temp As Double
             Dim MaxNumber As Int16
             n -= 1
-            ret = New MATRIX(n, n) '   ReDim ret(n, n)
+            ret = New Matrix(n, n) '   ReDim ret(n, n)
             For k = 1 To n - 1
                 i = k - 1
                 MaxNumber = k

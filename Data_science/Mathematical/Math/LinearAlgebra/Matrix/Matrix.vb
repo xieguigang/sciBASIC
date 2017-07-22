@@ -74,6 +74,15 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        Default Public Property Value(index1 As Integer, index2 As Integer) As Double
+            Get
+                Return X(index1, index2)
+            End Get
+            Set(value As Double)
+                X(index1, index2) = value
+            End Set
+        End Property
+
         Public Sub New(m As Integer, n As Integer)
             Me.M = m
             Me.N = n
@@ -419,7 +428,7 @@ Namespace LinearAlgebra
         ''' <param name="x"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Or(A As Matrix, x As Vector) As Vector
+        Public Shared Operator *(A As Matrix, x As Vector) As Vector
             Dim m As Integer, n As Integer, p As Integer
             m = A.M
             n = A.N
@@ -471,31 +480,11 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Transpose() As Matrix
-            Dim m As Integer, n As Integer
-            m = Me.M
-            n = Me.N
-
-            Dim TA As New Matrix(n, m)
-            For i As Integer = 0 To n - 1
-                For j As Integer = 0 To m - 1
-                    TA.X(i, j) = X(j, i)
-                Next
-            Next
-
-            Return TA
+            Return Matrix.Transpose(Me)
         End Function
 
         Public Shared Narrowing Operator CType(MAT As Matrix) As Double(,)
             Return MAT.X
         End Operator
-
-        Default Public Property Value(index1 As Integer, index2 As Integer) As Double
-            Get
-                Return X(index1, index2)
-            End Get
-            Set(value As Double)
-                X(index1, index2) = value
-            End Set
-        End Property
     End Class
 End Namespace
