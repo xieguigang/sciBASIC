@@ -6,6 +6,10 @@ Imports Microsoft.VisualBasic.Math.Matrix
 Module Program
 
     Sub Main()
+        Matrix.fffff()
+        Matrix.Ei()
+        Call TestPCA_scores()
+
         ' Call Matrix.Test()
         Dim input As GeneralMatrix = File.Load("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\flower.csv").AsMatrix
         Dim PCA = DataMining.PCA.PrincipalComponentAnalysis(input, nPC:=2)
@@ -30,4 +34,13 @@ Module Program
 
     '    Pause()
     'End Sub
+
+    Sub TestPCA_scores()
+        Dim input As GeneralMatrix = File.Load("G:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\scores.csv").AsMatrix(True, True)
+        Dim PCA = DataMining.PCA.PrincipalComponentAnalysis(input, nPC:=2)
+
+        Call PCA.Print
+
+        Pause()
+    End Sub
 End Module

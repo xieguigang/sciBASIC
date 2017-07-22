@@ -129,7 +129,9 @@ Namespace PCA
             Dim B As GeneralMatrix = input.Transpose.CenterNormalize
             Dim C = B.Covariance
             Dim SVD = C.SVD
-            Dim M = SVD.V(Which.IsTrue(SVD.SingularValues.Top(nPC)))
+            Dim V = SVD.V
+            Dim S = SVD.SingularValues
+            Dim M = V(Which.IsTrue(S.Top(nPC)))
             Dim PCA = input * M
             Return PCA
         End Function

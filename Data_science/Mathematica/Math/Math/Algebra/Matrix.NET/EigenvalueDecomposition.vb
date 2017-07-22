@@ -69,7 +69,7 @@ Namespace Matrix
         ''' <summary>Array for internal storage of eigenvectors.
         ''' @serial internal storage of eigenvectors.
         ''' </summary>
-        Private V As Double()()
+        Private _V As Double()()
 
         ''' <summary>Array for internal storage of nonsymmetric Hessenberg form.
         ''' @serial internal storage of nonsymmetric Hessenberg form.
@@ -92,6 +92,7 @@ Namespace Matrix
             '  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
             '  Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             '  Fortran subroutine in EISPACK.
+            Dim V = _V
 
             For j As Integer = 0 To n - 1
                 m_d(j) = V(n - 1)(j)
@@ -206,6 +207,8 @@ Namespace Matrix
             '  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
             '  Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             '  Fortran subroutine in EISPACK.
+
+            Dim V = _V
 
             For i As Integer = 1 To n - 1
                 e(i - 1) = e(i)
@@ -326,6 +329,7 @@ Namespace Matrix
 
             Dim low As Integer = 0
             Dim high As Integer = n - 1
+            Dim V = _V
 
             For m As Integer = low + 1 To high - 1
 
@@ -440,6 +444,7 @@ Namespace Matrix
 
             ' Initialize
 
+            Dim V = _V
             Dim nn As Integer = Me.n
             Dim n As Integer = nn - 1
             Dim low As Integer = 0
@@ -882,12 +887,13 @@ Namespace Matrix
         Public Sub New(Arg As GeneralMatrix)
             Dim A As Double()() = Arg.Array
             n = Arg.ColumnDimension
-            V = New Double(n - 1)() {}
+            Dim V = New Double(n - 1)() {}
             For i As Integer = 0 To n - 1
                 V(i) = New Double(n - 1) {}
             Next
             m_d = New Double(n - 1) {}
             e = New Double(n - 1) {}
+            _V = V
 
             issymmetric = True
             Dim j As Integer = 0
@@ -931,6 +937,8 @@ Namespace Matrix
                 ' Reduce Hessenberg to real Schur form.
                 hqr2()
             End If
+
+            _V = V
         End Sub
 
 #End Region
@@ -944,6 +952,7 @@ Namespace Matrix
                 Return m_d
             End Get
         End Property
+
         ''' <summary>Return the imaginary parts of the eigenvalues</summary>
         ''' <returns>     imag(diag(D))
         ''' </returns>
@@ -952,6 +961,7 @@ Namespace Matrix
                 Return e
             End Get
         End Property
+
         ''' <summary>Return the block diagonal eigenvalue matrix</summary>
         ''' <returns>     D
         ''' </returns>
@@ -980,10 +990,11 @@ Namespace Matrix
         ''' <summary>Return the eigenvector matrix</summary>
         ''' <returns>     V
         ''' </returns>
-
-        Public Overridable Function GetV() As GeneralMatrix
-            Return New GeneralMatrix(V, n, n)
-        End Function
+        Public ReadOnly Property V() As GeneralMatrix
+            Get
+                Return New GeneralMatrix(_V, n, n)
+            End Get
+        End Property
 #End Region
 
         ' A method called when serializing this class.

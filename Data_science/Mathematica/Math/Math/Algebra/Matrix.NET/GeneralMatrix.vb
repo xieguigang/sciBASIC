@@ -28,6 +28,7 @@
 
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Matrix
 
@@ -272,6 +273,18 @@ Namespace Matrix
         Public Overridable ReadOnly Property ColumnDimension() As Integer
             Get
                 Return n
+            End Get
+        End Property
+
+        Public ReadOnly Property DiagonalVector As Vector
+            Get
+                Dim v As New List(Of Double)
+
+                For i As Integer = 0 To m - 1
+                    v += buffer(i)(i)
+                Next
+
+                Return New Vector(v)
             End Get
         End Property
 #End Region
