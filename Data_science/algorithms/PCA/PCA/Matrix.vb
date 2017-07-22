@@ -11,7 +11,7 @@ Module Matrix
             {5, 9, 5}
         }
 
-        Call test3(m)
+        '   Call test3(m)
 
         Dim result = m.SVD()
 
@@ -24,20 +24,20 @@ Module Matrix
         Pause()
     End Sub
 
-    Sub test3(m As GeneralMatrix)
-        Dim SVD As Double()()() = Microsoft.VisualBasic.DataMining.PCA.Matrix.singularValueDecomposition(m.Array)
-        Dim U As GeneralMatrix = SVD(0)
-        Dim S As GeneralMatrix = SVD(1)
-        Dim V As GeneralMatrix = SVD(2)
+    'Sub test3(m As GeneralMatrix)
+    '    Dim SVD As Double()()() = Microsoft.VisualBasic.DataMining.PCA.Matrix.singularValueDecomposition(m.Array)
+    '    Dim U As GeneralMatrix = SVD(0)
+    '    Dim S As GeneralMatrix = SVD(1)
+    '    Dim V As GeneralMatrix = SVD(2)
 
 
-        Call U.Print
-        Call Console.WriteLine()
-        Call V.Print
-        Call Console.WriteLine()
-        Call V.Print
+    '    Call U.Print
+    '    Call Console.WriteLine()
+    '    Call V.Print
+    '    Call Console.WriteLine()
+    '    Call V.Print
 
 
-        Pause()
-    End Sub
+    '    Pause()
+    'End Sub
 End Module
