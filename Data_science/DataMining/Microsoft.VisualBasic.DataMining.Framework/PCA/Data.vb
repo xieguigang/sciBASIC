@@ -74,7 +74,7 @@ Namespace PCA
         ''' <param name="input">			input raw data array </param>
         ''' <param name="numComponents">	desired number of PCs
         ''' @return				the scores of the data array against the PCS </param>
-        Friend Shared Function PCANIPALS(input As Double()(), numComponents As Integer) As Double()()
+        Public Shared Function PCANIPALS(input As Double()(), numComponents As Integer) As Double()()
             Dim data As New Data(input)
             data.matrixData = data.matrixData.CenterNormalize()
             Dim PCA As Double()()() = data.NIPALSAlg(numComponents)
