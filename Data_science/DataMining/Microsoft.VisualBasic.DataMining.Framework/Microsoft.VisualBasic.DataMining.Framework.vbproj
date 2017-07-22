@@ -217,6 +217,7 @@
     <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
     <Compile Include="ComponentModel\Class.vb" />
     <Compile Include="ComponentModel\Extensions.vb" />
+    <Compile Include="PCA\Data.vb" />
     <Compile Include="FuzzyCMeans\AlgorithmsUtils.vb" />
     <Compile Include="FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb" />
     <Compile Include="FuzzyCMeans\Algorithm\Utils.vb" />
@@ -245,6 +246,7 @@
     <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="Abundance.vb" />
+    <Compile Include="PCA\Matrix.vb" />
     <Compile Include="NeuralNetwork\TrainingUtils.vb" />
     <Compile Include="NeuralNetwork\Dataset.vb" />
     <Compile Include="NeuralNetwork\Helpers.vb" />
@@ -256,6 +258,7 @@
     <Compile Include="NeuralNetwork\ActiveFunctions\ThresholdFunction.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\Synapse.vb" />
+    <Compile Include="PCA\PCA.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Statistics.vb" />
     <Compile Include="SVD.vb" />

@@ -44,19 +44,17 @@ Friend Class Data
         Dim scores#()() = Data.PCANIPALS(data__1, 3)
         Matrix.print(scores)
 
-        Call Test()
-
         Pause()
     End Sub
 
-    ''' <summary>
-    ''' http://www.cnblogs.com/bigshuai/archive/2012/06/18/2553808.html
-    ''' </summary>
-    Private Shared Sub Test()
-        Dim data()() = {{-1, -1, 0.0, 2, 0}, {-2, 0R, 0, 1, 1}}.RowIterator.ToArray
-        Matrix.print(Global.PCA.Data.principalComponentAnalysis(data, 1))
-        Matrix.print({New Double() {-3 / Math.Sqrt(2), -1 / Math.Sqrt(2), 0, 3 / Math.Sqrt(2), -1 / Math.Sqrt(2)}})
-    End Sub
+    '''' <summary>
+    '''' http://www.cnblogs.com/bigshuai/archive/2012/06/18/2553808.html
+    '''' </summary>
+    'Private Shared Sub Test()
+    '    Dim data()() = {{-1, -1, 0.0, 2, 0}, {-2, 0R, 0, 1, 1}}.RowIterator.ToArray
+    '    Matrix.print(Global.PCA.Data.principalComponentAnalysis(data, 1))
+    '    Matrix.print({New Double() {-3 / Math.Sqrt(2), -1 / Math.Sqrt(2), 0, 3 / Math.Sqrt(2), -1 / Math.Sqrt(2)}})
+    'End Sub
 
     ''' <summary>
     ''' PCA implemented using the NIPALS algorithm. The return value is a double[][], where each
