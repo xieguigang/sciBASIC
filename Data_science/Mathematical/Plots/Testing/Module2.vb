@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Correlations.Correlations
+Imports Microsoft.VisualBasic.Math.Correlations.Correlations
 
 Module Module2
 

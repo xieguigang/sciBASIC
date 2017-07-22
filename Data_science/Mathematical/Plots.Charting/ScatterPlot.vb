@@ -30,7 +30,7 @@ Imports System.Windows.Forms.DataVisualization.Charting
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Logging
-Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Math.Calculus
 
 Public Class ScatterPlot
 

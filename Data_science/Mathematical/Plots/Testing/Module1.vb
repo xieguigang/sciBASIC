@@ -72,33 +72,33 @@ Module Module1
     End Sub
 
     Sub d3heatmap()
-        Dim func As Func(Of Double, Double, (Z#, Color#)) = Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)
+        '    Dim func As Func(Of Double, Double, (Z#, Color#)) = Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)
 
-        Call Plot3D.ScatterHeatmap.Plot(
-    func, "-3,3", "-3,3",
-    New Camera With {
-        .screen = New Size(3600, 2500),
-        .ViewDistance = -3.4,
-        .angleZ = 30,
-        .angleX = 30,
-        .angleY = -30,
-        .offset = New Point(0, -100)
-    }, bg:="transparent", showLegend:=False) _
-    .Save("./3d-heatmap.png")
+        '    Call Plot3D.ScatterHeatmap.Plot(
+        'func, "-3,3", "-3,3",
+        'New Camera With {
+        '    .screen = New Size(3600, 2500),
+        '    .ViewDistance = -3.4,
+        '    .angleZ = 30,
+        '    .angleX = 30,
+        '    .angleY = -30,
+        '    .offset = New Point(0, -100)
+        '}, bg:="transparent", showLegend:=False) _
+        '.Save("./3d-heatmap.png")
     End Sub
 
     Sub axisScallingTest()
-        Call AxisScalling.GetAxisByTick(1, 0.1,).FormatNumeric.GetJson.__DEBUG_ECHO
-        Call AxisScalling.GetAxisValues(1).FormatNumeric.GetJson.__DEBUG_ECHO
-        Call AxisScalling.GetAxisValues(10).FormatNumeric.GetJson.__DEBUG_ECHO
-        Call AxisScalling.GetAxisValues(100).FormatNumeric.GetJson.__DEBUG_ECHO
-        Call AxisScalling.GetAxisValues(1000).FormatNumeric.GetJson.__DEBUG_ECHO
-        Call AxisScalling.GetAxisValues(1.0E+30).FormatNumeric.GetJson.__DEBUG_ECHO
-        Call AxisScalling.GetAxisValues(1.0E-30).FormatNumeric.GetJson.__DEBUG_ECHO
-        Call AxisScalling.GetAxisValues(0.1).FormatNumeric.GetJson.__DEBUG_ECHO
-        Call AxisScalling.GetAxisValues(0.25).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisByTick(1, 0.1,).tos.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisValues(1).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisValues(10).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisValues(100).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisValues(1000).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisValues(1.0E+30).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisValues(1.0E-30).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisValues(0.1).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisValues(0.25).FormatNumeric.GetJson.__DEBUG_ECHO
 
-        Pause()
+        'Pause()
     End Sub
 
     Sub TestYlinePlot()
