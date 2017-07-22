@@ -73,7 +73,7 @@ Public Module PlotExtensions
                 Call clusters.Add(c)
             Next
         Else
-            clusters = ClusterDataSet(n, entityList)
+            clusters = entityList.ClusterDataSet(n)
         End If
 
         Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
@@ -86,7 +86,7 @@ Public Module PlotExtensions
             })
         Dim keysOrder As New List(Of String)
 
-        For Each cluster In ClusterDataSet(CInt(keys.Length / 5), keysEntity)
+        For Each cluster In keysEntity.ClusterDataSet(CInt(keys.Length / 5))
             For Each k In cluster
                 keysOrder += k.uid
             Next
