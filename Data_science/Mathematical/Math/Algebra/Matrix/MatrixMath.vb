@@ -344,10 +344,10 @@ Namespace LinearAlgebra
         ''' 矩阵求秩，函数执行成功返回秩的大小
         ''' </summary>
         ''' <param name="K">要求秩的矩阵</param>
-        ''' <param name="error_">误差控制参数</param>
+        ''' <param name="[error]">误差控制参数</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function GetRank(K As Matrix, error_ As Int16) As Int16
+        Public Function GetRank(K As Matrix, [error] As Int16) As Int16
             Dim n As Int16 = K.GetSize
             Dim m As Int16 = K.Length \ n
             Dim i As Int16 = 0
@@ -388,10 +388,10 @@ Namespace LinearAlgebra
                 Return 0
             End If
             Dim error0 As Double
-            If error_ = -1 Then
+            If [error] = -1 Then
                 error0 = System.Math.Pow(0.1, 10)
             Else
-                error0 = System.Math.Pow(0.1, error_)
+                error0 = System.Math.Pow(0.1, [error])
             End If
             i = 0
             While i <= m '保证误差可控制
@@ -580,12 +580,12 @@ Namespace LinearAlgebra
         ''' <param name="K11">要求特征值的方阵</param>
         ''' <param name="n">方阵K1的阶数</param>
         ''' <param name="LoopNumber">循环次数</param>
-        ''' <param name="Errro">误差控制变量</param>
+        ''' <param name="errors">误差控制变量</param>
         ''' <param name="Ret">返回的特征值,Ret是是n*2的数组,第一列是实数部分,第2列为虚数部分</param>
         ''' <param name="IsHess">K1是否已经是上Hessenberg矩阵</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function EigenValue(K11 As Matrix, n As Int16, LoopNumber As Int16, Errro As Int16, Ret As Matrix, IsHess As Boolean) As Boolean 'ret里是n*2的数组，第一列是实数部分，第2列为虚数部分
+        Public Function EigenValue(K11 As Matrix, n As Int16, LoopNumber As Int16, errors As Int16, Ret As Matrix, IsHess As Boolean) As Boolean 'ret里是n*2的数组，第一列是实数部分，第2列为虚数部分
             Dim i As Int16 = K11.Length / n
             If n * n <> K11.Length Then '只有方阵才有特征值
                 Return False
@@ -596,7 +596,7 @@ Namespace LinearAlgebra
             Dim m As Int16
             Dim A(0, 0) As Double
             Ret = New Matrix(n - 1, 1) ' ReDim Ret(n - 1, 1) 'u v
-            Dim erro As Double = sys.Pow(0.1, Errro)
+            Dim erro As Double = sys.Pow(0.1, errors)
             Dim b As Double
             Dim c As Double
             Dim d As Double
