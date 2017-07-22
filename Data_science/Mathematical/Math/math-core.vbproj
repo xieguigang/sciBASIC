@@ -226,7 +226,7 @@
     <Compile Include="HashMaps\JenkinsHash.vb" />
     <Compile Include="HashMaps\Unchecked.vb" />
     <Compile Include="LinearAlgebra\Vector\Extensions.vb" />
-    <Compile Include="Matrix.NET\Extensions.vb" />
+    <Compile Include="LinearAlgebra\Matrix.NET\Extensions.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\Func.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncCaller.vb" />
@@ -283,21 +283,21 @@
     <Compile Include="FuzzyLogic\Models\LDM.vb" />
     <Compile Include="FuzzyLogic\Models\ModelAPI.vb" />
     <Compile Include="Scripting\Logical\TokenIcer.vb" />
-    <Compile Include="LP\Data\Equation.vb" />
-    <Compile Include="LP\Data\Solver.vb" />
-    <Compile Include="LP\Data\ObjectiveFunction.vb" />
-    <Compile Include="LP\Exceptions.vb" />
-    <Compile Include="LP\Data\InputReader.vb" />
-    <Compile Include="LP\LinearSolver.vb" />
-    <Compile Include="LP\Objective.vb" />
-    <Compile Include="LP\OptimizationType.vb" />
-    <Compile Include="LP\Tableau.vb" />
-    <Compile Include="Matrix.NET\CholeskyDecomposition.vb" />
-    <Compile Include="Matrix.NET\EigenvalueDecomposition.vb" />
-    <Compile Include="Matrix.NET\GeneralMatrix.vb" />
-    <Compile Include="Matrix.NET\LUDecomposition.vb" />
-    <Compile Include="Matrix.NET\QRDecomposition.vb" />
-    <Compile Include="Matrix.NET\SingularValueDecomposition.vb" />
+    <Compile Include="LinearAlgebra\LP\Data\Equation.vb" />
+    <Compile Include="LinearAlgebra\LP\Data\Solver.vb" />
+    <Compile Include="LinearAlgebra\LP\Data\ObjectiveFunction.vb" />
+    <Compile Include="LinearAlgebra\LP\Exceptions.vb" />
+    <Compile Include="LinearAlgebra\LP\Data\InputReader.vb" />
+    <Compile Include="LinearAlgebra\LP\LinearSolver.vb" />
+    <Compile Include="LinearAlgebra\LP\Objective.vb" />
+    <Compile Include="LinearAlgebra\LP\OptimizationType.vb" />
+    <Compile Include="LinearAlgebra\LP\Tableau.vb" />
+    <Compile Include="LinearAlgebra\Matrix.NET\CholeskyDecomposition.vb" />
+    <Compile Include="LinearAlgebra\Matrix.NET\EigenvalueDecomposition.vb" />
+    <Compile Include="LinearAlgebra\Matrix.NET\GeneralMatrix.vb" />
+    <Compile Include="LinearAlgebra\Matrix.NET\LUDecomposition.vb" />
+    <Compile Include="LinearAlgebra\Matrix.NET\QRDecomposition.vb" />
+    <Compile Include="LinearAlgebra\Matrix.NET\SingularValueDecomposition.vb" />
     <Compile Include="Quantile\Extensions.vb" />
     <Compile Include="Quantile\X.vb" />
     <Compile Include="Quantile\Quantile.vb" />
@@ -338,7 +338,7 @@
   <ItemGroup>
     <None Include="Expression_Evaluate.sequencediagram" />
     <None Include="FuzzyLogic\README.md" />
-    <None Include="LP\README.md" />
+    <None Include="LinearAlgebra\LP\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
