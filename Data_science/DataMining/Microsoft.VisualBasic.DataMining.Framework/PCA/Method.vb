@@ -1,3 +1,4 @@
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
 
@@ -121,7 +122,7 @@ Namespace PCA
         ''' variable for each data point </param>
         ''' <param name="nPC">number of components desired
         ''' @return	the transformed data set</param>
-        Public Function PrincipalComponentAnalysis(input As GeneralMatrix, nPC As Integer) As GeneralMatrix
+        <Extension> Public Function PrincipalComponentAnalysis(input As GeneralMatrix, nPC As Integer) As GeneralMatrix
             Dim B As GeneralMatrix = input.Transpose.CenterNormalize
             Dim C = B.Covariance
             Dim SVD = C.SVD

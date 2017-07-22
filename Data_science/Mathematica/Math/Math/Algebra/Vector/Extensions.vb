@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
@@ -34,6 +35,12 @@ Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Namespace LinearAlgebra
 
     Public Module Extensions
+
+        Public Iterator Function Points(x As Vector, y As Vector) As IEnumerable(Of PointF)
+            For i As Integer = 0 To x.Length - 1
+                Yield New PointF(x(i), y(i))
+            Next
+        End Function
 
         <Extension> Public Function Top(vector As Vector, n%) As BooleanVector
             Dim desc = vector.OrderByDescending(Function(x) x).Take(n).AsList

@@ -28,12 +28,18 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
 Imports Microsoft.VisualBasic.Text
 
 Namespace Matrix
 
     Public Module Extensions
+
+        <Extension>
+        Public Function ColumnVector(matrix As GeneralMatrix, i%) As Vector
+            Return New Vector(matrix({i}).Select(Function(r) r(Scan0)))
+        End Function
 
         Public Function size(M As GeneralMatrix, d%) As Integer
             If d = 1 Then
