@@ -6,21 +6,28 @@ Imports Microsoft.VisualBasic.DataMining.PCA
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module PCAPlot
 
-    <Extension> Public Function PC2(input As GeneralMatrix, sampleGroup%, Optional labels$() = Nothing, Optional colorSchema$ = "Set1:c12") As GraphicsData
+    <Extension> Public Function PC2(input As GeneralMatrix,
+                                    sampleGroup%,
+                                    Optional labels$() = Nothing,
+                                    Optional size$ = "2000,1800",
+                                    Optional colorSchema$ = "Set1:c8") As GraphicsData
+
         Dim result = input.PrincipalComponentAnalysis(nPC:=2)  ' x,y
         Dim x As Vector = result.ColumnVector(0)
         Dim y As Vector = result.ColumnVector(1)
         Dim getlabel As Func(Of Integer, String)
 
         If labels.IsNullOrEmpty Then
-            getlabel = Function(i) "#" & i.FormatZero()
+            getlabel = Function(i) "#" & (i + 1).FormatZero()
         Else
             getlabel = Function(i) labels(i)
         End If
@@ -62,11 +69,16 @@ Public Module PCAPlot
             Dim s As New SerialData With {
                 .color = Color.Black,
                 .PointSize = 5,
-                .title = "Cluster #" & group.i,
+                .title = "Cluster #" & (group.i + 1),
                 .pts = points
             }
+
+            serials += s
         Next
 
-        Return Bubble.Plot(serials)
+        Dim dx = x.Max - x.Min
+        Dim xaxis = $"({x.Min - dx / 5},{x.Max + dx / 5}),n=10"
+
+        Return Bubble.Plot(serials, size.SizeParser, xAxis:=xaxis, strokeColorAsMainColor:=True)
     End Function
 End Module

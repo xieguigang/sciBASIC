@@ -46,6 +46,7 @@ Public Module Bubble
     ''' <param name="size"></param>
     ''' <param name="bg"></param>
     ''' <param name="legend"></param>
+    ''' <param name="xAxis"><see cref="AxisProvider"/></param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(data As IEnumerable(Of SerialData),
@@ -61,7 +62,8 @@ Public Module Bubble
                          Optional xlabel$ = "",
                          Optional ylabel$ = "",
                          Optional axisLabelFontCSS$ = CSSFont.Win7LargeBold,
-                         Optional tagFontCSS$ = CSSFont.Win10Normal) As GraphicsData
+                         Optional tagFontCSS$ = CSSFont.Win10Normal,
+                         Optional strokeColorAsMainColor As Boolean = False) As GraphicsData
 
         Dim margin As Padding = padding
         Dim tagLabelFont As Font = CSSFont.TryParse(tagFontCSS).GDIObject
@@ -97,13 +99,22 @@ Public Module Bubble
 
                 For Each s As SerialData In mapper.ForEach(size, margin)
                     Dim b As SolidBrush = Nothing
+                    Dim getRadius = Function(pt As PointData)
+                                        Dim r# = scale(pt.value)
+
+                                        If r = 0R Then
+                                            Return s.PointSize
+                                        Else
+                                            Return r
+                                        End If
+                                    End Function
 
                     If Not (s.color.IsEmpty) Then
                         b = New SolidBrush(s.color)
                     End If
 
                     For Each pt As PointData In s
-                        Dim r As Double = scale(pt.value)
+                        Dim r As Double = getRadius(pt)
                         Dim p As New Point(CInt(pt.pt.X - r), CInt(pt.pt.Y - r))
                         Dim rect As New Rectangle(p, New Size(r * 2, r * 2))
 
@@ -115,8 +126,13 @@ Public Module Bubble
                             End If
                         End With
 
-                        If Not bubblePen Is Nothing Then
-                            Call g.DrawCircle(pt.pt, r, bubblePen, fill:=False)
+                        If pt.stroke.StringEmpty Then
+                            If Not bubblePen Is Nothing Then
+                                Call g.DrawCircle(pt.pt, r, bubblePen, fill:=False)
+                            End If
+                        Else
+                            Dim pen As Pen = Stroke.TryParse(pt.stroke).GDIObject
+                            Call g.DrawCircle(pt.pt, r, pen, fill:=False)
                         End If
 
                         If Not pt.Tag.StringEmpty Then
@@ -132,8 +148,12 @@ Public Module Bubble
  _
                         From x As SerialData
                         In array
+                        Let color As String = If(
+                            strokeColorAsMainColor,
+                            Stroke.TryParse(x.pts.First.stroke).fill,
+                            x.color.RGBExpression)
                         Select New Legend With {
-                            .color = x.color.RGBExpression,
+                            .color = color,
                             .fontstyle = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 20),
                             .style = LegendStyles.Circle,
                             .title = x.title

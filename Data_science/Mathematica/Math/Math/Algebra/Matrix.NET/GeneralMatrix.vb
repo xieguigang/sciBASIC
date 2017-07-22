@@ -1093,6 +1093,10 @@ Namespace Matrix
             Return Me.Copy()
         End Function
 
+        Public Overrides Function ToString() As String
+            Return $"[Row:{RowDimension}, Column:{ColumnDimension}]"
+        End Function
+
         ''' <summary>
         ''' A method called when serializing this class
         ''' </summary>
