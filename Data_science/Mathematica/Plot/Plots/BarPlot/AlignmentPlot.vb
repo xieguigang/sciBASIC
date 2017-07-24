@@ -29,7 +29,6 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
@@ -120,7 +119,9 @@ Namespace BarPlot
         End Structure
 
         ''' <summary>
-        ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形
+        ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形，由于绘制的时候是分别对<paramref name="query"/>和<paramref name="subject"/>
+        ''' 信号数据使用For循环进行绘图的，所以数组最后一个位置的元素会在最上层
+        ''' 并且绘制图例的时候，使用的是最上层的信号的颜色
         ''' </summary>
         ''' <param name="query">The query signals</param>
         ''' <param name="subject">The subject signal values</param>
@@ -242,56 +243,70 @@ Namespace BarPlot
                         Call g.DrawString(xlab, labelFont, Brushes.Black, New Point(.Right - fWidth, ymid + 2))
 
                         Dim left!
-                        Dim ba As New SolidBrush(cla.TranslateColor)
-                        Dim bb As New SolidBrush(clb.TranslateColor)
+                        'Dim ba As New SolidBrush(cla.TranslateColor)
+                        'Dim bb As New SolidBrush(clb.TranslateColor)
                         Dim xCSSFont As Font = CSSFont.TryParse(X_CSS).GDIObject
                         Dim xsz As SizeF
                         Dim xpos As PointF
                         Dim xlabel$
 
 #Region "绘制柱状图"
-                        For Each o In query
-                            y = o.value
-                            y = ymid - yscale(y)
-                            left = region.Padding.Left + xscale(o.X)
-                            rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
-                            g.FillRectangle(ba, rect)
+                        For Each part In query
+                            Dim ba As New SolidBrush(part.Color.TranslateColor)
+
+                            For Each o As (x#, value#) In part.signals
+                                y = o.value
+                                y = ymid - yscale(y)
+                                left = region.Padding.Left + xscale(o.x)
+                                rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
+                                g.FillRectangle(ba, rect)
+                            Next
                         Next
-                        For Each o In subject
-                            y = o.value
-                            y = ymid + yscale(y)
-                            left = region.Padding.Left + xscale(o.X)
-                            rect = Rectangle(ymid, left, left + bw, y)
-                            g.FillRectangle(bb, rect)
+
+                        For Each part In subject
+                            Dim bb As New SolidBrush(part.Color.TranslateColor)
+
+                            For Each o As (x#, value#) In part.signals
+                                y = o.value
+                                y = ymid + yscale(y)
+                                left = region.Padding.Left + xscale(o.x)
+                                rect = Rectangle(ymid, left, left + bw, y)
+                                g.FillRectangle(bb, rect)
+                            Next
                         Next
 #End Region
                         ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
 #Region "绘制横坐标轴"
-                        For Each o In query
-                            y = o.value
-                            y = ymid - yscale(y)
-                            left = region.Padding.Left + xscale(o.X)
-                            rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
+                        For Each part In query
+                            For Each o As (x#, value#) In part.signals
+                                y = o.value
+                                y = ymid - yscale(y)
+                                left = region.Padding.Left + xscale(o.x)
+                                rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
 
-                            If displayX AndAlso o.value / yLength >= labelPlotStrength Then
-                                xlabel = o.X.ToString("F2")
-                                xsz = g.MeasureString(xlabel, xCSSFont)
-                                xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
-                                g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
-                            End If
+                                If displayX AndAlso o.value / yLength >= labelPlotStrength Then
+                                    xlabel = o.x.ToString("F2")
+                                    xsz = g.MeasureString(xlabel, xCSSFont)
+                                    xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
+                                    g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                                End If
+                            Next
                         Next
-                        For Each o In subject
-                            y = o.value
-                            y = ymid + yscale(y)
-                            left = region.Padding.Left + xscale(o.X)
-                            rect = Rectangle(ymid, left, left + bw, y)
 
-                            If displayX AndAlso o.value / yLength >= labelPlotStrength Then
-                                xlabel = o.X.ToString("F2")
-                                xsz = g.MeasureString(xlabel, xCSSFont)
-                                xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
-                                g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
-                            End If
+                        For Each part In subject
+                            For Each o As (x#, value#) In part.signals
+                                y = o.value
+                                y = ymid + yscale(y)
+                                left = region.Padding.Left + xscale(o.x)
+                                rect = Rectangle(ymid, left, left + bw, y)
+
+                                If displayX AndAlso o.value / yLength >= labelPlotStrength Then
+                                    xlabel = o.x.ToString("F2")
+                                    xsz = g.MeasureString(xlabel, xCSSFont)
+                                    xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
+                                    g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                                End If
+                            Next
                         Next
 #End Region
                         rect = region.PlotRegion
@@ -317,11 +332,11 @@ Namespace BarPlot
                         y = 3
 
                         box = New Rectangle(New Point(rect.Right - 330, rect.Top + 20), New Size(20, 20))
-                        Call g.FillRectangle(ba, box)
+                        Call g.FillRectangle(query.Last.Color.GetBrush, box)
                         Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
                         box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
-                        Call g.FillRectangle(bb, box)
+                        Call g.FillRectangle(subject.Last.Color.GetBrush, box)
                         Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
                         Dim titleFont As Font = CSSFont _
