@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
 
 Module Matrix
@@ -20,6 +21,30 @@ Module Matrix
         Call result.U.Print
         Call Console.WriteLine()
         Call result.V.Print
+
+        Pause()
+    End Sub
+
+    Sub fffff()
+
+        Dim C As GeneralMatrix = {{0.716, 0.615}, {0.615, 0.616}}
+        Dim SVD = C.SVD
+        Dim V = SVD.V
+        Dim L = V(Which.IsTrue(SVD.SingularValues.Top(2)))
+        Dim PCA = L * C
+
+        Pause()
+    End Sub
+
+    Sub Ei()
+        Dim m As GeneralMatrix = {{0.716, 0.615}, {0.615, 0.616}}
+        Dim e = m.Eigen
+        Dim d = e.D
+
+        Dim svd = m.SVD
+
+        Dim svd2 = m.Covariance.SVD
+        Dim eeee = m.Covariance.Eigen
 
         Pause()
     End Sub

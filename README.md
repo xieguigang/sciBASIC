@@ -64,6 +64,15 @@ PM> Install-Package sciBASIC -Pre
 
 ---------------------------------------------------------------------------------------------------------------
 
+## Namespace
+
+|Namespace                      |Description                                                                       |
+|-------------------------------|----------------------------------------------------------------------------------|
+|Microsoft.VisualBasic.Data     |Raw data processing related code                                                  |
+|Microsoft.VisualBasic.Imaging  |``sciBASIC`` graphics system based on the GDI+ API from ``System.Drawing``        |
+|Microsoft.VisualBasic.Math     |``sciBASIC`` math library                                                         |
+|Microsoft.VisualBasic.Scripting|String expression related API for CLI programming and optional parameter scripting|
+
 ## ODEs scripting language feature
 
 Example for solving a dynamics system using VisualBasic ODEs scripting language feature, demo created for the [Lorenz system](https://en.wikipedia.org/wiki/Lorenz_system):

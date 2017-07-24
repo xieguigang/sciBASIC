@@ -28,6 +28,7 @@
 
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Matrix
 
@@ -274,6 +275,18 @@ Namespace Matrix
                 Return n
             End Get
         End Property
+
+        Public ReadOnly Property DiagonalVector As Vector
+            Get
+                Dim v As New List(Of Double)
+
+                For i As Integer = 0 To m - 1
+                    v += buffer(i)(i)
+                Next
+
+                Return New Vector(v)
+            End Get
+        End Property
 #End Region
 
 #Region "Public Methods"
@@ -323,7 +336,7 @@ Namespace Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Default Public Overloads Property Value(i As Integer, j As Integer) As Double
+        Default Public Shadows Property value(i As Integer, j As Integer) As Double
             Get
                 Return buffer(i)(j)
             End Get
@@ -332,7 +345,7 @@ Namespace Matrix
             End Set
         End Property
 
-        Default Public Overloads ReadOnly Property value(indices As IEnumerable(Of Integer)) As GeneralMatrix
+        Default Public Shadows ReadOnly Property value(indices As IEnumerable(Of Integer)) As GeneralMatrix
             Get
                 Dim index = indices.ToArray
                 Dim subMatrix = buffer.Select(Function(x) index.Select(Function(i) x(i)).ToArray).ToArray

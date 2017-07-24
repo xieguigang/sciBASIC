@@ -16,7 +16,10 @@ Namespace PCA
     ''' @author	Kushal Ranjan
     ''' @version	051513
     ''' </summary>
-    ''' <remarks>https://github.com/kranjan94/Principal-Component-Analysis</remarks>
+    ''' <remarks>
+''' + https://github.com/kranjan94/Principal-Component-Analysis
+''' + https://stats.stackexchange.com/questions/222/what-are-principal-component-scores
+''' </remarks>
     Public Module Method
 
         '''' <summary>
@@ -54,7 +57,7 @@ Namespace PCA
         '''' PCA implemented using the NIPALS algorithm. The return value is a double[][], where each
         '''' double[] j is an array of the scores of the jth data point corresponding to the desired
         '''' number of principal components. 
-        '''' (使用这个函数计算出PCA得分)
+        '''' (浣跨敤杩欎釜鍑芥暟璁＄畻鍑篜CA寰楀垎)
         '''' </summary>
         '''' <param name="input">			input raw data array </param>
         '''' <param name="numComponents">	desired number of PCs
@@ -116,7 +119,7 @@ Namespace PCA
 
         ''' <summary>
         ''' Performs principal component analysis with a specified number of principal components. 
-        ''' (使用这个函数来进行PCA分析)
+        ''' (浣跨敤杩欎釜鍑芥暟鏉ヨ繘琛孭CA鍒嗘瀽)
         ''' </summary>
         ''' <param name="input">input data; each double[] in input is an array of values of a single
         ''' variable for each data point </param>
@@ -126,7 +129,9 @@ Namespace PCA
             Dim B As GeneralMatrix = input.Transpose.CenterNormalize
             Dim C = B.Covariance
             Dim SVD = C.SVD
-            Dim M = SVD.V(Which.IsTrue(SVD.SingularValues.Top(nPC)))
+            Dim V = SVD.V
+            Dim S = SVD.SingularValues
+            Dim M = V(Which.IsTrue(S.Top(nPC)))
             Dim PCA = input * M
             Return PCA
         End Function
