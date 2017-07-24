@@ -42,7 +42,7 @@ Imports signals = System.ValueTuple(Of Double, Double)
 Namespace BarPlot
 
     ''' <summary>
-    ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形
+    ''' Visualize and comparing two discrete signals.(以条形图的方式可视化绘制两个离散的信号的比对的图形)
     ''' </summary>
     Public Module AlignmentPlot
 
