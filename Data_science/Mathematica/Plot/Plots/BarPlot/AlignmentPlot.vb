@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::41b03b5bd8e00446e8a62679cb2e2bd8, ..\sciBASIC#\Data_science\Mathematical\Plots\BarPlot\AlignmentPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -42,7 +42,7 @@ Imports signals = System.ValueTuple(Of Double, Double)
 Namespace BarPlot
 
     ''' <summary>
-    ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形
+    ''' Visualize and comparing two discrete signals.(以条形图的方式可视化绘制两个离散的信号的比对的图形)
     ''' </summary>
     Public Module AlignmentPlot
 
@@ -88,12 +88,79 @@ Namespace BarPlot
                                       Optional X_CSS$ = CSSFont.Win10Normal,
                                       Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
                                       Optional labelPlotStrength# = 0.25) As GraphicsData
+            Dim q As New Signal With {
+                .Name = queryName,
+                .Color = cla,
+                .signals = query
+            }
+            Dim s As New Signal With {
+                .Name = subjectName,
+                .Color = clb,
+                .signals = subject
+            }
 
+            Return PlotAlignmentGroups({q}, {s}, xrange, yrange,
+                                       size, padding,
+                                       xlab, ylab, labelCSS, queryName, subjectName,
+                                       title, tickCSS, titleCSS,
+                                       legendFontCSS, bw, format, displayX, X_CSS,
+                                       yAxislabelPosition,
+                                       labelPlotStrength)
+        End Function
+
+        Public Structure Signal
+            Dim Name$
+            Dim Color$
+            Dim signals As signals()
+
+            Public Overrides Function ToString() As String
+                Return Name & $" ({Color})"
+            End Function
+        End Structure
+
+        ''' <summary>
+        ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形，由于绘制的时候是分别对<paramref name="query"/>和<paramref name="subject"/>
+        ''' 信号数据使用For循环进行绘图的，所以数组最后一个位置的元素会在最上层
+        ''' 并且绘制图例的时候，使用的是最上层的信号的颜色
+        ''' </summary>
+        ''' <param name="query">The query signals</param>
+        ''' <param name="subject">The subject signal values</param>
+        ''' <param name="displayX">是否在信号的柱子上面显示出X坐标的信息</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function PlotAlignmentGroups(query As Signal(), subject As Signal(),
+                                            Optional xrange As DoubleRange = Nothing,
+                                            Optional yrange As DoubleRange = Nothing,
+                                            Optional size$ = "1200,800",
+                                            Optional padding$ = "padding: 70 30 50 100;",
+                                            Optional xlab$ = "X",
+                                            Optional ylab$ = "Y",
+                                            Optional labelCSS$ = CSSFont.Win7Bold,
+                                            Optional queryName$ = "query",
+                                            Optional subjectName$ = "subject",
+                                            Optional title$ = "Alignments Plot",
+                                            Optional tickCSS$ = CSSFont.Win7Normal,
+                                            Optional titleCSS$ = CSSFont.Win10NormalLarger,
+                                            Optional legendFontCSS$ = CSSFont.Win10Normal,
+                                            Optional bw! = 8,
+                                            Optional format$ = "F2",
+                                            Optional displayX As Boolean = True,
+                                            Optional X_CSS$ = CSSFont.Win10Normal,
+                                            Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
+                                            Optional labelPlotStrength# = 0.25) As GraphicsData
             If xrange Is Nothing Then
-                xrange = New DoubleRange(query.Keys.Join(subject.Keys).ToArray)
+                Dim ALL = query _
+                    .Select(Function(x) x.signals.Keys) _
+                    .Join(subject.Select(Function(x) x.signals.Keys)) _
+                    .ToArray
+                xrange = New DoubleRange(ALL)
             End If
             If yrange Is Nothing Then
-                yrange = New DoubleRange(query.Values.Join(subject.Values).ToArray)
+                Dim ALL = query _
+                    .Select(Function(x) x.signals.Values) _
+                    .Join(subject.Select(Function(x) x.signals.Values)) _
+                    .ToArray
+                yrange = New DoubleRange(ALL)
             End If
 
             Dim plotInternal =
@@ -176,56 +243,70 @@ Namespace BarPlot
                         Call g.DrawString(xlab, labelFont, Brushes.Black, New Point(.Right - fWidth, ymid + 2))
 
                         Dim left!
-                        Dim ba As New SolidBrush(cla.TranslateColor)
-                        Dim bb As New SolidBrush(clb.TranslateColor)
+                        'Dim ba As New SolidBrush(cla.TranslateColor)
+                        'Dim bb As New SolidBrush(clb.TranslateColor)
                         Dim xCSSFont As Font = CSSFont.TryParse(X_CSS).GDIObject
                         Dim xsz As SizeF
                         Dim xpos As PointF
                         Dim xlabel$
 
 #Region "绘制柱状图"
-                        For Each o In query
-                            y = o.value
-                            y = ymid - yscale(y)
-                            left = region.Padding.Left + xscale(o.X)
-                            rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
-                            g.FillRectangle(ba, rect)
+                        For Each part In query
+                            Dim ba As New SolidBrush(part.Color.TranslateColor)
+
+                            For Each o As (x#, value#) In part.signals
+                                y = o.value
+                                y = ymid - yscale(y)
+                                left = region.Padding.Left + xscale(o.x)
+                                rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
+                                g.FillRectangle(ba, rect)
+                            Next
                         Next
-                        For Each o In subject
-                            y = o.value
-                            y = ymid + yscale(y)
-                            left = region.Padding.Left + xscale(o.X)
-                            rect = Rectangle(ymid, left, left + bw, y)
-                            g.FillRectangle(bb, rect)
+
+                        For Each part In subject
+                            Dim bb As New SolidBrush(part.Color.TranslateColor)
+
+                            For Each o As (x#, value#) In part.signals
+                                y = o.value
+                                y = ymid + yscale(y)
+                                left = region.Padding.Left + xscale(o.x)
+                                rect = Rectangle(ymid, left, left + bw, y)
+                                g.FillRectangle(bb, rect)
+                            Next
                         Next
 #End Region
                         ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
 #Region "绘制横坐标轴"
-                        For Each o In query
-                            y = o.value
-                            y = ymid - yscale(y)
-                            left = region.Padding.Left + xscale(o.X)
-                            rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
+                        For Each part In query
+                            For Each o As (x#, value#) In part.signals
+                                y = o.value
+                                y = ymid - yscale(y)
+                                left = region.Padding.Left + xscale(o.x)
+                                rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
 
-                            If displayX AndAlso o.value / yLength >= labelPlotStrength Then
-                                xlabel = o.X.ToString("F2")
-                                xsz = g.MeasureString(xlabel, xCSSFont)
-                                xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
-                                g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
-                            End If
+                                If displayX AndAlso o.value / yLength >= labelPlotStrength Then
+                                    xlabel = o.x.ToString("F2")
+                                    xsz = g.MeasureString(xlabel, xCSSFont)
+                                    xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
+                                    g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                                End If
+                            Next
                         Next
-                        For Each o In subject
-                            y = o.value
-                            y = ymid + yscale(y)
-                            left = region.Padding.Left + xscale(o.X)
-                            rect = Rectangle(ymid, left, left + bw, y)
 
-                            If displayX AndAlso o.value / yLength >= labelPlotStrength Then
-                                xlabel = o.X.ToString("F2")
-                                xsz = g.MeasureString(xlabel, xCSSFont)
-                                xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
-                                g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
-                            End If
+                        For Each part In subject
+                            For Each o As (x#, value#) In part.signals
+                                y = o.value
+                                y = ymid + yscale(y)
+                                left = region.Padding.Left + xscale(o.x)
+                                rect = Rectangle(ymid, left, left + bw, y)
+
+                                If displayX AndAlso o.value / yLength >= labelPlotStrength Then
+                                    xlabel = o.x.ToString("F2")
+                                    xsz = g.MeasureString(xlabel, xCSSFont)
+                                    xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
+                                    g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                                End If
+                            Next
                         Next
 #End Region
                         rect = region.PlotRegion
@@ -251,11 +332,11 @@ Namespace BarPlot
                         y = 3
 
                         box = New Rectangle(New Point(rect.Right - 330, rect.Top + 20), New Size(20, 20))
-                        Call g.FillRectangle(ba, box)
+                        Call g.FillRectangle(query.Last.Color.GetBrush, box)
                         Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
                         box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
-                        Call g.FillRectangle(bb, box)
+                        Call g.FillRectangle(subject.Last.Color.GetBrush, box)
                         Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
                         Dim titleFont As Font = CSSFont _

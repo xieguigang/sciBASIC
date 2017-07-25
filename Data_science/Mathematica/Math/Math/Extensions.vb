@@ -33,7 +33,20 @@ Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports sys = System.Math
 
+''' <summary>
+''' 向量以及统计函数拓展
+''' </summary>
 Public Module Extensions
+
+    ''' <summary>
+    ''' 计算两个离散信号之间的相似度
+    ''' </summary>
+    ''' <param name="q"></param>
+    ''' <param name="s"></param>
+    ''' <returns></returns>
+    Public Function SSM(q As Vector, s As Vector) As Double
+        Return Sum(q * s) / Sqrt(Sum(q ^ 2) * Sum(s ^ 2))
+    End Function
 
     <Extension>
     Public Function AsVector(data As IEnumerable(Of Double)) As Vector
