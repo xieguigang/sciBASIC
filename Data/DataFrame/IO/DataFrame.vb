@@ -100,25 +100,34 @@ Namespace IO
         ''' <summary>
         ''' Indexing the column headers
         ''' </summary>
-        ''' <param name="df"></param>
+        ''' <param name="data"></param>
         ''' <returns></returns>
-        Private Shared Function __createSchemaOridinal(df As DataFrame) As Dictionary(Of String, Integer)
-            Dim arrayCache As String() = df.__columnList.ToArray
+        Private Shared Function __createSchemaOridinal(data As DataFrame) As Dictionary(Of String, Integer)
+            Dim arrayCache$() = data.__columnList.ToArray
+            Dim duplicates$() = arrayCache _
+                .GroupBy(Function(s) s) _
+                .Where(Function(g) g.Count > 1) _
+                .Select(Function(g) g.Key) _
+                .ToArray
 
-            Try
-                Return arrayCache _
-                    .SeqIterator _
-                    .ToDictionary(Function(i) i.value, Function(i) i.i)
-
-            Catch ex As Exception
+            If Not duplicates.IsNullOrEmpty Then
                 Dim sb As New StringBuilder(DuplicatedKeys)
+
+                Call sb.AppendLine()
+                Call sb.AppendLine("Duplicated headers: " & duplicates.GetJson)
+                Call sb.AppendLine()
 
                 Call sb.AppendLine("Here is the column header keys in you data: ")
                 Call sb.AppendLine()
-                Call sb.AppendLine("   " & arrayCache.GetJson)
+                Call sb.AppendLine("  " & arrayCache.GetJson)
 
-                Throw New DataException(sb.ToString, ex)
-            End Try
+                Throw New DuplicateNameException(sb.ToString)
+            End If
+
+            Return arrayCache _
+                .SeqIterator _
+                .ToDictionary(Function(i) i.value,
+                              Function(i) i.i)
         End Function
 
         ''' <summary>
