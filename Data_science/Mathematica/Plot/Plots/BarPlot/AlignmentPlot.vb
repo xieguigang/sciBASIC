@@ -118,18 +118,22 @@ Namespace BarPlot
             End Function
         End Structure
 
-        <Extension> Private Function Hit(highlights#(), err#) As Func(Of Double, Boolean)
+        <Extension> Private Function Hit(highlights#(), err#) As Func(Of Double, (err#, yes As Boolean))
             If highlights.IsNullOrEmpty Then
-                Return Function() False
+                Return Function() (-1, False)
             Else
                 Return Function(x)
+                           Dim e#
+
                            For Each n In highlights
-                               If Math.Abs(n - x) <= err Then
-                                   Return True
+                               e = Math.Abs(n - x)
+
+                               If e <= err Then
+                                   Return (e, True)
                                End If
                            Next
 
-                           Return False
+                           Return (-1, False)
                        End Function
             End If
         End Function
@@ -183,7 +187,6 @@ Namespace BarPlot
                 yrange = New DoubleRange(ALL)
             End If
 
-            Dim isHighlight = hitsHightLights.Hit(xError)
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
@@ -313,6 +316,10 @@ Namespace BarPlot
                                 End If
                             Next
                         Next
+
+                        ' 绘制高亮的区域
+                        Dim highlights = HighlightGroups(query, subject, hitsHightLights, xError)
+
 #End Region
                         ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
 #Region "绘制横坐标轴"
@@ -394,6 +401,11 @@ Namespace BarPlot
                 size.SizeParser, padding,
                 "white",
                 plotInternal)
+        End Function
+
+        Private Function HighlightGroups(query As Signal(), subject As Signal(), highlights#(), err#) As (x#, yq#, ys#)()
+            Dim isHighlight = highlights.Hit(err)
+
         End Function
     End Module
 End Namespace
