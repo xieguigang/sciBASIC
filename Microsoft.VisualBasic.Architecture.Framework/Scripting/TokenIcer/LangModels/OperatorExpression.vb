@@ -2,14 +2,18 @@
 
 Namespace Scripting.TokenIcer
 
-    Module OperatorExpression
+    Public Module OperatorExpression
 
-        Public ReadOnly Property Linq2Name As New Dictionary(Of ExpressionType, String)
+        ''' <summary>
+        ''' Linq Type to operator symbols.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Linq2Symbols As New Dictionary(Of ExpressionType, String)
         Public ReadOnly Property opName2Linq As New Dictionary(Of String, ExpressionType)
 
         Sub New()
             Call __opName2Linq()
-            Call __linq2Name()
+            Call __linq2Symbols()
         End Sub
 
         Const op_LessThan$ = NameOf(op_LessThan)
@@ -59,8 +63,8 @@ Namespace Scripting.TokenIcer
             End With
         End Sub
 
-        Private Sub __linq2Name()
-            With Linq2Name
+        Private Sub __linq2Symbols()
+            With Linq2Symbols
                 Call .Add(ExpressionType.Add, "+")
                 Call .Add(ExpressionType.AddAssign, "+=")
                 Call .Add(ExpressionType.AddAssignChecked, "+=")
