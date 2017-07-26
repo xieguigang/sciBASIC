@@ -118,6 +118,22 @@ Namespace BarPlot
             End Function
         End Structure
 
+        <Extension> Private Function Hit(highlights#(), err#) As Func(Of Double, Boolean)
+            If highlights.IsNullOrEmpty Then
+                Return Function() False
+            Else
+                Return Function(x)
+                           For Each n In highlights
+                               If Math.Abs(n - x) <= err Then
+                                   Return True
+                               End If
+                           Next
+
+                           Return False
+                       End Function
+            End If
+        End Function
+
         ''' <summary>
         ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形，由于绘制的时候是分别对<paramref name="query"/>和<paramref name="subject"/>
         ''' 信号数据使用For循环进行绘图的，所以数组最后一个位置的元素会在最上层
@@ -147,7 +163,9 @@ Namespace BarPlot
                                             Optional displayX As Boolean = True,
                                             Optional X_CSS$ = CSSFont.Win10Normal,
                                             Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
-                                            Optional labelPlotStrength# = 0.25) As GraphicsData
+                                            Optional labelPlotStrength# = 0.25,
+                                            Optional hitsHightLights As Double() = Nothing,
+                                            Optional xError# = 0.5) As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
                     .Select(Function(x) x.signals.Keys) _
@@ -163,6 +181,7 @@ Namespace BarPlot
                 yrange = New DoubleRange(ALL)
             End If
 
+            Dim isHighlight = hitsHightLights.Hit(xError)
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
@@ -260,6 +279,11 @@ Namespace BarPlot
                                 left = region.Padding.Left + xscale(o.x)
                                 rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
                                 g.FillRectangle(ba, rect)
+
+                                ' 绘制高亮的区域
+                                If isHighlight(o.x) Then
+
+                                End If
                             Next
                         Next
 
@@ -272,6 +296,11 @@ Namespace BarPlot
                                 left = region.Padding.Left + xscale(o.x)
                                 rect = Rectangle(ymid, left, left + bw, y)
                                 g.FillRectangle(bb, rect)
+
+                                ' 绘制高亮的区域
+                                If isHighlight(o.x) Then
+
+                                End If
                             Next
                         Next
 #End Region
