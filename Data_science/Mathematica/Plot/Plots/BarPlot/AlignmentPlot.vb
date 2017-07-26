@@ -172,7 +172,7 @@ Namespace BarPlot
                                             Optional labelPlotStrength# = 0.25,
                                             Optional hitsHightLights As Double() = Nothing,
                                             Optional xError# = 0.5,
-                                            Optional highlight$ = Stroke.HighlightStroke,
+                                            Optional highlight$ = Stroke.StrongHighlightStroke,
                                             Optional highlightMargin! = 2) As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
@@ -286,14 +286,6 @@ Namespace BarPlot
                                 left = region.Padding.Left + xscale(o.x)
                                 rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
                                 g.FillRectangle(ba, rect)
-
-                                ' 绘制高亮的区域
-                                If isHighlight(o.x) Then
-                                    rect = New Rectangle(
-                                        New Point(left - highlightMargin, y - highlightMargin),
-                                        New Size(bw + highlightMargin * 2, yscale(o.value) + highlightMargin))
-                                    g.DrawRectangle(highlightPen, rect)
-                                End If
                             Next
                         Next
 
@@ -306,24 +298,25 @@ Namespace BarPlot
                                 left = region.Padding.Left + xscale(o.x)
                                 rect = Rectangle(ymid, left, left + bw, y)
                                 g.FillRectangle(bb, rect)
-
-                                ' 绘制高亮的区域
-                                If isHighlight(o.x) Then
-                                    rect = Rectangle(
-                                        ymid,
-                                        left - highlightMargin,
-                                        left + bw + highlightMargin * 2,
-                                        y + highlightMargin)
-                                    g.DrawRectangle(highlightPen, rect)
-                                End If
                             Next
                         Next
 
                         ' 绘制高亮的区域
                         Dim highlights = HighlightGroups(query, subject, hitsHightLights, xError)
+                        Dim right!
+                        Dim blockHeight!
 
                         For Each block As (xmin#, xmax#, query#, subject#) In highlights
+                            left = region.Padding.Left + xscale(block.xmin)
+                            right = region.Padding.Left + xscale(block.xmax) + bw
+                            y = ymid - yscale(block.query)
+                            blockHeight = yscale(block.query) + yscale(block.subject)
 
+                            rect = New Rectangle(
+                                New Point(left - highlightMargin, y - highlightMargin),
+                                New Size(right - left + 2 * highlightMargin, blockHeight + 2 * highlightMargin))
+
+                            g.DrawRectangle(highlightPen, rect)
                         Next
 #End Region
                         ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
@@ -409,6 +402,10 @@ Namespace BarPlot
         End Function
 
         Private Function HighlightGroups(query As Signal(), subject As Signal(), highlights#(), err#) As (xmin#, xmax#, query#, subject#)()
+            If highlights.IsNullOrEmpty Then
+                Return {}
+            End If
+
             Dim isHighlight = highlights.Hit(err)
             Dim qh = query.__createHits(isHighlight)
             Dim sh = subject.__createHits(isHighlight)
