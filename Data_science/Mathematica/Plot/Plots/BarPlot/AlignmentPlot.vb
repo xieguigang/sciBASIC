@@ -165,7 +165,9 @@ Namespace BarPlot
                                             Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
                                             Optional labelPlotStrength# = 0.25,
                                             Optional hitsHightLights As Double() = Nothing,
-                                            Optional xError# = 0.5) As GraphicsData
+                                            Optional xError# = 0.5,
+                                            Optional highlight$ = Stroke.HighlightStroke,
+                                            Optional highlightMargin! = 2) As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
                     .Select(Function(x) x.signals.Keys) _
@@ -268,7 +270,7 @@ Namespace BarPlot
                         Dim xsz As SizeF
                         Dim xpos As PointF
                         Dim xlabel$
-
+                        Dim highlightPen As Pen = Stroke.TryParse(highlight).GDIObject
 #Region "绘制柱状图"
                         For Each part In query
                             Dim ba As New SolidBrush(part.Color.TranslateColor)
@@ -282,7 +284,10 @@ Namespace BarPlot
 
                                 ' 绘制高亮的区域
                                 If isHighlight(o.x) Then
-
+                                    rect = New Rectangle(
+                                        New Point(left - highlightMargin, y - highlightMargin),
+                                        New Size(bw + highlightMargin * 2, yscale(o.value) + highlightMargin))
+                                    g.DrawRectangle(highlightPen, rect)
                                 End If
                             Next
                         Next
@@ -299,7 +304,12 @@ Namespace BarPlot
 
                                 ' 绘制高亮的区域
                                 If isHighlight(o.x) Then
-
+                                    rect = Rectangle(
+                                        ymid,
+                                        left - highlightMargin,
+                                        left + bw + highlightMargin * 2,
+                                        y + highlightMargin)
+                                    g.DrawRectangle(highlightPen, rect)
                                 End If
                             Next
                         Next

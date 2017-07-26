@@ -41,6 +41,7 @@ Namespace HTML.CSS
 
         Public Const AxisStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
         Public Const AxisGridStroke$ = "stroke: lightgray; stroke-width: 2px; stroke-dash: dash;"
+        Public Const HighlightStroke$ = "stroke: lightgray; stroke-width: 0.5px; stroke-dash: dash;"
 
         Public Property fill As String
         Public Property width As Single
