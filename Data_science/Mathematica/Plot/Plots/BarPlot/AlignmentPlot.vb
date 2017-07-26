@@ -35,6 +35,8 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports signals = System.ValueTuple(Of Double, Double)
@@ -118,9 +120,9 @@ Namespace BarPlot
             End Function
         End Structure
 
-        <Extension> Private Function Hit(highlights#(), err#) As Func(Of Double, (err#, yes As Boolean))
+        <Extension> Private Function Hit(highlights#(), err#) As Func(Of Double, (err#, X#, yes As Boolean))
             If highlights.IsNullOrEmpty Then
-                Return Function() (-1, False)
+                Return Function() (-1, -1, False)
             Else
                 Return Function(x)
                            Dim e#
@@ -129,11 +131,11 @@ Namespace BarPlot
                                e = Math.Abs(n - x)
 
                                If e <= err Then
-                                   Return (e, True)
+                                   Return (e, n, True)
                                End If
                            Next
 
-                           Return (-1, False)
+                           Return (-1, -1, False)
                        End Function
             End If
         End Function
@@ -320,6 +322,9 @@ Namespace BarPlot
                         ' 绘制高亮的区域
                         Dim highlights = HighlightGroups(query, subject, hitsHightLights, xError)
 
+                        For Each block As (xmin#, xmax#, query#, subject#) In highlights
+
+                        Next
 #End Region
                         ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
 #Region "绘制横坐标轴"
@@ -403,9 +408,55 @@ Namespace BarPlot
                 plotInternal)
         End Function
 
-        Private Function HighlightGroups(query As Signal(), subject As Signal(), highlights#(), err#) As (x#, yq#, ys#)()
+        Private Function HighlightGroups(query As Signal(), subject As Signal(), highlights#(), err#) As (xmin#, xmax#, query#, subject#)()
             Dim isHighlight = highlights.Hit(err)
+            Dim qh = query.__createHits(isHighlight)
+            Dim sh = subject.__createHits(isHighlight)
+            Dim out As New List(Of (xmin#, xmax#, query#, subject#))
 
+            For Each x In highlights
+                If Not qh.ContainsKey(x) OrElse Not sh.ContainsKey(x) Then
+                    Continue For
+                End If
+
+                Dim q = qh(x)
+                Dim s = sh(x)
+
+                With q.x + s.x.ToArray
+                    out += (.Min, .Max, q.y, s.y)
+                End With
+            Next
+
+            Return out
+        End Function
+
+        <Extension>
+        Private Function __createHits(data As Signal(), ishighlight As Func(Of Double, (err#, x#, yes As Boolean))) As Dictionary(Of Double, (x As List(Of Double), y#))
+            Dim hits As New Dictionary(Of Double, (x As List(Of Double), y#))
+            Dim source As IEnumerable(Of signals) = data _
+                .Select(Function(x) x.signals) _
+                .IteratesALL
+
+            For Each o As (x#, y#) In source
+                Dim hit = ishighlight(o.x)
+
+                If hit.yes Then
+                    If Not hits.ContainsKey(hit.x) Then
+                        hits(hit.x) = (New List(Of Double), -100)
+                    End If
+
+                    Dim value = hits(hit.x)
+                    value.x.Add(o.x)
+
+                    If value.y < o.y Then
+                        value = (value.x, o.y)
+                    End If
+
+                    hits(hit.x) = value
+                End If
+            Next
+
+            Return hits
         End Function
     End Module
 End Namespace
