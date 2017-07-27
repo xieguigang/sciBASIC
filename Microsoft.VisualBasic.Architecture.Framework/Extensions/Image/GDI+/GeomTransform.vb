@@ -37,7 +37,7 @@ Imports sys = System.Math
 
 Namespace Imaging
 
-    <PackageNamespace("GDI.Transform")> Public Module GeomTransform
+    <Package("GDI.Transform")> Public Module GeomTransform
 
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
             Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)

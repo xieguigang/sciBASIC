@@ -61,7 +61,7 @@ Imports v = System.Array
 ''' Common extension methods library for convenient the programming job.
 ''' </summary>
 ''' <remarks></remarks>
-<[PackageNamespace]("Framework.Extensions",
+<Package("Framework.Extensions",
                     Description:="The common extension methods module in this Microsoft.VisualBasic program assembly." &
                                  "Common extension methods library for convenient the programming job.",
                     Publisher:="xie.guigang@gmail.com",

@@ -39,7 +39,7 @@ Namespace Math.Correlations
     ''' <summary>
     ''' 计算两个数据向量之间的相关度的大小
     ''' </summary>
-    <PackageNamespace("Correlations", Category:=APICategories.UtilityTools, Publisher:="amethyst.asuka@gcmodeller.org")>
+    <Package("Correlations", Category:=APICategories.UtilityTools, Publisher:="amethyst.asuka@gcmodeller.org")>
     Public Module Correlations
 
         ''' <summary>

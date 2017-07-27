@@ -45,7 +45,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' <summary>
 ''' Image drawing of a network model
 ''' </summary>
-<PackageNamespace("Network.Visualizer", Publisher:="xie.guigang@gmail.com")>
+<Package("Network.Visualizer", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkVisualizer
 
     ''' <summary>

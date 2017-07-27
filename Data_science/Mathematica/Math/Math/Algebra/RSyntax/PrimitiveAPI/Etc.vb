@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace SyntaxAPI
 
-    <PackageNamespace("RBase.Is")>
+    <Package("RBase.Is")>
     Public Module [Is]
 
         ''' <summary>
@@ -57,7 +57,7 @@ Namespace SyntaxAPI
 
     Namespace Machine
 
-        <PackageNamespace("RBase.Machine.Double")>
+        <Package("RBase.Machine.Double")>
         Public Module [Double]
 
             Public ReadOnly Property Eps As Double

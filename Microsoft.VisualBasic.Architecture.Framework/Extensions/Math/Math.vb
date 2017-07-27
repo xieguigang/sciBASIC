@@ -43,7 +43,7 @@ Namespace Math
     ''' common mathematical functions.To browse the .NET Framework source code for this
     ''' type, see the Reference Source.
     ''' </summary>
-    <PackageNamespace("VBMath", Publisher:="xie.guigang@gmail.com")>
+    <Package("VBMath", Publisher:="xie.guigang@gmail.com")>
     Public Module VBMath
 
         ''' <summary>

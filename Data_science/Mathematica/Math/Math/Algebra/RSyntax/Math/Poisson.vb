@@ -37,7 +37,7 @@ Namespace SyntaxAPI.MathExtension
     ''' Density, distribution function, quantile function and random generation for the Poisson distribution with parameter lambda.
     ''' </summary>
     ''' <remarks></remarks>
-    <PackageNamespace("RBase.Math.Poisson", Description:="Density, distribution function, quantile function and random generation for the Poisson distribution with parameter lambda.")>
+    <Package("RBase.Math.Poisson", Description:="Density, distribution function, quantile function and random generation for the Poisson distribution with parameter lambda.")>
     Public Module Poisson
 
         ''' <summary>

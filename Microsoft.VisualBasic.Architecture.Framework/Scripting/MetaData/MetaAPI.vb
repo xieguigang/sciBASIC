@@ -34,18 +34,18 @@ Namespace Scripting.MetaData
     Public Module MetaAPI
 
         ''' <summary>
-        ''' <see cref="PackageNamespace"/>
+        ''' <see cref="PackageAttribute"/>
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property TypeInfo As Type =
-            GetType(PackageNamespace)
+            GetType(PackageAttribute)
 
         <Extension> Public Function GetCLIMod(assm As Assembly) As Type
             Dim types As Type() = assm.GetTypes
             Dim LQuery = (From type As Type In types
-                          Let attrs As Object() = type.GetCustomAttributes(PackageNamespace.TypeInfo, inherit:=True)
+                          Let attrs As Object() = type.GetCustomAttributes(PackageAttribute.TypeInfo, inherit:=True)
                           Where Not attrs.IsNullOrEmpty
-                          Let attr = DirectCast(attrs(Scan0), PackageNamespace)
+                          Let attr = DirectCast(attrs(Scan0), PackageAttribute)
                           Select attr, type)
             Dim GetCLI = (From x In LQuery
                           Where x.attr.Category = APICategories.CLI_MAN
@@ -69,9 +69,9 @@ Namespace Scripting.MetaData
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        Public Function GetEntry(type As Type) As PackageNamespace
+        Public Function GetEntry(type As Type) As PackageAttribute
 #If NET_40 = 0 Then
-            Dim attrs = type.GetCustomAttributes(Of PackageNamespace)(inherit:=True)
+            Dim attrs = type.GetCustomAttributes(Of PackageAttribute)(inherit:=True)
             Return attrs.FirstOrDefault
 #Else
             Throw New NotSupportedException

@@ -41,7 +41,7 @@ Namespace Serialization.JSON
     ''' Only works on the Public visible type.
     ''' (使用.NET系统环境之中自带的框架进行JSON序列化和反序列化)
     ''' </summary>
-    <PackageNamespace("Json.Contract")>
+    <Package("Json.Contract")>
     Public Module JsonContract
 
         ''' <summary>

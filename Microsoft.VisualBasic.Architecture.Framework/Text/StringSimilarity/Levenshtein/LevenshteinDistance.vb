@@ -43,7 +43,7 @@ Namespace Text.Levenshtein
     ''' http://www.codeproject.com/Tips/697588/Levenshtein-Edit-Distance-Algorithm
     ''' </remarks>
     '''
-    <PackageNamespace("Distance.Levenshtein",
+    <Package("Distance.Levenshtein",
                   Description:="Implement the Levenshtein Edit Distance algorithm and result data visualization.",
                   Publisher:="furkanavcu",
                   Category:=APICategories.UtilityTools,

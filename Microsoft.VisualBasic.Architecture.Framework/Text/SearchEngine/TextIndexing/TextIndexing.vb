@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Text.Levenshtein
 
 Namespace Text.Search
 
-    <PackageNamespace("Text.Indexing", Publisher:="xie.guigang@gcmodeller.org", Category:=APICategories.UtilityTools)>
+    <Package("Text.Indexing", Publisher:="xie.guigang@gcmodeller.org", Category:=APICategories.UtilityTools)>
     Public Class TextIndexing
 
         ''' <summary>

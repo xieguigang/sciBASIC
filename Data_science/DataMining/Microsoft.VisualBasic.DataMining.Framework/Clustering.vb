@@ -88,7 +88,7 @@ Namespace Clustering
     End Class
 
 
-    <[PackageNamespace]("Clustering", Publisher:="xie.guigang@gmail.com")>
+    <Package("Clustering", Publisher:="xie.guigang@gmail.com")>
     Public Module Clustering
 
         ''' <summary>

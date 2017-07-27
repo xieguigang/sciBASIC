@@ -37,7 +37,7 @@ Namespace HTML
     ''' <summary>
     ''' Module provides some method for text document
     ''' </summary>
-    <PackageNamespace("Doc.Formatter",
+    <Package("Doc.Formatter",
                   Category:=APICategories.UtilityTools,
                   Publisher:="xie.guigang@live.com")>
     Public Module DocFormatter

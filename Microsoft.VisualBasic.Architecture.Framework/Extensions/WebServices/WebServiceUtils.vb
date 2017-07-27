@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Text.HtmlParser
 ''' The extension module for web services works.
 ''' </summary>
 '''
-<PackageNamespace("Utils.WebServices",
+<Package("Utils.WebServices",
                   Description:="The extension module for web services programming in your scripting.",
                   Category:=APICategories.UtilityTools,
                   Publisher:="<a href=""mailto://xie.guigang@gmail.com"">xie.guigang@gmail.com</a>")>
