@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports sys = System.Math
 
 Namespace Imaging.Math2D
@@ -89,38 +90,38 @@ Namespace Imaging.Math2D
             Return d4 < paramDouble7 * paramDouble7
         End Function
 
-        Public Shared Function createPointAuto(paramDimension1 As java.awt.Dimension, paramDimension2 As java.awt.Dimension, paramInt As Integer) As java.awt.Dimension
-            Dim localDimension As New java.awt.Dimension()
-            Dim i As Integer = paramDimension2.width - paramDimension1.width
-            Dim j As Integer = paramDimension2.height - paramDimension1.height
+        Public Shared Function createPointAuto(paramDimension1 As DblRect, paramDimension2 As DblRect, paramInt As Integer) As DblRect
+            Dim localDimension As New DblRect()
+            Dim i As Integer = paramDimension2.Width - paramDimension1.Width
+            Dim j As Integer = paramDimension2.Height - paramDimension1.Height
             Dim d3 As Double = Math.Sqrt(i * i + j * j)
             Dim d1 As Double = 0.8660254 * i - 0.5 * j
             Dim d2 As Double = -0.8660254 * i - 0.5 * j
             If Math.Abs(d1) < Math.Abs(d2) Then
-                paramDimension1.width += CInt(Math.Truncate((-0.5 * i - 0.8660254 * j) * paramInt / d3))
-                paramDimension1.height += CInt(Math.Truncate(d1 * paramInt / d3))
+                paramDimension1.Width += CInt(Math.Truncate((-0.5 * i - 0.8660254 * j) * paramInt / d3))
+                paramDimension1.Height += CInt(Math.Truncate(d1 * paramInt / d3))
             Else
-                paramDimension1.width += CInt(Math.Truncate((-0.5 * i + 0.8660254 * j) * paramInt / d3))
-                paramDimension1.height += CInt(Math.Truncate(d2 * paramInt / d3))
+                paramDimension1.Width += CInt(Math.Truncate((-0.5 * i + 0.8660254 * j) * paramInt / d3))
+                paramDimension1.Height += CInt(Math.Truncate(d2 * paramInt / d3))
             End If
             Return localDimension
         End Function
 
-        Public Shared Function createPointAuto(paramDimension1 As java.awt.Dimension, paramDimension2 As java.awt.Dimension, paramDimension3 As java.awt.Dimension, paramInt As Integer) As java.awt.Dimension
-            Dim localDimension As New java.awt.Dimension()
-            Dim localVector2D2 As New Vector2D(paramDimension2.width - paramDimension1.width, paramDimension2.height - paramDimension1.height)
-            Dim localVector2D3 As New Vector2D(paramDimension3.width - paramDimension1.width, paramDimension3.height - paramDimension1.height)
+        Public Shared Function createPointAuto(paramDimension1 As DblRect, paramDimension2 As DblRect, paramDimension3 As DblRect, paramInt As Integer) As DblRect
+            Dim localDimension As New DblRect()
+            Dim localVector2D2 As New Vector2D(paramDimension2.Width - paramDimension1.Width, paramDimension2.Height - paramDimension1.Height)
+            Dim localVector2D3 As New Vector2D(paramDimension3.Width - paramDimension1.Width, paramDimension3.Height - paramDimension1.Height)
             localVector2D2 = localVector2D2.multiple(1.0 / localVector2D2.length())
             localVector2D3 = localVector2D3.multiple(1.0 / localVector2D3.length())
             Dim localVector2D1 As Vector2D = add(localVector2D2, localVector2D3)
             localVector2D1 = localVector2D1.multiple(paramInt / localVector2D1.length())
-            paramDimension1.width -= CInt(Math.Truncate(localVector2D1.x))
-            paramDimension1.height -= CInt(Math.Truncate(localVector2D1.y))
+            paramDimension1.Width -= CInt(Math.Truncate(localVector2D1.x))
+            paramDimension1.Height -= CInt(Math.Truncate(localVector2D1.y))
             Return localDimension
         End Function
 
-        Public Shared Function createPointAuto(paramDimension As java.awt.Dimension, paramVector As ArrayList, paramInt As Integer) As java.awt.Dimension
-            Dim localDimension As New java.awt.Dimension()
+        Public Shared Function createPointAuto(paramDimension As DblRect, paramVector As ArrayList, paramInt As Integer) As DblRect
+            Dim localDimension As New DblRect()
             Dim d1 As Double = 360.0
             Dim d2 As Double = 360.0
             Dim d3 As Double = 0.0
@@ -136,14 +137,15 @@ Namespace Imaging.Math2D
             Next
 
             Dim localVector2D2 As Vector2D
+            Dim localVector2D3 As Vector2D
 
             While i > 0
-                localVector2D2 = New Vector2D(DirectCast(paramVector(j), java.awt.Dimension).width - paramDimension.width, DirectCast(paramVector(j), java.awt.Dimension).height - paramDimension.height)
+                localVector2D2 = New Vector2D(DirectCast(paramVector(j), DblRect).Width - paramDimension.Width, DirectCast(paramVector(j), DblRect).Height - paramDimension.Height)
                 d2 = 360.0
                 m = -1
                 For k = 0 To paramVector.Count - 1
                     If (arrayOfBoolean(k) = 0) AndAlso (j <> k) Then
-                        localVector2D3 = New Vector2D(DirectCast(paramVector(k), java.awt.Dimension).width - paramDimension.width, DirectCast(paramVector(k), java.awt.Dimension).height - paramDimension.height)
+                        localVector2D3 = New Vector2D(DirectCast(paramVector(k), DblRect).Width - paramDimension.Width, DirectCast(paramVector(k), DblRect).Height - paramDimension.Height)
                         d1 = angleDeg(localVector2D2, localVector2D3)
                         If d1 < 0.0 Then
                             d1 += 360.0
@@ -163,14 +165,14 @@ Namespace Imaging.Math2D
                 arrayOfBoolean(m) = True
                 i -= 1
             End While
-            localVector2D2 = New Vector2D(DirectCast(paramVector(n), java.awt.Dimension).width - paramDimension.width, DirectCast(paramVector(n), java.awt.Dimension).height - paramDimension.height)
-            Dim localVector2D3 As New Vector2D(DirectCast(paramVector(i1), java.awt.Dimension).width - paramDimension.width, DirectCast(paramVector(i1), java.awt.Dimension).height - paramDimension.height)
+            localVector2D2 = New Vector2D(DirectCast(paramVector(n), DblRect).Width - paramDimension.Width, DirectCast(paramVector(n), DblRect).Height - paramDimension.Height)
+            localVector2D3 = New Vector2D(DirectCast(paramVector(i1), DblRect).Width - paramDimension.Width, DirectCast(paramVector(i1), DblRect).Height - paramDimension.Height)
             localVector2D2 = localVector2D2.multiple(1.0 / localVector2D2.length())
             localVector2D3 = localVector2D3.multiple(1.0 / localVector2D3.length())
             Dim localVector2D1 As Vector2D = add(localVector2D2, localVector2D3)
             localVector2D1 = localVector2D1.multiple(paramInt / localVector2D1.length())
-            paramDimension.width += CInt(Math.Truncate(localVector2D1.x))
-            paramDimension.height += CInt(Math.Truncate(localVector2D1.y))
+            paramDimension.Width += CInt(Math.Truncate(localVector2D1.x))
+            paramDimension.Height += CInt(Math.Truncate(localVector2D1.y))
             Return localDimension
         End Function
     End Class
