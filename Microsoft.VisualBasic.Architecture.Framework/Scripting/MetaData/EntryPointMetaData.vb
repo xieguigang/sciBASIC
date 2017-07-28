@@ -45,8 +45,13 @@ Namespace Scripting.MetaData
 
         Public Shared ReadOnly Property TypeRef As Type = GetType(FunctionReturns)
 
-        Public Shared Function GetDescription(Method As System.Reflection.MethodInfo) As String
-            Dim attrs As Object() = Method.ReturnParameter.GetCustomAttributes(attributeType:=FunctionReturns.TypeRef, inherit:=True)
+        ''' <summary>
+        ''' Gets the description of the function returns value
+        ''' </summary>
+        ''' <param name="method"></param>
+        ''' <returns></returns>
+        Public Shared Function GetDescription(method As MethodInfo) As String
+            Dim attrs As Object() = method.ReturnParameter.GetCustomAttributes(attributeType:=FunctionReturns.TypeRef, inherit:=True)
             If attrs.IsNullOrEmpty Then
                 Return ""
             End If
@@ -63,19 +68,8 @@ Namespace Scripting.MetaData
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=True, Inherited:=True)>
     Public Class OverloadsSignatureHandle : Inherits Attribute
 
-        Dim _TypeIdBrief As String, _FullName As Type
-
         Public ReadOnly Property TypeIDBrief As String
-            Get
-                Return _TypeIdBrief
-            End Get
-        End Property
-
         Public ReadOnly Property FullName As Type
-            Get
-                Return _FullName
-            End Get
-        End Property
 
         ''' <summary>
         ''' 
@@ -96,12 +90,7 @@ Namespace Scripting.MetaData
     <AttributeUsage(AttributeTargets.Field, AllowMultiple:=False, Inherited:=True)>
     Public Class ImportsConstant : Inherits Attribute
 
-        Dim _Name As String
         Public ReadOnly Property Name As String
-            Get
-                Return _Name
-            End Get
-        End Property
 
         Sub New(<Parameter("imports.constant", "")> Optional Name As String = "")
             _Name = Name
@@ -111,12 +100,7 @@ Namespace Scripting.MetaData
             Return Name
         End Function
 
-        Private Shared ReadOnly _TypeInfo As System.Type = GetType(ImportsConstant)
+        Public Shared ReadOnly Property TypeInfo As Type = GetType(ImportsConstant)
 
-        Public Shared ReadOnly Property TypeInfo As System.Type
-            Get
-                Return _TypeInfo
-            End Get
-        End Property
     End Class
 End Namespace

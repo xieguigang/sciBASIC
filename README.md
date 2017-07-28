@@ -55,7 +55,6 @@ PM> Install-Package sciBASIC -Pre
 + **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic General App Runtime core
 + **[/mime](./mime/)** : various mime-type doc parsers in VisualBasic
 + **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET data graphics system
-+ **[/win32_api](./win32_api/)** : Win32 API collection (**Obsolete**)
 + **[/www](./www/)** : Web related utilities code
 
 ###### 2. docs for User
@@ -64,6 +63,15 @@ PM> Install-Package sciBASIC -Pre
 + **[/vb_codestyle](./docs/vb_codestyle/)** : sciBASIC# Coding style standard document
 
 ---------------------------------------------------------------------------------------------------------------
+
+## Namespace
+
+|Namespace                      |Description                                                                       |
+|-------------------------------|----------------------------------------------------------------------------------|
+|Microsoft.VisualBasic.Data     |Raw data processing related code                                                  |
+|Microsoft.VisualBasic.Imaging  |``sciBASIC`` graphics system based on the GDI+ API from ``System.Drawing``        |
+|Microsoft.VisualBasic.Math     |``sciBASIC`` math library                                                         |
+|Microsoft.VisualBasic.Scripting|String expression related API for CLI programming and optional parameter scripting|
 
 ## ODEs scripting language feature
 

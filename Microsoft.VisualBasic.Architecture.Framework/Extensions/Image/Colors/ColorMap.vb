@@ -40,7 +40,7 @@ Namespace Imaging
     ''' </summary>
     ''' <remarks>http://www.codeproject.com/Articles/18150/Create-Custom-Color-Maps-in-C</remarks>
     ''' 
-    <PackageNamespace("ColorMap", Publisher:="Jack J. H. Xu", Category:=APICategories.UtilityTools)>
+    <Package("ColorMap", Publisher:="Jack J. H. Xu", Category:=APICategories.UtilityTools)>
     Public Module ColorMapsExtensions
 
         ''' <summary>

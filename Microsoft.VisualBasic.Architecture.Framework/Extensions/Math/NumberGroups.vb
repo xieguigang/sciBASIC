@@ -93,33 +93,31 @@ Namespace Math
         ''' 将一维的数据按照一定的偏移量分组输出
         ''' </summary>
         ''' <param name="source"></param>
-        ''' <param name="offset"></param>
+        ''' <param name="offsets"></param>
         ''' <returns></returns>
-        <Extension>
-        Public Function Groups(source As IEnumerable(Of Integer), offset As Integer) As List(Of Integer())
-            Dim list As New List(Of Integer())
-            Dim orders As Integer() = (From n As Integer
-                                   In source
-                                       Select n
-                                       Order By n Ascending).ToArray
-            Dim tag As Integer = orders(Scan0)
-            Dim tmp As New List(Of Integer) From {tag}
+        <Extension> Public Function GroupBy(source As IEnumerable(Of Double), offsets#) As Dictionary(Of String, Double())
+            Dim data = source.AsList
+            Dim groups As New Dictionary(Of String, List(Of Double))
 
-            For Each x As Integer In orders.Skip(1)
-                If x - tag <= offset Then  ' 因为已经是经过排序了的，所以后面总是大于前面的
-                    tmp += x
-                Else
-                    tag = x
-                    list += tmp.ToArray
-                    tmp = New List(Of Integer) From {x}
+            Do While data.Count > 0
+                Dim x As Double = data.First
+                Dim hit As Boolean = False
+
+                For Each group In groups.Values
+                    If Abs(group.Average - x) <= offsets Then
+                        group.Add(x)
+                        hit = True
+                    End If
+                Next
+
+                If Not hit Then
+                    groups.Add(x, New List(Of Double) From {x})
                 End If
-            Next
+            Loop
 
-            If tmp.Count > 0 Then
-                list += tmp.ToArray
-            End If
-
-            Return list
+            Return groups _
+                .ToDictionary(Function(x) x.Key,
+                              Function(g) g.Value.ToArray)
         End Function
 
         ''' <summary>

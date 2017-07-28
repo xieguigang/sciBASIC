@@ -127,21 +127,7 @@ Namespace Math.StatisticsMathExtensions
         '     source contains no elements.
         <Extension>
         Public Function Covariance(source As IEnumerable(Of Double), other As IEnumerable(Of Double)) As Double
-            Dim len As Integer = source.Count()
-
-            If len <> other.Count() Then
-                Throw New ArgumentException("Collections are not of the same length", "other")
-            End If
-
-            Dim avgSource As Double = source.Average()
-            Dim avgOther As Double = other.Average()
-            Dim covariance__1 As Double = 0
-
-            For i As Integer = 0 To len - 1
-                covariance__1 += (source.ElementAt(i) - avgSource) * (other.ElementAt(i) - avgOther)
-            Next
-
-            Return covariance__1 / len
+            Return Math.Covariance(source.ToArray, other.ToArray)
         End Function
         '
         ' Summary:

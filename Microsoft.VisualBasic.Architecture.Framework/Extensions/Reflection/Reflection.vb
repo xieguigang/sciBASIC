@@ -40,7 +40,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <summary>
 ''' Some common used reflection operation extension at here.
 ''' </summary>
-<PackageNamespace("Emit.Reflection",
+<Package("Emit.Reflection",
                   Category:=APICategories.SoftwareTools,
                   Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection

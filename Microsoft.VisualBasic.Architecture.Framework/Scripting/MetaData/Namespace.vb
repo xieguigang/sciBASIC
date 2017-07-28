@@ -27,9 +27,7 @@
 #End Region
 
 Imports System.ComponentModel
-Imports System.Reflection
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 Namespace Scripting.MetaData
@@ -38,7 +36,7 @@ Namespace Scripting.MetaData
     ''' This attribute provides a more details information about a namepace package module in your scripting plugins.
     ''' </summary>
     <XmlType("PackageNamespace", [Namespace]:="Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a")>
-    Public Class PackageNamespace : Inherits [Namespace]
+    Public Class PackageAttribute : Inherits [Namespace]
 
         ''' <summary>
         ''' This plugins project's home page url.
@@ -71,7 +69,7 @@ Namespace Scripting.MetaData
         ''' 拷贝自身
         ''' </summary>
         ''' <param name="base"></param>
-        Sub New(base As PackageNamespace)
+        Sub New(base As PackageAttribute)
             Me.AutoExtract = base.AutoExtract
             Me.Category = base.Category
             Me.Cites = base.Cites

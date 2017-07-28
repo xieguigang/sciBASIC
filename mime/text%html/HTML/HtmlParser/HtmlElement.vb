@@ -162,7 +162,7 @@ Namespace HTML
         End Property
 
         Public Shared Function SingleNodeParser(value As String) As HtmlElement
-            Return TextParse(value).As(Of HtmlElement)
+            Return DirectCast(TextParse(value), HtmlElement)
         End Function
 
         Public Overrides Function ToString() As String

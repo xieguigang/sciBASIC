@@ -38,7 +38,7 @@ Namespace ComponentModel.Settings.Inf
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <PackageNamespace("Settings.Inf",
+    <Package("Settings.Inf",
                       Description:="Wrapper class for *.ini and *.inf configure file.", Url:="http://gcmodeller.org", Publisher:="xie.guigang@live.com")>
     Public Module INIProfile
 

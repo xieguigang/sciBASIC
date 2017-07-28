@@ -61,7 +61,7 @@ Imports v = System.Array
 ''' Common extension methods library for convenient the programming job.
 ''' </summary>
 ''' <remarks></remarks>
-<[PackageNamespace]("Framework.Extensions",
+<Package("Framework.Extensions",
                     Description:="The common extension methods module in this Microsoft.VisualBasic program assembly." &
                                  "Common extension methods library for convenient the programming job.",
                     Publisher:="xie.guigang@gmail.com",
@@ -249,7 +249,7 @@ Public Module Extensions
         Dim endTick As Long = App.NanoTime
         Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
         If echo Then
-            Call $"Work takes {t}ms...".__DEBUG_ECHO
+            Call $"[{work.Method.Name}] takes {t}ms...".__DEBUG_ECHO
         End If
         Return t
     End Function
@@ -1732,6 +1732,10 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToStringArray(Of T)(source As IEnumerable(Of T)) As String()
+        If source Is Nothing Then
+            Return {}
+        End If
+
         Dim LQuery$() = LinqAPI.Exec(Of String) <=
             From item As T
             In source

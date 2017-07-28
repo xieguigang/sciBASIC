@@ -41,7 +41,7 @@ Namespace Syntax
         End Function
 
         Private Function __maps(doc As YamlDocument) As Dictionary(Of MappingEntry)
-            Dim root As Mapping = doc.Root.As(Of Mapping)
+            Dim root As Mapping = DirectCast(doc.Root, Mapping)
             Return root.GetMaps
         End Function
     End Class

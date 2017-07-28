@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Text
 ''' Search the path from a specific keyword.(通过关键词来推测路径)
 ''' </summary>
 ''' <remarks></remarks>
-<[PackageNamespace]("Program.Path.Search",
+<Package("Program.Path.Search",
                     Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
 

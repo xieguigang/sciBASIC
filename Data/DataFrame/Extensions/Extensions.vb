@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 ''' <remarks></remarks>
 '''
-<PackageNamespace("IO_Device.Csv.Extensions",
+<Package("IO_Device.Csv.Extensions",
                   Description:="The shortcuts operation for the common csv document operations.",
                   Publisher:="xie.guigang@gmail.com")>
 Public Module Extensions
