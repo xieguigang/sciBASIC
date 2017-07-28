@@ -2,8 +2,15 @@
 Namespace Imaging.Math2D
 
     Public Class Vector2D
+
         Public x As Double
         Public y As Double
+
+        Public ReadOnly Property Length() As Double
+            Get
+                Return Math.Sqrt(x ^ 2 + y ^ 2)
+            End Get
+        End Property
 
         Public Sub New()
             Me.New(0.0, 0.0)
@@ -19,16 +26,39 @@ Namespace Imaging.Math2D
             Me.y = paramInt2
         End Sub
 
-        Public Overridable Function length() As Double
-            Return Math.Sqrt(Me.x * Me.x + Me.y * Me.y)
-        End Function
+        ''' <summary>
+        ''' reverse
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(v As Vector2D) As Vector2D
+            With v
+                Return New Vector2D(- .x, - .y)
+            End With
+        End Operator
 
-        Public Overridable Function reverse() As Vector2D
-            Return New Vector2D(-Me.x, -Me.y)
-        End Function
+        ''' <summary>
+        ''' multiple
+        ''' </summary>
+        ''' <param name="scale#"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        Public Shared Operator *(scale#, v As Vector2D) As Vector2D
+            With v
+                Return New Vector2D(scale * .x, scale * .y)
+            End With
+        End Operator
 
-        Public Overridable Function multiple(paramDouble As Double) As Vector2D
-            Return New Vector2D(paramDouble * Me.x, paramDouble * Me.y)
-        End Function
+        ''' <summary>
+        ''' multiple
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="scale#"></param>
+        ''' <returns></returns>
+        Public Shared Operator *(v As Vector2D, scale#) As Vector2D
+            With v
+                Return New Vector2D(scale * .x, scale * .y)
+            End With
+        End Operator
     End Class
 End Namespace

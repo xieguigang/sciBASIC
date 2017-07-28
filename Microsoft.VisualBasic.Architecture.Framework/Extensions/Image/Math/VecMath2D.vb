@@ -111,10 +111,10 @@ Namespace Imaging.Math2D
             Dim localDimension As New DblRect()
             Dim localVector2D2 As New Vector2D(paramDimension2.Width - paramDimension1.Width, paramDimension2.Height - paramDimension1.Height)
             Dim localVector2D3 As New Vector2D(paramDimension3.Width - paramDimension1.Width, paramDimension3.Height - paramDimension1.Height)
-            localVector2D2 = localVector2D2.multiple(1.0 / localVector2D2.length())
-            localVector2D3 = localVector2D3.multiple(1.0 / localVector2D3.length())
+            localVector2D2 = localVector2D2 * (1.0 / localVector2D2.Length())
+            localVector2D3 = localVector2D3 * (1.0 / localVector2D3.Length())
             Dim localVector2D1 As Vector2D = add(localVector2D2, localVector2D3)
-            localVector2D1 = localVector2D1.multiple(paramInt / localVector2D1.length())
+            localVector2D1 = localVector2D1 * (paramInt / localVector2D1.Length())
             paramDimension1.Width -= CInt(Math.Truncate(localVector2D1.x))
             paramDimension1.Height -= CInt(Math.Truncate(localVector2D1.y))
             Return localDimension
@@ -167,10 +167,10 @@ Namespace Imaging.Math2D
             End While
             localVector2D2 = New Vector2D(DirectCast(paramVector(n), DblRect).Width - paramDimension.Width, DirectCast(paramVector(n), DblRect).Height - paramDimension.Height)
             localVector2D3 = New Vector2D(DirectCast(paramVector(i1), DblRect).Width - paramDimension.Width, DirectCast(paramVector(i1), DblRect).Height - paramDimension.Height)
-            localVector2D2 = localVector2D2.multiple(1.0 / localVector2D2.length())
-            localVector2D3 = localVector2D3.multiple(1.0 / localVector2D3.length())
+            localVector2D2 = localVector2D2 * (1.0 / localVector2D2.Length())
+            localVector2D3 = localVector2D3 * (1.0 / localVector2D3.Length())
             Dim localVector2D1 As Vector2D = add(localVector2D2, localVector2D3)
-            localVector2D1 = localVector2D1.multiple(paramInt / localVector2D1.length())
+            localVector2D1 = localVector2D1 * (paramInt / localVector2D1.Length())
             paramDimension.Width += CInt(Math.Truncate(localVector2D1.x))
             paramDimension.Height += CInt(Math.Truncate(localVector2D1.y))
             Return localDimension
