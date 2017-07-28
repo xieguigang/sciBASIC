@@ -53,7 +53,7 @@ Namespace Math
     ''' </summary>
     ''' <remarks>Imports from https://github.com/rvs76/superbest-random.git </remarks>
     ''' 
-    <PackageNamespace("Random", Publisher:="rvs76", Description:="Some extension methods for Random for creating a few more kinds of random stuff.")>
+    <Package("Random", Publisher:="rvs76", Description:="Some extension methods for Random for creating a few more kinds of random stuff.")>
     Public Module RandomExtensions
 
         ''' <summary>

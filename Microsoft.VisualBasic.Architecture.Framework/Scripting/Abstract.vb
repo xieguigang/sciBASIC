@@ -9,7 +9,7 @@
         ''' <returns></returns>
         Public Delegate Function GetValue(var$) As Object
         ''' <summary>
-        ''' How to make a function calls
+        ''' How to make a function calls.(这个是在已经知道了确切的函数对象的前体下才会使用这个进行调用)
         ''' </summary>
         ''' <param name="func$"></param>
         ''' <param name="args"></param>

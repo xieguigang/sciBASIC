@@ -50,7 +50,13 @@ Namespace Emit.Delegates
             End Get
             Set(value As Object)
                 Dim [property] As New BindProperty(Of DataFrameColumnAttribute)(properties(name))
-                Dim array As IEnumerable = TryCast(value, IEnumerable)
+                Dim array As IEnumerable
+
+                If [property].Type Is GetType(String) AndAlso value.GetType Is GetType(String) Then
+                    array = Nothing
+                Else
+                    array = TryCast(value, IEnumerable)
+                End If
 
                 If value Is Nothing Then
                     For Each x In data

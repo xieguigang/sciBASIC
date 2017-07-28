@@ -45,7 +45,7 @@ Namespace Imaging
     ''' GDI+
     ''' </summary>
     '''
-    <PackageNamespace("GDI+", Description:="GDI+ GDIPlus Extensions Module to provide some useful interface.",
+    <Package("GDI+", Description:="GDI+ GDIPlus Extensions Module to provide some useful interface.",
                   Publisher:="xie.guigang@gmail.com",
                   Revision:=58,
                   Url:="http://gcmodeller.org")>

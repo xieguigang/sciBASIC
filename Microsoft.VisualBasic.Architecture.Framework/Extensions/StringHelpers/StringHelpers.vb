@@ -44,7 +44,7 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' <summary>
 ''' The extensions module for facilities the string operations.
 ''' </summary>
-<PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
+<Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
     ''' <summary>

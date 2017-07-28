@@ -117,6 +117,28 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
+        Public ReadOnly Property IsFunction As Boolean
+            Get
+                Return Not Arguments.IsNullOrEmpty
+            End Get
+        End Property
+
+        Public ReadOnly Property IsClosure As Boolean
+            Get
+                Return Not Closure Is Nothing
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' This token object eigther not a function and not a closure.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsObject As Boolean
+            Get
+                Return Not IsClosure AndAlso Not IsFunction
+            End Get
+        End Property
+
         Public Sub New(name As Tokens, value$)
             Me.name = name
             Me.Value = value

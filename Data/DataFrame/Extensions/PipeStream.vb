@@ -30,6 +30,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Linq
 
 Public Module PipeStream
 
@@ -58,5 +59,30 @@ Public Module PipeStream
                     .Value = d.Properties.Values.ToArray
                 }
             End Function).ToArray
+    End Function
+
+    ''' <summary>
+    ''' 将所读取出来的csv文件之中的数据转化为数值矩阵
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="header">csv文件之中是否含有行标题？TRUE的话则会跳过第一行</param>
+    ''' <param name="rowNames">csv文件之中是否含有列标题？TRUE的话会跳过第一列</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function AsMatrix(data As csv.IO.File, Optional header As Boolean = False, Optional rowNames As Boolean = False) As Double()()
+        Dim source As IO.File = data
+
+        If header Then
+            source = New IO.File(source.Skip(1))
+        End If
+        If rowNames Then
+            source = source.Columns.Skip(1).JoinColumns
+        End If
+
+        Return source _
+            .Select(Function(row)
+                        Return row.ToArray(AddressOf Val)
+                    End Function) _
+            .ToArray
     End Function
 End Module

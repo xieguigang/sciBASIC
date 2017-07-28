@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 
-<PackageNamespace("Texture.Resource.Loader", Publisher:="xie.guigang@gmail.com")>
+<Package("Texture.Resource.Loader", Publisher:="xie.guigang@gmail.com")>
 Public Module TextureResourceLoader
 
     ''' <summary>

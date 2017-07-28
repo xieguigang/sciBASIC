@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::1512ebaeb93e06b3a82f5d08311f2d19, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\TreeClustering.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -132,7 +132,7 @@ Namespace KMeans
         ''' <param name="[stop]"></param>
         ''' <returns></returns>
         Private Function __firstCluster(Of T As Entity)(source As IEnumerable(Of T), [stop] As Integer, kmeansStop As Integer, parallelDepth%) As Entity()
-            Dim result As KMeansCluster(Of T)() = ClusterDataSet(2, source, debug:=True, [stop]:=kmeansStop).ToArray
+            Dim result As KMeansCluster(Of T)() = source.ClusterDataSet(2, debug:=True, [stop]:=kmeansStop).ToArray
             ' 假设在刚开始不会出现为零的情况
             Dim cluster1 As AsyncHandle(Of Entity()) =
                 New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), "1", [stop], kmeansStop, parallelDepth)).Run    ' cluster1
@@ -179,8 +179,8 @@ EXIT_:          Dim array As T() = source.ToArray
             End If
 
             Dim list As New List(Of Entity)
-            Dim result As KMeansCluster(Of T)() = ClusterDataSet(
-                2, source,,
+            Dim result As KMeansCluster(Of T)() = source.ClusterDataSet(
+                2, ,
                 [stop]:=kmeansStop, ' 当递归的深度到达一定程度之后会自动使用非并行算法，以防止并行化的颗粒度过细，影响性能
                 parallel:=parallelDepth >= 0).ToArray
 

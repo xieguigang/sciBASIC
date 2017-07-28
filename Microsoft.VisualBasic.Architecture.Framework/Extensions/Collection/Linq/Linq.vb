@@ -39,7 +39,7 @@ Namespace Linq
     ''' <summary>
     ''' Linq Helpers.(为了方便编写Linq代码而构建的一个拓展模块)
     ''' </summary>
-    <PackageNamespace("LINQ", Category:=APICategories.UtilityTools)>
+    <Package("LINQ", Category:=APICategories.UtilityTools)>
     <Extension>
     Public Module Extensions
 

@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Serials.PeriodAnalysis
 
-    <[PackageNamespace]("Serials.PeriodAnalysis", Publisher:="xie.guigang@gmail.com")>
+    <Package("Serials.PeriodAnalysis", Publisher:="xie.guigang@gmail.com")>
     Public Module PeriodAnalysis
 
         ''' <summary>

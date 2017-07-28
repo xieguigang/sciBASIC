@@ -81,7 +81,7 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 ''' (从命令行之中使用``/@set``参数赋值环境变量的时候，每一个变量之间使用分号进行分隔)
 ''' </summary>
 '''
-<PackageNamespace("App", Description:="More easily runtime environment information provider on LINUX platform for visualbasic program.",
+<Package("App", Description:="More easily runtime environment information provider on LINUX platform for visualbasic program.",
                   Publisher:="amethyst.asuka@gcmodeller.org",
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
@@ -479,8 +479,12 @@ Public Module App
     ''' <param name="s$"></param>
     ''' <param name="args"></param>
     Public Sub println(s$, ParamArray args As Object())
-        Dim out As String = sprintf(s, args)
-        Call Console.WriteLine(out)
+        If args.IsNullOrEmpty Then
+            Call Console.WriteLine(s)
+        Else
+            Dim out As String = sprintf(s, args)
+            Call Console.WriteLine(out)
+        End If
     End Sub
 
     Public Sub println()

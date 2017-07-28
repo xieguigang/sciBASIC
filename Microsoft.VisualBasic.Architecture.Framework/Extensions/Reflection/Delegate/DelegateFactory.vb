@@ -36,13 +36,12 @@ Namespace Emit.Delegates
 
     Public Module DelegateFactory
 
-        Private Const AddAccessor As String = "add"
-        Private Const Item As String = "Item"
+        Const AddAccessor As String = "add"
+        Const Item As String = "Item"
+        Const RemoveAccessor As String = "remove"
 
-        Private Const RemoveAccessor As String = "remove"
-        Private ReadOnly EventHandlerFactoryMethodInfo As MethodInfo = GetType(DelegateFactory).GetMethod("EventHandlerFactory")
-
-        Private ReadOnly EventsProxies As New Dictionary(Of WeakReference(Of Object), WeakReference(Of Object))()
+        ReadOnly EventHandlerFactoryMethodInfo As MethodInfo = GetType(DelegateFactory).GetMethod("EventHandlerFactory")
+        ReadOnly EventsProxies As New Dictionary(Of WeakReference(Of Object), WeakReference(Of Object))()
 
         Public Function Contructor(Of TDelegate As Class)() As TDelegate
             Dim source = GetFuncDelegateReturnType(Of TDelegate)()

@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace FileIO
 
-    <PackageNamespace("IO.NetFile")>
+    <Package("IO.NetFile")>
     Public Module NetFile
 
         ''' <summary>

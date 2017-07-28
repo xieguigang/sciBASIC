@@ -43,7 +43,7 @@ Namespace AprioriAlgorithm
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <PackageNamespace("Tools.DataMining.Apriori",
+    <Package("Tools.DataMining.Apriori",
                       Publisher:="Omar Gameel Salem",
                       Url:="http://www.codeproject.com/Articles/70371/Apriori-Algorithm",
                       Description:="In data mining, Apriori is a classic algorithm for learning association rules. 

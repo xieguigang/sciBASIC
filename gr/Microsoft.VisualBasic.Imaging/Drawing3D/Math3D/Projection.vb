@@ -37,7 +37,7 @@ Namespace Drawing3D.Math3D
     ''' <summary>
     ''' 3D coordinate transformation tools.
     ''' </summary>
-    <PackageNamespace("Coordinate.Transformation",
+    <Package("Coordinate.Transformation",
                       Category:=APICategories.UtilityTools,
                       Publisher:="xie.guigang@gmail.com",
                       Description:="3D coordinate transformation tools.")>
