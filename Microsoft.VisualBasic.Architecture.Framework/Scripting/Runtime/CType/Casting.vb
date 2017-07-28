@@ -119,6 +119,7 @@ Namespace Scripting.Runtime
         Public Const RegexpDouble As String = "-?\d+(\.\d+)?"
         Public Const ScientificNotation$ = RegexpDouble & "[Ee][+-]\d+"
         Public Const RegexpFloat$ = RegexpDouble & "([Ee][+-]\d+)?"
+        Public Const RegexInteger$ = "[-]?\d+"
 
         ''' <summary>
         ''' Parsing a real number from the expression text by using the regex expression <see cref="RegexpFloat"/>.
