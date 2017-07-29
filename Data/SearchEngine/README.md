@@ -98,7 +98,7 @@ For test match a .NET object:
 ```vbnet
 Dim obj As New NamedValue(Of String) With {
     .Name = "Hello world!",
-    .x = "23333",
+    .Value = "23333",
     .Description = "Test Object"
 }
 Dim def As New IObject(GetType(NamedValue(Of String)))
