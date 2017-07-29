@@ -153,11 +153,15 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <summary>
         ''' Sets the property value of a specified object with optional index values for
         ''' index properties.
+        ''' (这个设置值的函数只适用于``Class``类型，对于``Structure``类型而言，则无法正常的工作)
         ''' </summary>
         ''' <param name="obj">The object whose property value will be set.</param>
         ''' <param name="value">The new property value.</param>
         Public Sub SetValue(obj As Object, value As Object) Implements IProperty.SetValue
-            Call __setValue(obj, value)
+            ' 2017-6-26 目前value参数为空值的话，会报错，故而在这里添加了一个If分支判断
+            If value IsNot Nothing Then
+                Call __setValue(obj, value)
+            End If
         End Sub
 
         ' Exceptions:

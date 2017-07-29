@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace IO
 
-    <PackageNamespace("Csv.HTML.Writer")>
+    <Package("Csv.HTML.Writer")>
     Public Module HTMLWriter
 
         <Extension> Public Function ToHTML(Of T As Class)(source As IEnumerable(Of T), Optional Title As String = "", Optional describ As String = "", Optional css As String = "") As String

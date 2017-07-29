@@ -32,8 +32,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.Calculus
-Imports Microsoft.VisualBasic.Mathematical.Interpolation
+Imports Microsoft.VisualBasic.Math.Calculus
+Imports Microsoft.VisualBasic.Math.Interpolation
 
 ''' <summary>
 ''' Methods for raw data processing
@@ -103,7 +103,7 @@ Public Module Normalization
             .x = array(Scan0).Value _
                 .ToArray(Function(x) x.Time),
             .y = array _
-                .Select(Function(x) New NamedValue(Of Double()) With {
+                .Select(Function(x) New NamedCollection(Of Double) With {
                     .Name = x.Name,
                     .Value = x.Value _
                         .ToArray(Function(o) o.Y)

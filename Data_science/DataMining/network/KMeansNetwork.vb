@@ -46,7 +46,7 @@ Namespace KMeans
         <Extension> Public Function ToNetwork(kmeans As IEnumerable(Of EntityLDM),
                                               Optional colors As Dictionary(Of String, Color) = Nothing,
                                               Optional defaultColor$ = "lightgray",
-                                              Optional cut As Func(Of Double, Boolean) = Nothing) As Network
+                                              Optional cut As Func(Of Double, Boolean) = Nothing) As NetworkTables
 
             Dim data As EntityLDM() = kmeans.ToArray
             Dim edges As New List(Of NetworkEdge)
@@ -116,7 +116,7 @@ Namespace KMeans
                 Next
             Next
 
-            Return New Network With {
+            Return New NetworkTables With {
                 .Edges = edges _
                 .RemoveSelfLoop _
                 .RemoveDuplicated(False, False), ' 相似度是无方向的

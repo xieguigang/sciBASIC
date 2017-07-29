@@ -38,7 +38,7 @@
 '
 
 Imports System.Numerics
-Imports Microsoft.VisualBasic.Mathematical
+Imports Microsoft.VisualBasic.Math
 
 ''' <summary>
 ''' Fourier transformation.

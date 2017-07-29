@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 
@@ -95,7 +96,7 @@ Public Module SchemasAPI
                         Dim value As Object = primaryField _
                             .BindProperty _
                             .GetValue(+o)
-                        Return Scripting.CStrSafe(value)
+                        Return CStrSafe(value)
                     End Function
         Else
             getID = Function(o) CStr(o.i)
@@ -149,7 +150,7 @@ Public Module SchemasAPI
             End If
 
             If Scripting.IsPrimitive(prop.Type) Then
-                Dim s$ = Scripting.CStrSafe(prop.GetValue(o))
+                Dim s$ = CStrSafe(prop.GetValue(o))
                 fill.Properties.Add(name, s)
             Else
                 ' 对于复杂类型，进行递归展开

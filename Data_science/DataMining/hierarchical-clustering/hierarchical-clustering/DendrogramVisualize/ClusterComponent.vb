@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Language
+Imports sys = System.Math
 
 '
 '*****************************************************************************
@@ -122,9 +123,9 @@ Namespace DendrogramVisualize
 
                 ' TODO Better use closure / callback here
                 '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = Math.Min(InitPoint.X, LinkPoint.X)
+                Dim val As Double = sys.Min(InitPoint.X, LinkPoint.X)
                 For Each child As ClusterComponent In Children
-                    val = Math.Min(val, child.RectMinX)
+                    val = sys.Min(val, child.RectMinX)
                 Next
                 Return val
             End Get
@@ -135,9 +136,9 @@ Namespace DendrogramVisualize
 
                 ' TODO Better use closure here
                 ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = Math.Min(InitPoint.Y, LinkPoint.Y)
+                Dim val As Double = sys.Min(InitPoint.Y, LinkPoint.Y)
                 For Each child As ClusterComponent In Children
-                    val = Math.Min(val, child.RectMinY)
+                    val = sys.Min(val, child.RectMinY)
                 Next
                 Return val
             End Get

@@ -28,7 +28,7 @@
 
 Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Text
+Imports System.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 
 Namespace HTML.CSS.Render
@@ -176,7 +176,7 @@ Namespace HTML.CSS.Render
                             Dim spannedwidth As Single = GetSpannedMinWidth(row, cell, col, colspan) + (colspan - 1) * HorizontalSpacing
 
 
-                            _columnMinWidths(affectcol) = Math.Max(_columnMinWidths(affectcol), cell.GetMinimumWidth() - spannedwidth)
+                            _columnMinWidths(affectcol) = Max(_columnMinWidths(affectcol), cell.GetMinimumWidth() - spannedwidth)
                         Next
 
                     Next
@@ -413,7 +413,7 @@ Namespace HTML.CSS.Render
             Else
                 For Each b As CssBox In AllRows
                     'Check trhough rows
-                    _columnCount = Math.Max(_columnCount, b.Boxes.Count)
+                    _columnCount = Max(_columnCount, b.Boxes.Count)
                 Next
             End If
 
@@ -517,7 +517,7 @@ Namespace HTML.CSS.Render
                         Dim col As Integer = GetCellRealColumnIndex(row, row.Boxes(i))
 
                         If Single.IsNaN(ColumnWidths(col)) AndAlso i < row.Boxes.Count AndAlso GetColSpan(row.Boxes(i)) = 1 Then
-                            _maxFullWidths(col) = Math.Max(_maxFullWidths(col), row.Boxes(i).GetFullWidth(g))
+                            _maxFullWidths(col) = Max(_maxFullWidths(col), row.Boxes(i).GetFullWidth(g))
                         End If
                     Next
                 Next
@@ -615,12 +615,12 @@ Namespace HTML.CSS.Render
                     Dim sb As SpacingBox = TryCast(cell, SpacingBox)
                     If sb IsNot Nothing Then
                         If sb.EndRow = currentrow Then
-                            maxBottom = Math.Max(maxBottom, sb.ExtendedBox.ActualBottom)
+                            maxBottom = Max(maxBottom, sb.ExtendedBox.ActualBottom)
                         End If
                     ElseIf rowspan = 1 Then
-                        maxBottom = Math.Max(maxBottom, cell.ActualBottom)
+                        maxBottom = Max(maxBottom, cell.ActualBottom)
                     End If
-                    maxRight = Math.Max(maxRight, cell.ActualRight)
+                    maxRight = Max(maxRight, cell.ActualRight)
                     curCol__2 += 1
                     curx = cell.ActualRight + HorizontalSpacing
                 Next
@@ -887,8 +887,7 @@ Namespace HTML.CSS.Render
         ''' <param name="b"></param>
         Private Function GetSpan(b As CssBox) As Integer
             Dim f As Single = CssValue.ParseNumber(b.GetAttribute("span"), 1)
-
-            Return Math.Max(1, Convert.ToInt32(f))
+            Return Max(1, Convert.ToInt32(f))
         End Function
 
         ''' <summary>

@@ -36,13 +36,12 @@ Namespace Emit.Delegates
 
     Public Module DelegateFactory
 
-        Private Const AddAccessor As String = "add"
-        Private Const Item As String = "Item"
+        Const AddAccessor As String = "add"
+        Const Item As String = "Item"
+        Const RemoveAccessor As String = "remove"
 
-        Private Const RemoveAccessor As String = "remove"
-        Private ReadOnly EventHandlerFactoryMethodInfo As MethodInfo = GetType(DelegateFactory).GetMethod("EventHandlerFactory")
-
-        Private ReadOnly EventsProxies As New Dictionary(Of WeakReference(Of Object), WeakReference(Of Object))()
+        ReadOnly EventHandlerFactoryMethodInfo As MethodInfo = GetType(DelegateFactory).GetMethod("EventHandlerFactory")
+        ReadOnly EventsProxies As New Dictionary(Of WeakReference(Of Object), WeakReference(Of Object))()
 
         Public Function Contructor(Of TDelegate As Class)() As TDelegate
             Dim source = GetFuncDelegateReturnType(Of TDelegate)()
@@ -585,6 +584,13 @@ Namespace Emit.Delegates
             Return PropertySet(Of TSource, TProperty)(propertyName)
         End Function
 
+        ''' <summary>
+        ''' 为指定类型的对象实例设置属性值，返回空值表名目标属性为一个只读属性或者写过程为私有访问类型
+        ''' </summary>
+        ''' <typeparam name="TProperty"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="propertyName"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function PropertySet(Of TProperty)(source As Type, propertyName As String) As Action(Of Object, TProperty)
             Dim propertyInfo = GetPropertyInfo(source, propertyName)
@@ -601,7 +607,16 @@ Namespace Emit.Delegates
                 propertyValueParam = Expression.Parameter(GetType(TProperty))
                 valueExpression = Expression.Convert(propertyValueParam, propertyInfo.PropertyType)
             End If
-            Return DirectCast(Expression.Lambda(Expression.[Call](Expression.Convert(sourceObjectParam, source), propertyInfo.SetMethod, valueExpression), sourceObjectParam, propertyValueParam).Compile(), Action(Of Object, TProperty))
+
+            Dim method = Expression.Lambda(
+                Expression.[Call](
+                    Expression.Convert(sourceObjectParam, source),
+                    propertyInfo.SetMethod,
+                    valueExpression),
+                sourceObjectParam,
+                propertyValueParam).Compile()
+
+            Return DirectCast(method, Action(Of Object, TProperty))
         End Function
 
         <Extension>

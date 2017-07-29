@@ -27,13 +27,77 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
+''' <summary>
+''' Extension methods for the .NET object sequence
+''' </summary>
 Public Module VectorExtensions
+
+    <Extension>
+    Public Function RepeatCalls(Of T)(factory As Func(Of T), n%, Optional sleep% = 0) As T()
+        Return n _
+            .SeqIterator _
+            .Select(Function(i)
+                        If sleep > 0 Then
+                            Call Thread.Sleep(sleep)
+                        End If
+
+                        Return factory()
+                    End Function) _
+            .ToArray
+    End Function
+
+    ''' <summary>
+    ''' Create a vector shadow of your data collection.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns>返回<see cref="Object"/>类型是为了简化语法</returns>
+    <Extension>
+    Public Function VectorShadows(Of T)(source As IEnumerable(Of T)) As Object
+        Return New VectorShadows(Of T)(source)
+    End Function
+
+    ''' <summary>
+    ''' 聚合，将nullable类型结构体转换为原来的值类型
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Coalesce(Of T As Structure)(source As IEnumerable(Of T?)) As IEnumerable(Of T)
+        Debug.Assert(source IsNot Nothing)
+        Return source.Where(Function(x) x.HasValue).[Select](Function(x) CType(x, T))
+    End Function
+
+    <Extension>
+    Public Function Sort(Of T)(source As IEnumerable(Of NamedValue(Of T)), by As Index(Of String), Optional throwNoOrder As Boolean = False) As NamedValue(Of T)()
+        Dim out As NamedValue(Of T)() = New NamedValue(Of T)(by.Count - 1) {}
+
+        For Each x In source
+            Dim i% = by(x.Name)
+
+            If i = -1 Then
+                If throwNoOrder Then
+                    Throw New InvalidExpressionException(x.Name & " was not found in the index value.")
+                Else
+                    Continue For
+                End If
+            Else
+                out(i) = x
+            End If
+        Next
+
+        Return out
+    End Function
 
     <Extension> Public Function GetRange(Of T)(vector As T(), index%, count%) As T()
         Dim fill As T() = New T(count - 1) {}
@@ -382,5 +446,5 @@ Public Module VectorExtensions
         ''' 包含在下一个分块之中的最开始的位置
         ''' </summary>
         NextFirst
-    End Enum     
+    End Enum
 End Module

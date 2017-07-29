@@ -1,5 +1,6 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports System.Math
 
 Namespace Drawing2D.Vector.Text.ASCIIArt
 
@@ -86,8 +87,8 @@ Namespace Drawing2D.Vector.Text.ASCIIArt
             Next
 
             ' Make sure generalsize is made of integers 
-            generalsize.Width = CInt(Math.Truncate(generalsize.Width))
-            generalsize.Height = CInt(Math.Truncate(generalsize.Height))
+            generalsize.Width = CInt(Truncate(generalsize.Width))
+            generalsize.Height = CInt(Truncate(generalsize.Height))
             ' and size defines a square to maintain image proportions
             ' as the ASCII transformation will be 1 pixel = 1 character Image
             ' thus substituting one pixel by one character image

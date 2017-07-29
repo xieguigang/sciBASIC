@@ -33,6 +33,8 @@ Namespace Language
     ''' </summary>
     Public Class float : Inherits Value(Of Double)
         Implements IComparable
+        Implements IConvertible
+        Implements IEquatable(Of Double)
 
         Sub New(x#)
             value = x#
@@ -57,6 +59,8 @@ Namespace Language
                 Throw New Exception($"Miss-match of type:  {GetType(float).FullName} --> {type.FullName}")
             End If
         End Function
+
+#Region "Numeric operators"
 
         ''' <summary>
         ''' n &lt; value &lt;= n2
@@ -124,5 +128,88 @@ Namespace Language
         Public Overloads Shared Operator *(a As float, b As float) As Double
             Return a.value * b.value
         End Operator
+#End Region
+
+#Region "Implements IConvertible"
+
+        Public Function GetTypeCode() As TypeCode Implements IConvertible.GetTypeCode
+            Return TypeCode.Double
+        End Function
+
+        Public Function ToBoolean(provider As IFormatProvider) As Boolean Implements IConvertible.ToBoolean
+            If value = 0R Then
+                Return False
+            Else
+                Return True
+            End If
+        End Function
+
+        Public Function ToChar(provider As IFormatProvider) As Char Implements IConvertible.ToChar
+            Return ChrW(CInt(value))
+        End Function
+
+        Public Function ToSByte(provider As IFormatProvider) As SByte Implements IConvertible.ToSByte
+            Return CSByte(value)
+        End Function
+
+        Public Function ToByte(provider As IFormatProvider) As Byte Implements IConvertible.ToByte
+            Return CByte(value)
+        End Function
+
+        Public Function ToInt16(provider As IFormatProvider) As Short Implements IConvertible.ToInt16
+            Return CShort(value)
+        End Function
+
+        Public Function ToUInt16(provider As IFormatProvider) As UShort Implements IConvertible.ToUInt16
+            Return CUShort(value)
+        End Function
+
+        Public Function ToInt32(provider As IFormatProvider) As Integer Implements IConvertible.ToInt32
+            Return CInt(value)
+        End Function
+
+        Public Function ToUInt32(provider As IFormatProvider) As UInteger Implements IConvertible.ToUInt32
+            Return CUInt(value)
+        End Function
+
+        Public Function ToInt64(provider As IFormatProvider) As Long Implements IConvertible.ToInt64
+            Return CLng(value)
+        End Function
+
+        Public Function ToUInt64(provider As IFormatProvider) As ULong Implements IConvertible.ToUInt64
+            Return CULng(value)
+        End Function
+
+        Public Function ToSingle(provider As IFormatProvider) As Single Implements IConvertible.ToSingle
+            Return CSng(value)
+        End Function
+
+        Public Function ToDouble(provider As IFormatProvider) As Double Implements IConvertible.ToDouble
+            Return value
+        End Function
+
+        Public Function ToDecimal(provider As IFormatProvider) As Decimal Implements IConvertible.ToDecimal
+            Return CDec(value)
+        End Function
+
+        Public Function ToDateTime(provider As IFormatProvider) As Date Implements IConvertible.ToDateTime
+            Return Date.FromBinary(CLng(value))
+        End Function
+
+        Public Overloads Function ToString(provider As IFormatProvider) As String Implements IConvertible.ToString
+            Return value.ToString(provider)
+        End Function
+
+        Public Function ToType(conversionType As Type, provider As IFormatProvider) As Object Implements IConvertible.ToType
+            Return CTypeDynamic(value, conversionType)
+        End Function
+#End Region
+
+#Region "Implements IEquatable(Of Double)"
+        Public Overloads Function Equals(other As Double) As Boolean Implements IEquatable(Of Double).Equals
+            Return value = other
+        End Function
+#End Region
+
     End Class
 End Namespace

@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
+Imports System.Math
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -66,7 +66,7 @@ Namespace Drawing2D.Vector.Shapes
 
         Public ReadOnly Property Radius As Single
             Get
-                Return Math.Min(Size.Width, Size.Height) / 2
+                Return Min(Size.Width, Size.Height) / 2
             End Get
         End Property
 

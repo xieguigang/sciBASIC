@@ -41,6 +41,8 @@ Namespace HTML.CSS
 
         Public Const AxisStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
         Public Const AxisGridStroke$ = "stroke: lightgray; stroke-width: 2px; stroke-dash: dash;"
+        Public Const HighlightStroke$ = "stroke: gray; stroke-width: 0.5px; stroke-dash: dash;"
+        Public Const StrongHighlightStroke$ = "stroke: black; stroke-width: 1px; stroke-dash: dash;"
 
         Public Property fill As String
         Public Property width As Single
@@ -75,6 +77,10 @@ Namespace HTML.CSS
             dash = style.DashStyle
         End Sub
 
+        ''' <summary>
+        ''' 生成CSS字符串值
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return $"stroke: {fill}; stroke-width: {width}px; stroke-dash: {dash};"
         End Function

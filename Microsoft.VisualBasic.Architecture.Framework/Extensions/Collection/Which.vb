@@ -81,6 +81,15 @@ Public NotInheritable Class Which
     End Function
 
     ''' <summary>
+    ''' Syntax helper for <see cref="VectorShadows(Of T)(IEnumerable(Of T))"/>
+    ''' </summary>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
+    Public Shared Function IsTrue(list As Object) As Integer()
+        Return Which.IsTrue(DirectCast(list, IEnumerable).Cast(Of Object).Select(Function(o) CBool(o)))
+    End Function
+
+    ''' <summary>
     ''' Returns all of the indices which is False
     ''' </summary>
     ''' <param name="v"></param>

@@ -69,20 +69,20 @@ Public Module MatrixExtensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToMatrix(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T(,)
-        Dim width As Integer = source.First.Count
         Dim array As IEnumerable(Of T)() = source.ToArray
+        Dim width As Integer = array(Scan0).Count
         Dim height As Integer = array.Length
-        Dim MAT As T(,) = New T(height - 1, width - 1) {}
+        Dim M As T(,) = New T(height - 1, width - 1) {}
 
         For i As Integer = 0 To height - 1
-            Dim row As T() = array(i).ToArray
+            Dim V As T() = array(i).ToArray
 
             For j As Integer = 0 To width - 1
-                MAT(i, j) = row(j)
+                M(i, j) = V(j)
             Next
         Next
 
-        Return MAT
+        Return M
     End Function
 
     ''' <summary>

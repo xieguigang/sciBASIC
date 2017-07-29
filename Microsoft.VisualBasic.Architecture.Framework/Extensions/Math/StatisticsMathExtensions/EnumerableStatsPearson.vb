@@ -30,7 +30,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Runtime.CompilerServices
 
-Namespace Mathematical.StatisticsMathExtensions
+Namespace Math.StatisticsMathExtensions
 
     Public Module EnumerableStatsPearson
         '
@@ -52,7 +52,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of System.Nullable(Of Decimal)), other As IEnumerable(Of System.Nullable(Of Decimal))) As System.Nullable(Of Decimal)
+        Public Function Pearson(source As IEnumerable(Of Decimal?), other As IEnumerable(Of Decimal?)) As Decimal
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
             If values.Any() Then
                 Return values.Pearson(other.Coalesce())
@@ -100,7 +100,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of System.Nullable(Of Double)), other As IEnumerable(Of System.Nullable(Of Double))) As System.Nullable(Of Double)
+        Public Function Pearson(source As IEnumerable(Of Double?), other As IEnumerable(Of Double?)) As Double
             Dim values As IEnumerable(Of Double) = source.Coalesce()
             If values.Any() Then
                 Return values.Pearson(other.Coalesce())
@@ -149,7 +149,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of System.Nullable(Of Single)), other As IEnumerable(Of System.Nullable(Of Single))) As System.Nullable(Of Single)
+        Public Function Pearson(source As IEnumerable(Of Single?), other As IEnumerable(Of Single?)) As Single
             Dim values As IEnumerable(Of Single) = source.Coalesce()
             If values.Any() Then
                 Return values.Pearson(other.Coalesce())
@@ -197,7 +197,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of System.Nullable(Of Integer)), other As IEnumerable(Of System.Nullable(Of Integer))) As System.Nullable(Of Double)
+        Public Function Pearson(source As IEnumerable(Of Integer?), other As IEnumerable(Of Integer?)) As Double
             Dim values As IEnumerable(Of Integer) = source.Coalesce()
             If values.Any() Then
                 Return values.Pearson(other.Coalesce())
@@ -248,7 +248,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of System.Nullable(Of Long)), other As IEnumerable(Of System.Nullable(Of Long))) As System.Nullable(Of Double)
+        Public Function Pearson(source As IEnumerable(Of Long?), other As IEnumerable(Of Long?)) As Double
             Dim values As IEnumerable(Of Long) = source.Coalesce()
             If values.Any() Then
                 Return values.Pearson(other.Coalesce())
@@ -308,7 +308,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Decimal))) As System.Nullable(Of Decimal)
+        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
             Return source.[Select](selector).Pearson(other.[Select](selector))
         End Function
         '
@@ -368,7 +368,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Double))) As System.Nullable(Of Double)
+        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
             Return source.[Select](selector).Pearson(other.[Select](selector))
         End Function
         '
@@ -425,7 +425,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Single))) As System.Nullable(Of Single)
+        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
             Return source.[Select](selector).Pearson(other.[Select](selector))
         End Function
         '
@@ -484,7 +484,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Integer))) As System.Nullable(Of Double)
+        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
             Return source.[Select](selector).Pearson(other.[Select](selector))
         End Function
         '
@@ -539,7 +539,7 @@ Namespace Mathematical.StatisticsMathExtensions
         '     The Pearson of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, System.Nullable(Of Long))) As System.Nullable(Of Double)
+        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
             Return source.[Select](selector).Pearson(other.[Select](selector))
         End Function
         '

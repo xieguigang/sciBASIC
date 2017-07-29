@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -36,6 +37,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports sys = System.Math
 
 Namespace Imaging
 
@@ -43,11 +45,28 @@ Namespace Imaging
     ''' GDI+
     ''' </summary>
     '''
-    <PackageNamespace("GDI+", Description:="GDI+ GDIPlus Extensions Module to provide some useful interface.",
+    <Package("GDI+", Description:="GDI+ GDIPlus Extensions Module to provide some useful interface.",
                   Publisher:="xie.guigang@gmail.com",
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GraphicsExtensions
+
+        <Extension> Public Function SaveIcon(ico As Icon, path$) As Boolean
+            Call path.ParentPath.MkDIR
+
+            Try
+                Using file As New FileStream(path, FileMode.OpenOrCreate)
+                    Call ico.Save(file)
+                    Call file.Flush()
+                End Using
+
+                Return True
+            Catch ex As Exception
+                Call App.LogException(New Exception(path, ex))
+            End Try
+
+            Return False
+        End Function
 
         <Extension>
         Public Function PointF(pf As Point) As PointF
@@ -572,7 +591,7 @@ Namespace Imaging
         <Extension> Public Function Vignette(Image As Image, y1 As Integer, y2 As Integer, Optional RenderColor As Color = Nothing) As Image
             Dim Gr = Image.CreateCanvas2D
             Dim Alpha As Integer = 0
-            Dim delta = (Math.PI / 2) / Math.Abs(y1 - y2)
+            Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
             Dim offset As Double = 0
 
             If RenderColor = Nothing OrElse RenderColor.IsEmpty Then
@@ -583,7 +602,7 @@ Namespace Imaging
                 Dim Color = System.Drawing.Color.FromArgb(Alpha, RenderColor.R, RenderColor.G, RenderColor.B)
                 Call Gr.Graphics.DrawLine(New Pen(Color), New Point(0, y), New Point(Gr.Width, y))
 
-                Alpha = CInt(255 * Math.Sin(offset) ^ 2)
+                Alpha = CInt(255 * sys.Sin(offset) ^ 2)
                 offset += delta
             Next
 
@@ -710,12 +729,15 @@ Namespace Imaging
             res = res.ImageCrop(region.Location, region.Size)
 
             If margin > 0 Then
-                Dim gr = New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
-                Call gr.Graphics.DrawImage(res, New Point(margin, margin))
-                res = gr.ImageResource
-            End If
+                With New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
+                    Call .Clear(blankColor)
+                    Call .DrawImage(res, New Point(margin, margin))
 
-            Return res
+                    Return .ImageResource
+                End With
+            Else
+                Return res
+            End If
         End Function
     End Module
 End Namespace

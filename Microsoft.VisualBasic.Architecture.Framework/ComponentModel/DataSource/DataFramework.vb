@@ -128,7 +128,7 @@ Namespace ComponentModel.DataSourceModel
             New Dictionary(Of Type, __StringTypeCaster) From {
  _
                 {GetType(String), Function(strValue As String) strValue},
-                {GetType(Boolean), AddressOf getBoolean},
+                {GetType(Boolean), AddressOf ParseBoolean},
                 {GetType(DateTime), Function(strValue As String) CType(strValue, DateTime)},
                 {GetType(Double), AddressOf Val},
                 {GetType(Integer), Function(strValue As String) CInt(strValue)},

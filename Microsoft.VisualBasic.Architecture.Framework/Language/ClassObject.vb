@@ -60,6 +60,17 @@ Namespace Language
         <Extension> Public Function ref(Of T)(x As T) As T
             Return x
         End Function
+
+        ''' <summary>
+        ''' Extension method for VisualBasic ``With`` anonymous variable syntax for determine that source reference is nothing or not?
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function IsNothing(Of T As Class)(x As T) As Boolean
+            Return x Is Nothing
+        End Function
     End Module
 
     ''' <summary>

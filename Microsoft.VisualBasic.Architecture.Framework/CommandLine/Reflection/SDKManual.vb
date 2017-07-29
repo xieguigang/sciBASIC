@@ -1,32 +1,31 @@
 ﻿#Region "Microsoft.VisualBasic::f4e76c17bc7e3242f9b262d020998aff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Grouping
@@ -37,13 +36,16 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer.Prefix
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.SoftwareToolkits
 Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
 
+    ''' <summary>
+    ''' Generates the help document in markdown format.
+    ''' (生成markdown格式的帮助文件)
+    ''' </summary>
     Module SDKManual
 
         Public ReadOnly Property DocPath As String = $"{App.ExecutablePath.TrimSuffix}.md"
@@ -71,12 +73,12 @@ Namespace CommandLine.Reflection
             Call sb.AppendLine(vbCrLf & vbCrLf & CLI.HelpSummary(False))
 
             Dim firstPage As String = sb.ToString
-            Dim pages As String() = {
+            Dim pages As List(Of String) = {
                 DebuggerArgs.DebuggerHelps,
                 CLI.Type.NamespaceEntry.Description
-            }
+            }.AsList
 
-            pages += LinqAPI.MakeList(Of String) <=
+            pages += LinqAPI.Exec(Of String) <=
  _
                 From api As SeqValue(Of APIEntryPoint)
                 In CLI.APIList.SeqIterator(offset:=1)
@@ -222,7 +224,7 @@ Namespace CommandLine.Reflection
 
                                     If lines.Length > 1 Then
                                         For Each line$ In lines.Skip(1)
-                                            Call sb.AppendLine(left & New String(" ", nameMaxLen + 6) & line$)
+                                            Call sb.AppendLine(left & New String(" "c, nameMaxLen + 6) & line$)
                                         Next
                                     End If
                                 Else
@@ -281,6 +283,12 @@ Namespace CommandLine.Reflection
                 Call sb.AppendLine()
                 Call print(g.value.Data, left:=indent)
             Next
+
+            If Not markdown Then
+                Call sb.AppendLine(New String("-"c, 100))
+                Call sb.AppendLine()
+                Call sb.AppendLine("   " & $"You can using ""{AssemblyName} ??<commandName>"" for getting more details command help.")
+            End If
 
             Return sb.ToString.Trim(ASCII.CR, ASCII.LF, " "c)
         End Function

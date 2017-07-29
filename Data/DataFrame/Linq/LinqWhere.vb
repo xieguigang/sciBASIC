@@ -181,7 +181,7 @@ Namespace IO.Linq
                 Case GetType(Double) : Return DirectCast(a, Double) > Val(test)
                 Case GetType(UInteger) : Return DirectCast(a, UInteger) > CInt(Val(test))
                 Case GetType(ULong) : Return DirectCast(a, ULong) > CLng(Val(test))
-                Case GetType(Boolean) : Return DirectCast(a, Boolean) > test.getBoolean
+                Case GetType(Boolean) : Return DirectCast(a, Boolean) > test.ParseBoolean
                 Case GetType(DateTime) : Return DirectCast(a, DateTime) > DateTime.Parse(test)
                 Case Else ' Object
                     Return a > test
@@ -203,7 +203,7 @@ Namespace IO.Linq
                 Case GetType(Double) : Return DirectCast(a, Double) < Val(test)
                 Case GetType(UInteger) : Return DirectCast(a, UInteger) < CInt(Val(test))
                 Case GetType(ULong) : Return DirectCast(a, ULong) < CLng(Val(test))
-                Case GetType(Boolean) : Return DirectCast(a, Boolean) < test.getBoolean
+                Case GetType(Boolean) : Return DirectCast(a, Boolean) < test.ParseBoolean
                 Case GetType(DateTime) : Return DirectCast(a, DateTime) < DateTime.Parse(test)
                 Case Else ' Object
                     Return a < test
@@ -225,7 +225,7 @@ Namespace IO.Linq
                 Case GetType(Double) : Return DirectCast(a, Double) = Val(test)
                 Case GetType(UInteger) : Return DirectCast(a, UInteger) = CInt(Val(test))
                 Case GetType(ULong) : Return DirectCast(a, ULong) = CLng(Val(test))
-                Case GetType(Boolean) : Return DirectCast(a, Boolean) = test.getBoolean
+                Case GetType(Boolean) : Return DirectCast(a, Boolean) = test.ParseBoolean
                 Case GetType(DateTime) : Return DirectCast(a, DateTime) = DateTime.Parse(test)
                 Case Else ' Object
                     Return a.Equals(test)

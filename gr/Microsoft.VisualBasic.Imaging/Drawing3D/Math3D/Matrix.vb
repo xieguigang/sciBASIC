@@ -28,17 +28,14 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Drawing3D.Math3D
 
     Public Class Matrix : Implements IEnumerable(Of Surface)
 
-        Public ReadOnly Property Matrix As New Vector3D With {
-            .X = New Vector,
-            .Y = New Vector,
-            .Z = New Vector
-        }
+        Public ReadOnly Property Matrix As Vector3D
+
         ReadOnly surfaces As New List(Of SurfaceVector)
 
         Public Structure SurfaceVector
@@ -48,13 +45,21 @@ Namespace Drawing3D.Math3D
 
         Sub New(surface As IEnumerable(Of Surface))
             Dim i As int = 0
+            Dim x As New List(Of Double)
+            Dim y As New List(Of Double)
+            Dim z As New List(Of Double)
 
             For Each s As Surface In surface
                 Dim v As New List(Of Integer)
 
                 For Each p3D As Point3D In s.vertices
-                    v += ++i
-                    Matrix.Add(p3D)
+                    v += ++i  ' 这个自增变量是为了生成后面的顶点坐标所使用的
+
+                    With p3D
+                        x += .X
+                        y += .Y
+                        z += .Z
+                    End With
                 Next
 
                 surfaces += New SurfaceVector With {
@@ -62,6 +67,8 @@ Namespace Drawing3D.Math3D
                     .vertices = v
                 }
             Next
+
+            Matrix = New Vector3D(New Vector(x), New Vector(y), New Vector(z))
         End Sub
 
         ''' <summary>

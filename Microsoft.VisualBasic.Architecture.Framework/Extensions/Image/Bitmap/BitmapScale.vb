@@ -28,8 +28,10 @@
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit
+Imports sys = System.Math
 
 Namespace Imaging
 
@@ -75,7 +77,7 @@ Namespace Imaging
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = Math.Abs(bmpData.Stride) * curBitmap.Height
+            Dim bytes As Integer = sys.Abs(bmpData.Stride) * curBitmap.Height
 
             Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
                 Dim byts As Marshal.Byte = rgbValues
@@ -135,7 +137,7 @@ Namespace Imaging
                 If newValue > 255 Then
                     newValue = 255
                 End If
-                contrastLookup(i) = CByte(Math.Truncate(newValue))
+                contrastLookup(i) = CByte(Truncate(newValue))
             Next
 
             Using bitmapdata As BitmapBuffer = BitmapBuffer.FromBitmap(bmp)
@@ -173,7 +175,7 @@ Namespace Imaging
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = Math.Abs(bmpData.Stride) * curBitmap.Height
+            Dim bytes As Integer = sys.Abs(bmpData.Stride) * curBitmap.Height
 
             Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
                 Dim byts As Marshal.Byte = rgbValues
@@ -187,7 +189,7 @@ Namespace Imaging
                     ' Get the blue channel
                     iB = rgbValues(0)
 
-                    Dim luma = CInt(Math.Truncate(iR * 0.3 + iG * 0.59 + iB * 0.11))
+                    Dim luma = CInt(Truncate(iR * 0.3 + iG * 0.59 + iB * 0.11))
                     ' gray pixel
                     byts(2) = luma
                     byts(1) = luma
@@ -209,7 +211,7 @@ Namespace Imaging
         ''' <returns></returns>
         <Extension>
         Public Function GrayScale(c As Color) As Integer
-            Dim luma% = CInt(Math.Truncate(c.R * 0.3 + c.G * 0.59 + c.B * 0.11))
+            Dim luma% = CInt(Truncate(c.R * 0.3 + c.G * 0.59 + c.B * 0.11))
             Return luma
         End Function
 

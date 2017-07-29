@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports sys = System.Math
 
 Namespace Drawing3D.Math3D
 
@@ -64,6 +65,11 @@ Namespace Drawing3D.Math3D
             Return out
         End Function
 
+        <Extension>
+        Public Function OffSets(polygon As IEnumerable(Of Point3D), offset As Point3D) As Point3D()
+            Return polygon.Select(Function(point) point - offset).ToArray
+        End Function
+
         ''' <summary>
         ''' 三维坐标系的原点``(0, 0, 0)``
         ''' </summary>
@@ -80,8 +86,8 @@ Namespace Drawing3D.Math3D
         Public Function RotateX([Me] As Point3D, origin As Point3D, angle As Double) As Point3D
             Dim pY As Double = [Me].Y - origin.Y
             Dim pZ As Double = [Me].Z - origin.Z
-            Dim cos As Double = Math.Cos(angle)
-            Dim sin As Double = Math.Sin(angle)
+            Dim cos As Double = sys.Cos(angle)
+            Dim sin As Double = sys.Sin(angle)
             Dim z As Double = pZ * cos - pY * sin
             Dim y As Double = pZ * sin + pY * cos
             pZ = z
@@ -97,8 +103,8 @@ Namespace Drawing3D.Math3D
         Public Function RotateY([Me] As Point3D, origin As Point3D, angle As Double) As Point3D
             Dim pX As Double = [Me].X - origin.X
             Dim pZ As Double = [Me].Z - origin.Z
-            Dim cos As Double = Math.Cos(angle)
-            Dim sin As Double = Math.Sin(angle)
+            Dim cos As Double = sys.Cos(angle)
+            Dim sin As Double = sys.Sin(angle)
             Dim x As Double = pX * cos - pZ * sin
             Dim z As Double = pX * sin + pZ * cos
             pX = x
@@ -114,8 +120,8 @@ Namespace Drawing3D.Math3D
         Public Function RotateZ([Me] As Point3D, origin As Point3D, angle As Double) As Point3D
             Dim pX As Double = [Me].X - origin.X
             Dim pY As Double = [Me].Y - origin.Y
-            Dim cos As Double = Math.Cos(angle)
-            Dim sin As Double = Math.Sin(angle)
+            Dim cos As Double = sys.Cos(angle)
+            Dim sin As Double = sys.Sin(angle)
             Dim x As Double = pX * cos - pY * sin
             Dim y As Double = pX * sin + pY * cos
             pX = x
@@ -167,7 +173,7 @@ Namespace Drawing3D.Math3D
             Dim dy As Double = p2.Y - p1.Y
             Dim dz As Double = p2.Z - p1.Z
 
-            Return Math.Sqrt(dx * dx + dy * dy + dz * dz)
+            Return sys.Sqrt(dx * dx + dy * dy + dz * dz)
         End Function
     End Module
 End Namespace

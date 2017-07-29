@@ -82,10 +82,32 @@ Namespace FileIO
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function OpenWriter(path As String, Optional encoding As Encoding = Nothing, Optional newLine As String = vbLf) As StreamWriter
-            Call "".SaveTo(path)
+        Public Function OpenWriter(path$,
+                                   Optional encoding As Encoding = Nothing,
+                                   Optional newLine As String = vbLf,
+                                   Optional append As Boolean = False) As StreamWriter
+            Dim file As FileStream
+            Dim writeNew = Function()
+                               Call "".SaveTo(path)
+                               Return New FileStream(path, FileMode.OpenOrCreate)
+                           End Function
 
-            Dim file As New FileStream(path, FileMode.OpenOrCreate)
+            If append Then
+                With path.ParentPath
+                    If Not .DirectoryExists Then
+                        Call .MkDIR
+                    End If
+
+                    If path.FileExists Then
+                        file = New FileStream(path, FileMode.Append)
+                    Else
+                        file = writeNew()
+                    End If
+                End With
+            Else
+                file = writeNew()
+            End If
+
             Dim writer As New StreamWriter(file, encoding) With {
                 .NewLine =
                 If(newLine Is Nothing OrElse newLine.Length = 0,

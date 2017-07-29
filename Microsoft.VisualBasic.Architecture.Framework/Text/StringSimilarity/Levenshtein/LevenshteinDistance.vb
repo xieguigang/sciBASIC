@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports sys = System.Math
 
 Namespace Text.Levenshtein
 
@@ -42,7 +43,7 @@ Namespace Text.Levenshtein
     ''' http://www.codeproject.com/Tips/697588/Levenshtein-Edit-Distance-Algorithm
     ''' </remarks>
     '''
-    <PackageNamespace("Distance.Levenshtein",
+    <Package("Distance.Levenshtein",
                   Description:="Implement the Levenshtein Edit Distance algorithm and result data visualization.",
                   Publisher:="furkanavcu",
                   Category:=APICategories.UtilityTools,
@@ -123,10 +124,10 @@ Vladimir I",
                         '  if the letters are same
                         distTable(i, j) = distTable(i - 1, j - 1)
                     Else ' if not add 1 to its neighborhoods and assign minumun of its neighborhoods
-                        Dim n As Double = Math.Min(
+                        Dim n As Double = sys.Min(
                             distTable(i - 1, j - 1) + cost.substitute(reference(i - 1), hypotheses(j - 1)),
                             distTable(i - 1, j) + cost.delete(reference(i - 1)))
-                        distTable(i, j) = Math.Min(n, distTable(i, j - 1) + cost.insert(hypotheses(j - 1)))
+                        distTable(i, j) = sys.Min(n, distTable(i, j - 1) + cost.insert(hypotheses(j - 1)))
                     End If
                 Next
             Next

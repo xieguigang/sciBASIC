@@ -39,7 +39,7 @@ Namespace ComponentModel.DataStructures
     ''' (这个对象的功能和List类似，但是这个对象的主要的作用是进行一些集合运算：使用AND求交集以及使用OR求并集的)
     ''' </summary>
     ''' 
-    <PackageNamespace("Set",
+    <Package("Set",
                       Category:=APICategories.UtilityTools,
                       Description:="Represents an unordered grouping of unique hetrogenous members.",
                       Url:="http://www.codeproject.com/Articles/10806/A-Generic-Set-Data-Structure",

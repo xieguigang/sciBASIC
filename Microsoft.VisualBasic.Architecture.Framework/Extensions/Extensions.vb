@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Globalization
 Imports System.Reflection
@@ -39,7 +38,6 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
@@ -51,6 +49,7 @@ Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports Microsoft.VisualBasic.Text.Similarity
+Imports sys = System.Math
 Imports v = System.Array
 
 #Const FRAMEWORD_CORE = 1
@@ -62,7 +61,7 @@ Imports v = System.Array
 ''' Common extension methods library for convenient the programming job.
 ''' </summary>
 ''' <remarks></remarks>
-<[PackageNamespace]("Framework.Extensions",
+<Package("Framework.Extensions",
                     Description:="The common extension methods module in this Microsoft.VisualBasic program assembly." &
                                  "Common extension methods library for convenient the programming job.",
                     Publisher:="xie.guigang@gmail.com",
@@ -84,7 +83,7 @@ Public Module Extensions
     ''' <param name="x#"></param>
     ''' <returns></returns>
     <Extension> Public Function Log2(x#) As Double
-        Return Math.Log(x, newBase:=2)
+        Return sys.Log(x, newBase:=2)
     End Function
 
     ''' <summary>
@@ -104,20 +103,6 @@ Public Module Extensions
     Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Return source.Select(Function(row) $"{row.Name}{ASCII.TAB}{row.Value}").SaveTo(path, encoding.CodePage)
     End Function
-
-    ''' <summary>
-    ''' <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
-    ''' </summary>
-    ''' <param name="s$"></param>
-    ''' <param name="args"></param>
-    Public Sub println(s$, ParamArray args As Object())
-        Dim out As String = sprintf(s, args)
-        Call Console.WriteLine(out)
-    End Sub
-
-    Public Sub println()
-        Call Console.WriteLine()
-    End Sub
 
     ''' <summary>
     ''' ``days, hh:mm:ss.ms``
@@ -264,7 +249,7 @@ Public Module Extensions
         Dim endTick As Long = App.NanoTime
         Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
         If echo Then
-            Call $"Work takes {t}ms...".__DEBUG_ECHO
+            Call $"[{work.Method.Name}] takes {t}ms...".__DEBUG_ECHO
         End If
         Return t
     End Function
@@ -671,9 +656,6 @@ Public Module Extensions
         Return sBuilder.ToString
     End Function
 
-    Const A As Integer = Asc("A")
-    Const Z As Integer = Asc("Z")
-
 #Disable Warning
 
     ''' <summary>
@@ -934,45 +916,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Free this variable pointer in the memory.(销毁本对象类型在内存之中的指针)
-    ''' </summary>
-    ''' <typeparam name="T">假若该对象类型实现了<see cref="System.IDisposable"></see>接口，则函数还会在销毁前调用该接口的销毁函数</typeparam>
-    ''' <param name="obj"></param>
-    ''' <remarks></remarks>
-    <Extension> Public Sub Free(Of T As Class)(ByRef obj As T)
-        If Not obj Is Nothing Then
-            Dim TypeInfo As Type = obj.GetType
-            If Array.IndexOf(TypeInfo.GetInterfaces, GetType(IDisposable)) > -1 Then
-                Try
-                    Call DirectCast(obj, IDisposable).Dispose()
-                Catch ex As Exception
-
-                End Try
-            End If
-        End If
-
-        obj = Nothing
-
-        ' Will not working on Linux platform
-        If App.IsMicrosoftPlatform Then
-            Call FlushMemory()
-        End If
-    End Sub
-
-    ''' <summary>
-    ''' Pause the console program.
-    ''' </summary>
-    ''' <param name="Prompted"></param>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Pause", Info:="Pause the console program.")>
-    Public Sub Pause(Optional Prompted As String = "Press any key to continute...")
-        Call InnerQueue.WaitQueue()
-        Call Console.WriteLine(Prompted)
-        Call Console.Read()
-    End Sub
-
-    ''' <summary>
     ''' All of the number value in the target array offset a integer value.
     ''' </summary>
     ''' <param name="array"></param>
@@ -1223,38 +1166,6 @@ Public Module Extensions
     End Function
 #End If
 
-    Public Declare Function SetProcessWorkingSetSize Lib "kernel32.dll" (process As IntPtr, minimumWorkingSetSize As Integer, maximumWorkingSetSize As Integer) As Integer
-
-    ''' <summary>
-    ''' Rabbish collection to free the junk memory.(垃圾回收)
-    ''' </summary>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("FlushMemory", Info:="Rabbish collection To free the junk memory.")>
-    Public Sub FlushMemory()
-        Call GC.Collect()
-        Call GC.WaitForPendingFinalizers()
-
-        If (Environment.OSVersion.Platform = PlatformID.Win32NT) Then
-            Call SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1)
-        End If
-    End Sub
-
-    <Extension> Public Function VectorCollectionToMatrix(Of T)(Vectors As IEnumerable(Of Generic.IEnumerable(Of T))) As T(,)
-        Dim MAT As T(,) = New T(Vectors.Count, Vectors.First.Count) {}
-        Dim Dimension As Integer = Vectors.First.Count
-
-        For i As Integer = 0 To MAT.GetLength(Dimension)
-            Dim Vector = Vectors(i)
-
-            For j As Integer = 0 To Dimension
-                MAT(i, j) = Vector(j)
-            Next
-        Next
-
-        Return MAT
-    End Function
-
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' Insert data or update the exists data in the dictionary, if the target object with <see cref="INamedValue.Key"/> 
@@ -1440,7 +1351,16 @@ Public Module Extensions
         Return 0
     End Function
 
-    <Extension> Public Function TryInvoke(Of T, TOut)(value As T, proc As Func(Of T, TOut), Optional [default] As TOut = Nothing) As TOut
+    ''' <summary>
+    ''' 尝试将目标对象放入到函数指针之中来运行，运行失败的时候回返回<paramref name="default"/>默认值
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="TOut"></typeparam>
+    ''' <param name="value"></param>
+    ''' <param name="proc"></param>
+    ''' <param name="[default]"></param>
+    ''' <returns></returns>
+    <Extension> Public Function TryInvoke(Of T, TOut)(proc As Func(Of T, TOut), value As T, Optional [default] As TOut = Nothing) As TOut
         Try
             Return proc(value)
         Catch ex As Exception
@@ -1497,70 +1417,6 @@ Public Module Extensions
         End If
     End Function
 #End If
-
-    ''' <summary>
-    ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property BooleanValues As SortedDictionary(Of String, Boolean) =
-        New SortedDictionary(Of String, Boolean) From {
- _
-            {"t", True}, {"true", True},
-            {"1", True},
-            {"y", True}, {"yes", True}, {"ok", True},
-            {"ok!", True},
-            {"success", True}, {"successful", True}, {"successfully", True}, {"succeeded", True},
-            {"right", True},
-            {"wrong", False},
-            {"failure", False}, {"failures", False},
-            {"exception", False},
-            {"error", False}, {"err", False},
-            {"f", False}, {"false", False},
-            {"0", False},
-            {"n", False}, {"no", False}
-        }
-
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
-    ''' (请注意，空值字符串为False)
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("Get.Boolean")> <Extension> Public Function getBoolean(str As String) As Boolean
-#Else
-    <Extension> Public Function get_BooleanValue(str As String) As Boolean
-#End If
-        If String.IsNullOrEmpty(str) Then
-            Return False
-        End If
-
-        str = str.ToLower.Trim
-        If BooleanValues.ContainsKey(key:=str) Then
-            Return BooleanValues(str)
-        Else
-#If DEBUG Then
-            Call $"""{str}"" {NameOf(System.Boolean)} (null_value_definition)  ==> False".__DEBUG_ECHO
-#End If
-            Return False
-        End If
-    End Function
-
-    <Extension> <ExportAPI("Get.Boolean")> Public Function getBoolean(ch As Char) As Boolean
-        If ch = ASCII.NUL Then
-            Return False
-        End If
-
-        Select Case ch
-            Case "y"c, "Y"c, "t"c, "T"c, "1"c
-                Return True
-            Case "n"c, "N"c, "f"c, "F"c, "0"c
-                Return False
-        End Select
-
-        Return True
-    End Function
 
     ''' <summary>
     ''' 这个是一个安全的方法，假若下标越界或者目标数据源为空的话，则会返回空值
@@ -1705,7 +1561,7 @@ Public Module Extensions
     <Extension> Public Function Shuffles(Of T)(source As IEnumerable(Of T)) As T()
         Dim tmp As New List(Of T)(source)
         Dim buf As T() = New T(tmp.Count - 1) {}
-        Dim rand As New Random(Seed:=Mathematical.Seed)
+        Dim rand As New Random(Seed:=Math.Seed)
         Dim l As Integer = tmp.Count - 1
 
         For i As Integer = 0 To buf.Length - 1
@@ -1876,6 +1732,10 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToStringArray(Of T)(source As IEnumerable(Of T)) As String()
+        If source Is Nothing Then
+            Return {}
+        End If
+
         Dim LQuery$() = LinqAPI.Exec(Of String) <=
             From item As T
             In source

@@ -1,34 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::03ef19f2d9dc69d4470e807f7a1ec41e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Java\JavaMath.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports Microsoft.VisualBasic
-Imports System
-Imports System.Diagnostics
+Imports sys = System.Math
 
 '
 ' * Copyright (c) 1994, 2013, Oracle and/or its affiliates. All rights reserved.
@@ -157,7 +155,7 @@ Namespace Language.Java
         ''' <param name="a">   an angle, in radians. </param>
         ''' <returns>  the sine of the argument. </returns>
         Public Function sin(a As Double) As Double
-            Return Math.Sin(a) ' default impl. delegates to StrictMath
+            Return sys.Sin(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -171,7 +169,7 @@ Namespace Language.Java
         ''' <param name="a">   an angle, in radians. </param>
         ''' <returns>  the cosine of the argument. </returns>
         Public Function cos(a As Double) As Double
-            Return Math.Cos(a) ' default impl. delegates to StrictMath
+            Return sys.Cos(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -187,7 +185,7 @@ Namespace Language.Java
         ''' <param name="a">   an angle, in radians. </param>
         ''' <returns>  the tangent of the argument. </returns>
         Public Function tan(a As Double) As Double
-            Return Math.Tan(a) ' default impl. delegates to StrictMath
+            Return sys.Tan(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -204,7 +202,7 @@ Namespace Language.Java
         ''' <param name="a">   the value whose arc sine is to be returned. </param>
         ''' <returns>  the arc sine of the argument. </returns>
         Public Function asin(a As Double) As Double
-            Return Math.Asin(a) ' default impl. delegates to StrictMath
+            Return sys.Asin(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -219,7 +217,7 @@ Namespace Language.Java
         ''' <param name="a">   the value whose arc cosine is to be returned. </param>
         ''' <returns>  the arc cosine of the argument. </returns>
         Public Function acos(a As Double) As Double
-            Return Math.Acos(a) ' default impl. delegates to StrictMath
+            Return sys.Acos(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -235,7 +233,7 @@ Namespace Language.Java
         ''' <param name="a">   the value whose arc tangent is to be returned. </param>
         ''' <returns>  the arc tangent of the argument. </returns>
         Public Function atan(a As Double) As Double
-            Return Math.Atan(a) ' default impl. delegates to StrictMath
+            Return sys.Atan(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -282,7 +280,7 @@ Namespace Language.Java
         ''' <returns>  the value _e_{@code a},
         '''          where _e_ is the base of the natural logarithms. </returns>
         Public Function exp(a As Double) As Double
-            Return Math.Exp(a) ' default impl. delegates to StrictMath
+            Return sys.Exp(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -302,7 +300,7 @@ Namespace Language.Java
         ''' <returns>  the value ln {@code a}, the natural logarithm of
         '''          {@code a}. </returns>
         Public Function log(a As Double) As Double
-            Return Math.Log(a) ' default impl. delegates to StrictMath
+            Return sys.Log(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -326,7 +324,7 @@ Namespace Language.Java
         ''' <returns>  the base 10 logarithm of  {@code a}.
         ''' @since 1.5 </returns>
         Public Function log10(a As Double) As Double
-            Return Math.Log10(a) ' default impl. delegates to StrictMath
+            Return sys.Log10(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -346,11 +344,11 @@ Namespace Language.Java
         ''' <returns>  the positive square root of {@code a}.
         '''          If the argument is NaN or less than zero, the result is NaN. </returns>
         Public Function sqrt(a As Double) As Double
-            Return Math.Sqrt(a) ' default impl. delegates to StrictMath
+            Return sys.Sqrt(a) ' default impl. delegates to StrictMath
             ' Note that hardware sqrt instructions
             ' frequently can be directly used by JITs
             ' and should be much faster than doing
-            ' Math.sqrt in software.
+            ' sys.sqrt in software.
         End Function
 
         '''' <summary>
@@ -379,7 +377,7 @@ Namespace Language.Java
         '''' <returns>  the cube root of {@code a}.
         '''' @since 1.5 </returns>
         'Public Function cbrt(a As Double) As Double
-        '    Return Math.cbrt(a)
+        '    Return sys.cbrt(a)
         'End Function
 
         ''' <summary>
@@ -404,7 +402,7 @@ Namespace Language.Java
         ''' <returns>  the remainder when {@code f1} is divided by
         '''          {@code f2}. </returns>
         Public Function IEEEremainder(f1 As Double, f2 As Double) As Double
-            Return Math.IEEERemainder(f1, f2) ' delegate to StrictMath
+            Return sys.IEEERemainder(f1, f2) ' delegate to StrictMath
         End Function
 
         ''' <summary>
@@ -417,7 +415,7 @@ Namespace Language.Java
         ''' positive zero or negative zero, then the result is the same as
         ''' the argument.  + If the argument value is less than zero but
         ''' greater than -1.0, then the result is negative zero. Note
-        ''' that the value of {@code Math.ceil(x)} is exactly the
+        ''' that the value of {@code sys.ceil(x)} is exactly the
         ''' value of {@code -Math.floor(-x)}.
         ''' 
         ''' </summary>
@@ -426,7 +424,7 @@ Namespace Language.Java
         '''          floating-point value that is greater than or equal to
         '''          the argument and is equal to a mathematical  java.lang.[Integer]. </returns>
         Public Function ceil(a As Double) As Double
-            Return Math.Ceiling(a) ' default impl. delegates to StrictMath
+            Return sys.Ceiling(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -444,7 +442,7 @@ Namespace Language.Java
         '''          floating-point value that less than or equal to the argument
         '''          and is equal to a mathematical  java.lang.[Integer]. </returns>
         Public Function floor(a As Double) As Double
-            Return Math.Floor(a) ' default impl. delegates to StrictMath
+            Return sys.Floor(a) ' default impl. delegates to StrictMath
         End Function
 
         '''' <summary>
@@ -462,7 +460,7 @@ Namespace Language.Java
         '''' <returns>  the closest floating-point value to {@code a} that is
         ''''          equal to a mathematical  java.lang.[Integer]. </returns>
         'Public Function rint(a As Double) As Double
-        '    Return Math.rint(a) ' default impl. delegates to StrictMath
+        '    Return sys.rint(a) ' default impl. delegates to StrictMath
         'End Function
 
         ''' <summary>
@@ -517,7 +515,7 @@ Namespace Language.Java
         '''          in polar coordinates that corresponds to the point
         '''          (_x_, _y_) in Cartesian coordinates. </returns>
         Public Function atan2(y As Double, x As Double) As Double
-            Return Math.Atan2(y, x) ' default impl. delegates to StrictMath
+            Return sys.Atan2(y, x) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -643,7 +641,7 @@ Namespace Language.Java
         ''' <param name="b">   the exponent. </param>
         ''' <returns>  the value {@code a}<sup>{@code b}</sup>. </returns>
         Public Function pow(a As Double, b As Double) As Double
-            Return Math.Pow(a, b) ' default impl. delegates to StrictMath
+            Return sys.Pow(a, b) ' default impl. delegates to StrictMath
         End Function
 
         '''' <summary>
@@ -853,8 +851,8 @@ Namespace Language.Java
         ''' @since 1.8 </exception>
         Public Function multiplyExact(x As Long, y As Long) As Long
             Dim r As Long = x * y
-            Dim ax As Long = Math.Abs(x)
-            Dim ay As Long = Math.Abs(y)
+            Dim ax As Long = sys.Abs(x)
+            Dim ay As Long = sys.Abs(y)
             If (CInt(CUInt((ax Or ay)) >> 31 <> 0)) Then
                 ' Some bits greater than 2^31 that might cause overflow
                 ' Check the result using the divide operator
@@ -1320,7 +1318,7 @@ Namespace Language.Java
 
         '    Select Case exp
         '        Case sun.misc.DoubleConsts.MAX_EXPONENT + 1 ' NaN or infinity
-        '            Return Math.Abs(d)
+        '            Return sys.Abs(d)
 
         '        Case sun.misc.DoubleConsts.MIN_EXPONENT - 1 ' zero or subnormal
         '            Return Java.lang.[Double].MIN_VALUE
@@ -1368,7 +1366,7 @@ Namespace Language.Java
 
         '    Select Case exp
         '        Case sun.misc.FloatConsts.MAX_EXPONENT + 1 ' NaN or infinity
-        '            Return Math.Abs(f)
+        '            Return sys.Abs(f)
 
         '        Case sun.misc.FloatConsts.MIN_EXPONENT - 1 ' zero or subnormal
         '            Return sun.misc.FloatConsts.MIN_VALUE
@@ -1454,7 +1452,7 @@ Namespace Language.Java
         ''' <returns>  The hyperbolic sine of {@code x}.
         ''' @since 1.5 </returns>
         Public Function sinh(x As Double) As Double
-            Return Math.Sinh(x)
+            Return sys.Sinh(x)
         End Function
 
         ''' <summary>
@@ -1481,7 +1479,7 @@ Namespace Language.Java
         ''' <returns>  The hyperbolic cosine of {@code x}.
         ''' @since 1.5 </returns>
         Public Function cosh(x As Double) As Double
-            Return Math.Cosh(x)
+            Return sys.Cosh(x)
         End Function
 
         ''' <summary>
@@ -1519,7 +1517,7 @@ Namespace Language.Java
         ''' <returns>  The hyperbolic tangent of {@code x}.
         ''' @since 1.5 </returns>
         Public Function tanh(x As Double) As Double
-            Return Math.Tanh(x)
+            Return sys.Tanh(x)
         End Function
 
         '''' <summary>
@@ -1547,7 +1545,7 @@ Namespace Language.Java
         '''' without intermediate overflow or underflow
         '''' @since 1.5 </returns>
         'Public Function hypot(x As Double, y As Double) As Double
-        '    Return Math.hypot(x, y)
+        '    Return sys.hypot(x, y)
         'End Function
 
         '''' <summary>
@@ -1584,7 +1582,7 @@ Namespace Language.Java
         '''' <returns>  the value _e_<sup>{@code x}</sup> - 1.
         '''' @since 1.5 </returns>
         'Public Function expm1(x As Double) As Double
-        '    Return Math.expm1(x)
+        '    Return sys.expm1(x)
         'End Function
 
         ''' <summary>
@@ -1625,8 +1623,8 @@ Namespace Language.Java
                 Return [Double].NaN
             End If
 
-            If Math.Abs(x) > 0.0001 Then
-                Return Math.Log(1.0 + x)
+            If sys.Abs(x) > 0.0001 Then
+                Return sys.Log(1.0 + x)
             End If
 
             ' Use Taylor approx. log(1 + x) = x - x^2/2 with error roughly x^3/3
@@ -1643,8 +1641,8 @@ Namespace Language.Java
                 Return [Double].NaN
             End If
 
-            If Math.Abs(x) > 0.0001 Then
-                Return Math.Log(1.0 - x)
+            If sys.Abs(x) > 0.0001 Then
+                Return sys.Log(1.0 - x)
             End If
 
             ' Use Taylor approx. log(1 + x) = x - x^2/2 with error roughly x^3/3
@@ -2151,11 +2149,11 @@ Namespace Language.Java
         '    ' Make sure scaling factor is in a reasonable range
 
         '    If scaleFactor < 0 Then
-        '        scaleFactor = Math.Max(scaleFactor, -MAX_SCALE)
+        '        scaleFactor = sys.Max(scaleFactor, -MAX_SCALE)
         '        scale_increment = -512
         '        exp_delta = twoToTheDoubleScaleDown
         '    Else
-        '        scaleFactor = Math.Min(scaleFactor, MAX_SCALE)
+        '        scaleFactor = sys.Min(scaleFactor, MAX_SCALE)
         '        scale_increment = 512
         '        exp_delta = twoToTheDoubleScaleUp
         '    End If
@@ -2212,7 +2210,7 @@ Namespace Language.Java
         '    Dim MAX_SCALE As Integer = sun.misc.FloatConsts.MAX_EXPONENT + -sun.misc.FloatConsts.MIN_EXPONENT + sun.misc.FloatConsts.SIGNIFICAND_WIDTH + 1
 
         '    ' Make sure scaling factor is in a reasonable range
-        '    scaleFactor = Math.Max(System.Math.Min(scaleFactor, MAX_SCALE), -MAX_SCALE)
+        '    scaleFactor = sys.Max(System.Math.Min(scaleFactor, MAX_SCALE), -MAX_SCALE)
 
         '    '        
         '    '         * Since + MAX_SCALE for float fits well within the double

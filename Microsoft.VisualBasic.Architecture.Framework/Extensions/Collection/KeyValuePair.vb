@@ -39,6 +39,15 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    <Extension> Public Function AsNamedVector(Of T)(groups As IEnumerable(Of IGrouping(Of String, T))) As IEnumerable(Of NamedCollection(Of T))
+        Return groups.Select(Function(group)
+                                 Return New NamedCollection(Of T) With {
+                                    .Name = group.Key,
+                                    .Value = group.ToArray
+                                 }
+                             End Function)
+    End Function
+
     ''' <summary>
     ''' Removes the target key in the dictionary table, and then gets the removed value.
     ''' (删除字典之中的指定的键值对，然后返回被删除的数据值)
@@ -250,6 +259,13 @@ Public Module KeyValuePairExtensions
         table = out
     End Sub
 
+    ''' <summary>
+    ''' 按照键名对字典进行重新排序
+    ''' </summary>
+    ''' <typeparam name="V"></typeparam>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="desc">默认为从小到大的升序排序</param>
     <Extension> Public Sub SortByKey(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
         Dim orders As V()
         Dim out As New Dictionary(Of V, T)

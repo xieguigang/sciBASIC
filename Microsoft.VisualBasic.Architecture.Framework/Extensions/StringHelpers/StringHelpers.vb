@@ -44,7 +44,7 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' <summary>
 ''' The extensions module for facilities the string operations.
 ''' </summary>
-<PackageNamespace("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
+<Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
     ''' <summary>
@@ -605,6 +605,26 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
+    ''' 将正则匹配成功的字符串替换为指定的目标字符串：<paramref name="replaceAs"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <param name="replaceAs$"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function StringReplace(s$, pattern$, replaceAs$, Optional opt As RegexOptions = RegexICSng) As String
+        Dim targets$() = r.Matches(s, pattern, opt).ToArray
+        Dim sb As New StringBuilder(s)
+
+        For Each t As String In targets
+            Call sb.Replace(t, replaceAs)
+        Next
+
+        Return sb.ToString
+    End Function
+
+    ''' <summary>
     ''' String collection tokenized by a certain delimiter string element.
     ''' </summary>
     ''' <param name="source"></param>
@@ -796,36 +816,36 @@ Public Module StringHelpers
     ''' Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，
     ''' 所以可以使用这个函数来进行统一的分行操作)
     ''' </summary>
-    ''' <param name="__text"></param>
+    ''' <param name="s"></param>
     ''' <returns></returns>
     ''' <param name="trim">
     ''' Set <see cref="System.Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
     ''' </param>
     <ExportAPI("lTokens")>
-    <Extension> Public Function lTokens(__text As String, Optional trim As Boolean = True) As String()
-        If String.IsNullOrEmpty(__text) Then
+    <Extension> Public Function lTokens(s$, Optional trim As Boolean = True) As String()
+        If String.IsNullOrEmpty(s) Then
             Return New String() {}
         End If
 
-        Dim lf As Boolean = InStr(__text, vbLf) > 0
-        Dim cr As Boolean = InStr(__text, vbCr) > 0
+        Dim lf As Boolean = InStr(s, vbLf) > 0
+        Dim cr As Boolean = InStr(s, vbCr) > 0
 
         If Not (cr OrElse lf) Then  ' 没有分行符，则只有一行
-            Return New String() {__text}
+            Return New String() {s}
         End If
 
         If lf AndAlso cr Then
             If trim Then  ' 假若将这个换行替换掉，在Csv文件读取模块会出现bug。。。。。不清楚是怎么回事
-                __text = __text.Replace(vbCr, "")
+                s = s.Replace(vbCr, "")
             End If
-            Return Text.Splitter.Split(__text, vbLf, True)
+            Return Splitter.Split(s, vbLf, True)
         End If
 
         If lf Then
-            Return Text.Splitter.Split(__text, vbLf, True)
+            Return Splitter.Split(s, vbLf, True)
         End If
 
-        Return Text.Splitter.Split(__text, vbCr, True)
+        Return Splitter.Split(s, vbCr, True)
     End Function
 
     ''' <summary>

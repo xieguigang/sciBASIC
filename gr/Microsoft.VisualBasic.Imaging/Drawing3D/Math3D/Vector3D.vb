@@ -27,8 +27,9 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Language
+Imports sys = System.Math
 
 Namespace Drawing3D.Math3D
 
@@ -94,12 +95,6 @@ Namespace Drawing3D.Math3D
             End With
         End Sub
 
-        Public Sub Add(p3D As Point3D)
-            Call X.Add(p3D.X)
-            Call Y.Add(p3D.Y)
-            Call Z.Add(p3D.Z)
-        End Sub
-
         ''' <summary>
         ''' 
         ''' </summary>
@@ -109,8 +104,8 @@ Namespace Drawing3D.Math3D
             Dim rad As Single, cosa As Single, sina As Single, yn As Vector, zn As Vector
 
             rad = angle * Math.PI / 180
-            cosa = Math.Cos(rad)
-            sina = Math.Sin(rad)
+            cosa = sys.Cos(rad)
+            sina = sys.Sin(rad)
             yn = Me.Y * cosa - Me.Z * sina
             zn = Me.Y * sina + Me.Z * cosa
             Return New Vector3D(New Vector(Me.X), yn, zn)
@@ -120,8 +115,8 @@ Namespace Drawing3D.Math3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Vector, Zn As Vector
 
             rad = angle * Math.PI / 180
-            cosa = Math.Cos(rad)
-            sina = Math.Sin(rad)
+            cosa = sys.Cos(rad)
+            sina = sys.Sin(rad)
             Zn = Me.Z * cosa - Me.X * sina
             Xn = Me.Z * sina + Me.X * cosa
 
@@ -132,8 +127,8 @@ Namespace Drawing3D.Math3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Vector, Yn As Vector
 
             rad = angle * Math.PI / 180
-            cosa = Math.Cos(rad)
-            sina = Math.Sin(rad)
+            cosa = sys.Cos(rad)
+            sina = sys.Sin(rad)
             Xn = Me.X * cosa - Me.Y * sina
             Yn = Me.X * sina + Me.Y * cosa
             Return New Vector3D(Xn, Yn, New Vector(Me.Z))

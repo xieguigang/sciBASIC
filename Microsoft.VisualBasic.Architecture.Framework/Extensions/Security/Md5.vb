@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace SecurityString
 
-    <PackageNamespace("Md5Hash", Publisher:="Microsoft Corp.", Description:="Represents the abstract class from which all implementations of the System.Security.Cryptography.MD5 hash algorithm inherit.")>
+    <Package("Md5Hash", Publisher:="Microsoft Corp.", Description:="Represents the abstract class from which all implementations of the System.Security.Cryptography.MD5 hash algorithm inherit.")>
     Public Module MD5Hash
 
         <ExportAPI("Uid")>

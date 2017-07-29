@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Vector.Shapes
@@ -53,12 +54,12 @@ Namespace Drawing2D.Vector.Shapes
         Public Shared Function PathData(topleft As Point, size As SizeF) As Point()
             Dim pts(9) As Point
             Dim center As New Point(topleft.X + size.Width / 2, topleft.Y + size.Height / 2)
-            Dim radius As Integer = Math.Min(size.Width, size.Height) / 2
+            Dim radius As Integer = Min(size.Width, size.Height) / 2
 
             pts(0) = New Point(center.X, center.Y - radius)
             pts(1) = RotateTheta(pts(0), center, 36.0)
 
-            Dim len As Single = radius * Math.Sin((18.0 * Math.PI / 180.0)) / Math.Sin((126.0 * Math.PI / 180.0))
+            Dim len As Single = radius * Sin((18.0 * Math.PI / 180.0)) / Sin((126.0 * Math.PI / 180.0))
 
             pts(1).X = CInt(center.X + len * (pts(1).X - center.X) / radius)
             pts(1).Y = CInt(center.Y + len * (pts(1).Y - center.Y) / radius)
@@ -79,8 +80,8 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="theta"></param>
         ''' <returns></returns>
         Public Shared Function RotateTheta(pt As Point, center As Point, theta As Single) As Point
-            Dim x As Integer = CInt(center.X + (pt.X - center.X) * Math.Cos((theta * Math.PI / 180)) - (pt.Y - center.Y) * Math.Sin((theta * Math.PI / 180)))
-            Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Math.Sin((theta * Math.PI / 180)) + (pt.Y - center.Y) * Math.Cos((theta * Math.PI / 180)))
+            Dim x As Integer = CInt(center.X + (pt.X - center.X) * Cos((theta * Math.PI / 180)) - (pt.Y - center.Y) * Sin((theta * Math.PI / 180)))
+            Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Sin((theta * Math.PI / 180)) + (pt.Y - center.Y) * Cos((theta * Math.PI / 180)))
 
             Return New Point(x, y)
         End Function

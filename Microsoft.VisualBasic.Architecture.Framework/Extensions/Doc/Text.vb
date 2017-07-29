@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 
-<PackageNamespace("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
+<Package("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
 
     ''' <summary>
@@ -108,12 +108,16 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function OpenWriter(path$, Optional encoding As Encodings = Encodings.UTF8, Optional newLine$ = ASCII.LF) As StreamWriter
-        Return FileIO.OpenWriter(path, encoding.CodePage, newLine)
+    Public Function OpenWriter(path$,
+                               Optional encoding As Encodings = Encodings.UTF8,
+                               Optional newLine$ = ASCII.LF,
+                               Optional append As Boolean = False) As StreamWriter
+        Return FileIO.OpenWriter(path, encoding.CodePage, newLine, append)
     End Function
 
     ''' <summary>
-    ''' 通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作
+    ''' Reading a super large size text file through stream method.
+    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
@@ -144,7 +148,7 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 
+    ''' 自动进行判断解决所读取的数据源，当<paramref name="handle"/>为文件路径的时候，会读取文件内容，反之则会直接返回<paramref name="handle"/>的内容
     ''' </summary>
     ''' <param name="handle$">文本内容或者文件路径</param>
     ''' <returns></returns>

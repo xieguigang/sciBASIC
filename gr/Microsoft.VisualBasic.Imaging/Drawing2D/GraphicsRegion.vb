@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::c9c648467b02361d3693073df5639a6f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -46,9 +46,31 @@ Namespace Drawing2D
         ''' </summary>
         Public Padding As Padding
 
+        Sub New(size As Size, padding As Padding)
+            Me.Size = size
+            Me.Padding = padding
+        End Sub
+
+        Sub New(padding As Padding, size As Size)
+            Me.Size = size
+            Me.Padding = padding
+        End Sub
+
         Public ReadOnly Property Bottom As Integer
             Get
                 Return Size.Height - Padding.Bottom
+            End Get
+        End Property
+
+        Public ReadOnly Property Width As Integer
+            Get
+                Return Size.Width
+            End Get
+        End Property
+
+        Public ReadOnly Property Height As Integer
+            Get
+                Return Size.Height
             End Get
         End Property
 
@@ -74,6 +96,22 @@ Namespace Drawing2D
         Public ReadOnly Property EntireArea As Rectangle
             Get
                 Return New Rectangle(New Point, Size)
+            End Get
+        End Property
+
+        Public ReadOnly Property XRange As String
+            Get
+                With Padding
+                    Return $"{ .Left},{Width - .Right}"
+                End With
+            End Get
+        End Property
+
+        Public ReadOnly Property YRange As String
+            Get
+                With Padding
+                    Return $"{ .Top},{Height - .Bottom}"
+                End With
             End Get
         End Property
 

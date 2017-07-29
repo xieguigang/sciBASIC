@@ -39,8 +39,8 @@ Namespace NeuralNetwork.Models
     ''' </summary>
     Public Module NetworkModelAPI
 
-        <Extension> Public Function VisualizeModel(net As NeuralNetwork.Network) As FileStream.Network
-            Dim network As New FileStream.Network
+        <Extension> Public Function VisualizeModel(net As NeuralNetwork.Network) As FileStream.NetworkTables
+            Dim network As New FileStream.NetworkTables
             Dim hash = (New List(Of Neuron) + net.HiddenLayer + net.InputLayer + net.OutputLayer) _
                 .SeqIterator _
                 .ToDictionary(Function(x) x.value,

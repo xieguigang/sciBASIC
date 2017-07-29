@@ -38,7 +38,7 @@ Imports Microsoft.VisualBasic.Text
 ''' <summary>
 ''' IO函数拓展
 ''' </summary>
-<PackageNamespace("IO")>
+<Package("IO")>
 Public Module IOExtensions
 
     ''' <summary>

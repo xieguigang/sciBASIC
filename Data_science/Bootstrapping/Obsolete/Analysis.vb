@@ -34,7 +34,7 @@
 'Imports Microsoft.VisualBasic.Language
 'Imports Microsoft.VisualBasic.Language.UnixBash
 'Imports Microsoft.VisualBasic.Linq
-'Imports Microsoft.VisualBasic.Mathematical.Calculus
+'Imports Microsoft.VisualBasic.Math.Calculus
 'Imports Microsoft.VisualBasic.Serialization.JSON
 
 '''' <summary>

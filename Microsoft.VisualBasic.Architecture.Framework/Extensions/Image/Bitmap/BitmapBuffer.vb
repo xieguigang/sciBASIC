@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports sys = System.Math
 
 Namespace Imaging
 
@@ -133,7 +134,7 @@ Namespace Imaging
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = Math.Abs(bmpData.Stride) * curBitmap.Height
+            Dim bytes As Integer = sys.Abs(bmpData.Stride) * curBitmap.Height
 
             Return New BitmapBuffer(ptr, bytes, curBitmap, bmpData)
         End Function

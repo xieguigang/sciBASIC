@@ -27,8 +27,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
-Imports Microsoft.VisualBasic.Mathematical.BasicR
-Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Math.BasicR
+Imports Microsoft.VisualBasic.Math.Calculus
 
 Namespace Darwinism.GAF
 

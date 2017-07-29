@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
@@ -122,8 +122,7 @@ Namespace FuzzyCMeans
                     list.Add(random.[Next](0, 100))
                 Next
 
-                ' ��Ҫ�����b�Ķ���Ž���������ģ�飬��Ϊ���һ��list��û�б����
-                Dim b As Boolean = coordinates.Add(list)
+                Dim b As Boolean = coordinates.Add(New Vector(list))
 #Region "DEBUG"
 #If DEBUG Then
                 If Not b Then _

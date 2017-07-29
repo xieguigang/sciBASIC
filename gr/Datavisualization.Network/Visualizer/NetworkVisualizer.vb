@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -34,16 +35,17 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
 ''' Image drawing of a network model
 ''' </summary>
-<PackageNamespace("Network.Visualizer", Publisher:="xie.guigang@gmail.com")>
+<Package("Network.Visualizer", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkVisualizer
 
     ''' <summary>
@@ -55,10 +57,12 @@ Public Module NetworkVisualizer
 
     <Extension>
     Public Function GetDisplayText(n As Node) As String
-        If n.Data Is Nothing OrElse n.Data.origID.StringEmpty Then
+        If n.Data Is Nothing OrElse (n.Data.origID.StringEmpty AndAlso n.Data.label.StringEmpty) Then
             Return n.ID
-        Else
+        ElseIf n.Data.label.StringEmpty Then
             Return n.Data.origID
+        Else
+            Return n.Data.label
         End If
     End Function
 
@@ -117,6 +121,7 @@ Public Module NetworkVisualizer
     ''' <param name="background">背景色或者背景图片的文件路径</param>
     ''' <param name="defaultColor"></param>
     ''' <param name="nodePoints">如果还需要获取得到节点的绘图位置的话，则可以使用这个可选参数来获取返回</param>
+    ''' <param name="fontSizeFactor">这个参数值越小，字体会越大</param>
     ''' <returns></returns>
     <ExportAPI("Draw.Image")>
     <Extension>
@@ -131,7 +136,10 @@ Public Module NetworkVisualizer
                               Optional nodeStroke$ = WhiteStroke,
                               Optional scale# = 1.2,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
-                              Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing) As GraphicsData
+                              Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing,
+                              Optional fontSizeFactor# = 1.5,
+                              Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
+                              Optional getNodeLabel As Func(Of Node, String) = Nothing) As GraphicsData
 
         Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
         Dim br As Brush
@@ -186,6 +194,13 @@ Public Module NetworkVisualizer
 
         Call "Initialize variables, done!".__INFO_ECHO
 
+        If edgeDashTypes Is Nothing Then
+            edgeDashTypes = New Dictionary(Of String, DashStyle)
+        End If
+        If getNodeLabel Is Nothing Then
+            getNodeLabel = Function(node) node.GetDisplayText
+        End If
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
@@ -207,6 +222,12 @@ Public Module NetworkVisualizer
                     w = If(w < 1.5, 1.5, w)
                     Dim lineColor As New Pen(cl, w)
 
+                    With edge.Data!interaction_type
+                        If edgeDashTypes.ContainsKey(.ref) Then
+                            lineColor.DashStyle = edgeDashTypes(.ref)
+                        End If
+                    End With
+
                     ' 在这里绘制的是节点之间相连接的边
                     Dim a = scalePos(n), b = scalePos(otherNode)
 
@@ -220,9 +241,10 @@ Public Module NetworkVisualizer
                 Call "Render network nodes...".__INFO_ECHO
 
                 For Each n As Node In net.nodes  ' 在这里进行节点的绘制
-                    Dim r As Single = n.Data.radius
+                    Dim r# = n.Data.radius
 
-                    If r = 0! Then
+                    ' 当网络之中没有任何边的时候，r的值会是NAN
+                    If r = 0# OrElse r.IsNaNImaginary Then
                         r = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
                         r = If(r = 0, 9, r)
                     End If
@@ -239,7 +261,7 @@ Public Module NetworkVisualizer
 
                     If displayId Then
 
-                        Dim font As New Font(baseFont.Name, (baseFont.Size + r) / 2)
+                        Dim font As New Font(baseFont.Name, (baseFont.Size + r) / fontSizeFactor)
                         Dim s As String = n.GetDisplayText
                         Dim size As SizeF = g.MeasureString(s, font)
                         Dim sloci As New Point With {

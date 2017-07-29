@@ -32,6 +32,8 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports Who = Microsoft.VisualBasic.Which
+Imports Microsoft.VisualBasic.Emit.Delegates
 
 Namespace Language
 
@@ -85,6 +87,22 @@ Namespace Language
                 Else
                     MyBase.Item(Scan0) = value
                 End If
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="args">同时支持boolean和integer</param>
+        ''' <returns></returns>
+        Default Public Overloads Property Item(args As Object) As List(Of T)
+            Get
+                Dim index = Indexer.Indexing(args)
+                Return Me(index)
+            End Get
+            Set
+                Dim index = Indexer.Indexing(args)
+                Me(index) = Value
             End Set
         End Property
 
@@ -185,6 +203,19 @@ Namespace Language
             Get
                 Return MyBase.Where(Function(o) where(o)).ToArray
             End Get
+        End Property
+
+        Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
+            Get
+                Return Me(Who.IsTrue(booleans))
+            End Get
+            Set(value As T())
+                For Each i In booleans.SeqIterator
+                    If i.value Then
+                        MyBase.Item(i) = value(i)
+                    End If
+                Next
+            End Set
         End Property
 #End Region
 

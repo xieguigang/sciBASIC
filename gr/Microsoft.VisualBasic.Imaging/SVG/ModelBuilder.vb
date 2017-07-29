@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
+Imports sys = System.Math
 
 Namespace SVG
 
@@ -36,10 +37,10 @@ Namespace SVG
             Dim endAngle! = startAngle + sweepAngle
             Dim rX = width / 2
             Dim rY = height / 2
-            Dim x1 = x + rX * Math.Cos(Math.PI * startAngle / 180)
-            Dim y1 = y + rY * Math.Sin(Math.PI * startAngle / 180)
-            Dim x2 = x + rX * Math.Cos(Math.PI * endAngle / 180)
-            Dim y2 = y + rY * Math.Sin(Math.PI * endAngle / 180)
+            Dim x1 = x + rX * sys.Cos(Math.PI * startAngle / 180)
+            Dim y1 = y + rY * sys.Sin(Math.PI * startAngle / 180)
+            Dim x2 = x + rX * sys.Cos(Math.PI * endAngle / 180)
+            Dim y2 = y + rY * sys.Sin(Math.PI * endAngle / 180)
             Dim d = $"M{x},{y}  L{x1},{y1}  A{rX},{rY} 0 0,1 {x2},{y2} z" ' 1 means clockwise
 
             Return New path With {

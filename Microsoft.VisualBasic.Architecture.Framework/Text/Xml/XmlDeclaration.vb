@@ -48,7 +48,7 @@ Namespace Text.Xml
             s = Regex.Match(declares, "encoding=""\S+""", RegexICSng).Value
             encoding = EncodingParser(s.GetStackValue("""", """"))
             s = Regex.Match(declares, "standalone=""\S+""", RegexICSng).Value
-            standalone = s.GetStackValue("""", """").getBoolean
+            standalone = s.GetStackValue("""", """").ParseBoolean
             s = Regex.Match(declares, "version=""\S+""", RegexICSng).Value
             version = s.GetStackValue("""", """")
         End Sub

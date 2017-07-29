@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.Text.HtmlParser
 
 Namespace SoftwareToolkits.XmlDoc.Serialization
 
-    <PackageNamespace("Assembly.Doc.API")>
+    <Package("Assembly.Doc.API")>
     Public Module DocAPI
 
         Dim libraries As Dictionary(Of String, Libraries) =

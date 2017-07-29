@@ -41,7 +41,7 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 ''' <remarks></remarks>
 ''' 
-<PackageNamespace("IO_Device.Csv.DataImports",
+<Package("IO_Device.Csv.DataImports",
                   Description:="Module provides the csv data imports operation of the csv document creates from a text file.(模块提供了从文本文档之中导入数据的方法)",
                   Publisher:="xie.guigang@gmail.com")>
 Public Module DataImports

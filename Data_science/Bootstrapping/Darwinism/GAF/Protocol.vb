@@ -34,8 +34,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
-Imports Microsoft.VisualBasic.Mathematical
-Imports Microsoft.VisualBasic.Mathematical.Calculus
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Darwinism.GAF
@@ -384,7 +384,7 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         <Extension>
         Public Function Fitting(Of T As MonteCarlo.Model)(
-                         observation As IEnumerable(Of NamedValue(Of Double())), x#(),
+                         observation As IEnumerable(Of NamedCollection(Of Double)), x#(),
                          Optional popSize% = 100%,
                          Optional evolIterations% = Integer.MaxValue%,
                          Optional ByRef outPrint As List(Of outPrint) = Nothing,

@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports sys = System.Math
 Imports Vector = Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
 
 Namespace Drawing3D.Math3D
@@ -50,7 +51,7 @@ Namespace Drawing3D.Math3D
         <Extension>
         Public Function Magnitude(v As Vector) As Double
             With v
-                Return Math.Sqrt(.X ^ 2 + .Y ^ 2 + .Z ^ 2)
+                Return sys.Sqrt(.X ^ 2 + .Y ^ 2 + .Z ^ 2)
             End With
         End Function
 

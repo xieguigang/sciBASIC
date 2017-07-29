@@ -137,29 +137,34 @@ Namespace Language.UnixBash
                 AddressOf New wildcardsCompatible With {
                     .regexp = If(wc.Length = 0, {"*"}, wc)
                 }.IsMatch
+            Dim list As IEnumerable(Of String)
 
-            If ls.__opts.ContainsKey(SearchOpt.Options.Directory) Then
-                Dim res As IEnumerable(Of String) =
-                    FileIO.FileSystem.GetDirectories(DIR, ls.SearchType)
-
-                If l Then
-                    Return res.Where(isMatch)
+            With ls
+                If .__opts.ContainsKey(SearchOpt.Options.Directory) Then
+                    list = DIR.ListDirectory(.SearchType)
                 Else
-                    Return res.Where(isMatch).ToArray(Function(s) s.BaseName)
+                    list = DIR.ReadDirectory(.SearchType)
                 End If
-            Else
-                Dim res As IEnumerable(Of String) =
-                    FileIO.FileSystem.GetFiles(DIR, ls.SearchType)
 
-                If l Then
-                    Return res.Where(isMatch)
+                If .__opts.ContainsKey(SearchOpt.Options.Directory) Then
+                    If l Then
+                        Return list.Where(isMatch)
+                    Else
+                        Return list.Where(isMatch) _
+                            .Select(Function(s) s.BaseName)
+                    End If
                 Else
-                    Return From path As String
-                           In res
-                           Where isMatch(path)
-                           Select path.Replace("\", "/").Split("/"c).Last
+                    If l Then
+                        Return list.Where(isMatch)
+                    Else
+                        Return From path As String
+                               In list
+                               Where isMatch(path)
+                               Let name As String = path.Replace("\", "/").Split("/"c).Last
+                               Select name
+                    End If
                 End If
-            End If
+            End With
         End Operator
 
         Public Shared Operator >(ls As Search, DIR As String) As IEnumerable(Of String)

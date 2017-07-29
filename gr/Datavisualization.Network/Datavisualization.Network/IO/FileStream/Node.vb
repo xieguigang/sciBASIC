@@ -36,7 +36,7 @@ Namespace FileStream
     ''' An node entity in the target network.(这个对象里面包含了网络之中的节点的实体的最基本的定义：节点的标识符以及节点的类型)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class Node : Inherits INetComponent
+    Public Class Node : Inherits IDynamicsTable
         Implements INamedValue
         Implements INode
 

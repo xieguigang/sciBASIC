@@ -28,7 +28,7 @@
 
 Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Text
+Imports System.Math
 
 Namespace HTML.CSS.Render
 
@@ -122,7 +122,7 @@ Namespace HTML.CSS.Render
             Dim res As Single = Single.MinValue
 
             For Each word As CssBoxWord In Words
-                res = Math.Max(res, word.Bottom)
+                res = Max(res, word.Bottom)
             Next
 
             Return res
@@ -192,7 +192,7 @@ Namespace HTML.CSS.Render
                 Rectangles.Add(box, RectangleF.FromLTRB(x, y, r, b))
             Else
                 Dim f As RectangleF = Rectangles(box)
-                Rectangles(box) = RectangleF.FromLTRB(Math.Min(f.X, x), Math.Min(f.Y, y), Math.Max(f.Right, r), Math.Max(f.Bottom, b))
+                Rectangles(box) = RectangleF.FromLTRB(Min(f.X, x), Min(f.Y, y), Max(f.Right, r), Max(f.Bottom, b))
             End If
 
             If box.ParentBox IsNot Nothing AndAlso box.ParentBox.Display = CssConstants.Inline Then
