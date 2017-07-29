@@ -10,8 +10,7 @@ Namespace Imaging.LayoutModel
     ''' <summary>
     ''' Implements a 2-dimensional rectangle with double precision coordinates.
     ''' </summary>
-    Public Class mxRectangle
-        Inherits mxPoint
+    Public Class DblRect : Inherits mxPoint
 
         ''' <summary>
         ''' Constructs a new rectangle at (0, 0) with the width and height set to 0.
@@ -40,8 +39,8 @@ Namespace Imaging.LayoutModel
         ''' Constructs a copy of the given rectangle.
         ''' </summary>
         ''' <param name="rect"> Rectangle to construct a copy of. </param>
-        Public Sub New(ByVal rect As mxRectangle)
-            Me.New(rect.X, rect.Y, rect.width, rect.height)
+        Public Sub New(ByVal rect As DblRect)
+            Me.New(rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
 
         ''' <summary>
@@ -56,6 +55,10 @@ Namespace Imaging.LayoutModel
 
             width = width
             height = height
+        End Sub
+
+        Sub New(width%, height%)
+            Call Me.New(0, 0, width, height)
         End Sub
 
         ''' <summary>
@@ -80,24 +83,24 @@ Namespace Imaging.LayoutModel
         Public Overridable Sub setRect(ByVal x As Double, ByVal y As Double, ByVal w As Double, ByVal h As Double)
             Me.X = x
             Me.Y = y
-            Me.width = w
-            Me.height = h
+            Me.Width = w
+            Me.Height = h
         End Sub
 
         ''' <summary>
         ''' Adds the given rectangle to this rectangle.
         ''' </summary>
-        Public Overridable Sub add(ByVal rect As mxRectangle)
+        Public Overridable Sub add(ByVal rect As DblRect)
             If rect IsNot Nothing Then
                 Dim minX As Double = sys.Min(X, rect.X)
                 Dim minY As Double = sys.Min(Y, rect.Y)
-                Dim maxX As Double = sys.Max(X + width, rect.X + rect.width)
-                Dim maxY As Double = sys.Max(Y + height, rect.Y + rect.height)
+                Dim maxX As Double = sys.Max(X + Width, rect.X + rect.Width)
+                Dim maxY As Double = sys.Max(Y + Height, rect.Y + rect.Height)
 
                 X = minX
                 Y = minY
-                width = maxX - minX
-                height = maxY - minY
+                Width = maxX - minX
+                Height = maxY - minY
             End If
         End Sub
 
@@ -130,8 +133,8 @@ Namespace Imaging.LayoutModel
         Public Overridable Sub grow(ByVal amount As Double)
             X -= amount
             Y -= amount
-            width += 2 * amount
-            height += 2 * amount
+            Width += 2 * amount
+            Height += 2 * amount
         End Sub
 
         ''' <summary>
@@ -141,7 +144,7 @@ Namespace Imaging.LayoutModel
         ''' <param name="y"> Y-coordinate of the point. </param>
         ''' <returns> Returns true if the point is contained in the rectangle. </returns>
         Public Overridable Function contains(ByVal x As Double, ByVal y As Double) As Boolean
-            Return (Me.X <= x AndAlso Me.X + width >= x AndAlso Me.Y <= y AndAlso Me.Y + height >= y)
+            Return (Me.X <= x AndAlso Me.X + Width >= x AndAlso Me.Y <= y AndAlso Me.Y + Height >= y)
         End Function
 
         ''' <summary>
@@ -228,10 +231,10 @@ Namespace Imaging.LayoutModel
         ''' Returns true if the given object equals this rectangle.
         ''' </summary>
         Public Overrides Function Equals(ByVal obj As Object) As Boolean
-            If TypeOf obj Is mxRectangle Then
-                Dim ___rect As mxRectangle = CType(obj, mxRectangle)
+            If TypeOf obj Is DblRect Then
+                Dim ___rect As DblRect = CType(obj, DblRect)
 
-                Return ___rect.X = X AndAlso ___rect.Y = Y AndAlso ___rect.width = width AndAlso ___rect.height = height
+                Return ___rect.X = X AndAlso ___rect.Y = Y AndAlso ___rect.Width = Width AndAlso ___rect.Height = Height
             End If
 
             Return False
@@ -241,7 +244,7 @@ Namespace Imaging.LayoutModel
         ''' Returns a new instance of the same rectangle.
         ''' </summary>
         Public Overrides Function Clone() As Object
-            Dim ___clone As mxRectangle = CType(MyBase.Clone(), mxRectangle)
+            Dim ___clone As DblRect = CType(MyBase.Clone(), DblRect)
 
             ___clone.Width = Width
             ___clone.Height = Height

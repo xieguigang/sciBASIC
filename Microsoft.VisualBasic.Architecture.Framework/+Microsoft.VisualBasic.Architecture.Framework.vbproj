@@ -429,7 +429,10 @@
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
-    <Compile Include="Extensions\Image\GDI+\Layouts\mxRectangle.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\DblRect.vb" />
+    <Compile Include="Extensions\Image\Math\PolygonD.vb" />
+    <Compile Include="Extensions\Image\Math\VecMath2D.vb" />
+    <Compile Include="Extensions\Image\Math\Vector2D.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Correlations\Ranking.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
