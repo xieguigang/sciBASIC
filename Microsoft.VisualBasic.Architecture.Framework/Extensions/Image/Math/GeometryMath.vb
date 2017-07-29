@@ -4,6 +4,8 @@ Imports sys = System.Math
 Namespace Imaging.Math2D
 
     ''' <summary>
+    ''' https://stackoverflow.com/questions/30080/how-to-know-if-a-line-intersects-a-plane-in-c-basic-2d-geometry
+    ''' 
     ''' 与几何相关的辅助类
     ''' </summary>
     Public Module GeometryMath
