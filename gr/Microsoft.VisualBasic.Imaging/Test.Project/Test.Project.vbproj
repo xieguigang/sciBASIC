@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1A566414-428F-403B-84A6-6B9F36FB1117}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.Project.Program</StartupObject>
+    <StartupObject>Test.Project.LineTest</StartupObject>
     <RootNamespace>Test.Project</RootNamespace>
     <AssemblyName>Test.Project</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -120,6 +120,7 @@
     <Compile Include="Class1.vb" />
     <Compile Include="ConvexHull_demo.vb" />
     <Compile Include="ConcaveHull_demo.vb" />
+    <Compile Include="LineTest.vb" />
     <Compile Include="SVGTest.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -159,7 +160,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
