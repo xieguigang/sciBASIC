@@ -18,11 +18,11 @@ Namespace FileStream.Json
     End Class
 
     Public Class edges
-        Public Property srcId As Integer
-        Public Property tarId As Integer
-        Public Property source As String
-        Public Property target As String
-        Public Property correlation As String
+        Public Property source As Integer
+        Public Property target As Integer
+        Public Property A As String
+        Public Property B As String
+        Public Property value As String
         Public Property weight As String
         Public Property id As String
         Public Property Data As Dictionary(Of String, String)
