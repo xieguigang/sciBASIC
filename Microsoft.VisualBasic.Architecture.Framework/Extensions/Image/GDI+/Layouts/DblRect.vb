@@ -57,6 +57,10 @@ Namespace Imaging.LayoutModel
             height = height
         End Sub
 
+        Sub New(width%, height%)
+            Call Me.New(0, 0, width, height)
+        End Sub
+
         ''' <summary>
         ''' Returns the width of the rectangle.
         ''' </summary>

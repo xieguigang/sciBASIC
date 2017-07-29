@@ -226,3 +226,6 @@ pip-log.txt
 .mr.developer.cfg
 /CLI_tools/App
 /CLI_tools/App
+/GCModeller/GCModeller
+/GCModeller/GCModeller
+/GCModeller/GCModeller/Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.dll.config
