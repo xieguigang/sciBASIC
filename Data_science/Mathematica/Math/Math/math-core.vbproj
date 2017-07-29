@@ -218,7 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factor.vb" />
-    <Compile Include="Algebra\Vector\NumericsOperator.vb" />
     <Compile Include="Algebra\Vector\NumericsVector.vb" />
     <Compile Include="UncheckInteger.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
