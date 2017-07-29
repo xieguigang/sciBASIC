@@ -37,7 +37,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' 线段的起点和终点
         ''' </summary>
         Dim pt1 As PointF, pt2 As PointF
-        Dim pen As Pen
+        Public Property Stroke As Pen
 
         Public Overrides ReadOnly Property Size As Size
             Get
@@ -82,7 +82,7 @@ Namespace Drawing2D.Vector.Shapes
 
             Me.pt1 = a
             Me.pt2 = b
-            Me.pen = New Pen(New SolidBrush(c), width)
+            Me.Stroke = New Pen(New SolidBrush(c), width)
         End Sub
 
         Sub New(x1#, y1#, x2#, y2#)
@@ -99,9 +99,7 @@ Namespace Drawing2D.Vector.Shapes
 
         Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim rect As RectangleF = MyBase.Draw(g, overridesLoci)
-            Dim p1 = Location
-            Dim p2 = New Point(Me.Location.X + pt2.X - pt1.X, Me.Location.Y + pt2.Y - pt1.Y)
-            Call g.DrawLine(pen, p1, p2)
+            Call g.DrawLine(Stroke, pt1, pt2)
             Return rect
         End Function
 
@@ -130,8 +128,13 @@ Namespace Drawing2D.Vector.Shapes
                 offset = New PointF(dx, dy)
             End If
 
-            Dim color As Color = DirectCast(pen.Brush, SolidBrush).Color
-            Return New Line(pt1.OffSet2D(offset), pt2.OffSet2D(offset), color, pen.Width)
+            With Stroke
+                Dim color As Color = DirectCast(.Brush, SolidBrush).Color
+                Return New Line(
+                    pt1.OffSet2D(offset),
+                    pt2.OffSet2D(offset),
+                    color, .Width)
+            End With
         End Function
     End Class
 End Namespace
