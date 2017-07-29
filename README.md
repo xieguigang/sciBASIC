@@ -94,7 +94,7 @@ Call {
  .Save($"{App.HOME}/Lorenz_system.csv")
 ```
 
-![](./Data_science/Mathematical/data/Lorenz_system/Lorenz_system.png)
+<img src="./Data_science/Mathematica/data/Lorenz_system/Lorenz_system.png" width="500px" />
 
 ## Microsoft VisualBasic Trinity Natural Language Processor
 
@@ -149,10 +149,10 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 Imports Microsoft.VisualBasic.Data.ChartPlots
 ```
 
-![](./Data_science/Mathematical/images/heatmap/Sample.SPCC.png)
+![](./Data_science/Mathematica/images/heatmap/Sample.SPCC.png)
 ![](./Data_science/algorithms/CMeans/CMeans.png)
-![](./Data_science/Mathematical/images/295022-plots-plots.png)
-[![](./Data_science/Mathematical/images/alignment/L26369_%255BM%252BH%255D%252B%2523.%252Flxy-CID30.mzXML%2523294-alignment.png)](./Data_science/Mathematical/Plots/BarPlot/AlignmentPlot.vb)
+![](./Data_science/Mathematica/images/295022-plots-plots.png)
+[![](./Data_science/Mathematica/images/alignment/L26369_%255BM%252BH%255D%252B%2523.%252Flxy-CID30.mzXML%2523294-alignment.png)](./Data_science/Mathematica/Plots/BarPlot/AlignmentPlot.vb)
 
 ###### 3D heatmap
 
@@ -174,7 +174,7 @@ Call Plot3D.ScatterHeatmap.Plot(
     .SaveAs("./3d-heatmap.png")
 ```
 
-![](./Data_science/Mathematical/images/3d-heatmap.png)
+![](./Data_science/Mathematica/images/3d-heatmap.png)
 
 ###### Scatter Heatmap
 
@@ -189,8 +189,8 @@ Call ScatterHeatmap _
     .SaveAs("./scatter-heatmap.png")
 ```
 
-![](./Data_science/Mathematical/images/scatter-heatmap.png)
-![](./Data_science/Mathematical/images/256821.654661046-rho_gamma3_1%2C120_0.25%2C20.png)
+![](./Data_science/Mathematica/images/scatter-heatmap.png)
+![](./Data_science/Mathematica/images/256821.654661046-rho_gamma3_1%2C120_0.25%2C20.png)
 
 ###### Stacked Barplot
 
@@ -212,7 +212,7 @@ Call BarPlot.Plot(
     .SaveAs("./FigurePlot-Reference-Unigenes.absolute.level1.png")
 ```
 
-![](./Data_science/Mathematical/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
+![](./Data_science/Mathematica/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
 
 ###### beta-PDF
 
@@ -226,15 +226,15 @@ Public Function lgamma(x As Double) As Double
     Dim logterm As Double = Math.Log(x * (1.0F + x) * (2.0F + x))
     Dim xp3 As Double = 3.0F + x
 
-    Return -2.081061F - x + 0.0833333F / xp3 - 
+    Return -2.081061F - x + 0.0833333F / xp3 -
         logterm + (2.5F + x) * Math.Log(xp3)
 End Function
 ```
-<img src="./Data_science/Mathematical/data/beta-PDF/beta_PDF.png" height="650px"></img>
+<img src="./Data_science/Mathematica/data/beta-PDF/beta_PDF.png" height="650px"></img>
 > https://en.wikipedia.org/wiki/Beta_distribution
 
 ###### Heatmap
-![](./Data_science/Mathematical/images/heatmap.png)
+![](./Data_science/Mathematica/images/heatmap.png)
 
 ```vbnet
 Dim data = DataSet.LoadDataSet("./Quick_correlation_matrix_heatmap/mtcars.csv")
@@ -248,7 +248,7 @@ Call data.CorrelatesNormalized() _
 
 > ###### Microsoft.VisualBasic.Mathematical.Plots.Heatmap::Plot(IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))), Color(), Integer, String, Boolean, Size, Size, String, String, String) As Bitmap
 
-Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):
+Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematica/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):
 
 ```R
 data(mtcars)

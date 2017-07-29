@@ -167,8 +167,7 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\vs_solutions\packages\System.ValueTuple.4.4.0-preview1-25305-02\lib\net461\System.ValueTuple.dll</HintPath>
+      <HintPath>..\..\..\..\..\KEGG_canvas\packages\System.ValueTuple.4.4.0-preview2-25405-01\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows" />
@@ -194,6 +193,7 @@
     <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Graph\Selector.vb" />
+    <Compile Include="IO\FileStream\Json\json.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
@@ -201,9 +201,9 @@
     <Compile Include="Layouts\forceNetwork.vb" />
     <Compile Include="Analysis\Extensions.vb" />
     <Compile Include="Analysis\Statistics.vb" />
-    <Compile Include="IO\FileStream\vbnet.vb" />
-    <Compile Include="IO\FileStream\Cytoscape.vb" />
-    <Compile Include="IO\FileStream\Network.vb" />
+    <Compile Include="IO\FileStream\csv\vbnet.vb" />
+    <Compile Include="IO\FileStream\csv\Cytoscape.vb" />
+    <Compile Include="IO\FileStream\csv\Network.vb" />
     <Compile Include="IO\Generic\IDynamicsTable.vb" />
     <Compile Include="IO\ModelExtensions.vb" />
     <Compile Include="Graph\Extensions.vb" />
@@ -223,9 +223,9 @@
     <Compile Include="Layouts\ForceDirected\Layout\Point.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Spring.vb" />
     <Compile Include="IO\Generic\NameOf.vb" />
-    <Compile Include="IO\FileStream\Edge.vb" />
+    <Compile Include="IO\FileStream\csv\Edge.vb" />
     <Compile Include="IO\Generic\Network%28Of T%29.vb" />
-    <Compile Include="IO\FileStream\Node.vb" />
+    <Compile Include="IO\FileStream\csv\Node.vb" />
     <Compile Include="FindPath\Dijkstra\Dijkstra.vb" />
     <Compile Include="FindPath\PQDijkstra\BasicHeap.vb" />
     <Compile Include="FindPath\PQDijkstra\DijkstraFast.vb" />
