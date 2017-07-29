@@ -85,6 +85,10 @@ Namespace Drawing2D.Vector.Shapes
             Me.pen = New Pen(New SolidBrush(c), width)
         End Sub
 
+        Sub New(x1#, y1#, x2#, y2#)
+            Call Me.New(New PointF(x1, y1), New PointF(x2, y2))
+        End Sub
+
         Sub New(a As PointF, b As PointF)
             Call Me.New(a, b, Color.Black, 1)
         End Sub
@@ -114,8 +118,12 @@ Namespace Drawing2D.Vector.Shapes
                 ' 水平往下平移
                 ' x不变，只变换y
                 offset = New PointF(0, d)
+            ElseIf Abs(Alpha - PI / 2) <= 0.000000000001 Then
+                ' 往左或者往右水平平移
+                ' x变y不变
+                offset = New PointF(d, 0)
             Else
-                Dim c = d / Tan(Alpha)
+                Dim c = d / tanA
                 Dim dx = c * Cos(Alpha)
                 Dim dy = c * Sin(Alpha)
 
