@@ -20,13 +20,19 @@ Module LineTest
             Call left.Draw(g)
 
 
-            line = New Line(200, 200, 450, 450)
-            Dim cor = line.ParallelShift(150)
-            cor.Stroke.Color = Color.Red
-            cor.Stroke.Width = 5
+            For Each line In {
+                New Line(200, 200, 450, 450),
+                New Line(300, 532, 1026, 663),
+                New Line(1200, 635, 1999, 99)
+            }
 
-            Call line.Draw(g)
-            Call cor.Draw(g)
+                Dim cor = line.ParallelShift(-150)
+                cor.Stroke.Color = Color.Red
+                cor.Stroke.Width = 5
+
+                Call line.Draw(g)
+                Call cor.Draw(g)
+            Next
 
             Call g.Save("./test.png", ImageFormats.Png)
         End Using
