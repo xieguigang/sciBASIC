@@ -202,7 +202,7 @@ B21,B22,B23,...
         Public Function Trim() As File
             Dim columns$()() = Me _
                 .Columns _
-                .Where(Function(c) Not c.EmptyStringVector) _
+                .Where(Function(c) Not c.IsEmptyStringVector) _
                 .ToArray
             Dim df As File = columns.JoinColumns
             Return df
