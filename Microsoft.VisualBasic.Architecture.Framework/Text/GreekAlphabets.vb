@@ -71,5 +71,14 @@ Namespace Text
             Next
             Return s
         End Function
+
+        ''' <summary>
+        ''' 将字符串文本之中的希腊字母替换为英文单词
+        ''' </summary>
+        ''' <param name="s$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function StripGreek(s$) As String
+            Return New StringBuilder(s).StripGreek.ToString
+        End Function
     End Module
 End Namespace
