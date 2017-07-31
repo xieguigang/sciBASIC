@@ -42,6 +42,13 @@ Namespace LinearAlgebra
             Next
         End Function
 
+        <Extension>
+        Public Function Point2D(polygon As (X As Vector, Y As Vector)) As IEnumerable(Of PointF)
+            With polygon
+                Return Points(.X, .Y)
+            End With
+        End Function
+
         <Extension> Public Function Top(vector As Vector, n%) As BooleanVector
             Dim desc = vector.OrderByDescending(Function(x) x).Take(n).AsList
             Return New BooleanVector(vector.Select(Function(x) desc.IndexOf(x) > -1))
