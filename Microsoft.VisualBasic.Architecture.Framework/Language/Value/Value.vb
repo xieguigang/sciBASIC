@@ -33,7 +33,8 @@ Namespace Language
     ''' You can applying this data type into a dictionary object to makes the mathematics calculation more easily.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class Value(Of T) : Implements IValueOf
+    Public Class Value(Of T) ': Implements ValueType
+        Implements IValueOf
 
         ''' <summary>
         ''' This object have a <see cref="IValueOf.value"/> property for stores its data
@@ -57,7 +58,7 @@ Namespace Language
         '     System.Nullable`1 object has no value.
         Public ReadOnly Property HasValue As Boolean
             Get
-                Return Not value Is Nothing
+                Return Not Value Is Nothing
             End Get
         End Property
 
@@ -87,10 +88,10 @@ Namespace Language
         '     The value of the System.Nullable`1.Value property if the System.Nullable`1.HasValue
         '     property is true; otherwise, the defaultValue parameter.
         Public Function GetValueOrDefault(defaultValue As T) As T
-            If value Is Nothing Then
+            If Value Is Nothing Then
                 Return defaultValue
             Else
-                Return value
+                Return Value
             End If
         End Function
         '
@@ -121,7 +122,7 @@ Namespace Language
             ElseIf Not other.GetType Is GetType(T) Then
                 Return False
             Else
-                Return value.Equals(other)
+                Return Value.Equals(other)
             End If
         End Function
 
@@ -143,6 +144,7 @@ Namespace Language
         ''' Value is Nothing
         ''' </summary>
         Sub New()
+            Call MyBase.New
             Value = Nothing
         End Sub
 

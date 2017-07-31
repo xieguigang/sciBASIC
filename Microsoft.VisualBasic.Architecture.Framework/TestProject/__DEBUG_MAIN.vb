@@ -91,6 +91,14 @@ Public Module __DEBUG_MAIN
     End Class
 
 
+    Sub fffff()
+        Dim s As Value(Of String) = "3333333"
+
+        's.ClassDumper
+        Dim i As Integer?
+        i += 2
+    End Sub
+
     'Private Sub testColors()
     '    Dim c1 = Color.Blue.ColorToDecimal
     '    Dim c2 = Color.Red.ColorToDecimal
