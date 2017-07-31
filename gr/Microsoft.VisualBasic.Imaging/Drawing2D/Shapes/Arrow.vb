@@ -142,5 +142,18 @@ Namespace Drawing2D.Vector.Shapes
 
             Return Nothing
         End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="height!">箭头的底部的高度的1/2</param>
+        ''' <param name="length!">箭头顶部到底部的长度</param>
+        ''' <returns></returns>
+        Public Shared Function ArrowHead(height!, length!) As PointF()
+            Dim p1 As New PointF(length, 0)  ' 顶部
+            Dim p2 As New PointF(0, height)
+            Dim p3 As New PointF(0, -height)
+            Return {p1, p2, p3}
+        End Function
     End Class
 End Namespace
