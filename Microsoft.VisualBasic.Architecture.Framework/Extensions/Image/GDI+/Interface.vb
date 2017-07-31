@@ -3674,42 +3674,24 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public MustOverride Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
-        '
-        ' Summary:
-        '     Fills the interior of a pie section defined by an ellipse specified by a pair
-        '     of coordinates, a width, a height, and two radial lines.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse from which the pie section comes.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse from which the pie section comes.
-        '
-        '   width:
-        '     Width of the bounding rectangle that defines the ellipse from which the pie section
-        '     comes.
-        '
-        '   height:
-        '     Height of the bounding rectangle that defines the ellipse from which the pie
-        '     section comes.
-        '
-        '   startAngle:
-        '     Angle in degrees measured clockwise from the x-axis to the first side of the
-        '     pie section.
-        '
-        '   sweepAngle:
-        '     Angle in degrees measured clockwise from the startAngle parameter to the second
-        '     side of the pie section.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of a pie section defined by an ellipse specified by a pair
+        ''' of coordinates, a width, a height, and two radial lines.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse from which the pie section comes.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse from which the pie section comes.</param>
+        ''' <param name="width">Width of the bounding rectangle that defines the ellipse from which the pie section
+        ''' comes.</param>
+        ''' <param name="height">Height of the bounding rectangle that defines the ellipse from which the pie
+        ''' section comes.</param>
+        ''' <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the first side of the
+        ''' pie section.</param>
+        ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second
+        ''' side of the pie section.</param>
         Public MustOverride Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
         '
         ' Summary:

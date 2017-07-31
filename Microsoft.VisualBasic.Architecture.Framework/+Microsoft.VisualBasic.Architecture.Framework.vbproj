@@ -430,6 +430,7 @@
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\DblRect.vb" />
+    <Compile Include="Extensions\Image\Math\GeometryMath.vb" />
     <Compile Include="Extensions\Image\Math\PolygonD.vb" />
     <Compile Include="Extensions\Image\Math\VecMath2D.vb" />
     <Compile Include="Extensions\Image\Math\Vector2D.vb" />
@@ -460,6 +461,7 @@
     <Compile Include="Scripting\TokenIcer\LangModels\OperatorExpression.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\PeekToken.vb" />
     <Compile Include="Scripting\VBLanguage.vb" />
+    <Compile Include="Text\GreekAlphabets.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
     <Compile Include="Text\Xml\Linq\NodeIterator.vb" />
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
