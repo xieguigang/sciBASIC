@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
 Imports Vec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
@@ -69,6 +70,22 @@ Namespace Drawing2D
                 .Sequence _
                 .Select(Function(i) New Point(x(i), y(i))) _
                 .ToArray
+        End Function
+
+        ''' <summary>
+        ''' 请注意，这个是围绕坐标轴远点进行的旋转，如果想要围绕指定点进行旋转，还需要进行平移操作
+        ''' </summary>
+        ''' <param name="shape"></param>
+        ''' <param name="alpha#"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Rotate(shape As IEnumerable(Of PointF), alpha#) As PointF()
+            Dim vector = shape.ToArray
+            Dim x0 As New Vec(vector.Select(Function(pt) pt.X))
+            Dim y0 As New Vec(vector.Select(Function(pt) pt.Y))
+            Dim x1 = x0 * Math.Cos(alpha) + y0 * Math.Sin(alpha)
+            Dim y1 = -x0 * Math.Sin(alpha) + y0 * Math.Cos(alpha)
+            Return (x1, y1).Point2D.ToArray
         End Function
 
         ''' <summary>
