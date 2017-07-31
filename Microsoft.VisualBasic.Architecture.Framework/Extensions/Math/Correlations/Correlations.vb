@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -41,6 +42,40 @@ Namespace Math.Correlations
     ''' </summary>
     <Package("Correlations", Category:=APICategories.UtilityTools, Publisher:="amethyst.asuka@gcmodeller.org")>
     Public Module Correlations
+
+        ''' <summary>
+        ''' The Jaccard index, also known as Intersection over Union and the Jaccard similarity coefficient 
+        ''' (originally coined coefficient de communauté by Paul Jaccard), is a statistic used for comparing 
+        ''' the similarity and diversity of sample sets. The Jaccard coefficient measures similarity between 
+        ''' finite sample sets, and is defined as the size of the intersection divided by the size of the 
+        ''' union of the sample sets.
+        ''' 
+        ''' https://en.wikipedia.org/wiki/Jaccard_index
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="equal"></param>
+        ''' <returns></returns>
+        Public Function JaccardIndex(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T), Optional equal As Func(Of Object, Object, Boolean) = Nothing) As Double
+            If equal Is Nothing Then
+                equal = Function(x, y) x.Equals(y)
+            End If
+
+            Dim setA As New [Set](a, equal)
+            Dim setB As New [Set](b, equal)
+
+            ' (If A and B are both empty, we define J(A,B) = 1.)
+            If setA.Length = setB.Length AndAlso setA.Length = 0 Then
+                Return 1
+            End If
+
+            Dim intersects = setA And setB
+            Dim union = setA + setB
+            Dim similarity# = intersects.Length / union.Length
+
+            Return similarity
+        End Function
 
         ''' <summary>
         ''' Sandelin-Wasserman similarity function.(假若所有的元素都是0-1之间的话，结果除以2可以得到相似度)

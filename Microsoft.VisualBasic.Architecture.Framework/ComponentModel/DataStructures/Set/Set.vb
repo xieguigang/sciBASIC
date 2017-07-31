@@ -45,8 +45,8 @@ Namespace ComponentModel.DataStructures
                       Url:="http://www.codeproject.com/Articles/10806/A-Generic-Set-Data-Structure",
                       Publisher:="Sean Michael Murphy")>
     Public Class [Set]
-        Implements System.Collections.IEnumerable
-        Implements System.IDisposable
+        Implements IEnumerable
+        Implements IDisposable
 
         ''' <summary>
         ''' Enum of values to determine the aggressiveness of the response of the
@@ -67,13 +67,18 @@ Namespace ComponentModel.DataStructures
 #Region "Private Members"
         Dim _members As New ArrayList()
         Dim _behaviour As BadBehaviourResponses = BadBehaviourResponses.BeAggressive
+        ''' <summary>
+        ''' 如何判断两个元素是否相同？
+        ''' </summary>
+        Dim _equals As Func(Of Object, Object, Boolean)
 #End Region
 
 #Region "ctors"
         ''' <summary>
         ''' Default constructor.
         ''' </summary>
-        Public Sub New()
+        Public Sub New(Optional equals As Func(Of Object, Object, Boolean) = Nothing)
+            _equals = equals
         End Sub
 
         ''' <summary>
@@ -81,8 +86,9 @@ Namespace ComponentModel.DataStructures
         ''' be unioned together, with addition exceptions quietly eaten.
         ''' </summary>
         ''' <param name="sources">The source array of <see cref="[Set]">Set</see> objects.</param>
-        Public Sub New(sources As [Set]())
+        Public Sub New(sources As [Set](), Optional equals As Func(Of Object, Object, Boolean) = Nothing)
             _behaviour = BadBehaviourResponses.BeCool
+            _equals = equals
 
             For Each initialSet As [Set] In sources
                 For Each o As Object In initialSet
@@ -93,8 +99,9 @@ Namespace ComponentModel.DataStructures
             _behaviour = BadBehaviourResponses.BeAggressive
         End Sub
 
-        Sub New(source As IEnumerable)
+        Sub New(source As IEnumerable, Optional equals As Func(Of Object, Object, Boolean) = Nothing)
             _behaviour = BadBehaviourResponses.BeCool
+            _equals = equals
 
             For Each o As Object In source
                 Call Me.Add(o)
@@ -128,7 +135,7 @@ Namespace ComponentModel.DataStructures
         ''' was removed.</returns>
         Public Function Remove(target As Object) As Boolean
             For i As Int32 = 0 To _members.Count - 1
-                If _members(i).Equals(target) Then
+                If _equals(_members(i), target) Then
                     _members.RemoveAt(i)
                     Return True
                 End If
@@ -146,7 +153,7 @@ Namespace ComponentModel.DataStructures
         ''' already a member of the set an InvalidOperationException is thrown.</exception>
         Public Sub Add(member As Object)
             For i As Int32 = 0 To _members.Count - 1
-                If _members(i).Equals(member) Then
+                If _equals(_members(i), member) Then
                     If _behaviour = BadBehaviourResponses.BeAggressive Then
                         Throw New ArgumentException(member.ToString() + " already in set in position " + (i + 1).ToString() + ".")
                     Else
@@ -165,7 +172,7 @@ Namespace ComponentModel.DataStructures
         ''' <returns>True if it is a member of the <see cref="[Set]">Set</see>, false if not.</returns>
         Public Function Contains(target As Object) As Boolean
             For Each o As Object In _members
-                If o.Equals(target) Then
+                If _equals(o, target) Then
                     Return True
                 End If
             Next
