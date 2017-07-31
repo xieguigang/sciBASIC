@@ -1120,7 +1120,7 @@ Public Module App
     '''
     <ExportAPI("Folk.Self")>
     Public Function SelfFolk(CLI As String) As IIORedirectAbstract
-        Return Shell(App.ExecutablePath, CLI)
+        Return Shell(App.ExecutablePath, CLI, CLR:=True)
     End Function
 
     ''' <summary>
