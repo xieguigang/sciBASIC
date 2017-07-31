@@ -15,8 +15,8 @@ Namespace LinearAlgebra
             Dim x2 = p2.X
             Dim y1 = p1.Y
             Dim y2 = p2.Y
-            Dim b# = (x1 * y2 / x2 - y1) * (x2 / x1)
-            Dim a# = (y1 - b) / x1
+            Dim a# = (y2 - y1) / (x2 - x1)
+            Dim b# = y1 - a * x1
 
             Return Function(x)
                        Return a * x + b
