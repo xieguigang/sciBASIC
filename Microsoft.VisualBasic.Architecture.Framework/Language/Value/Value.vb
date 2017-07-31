@@ -33,7 +33,8 @@ Namespace Language
     ''' You can applying this data type into a dictionary object to makes the mathematics calculation more easily.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class Value(Of T) : Implements IValueOf
+    Public Class Value(Of T) ': Implements ValueType
+        Implements IValueOf
 
         ''' <summary>
         ''' This object have a <see cref="IValueOf.value"/> property for stores its data
@@ -44,36 +45,119 @@ Namespace Language
             ''' value property for this object stores its data
             ''' </summary>
             ''' <returns></returns>
-            Property value As T
+            Property Value As T
         End Interface
+
+        '
+        ' Summary:
+        '     Gets a value indicating whether the current System.Nullable`1 object has a valid
+        '     value of its underlying type.
+        '
+        ' Returns:
+        '     true if the current System.Nullable`1 object has a value; false if the current
+        '     System.Nullable`1 object has no value.
+        Public ReadOnly Property HasValue As Boolean
+            Get
+                Return Not Value Is Nothing
+            End Get
+        End Property
+
+        '
+        ' Summary:
+        '     Retrieves the value of the current System.Nullable`1 object, or the object's
+        '     default value.
+        '
+        ' Returns:
+        '     The value of the System.Nullable`1.Value property if the System.Nullable`1.HasValue
+        '     property is true; otherwise, the default value of the current System.Nullable`1
+        '     object. The type of the default value is the type argument of the current System.Nullable`1
+        '     object, and the value of the default value consists solely of binary zeroes.
+        Public Function GetValueOrDefault() As T
+            Return GetValueOrDefault(Nothing)
+        End Function
+        '
+        ' Summary:
+        '     Retrieves the value of the current System.Nullable`1 object, or the specified
+        '     default value.
+        '
+        ' Parameters:
+        '   defaultValue:
+        '     A value to return if the System.Nullable`1.HasValue property is false.
+        '
+        ' Returns:
+        '     The value of the System.Nullable`1.Value property if the System.Nullable`1.HasValue
+        '     property is true; otherwise, the defaultValue parameter.
+        Public Function GetValueOrDefault(defaultValue As T) As T
+            If Value Is Nothing Then
+                Return defaultValue
+            Else
+                Return Value
+            End If
+        End Function
+        '
+        ' Summary:
+        '     Indicates whether the current System.Nullable`1 object is equal to a specified
+        '     object.
+        '
+        ' Parameters:
+        '   other:
+        '     An object.
+        '
+        ' Returns:
+        '     true if the other parameter is equal to the current System.Nullable`1 object;
+        '     otherwise, false. This table describes how equality is defined for the compared
+        '     values: Return ValueDescriptiontrueThe System.Nullable`1.HasValue property is
+        '     false, and the other parameter is null. That is, two null values are equal by
+        '     definition.-or-The System.Nullable`1.HasValue property is true, and the value
+        '     returned by the System.Nullable`1.Value property is equal to the other parameter.falseThe
+        '     System.Nullable`1.HasValue property for the current System.Nullable`1 structure
+        '     is true, and the other parameter is null.-or-The System.Nullable`1.HasValue property
+        '     for the current System.Nullable`1 structure is false, and the other parameter
+        '     is not null.-or-The System.Nullable`1.HasValue property for the current System.Nullable`1
+        '     structure is true, and the value returned by the System.Nullable`1.Value property
+        '     is not equal to the other parameter.
+        Public Overrides Function Equals(other As Object) As Boolean
+            If other Is Nothing Then
+                Return False
+            ElseIf Not other.GetType Is GetType(T) Then
+                Return False
+            Else
+                Return Value.Equals(other)
+            End If
+        End Function
 
         ''' <summary>
         ''' The object value with a specific type define.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property value As T Implements IValueOf.value
+        Public Overridable Property Value As T Implements IValueOf.Value
 
         ''' <summary>
         ''' Creates an reference value object with the specific object value
         ''' </summary>
         ''' <param name="value"></param>
         Sub New(value As T)
-            Me.value = value
+            Me.Value = value
         End Sub
 
         ''' <summary>
         ''' Value is Nothing
         ''' </summary>
         Sub New()
-            value = Nothing
+            Call MyBase.New
+            Value = Nothing
         End Sub
+
+        Public Function GetUnderlyingType() As Type
+            Return GetType(T)
+        End Function
 
         ''' <summary>
         ''' Is the value is nothing.
         ''' </summary>
         ''' <returns></returns>
         Public Function IsNothing() As Boolean
-            Return value Is Nothing
+            Return Value Is Nothing
         End Function
 
         ''' <summary>
@@ -81,7 +165,7 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Scripting.InputHandler.ToString(value)
+            Return Scripting.InputHandler.ToString(Value)
         End Function
 
         Public Overloads Shared Operator +(list As Generic.List(Of Value(Of T)), x As Value(Of T)) As Generic.List(Of Value(Of T))
@@ -99,12 +183,12 @@ Namespace Language
         End Operator
 
         Public Shared Operator <=(value As Value(Of T), o As T) As T
-            value.value = o
+            value.Value = o
             Return o
         End Operator
 
         Public Shared Narrowing Operator CType(x As Value(Of T)) As T
-            Return x.value
+            Return x.Value
         End Operator
 
         Public Shared Widening Operator CType(x As T) As Value(Of T)
@@ -117,7 +201,7 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Shared Operator +(x As Value(Of T)) As T
-            Return x.value
+            Return x.Value
         End Operator
 
         ''' <summary>
@@ -127,7 +211,7 @@ Namespace Language
         ''' <param name="o"></param>
         ''' <returns></returns>
         Public Shared Operator =(value As Value(Of T), o As T) As T
-            value.value = o
+            value.Value = o
             Return o
         End Operator
 
