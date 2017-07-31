@@ -89,16 +89,28 @@ Namespace Drawing2D
         End Function
 
         ''' <summary>
-        ''' Move the shape its bounds box topleft to target place
+        ''' 
         ''' </summary>
         ''' <param name="shape"></param>
-        ''' <param name="topLeft"></param>
+        ''' <param name="location"></param>
+        ''' <param name="type">By default, is move the shape its bounds box topleft to target place.</param>
         ''' <returns></returns>
         <Extension>
-        Public Function MoveTo(shape As IEnumerable(Of PointF), topLeft As PointF) As PointF()
+        Public Function MoveTo(shape As IEnumerable(Of PointF), location As PointF, Optional type As MoveTypes = MoveTypes.BoundsBoxTopLeft) As PointF()
             Dim polygon = shape.ToArray
-            Dim rect As RectangleF = polygon.GetBounds
-            Dim offset As New PointF(rect.Left - topLeft.X, rect.Top - topLeft.Y)
+            Dim offset As PointF
+
+            Select Case type
+                Case MoveTypes.BoundsBoxTopLeft
+                    With polygon.GetBounds
+                        offset = New PointF(.Left - location.X, .Top - location.Y)
+                    End With
+                Case Else
+                    With polygon.Centre
+                        offset = New PointF(.X - location.X, .Y - location.Y)
+                    End With
+            End Select
+
             Dim out = polygon _
                 .Select(Function(point)
                             Return New PointF(point.X - offset.X,
@@ -108,13 +120,26 @@ Namespace Drawing2D
             Return out
         End Function
 
+        '<Extension>
+        'Public Function MoveTopLeft(polygon As PointF(), topLeft As PointF) As PointF()
+
+        'End Function
+
         <Extension>
-        Public Function MoveTo(shape As IEnumerable(Of Point), topLeft As PointF) As Point()
+        Public Function MoveTo(shape As IEnumerable(Of Point), location As PointF, Optional type As MoveTypes = MoveTypes.BoundsBoxTopLeft) As Point()
             Return shape _
                 .Select(Function(point) point.PointF) _
-                .MoveTo(topLeft) _
+                .MoveTo(location) _
                 .Select(Function(point) point.ToPoint) _
                 .ToArray
         End Function
+
+        Public Enum MoveTypes As Byte
+            ''' <summary>
+            ''' Move the shape its bounds box topleft to target place
+            ''' </summary>
+            BoundsBoxTopLeft
+            PolygonCentre
+        End Enum
     End Module
 End Namespace

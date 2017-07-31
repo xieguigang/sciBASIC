@@ -41,16 +41,26 @@ Namespace Drawing2D
             last = New PointF(x, y)
         End Sub
 
+        Public Sub MoveTo(location As PointF)
+            last = location
+        End Sub
+
         Public Sub LineTo(x!, y!)
-            Dim p2 As New PointF(x, y)
-            Call Path.AddLine(last, p2)
-            last = p2
+            Call LineTo(New PointF(x, y))
+        End Sub
+
+        Public Sub LineTo(location As PointF)
+            Call Path.AddLine(last, location)
+            last = location
         End Sub
 
         Public Sub Rewind()
             Call Path.Reset()
         End Sub
 
+        ''' <summary>
+        ''' 关闭所有打开的数字，在此路径，并开始一个新图形。 通过将行从其终结点连接到其起始点，则关闭每个打开的图形。
+        ''' </summary>
         Public Sub CloseAllFigures()
             Call Path.CloseAllFigures()
         End Sub
