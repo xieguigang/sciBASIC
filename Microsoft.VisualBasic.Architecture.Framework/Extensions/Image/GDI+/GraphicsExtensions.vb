@@ -469,7 +469,7 @@ Namespace Imaging
         Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
 
         ''' <summary>
-        ''' 创建一个GDI+的绘图设备
+        ''' 创建一个GDI+的绘图设备，默认的背景填充色为白色
         ''' </summary>
         ''' <param name="r"></param>
         ''' <param name="filled">默认的背景填充颜色为白色</param>

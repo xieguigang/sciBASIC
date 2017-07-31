@@ -48,6 +48,32 @@ Imports r = System.Text.RegularExpressions.Regex
 Public Module StringHelpers
 
     ''' <summary>
+    ''' 判断这个字符串数组之中的所有的元素都是空字符串？
+    ''' </summary>
+    ''' <param name="s$">字符串数组</param>
+    ''' <returns></returns>
+    <Extension> Public Function IsEmptyStringVector(s$(), Optional RNull As Boolean = False) As Boolean
+        If RNull Then
+            Return s _
+                .Where(AddressOf StringHelpers.RNull) _
+                .Count = s.Length
+        Else
+            Return s.Where(Function(c) Not c.StringEmpty).Count = 0
+        End If
+    End Function
+
+    Private Function RNull(c$) As Boolean
+        Return c.StringEmpty OrElse
+            c.TextEquals("NULL") OrElse
+            c.TextEquals("NA")
+    End Function
+
+    <Extension>
+    Public Function AllEquals(s As IEnumerable(Of String), str$) As Boolean
+        Return s.All(Function(x) x = str)
+    End Function
+
+    ''' <summary>
     ''' https://github.com/darkskyapp/string-hash
     ''' </summary>
     ''' <param name="s$"></param>

@@ -135,7 +135,7 @@ Namespace Language.UnixBash
             Dim wc$() = ls.wildcards
             Dim isMatch As Func(Of String, Boolean) =
                 AddressOf New wildcardsCompatible With {
-                    .regexp = If(wc.Length = 0, {"*"}, wc)
+                    .regexp = If(wc.IsNullOrEmpty, {"*"}, wc)
                 }.IsMatch
             Dim list As IEnumerable(Of String)
 
