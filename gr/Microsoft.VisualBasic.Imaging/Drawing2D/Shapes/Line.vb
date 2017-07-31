@@ -109,30 +109,15 @@ Namespace Drawing2D.Vector.Shapes
         ''' <param name="d#">位移的距离</param>
         ''' <returns></returns>
         Public Function ParallelShift(d#) As Line
-            Dim tanA = Tan(Alpha)
-            Dim offset As PointF
-
-            If Abs(tanA) <= 0.0000000001 Then
-                ' 水平往下平移
-                ' x不变，只变换y
-                offset = New PointF(0, d)
-            ElseIf Abs(Alpha - PI / 2) <= 0.000000000001 Then
-                ' 往左或者往右水平平移
-                ' x变y不变
-                offset = New PointF(d, 0)
-            Else
-                Dim c = d / tanA
-                Dim dx = c * Cos(Alpha)
-                Dim dy = c * Sin(Alpha)
-
-                offset = New PointF(dx, dy)
-            End If
-
             With Stroke
                 Dim color As Color = DirectCast(.Brush, SolidBrush).Color
+                Dim dx = d * Sin(Alpha)
+                Dim dy = d * Cos(Alpha)
+                Dim offset As New Point(dx, -dy)
+
                 Return New Line(
-                    pt1.OffSet2D(offset),
-                    pt2.OffSet2D(offset),
+                    pt1.OffSet2D(Offset),
+                    pt2.OffSet2D(Offset),
                     color, .Width)
             End With
         End Function
