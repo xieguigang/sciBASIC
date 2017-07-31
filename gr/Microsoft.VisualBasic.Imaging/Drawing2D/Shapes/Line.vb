@@ -81,8 +81,8 @@ Namespace Drawing2D.Vector.Shapes
 
         Public ReadOnly Property Center As PointF
             Get
-                Dim x! = (pt1.X - pt2.X) / 2
-                Dim y! = (pt1.Y - pt2.Y) / 2
+                Dim x! = (pt1.X + pt2.X) / 2
+                Dim y! = (pt1.Y + pt2.Y) / 2
                 Return New PointF(x, y)
             End Get
         End Property
