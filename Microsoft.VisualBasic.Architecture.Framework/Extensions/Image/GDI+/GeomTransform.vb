@@ -100,16 +100,25 @@ Namespace Imaging
         ''' <param name="shape"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Centre(shape As IEnumerable(Of Point)) As Point
-            Dim x As New List(Of Integer)
-            Dim y As New List(Of Integer)
+        Public Function Centre(shape As IEnumerable(Of PointF)) As PointF
+            Dim x As New List(Of Single)
+            Dim y As New List(Of Single)
 
             Call shape.DoEach(Sub(pt)
                                   x += pt.X
                                   y += pt.Y
                               End Sub)
 
-            Return New Point(x.Average, y.Average)
+            Return New PointF(x.Average, y.Average)
+        End Function
+
+        <Extension>
+        Public Function Centre(shape As IEnumerable(Of Point)) As PointF
+            Return shape.PointF.Centre
+        End Function
+
+        <Extension> Public Function PointF(polygon As IEnumerable(Of Point)) As IEnumerable(Of PointF)
+            Return polygon.Select(Function(pt) New PointF(pt.X, pt.Y))
         End Function
 
         ''' <summary>

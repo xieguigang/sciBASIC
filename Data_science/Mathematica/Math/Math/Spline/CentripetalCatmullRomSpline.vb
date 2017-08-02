@@ -57,10 +57,10 @@ Namespace Interpolation
         ''' <param name="amountOfPoints!">How many points you want on the curve</param>
         ''' <returns>points on the Catmull curve so we can visualize them</returns>
         Public Function CatmulRom(pa As PointF, pb As PointF, pc As PointF, pd As PointF, Optional alpha! = 0.5F, Optional amountOfPoints! = 10.0F) As List(Of PointF)
-            Dim p0 As New Vector({pa.X, pa.Y})
-            Dim p1 As New Vector({pb.X, pb.Y})
-            Dim p2 As New Vector({pc.X, pc.Y})
-            Dim p3 As New Vector({pd.X, pd.Y})
+            Dim p0 As New Vector(shorts:={pa.X, pa.Y})
+            Dim p1 As New Vector(shorts:={pb.X, pb.Y})
+            Dim p2 As New Vector(shorts:={pc.X, pc.Y})
+            Dim p3 As New Vector(shorts:={pd.X, pd.Y})
 
             Dim t0! = 0.0F
             Dim t1! = GetT(t0, alpha, p0, p1)

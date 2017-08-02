@@ -101,6 +101,10 @@ Namespace LinearAlgebra
             Call MyBase.New(data)
         End Sub
 
+        Sub New(shorts As IEnumerable(Of Single))
+            Call Me.New(shorts.Select(Function(x) CDbl(x)))
+        End Sub
+
         ''' <summary>
         ''' Init with transform
         ''' </summary>

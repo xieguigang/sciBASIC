@@ -73,7 +73,7 @@ Namespace HTML.CSS
 
         Sub New(style As Pen)
             width = style.Width
-            fill = style.Color.RGB2Hexadecimal
+            fill = style.Color.ToHtmlColor
             dash = style.DashStyle
         End Sub
 

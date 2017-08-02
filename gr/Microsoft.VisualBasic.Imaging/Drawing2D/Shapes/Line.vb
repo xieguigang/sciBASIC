@@ -46,6 +46,16 @@ Namespace Drawing2D.Vector.Shapes
         End Property
 
         ''' <summary>
+        ''' 线段的长度
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Length As Double
+            Get
+                Return Math.Sqrt((pt1.X - pt2.X) ^ 2 + (pt1.Y - pt2.Y) ^ 2)
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 返回线段和X轴的夹角，夹角值为弧度值
         ''' </summary>
         ''' <returns></returns>
@@ -66,6 +76,14 @@ Namespace Drawing2D.Vector.Shapes
                 End If
 
                 Return a
+            End Get
+        End Property
+
+        Public ReadOnly Property Center As PointF
+            Get
+                Dim x! = (pt1.X + pt2.X) / 2
+                Dim y! = (pt1.Y + pt2.Y) / 2
+                Return New PointF(x, y)
             End Get
         End Property
 

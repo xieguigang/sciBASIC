@@ -217,7 +217,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub Clear(color As Color)
-            __svgData.bg$ = color.RGB2Hexadecimal
+            __svgData.bg$ = color.ToHtmlColor
         End Sub
 
         Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
@@ -624,7 +624,7 @@ Namespace SVG
             }
 
             If TypeOf brush Is SolidBrush Then
-                Dim color$ = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+                Dim color$ = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
                 text.style &= color
             End If
 
@@ -811,14 +811,14 @@ Namespace SVG
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF)
             Dim path As New path(points.GraphicsPath) With {
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
             }
             Call __svgData.Add(path)
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point)
             Dim path As New path(points.GraphicsPath) With {
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
             }
             Call __svgData.Add(path)
         End Sub
@@ -857,7 +857,7 @@ Namespace SVG
 
         Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
             Dim pathData As New path(path) With {
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
             }
             Call __svgData.Add(pathData)
         End Sub
@@ -874,17 +874,17 @@ Namespace SVG
 
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
             Dim path As path = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
-            path.style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+            path.style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
             Call __svgData.Add(path)
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point)
-            Call FillPolygon(brush, points.Select(AddressOf PointF).ToArray)
+            Call FillPolygon(brush, points.PointF.ToArray)
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
             Dim polygon As New polygon(points) With {
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
             }
             Call __svgData.Add(polygon)
         End Sub
@@ -919,7 +919,7 @@ Namespace SVG
                 .y = y,
                 .width = width,
                 .height = height,
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.RGB2Hexadecimal
+                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
             }
             Call __svgData.Add(rect)
         End Sub
