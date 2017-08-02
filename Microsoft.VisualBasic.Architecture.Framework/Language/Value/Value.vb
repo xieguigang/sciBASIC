@@ -33,7 +33,8 @@ Namespace Language
     ''' You can applying this data type into a dictionary object to makes the mathematics calculation more easily.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class Value(Of T) : Implements IValueOf
+    Public Class Value(Of T) ': Implements ValueType
+        Implements IValueOf
 
         ''' <summary>
         ''' This object have a <see cref="IValueOf.value"/> property for stores its data
@@ -44,7 +45,7 @@ Namespace Language
             ''' value property for this object stores its data
             ''' </summary>
             ''' <returns></returns>
-            Property value As T
+            Property Value As T
         End Interface
 
         '
@@ -57,7 +58,7 @@ Namespace Language
         '     System.Nullable`1 object has no value.
         Public ReadOnly Property HasValue As Boolean
             Get
-                Return Not value Is Nothing
+                Return Not Value Is Nothing
             End Get
         End Property
 
@@ -87,10 +88,10 @@ Namespace Language
         '     The value of the System.Nullable`1.Value property if the System.Nullable`1.HasValue
         '     property is true; otherwise, the defaultValue parameter.
         Public Function GetValueOrDefault(defaultValue As T) As T
-            If value Is Nothing Then
+            If Value Is Nothing Then
                 Return defaultValue
             Else
-                Return value
+                Return Value
             End If
         End Function
         '
@@ -121,7 +122,7 @@ Namespace Language
             ElseIf Not other.GetType Is GetType(T) Then
                 Return False
             Else
-                Return value.Equals(other)
+                Return Value.Equals(other)
             End If
         End Function
 
@@ -129,29 +130,34 @@ Namespace Language
         ''' The object value with a specific type define.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property value As T Implements IValueOf.value
+        Public Overridable Property Value As T Implements IValueOf.Value
 
         ''' <summary>
         ''' Creates an reference value object with the specific object value
         ''' </summary>
         ''' <param name="value"></param>
         Sub New(value As T)
-            Me.value = value
+            Me.Value = value
         End Sub
 
         ''' <summary>
         ''' Value is Nothing
         ''' </summary>
         Sub New()
-            value = Nothing
+            Call MyBase.New
+            Value = Nothing
         End Sub
+
+        Public Function GetUnderlyingType() As Type
+            Return GetType(T)
+        End Function
 
         ''' <summary>
         ''' Is the value is nothing.
         ''' </summary>
         ''' <returns></returns>
         Public Function IsNothing() As Boolean
-            Return value Is Nothing
+            Return Value Is Nothing
         End Function
 
         ''' <summary>
@@ -159,7 +165,7 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Scripting.InputHandler.ToString(value)
+            Return Scripting.InputHandler.ToString(Value)
         End Function
 
         Public Overloads Shared Operator +(list As Generic.List(Of Value(Of T)), x As Value(Of T)) As Generic.List(Of Value(Of T))
@@ -177,12 +183,12 @@ Namespace Language
         End Operator
 
         Public Shared Operator <=(value As Value(Of T), o As T) As T
-            value.value = o
+            value.Value = o
             Return o
         End Operator
 
         Public Shared Narrowing Operator CType(x As Value(Of T)) As T
-            Return x.value
+            Return x.Value
         End Operator
 
         Public Shared Widening Operator CType(x As T) As Value(Of T)
@@ -195,7 +201,7 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Shared Operator +(x As Value(Of T)) As T
-            Return x.value
+            Return x.Value
         End Operator
 
         ''' <summary>
@@ -205,7 +211,7 @@ Namespace Language
         ''' <param name="o"></param>
         ''' <returns></returns>
         Public Shared Operator =(value As Value(Of T), o As T) As T
-            value.value = o
+            value.Value = o
             Return o
         End Operator
 

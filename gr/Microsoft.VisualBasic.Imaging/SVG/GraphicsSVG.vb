@@ -879,7 +879,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point)
-            Call FillPolygon(brush, points.Select(AddressOf PointF).ToArray)
+            Call FillPolygon(brush, points.PointF.ToArray)
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)

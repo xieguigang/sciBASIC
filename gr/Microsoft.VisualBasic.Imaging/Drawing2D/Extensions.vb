@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
 Imports Vec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
@@ -72,16 +73,44 @@ Namespace Drawing2D
         End Function
 
         ''' <summary>
-        ''' Move the shape its bounds box topleft to target place
+        ''' 请注意，这个是围绕坐标轴远点进行的旋转，如果想要围绕指定点进行旋转，还需要进行平移操作
         ''' </summary>
         ''' <param name="shape"></param>
-        ''' <param name="topLeft"></param>
+        ''' <param name="alpha#"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function MoveTo(shape As IEnumerable(Of PointF), topLeft As PointF) As PointF()
+        Public Function Rotate(shape As IEnumerable(Of PointF), alpha#) As PointF()
+            Dim vector = shape.ToArray
+            Dim x0 As New Vec(vector.Select(Function(pt) pt.X))
+            Dim y0 As New Vec(vector.Select(Function(pt) pt.Y))
+            Dim x1 = x0 * Math.Cos(alpha) + y0 * Math.Sin(alpha)
+            Dim y1 = -x0 * Math.Sin(alpha) + y0 * Math.Cos(alpha)
+            Return (x1, y1).Point2D.ToArray
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="shape"></param>
+        ''' <param name="location"></param>
+        ''' <param name="type">By default, is move the shape its bounds box topleft to target place.</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function MoveTo(shape As IEnumerable(Of PointF), location As PointF, Optional type As MoveTypes = MoveTypes.BoundsBoxTopLeft) As PointF()
             Dim polygon = shape.ToArray
-            Dim rect As RectangleF = polygon.GetBounds
-            Dim offset As New PointF(rect.Left - topLeft.X, rect.Top - topLeft.Y)
+            Dim offset As PointF
+
+            Select Case type
+                Case MoveTypes.BoundsBoxTopLeft
+                    With polygon.GetBounds
+                        offset = New PointF(.Left - location.X, .Top - location.Y)
+                    End With
+                Case Else
+                    With polygon.Centre
+                        offset = New PointF(.X - location.X, .Y - location.Y)
+                    End With
+            End Select
+
             Dim out = polygon _
                 .Select(Function(point)
                             Return New PointF(point.X - offset.X,
@@ -91,13 +120,26 @@ Namespace Drawing2D
             Return out
         End Function
 
+        '<Extension>
+        'Public Function MoveTopLeft(polygon As PointF(), topLeft As PointF) As PointF()
+
+        'End Function
+
         <Extension>
-        Public Function MoveTo(shape As IEnumerable(Of Point), topLeft As PointF) As Point()
+        Public Function MoveTo(shape As IEnumerable(Of Point), location As PointF, Optional type As MoveTypes = MoveTypes.BoundsBoxTopLeft) As Point()
             Return shape _
                 .Select(Function(point) point.PointF) _
-                .MoveTo(topLeft) _
+                .MoveTo(location) _
                 .Select(Function(point) point.ToPoint) _
                 .ToArray
         End Function
+
+        Public Enum MoveTypes As Byte
+            ''' <summary>
+            ''' Move the shape its bounds box topleft to target place
+            ''' </summary>
+            BoundsBoxTopLeft
+            PolygonCentre
+        End Enum
     End Module
 End Namespace
