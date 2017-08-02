@@ -42,12 +42,32 @@ Namespace Language
         ''' The overloads function
         ''' </summary>
         ReadOnly methods As New Dictionary(Of String, OverloadsFunction)
-
         ReadOnly type As Type = GetType(T)
 
         Const stringContract$ = "op_Concatenate"
         Const objectLike$ = "op_Like"
         Const integerDivision$ = "op_IntegerDivision"
+
+        Default Public Overloads Property Item(exp$) As Object
+            Get
+                If exp = "Me" Then
+                    Return Me
+                ElseIf propertyNames.IndexOf(exp) > -1 Then
+                    Return linq(exp)
+                Else
+                    Return MyBase.Item(exp)
+                End If
+            End Get
+            Set(value)
+                If exp = "Me" Then
+                    buffer = DirectCast(value, IEnumerable(Of T)).ToArray
+                ElseIf propertyNames.IndexOf(exp) > -1 Then
+                    linq(exp) = value
+                Else
+                    MyBase.Item(exp) = DirectCast(value, IEnumerable(Of T)).AsList
+                End If
+            End Set
+        End Property
 
         Public Function [As](Of V)() As V()
             Return buffer.As(Of V)
