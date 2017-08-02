@@ -16,7 +16,7 @@ Namespace FileStream.Json
         ''' All unique vaue of the property <see cref="node.type"/>
         ''' </summary>
         ''' <returns></returns>
-        Public Property types As String()
+        Public Property types As Dictionary(Of String, String)
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
