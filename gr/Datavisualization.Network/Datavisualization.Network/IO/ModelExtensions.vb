@@ -139,7 +139,7 @@ Namespace FileStream
         ''' <param name="method$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function OrderByDegrees(nodeGroups As IGrouping(Of String, Graph.Node), Optional method$ = NameOf(Average)) As IEnumerable(Of IGrouping(Of String, Graph.Node))
+        Public Function OrderByDegrees(nodeGroups As IEnumerable(Of IGrouping(Of String, Graph.Node)), Optional method$ = NameOf(Average)) As IEnumerable(Of IGrouping(Of String, Graph.Node))
             Dim orderProvider As Func(Of IGrouping(Of String, Graph.Node), Double) = Nothing
 
             Select Case method

@@ -48,6 +48,21 @@ Public Module KeyValuePairExtensions
                              End Function)
     End Function
 
+    <Extension>
+    Public Function AsGroups(Of T)(table As Dictionary(Of String, T())) As IEnumerable(Of NamedCollection(Of T))
+        Return table.Select(Function(item)
+                                Return New NamedCollection(Of T) With {
+                                    .Name = item.Key,
+                                    .Value = item.Value
+                                }
+                            End Function)
+    End Function
+
+    <Extension>
+    Public Function IGrouping(Of T)(source As IEnumerable(Of NamedCollection(Of T))) As IEnumerable(Of IGrouping(Of String, T))
+        Return source.Select(Function(x) DirectCast(x, IGrouping(Of String, T)))
+    End Function
+
     ''' <summary>
     ''' Removes the target key in the dictionary table, and then gets the removed value.
     ''' (删除字典之中的指定的键值对，然后返回被删除的数据值)
@@ -127,6 +142,13 @@ Public Module KeyValuePairExtensions
             list = list.Distinct
         End If
         Return list.ToArray
+    End Function
+
+    <Extension>
+    Public Function Keys(Of K, V)(source As IEnumerable(Of IGrouping(Of K, V))) As K()
+        Return source _
+            .Select(Function(x) x.Key) _
+            .ToArray
     End Function
 
     ''' <summary>
