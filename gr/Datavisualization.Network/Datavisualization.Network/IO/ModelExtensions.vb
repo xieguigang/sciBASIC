@@ -171,7 +171,10 @@ Namespace FileStream
                     .Color = c,
                     .radius = r,
                     .Properties = New Dictionary(Of String, String) From {
-                        {names.REFLECTION_ID_MAPPING_NODETYPE, n.NodeType}
+                        {names.REFLECTION_ID_MAPPING_NODETYPE, n.NodeType},
+                        {names.REFLECTION_ID_MAPPING_DEGREE, n(names.REFLECTION_ID_MAPPING_DEGREE)},
+                        {names.REFLECTION_ID_MAPPING_DEGREE_IN, n(names.REFLECTION_ID_MAPPING_DEGREE_IN)},
+                        {names.REFLECTION_ID_MAPPING_DEGREE_OUT, n(names.REFLECTION_ID_MAPPING_DEGREE_OUT)}
                     },
                     .initialPostion = pos,
                     .label = n!name
