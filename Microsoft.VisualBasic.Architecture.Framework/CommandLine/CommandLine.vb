@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -665,8 +666,28 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="key"></param>
         ''' <param name="value"></param>
-        Public Sub Add(key As String, value As String)
-            Call __listArguments.Add(New NamedValue(Of String)(key.ToLower, value))
+        Public Sub Add(key$, value$,
+                       Optional allowDuplicated As Boolean = False,
+                       <CallerMemberName> Optional stack$ = Nothing)
+
+            Dim item As New NamedValue(Of String) With {
+                .Name = key.ToLower,
+                .Value = value,
+                .Description = stack & "->" & NameOf(Add)
+            }
+
+            If Not allowDuplicated Then
+                For i As Integer = 0 To __listArguments.Count - 1
+                    With __listArguments(i)
+                        If .Name.TextEquals(key) Then
+                            __listArguments(i) = item
+                            Exit For
+                        End If
+                    End With
+                Next
+            Else
+                __listArguments += item
+            End If
         End Sub
 
         ''' <summary>

@@ -201,10 +201,13 @@ Public Module App
     ''' Gets the ``/in`` commandline value as the input file path.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property InputFile As String
+    Public Property InputFile As String
         Get
             Return App.CommandLine("/in")
         End Get
+        Friend Set(value As String)
+            App.CommandLine.Add("/in", value)
+        End Set
     End Property
 
     Dim _out$
