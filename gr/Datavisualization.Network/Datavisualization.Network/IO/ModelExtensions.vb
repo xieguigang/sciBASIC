@@ -131,6 +131,32 @@ Namespace FileStream
         End Function
 
         ''' <summary>
+        ''' 将节点组按照组内的节点的degree的总和或者平均值来重排序
+        ''' 函数返回的是降序排序的结果
+        ''' 如果需要升序排序，则可以对返回的结果进行一次reverse即可
+        ''' </summary>
+        ''' <param name="nodeGroups"></param>
+        ''' <param name="method$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function OrderByDegrees(nodeGroups As IGrouping(Of String, Graph.Node), Optional method$ = NameOf(Average)) As IEnumerable(Of IGrouping(Of String, Graph.Node))
+            Dim orderProvider As Func(Of IGrouping(Of String, Graph.Node), Double) = Nothing
+
+            Select Case method
+                Case NameOf(Average)
+                    orderProvider = Function(g)
+                                        Return Aggregate x In g Into Average(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
+                                    End Function
+                Case NameOf(Sum)
+                    orderProvider = Function(g)
+                                        Return Aggregate x In g Into Sum(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
+                                    End Function
+            End Select
+
+            Return nodeGroups.OrderByDescending(orderProvider)
+        End Function
+
+        ''' <summary>
         ''' Transform the network data model to graph model
         ''' </summary>
         ''' <typeparam name="TNode"></typeparam>
@@ -157,7 +183,6 @@ Namespace FileStream
                 Dim br As New SolidBrush(defaultBrush.TranslateColor)
                 nodeColor = Function(n) br
             End If
-
 
             Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
  _
