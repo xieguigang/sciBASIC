@@ -270,6 +270,10 @@ Public Module TextDoc
             encoding = DefaultEncoding
         End If
 
+        If text Is Nothing Then
+            text = ""
+        End If
+
         Dim DIR As String
 
         Try
