@@ -311,14 +311,22 @@ Namespace FileStream
         End Function
 
         ''' <summary>
+        ''' 无边连接的节点的Degree值为零
+        ''' </summary>
+        Public Const NoConnections% = 0
+
+        ''' <summary>
         ''' 直接按照节点的``Degree``来筛选
         ''' </summary>
         ''' <param name="net"></param>
-        ''' <param name="degree%">``<see cref="Node"/> -> "Degree"``</param>
+        ''' <param name="degree%">``<see cref="Node"/> -> "Degree"``.（当这个参数为零的时候，表示默认是将无连接的孤立节点删除掉）</param>
         ''' <param name="removeIDs$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function RemovesByDegree(net As NetworkTables, Optional degree% = 0, Optional ByRef removeIDs$() = Nothing) As NetworkTables
+        Public Function RemovesByDegree(net As NetworkTables,
+                                        Optional degree% = NoConnections,
+                                        Optional ByRef removeIDs$() = Nothing) As NetworkTables
+
             Dim nodes As New List(Of Node)
             Dim removes As New List(Of String)
 
