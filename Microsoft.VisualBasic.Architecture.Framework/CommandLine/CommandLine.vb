@@ -681,13 +681,15 @@ Namespace CommandLine
                     With __listArguments(i)
                         If .Name.TextEquals(key) Then
                             __listArguments(i) = item
-                            Exit For
+                            Return
                         End If
                     End With
                 Next
-            Else
-                __listArguments += item
+
+                ' 没有查找到需要被替换掉的下标，则直接在下面的代码之中进行添加
             End If
+
+            __listArguments += item
         End Sub
 
         ''' <summary>
