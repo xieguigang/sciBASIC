@@ -81,6 +81,12 @@ Namespace Terminal
             '(0,1) 第二行
             Console.WriteLine(" ")
             Console.BackgroundColor = colorBack
+
+            Call SetToEchoLine()
+        End Sub
+
+        Public Sub SetToEchoLine()
+            Console.SetCursorPosition(0, y + 3)
         End Sub
 
         Public Overrides Sub [Step]()
@@ -126,6 +132,8 @@ Namespace Terminal
             If Not String.IsNullOrEmpty(details) Then
                 Console.WriteLine(vbTab & details)
             End If
+
+            Call SetToEchoLine()
         End Sub
 
         ''' <summary>
