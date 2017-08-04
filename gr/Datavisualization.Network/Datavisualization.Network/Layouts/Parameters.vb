@@ -46,7 +46,7 @@ Namespace Layouts
 
         Public Const DefaultFileName$ = "ForceDirectedArgs.ini"
 
-        Public Shared Function Load() As ForceDirectedArgs
+        Public Shared Function Load(Optional out$ = Nothing) As ForceDirectedArgs
             Dim b As Boolean = False
             Dim ini As Parameters = LoadProfile(Of Parameters)(b)
 
@@ -56,7 +56,11 @@ Namespace Layouts
                     .Repulsion = DefaultRepulsion,
                     .Stiffness = DefaultStiffness
                 }
-                Call ini.WriteProfile
+                If out.StringEmpty Then
+                    Call ini.WriteProfile
+                Else
+                    Call ini.WriteProfile(out)
+                End If
             End If
 
             Return ini.ForceDirectedArgs

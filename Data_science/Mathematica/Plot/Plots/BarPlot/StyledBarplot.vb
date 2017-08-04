@@ -149,7 +149,7 @@ Namespace BarPlot
  _
                 From ls As SeqValue(Of BarSerial)
                 In array.SeqIterator
-                Let color As String = colors(ls).RGB2Hexadecimal
+                Let color As String = colors(ls).ToHtmlColor
                 Let r As BarSerial = (+ls)
                 Select New BarSerial With {
                     .Brush = color,

@@ -67,7 +67,7 @@ Namespace ComponentModel
             If colors.IsNullOrEmpty OrElse colors.Length < values.Length Then
                 colors$ = Imaging _
                     .ChartColors _
-                    .Select(AddressOf Imaging.RGB2Hexadecimal) _
+                    .Select(AddressOf Imaging.ToHtmlColor) _
                     .ToArray
             End If
             Dim out As ColorClass() = values _

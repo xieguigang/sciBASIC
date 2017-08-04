@@ -60,7 +60,7 @@ Namespace KMeans
                 For Each c As KeyValuePair(Of String, Color) In colors
                     clusterColors += New NamedValue(Of String) With {
                         .Name = c.Key,
-                        .Value = c.Value.RGB2Hexadecimal
+                        .Value = c.Value.ToHtmlColor
                     }
                 Next
             End If
@@ -101,7 +101,7 @@ Namespace KMeans
                             .Select(getColor) _
                             .Select(AddressOf TranslateColor) _
                             .Average _
-                            .RGB2Hexadecimal
+                            .ToHtmlColor
                     End If
 
                     edges += New NetworkEdge With {
