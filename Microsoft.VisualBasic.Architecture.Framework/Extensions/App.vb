@@ -230,6 +230,8 @@ Public Module App
     End Property
 
     ''' <summary>
+    ''' Found the file path based on the current application context.
+    ''' 
     ''' 1. 直接查找(这个查找已经包含了在当前的文件夹之中查找)
     ''' 2. 从<see cref="App.InputFile"/>所在的文件夹之中查找
     ''' 3. 从<see cref="App.OutFile"/>所在的文件夹之中查找
