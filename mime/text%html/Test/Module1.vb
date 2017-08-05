@@ -32,7 +32,13 @@ Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
 Module Module1
 
     Sub Main()
-        Dim md = "![](./images/test.png) and ![](./2. annotations/GO/plot.png)
+        Dim md = "
+
+# header1
+
+## Header2
+
+![](./images/test.png) and ![](./2. annotations/GO/plot.png)
 
 |1|2|3|
 |-|-|-|
@@ -45,6 +51,30 @@ Module Module1
 code here
 ```
 
+    Dim a = a+b
+    Call MsgBox(12334)
+
+--------------------------
+
+```vbnet
+Dim DDDDDDDDDDDDDDDDDDDDDDDDDDDDD%
+
+Public Function T() As Void
+End Function
+```
+
+
+###### Escaping Test
+
+```
+
+# This is not a table
+
+|a|b|c|
+|-|-|-|
+|1|2|3|
+
+```
 "
 
         ' md = "G:\temp\reports.md".ReadAllText
