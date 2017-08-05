@@ -173,7 +173,6 @@ Namespace MarkDown
             Return text
         End Function
 
-
         ''' <summary>
         ''' Perform transformations that form block-level tags like paragraphs, headers, and list items.
         ''' </summary>
@@ -182,6 +181,10 @@ Namespace MarkDown
             For Each extension As ExtensionTransform In _inlineExtensions
                 text = extension(text)
             Next
+
+            ' 因为R或者python语言之中的注释符号是markdown之中的header的标记
+            ' 所以为了不将其转义，需要将codeblock优先于header进行转换
+            text = DoCodeBlocks(text)
 
             If Not _DisableHeaders Then
                 text = DoHeaders(text)
@@ -192,7 +195,6 @@ Namespace MarkDown
             End If
 
             text = DoLists(text)
-            text = DoCodeBlocks(text)
             text = DoBlockQuotes(text)
 
             ' We already ran HashHTMLBlocks() before, in Markdown(), but that
@@ -206,8 +208,7 @@ Namespace MarkDown
             Return text
         End Function
 
-
-        Private _inlineExtensions As New List(Of ExtensionTransform)()
+        ReadOnly _inlineExtensions As New List(Of ExtensionTransform)()
 
         ''' <summary>
         ''' Public <see cref="System.Delegate"/> Function ExtensionTransform(text As <see cref="String"/>) As <see cref="String"/>
@@ -1055,12 +1056,14 @@ Namespace MarkDown
 
 #Region "代码预览块的HTML文本处理"
 
+        Const CodeBlockFlag$ = "[`]{3}"
+
         ''' <summary>
         ''' 带语言类型说明的代码块
         ''' </summary>
-        Const SyntaxCodeBloackRegexp$ = "^```\S+\s*$.+?^```\s*$"
+        Const SyntaxCodeBloackRegexp$ = CodeBlockFlag & ".+?" & CodeBlockFlag
 
-        Shared ReadOnly __syntaxCodeBlock As New Regex(SyntaxCodeBloackRegexp, RawCompileOptions)
+        Shared ReadOnly __syntaxCodeBlock As New Regex(SyntaxCodeBloackRegexp, RegexICSng)
 
         ''' <summary>
         ''' 这里只是解析出4个空格的缩进的代码块
@@ -1082,8 +1085,21 @@ Namespace MarkDown
         ''' Turn Markdown 4-space indented code into HTML pre code blocks
         ''' </summary>
         Private Function DoCodeBlocks(text As String) As String
+            text = __syntaxCodeBlock.Replace(text, New MatchEvaluator(AddressOf SyntaxedCodeBlockEvaluator))
             text = _codeBlock.Replace(text, New MatchEvaluator(AddressOf CodeBlockEvaluator))
             Return text
+        End Function
+
+        Private Function SyntaxedCodeBlockEvaluator(match As Match) As String
+            Dim codeBlock As String = match.Value
+            Dim lines = codeBlock.lTokens
+            Dim language$ = Mid(lines(Scan0), 4).Trim
+
+            codeBlock = lines.Skip(1).Take(lines.Length - 2).JoinBy(vbLf)
+            codeBlock = EncodeCode(Outdent(codeBlock))
+            codeBlock = _newlinesLeadingTrailing.Replace(codeBlock, "")
+
+            Return String.Concat(vbLf & vbLf & $"<pre><code class=""{language}"">", codeBlock, vbLf & "</code></pre>" & vbLf & vbLf)
         End Function
 
         Private Function CodeBlockEvaluator(match As Match) As String
