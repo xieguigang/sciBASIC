@@ -6,11 +6,17 @@ Namespace FileStream.Json
 
         Public Property nodes As node()
         Public Property edges As edges()
+
         ''' <summary>
         ''' 优先加载的样式名称
         ''' </summary>
         ''' <returns></returns>
         Public Property style As String
+        ''' <summary>
+        ''' All unique vaue of the property <see cref="node.type"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property types As Dictionary(Of String, String)
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -18,6 +24,7 @@ Namespace FileStream.Json
     End Class
 
     Public Class edges
+
         Public Property source As Integer
         Public Property target As Integer
         Public Property A As String
@@ -33,6 +40,7 @@ Namespace FileStream.Json
     End Class
 
     Public Class node
+
         Public Property id As Integer
         Public Property name As String
         Public Property degree As Integer
