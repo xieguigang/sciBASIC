@@ -195,7 +195,13 @@ Namespace Text.HtmlParser
 
         ' <area shape=rect	coords=40,45,168,70	href="/dbget-bin/www_bget?hsa05034"	title="hsa05034: Alcoholism" onmouseover="popupTimer(&quot;hsa05034&quot;, &quot;hsa05034: Alcoholism&quot;, &quot;#ffffff&quot;)" onmouseout="hideMapTn()" />
 
-        Const attributeParse$ = "\S+=.+"
+        Const attributeParse$ = "\S+?=.+?"
+
+        <Extension>
+        Private Function stripTag(ByRef tag$) As String
+            tag = tag.Trim("<"c).Trim(">"c).Trim("/"c)
+            Return tag
+        End Function
 
         ''' <summary>
         ''' 获取一个html标签之中的所有的attribute属性数据
@@ -203,22 +209,29 @@ Namespace Text.HtmlParser
         ''' <param name="tag$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function TagAttributes(tag$) As NamedValue(Of String)()
-            Dim list = Regex.Matches(tag, attributeParse, RegexICSng).ToArray
-            Dim out = list _
-                .Select(Function(a) a.GetTagValue(trim:=True)) _
-                .Select(Function(attr)
-                            Return New NamedValue(Of String) With {
-                                .Name = attr.Name,
-                                .Value = attr.Value _
-                                    .Trim(ASCII.Quot) _
-                                    .Trim,
-                                .Description = attr.Description
-                            }
-                        End Function) _
-                .ToArray
+        Public Iterator Function TagAttributes(tag$) As IEnumerable(Of NamedValue(Of String))
+            Dim list = Regex.Matches(tag.stripTag, attributeParse, RegexICSng).ToArray
+            Dim p%
+            Dim s$
+            Dim name$
 
-            Return out
+            For i As Integer = 0 To list.Length - 1
+                name = list(i)
+                p = InStr(tag, name)
+                s = Mid(tag, p)
+                s = Regex.Split(s, "\S+=").ElementAtOrDefault(1) ' value
+
+                name = name.Split("="c).First
+
+                If Not s Is Nothing Then
+                    s = s.Trim(" "c, ASCII.TAB, ASCII.Quot)
+                End If
+
+                Yield New NamedValue(Of String) With {
+                    .Name = name,
+                    .Value = s
+                }
+            Next
         End Function
     End Module
 End Namespace
