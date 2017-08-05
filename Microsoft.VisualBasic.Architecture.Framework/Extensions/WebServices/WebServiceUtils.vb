@@ -512,12 +512,12 @@ Public Module WebServiceUtils
     <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request Or a html file on the local filesystem.")>
     <Extension> Public Function [GET](url As String,
                                       <Parameter("Request.TimeOut")>
-                                      Optional retry As UInt16 = 10,
+                                      Optional retry As UInt16 = 0,
                                       <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
                                       Optional isFileUrl As Boolean = False,
                                       Optional headers As Dictionary(Of String, String) = Nothing,
                                       Optional proxy As String = Nothing,
-                                      Optional doNotRetry404 As Boolean = False,
+                                      Optional doNotRetry404 As Boolean = True,
                                       Optional UA$ = UserAgent.GoogleChrome) As String
 #Else
     ''' <summary>

@@ -1,34 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::5e0e4f0c1d92455afa6fc8c32ffb05fe, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\ImageFormat.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text
 
 Namespace Imaging
 
@@ -77,6 +79,10 @@ Namespace Imaging
         ''' Gets the Windows metafile (WMF) image format.
         ''' </summary>
         Wmf
+        ''' <summary>
+        ''' Base64
+        ''' </summary>
+        Base64
     End Enum
 
     ''' <summary>
@@ -129,8 +135,7 @@ Namespace Imaging
             Return enumFormats.TryGetValue(LCase(format), [default]:=ImageFormats.Png)
         End Function
 
-        ReadOnly __formats As SortedDictionary(Of ImageFormats, ImageFormat) =
-            New SortedDictionary(Of ImageFormats, ImageFormat) From {
+        ReadOnly __formats As New SortedDictionary(Of ImageFormats, ImageFormat) From {
  _
             {ImageFormats.Bmp, ImageFormat.Bmp},
             {ImageFormats.Emf, ImageFormat.Emf},
@@ -158,6 +163,10 @@ Namespace Imaging
 
                 If format = ImageFormats.Tiff Then
                     Return New TiffWriter(res).MultipageTiffSave(path)
+                ElseIf format = ImageFormats.Base64 Then
+                    Return res _
+                        .ToBase64String _
+                        .SaveTo(path, Encodings.ASCII.CodePage)
                 Else
                     Call res.Save(path, format.GetFormat)
                 End If
