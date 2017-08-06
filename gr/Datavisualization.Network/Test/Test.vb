@@ -42,7 +42,7 @@ Module Test
     End Sub
 
     Sub TestPageRank()
-        Dim g As New Network
+        Dim g As New NetworkTables
 
         Call g.AddEdges("B", {"C"})
         Call g.AddEdges("C", {"B"})
