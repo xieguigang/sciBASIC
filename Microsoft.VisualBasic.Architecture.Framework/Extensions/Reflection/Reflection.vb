@@ -421,6 +421,12 @@ NULL:       If Not strict Then
             .Description([default]:=s)
     End Function
 
+    ''' <summary>
+    ''' 获取得到定义该类型成员之上的<see cref="DescriptionAttribute"/>值或者默认定义
+    ''' </summary>
+    ''' <param name="m"></param>
+    ''' <param name="default$"></param>
+    ''' <returns></returns>
     <Extension> Public Function Description(m As MemberInfo, Optional default$ = Nothing) As String
         Dim customAttrs() = m.GetCustomAttributes(
             GetType(DescriptionAttribute),
@@ -433,12 +439,24 @@ NULL:       If Not strict Then
         End If
     End Function
 
+    <Extension> Public Function Category(m As MemberInfo, Optional default$ = Nothing) As String
+        Dim customAttrs() = m.GetCustomAttributes(
+           GetType(CategoryAttribute),
+           inherit:=False)
+
+        If Not customAttrs.IsNullOrEmpty Then
+            Return DirectCast(customAttrs(Scan0), CategoryAttribute).Category
+        Else
+            Return [default]
+        End If
+    End Function
+
     ''' <summary>
     ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.(只允许枚举类型，其他的都返回空集合)
     ''' </summary>
     ''' <typeparam name="T">泛型类型约束只允许枚举类型，其他的都返回空集合</typeparam>
     ''' <returns></returns>
-    Public Function Enums(Of T)() As T()
+    Public Function Enums(Of T As Structure)() As T()
         Dim EnumType As Type = GetType(T)
         If Not EnumType.IsInheritsFrom(GetType(System.Enum)) Then
             Return Nothing

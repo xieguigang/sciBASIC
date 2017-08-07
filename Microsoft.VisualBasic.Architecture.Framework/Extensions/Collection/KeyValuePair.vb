@@ -195,7 +195,7 @@ Public Module KeyValuePairExtensions
     ''' <param name="lcaseKey"></param>
     ''' <param name="usingDescription"></param>
     ''' <returns></returns>
-    Public Function EnumParser(Of T)(Optional lcaseKey As Boolean = True, Optional usingDescription As Boolean = False) As Dictionary(Of String, T)
+    Public Function EnumParser(Of T As Structure)(Optional lcaseKey As Boolean = True, Optional usingDescription As Boolean = False) As Dictionary(Of String, T)
         Dim values As [Enum]() = Enums(Of T)().ToArray(Function(e) DirectCast(CType(e, Object), [Enum]))
         Dim [case] = If(lcaseKey, Function(key$) LCase(key), Function(key$) key)
 
@@ -330,7 +330,7 @@ Public Module KeyValuePairExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
-    Public Function ParserDictionary(Of T)() As Dictionary(Of String, T)
+    Public Function ParserDictionary(Of T As Structure)() As Dictionary(Of String, T)
         Return Enums(Of T).ToDictionary(Function(x) DirectCast(CType(x, Object), [Enum]).Description)
     End Function
 
