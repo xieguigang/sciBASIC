@@ -61,7 +61,7 @@ Namespace Imaging
         End Sub
 
         Public Overrides Function ToString() As String
-            Return ToRGB.RGB2Hexadecimal
+            Return ToRGB.ToHtmlColor
         End Function
 
         ''' <summary>

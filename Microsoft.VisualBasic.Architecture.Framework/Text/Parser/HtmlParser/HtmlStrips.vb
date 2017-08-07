@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::1aeba6c4d89ab3c617d31b63b209ebab, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\HtmlParser\HtmlStrips.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Text.HtmlParser
@@ -190,6 +191,47 @@ Namespace Text.HtmlParser
             Else
                 Return Regex.Split(html, LineFeed, RegexICSng)
             End If
+        End Function
+
+        ' <area shape=rect	coords=40,45,168,70	href="/dbget-bin/www_bget?hsa05034"	title="hsa05034: Alcoholism" onmouseover="popupTimer(&quot;hsa05034&quot;, &quot;hsa05034: Alcoholism&quot;, &quot;#ffffff&quot;)" onmouseout="hideMapTn()" />
+
+        Const attributeParse$ = "\S+?=.+?"
+
+        <Extension>
+        Private Function stripTag(ByRef tag$) As String
+            tag = tag.Trim("<"c).Trim(">"c).Trim("/"c)
+            Return tag
+        End Function
+
+        ''' <summary>
+        ''' 获取一个html标签之中的所有的attribute属性数据
+        ''' </summary>
+        ''' <param name="tag$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function TagAttributes(tag$) As IEnumerable(Of NamedValue(Of String))
+            Dim list = Regex.Matches(tag.stripTag, attributeParse, RegexICSng).ToArray
+            Dim p%
+            Dim s$
+            Dim name$
+
+            For i As Integer = 0 To list.Length - 1
+                name = list(i)
+                p = InStr(tag, name)
+                s = Mid(tag, p)
+                s = Regex.Split(s, "\S+=").ElementAtOrDefault(1) ' value
+
+                name = name.Split("="c).First
+
+                If Not s Is Nothing Then
+                    s = s.Trim(" "c, ASCII.TAB, ASCII.Quot)
+                End If
+
+                Yield New NamedValue(Of String) With {
+                    .Name = name,
+                    .Value = s
+                }
+            Next
         End Function
     End Module
 End Namespace

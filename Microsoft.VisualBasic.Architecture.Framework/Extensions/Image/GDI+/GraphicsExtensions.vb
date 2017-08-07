@@ -268,10 +268,16 @@ Namespace Imaging
         ''' <param name="path"></param>
         ''' <returns></returns>
         <ExportAPI("LoadImage"), Extension>
-        Public Function LoadImage(path As String) As Image
-            Dim stream As Byte() = FileIO.FileSystem.ReadAllBytes(path)
-            Dim res = Image.FromStream(stream:=New IO.MemoryStream(stream))
-            Return res
+        Public Function LoadImage(path As String, Optional base64 As Boolean = False) As Image
+            If base64 Then
+                Dim base64String = path.ReadAllText
+                Dim img As Image = base64String.GetImage
+                Return img
+            Else
+                Dim stream As Byte() = FileIO.FileSystem.ReadAllBytes(path)
+                Dim res = Image.FromStream(stream:=New IO.MemoryStream(stream))
+                Return res
+            End If
         End Function
 
         <ExportAPI("LoadImage")>
