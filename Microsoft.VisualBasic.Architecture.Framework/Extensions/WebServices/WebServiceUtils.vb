@@ -671,7 +671,7 @@ RETRY:      Return __get(url, headers, proxy, UA)
                                              save As String,
                                              Optional proxy As String = Nothing,
                                              Optional ua As String = UserAgent.FireFox,
-                                             Optional retry As Integer = 10) As Boolean
+                                             Optional retry As Integer = 0) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
