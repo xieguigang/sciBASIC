@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
@@ -14,15 +15,36 @@ Public Class World
     Public Delegate Function Reaction(m1 As MassPoint, m2 As MassPoint) As Force
     Public Delegate Sub Output(objs As IEnumerable(Of MassPoint))
 
-    Dim objects As List(Of MassPoint)
-    Dim reactions As New Dictionary(Of String, Dictionary(Of String, NamedValue(Of Reaction)))
-    Dim forceSystem As Dictionary(Of String, List(Of Force))
-    Dim outputs As Output
+    Protected objects As List(Of MassPoint)
+    Protected reactions As New Dictionary(Of String, Dictionary(Of String, NamedValue(Of Reaction)))
+    Protected forceSystem As Dictionary(Of String, List(Of Force))
+    Protected outputs As Output
 
     Protected Overridable Sub RaiseEvents()
         If Not outputs Is Nothing Then
             Call outputs(objects)
         End If
+    End Sub
+
+    ''' <summary>
+    ''' 添加两个对象之间的相互作用
+    ''' </summary>
+    ''' <param name="a$">对象a：<see cref="MassPoint.ID"/></param>
+    ''' <param name="b$">对象b：<see cref="MassPoint.ID"/></param>
+    ''' <param name="react">这两个对象之间如何产生力？</param>
+    ''' <param name="trace$"></param>
+    Public Sub AddReaction(a$, b$, react As Reaction, <CallerMemberName> Optional trace$ = Nothing)
+        If Not reactions.ContainsKey(a) Then
+            reactions.Add(a, New Dictionary(Of String, NamedValue(Of Reaction)))
+        End If
+
+        Dim list = reactions(a)
+
+        list(b) = New NamedValue(Of Reaction) With {
+            .Name = react.ToString,
+            .Value = react,
+            .Description = trace
+        }
     End Sub
 
     ''' <summary>
@@ -61,4 +83,9 @@ Public Class World
             m.Displacement()    ' 加速度改变了物体现有的运动状态
         Next
     End Sub
+
+    Public Shared Operator +(world As World, m As MassPoint) As World
+        world.objects += m
+        Return world
+    End Operator
 End Class
