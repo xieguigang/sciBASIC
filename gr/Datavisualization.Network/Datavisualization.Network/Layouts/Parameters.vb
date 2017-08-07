@@ -41,7 +41,7 @@ Namespace Layouts
         Public Property ForceDirectedArgs As ForceDirectedArgs
 
         Public Const DefaultStiffness As Single = 81.76!
-        Public Const DefaultRepulsion As Single = 20000.0!
+        Public Const DefaultRepulsion As Single = 2000.0!
         Public Const DefaultDamping As Single = 0.5!
 
         Public Const DefaultFileName$ = "ForceDirectedArgs.ini"
