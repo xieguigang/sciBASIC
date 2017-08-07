@@ -1,6 +1,9 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
 ''' Physics world reactor
@@ -13,17 +16,27 @@ Public Class World
     End Enum
 
     Public Delegate Function Reaction(m1 As MassPoint, m2 As MassPoint) As Force
-    Public Delegate Sub Output(objs As IEnumerable(Of MassPoint))
+
+    ''' <summary>
+    ''' 将状态被改变的对象输出到显示设备或者存储设备之上
+    ''' </summary>
+    ''' <param name="objs"></param>
+    ''' <param name="physX">调试使用</param>
+    Public Delegate Sub Output(objs As IEnumerable(Of MassPoint), physX As Dictionary(Of String, List(Of Force)))
 
     Protected objects As List(Of MassPoint)
     Protected reactions As New Dictionary(Of String, Dictionary(Of String, NamedValue(Of Reaction)))
-    Protected forceSystem As Dictionary(Of String, List(Of Force))
+    Protected forceSystem As New Dictionary(Of String, List(Of Force))
     Protected outputs As Output
 
     Protected Overridable Sub RaiseEvents()
         If Not outputs Is Nothing Then
-            Call outputs(objects)
+            Call outputs(objects, forceSystem)
         End If
+    End Sub
+
+    Sub New(Optional updates As Output = Nothing)
+        outputs = updates
     End Sub
 
     ''' <summary>
@@ -48,7 +61,7 @@ Public Class World
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' 指令世界模型对象迭代计算指定的迭代计算次数
     ''' </summary>
     ''' <param name="time%">迭代的次数</param>
     Public Sub React(time As UInteger)
@@ -86,6 +99,31 @@ Public Class World
 
     Public Shared Operator +(world As World, m As MassPoint) As World
         world.objects += m
+        world.forceSystem.Add(m.ID, New List(Of Force))
+
+        If m.Acceleration Is Nothing Then
+            m.Acceleration = New Vector(2)
+        End If
+        If m.Velocity Is Nothing Then
+            m.Velocity = New Vector(2)
+        End If
+
         Return world
     End Operator
+
+    Public Shared Function LocationGenerator(size As Size) As Func(Of Vector)
+        Dim rand As New Random
+        Dim w% = size.Width
+        Dim h% = size.Height
+
+        Return Function()
+                   Call Thread.Sleep(1)
+
+                   SyncLock rand
+                       With rand
+                           Return New Vector(data:={ .Next(0, w), .Next(0, h)})
+                       End With
+                   End SyncLock
+               End Function
+    End Function
 End Class
