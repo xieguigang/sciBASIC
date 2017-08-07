@@ -31,7 +31,6 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
 Imports NetGraph = Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkTables
 
@@ -125,6 +124,17 @@ Namespace Analysis
             Next
 
             Return ([in], out)
+        End Function
+
+        <Extension>
+        Public Function Sum(degrees As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))) As Dictionary(Of String, Integer)
+            Dim degreeValue As New Dictionary(Of String, Integer)(degrees.in)
+
+            For Each node In degrees.out
+                degreeValue(node.Key) += degreeValue(node.Key) + node.Value
+            Next
+
+            Return degreeValue
         End Function
 
         <Extension>
