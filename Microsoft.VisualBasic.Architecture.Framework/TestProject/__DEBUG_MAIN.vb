@@ -146,6 +146,19 @@ Public Module __DEBUG_MAIN
 
     Function Main() As Integer
 
+        Dim ddddsss = "1234567"
+
+        With ddddsss
+
+            ddddsss = "abc"
+
+            Dim g = .ref.GetJson
+
+            System.Console.WriteLine(g)
+            Pause()
+        End With
+
+
         Dim nnnnn = New List(Of NamedValue(Of String)) From {
             {"1", "1", "1"}, 
             {"22", "33"}
