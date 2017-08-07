@@ -37,6 +37,7 @@ Namespace Drawing2D.Vector.Shapes
         ''' 线段的起点和终点
         ''' </summary>
         Dim pt1 As PointF, pt2 As PointF
+
         Public Property Stroke As Pen
 
         Public Overrides ReadOnly Property Size As Size
