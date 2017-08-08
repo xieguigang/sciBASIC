@@ -87,10 +87,10 @@ Namespace LinearAlgebra
         End Sub
 
         ''' <summary>
-        ''' 创建一个空的向量
+        ''' 创建一个空的向量，包含有零个元素
         ''' </summary>
-        Sub New()
-            Call MyBase.New(8)
+        Private Sub New()
+            Call MyBase.New()
         End Sub
 
         ''' <summary>
