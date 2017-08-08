@@ -98,6 +98,10 @@ Namespace ComponentModel.Ranges
         ''' <returns></returns>
         <Extension>
         Public Function RangeTransform(from As IEnumerable(Of Double), [to] As DoubleRange) As Double()
+            If from.IsNullOrEmpty Then
+                Return {}
+            End If
+
             Dim vector#() = from.ToArray
             Dim scale = New DoubleRange(vector).GetScaler
             Dim percentages#() = vector.Select(scale).ToArray
