@@ -354,6 +354,13 @@ Namespace CommandLine
             End If
         End Function
 
+        Public Function IsTrue(parameter$) As Boolean
+            If Me.HavebFlag(parameter) Then
+                Return True
+            End If
+            Return Me(parameter).ParseBoolean
+        End Function
+
 #Region "Pipeline"
 
         ''' <summary>About <paramref name="s"/>:
@@ -427,10 +434,7 @@ Namespace CommandLine
         ''' <param name="parameter">可以包含有开关参数</param>
         ''' <returns></returns>
         Public Function GetBoolean(parameter As String) As Boolean
-            If Me.HavebFlag(parameter) Then
-                Return True
-            End If
-            Return Me(parameter).ParseBoolean
+            Return Me.IsTrue(parameter)
         End Function
 
         ''' <summary>
@@ -447,8 +451,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function GetBytes(parameter As String) As Byte()
-            Dim Tokens As String() = Me(parameter).Split(","c)
-            Return (From s As String In Tokens Select CByte(Val(s))).ToArray
+            Dim tokens As String() = Me(parameter).Split(","c)
+            Return (From s As String In tokens Select CByte(Val(s))).ToArray
         End Function
 
         ''' <summary>

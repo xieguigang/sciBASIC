@@ -13,6 +13,22 @@ Public Class Factor(Of T As IComparable(Of T)) : Inherits int
     End Function
 End Class
 
+Public Class Factors(Of T As IComparable(Of T)) : Inherits Index(Of T)
+
+    Sub New(ParamArray list As T())
+        Call MyBase.New(list)
+    End Sub
+
+    Public Iterator Function GetFactors() As IEnumerable(Of Factor(Of T))
+        For Each i In MyBase.Map
+            Yield New Factor(Of T) With {
+                .FactorValue = i.Key,
+                .Value = i.Value
+            }
+        Next
+    End Function
+End Class
+
 Public Module FactorExtensions
 
     ''' <summary>

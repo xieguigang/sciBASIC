@@ -62,7 +62,7 @@ Namespace ComponentModel
         ''' <typeparam name="T"></typeparam>
         ''' <param name="colors$">Using the user custom colors</param>
         ''' <returns></returns>
-        Public Shared Function FromEnums(Of T)(Optional colors$() = Nothing) As ColorClass()
+        Public Shared Function FromEnums(Of T As Structure)(Optional colors$() = Nothing) As ColorClass()
             Dim values As T() = Enums(Of T)()
             If colors.IsNullOrEmpty OrElse colors.Length < values.Length Then
                 colors$ = Imaging _
