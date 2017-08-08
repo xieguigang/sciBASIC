@@ -57,6 +57,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -75,6 +76,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Html\Article.vb" />
+    <Compile Include="Html\Html2Article.vb" />
+    <Compile Include="Html\UrlUtility.vb" />
     <Compile Include="TextRank.vb" />
     <Compile Include="NLP.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -113,11 +117,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
+    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\gr\Datavisualization.Network\Datavisualization.Network\Datavisualization.Network.vbproj">
+    <ProjectReference Include="..\..\gr\Datavisualization.Network\Datavisualization.Network\Network.GraphTheory.vbproj">
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
       <Name>Datavisualization.Network</Name>
     </ProjectReference>
