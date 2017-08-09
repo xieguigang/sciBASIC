@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dc637dc370805afa8d01de4ff782d80, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\NodeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::20162cac7c104f450197ff233b297c9c, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\NodeStyles.vb"
 
     ' Author:
     ' 

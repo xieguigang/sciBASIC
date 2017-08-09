@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1628dd6494f1620286f8b1095894e525, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\vbnet.vb"
+﻿#Region "Microsoft.VisualBasic::ee56d73a83aa56d547af91e8d3826a41, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\csv\vbnet.vb"
 
     ' Author:
     ' 

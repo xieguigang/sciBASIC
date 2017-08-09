@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c1cd0f39c2630fcfd74f07a05682259, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\ScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::4c1cd0f39c2630fcfd74f07a05682259, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\ScriptEngine.vb"
 
     ' Author:
     ' 

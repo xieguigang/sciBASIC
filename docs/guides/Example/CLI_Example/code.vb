@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::674c5b99fcf312cf8c5c2425fe0bedd4, ..\sciBASIC#\docs\guides\Example\CLI_Example\code.vb"
+﻿#Region "Microsoft.VisualBasic::8bec22e7bb958f2a0f0bbb6d576e3941, ..\sciBASIC#\docs\guides\Example\CLI_Example\code.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Namespace TestApp
         End Function
     End Class
 End Namespace
-

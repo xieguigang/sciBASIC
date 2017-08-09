@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a65536751867d70d9d63e0e9bdb6de8b, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::fb13666e7b35ce0f0618b9c5f84ef5e5, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm.vb"
 
     ' Author:
     ' 
@@ -53,5 +53,3 @@ Public Interface ClusteringAlgorithm
     Function performFlatClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy, threshold As Double) As IList(Of Cluster)
 
 End Interface
-
-

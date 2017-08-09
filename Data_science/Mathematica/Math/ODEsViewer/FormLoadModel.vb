@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f88aef9468756a72c9dc77403784ffa, ..\sciBASIC#\Data_science\Mathematical\ODEsViewer\FormLoadModel.vb"
+﻿#Region "Microsoft.VisualBasic::2f88aef9468756a72c9dc77403784ffa, ..\sciBASIC#\Data_science\Mathematica\Math\ODEsViewer\FormLoadModel.vb"
 
     ' Author:
     ' 

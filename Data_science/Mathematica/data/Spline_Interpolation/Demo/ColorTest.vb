@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90322157d701e46fed00efb2bad271d4, ..\sciBASIC#\Data_science\Mathematical\data\Spline_Interpolation\Demo\ColorTest.vb"
+﻿#Region "Microsoft.VisualBasic::90322157d701e46fed00efb2bad271d4, ..\sciBASIC#\Data_science\Mathematica\data\Spline_Interpolation\Demo\ColorTest.vb"
 
     ' Author:
     ' 

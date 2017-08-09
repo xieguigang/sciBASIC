@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fd3a71fbd2b7f785b1ab628ea64ba1a, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\StyleMappings.vb"
+﻿#Region "Microsoft.VisualBasic::a3d7aad63a34c955f35590659dbb5e71, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\StyleMappings.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcdeddae476c92fc4895b5b6129797a8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\SharedORM\API.vb"
+﻿#Region "Microsoft.VisualBasic::9847edce9549879588136c531769a7e9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\SharedORM\API.vb"
 
     ' Author:
     ' 

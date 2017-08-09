@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e178bd8f4e639048630503997cedb7f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::db58404c32617c9518cc589b7e4fb9f4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -1153,5 +1153,3 @@ Namespace SVG
         End Sub
     End Class
 End Namespace
-
-
