@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c31c360f2bfd57c0dd76fa0f28387b67, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Helpers\Variable.vb"
+﻿#Region "Microsoft.VisualBasic::c31c360f2bfd57c0dd76fa0f28387b67, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Helpers\Variable.vb"
 
     ' Author:
     ' 

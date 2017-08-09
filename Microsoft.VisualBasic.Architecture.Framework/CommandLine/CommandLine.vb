@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::f3d09ff483e8ebdd258f40e97253bca1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::81d2849986e047e897f7b55fd5f7e07a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -354,6 +354,13 @@ Namespace CommandLine
             End If
         End Function
 
+        Public Function IsTrue(parameter$) As Boolean
+            If Me.HavebFlag(parameter) Then
+                Return True
+            End If
+            Return Me(parameter).ParseBoolean
+        End Function
+
 #Region "Pipeline"
 
         ''' <summary>About <paramref name="s"/>:
@@ -427,10 +434,7 @@ Namespace CommandLine
         ''' <param name="parameter">可以包含有开关参数</param>
         ''' <returns></returns>
         Public Function GetBoolean(parameter As String) As Boolean
-            If Me.HavebFlag(parameter) Then
-                Return True
-            End If
-            Return Me(parameter).ParseBoolean
+            Return Me.IsTrue(parameter)
         End Function
 
         ''' <summary>
@@ -447,8 +451,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function GetBytes(parameter As String) As Byte()
-            Dim Tokens As String() = Me(parameter).Split(","c)
-            Return (From s As String In Tokens Select CByte(Val(s))).ToArray
+            Dim tokens As String() = Me(parameter).Split(","c)
+            Return (From s As String In tokens Select CByte(Val(s))).ToArray
         End Function
 
         ''' <summary>

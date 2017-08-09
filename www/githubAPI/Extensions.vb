@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75269278f32a398470bb0cada4c91201, ..\sciBASIC#\www\githubAPI\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b71c3f95f961b06fe3e1cf19138437d0, ..\sciBASIC#\www\githubAPI\Extensions.vb"
 
     ' Author:
     ' 

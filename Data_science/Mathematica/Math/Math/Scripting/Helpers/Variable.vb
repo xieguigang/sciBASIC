@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03745ead43a959129b7818280916e252, ..\sciBASIC#\Data_science\Mathematical\Math\Scripting\Helpers\Variable.vb"
+﻿#Region "Microsoft.VisualBasic::03745ead43a959129b7818280916e252, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Helpers\Variable.vb"
 
     ' Author:
     ' 

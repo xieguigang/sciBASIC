@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::867d6e183a1666f5ab83882cac1e8cf3, ..\sciBASIC#\Data_science\Mathematical\Math\Distributions\Gamma.vb"
+﻿#Region "Microsoft.VisualBasic::eb8bb1c84e0a4977f09c2bb21a9d28c0, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Gamma.vb"
 
     ' Author:
     ' 

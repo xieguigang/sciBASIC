@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af7d03785418bcf92596b69febcdc0bf, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xl\workbook.xml.vb"
+﻿#Region "Microsoft.VisualBasic::9a4cc889c94fe6bb81f4c960c8314039, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xl\workbook.xml.vb"
 
     ' Author:
     ' 
@@ -68,6 +68,3 @@ Namespace xl
         End Function
     End Structure
 End Namespace
-
-
-

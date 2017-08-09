@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc14776c5a52de74fa2efbc838e59e2e, ..\sciBASIC#\Data_science\Mathematical\Math\LP\Data\ObjectiveFunction.vb"
+﻿#Region "Microsoft.VisualBasic::fc14776c5a52de74fa2efbc838e59e2e, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\Data\ObjectiveFunction.vb"
 
     ' Author:
     ' 

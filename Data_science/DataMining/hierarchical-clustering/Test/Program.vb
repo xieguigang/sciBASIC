@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::482ab4d4e3a463e8d38b7763c8abe357, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\ConsoleApp.Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::4f6bf4bc5149bcff36c704a7dc4a3009, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\Test\Program.vb"
 
     ' Author:
     ' 
@@ -72,4 +72,3 @@ Module Program
         Return cluster
     End Function
 End Module
-

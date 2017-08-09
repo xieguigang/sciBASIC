@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dacf12e8cb36620e19f989c461ac4793, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Clustering.vb"
+﻿#Region "Microsoft.VisualBasic::5133ea983034908642eb3f8b246c5872, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Clustering.vb"
 
     ' Author:
     ' 

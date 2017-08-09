@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2b26a30e3aba50298c101a1582f9e41, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::88e7e2ae58320358c8b19c37f93d43ed, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 
@@ -303,4 +303,3 @@ Namespace StorageProvider.ComponentModels
         End Function
     End Class
 End Namespace
-
