@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d3db090cb0d8a40b5ad3751dcf30348, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\Json\json.vb"
+#Region "Microsoft.VisualBasic::7d3db090cb0d8a40b5ad3751dcf30348, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\Json\json.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FileStream.Json
@@ -51,12 +53,12 @@ Namespace FileStream.Json
         End Function
     End Class
 
-    Public Class edges
+    Public Class edges : Implements IInteraction
 
         Public Property source As Integer
         Public Property target As Integer
-        Public Property A As String
-        Public Property B As String
+        Public Property A As String Implements IInteraction.source
+        Public Property B As String Implements IInteraction.target
         Public Property value As String
         Public Property weight As String
         Public Property id As String
@@ -67,10 +69,10 @@ Namespace FileStream.Json
         End Function
     End Class
 
-    Public Class node
+    Public Class node : Implements INamedValue
 
         Public Property id As Integer
-        Public Property name As String
+        Public Property name As String Implements INamedValue.Key
         Public Property degree As Integer
         Public Property type As String
         Public Property Data As Dictionary(Of String, String)
