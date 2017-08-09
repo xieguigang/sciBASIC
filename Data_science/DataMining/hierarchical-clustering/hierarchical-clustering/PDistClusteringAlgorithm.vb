@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ea0b2cfce624f708edbe6621f2e5e79, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\PDistClusteringAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::79e393ccb9d773f478b4aa0909c899cf, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\PDistClusteringAlgorithm.vb"
 
     ' Author:
     ' 
@@ -123,4 +123,3 @@ Public Class PDistClusteringAlgorithm
     End Function
 
 End Class
-

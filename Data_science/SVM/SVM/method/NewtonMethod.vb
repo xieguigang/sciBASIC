@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc61616b2c00ae11971725d5481abad1, ..\sciBASIC#\Data_science\SVM\SVM\method\NewtonMethod.vb"
+﻿#Region "Microsoft.VisualBasic::e1ef259813f61d6a191caaa12873baa9, ..\sciBASIC#\Data_science\SVM\SVM\method\NewtonMethod.vb"
 
     ' Author:
     ' 
@@ -255,5 +255,3 @@ Namespace Method
     End Class
 
 End Namespace
-
-

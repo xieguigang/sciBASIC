@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a78e5fbb626ab3464238eb35e6020e2e, ..\sciBASIC#\Data_science\SVM\SVM\OptimizerCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::a1cfd91d8234857bf2c1879aa9a11767, ..\sciBASIC#\Data_science\SVM\SVM\OptimizerCalculator.vb"
 
     ' Author:
     ' 
@@ -91,4 +91,3 @@ Public Module OptimizerCalculator
         End With
     End Sub
 End Module
-

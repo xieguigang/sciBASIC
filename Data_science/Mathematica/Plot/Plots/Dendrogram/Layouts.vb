@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f61c671a58d66f9c10ab4be68d0189b, ..\sciBASIC#\Data_science\Mathematical\Plots\Dendrogram\Layouts.vb"
+﻿#Region "Microsoft.VisualBasic::4f61c671a58d66f9c10ab4be68d0189b, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Dendrogram\Layouts.vb"
 
     ' Author:
     ' 

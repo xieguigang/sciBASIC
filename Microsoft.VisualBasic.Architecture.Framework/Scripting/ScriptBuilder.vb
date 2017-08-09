@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53abe4e5e4d64ffa5e3c46fc18990178, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::4160b0cb3e10b50a1fd4239a40633bba, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -27,13 +27,15 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Text
 
 Namespace Scripting.SymbolBuilder
 
     ''' <summary>
     ''' 对<see cref="StringBuilder"/>对象的拓展，添加了操作符凭借字符串，从而能够让生成代码的操作更加的方便
     ''' </summary>
-    Public Class ScriptBuilder
+    Public Class ScriptBuilder : Implements ISaveHandle
 
         Public ReadOnly Property Script As StringBuilder
 
@@ -55,6 +57,17 @@ Namespace Scripting.SymbolBuilder
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return Script.ToString
+        End Function
+
+        ''' <summary>
+        ''' Appends a copy of the specified string followed by the default line terminator
+        ''' to the end of the current <see cref="ScriptBuilder"/> object.
+        ''' </summary>
+        ''' <param name="line$">The string to append.</param>
+        ''' <returns>A reference to this instance after the append operation has completed.</returns>
+        Public Function AppendLine(Optional line$ = "") As ScriptBuilder
+            Call Script.AppendLine(line)
+            Return Me
         End Function
 
         ''' <summary>
@@ -87,5 +100,13 @@ Namespace Scripting.SymbolBuilder
             Call sb.Script.AppendLine(s)
             Return sb
         End Operator
+
+        Public Function Save(Optional path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+            Return Script.ToString.SaveTo(path, encoding)
+        End Function
+
+        Public Function Save(Optional path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Script.ToString.SaveTo(path, encoding.CodePage)
+        End Function
     End Class
 End Namespace

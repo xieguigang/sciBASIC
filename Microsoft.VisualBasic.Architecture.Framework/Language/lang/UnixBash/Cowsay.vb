@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1901f6186f85f9adbf29b1fbed68e0e6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\Cowsay.vb"
+﻿#Region "Microsoft.VisualBasic::5fd474cee93bf8f6967bce44e951e500, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\Cowsay.vb"
 
     ' Author:
     ' 

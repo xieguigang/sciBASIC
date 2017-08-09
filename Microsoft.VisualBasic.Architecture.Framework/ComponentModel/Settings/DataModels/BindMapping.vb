@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0a9595bc0b1c257b7653e2b0eaef4a9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\BindMapping.vb"
+﻿#Region "Microsoft.VisualBasic::e0a9595bc0b1c257b7653e2b0eaef4a9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\DataModels\BindMapping.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7dbe11251c9a071d384a0aed9c611e4, ..\sciBASIC#\Data_science\Mathematical\Plots\3D\Device\FormDevice.vb"
+﻿#Region "Microsoft.VisualBasic::e7dbe11251c9a071d384a0aed9c611e4, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Device\FormDevice.vb"
 
     ' Author:
     ' 

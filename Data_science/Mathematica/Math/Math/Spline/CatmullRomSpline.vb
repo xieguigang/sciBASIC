@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d6cf26202a88b8bd7d1f1fcc4f44370, ..\sciBASIC#\Data_science\Mathematical\Math\Spline\CatmullRomSpline.vb"
+﻿#Region "Microsoft.VisualBasic::2d6cf26202a88b8bd7d1f1fcc4f44370, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Spline\CatmullRomSpline.vb"
 
     ' Author:
     ' 

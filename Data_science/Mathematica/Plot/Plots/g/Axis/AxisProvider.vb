@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::735165efa133164d8db22873e077ef69, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Axis\AxisProvider.vb"
+﻿#Region "Microsoft.VisualBasic::80718309bfaf05260017f46b9c68201c, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\AxisProvider.vb"
 
     ' Author:
     ' 

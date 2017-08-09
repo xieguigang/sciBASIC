@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca26dadf9ab3ad3d072322223c7a6526, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\docProps\core.xml.vb"
+﻿#Region "Microsoft.VisualBasic::43b72cb99a0f29a294a9ece36bd0b9e1, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\docProps\core.xml.vb"
 
     ' Author:
     ' 
@@ -29,4 +29,3 @@
 Public Class core
 
 End Class
-

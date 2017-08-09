@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3326245784a30947d4223a714a9e973e, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\LabelStyles.vb"
+﻿#Region "Microsoft.VisualBasic::37253c62613e2943d78df3091961f256, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Fractions\LabelStyles.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Public Enum ValueLabels
     None

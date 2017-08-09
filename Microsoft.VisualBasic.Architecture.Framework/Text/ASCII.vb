@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3a1eb3aecb7ec0d92f46e181d2cb061, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::1c75bcd044f78268febcc01498591477, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
 
     ' Author:
     ' 
