@@ -234,6 +234,7 @@
     <Compile Include="MarkDown\MarkdownOptions.vb" />
     <Compile Include="MarkDown\FormatHelper.vb" />
     <Compile Include="MarkDown\DocumentHelper.vb" />
+    <Compile Include="MarkDown\TOC.vb" />
     <Compile Include="Markups\StreamWriter\HTMLWriter.vb" />
     <Compile Include="HTML\Extensions.vb" />
     <Compile Include="HTML\DocFormatter.vb" />
