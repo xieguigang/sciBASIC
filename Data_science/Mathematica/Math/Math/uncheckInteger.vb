@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e28945a8a635a3a752b9377f7d3f24bd, ..\sciBASIC#\Data_science\Mathematical\Math\uncheckInteger.vb"
+﻿#Region "Microsoft.VisualBasic::2c009a3199614ac8727f54b4a60029c7, ..\sciBASIC#\Data_science\Mathematica\Math\Math\uncheckInteger.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Public Module UncheckInteger
         Return BitConverter.ToInt32(bytes.ToByteArray, Scan0)
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b69dd2ee9a686a0a2bc79fa8cdb8e3b6, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Solvers\ISolver.vb"
+﻿#Region "Microsoft.VisualBasic::b69dd2ee9a686a0a2bc79fa8cdb8e3b6, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Solvers\ISolver.vb"
 
     ' Author:
     ' 

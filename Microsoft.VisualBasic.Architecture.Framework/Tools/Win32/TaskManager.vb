@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bb4e0d076f3b410b94f9a9a2796f96b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
+﻿#Region "Microsoft.VisualBasic::6dac82a5a59fa93194bba41263b84e65, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Win32\TaskManager.vb"
 
     ' Author:
     ' 

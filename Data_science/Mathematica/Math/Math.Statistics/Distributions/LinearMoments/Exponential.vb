@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e0e9e85d128a939c33afbef7b502980, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\Distributions\LinearMoments\Exponential.vb"
+﻿#Region "Microsoft.VisualBasic::3e0e9e85d128a939c33afbef7b502980, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Exponential.vb"
 
     ' Author:
     ' 

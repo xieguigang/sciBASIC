@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34c0ba3b869c488bac1687a90c362486, ..\sciBASIC#\Data_science\Mathematical\Plots\Scatter\ManhattanStatics.vb"
+﻿#Region "Microsoft.VisualBasic::546ab79586c675b7841a00d95dc508f1, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\ManhattanStatics.vb"
 
     ' Author:
     ' 

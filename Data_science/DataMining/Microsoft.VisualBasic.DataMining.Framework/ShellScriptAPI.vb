@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a68fd8905505de257b0d818fd9e9185, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\ShellScriptAPI.vb"
+﻿#Region "Microsoft.VisualBasic::689ff46557c0eeb7081cf91d06a91eaa, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\ShellScriptAPI.vb"
 
     ' Author:
     ' 

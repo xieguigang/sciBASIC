@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd6e60571f2ada400f539d7139de547d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::e7063b31bfaa6a47452dfdac198c6b7a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorMap.vb"
 
     ' Author:
     ' 

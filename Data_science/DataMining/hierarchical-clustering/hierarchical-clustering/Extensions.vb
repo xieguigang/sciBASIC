@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e37a1b9d0313bff39ea62438c4f8ecb, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7e89a21f7c1b639499f7abc52d1d432d, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Extensions.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Public Module Extensions
         End With
     End Sub
 End Module
-

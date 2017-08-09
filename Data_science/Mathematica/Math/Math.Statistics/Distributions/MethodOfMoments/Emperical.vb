@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f841ca8a087a519dd49d1a015358e679, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\Distributions\MethodOfMoments\Emperical.vb"
+﻿#Region "Microsoft.VisualBasic::f841ca8a087a519dd49d1a015358e679, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Emperical.vb"
 
     ' Author:
     ' 

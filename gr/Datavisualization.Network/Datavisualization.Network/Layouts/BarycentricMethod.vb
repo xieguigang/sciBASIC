@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94f795c160f8bfd85d185d0b4db26526, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\BarycentricMethod.vb"
+﻿#Region "Microsoft.VisualBasic::42b1bfb586ab2d3f85cc3b68926e2787, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\BarycentricMethod.vb"
 
     ' Author:
     ' 
