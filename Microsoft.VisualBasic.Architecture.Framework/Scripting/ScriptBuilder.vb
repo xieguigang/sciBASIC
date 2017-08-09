@@ -60,6 +60,17 @@ Namespace Scripting.SymbolBuilder
         End Function
 
         ''' <summary>
+        ''' Appends a copy of the specified string followed by the default line terminator
+        ''' to the end of the current <see cref="ScriptBuilder"/> object.
+        ''' </summary>
+        ''' <param name="line$">The string to append.</param>
+        ''' <returns>A reference to this instance after the append operation has completed.</returns>
+        Public Function AppendLine(Optional line$ = "") As ScriptBuilder
+            Call Script.AppendLine(line)
+            Return Me
+        End Function
+
+        ''' <summary>
         ''' <see cref="StringBuilder.ToString()"/>
         ''' </summary>
         ''' <param name="sb"></param>
