@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94a3781aea2eba176b5bcd5b20338046, ..\sciBASIC#\Data_science\Mathematical\Math\Distributions\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::51e9a8fd9982ae9f372d9689129ee5ac, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Beta.vb"
 
     ' Author:
     ' 

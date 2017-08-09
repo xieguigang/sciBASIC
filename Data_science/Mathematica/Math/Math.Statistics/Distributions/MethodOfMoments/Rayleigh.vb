@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c59cd022a9f370e501c202d98840830, ..\sciBASIC#\Data_science\Mathematical\Math.Statistics\Distributions\MethodOfMoments\Rayleigh.vb"
+﻿#Region "Microsoft.VisualBasic::1c59cd022a9f370e501c202d98840830, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Rayleigh.vb"
 
     ' Author:
     ' 

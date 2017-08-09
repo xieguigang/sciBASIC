@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::587a3a8b6592301e7edc972a2cddfc1a, ..\sciBASIC#\Data_science\Mathematical\Plots\g\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::587a3a8b6592301e7edc972a2cddfc1a, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\DataScaler.vb"
 
     ' Author:
     ' 

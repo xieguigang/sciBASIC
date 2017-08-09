@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f9bd847f3a8a197a74b4f39b1e14767, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::9a400696d779fb1627c44851b354c3e5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlBuilder.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 

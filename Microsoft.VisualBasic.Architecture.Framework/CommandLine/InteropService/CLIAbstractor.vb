@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::074ce365aa327d12752bba6ad67d1208, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\CLIAbstractor.vb"
+﻿#Region "Microsoft.VisualBasic::de1a6b667a790c3924fef62083634c1e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\CLIAbstractor.vb"
 
     ' Author:
     ' 

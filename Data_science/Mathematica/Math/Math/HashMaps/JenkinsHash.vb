@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0882f4be53d688f86599a2f6344b3445, ..\sciBASIC#\Data_science\Mathematical\Math\HashMaps\JenkinsHash.vb"
+﻿#Region "Microsoft.VisualBasic::0882f4be53d688f86599a2f6344b3445, ..\sciBASIC#\Data_science\Mathematica\Math\Math\HashMaps\JenkinsHash.vb"
 
     ' Author:
     ' 

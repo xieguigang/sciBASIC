@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e207c72f798d06958e312d46f305aec, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\FuzzyCmeansVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::2e207c72f798d06958e312d46f305aec, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\FuzzyCMeansVisualize.vb"
 
     ' Author:
     ' 

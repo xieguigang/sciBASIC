@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d62ae946441fa096e1e0935f826d82a8, ..\sciBASIC#\Data_science\Mathematical\Randomizer\Randomizer.vb"
+﻿#Region "Microsoft.VisualBasic::d62ae946441fa096e1e0935f826d82a8, ..\sciBASIC#\Data_science\Mathematica\Math\Randomizer\Randomizer.vb"
 
     ' Author:
     ' 

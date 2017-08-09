@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a7884058b36800e271831ad5665e65b, ..\sciBASIC#\Data_science\Mathematical\data\LP\LP_tool\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7a7884058b36800e271831ad5665e65b, ..\sciBASIC#\Data_science\Mathematica\data\LP\LP_tool\Program.vb"
 
     ' Author:
     ' 

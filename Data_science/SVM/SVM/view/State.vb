@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89d5b6a1d0d1fa55b761f032e4890baa, ..\sciBASIC#\Data_science\SVM\SVM\view\State.vb"
+﻿#Region "Microsoft.VisualBasic::891f516ce3925fe4c76767849b38e842, ..\sciBASIC#\Data_science\SVM\SVM\view\State.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Public Class State
         Return MyBase.Equals(o)
     End Function
 End Class
-

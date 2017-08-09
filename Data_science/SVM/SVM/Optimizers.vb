@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::167af73e89a1cab4bbc552b4e289afba, ..\sciBASIC#\Data_science\SVM\SVM\Optimizers.vb"
+﻿#Region "Microsoft.VisualBasic::cdfde9b18be1e3c55acd8cec1eae55e4, ..\sciBASIC#\Data_science\SVM\SVM\Optimizers.vb"
 
     ' Author:
     ' 
@@ -31,4 +31,3 @@ Public Enum Optimizers
     GradientDescent
     NewtonMethod
 End Enum
-

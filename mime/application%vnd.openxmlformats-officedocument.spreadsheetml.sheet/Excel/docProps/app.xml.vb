@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63044f35c69fbf1134ff935254a99f7d, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\docProps\app.xml.vb"
+﻿#Region "Microsoft.VisualBasic::051141ddd257d0b4b3e565485ba68e66, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\docProps\app.xml.vb"
 
     ' Author:
     ' 
@@ -36,4 +36,3 @@ Namespace docProps
 
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84b071287dd4f322299c14017a84146e, ..\sciBASIC#\CLI_tools\XMLFormater\XMLFormater\Program.vb"
+﻿#Region "Microsoft.VisualBasic::d774765ac27b20ca9c2d047b76e43364, ..\sciBASIC#\CLI_tools\XMLFormater\XMLFormater\Program.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Module Program
         Return 0
     End Function
 End Module
-
