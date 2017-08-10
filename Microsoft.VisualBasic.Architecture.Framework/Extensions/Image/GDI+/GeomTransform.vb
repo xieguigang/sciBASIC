@@ -39,6 +39,13 @@ Namespace Imaging
 
     <Package("GDI.Transform")> Public Module GeomTransform
 
+        <Extension>
+        Public Function CenterAlign(rect As RectangleF, size As SizeF) As PointF
+            Dim x! = (rect.Width - size.Width) / 2 + rect.Left
+            Dim y! = (rect.Height - size.Height) / 2 + rect.Top
+            Return New PointF(x, y)
+        End Function
+
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
             Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
         End Function
