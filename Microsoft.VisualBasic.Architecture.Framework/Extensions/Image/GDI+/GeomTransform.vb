@@ -39,6 +39,13 @@ Namespace Imaging
 
     <Package("GDI.Transform")> Public Module GeomTransform
 
+        <Extension>
+        Public Function CenterAlign(rect As RectangleF, size As SizeF) As PointF
+            Dim x! = (rect.Width - size.Width) / 2 + rect.Left
+            Dim y! = (rect.Height - size.Height) / 2 + rect.Top
+            Return New PointF(x, y)
+        End Function
+
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
             Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
         End Function
@@ -92,6 +99,28 @@ Namespace Imaging
         <ExportAPI("Center")>
         <Extension> Public Function Centre(rect As Rectangle) As Point
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
+        End Function
+
+        ''' <summary>
+        ''' Resize the rectangle
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <param name="factor"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Scale(rect As RectangleF, factor As SizeF) As RectangleF
+            Dim size = New SizeF(rect.Width * factor.Width, rect.Height * factor.Height)
+            Dim delta = size - rect.Size
+            Dim offset As New PointF(rect.Left - delta.Width / 2, rect.Top - delta.Height / 2)
+            Dim location As PointF = (rect.Location.OffSet2D(offset))
+            Return New RectangleF(location, size)
+        End Function
+
+        <Extension> Public Function Scale(rect As Rectangle, factor As SizeF) As Rectangle
+            With rect
+                With New RectangleF(.Location.PointF, .Size.SizeF).Scale(factor)
+                    Return New Rectangle(.Location.ToPoint, .Size.ToSize)
+                End With
+            End With
         End Function
 
         ''' <summary>
