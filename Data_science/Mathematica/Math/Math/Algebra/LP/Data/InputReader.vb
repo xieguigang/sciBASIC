@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ea1d0fd77dbcb3278dc2ea855c79365, ..\sciBASIC#\Data_science\Mathematical\Math\LP\Data\InputReader.vb"
+﻿#Region "Microsoft.VisualBasic::6ea1d0fd77dbcb3278dc2ea855c79365, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\Data\InputReader.vb"
 
     ' Author:
     ' 

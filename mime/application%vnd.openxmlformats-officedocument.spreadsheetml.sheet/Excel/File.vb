@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db5200515eff75f4d97c94dd710608f6, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\File.vb"
+﻿#Region "Microsoft.VisualBasic::aeb106bf96344a4acb3e0a6e9cc02065, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\File.vb"
 
     ' Author:
     ' 
@@ -26,11 +26,9 @@
 
 #End Region
 
-
 ''' <summary>
 ''' ``*.xlsx`` document file
 ''' </summary>
 Public Class File
 
 End Class
-

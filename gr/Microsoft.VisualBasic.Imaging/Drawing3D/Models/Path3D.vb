@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6f454a2589bdf63906da7bc0ba16288, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
+﻿#Region "Microsoft.VisualBasic::0a4243e4879ffde9fa4fc24be8837266, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc3766e9b09610e3f6d4ee400b6634f7, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xl\styles.xml.vb"
+﻿#Region "Microsoft.VisualBasic::9575178c459a7845a7d18e42d1b89c9a, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xl\styles.xml.vb"
 
     ' Author:
     ' 
@@ -29,4 +29,3 @@
 Public Class Class2
 
 End Class
-

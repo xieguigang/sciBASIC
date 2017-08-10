@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b0afc5477c587dc27546b9c4ddb18df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\GZStream.vb"
+﻿#Region "Microsoft.VisualBasic::49316252b4b472651af24c2f71ec5ff4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\GZStream.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Public Module GZStream
         Return s
     End Function
 End Module
-

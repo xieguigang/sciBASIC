@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7b79d524e1631c50913927df0098168, ..\sciBASIC#\Data_science\Mathematical\Plots\QQPlot.vb"
+﻿#Region "Microsoft.VisualBasic::cca2aa61075cd6c82131ba12efc9042f, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\QQPlot.vb"
 
     ' Author:
     ' 

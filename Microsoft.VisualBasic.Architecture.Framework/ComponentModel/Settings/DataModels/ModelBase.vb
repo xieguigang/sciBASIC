@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9161dffe0553bacd8f508b50bbf6d0c4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\LDM\ModelBase.vb"
+﻿#Region "Microsoft.VisualBasic::9161dffe0553bacd8f508b50bbf6d0c4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\DataModels\ModelBase.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::884502716def045fbf3a249f990e6a9f, ..\sciBASIC#\Data_science\Mathematical\Math\FuzzyLogic\LinguisticVariableCollection.vb"
+﻿#Region "Microsoft.VisualBasic::884502716def045fbf3a249f990e6a9f, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\LinguisticVariableCollection.vb"
 
     ' Author:
     ' 

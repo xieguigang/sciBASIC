@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3e97b83c4617a92486af559a2ca421d, ..\sciBASIC#\Data_science\SVM\SVM\view\CartesianCoordinateSystem.vb"
+﻿#Region "Microsoft.VisualBasic::1119041362c4ac574eda49e88b4394b9, ..\sciBASIC#\Data_science\SVM\SVM\view\CartesianCoordinateSystem.vb"
 
     ' Author:
     ' 
@@ -148,4 +148,3 @@ Public Class CartesianCoordinateSystem
         Call mState.RemovePoint(point)
     End Sub
 End Class
-

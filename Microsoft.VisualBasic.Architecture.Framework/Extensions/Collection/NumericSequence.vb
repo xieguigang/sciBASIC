@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4008ed89a1c0248512e9d96e9a4e7bda, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\NumericSequence.vb"
+﻿#Region "Microsoft.VisualBasic::ff5e7ce2cbbc6f790a168039d6e8b067, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\NumericSequence.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Public Module NumericSequence
         End If
     End Function
 End Module
-

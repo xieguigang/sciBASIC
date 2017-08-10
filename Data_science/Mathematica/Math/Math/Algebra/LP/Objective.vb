@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::458d2e34acd39b90407042d5f97353f4, ..\sciBASIC#\Data_science\Mathematical\Math\LP\Objective.vb"
+﻿#Region "Microsoft.VisualBasic::458d2e34acd39b90407042d5f97353f4, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\Objective.vb"
 
     ' Author:
     ' 

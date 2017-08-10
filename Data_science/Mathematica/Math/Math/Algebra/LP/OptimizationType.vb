@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85055d21ee4f136c5d3567d991bd4011, ..\sciBASIC#\Data_science\Mathematical\Math\LP\OptimizationType.vb"
+﻿#Region "Microsoft.VisualBasic::85055d21ee4f136c5d3567d991bd4011, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\OptimizationType.vb"
 
     ' Author:
     ' 

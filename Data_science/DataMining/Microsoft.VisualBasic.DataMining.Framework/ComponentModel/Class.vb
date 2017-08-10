@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f285c60baed9da04e670fa7c4447dadb, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\ComponentModel\Class.vb"
+﻿#Region "Microsoft.VisualBasic::cb4168f6c72e295c2a06c16ded481641, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\ComponentModel\Class.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Namespace ComponentModel
         ''' <typeparam name="T"></typeparam>
         ''' <param name="colors$">Using the user custom colors</param>
         ''' <returns></returns>
-        Public Shared Function FromEnums(Of T)(Optional colors$() = Nothing) As ColorClass()
+        Public Shared Function FromEnums(Of T As Structure)(Optional colors$() = Nothing) As ColorClass()
             Dim values As T() = Enums(Of T)()
             If colors.IsNullOrEmpty OrElse colors.Length < values.Length Then
                 colors$ = Imaging _

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::303780a03b9eaad95a2e6b9932c7c5c9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Where.vb"
+﻿#Region "Microsoft.VisualBasic::fe0e195744016013d6bc30ab975104cc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\Where.vb"
 
     ' Author:
     ' 

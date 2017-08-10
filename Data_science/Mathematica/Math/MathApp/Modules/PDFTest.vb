@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84fb9859fe35175c7c3c7b617fb4214b, ..\sciBASIC#\Data_science\Mathematical\MathApp\Modules\PDFTest.vb"
+﻿#Region "Microsoft.VisualBasic::84fb9859fe35175c7c3c7b617fb4214b, ..\sciBASIC#\Data_science\Mathematica\Math\MathApp\Modules\PDFTest.vb"
 
     ' Author:
     ' 
