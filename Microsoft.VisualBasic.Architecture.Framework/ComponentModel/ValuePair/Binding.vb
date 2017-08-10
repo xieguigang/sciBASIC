@@ -56,5 +56,17 @@ Namespace ComponentModel
         Public Overrides Function ToString() As String
             Return Bind.ToString & " --> " & Target.ToString
         End Function
+
+        ''' <summary>
+        ''' Convert this binding to tuple
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Tuple() As Tuple(Of T, K)
+            Return Me
+        End Function
+
+        Public Shared Narrowing Operator CType(b As Binding(Of T, K)) As Tuple(Of T, K)
+            Return New Tuple(Of T, K)(b.Bind, b.Target)
+        End Operator
     End Structure
 End Namespace
