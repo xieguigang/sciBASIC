@@ -102,6 +102,28 @@ Namespace Imaging
         End Function
 
         ''' <summary>
+        ''' Resize the rectangle
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <param name="factor"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Scale(rect As RectangleF, factor As SizeF) As RectangleF
+            Dim size = New SizeF(rect.Width * factor.Width, rect.Height * factor.Height)
+            Dim delta = size - rect.Size
+            Dim offset As New PointF(rect.Left - delta.Width / 2, rect.Top - delta.Height / 2)
+            Dim location As PointF = (rect.Location.OffSet2D(offset))
+            Return New RectangleF(location, size)
+        End Function
+
+        <Extension> Public Function Scale(rect As Rectangle, factor As SizeF) As Rectangle
+            With rect
+                With New RectangleF(.Location.PointF, .Size.SizeF).Scale(factor)
+                    Return New Rectangle(.Location.ToPoint, .Size.ToSize)
+                End With
+            End With
+        End Function
+
+        ''' <summary>
         ''' 获取目标多边形对象的中心点的坐标位置
         ''' </summary>
         ''' <param name="shape"></param>
