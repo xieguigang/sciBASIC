@@ -3637,6 +3637,24 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public MustOverride Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+
+        ''' <summary>
+        ''' Fills the interior of a pie section defined by an ellipse specified by a System.Drawing.RectangleF
+        ''' structure and two radial lines.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="rect"><see cref="RectangleF"/> structure that represents the bounding rectangle that
+        ''' defines the ellipse from which the pie section comes.</param>
+        ''' <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the first side of the
+        ''' pie section.</param>
+        ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second
+        ''' side of the pie section.</param>
+        Public Sub FillPie(brush As Brush, rect As RectangleF, startAngle As Single, sweepAngle As Single)
+            With rect
+                Call FillPie(brush, New Rectangle(.Location.ToPoint, .Size.ToSize), startAngle, sweepAngle)
+            End With
+        End Sub
+
         '
         ' Summary:
         '     Fills the interior of a pie section defined by an ellipse specified by a pair
