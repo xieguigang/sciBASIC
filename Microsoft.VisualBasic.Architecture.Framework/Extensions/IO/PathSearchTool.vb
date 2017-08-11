@@ -408,6 +408,17 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
+    ''' Get the directory its name of the target <paramref name="dir"/> directory
+    ''' </summary>
+    ''' <param name="dir$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function DirectoryName(dir$) As String
+        Return dir.TrimDIR _
+            .Split("\"c).Last _
+            .Split("/"c).Last
+    End Function
+
+    ''' <summary>
     ''' Check if the file is opened by other code?(检测文件是否已经被其他程序打开使用之中)
     ''' </summary>
     ''' <param name="FileName">目标文件</param>
