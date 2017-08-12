@@ -897,9 +897,9 @@ Namespace MarkDown
             Return result
         End Function
 
-        Private Shared _headerSetext As New Regex(vbCr & vbLf & "                ^(.+?)" & vbCr & vbLf & "                [ ]*" & vbCr & vbLf & "                \n" & vbCr & vbLf & "                (=+|-+)     # $1 = string of ='s or -'s" & vbCr & vbLf & "                [ ]*" & vbCr & vbLf & "                \n+", RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Shared ReadOnly _headerSetext As New Regex(vbCr & vbLf & "                ^(.+?)" & vbCr & vbLf & "                [ ]*" & vbCr & vbLf & "                \n" & vbCr & vbLf & "                (=+|-+)     # $1 = string of ='s or -'s" & vbCr & vbLf & "                [ ]*" & vbCr & vbLf & "                \n+", RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
-        Private Shared _headerAtx As New Regex(vbCr & vbLf & "                ^(\#{1,6})  # $1 = string of #'s" & vbCr & vbLf & "                [ ]*" & vbCr & vbLf & "                (.+?)       # $2 = Header text" & vbCr & vbLf & "                [ ]*" & vbCr & vbLf & "                \#*         # optional closing #'s (not counted)" & vbCr & vbLf & "                \n+", RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Shared ReadOnly _headerAtx As New Regex(vbCr & vbLf & "                ^(\#{1,6})  # $1 = string of #'s" & vbCr & vbLf & "                [ ]*" & vbCr & vbLf & "                (.+?)       # $2 = Header text" & vbCr & vbLf & "                [ ]*" & vbCr & vbLf & "                \#*         # optional closing #'s (not counted)" & vbCr & vbLf & "                \n+", RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown headers into HTML header tags
