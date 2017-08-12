@@ -161,13 +161,13 @@ Namespace Imaging
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' 进行圆的绘制
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="centra">圆心的坐标，这个函数之中会自动转换为<see cref="Rectangle"/>的左上角位置坐标</param>
-        ''' <param name="r!"></param>
-        ''' <param name="color"></param>
-        ''' <param name="fill"></param>
+        ''' <param name="r!">圆的半径</param>
+        ''' <param name="color">线条的颜色</param>
+        ''' <param name="fill">是否进行填充？</param>
         <Extension>
         Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As Pen, Optional fill As Boolean = True)
             Dim d = r * 2
