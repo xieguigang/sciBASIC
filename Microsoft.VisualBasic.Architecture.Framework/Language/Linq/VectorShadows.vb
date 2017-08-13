@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f918567811b01f9f0157327e7c1f6c30, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\VectorShadows.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -49,38 +49,13 @@ Namespace Language
         ''' 无参数的属性
         ''' </summary>
         ReadOnly linq As DataValue(Of T)
-        ReadOnly propertyNames As Index(Of String)
-
-        ''' <summary>
-        ''' 单目运算符无重名的问题
-        ''' </summary>
-        ReadOnly operatorsUnary As New Dictionary(Of ExpressionType, MethodInfo)
-        ''' <summary>
-        ''' 双目运算符重载会带来重名运算符的问题
-        ''' </summary>
-        ReadOnly operatorsBinary As New Dictionary(Of ExpressionType, BinaryOperator)
-
-#Region "VisualBasic exclusive language features"
-        ReadOnly op_Concatenates As BinaryOperator
-        ReadOnly op_Likes As BinaryOperator
-        ReadOnly op_IntegerDivisions As BinaryOperator
-#End Region
-
-        ''' <summary>
-        ''' The overloads function
-        ''' </summary>
-        ReadOnly methods As New Dictionary(Of String, OverloadsFunction)
-        ReadOnly type As Type = GetType(T)
-
-        Const stringContract$ = "op_Concatenate"
-        Const objectLike$ = "op_Like"
-        Const integerDivision$ = "op_IntegerDivision"
+        ReadOnly type As New SchemaProvider(GetType(T))
 
         Default Public Overloads Property Item(exp$) As Object
             Get
                 If exp = "Me" Then
                     Return Me
-                ElseIf propertyNames.IndexOf(exp) > -1 Then
+                ElseIf type.PropertyNames.IndexOf(exp) > -1 Then
                     Return linq(exp)
                 Else
                     Return MyBase.Item(exp)
@@ -89,7 +64,7 @@ Namespace Language
             Set(value)
                 If exp = "Me" Then
                     buffer = DirectCast(value, IEnumerable(Of T)).ToArray
-                ElseIf propertyNames.IndexOf(exp) > -1 Then
+                ElseIf type.PropertyNames.IndexOf(exp) > -1 Then
                     linq(exp) = value
                 Else
                     MyBase.Item(exp) = DirectCast(value, IEnumerable(Of T)).AsList
@@ -115,55 +90,6 @@ Namespace Language
         Sub New(source As IEnumerable(Of T))
             buffer = source.ToArray
             linq = New DataValue(Of T)(buffer)
-            propertyNames = linq.PropertyNames.Indexing
-
-            Dim methods = GetType(T).GetMethods()
-            Dim operators = methods _
-                .Where(Function(x) InStr(x.Name, "op_") = 1 AndAlso x.IsStatic) _
-                .GroupBy(Function(op) op.Name) _
-                .ToArray
-
-            Dim find = Function(opName$)
-                           Return operators _
-                               .Where(Function(m) m.Key = opName) _
-                               .FirstOrDefault _
-                              ?.OverloadsBinaryOperator
-                       End Function
-
-            ' 因为字符串连接操作符在Linq表达式中并没有被定义，所以在这里需要特殊处理
-            op_Concatenates = find(stringContract)
-            op_Likes = find(objectLike)
-            op_IntegerDivisions = find(integerDivision)
-
-            For Each op As IGrouping(Of String, MethodInfo) In operators
-#If DEBUG Then
-                ' Call op.Key.EchoLine
-#End If
-                With op
-                    If .Key = stringContract OrElse
-                        .Key = objectLike OrElse
-                        .Key = integerDivision Then
-
-                        ' 前面已经被处理过了，不需要再额外处理这个运算符了
-                        Continue For
-                    End If
-                End With
-
-                ' 将运算符字符串名称转换为Linq表达式类型名称
-                Dim type As ExpressionType = OperatorExpression.opName2Linq(op.Key)
-
-                If op.First.GetParameters.Length > 1 Then
-                    operatorsBinary(type) = op.OverloadsBinaryOperator
-                Else
-                    operatorsUnary(type) = op.First
-                End If
-            Next
-
-            Me.methods = methods _
-                .Where(Function(m) Not m.IsStatic) _
-                .GroupBy(Function(func) func.Name) _
-                .Select(Function([overloads]) New OverloadsFunction([overloads].Key, [overloads])) _
-                .ToDictionary(Function(g) g.Name)
         End Sub
 
         ''' <summary>
@@ -171,7 +97,7 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function GetDynamicMemberNames() As IEnumerable(Of String)
-            Return propertyNames.Objects.AsList + methods.Keys
+            Return type.GetDynamicMemberNames
         End Function
 
         ''' <summary>
@@ -204,17 +130,16 @@ Namespace Language
         ''' <param name="result"></param>
         ''' <returns></returns>
         Public Overrides Function TryGetMember(binder As GetMemberBinder, ByRef result As Object) As Boolean
-            If propertyNames.IndexOf(binder.Name) = -1 Then
-                Return False
-            Else
-                With linq
-                    Dim type As Type = .GetProperty(binder.Name).PropertyType
-                    Dim source = .Evaluate(binder.Name)
+            With type.TryGetMember(binder)
+                If .IsNothing Then
+                    Return False
+                Else
+                    Dim type As Type = .PropertyType
+                    Dim source = linq.Evaluate(binder.Name)
                     result = CreateVector(DirectCast(source, IEnumerable), type)
-                End With
-
-                Return True
-            End If
+                    Return True
+                End If
+            End With
         End Function
 
         ''' <summary>
@@ -224,7 +149,7 @@ Namespace Language
         ''' <param name="value"></param>
         ''' <returns></returns>
         Public Overrides Function TrySetMember(binder As SetMemberBinder, value As Object) As Boolean
-            If propertyNames.IndexOf(binder.Name) = -1 Then
+            If type.TrySetMember(binder) Is Nothing Then
                 Return False
             Else
                 linq.Evaluate(binder.Name) = value
@@ -243,12 +168,7 @@ Namespace Language
         ''' <param name="result"></param>
         ''' <returns></returns>
         Public Overrides Function TryInvokeMember(binder As InvokeMemberBinder, args() As Object, ByRef result As Object) As Boolean
-            If Not methods.ContainsKey(binder.Name) Then
-                Return False
-            End If
-
-            Dim [overloads] = methods(binder.Name)
-            Dim method As MethodInfo = [overloads].Match(args.Select(Function(o) o.GetType).ToArray)
+            Dim method As MethodInfo = type.TryInvokeMember(binder, args)
 
             If method Is Nothing Then
                 Return False
@@ -262,10 +182,11 @@ Namespace Language
 
 #Region "Operator:Unary"
         Public Overrides Function TryUnaryOperation(binder As UnaryOperationBinder, ByRef result As Object) As Boolean
-            If Not operatorsUnary.ContainsKey(binder.Operation) Then
+            Dim method As MethodInfo = type.TryUnaryOperation(binder)
+
+            If method Is Nothing Then
                 Return False
             Else
-                Dim method = operatorsUnary(binder.Operation)
                 result = Me.Select(Function(x) method.Invoke(Nothing, {x}))
                 result = CreateVector(DirectCast(result, IEnumerable), method.ReturnType)
             End If
