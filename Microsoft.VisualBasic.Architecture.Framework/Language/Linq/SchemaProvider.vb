@@ -2,12 +2,11 @@
 Imports System.Linq.Expressions
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Language
 
@@ -42,7 +41,7 @@ Namespace Language
 
         Public Const stringContract$ = "op_Concatenate"
         Public Const objectLike$ = "op_Like"
-        Public Const integerDivision$ = "op_IntegerDivision"
+        Public Const nameIntegerDivision$ = "op_IntegerDivision"
 
         Sub New(type As Type)
             Me.Type = type
@@ -68,7 +67,7 @@ Namespace Language
             ' 因为字符串连接操作符在Linq表达式中并没有被定义，所以在这里需要特殊处理
             op_Concatenates = find(stringContract)
             op_Likes = find(objectLike)
-            op_IntegerDivisions = find(integerDivision)
+            op_IntegerDivisions = find(nameIntegerDivision)
 
             For Each op As IGrouping(Of String, MethodInfo) In operators
 #If DEBUG Then
@@ -77,7 +76,7 @@ Namespace Language
                 With op
                     If .Key = stringContract OrElse
                         .Key = objectLike OrElse
-                        .Key = integerDivision Then
+                        .Key = nameIntegerDivision Then
 
                         ' 前面已经被处理过了，不需要再额外处理这个运算符了
                         Continue For
@@ -166,5 +165,99 @@ Namespace Language
         Public Overrides Function ToString() As String
             Return Type.ToString
         End Function
+
+#Region "Operator:Binary"
+
+        ''' <summary>
+        ''' Fix for &amp; operator not defined!
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function [Concatenate](type As Type, ByRef vector As Boolean) As MethodInfo
+            If op_Concatenates Is Nothing Then
+                Return Nothing
+            Else
+                Return binaryOperatorSelfLeft(op_Concatenates, type, vector)
+            End If
+        End Function
+
+        Private Shared Function binaryOperatorSelfLeft(op As BinaryOperator, type As Type, ByRef vector As Boolean) As MethodInfo
+            Dim method As MethodInfo = op.MatchRight(type)
+
+            If Not method Is Nothing Then
+                Return method
+            End If
+
+            If type.ImplementsInterface(GetType(IEnumerable)) Then
+                vector = True
+                type = type.GetInterfaces _
+                    .Where(Function(i) i.Name = NameOf(IEnumerable)) _
+                    .First _
+                    .GenericTypeArguments _
+                    .First
+
+                Return op.MatchRight(type)
+            Else
+                Return Nothing
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Fix for Like operator not defined in Linq.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function [Like](type As Type, ByRef vector As Boolean) As MethodInfo
+            If op_Likes Is Nothing Then
+                Return Nothing
+            Else
+                Return binaryOperatorSelfLeft(op_Likes, type, vector)
+            End If
+        End Function
+
+        Public Function [IntegerDivision](type As Type, ByRef vector As Boolean) As MethodInfo
+            If op_IntegerDivisions Is Nothing Then
+                Return Nothing
+            Else
+                Return binaryOperatorSelfLeft(op_IntegerDivisions, type, vector)
+            End If
+        End Function
+
+        Const left% = 0
+        Const right% = 1
+
+        Public Function TryBinaryOperation(binder As BinaryOperationBinder, type As Type, ByRef vector As Boolean) As MethodInfo
+            If Not operatorsBinary.ContainsKey(binder.Operation) Then
+                Return Nothing
+            End If
+
+            Dim op As BinaryOperator = operatorsBinary(binder.Operation)
+            Dim target As MethodInfo = Nothing
+
+            With op.MatchRight(type)
+                If Not .IsNothing AndAlso .GetParameters(left).ParameterType Is Me.Type Then
+                    Return .ref
+                End If
+            End With
+
+            ' target还是空值的话，则尝试将目标参数转换为集合类型
+            If Not type.ImplementsInterface(GetType(IEnumerable)) Then
+                Return Nothing
+            Else
+                type = type.GetInterfaces _
+                    .Where(Function(i) i.Name = NameOf(IEnumerable)) _
+                    .First _
+                    .GenericTypeArguments _
+                    .First
+            End If
+
+            With op.MatchRight(type)
+                If Not .IsNothing AndAlso .GetParameters(left).ParameterType Is Me.Type Then
+                    vector = True
+                    Return .ref
+                End If
+            End With
+
+            Return Nothing
+        End Function
+#End Region
     End Class
 End Namespace
