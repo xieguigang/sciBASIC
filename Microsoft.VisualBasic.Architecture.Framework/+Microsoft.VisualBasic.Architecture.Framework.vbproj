@@ -451,6 +451,7 @@
     <Compile Include="Language\lang\Java\Line2D.vb" />
     <Compile Include="Language\lang\Java\Collections.vb" />
     <Compile Include="Language\lang\Java\Reflection.vb" />
+    <Compile Include="Language\Linq\SchemaProvider.vb" />
     <Compile Include="Language\Linq\Indexer.vb" />
     <Compile Include="Language\Linq\Vector.vb" />
     <Compile Include="Language\Linq\VectorShadows.vb" />

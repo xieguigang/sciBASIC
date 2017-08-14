@@ -110,8 +110,7 @@ Namespace Imaging
         <Extension> Public Function Scale(rect As RectangleF, factor As SizeF) As RectangleF
             Dim size = New SizeF(rect.Width * factor.Width, rect.Height * factor.Height)
             Dim delta = size - rect.Size
-            Dim offset As New PointF(rect.Left - delta.Width / 2, rect.Top - delta.Height / 2)
-            Dim location As PointF = (rect.Location.OffSet2D(offset))
+            Dim location As New PointF(rect.Left - delta.Width / 2, rect.Top - delta.Height / 2)
             Return New RectangleF(location, size)
         End Function
 
