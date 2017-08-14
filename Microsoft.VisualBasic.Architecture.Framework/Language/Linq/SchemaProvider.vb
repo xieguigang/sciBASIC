@@ -13,7 +13,7 @@ Namespace Language
     ''' <summary>
     ''' Schema provider of the <see cref="VectorShadows(Of T)"/>
     ''' </summary>
-    Public Class SchemaProvider
+    Public Class VectorSchemaProvider
 
         ''' <summary>
         ''' 单目运算符无重名的问题

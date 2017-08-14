@@ -47,7 +47,7 @@ Namespace Language
         ''' 无参数的属性
         ''' </summary>
         ReadOnly linq As DataValue(Of T)
-        ReadOnly type As New SchemaProvider(GetType(T))
+        ReadOnly type As New VectorSchemaProvider(GetType(T))
 
         Default Public Overloads Property Item(exp$) As Object
             Get
