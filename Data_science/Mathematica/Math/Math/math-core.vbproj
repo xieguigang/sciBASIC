@@ -218,6 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
+    <Compile Include="Algebra\Vector\NamedVector.vb" />
     <Compile Include="Factor.vb" />
     <Compile Include="Algebra\Vector\NumericsVector.vb" />
     <Compile Include="UncheckInteger.vb" />
