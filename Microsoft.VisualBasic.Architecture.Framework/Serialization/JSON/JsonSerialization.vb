@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::ad13f492e159e124870763ade14248f1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonSerialization.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,10 +30,13 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization.Json
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Serialization.JSON
 
@@ -64,7 +67,7 @@ Namespace Serialization.JSON
 
                 Call jsonSer.WriteObject(ms, obj)
 
-                Dim json As String = Encoding.UTF8.GetString(ms.ToArray())
+                Dim json$ = Encoding.UTF8.GetString(ms.ToArray())
                 If indent Then
                     json = Formatter.Format(json)
                 End If
@@ -164,21 +167,37 @@ Namespace Serialization.JSON
             Return json.LoadObject(Of T)(simpleDict)
         End Function
 
-        <Extension>
-        Public Function NamedProperty(Of T)(name As String, value As T) As String
-            Dim json As String = value.GetJson
-            Return $"""{name}"": " & json
-        End Function
+        Const JsonLongTime$ = "\d+-\d+-\d+T\d+:\d+:\d+\.\d+"
 
-        ''' <summary>
-        ''' 生成Json之中的动态属性
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function NamedProperty(Of T)(x As NamedValue(Of T)) As String
-            Return x.Name.NamedProperty(Of T)(x.Value)
+        Public Function EnsureDate(json$, Optional propertyName$ = Nothing) As String
+            Dim pattern$ = $"""{JsonLongTime}"""
+
+            If Not propertyName.StringEmpty Then
+                pattern = $"""{propertyName}""\s*:\s*" & pattern
+            End If
+
+            Dim dates = r.Matches(json, pattern, RegexICSng)
+            Dim sb As New StringBuilder(json)
+            Dim [date] As Date
+
+            For Each m As Match In dates
+                Dim s$ = m.Value
+
+                If Not propertyName.StringEmpty Then
+                    With r.Replace(s, $"""{propertyName}""\s*:", "", RegexICSng) _
+                        .Trim _
+                        .Trim(ASCII.Quot)
+
+                        [date] = Date.Parse(.ref)
+                    End With
+                    sb.Replace(s, $"""{propertyName}"":" & [date].GetJson)
+                Else
+                    [date] = Date.Parse(s.Trim(ASCII.Quot))
+                    sb.Replace(s, [date].GetJson)
+                End If
+            Next
+
+            Return sb.ToString
         End Function
     End Module
 End Namespace
