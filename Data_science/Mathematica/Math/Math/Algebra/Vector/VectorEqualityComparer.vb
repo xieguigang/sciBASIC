@@ -28,9 +28,18 @@
 
 Namespace LinearAlgebra
 
-    Public Class VectorEqualityComparer
-        Implements IEqualityComparer(Of Vector)
+    ''' <summary>
+    ''' Determine that the two vector are equals to each other.
+    ''' </summary>
+    ''' <remarks>单实例模式？？</remarks>
+    Public Class VectorEqualityComparer : Implements IEqualityComparer(Of Vector)
 
+        ''' <summary>
+        ''' Sequence Equals
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function VectorEqualsToAnother(v1 As List(Of Double), v2 As List(Of Double)) As Boolean
             If v1.Count <> v2.Count Then
                 Return False
@@ -63,6 +72,11 @@ Namespace LinearAlgebra
             Return VectorEqualsToAnother(x, y)
         End Function
 
+        ''' <summary>
+        ''' Sum all elements' hashcode 
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
         Public Overloads Function GetHashCode(v As Vector) As Integer Implements IEqualityComparer(Of Vector).GetHashCode
             Dim sum As Integer = v.Sum(Function(x) x.GetHashCode)
             Return sum
