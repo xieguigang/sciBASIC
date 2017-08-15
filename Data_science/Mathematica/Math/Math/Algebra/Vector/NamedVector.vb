@@ -1,4 +1,3 @@
-﻿
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace LinearAlgebra
@@ -8,11 +7,18 @@ Namespace LinearAlgebra
     ''' </summary>
     Public Class NamedVectorFactory
 
+        Public ReadOnly Property Keys As String()
+
         ReadOnly factors As Factor(Of String)()
 
         Sub New(factors As IEnumerable(Of String))
-            Me.factors = FactorExtensions.factors(factors)
+            Me.Keys = factors.ToArray
+            Me.factors = FactorExtensions.factors(Keys)
         End Sub
+
+        Public Function EmptyVector() As Vector
+            Return New Vector(factors.Length - 1)
+        End Function
 
         Public Function AsVector(data As Dictionary(Of String, Double)) As Vector
             Dim vector#() = New Double(factors.Length - 1) {}
@@ -22,6 +28,12 @@ Namespace LinearAlgebra
             Next
 
             Return vector.AsVector
+        End Function
+
+        Public Function Translate(vector As Vector) As Dictionary(Of String, Double)
+            Return factors.ToDictionary(
+                Function(factor) factor.FactorValue,
+                Function(i) vector(i.Value))
         End Function
 
         Public Overrides Function ToString() As String
