@@ -35,11 +35,22 @@ Imports Who = Microsoft.VisualBasic.Which
 
 Namespace Language
 
+    ''' <summary>
+    ''' VB.NET object collection
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class Vector(Of T) : Inherits DynamicObject
         Implements IEnumerable(Of T)
 
+        ''' <summary>
+        ''' Array that hold the .NET object in this collection
+        ''' </summary>
         Protected buffer As T()
 
+        ''' <summary>
+        ''' Gets the element counts in this vector collection
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Length As Integer
             Get
                 Return buffer.Length
@@ -144,6 +155,11 @@ Namespace Language
         '    End Set
         'End Property
 
+        ''' <summary>
+        ''' Direct get the element in the array by its index.
+        ''' </summary>
+        ''' <param name="index%"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(index%) As T
             Get
                 Return buffer(index)
@@ -182,6 +198,11 @@ Namespace Language
             End Set
         End Property
 
+        ''' <summary>
+        ''' Get subset of the collection by using a continues index
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(range As IntRange) As List(Of T)
             Get
                 Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
@@ -195,6 +216,11 @@ Namespace Language
             End Set
         End Property
 
+        ''' <summary>
+        ''' Gets subset of the collection by using a discontinues index
+        ''' </summary>
+        ''' <param name="indices"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(indices As IEnumerable(Of Integer)) As List(Of T)
             Get
                 Return New List(Of T)(indices.Select(Function(i) buffer(i)))
@@ -217,6 +243,11 @@ Namespace Language
             End Get
         End Property
 
+        ''' <summary>
+        ''' Select elements by logical condiction result.
+        ''' </summary>
+        ''' <param name="booleans"></param>
+        ''' <returns></returns>
         Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
             Get
                 Return Me(Who.IsTrue(booleans))
