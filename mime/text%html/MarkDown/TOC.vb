@@ -39,12 +39,16 @@ Namespace MarkDown
             Dim headers As New List(Of String)
 
             headers += MarkdownHTML._headerSetext.Matches(md).ToArray
-            headers += MarkdownHTML._headerAtx.Matches(md).ToArray
+            headers += MarkdownHTML._headerAtx _
+                .Matches(md) _
+                .ToArray(Function(s) s.TrimNewLine.Trim)
 
             Dim orders As New List(Of SeqValue(Of String))
             Dim pos%
 
             For Each headerGroup As IGrouping(Of String, String) In headers.GroupBy(Function(s) s)
+                pos = 1  ' start 参数必须要大于零
+
                 Do While True
                     pos = InStr(pos, md, headerGroup.Key)
 
@@ -53,6 +57,9 @@ Namespace MarkDown
                             .i = pos,
                             .value = headerGroup.Key
                         }
+                        pos += 1  ' 必须要往前位移一个字符，否则会出现死循环
+                    Else
+                        Exit Do
                     End If
                 Loop
             Next
