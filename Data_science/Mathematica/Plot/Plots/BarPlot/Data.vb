@@ -38,7 +38,15 @@ Namespace BarPlot
 
     Public Class BarDataSample
 
+        ''' <summary>
+        ''' 分组名称
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Tag As String
+        ''' <summary>
+        ''' 当前分组下的每一个序列的数据值
+        ''' </summary>
+        ''' <returns></returns>
         Public Property data As Double()
 
         ''' <summary>

@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 
 Namespace Scripting.Runtime
 
@@ -29,6 +30,11 @@ Namespace Scripting.Runtime
         <Extension>
         Public Function AsInteger(source As IEnumerable(Of String)) As Integer()
             Return source.AsType(Of Integer).ToArray
+        End Function
+
+        <Extension>
+        Public Function AsColor(source As IEnumerable(Of String)) As Color()
+            Return source.AsType(Of Color).ToArray
         End Function
     End Module
 End Namespace
