@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Imaging.Driver
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 
 Namespace BarPlot

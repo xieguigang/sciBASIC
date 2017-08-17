@@ -4,7 +4,12 @@ Module BarPlotTest
 
     Sub Main()
 
-        Dim dara = BarPlotDataExtensions.LoadDataSet("C:\Users\gg.xie\Desktop\sp.csv").Strip(30)
+        Dim dara = BarPlotDataExtensions _
+            .LoadDataSet("C:\Users\gg.xie\Desktop\sp.csv") _
+            .Strip(30) _
+            .Normalize
+
+        Call StackedBarPlot.Plot(dara).Save("./barplot.png")
 
     End Sub
 End Module

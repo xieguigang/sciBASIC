@@ -160,5 +160,18 @@ Namespace BarPlot
 
             Return out
         End Function
+
+        ''' <summary>
+        ''' 将每一个分组内的数据都归一化为100%
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Normalize(data As BarDataGroup) As BarDataGroup
+            For Each x In data.Samples
+                x.data = x.data.AsVector / x.StackedSum
+            Next
+
+            Return data
+        End Function
     End Module
 End Namespace
