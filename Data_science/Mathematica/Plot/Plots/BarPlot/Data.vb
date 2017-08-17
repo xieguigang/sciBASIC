@@ -73,6 +73,11 @@ Namespace BarPlot
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Property Serials As NamedValue(Of Color)()
+
+        ''' <summary>
+        ''' 分组数据
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Samples As BarDataSample()
         Public Property Index As NamedVectorFactory
 
