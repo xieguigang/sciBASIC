@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -14,20 +15,45 @@ Namespace MarkDown
         ''' </summary>
         ''' <param name="md$"></param>
         ''' <returns></returns>
-        Public Function AddToc(md$, Optional numbering As Boolean = True, Optional autoSave As Boolean = True) As String
+        Public Function AddToc(md As StringBuilder, Optional numbering As Boolean = True, Optional autoSave As Boolean = True) As String
             Dim sb As New StringBuilder
-            Dim headers = GetHeaders(md)
 
             Call sb.AppendLine("<!-- vb.net-markdown-toc -->")
+            Call sb.AppendLine()
+            Call sb.AppendLine(md.ReplaceHeaders)
+            Call sb.AppendLine()
             Call sb.AppendLine("<!-- vb.net-markdown-toc-config
 	numbering=true
 	autoSave=true
 	/vb.net-markdown-toc-config -->
 <!-- /vb.net-markdown-toc -->")
 
-            Call sb.AppendLine(md)
+            Call sb.AppendLine(md.ToString)
 
             Return sb.ToString
+        End Function
+
+        <Extension> Private Function ReplaceHeaders(ByRef md As StringBuilder) As String
+            Dim headers = GetHeaders(md.ToString)
+            Dim i%() = {1, 1, 1, 1, 1, 1}
+            Dim TOC As New List(Of String)
+
+            For Each head In headers
+                Dim parts = head.GetTagValue(" ", trim:=True)
+                Dim level$ = parts.Name
+                Dim indent$ = "   ".Repeats(level.Length - 1).JoinBy("")
+
+                If level.Length > 4 Then
+                    Continue For
+                End If
+
+                If level.Length = 1 Then
+                    TOC += $"{i}. " & parts.Value
+                End If
+
+                level = $"<h{level.Length}>"
+
+            Next
         End Function
 
         ''' <summary>
