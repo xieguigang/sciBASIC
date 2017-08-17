@@ -21,8 +21,8 @@ Namespace BarPlot
                              Optional interval! = 5,
                              Optional columnCount% = 8,
                              Optional legendLabelFontCSS$ = CSSFont.Win10NormalLarger,
-                             Optional tickFontCSS$ = CSSFont.Win10Normal,
-                             Optional groupLabelFontCSS$ = CSSFont.Win7Bold,
+                             Optional tickFontCSS$ = CSSFont.Win10NormalLarger,
+                             Optional groupLabelFontCSS$ = CSSFont.Win7Large,
                              Optional axisLabelFontCSS$ = CSSFont.Win7LargerNormal) As GraphicsData
 
             Dim serialBrushes = data.Serials _
@@ -49,8 +49,16 @@ Namespace BarPlot
                     Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelFontCSS)
                     Dim bottomPart = groupLabelFont.Height + 30 + (legendFont.Height + interval) * columnCount
                     Dim barRegionHeight = height - bottomPart   ' 条形图区域的总高度
-
                     Dim x0! = rect.Padding.Left + leftPart
+
+                    ' 绘制y轴
+                    For Each tick# In {0.00, 0.25, 0.5, 0.75, 1.0}
+                        Dim y# = rect.Height - rect.Padding.Bottom - bottomPart - barRegionHeight * tick
+                        Dim location As New Point(x0 - tickSize.Width - 20, y - tickSize.Height / 2)
+
+                        g.DrawLine(Pens.Black, New Point(x0 - 10, y), New Point(x0 - 20, y))
+                        g.DrawString(tick.ToString("F2"), tickFont, Brushes.Black, location)
+                    Next
 
                     ' 遍历X轴上面的每一个分组
                     For Each group As BarDataSample In data.Samples
