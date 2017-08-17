@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Interpolation
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing2D.Colors
@@ -182,6 +183,13 @@ Namespace Drawing2D.Colors
             Color.Orange, Color.DarkOrange, Color.Brown, Color.Gray, Color.CadetBlue
         }
 
+        Public ReadOnly Property Category31 As Color() = {
+            "#BCBD22", "#4AD693", "#1F77B4", "#CDE64C", "#9AC901", "#56028E", "#A2D1CF", "#C8B631",
+            "#6DBCEC", "#C24642", "#5F71BC", "#798DCD", "#292E76", "#FF7256", "#91CF4F", "#FE5050",
+            "#FEBF00", "#FD7E00", "#07A7E4", "#51AC81", "#FE00FF", "#FDE688", "#7E00FD", "#CD00FF",
+            "#988ED5", "#027093", "#73945A", "#8C564B", "#9467BD", "#D62829", "#2CA02C"
+        }.AsColor()
+
         <Extension>
         Private Function IsColorNameList(exp$) As Boolean
             If InStr(exp, ",") > 0 Then
@@ -226,8 +234,10 @@ Namespace Drawing2D.Colors
                 Return Rainbow
             ElseIf term.TextEquals("dotnet.colors") Then
                 Return AllDotNetPrefixColors
-            ElseIf term.TextEquals("vb.chart") Then
+            ElseIf term.TextEquals("scibasic.chart()") Then
                 Return ChartColors
+            ElseIf term.TextEquals("scibasic.category31()") Then
+                Return Category31
             ElseIf term.TextEquals("clusters") Then
                 Return ClusterColour
             End If

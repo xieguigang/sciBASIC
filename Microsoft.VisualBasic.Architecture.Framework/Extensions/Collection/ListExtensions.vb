@@ -107,33 +107,33 @@ Public Module ListExtensions
     End Function
 
     ''' <summary>
-    '''
+    ''' Take elements by <paramref name="index"/> list. 
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="indexs">所要获取的目标对象的下表的集合</param>
+    ''' <param name="index">所要获取的目标对象的下表的集合</param>
     ''' <param name="reversed">是否为反向选择，即返回所有不在目标index集合之中的元素列表</param>
     ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("takes")>
     <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T),
-                                            indexs%(),
+                                            index%(),
                                             Optional offSet% = 0,
                                             Optional reversed As Boolean = False) As T()
         If reversed Then
-            Return source.__reversedTake(indexs)
+            Return source.__reversedTake(index)
         End If
 
-        Dim result As T() = New T(indexs.Length - 1) {}
+        Dim result As T() = New T(index.Length - 1) {}
         Dim indices As New Index(Of Integer)(
-            indexs.Select(Function(oi) oi + offSet))
+            index.Select(Function(oi) oi + offSet))
 
         For Each x As SeqValue(Of T) In source.SeqIterator
             Dim i As Integer = indices(x.i)  ' 在这里得到的是x的index在indexs参数之中的索引位置
 
             If i > -1 Then  ' 当前的原始的下表位于indexs参数值中，则第i个indexs元素所指向的source的元素就是x，将其放入对应的结果列表之中
-                result(i) = +x
+                result(i) = x.value
             End If
         Next
 

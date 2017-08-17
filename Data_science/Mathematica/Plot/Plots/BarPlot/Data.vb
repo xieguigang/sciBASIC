@@ -1,44 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::208c1391708af97c27d85f43eb6efb01, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Data.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BarPlot
 
-    Public Class BarDataSample
+    Public Class BarDataSample : Implements INamedValue
 
-        Public Property Tag As String
+        ''' <summary>
+        ''' 分组名称
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Tag As String Implements INamedValue.Key
+        ''' <summary>
+        ''' 当前分组下的每一个序列的数据值
+        ''' </summary>
+        ''' <returns></returns>
         Public Property data As Double()
 
         ''' <summary>
@@ -63,10 +73,16 @@ Namespace BarPlot
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Property Serials As NamedValue(Of Color)()
+
+        ''' <summary>
+        ''' 分组数据
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Samples As BarDataSample()
+        Public Property Index As NamedVectorFactory
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return Samples.Keys.GetJson
         End Function
 
         ''' <summary>
@@ -90,7 +106,7 @@ Namespace BarPlot
                 }
 
             For Each x In serials
-                values += source(CInt(x.Name)).value
+                values += source(CInt(x.Name)).Value
             Next
 
             Return New BarDataGroup With {

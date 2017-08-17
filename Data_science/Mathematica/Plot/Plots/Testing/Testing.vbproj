@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AD4BCB63-E1C7-4243-A032-78A4FA0DBEBF}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.PCAPlotTest</StartupObject>
+    <StartupObject>Testing.BarPlotTest</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module1.vb" />
+    <Compile Include="BarPlotTest.vb" />
     <Compile Include="PCAPlotTest.vb" />
     <Compile Include="ImageDataPlots.vb" />
     <Compile Include="FuzzyCMeansVisualize.vb" />
@@ -157,7 +158,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\Data\DataFrame\+VB_DataFrame.vbproj">
