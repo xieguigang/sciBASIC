@@ -53,7 +53,7 @@ Namespace BarPlot
                     Dim x0! = rect.Padding.Left + leftPart
 
                     ' 遍历X轴上面的每一个分组
-                    For Each group In data.Samples
+                    For Each group As BarDataSample In data.Samples
 
                         Dim y0! = rect.Padding.Top
                         Dim sum# = group.StackedSum
@@ -67,6 +67,13 @@ Namespace BarPlot
                             g.FillRectangle(serial.value.Value, rect:=bar)
                             y0 += h
                         Next
+
+                        Dim x!, y!
+                        Dim labelSize = g.MeasureString(group.Tag, groupLabelFont)
+
+                        x = x0 + (wb - labelSize.Width) / 2
+                        y = y0 + (30)
+                        Call g.DrawString(group.Tag, groupLabelFont, Brushes.Black, New PointF(x, y))
 
                         x0 += wb + interval
                     Next
