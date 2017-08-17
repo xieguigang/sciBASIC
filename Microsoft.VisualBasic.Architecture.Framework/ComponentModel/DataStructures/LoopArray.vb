@@ -35,7 +35,7 @@ Namespace ComponentModel.DataStructures
         Dim __innerArray As T()
         Dim __p As Integer
 
-        Public ReadOnly Property Raw As T()
+        Public ReadOnly Property Buffer As T()
             Get
                 Return __innerArray
             End Get
@@ -93,5 +93,13 @@ Namespace ComponentModel.DataStructures
 
             Return __innerArray(__p)
         End Function
+
+        Public Shared Narrowing Operator CType(array As LoopArray(Of T)) As T()
+            Return array.Buffer
+        End Operator
+
+        Public Shared Widening Operator CType(array As T()) As LoopArray(Of T)
+            Return New LoopArray(Of T)(array)
+        End Operator
     End Class
 End Namespace

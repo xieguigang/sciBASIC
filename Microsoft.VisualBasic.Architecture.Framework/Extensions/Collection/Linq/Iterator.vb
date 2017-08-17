@@ -112,6 +112,14 @@ Namespace Linq
         Public Function Indices(Of T)(source As IEnumerable(Of SeqValue(Of T))) As Integer()
             Return source.Select(Function(o) o.i).ToArray
         End Function
+
+        <Extension>
+        Public Function Indices(Of T)(source As IEnumerable(Of T), assert As Func(Of T, Boolean)) As Integer()
+            Return source _
+                .SeqIterator _
+                .Where(Function(x) True = assert(x.value)) _
+                .Indices
+        End Function
     End Module
 
     Public Structure SeqValue(Of T1, T2) : Implements IAddressOf
