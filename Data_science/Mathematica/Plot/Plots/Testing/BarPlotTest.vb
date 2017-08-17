@@ -9,7 +9,7 @@ Module BarPlotTest
             .Strip(30) _
             .Normalize
 
-        Call StackedBarPlot.Plot(dara).Save("C:\Users\xieguigang\Desktop\test.png")
+        Call StackedBarPlot.Plot(dara, YaxisTitle:="Relative abundance").Save("C:\Users\xieguigang\Desktop\test.png")
 
     End Sub
 End Module

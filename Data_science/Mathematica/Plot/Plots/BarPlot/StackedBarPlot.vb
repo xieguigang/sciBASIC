@@ -13,6 +13,22 @@ Namespace BarPlot
 
     Public Module StackedBarPlot
 
+        ''' <summary>
+        ''' 绘制百分比堆积的条形图
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="size$"></param>
+        ''' <param name="padding$"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="percentStacked!"></param>
+        ''' <param name="YaxisTitle$"></param>
+        ''' <param name="interval!"></param>
+        ''' <param name="columnCount%"></param>
+        ''' <param name="legendLabelFontCSS$"></param>
+        ''' <param name="tickFontCSS$"></param>
+        ''' <param name="groupLabelFontCSS$"></param>
+        ''' <param name="axisLabelFontCSS$"></param>
+        ''' <returns></returns>
         Public Function Plot(data As BarDataGroup,
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
@@ -21,10 +37,10 @@ Namespace BarPlot
                              Optional YaxisTitle$ = "Value",
                              Optional interval! = 5,
                              Optional columnCount% = 8,
-                             Optional legendLabelFontCSS$ = CSSFont.Win10NormalLarger,
+                             Optional legendLabelFontCSS$ = CSSFont.Win7LittleLarge,
                              Optional tickFontCSS$ = CSSFont.Win10NormalLarger,
-                             Optional groupLabelFontCSS$ = CSSFont.Win7Large,
-                             Optional axisLabelFontCSS$ = CSSFont.Win7LargerNormal) As GraphicsData
+                             Optional groupLabelFontCSS$ = CSSFont.Win7LargerBold,
+                             Optional axisLabelFontCSS$ = CSSFont.Win7Large) As GraphicsData
 
             Dim serialBrushes = data.Serials _
                 .Select(Function(s)
@@ -48,14 +64,16 @@ Namespace BarPlot
                     Dim barRegionWidth = width - leftPart
                     Dim wb = (barRegionWidth - (n - 1) * interval) / n
                     Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelFontCSS)
-                    Dim bottomPart = groupLabelFont.Height + 30 + (legendFont.Height + interval) * columnCount
+                    Dim boxWidth% = legendFont.Height * 1.1
+                    Dim bottomPart = groupLabelFont.Height + 30 + (boxWidth + interval * 2) * columnCount
                     Dim barRegionHeight = height - bottomPart   ' 条形图区域的总高度
                     Dim x0! = rect.Padding.Left + leftPart
 
-                    ' g.RotateTransform(90)
-                    Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                    text.DrawString(YaxisTitle, axisFont, Brushes.Black, New PointF(0, 0), angle:=-90)
-                    ' g.ResetTransform()
+                    Call New GraphicsText(DirectCast(g, Graphics2D).Graphics).DrawString(
+                        YaxisTitle, axisFont,
+                        Brushes.Black,
+                        New PointF((rect.Padding.Left - axisFont.Height), height / 2),
+                        angle:=-90)
 
                     ' 绘制y轴
                     For Each tick# In {0.00, 0.25, 0.5, 0.75, 1.0}
@@ -90,6 +108,31 @@ Namespace BarPlot
                         Call g.DrawString(group.Tag, groupLabelFont, Brushes.Black, New PointF(x, y))
 
                         x0 += wb + interval
+                    Next
+
+                    ' 绘制图例
+                    Dim bottomY = rect.Padding.Top + barRegionHeight + boxWidth * 2 + groupLabelFont.Height
+                    Dim ly! = bottomY
+
+                    x0 = rect.Padding.Left + leftPart
+
+                    For Each block In serialBrushes.Split(columnCount)
+
+                        Dim maxWidth%
+
+                        For Each legend In block
+                            ' 绘制方形色块
+                            Dim box As New Rectangle(x0, ly, boxWidth, boxWidth)
+                            g.FillRectangle(legend.Value, box)
+                            ' 绘制系列标签
+                            g.DrawString(legend.Name, legendFont, Brushes.Black, New PointF(x0 + boxWidth + 5, ly))
+
+                            maxWidth = Math.Max(maxWidth, g.MeasureString(legend.Name, legendFont).Width)
+                            ly += interval + boxWidth
+                        Next
+
+                        ly = bottomY
+                        x0 += interval * 2 + boxWidth + maxWidth
                     Next
                 End Sub
 
