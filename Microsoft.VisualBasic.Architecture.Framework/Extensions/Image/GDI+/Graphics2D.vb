@@ -4579,7 +4579,7 @@ Namespace Imaging
         '     Resets the world transformation matrix of this System.Drawing.Graphics to the
         '     identity matrix.
         Public Overrides Sub ResetTransform()
-
+            Call Graphics.ResetTransform()
         End Sub
         '
         ' Summary:
@@ -4601,7 +4601,7 @@ Namespace Imaging
         '   angle:
         '     Angle of rotation in degrees.
         Public Overrides Sub RotateTransform(angle As Single)
-
+            Call Graphics.RotateTransform(angle)
         End Sub
         '
         ' Summary:

@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -50,6 +51,11 @@ Namespace BarPlot
                     Dim bottomPart = groupLabelFont.Height + 30 + (legendFont.Height + interval) * columnCount
                     Dim barRegionHeight = height - bottomPart   ' 条形图区域的总高度
                     Dim x0! = rect.Padding.Left + leftPart
+
+                    ' g.RotateTransform(90)
+                    Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                    text.DrawString(YaxisTitle, axisFont, Brushes.Black, New PointF(0, 0), angle:=-90)
+                    ' g.ResetTransform()
 
                     ' 绘制y轴
                     For Each tick# In {0.00, 0.25, 0.5, 0.75, 1.0}
