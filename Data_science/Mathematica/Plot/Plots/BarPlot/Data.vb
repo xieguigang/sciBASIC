@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -83,6 +84,56 @@ Namespace BarPlot
 
         Public Overrides Function ToString() As String
             Return Samples.Keys.GetJson
+        End Function
+
+        ''' <summary>
+        ''' 如果系列在这里面，则会一次排在前面，否则任然是按照原始的顺序排布
+        ''' </summary>
+        ''' <param name="orders$"></param>
+        ''' <returns></returns>
+        Public Function Reorder(ParamArray orders$()) As BarDataGroup
+            Dim oldOrders = Me.Serials _
+                .Keys _
+                .SeqIterator _
+                .ToDictionary(Function(x) x.value,
+                              Function(x) x.i)
+            Dim newOrders As New List(Of SeqValue(Of String))
+
+            For Each name In orders
+                newOrders += New SeqValue(Of String) With {
+                    .i = oldOrders(name),
+                    .value = name
+                }
+                oldOrders.Remove(name)
+            Next
+
+            newOrders += oldOrders _
+                .Select(Function(x)
+                            Return New SeqValue(Of String) With {
+                                .i = x.Value,
+                                .value = x.Key
+                            }
+                        End Function)
+
+            Dim serials = newOrders _
+                .Select(Function(i) Me.Serials(i)) _
+                .ToArray
+            Dim groups As New List(Of BarDataSample)
+
+            For Each g In Me.Samples
+                groups += New BarDataSample With {
+                    .Tag = g.Tag,
+                    .data = newOrders _
+                        .Select(Function(i) g.data(i)) _
+                        .ToArray
+                }
+            Next
+
+            Return New BarDataGroup With {
+                .Index = Index,
+                .Samples = groups,
+                .Serials = serials
+            }
         End Function
 
         ''' <summary>
