@@ -38,8 +38,8 @@ Namespace BarPlot
                              Optional interval! = 5,
                              Optional columnCount% = 8,
                              Optional legendLabelFontCSS$ = CSSFont.Win7LittleLarge,
-                             Optional tickFontCSS$ = CSSFont.Win10NormalLarger,
-                             Optional groupLabelFontCSS$ = CSSFont.Win7LargerBold,
+                             Optional tickFontCSS$ = CSSFont.Win7LittleLarge,
+                             Optional groupLabelFontCSS$ = CSSFont.Win7LittleLarge,
                              Optional axisLabelFontCSS$ = CSSFont.Win7Large) As GraphicsData
 
             Dim serialBrushes = data.Serials _
