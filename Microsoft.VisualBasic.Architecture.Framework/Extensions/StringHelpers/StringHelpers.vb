@@ -234,7 +234,7 @@ Public Module StringHelpers
             Dim key$ = Mid(s, 1, p - 1)
             Dim value$ = Mid(s, p + delimiter.Length)
 
-            If Not trim.StringEmpty Then
+            If Not trim.StringEmpty(whitespaceAsEmpty:=False) Then
                 value = value.Trim(trim.ToArray)
             End If
 
@@ -280,13 +280,15 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s">The input test string</param>
     ''' <returns></returns>
-    <Extension> Public Function StringEmpty(s As String) As Boolean
-        If s Is Nothing OrElse
-            String.IsNullOrEmpty(s) OrElse
-            String.IsNullOrWhiteSpace(s) Then
+    <Extension> Public Function StringEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
+        If s Is Nothing OrElse String.IsNullOrEmpty(s) Then
             Return True
         Else
-            Return False
+            If String.IsNullOrWhiteSpace(s) Then
+                Return whitespaceAsEmpty
+            Else
+                Return False
+            End If
         End If
     End Function
 

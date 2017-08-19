@@ -201,7 +201,7 @@ Namespace Language
         ''' <param name="vector"></param>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Public Shared Operator &(vector As VectorShadows(Of T), obj As Object) As Object
+        Public Overloads Shared Operator &(vector As VectorShadows(Of T), obj As Object) As Object
             Dim type As Type = obj.GetType
             Dim isVector As Boolean = False
             Dim op As MethodInfo = vector.type.Concatenate(type, isVector)
