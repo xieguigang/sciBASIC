@@ -84,12 +84,15 @@ Public Module BoxPlot
             Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
                 Dim plotRegion = rect.PlotRegion
+                Dim leftPart = yAxisLabelFont.Height + tickLabelFont.Height + 50
+                Dim bottomPart = groupLabelFont.Height + 50
 
                 With plotRegion
-                    Dim leftPart = yAxisLabelFont.Height + tickLabelFont.Height + 50
-                    Dim bottomPart = groupLabelFont.Height + 50
+
                     Dim topLeft = .Location.OffSet2D(leftPart, 0)
-                    Dim rectSize As New Size(.Width - leftPart, .Height - bottomPart)
+                    Dim rectSize As New Size(
+                        width:= .Width - leftPart,
+                        height:= .Height - bottomPart)
 
                     plotRegion = New Rectangle(topLeft, rectSize)
                 End With
@@ -105,8 +108,8 @@ Public Module BoxPlot
                         plotRegion)
                 End If
 
-                ' x0在盒子的中间
-                Dim x0!
+                ' x0在盒子的左边
+                Dim x0! = rect.Padding.Left + leftPart + interval
                 Dim y0!
 
                 ' 绘制盒子
@@ -115,6 +118,7 @@ Public Module BoxPlot
                     Dim outlier = group.Value.Outlier(quartile)
                     Dim brush As SolidBrush = colors.Next
                     Dim pen As New Pen(brush.Color, lineWidth)
+                    Dim x1 = x0 + boxWidth / 2  ' x1在盒子的中间
 
                     If Not outlier.Outlier.IsNullOrEmpty Then
                         quartile = outlier.Normal.Quartile
@@ -122,23 +126,41 @@ Public Module BoxPlot
 
                     ' max
                     y0 = y(quartile.range.Max)
-                    g.DrawLine(pen, New Point(x0 - boxWidth / 2, y0), New Point(x0 + boxWidth / 2, y0))
+                    g.DrawLine(pen, New Point(x0, y0), New Point(x0 + boxWidth, y0))
 
                     ' min
                     y0 = y(quartile.range.Min)
-                    g.DrawLine(pen, New Point(x0 - boxWidth / 2, y0), New Point(x0 + boxWidth / 2, y0))
+                    g.DrawLine(pen, New Point(x0, y0), New Point(x0 + boxWidth, y0))
+
+                    ' q1
+                    Dim q1Y = y(quartile.Q1)
+                    g.DrawLine(pen, New Point(x0, q1Y), New Point(x0 + boxWidth, q1Y))
+
+                    ' q2
+                    Dim q2Y = y(quartile.Q2)
+                    g.DrawLine(pen, New Point(x0, q2Y), New Point(x0 + boxWidth, q2Y))
+
+                    ' q3
+                    Dim q3Y = y(quartile.Q3)
+                    g.DrawLine(pen, New Point(x0, q3Y), New Point(x0 + boxWidth, q3Y))
+
+                    ' box
+                    g.DrawLine(pen, New Point(x0, q3Y), New Point(x0, q1Y))
+                    g.DrawLine(pen, New Point(x0 + boxWidth, q3Y), New Point(x0 + boxWidth, q1Y))
 
                     ' outliers + normal points
                     If showDataPoints Then
                         For Each n As Double In outlier.Normal
-                            Call g.FillEllipse(brush, New PointF(x0, y(n)).CircleRectangle(dotSize))
+                            Call g.FillEllipse(brush, New PointF(x1, y(n)).CircleRectangle(dotSize))
                         Next
                     End If
                     If showOutliers Then
                         For Each n As Double In outlier.Outlier
-                            Call g.FillEllipse(brush, New PointF(x0, y(n)).CircleRectangle(dotSize))
+                            Call g.FillEllipse(brush, New PointF(x1, y(n)).CircleRectangle(dotSize))
                         Next
                     End If
+
+                    x0 += boxWidth + interval
                 Next
             End Sub
 
