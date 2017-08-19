@@ -32,9 +32,18 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
+''' <summary>
+''' ```
+''' min, q1, q2, q3, max
+'''       _________
+'''  +----|   |   |----+
+'''       ---------
+''' ```
+''' </summary>
 Public Module BoxPlot
 
     <Extension> Public Function Plot(data As BoxData,
@@ -72,7 +81,7 @@ Public Module BoxPlot
 
                 ' 绘制盒子
                 For Each group In data.Groups
-
+                    Dim quartile = group.Value.Quartile
                 Next
             End Sub
 
