@@ -26,7 +26,19 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
+
 Public Module BoxPlot
 
+    <Extension> Public Function Plot(data As BoxData,
+                                     Optional size$ = "3000,2700",
+                                     Optional padding$ = g.DefaultPadding,
+                                     Optional bg$ = "white",
+                                     Optional schema$ = ColorBrewer.QualitativeSchemes.Set1_9) As GraphicsData
+
+    End Function
 End Module
 
