@@ -61,7 +61,8 @@ Public Module BoxPlot
                                      Optional YAxisLabelFontCSS$ = CSSFont.Win7LittleLarge,
                                      Optional tickFontCSS$ = CSSFont.Win7Normal,
                                      Optional regionStroke$ = Stroke.AxisStroke,
-                                     Optional interval# = 100) As GraphicsData
+                                     Optional interval# = 100,
+                                     Optional dotSize! = 10) As GraphicsData
 
         Dim yAxisLabelFont As Font = CSSFont.TryParse(YAxisLabelFontCSS)
         Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelCSSFont)
@@ -101,6 +102,9 @@ Public Module BoxPlot
                         plotRegion)
                 End If
 
+                Dim x0!
+                Dim y0!
+
                 ' 绘制盒子
                 For Each group As NamedValue(Of Vector) In data.Groups
                     Dim quartile = group.Value.Quartile
@@ -112,11 +116,14 @@ Public Module BoxPlot
                     End If
 
                     ' max
-                    ' min
-                    ' outliers
+                    y0 = y(quartile.range.Max)
 
-                    For Each x In outlier.Outlier
-                        Call g.FillEllipse()
+                    ' min
+                    y0 = y(quartile.range.Min)
+
+                    ' outliers + normal points
+                    For Each n As Double In group.Value
+                        Call g.FillEllipse(brush, New PointF(x0, y(n)).CircleRectangle(dotSize))
                     Next
                 Next
             End Sub
