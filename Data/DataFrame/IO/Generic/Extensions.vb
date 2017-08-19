@@ -1,38 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::bbe72b7c06a9489793d27d7898450803, ..\sciBASIC#\Data\DataFrame\IO\Generic\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Linq
 
 Namespace IO
 
     Public Module Extensions
+
+        <Extension>
+        Public Function PropertyNames(table As IDictionary(Of String, DataSet)) As String()
+            Return table.Values _
+                .Select(Function(o) o.EnumerateKeys(False)) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+        End Function
 
         <Extension>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
@@ -44,7 +54,7 @@ Namespace IO
             Return data _
                 .Select(Function(x)
                             Return New NamedValue(Of Dictionary(Of String, Double)) With {
-                                .Name = x.ID, 
+                                .Name = x.ID,
                                 .Value = x.Properties
                             }
                         End Function) _
@@ -79,7 +89,7 @@ Namespace IO
                 .GroupBy(Function(p) p.Property) _
                 .ToDictionary(Function(k) k.Key,
                               Function(v) v.Select(
-                              Function(s) s.value).JoinBy("; "))
+                              Function(s) s.Value).JoinBy("; "))
 
             Return New EntityObject With {
                 .ID = g.Key,

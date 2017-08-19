@@ -32,7 +32,7 @@ Public Class BoxData
         Dim datasets As Dictionary(Of DataSet) = DataSet _
             .LoadDataSet(path) _
             .ToDictionary
-        Dim serials$() = datasets(Scan0).EnumerateKeys
+        Dim serials$() = datasets.PropertyNames
 
         For Each name As String In serials
             Dim data = groupDesigner _
