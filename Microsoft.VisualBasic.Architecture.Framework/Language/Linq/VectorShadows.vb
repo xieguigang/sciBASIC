@@ -263,7 +263,7 @@ Namespace Language
         Public Shared Operator Like(vector As VectorShadows(Of T), obj As Object) As Object
             Dim type As Type = obj.GetType
             Dim isVector As Boolean = False
-            Dim op As MethodInfo = vector.type.Concatenate(type, isVector)
+            Dim op As MethodInfo = vector.type.Like(type, isVector)
 
             If op Is Nothing Then
 
