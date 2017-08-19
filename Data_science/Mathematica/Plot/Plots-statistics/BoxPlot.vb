@@ -81,6 +81,8 @@ Public Module BoxPlot
             .Select(Function(color) New SolidBrush(color)) _
             .ToArray
 
+        ranges *= 1.25
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 

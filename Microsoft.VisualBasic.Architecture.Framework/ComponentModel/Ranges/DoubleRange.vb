@@ -165,6 +165,19 @@ Namespace ComponentModel.Ranges
         End Operator
 
         ''' <summary>
+        ''' Scale numeric range
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <param name="factor#"></param>
+        ''' <returns></returns>
+        Public Shared Operator *(range As DoubleRange, factor#) As DoubleRange
+            With range
+                Dim delta = (.Length * factor - .Length) / 2
+                Return New DoubleRange(.Min - delta, .Max + delta)
+            End With
+        End Operator
+
+        ''' <summary>
         ''' 这个函数需要通过一个返回结果的元素个数参数来计算出step步长
         ''' </summary>
         ''' <param name="n%">所返回来的数组的元素的个数</param>
