@@ -56,12 +56,14 @@ Namespace Quantile
         ''' <param name="quartile"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Outlier(data As Vector, quartile As (Q1#, Q2#, Q3#, IQR#, range As DoubleRange)) As Double()
+        Public Function Outlier(data As Vector, quartile As (Q1#, Q2#, Q3#, IQR#, range As DoubleRange)) As (Normal As Double(), Outlier As Double())
             With quartile
                 Dim lowerBound = .Q1 - 1.5 * .IQR
                 Dim upperBound = .Q3 + 1.5 * .IQR
+                Dim normal#() = data((data >= lowerBound) & (data <= upperBound))
+                Dim outliers = data(data < lowerBound) & data(data > upperBound)
 
-                Return data(data < lowerBound) & data(data > upperBound)
+                Return (normal, outliers)
             End With
         End Function
     End Module

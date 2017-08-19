@@ -82,6 +82,12 @@ Public Module BoxPlot
                 ' 绘制盒子
                 For Each group In data.Groups
                     Dim quartile = group.Value.Quartile
+                    Dim outlier = group.Value.Outlier(quartile)
+
+                    If Not outlier.Outlier.IsNullOrEmpty Then
+                        quartile = outlier.Normal.Quartile
+                    End If
+
                 Next
             End Sub
 
