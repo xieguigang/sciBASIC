@@ -80,7 +80,7 @@ Namespace Language
                 Return New VectorShadows(Of T)(MyBase.Item(booleans))
             End Get
             Set(value As VectorShadows(Of T))
-                MyBase.Item(booleans) = value.buffer
+                MyBase.Item(booleans) = value
             End Set
         End Property
 #End Region
