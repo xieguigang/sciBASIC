@@ -62,7 +62,10 @@ Public Module BoxPlot
                                      Optional tickFontCSS$ = CSSFont.Win7Normal,
                                      Optional regionStroke$ = Stroke.AxisStroke,
                                      Optional interval# = 100,
-                                     Optional dotSize! = 10) As GraphicsData
+                                     Optional dotSize! = 10,
+                                     Optional lineWidth% = 2,
+                                     Optional showDataPoints As Boolean = True,
+                                     Optional showOutliers As Boolean = True) As GraphicsData
 
         Dim yAxisLabelFont As Font = CSSFont.TryParse(YAxisLabelFontCSS)
         Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelCSSFont)
@@ -102,6 +105,7 @@ Public Module BoxPlot
                         plotRegion)
                 End If
 
+                ' x0在盒子的中间
                 Dim x0!
                 Dim y0!
 
@@ -110,6 +114,7 @@ Public Module BoxPlot
                     Dim quartile = group.Value.Quartile
                     Dim outlier = group.Value.Outlier(quartile)
                     Dim brush As SolidBrush = colors.Next
+                    Dim pen As New Pen(brush.Color, lineWidth)
 
                     If Not outlier.Outlier.IsNullOrEmpty Then
                         quartile = outlier.Normal.Quartile
@@ -117,14 +122,23 @@ Public Module BoxPlot
 
                     ' max
                     y0 = y(quartile.range.Max)
+                    g.DrawLine(pen, New Point(x0 - boxWidth / 2, y0), New Point(x0 + boxWidth / 2, y0))
 
                     ' min
                     y0 = y(quartile.range.Min)
+                    g.DrawLine(pen, New Point(x0 - boxWidth / 2, y0), New Point(x0 + boxWidth / 2, y0))
 
                     ' outliers + normal points
-                    For Each n As Double In group.Value
-                        Call g.FillEllipse(brush, New PointF(x0, y(n)).CircleRectangle(dotSize))
-                    Next
+                    If showDataPoints Then
+                        For Each n As Double In outlier.Normal
+                            Call g.FillEllipse(brush, New PointF(x0, y(n)).CircleRectangle(dotSize))
+                        Next
+                    End If
+                    If showOutliers Then
+                        For Each n As Double In outlier.Outlier
+                            Call g.FillEllipse(brush, New PointF(x0, y(n)).CircleRectangle(dotSize))
+                        Next
+                    End If
                 Next
             End Sub
 

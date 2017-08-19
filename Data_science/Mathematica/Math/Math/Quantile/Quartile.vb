@@ -33,9 +33,9 @@ Namespace Quantile
                 q = (n + 1) * {0.25, 0.5, 0.75}.AsVector
             End If
 
-            Dim q1 = vector(q(0))
-            Dim q2 = vector(q(1))
-            Dim q3 = vector(q(2))
+            Dim q1 = vector(Math.Truncate(q(0)))
+            Dim q2 = vector(Math.Truncate(q(1)))
+            Dim q3 = vector(Math.Truncate(q(2)))
             Dim IQR = q3 - q1
 
             Return (q1, q2, q3, IQR, New DoubleRange(vector))

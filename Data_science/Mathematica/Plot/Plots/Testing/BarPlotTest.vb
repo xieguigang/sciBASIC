@@ -28,6 +28,8 @@ Module BarPlotTest
         Next
 
 
+        Pause()
+
         For Each path As String In {
             "D:\projects\8.18\Report_soil\Result\01_OTU_Taxa\Taxonomy\Relative_abundance\Species.csv",
             "D:\projects\8.18\Report_soil\Result\01_OTU_Taxa\Taxonomy\Relative_abundance\Class.csv",
