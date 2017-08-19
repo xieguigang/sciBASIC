@@ -28,10 +28,16 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -54,11 +60,22 @@ Public Module BoxPlot
                                      Optional groupLabelCSSFont$ = CSSFont.Win7LittleLarge,
                                      Optional YAxisLabelFontCSS$ = CSSFont.Win7LittleLarge,
                                      Optional tickFontCSS$ = CSSFont.Win7Normal,
-                                     Optional regionStroke$ = Stroke.AxisStroke) As GraphicsData
+                                     Optional regionStroke$ = Stroke.AxisStroke,
+                                     Optional interval# = 100) As GraphicsData
 
         Dim yAxisLabelFont As Font = CSSFont.TryParse(YAxisLabelFontCSS)
         Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelCSSFont)
         Dim tickLabelFont As Font = CSSFont.TryParse(tickFontCSS)
+        Dim ranges As DoubleRange = data _
+            .Groups _
+            .Select(Function(x) x.Value) _
+            .IteratesALL _
+            .ToArray
+        Dim colors As LoopArray(Of SolidBrush) = Designer _
+            .GetColors(schema) _
+            .Select(Function(color) New SolidBrush(color)) _
+            .ToArray
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
@@ -73,6 +90,11 @@ Public Module BoxPlot
                     plotRegion = New Rectangle(topLeft, rectSize)
                 End With
 
+                Dim boxWidth = StackedBarPlot.BarWidth(plotRegion.Width, data.Groups.Length, interval)
+                Dim bottom = plotRegion.Bottom
+                Dim height = plotRegion.Height
+                Dim y = Function(x#) bottom - height * (x - ranges.Min) / ranges.Length
+
                 If Not regionStroke.StringEmpty Then
                     Call g.DrawRectangle(
                         Stroke.TryParse(regionStroke).GDIObject,
@@ -80,14 +102,22 @@ Public Module BoxPlot
                 End If
 
                 ' 绘制盒子
-                For Each group In data.Groups
+                For Each group As NamedValue(Of Vector) In data.Groups
                     Dim quartile = group.Value.Quartile
                     Dim outlier = group.Value.Outlier(quartile)
+                    Dim brush As SolidBrush = colors.Next
 
                     If Not outlier.Outlier.IsNullOrEmpty Then
                         quartile = outlier.Normal.Quartile
                     End If
 
+                    ' max
+                    ' min
+                    ' outliers
+
+                    For Each x In outlier.Outlier
+                        Call g.FillEllipse()
+                    Next
                 Next
             End Sub
 

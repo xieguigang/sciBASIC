@@ -30,7 +30,11 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataStructures
 
-    Public Class LoopArray(Of T)
+    ''' <summary>
+    ''' Infinite loop iterates of the target element collection.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public Class LoopArray(Of T) : Implements IEnumerable(Of T)
 
         Dim __innerArray As T()
         Dim __p As Integer
@@ -101,5 +105,30 @@ Namespace ComponentModel.DataStructures
         Public Shared Widening Operator CType(array As T()) As LoopArray(Of T)
             Return New LoopArray(Of T)(array)
         End Operator
+
+        Dim _break As Boolean
+
+        ''' <summary>
+        ''' Exit the Infinite loop iterator <see cref="GetEnumerator()"/>
+        ''' </summary>
+        Public Sub Break()
+            _break = True
+        End Sub
+
+        ''' <summary>
+        ''' Infinite loop iterates of the target element collection.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            _break = False
+
+            Do While Not _break
+                Yield [Next]()
+            Loop
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Class
 End Namespace

@@ -158,6 +158,12 @@ Namespace ComponentModel.Ranges
             Return r
         End Operator
 
+        Public Shared Widening Operator CType(data#()) As DoubleRange
+            With data
+                Return New DoubleRange(min:= .Min, max:= .Max)
+            End With
+        End Operator
+
         ''' <summary>
         ''' 这个函数需要通过一个返回结果的元素个数参数来计算出step步长
         ''' </summary>
