@@ -35,6 +35,11 @@ Namespace IO
     Public Module Extensions
 
         <Extension>
+        Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
+            Return datasets.Select(Function(x) x([property])).ToArray
+        End Function
+
+        <Extension>
         Public Function NamedMatrix(data As IEnumerable(Of DataSet)) As NamedValue(Of Dictionary(Of String, Double))()
             Return data _
                 .Select(Function(x)

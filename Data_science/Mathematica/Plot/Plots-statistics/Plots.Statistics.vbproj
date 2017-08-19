@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoxPlot.vb" />
+    <Compile Include="BoxData.vb" />
     <Compile Include="ZScores.vb" />
     <Compile Include="PCAPlot.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
