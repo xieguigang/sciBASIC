@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
@@ -139,6 +140,8 @@ Public Module BoxPlot
                     ' q2
                     Dim q2Y = y(quartile.Q2)
                     g.DrawLine(pen, New Point(x0, q2Y), New Point(x0 + boxWidth, q2Y))
+                    g.DrawLine(pen, New Point(x0, q2Y + lineWidth), New Point(x0 + boxWidth, q2Y + lineWidth))
+                    g.DrawLine(pen, New Point(x0, q2Y + 2 * lineWidth), New Point(x0 + boxWidth, q2Y + 2 * lineWidth))
 
                     ' q3
                     Dim q3Y = y(quartile.Q3)
@@ -147,6 +150,14 @@ Public Module BoxPlot
                     ' box
                     g.DrawLine(pen, New Point(x0, q3Y), New Point(x0, q1Y))
                     g.DrawLine(pen, New Point(x0 + boxWidth, q3Y), New Point(x0 + boxWidth, q1Y))
+
+                    ' dashline to min/max
+                    pen = New Pen(brush.Color, lineWidth) With {
+                        .DashStyle = DashStyle.Dash
+                    }
+
+                    g.DrawLine(pen, New Point(x1, y(quartile.range.Min)), New Point(x1, q1Y))
+                    g.DrawLine(pen, New Point(x1, y(quartile.range.Max)), New Point(x1, q3Y))
 
                     ' outliers + normal points
                     If showDataPoints Then
