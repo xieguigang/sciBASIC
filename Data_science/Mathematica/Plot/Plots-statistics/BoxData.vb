@@ -39,7 +39,7 @@ Public Class BoxData
                 .Select(Function(x)
                             Dim values As Vector = datasets(x.Value).Vector([property]:=name)
                             Return New NamedValue(Of Vector) With {
-                                .Name = x.Name,
+                                .name = x.Name,
                                 .Description = x.Description,
                                 .Value = values
                             }
