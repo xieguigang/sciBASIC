@@ -98,7 +98,7 @@ Public Module BoxPlot
                     plotRegion = New Rectangle(topLeft, rectSize)
                 End With
 
-                Dim boxWidth = StackedBarPlot.BarWidth(plotRegion.Width, data.Groups.Length, interval)
+                Dim boxWidth = StackedBarPlot.BarWidth(plotRegion.Width - 2 * interval, data.Groups.Length, interval)
                 Dim bottom = plotRegion.Bottom
                 Dim height = plotRegion.Height
                 Dim y = Function(x#) bottom - height * (x - ranges.Min) / ranges.Length
