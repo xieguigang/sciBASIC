@@ -21,7 +21,11 @@ Module BarPlotTest
         Dim dddddd = BoxData.Load("C:\Users\xieguigang\Desktop\alpha-box.csv", groups).ToArray
 
 
+        For Each x In dddddd
 
+            Call x.Plot().Save($"./{x.SerialName}.png")
+
+        Next
 
 
         For Each path As String In {

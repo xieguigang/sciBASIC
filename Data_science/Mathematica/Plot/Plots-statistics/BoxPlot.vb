@@ -26,10 +26,14 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module BoxPlot
 
@@ -37,8 +41,45 @@ Public Module BoxPlot
                                      Optional size$ = "3000,2700",
                                      Optional padding$ = g.DefaultPadding,
                                      Optional bg$ = "white",
-                                     Optional schema$ = ColorBrewer.QualitativeSchemes.Set1_9) As GraphicsData
+                                     Optional schema$ = ColorBrewer.QualitativeSchemes.Set1_9,
+                                     Optional groupLabelCSSFont$ = CSSFont.Win7LittleLarge,
+                                     Optional YAxisLabelFontCSS$ = CSSFont.Win7LittleLarge,
+                                     Optional tickFontCSS$ = CSSFont.Win7Normal,
+                                     Optional regionStroke$ = Stroke.AxisStroke) As GraphicsData
 
+        Dim yAxisLabelFont As Font = CSSFont.TryParse(YAxisLabelFontCSS)
+        Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelCSSFont)
+        Dim tickLabelFont As Font = CSSFont.TryParse(tickFontCSS)
+        Dim plotInternal =
+            Sub(ByRef g As IGraphics, rect As GraphicsRegion)
+
+                Dim plotRegion = rect.PlotRegion
+
+                With plotRegion
+                    Dim leftPart = yAxisLabelFont.Height + tickLabelFont.Height + 50
+                    Dim bottomPart = groupLabelFont.Height + 50
+                    Dim topLeft = .Location.OffSet2D(leftPart, 0)
+                    Dim rectSize As New Size(.Width - leftPart, .Height - bottomPart)
+
+                    plotRegion = New Rectangle(topLeft, rectSize)
+                End With
+
+                If Not regionStroke.StringEmpty Then
+                    Call g.DrawRectangle(
+                        Stroke.TryParse(regionStroke).GDIObject,
+                        plotRegion)
+                End If
+
+                ' 绘制盒子
+                For Each group In data.Groups
+
+                Next
+            End Sub
+
+        Return g.GraphicsPlots(
+            size.SizeParser, padding,
+            bg,
+            plotInternal)
     End Function
 End Module
 
