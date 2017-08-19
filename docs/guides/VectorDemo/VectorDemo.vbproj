@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A7E626A0-A2C5-4429-805A-DC18910CE336}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>VectorDemo.Program</StartupObject>
+    <StartupObject>VectorDemo.Test2</StartupObject>
     <RootNamespace>VectorDemo</RootNamespace>
     <AssemblyName>VectorDemo</AssemblyName>
     <FileAlignment>512</FileAlignment>
