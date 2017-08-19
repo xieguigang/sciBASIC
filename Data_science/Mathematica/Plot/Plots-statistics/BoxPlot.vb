@@ -118,6 +118,7 @@ Public Module BoxPlot
                 Dim x0! = rect.Padding.Left + leftPart + interval
                 Dim y0!
                 Dim labelSize As SizeF
+                Dim tickPen As Pen = Stroke.TryParse(regionStroke).GDIObject
 
                 ' 绘制盒子
                 For Each group As NamedValue(Of Vector) In data.Groups
@@ -180,11 +181,11 @@ Public Module BoxPlot
                     ' draw group label
                     labelSize = g.MeasureString(group.Name, groupLabelFont)
                     g.DrawString(group.Name, groupLabelFont, Brushes.Black, New PointF(x1 - labelSize.Width / 2, bottom + 20))
+                    g.DrawLine(tickPen, New Point(x1, bottom + 20), New Point(x1, bottom))
 
                     x0 += boxWidth + interval
                 Next
 
-                Dim tickPen As Pen = Stroke.TryParse(regionStroke).GDIObject
                 Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                 Dim label$
 
