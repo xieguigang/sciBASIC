@@ -47,7 +47,7 @@ Module Program
         }
 
         Dim g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
-        Call dp.paint(g)
+        Call dp.paint(g, New Rectangle(100, 100, 500, 400))
         Call g.Save("../../../test.png", ImageFormats.Png)
 
         Pause()

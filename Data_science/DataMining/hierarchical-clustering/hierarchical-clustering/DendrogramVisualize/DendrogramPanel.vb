@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::61cf7327f9c2a90624466d5c1cafcd3f, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\DendrogramPanel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -55,18 +56,18 @@ Namespace DendrogramVisualize
 
         Friend Shared ReadOnly solidStroke As New Stroke(1.0F)
 
-        Private _model As Cluster
+        Dim _model As Cluster
         ''' <summary>
         ''' Root node
         ''' </summary>
-        Private component As ClusterComponent
+        Dim component As ClusterComponent
 
-        Private scaleTickLabelPadding As Integer = 4
+        Dim scaleTickLabelPadding% = 4
 
-        Private xModelOrigin As Double = 0.0
-        Private yModelOrigin As Double = 0.0
-        Private wModel As Double = 0.0
-        Private hModel As Double = 0.0
+        Dim xModelOrigin As Double = 0.0
+        Dim yModelOrigin As Double = 0.0
+        Dim wModel As Double = 0.0
+        Dim hModel As Double = 0.0
 
         Public Property ShowDistanceValues As Boolean = True
         Public Property ShowScale As Boolean = True
@@ -74,12 +75,6 @@ Namespace DendrogramVisualize
         Public Property ScaleTickLength As Integer = 4
         Public Property ScaleValueInterval As Double
         Public Property ScaleValueDecimals As Integer
-
-        Public Property BorderTop As Integer = 20
-        Public Property BorderLeft As Integer = 20
-        Public Property BorderRight As Integer = 20
-        Public Property BorderBottom As Integer = 20
-
         Public Property LineColor As Color = Color.Black
 
         Public Property Model As Cluster
@@ -154,12 +149,17 @@ Namespace DendrogramVisualize
             Return comp
         End Function
 
-        Public Sub paint(g2 As Graphics2D)
-            Dim size As Size = g2.Size
-            Dim wDisplay As Integer = size.Width - BorderLeft - BorderRight
-            Dim hDisplay As Integer = size.Height - BorderTop - BorderBottom
-            Dim xDisplayOrigin As Integer = BorderLeft
-            Dim yDisplayOrigin As Integer = BorderBottom
+        Public Sub paint(g2 As Graphics2D, Optional region As Rectangle = Nothing)
+            If region.IsEmpty Then
+                region = g2.ImageResource.EntireImage
+            End If
+
+            Dim size As Size = region.Size
+            ' 绘图区域的大小，width/height
+            Dim wDisplay As Integer = size.Width
+            Dim hDisplay As Integer = size.Height
+            Dim xDisplayOrigin As Integer = region.Location.X
+            Dim yDisplayOrigin As Integer = region.Location.Y
 
             ' 设置默认的笔对象
             g2.Stroke = solidStroke
