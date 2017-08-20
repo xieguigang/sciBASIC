@@ -36,6 +36,17 @@ Namespace IO
     Public Module Extensions
 
         <Extension>
+        Public Function EuclideanDistance(a As DataSet, b As DataSet, names$()) As Double
+            Dim d# = Aggregate key As String
+                     In names
+                     Let x = a(key)
+                     Let y = b(key)
+                     Into Sum((x - y) ^ 2) '
+
+            Return Math.Sqrt(d)
+        End Function
+
+        <Extension>
         Public Function PropertyNames(table As IDictionary(Of String, DataSet)) As String()
             Return table.Values _
                 .Select(Function(o) o.EnumerateKeys(False)) _

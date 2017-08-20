@@ -120,6 +120,15 @@ Public Module Heatmap
 
     Public Delegate Function ReorderProvider(data As NamedValue(Of Dictionary(Of String, Double))()) As NamedValue(Of Dictionary(Of String, Double))()
 
+    ' dendrogramLayout$ = A,B
+    '                                         |
+    '    A                                    | B
+    ' ------+---------------------------------+
+    '       |
+    '       |
+    '       |
+    '       |
+
     ''' <summary>
     ''' 可以用来表示任意变量之间的相关度
     ''' </summary>
@@ -144,6 +153,7 @@ Public Module Heatmap
                          Optional bg$ = "white",
                          Optional drawLabels As DrawElements = DrawElements.Both,
                          Optional drawDendrograms As DrawElements = DrawElements.Rows,
+                         Optional dendrogramLayout$ = "200,200",
                          Optional fontStyle$ = CSSFont.Win10Normal,
                          Optional legendTitle$ = "Heatmap Color Legend",
                          Optional legendFontStyle$ = CSSFont.PlotSubTitle,
@@ -162,19 +172,24 @@ Public Module Heatmap
             valuelabelFont = New Font(FontFace.CambriaMath, 16, Drawing.FontStyle.Bold)
         End If
 
+        Dim array As NamedValue(Of Dictionary(Of String, Double))() = data.ToArray
+        Dim dlayout As (A%, B%)
+
+        With dendrogramLayout.SizeParser
+            dlayout = (.Width, .Height)
+        End With
+        If Not kmeans Is Nothing Then
+            array = kmeans(array)  ' 因为可能会重新进行排序了，所以这里要在keys的申明之前完成
+        End If
+
+        Dim keys$() = array(Scan0).Value.Keys.ToArray
         Dim legendFont As Font = CSSFont.TryParse(legendFontStyle)
         Dim margin As Padding = padding
-        Dim array = data.ToArray
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim plotInternal =
             Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
 
-                If Not kmeans Is Nothing Then
-                    array = kmeans(array)  ' 因为可能会重新进行排序了，所以这里要在keys的申明之前完成
-                End If
-
-                Dim dw! = args.dw
-                Dim keys$() = array(Scan0).Value.Keys.ToArray
+                Dim dw! = args.dStep.Width, dh! = args.dStep.Height
                 Dim blockSize As New SizeF(dw, dw)
                 Dim colors As Color() = args.colors
 
@@ -209,7 +224,7 @@ Public Module Heatmap
                     Next
 
                     args.left = margin.Left
-                    args.top += dw!
+                    args.top += dh!
 
                     If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
                         Dim sz As SizeF = g.MeasureString(x.Name, font)
@@ -224,8 +239,8 @@ Public Module Heatmap
 
         Return __plotInterval(
             plotInternal,
-            data.ToArray,
-            font, drawLabels, drawDendrograms,
+            array,
+            font, drawLabels, drawDendrograms, dlayout,
             customColors, mapLevels, mapName,
             size.SizeParser, margin, bg,
             legendTitle, legendFont, Nothing,
@@ -237,7 +252,7 @@ Public Module Heatmap
     Public Class PlotArguments
 
         Public left!
-        Public dw!
+        Public dStep As SizeF
         Public levels As Dictionary(Of Double, Integer)
         Public top!
         Public colors As Color()
@@ -246,9 +261,9 @@ Public Module Heatmap
 
     Public Enum DrawElements As Byte
         None = 0
-        Rows
-        Cols
-        Both = 100
+        Rows = 2
+        Cols = 4
+        Both = 8
     End Enum
 
     ''' <summary>
@@ -257,12 +272,14 @@ Public Module Heatmap
     ''' <param name="drawLabels">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
     ''' <param name="legendLayout">这个对象定义了图示的大小和位置</param>
     ''' <param name="font">对行标签或者列标签的字体的定义</param>
+    ''' <param name="array">Name为行名称，字典之中的key为列名称</param>
     <Extension>
     Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
                                    array As NamedValue(Of Dictionary(Of String, Double))(),
                                    font As Font,
                                    drawLabels As DrawElements,
                                    drawDendrograms As DrawElements,
+                                   dendrogramLayout As (A%, B%),
                                    Optional colors As Color() = Nothing,
                                    Optional mapLevels% = 100,
                                    Optional mapName$ = ColorMap.PatternJet,
@@ -279,6 +296,8 @@ Public Module Heatmap
                                    Optional legendWidth! = -1,
                                    Optional legendHasUnmapped As Boolean = True,
                                    Optional legendLayout As Rectangle = Nothing) As GraphicsData
+
+        Dim keys$() = array(Scan0).Value.Keys.ToArray
         Dim angle! = -45
 
         If colors.IsNullOrEmpty Then
@@ -288,7 +307,31 @@ Public Module Heatmap
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
-                Dim dw!? = CSng((size.Height - padding.Horizontal) / array.Length)  ' 矩阵之中的方格的大小
+                ' 根据布局计算出矩阵的大小和位置
+                Dim left! = padding.Left, top! = padding.Top    ' 绘图区域的左上角位置
+                ' 计算出右边的行标签的最大的占用宽度
+                Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, font)
+                Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, font)
+                ' 宽度与最大行标签宽度相减得到矩阵的绘制宽度
+                Dim dw = region.PlotRegion.Width - maxRowLabelSize.Width
+                Dim dh = region.PlotRegion.Height - maxColLabelSize.Width
+
+                ' 有行的聚类树
+                If drawDendrograms.HasFlag(DrawElements.Rows) Then
+                    ' A
+                    left += dendrogramLayout.A
+                    dw = dw - dendrogramLayout.A
+                End If
+                ' 有列的聚类树
+                If drawDendrograms.HasFlag(DrawElements.Cols) Then
+                    ' B
+                    top += dendrogramLayout.B
+                    dh = dh - dendrogramLayout.B
+                End If
+
+                dw /= keys.Length
+                dh /= array.Length
+
                 Dim correl#() = array _
                     .Select(Function(x) x.Value.Values) _
                     .IteratesALL _
@@ -302,11 +345,9 @@ Public Module Heatmap
                     .ToDictionary(Function(x) correl(x.i),
                                   Function(x) x.value)
 
-                Dim left! = padding.Left, top! = padding.Top
-                Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim args As New PlotArguments With {
                     .colors = colors,
-                    .dw = dw,
+                    .dStep = New SizeF(dw, dh),
                     .left = left,
                     .levels = lvs,
                     .top = top

@@ -52,6 +52,7 @@ Public Module HeatmapTable
                          Optional size$ = "1600,1600",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
+                         Optional rowDendrogramHeight% = 200,
                          Optional fontStyle$ = CSSFont.Win10Normal,
                          Optional legendTitle$ = "Heatmap Color Legend",
                          Optional legendFont$ = CSSFont.Win7Large,
@@ -74,7 +75,7 @@ Public Module HeatmapTable
             Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
 
                 ' 在绘制上三角的时候假设每一个对象的keys的顺序都是相同的
-                Dim dw! = args.dw
+                Dim dw! = args.dStep.Width, dh! = args.dStep.Height
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小
                 Dim i% = 1
@@ -170,7 +171,7 @@ Public Module HeatmapTable
 
         Return Heatmap.__plotInterval(
             plotInternal, data.ToArray,
-            font, DrawElements.Rows, DrawElements.Rows,,
+            font, DrawElements.Rows, DrawElements.Rows, (rowDendrogramHeight, 0),,
             mapLevels, mapName,
             gsize, margin, bg,
             legendTitle,
