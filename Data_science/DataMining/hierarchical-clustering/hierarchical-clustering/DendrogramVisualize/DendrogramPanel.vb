@@ -68,6 +68,7 @@ Namespace DendrogramVisualize
         Dim wModel As Double = 0.0
         Dim hModel As Double = 0.0
 
+        Public Property ShowLeafLabel As Boolean = True
         Public Property ShowDistanceValues As Boolean = True
         Public Property ShowScale As Boolean = True
         Public Property ScalePadding As Integer = 10
@@ -75,6 +76,7 @@ Namespace DendrogramVisualize
         Public Property ScaleValueInterval As Double
         Public Property ScaleValueDecimals As Integer
         Public Property LineColor As Color = Color.Black
+        Public Property LinkDotRadius% = 5
 
         Public Property Model As Cluster
             Get
@@ -229,7 +231,9 @@ Namespace DendrogramVisualize
                 .classTable = ClassTable,
                 .stroke = stroke,
                 .classLegendSize = New Size(classLegendWidth, legendHeight),
-                .classLegendPadding = padding
+                .classLegendPadding = padding,
+                .ShowLabelName = ShowLeafLabel,
+                .LinkDotRadius = LinkDotRadius
             }
             Dim labels As New List(Of NamedValue(Of PointF))
 

@@ -58,11 +58,6 @@ Namespace DendrogramVisualize
 
         Public Property Children As New List(Of ClusterComponent)
         Public Property NamePadding As Integer = 6
-        ''' <summary>
-        ''' 点的大小
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property DotRadius As Integer = 5
         Public Property LinkPoint As PointF
         Public Property InitPoint As PointF
         Public Property Cluster As Cluster
@@ -89,7 +84,12 @@ Namespace DendrogramVisualize
                 y1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
                 x2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
                 y2 = y1
-                g.FillEllipse(Brushes.Black, x1 - DotRadius, y1 - DotRadius, DotRadius * 2, DotRadius * 2)
+
+                If .LinkDotRadius > 0 Then
+                    Dim dotRadius = .LinkDotRadius
+                    Dim d% = dotRadius * 2
+                    g.FillEllipse(Brushes.Black, x1 - dotRadius, y1 - dotRadius, d, d)
+                End If
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
                 If Cluster.Leaf Then
@@ -101,7 +101,9 @@ Namespace DendrogramVisualize
                     }
 
                     ' 绘制叶节点
-                    g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, location)
+                    If args.ShowLabelName Then
+                        g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, location)
+                    End If
                     labels += New NamedValue(Of PointF) With {
                         .Name = Cluster.Name,
                         .Value = location

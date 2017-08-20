@@ -94,6 +94,19 @@ Namespace Heatmap
             Dim rowKeys$() ' 经过聚类之后得到的新的排序顺序
             Dim colKeys$()
 
+            Dim configDendrogramCanvas =
+                Function(cluster As Cluster)
+                    Return New DendrogramPanel With {
+                        .LineColor = Color.Black,
+                        .ScaleValueDecimals = 0,
+                        .ScaleValueInterval = 1,
+                        .Model = cluster,
+                        .ShowScale = False,
+                        .ShowDistanceValues = False,
+                        .ShowLeafLabel = False,
+                        .LinkDotRadius = 0
+                    }
+                End Function
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
@@ -134,14 +147,6 @@ Namespace Heatmap
                     If drawDendrograms.HasFlag(DrawElements.Rows) Then
                         ' 绘制出聚类树
                         Dim cluster As Cluster = Time(AddressOf array.RunCluster)
-                        Dim dp As New DendrogramPanel With {
-                            .LineColor = Color.Black,
-                            .ScaleValueDecimals = 0,
-                            .ScaleValueInterval = 1,
-                            .Model = cluster,
-                            .ShowScale = False,
-                            .ShowDistanceValues = False
-                        }
                         Dim topleft As New Point With {
                             .X = rect.Padding.Left,
                             .Y = rect.Padding.Top + layoutB
@@ -150,7 +155,7 @@ Namespace Heatmap
                             .Width = dendrogramLayout.A,
                             .Height = rect.PlotRegion.Height - (layoutB + maxColLabelSize.Width)
                         }
-                        rowKeys = dp _
+                        rowKeys = configDendrogramCanvas(cluster) _
                             .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
                             .OrderBy(Function(x) x.Value.Y) _
                             .Keys

@@ -72,6 +72,11 @@ Namespace DendrogramVisualize
         Dim stroke As Pen
         Dim classLegendSize As Size
         Dim classLegendPadding%
+        Dim ShowLabelName As Boolean
+        ''' <summary>
+        ''' 点的大小
+        ''' </summary>
+        Dim LinkDotRadius As Integer
 
     End Structure
 End Namespace
