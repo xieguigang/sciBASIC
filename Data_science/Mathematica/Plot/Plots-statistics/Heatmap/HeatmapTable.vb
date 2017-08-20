@@ -44,10 +44,6 @@ Public Module HeatmapTable
     ''' <summary>
     ''' 只能够用来表示两两变量之间的相关度
     ''' </summary>
-    ''' <param name="triangularStyle">
-    ''' 是否下三角部分显示圆，默认是本三角样式
-    ''' 圆的半径大小用来表示相关度的绝对值，颜色则是和普通的heatmap一样用来表示相关度的大小和方向
-    ''' </param>
     ''' <param name="fontStyle">对象标签的字体</param>
     ''' <returns></returns>
     Public Function Plot(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))),
@@ -56,7 +52,6 @@ Public Module HeatmapTable
                          Optional size$ = "1600,1600",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
-                         Optional triangularStyle As Boolean = True,
                          Optional fontStyle$ = CSSFont.Win10Normal,
                          Optional legendTitle$ = "Heatmap Color Legend",
                          Optional legendFont$ = CSSFont.Win7Large,
@@ -97,7 +92,7 @@ Public Module HeatmapTable
                         Dim labelbrush As SolidBrush = Nothing
                         Dim gridDraw As Boolean = drawGrid
 
-                        If triangularStyle AndAlso i > x.i Then ' 上三角部分不绘制任何图形
+                        If i > x.i Then ' 上三角部分不绘制任何图形
                             gridDraw = False
                             ' 绘制标签
                             If i = x.i + 1 Then
@@ -105,9 +100,9 @@ Public Module HeatmapTable
                             End If
                         Else
                             Dim level% = levels(c#)  '  得到等级
-                            Dim color As Color = Colors(   ' 得到当前的方格的颜色
-                                If(level% > Colors.Length - 1,
-                                Colors.Length - 1,
+                            Dim color As Color = colors(   ' 得到当前的方格的颜色
+                                If(level% > colors.Length - 1,
+                                colors.Length - 1,
                                 level))
                             Dim b As New SolidBrush(color)
 
@@ -175,7 +170,7 @@ Public Module HeatmapTable
 
         Return Heatmap.__plotInterval(
             plotInternal, data.ToArray,
-            font, Not triangularStyle,,
+            font, DrawElements.Rows, DrawElements.Rows,,
             mapLevels, mapName,
             gsize, margin, bg,
             legendTitle,

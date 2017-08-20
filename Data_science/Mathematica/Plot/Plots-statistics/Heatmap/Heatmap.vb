@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::6e9eddf5dbaf07f708b12a876ac34839, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Heatmaps\Heatmap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -41,6 +41,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Correlations.Correlations
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module Heatmap
 
@@ -138,9 +139,11 @@ Public Module Heatmap
                          Optional mapLevels% = 100,
                          Optional mapName$ = ColorMap.PatternJet,
                          Optional kmeans As ReorderProvider = Nothing,
-                         Optional size As Size = Nothing,
+                         Optional size$ = "3000,2700",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
+                         Optional drawLabels As DrawElements = DrawElements.Both,
+                         Optional drawDendrograms As DrawElements = DrawElements.Rows,
                          Optional fontStyle$ = CSSFont.Win10Normal,
                          Optional legendTitle$ = "Heatmap Color Legend",
                          Optional legendFontStyle$ = CSSFont.PlotSubTitle,
@@ -180,9 +183,9 @@ Public Module Heatmap
                     For Each key As String In keys
                         Dim c# = x.Value(key)
                         Dim level% = args.levels(c#)  '  得到等级
-                        Dim color As Color = Colors(
-                            If(level% > Colors.Length - 1,
-                               Colors.Length - 1,
+                        Dim color As Color = colors(
+                            If(level% > colors.Length - 1,
+                               colors.Length - 1,
                                level))
                         Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
                         Dim b As New SolidBrush(color)
@@ -208,21 +211,23 @@ Public Module Heatmap
                     args.left = margin.Left
                     args.top += dw!
 
-                    Dim sz As SizeF = g.MeasureString(x.Name, font)
-                    Dim y As Single = args.top - dw - (sz.Height - dw) / 2
-                    Dim lx As Single = margin.Left - sz.Width - margin.Left * 0.1
+                    If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
+                        Dim sz As SizeF = g.MeasureString(x.Name, font)
+                        Dim y As Single = args.top - dw - (sz.Height - dw) / 2
+                        Dim lx As Single = margin.Left - sz.Width - margin.Left * 0.1
 
-                    ' 绘制行标签
-                    Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
+                        ' 绘制行标签
+                        Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
+                    End If
                 Next
             End Sub
 
         Return __plotInterval(
             plotInternal,
             data.ToArray,
-            font, True,
+            font, drawLabels, drawDendrograms,
             customColors, mapLevels, mapName,
-            size, margin, bg,
+            size.SizeParser, margin, bg,
             legendTitle, legendFont, Nothing,
             min, max,
             mainTitle, titleFont,
@@ -239,16 +244,25 @@ Public Module Heatmap
 
     End Class
 
+    Public Enum DrawElements As Byte
+        None = 0
+        Rows
+        Cols
+        Both = 100
+    End Enum
+
     ''' <summary>
     ''' 一些共同的绘图元素过程
     ''' </summary>
-    ''' <param name="drawLabel2">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
+    ''' <param name="drawLabels">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
     ''' <param name="legendLayout">这个对象定义了图示的大小和位置</param>
+    ''' <param name="font">对行标签或者列标签的字体的定义</param>
     <Extension>
     Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
                                    array As NamedValue(Of Dictionary(Of String, Double))(),
                                    font As Font,
-                                   drawLabel2 As Boolean,
+                                   drawLabels As DrawElements,
+                                   drawDendrograms As DrawElements,
                                    Optional colors As Color() = Nothing,
                                    Optional mapLevels% = 100,
                                    Optional mapName$ = ColorMap.PatternJet,
@@ -267,27 +281,14 @@ Public Module Heatmap
                                    Optional legendLayout As Rectangle = Nothing) As GraphicsData
         Dim angle! = -45
 
-        If padding.IsEmpty Then
-            Dim maxLabel As String = LinqAPI.DefaultFirst(Of String) <=
-                From x
-                In array
-                Select x.Name
-                Order By Name.Length Descending
-
-            Dim sz As Size = maxLabel.MeasureString(font)
-
-            padding = New Padding(sz.Width * 1.5, sz.Width * 1.5)
-        End If
-
-        size = If(size.IsEmpty, New Size(2000, 1600), size)
-
         If colors.IsNullOrEmpty Then
             colors = Designer.GetColors(mapName, mapLevels)
         End If
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                Dim dw!? = CSng((size.Height - padding.Horizontal) / array.Length)
+
+                Dim dw!? = CSng((size.Height - padding.Horizontal) / array.Length)  ' 矩阵之中的方格的大小
                 Dim correl#() = array _
                     .Select(Function(x) x.Value.Values) _
                     .IteratesALL _
@@ -317,7 +318,8 @@ Public Module Heatmap
                 top = args.top
                 left += dw / 2
 
-                If drawLabel2 Then
+                ' 绘制下方的矩阵的列标签
+                If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
                     Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                     Dim format As New StringFormat() With {
                         .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
