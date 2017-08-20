@@ -21,6 +21,8 @@ Namespace Heatmap
         Public levels As Dictionary(Of Double, Integer)
         Public top!
         Public colors As Color()
+        Public RowOrders$()
+        Public ColOrders$()
 
     End Class
 
@@ -35,6 +37,14 @@ Namespace Heatmap
     ''' heatmap plot internal
     ''' </summary>
     Module Internal
+
+        Public Function ScaleByRow()
+
+        End Function
+
+        Public Function ScaleByCol()
+
+        End Function
 
         ''' <summary>
         ''' 一些共同的绘图元素过程
@@ -73,6 +83,9 @@ Namespace Heatmap
             If colors.IsNullOrEmpty Then
                 colors = Designer.GetColors(mapName, mapLevels)
             End If
+
+            Dim rowKeys$() ' 经过聚类之后得到的新的排序顺序
+            Dim colKeys$()
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
@@ -122,12 +135,18 @@ Namespace Heatmap
                         }
                         Dim topleft As New Point With {
                             .X = rect.Padding.Left,
-                            .Y = rect.Padding.Top +
-                                If(drawDendrograms.HasFlag(DrawElements.Cols),
-                                   dendrogramLayout.B, 0)
+                            .Y = rect.Padding.Top + layoutB
                         }
-                        Dim dsize As New Size With {.Width = dendrogramLayout.A, .Height = rect.Padding.Top +   }
-                        Dim rowOrders = dp.Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize))
+                        Dim dsize As New Size With {
+                            .Width = dendrogramLayout.A,
+                            .Height = rect.PlotRegion.Height - (layoutB + maxColLabelSize.Width)
+                        }
+                        rowKeys = dp _
+                            .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
+                            .OrderBy(Function(x) x.Value.Y) _
+                            .Keys
+                    Else
+                        rowKeys = array.Keys
                     End If
                     If drawDendrograms.HasFlag(DrawElements.Cols) Then
                         Dim cluster As Cluster = array.Transpose.RunCluster()
@@ -137,14 +156,19 @@ Namespace Heatmap
                             .ScaleValueInterval = 1,
                             .Model = cluster
                         }
-                        Dim rowOrders = dp.Paint(DirectCast(g, Graphics2D), New Rectangle(300, 100, 500, 500))
+                        colKeys = dp _
+                            .Paint(DirectCast(g, Graphics2D), New Rectangle(300, 100, 500, 500)) _
+                            .OrderBy(Function(x) x.Value.X) _
+                            .Keys
+                    Else
+                        colKeys = array.First.EnumerateKeys(joinProperties:=False)
                     End If
 
                     dw /= keys.Length
                     dh /= array.Length
 
                     Dim correl#() = array _
-                        .Select(Function(x) x.Value.Values) _
+                        .Select(Function(x) x.Properties.Values) _
                         .IteratesALL _
                         .Join(min, max) _
                         .Distinct _
@@ -161,7 +185,9 @@ Namespace Heatmap
                         .dStep = New SizeF(dw, dh),
                         .left = left,
                         .levels = lvs,
-                        .top = top
+                        .top = top,
+                        .ColOrders = colKeys,
+                        .RowOrders = rowKeys
                     }
 
                     Call plot(g, rect, args)

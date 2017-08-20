@@ -119,8 +119,6 @@ Namespace Heatmap
             End If
         End Function
 
-        Public Delegate Function ReorderProvider(data As NamedValue(Of Dictionary(Of String, Double))()) As NamedValue(Of Dictionary(Of String, Double))()
-
         ' dendrogramLayout$ = A,B
         '                                         |
         '    A                                    | B
@@ -139,7 +137,6 @@ Namespace Heatmap
         ''' </param>
         ''' <param name="mapLevels%"></param>
         ''' <param name="mapName$">The color map name. <see cref="Designer"/></param>
-        ''' <param name="kmeans">Reorder datasets by using kmeans clustering</param>
         ''' <param name="size"></param>
         ''' <param name="bg$"></param>
         ''' <returns></returns>
@@ -148,7 +145,6 @@ Namespace Heatmap
                              Optional customColors As Color() = Nothing,
                              Optional mapLevels% = 100,
                              Optional mapName$ = ColorMap.PatternJet,
-                             Optional kmeans As ReorderProvider = Nothing,
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
@@ -175,15 +171,12 @@ Namespace Heatmap
 
             Dim array As DataSet() = data.ToArray
             Dim dlayout As (A%, B%)
+            Dim dataTable = array.ToDictionary
 
             With dendrogramLayout.SizeParser
                 dlayout = (.Width, .Height)
             End With
-            If Not kmeans Is Nothing Then
-                array = kmeans(array)  ' 因为可能会重新进行排序了，所以这里要在keys的申明之前完成
-            End If
 
-            Dim keys$() = array(Scan0).Properties.Keys.ToArray
             Dim legendFont As Font = CSSFont.TryParse(legendFontStyle)
             Dim margin As Padding = padding
             Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
@@ -195,8 +188,8 @@ Namespace Heatmap
                     Dim colors As Color() = args.colors
 
                     ' 按行绘制heatmap之中的矩阵
-                    For Each x As DataSet In array   ' 在这里绘制具体的矩阵
-                        For Each key As String In keys
+                    For Each x As DataSet In args.RowOrders.Select(Function(key) dataTable(key))     ' 在这里绘制具体的矩阵
+                        For Each key As String In args.ColOrders
                             Dim c# = x(key)
                             Dim level% = args.levels(c#)  '  得到等级
                             Dim color As Color = colors(

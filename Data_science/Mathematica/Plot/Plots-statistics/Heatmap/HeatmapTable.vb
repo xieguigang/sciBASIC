@@ -90,7 +90,7 @@ Namespace Heatmap
                         ' X为矩阵之中的行数据
                         ' 下面的循环为横向绘制出三角形的每一行的图形
                         For Each key As String In keys
-                            Dim c# = (+x).Value(key)
+                            Dim c# = (+x)(key)
                             Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
                             Dim labelbrush As SolidBrush = Nothing
                             Dim gridDraw As Boolean = drawGrid

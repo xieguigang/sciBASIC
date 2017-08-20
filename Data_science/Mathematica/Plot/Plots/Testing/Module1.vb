@@ -130,8 +130,7 @@ Module Module1
         'Pause()
 
         Dim datahm = Heatmap.LoadDataSet("C:\Users\xieguigang\OneDrive\1.5\hh.csv")
-        Call Heatmap.Plot(datahm, mapName:=ColorMap.PatternHot,
-                          kmeans:=AddressOf KmeansReorder,
+        Call Heatmap.Heatmap.Plot(datahm, mapName:=ColorMap.PatternHot,
                           mapLevels:=20,
                           padding:="padding: 300",
                           legendTitle:="Spearman correlations",
