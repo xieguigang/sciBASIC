@@ -112,6 +112,7 @@
     <Compile Include="BoxData.vb" />
     <Compile Include="Heatmap\Heatmap.vb" />
     <Compile Include="Heatmap\HeatmapTable.vb" />
+    <Compile Include="Heatmap\Internal.vb" />
     <Compile Include="Heatmap\PlotExtensions.vb" />
     <Compile Include="ZScores.vb" />
     <Compile Include="PCAPlot.vb" />

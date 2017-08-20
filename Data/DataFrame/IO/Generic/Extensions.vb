@@ -33,6 +33,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace IO
 
+    ''' <summary>
+    ''' Data extension for <see cref="DataSet"/> and <see cref="EntityObject"/>
+    ''' </summary>
     Public Module Extensions
 
         <Extension>
