@@ -54,8 +54,6 @@ Namespace DendrogramVisualize
 
     Public Class DendrogramPanel
 
-        Friend Shared ReadOnly solidStroke As New Stroke(1.0F)
-
         Dim _model As Cluster
         ''' <summary>
         ''' Root node
@@ -149,7 +147,11 @@ Namespace DendrogramVisualize
             Return comp
         End Function
 
-        Public Sub paint(g2 As Graphics2D, Optional region As Rectangle = Nothing)
+        Public Sub paint(g2 As Graphics2D,
+                         Optional region As Rectangle = Nothing,
+                         Optional axisStrokeCSS$ = Stroke.AxisStroke,
+                         Optional branchStrokeCSS$ = Stroke.AxisStroke)
+
             If region.IsEmpty Then
                 region = g2.ImageResource.EntireImage
             End If
@@ -162,11 +164,13 @@ Namespace DendrogramVisualize
             Dim yDisplayOrigin As Integer = region.Location.Y
 
             ' 设置默认的笔对象
-            g2.Stroke = solidStroke
+            g2.Stroke = Stroke.TryParse(axisStrokeCSS)
 
             ' 如果cluster的结果不为空
             If component IsNot Nothing Then
-                Call __draw(g2, wDisplay, hDisplay, xDisplayOrigin, yDisplayOrigin)
+                Call __draw(g2,
+                            wDisplay, hDisplay, xDisplayOrigin, yDisplayOrigin,
+                            stroke:=Stroke.TryParse(branchStrokeCSS))
             Else
                 ' No data available 
                 Dim str As String = "No data"
@@ -177,7 +181,7 @@ Namespace DendrogramVisualize
             End If
         End Sub
 
-        Private Sub __draw(g2 As Graphics2D, wDisplay%, hDisplay%, xDisplayOrigin%, yDisplayOrigin%)
+        Private Sub __draw(g2 As Graphics2D, wDisplay%, hDisplay%, xDisplayOrigin%, yDisplayOrigin%, stroke As Stroke)
             Dim nameGutterWidth As Integer = component.GetMaxNameWidth(g2, False) + component.NamePadding
 
             wDisplay -= nameGutterWidth
@@ -195,9 +199,19 @@ Namespace DendrogramVisualize
             Dim xOffset As Integer = CInt(Fix(xDisplayOrigin - xModelOrigin * xFactor))
             Dim yOffset As Integer = CInt(Fix(yDisplayOrigin - yModelOrigin * yFactor))
             Dim classHeight! = (1 / component.Cluster.CountLeafs) * yFactor
+            Dim args As New PainterArguments With {
+                .xDisplayOffset = xOffset,
+                .yDisplayOffset = yOffset,
+                .xDisplayFactor = xFactor,
+                .yDisplayFactor = yFactor,
+                .decorated = ShowDistanceValues,
+                .classHeight = classHeight,
+                .classTable = ClassTable,
+                .stroke = stroke
+            }
 
             ' 从这里开始进行递归的绘制出整个进化树
-            Call component.paint(g2, xOffset, yOffset, xFactor, yFactor, ShowDistanceValues, classHeight, ClassTable)
+            Call component.paint(g2, args)
 
             ' 在这里进行标尺的绘制
             If ShowScale Then

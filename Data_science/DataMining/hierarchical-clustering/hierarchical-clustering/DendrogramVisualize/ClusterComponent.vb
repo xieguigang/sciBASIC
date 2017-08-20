@@ -74,48 +74,46 @@ Namespace DendrogramVisualize
         ''' 绘制具体的聚类结果
         ''' </summary>
         ''' <param name="g"></param>
-        ''' <param name="xDisplayOffset"></param>
-        ''' <param name="yDisplayOffset"></param>
-        ''' <param name="xDisplayFactor"></param>
-        ''' <param name="yDisplayFactor"></param>
-        ''' <param name="decorated"></param>
-        Public Sub paint(g As Graphics2D, xDisplayOffset%, yDisplayOffset%, xDisplayFactor#, yDisplayFactor#, decorated As Boolean, classHeight!, Optional classTable As Dictionary(Of String, String) = Nothing) Implements Paintable.paint
+        Public Sub paint(g As Graphics2D, args As PainterArguments) Implements Paintable.paint
             Dim x1, y1, x2, y2 As Integer
             Dim fontMetrics As FontMetrics = g.FontMetrics
 
-            x1 = CInt(Fix(InitPoint.X * xDisplayFactor + xDisplayOffset))
-            y1 = CInt(Fix(InitPoint.Y * yDisplayFactor + yDisplayOffset))
-            x2 = CInt(Fix(LinkPoint.X * xDisplayFactor + xDisplayOffset))
-            y2 = y1
-            g.FillEllipse(Brushes.Black, x1 - DotRadius, y1 - DotRadius, DotRadius * 2, DotRadius * 2)
-            g.DrawLine(Pens.Black, x1, y1, x2, y2)
+            With args
 
-            If Cluster.Leaf Then
-                Dim nx! = x1 + NamePadding
-                Dim ny! = y1
+                x1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .xDisplayOffset))
+                y1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
+                x2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
+                y2 = y1
+                g.FillEllipse(Brushes.Black, x1 - DotRadius, y1 - DotRadius, DotRadius * 2, DotRadius * 2)
+                g.DrawLine(.stroke, x1, y1, x2, y2)
 
-                ' 绘制叶节点
-                g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, nx, y1 - (fontMetrics.Height / 2) - 2)
-                If Not classTable Is Nothing Then
-                    ' 如果还存在分类信息的话，会绘制分类的颜色条
-                    Dim color As Brush = classTable(Cluster.Name).GetBrush
-                    ' Dim rect As New RectangleF(New PointF())
+                If Cluster.Leaf Then
+                    Dim nx! = x1 + NamePadding
+                    Dim ny! = y1
+
+                    ' 绘制叶节点
+                    g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, nx, y1 - (fontMetrics.Height / 2) - 2)
+                    If Not .classTable Is Nothing Then
+                        ' 如果还存在分类信息的话，会绘制分类的颜色条
+                        Dim color As Brush = .classTable(Cluster.Name).GetBrush
+                        ' Dim rect As New RectangleF(New PointF())
+                    End If
                 End If
-            End If
-            If decorated AndAlso Cluster.Distance IsNot Nothing AndAlso (Not Cluster.Distance.NaN) AndAlso Cluster.Distance.Distance > 0 Then
-                Dim s As String = String.Format("{0:F2}", Cluster.Distance)
-                Dim rect As RectangleF = fontMetrics.GetStringBounds(s, g.Graphics)
-                g.DrawString(s, fontMetrics, Brushes.Black, x1 - CInt(Fix(rect.Width)), y1 - 2 - rect.Height)
-            End If
+                If .decorated AndAlso Cluster.Distance IsNot Nothing AndAlso (Not Cluster.Distance.NaN) AndAlso Cluster.Distance.Distance > 0 Then
+                    Dim s As String = String.Format("{0:F2}", Cluster.Distance)
+                    Dim rect As RectangleF = fontMetrics.GetStringBounds(s, g.Graphics)
+                    g.DrawString(s, fontMetrics, Brushes.Black, x1 - CInt(Fix(rect.Width)), y1 - 2 - rect.Height)
+                End If
 
-            x1 = x2
-            y1 = y2
-            y2 = CInt(Fix(LinkPoint.Y * yDisplayFactor + yDisplayOffset))
-            g.DrawLine(Pens.Black, x1, y1, x2, y2)
+                x1 = x2
+                y1 = y2
+                y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
+                g.DrawLine(.stroke, x1, y1, x2, y2)
 
-            For Each child As ClusterComponent In Children
-                child.paint(g, xDisplayOffset, yDisplayOffset, xDisplayFactor, yDisplayFactor, decorated, classHeight, classTable)
-            Next
+                For Each child As ClusterComponent In Children
+                    child.paint(g, args)
+                Next
+            End With
         End Sub
 
         Public ReadOnly Property RectMinX As Double
