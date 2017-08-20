@@ -52,7 +52,7 @@ Namespace Hierarchy
     Public Class HierarchyBuilder
 
         Public ReadOnly Property Distances As DistanceMap
-        Public ReadOnly Property Clusters As Dictionary(Of Cluster)
+        Public ReadOnly Property Clusters As List(Of Cluster)
 
         Public ReadOnly Property TreeComplete As Boolean
             Get
@@ -60,14 +60,19 @@ Namespace Hierarchy
             End Get
         End Property
 
+        Const NoRoot$ = "No root available"
+
         Public ReadOnly Property RootCluster As Cluster
             Get
-                If Not TreeComplete Then Throw New Exception("No root available")
-                Return Clusters(0)
+                If Not TreeComplete Then
+                    Throw New EvaluateException(NoRoot)
+                Else
+                    Return Clusters(0)
+                End If
             End Get
         End Property
 
-        Public Sub New(clusters As IList(Of Cluster), distances As DistanceMap)
+        Public Sub New(clusters As List(Of Cluster), distances As DistanceMap)
             Me.Clusters = clusters
             Me.Distances = distances
         End Sub
@@ -100,7 +105,7 @@ Namespace Hierarchy
                 Dim oldClusterR As Cluster = minDistLink.rCluster()
                 Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
 
-                For Each iClust As Cluster In Clusters.Values
+                For Each iClust As Cluster In Clusters
                     Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
                     Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
                     Dim newLinkage As New HierarchyTreeNode With {

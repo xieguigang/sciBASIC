@@ -17,7 +17,14 @@ Namespace Heatmap
     Public Class PlotArguments
 
         Public left!
+        ''' <summary>
+        ''' 绘制矩阵之中的方格在xy上面的步进值
+        ''' </summary>
         Public dStep As SizeF
+        ''' <summary>
+        ''' 矩阵区域的大小和位置
+        ''' </summary>
+        Public matrixPlotRegion As Rectangle
         Public levels As Dictionary(Of Double, Integer)
         Public top!
         Public colors As Color()
@@ -126,12 +133,14 @@ Namespace Heatmap
                     ' 2. 然后才能够进行绘图
                     If drawDendrograms.HasFlag(DrawElements.Rows) Then
                         ' 绘制出聚类树
-                        Dim cluster As Cluster = array.RunCluster()
+                        Dim cluster As Cluster = Time(AddressOf array.RunCluster)
                         Dim dp As New DendrogramPanel With {
                             .LineColor = Color.Black,
                             .ScaleValueDecimals = 0,
                             .ScaleValueInterval = 1,
-                            .Model = cluster
+                            .Model = cluster,
+                            .ShowScale = False,
+                            .ShowDistanceValues = False
                         }
                         Dim topleft As New Point With {
                             .X = rect.Padding.Left,
@@ -149,12 +158,14 @@ Namespace Heatmap
                         rowKeys = array.Keys
                     End If
                     If drawDendrograms.HasFlag(DrawElements.Cols) Then
-                        Dim cluster As Cluster = array.Transpose.RunCluster()
+                        Dim cluster As Cluster = Time(AddressOf array.Transpose.RunCluster)
                         Dim dp As New DendrogramPanel With {
                             .LineColor = Color.Black,
                             .ScaleValueDecimals = 0,
                             .ScaleValueInterval = 1,
-                            .Model = cluster
+                            .Model = cluster,
+                            .ShowScale = False,
+                            .ShowDistanceValues = False
                         }
                         colKeys = dp _
                             .Paint(DirectCast(g, Graphics2D), New Rectangle(300, 100, 500, 500)) _
@@ -163,6 +174,11 @@ Namespace Heatmap
                     Else
                         colKeys = array.First.EnumerateKeys(joinProperties:=False)
                     End If
+
+                    Dim matrixPlotRegion As New Rectangle With {
+                        .Location = New Point(left, top),
+                        .Size = New Size(dw, dh)
+                    }
 
                     dw /= keys.Length
                     dh /= array.Length
@@ -187,7 +203,8 @@ Namespace Heatmap
                         .levels = lvs,
                         .top = top,
                         .ColOrders = colKeys,
-                        .RowOrders = rowKeys
+                        .RowOrders = rowKeys,
+                        .matrixPlotRegion = matrixPlotRegion
                     }
 
                     Call plot(g, rect, args)

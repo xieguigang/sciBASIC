@@ -217,13 +217,13 @@ Namespace Heatmap
                             args.left += dw!
                         Next
 
-                        args.left = margin.Left
+                        args.left = args.matrixPlotRegion.Left
                         args.top += dh!
 
                         If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
                             Dim sz As SizeF = g.MeasureString(x.ID, font)
                             Dim y As Single = args.top - dw - (sz.Height - dw) / 2
-                            Dim lx As Single = margin.Left - sz.Width - margin.Left * 0.1
+                            Dim lx As Single = args.matrixPlotRegion.Right + 10
 
                             ' 绘制行标签
                             Call g.DrawString(x.ID, font, Brushes.Black, New PointF(lx, y))

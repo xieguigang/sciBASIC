@@ -135,7 +135,7 @@ Module Module1
                           mapLevels:=20,
                           padding:="padding: 300",
                           legendTitle:="Spearman correlations",
-                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("x:\spcc.png")
+                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("D:\spcc.png")
         Pause()
         Dim data = csv.LoadBarData(
     "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",
