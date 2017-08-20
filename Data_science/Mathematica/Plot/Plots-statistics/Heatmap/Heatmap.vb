@@ -30,6 +30,8 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
+Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -275,7 +277,7 @@ Public Module Heatmap
     ''' <param name="array">Name为行名称，字典之中的key为列名称</param>
     <Extension>
     Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
-                                   array As NamedValue(Of Dictionary(Of String, Double))(),
+                                   array As DataSet(),
                                    font As Font,
                                    drawLabels As DrawElements,
                                    drawDendrograms As DrawElements,
@@ -297,7 +299,7 @@ Public Module Heatmap
                                    Optional legendHasUnmapped As Boolean = True,
                                    Optional legendLayout As Rectangle = Nothing) As GraphicsData
 
-        Dim keys$() = array(Scan0).Value.Keys.ToArray
+        Dim keys$() = array(Scan0).Properties.Keys.ToArray
         Dim angle! = -45
 
         If colors.IsNullOrEmpty Then
@@ -321,12 +323,31 @@ Public Module Heatmap
                     ' A
                     left += dendrogramLayout.A
                     dw = dw - dendrogramLayout.A
+
+                    ' 绘制出聚类树
+                    Dim cluster As Cluster = array.RunCluster()
+                    Dim dp As New DendrogramPanel With {
+                        .LineColor = Color.Black,
+                        .ScaleValueDecimals = 0,
+                        .ScaleValueInterval = 1,
+                        .Model = cluster
+                    }
+                    Dim rowOrders = dp.Paint(DirectCast(g, Graphics2D), New Rectangle(300, 100, 500, 500))
                 End If
                 ' 有列的聚类树
                 If drawDendrograms.HasFlag(DrawElements.Cols) Then
                     ' B
                     top += dendrogramLayout.B
                     dh = dh - dendrogramLayout.B
+
+                    Dim cluster As Cluster = array.RunCluster()
+                    Dim dp As New DendrogramPanel With {
+                        .LineColor = Color.Black,
+                        .ScaleValueDecimals = 0,
+                        .ScaleValueInterval = 1,
+                        .Model = cluster
+                    }
+                    Dim rowOrders = dp.Paint(DirectCast(g, Graphics2D), New Rectangle(300, 100, 500, 500))
                 End If
 
                 dw /= keys.Length

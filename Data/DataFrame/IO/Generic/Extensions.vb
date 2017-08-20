@@ -47,8 +47,35 @@ Namespace IO
         End Function
 
         <Extension>
+        Public Function Transpose(source As IEnumerable(Of DataSet)) As DataSet()
+            Dim list As DataSet() = source.ToArray
+            Dim allKeys = list.PropertyNames
+
+            Return allKeys _
+                .Select(Function(key)
+                            Return New DataSet With {
+                                .ID = key,
+                                .Properties = list _
+                                    .ToDictionary(Function(x) x.ID,
+                                                  Function(x) x(key))
+                            }
+                        End Function) _
+                .ToArray
+        End Function
+
+        <Extension>
         Public Function PropertyNames(table As IDictionary(Of String, DataSet)) As String()
-            Return table.Values _
+            Return table.Values.PropertyNames
+        End Function
+
+        ''' <summary>
+        ''' Gets the union collection of the keys from <see cref="DataSet.Properties"/> 
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function PropertyNames(list As IEnumerable(Of DataSet)) As String()
+            Return list _
                 .Select(Function(o) o.EnumerateKeys(False)) _
                 .IteratesALL _
                 .Distinct _
@@ -57,7 +84,9 @@ Namespace IO
 
         <Extension>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
-            Return datasets.Select(Function(x) x([property])).ToArray
+            Return datasets _
+                .Select(Function(x) x([property])) _
+                .ToArray
         End Function
 
         <Extension>
@@ -116,7 +145,9 @@ Namespace IO
         ''' <returns></returns>
         <Extension>
         Public Function Values(data As IEnumerable(Of EntityObject), key$) As String()
-            Return data.Select(Function(r) r(key$)).ToArray
+            Return data _
+                .Select(Function(r) r(key$)) _
+                .ToArray
         End Function
     End Module
 End Namespace
