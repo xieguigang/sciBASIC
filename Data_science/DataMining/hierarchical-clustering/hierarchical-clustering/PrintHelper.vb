@@ -26,13 +26,19 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 
-Public Module Extensions
+Public Module PrintHelper
 
-    <Extension> Public Sub Print(cluster As Cluster)
-        Call Console.WriteLine(cluster.ToConsoleLine(indent:=Scan0))
+    <Extension> Public Sub Print(cluster As Cluster, Optional out As StreamWriter = Nothing)
+        If out Is Nothing Then
+            out = New StreamWriter(Console.OpenStandardOutput)
+        End If
+
+        Call out.WriteLine(cluster.ToConsoleLine(indent:=Scan0))
+        Call out.Flush()
     End Sub
 
     <Extension>
