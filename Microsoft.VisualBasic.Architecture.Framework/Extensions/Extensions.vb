@@ -553,20 +553,25 @@ Public Module Extensions
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="hash"></param>
-    ''' <param name="Index"></param>
+    ''' <param name="index"></param>
     ''' <param name="[default]"></param>
     ''' <returns></returns>
-    <Extension> Public Function TryGetValue(Of TKey, TValue)(hash As Dictionary(Of TKey, TValue), Index As TKey, Optional [default] As TValue = Nothing) As TValue
+    <Extension> Public Function TryGetValue(Of TKey, TValue)(hash As Dictionary(Of TKey, TValue),
+                                                             index As TKey,
+                                                             Optional [default] As TValue = Nothing,
+                                                             <CallerMemberName> Optional trace$ = Nothing) As TValue
         If hash Is Nothing Then
+#If DEBUG Then
             Call PrintException("hash table is nothing!")
+#End If
             Return [default]
         End If
 
-        If hash.ContainsKey(Index) Then
-            Return hash(Index)
+        If hash.ContainsKey(index) Then
+            Return hash(index)
         Else
 #If DEBUG Then
-            Call PrintException($"Index:={Scripting.ToString(Index)} is not exist in the hash table!")
+            Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
 #End If
             Return [default]
         End If
