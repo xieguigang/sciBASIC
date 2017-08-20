@@ -190,8 +190,6 @@
     <Compile Include="BarPlot\Histogram\DataModel.vb" />
     <Compile Include="Scatter\Bubble.vb" />
     <Compile Include="csv\BarData.vb" />
-    <Compile Include="Dendrogram\Dendrogram.vb" />
-    <Compile Include="Dendrogram\Layouts.vb" />
     <Compile Include="Fractions\TreeMap.vb" />
     <Compile Include="Fractions\Fractions.vb" />
     <Compile Include="Fractions\Pyramid.vb" />
@@ -206,13 +204,10 @@
     <Compile Include="g\Legends\Legend.vb" />
     <Compile Include="csv\SerialData.vb" />
     <Compile Include="g\Legends\LegendStyles.vb" />
-    <Compile Include="Heatmaps\Heatmap.vb" />
     <Compile Include="BarPlot\Data.vb" />
-    <Compile Include="Heatmaps\HeatmapTable.vb" />
-    <Compile Include="Heatmaps\Contour.vb" />
+    <Compile Include="Contour.vb" />
     <Compile Include="BarPlot\Histogram\Histogram.vb" />
     <Compile Include="ImageData.vb" />
-    <Compile Include="QQPlot.vb" />
     <Compile Include="Fractions\PieChart.vb" />
     <Compile Include="PlotTypes.vb" />
     <Compile Include="BarPlot\BarPlot.vb" />
