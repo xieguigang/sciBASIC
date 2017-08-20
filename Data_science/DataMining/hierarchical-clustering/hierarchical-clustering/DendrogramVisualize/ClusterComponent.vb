@@ -53,11 +53,15 @@ Imports sys = System.Math
 Namespace DendrogramVisualize
 
     Public Class ClusterComponent
-        Implements Paintable
+        Implements IPaintable
 
         Public Property Children As New List(Of ClusterComponent)
         Public Property NamePadding As Integer = 6
-        Public Property DotRadius As Integer = 2
+        ''' <summary>
+        ''' 点的大小
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property DotRadius As Integer = 5
         Public Property LinkPoint As PointF
         Public Property InitPoint As PointF
         Public Property Cluster As Cluster
@@ -74,7 +78,7 @@ Namespace DendrogramVisualize
         ''' 绘制具体的聚类结果
         ''' </summary>
         ''' <param name="g"></param>
-        Public Sub paint(g As Graphics2D, args As PainterArguments) Implements Paintable.paint
+        Public Sub paint(g As Graphics2D, args As PainterArguments) Implements IPaintable.paint
             Dim x1, y1, x2, y2 As Integer
             Dim fontMetrics As FontMetrics = g.FontMetrics
 
@@ -97,7 +101,8 @@ Namespace DendrogramVisualize
                     If Not .classTable Is Nothing Then
                         ' 如果还存在分类信息的话，会绘制分类的颜色条
                         Dim color As Brush = .classTable(Cluster.Name).GetBrush
-                        Dim rect As New RectangleF(New PointF(nx, y1), New Size(100, 100))
+                        Dim topleft As New PointF(nx + .classLegendPadding, y1 - .classLegendSize.Height / 2)
+                        Dim rect As New RectangleF(topleft, .classLegendSize)
 
                         g.FillRectangle(color, rect)
                     End If

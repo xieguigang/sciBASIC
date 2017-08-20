@@ -150,7 +150,8 @@ Namespace DendrogramVisualize
         Public Sub paint(g2 As Graphics2D,
                          Optional region As Rectangle = Nothing,
                          Optional axisStrokeCSS$ = Stroke.AxisStroke,
-                         Optional branchStrokeCSS$ = Stroke.AxisStroke)
+                         Optional branchStrokeCSS$ = Stroke.AxisStroke,
+                         Optional classLegendWidth% = 50)
 
             If region.IsEmpty Then
                 region = g2.ImageResource.EntireImage
@@ -170,7 +171,8 @@ Namespace DendrogramVisualize
             If component IsNot Nothing Then
                 Call __draw(g2,
                             wDisplay, hDisplay, xDisplayOrigin, yDisplayOrigin,
-                            stroke:=Stroke.TryParse(branchStrokeCSS))
+                            stroke:=Stroke.TryParse(branchStrokeCSS),
+                            classLegendWidth:=classLegendWidth)
             Else
                 ' No data available 
                 Dim str As String = "No data"
@@ -182,7 +184,7 @@ Namespace DendrogramVisualize
             End If
         End Sub
 
-        Private Sub __draw(g2 As Graphics2D, wDisplay%, hDisplay%, xDisplayOrigin%, yDisplayOrigin%, stroke As Stroke)
+        Private Sub __draw(g2 As Graphics2D, wDisplay%, hDisplay%, xDisplayOrigin%, yDisplayOrigin%, stroke As Stroke, classLegendWidth%)
             Dim nameGutterWidth As Integer = component.GetMaxNameWidth(g2, False) + component.NamePadding
 
             wDisplay -= nameGutterWidth
@@ -200,6 +202,11 @@ Namespace DendrogramVisualize
             Dim xOffset As Integer = CInt(Fix(xDisplayOrigin - xModelOrigin * xFactor))
             Dim yOffset As Integer = CInt(Fix(yDisplayOrigin - yModelOrigin * yFactor))
             Dim classHeight! = (1 / component.Cluster.CountLeafs) * yFactor
+            Dim padding% = If(
+                ClassTable.IsNullOrEmpty,
+                -1,
+                g2.MeasureString(ClassTable.Keys.MaxLengthString).Width + 10)
+            Dim legendHeight% = hDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1) ' 绘图区域的高度除以个数
             Dim args As New PainterArguments With {
                 .xDisplayOffset = xOffset,
                 .yDisplayOffset = yOffset,
@@ -208,7 +215,9 @@ Namespace DendrogramVisualize
                 .decorated = ShowDistanceValues,
                 .classHeight = classHeight,
                 .classTable = ClassTable,
-                .stroke = stroke
+                .stroke = stroke,
+                .classLegendSize = New Size(classLegendWidth, legendHeight),
+                .classLegendPadding = padding
             }
 
             ' 从这里开始进行递归的绘制出整个进化树

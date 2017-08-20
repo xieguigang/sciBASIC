@@ -54,7 +54,7 @@ Namespace DendrogramVisualize
     ''' @author lars
     ''' 
     ''' </summary>
-    Public Interface Paintable
+    Public Interface IPaintable
         Sub paint(g As Graphics2D, args As PainterArguments)
     End Interface
 
@@ -68,6 +68,8 @@ Namespace DendrogramVisualize
         ''' </summary>
         Dim classTable As Dictionary(Of String, String)
         Dim stroke As Pen
+        Dim classLegendSize As Size
+        Dim classLegendPadding%
 
     End Structure
 End Namespace
