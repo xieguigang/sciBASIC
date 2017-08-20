@@ -356,27 +356,4 @@ Public Module Heatmap
 
         Return GraphicsPlots(size, padding, bg$, plotInternal)
     End Function
-
-    ''' <summary>
-    ''' 绘制按照任意角度旋转的文本
-    ''' </summary>
-    ''' <param name="g"></param>
-    ''' <param name="text"></param>
-    ''' <param name="font"></param>
-    ''' <param name="brush"></param>
-    ''' <param name="x!"></param>
-    ''' <param name="y!"></param>
-    ''' <param name="angle!"></param>
-    <Extension>
-    Public Sub DrawString(g As IGraphics, text$, font As Font, brush As Brush, x!, y!, angle!)
-        With g
-            Call g.TranslateTransform(.Size.Width / 2, .Size.Height / 2)
-            Call g.RotateTransform(angle)
-
-            ' 不清楚旋转之后会不会对字符串的大小产生影响，所以measureString放在旋转之后
-            Dim textSize As SizeF = g.MeasureString(text, font)
-            Call g.DrawString(text, font, brush, -(textSize.Width / 2), -(textSize.Height / 2))
-            Call g.ResetTransform()
-        End With
-    End Sub
 End Module
