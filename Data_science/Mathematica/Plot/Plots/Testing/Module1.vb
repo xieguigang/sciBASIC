@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -110,11 +111,11 @@ Module Module1
 
     Sub Main()
 
-        Call App.JoinVariable("graphic_driver", "svg")
+        'Call App.JoinVariable("graphic_driver", "svg")
 
-        Call TestYlinePlot()
+        'Call TestYlinePlot()
 
-        Call axisScallingTest()
+        'Call axisScallingTest()
 
         '        Call heatmap2()
 
@@ -129,7 +130,7 @@ Module Module1
         'Call CMeansVisualize()
         'Pause()
 
-        Dim datahm = Heatmap.LoadDataSet("C:\Users\xieguigang\OneDrive\1.5\hh.csv")
+        Dim datahm = DataSet.LoadDataSet("D:\OneDrive\1.5\samples\3. DEGs\DEPs_heatmap\SK.csv")
         Call Heatmap.Heatmap.Plot(datahm, mapName:=ColorMap.PatternHot,
                           mapLevels:=20,
                           padding:="padding: 300",
