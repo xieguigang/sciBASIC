@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::b84e2e514c3a2addc2bda973f1aaf54d, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\ClusterComponent.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Language
@@ -78,7 +79,7 @@ Namespace DendrogramVisualize
         ''' 绘制具体的聚类结果
         ''' </summary>
         ''' <param name="g"></param>
-        Public Sub paint(g As Graphics2D, args As PainterArguments) Implements IPaintable.paint
+        Public Sub paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF))) Implements IPaintable.paint
             Dim x1, y1, x2, y2 As Integer
             Dim fontMetrics As FontMetrics = g.FontMetrics
 
@@ -94,9 +95,17 @@ Namespace DendrogramVisualize
                 If Cluster.Leaf Then
                     Dim nx! = x1 + NamePadding
                     Dim ny! = y1
+                    Dim location As New PointF With {
+                        .X = nx,
+                        .Y = y1 - (fontMetrics.Height / 2) - 2
+                    }
 
                     ' 绘制叶节点
-                    g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, nx, y1 - (fontMetrics.Height / 2) - 2)
+                    g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, location)
+                    labels += New NamedValue(Of PointF) With {
+                        .Name = Cluster.Name,
+                        .Value = location
+                    }
 
                     If Not .classTable Is Nothing Then
                         ' 如果还存在分类信息的话，会绘制分类的颜色条
@@ -107,10 +116,19 @@ Namespace DendrogramVisualize
                         g.FillRectangle(color, rect)
                     End If
                 End If
-                If .decorated AndAlso Cluster.Distance IsNot Nothing AndAlso (Not Cluster.Distance.NaN) AndAlso Cluster.Distance.Distance > 0 Then
+                If .decorated AndAlso
+                    Cluster.Distance IsNot Nothing AndAlso
+                    (Not Cluster.Distance.NaN) AndAlso
+                    Cluster.Distance.Distance > 0 Then
+
                     Dim s As String = String.Format("{0:F2}", Cluster.Distance)
                     Dim rect As RectangleF = fontMetrics.GetStringBounds(s, g.Graphics)
-                    g.DrawString(s, fontMetrics, Brushes.Black, x1 - CInt(Fix(rect.Width)), y1 - 2 - rect.Height)
+                    Dim location As New PointF With {
+                        .X = x1 - CInt(Fix(rect.Width)),
+                        .Y = y1 - 2 - rect.Height
+                    }
+
+                    g.DrawString(s, fontMetrics, Brushes.Black, location)
                 End If
 
                 x1 = x2
@@ -119,7 +137,7 @@ Namespace DendrogramVisualize
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
                 For Each child As ClusterComponent In Children
-                    child.paint(g, args)
+                    child.paint(g, args, labels)
                 Next
             End With
         End Sub

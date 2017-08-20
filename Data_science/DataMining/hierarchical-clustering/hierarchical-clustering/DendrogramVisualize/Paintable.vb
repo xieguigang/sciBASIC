@@ -27,7 +27,9 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 
 '
 '*****************************************************************************
@@ -55,7 +57,7 @@ Namespace DendrogramVisualize
     ''' 
     ''' </summary>
     Public Interface IPaintable
-        Sub paint(g As Graphics2D, args As PainterArguments)
+        Sub paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF)))
     End Interface
 
     Public Structure PainterArguments
