@@ -164,29 +164,27 @@ Public Module Heatmap
         Dim array = data.ToArray
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim plotInternal =
-            Sub(g As IGraphics, region As GraphicsRegion,
-                left As Value(Of Single),
-                dw As Single,
-                levels As Dictionary(Of Double, Integer),
-                top As Value(Of Single),
-                colors As Color())
+            Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
 
                 If Not kmeans Is Nothing Then
                     array = kmeans(array)  ' 因为可能会重新进行排序了，所以这里要在keys的申明之前完成
                 End If
 
+                Dim dw! = args.dw
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim blockSize As New SizeF(dw, dw)
+                Dim colors As Color() = args.colors
 
+                ' 按行绘制heatmap之中的矩阵
                 For Each x As NamedValue(Of Dictionary(Of String, Double)) In array   ' 在这里绘制具体的矩阵
                     For Each key As String In keys
                         Dim c# = x.Value(key)
-                        Dim level% = levels(c#)  '  得到等级
-                        Dim color As Color = colors(
-                            If(level% > colors.Length - 1,
-                               colors.Length - 1,
+                        Dim level% = args.levels(c#)  '  得到等级
+                        Dim color As Color = Colors(
+                            If(level% > Colors.Length - 1,
+                               Colors.Length - 1,
                                level))
-                        Dim rect As New RectangleF(New PointF(left, top), blockSize)
+                        Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
                         Dim b As New SolidBrush(color)
 
                         Call g.FillRectangle(b, rect)
@@ -204,16 +202,17 @@ Public Module Heatmap
                             Call g.DrawString(key, valuelabelFont, Brushes.White, kpos)
                         End If
 
-                        left.value += dw!
+                        args.left += dw!
                     Next
 
-                    left.value = margin.Left
-                    top.value += dw!
+                    args.left = margin.Left
+                    args.top += dw!
 
                     Dim sz As SizeF = g.MeasureString(x.Name, font)
-                    Dim y As Single = top.value - dw - (sz.Height - dw) / 2
+                    Dim y As Single = args.top - dw - (sz.Height - dw) / 2
                     Dim lx As Single = margin.Left - sz.Width - margin.Left * 0.1
 
+                    ' 绘制行标签
                     Call g.DrawString(x.Name, font, Brushes.Black, New PointF(lx, y))
                 Next
             End Sub
@@ -230,13 +229,23 @@ Public Module Heatmap
             legendWidth, legendHasUnmapped, legendLayout)
     End Function
 
+    Public Class PlotArguments
+
+        Public left!
+        Public dw!
+        Public levels As Dictionary(Of Double, Integer)
+        Public top!
+        Public colors As Color()
+
+    End Class
+
     ''' <summary>
     ''' 一些共同的绘图元素过程
     ''' </summary>
     ''' <param name="drawLabel2">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
     ''' <param name="legendLayout">这个对象定义了图示的大小和位置</param>
     <Extension>
-    Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, Value(Of Single), Single, Dictionary(Of Double, Integer), Value(Of Single), Color()),
+    Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
                                    array As NamedValue(Of Dictionary(Of String, Double))(),
                                    font As Font,
                                    drawLabel2 As Boolean,
@@ -294,24 +303,32 @@ Public Module Heatmap
 
                 Dim left! = padding.Left, top! = padding.Top
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
-                Dim getLeft As New Value(Of Single)(left)
-                Dim getTop As New Value(Of Single)(top)
+                Dim args As New PlotArguments With {
+                    .colors = colors,
+                    .dw = dw,
+                    .left = left,
+                    .levels = lvs,
+                    .top = top
+                }
 
-                Call plot(g, region, getLeft, dw, lvs, getTop, colors)
+                Call plot(g, region, args)
 
-                left = getLeft
-                top = getTop
+                left = args.left
+                top = args.top
                 left += dw / 2
 
                 If drawLabel2 Then
                     Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                    Dim format As New StringFormat() With {
+                        .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
+                    }
 
                     For Each key$ In keys
                         Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
                         Dim dx! = sz.Width * Math.Cos(angle)
                         Dim dy! = sz.Width * Math.Sin(angle)
 
-                        Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, New StringFormat() With {.FormatFlags = StringFormatFlags.MeasureTrailingSpaces})
+                        Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, format)
 
                         left += dw
                     Next
@@ -354,6 +371,6 @@ Public Module Heatmap
                 Call g.DrawString(mainTitle, titleFont, Brushes.Black, titlePosi)
             End Sub
 
-        Return GraphicsPlots(size, padding, bg$, plotInternal)
+        Return g.GraphicsPlots(size, padding, bg$, plotInternal)
     End Function
 End Module

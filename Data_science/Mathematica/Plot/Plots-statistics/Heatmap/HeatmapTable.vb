@@ -76,18 +76,16 @@ Public Module HeatmapTable
         Dim gridBrush As New Pen(gridColor.TranslateColor, 2)
         Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
         Dim plotInternal =
-            Sub(g As IGraphics, region As GraphicsRegion,
-                left As Value(Of Single),
-                dw As Single,
-                levels As Dictionary(Of Double, Integer),
-                top As Value(Of Single),
-                colors As Color())
+            Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
 
                 ' 在绘制上三角的时候假设每一个对象的keys的顺序都是相同的
+                Dim dw! = args.dw
                 Dim keys$() = array(Scan0).Value.Keys.ToArray
                 Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小
                 Dim i% = 1
                 Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                Dim levels = args.levels
+                Dim colors = args.colors
 
                 For Each x As SeqValue(Of NamedValue(Of Dictionary(Of String, Double))) In array.SeqIterator(offset:=1)  ' 在这里绘制具体的矩阵
 
@@ -95,7 +93,7 @@ Public Module HeatmapTable
                     ' 下面的循环为横向绘制出三角形的每一行的图形
                     For Each key As String In keys
                         Dim c# = (+x).Value(key)
-                        Dim rect As New RectangleF(New PointF(left, top), blockSize)
+                        Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
                         Dim labelbrush As SolidBrush = Nothing
                         Dim gridDraw As Boolean = drawGrid
 
@@ -107,9 +105,9 @@ Public Module HeatmapTable
                             End If
                         Else
                             Dim level% = levels(c#)  '  得到等级
-                            Dim color As Color = colors(   ' 得到当前的方格的颜色
-                                If(level% > colors.Length - 1,
-                                colors.Length - 1,
+                            Dim color As Color = Colors(   ' 得到当前的方格的颜色
+                                If(level% > Colors.Length - 1,
+                                Colors.Length - 1,
                                 level))
                             Dim b As New SolidBrush(color)
 
@@ -133,16 +131,16 @@ Public Module HeatmapTable
                             Call g.DrawString(key, valuelabelFont, labelbrush, kpos)
                         End If
 
-                        left.value += dw!
+                        args.left += dw!
                         i += 1
                     Next
 
-                    left.value = margin.Left
-                    top.value += dw!
+                    args.left = margin.Left
+                    args.top += dw!
                     i = 1
 
                     Dim sz As SizeF = g.MeasureString((+x).Name, font)
-                    Dim y As Single = top.value - dw - (sz.Height - dw) / 2
+                    Dim y As Single = args.top - dw - (sz.Height - dw) / 2
                     Dim lx! = margin.Left - sz.Width - margin.Horizontal * 0.1
 
                     Call g.DrawString((+x).Name, font, Brushes.Black, New PointF(lx, y))
