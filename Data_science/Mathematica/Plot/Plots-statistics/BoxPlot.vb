@@ -213,16 +213,15 @@ Public Module BoxPlot
                                     angle:=-90)
                 Next
 
+                Dim canvasPadding = rect.Padding
                 ' 绘制y坐标轴标签
                 labelSize = g.MeasureString(YaxisLabel, yAxisLabelFont)
-                text.DrawString(YaxisLabel,
-                                yAxisLabelFont,
-                                Brushes.Black,
-                                New PointF With {
-                                    .X = rect.Padding.Left + (leftPart - tickLabelFont.Height - labelSize.Height) / 2,
-                                    .Y = rect.Padding.Top + (rect.PlotRegion.Height - labelSize.Width) / 2
-                                },
-                                angle:=-90)
+
+                Dim location As New PointF With {
+                    .X = canvasPadding.Left + (leftPart - tickLabelFont.Height - labelSize.Height) / 2,
+                    .Y = rect.PlotRegion.Height / 2
+                }
+                text.DrawString(YaxisLabel, yAxisLabelFont, Brushes.Black, location, angle:=-90)
             End Sub
 
         Return g.GraphicsPlots(
