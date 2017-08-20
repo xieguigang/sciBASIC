@@ -139,6 +139,7 @@
   <ItemGroup>
     <Compile Include="DendrogramVisualize\NodeLayout.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="DoCluster.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Cluster.vb" />
     <Compile Include="ClusteringAlgorithm.vb" />

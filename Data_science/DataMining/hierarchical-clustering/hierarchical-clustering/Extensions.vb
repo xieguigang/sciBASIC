@@ -28,8 +28,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Linq
 
 Public Module Extensions
 
@@ -61,22 +59,4 @@ Public Module Extensions
             Next
         End With
     End Sub
-
-    <Extension>
-    Public Function DistanceMatrix(objects As IEnumerable(Of DataSet)) As Double()()
-        Dim list = objects.ToArray
-        Dim keys = list _
-            .Select(Function(obj) obj.Properties.Keys) _
-            .IteratesALL _
-            .Distinct _
-            .ToArray
-
-        Return list _
-            .Select(Function(x)
-                        Return list _
-                            .Select(Function(y) x.EuclideanDistance(y, keys)) _
-                            .ToArray
-                    End Function) _
-            .ToArray
-    End Function
 End Module
