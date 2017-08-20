@@ -43,7 +43,15 @@ Module Program
             .LineColor = Color.Blue,
             .ScaleValueDecimals = 0,
             .ScaleValueInterval = 1,
-            .Model = cluster
+            .Model = cluster,
+            .ClassTable = New Dictionary(Of String, String) From {
+                {"O1", "green"},
+                {"O2", "green"},
+                {"O3", "blue"},
+                {"O4", "yellow"},
+                {"O5", "red"},
+                {"O6", "red"}
+            }
         }
 
         Dim g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)

@@ -93,10 +93,13 @@ Namespace DendrogramVisualize
 
                     ' 绘制叶节点
                     g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, nx, y1 - (fontMetrics.Height / 2) - 2)
+
                     If Not .classTable Is Nothing Then
                         ' 如果还存在分类信息的话，会绘制分类的颜色条
                         Dim color As Brush = .classTable(Cluster.Name).GetBrush
-                        ' Dim rect As New RectangleF(New PointF())
+                        Dim rect As New RectangleF(New PointF(nx, y1), New Size(100, 100))
+
+                        g.FillRectangle(color, rect)
                     End If
                 End If
                 If .decorated AndAlso Cluster.Distance IsNot Nothing AndAlso (Not Cluster.Distance.NaN) AndAlso Cluster.Distance.Distance > 0 Then

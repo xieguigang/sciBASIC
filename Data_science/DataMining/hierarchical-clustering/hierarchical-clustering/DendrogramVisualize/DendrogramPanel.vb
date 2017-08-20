@@ -177,6 +177,7 @@ Namespace DendrogramVisualize
                 Dim rect As RectangleF = g2.FontMetrics.GetStringBounds(str, g2.Graphics)
                 Dim xt As Integer = CInt(Fix(wDisplay / 2.0 - rect.Width / 2.0))
                 Dim yt As Integer = CInt(Fix(hDisplay / 2.0 - rect.Height / 2.0))
+
                 g2.DrawString(str, xt, yt)
             End If
         End Sub
