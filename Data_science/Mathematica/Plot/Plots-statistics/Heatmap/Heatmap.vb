@@ -184,7 +184,7 @@ Namespace Heatmap
                 Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
 
                     Dim dw! = args.dStep.Width, dh! = args.dStep.Height
-                    Dim blockSize As New SizeF(dw, dw)
+                    Dim blockSize As New SizeF(dw, dh)
                     Dim colors As Color() = args.colors
 
                     ' 按行绘制heatmap之中的矩阵
@@ -220,6 +220,7 @@ Namespace Heatmap
                         args.left = args.matrixPlotRegion.Left
                         args.top += dh!
 
+                        ' debug
                         Call g.DrawLine(Pens.Blue, New Point(args.left, args.top), New Point(args.matrixPlotRegion.Right, args.top))
 
                         If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
@@ -232,7 +233,8 @@ Namespace Heatmap
                         End If
                     Next
 
-                    Call g.DrawRectangle(Pens.Green, args.matrixPlotRegion)
+                    ' debug
+                    Call g.DrawRectangle(Pens.LawnGreen, args.matrixPlotRegion)
                 End Sub
 
             Return __plotInterval(
