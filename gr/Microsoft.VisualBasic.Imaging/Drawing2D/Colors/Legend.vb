@@ -75,7 +75,7 @@ Namespace Drawing2D.Colors
         Public Const DefaultPadding$ = "padding:50px 50px 50px 50px;"
 
         ''' <summary>
-        ''' 输出的图例的大小默认为：``{800, 1000}``
+        ''' 竖直的颜色图例，输出的图例的大小默认为：``{800, 1000}``
         ''' </summary>
         ''' <param name="designer"></param>
         ''' <param name="title$"></param>
@@ -164,24 +164,37 @@ Namespace Drawing2D.Colors
             Return GraphicsPlots(lsize, margin, bg, plotInternal)
         End Function
 
+        ''' <summary>
+        ''' 横向的颜色legend
+        ''' </summary>
+        ''' <param name="designer"></param>
+        ''' <param name="range"></param>
+        ''' <param name="size"></param>
+        ''' <param name="padding$"></param>
+        ''' <param name="labelFontCSS$"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function ColorLegend2(designer As SolidBrush(),
-                                     range As DoubleRange,
-                                     size As Size,
-                                     Optional padding$ = g.ZeroPadding,
-                                     Optional labelFontCSS$ = CSSFont.Win7Normal) As GraphicsData
+        Public Function ColorLegendHorizontal(designer As SolidBrush(),
+                                              range As DoubleRange,
+                                              size As Size,
+                                              Optional padding$ = g.ZeroPadding,
+                                              Optional labelFontCSS$ = CSSFont.Win7Normal) As GraphicsData
+
             Dim font As Font = CSSFont.TryParse(labelFontCSS)
+            Dim l = designer.Length
+            Dim labels$() = range _
+                .Enumerate(l) _
+                .Select(Function(n) n.ToString("F2")) _
+                .ToArray
+
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Dim l = designer.Length
+
                     Dim dx = (region.Size.Width - region.Padding.Horizontal) / l
                     Dim h = region.Size.Height - region.Padding.Vertical * (2 / 3)
                     Dim x = region.Padding.Left, y = region.Padding.Top + h + 10
-                    Dim labels$() = range _
-                        .Enumerate(l) _
-                        .Select(Function(n) n.ToString("F2")) _
-                        .ToArray
 
+                    ' 绘制出水平的颜色渐变条
                     For i As Integer = 0 To l - 1
                         Dim b = designer(i)
                         Dim rect As New Rectangle(x, region.Padding.Top, dx, h)
@@ -193,6 +206,9 @@ Namespace Drawing2D.Colors
 
                         x += dx
                     Next
+
+                    ' 绘制出竖直标尺
+
                 End Sub
 
             Return g.GraphicsPlots(
