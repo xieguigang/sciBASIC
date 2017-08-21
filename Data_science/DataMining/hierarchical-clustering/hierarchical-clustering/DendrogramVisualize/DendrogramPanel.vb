@@ -199,9 +199,11 @@ Namespace DendrogramVisualize
         End Function
 
         Private Function __draw(g2 As Graphics2D, wDisplay%, hDisplay%, xDisplayOrigin%, yDisplayOrigin%, stroke As Stroke, classLegendWidth%) As NamedValue(Of PointF)()
-            Dim nameGutterWidth As Integer = component.GetMaxNameWidth(g2, False) + component.NamePadding
 
-            wDisplay -= nameGutterWidth
+            If ShowLeafLabel Then
+                Dim nameGutterWidth% = component.GetMaxNameWidth(g2, False) + component.NamePadding
+                wDisplay -= nameGutterWidth
+            End If
 
             If ShowScale Then
                 Dim rect As RectangleF = g2.FontMetrics.GetStringBounds("0", g2.Graphics)

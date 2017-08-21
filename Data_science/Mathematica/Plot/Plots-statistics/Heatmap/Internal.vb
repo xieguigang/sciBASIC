@@ -181,6 +181,8 @@ Namespace Heatmap
                         colKeys = array.First.EnumerateKeys(joinProperties:=False)
                     End If
 
+                    left += 10
+
                     Dim matrixPlotRegion As New Rectangle With {
                         .Location = New Point(left, top),
                         .Size = New Size(dw, dh)
@@ -213,6 +215,7 @@ Namespace Heatmap
                         .matrixPlotRegion = matrixPlotRegion
                     }
 
+                    ' 绘制heatmap之中的矩阵内容
                     Call plot(g, rect, args)
 
                     left = args.left
@@ -220,22 +223,22 @@ Namespace Heatmap
                     left += dw / 2
 
                     ' 绘制下方的矩阵的列标签
-                    If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
-                        Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                        Dim format As New StringFormat() With {
-                            .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
-                        }
+                    'If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
+                    '    Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                    '    Dim format As New StringFormat() With {
+                    '        .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
+                    '    }
 
-                        For Each key$ In keys
-                            Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
-                            Dim dx! = sz.Width * Math.Cos(angle)
-                            Dim dy! = sz.Width * Math.Sin(angle)
+                    '    For Each key$ In keys
+                    '        Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
+                    '        Dim dx! = sz.Width * Math.Cos(angle)
+                    '        Dim dy! = sz.Width * Math.Sin(angle)
 
-                            Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, format)
+                    '        Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, format)
 
-                            left += dw
-                        Next
-                    End If
+                    '        left += dw
+                    '    Next
+                    'End If
 
                     ' Draw legends
                     Dim legend As GraphicsData = colors.ColorMapLegend(
