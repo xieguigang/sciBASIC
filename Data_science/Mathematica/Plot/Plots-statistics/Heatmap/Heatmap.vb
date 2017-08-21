@@ -222,7 +222,7 @@ Namespace Heatmap
 
                         If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
                             Dim sz As SizeF = g.MeasureString(x.ID, font)
-                            Dim y As Single = args.top - dw - (sz.Height - dw) / 2
+                            Dim y As Single = args.top - dh - (sz.Height - dh) / 2
                             Dim lx As Single = args.matrixPlotRegion.Right + 10
 
                             ' 绘制行标签

@@ -159,6 +159,7 @@ Namespace Heatmap
                             .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
                             .OrderBy(Function(x) x.Value.Y) _
                             .Keys
+                        Call g.DrawRectangle(Pens.Red, New Rectangle(topleft, dsize))
                     Else
                         rowKeys = array.Keys
                     End If
@@ -260,8 +261,8 @@ Namespace Heatmap
                     Dim scale# = lmargin / lsize.Width
                     Dim lh% = CInt(scale * (size.Height * 2 / 3))
 
-                    Call g.DrawImageUnscaled(
-                        legend, CInt(left), CInt(top), lmargin, lh)
+                    'Call g.DrawImageUnscaled(
+                    '    legend, CInt(left), CInt(top), lmargin, lh)
 
                     If titleFont Is Nothing Then
                         titleFont = New Font(FontFace.BookmanOldStyle, 30, FontStyle.Bold)
