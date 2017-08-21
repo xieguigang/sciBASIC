@@ -1,32 +1,42 @@
-﻿Imports Microsoft.VisualBasic.Serialization.JSON
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module2
 
     Sub Main()
 
-        Call create_axis({-10.3301, 13.7566}, 20).GetJson(True).__DEBUG_ECHO
+        Call CreateAxisTicks({-10.3301, 13.7566}, 20).GetJson(True).__DEBUG_ECHO
 
         Pause()
 
     End Sub
 
-    Function create_axis(dataseries#(), ticks%, Optional decimalDigits% = 2) As Double()
+    ''' <summary>
+    ''' ### An Algorithm for Creating and Selecting Graph Axes
+    ''' > http://austinclemens.com/blog/2016/01/09/an-algorithm-for-creating-a-graphs-axes/
+    ''' </summary>
+    ''' <param name="dataSeries#"></param>
+    ''' <param name="ticks%"></param>
+    ''' <param name="decimalDigits%"></param>
+    ''' <returns></returns>
+    <Extension>
+    Function CreateAxisTicks(dataSeries#(), Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
 
-        Dim maxdata = dataseries.Max
-        Dim mindata = dataseries.Min
-        Dim zero_flag = 0
+        ' First, get the minimum and maximum of the series, toggle the zero_flag variable 
+        ' if 0 Is between Then the min And max, And Get the range Of the data.
+        Dim max# = dataSeries.Max
+        Dim min# = dataSeries.Min
+        Dim zeroFlag As Boolean = False
 
-        If (mindata <= 0 AndAlso maxdata >= 0) Then
-            zero_flag = 1
+        If (min <= 0 AndAlso max >= 0) Then
+            zeroFlag = True
         End If
 
-        Dim Range = maxdata - mindata
-        Dim nice_ticks = {0.1, 0.2, 0.5, 1, 0.15, 0.25, 0.75}
-
-
-        Dim steps = Range / (ticks - 1)
-        Dim rounded
-        Dim digits
+        Dim range = max - min
+        Dim niceTicks#() = {0.1, 0.2, 0.5, 1, 0.15, 0.25, 0.75}
+        Dim steps = range / (ticks - 1)
+        Dim rounded As Double
+        Dim digits As Integer
 
 
         If (steps >= 1) Then
@@ -34,58 +44,59 @@ Module Module2
             digits = rounded.ToString().Length
         Else
             Dim places = steps.ToString().Split("."c)(1)
-            Dim first_place = 0
+            Dim firstPlace% = 0
+
             For i = 0 To places.Length - 1
-                If (places(i) <> "0" AndAlso first_place = 0) Then
-                    first_place = i
+                If (places(i) <> "0" AndAlso firstPlace = 0) Then
+                    firstPlace = i
                 End If
             Next
-            digits = -CInt(first_place)
+
+            digits = -firstPlace
         End If
 
+        Dim candidateSteps As New List(Of Double)
 
-        Dim candidate_steps As New List(Of Double)
-        For i = 0 To nice_ticks.Length - 1
-            candidate_steps.Add(nice_ticks(i) * Math.Pow(10, digits))
-            candidate_steps.Add(nice_ticks(i) * Math.Pow(10, digits - 1))
-            candidate_steps.Add(nice_ticks(i) * Math.Pow(10, digits + 1))
+        For i As Integer = 0 To niceTicks.Length - 1
+            candidateSteps.Add(niceTicks(i) * Math.Pow(10, digits))
+            candidateSteps.Add(niceTicks(i) * Math.Pow(10, digits - 1))
+            candidateSteps.Add(niceTicks(i) * Math.Pow(10, digits + 1))
         Next
 
-        Dim min_steps As Double
-        Dim step_array As New List(Of Double)
-        Dim candidate_arrays As New List(Of Double)
-        Dim maxLenghth As Double() = {}
+        Dim minSteps As Double
+        Dim stepArray As New List(Of Double)
+        Dim candidateArray#() = {}
 
-        For i = 0 To candidate_steps.Count - 1
-            steps = candidate_steps(i)
+        For i As Integer = 0 To candidateSteps.Count - 1
+            steps = candidateSteps(i)
 
             ' starting value depends on whether Or Not 0 Is in the array
-            If (zero_flag = 1) Then
-                min_steps = Math.Ceiling(Math.Abs(mindata) / steps)
-                step_array = {-min_steps * steps}.AsList
+            If (zeroFlag) Then
+                minSteps = Math.Ceiling(Math.Abs(min) / steps)
+                stepArray = {-minSteps * steps}.AsList
             Else
-                step_array = {Math.Floor(mindata / steps) * steps}.AsList
+                stepArray = {Math.Floor(min / steps) * steps}.AsList
             End If
 
-            Dim stepnum = 1
-            Do While (step_array(step_array.Count - 1) < maxdata)
-                step_array.Add((step_array(0) + steps * stepnum))
+            Dim stepnum% = 1
+
+            Do While (stepArray(stepArray.Count - 1) < max)
+                stepArray.Add((stepArray(0) + steps * stepnum))
                 stepnum += 1
             Loop
 
             ' this arbitrarily enforces step_arrays of length between 4 And 10
-            If (step_array.Count < 11 AndAlso step_array.Count > 4) Then
-                If maxLenghth.Length < step_array.Count Then
-                    maxLenghth = step_array.ToArray
+            If (stepArray.Count < 11 AndAlso stepArray.Count > 4) Then
+                If candidateArray.Length < stepArray.Count Then
+                    candidateArray = stepArray.ToArray
                 End If
             End If
         Next
 
-        For i As Integer = 0 To maxLenghth.Length - 1
-            maxLenghth(i) = Math.Round(maxLenghth(i), decimalDigits)
+        For i As Integer = 0 To candidateArray.Length - 1
+            candidateArray(i) = Math.Round(candidateArray(i), decimalDigits)
         Next
 
-        Return maxLenghth
+        Return candidateArray
     End Function
-
 End Module
