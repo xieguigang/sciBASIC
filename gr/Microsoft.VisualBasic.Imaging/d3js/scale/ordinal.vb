@@ -28,29 +28,32 @@
 
 Namespace d3js.scale
 
-    Public Class ordinal
+    ''' <summary>
+    ''' 相当于cytoscape之中的离散型映射
+    ''' </summary>
+    Public Class OrdinalScale : Inherits IScale
 
-        Public Function domain(values#()) As ordinal
-
+        Public Overrides Function domain(values() As Double) As OrdinalScale
+            Return domain(values.ToStringArray)
         End Function
 
-        Public Function domain(values$()) As ordinal
-
+        Public Overrides Function domain(values() As String) As OrdinalScale
+            Throw New NotImplementedException()
         End Function
 
-        Public Function domain(values%()) As ordinal
-            Return domain(values.Select(Function(n) CDbl(n)).ToArray)
+        Public Overrides Function domain(values() As Integer) As OrdinalScale
+            Return domain(values.ToStringArray)
         End Function
 
-        Public Function rangeBands() As ordinal
-
+        Public Overrides Function rangeBands() As OrdinalScale
+            Throw New NotImplementedException()
         End Function
 
-        Public Function range(Optional values#() = Nothing) As ordinal
-
+        Public Overrides Function range(Optional values() As Double = Nothing) As OrdinalScale
+            Throw New NotImplementedException()
         End Function
 
-        Public Shared Narrowing Operator CType(ordinal As ordinal) As Double()
+        Public Shared Narrowing Operator CType(ordinal As OrdinalScale) As Double()
 
         End Operator
     End Class

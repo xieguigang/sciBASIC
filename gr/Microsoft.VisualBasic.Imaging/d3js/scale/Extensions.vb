@@ -28,9 +28,58 @@
 
 Namespace d3js.scale
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' + https://stackoverflow.com/questions/29785238/d3-different-between-scale-in-ordinal-and-linear
+    ''' </remarks>
     Public Module Extensions
 
-        Public Function ordinal() As ordinal
+        ''' <summary>
+        ''' > Ordinal scales have a discrete domain, such as a set of names or categories.
+        ''' > An ordinal scale's values must be coercible to a string, and the stringified 
+        ''' > version of the domain value uniquely identifies the corresponding range value.
+        ''' 
+        ''' So, as an example, a domain of an ordinal scale may contain names, like so:
+        '''
+        ''' ```javascript
+        ''' var ordinalScale = d3.scale.ordinal()
+        '''     .domain(['Alice', 'Bob'])
+        '''     .range([0, 100]);
+        '''
+        ''' ordinalScale('Alice'); // 0
+        ''' ordinalScale('Bob');   // 100
+        ''' ```
+        ''' 
+        ''' Notice how all values are strings. They cannot be interpolated. What Is between 
+        ''' 'Alice' and 'Bob'? I don't know. Neither does D3.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function ordinal() As OrdinalScale
+
+        End Function
+
+        ''' <summary>
+        ''' > Quantitative scales have a continuous domain, such as the set of real numbers, or dates.
+        ''' 
+        ''' As an example, you can construct the following scale:
+        '''
+        ''' ```javascript
+        ''' var linearScale = d3.scale.linear()
+        '''     .domain([0, 10])
+        '''     .range([0, 100]);
+        '''
+        ''' linearScale(0);  // 0
+        ''' linearScale(5);  // 50
+        ''' linearScale(10); // 100
+        ''' ```
+        ''' 
+        ''' Notice how D3 Is able To interpolate 5 even If we haven't specified it explicitly in the 
+        ''' domain.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function linear() As LinearScale
 
         End Function
     End Module
