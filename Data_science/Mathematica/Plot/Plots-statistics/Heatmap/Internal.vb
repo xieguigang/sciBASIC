@@ -159,7 +159,7 @@ Namespace Heatmap
                             .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
                             .OrderBy(Function(x) x.Value.Y) _
                             .Keys
-                        Call g.DrawRectangle(Pens.Red, New Rectangle(topleft, dsize))
+                        ' Call g.DrawRectangle(Pens.Red, New Rectangle(topleft, dsize))
                     Else
                         rowKeys = array.Keys
                     End If

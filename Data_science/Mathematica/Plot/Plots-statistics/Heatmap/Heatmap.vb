@@ -158,7 +158,7 @@ Namespace Heatmap
                              Optional max# = 1,
                              Optional mainTitle$ = "heatmap",
                              Optional titleFont As Font = Nothing,
-                             Optional drawGrid As Boolean = True,
+                             Optional drawGrid As Boolean = False,
                              Optional drawValueLabel As Boolean = False,
                              Optional valuelabelFont As Font = Nothing,
                              Optional legendWidth! = -1,
@@ -221,7 +221,7 @@ Namespace Heatmap
                         args.top += dh!
 
                         ' debug
-                        Call g.DrawLine(Pens.Blue, New Point(args.left, args.top), New Point(args.matrixPlotRegion.Right, args.top))
+                        ' Call g.DrawLine(Pens.Blue, New Point(args.left, args.top), New Point(args.matrixPlotRegion.Right, args.top))
 
                         If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
                             Dim sz As SizeF = g.MeasureString(x.ID, font)
@@ -234,7 +234,7 @@ Namespace Heatmap
                     Next
 
                     ' debug
-                    Call g.DrawRectangle(Pens.LawnGreen, args.matrixPlotRegion)
+                    ' Call g.DrawRectangle(Pens.LawnGreen, args.matrixPlotRegion)
                 End Sub
 
             Return __plotInterval(

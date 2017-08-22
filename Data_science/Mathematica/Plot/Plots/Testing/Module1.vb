@@ -130,12 +130,12 @@ Module Module1
         'Call CMeansVisualize()
         'Pause()
 
-        Dim datahm = DataSet.LoadDataSet("C:\Users\xieguigang\Desktop\SK.csv")
+        Dim datahm = DataSet.LoadDataSet("C:\Users\gg.xie\Desktop\1. siRelB vs sictrl.csv")
         Call Heatmap.Heatmap.Plot(datahm, mapName:=ColorMap.PatternHot,
                           mapLevels:=20,
                           padding:="padding: 300",
                           legendTitle:="Spearman correlations",
-                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("D:\spcc.png")
+                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("C:\Users\gg.xie\Desktop\1. siRelB vs sictrl.png")
         Pause()
         Dim data = csv.LoadBarData(
     "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",
