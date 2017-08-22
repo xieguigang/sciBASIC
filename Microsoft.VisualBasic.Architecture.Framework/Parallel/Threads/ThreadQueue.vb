@@ -33,8 +33,7 @@ Namespace Parallel
     ''' <summary>
     ''' 任务线程队列
     ''' </summary>
-    Public Class ThreadQueue
-        Implements IDisposable
+    Public Class ThreadQueue : Implements IDisposable
 
         ''' <summary>
         ''' Writer Thread ☺
