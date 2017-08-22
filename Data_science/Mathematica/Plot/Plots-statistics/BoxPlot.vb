@@ -26,19 +26,208 @@
 
 #End Region
 
+Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
+''' <summary>
+''' ```
+''' min, q1, q2, q3, max
+'''       _________
+'''  +----|   |   |----+
+'''       ---------
+''' ```
+''' </summary>
 Public Module BoxPlot
 
     <Extension> Public Function Plot(data As BoxData,
                                      Optional size$ = "3000,2700",
                                      Optional padding$ = g.DefaultPadding,
                                      Optional bg$ = "white",
-                                     Optional schema$ = ColorBrewer.QualitativeSchemes.Set1_9) As GraphicsData
+                                     Optional schema$ = ColorBrewer.QualitativeSchemes.Set1_9,
+                                     Optional YaxisLabel$ = "value",
+                                     Optional groupLabelCSSFont$ = CSSFont.Win7Large,
+                                     Optional YAxisLabelFontCSS$ = CSSFont.Win7Large,
+                                     Optional tickFontCSS$ = CSSFont.Win7LittleLarge,
+                                     Optional regionStroke$ = Stroke.AxisStroke,
+                                     Optional interval# = 100,
+                                     Optional dotSize! = 10,
+                                     Optional lineWidth% = 2,
+                                     Optional rangeScale# = 1.25,
+                                     Optional showDataPoints As Boolean = True,
+                                     Optional showOutliers As Boolean = True) As GraphicsData
 
+        Dim yAxisLabelFont As Font = CSSFont.TryParse(YAxisLabelFontCSS)
+        Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelCSSFont)
+        Dim tickLabelFont As Font = CSSFont.TryParse(tickFontCSS)
+        Dim ranges As DoubleRange = data _
+            .Groups _
+            .Select(Function(x) x.Value) _
+            .IteratesALL _
+            .ToArray
+        Dim colors As LoopArray(Of SolidBrush) = Designer _
+            .GetColors(schema) _
+            .Select(Function(color) New SolidBrush(color)) _
+            .ToArray
+
+        ranges *= rangeScale
+
+        Dim plotInternal =
+            Sub(ByRef g As IGraphics, rect As GraphicsRegion)
+
+                Dim plotRegion = rect.PlotRegion
+                Dim leftPart = yAxisLabelFont.Height + tickLabelFont.Height + 50
+                Dim bottomPart = groupLabelFont.Height + 50
+
+                With plotRegion
+
+                    Dim topLeft = .Location.OffSet2D(leftPart, 0)
+                    Dim rectSize As New Size(
+                        width:= .Width - leftPart,
+                        height:= .Height - bottomPart)
+
+                    plotRegion = New Rectangle(topLeft, rectSize)
+                End With
+
+                Dim boxWidth = StackedBarPlot.BarWidth(plotRegion.Width - 2 * interval, data.Groups.Length, interval)
+                Dim bottom = plotRegion.Bottom
+                Dim height = plotRegion.Height
+                Dim y = Function(x#) bottom - height * (x - ranges.Min) / ranges.Length
+
+                If Not regionStroke.StringEmpty Then
+                    Call g.DrawRectangle(
+                        Stroke.TryParse(regionStroke).GDIObject,
+                        plotRegion)
+                End If
+
+                ' x0在盒子的左边
+                Dim x0! = rect.Padding.Left + leftPart + interval
+                Dim y0!
+                Dim labelSize As SizeF
+                Dim tickPen As Pen = Stroke.TryParse(regionStroke).GDIObject
+
+                ' 绘制盒子
+                For Each group As NamedValue(Of Vector) In data.Groups
+                    Dim quartile = group.Value.Quartile
+                    Dim outlier = group.Value.Outlier(quartile)
+                    Dim brush As SolidBrush = colors.Next
+                    Dim pen As New Pen(brush.Color, lineWidth)
+                    Dim x1 = x0 + boxWidth / 2  ' x1在盒子的中间
+
+                    If Not outlier.Outlier.IsNullOrEmpty Then
+                        quartile = outlier.Normal.Quartile
+                    End If
+
+                    ' max
+                    y0 = y(quartile.range.Max)
+                    g.DrawLine(pen, New Point(x0, y0), New Point(x0 + boxWidth, y0))
+
+                    ' min
+                    y0 = y(quartile.range.Min)
+                    g.DrawLine(pen, New Point(x0, y0), New Point(x0 + boxWidth, y0))
+
+                    ' q1
+                    Dim q1Y = y(quartile.Q1)
+                    g.DrawLine(pen, New Point(x0, q1Y), New Point(x0 + boxWidth, q1Y))
+
+                    ' q2
+                    Dim q2Y = y(quartile.Q2)
+                    g.DrawLine(pen, New Point(x0, q2Y), New Point(x0 + boxWidth, q2Y))
+                    g.DrawLine(pen, New Point(x0, q2Y + lineWidth), New Point(x0 + boxWidth, q2Y + lineWidth))
+                    g.DrawLine(pen, New Point(x0, q2Y + 2 * lineWidth), New Point(x0 + boxWidth, q2Y + 2 * lineWidth))
+
+                    ' q3
+                    Dim q3Y = y(quartile.Q3)
+                    g.DrawLine(pen, New Point(x0, q3Y), New Point(x0 + boxWidth, q3Y))
+
+                    ' box
+                    g.DrawLine(pen, New Point(x0, q3Y), New Point(x0, q1Y))
+                    g.DrawLine(pen, New Point(x0 + boxWidth, q3Y), New Point(x0 + boxWidth, q1Y))
+
+                    ' dashline to min/max
+                    pen = New Pen(brush.Color, lineWidth) With {
+                        .DashStyle = DashStyle.Dash
+                    }
+
+                    g.DrawLine(pen, New Point(x1, y(quartile.range.Min)), New Point(x1, q1Y))
+                    g.DrawLine(pen, New Point(x1, y(quartile.range.Max)), New Point(x1, q3Y))
+
+                    ' outliers + normal points
+                    If showDataPoints Then
+                        For Each n As Double In outlier.Normal
+                            Call g.FillEllipse(brush, New PointF(x1, y(n)).CircleRectangle(dotSize))
+                        Next
+                    End If
+                    If showOutliers Then
+                        For Each n As Double In outlier.Outlier
+                            Call g.FillEllipse(brush, New PointF(x1, y(n)).CircleRectangle(dotSize))
+                        Next
+                    End If
+
+                    ' draw group label
+                    labelSize = g.MeasureString(group.Name, groupLabelFont)
+                    g.DrawString(group.Name, groupLabelFont, Brushes.Black, New PointF(x1 - labelSize.Width / 2, bottom + 20))
+                    g.DrawLine(tickPen, New Point(x1, bottom + 20), New Point(x1, bottom))
+
+                    x0 += boxWidth + interval
+                Next
+
+                Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                Dim label$
+
+                x0! = rect.Padding.Left + leftPart
+
+                ' 绘制y坐标轴
+                For Each d In ranges.Enumerate(5)
+                    d = d + ranges.Length / 20
+
+                    If d > ranges.Max Then
+                        Exit For
+                    End If
+
+                    y0 = y(d)
+                    g.DrawLine(tickPen, New Point(x0, y0), New Point(x0 - 10, y0))
+                    label = d.ToString("F2")
+                    labelSize = g.MeasureString(label, tickLabelFont)
+                    text.DrawString(label,
+                                    tickLabelFont,
+                                    Brushes.Black,
+                                    New PointF With {
+                                        .X = x0 - 10 - labelSize.Height,
+                                        .Y = y0 + labelSize.Width / 2
+                                    },
+                                    angle:=-90)
+                Next
+
+                Dim canvasPadding = rect.Padding
+                ' 绘制y坐标轴标签
+                labelSize = g.MeasureString(YaxisLabel, yAxisLabelFont)
+
+                Dim location As New PointF With {
+                    .X = canvasPadding.Left + (leftPart - tickLabelFont.Height - labelSize.Height) / 2,
+                    .Y = rect.PlotRegion.Height / 2
+                }
+                text.DrawString(YaxisLabel, yAxisLabelFont, Brushes.Black, location, angle:=-90)
+            End Sub
+
+        Return g.GraphicsPlots(
+            size.SizeParser, padding,
+            bg,
+            plotInternal)
     End Function
 End Module
 

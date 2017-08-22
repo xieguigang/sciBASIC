@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AD4BCB63-E1C7-4243-A032-78A4FA0DBEBF}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.BarPlotTest</StartupObject>
+    <StartupObject>Testing.Module1</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -191,10 +191,6 @@
     <ProjectReference Include="..\..\Plots-Statistics\Plots.Statistics.vbproj">
       <Project>{368ee92f-7aa0-47df-be48-2ae150369a4c}</Project>
       <Name>Plots.Statistics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plots.Extensions\Plots.Extensions.vbproj">
-      <Project>{e939a9e5-b44c-417d-abc2-e5567b540062}</Project>
-      <Name>Plots.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plots.vbproj">
       <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>

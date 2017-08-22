@@ -221,6 +221,7 @@
     <Compile Include="Algebra\Vector\NamedVector.vb" />
     <Compile Include="Factor.vb" />
     <Compile Include="Algebra\Vector\NumericsVector.vb" />
+    <Compile Include="Quantile\Quartile.vb" />
     <Compile Include="UncheckInteger.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />

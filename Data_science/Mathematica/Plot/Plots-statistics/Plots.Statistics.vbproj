@@ -89,6 +89,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -109,6 +110,10 @@
   <ItemGroup>
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
+    <Compile Include="Heatmap\Heatmap.vb" />
+    <Compile Include="Heatmap\HeatmapTable.vb" />
+    <Compile Include="Heatmap\Internal.vb" />
+    <Compile Include="Heatmap\PlotExtensions.vb" />
     <Compile Include="ZScores.vb" />
     <Compile Include="PCAPlot.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -163,6 +168,10 @@
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj">
+      <Project>{6ca54af6-cadc-457e-94b9-384f2990f07e}</Project>
+      <Name>hierarchical-clustering</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\DataMining\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
       <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
@@ -174,10 +183,6 @@
     <ProjectReference Include="..\..\Math\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
       <Name>ODEsSolver</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plots\Plots.Extensions\Plots.Extensions.vbproj">
-      <Project>{a7819bb0-ea16-4526-a7d8-e6533f30e914}</Project>
-      <Name>Plots.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plots\Plots.vbproj">
       <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>

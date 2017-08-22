@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::c6022c1beb03ce9b3d5eb7b374896bb7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Dynamic
 Imports Microsoft.VisualBasic.ComponentModel
+Imports CollectionSet = Microsoft.VisualBasic.ComponentModel.DataStructures.Set
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -248,11 +249,11 @@ Namespace Language
         ''' </summary>
         ''' <param name="booleans"></param>
         ''' <returns></returns>
-        Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
+        Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of T)
             Get
-                Return Me(Who.IsTrue(booleans))
+                Return New Vector(Of T)(Me(Who.IsTrue(booleans)))
             End Get
-            Set(value As T())
+            Set(value As Vector(Of T))
                 For Each i In booleans.SeqIterator
                     If i.value Then
                         buffer(i) = value(i)
@@ -292,6 +293,17 @@ Namespace Language
         ''' <returns></returns>
         Public Overloads Shared Narrowing Operator CType(v As Vector(Of T)) As T()
             Return v.ToArray
+        End Operator
+
+        ''' <summary>
+        ''' Union two collection directly without <see cref="Enumerable.Distinct"/> operation.
+        ''' (请注意，使用<see cref="CollectionSet"/>集合对象的Union功能会去除重复，而这个操作符则是直接进行合并取``并集``而不去重)
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator &(a As Vector(Of T), b As Vector(Of T)) As Vector(Of T)
+            Return New Vector(Of T)(a.buffer.AsList + b.buffer)
         End Operator
     End Class
 End Namespace

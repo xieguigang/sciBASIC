@@ -44,11 +44,6 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module PlotExtensions
 
-    ''' <summary>
-    ''' 为heatmap的列和行之中的元素的排列位置提供排列顺序。<see cref="ReorderProvider"/>
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <returns></returns>
     <Extension>
     Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))(), Optional n% = 5) As NamedValue(Of Dictionary(Of String, Double))()
         Dim keys$() = data(Scan0%).Value.Keys.ToArray

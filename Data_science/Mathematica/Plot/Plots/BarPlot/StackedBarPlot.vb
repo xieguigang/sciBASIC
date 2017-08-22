@@ -13,6 +13,10 @@ Namespace BarPlot
 
     Public Module StackedBarPlot
 
+        Public Function BarWidth(regionWidth%, n%, interval#) As Single
+            Return (regionWidth - (n - 1) * interval) / n
+        End Function
+
         ''' <summary>
         ''' 绘制百分比堆积的条形图
         ''' </summary>
@@ -62,7 +66,7 @@ Namespace BarPlot
                     Dim tickSize = g.MeasureString("0.00", tickFont)
                     Dim leftPart = axisFont.Height + tickSize.Width + 10
                     Dim barRegionWidth = width - leftPart
-                    Dim wb = (barRegionWidth - (n - 1) * interval) / n
+                    Dim wb = BarWidth(barRegionWidth, n, interval)
                     Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelFontCSS)
                     Dim boxWidth% = legendFont.Height * 1.1
                     Dim bottomPart = groupLabelFont.Height + 30 + (boxWidth + interval * 2) * columnCount
@@ -89,8 +93,8 @@ Namespace BarPlot
 
                         Dim y0! = rect.Padding.Top
                         Dim sum# = group.StackedSum
-                        ' 慢慢的从上面累加y到下面底部
 
+                        ' 慢慢的从上面累加y到下面底部
                         For Each serial As SeqValue(Of NamedValue(Of SolidBrush)) In serialBrushes.SeqIterator
                             Dim value As Double = group.data(serial) / sum  ' 百分比
                             Dim h = value * barRegionHeight
@@ -120,9 +124,9 @@ Namespace BarPlot
 
                         Dim maxWidth%
 
-                        For Each legend In block
-                            ' 绘制方形色块
+                        For Each legend As NamedValue(Of SolidBrush) In block
                             Dim box As New Rectangle(x0, ly, boxWidth, boxWidth)
+                            ' 绘制方形色块
                             g.FillRectangle(legend.Value, box)
                             ' 绘制系列标签
                             g.DrawString(legend.Name, legendFont, Brushes.Black, New PointF(x0 + boxWidth + 5, ly))

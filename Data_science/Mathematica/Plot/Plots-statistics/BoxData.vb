@@ -32,14 +32,14 @@ Public Class BoxData
         Dim datasets As Dictionary(Of DataSet) = DataSet _
             .LoadDataSet(path) _
             .ToDictionary
-        Dim serials$() = datasets(Scan0).EnumerateKeys
+        Dim serials$() = datasets.PropertyNames
 
         For Each name As String In serials
             Dim data = groupDesigner _
                 .Select(Function(x)
                             Dim values As Vector = datasets(x.Value).Vector([property]:=name)
                             Return New NamedValue(Of Vector) With {
-                                .Name = x.Name,
+                                .name = x.Name,
                                 .Description = x.Description,
                                 .Value = values
                             }

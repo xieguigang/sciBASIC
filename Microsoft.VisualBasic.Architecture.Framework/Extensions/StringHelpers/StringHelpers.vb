@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::bb46b04fb0bc92400b19c97e2d1b8252, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -234,7 +234,7 @@ Public Module StringHelpers
             Dim key$ = Mid(s, 1, p - 1)
             Dim value$ = Mid(s, p + delimiter.Length)
 
-            If Not trim.StringEmpty Then
+            If Not trim.StringEmpty(whitespaceAsEmpty:=False) Then
                 value = value.Trim(trim.ToArray)
             End If
 
@@ -280,13 +280,15 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s">The input test string</param>
     ''' <returns></returns>
-    <Extension> Public Function StringEmpty(s As String) As Boolean
-        If s Is Nothing OrElse
-            String.IsNullOrEmpty(s) OrElse
-            String.IsNullOrWhiteSpace(s) Then
+    <Extension> Public Function StringEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
+        If s Is Nothing OrElse String.IsNullOrEmpty(s) Then
             Return True
         Else
-            Return False
+            If String.IsNullOrWhiteSpace(s) Then
+                Return whitespaceAsEmpty
+            Else
+                Return False
+            End If
         End If
     End Function
 

@@ -468,6 +468,12 @@ Namespace Imaging
             End With
         End Function
 
+        <Extension> Public Function OffSet2D(pt As PointF, x!, y!) As PointF
+            With pt
+                Return New PointF(x + .X, y + .Y)
+            End With
+        End Function
+
         <Extension> Public Function IsValidGDIParameter(size As Size) As Boolean
             Return size.Width > 0 AndAlso size.Height > 0
         End Function

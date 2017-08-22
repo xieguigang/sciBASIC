@@ -1295,18 +1295,19 @@ Namespace Math
         Public Function Log(d As Double) As Double
             Return sys.Log(d)
         End Function
-        '
-        ' Summary:
-        '     Calculates the integral part of a specified double-precision floating-point number.
-        '
-        ' Parameters:
-        '   d:
-        '     A number to truncate.
-        '
-        ' Returns:
-        '     The integral part of d; that is, the number that remains after any fractional
-        '     digits have been discarded, or one of the values listed in the following table.
-        '     dReturn valueSystem.Double.NaNSystem.Double.NaNSystem.Double.NegativeInfinitySystem.Double.NegativeInfinitySystem.Double.PositiveInfinitySystem.Double.PositiveInfinity
+
+        ''' <summary>
+        ''' Calculates the integral part of a specified double-precision floating-point number.
+        ''' </summary>
+        ''' <param name="d">A number to truncate.</param>
+        ''' <returns>The integral part of d; that is, the number that remains after any fractional
+        ''' digits have been discarded, or one of the values listed in the following table.
+        ''' |<paramref name="d"/>          |Return value                  |
+        ''' |------------------------------|------------------------------|
+        ''' |System.Double.NaN             |System.Double.NaN             |
+        ''' |System.Double.NegativeInfinity|System.Double.NegativeInfinity|
+        ''' |System.Double.PositiveInfinity|System.Double.PositiveInfinity|
+        ''' </returns>
         Public Function Truncate(d As Double) As Double
             Return sys.Truncate(d)
         End Function

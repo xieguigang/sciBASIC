@@ -5142,7 +5142,16 @@ Namespace Imaging
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
             Return Graphics.MeasureString(text, font)
         End Function
-        '
+
+        ''' <summary>
+        ''' Using <see cref="Font"/>
+        ''' </summary>
+        ''' <param name="text"></param>
+        ''' <returns></returns>
+        Public Overloads Function MeasureString(text As String) As SizeF
+            Return Graphics.MeasureString(text, Font)
+        End Function
+
         ' Summary:
         '     Measures the specified string when drawn with the specified System.Drawing.Font.
         '
