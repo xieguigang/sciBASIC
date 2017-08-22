@@ -421,6 +421,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\LineValue.vb" />
+    <Compile Include="Extensions\Utils.vb" />
     <Compile Include="Extensions\CodeDOM\References.vb" />
     <Compile Include="Extensions\Collection\VectorAssertExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
@@ -451,6 +452,7 @@
     <Compile Include="Language\lang\Java\Line2D.vb" />
     <Compile Include="Language\lang\Java\Collections.vb" />
     <Compile Include="Language\lang\Java\Reflection.vb" />
+    <Compile Include="Language\Linq\SchemaProvider.vb" />
     <Compile Include="Language\Linq\Indexer.vb" />
     <Compile Include="Language\Linq\Vector.vb" />
     <Compile Include="Language\Linq\VectorShadows.vb" />
@@ -459,6 +461,7 @@
     <Compile Include="Scripting\Abstract.vb" />
     <Compile Include="Scripting\Expressions\Selector.vb" />
     <Compile Include="Scripting\Runtime\BinaryOperator.vb" />
+    <Compile Include="Scripting\Runtime\CType\CastStringVector.vb" />
     <Compile Include="Scripting\Runtime\OverloadsFunction.vb" />
     <Compile Include="Scripting\Runtime\Extensions.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\OperatorExpression.vb" />

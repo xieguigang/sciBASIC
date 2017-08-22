@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::b84e2e514c3a2addc2bda973f1aaf54d, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\ClusterComponent.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Language
@@ -53,11 +54,10 @@ Imports sys = System.Math
 Namespace DendrogramVisualize
 
     Public Class ClusterComponent
-        Implements Paintable
+        Implements IPaintable
 
         Public Property Children As New List(Of ClusterComponent)
         Public Property NamePadding As Integer = 6
-        Public Property DotRadius As Integer = 2
         Public Property LinkPoint As PointF
         Public Property InitPoint As PointF
         Public Property Cluster As Cluster
@@ -74,48 +74,74 @@ Namespace DendrogramVisualize
         ''' 绘制具体的聚类结果
         ''' </summary>
         ''' <param name="g"></param>
-        ''' <param name="xDisplayOffset"></param>
-        ''' <param name="yDisplayOffset"></param>
-        ''' <param name="xDisplayFactor"></param>
-        ''' <param name="yDisplayFactor"></param>
-        ''' <param name="decorated"></param>
-        Public Sub paint(g As Graphics2D, xDisplayOffset%, yDisplayOffset%, xDisplayFactor#, yDisplayFactor#, decorated As Boolean, classHeight!, Optional classTable As Dictionary(Of String, String) = Nothing) Implements Paintable.paint
+        Public Sub paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF))) Implements IPaintable.paint
             Dim x1, y1, x2, y2 As Integer
             Dim fontMetrics As FontMetrics = g.FontMetrics
 
-            x1 = CInt(Fix(InitPoint.X * xDisplayFactor + xDisplayOffset))
-            y1 = CInt(Fix(InitPoint.Y * yDisplayFactor + yDisplayOffset))
-            x2 = CInt(Fix(LinkPoint.X * xDisplayFactor + xDisplayOffset))
-            y2 = y1
-            g.FillEllipse(Brushes.Black, x1 - DotRadius, y1 - DotRadius, DotRadius * 2, DotRadius * 2)
-            g.DrawLine(Pens.Black, x1, y1, x2, y2)
+            With args
 
-            If Cluster.Leaf Then
-                Dim nx! = x1 + NamePadding
-                Dim ny! = y1
+                x1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .xDisplayOffset))
+                y1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
+                x2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
+                y2 = y1
 
-                ' 绘制叶节点
-                g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, nx, y1 - (fontMetrics.Height / 2) - 2)
-                If Not classTable Is Nothing Then
-                    ' 如果还存在分类信息的话，会绘制分类的颜色条
-                    Dim color As Brush = classTable(Cluster.Name).GetBrush
-                    ' Dim rect As New RectangleF(New PointF())
+                If .LinkDotRadius > 0 Then
+                    Dim dotRadius = .LinkDotRadius
+                    Dim d% = dotRadius * 2
+                    g.FillEllipse(Brushes.Black, x1 - dotRadius, y1 - dotRadius, d, d)
                 End If
-            End If
-            If decorated AndAlso Cluster.Distance IsNot Nothing AndAlso (Not Cluster.Distance.NaN) AndAlso Cluster.Distance.Distance > 0 Then
-                Dim s As String = String.Format("{0:F2}", Cluster.Distance)
-                Dim rect As RectangleF = fontMetrics.GetStringBounds(s, g.Graphics)
-                g.DrawString(s, fontMetrics, Brushes.Black, x1 - CInt(Fix(rect.Width)), y1 - 2 - rect.Height)
-            End If
+                g.DrawLine(.stroke, x1, y1, x2, y2)
 
-            x1 = x2
-            y1 = y2
-            y2 = CInt(Fix(LinkPoint.Y * yDisplayFactor + yDisplayOffset))
-            g.DrawLine(Pens.Black, x1, y1, x2, y2)
+                If Cluster.Leaf Then
+                    Dim nx! = x1 + NamePadding
+                    Dim ny! = y1
+                    Dim location As New PointF With {
+                        .X = nx,
+                        .Y = y1 - (fontMetrics.Height / 2) - 2
+                    }
 
-            For Each child As ClusterComponent In Children
-                child.paint(g, xDisplayOffset, yDisplayOffset, xDisplayFactor, yDisplayFactor, decorated, classHeight, classTable)
-            Next
+                    ' 绘制叶节点
+                    If args.ShowLabelName Then
+                        g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, location)
+                    End If
+                    labels += New NamedValue(Of PointF) With {
+                        .Name = Cluster.Name,
+                        .Value = location
+                    }
+
+                    If Not .classTable Is Nothing Then
+                        ' 如果还存在分类信息的话，会绘制分类的颜色条
+                        Dim color As Brush = .classTable(Cluster.Name).GetBrush
+                        Dim topleft As New PointF(nx + .classLegendPadding, y1 - .classLegendSize.Height / 2)
+                        Dim rect As New RectangleF(topleft, .classLegendSize)
+
+                        g.FillRectangle(color, rect)
+                    End If
+                End If
+                If .decorated AndAlso
+                    Cluster.Distance IsNot Nothing AndAlso
+                    (Not Cluster.Distance.NaN) AndAlso
+                    Cluster.Distance.Distance > 0 Then
+
+                    Dim s As String = String.Format("{0:F2}", Cluster.Distance)
+                    Dim rect As RectangleF = fontMetrics.GetStringBounds(s, g.Graphics)
+                    Dim location As New PointF With {
+                        .X = x1 - CInt(Fix(rect.Width)),
+                        .Y = y1 - 2 - rect.Height
+                    }
+
+                    g.DrawString(s, fontMetrics, Brushes.Black, location)
+                End If
+
+                x1 = x2
+                y1 = y2
+                y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
+                g.DrawLine(.stroke, x1, y1, x2, y2)
+
+                For Each child As ClusterComponent In Children
+                    child.paint(g, args, labels)
+                Next
+            End With
         End Sub
 
         Public ReadOnly Property RectMinX As Double

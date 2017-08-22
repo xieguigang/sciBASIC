@@ -56,6 +56,12 @@ Namespace Scripting.Runtime
             Return method
         End Function
 
+        ''' <summary>
+        ''' Find the best matched overloads function based on the input parameter
+        ''' </summary>
+        ''' <param name="target"></param>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
         Public Shared Function Align(target As MethodInfo, args As Type()) As Double
             Dim params = target.GetParameters
 

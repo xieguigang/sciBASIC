@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::b472410d8bce600e295391d8b87e348a, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\RSyntax\Math\Math.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -84,9 +85,29 @@ Namespace SyntaxAPI.MathExtension
             Return x.Max
         End Function
 
+        Public Function Max(x As Vector, y#) As Vector
+            Return x.Select(Function(xi) sys.Max(xi, y)).AsVector
+        End Function
+
+        Public Function Max(x As Vector, y As Vector) As Vector
+            Return x.SeqIterator _
+                .Select(Function(i) sys.Max(i.value, y(i))) _
+                .AsVector
+        End Function
+
         <ExportAPI("Min")>
         Public Function Min(x As Vector) As Double
             Return x.Min
+        End Function
+
+        Public Function Min(x As Vector, y#) As Vector
+            Return x.Select(Function(xi) sys.Min(xi, y)).AsVector
+        End Function
+
+        Public Function Min(x As Vector, y As Vector) As Vector
+            Return x.SeqIterator _
+                .Select(Function(i) sys.Min(i.value, y(i))) _
+                .AsVector
         End Function
 
         ''' <summary>

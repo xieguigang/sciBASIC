@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::9e8c8f6677b6f5186f5463db19876f6e, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -545,6 +546,14 @@ Namespace LinearAlgebra
 
         Public Shared Operator <=(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d <= n)
+        End Operator
+
+        Public Shared Operator >=(x As Vector, y As Vector) As BooleanVector
+            Return New BooleanVector(From a In x.SeqIterator Select a.value >= y.buffer(a))
+        End Operator
+
+        Public Shared Operator <=(x As Vector, y As Vector) As BooleanVector
+            Return New BooleanVector(From a In x.SeqIterator Select a.value <= y.buffer(a))
         End Operator
 
 #Region "Syntax support for: Dim v As Vector = {1, 2, 3, 4, 5, 6}"

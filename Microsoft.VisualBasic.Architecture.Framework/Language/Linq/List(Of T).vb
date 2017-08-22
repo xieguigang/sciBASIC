@@ -456,6 +456,12 @@ Namespace Language
             Return LQuery
         End Operator
 
+        ''' <summary>
+        ''' Elements count not equals to a specific number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
         Public Shared Operator <>(list As List(Of T), count%) As Boolean
             If list Is Nothing Then
                 Return True
@@ -463,8 +469,28 @@ Namespace Language
             Return list.Count <> count
         End Operator
 
+        ''' <summary>
+        ''' Assert that the element counts of this list object is equals to a specifc number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
         Public Shared Operator =(list As List(Of T), count%) As Boolean
             Return Not (list <> count)
+        End Operator
+
+        ''' <summary>
+        ''' <see cref="Enumerable.SequenceEqual(Of T)"/>
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="collection"></param>
+        ''' <returns></returns>
+        Public Shared Operator =(list As List(Of T), collection As IEnumerable(Of T)) As Boolean
+            Return list.SequenceEqual(collection)
+        End Operator
+
+        Public Shared Operator <>(list As List(Of T), collection As IEnumerable(Of T)) As Boolean
+            Return Not list.SequenceEqual(collection)
         End Operator
 
         ''' <summary>

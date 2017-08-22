@@ -72,6 +72,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return MyClass.MemberwiseClone
         End Function
 
+        ''' <summary>
+        ''' MemberwiseClone
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Copy() As SQLTable
             Return DirectCast(MyClass.MemberwiseClone, SQLTable)
         End Function
