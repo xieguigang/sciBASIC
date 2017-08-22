@@ -130,7 +130,7 @@ Module Module1
         'Call CMeansVisualize()
         'Pause()
 
-        Dim datahm = DataSet.LoadDataSet("D:\OneDrive\1.5\samples\3. DEGs\DEPs_heatmap\SK.csv")
+        Dim datahm = DataSet.LoadDataSet("C:\Users\xieguigang\Desktop\SK.csv")
         Call Heatmap.Heatmap.Plot(datahm, mapName:=ColorMap.PatternHot,
                           mapLevels:=20,
                           padding:="padding: 300",

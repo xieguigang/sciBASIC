@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AD4BCB63-E1C7-4243-A032-78A4FA0DBEBF}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.Module1</StartupObject>
+    <StartupObject>Testing.Module2</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="BarPlotTest.vb" />
+    <Compile Include="Module2.vb" />
     <Compile Include="PCAPlotTest.vb" />
     <Compile Include="ImageDataPlots.vb" />
     <Compile Include="FuzzyCMeansVisualize.vb" />
