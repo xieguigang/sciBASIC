@@ -94,4 +94,38 @@ Module Module1
 
     End Sub
 
+    Sub Main()
+        Call New Lazy().show()
+
+
+        Pause()
+    End Sub
+
+
+    Public Structure Lazy
+
+        Public Async Sub show()
+
+            Console.WriteLine(Await Load())
+            Console.WriteLine("c")
+        End Sub
+
+        Public Async Function Load() As Task(Of String)
+            Return 1234 + Await LongLoad()
+        End Function
+
+        Private Function LongLoad() As Task(Of Integer)
+            Dim t As New Task(Of Integer)(Function()
+                                              Console.WriteLine("a")
+                                              Threading.Thread.Sleep(10000)
+                                              Console.WriteLine("b")
+                                              Return 100
+                                          End Function)
+            t.Start()
+
+            Return t
+        End Function
+
+    End Structure
+
 End Module

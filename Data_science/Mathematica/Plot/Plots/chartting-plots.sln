@@ -1,23 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "..\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "math-core", "..\..\Math\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{502430AD-9C24-4969-B189-D44BF3E1C196}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots", "Plots.vbproj", "{17F8E821-0A01-4975-9CAA-AC95251226D5}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\..\..\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\..\..\..\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imaging", "..\..\..\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj", "{85E71B4B-9276-4EC8-AADC-C849205F1EA8}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imaging", "..\..\..\..\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj", "{85E71B4B-9276-4EC8-AADC-C849205F1EA8}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\..\..\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ChartingBase.Test", "Testing\ChartingBase.Test\ChartingBase.Test.vbproj", "{56BF764F-5458-4873-9203-F44E7DC12905}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\..\..\..\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -218,36 +216,6 @@ Global
 		{2DD4BE80-DDC3-4767-94A7-10F1C3395716}.Release2|x64.Build.0 = Release2|x64
 		{2DD4BE80-DDC3-4767-94A7-10F1C3395716}.Release2|x86.ActiveCfg = Release2|x86
 		{2DD4BE80-DDC3-4767-94A7-10F1C3395716}.Release2|x86.Build.0 = Release2|x86
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Debug|x64.Build.0 = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Debug|x86.Build.0 = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.docs|Any CPU.ActiveCfg = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.docs|Any CPU.Build.0 = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.docs|x64.ActiveCfg = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.docs|x64.Build.0 = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.docs|x86.ActiveCfg = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.docs|x86.Build.0 = Debug|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Publish|Any CPU.ActiveCfg = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Publish|Any CPU.Build.0 = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Publish|x64.ActiveCfg = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Publish|x64.Build.0 = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Publish|x86.ActiveCfg = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Publish|x86.Build.0 = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release|x64.ActiveCfg = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release|x64.Build.0 = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release|x86.ActiveCfg = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release|x86.Build.0 = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release2|Any CPU.ActiveCfg = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release2|Any CPU.Build.0 = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release2|x64.ActiveCfg = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release2|x64.Build.0 = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release2|x86.ActiveCfg = Release|Any CPU
-		{56BF764F-5458-4873-9203-F44E7DC12905}.Release2|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

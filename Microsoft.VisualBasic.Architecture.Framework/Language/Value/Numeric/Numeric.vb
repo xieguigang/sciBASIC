@@ -27,9 +27,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports Microsoft.VisualBasic.FileIO
-Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace Language
 
@@ -65,6 +62,11 @@ Namespace Language
     '''     obj is not the same type as this instance.
     ''' </remarks>
     Public Module Numeric
+
+#Region "VB type char helper"
+        Public Const yes! = 1
+        Public Const no! = 0
+#End Region
 
         ''' <summary>
         ''' *<see cref="Numeric.MaxIndex"/>* The max element its index in the source collection.

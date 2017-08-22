@@ -59,6 +59,7 @@ Namespace HTML.CSS
         Public Const Win7LargerBold$ = "font-style: strong; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7LargerNormal$ = "font-style: normal; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7LargeBold$ = "font-style: strong; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7LittleLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7Large$ = "font-style: strong; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7VeryLarge$ = "font-style: normal; font-size: 36; font-family: " & FontFace.MicrosoftYaHei & ";"
 

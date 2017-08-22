@@ -34,7 +34,7 @@ Namespace CommandLine.Reflection
     ''' <remarks></remarks>
     Public Enum CLITypes
         ''' <summary>
-        ''' String.(对于指定为字符串类型的参数，在调用的时候回自动调用<see cref="Extensions.CLIToken"/>函数)
+        ''' String.(对于指定为字符串类型的参数，在调用的时候回自动调用<see cref="Utils.CLIToken"/>函数)
         ''' </summary>
         ''' <remarks></remarks>
         [String]

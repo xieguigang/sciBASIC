@@ -39,6 +39,18 @@ Namespace Imaging
 
     <Package("GDI.Transform")> Public Module GeomTransform
 
+        ''' <summary>
+        ''' <see cref="Graphics.DrawEllipse(Pen, RectangleF)"/>
+        ''' </summary>
+        ''' <param name="center"></param>
+        ''' <param name="r!"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function CircleRectangle(center As PointF, r!) As RectangleF
+            Dim d = r * 2
+            Return New RectangleF(center.OffSet2D(-r, -r), New SizeF(d, d))
+        End Function
+
         <Extension>
         Public Function CenterAlign(rect As RectangleF, size As SizeF) As PointF
             Dim x! = (rect.Width - size.Width) / 2 + rect.Left

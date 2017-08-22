@@ -50,7 +50,7 @@ Public Module VBDebugger
     ''' <returns></returns>
     Public Function die(message$, Optional failure As Func(Of Object, Boolean) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandler
         If failure Is Nothing Then
-            failure = Function(o) o Is Nothing
+            failure = AddressOf ExceptionHandler.Default
         End If
         Return New ExceptionHandler With {
             .Message = message,

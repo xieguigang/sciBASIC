@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::bb46b04fb0bc92400b19c97e2d1b8252, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -204,28 +204,41 @@ Public Module StringHelpers
     ''' the current <see cref="System.String"/> object.</param>
     ''' <returns></returns>
     <Extension>
-    Public Function GetTagValue(s As String, Optional delimiter As String = " ", Optional trim As Boolean = False, Optional failureNoName As Boolean = True) As NamedValue(Of String)
+    Public Function GetTagValue(s$, Optional delimiter$ = " ", Optional trim As Boolean = False, Optional failureNoName As Boolean = True) As NamedValue(Of String)
+        Return s.GetTagValue(delimiter, trim:=If(trim, " ", Nothing), failureNoName:=failureNoName)
+    End Function
+
+    ''' <summary>
+    ''' Text parser for the format: ``tagName{<paramref name="delimiter"/>}value``
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="delimiter$"></param>
+    ''' <param name="trim$">Chars collection for <see cref="String.Trim"/> function</param>
+    ''' <param name="failureNoName"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GetTagValue(s$, delimiter$, trim$, Optional failureNoName As Boolean = True) As NamedValue(Of String)
         If s.StringEmpty Then
             Return Nothing
         End If
 
-        Dim p As Integer = InStr(s, delimiter, CompareMethod.Text)
+        Dim p% = InStr(s, delimiter, CompareMethod.Text)
 
         If p = 0 Then
             If failureNoName Then
-                Return New NamedValue(Of String)("", s)
+                Return New NamedValue(Of String)("", s, s)
             Else
-                Return New NamedValue(Of String)(s, "")
+                Return New NamedValue(Of String)(s, "", s)
             End If
         Else
-            Dim key As String = Mid(s, 1, p - 1)
-            Dim value As String = Mid(s, p + delimiter.Length)
+            Dim key$ = Mid(s, 1, p - 1)
+            Dim value$ = Mid(s, p + delimiter.Length)
 
-            If trim Then
-                value = value.Trim
+            If Not trim.StringEmpty(whitespaceAsEmpty:=False) Then
+                value = value.Trim(trim.ToArray)
             End If
 
-            Return New NamedValue(Of String)(key, value)
+            Return New NamedValue(Of String)(key, value, s)
         End If
     End Function
 
@@ -245,7 +258,10 @@ Public Module StringHelpers
     ''' <param name="s2"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function TextEquals(s1 As String, s2 As String) As Boolean
+    Public Function TextEquals(s1$, s2$) As Boolean
+        'If {s1, s2}.All(Function(s) s Is Nothing) Then
+        '    Return True ' null = null ??
+        'End If
         Return String.Equals(s1, s2, StringComparison.OrdinalIgnoreCase)
     End Function
 
@@ -264,13 +280,15 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s">The input test string</param>
     ''' <returns></returns>
-    <Extension> Public Function StringEmpty(s As String) As Boolean
-        If s Is Nothing OrElse
-            String.IsNullOrEmpty(s) OrElse
-            String.IsNullOrWhiteSpace(s) Then
+    <Extension> Public Function StringEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
+        If s Is Nothing OrElse String.IsNullOrEmpty(s) Then
             Return True
         Else
-            Return False
+            If String.IsNullOrWhiteSpace(s) Then
+                Return whitespaceAsEmpty
+            Else
+                Return False
+            End If
         End If
     End Function
 
@@ -310,13 +328,14 @@ Public Module StringHelpers
     Public ReadOnly Property NonStrictCompares As StringComparison = StringComparison.OrdinalIgnoreCase
 
     ''' <summary>
-    ''' 
+    ''' Split long text data into seperate lines by the specific <paramref name="len"/> value.
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="len"></param>
     ''' <returns></returns>
+    ''' <remarks>Using for the Fasta sequence writer.</remarks>
     <ExportAPI("s.Parts")>
-    Public Function Parts(s As String, len As String) As String
+    <Extension> Public Function Parts(s$, len%) As String
         Dim sbr As New StringBuilder
         Call Parts(s, len, sbr)
         Return sbr.ToString
@@ -353,13 +372,17 @@ Public Module StringHelpers
 
     <ExportAPI("Parsing.E-Mails")>
     Public Function GetEMails(s As String) As String()
-        Dim values As String() = Regex.Matches(s, REGEX_EMAIL, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
+        Dim values$() = Regex _
+            .Matches(s, REGEX_EMAIL, RegexICSng) _
+            .ToArray
         Return values
     End Function
 
     <ExportAPI("Parsing.URLs")>
     Public Function GetURLs(s As String) As String()
-        Dim values As String() = Regex.Matches(s, REGEX_URL, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
+        Dim values$() = Regex _
+            .Matches(s, REGEX_URL, RegexICSng) _
+            .ToArray
         Return values
     End Function
 
@@ -372,7 +395,7 @@ Public Module StringHelpers
     ''' <returns></returns>
     '''
     <ExportAPI("Count", Info:="Counting the specific char in the input string value.")>
-    <Extension> Public Function Count(str As String, ch As Char) As Integer
+    <Extension> Public Function Count(str$, ch As Char) As Integer
         If String.IsNullOrEmpty(str) Then
             Return 0
         Else
@@ -392,7 +415,7 @@ Public Module StringHelpers
     ''' <remarks></remarks>
     '''
     <ExportAPI("Wrapper.Trim")>
-    <Extension> Public Function GetString(s As String, Optional wrapper As Char = """"c) As String
+    <Extension> Public Function GetString(s$, Optional wrapper As Char = ASCII.Quot) As String
         If String.IsNullOrEmpty(s) OrElse Len(s) = 1 Then
             Return s
         End If
@@ -431,7 +454,7 @@ Public Module StringHelpers
     ''' <param name="fill"></param>
     ''' <returns></returns>
     <ExportAPI("FormatZero")>
-    <Extension> Public Function FormatZero(Of T)(n As T, Optional fill As String = "00") As String
+    <Extension> Public Function FormatZero(Of T)(n As T, Optional fill$ = "00") As String
         Dim s As String = n.ToString
         Dim d As Integer = Len(fill) - Len(s)
 
@@ -493,7 +516,7 @@ Public Module StringHelpers
     ''' <remarks></remarks>
     '''
     <ExportAPI("Intersection")>
-    Public Function Intersection(ParamArray values As String()()) As String()
+    Public Function Intersection(ParamArray values$()()) As String()
         Return values.Intersection
     End Function
 
@@ -518,8 +541,8 @@ Public Module StringHelpers
     ''' <param name="options"></param>
     ''' <returns></returns>
     <ExportAPI("Regex", Info:="Searches the specified input string for the first occurrence of the specified regular expression.")>
-    <Extension> Public Function Match(<Parameter("input", "The string to search for a match.")> input As String,
-                                      <Parameter("Pattern", "The regular expression pattern to match.")> pattern As String,
+    <Extension> Public Function Match(<Parameter("input", "The string to search for a match.")> input$,
+                                      <Parameter("Pattern", "The regular expression pattern to match.")> pattern$,
                                       Optional options As RegexOptions = RegexOptions.Multiline) As String
         Return Regex.Match(input, pattern, options).Value
     End Function
@@ -532,7 +555,7 @@ Public Module StringHelpers
     ''' <param name="options"></param>
     ''' <returns></returns>
     <ExportAPI("Match")>
-    <Extension> Public Function Match(input As Match, pattern As String, Optional options As RegexOptions = RegexOptions.Multiline) As String
+    <Extension> Public Function Match(input As Match, pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As String
         Return Regex.Match(input.Value, pattern, options).Value
     End Function
 
