@@ -148,6 +148,7 @@ Namespace Heatmap
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
+                             Optional drawScaleMethod As DrawElements = DrawElements.Cols,
                              Optional drawLabels As DrawElements = DrawElements.Both,
                              Optional drawDendrograms As DrawElements = DrawElements.Rows,
                              Optional dendrogramLayout$ = "200,200",
@@ -239,7 +240,7 @@ Namespace Heatmap
 
             Return __plotInterval(
                 plotInternal, array,
-                font, drawLabels, drawDendrograms, dlayout,
+                font, drawScaleMethod, drawLabels, drawDendrograms, dlayout,
                 customColors, mapLevels, mapName,
                 size.SizeParser, margin, bg,
                 legendTitle, legendFont, Nothing,

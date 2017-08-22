@@ -88,10 +88,16 @@ Namespace Heatmap
         ''' <param name="legendLayout">这个对象定义了图示的大小和位置</param>
         ''' <param name="font">对行标签或者列标签的字体的定义</param>
         ''' <param name="array">Name为行名称，字典之中的key为列名称</param>
+        ''' <param name="scaleMethod">
+        ''' + 如果是<see cref="DrawElements.Cols"/>表示按列赋值颜色
+        ''' + 如果是<see cref="DrawElements.Rows"/>表示按行赋值颜色
+        ''' + 如果是<see cref="DrawElements.None"/>或者<see cref="DrawElements.Both"/>则是表示按照整体数据
+        ''' </param>
         <Extension>
         Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
                                        array As DataSet(),
                                        font As Font,
+                                       scaleMethod As DrawElements,
                                        drawLabels As DrawElements,
                                        drawDendrograms As DrawElements,
                                        dendrogramLayout As (A%, B%),
