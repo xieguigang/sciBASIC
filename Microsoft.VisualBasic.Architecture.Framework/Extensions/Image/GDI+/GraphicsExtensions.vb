@@ -114,6 +114,18 @@ Namespace Imaging
             End If
         End Function
 
+        ''' <summary>
+        ''' Converts the colors into solidbrushes in batch.
+        ''' </summary>
+        ''' <param name="colors"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetBrushes(colors As IEnumerable(Of Color)) As SolidBrush()
+            Return colors _
+                .Select(Function(c) New SolidBrush(c)) _
+                .ToArray
+        End Function
+
         <Extension>
         Public Sub DrawCircle(ByRef g As Graphics, centra As PointF, r!, color As SolidBrush)
             Dim d = r * 2

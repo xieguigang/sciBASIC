@@ -176,39 +176,17 @@ Namespace Drawing2D.Colors
         <Extension>
         Public Function ColorLegendHorizontal(designer As SolidBrush(),
                                               range As DoubleRange,
+                                              ticks#(),
                                               size As Size,
                                               Optional padding$ = g.ZeroPadding,
                                               Optional labelFontCSS$ = CSSFont.Win7Normal) As GraphicsData
-
-            Dim font As Font = CSSFont.TryParse(labelFontCSS)
-            Dim l = designer.Length
-            Dim labels$() = range _
-                .Enumerate(l) _
-                .Select(Function(n) n.ToString("F2")) _
-                .ToArray
-
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-
-                    Dim dx = (region.Size.Width - region.Padding.Horizontal) / l
-                    Dim h = region.Size.Height - region.Padding.Vertical * (2 / 3)
-                    Dim x = region.Padding.Left, y = region.Padding.Top + h + 10
-
-                    ' 绘制出水平的颜色渐变条
-                    For i As Integer = 0 To l - 1
-                        Dim b = designer(i)
-                        Dim rect As New Rectangle(x, region.Padding.Top, dx, h)
-                        Dim s$ = labels(i)
-                        Dim fsize = g.MeasureString(s, font)
-
-                        Call g.FillRectangle(b, rect)
-                        Call g.DrawString(s, font, Brushes.Black, New PointF(x - fsize.Width / 2, y))
-
-                        x += dx
-                    Next
-
-                    ' 绘制出竖直标尺
-
+                    Call designer.ColorLegendHorizontal(
+                        range, ticks,
+                        g, region.PlotRegion,
+                        padding,
+                        labelFontCSS)
                 End Sub
 
             Return g.GraphicsPlots(
@@ -216,5 +194,40 @@ Namespace Drawing2D.Colors
                 "transparent",
                 plotInternal)
         End Function
+
+        <Extension>
+        Public Sub ColorLegendHorizontal(designer As SolidBrush(),
+                                         range As DoubleRange,
+                                         ticks#(),
+                                         ByRef g As IGraphics,
+                                         region As Rectangle,
+                                         Optional padding$ = g.ZeroPadding,
+                                         Optional labelFontCSS$ = CSSFont.Win7Normal)
+
+            Dim font As Font = CSSFont.TryParse(labelFontCSS)
+            Dim l = designer.Length
+            Dim labels$() = range _
+                .Enumerate(l) _
+                .Select(Function(n) n.ToString("F2")) _
+                .ToArray
+            Dim dx = region.Width / l
+            Dim h = region.Height * (2 / 3)
+            Dim x = region.Left, y = region.Top
+
+            ' 绘制出水平的颜色渐变条
+            For i As Integer = 0 To l - 1
+                Dim b = designer(i)
+                Dim rect As New Rectangle(x, y, dx, h)
+                Dim s$ = labels(i)
+                Dim fsize = g.MeasureString(s, Font)
+
+                Call g.FillRectangle(b, rect)
+                Call g.DrawString(s, Font, Brushes.Black, New PointF(x - fsize.Width / 2, y))
+
+                x += dx
+            Next
+
+            ' 绘制出竖直标尺
+        End Sub
     End Module
 End Namespace

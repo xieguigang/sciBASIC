@@ -121,6 +121,7 @@
     <Compile Include="Module1.vb" />
     <Compile Include="BarPlotTest.vb" />
     <Compile Include="Module2.vb" />
+    <Compile Include="ColorLegendTest.vb" />
     <Compile Include="PCAPlotTest.vb" />
     <Compile Include="ImageDataPlots.vb" />
     <Compile Include="FuzzyCMeansVisualize.vb" />
