@@ -29,7 +29,17 @@
 Namespace d3js.scale
 
     ''' <summary>
-    ''' 
+    ''' + Continuous scales map a continuous, quantitative input domain to a continuous output range. 
+    '''   If the range is also numeric, the mapping may be inverted. A continuous scale is not 
+    '''   constructed directly; instead, try a linear, power, log, identity, time or sequential color 
+    '''   scale.
+    ''' + Sequential scales are similar to continuous scales in that they map a continuous, numeric 
+    '''   input domain to a continuous output range. However, unlike continuous scales, the output range 
+    '''   of a sequential scale is fixed by its interpolator and not configurable. These scales do not 
+    '''   expose invert, range, rangeRound and interpolate methods.
+    ''' + Unlike continuous scales, ordinal scales have a discrete domain and range. For example, an 
+    '''   ordinal scale might map a set of named categories to a set of colors, or determine the 
+    '''   horizontal positions of columns in a column chart.
     ''' </summary>
     ''' <remarks>
     ''' + https://stackoverflow.com/questions/29785238/d3-different-between-scale-in-ordinal-and-linear
