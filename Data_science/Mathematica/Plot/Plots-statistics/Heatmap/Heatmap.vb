@@ -208,9 +208,9 @@ Namespace Heatmap
                                 key = c.FormatNumeric(2)
                                 Dim ksz As SizeF = g.MeasureString(key, valuelabelFont)
                                 Dim kpos As New PointF With {
-                                .X = rect.Left + (rect.Width - ksz.Width) / 2,
-                                .Y = rect.Top + (rect.Height - ksz.Height) / 2
-                            }
+                                    .X = rect.Left + (rect.Width - ksz.Width) / 2,
+                                    .Y = rect.Top + (rect.Height - ksz.Height) / 2
+                                }
                                 Call g.DrawString(key, valuelabelFont, Brushes.White, kpos)
                             End If
 

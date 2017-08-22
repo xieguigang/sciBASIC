@@ -45,12 +45,40 @@ Namespace Heatmap
     ''' </summary>
     Module Internal
 
-        Public Function ScaleByRow()
-
+        <Extension>
+        Public Function ScaleByRow(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+            Return data _
+                .Select(Function(x)
+                            Dim max# = x.Properties.Values.Max
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = x _
+                                    .Properties _
+                                    .Keys _
+                                    .ToDictionary(Function(key) key,
+                                                  Function(key) x(key) / max)
+                            }
+                        End Function)
         End Function
 
-        Public Function ScaleByCol()
+        <Extension>
+        Public Function ScaleByCol(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+            Dim list = data.ToArray
+            Dim keys = list.PropertyNames
+            Dim max = keys.ToDictionary(
+                Function(key) key,
+                Function(key) list.Select(
+                Function(x) x(key)).Max)
 
+            Return list _
+                .Select(Function(x)
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = keys _
+                                    .ToDictionary(Function(key) key,
+                                                  Function(key) x(key) / max(key))
+                            }
+                        End Function)
         End Function
 
         ''' <summary>
