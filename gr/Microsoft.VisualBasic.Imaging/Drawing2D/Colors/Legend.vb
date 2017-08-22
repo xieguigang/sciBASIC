@@ -168,14 +168,12 @@ Namespace Drawing2D.Colors
         ''' 横向的颜色legend
         ''' </summary>
         ''' <param name="designer"></param>
-        ''' <param name="range"></param>
         ''' <param name="size"></param>
         ''' <param name="padding$"></param>
         ''' <param name="labelFontCSS$"></param>
         ''' <returns></returns>
         <Extension>
         Public Function ColorLegendHorizontal(designer As SolidBrush(),
-                                              range As DoubleRange,
                                               ticks#(),
                                               size As Size,
                                               Optional padding$ = g.ZeroPadding,
@@ -183,7 +181,7 @@ Namespace Drawing2D.Colors
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Call designer.ColorLegendHorizontal(
-                        range, ticks,
+                        ticks,
                         g, region.PlotRegion,
                         padding,
                         labelFontCSS)
@@ -197,19 +195,15 @@ Namespace Drawing2D.Colors
 
         <Extension>
         Public Sub ColorLegendHorizontal(designer As SolidBrush(),
-                                         range As DoubleRange,
                                          ticks#(),
                                          ByRef g As IGraphics,
                                          region As Rectangle,
                                          Optional padding$ = g.ZeroPadding,
-                                         Optional labelFontCSS$ = CSSFont.Win7Normal)
+                                         Optional labelFontCSS$ = CSSFont.Win7Normal,
+                                         Optional AxisStroke$ = Stroke.AxisStroke)
 
             Dim font As Font = CSSFont.TryParse(labelFontCSS)
             Dim l = designer.Length
-            Dim labels$() = range _
-                .Enumerate(l) _
-                .Select(Function(n) n.ToString("F2")) _
-                .ToArray
             Dim dx = region.Width / l
             Dim h = region.Height * (2 / 3)
             Dim x = region.Left, y = region.Top
@@ -218,16 +212,32 @@ Namespace Drawing2D.Colors
             For i As Integer = 0 To l - 1
                 Dim b = designer(i)
                 Dim rect As New Rectangle(x, y, dx, h)
-                Dim s$ = labels(i)
-                Dim fsize = g.MeasureString(s, Font)
 
-                Call g.FillRectangle(b, rect)
-                Call g.DrawString(s, Font, Brushes.Black, New PointF(x - fsize.Width / 2, y))
-
+                g.FillRectangle(b, rect)
                 x += dx
             Next
 
-            ' 绘制出竖直标尺
+            ' 绘制出水平标尺刻度
+            y = y + h + 10
+
+            With region
+
+                g.DrawLine(Stroke.TryParse(AxisStroke).GDIObject, New Point(.Left, y), New Point(.Right, y))
+                y += 5
+
+                For Each i As SeqValue(Of Double) In ticks _
+                    .RangeTransform({region.Left, region.Right}) _
+                    .SeqIterator
+
+                    Dim tick$ = ticks(i)
+                    Dim fsize = g.MeasureString(tick, font)
+
+                    x = i.value
+                    g.DrawLine(Pens.Black, New PointF(x, y), New Point(x, y - 5))
+                    g.DrawString(tick, font, Brushes.Black, New PointF(x - fsize.Width / 2, y))
+                Next
+            End With
+
         End Sub
     End Module
 End Namespace
