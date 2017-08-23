@@ -3779,20 +3779,12 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
         Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
-        '
-        ' Summary:
-        '     Fills the interior of a rectangle specified by a System.Drawing.Rectangle structure.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   rect:
-        '     System.Drawing.Rectangle structure that represents the rectangle to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of a rectangle specified by a System.Drawing.Rectangle structure.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="rect">System.Drawing.Rectangle structure that represents the rectangle to fill.</param>
         Public MustOverride Sub FillRectangle(brush As Brush, rect As Rectangle)
 
         ''' <summary>
