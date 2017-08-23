@@ -139,6 +139,7 @@ Namespace Heatmap
         ''' <param name="mapName$">The color map name. <see cref="Designer"/></param>
         ''' <param name="size"></param>
         ''' <param name="bg$"></param>
+        ''' <param name="logTransform">0或者小于零的数表示不会进行log变换</param>
         ''' <returns></returns>
         <Extension>
         Public Function Plot(data As IEnumerable(Of DataSet),
@@ -148,11 +149,13 @@ Namespace Heatmap
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
+                             Optional logTransform# = 0,
                              Optional drawScaleMethod As DrawElements = DrawElements.Cols,
                              Optional drawLabels As DrawElements = DrawElements.Both,
                              Optional drawDendrograms As DrawElements = DrawElements.Rows,
                              Optional dendrogramLayout$ = "200,200",
-                             Optional fontStyle$ = CSSFont.Win10Normal,
+                             Optional rowLabelfontStyle$ = CSSFont.Win7Normal,
+                             Optional colLabelFontStyle$ = CSSFont.Win7LargerBold,
                              Optional legendTitle$ = "Heatmap Color Legend",
                              Optional legendFontStyle$ = CSSFont.PlotSubTitle,
                              Optional min# = -1,
@@ -164,7 +167,7 @@ Namespace Heatmap
                              Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
                              Optional legendWidth! = -1,
                              Optional legendHasUnmapped As Boolean = True,
-                             Optional legendSize$ = "600,120") As GraphicsData
+                             Optional legendSize$ = "600,100") As GraphicsData
 
             Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
             Dim array As DataSet() = data.ToArray
@@ -177,7 +180,7 @@ Namespace Heatmap
 
             Dim legendFont As Font = CSSFont.TryParse(legendFontStyle)
             Dim margin As Padding = padding
-            Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
+            Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelfontStyle).GDIObject
             Dim plotInternal =
                 Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
 
@@ -223,12 +226,12 @@ Namespace Heatmap
                         ' Call g.DrawLine(Pens.Blue, New Point(args.left, args.top), New Point(args.matrixPlotRegion.Right, args.top))
 
                         If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
-                            Dim sz As SizeF = g.MeasureString(x.ID, font)
+                            Dim sz As SizeF = g.MeasureString(x.ID, rowLabelFont)
                             Dim y As Single = args.top - dh - (sz.Height - dh) / 2
                             Dim lx As Single = args.matrixPlotRegion.Right + 10
 
                             ' 绘制行标签
-                            Call g.DrawString(x.ID, font, Brushes.Black, New PointF(lx, y))
+                            Call g.DrawString(x.ID, rowLabelFont, Brushes.Black, New PointF(lx, y))
                         End If
                     Next
 
@@ -238,7 +241,7 @@ Namespace Heatmap
 
             Return __plotInterval(
                 plotInternal, array,
-                font, drawScaleMethod, drawLabels, drawDendrograms, dlayout,
+                rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject, logTransform, drawScaleMethod, drawLabels, drawDendrograms, dlayout,
                 customColors.GetBrushes, mapLevels, mapName,
                 size.SizeParser, margin, bg,
                 legendTitle, legendFont, Nothing,

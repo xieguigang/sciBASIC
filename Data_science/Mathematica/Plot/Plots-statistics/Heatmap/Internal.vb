@@ -97,7 +97,7 @@ Namespace Heatmap
         ''' </summary>
         ''' <param name="drawLabels">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
         ''' <param name="legendSize">这个对象定义了图示的大小</param>
-        ''' <param name="font">对行标签或者列标签的字体的定义</param>
+        ''' <param name="rowLabelfont">对行标签或者列标签的字体的定义</param>
         ''' <param name="array">Name为行名称，字典之中的key为列名称</param>
         ''' <param name="scaleMethod">
         ''' + 如果是<see cref="DrawElements.Cols"/>表示按列赋值颜色
@@ -107,7 +107,8 @@ Namespace Heatmap
         <Extension>
         Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
                                        array As DataSet(),
-                                       font As Font,
+                                       rowLabelfont As Font, colLabelFont As Font,
+                                       logScale#,
                                        scaleMethod As DrawElements,
                                        drawLabels As DrawElements,
                                        drawDendrograms As DrawElements,
@@ -166,8 +167,8 @@ Namespace Heatmap
                     ' 根据布局计算出矩阵的大小和位置
                     Dim left! = padding.Left, top! = padding.Top    ' 绘图区域的左上角位置
                     ' 计算出右边的行标签的最大的占用宽度
-                    Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, font)
-                    Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, font)
+                    Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, rowLabelfont)
+                    Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, colLabelFont)
                     Dim llayout As New Rectangle(New Point(left, top), legendSize)
 
                     ' legend位于整个图片的左上角
@@ -283,29 +284,33 @@ Namespace Heatmap
                     left += dw / 2
 
                     ' 绘制下方的矩阵的列标签
-                    ' If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
-                    '     Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                    '     Dim format As New StringFormat() With {
-                    '         .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
-                    '     }
+                    If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
+                        Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                        Dim format As New StringFormat() With {
+                            .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
+                        }
 
-                    '     For Each key$ In keys
-                    '         Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
-                    '         Dim dx! = sz.Width * Math.Cos(angle)
-                    '         Dim dy! = sz.Width * Math.Sin(angle)
+                        For Each key$ In keys
+                            Dim sz = g.MeasureString(key$, colLabelFont) ' 得到斜边的长度
+                            Dim dx! = sz.Width * Math.Cos(angle)
+                            Dim dy! = sz.Width * Math.Sin(angle)
+                            Dim pos As New PointF(left - dx, top - dy)
 
-                    '         Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, format)
+                            Call text.DrawString(key$, colLabelFont, Brushes.Black, pos, angle, format)
 
-                    '         left += dw
-                    '     Next
-                    ' End If
+                            left += dw
+                        Next
+                    End If
 
                     If titleFont Is Nothing Then
                         titleFont = New Font(FontFace.BookmanOldStyle, 30, FontStyle.Bold)
                     End If
 
                     Dim titleSize = g.MeasureString(mainTitle, titleFont)
-                    Dim titlePosi As New PointF((left - titleSize.Width) / 2, (padding.Top - titleSize.Height) / 2)
+                    Dim titlePosi As New PointF With {
+                        .X = args.matrixPlotRegion.Left + (args.matrixPlotRegion.Width - titleSize.Width) / 2, ' 标题在所绘制的矩阵上方居中
+                        .Y = (padding.Top - titleSize.Height) / 2
+                    }
 
                     Call g.DrawString(mainTitle, titleFont, Brushes.Black, titlePosi)
                 End Sub

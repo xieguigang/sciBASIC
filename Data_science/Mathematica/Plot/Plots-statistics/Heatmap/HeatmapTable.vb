@@ -46,7 +46,7 @@ Namespace Heatmap
         ''' <summary>
         ''' 只能够用来表示两两变量之间的相关度
         ''' </summary>
-        ''' <param name="fontStyle">对象标签的字体</param>
+        ''' <param name="rowLabelFontStyle">因为是三角形的矩阵，所以行和列的字体都使用相同的值了</param>
         ''' <returns></returns>
         Public Function Plot(data As IEnumerable(Of DataSet),
                              Optional mapLevels% = 20,
@@ -54,8 +54,9 @@ Namespace Heatmap
                              Optional size$ = "1600,1600",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
+                             Optional logScale# = 0,
                              Optional rowDendrogramHeight% = 200,
-                             Optional fontStyle$ = CSSFont.Win10Normal,
+                             Optional rowLabelFontStyle$ = CSSFont.Win10Normal,
                              Optional legendTitle$ = "Heatmap Color Legend",
                              Optional legendFont$ = CSSFont.Win7Large,
                              Optional legendLabelFont$ = CSSFont.PlotSubTitle,
@@ -72,7 +73,7 @@ Namespace Heatmap
             Dim array = data.ToArray
             Dim min#, max#
             Dim gridBrush As New Pen(gridColor.TranslateColor, 2)
-            Dim font As Font = CSSFont.TryParse(fontStyle).GDIObject
+            Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelFontStyle).GDIObject
             Dim plotInternal =
                 Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
 
@@ -99,7 +100,7 @@ Namespace Heatmap
                                 gridDraw = False
                                 ' 绘制标签
                                 If i = x.i + 1 Then
-                                    Call text.DrawString(key, font, Brushes.Black, rect.Location, angle:=-45)
+                                    Call text.DrawString(key, rowLabelFont, Brushes.Black, rect.Location, angle:=-45)
                                 End If
                             Else
                                 Dim level% = levelRow(key)  '  得到等级
@@ -136,11 +137,11 @@ Namespace Heatmap
                         args.top += dw!
                         i = 1
 
-                        Dim sz As SizeF = g.MeasureString((+x).ID, font)
+                        Dim sz As SizeF = g.MeasureString((+x).ID, rowLabelFont)
                         Dim y As Single = args.top - dw - (sz.Height - dw) / 2
                         Dim lx! = margin.Left - sz.Width - margin.Horizontal * 0.1
 
-                        Call g.DrawString((+x).ID, font, Brushes.Black, New PointF(lx, y))
+                        Call g.DrawString((+x).ID, rowLabelFont, Brushes.Black, New PointF(lx, y))
                     Next
                 End Sub
 
@@ -160,7 +161,7 @@ Namespace Heatmap
                 .Left = array _
                     .Keys _
                     .MaxLengthString _
-                    .MeasureString(font) _
+                    .MeasureString(rowLabelFont) _
                     .Width * 1.5
                 .Bottom = 50
             End With
@@ -169,7 +170,7 @@ Namespace Heatmap
 
             Return __plotInterval(
                 plotInternal, data.ToArray,
-                font, DrawElements.None, DrawElements.Rows, DrawElements.Rows, (rowDendrogramHeight, 0),,
+                rowLabelFont, rowLabelFont, logScale, DrawElements.None, DrawElements.Rows, DrawElements.Rows, (rowDendrogramHeight, 0),,
                 mapLevels, mapName,
                 gsize, margin, bg,
                 legendTitle,
