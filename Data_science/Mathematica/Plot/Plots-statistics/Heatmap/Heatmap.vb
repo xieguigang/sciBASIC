@@ -161,18 +161,15 @@ Namespace Heatmap
                              Optional titleFont As Font = Nothing,
                              Optional drawGrid As Boolean = False,
                              Optional drawValueLabel As Boolean = False,
-                             Optional valuelabelFont As Font = Nothing,
+                             Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
                              Optional legendWidth! = -1,
                              Optional legendHasUnmapped As Boolean = True,
-                             Optional legendSize$ = "500,200") As GraphicsData
+                             Optional legendSize$ = "600,120") As GraphicsData
 
-            If valuelabelFont Is Nothing Then
-                valuelabelFont = New Font(FontFace.CambriaMath, 16, Drawing.FontStyle.Bold)
-            End If
-
+            Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
             Dim array As DataSet() = data.ToArray
             Dim dlayout As (A%, B%)
-            Dim dataTable = array.ToDictionary
+            Dim dataTable As Dictionary(Of DataSet) = array.ToDictionary
 
             With dendrogramLayout.SizeParser
                 dlayout = (.Width, .Height)

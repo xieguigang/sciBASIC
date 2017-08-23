@@ -167,7 +167,7 @@ Namespace Heatmap
                     Dim dw = rect.PlotRegion.Width - maxRowLabelSize.Width
                     Dim dh = rect.PlotRegion.Height - maxColLabelSize.Width - legendSize.Height
 
-                    top += legendSize.Height
+                    top += legendSize.Height + 20
 
                     ' 1. 首先要确定layout
                     ' 因为行和列的聚类树需要相互依赖对方来确定各自的绘图区域
