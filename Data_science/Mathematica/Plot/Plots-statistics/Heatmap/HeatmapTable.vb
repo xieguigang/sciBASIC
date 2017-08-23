@@ -103,11 +103,10 @@ Namespace Heatmap
                                 End If
                             Else
                                 Dim level% = levels(c#)  '  得到等级
-                                Dim color As Color = colors(   ' 得到当前的方格的颜色
+                                Dim b As SolidBrush = colors(   ' 得到当前的方格的颜色
                                     If(level% > colors.Length - 1,
                                     colors.Length - 1,
                                     level))
-                                Dim b As New SolidBrush(color)
 
                                 If drawValueLabel Then
                                     labelbrush = Brushes.White
@@ -166,10 +165,7 @@ Namespace Heatmap
                 .Bottom = 50
             End With
             Dim gsize As Size = size.SizeParser
-            Dim llayout As New Rectangle With {
-                .Size = New Size(gsize.Width / 3, gsize.Height / 3),
-                .Location = New Point(gsize.Width - .Size.Width - 50, margin.Top)
-            }
+            Dim llayout As New Size(gsize.Width / 3, gsize.Height / 3)
 
             Return __plotInterval(
                 plotInternal, data.ToArray,
@@ -179,7 +175,7 @@ Namespace Heatmap
                 legendTitle,
                 CSSFont.TryParse(legendFont), CSSFont.TryParse(legendLabelFont), min, max,
                 mainTitle, titleFont,
-                120, legendLayout:=llayout)
+                120, legendSize:=llayout)
         End Function
     End Module
 

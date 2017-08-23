@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
@@ -27,7 +28,7 @@ Namespace Heatmap
         Public matrixPlotRegion As Rectangle
         Public levels As Dictionary(Of Double, Integer)
         Public top!
-        Public colors As Color()
+        Public colors As SolidBrush()
         Public RowOrders$()
         Public ColOrders$()
 
@@ -85,7 +86,7 @@ Namespace Heatmap
         ''' 一些共同的绘图元素过程
         ''' </summary>
         ''' <param name="drawLabels">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
-        ''' <param name="legendLayout">这个对象定义了图示的大小和位置</param>
+        ''' <param name="legendSize">这个对象定义了图示的大小</param>
         ''' <param name="font">对行标签或者列标签的字体的定义</param>
         ''' <param name="array">Name为行名称，字典之中的key为列名称</param>
         ''' <param name="scaleMethod">
@@ -101,7 +102,7 @@ Namespace Heatmap
                                        drawLabels As DrawElements,
                                        drawDendrograms As DrawElements,
                                        dendrogramLayout As (A%, B%),
-                                       Optional colors As Color() = Nothing,
+                                       Optional colors As SolidBrush() = Nothing,
                                        Optional mapLevels% = 100,
                                        Optional mapName$ = ColorMap.PatternJet,
                                        Optional size As Size = Nothing,
@@ -116,13 +117,13 @@ Namespace Heatmap
                                        Optional titleFont As Font = Nothing,
                                        Optional legendWidth! = -1,
                                        Optional legendHasUnmapped As Boolean = True,
-                                       Optional legendLayout As Rectangle = Nothing) As GraphicsData
+                                       Optional legendSize As Size = Nothing) As GraphicsData
 
             Dim keys$() = array(Scan0).Properties.Keys.ToArray
             Dim angle! = -45
 
             If colors.IsNullOrEmpty Then
-                colors = Designer.GetColors(mapName, mapLevels)
+                colors = Designer.GetColors(mapName, mapLevels).GetBrushes
             End If
 
             Dim rowKeys$() ' 经过聚类之后得到的新的排序顺序
@@ -141,6 +142,14 @@ Namespace Heatmap
                         .LinkDotRadius = 0
                     }
                 End Function
+            Dim DATA#() = array _
+                .Select(Function(x) x.Properties.Values) _
+                .IteratesALL _
+                .Join(min, max) _
+                .Distinct _
+                .ToArray
+            Dim ticks = AxisScalling.CreateAxisTicks(DATA)
+
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
@@ -149,6 +158,10 @@ Namespace Heatmap
                     ' 计算出右边的行标签的最大的占用宽度
                     Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, font)
                     Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, font)
+
+                    ' legend位于整个图片的左上角
+                    Call Legends.ColorLegendHorizontal(colors, ticks, g, New Rectangle(New Point(left, top), legendSize))
+
                     ' 宽度与最大行标签宽度相减得到矩阵的绘制宽度
                     Dim dw = rect.PlotRegion.Width - maxRowLabelSize.Width
                     Dim dh = rect.PlotRegion.Height - maxColLabelSize.Width
@@ -225,17 +238,12 @@ Namespace Heatmap
                     dw /= keys.Length
                     dh /= array.Length
 
-                    Dim correl#() = array _
-                        .Select(Function(x) x.Properties.Values) _
-                        .IteratesALL _
-                        .Join(min, max) _
-                        .Distinct _
-                        .ToArray
+
                     Dim lvs As Dictionary(Of Double, Integer) =
-                        correl _
+                        DATA _
                         .GenerateMapping(mapLevels, offset:=0) _
                         .SeqIterator _
-                        .ToDictionary(Function(x) correl(x.i),
+                        .ToDictionary(Function(x) DATA(x.i),
                                       Function(x) x.value)
 
                     Dim args As New PlotArguments With {
@@ -273,33 +281,6 @@ Namespace Heatmap
                     '        left += dw
                     '    Next
                     'End If
-
-                    ' Draw legends
-                    Dim legend As GraphicsData = colors.ColorMapLegend(
-                        haveUnmapped:=legendHasUnmapped,
-                        min:=Math.Round(correl.Min, 1),
-                        max:=Math.Round(correl.Max, 1),
-                        title:=legendTitle,
-                        titleFont:=legendFont,
-                        labelFont:=legendLabelFont,
-                        legendWidth:=legendWidth,
-                        lsize:=legendLayout.Size)
-                    Dim lsize As Size = legend.Size
-                    Dim lmargin As Integer = size.Width - size.Height + padding.Left
-
-                    If Not legendLayout.Location.IsEmpty Then
-                        left = legendLayout.Left
-                        top = legendLayout.Top
-                    Else
-                        left = size.Width - lmargin
-                        top = size.Height / 3
-                    End If
-
-                    Dim scale# = lmargin / lsize.Width
-                    Dim lh% = CInt(scale * (size.Height * 2 / 3))
-
-                    'Call g.DrawImageUnscaled(
-                    '    legend, CInt(left), CInt(top), lmargin, lh)
 
                     If titleFont Is Nothing Then
                         titleFont = New Font(FontFace.BookmanOldStyle, 30, FontStyle.Bold)

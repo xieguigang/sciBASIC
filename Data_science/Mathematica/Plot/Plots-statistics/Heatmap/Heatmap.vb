@@ -164,7 +164,7 @@ Namespace Heatmap
                              Optional valuelabelFont As Font = Nothing,
                              Optional legendWidth! = -1,
                              Optional legendHasUnmapped As Boolean = True,
-                             Optional legendLayout As Rectangle = Nothing) As GraphicsData
+                             Optional legendSize$ = "500,200") As GraphicsData
 
             If valuelabelFont Is Nothing Then
                 valuelabelFont = New Font(FontFace.CambriaMath, 16, Drawing.FontStyle.Bold)
@@ -186,19 +186,18 @@ Namespace Heatmap
 
                     Dim dw! = args.dStep.Width, dh! = args.dStep.Height
                     Dim blockSize As New SizeF(dw, dh)
-                    Dim colors As Color() = args.colors
+                    Dim colors As SolidBrush() = args.colors
 
                     ' 按行绘制heatmap之中的矩阵
                     For Each x As DataSet In args.RowOrders.Select(Function(key) dataTable(key))     ' 在这里绘制具体的矩阵
                         For Each key As String In args.ColOrders
                             Dim c# = x(key)
                             Dim level% = args.levels(c#)  '  得到等级
-                            Dim color As Color = colors(
+                            Dim b = colors(
                             If(level% > colors.Length - 1,
                                colors.Length - 1,
                                level))
                             Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
-                            Dim b As New SolidBrush(color)
 
                             Call g.FillRectangle(b, rect)
 
@@ -241,12 +240,12 @@ Namespace Heatmap
             Return __plotInterval(
                 plotInternal, array,
                 font, drawScaleMethod, drawLabels, drawDendrograms, dlayout,
-                customColors, mapLevels, mapName,
+                customColors.GetBrushes, mapLevels, mapName,
                 size.SizeParser, margin, bg,
                 legendTitle, legendFont, Nothing,
                 min, max,
                 mainTitle, titleFont,
-                legendWidth, legendHasUnmapped, legendLayout)
+                legendWidth, legendHasUnmapped, legendSize.SizeParser)
         End Function
     End Module
 End Namespace
