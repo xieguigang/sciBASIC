@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -69,20 +70,22 @@ Public Module BoxPlot
                                      Optional lineWidth% = 2,
                                      Optional rangeScale# = 1.25,
                                      Optional showDataPoints As Boolean = True,
-                                     Optional showOutliers As Boolean = True) As GraphicsData
+                                     Optional showOutliers As Boolean = True,
+                                     Optional fillBox As Boolean = True) As GraphicsData
 
         Dim yAxisLabelFont As Font = CSSFont.TryParse(YAxisLabelFontCSS)
         Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelCSSFont)
         Dim tickLabelFont As Font = CSSFont.TryParse(tickFontCSS)
-        Dim ranges As DoubleRange = data _
-            .Groups _
-            .Select(Function(x) x.Value) _
-            .IteratesALL _
-            .ToArray
         Dim colors As LoopArray(Of SolidBrush) = Designer _
             .GetColors(schema) _
             .Select(Function(color) New SolidBrush(color)) _
             .ToArray
+        Dim ticks#() = data _
+            .Groups _
+            .Select(Function(x) x.Value) _
+            .IteratesALL _
+            .ToArray.CreateAxisTicks
+        Dim ranges As DoubleRange = ticks
 
         ranges *= rangeScale
 
@@ -192,16 +195,11 @@ Public Module BoxPlot
                 x0! = rect.Padding.Left + leftPart
 
                 ' 绘制y坐标轴
-                For Each d In ranges.Enumerate(5)
-                    d = d + ranges.Length / 20
-
-                    If d > ranges.Max Then
-                        Exit For
-                    End If
-
+                For Each d As Double In ticks
                     y0 = y(d)
                     g.DrawLine(tickPen, New Point(x0, y0), New Point(x0 - 10, y0))
-                    label = d.ToString("F2")
+                    ' label = d.ToString("F2")
+                    label = d
                     labelSize = g.MeasureString(label, tickLabelFont)
                     text.DrawString(label,
                                     tickLabelFont,

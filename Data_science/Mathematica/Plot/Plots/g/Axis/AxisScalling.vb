@@ -148,6 +148,13 @@ Namespace Graphic.Axis
                 candidateArray(i) = Math.Round(candidateArray(i), decimalDigits)
             Next
 
+            'If candidateArray.All(Function(x) Val(x.ToString.Split("."c).Last) = 0) Then
+            '    ' 全部都是整数，将小数点后面的零都去掉
+            '    For i As Integer = 0 To candidateArray.Length - 1
+            '        candidateArray(i) = CInt(candidateArray(i))
+            '    Next
+            'End If
+
             Return candidateArray
         End Function
 
