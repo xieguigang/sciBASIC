@@ -187,13 +187,15 @@ Namespace Heatmap
 
                     ' 按行绘制heatmap之中的矩阵
                     For Each x As DataSet In args.RowOrders.Select(Function(key) dataTable(key))     ' 在这里绘制具体的矩阵
+                        Dim levelRow As DataSet = args.levels(x.ID)
+
                         For Each key As String In args.ColOrders
                             Dim c# = x(key)
-                            Dim level% = args.levels(c#)  '  得到等级
+                            Dim level% = levelRow(key)  '  得到等级
                             Dim b = colors(
-                            If(level% > colors.Length - 1,
-                               colors.Length - 1,
-                               level))
+                                If(level% > colors.Length - 1,
+                                    colors.Length - 1,
+                                    level))
                             Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
 
                             Call g.FillRectangle(b, rect)

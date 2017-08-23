@@ -82,10 +82,10 @@ Namespace Heatmap
                     Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小
                     Dim i% = 1
                     Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                    Dim levels = args.levels
                     Dim colors = args.colors
 
                     For Each x As SeqValue(Of DataSet) In array.SeqIterator(offset:=1)  ' 在这里绘制具体的矩阵
+                        Dim levelRow As DataSet = args.levels(x.value.ID)
 
                         ' X为矩阵之中的行数据
                         ' 下面的循环为横向绘制出三角形的每一行的图形
@@ -102,7 +102,7 @@ Namespace Heatmap
                                     Call text.DrawString(key, font, Brushes.Black, rect.Location, angle:=-45)
                                 End If
                             Else
-                                Dim level% = levels(c#)  '  得到等级
+                                Dim level% = levelRow(key)  '  得到等级
                                 Dim b As SolidBrush = colors(   ' 得到当前的方格的颜色
                                     If(level% > colors.Length - 1,
                                     colors.Length - 1,

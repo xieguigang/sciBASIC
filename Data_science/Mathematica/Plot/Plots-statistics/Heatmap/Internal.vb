@@ -26,7 +26,7 @@ Namespace Heatmap
         ''' 矩阵区域的大小和位置
         ''' </summary>
         Public matrixPlotRegion As Rectangle
-        Public levels As Dictionary(Of Double, Integer)
+        Public levels As Dictionary(Of String, DataSet)
         Public top!
         Public colors As SolidBrush()
         Public RowOrders$()
@@ -46,8 +46,13 @@ Namespace Heatmap
     ''' </summary>
     Module Internal
 
+        ''' <summary>
+        ''' 返回来的都是0-1之间的数，乘以颜色数组长度之后即可庸作为颜色的index
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function ScaleByRow(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+        Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
             Return data _
                 .Select(Function(x)
                             Dim max# = x.Properties.Values.Max
@@ -57,13 +62,18 @@ Namespace Heatmap
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) x(key) / max)
+                                                  Function(key) levels * x(key) / max)
                             }
                         End Function)
         End Function
 
+        ''' <summary>
+        ''' 返回来的都是0-1之间的数，乘以颜色数组长度之后即可庸作为颜色的index
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function ScaleByCol(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+        Public Function ScaleByCol(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
             Dim list = data.ToArray
             Dim keys = list.PropertyNames
             Dim max = keys.ToDictionary(
@@ -77,7 +87,7 @@ Namespace Heatmap
                                 .ID = x.ID,
                                 .Properties = keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) x(key) / max(key))
+                                                  Function(key) levels * x(key) / max(key))
                             }
                         End Function)
         End Function
@@ -241,19 +251,24 @@ Namespace Heatmap
                     dw /= keys.Length
                     dh /= array.Length
 
+                    Dim levels As New Dictionary(Of String, DataSet)
 
-                    Dim lvs As Dictionary(Of Double, Integer) =
-                        DATA _
-                        .GenerateMapping(mapLevels, offset:=0) _
-                        .SeqIterator _
-                        .ToDictionary(Function(x) DATA(x.i),
-                                      Function(x) x.value)
+                    Select Case scaleMethod
+                        Case DrawElements.Cols
+                            levels = array _
+                                .ScaleByCol(colors.Length - 1) _
+                                .ToDictionary(Function(x) x.ID)
+                        Case DrawElements.Rows
+                            levels = array _
+                                .ScaleByRow(colors.Length - 1) _
+                                .ToDictionary(Function(x) x.ID)
+                    End Select
 
                     Dim args As New PlotArguments With {
                         .colors = colors,
                         .dStep = New SizeF(dw, dh),
                         .left = left,
-                        .levels = lvs,
+                        .levels = levels,
                         .top = top,
                         .ColOrders = colKeys,
                         .RowOrders = rowKeys,
@@ -268,22 +283,22 @@ Namespace Heatmap
                     left += dw / 2
 
                     ' 绘制下方的矩阵的列标签
-                    'If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
-                    '    Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                    '    Dim format As New StringFormat() With {
-                    '        .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
-                    '    }
+                    ' If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
+                    '     Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                    '     Dim format As New StringFormat() With {
+                    '         .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
+                    '     }
 
-                    '    For Each key$ In keys
-                    '        Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
-                    '        Dim dx! = sz.Width * Math.Cos(angle)
-                    '        Dim dy! = sz.Width * Math.Sin(angle)
+                    '     For Each key$ In keys
+                    '         Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
+                    '         Dim dx! = sz.Width * Math.Cos(angle)
+                    '         Dim dy! = sz.Width * Math.Sin(angle)
 
-                    '        Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, format)
+                    '         Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, format)
 
-                    '        left += dw
-                    '    Next
-                    'End If
+                    '         left += dw
+                    '     Next
+                    ' End If
 
                     If titleFont Is Nothing Then
                         titleFont = New Font(FontFace.BookmanOldStyle, 30, FontStyle.Bold)
