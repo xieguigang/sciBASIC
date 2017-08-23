@@ -226,9 +226,9 @@ Public Module StringHelpers
 
         If p = 0 Then
             If failureNoName Then
-                Return New NamedValue(Of String)("", s)
+                Return New NamedValue(Of String)("", s, s)
             Else
-                Return New NamedValue(Of String)(s, "")
+                Return New NamedValue(Of String)(s, "", s)
             End If
         Else
             Dim key$ = Mid(s, 1, p - 1)
@@ -238,7 +238,7 @@ Public Module StringHelpers
                 value = value.Trim(trim.ToArray)
             End If
 
-            Return New NamedValue(Of String)(key, value)
+            Return New NamedValue(Of String)(key, value, s)
         End If
     End Function
 

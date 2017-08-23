@@ -264,8 +264,24 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
         Throw New NotSupportedException
     End Operator
 
+    ''' <summary>
+    ''' <see cref="ContainsKey(String)"/>
+    ''' </summary>
+    ''' <param name="hash"></param>
+    ''' <param name="null"></param>
+    ''' <returns></returns>
     Public Shared Operator &(hash As Dictionary(Of V), null As String) As Boolean
         Return hash.ContainsKey(null)
+    End Operator
+
+    ''' <summary>
+    ''' <see cref="ContainsKey(String)"/>
+    ''' </summary>
+    ''' <param name="table"></param>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Public Shared Operator &(table As Dictionary(Of V), x As V) As Boolean
+        Return table & x.Key
     End Operator
 
     Public Shared Narrowing Operator CType(map As Dictionary(Of V)) As V()

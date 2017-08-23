@@ -148,6 +148,7 @@ Namespace Heatmap
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
+                             Optional drawScaleMethod As DrawElements = DrawElements.Cols,
                              Optional drawLabels As DrawElements = DrawElements.Both,
                              Optional drawDendrograms As DrawElements = DrawElements.Rows,
                              Optional dendrogramLayout$ = "200,200",
@@ -158,7 +159,7 @@ Namespace Heatmap
                              Optional max# = 1,
                              Optional mainTitle$ = "heatmap",
                              Optional titleFont As Font = Nothing,
-                             Optional drawGrid As Boolean = True,
+                             Optional drawGrid As Boolean = False,
                              Optional drawValueLabel As Boolean = False,
                              Optional valuelabelFont As Font = Nothing,
                              Optional legendWidth! = -1,
@@ -208,9 +209,9 @@ Namespace Heatmap
                                 key = c.FormatNumeric(2)
                                 Dim ksz As SizeF = g.MeasureString(key, valuelabelFont)
                                 Dim kpos As New PointF With {
-                                .X = rect.Left + (rect.Width - ksz.Width) / 2,
-                                .Y = rect.Top + (rect.Height - ksz.Height) / 2
-                            }
+                                    .X = rect.Left + (rect.Width - ksz.Width) / 2,
+                                    .Y = rect.Top + (rect.Height - ksz.Height) / 2
+                                }
                                 Call g.DrawString(key, valuelabelFont, Brushes.White, kpos)
                             End If
 
@@ -221,7 +222,7 @@ Namespace Heatmap
                         args.top += dh!
 
                         ' debug
-                        Call g.DrawLine(Pens.Blue, New Point(args.left, args.top), New Point(args.matrixPlotRegion.Right, args.top))
+                        ' Call g.DrawLine(Pens.Blue, New Point(args.left, args.top), New Point(args.matrixPlotRegion.Right, args.top))
 
                         If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
                             Dim sz As SizeF = g.MeasureString(x.ID, font)
@@ -234,12 +235,12 @@ Namespace Heatmap
                     Next
 
                     ' debug
-                    Call g.DrawRectangle(Pens.LawnGreen, args.matrixPlotRegion)
+                    ' Call g.DrawRectangle(Pens.LawnGreen, args.matrixPlotRegion)
                 End Sub
 
             Return __plotInterval(
                 plotInternal, array,
-                font, drawLabels, drawDendrograms, dlayout,
+                font, drawScaleMethod, drawLabels, drawDendrograms, dlayout,
                 customColors, mapLevels, mapName,
                 size.SizeParser, margin, bg,
                 legendTitle, legendFont, Nothing,

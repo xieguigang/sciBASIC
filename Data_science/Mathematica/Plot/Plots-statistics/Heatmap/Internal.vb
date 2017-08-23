@@ -45,12 +45,40 @@ Namespace Heatmap
     ''' </summary>
     Module Internal
 
-        Public Function ScaleByRow()
-
+        <Extension>
+        Public Function ScaleByRow(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+            Return data _
+                .Select(Function(x)
+                            Dim max# = x.Properties.Values.Max
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = x _
+                                    .Properties _
+                                    .Keys _
+                                    .ToDictionary(Function(key) key,
+                                                  Function(key) x(key) / max)
+                            }
+                        End Function)
         End Function
 
-        Public Function ScaleByCol()
+        <Extension>
+        Public Function ScaleByCol(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+            Dim list = data.ToArray
+            Dim keys = list.PropertyNames
+            Dim max = keys.ToDictionary(
+                Function(key) key,
+                Function(key) list.Select(
+                Function(x) x(key)).Max)
 
+            Return list _
+                .Select(Function(x)
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = keys _
+                                    .ToDictionary(Function(key) key,
+                                                  Function(key) x(key) / max(key))
+                            }
+                        End Function)
         End Function
 
         ''' <summary>
@@ -60,10 +88,16 @@ Namespace Heatmap
         ''' <param name="legendLayout">这个对象定义了图示的大小和位置</param>
         ''' <param name="font">对行标签或者列标签的字体的定义</param>
         ''' <param name="array">Name为行名称，字典之中的key为列名称</param>
+        ''' <param name="scaleMethod">
+        ''' + 如果是<see cref="DrawElements.Cols"/>表示按列赋值颜色
+        ''' + 如果是<see cref="DrawElements.Rows"/>表示按行赋值颜色
+        ''' + 如果是<see cref="DrawElements.None"/>或者<see cref="DrawElements.Both"/>则是表示按照整体数据
+        ''' </param>
         <Extension>
         Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
                                        array As DataSet(),
                                        font As Font,
+                                       scaleMethod As DrawElements,
                                        drawLabels As DrawElements,
                                        drawDendrograms As DrawElements,
                                        dendrogramLayout As (A%, B%),
@@ -159,7 +193,7 @@ Namespace Heatmap
                             .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
                             .OrderBy(Function(x) x.Value.Y) _
                             .Keys
-                        Call g.DrawRectangle(Pens.Red, New Rectangle(topleft, dsize))
+                        ' Call g.DrawRectangle(Pens.Red, New Rectangle(topleft, dsize))
                     Else
                         rowKeys = array.Keys
                     End If

@@ -60,12 +60,15 @@ Namespace CommandLine.Reflection
 
         Public Shared Function GetDllMethod(assembly As Assembly, entryPoint$) As MethodInfo
             Dim entry As NamedValue(Of String) = GetPoint(entryPoint)
-            Dim dll As Type = LinqAPI.DefaultFirst(Of Type) <= From type As Type
-                                                               In assembly.GetTypes
-                                                               Let load = type.GetCustomAttribute(Of RunDllEntryPoint)
-                                                               Let name = load?.Namespace
-                                                               Where Not load Is Nothing AndAlso name.TextEquals(entry.Name)
-                                                               Select type
+            Dim dll As Type = LinqAPI.DefaultFirst(Of Type) _
+ _
+                () <= From type As Type
+                      In assembly.GetTypes
+                      Let load = type.GetCustomAttribute(Of RunDllEntryPoint)
+                      Let name = load?.Namespace
+                      Where Not load Is Nothing AndAlso name.TextEquals(entry.Name)
+                      Select type
+
             If dll Is Nothing Then
                 Return Nothing
             Else

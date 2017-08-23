@@ -38,7 +38,9 @@ Namespace CommandLine
     Public Module CLIMapper
 
         ''' <summary>
-        ''' The properties in the class type needs decorating with attribute <see cref="CLIParameter"/>
+        ''' Assign the argument value in the commandline into the target argument container object.
+        ''' The properties in the container class type needs decorating with attribute 
+        ''' <see cref="CLIParameter"/>
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="args"></param>
@@ -48,25 +50,28 @@ Namespace CommandLine
         Public Function Maps(Of T As Class)(args As CommandLine, Optional strict As Boolean = False) As T
             Dim type As Type = GetType(T)
             Dim obj As Object = Activator.CreateInstance(type)
-            Dim props = (From prop As PropertyInfo
-                         In type.GetProperties
-                         Where prop.CanWrite AndAlso
-                             Scripting.IsPrimitive(prop.PropertyType)
-                         Select prop)
+            Dim props = From prop As PropertyInfo
+                        In type.GetProperties
+                        Where prop.CanWrite AndAlso
+                            Scripting.IsPrimitive(prop.PropertyType)
+                        Select prop
 
             For Each prop As PropertyInfo In props
                 Dim name As String = prop.GetName
 
                 If Not args.ContainsParameter(name, Not strict) Then
                     Continue For
+                Else
+                    type = prop.PropertyType
                 End If
 
-                If prop.PropertyType.Equals(GetType(Boolean)) Then
-                    Call prop.SetValue(obj, True, Nothing)  ' 由于是逻辑值，所以只要存在就是真，不存在就是False
+                If type.Equals(GetType(Boolean)) Then
+                    ' 由于是逻辑值，所以只要存在就是真，不存在就是False
+                    Call prop.SetValue(obj, True, Nothing)
                 Else
-                    Dim cast As Func(Of String, Object) = Scripting.CasterString(prop.PropertyType)
                     Dim s As String = args(name)
-                    Dim value As Object = cast(s)
+                    Dim value = Scripting.CTypeDynamic(s, type)
+
                     Call prop.SetValue(obj, value, Nothing)
                 End If
             Next
@@ -74,10 +79,17 @@ Namespace CommandLine
             Return DirectCast(obj, T)
         End Function
 
-        <Extension>
-        Public Function GetName(prop As PropertyInfo) As String
+        ''' <summary>
+        ''' If the property <paramref name="prop"/> have the custom attribute <see cref="CLIParameter"/>
+        ''' then the name value in <see cref="CLIParameter"/> will be used, otherwise, 
+        ''' <see cref="PropertyInfo.Name"/> will be used. 
+        ''' </summary>
+        ''' <param name="prop"></param>
+        ''' <returns></returns>
+        <Extension> Public Function GetName(prop As PropertyInfo) As String
             Dim attr As CLIParameter = prop.GetAttribute(Of CLIParameter)
-            If attr Is Nothing Then
+
+            If attr Is Nothing OrElse attr.Name.StringEmpty Then
                 Return prop.Name
             Else
                 Return attr.Name
