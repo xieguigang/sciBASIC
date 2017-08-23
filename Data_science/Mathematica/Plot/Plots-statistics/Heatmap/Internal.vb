@@ -11,6 +11,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Heatmap
@@ -90,6 +92,48 @@ Namespace Heatmap
                                                   Function(key) levels * x(key) / max(key))
                             }
                         End Function)
+        End Function
+
+        <Extension>
+        Public Function ScaleByALL(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
+            Dim list = data.ToArray
+            Dim keys = list.PropertyNames
+            Dim max = list _
+                .Select(Function(x) x.Properties.Values) _
+                .IteratesALL _
+                .Max
+
+            Return data _
+                .Select(Function(x)
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = x _
+                                    .Properties _
+                                    .Keys _
+                                    .ToDictionary(Function(key) key,
+                                                 Function(key) levels * x(key) / max)
+                           }
+                        End Function)
+        End Function
+
+        ''' <summary>
+        ''' 因为只是想要缩小距离，并不是真正的数学上的log计算
+        ''' 故而，0的log值为0
+        ''' 负数的log值为绝对值的log乘上-1
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="base#"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Log(v As Vector, base#) As Vector
+            Return v _
+                .Select(Function(x)
+                            If x = 0R Then
+                                Return 0
+                            Else
+                                Return Math.Sign(x) * Math.Log(x, base)
+                            End If
+                        End Function) _
+                .AsVector
         End Function
 
         ''' <summary>
@@ -253,16 +297,42 @@ Namespace Heatmap
                     dh /= array.Length
 
                     Dim levels As New Dictionary(Of String, DataSet)
+                    Dim scaleData As DataSet()
+
+                    If logScale > 0 Then
+                        Dim names As New NamedVectorFactory(keys)
+
+                        scaleData = array _
+                            .Select(Function(x)
+                                        Dim vector As Vector = names _
+                                            .AsVector(x.Properties) _
+                                            .Log(logScale)
+
+                                        Return New DataSet With {
+                                            .ID = x.ID,
+                                            .Properties = names.Translate(vector)
+                                        }
+                                    End Function) _
+                            .ToArray
+                    Else
+                        scaleData = array
+                    End If
 
                     Select Case scaleMethod
                         Case DrawElements.Cols
-                            levels = array _
+                            levels = scaleData _
                                 .ScaleByCol(colors.Length - 1) _
                                 .ToDictionary(Function(x) x.ID)
                         Case DrawElements.Rows
-                            levels = array _
+                            levels = scaleData _
                                 .ScaleByRow(colors.Length - 1) _
                                 .ToDictionary(Function(x) x.ID)
+
+                        Case Else
+                            levels = scaleData _
+                                .ScaleByALL(colors.Length - 1) _
+                                .ToDictionary(Function(x) x.ID)
+
                     End Select
 
                     Dim args As New PlotArguments With {

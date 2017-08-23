@@ -133,8 +133,9 @@ Module Module1
 
         Dim datahm = DataSet.LoadDataSet("C:\Users\xieguigang\Desktop\ttttttt.csv")
         Call Heatmap.Heatmap.Plot(datahm, mapName:=ColorBrewer.DivergingSchemes.RdYlGn11,
-                                   size:="2000,2700",
-                                  drawScaleMethod:=Heatmap.DrawElements.Rows,
+                                   size:="2000,3600",
+                                  drawScaleMethod:=Heatmap.DrawElements.Cols,
+                                  logTransform:=2,
                           mapLevels:=120,
                           padding:="padding: 300",
                           legendTitle:="Spearman correlations",
