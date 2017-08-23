@@ -148,7 +148,7 @@ Namespace Heatmap
                 .Join(min, max) _
                 .Distinct _
                 .ToArray
-            Dim ticks = AxisScalling.CreateAxisTicks(DATA)
+            Dim ticks = AxisScalling.CreateAxisTicks(DATA, ticks:=5)
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
@@ -158,13 +158,16 @@ Namespace Heatmap
                     ' 计算出右边的行标签的最大的占用宽度
                     Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, font)
                     Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, font)
+                    Dim llayout As New Rectangle(New Point(left, top), legendSize)
 
                     ' legend位于整个图片的左上角
-                    Call Legends.ColorLegendHorizontal(colors, ticks, g, New Rectangle(New Point(left, top), legendSize))
+                    Call Legends.ColorLegendHorizontal(colors, ticks, g, llayout, scientificNotation:=True)
 
                     ' 宽度与最大行标签宽度相减得到矩阵的绘制宽度
                     Dim dw = rect.PlotRegion.Width - maxRowLabelSize.Width
-                    Dim dh = rect.PlotRegion.Height - maxColLabelSize.Width
+                    Dim dh = rect.PlotRegion.Height - maxColLabelSize.Width - legendSize.Height
+
+                    top += legendSize.Height
 
                     ' 1. 首先要确定layout
                     ' 因为行和列的聚类树需要相互依赖对方来确定各自的绘图区域
@@ -196,11 +199,11 @@ Namespace Heatmap
                         Dim cluster As Cluster = Time(AddressOf array.RunCluster)
                         Dim topleft As New Point With {
                             .X = rect.Padding.Left,
-                            .Y = rect.Padding.Top + layoutB
+                            .Y = top
                         }
                         Dim dsize As New Size With {
                             .Width = dendrogramLayout.A,
-                            .Height = rect.PlotRegion.Height - (layoutB + maxColLabelSize.Width)
+                            .Height = dh
                         }
                         rowKeys = configDendrogramCanvas(cluster) _
                             .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
