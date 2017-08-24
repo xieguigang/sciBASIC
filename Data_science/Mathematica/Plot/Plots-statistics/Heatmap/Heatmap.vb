@@ -223,7 +223,9 @@ Namespace Heatmap
                                     colors.Length - 1,
                                     level))
                             Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
-
+#If DEBUG Then
+                            ' Call $"{level} -> {b.Color.ToString}".__DEBUG_ECHO
+#End If
                             Call g.FillRectangle(b, rect)
 
                             If drawGrid Then

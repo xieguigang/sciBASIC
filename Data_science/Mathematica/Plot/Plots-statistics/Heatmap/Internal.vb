@@ -14,6 +14,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Heatmap
 
@@ -283,7 +284,7 @@ Namespace Heatmap
                             .OrderBy(Function(x) x.Value.X) _
                             .Keys
                     Else
-                        colKeys = array.First.EnumerateKeys(joinProperties:=False)
+                        colKeys = array.PropertyNames
                     End If
 
                     left += 10
@@ -345,7 +346,9 @@ Namespace Heatmap
                         .RowOrders = rowKeys,
                         .matrixPlotRegion = matrixPlotRegion
                     }
-
+#If DEBUG Then
+                    ' Call levels.GetJson().Warning
+#End If
                     ' 绘制heatmap之中的矩阵内容
                     Call plot(g, rect, args)
 
