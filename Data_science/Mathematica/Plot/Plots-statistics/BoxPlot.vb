@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -69,20 +70,22 @@ Public Module BoxPlot
                                      Optional lineWidth% = 2,
                                      Optional rangeScale# = 1.25,
                                      Optional showDataPoints As Boolean = True,
-                                     Optional showOutliers As Boolean = True) As GraphicsData
+                                     Optional showOutliers As Boolean = True,
+                                     Optional fillBox As Boolean = True) As GraphicsData
 
         Dim yAxisLabelFont As Font = CSSFont.TryParse(YAxisLabelFontCSS)
         Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelCSSFont)
         Dim tickLabelFont As Font = CSSFont.TryParse(tickFontCSS)
-        Dim ranges As DoubleRange = data _
-            .Groups _
-            .Select(Function(x) x.Value) _
-            .IteratesALL _
-            .ToArray
         Dim colors As LoopArray(Of SolidBrush) = Designer _
             .GetColors(schema) _
             .Select(Function(color) New SolidBrush(color)) _
             .ToArray
+        Dim ticks#() = data _
+            .Groups _
+            .Select(Function(x) x.Value) _
+            .IteratesALL _
+            .ToArray.CreateAxisTicks
+        Dim ranges As DoubleRange = ticks
 
         ranges *= rangeScale
 
@@ -121,12 +124,28 @@ Public Module BoxPlot
                 Dim tickPen As Pen = Stroke.TryParse(regionStroke).GDIObject
 
                 ' 绘制盒子
+                ' 当不填充盒子的时候，使用的线条和点的颜色都是彩色的
+                ' 当进行盒子的填充的时候，线条和点的颜色都是黑色的，盒子使用自定的颜色进行填充
                 For Each group As NamedValue(Of Vector) In data.Groups
                     Dim quartile = group.Value.Quartile
                     Dim outlier = group.Value.Outlier(quartile)
-                    Dim brush As SolidBrush = colors.Next
-                    Dim pen As New Pen(brush.Color, lineWidth)
+                    Dim brush As SolidBrush = colors.Next   ' 得到了色彩画刷
                     Dim x1 = x0 + boxWidth / 2  ' x1在盒子的中间
+                    Dim pen As Pen
+
+                    If fillBox Then
+                        ' 使用彩色画刷填充盒子，但是线条和点都是黑色的
+                        pen = New Pen(Color.Black, lineWidth)
+                        ' 先填充盒子
+                        ' y 分别为q1和q3
+                        Dim box As New Rectangle With {
+                            .Location = New Point(x0, y(quartile.Q3)),
+                            .Size = New Size(boxWidth, y(quartile.Q1) - y(quartile.Q3))
+                        }
+                        g.FillRectangle(brush, rect:=box)
+                    Else
+                        pen = New Pen(brush.Color, lineWidth)
+                    End If
 
                     If Not outlier.Outlier.IsNullOrEmpty Then
                         quartile = outlier.Normal.Quartile
@@ -166,6 +185,10 @@ Public Module BoxPlot
                     g.DrawLine(pen, New Point(x1, y(quartile.range.Min)), New Point(x1, q1Y))
                     g.DrawLine(pen, New Point(x1, y(quartile.range.Max)), New Point(x1, q3Y))
 
+                    If fillBox Then
+                        brush = Brushes.Black
+                    End If
+
                     ' outliers + normal points
                     If showDataPoints Then
                         For Each n As Double In outlier.Normal
@@ -192,16 +215,11 @@ Public Module BoxPlot
                 x0! = rect.Padding.Left + leftPart
 
                 ' 绘制y坐标轴
-                For Each d In ranges.Enumerate(5)
-                    d = d + ranges.Length / 20
-
-                    If d > ranges.Max Then
-                        Exit For
-                    End If
-
+                For Each d As Double In ticks
                     y0 = y(d)
                     g.DrawLine(tickPen, New Point(x0, y0), New Point(x0 - 10, y0))
-                    label = d.ToString("F2")
+                    ' label = d.ToString("F2")
+                    label = d
                     labelSize = g.MeasureString(label, tickLabelFont)
                     text.DrawString(label,
                                     tickLabelFont,

@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
@@ -10,6 +11,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Heatmap
@@ -25,9 +28,9 @@ Namespace Heatmap
         ''' 矩阵区域的大小和位置
         ''' </summary>
         Public matrixPlotRegion As Rectangle
-        Public levels As Dictionary(Of Double, Integer)
+        Public levels As Dictionary(Of String, DataSet)
         Public top!
-        Public colors As Color()
+        Public colors As SolidBrush()
         Public RowOrders$()
         Public ColOrders$()
 
@@ -45,8 +48,13 @@ Namespace Heatmap
     ''' </summary>
     Module Internal
 
+        ''' <summary>
+        ''' 返回来的都是0-1之间的数，乘以颜色数组长度之后即可庸作为颜色的index
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function ScaleByRow(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+        Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
             Return data _
                 .Select(Function(x)
                             Dim max# = x.Properties.Values.Max
@@ -56,13 +64,18 @@ Namespace Heatmap
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) x(key) / max)
+                                                  Function(key) levels * x(key) / max)
                             }
                         End Function)
         End Function
 
+        ''' <summary>
+        ''' 返回来的都是0-1之间的数，乘以颜色数组长度之后即可庸作为颜色的index
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function ScaleByCol(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+        Public Function ScaleByCol(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
             Dim list = data.ToArray
             Dim keys = list.PropertyNames
             Dim max = keys.ToDictionary(
@@ -76,17 +89,59 @@ Namespace Heatmap
                                 .ID = x.ID,
                                 .Properties = keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) x(key) / max(key))
+                                                  Function(key) levels * x(key) / max(key))
                             }
                         End Function)
+        End Function
+
+        <Extension>
+        Public Function ScaleByALL(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
+            Dim list = data.ToArray
+            Dim keys = list.PropertyNames
+            Dim max = list _
+                .Select(Function(x) x.Properties.Values) _
+                .IteratesALL _
+                .Max
+
+            Return data _
+                .Select(Function(x)
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = x _
+                                    .Properties _
+                                    .Keys _
+                                    .ToDictionary(Function(key) key,
+                                                 Function(key) levels * x(key) / max)
+                           }
+                        End Function)
+        End Function
+
+        ''' <summary>
+        ''' 因为只是想要缩小距离，并不是真正的数学上的log计算
+        ''' 故而，0的log值为0
+        ''' 负数的log值为绝对值的log乘上-1
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="base#"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Log(v As Vector, base#) As Vector
+            Return v _
+                .Select(Function(x)
+                            If x = 0R Then
+                                Return 0
+                            Else
+                                Return Math.Sign(x) * Math.Log(x, base)
+                            End If
+                        End Function) _
+                .AsVector
         End Function
 
         ''' <summary>
         ''' 一些共同的绘图元素过程
         ''' </summary>
         ''' <param name="drawLabels">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
-        ''' <param name="legendLayout">这个对象定义了图示的大小和位置</param>
-        ''' <param name="font">对行标签或者列标签的字体的定义</param>
+        ''' <param name="legendSize">这个对象定义了图示的大小</param>
+        ''' <param name="rowLabelfont">对行标签或者列标签的字体的定义</param>
         ''' <param name="array">Name为行名称，字典之中的key为列名称</param>
         ''' <param name="scaleMethod">
         ''' + 如果是<see cref="DrawElements.Cols"/>表示按列赋值颜色
@@ -96,12 +151,13 @@ Namespace Heatmap
         <Extension>
         Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
                                        array As DataSet(),
-                                       font As Font,
+                                       rowLabelfont As Font, colLabelFont As Font,
+                                       logScale#,
                                        scaleMethod As DrawElements,
                                        drawLabels As DrawElements,
                                        drawDendrograms As DrawElements,
                                        dendrogramLayout As (A%, B%),
-                                       Optional colors As Color() = Nothing,
+                                       Optional colors As SolidBrush() = Nothing,
                                        Optional mapLevels% = 100,
                                        Optional mapName$ = ColorMap.PatternJet,
                                        Optional size As Size = Nothing,
@@ -116,13 +172,13 @@ Namespace Heatmap
                                        Optional titleFont As Font = Nothing,
                                        Optional legendWidth! = -1,
                                        Optional legendHasUnmapped As Boolean = True,
-                                       Optional legendLayout As Rectangle = Nothing) As GraphicsData
+                                       Optional legendSize As Size = Nothing) As GraphicsData
 
             Dim keys$() = array(Scan0).Properties.Keys.ToArray
             Dim angle! = -45
 
             If colors.IsNullOrEmpty Then
-                colors = Designer.GetColors(mapName, mapLevels)
+                colors = Designer.GetColors(mapName, mapLevels).GetBrushes
             End If
 
             Dim rowKeys$() ' 经过聚类之后得到的新的排序顺序
@@ -141,17 +197,32 @@ Namespace Heatmap
                         .LinkDotRadius = 0
                     }
                 End Function
+            Dim DATA#() = array _
+                .Select(Function(x) x.Properties.Values) _
+                .IteratesALL _
+                .Join(min, max) _
+                .Distinct _
+                .ToArray
+            Dim ticks = AxisScalling.CreateAxisTicks(DATA, ticks:=5)
+
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
                     ' 根据布局计算出矩阵的大小和位置
                     Dim left! = padding.Left, top! = padding.Top    ' 绘图区域的左上角位置
                     ' 计算出右边的行标签的最大的占用宽度
-                    Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, font)
-                    Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, font)
+                    Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, rowLabelfont)
+                    Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, colLabelFont)
+                    Dim llayout As New Rectangle(New Point(left, top), legendSize)
+
+                    ' legend位于整个图片的左上角
+                    Call Legends.ColorLegendHorizontal(colors, ticks, g, llayout, scientificNotation:=True)
+
                     ' 宽度与最大行标签宽度相减得到矩阵的绘制宽度
                     Dim dw = rect.PlotRegion.Width - maxRowLabelSize.Width
-                    Dim dh = rect.PlotRegion.Height - maxColLabelSize.Width
+                    Dim dh = rect.PlotRegion.Height - maxColLabelSize.Width - legendSize.Height
+
+                    top += legendSize.Height + 20
 
                     ' 1. 首先要确定layout
                     ' 因为行和列的聚类树需要相互依赖对方来确定各自的绘图区域
@@ -183,11 +254,11 @@ Namespace Heatmap
                         Dim cluster As Cluster = Time(AddressOf array.RunCluster)
                         Dim topleft As New Point With {
                             .X = rect.Padding.Left,
-                            .Y = rect.Padding.Top + layoutB
+                            .Y = top
                         }
                         Dim dsize As New Size With {
                             .Width = dendrogramLayout.A,
-                            .Height = rect.PlotRegion.Height - (layoutB + maxColLabelSize.Width)
+                            .Height = dh
                         }
                         rowKeys = configDendrogramCanvas(cluster) _
                             .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
@@ -225,24 +296,50 @@ Namespace Heatmap
                     dw /= keys.Length
                     dh /= array.Length
 
-                    Dim correl#() = array _
-                        .Select(Function(x) x.Properties.Values) _
-                        .IteratesALL _
-                        .Join(min, max) _
-                        .Distinct _
-                        .ToArray
-                    Dim lvs As Dictionary(Of Double, Integer) =
-                        correl _
-                        .GenerateMapping(mapLevels, offset:=0) _
-                        .SeqIterator _
-                        .ToDictionary(Function(x) correl(x.i),
-                                      Function(x) x.value)
+                    Dim levels As New Dictionary(Of String, DataSet)
+                    Dim scaleData As DataSet()
+
+                    If logScale > 0 Then
+                        Dim names As New NamedVectorFactory(keys)
+
+                        scaleData = array _
+                            .Select(Function(x)
+                                        Dim vector As Vector = names _
+                                            .AsVector(x.Properties) _
+                                            .Log(logScale)
+
+                                        Return New DataSet With {
+                                            .ID = x.ID,
+                                            .Properties = names.Translate(vector)
+                                        }
+                                    End Function) _
+                            .ToArray
+                    Else
+                        scaleData = array
+                    End If
+
+                    Select Case scaleMethod
+                        Case DrawElements.Cols
+                            levels = scaleData _
+                                .ScaleByCol(colors.Length - 1) _
+                                .ToDictionary(Function(x) x.ID)
+                        Case DrawElements.Rows
+                            levels = scaleData _
+                                .ScaleByRow(colors.Length - 1) _
+                                .ToDictionary(Function(x) x.ID)
+
+                        Case Else
+                            levels = scaleData _
+                                .ScaleByALL(colors.Length - 1) _
+                                .ToDictionary(Function(x) x.ID)
+
+                    End Select
 
                     Dim args As New PlotArguments With {
                         .colors = colors,
                         .dStep = New SizeF(dw, dh),
                         .left = left,
-                        .levels = lvs,
+                        .levels = levels,
                         .top = top,
                         .ColOrders = colKeys,
                         .RowOrders = rowKeys,
@@ -257,56 +354,33 @@ Namespace Heatmap
                     left += dw / 2
 
                     ' 绘制下方的矩阵的列标签
-                    'If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
-                    '    Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                    '    Dim format As New StringFormat() With {
-                    '        .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
-                    '    }
+                    If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
+                        Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                        Dim format As New StringFormat() With {
+                            .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
+                        }
 
-                    '    For Each key$ In keys
-                    '        Dim sz = g.MeasureString(key$, font) ' 得到斜边的长度
-                    '        Dim dx! = sz.Width * Math.Cos(angle)
-                    '        Dim dy! = sz.Width * Math.Sin(angle)
+                        For Each key$ In keys
+                            Dim sz = g.MeasureString(key$, colLabelFont) ' 得到斜边的长度
+                            Dim dx! = sz.Width * Math.Cos(angle)
+                            Dim dy! = sz.Width * Math.Sin(angle)
+                            Dim pos As New PointF(left - dx, top - dy)
 
-                    '        Call text.DrawString(key$, font, Brushes.Black, New PointF(left - dx, top - dy), angle, format)
+                            Call text.DrawString(key$, colLabelFont, Brushes.Black, pos, angle, format)
 
-                    '        left += dw
-                    '    Next
-                    'End If
-
-                    ' Draw legends
-                    Dim legend As GraphicsData = colors.ColorMapLegend(
-                        haveUnmapped:=legendHasUnmapped,
-                        min:=Math.Round(correl.Min, 1),
-                        max:=Math.Round(correl.Max, 1),
-                        title:=legendTitle,
-                        titleFont:=legendFont,
-                        labelFont:=legendLabelFont,
-                        legendWidth:=legendWidth,
-                        lsize:=legendLayout.Size)
-                    Dim lsize As Size = legend.Size
-                    Dim lmargin As Integer = size.Width - size.Height + padding.Left
-
-                    If Not legendLayout.Location.IsEmpty Then
-                        left = legendLayout.Left
-                        top = legendLayout.Top
-                    Else
-                        left = size.Width - lmargin
-                        top = size.Height / 3
+                            left += dw
+                        Next
                     End If
-
-                    Dim scale# = lmargin / lsize.Width
-                    Dim lh% = CInt(scale * (size.Height * 2 / 3))
-
-                    'Call g.DrawImageUnscaled(
-                    '    legend, CInt(left), CInt(top), lmargin, lh)
 
                     If titleFont Is Nothing Then
                         titleFont = New Font(FontFace.BookmanOldStyle, 30, FontStyle.Bold)
                     End If
 
                     Dim titleSize = g.MeasureString(mainTitle, titleFont)
-                    Dim titlePosi As New PointF((left - titleSize.Width) / 2, (padding.Top - titleSize.Height) / 2)
+                    Dim titlePosi As New PointF With {
+                        .X = args.matrixPlotRegion.Left + (args.matrixPlotRegion.Width - titleSize.Width) / 2, ' 标题在所绘制的矩阵上方居中
+                        .Y = (padding.Top - titleSize.Height) / 2
+                    }
 
                     Call g.DrawString(mainTitle, titleFont, Brushes.Black, titlePosi)
                 End Sub

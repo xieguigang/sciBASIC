@@ -18,7 +18,7 @@ Module BarPlotTest
             New NamedCollection(Of String)("T2", {"T2-1", "T2-2", "T2-3", "T2-4", "T2-5", "T2-6"}),
             New NamedCollection(Of String)("T3", {"T3-1", "T3-2", "T3-3", "T3-4", "T3-5", "T3-6"})
         }
-        Dim boxGroups = BoxData.Load("C:\Users\xieguigang\Desktop\alpha-box.csv", groups).ToArray
+        Dim boxGroups = BoxData.Load("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\images\boxplot\alpha-box.csv", groups).ToArray
 
         For Each x As BoxData In boxGroups
             Call x _

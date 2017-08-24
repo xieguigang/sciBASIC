@@ -104,7 +104,7 @@ Namespace Graphic.Axis
 
             Dim minSteps As Double
             Dim stepArray As New List(Of Double)
-            Dim candidateArray#() = {}
+            Dim candidateArray As New List(Of Double())
 
             ' Loop through candidate steps and generate an axis based on each step length.
             For i As Integer = 0 To candidateSteps.Count - 1
@@ -127,28 +127,37 @@ Namespace Graphic.Axis
 
                 ' this arbitrarily enforces step_arrays of length between 4 And 10
                 If (stepArray.Count < 11 AndAlso stepArray.Count > 4) Then
-                    If candidateArray.Length < stepArray.Count Then
 
-                        ' All that remains is to score all the candidate arrays. 
-                        ' I’m not going to include my scorer, because there are a 
-                        ' lot of arbitrary choices involved, but basically I look at 
-                        ' how much space each array wastes compared to the data use 
-                        ' that as a starting value. Each array gets the score 10^percent 
-                        ' wasted space – then I further penalize the array for large 
-                        ' values of ticks, tick values that I don’t like as much 
-                        ' (.15 for example, is great in certain cases, but probably 
-                        ' shouldn’t be liked as much by the function as .1). 
-                        ' The array with the lowest score ‘wins’.
-                        candidateArray = stepArray.ToArray
-                    End If
+                    ' All that remains is to score all the candidate arrays. 
+                    ' I’m not going to include my scorer, because there are a 
+                    ' lot of arbitrary choices involved, but basically I look at 
+                    ' how much space each array wastes compared to the data use 
+                    ' that as a starting value. Each array gets the score 10^percent 
+                    ' wasted space – then I further penalize the array for large 
+                    ' values of ticks, tick values that I don’t like as much 
+                    ' (.15 for example, is great in certain cases, but probably 
+                    ' shouldn’t be liked as much by the function as .1). 
+                    ' The array with the lowest score ‘wins’.
+                    candidateArray += stepArray.ToArray
                 End If
             Next
 
-            For i As Integer = 0 To candidateArray.Length - 1
-                candidateArray(i) = Math.Round(candidateArray(i), decimalDigits)
-            Next
+            With candidateArray.Select(Function(ar) Math.Abs(ar.Length - ticks))
+                Dim tickArray#() = candidateArray(Which.Min(.ref))
 
-            Return candidateArray
+                For i As Integer = 0 To tickArray.Length - 1
+                    tickArray(i) = Math.Round(tickArray(i), decimalDigits)
+                Next
+
+                'If candidateArray.All(Function(x) Val(x.ToString.Split("."c).Last) = 0) Then
+                '    ' 全部都是整数，将小数点后面的零都去掉
+                '    For i As Integer = 0 To candidateArray.Length - 1
+                '        candidateArray(i) = CInt(candidateArray(i))
+                '    Next
+                'End If
+
+                Return tickArray
+            End With
         End Function
 
         ''' <summary>
