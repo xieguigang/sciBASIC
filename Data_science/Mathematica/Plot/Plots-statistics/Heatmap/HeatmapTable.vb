@@ -170,8 +170,8 @@ Namespace Heatmap
 
             Return __plotInterval(
                 plotInternal, data.ToArray,
-                rowLabelFont, rowLabelFont, logScale, DrawElements.None, DrawElements.Rows, DrawElements.Rows, (rowDendrogramHeight, 0),,
-                mapLevels, mapName,
+                rowLabelFont, rowLabelFont, logScale, DrawElements.None, DrawElements.Rows, DrawElements.Rows, (rowDendrogramHeight, 0),
+                False,, mapLevels, mapName,
                 gsize, margin, bg,
                 legendTitle,
                 CSSFont.TryParse(legendFont), CSSFont.TryParse(legendLabelFont), min, max,

@@ -150,6 +150,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 ```
 ![](./Data_science/DataMining/hierarchical-clustering/test.png)
 ![](./Data_science/Mathematica/images/heatmap/Sample.SPCC.png)
+![](./Data_science/Mathematica/images/log2FC_heatmap.png)
 ![](./Data_science/algorithms/CMeans/CMeans.png)
 ![](./Data_science/Mathematica/images/295022-plots-plots.png)
 [![](./Data_science/Mathematica/images/alignment/L26369_%255BM%252BH%255D%252B%2523.%252Flxy-CID30.mzXML%2523294-alignment.png)](./Data_science/Mathematica/Plots/BarPlot/AlignmentPlot.vb)

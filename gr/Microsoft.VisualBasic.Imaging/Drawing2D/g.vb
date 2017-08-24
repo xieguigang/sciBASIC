@@ -65,6 +65,8 @@ Namespace Drawing2D
         ''' </summary>
         Public Const ZeroPadding$ = "padding: 0px 0px 0px 0px;"
 
+        Public Const SmallPadding$ = "padding: 30px 30px 30px 30px;"
+
         ''' <summary>
         ''' 在这个模块的构造函数之中，程序会自动根据命令行所设置的环境参数来设置默认的图形引擎
         ''' 

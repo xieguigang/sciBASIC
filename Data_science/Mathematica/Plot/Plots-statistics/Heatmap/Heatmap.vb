@@ -44,6 +44,13 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Heatmap
 
+    ''' <summary>
+    ''' A heat map (or heatmap) is a graphical representation of data where the individual values 
+    ''' contained in a matrix are represented as colors. The term 'heat map' was originally coined 
+    ''' and trademarked by software designer Cormac Kinney in 1991, to describe a 2D display 
+    ''' depicting financial market information,[1] though similar plots such as shading matrices 
+    ''' have existed for over a century.
+    ''' </summary>
     Public Module Heatmap
 
         ''' <summary>
@@ -136,7 +143,23 @@ Namespace Heatmap
         ''' 可以使用这一组颜色来手动自定义heatmap的颜色，也可以使用<paramref name="mapName"/>来获取内置的颜色谱
         ''' </param>
         ''' <param name="mapLevels%"></param>
-        ''' <param name="mapName$">The color map name. <see cref="Designer"/></param>
+        ''' <param name="mapName$">
+        ''' The color map name, using for the <see cref="Designer"/>
+        ''' 
+        ''' There are many different color schemes that can be used to illustrate the heatmap, with perceptual advantages 
+        ''' and disadvantages for each. Rainbow colormaps are often used, as humans can perceive more shades of color than 
+        ''' they can of gray, and this would purportedly increase the amount of detail perceivable in the image. However, 
+        ''' this is discouraged by many in the scientific community, for the following reasons:
+        '''
+        ''' + The colors lack the natural perceptual ordering found In grayscale Or blackbody spectrum colormaps.
+        ''' + Common colormaps(Like the "jet" colormap used As the Default In many visualization software packages) have 
+        '''   uncontrolled changes In luminance that prevent meaningful conversion To grayscale For display Or printing. 
+        '''   This also distracts from the actual data, arbitrarily making yellow And cyan regions appear more prominent 
+        '''   than the regions Of the data that are actually most important.[citation needed]
+        ''' + The changes between colors also lead To perception Of gradients that aren't actually present, making actual 
+        '''   gradients less prominent, meaning that rainbow colormaps can actually obscure detail in many cases rather than 
+        '''   enhancing it.
+        ''' </param>
         ''' <param name="size"></param>
         ''' <param name="bg$"></param>
         ''' <param name="logTransform">0或者小于零的数表示不会进行log变换</param>
@@ -144,6 +167,7 @@ Namespace Heatmap
         <Extension>
         Public Function Plot(data As IEnumerable(Of DataSet),
                              Optional customColors As Color() = Nothing,
+                             Optional reverseClrSeq As Boolean = False,
                              Optional mapLevels% = 100,
                              Optional mapName$ = ColorMap.PatternJet,
                              Optional size$ = "3000,2700",
@@ -161,7 +185,7 @@ Namespace Heatmap
                              Optional min# = -1,
                              Optional max# = 1,
                              Optional mainTitle$ = "heatmap",
-                             Optional titleFont As Font = Nothing,
+                             Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
                              Optional drawGrid As Boolean = False,
                              Optional drawValueLabel As Boolean = False,
                              Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
@@ -178,6 +202,7 @@ Namespace Heatmap
                 dlayout = (.Width, .Height)
             End With
 
+            Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
             Dim legendFont As Font = CSSFont.TryParse(legendFontStyle)
             Dim margin As Padding = padding
             Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelfontStyle).GDIObject
@@ -200,7 +225,9 @@ Namespace Heatmap
                                     colors.Length - 1,
                                     level))
                             Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
-
+#If DEBUG Then
+                            ' Call $"{level} -> {b.Color.ToString}".__DEBUG_ECHO
+#End If
                             Call g.FillRectangle(b, rect)
 
                             If drawGrid Then
@@ -242,7 +269,7 @@ Namespace Heatmap
             Return __plotInterval(
                 plotInternal, array,
                 rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject, logTransform, drawScaleMethod, drawLabels, drawDendrograms, dlayout,
-                customColors.GetBrushes, mapLevels, mapName,
+                reverseClrSeq, customColors.GetBrushes, mapLevels, mapName,
                 size.SizeParser, margin, bg,
                 legendTitle, legendFont, Nothing,
                 min, max,
