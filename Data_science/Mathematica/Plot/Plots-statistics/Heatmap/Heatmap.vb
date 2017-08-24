@@ -167,6 +167,7 @@ Namespace Heatmap
         <Extension>
         Public Function Plot(data As IEnumerable(Of DataSet),
                              Optional customColors As Color() = Nothing,
+                             Optional reverseClrSeq As Boolean = False,
                              Optional mapLevels% = 100,
                              Optional mapName$ = ColorMap.PatternJet,
                              Optional size$ = "3000,2700",
@@ -184,7 +185,7 @@ Namespace Heatmap
                              Optional min# = -1,
                              Optional max# = 1,
                              Optional mainTitle$ = "heatmap",
-                             Optional titleFont As Font = Nothing,
+                             Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
                              Optional drawGrid As Boolean = False,
                              Optional drawValueLabel As Boolean = False,
                              Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
@@ -201,6 +202,7 @@ Namespace Heatmap
                 dlayout = (.Width, .Height)
             End With
 
+            Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
             Dim legendFont As Font = CSSFont.TryParse(legendFontStyle)
             Dim margin As Padding = padding
             Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelfontStyle).GDIObject
@@ -267,7 +269,7 @@ Namespace Heatmap
             Return __plotInterval(
                 plotInternal, array,
                 rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject, logTransform, drawScaleMethod, drawLabels, drawDendrograms, dlayout,
-                customColors.GetBrushes, mapLevels, mapName,
+                reverseClrSeq, customColors.GetBrushes, mapLevels, mapName,
                 size.SizeParser, margin, bg,
                 legendTitle, legendFont, Nothing,
                 min, max,

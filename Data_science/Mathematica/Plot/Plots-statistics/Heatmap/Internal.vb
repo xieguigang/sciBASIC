@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
@@ -56,16 +57,17 @@ Namespace Heatmap
         ''' <returns></returns>
         <Extension>
         Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
+            Dim levelRange As DoubleRange = {0R, levels}
             Return data _
                 .Select(Function(x)
-                            Dim max# = x.Properties.Values.Max
+                            Dim range As DoubleRange = x.Properties.Values.Range
                             Return New DataSet With {
                                 .ID = x.ID,
                                 .Properties = x _
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) levels * x(key) / max)
+                                                  Function(key) range.ScaleMapping(x(key), levelRange))
                             }
                         End Function)
         End Function
@@ -79,10 +81,10 @@ Namespace Heatmap
         Public Function ScaleByCol(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
             Dim list = data.ToArray
             Dim keys = list.PropertyNames
-            Dim max = keys.ToDictionary(
+            Dim ranges = keys.ToDictionary(
                 Function(key) key,
-                Function(key) list.Select(
-                Function(x) x(key)).Max)
+                Function(key) list.Select(Function(x) x(key)).Range)
+            Dim levelRange As DoubleRange = {0R, levels}
 
             Return list _
                 .Select(Function(x)
@@ -90,7 +92,7 @@ Namespace Heatmap
                                 .ID = x.ID,
                                 .Properties = keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) levels * x(key) / max(key))
+                                                  Function(key) ranges(key).ScaleMapping(x(key), levelRange))
                             }
                         End Function)
         End Function
@@ -99,10 +101,11 @@ Namespace Heatmap
         Public Function ScaleByALL(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
             Dim list = data.ToArray
             Dim keys = list.PropertyNames
-            Dim max = list _
+            Dim range As DoubleRange = list _
                 .Select(Function(x) x.Properties.Values) _
                 .IteratesALL _
-                .Max
+                .Range
+            Dim levelRange As DoubleRange = {0R, levels}
 
             Return data _
                 .Select(Function(x)
@@ -112,7 +115,7 @@ Namespace Heatmap
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
-                                                 Function(key) levels * x(key) / max)
+                                                  Function(key) range.ScaleMapping(x(key), levelRange))
                            }
                         End Function)
         End Function
@@ -158,6 +161,7 @@ Namespace Heatmap
                                        drawLabels As DrawElements,
                                        drawDendrograms As DrawElements,
                                        dendrogramLayout As (A%, B%),
+                                       reverseClrSeq As Boolean,
                                        Optional colors As SolidBrush() = Nothing,
                                        Optional mapLevels% = 100,
                                        Optional mapName$ = ColorMap.PatternJet,
@@ -180,6 +184,9 @@ Namespace Heatmap
 
             If colors.IsNullOrEmpty Then
                 colors = Designer.GetColors(mapName, mapLevels).GetBrushes
+                If reverseClrSeq Then
+                    colors = colors.Reverse.ToArray
+                End If
             End If
 
             Dim rowKeys$() ' 经过聚类之后得到的新的排序顺序
@@ -373,10 +380,6 @@ Namespace Heatmap
 
                             left += dw
                         Next
-                    End If
-
-                    If titleFont Is Nothing Then
-                        titleFont = New Font(FontFace.BookmanOldStyle, 30, FontStyle.Bold)
                     End If
 
                     Dim titleSize = g.MeasureString(mainTitle, titleFont)
