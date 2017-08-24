@@ -174,7 +174,7 @@ Namespace Heatmap
                                        Optional legendHasUnmapped As Boolean = True,
                                        Optional legendSize As Size = Nothing) As GraphicsData
 
-            Dim keys$() = array(Scan0).Properties.Keys.ToArray
+            Dim keys$() = array.PropertyNames
             Dim angle! = -45
 
             If colors.IsNullOrEmpty Then
