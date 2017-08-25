@@ -36,6 +36,13 @@ Namespace Language
             }
         End Operator
 
+        ''' <summary>
+        ''' if <see cref="assert"/> is true, then will using default <see cref="value"/>, 
+        ''' otherwise, return the source <paramref name="obj"/>.
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <param name="[default]"></param>
+        ''' <returns></returns>
         Public Shared Operator Or(obj As T, [default] As DefaultValue(Of T)) As T
             With [default]
                 If .assert(obj) Then
