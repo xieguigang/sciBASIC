@@ -135,8 +135,6 @@ Public Module ZScoresPlot
                     yTop += dy
                 Next
 
-                yTop! = rect.Padding.Top
-
                 ' 绘制出X轴的ticks
                 For Each tick As Double In ticks
                     labelSize = g.MeasureString(tick, tickFont)
@@ -151,6 +149,7 @@ Public Module ZScoresPlot
                 Next
 
                 ' 绘制出标题
+                yTop! = rect.Padding.Top
                 labelSize = g.MeasureString(title, titleFont)
                 labelPosition = New PointF With {
                     .X = left + (plotWidth - labelSize.Width) / 2,
@@ -165,6 +164,7 @@ Public Module ZScoresPlot
                     .X = X(range.Max),
                     .Y = yTop + (plotHeight - legendHeight) / 2
                 }
+                Dim shapes = data.shapes
                 Dim legends = groups _
                     .Keys _
                     .Select(Function(label)
@@ -172,7 +172,7 @@ Public Module ZScoresPlot
                                     .title = label,
                                     .color = colors(label).RGBExpression,
                                     .fontstyle = legendLabelFontCSS,
-                                    .style = LegendStyles.Circle
+                                    .style = shapes(label)
                                 }
                             End Function) _
                     .ToArray
@@ -200,6 +200,7 @@ Public Structure ZScores
     ''' Colors for the <see cref="groups"/>
     ''' </summary>
     Dim colors As Dictionary(Of String, Color)
+    Dim shapes As Dictionary(Of String, LegendStyles)
 
     Public Function Range() As DoubleRange
         Return serials _
@@ -228,7 +229,9 @@ Public Structure ZScores
             .serials = zscores,
             .groups = groups,
             .colors = groups.ToDictionary(Function(x) x.Key,
-                                          Function(x) colorlist.Next)
+                                          Function(x) colorlist.Next),
+            .shapes = groups.ToDictionary(Function(x) x.Key,
+                                          Function(x) LegendStyles.Circle)
         }
     End Function
 

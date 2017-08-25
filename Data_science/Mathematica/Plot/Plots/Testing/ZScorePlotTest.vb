@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
+﻿Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 
@@ -17,6 +18,8 @@ Module ZScorePlotTest
             !Control = labels - !Case - !Test - !QC
 
             Dim data = ZScores.Load(csv, .ref, ColorBrewer.QualitativeSchemes.Set2_4)
+
+            ' data.shapes!Case = LegendStyles.Triangle
 
             Call ZScoresPlot.Plot(data).Save(csv.ParentPath & "/16S-KO-level3-Z-scores.png")
         End With
