@@ -159,7 +159,7 @@ Namespace PCA
             Dim SVD = C.SVD
             Dim V = SVD.V
             Dim S = SVD.SingularValues
-            Dim M = V(Which.IsTrue(S.Top(nPC)))
+            Dim M = V(Which(S.Top(nPC)))
             Dim PCA = input * M
             Return PCA
         End Function

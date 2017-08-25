@@ -32,8 +32,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Who = Microsoft.VisualBasic.Which
-Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Who = Microsoft.VisualBasic.Linq.Which
 
 Namespace Language
 

@@ -28,11 +28,11 @@
 
 Imports System.Dynamic
 Imports Microsoft.VisualBasic.ComponentModel
-Imports CollectionSet = Microsoft.VisualBasic.ComponentModel.DataStructures.Set
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Who = Microsoft.VisualBasic.Which
+Imports CollectionSet = Microsoft.VisualBasic.ComponentModel.DataStructures.Set
+Imports Who = Microsoft.VisualBasic.Linq.Which
 
 Namespace Language
 
@@ -251,7 +251,7 @@ Namespace Language
         ''' <returns></returns>
         Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of T)
             Get
-                Return New Vector(Of T)(Me(Who.IsTrue(booleans)))
+                Return New Vector(Of T)(Me(Which.IsTrue(booleans)))
             End Get
             Set(value As Vector(Of T))
                 For Each i In booleans.SeqIterator
