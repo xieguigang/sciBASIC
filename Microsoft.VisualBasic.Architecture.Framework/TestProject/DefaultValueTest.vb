@@ -24,7 +24,6 @@ Module DefaultValueTest
         Call Draw()  ' using default font
         Call Draw(New Font(FontFace.Cambria, 36, FontStyle.Regular))  ' using user defined font
 
-
         Pause()
     End Sub
 

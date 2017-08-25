@@ -8,11 +8,12 @@ Namespace Language
         ''' <summary>
         ''' The default value assertor
         ''' </summary>
-        Friend ReadOnly defaultAssert As DefaultValue(Of Assert(Of Object)) =
-            New Assert(Of Object)(AddressOf ExceptionHandler.Default) _
-                .AsDefault() + Function(assert)
-                                   Return assert Is Nothing
-                               End Function
+        Friend ReadOnly defaultAssert As New DefaultValue(Of Assert(Of Object)) With {
+            .Value = AddressOf ExceptionHandler.Default,
+            .assert = Function(assert)
+                          Return assert Is Nothing
+                      End Function
+        }
 
         ''' <summary>
         ''' 模拟R语言之中的``%||%``操作符
