@@ -35,21 +35,25 @@ Namespace Graphic.Axis
 
     Public Module AxisScalling
 
+        <Extension>
+        Function CreateAxisTicks(range As DoubleRange, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+            With range
+                Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits)
+            End With
+        End Function
+
         ''' <summary>
         ''' ### An Algorithm for Creating and Selecting Graph Axes
         ''' > http://austinclemens.com/blog/2016/01/09/an-algorithm-for-creating-a-graphs-axes/
         ''' </summary>
-        ''' <param name="dataSeries#"></param>
         ''' <param name="ticks%"></param>
         ''' <param name="decimalDigits%"></param>
         ''' <returns></returns>
         <Extension>
-        Function CreateAxisTicks(dataSeries#(), Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+        Function CreateAxisTicks(min#, max#, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
 
             ' First, get the minimum and maximum of the series, toggle the zero_flag variable 
             ' if 0 Is between Then the min And max, And Get the range Of the data.
-            Dim max# = dataSeries.Max
-            Dim min# = dataSeries.Min
             Dim zeroFlag As Boolean = False
             Dim range = max - min
 

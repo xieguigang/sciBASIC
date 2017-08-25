@@ -84,7 +84,8 @@ Public Module BoxPlot
             .Groups _
             .Select(Function(x) x.Value) _
             .IteratesALL _
-            .ToArray.CreateAxisTicks
+            .Range _
+            .CreateAxisTicks
         Dim ranges As DoubleRange = ticks
 
         ranges *= rangeScale

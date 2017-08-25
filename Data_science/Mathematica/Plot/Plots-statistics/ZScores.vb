@@ -27,23 +27,39 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
-Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
 ''' Plot of the <see cref="Bootstraping.Z"/>
 ''' </summary>
 Public Module ZScoresPlot
 
-    Public Function Plot() As GraphicsData
+    <Extension>
+    Public Function Plot(data As ZScores, Optional size$ = "2700,3000", Optional margin$ = g.DefaultPadding, Optional bg$ = "white") As GraphicsData
+        Dim ticks#() = data.Range.CreateAxisTicks
+        Dim range As DoubleRange = ticks
+        Dim plotInternal =
+            Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
+            End Sub
+
+        Return g.GraphicsPlots(
+            size.SizeParser, margin,
+            bg,
+            plotInternal)
     End Function
-
-
 End Module
 
 Public Structure ZScores
@@ -54,6 +70,13 @@ Public Structure ZScores
     ''' Colors for the <see cref="groups"/>
     ''' </summary>
     Dim colors As Dictionary(Of String, Color)
+
+    Public Function Range() As DoubleRange
+        Return serials _
+            .Select(Function(d) d.Properties.Values) _
+            .IteratesALL _
+            .Range
+    End Function
 
     Public Shared Function Load(path$, groups As Dictionary(Of String, String()), colors As Color()) As ZScores
         Dim colorlist As LoopArray(Of Color) = colors
