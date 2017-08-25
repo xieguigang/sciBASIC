@@ -1,5 +1,7 @@
 ## Z-scores plot
 
+[test code](https://github.com/xieguigang/sciBASIC/blob/35b840c5261c8bbbe552af8f8d7e410d08445698/Data_science/Mathematica/Plot/Plots/Testing/ZScorePlotTest.vb)
+
 ```vbnet
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
