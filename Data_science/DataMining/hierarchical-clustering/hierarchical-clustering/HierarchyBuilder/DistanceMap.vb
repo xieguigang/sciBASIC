@@ -40,7 +40,7 @@ Namespace Hierarchy
     ''' </summary>
     Public Class DistanceMap
 
-        Private pairHash As Dictionary(Of String, Item)
+        Private pairHashTable As Dictionary(Of String, Item)
         Private data As PriorityQueue(Of Item)
 
         Private Class Item
@@ -74,7 +74,7 @@ Namespace Hierarchy
 
         Public Sub New()
             data = New PriorityQueue(Of Item)
-            pairHash = New Dictionary(Of String, Item)
+            pairHashTable = New Dictionary(Of String, Item)
         End Sub
 
         Public Function list() As IList(Of HierarchyTreeNode)
@@ -87,7 +87,7 @@ Namespace Hierarchy
 
         Public Function findByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Dim inCode As String = hashCodePair(c1, c2)
-            Return pairHash(inCode).pair
+            Return pairHashTable(inCode).pair
         End Function
 
         Public Function removeFirst() As HierarchyTreeNode
@@ -97,12 +97,12 @@ Namespace Hierarchy
             Loop
             If poll Is Nothing Then Return Nothing
             Dim link As HierarchyTreeNode = poll.pair
-            pairHash.Remove(poll.hash)
+            pairHashTable.Remove(poll.hash)
             Return link
         End Function
 
         Public Function remove(link As HierarchyTreeNode) As Boolean
-            Dim ___remove As Item = pairHash.RemoveAndGet(hashCodePair(link))
+            Dim ___remove As Item = pairHashTable.RemoveAndGet(hashCodePair(link))
             If ___remove Is Nothing Then Return False
             ___remove.removed = True
             data.Remove(___remove)
@@ -112,12 +112,13 @@ Namespace Hierarchy
 
         Public Function add(link As HierarchyTreeNode) As Boolean
             Dim e As New Item(Me, link)
-            Dim existingItem As Item = pairHash.TryGetValue(e.hash)
-            If existingItem IsNot Nothing Then
+
+            If pairHashTable.ContainsKey(e.hash) Then
+                Dim existingItem As Item = pairHashTable(e.hash)
                 Console.Error.WriteLine("hashCode = " & existingItem.hash & " adding redundant link:" & link.ToString & " (exist:" & existingItem.ToString & ")")
                 Return False
             Else
-                pairHash(e.hash) = e
+                pairHashTable(e.hash) = e
                 data.Enqueue(e)
                 Return True
             End If

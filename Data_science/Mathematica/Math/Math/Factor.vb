@@ -34,11 +34,23 @@ Imports Microsoft.VisualBasic.Linq
 Public Class Factor(Of T As IComparable(Of T)) : Inherits int
     Implements Value(Of T).IValueOf
 
-    Public Property FactorValue As T Implements Value(Of T).IValueOf.value
+    Public Property FactorValue As T Implements Value(Of T).IValueOf.Value
+
+    Sub New()
+    End Sub
+
+    Sub New(value As T, factor%)
+        Me.Value = factor
+        Me.FactorValue = value
+    End Sub
 
     Public Overrides Function ToString() As String
         Return FactorValue.ToString
     End Function
+
+    Public Overloads Shared Narrowing Operator CType(factor As Factor(Of T)) As T
+        Return factor.FactorValue
+    End Operator
 End Class
 
 Public Class Factors(Of T As IComparable(Of T)) : Inherits Index(Of T)

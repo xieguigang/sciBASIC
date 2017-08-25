@@ -136,12 +136,12 @@ Public Module KeyValuePairExtensions
     ''' <param name="distinct"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Keys(Of T As INamedValue)(source As IEnumerable(Of T), Optional distinct As Boolean = False) As String()
+    Public Function Keys(Of T As INamedValue)(source As IEnumerable(Of T), Optional distinct As Boolean = False) As List(Of String)
         Dim list As IEnumerable(Of String) = source.Select(Function(o) o.Key)
         If distinct Then
             list = list.Distinct
         End If
-        Return list.ToArray
+        Return list.AsList
     End Function
 
     <Extension>

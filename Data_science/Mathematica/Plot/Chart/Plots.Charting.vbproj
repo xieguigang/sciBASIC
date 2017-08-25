@@ -170,10 +170,6 @@
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
       <Name>ODEsSolver</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plots\Plots.Extensions\Plots.Extensions.vbproj">
-      <Project>{e939a9e5-b44c-417d-abc2-e5567b540062}</Project>
-      <Name>Plots.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plots\Plots.vbproj">
       <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>
       <Name>Plots</Name>

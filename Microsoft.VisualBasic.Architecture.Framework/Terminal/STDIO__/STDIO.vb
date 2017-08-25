@@ -97,7 +97,7 @@ Namespace Terminal
         End Sub
 
         ''' <summary>
-        ''' 不换行
+        ''' Alias for the <see cref="Console.Write"/>.(不换行)
         ''' </summary>
         ''' <param name="out"></param>
         ''' <remarks></remarks>

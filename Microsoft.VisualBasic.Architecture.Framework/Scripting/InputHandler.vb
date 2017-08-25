@@ -70,7 +70,7 @@ Namespace Scripting
             {GetType(Image), AddressOf Casting.CastImage},
             {GetType(FileInfo), AddressOf Casting.CastFileInfo},
             {GetType(Graphics2D), AddressOf Casting.CastGDIPlusDeviceHandle},
-            {GetType(Color), AddressOf ToColor},
+            {GetType(Color), AddressOf TranslateColor},
             {GetType(Font), AddressOf Casting.CastFont},
             {GetType(System.Net.IPEndPoint), AddressOf Casting.CastIPEndPoint},
             {GetType(Logging.LogFile), AddressOf Casting.CastLogFile},

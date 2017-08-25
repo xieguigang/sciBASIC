@@ -563,7 +563,7 @@ Namespace Emit.Delegates
             Return DirectCast(Expression.Lambda(returnExpression, sourceObjectParam).Compile(), Func(Of Object, Object))
         End Function
 
-        Public Function PropertyGet(Of TSource, TProperty)(propertyInfo As PropertyInfo) As Func(Of TSource, TProperty)
+        <Extension> Public Function PropertyGet(Of TSource, TProperty)(propertyInfo As PropertyInfo) As Func(Of TSource, TProperty)
             Return PropertyGet(Of TSource, TProperty)(Nothing, propertyInfo)
         End Function
 

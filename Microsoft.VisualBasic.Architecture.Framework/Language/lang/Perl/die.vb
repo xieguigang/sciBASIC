@@ -31,7 +31,32 @@ Namespace Language.Perl
     Public Structure ExceptionHandler
 
         Dim Message$
-        Dim failure As Func(Of Object, Boolean)
+        Dim failure As Assert(Of Object)
+
+        ''' <summary>
+        ''' Returns True means test failure
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Shared Function [Default](obj As Object) As Boolean
+            If obj Is Nothing Then
+                Return True
+            End If
+
+            With obj.GetType
+                If .ref Is GetType(Boolean) Then
+                    Return False = DirectCast(obj, Boolean)
+                ElseIf .ref Is GetType(String) Then
+                    Return String.IsNullOrEmpty(DirectCast(obj, String))
+                ElseIf .ref.IsInheritsFrom(GetType(Array)) Then
+                    Return DirectCast(obj, Array).Length = 0
+                    'ElseIf .ref.IsInheritsFrom(GetType(IEnumerable)) Then
+                    '    Return DirectCast(obj, IEnumerable)
+                Else
+                    Return False ' False表示没有错误
+                End If
+            End With
+        End Function
 
         ''' <summary>
         ''' Perl like exception handler syntax for testing the result is failure or not?
