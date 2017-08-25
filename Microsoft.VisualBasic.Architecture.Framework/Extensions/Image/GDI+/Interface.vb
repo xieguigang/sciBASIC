@@ -3526,22 +3526,14 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public MustOverride Sub FillEllipse(brush As Brush, rect As Rectangle)
-        '
-        ' Summary:
-        '     Fills the interior of an ellipse defined by a bounding rectangle specified by
-        '     a System.Drawing.RectangleF structure.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that represents the bounding rectangle that
-        '     defines the ellipse.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of an ellipse defined by a bounding rectangle specified by
+        ''' a System.Drawing.RectangleF structure.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="rect">System.Drawing.RectangleF structure that represents the bounding rectangle that
+        ''' defines the ellipse.</param>
         Public MustOverride Sub FillEllipse(brush As Brush, rect As RectangleF)
         '
         ' Summary:
@@ -3787,35 +3779,19 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
         Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
-        '
-        ' Summary:
-        '     Fills the interior of a rectangle specified by a System.Drawing.Rectangle structure.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   rect:
-        '     System.Drawing.Rectangle structure that represents the rectangle to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of a rectangle specified by a System.Drawing.Rectangle structure.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="rect">System.Drawing.Rectangle structure that represents the rectangle to fill.</param>
         Public MustOverride Sub FillRectangle(brush As Brush, rect As Rectangle)
-        '
-        ' Summary:
-        '     Fills the interior of a rectangle specified by a System.Drawing.RectangleF structure.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that represents the rectangle to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of a rectangle specified by a System.Drawing.RectangleF structure.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="rect">System.Drawing.RectangleF structure that represents the rectangle to fill.</param>
         Public MustOverride Sub FillRectangle(brush As Brush, rect As RectangleF)
         '
         ' Summary:
@@ -4498,48 +4474,27 @@ Namespace Imaging
         '     This method returns an array of System.Drawing.Region objects, each of which
         '     bounds a range of character positions within the specified string.
         Public MustOverride Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified by the text parameter as drawn with the font parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
+
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' </summary>
+        ''' <param name="text">String to measure.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified by the text parameter as drawn with the font parameter.
+        ''' </returns>
         Public MustOverride Function MeasureString(text As String, font As Font) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the format of the string.
-        '
-        '   width:
-        '     Maximum width of the string in pixels.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified in the text parameter as drawn with the font parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
+
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' </summary>
+        ''' <param name="text">String to measure.</param>
+        ''' <param name="font">System.Drawing.Font that defines the format of the string.</param>
+        ''' <param name="width">Maximum width of the string in pixels.</param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified in the text parameter as drawn with the font parameter.</returns>
         Public MustOverride Function MeasureString(text As String, font As Font, width As Integer) As SizeF
         '
         ' Summary:

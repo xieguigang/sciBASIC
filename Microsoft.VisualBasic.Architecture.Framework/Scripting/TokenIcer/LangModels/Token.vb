@@ -28,7 +28,6 @@
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace Scripting.TokenIcer
@@ -176,7 +175,9 @@ Namespace Scripting.TokenIcer
         Public Property Trace As LineValue
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return tokens _
+                .Select(Function(t) t.ToString) _
+                .JoinBy(" ")
         End Function
     End Class
 

@@ -479,7 +479,7 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
+    ''' java <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
     ''' </summary>
     ''' <param name="s$"></param>
     ''' <param name="args"></param>

@@ -1,0 +1,3 @@
++ [Plots](./Plots/Plots.vbproj) module have minimal required reference, only for some basically charting plot
++ [Plots-statistics](./Plots-statistics/Plots.Statistics.vbproj) module have more complexe project reference, it have the ability for drawing more complexe charting plots which is combined from sevral basically drawings.
++ [Chart](./Chart/Plots.Charting.vbproj) project for WinForm controls.

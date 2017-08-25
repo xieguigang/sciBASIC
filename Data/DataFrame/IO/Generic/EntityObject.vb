@@ -62,6 +62,10 @@ Namespace IO
             Me.Properties = props
         End Sub
 
+        Sub New(x As EntityObject)
+            Call Me.New(x.ID, New Dictionary(Of String, String)(x.Properties))
+        End Sub
+
         ''' <summary>
         ''' Copy prop[erty value
         ''' </summary>

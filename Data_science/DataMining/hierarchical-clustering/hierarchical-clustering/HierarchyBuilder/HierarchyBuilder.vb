@@ -52,7 +52,7 @@ Namespace Hierarchy
     Public Class HierarchyBuilder
 
         Public ReadOnly Property Distances As DistanceMap
-        Public ReadOnly Property Clusters As IList(Of Cluster)
+        Public ReadOnly Property Clusters As List(Of Cluster)
 
         Public ReadOnly Property TreeComplete As Boolean
             Get
@@ -60,14 +60,19 @@ Namespace Hierarchy
             End Get
         End Property
 
+        Const NoRoot$ = "No root available"
+
         Public ReadOnly Property RootCluster As Cluster
             Get
-                If Not TreeComplete Then Throw New Exception("No root available")
-                Return Clusters(0)
+                If Not TreeComplete Then
+                    Throw New EvaluateException(NoRoot)
+                Else
+                    Return Clusters(0)
+                End If
             End Get
         End Property
 
-        Public Sub New(clusters As IList(Of Cluster), distances As DistanceMap)
+        Public Sub New(clusters As List(Of Cluster), distances As DistanceMap)
             Me.Clusters = clusters
             Me.Distances = distances
         End Sub
@@ -91,6 +96,7 @@ Namespace Hierarchy
 
         Public Sub agglomerate(linkageStrategy As LinkageStrategy)
             Dim minDistLink As HierarchyTreeNode = Distances.removeFirst()
+
             If minDistLink IsNot Nothing Then
                 Clusters.Remove(minDistLink.rCluster())
                 Clusters.Remove(minDistLink.lCluster())
@@ -102,20 +108,21 @@ Namespace Hierarchy
                 For Each iClust As Cluster In Clusters
                     Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
                     Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
-                    Dim newLinkage As New HierarchyTreeNode
-                    newLinkage.lCluster = iClust
-                    newLinkage.rCluster = newCluster
-                    Dim distanceValues As ICollection(Of Distance) = New List(Of Distance)
+                    Dim newLinkage As New HierarchyTreeNode With {
+                        .lCluster = iClust,
+                        .rCluster = newCluster
+                    }
+                    Dim distanceValues As New List(Of Distance)
 
                     If link1 IsNot Nothing Then
                         Dim distVal As Double = link1.LinkageDistance
-                        Dim weightVal As Double = link1.getOtherCluster(iClust).WeightValue
+                        Dim weightVal As Double = link1.GetOtherCluster(iClust).WeightValue
                         distanceValues.Add(New Distance(distVal, weightVal))
                         Distances.remove(link1)
                     End If
                     If link2 IsNot Nothing Then
                         Dim distVal As Double = link2.LinkageDistance
-                        Dim weightVal As Double = link2.getOtherCluster(iClust).WeightValue
+                        Dim weightVal As Double = link2.GetOtherCluster(iClust).WeightValue
                         distanceValues.Add(New Distance(distVal, weightVal))
                         Distances.remove(link2)
                     End If
@@ -124,9 +131,9 @@ Namespace Hierarchy
 
                     newLinkage.LinkageDistance = newDistance.Distance
                     Distances.add(newLinkage)
+                Next
 
-                Next iClust
-                Clusters.Add(newCluster)
+                Call Clusters.Add(newCluster)
             End If
         End Sub
 
@@ -134,5 +141,4 @@ Namespace Hierarchy
             Return Distances.findByCodePair(c1, c2)
         End Function
     End Class
-
 End Namespace

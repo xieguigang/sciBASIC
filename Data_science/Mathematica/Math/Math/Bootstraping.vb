@@ -197,24 +197,35 @@ Public Module Bootstraping
 
     ''' <summary>
     ''' ###### Z-score 标准化(zero-mean normalization)
+    ''' 
     ''' 也叫标准差标准化，经过处理的数据符合标准正态分布，即均值为0，标准差为1
-    ''' 其中<paramref name="m"/>为所有样本数据的均值，<paramref name="sd"/>为所有样本数据的标准差。
+    ''' 其中<paramref name="μ"/>为所有样本数据的均值，<paramref name="σ"/>为所有样本数据的标准差。
     ''' </summary>
     ''' <param name="x#">Sample data</param>
-    ''' <param name="m#">Average</param>
-    ''' <param name="sd#">STD</param>
+    ''' <param name="μ#">μ is the mean of the population.</param>
+    ''' <param name="σ#">σ is the standard deviation of the population.</param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 注：是否要进行标准化，要根据具体实验定。如果特征非常稀疏，并且有大量的0（现实应用中很多特征都具有这个特点），
     ''' ``Z-score`` 标准化的过程几乎就是一个除0的过程，结果不可预料。
     ''' </remarks>
-    Public Function Z#(x#, m#, sd#)
-        Dim answer As Double = (x - m) / sd
+    Public Function Z#(x#, μ#, σ#)
+        Dim answer As Double = (x - μ) / σ
         Return answer
     End Function
 
     ''' <summary>
+    ''' ## Standard score
     ''' 
+    ''' In statistics, the standard score is the signed number of standard deviations by which the value of 
+    ''' an observation or data point is above the mean value of what is being observed or measured. Observed 
+    ''' values above the mean have positive standard scores, while values below the mean have negative 
+    ''' standard scores. The standard score is a dimensionless quantity obtained by subtracting the population 
+    ''' mean from an individual raw score and then dividing the difference by the population standard deviation. 
+    ''' This conversion process is called standardizing or normalizing (however, "normalizing" can refer to 
+    ''' many types of ratios; see normalization for more).
+    ''' 
+    ''' > https://en.wikipedia.org/wiki/Standard_score
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
@@ -222,9 +233,9 @@ Public Module Bootstraping
     ''' http://blog.163.com/huai_jing@126/blog/static/171861983201321074124426/
     ''' </remarks>
     <Extension> Public Function Z(x As Vector) As Vector
-        Dim m# = x.Average
-        Dim delta# = x.STD
-        Dim x1 As Vector = (x - m) / delta
+        Dim μ# = x.Average ' μ is the mean of the population.
+        Dim σ# = x.SD   ' σ is the standard deviation of the population.
+        Dim x1 As Vector = (x - μ) / σ
         Return x1
     End Function
 

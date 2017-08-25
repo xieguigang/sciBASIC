@@ -101,8 +101,16 @@ Namespace ComponentModel.Ranges
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 因为进行json序列化的话，因为这个实现了<see cref="IEnumerable(Of T)"/>接口，但是并没有实现Add方法，
+        ''' 所以会出错，这里取消使用json来生成<see cref="ToString"/>函数的结果
+        ''' </remarks>
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"[min={Min}, max={Max}]"
         End Function
 
         ''' <summary>
@@ -156,6 +164,25 @@ Namespace ComponentModel.Ranges
             Dim r As New DoubleRange
             Call exp.Parser(r.Min, r.Max)
             Return r
+        End Operator
+
+        Public Shared Widening Operator CType(data#()) As DoubleRange
+            With data
+                Return New DoubleRange(min:= .Min, max:= .Max)
+            End With
+        End Operator
+
+        ''' <summary>
+        ''' Scale numeric range
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <param name="factor#"></param>
+        ''' <returns></returns>
+        Public Shared Operator *(range As DoubleRange, factor#) As DoubleRange
+            With range
+                Dim delta = (.Length * factor - .Length) / 2
+                Return New DoubleRange(.Min - delta, .Max + delta)
+            End With
         End Operator
 
         ''' <summary>

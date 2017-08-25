@@ -61,9 +61,11 @@ Namespace d3js.SVG.CSS
 
     Public Class Font
 
-        Public Property font As String = MicrosoftYaHei
+        Public Property font As String = FontFace.MicrosoftYaHei
         Public Property color As String = "gray"
-        <Field("font-size")> Public Property font_size As Integer = 10
+
+        <Field("font-size")>
+        Public Property font_size As Integer = 10
 
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder

@@ -190,6 +190,8 @@
   <ItemGroup>
     <Compile Include="d3js\ScaleChromatic.vb" />
     <Compile Include="d3js\CSSModel.vb" />
+    <Compile Include="d3js\scale\IScale.vb" />
+    <Compile Include="d3js\scale\linear.vb" />
     <Compile Include="d3js\scale\Extensions.vb" />
     <Compile Include="d3js\scale\ordinal.vb" />
     <Compile Include="Drawing2D\Colors\ColorPalette.Designer.vb">

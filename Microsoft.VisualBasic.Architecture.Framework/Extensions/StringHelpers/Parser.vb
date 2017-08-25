@@ -90,8 +90,7 @@ Public Module PrimitiveParser
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property BooleanValues As SortedDictionary(Of String, Boolean) =
-        New SortedDictionary(Of String, Boolean) From {
+    Public ReadOnly Property BooleanValues As New SortedDictionary(Of String, Boolean) From {
  _
             {"t", True}, {"true", True},
             {"1", True},

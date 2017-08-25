@@ -1,40 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::4bfb257978e7dcbe72374eeb8aaf2c81, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\FontFace.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Text
+Imports DefaultFont = Microsoft.VisualBasic.Language.DefaultValue(Of System.Drawing.Font)
 
 Namespace Imaging
 
     ''' <summary>
     ''' Font names collection
     ''' </summary>
-    Public Module FontFace
+    Public NotInheritable Class FontFace
 
         ''' <summary>
         ''' 微软雅黑字体的名称
@@ -56,11 +57,10 @@ Namespace Imaging
         Public Const Tahoma As String = "Tahoma"
         Public Const TimesNewRoman As String = "Times New Roman"
 
-        Public ReadOnly Property InstalledFontFamilies As IReadOnlyCollection(Of String)
+        Public Shared ReadOnly Property InstalledFontFamilies As IReadOnlyCollection(Of String)
 
-        ReadOnly __fontFamilies As Dictionary(Of String, String)
-
-        Sub New()
+        Shared ReadOnly __fontFamilies As Dictionary(Of String, String)
+        Shared Sub New()
             Dim fontFamilies() As FontFamily
             Dim installedFontCollection As New InstalledFontCollection()
 
@@ -74,13 +74,17 @@ Namespace Imaging
             Next
         End Sub
 
+        Private Sub New()
+        End Sub
+
         ''' <summary>
-        ''' 由于字体名称的大小写敏感，所以假若是html css之类的渲染的话，由于可能会是小写的字体名称会导致无法正确的加载所需要的字体，所以可以使用这个函数来消除这种由于大小写敏感而带来的bug
+        ''' 由于字体名称的大小写敏感，所以假若是html css之类的渲染的话，由于可能会是小写的字体名称会导致无法
+        ''' 正确的加载所需要的字体，所以可以使用这个函数来消除这种由于大小写敏感而带来的bug
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <param name="default">默认使用Windows10的默认字体</param>
         ''' <returns></returns>
-        Public Function GetFontName(name$, Optional default$ = FontFace.SegoeUI) As String
+        Public Shared Function GetFontName(name$, Optional default$ = FontFace.SegoeUI) As String
             If __fontFamilies.ContainsKey(name) Then
                 Return __fontFamilies(name)
             Else
@@ -93,5 +97,21 @@ Namespace Imaging
                 End If
             End If
         End Function
+    End Class
+
+    ''' <summary>
+    ''' Default font values
+    ''' </summary>
+    Public Module DefaultFontValues
+
+        Public NotInheritable Class MicrosoftYaHei
+
+            Public Shared ReadOnly Property Normal As DefaultFont = New Font(FontFace.MicrosoftYaHei, 12, FontStyle.Regular)
+            Public Shared ReadOnly Property Large As DefaultFont = New Font(FontFace.MicrosoftYaHei, 30, FontStyle.Regular)
+            Public Shared ReadOnly Property Bold As DefaultFont = New Font(FontFace.MicrosoftYaHei, 12, FontStyle.Bold)
+
+            Private Sub New()
+            End Sub
+        End Class
     End Module
 End Namespace
