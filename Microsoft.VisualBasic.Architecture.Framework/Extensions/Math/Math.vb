@@ -625,19 +625,13 @@ Namespace Math
         Public Function Log(a As Double, newBase As Double) As Double
             Return sys.Log(a, newBase)
         End Function
-        '
-        ' Summary:
-        '     Returns the smaller of two decimal numbers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two decimal numbers to compare.
-        '
-        '   val2:
-        '     The second of two decimal numbers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is smaller.
+
+        ''' <summary>
+        ''' Returns the smaller of two decimal numbers.
+        ''' </summary>
+        ''' <param name="val1">The first of two decimal numbers to compare.</param>
+        ''' <param name="val2">The second of two decimal numbers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Min(val1 As Decimal, val2 As Decimal) As Decimal
             If val1 < val2 Then
