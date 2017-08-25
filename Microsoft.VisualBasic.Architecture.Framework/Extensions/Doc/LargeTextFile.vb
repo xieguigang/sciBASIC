@@ -79,11 +79,11 @@ Public Module LargeTextFile
     End Function
 
     Private Function __textPartitioning(dat As String(), maxSize As Double) As String()()
-        Dim currentSize As Double = (From s As String In dat.AsParallel Select CDbl(Len(s))).ToArray.Sum
+        Dim currentSize As Double = (From s As String In dat.AsParallel Select CDbl(Len(s))).Sum
         If currentSize > maxSize Then
             Dim SplitTokens = dat.Split(CInt(dat.Length / 2))
             If SplitTokens.Length > 1 Then
-                Return (From n In SplitTokens Select __textPartitioning(n, maxSize)).ToArray.ToVector
+                Return (From n In SplitTokens Select __textPartitioning(n, maxSize)).ToVector
             Else
                 Return SplitTokens
             End If

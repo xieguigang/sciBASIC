@@ -30,7 +30,6 @@ Imports System.IO
 Imports System.Text
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -75,14 +74,14 @@ Namespace ComponentModel
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="encoding"><see cref="System.Text.Encoding.Default"/>, if null</param>
-        Sub New(path As String, Optional encoding As Encoding = Nothing, Optional maxBufferSize As Integer = BufferedStream.maxBufferSize)
+        Sub New(path$, Optional encoding As Encoding = Nothing, Optional maxBufferSize As Integer = BufferedStream.maxBufferSize)
             If Not path.FileExists Then
                 Throw New FileNotFoundException("Buffer file is not found!", path.GetFullPath)
             ElseIf maxBufferSize > BufferedStream.maxBufferSize Then
                 Throw New InternalBufferOverflowException($"String reader buffer(size={maxBufferSize} bytes) is too large!")
             Else
                 FileName = path
-                encoding = encoding.Assertion
+                encoding = encoding Or DefaultEncoding
                 __encoding = encoding
             End If
 
