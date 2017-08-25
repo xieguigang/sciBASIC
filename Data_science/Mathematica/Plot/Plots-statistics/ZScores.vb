@@ -49,7 +49,7 @@ Public Module ZScoresPlot
 
     <Extension>
     Public Function Plot(data As ZScores,
-                         Optional size$ = "2700,3000",
+                         Optional size$ = "2200,2400",
                          Optional margin$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional title$ = "Z-scores",
@@ -57,7 +57,7 @@ Public Module ZScoresPlot
                          Optional serialLabelFontCSS$ = CSSFont.Win7LargerNormal,
                          Optional legendLabelFontCSS$ = CSSFont.Win7LittleLarge,
                          Optional tickFontCSS$ = CSSFont.Win7Normal,
-                         Optional pointWidth! = 5,
+                         Optional pointWidth! = 10,
                          Optional axisStrokeCSS$ = Stroke.AxisStroke) As GraphicsData
 
         Dim ticks#() = data.Range.CreateAxisTicks
@@ -86,9 +86,9 @@ Public Module ZScoresPlot
                 Dim X = Function(Z#)
                             Return rect.Padding.Left + maxSerialLabelSize.Width + 5 + range.ScaleMapping(Z, plotWidthRange)
                         End Function
-                Dim dy! = plotHeight / (data.serials.Length - 1)
+                Dim dy! = plotHeight / (data.serials.Length)
                 Dim yTop! = rect.Padding.Top
-                Dim left! = X(0)
+                Dim left! = X(range.Min)
                 Dim labelSize As SizeF
                 Dim labelPosition As PointF
                 Dim pt As PointF
@@ -113,6 +113,8 @@ Public Module ZScoresPlot
                             g.FillEllipse(color, New RectangleF(pt, pointSize))
                         Next
                     Next
+
+                    yTop += dy
                 Next
 
                 ' 绘制出X轴的ticks
