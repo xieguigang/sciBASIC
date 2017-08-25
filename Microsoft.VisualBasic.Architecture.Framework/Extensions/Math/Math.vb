@@ -1746,16 +1746,25 @@ Namespace Math
         End Function
 
         ''' <summary>
-        ''' Standard Deviation
+        ''' ## Standard Deviation
+        ''' 
+        ''' In statistics, the standard deviation (SD, also represented by the Greek letter sigma σ or the Latin letter s) 
+        ''' is a measure that is used to quantify the amount of variation or dispersion of a set of data values. A low 
+        ''' standard deviation indicates that the data points tend to be close to the mean (also called the expected value) 
+        ''' of the set, while a high standard deviation indicates that the data points are spread out over a wider range of 
+        ''' values.
+        ''' 
+        ''' > https://en.wikipedia.org/wiki/Standard_deviation
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("STD", Info:="Standard Deviation")>
-        <Extension> Public Function STD(values As IEnumerable(Of Double)) As Double
-            Dim Avg As Double = values.Average
-            Dim LQuery = (From n As Double In values Select (n - Avg) ^ 2).ToArray
-            Return sys.Sqrt(LQuery.Sum / LQuery.Length)
+        <Extension> Public Function SD(values As IEnumerable(Of Double)) As Double
+            Dim data#() = values.ToArray
+            Dim avg# = data.Average
+            Dim sumValue# = Aggregate n As Double In data Into Sum((n - avg) ^ 2)
+            Return sys.Sqrt(sumValue / data.Length)
         End Function
 
         ''' <summary>
@@ -1765,8 +1774,8 @@ Namespace Math
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("STD", Info:="Standard Deviation")>
-        <Extension> Public Function STD(values As IEnumerable(Of Integer)) As Double
-            Return values.Select(Function(x) CDbl(x)).STD
+        <Extension> Public Function SD(values As IEnumerable(Of Integer)) As Double
+            Return values.Select(Function(x) CDbl(x)).SD
         End Function
 
         ''' <summary>
@@ -1776,8 +1785,8 @@ Namespace Math
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("STD", Info:="Standard Deviation")>
-        <Extension> Public Function STD(values As IEnumerable(Of Long)) As Double
-            Return values.Select(Function(x) CDbl(x)).STD
+        <Extension> Public Function SD(values As IEnumerable(Of Long)) As Double
+            Return values.Select(Function(x) CDbl(x)).SD
         End Function
 
         ''' <summary>
@@ -1787,8 +1796,8 @@ Namespace Math
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("STD", Info:="Standard Deviation")>
-        <Extension> Public Function STD(values As IEnumerable(Of Single)) As Double
-            Return values.Select(Function(x) CDbl(x)).STD
+        <Extension> Public Function SD(values As IEnumerable(Of Single)) As Double
+            Return values.Select(Function(x) CDbl(x)).SD
         End Function
 
         ''' <summary>

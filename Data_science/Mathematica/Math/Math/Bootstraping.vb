@@ -223,7 +223,7 @@ Public Module Bootstraping
     ''' </remarks>
     <Extension> Public Function Z(x As Vector) As Vector
         Dim m# = x.Average
-        Dim delta# = x.STD
+        Dim delta# = x.SD
         Dim x1 As Vector = (x - m) / delta
         Return x1
     End Function
