@@ -105,7 +105,10 @@ Public Module ZScoresPlot
                     For Each group In groups
                         Dim color As New SolidBrush(colors(group.Key))
 
-                        For Each Z As Double In serial.TakeValues(group.Value)
+                        For Each Z As Double In serial _
+                            .TakeValues(group.Value) _
+                            .Where(Function(n) Not n.IsNaNImaginary)
+
                             pt = New PointF(X(Z), yPoints)
                             g.FillEllipse(color, New RectangleF(pt, pointSize))
                         Next
@@ -162,12 +165,13 @@ Public Structure ZScores
         Return serials _
             .Select(Function(d) d.Properties.Values) _
             .IteratesALL _
+            .Where(Function(x) Not x.IsNaNImaginary) _
             .Range
     End Function
 
     Public Shared Function Load(path$, groups As Dictionary(Of String, String()), colors As Color()) As ZScores
         Dim colorlist As LoopArray(Of Color) = colors
-        Dim datalist As DataSet() = DataSet.LoadDataSet(path)
+        Dim datalist As DataSet() = DataSet.LoadDataSet(path).ToArray
         Dim names As New NamedVectorFactory(datalist.PropertyNames)
         Dim zscores = datalist _
             .Select(Function(serial)
