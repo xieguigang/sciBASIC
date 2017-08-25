@@ -58,9 +58,11 @@ Public Module ZScoresPlot
                          Optional serialLabelFontCSS$ = CSSFont.Win7LargerNormal,
                          Optional legendLabelFontCSS$ = CSSFont.Win7LittleLarge,
                          Optional tickFontCSS$ = CSSFont.Win7Normal,
-                         Optional pointWidth! = 10,
+                         Optional pointWidth! = 20,
                          Optional axisStrokeCSS$ = Stroke.AxisStroke,
-                         Optional legendBoxStroke$ = Stroke.AxisStroke) As GraphicsData
+                         Optional legendBoxStroke$ = Stroke.AxisStroke,
+                         Optional displayZERO As Boolean = True,
+                         Optional ZEROStrokeCSS$ = Stroke.AxisGridStroke) As GraphicsData
 
         Dim ticks#() = data.Range.CreateAxisTicks
         Dim range As DoubleRange = ticks
@@ -95,6 +97,20 @@ Public Module ZScoresPlot
                 Dim labelPosition As PointF
                 Dim pt As PointF
 
+                ' 分别绘制出X坐标轴和Y坐标轴
+                g.DrawLine(axisStroke, New PointF(left, yTop), New PointF(left, yTop + plotHeight))
+                g.DrawLine(axisStroke,
+                           New PointF(left, yTop + plotHeight),
+                           New PointF(left + plotWidth, yTop + plotHeight))
+
+                If displayZERO Then
+                    Dim zeroPen As Pen = Stroke.TryParse(ZEROStrokeCSS).GDIObject
+
+                    g.DrawLine(zeroPen,
+                               New PointF(X(0), yTop),
+                               New PointF(X(0), yTop + plotHeight))
+                End If
+
                 ' 绘制出每一个系列的点和相应的标签字符串
                 For Each serial As DataSet In data.serials
                     Dim labelY = yTop + (dy - serialLabelFont.Height) / 2
@@ -119,6 +135,8 @@ Public Module ZScoresPlot
                     yTop += dy
                 Next
 
+                yTop! = rect.Padding.Top
+
                 ' 绘制出X轴的ticks
                 For Each tick As Double In ticks
                     labelSize = g.MeasureString(tick, tickFont)
@@ -131,13 +149,6 @@ Public Module ZScoresPlot
                     g.DrawString(tick, tickFont, Brushes.Black, labelPosition)
                     g.DrawLine(Pens.Black, New PointF(pt.X, yTop), New PointF(pt.X, yTop + 8))
                 Next
-
-                ' 分别绘制出X坐标轴和Y坐标轴
-                yTop = rect.Padding.Top
-                g.DrawLine(axisStroke, New PointF(left, yTop), New PointF(left, yTop + plotHeight))
-                g.DrawLine(axisStroke,
-                           New PointF(left, yTop + plotHeight),
-                           New PointF(left + plotWidth, yTop + plotHeight))
 
                 ' 绘制出标题
                 labelSize = g.MeasureString(title, titleFont)
@@ -221,7 +232,7 @@ Public Structure ZScores
         }
     End Function
 
-    Public Shared Function Load(path$, groups As Dictionary(Of String, String()), Optional colors$ = ColorBrewer.QualitativeSchemes.Paired12) As ZScores
+    Public Shared Function Load(path$, groups As Dictionary(Of String, String()), Optional colors$ = ColorBrewer.QualitativeSchemes.Set2_8) As ZScores
         Return ZScores.Load(path, groups, Designer.GetColors(colors))
     End Function
 End Structure
