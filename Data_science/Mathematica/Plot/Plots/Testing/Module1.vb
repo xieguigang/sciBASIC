@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Module Module1
@@ -130,12 +131,15 @@ Module Module1
         'Call CMeansVisualize()
         'Pause()
 
-        Dim datahm = DataSet.LoadDataSet("C:\Users\gg.xie\Desktop\1. siRelB vs sictrl.csv")
-        Call Heatmap.Heatmap.Plot(datahm, mapName:=ColorMap.PatternHot,
-                          mapLevels:=20,
+        Dim datahm = DataSet.LoadDataSet("C:\Users\xieguigang\Desktop\ttttttt.csv")
+        Call Heatmap.Heatmap.Plot(datahm, mapName:=ColorBrewer.DivergingSchemes.RdYlGn11,
+                                   size:="2000,3600",
+                                  drawScaleMethod:=Heatmap.DrawElements.Cols,
+                                  logTransform:=2,
+                          mapLevels:=120,
                           padding:="padding: 300",
                           legendTitle:="Spearman correlations",
-                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("C:\Users\gg.xie\Desktop\1. siRelB vs sictrl.png")
+                          rowLabelfontStyle:=CSSFont.Win10Normal).Save("C:\Users\xieguigang\Desktop\ttttttt.png")
         Pause()
         Dim data = csv.LoadBarData(
     "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",

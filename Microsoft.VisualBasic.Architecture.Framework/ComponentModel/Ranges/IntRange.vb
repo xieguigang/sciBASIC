@@ -84,8 +84,15 @@ Namespace ComponentModel.Ranges
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="DoubleRange.ToString()"/>
+        ''' </remarks>
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"[min={Min}, max={Max}]"
         End Function
 
         ''' <summary>

@@ -56,7 +56,7 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Circle
                     Dim r As Single = sys.Min(graphicsSize.Height, graphicsSize.Width) / 2
-                    Dim c As New Point(pos.X + graphicsSize.Width / 2,
+                    Dim c As New Point(pos.X + graphicsSize.Height,
                                        pos.Y + graphicsSize.Height / 2)
 
                     Call Circle.Draw(g, c, r, New SolidBrush(l.color.ToColor), border)
@@ -153,11 +153,12 @@ Namespace Graphic.Legend
 
             End Select
 
-            Call g.DrawString(l.title,
-                              font,
-                              Brushes.Black,
-                              New Point(pos.X + graphicsSize.Width + 5,
-                                        pos.Y + (graphicsSize.Height - fSize.Height) / 2))
+            Dim labelPosition As New Point With {
+                .X = pos.X + graphicsSize.Height * 2.5,
+                .Y = pos.Y + (graphicsSize.Height - fSize.Height) / 2
+            }
+
+            Call g.DrawString(l.title, font, Brushes.Black, labelPosition)
 
             If fSize.Height > graphicsSize.Height Then
                 Return fSize
@@ -171,7 +172,7 @@ Namespace Graphic.Legend
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="topLeft"></param>
-        ''' <param name="ls"></param>
+        ''' <param name="legends"></param>
         ''' <param name="graphicSize">
         ''' 单个legend图形的绘图区域的大小，图例之中的shap的大小都是根据这个参数来进行限制自动调整的
         ''' </param>
@@ -181,7 +182,7 @@ Namespace Graphic.Legend
         <Extension>
         Public Sub DrawLegends(ByRef g As IGraphics,
                                topLeft As Point,
-                               ls As IEnumerable(Of Legend),
+                               legends As IEnumerable(Of Legend),
                                Optional graphicSize As SizeF = Nothing,
                                Optional d% = 10,
                                Optional border As Stroke = Nothing,
@@ -192,13 +193,13 @@ Namespace Graphic.Legend
             Dim ZERO As Point = topLeft
             Dim n As Integer
             Dim size As SizeF
-            Dim legends As Legend() = ls.ToArray
+            Dim legendList As Legend() = legends.ToArray
 
             If graphicSize.IsEmpty Then
                 graphicSize = New SizeF(120.0!, 45.0!)
             End If
 
-            For Each l As Legend In legends
+            For Each l As Legend In legendList
                 n += 1
                 size = g.DrawLegend(topLeft, graphicSize, l, border, radius)
                 topLeft = New Point(
@@ -207,7 +208,7 @@ Namespace Graphic.Legend
             Next
 
             If Not regionBorder Is Nothing Then
-                Dim maxTitleSize As SizeF = legends.MaxLegendSize(g)
+                Dim maxTitleSize As SizeF = legendList.MaxLegendSize(g)
 
                 With graphicSize
                     size = New SizeF(.Width + d + maxTitleSize.Width, Math.Max(.Height, maxTitleSize.Height) * (n + 1))

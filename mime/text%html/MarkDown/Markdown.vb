@@ -1121,7 +1121,7 @@ Namespace MarkDown
             )
             ((?=^[ ]{{0,{0}}}[^ \t\n])|\Z) # Lookahead for non-space at line-start, or end of doc"
 
-        Private Shared _codeBlock As New Regex(String.Format(codeBlockRegexp, _tabWidth), RawCompileOptions)
+        Private Shared _codeBlock As New Regex(String.Format(codeBlockRegexp, _tabWidth), RegexPythonRawString)
 
         ''' <summary>
         ''' Turn Markdown 4-space indented code into HTML pre code blocks

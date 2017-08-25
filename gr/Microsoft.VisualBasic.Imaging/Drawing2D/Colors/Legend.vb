@@ -31,7 +31,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Colors
@@ -200,7 +199,8 @@ Namespace Drawing2D.Colors
                                          region As Rectangle,
                                          Optional padding$ = g.ZeroPadding,
                                          Optional labelFontCSS$ = CSSFont.Win7Normal,
-                                         Optional AxisStroke$ = Stroke.AxisStroke)
+                                         Optional AxisStroke$ = Stroke.AxisStroke,
+                                         Optional scientificNotation As Boolean = False)
 
             Dim font As Font = CSSFont.TryParse(labelFontCSS)
             Dim l = designer.Length
@@ -229,7 +229,7 @@ Namespace Drawing2D.Colors
                     .RangeTransform({region.Left, region.Right}) _
                     .SeqIterator
 
-                    Dim tick$ = ticks(i)
+                    Dim tick$ = If(scientificNotation, ticks(i).ToString("G2"), ticks(i))
                     Dim fsize = g.MeasureString(tick, font)
 
                     x = i.value

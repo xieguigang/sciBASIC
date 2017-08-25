@@ -41,7 +41,24 @@ Call csv.Save("./visitors_updated.csv", Encodings.ASCII)
 |![](./Example/rowModify.png)|
 
 
+### Using Reflection
 
+```vbnet
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
+
+Dim visitors As Visitor() = "../../../../Example/visitors.csv".LoadCsv(Of Visitor)
+Dim dynamics As EntityObject() = EntityObject.LoadDataSet("../../../../Example/visitors.csv").ToArray
+
+Call visitors.SaveTo("./test.csv")
+Call dynamics.SaveTo("./test2.csv")
+
+For Each visit In dynamics
+    With visit
+        Call println("%s visit %s at %s", !ip, !url, !time)
+    End With
+Next
+```
 
 
 

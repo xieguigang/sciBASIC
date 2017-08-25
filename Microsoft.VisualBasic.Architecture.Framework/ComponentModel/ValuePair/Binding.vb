@@ -29,7 +29,9 @@
 Namespace ComponentModel
 
     ''' <summary>
-    ''' 作用与<see cref="KeyValuePair(Of T, K)"/>类似，只不过类型的名称更加符合绑定的描述
+    ''' Functioning the same as the <see cref="KeyValuePair(Of T, K)"/>, but with more specific on the name. 
+    ''' <see cref="KeyValuePair(Of T, K)"/> its name is too generic.
+    ''' (作用与<see cref="KeyValuePair(Of T, K)"/>类似，只不过类型的名称更加符合绑定的描述)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <typeparam name="K"></typeparam>
@@ -39,7 +41,8 @@ Namespace ComponentModel
         Dim Target As K
 
         ''' <summary>
-        ''' 当<see cref="Bind"/>以及<see cref="Target"/>都同时为空值的时候这个参数才会为真
+        ''' If the field <see cref="Bind"/> and <see cref="Target"/> are both nothing, then this binding is empty.
+        ''' (当<see cref="Bind"/>以及<see cref="Target"/>都同时为空值的时候这个参数才会为真)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property IsEmpty As Boolean
@@ -54,7 +57,11 @@ Namespace ComponentModel
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Bind.ToString & " --> " & Target.ToString
+            If IsEmpty Then
+                Return "No binding"
+            Else
+                Return Bind.ToString & " --> " & Target.ToString
+            End If
         End Function
 
         ''' <summary>
@@ -65,6 +72,11 @@ Namespace ComponentModel
             Return Me
         End Function
 
+        ''' <summary>
+        ''' Implicit convert this binding as the <see cref="System.Tuple(Of T, K)"/>
+        ''' </summary>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Shared Narrowing Operator CType(b As Binding(Of T, K)) As Tuple(Of T, K)
             Return New Tuple(Of T, K)(b.Bind, b.Target)
         End Operator
