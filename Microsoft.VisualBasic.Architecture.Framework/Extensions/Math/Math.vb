@@ -57,19 +57,13 @@ Namespace Math
         Public Const E# = sys.E
 
 #Region "Imports System.Math"
-        '
-        ' Summary:
-        '     Returns the smaller of two 8-bit unsigned integers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two 8-bit unsigned integers to compare.
-        '
-        '   val2:
-        '     The second of two 8-bit unsigned integers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is smaller.
+
+        ''' <summary>
+        ''' Returns the smaller of two 8-bit unsigned integers.
+        ''' </summary>
+        ''' <param name="val1">The first of two 8-bit unsigned integers to compare.</param>
+        ''' <param name="val2">The second of two 8-bit unsigned integers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Min(val1 As Byte, val2 As Byte) As Byte
             If val1 < val2 Then
@@ -78,19 +72,13 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the smaller of two 8-bit signed integers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two 8-bit signed integers to compare.
-        '
-        '   val2:
-        '     The second of two 8-bit signed integers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is smaller.
+
+        ''' <summary>
+        ''' Returns the smaller of two 8-bit signed integers.
+        ''' </summary>
+        ''' <param name="val1">The first of two 8-bit signed integers to compare.</param>
+        ''' <param name="val2">The second of two 8-bit signed integers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Min(val1 As SByte, val2 As SByte) As SByte
             If val1 < val2 Then
@@ -99,19 +87,13 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the larger of two decimal numbers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two decimal numbers to compare.
-        '
-        '   val2:
-        '     The second of two decimal numbers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is larger.
+
+        ''' <summary>
+        ''' Returns the larger of two decimal numbers.
+        ''' </summary>
+        ''' <param name="val1">The first of two decimal numbers to compare.</param>
+        ''' <param name="val2">The second of two decimal numbers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is larger.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Max(val1 As Decimal, val2 As Decimal) As Decimal
             If val1 > val2 Then
@@ -120,20 +102,14 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the larger of two double-precision floating-point numbers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two double-precision floating-point numbers to compare.
-        '
-        '   val2:
-        '     The second of two double-precision floating-point numbers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is larger. If val1, val2, or both val1 and
-        '     val2 are equal to System.Double.NaN, System.Double.NaN is returned.
+
+        ''' <summary>
+        ''' Returns the larger of two double-precision floating-point numbers.
+        ''' </summary>
+        ''' <param name="val1">The first of two double-precision floating-point numbers to compare.</param>
+        ''' <param name="val2">The second of two double-precision floating-point numbers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is larger. If val1, val2, or both val1 and
+        ''' val2 are equal to System.Double.NaN, System.Double.NaN is returned.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Max(val1 As Double, val2 As Double) As Double
             If val1 > val2 Then
@@ -142,20 +118,14 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the larger of two single-precision floating-point numbers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two single-precision floating-point numbers to compare.
-        '
-        '   val2:
-        '     The second of two single-precision floating-point numbers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is larger. If val1, or val2, or both val1 and
-        '     val2 are equal to System.Single.NaN, System.Single.NaN is returned.
+
+        ''' <summary>
+        ''' Returns the larger of two single-precision floating-point numbers.
+        ''' </summary>
+        ''' <param name="val1">The first of two single-precision floating-point numbers to compare.</param>
+        ''' <param name="val2">The second of two single-precision floating-point numbers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is larger. If val1, or val2, or both val1 and
+        ''' val2 are equal to System.Single.NaN, System.Single.NaN is returned.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Max(val1 As Single, val2 As Single) As Single
             If val1 > val2 Then
