@@ -1,6 +1,16 @@
-﻿Namespace Language
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Perl
+
+Namespace Language
 
     Public Module LanguageAPI
+
+        Friend ReadOnly defaultAssert As New DefaultValue(Of Assert(Of Object)) With {
+            .Value = AddressOf ExceptionHandler.Default,
+            .assert = Function(assert)
+                          Return assert Is Nothing
+                      End Function
+        }
 
         ''' <summary>
         ''' 模拟R语言之中的``%||%``操作符
@@ -22,8 +32,13 @@
         Public Function [Default](Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .Value = x,
-                .assert = isNothing Or DefaultValue(Of T).defaultAssert
+                .assert = isNothing Or defaultAssert
             }
+        End Function
+
+        <Extension>
+        Public Function AsDefault(Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As DefaultValue(Of T)
+            Return [Default](x, isNothing)
         End Function
     End Module
 End Namespace

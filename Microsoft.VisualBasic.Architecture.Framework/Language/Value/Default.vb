@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Language.Perl
-
-Namespace Language
+﻿Namespace Language
 
     Public Delegate Function Assert(Of T)(obj As T) As Boolean
 
@@ -18,13 +16,6 @@ Namespace Language
         ''' asset that if target value is null?
         ''' </summary>
         Dim assert As Assert(Of Object)
-
-        Friend Shared ReadOnly defaultAssert As New DefaultValue(Of Assert(Of Object)) With {
-            .Value = AddressOf ExceptionHandler.Default,
-            .assert = Function(assert)
-                          Return assert Is Nothing
-                      End Function
-        }
 
         Public Overrides Function ToString() As String
             Return $"default({Value})"
