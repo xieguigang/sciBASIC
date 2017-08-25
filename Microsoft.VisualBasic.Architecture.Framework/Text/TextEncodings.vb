@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Language
+Imports defaultEncoding = Microsoft.VisualBasic.Language.DefaultValue(Of System.Text.Encoding)
 
 Namespace Text
 
@@ -63,20 +63,38 @@ Namespace Text
         GB2312
     End Enum
 
+    ''' <summary>
+    ''' 表示字符编码。若要浏览此类型的.NET Framework 源代码，请参阅 Reference Source。
+    ''' </summary>
     Public Module TextEncodings
 
         ''' <summary>
-        ''' Default value or user specific?
+        ''' 获取操作系统的当前 ANSI 代码页的编码。
         ''' </summary>
-        ''' <param name="encoding"></param>
         ''' <returns></returns>
-        <Extension> Public Function Assertion(encoding As Encoding) As Encoding
-            If encoding Is Nothing Then
-                Return Encoding.Default
+        Public ReadOnly Property DefaultEncoding As defaultEncoding = Encoding.Default
+        ''' <summary>
+        ''' 获取 UTF-8 格式的编码。
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property UTF8 As defaultEncoding = Encoding.UTF8
+
+        ''' <summary>
+        ''' 构造函数会自动的从命令行配置之中设置默认的编码格式
+        ''' </summary>
+        Sub New()
+            ' setting default codepage from App commandline options for current App Process session.
+            Dim codepage$ = App.GetVariable("default_encoding")
+
+            ' If no settings from the commandline, using default ANSI encoding
+            If codepage.StringEmpty Then
+                DefaultEncoding = Encoding.Default
             Else
-                Return encoding
+                DefaultEncoding = Text _
+                    .ParseEncodingsName(codepage, Encodings.Default) _
+                    .CodePage
             End If
-        End Function
+        End Sub
 
         Public ReadOnly Property TextEncodings As IReadOnlyDictionary(Of Encodings, Encoding) =
             New Dictionary(Of Encodings, Encoding) From {
@@ -145,7 +163,7 @@ Namespace Text
         ''' <param name="from"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function TransEncoding(path As String, encoding As Encodings, Optional from As Encoding = Nothing) As Boolean
+        Public Function TransEncoding(path$, encoding As Encodings, Optional from As Encoding = Nothing) As Boolean
             If Not path.FileExists Then
                 Call "".SaveTo(path, encoding.CodePage)
             End If

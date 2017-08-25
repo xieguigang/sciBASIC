@@ -138,9 +138,9 @@ Public Module TextDoc
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <Extension> Public Function ReadFirstLine(path As String) As String
+    <Extension> Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
-            Using reader As StreamReader = New StreamReader(file, DefaultEncoding)
+            Using reader As New StreamReader(file, encoding Or DefaultEncoding)
                 Dim first As String = reader.ReadLine
                 Return first
             End Using
@@ -161,22 +161,22 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 这个函数只建议读取小文本文件的时候使用
+    ''' This function just suite for read a small text file.(这个函数只建议读取小文本文件的时候使用)
     ''' </summary>
     ''' <param name="path"></param>
-    ''' <param name="encoding">Default value is UTF8</param>
+    ''' <param name="encoding">Default value is <see cref="Encoding.UTF8"/></param>
     ''' <param name="suppress">Suppress error message??</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Read.TXT")>
     <Extension>
-    Public Function ReadAllText(path As String, Optional encoding As Encoding = Nothing, Optional throwEx As Boolean = True, Optional suppress As Boolean = False) As String
-        If encoding Is Nothing Then
-            encoding = DefaultEncoding
-        End If
+    Public Function ReadAllText(path$,
+                                Optional encoding As Encoding = Nothing,
+                                Optional throwEx As Boolean = True,
+                                Optional suppress As Boolean = False) As String
         Try
-            Return FileIO.FileSystem.ReadAllText(path, encoding:=encoding)
+            Return FileIO.FileSystem.ReadAllText(path, encoding:=encoding Or UTF8)
         Catch ex As Exception
             ex = New Exception(path.ToFileURL, ex)
             If throwEx Then
@@ -205,33 +205,12 @@ Public Module TextDoc
     <ExportAPI("Read.Lines")>
     <Extension>
     Public Function ReadAllLines(path As String, Optional Encoding As Encoding = Nothing) As String()
-        If Encoding Is Nothing Then
-            Encoding = DefaultEncoding
-        End If
         If path.FileExists Then
-            Return IO.File.ReadAllLines(path, encoding:=Encoding)
+            Return IO.File.ReadAllLines(path, encoding:=Encoding Or DefaultEncoding)
         Else
             Return New String() {}
         End If
     End Function
-
-    ''' <summary>
-    ''' Default is <see cref="Encoding.Default"/>
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property DefaultEncoding As Encoding
-
-    Sub New()
-        Dim codepage$ = App.GetVariable("default_encoding")
-
-        If codepage.StringEmpty Then
-            DefaultEncoding = Encoding.Default
-        Else
-            DefaultEncoding = Text _
-                .ParseEncodingsName(codepage, Encodings.Default) _
-                .CodePage
-        End If
-    End Sub
 
     ''' <summary>
     ''' 使用html文本的默认编码格式<see cref="Encodings.UTF8"/>来保存这个文本文件
@@ -266,10 +245,6 @@ Public Module TextDoc
             Return False
         End If
 
-        If encoding Is Nothing Then
-            encoding = DefaultEncoding
-        End If
-
         If text Is Nothing Then
             text = ""
         End If
@@ -290,7 +265,7 @@ Public Module TextDoc
 
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
-            Call FileIO.FileSystem.WriteAllText(path, text, append:=append, encoding:=encoding)
+            Call FileIO.FileSystem.WriteAllText(path, text, append:=append, encoding:=encoding Or DefaultEncoding)
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)
@@ -356,13 +331,10 @@ Public Module TextDoc
         If String.IsNullOrEmpty(path) Then
             Return False
         End If
-        If encoding Is Nothing Then
-            encoding = Encoding.Default
-        End If
 
         Call "".SaveTo(path)
 
-        Using file As New StreamWriter(New FileStream(path, FileMode.OpenOrCreate), encoding)
+        Using file As New StreamWriter(New FileStream(path, FileMode.OpenOrCreate), encoding Or DefaultEncoding)
             For Each line As String In array.SafeQuery
                 Call file.WriteLine(line)
             Next
@@ -379,7 +351,7 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(sBuilder As StringBuilder, path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(sBuilder As StringBuilder, path As String, Optional encoding As Encoding = Nothing) As Boolean
         Return sBuilder.ToString.SaveTo(path, encoding)
     End Function
 End Module
