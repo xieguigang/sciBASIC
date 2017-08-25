@@ -40,6 +40,14 @@ Imports Microsoft.VisualBasic.Text
 <[Namespace]("Large_Text_File")>
 Public Module LargeTextFile
 
+    ''' <summary>
+    ''' Iterates read all lines in a very large text file, using for loading a very large size csv/tsv file
+    ''' </summary>
+    ''' <param name="path$">file path</param>
+    ''' <param name="title$">The header line of this large size csv/tsv file.</param>
+    ''' <param name="skip%">Skip n lines, then start to populate data lines.</param>
+    ''' <param name="encoding">Text file encoding.</param>
+    ''' <returns></returns>
     <Extension>
     Public Function IteratesTableData(path$, ByRef title$, Optional skip% = -1, Optional encoding As Encodings = Encodings.ASCII) As IEnumerable(Of String)
         Using reader As StreamReader = path.OpenReader(encoding.CodePage)
@@ -65,7 +73,7 @@ Public Module LargeTextFile
     End Function
 
     <ExportAPI("Partitioning")>
-    Public Function TextPartition(data As Generic.IEnumerable(Of String)) As String()()
+    Public Function TextPartition(data As IEnumerable(Of String)) As String()()
         Dim maxSize As Double = New StringBuilder(1024 * 1024).MaxCapacity
         Return __textPartitioning(data.ToArray, maxSize)
     End Function
