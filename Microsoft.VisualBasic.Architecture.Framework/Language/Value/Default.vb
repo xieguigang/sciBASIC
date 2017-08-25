@@ -21,6 +21,19 @@
             Return $"default({Value})"
         End Function
 
+        ''' <summary>
+        ''' Add handler
+        ''' </summary>
+        ''' <param name="[default]"></param>
+        ''' <param name="assert"></param>
+        ''' <returns></returns>
+        Public Shared Operator +([default] As DefaultValue(Of T), assert As Assert(Of Object)) As DefaultValue(Of T)
+            Return New DefaultValue(Of T) With {
+                .assert = assert,
+                .Value = [default].Value
+            }
+        End Operator
+
         Public Shared Operator Or(obj As T, [default] As DefaultValue(Of T)) As T
             With [default]
                 If .assert(obj) Then
