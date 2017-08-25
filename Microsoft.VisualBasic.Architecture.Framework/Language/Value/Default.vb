@@ -1,4 +1,6 @@
-﻿Namespace Language
+﻿Imports Microsoft.VisualBasic.Language.Perl
+
+Namespace Language
 
     Public Delegate Function Assert(Of T)(obj As T) As Boolean
 
@@ -42,6 +44,13 @@
                     Return obj
                 End If
             End With
+        End Operator
+
+        Public Shared Widening Operator CType(obj As T) As DefaultValue(Of T)
+            Return New DefaultValue(Of T) With {
+                .Value = obj,
+                .assert = AddressOf ExceptionHandler.Default
+            }
         End Operator
     End Structure
 End Namespace

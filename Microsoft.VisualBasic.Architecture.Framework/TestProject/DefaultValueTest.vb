@@ -27,10 +27,8 @@ Module DefaultValueTest
         Pause()
     End Sub
 
-    Dim defaultFont As DefaultValue(Of Font) = New Font(FontFace.MicrosoftYaHei, 24, FontStyle.Italic).AsDefault
-
     Public Function Draw(Optional font As Font = Nothing)
-        font = font Or defaultFont
+        font = font Or MicrosoftYaHei.Large
 
         println(font.ToString)
     End Function
