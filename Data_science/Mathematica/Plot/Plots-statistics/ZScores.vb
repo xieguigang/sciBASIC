@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -58,7 +59,8 @@ Public Module ZScoresPlot
                          Optional legendLabelFontCSS$ = CSSFont.Win7LittleLarge,
                          Optional tickFontCSS$ = CSSFont.Win7Normal,
                          Optional pointWidth! = 10,
-                         Optional axisStrokeCSS$ = Stroke.AxisStroke) As GraphicsData
+                         Optional axisStrokeCSS$ = Stroke.AxisStroke,
+                         Optional legendBoxStroke$ = Stroke.AxisStroke) As GraphicsData
 
         Dim ticks#() = data.Range.CreateAxisTicks
         Dim range As DoubleRange = ticks
@@ -145,6 +147,31 @@ Public Module ZScoresPlot
                 }
 
                 g.DrawString(title, titleFont, Brushes.Black, labelPosition)
+
+                ' 绘制legend
+                Dim legendHeight! = (legendLabelFont.Height + 5) * groups.Count
+                Dim legendLocation As New Point With {
+                    .X = X(range.Max),
+                    .Y = yTop + (plotHeight - legendHeight) / 2
+                }
+                Dim legends = groups _
+                    .Keys _
+                    .Select(Function(label)
+                                Return New Legend With {
+                                    .title = label,
+                                    .color = colors(label).RGBExpression,
+                                    .fontstyle = legendLabelFontCSS,
+                                    .style = LegendStyles.Circle
+                                }
+                            End Function) _
+                    .ToArray
+                Dim legendBoxBorder As Stroke = Stroke.TryParse(legendBoxStroke)
+
+                Call g.DrawLegends(
+                    topLeft:=legendLocation,
+                    legends:=legends,
+                    graphicSize:=New Size(maxLegendLabelSize.Width, legendLabelFont.Height),
+                    regionBorder:=legendBoxBorder)
             End Sub
 
         Return g.GraphicsPlots(
