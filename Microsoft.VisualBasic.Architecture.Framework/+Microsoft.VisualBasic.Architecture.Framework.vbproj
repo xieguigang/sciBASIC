@@ -458,6 +458,8 @@
     <Compile Include="Language\Linq\VectorShadows.vb" />
     <Compile Include="Language\Linq\List%28Of T%29.vb" />
     <Compile Include="Language\lang\Perl\die.vb" />
+    <Compile Include="Language\API.vb" />
+    <Compile Include="Language\Value\Default.vb" />
     <Compile Include="Scripting\Abstract.vb" />
     <Compile Include="Scripting\Expressions\Selector.vb" />
     <Compile Include="Scripting\Runtime\BinaryOperator.vb" />

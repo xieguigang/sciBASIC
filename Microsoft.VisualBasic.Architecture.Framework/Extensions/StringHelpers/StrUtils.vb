@@ -57,12 +57,12 @@
 '
 
 Imports System.Globalization
+Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
-Imports System.Numerics
+Imports Microsoft.VisualBasic.Linq
 
 Public Module StrUtils
 

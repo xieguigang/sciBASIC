@@ -31,6 +31,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots.Statistics", "Plots-S
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "hierarchical-clustering", "..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj", "{6CA54AF6-CADC-457E-94B9-384F2990F07E}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Math.Statistics", "..\Math\Math.Statistics\Math.Statistics.vbproj", "{3E195DF1-9FEB-44D5-904B-15626BBE74D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -410,6 +412,36 @@ Global
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.Release2|x64.Build.0 = Release|x64
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.Release2|x86.ActiveCfg = Release|Any CPU
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.Release2|x86.Build.0 = Release|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Debug|x64.ActiveCfg = Debug|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Debug|x64.Build.0 = Debug|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Debug|x86.Build.0 = Debug|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.docs|Any CPU.ActiveCfg = docs|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.docs|Any CPU.Build.0 = docs|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.docs|x64.ActiveCfg = docs|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.docs|x64.Build.0 = docs|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.docs|x86.ActiveCfg = docs|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.docs|x86.Build.0 = docs|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Publish|Any CPU.ActiveCfg = Publish|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Publish|Any CPU.Build.0 = Publish|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Publish|x64.ActiveCfg = Publish|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Publish|x64.Build.0 = Publish|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Publish|x86.ActiveCfg = Publish|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Publish|x86.Build.0 = Publish|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release|x64.ActiveCfg = Release|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release|x64.Build.0 = Release|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release|x86.Build.0 = Release|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release2|x64.ActiveCfg = Release|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release2|x64.Build.0 = Release|x64
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release2|x86.ActiveCfg = Release|Any CPU
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7}.Release2|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -424,6 +456,7 @@ Global
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30} = {BD520A3E-1448-45A6-A928-59676FE72A3F}
 		{BD520A3E-1448-45A6-A928-59676FE72A3F} = {502430AD-9C24-4969-B189-D44BF3E1C196}
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E} = {BD520A3E-1448-45A6-A928-59676FE72A3F}
+		{3E195DF1-9FEB-44D5-904B-15626BBE74D7} = {BD520A3E-1448-45A6-A928-59676FE72A3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57A11E93-03F9-4906-A33D-DD2D3807BCE5}

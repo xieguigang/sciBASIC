@@ -31,7 +31,7 @@ Namespace Language.Perl
     Public Structure ExceptionHandler
 
         Dim Message$
-        Dim failure As Func(Of Object, Boolean)
+        Dim failure As Assert(Of Object)
 
         ''' <summary>
         ''' Returns True means test failure
