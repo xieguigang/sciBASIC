@@ -26,7 +26,59 @@
 
 #End Region
 
-Public Module ZScores
+Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+
+''' <summary>
+''' Plot of the <see cref="Bootstraping.Z"/>
+''' </summary>
+Public Module ZScoresPlot
+
+    Public Function Plot() As GraphicsData
+
+    End Function
+
 
 End Module
 
+Public Structure ZScores
+
+    Dim serials As DataSet()
+    Dim groups As Dictionary(Of String, String())
+    ''' <summary>
+    ''' Colors for the <see cref="groups"/>
+    ''' </summary>
+    Dim colors As Dictionary(Of String, Color)
+
+    Public Shared Function Load(path$, groups As Dictionary(Of String, String()), colors As Color()) As ZScores
+        Dim colorlist As LoopArray(Of Color) = colors
+        Dim datalist As DataSet() = DataSet.LoadDataSet(path)
+        Dim names As New NamedVectorFactory(datalist.PropertyNames)
+        Dim zscores = datalist _
+            .Select(Function(serial)
+                        Dim z As Vector = names _
+                            .AsVector(serial.Properties) _
+                            .Z()
+                        Return New DataSet With {
+                            .ID = serial.ID,
+                            .Properties = names.Translate(z)
+                        }
+                    End Function) _
+            .ToArray
+        Return New ZScores With {
+            .serials = zscores,
+            .groups = groups,
+            .colors = groups.ToDictionary(Function(x) x.Key,
+                                          Function(x) colorlist.Next)
+        }
+    End Function
+
+    Public Shared Function Load(path$, groups As Dictionary(Of String, String()), Optional colors$ = ColorBrewer.QualitativeSchemes.Paired12) As ZScores
+        Return ZScores.Load(path, groups, Designer.GetColors(colors))
+    End Function
+End Structure
