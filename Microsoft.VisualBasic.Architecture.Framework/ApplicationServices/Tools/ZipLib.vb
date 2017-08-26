@@ -280,6 +280,7 @@ Public Module GZip
 
                     Select Case fileOverwrite
                         Case Overwrite.Always
+
                             'Deletes the file if it is found
                             If fileInZip IsNot Nothing Then
                                 fileInZip.Delete()
@@ -289,10 +290,13 @@ Public Module GZip
                             zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
 
                         Case Overwrite.IfNewer
+
                             'This is a bit trickier - we only delete the file if it is
                             'newer, but if it is newer or if the file isn't already in
                             'the zip file, we will write it to the zip file
+
                             If fileInZip IsNot Nothing Then
+
                                 'Deletes the file only if it is older than our file.
                                 'Note that the file will be ignored if the existing file
                                 'in the archive is newer.
@@ -308,6 +312,7 @@ Public Module GZip
                             End If
 
                         Case Overwrite.Never
+
                             'Don't do anything - this is a decision that you need to
                             'consider, however, since this will mean that no file will
                             'be writte.  You could write a second copy to the zip with

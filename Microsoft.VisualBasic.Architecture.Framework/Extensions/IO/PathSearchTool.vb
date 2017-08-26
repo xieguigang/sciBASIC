@@ -975,6 +975,8 @@ Public Module ProgramPathSearchTool
         If appendParent Then
             Return "..\" & lcRelativePath
         Else
+            ' 2017-8-26
+            ' 为Xlsx打包模块进行的修复
             Return lcRelativePath.Split("\"c).Skip(1).JoinBy("\")
         End If
     End Function
