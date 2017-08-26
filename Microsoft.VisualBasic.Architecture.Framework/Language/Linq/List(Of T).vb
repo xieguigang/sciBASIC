@@ -206,7 +206,7 @@ Namespace Language
 
         Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
             Get
-                Return Me(Who.IsTrue(booleans))
+                Return Me(Which.IsTrue(booleans))
             End Get
             Set(value As T())
                 For Each i In booleans.SeqIterator

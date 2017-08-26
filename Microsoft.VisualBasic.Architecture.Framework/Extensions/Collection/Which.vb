@@ -37,7 +37,21 @@ Namespace Linq
     ''' </summary>
     Public NotInheritable Class Which
 
-        Public Function GetMinIndex(values As List(Of Double)) As Integer
+        ''' <summary>
+        ''' Returns the collection element its index where the test expression <paramref name="predicate"/> result is TRUE
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="predicate"></param>
+        ''' <returns></returns>
+        Public Shared Function Index(Of T)(source As IEnumerable(Of T), predicate As Func(Of T, Boolean)) As IEnumerable(Of Integer)
+            Return source _
+                .SeqIterator _
+                .Where(Function(i) predicate(i.value)) _
+                .Select(Function(o) o.i)
+        End Function
+
+        Public Shared Function GetMinIndex(values As List(Of Double)) As Integer
             Dim min As Double = Double.MaxValue
             Dim minIndex As Integer = 0
             For i As Integer = 0 To values.Count - 1
@@ -53,7 +67,7 @@ Namespace Linq
         ''' <summary>
         ''' 在这里不适用Module类型，要不然会和其他的Max拓展函数产生冲突的。。
         ''' </summary>
-        Friend Sub New()
+        Private Sub New()
         End Sub
 
         ''' <summary>
@@ -87,26 +101,22 @@ Namespace Linq
         ''' </summary>
         ''' <param name="v"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property IsTrue(v As IEnumerable(Of Boolean)) As Integer()
-            Get
-                Return v _
-                    .SeqIterator _
-                    .Where(Function(b) True = +b) _
-                    .Select(Function(i) CInt(i)) _
-                    .ToArray
-            End Get
-        End Property
+        Public Shared Function IsTrue(v As IEnumerable(Of Boolean)) As Integer()
+            Return v _
+                .SeqIterator _
+                .Where(Function(b) True = +b) _
+                .Select(Function(i) CInt(i)) _
+                .ToArray
+        End Function
 
         ''' <summary>
         ''' Syntax helper for <see cref="VectorShadows(Of T)(IEnumerable(Of T))"/>
         ''' </summary>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property IsTrue(list As Object) As Integer()
-            Get
-                Return IsTrue(DirectCast(list, IEnumerable).Cast(Of Object).Select(Function(o) CBool(o)))
-            End Get
-        End Property
+        Public Shared Function IsTrue(list As Object) As Integer()
+            Return IsTrue(DirectCast(list, IEnumerable).Cast(Of Object).Select(Function(o) CBool(o)))
+        End Function
 
         ''' <summary>
         ''' Returns all of the indices which is False
@@ -121,11 +131,9 @@ Namespace Linq
                 .ToArray
         End Function
 
-        Default Public ReadOnly Property IsTrue([operator] As Func(Of Boolean())) As Integer()
-            Get
-                Return IsTrue([operator]())
-            End Get
-        End Property
+        Public Shared Function IsTrue([operator] As Func(Of Boolean())) As Integer()
+            Return IsTrue([operator]())
+        End Function
 
         Public Shared Function IsFalse([operator] As Func(Of Boolean())) As Integer()
             Return Which.IsFalse([operator]())

@@ -41,8 +41,6 @@ Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 ''' </summary>
 Public Module VectorExtensions
 
-    Public ReadOnly Property Which As New Which
-
     <Extension>
     Public Function RepeatCalls(Of T)(factory As Func(Of T), n%, Optional sleep% = 0) As T()
         Return n _

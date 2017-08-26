@@ -32,7 +32,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports CollectionSet = Microsoft.VisualBasic.ComponentModel.DataStructures.Set
-Imports Who = Microsoft.VisualBasic.Linq.Which
 
 Namespace Language
 

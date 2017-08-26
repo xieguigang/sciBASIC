@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Language
 
@@ -41,13 +42,13 @@ Namespace Language
             ElseIf type.ImplementsInterface(GetType(IEnumerable(Of Integer))) Then
                 Return DirectCast(args, IEnumerable(Of Integer))
             ElseIf type.ImplementsInterface(GetType(IEnumerable(Of Boolean))) Then
-                Return Which(DirectCast(args, IEnumerable(Of Boolean)))
+                Return Which.IsTrue(DirectCast(args, IEnumerable(Of Boolean)))
             ElseIf type.ImplementsInterface(GetType(IEnumerable(Of Object))) Then
                 Dim array = DirectCast(args, IEnumerable(Of Object)).ToArray
 
                 With array(Scan0).GetType
                     If .ref Is GetType(Boolean) Then
-                        Return Which(array.Select(Function(o) CBool(o)))
+                        Return Which.IsTrue(array.Select(Function(o) CBool(o)))
                     ElseIf .ref Is GetType(Integer) Then
                         Return array.Select(Function(o) CInt(o))
                     Else
