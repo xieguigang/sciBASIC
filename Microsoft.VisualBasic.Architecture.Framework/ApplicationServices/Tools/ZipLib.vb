@@ -31,6 +31,7 @@ Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 #If NET_40 = 0 Then
@@ -179,7 +180,7 @@ Public Module GZip
                                 Optional action As ArchiveAction = ArchiveAction.Replace,
                                 Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
                                 Optional compression As CompressionLevel = CompressionLevel.Optimal)
-        Dim files = FileIO.FileSystem.GetFiles(DIR)
+        Dim files = ls - l - r - "*.*" <= DIR
         Call AddToArchive(saveZip, files.AsList, action, fileOverwrite, compression)
     End Sub
 
