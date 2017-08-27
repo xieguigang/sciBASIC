@@ -910,11 +910,11 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="pcFrom">生成相对路径的参考文件夹</param>
     ''' <param name="pcTo">所需要生成相对路径的目标文件系统对象的绝对路径或者相对路径</param>
+    ''' <param name="appendParent">是否将父目录的路径也添加进入相对路径之中？默认是</param>
     ''' <returns></returns>
-    '''
     <ExportAPI(NameOf(RelativePath),
                Info:="Gets the relative path value of pcTo file system object relative to a reference directory pcFrom")>
-    Public Function RelativePath(pcFrom As String, pcTo As String) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
+    Public Function RelativePath(pcFrom$, pcTo$, Optional appendParent As Boolean = True) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
         Dim lcRelativePath As String = Nothing
         Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim()))
         Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim()))
@@ -969,8 +969,16 @@ Public Module ProgramPathSearchTool
                 lcEndPart = "..\" & lcEndPart
             End While
         End If
+
         lcRelativePath = lcEndPart & lcFileTo
-        Return "..\" & lcRelativePath
+
+        If appendParent Then
+            Return "..\" & lcRelativePath
+        Else
+            ' 2017-8-26
+            ' 为Xlsx打包模块进行的修复
+            Return lcRelativePath.Split("\"c).Skip(1).JoinBy("\")
+        End If
     End Function
 
     ''' <summary>

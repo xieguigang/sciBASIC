@@ -137,7 +137,7 @@ Namespace Imaging
         ''' Reads all of the color property from <see cref="Color"/> and then creates the color dictionary based on the property name.
         ''' </summary>
         ''' <returns></returns>
-        Private Function __getColorHash() As Dictionary(Of String, Color)
+        Private Function __getDotNetColors() As Dictionary(Of String, Color)
             Dim props As IEnumerable(Of PropertyInfo) =
                 GetType(Color).GetProperties(BindingFlags.Public Or BindingFlags.Static)
             Dim getValues = From p As PropertyInfo  ' Gets all of the known name color from the Color object its shared property.
@@ -156,7 +156,7 @@ Namespace Imaging
         ''' Key都是小写的
         ''' </summary>
         ReadOnly __allDotNETPrefixColors As Dictionary(Of String, Color) =
-            __getColorHash()
+            __getDotNetColors()
 
         ''' <summary>
         ''' Gets all of the known name color from the Color object its shared property.

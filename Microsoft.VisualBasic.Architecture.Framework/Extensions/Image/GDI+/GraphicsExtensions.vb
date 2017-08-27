@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
@@ -77,18 +78,22 @@ Namespace Imaging
         <Extension>
         Public Function GraphicsPath(points As IEnumerable(Of Point)) As GraphicsPath
             Dim path As New GraphicsPath
+
             For Each pt In points.SlideWindows(2)
                 Call path.AddLine(pt(0), pt(1))
             Next
+
             Return path
         End Function
 
         <Extension>
         Public Function GraphicsPath(points As IEnumerable(Of PointF)) As GraphicsPath
             Dim path As New GraphicsPath
+
             For Each pt In points.SlideWindows(2)
                 Call path.AddLine(pt(0), pt(1))
             Next
+
             Return path
         End Function
 
@@ -338,9 +343,12 @@ Namespace Imaging
 
         <ExportAPI("GrayBitmap", Info:="Create the gray color of the target image.")>
         <Extension> Public Function CreateGrayBitmap(res As Image) As Image
-            Dim Gr = DirectCast(res.Clone, Image).CreateCanvas2D
-            Call System.Windows.Forms.ControlPaint.DrawImageDisabled(Gr.Graphics, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
-            Return Gr.ImageResource
+            Using g = DirectCast(res.Clone, Image).CreateCanvas2D
+                With g
+                    Call ControlPaint.DrawImageDisabled(.Graphics, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
+                    Return .ImageResource
+                End With
+            End Using
         End Function
 
         ''' <summary>
@@ -350,27 +358,27 @@ Namespace Imaging
         ''' <param name="pen">Default pen width is 1px and with color <see cref="Color.Black"/>.(默认的绘图笔为黑色的1个像素的边框)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function ImageAddFrame(Handle As Graphics2D,
+        <Extension> Public Function ImageAddFrame(handle As Graphics2D,
                                                   Optional pen As Pen = Nothing,
                                                   Optional offset As Integer = 0) As Graphics2D
 
             Dim TopLeft As New Point(offset, offset)
-            Dim TopRight As New Point(Handle.Width - offset, 1 + offset)
-            Dim BottomLeft As New Point(offset + 1, Handle.Height - offset)
-            Dim BottomRight As New Point(Handle.Width - offset, Handle.Height - offset)
+            Dim TopRight As New Point(handle.Width - offset, 1 + offset)
+            Dim BottomLeft As New Point(offset + 1, handle.Height - offset)
+            Dim BottomRight As New Point(handle.Width - offset, handle.Height - offset)
 
             If pen Is Nothing Then
-                pen = Drawing.Pens.Black
+                pen = Pens.Black
             End If
 
-            Call Handle.Graphics.DrawLine(pen, TopLeft, TopRight)
-            Call Handle.Graphics.DrawLine(pen, TopRight, BottomRight)
-            Call Handle.Graphics.DrawLine(pen, BottomRight, BottomLeft)
-            Call Handle.Graphics.DrawLine(pen, BottomLeft, TopLeft)
+            Call handle.Graphics.DrawLine(pen, TopLeft, TopRight)
+            Call handle.Graphics.DrawLine(pen, TopRight, BottomRight)
+            Call handle.Graphics.DrawLine(pen, BottomRight, BottomLeft)
+            Call handle.Graphics.DrawLine(pen, BottomLeft, TopLeft)
 
-            Call Handle.Graphics.FillRectangle(New SolidBrush(pen.Color), New Rectangle(New Point, New Size(1, 1)))
+            Call handle.Graphics.FillRectangle(New SolidBrush(pen.Color), New Rectangle(New Point, New Size(1, 1)))
 
-            Return Handle
+            Return handle
         End Function
 
         ''' <summary>
@@ -382,11 +390,11 @@ Namespace Imaging
         ''' <remarks></remarks>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As Drawing.SizeF, Optional filled As Color = Nothing) As Graphics2D
+        <Extension> Public Function CreateGDIDevice(r As SizeF, Optional filled As Color = Nothing) As Graphics2D
             Return (New Size(CInt(r.Width), CInt(r.Height))).CreateGDIDevice(filled)
         End Function
 
-        <Extension> Public Function OpenDevice(ctrl As System.Windows.Forms.Control) As Graphics2D
+        <Extension> Public Function OpenDevice(ctrl As Control) As Graphics2D
             Dim ImageRes As Image
 
             'If ctrl.BackgroundImage Is Nothing Then
@@ -412,11 +420,15 @@ Namespace Imaging
         '''
         <ExportAPI("GDI+.Create")>
         <Extension> Public Function GDIPlusDeviceHandleFromImageFile(path As String) As Graphics2D
-            Dim Image As Image = LoadImage(path)
-            Dim GrDevice As Graphics = Graphics.FromImage(Image)
-            GrDevice.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            GrDevice.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
-            Return Graphics2D.CreateObject(GrDevice, Image)
+            Dim image As Image = LoadImage(path)
+            Dim g As Graphics = Graphics.FromImage(image)
+
+            With g
+                .CompositingQuality = CompositingQuality.HighQuality
+                .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+            End With
+
+            Return Graphics2D.CreateObject(g, image)
         End Function
 
         ''' <summary>
@@ -429,7 +441,7 @@ Namespace Imaging
         <Extension> Public Function CreateCanvas2D(res As Image,
                                                    Optional directAccess As Boolean = False,
                                                    <CallerMemberName>
-                                                   Optional caller As String = "") As Graphics2D
+                                                   Optional caller$ = "") As Graphics2D
             If directAccess Then
                 Return Graphics2D.CreateObject(Graphics.FromImage(res), res)
             Else
@@ -557,9 +569,12 @@ Namespace Imaging
         <ExportAPI("Image.Resize")>
         Public Function Resize(Image As Image, newSize As Size) As Image
             SyncLock Image
-                Dim Gr As Graphics2D = newSize.CreateGDIDevice
-                Call Gr.Graphics.DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
-                Return Gr.ImageResource
+                Using g As Graphics2D = newSize.CreateGDIDevice
+                    With g
+                        Call .DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
+                        Return .ImageResource
+                    End With
+                End Using
             End SyncLock
         End Function
 
@@ -576,21 +591,23 @@ Namespace Imaging
             End If
 
             SyncLock resAvatar
-                Dim Bitmap As Bitmap = New Bitmap(OutSize, OutSize)
+                Dim Bitmap As New Bitmap(OutSize, OutSize)
 
                 resAvatar = DirectCast(resAvatar.Clone, Image)
+                resAvatar = Resize(resAvatar, Bitmap.Size)
 
-                Using Gr = Graphics.FromImage(Bitmap)
+                Using g = Graphics.FromImage(Bitmap)
+                    Dim image As Brush = New TextureBrush(resAvatar)
 
-                    Gr.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-                    Gr.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
-                    Gr.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-                    Gr.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
+                    With g
+                        .CompositingQuality = CompositingQuality.HighQuality
+                        .InterpolationMode = InterpolationMode.HighQualityBicubic
+                        .SmoothingMode = SmoothingMode.HighQuality
+                        .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
 
-                    resAvatar = Resize(resAvatar, Bitmap.Size)
+                        Call .FillPie(image, Bitmap.EntireImage, 0, 360)
+                    End With
 
-                    Dim rH As Drawing.Brush = New Drawing.TextureBrush(resAvatar)
-                    Call Gr.FillPie(rH, New Rectangle(0, 0, OutSize, OutSize), 0, 360)
                     Return Bitmap
                 End Using
             End SyncLock
@@ -614,28 +631,34 @@ Namespace Imaging
         ''' <param name="y2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function Vignette(Image As Image, y1 As Integer, y2 As Integer, Optional RenderColor As Color = Nothing) As Image
-            Dim Gr = Image.CreateCanvas2D
-            Dim Alpha As Integer = 0
-            Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
-            Dim offset As Double = 0
+        <Extension> Public Function Vignette(image As Image, y1%, y2%, Optional renderColor As Color = Nothing) As Image
+            Using g As Graphics2D = image.CreateCanvas2D
+                With g
+                    Dim alpha As Integer = 0
+                    Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
+                    Dim offset As Double = 0
 
-            If RenderColor = Nothing OrElse RenderColor.IsEmpty Then
-                RenderColor = Color.White
-            End If
+                    If renderColor = Nothing OrElse renderColor.IsEmpty Then
+                        renderColor = Color.White
+                    End If
 
-            For y As Integer = y1 To y2
-                Dim Color = System.Drawing.Color.FromArgb(Alpha, RenderColor.R, RenderColor.G, RenderColor.B)
-                Call Gr.Graphics.DrawLine(New Pen(Color), New Point(0, y), New Point(Gr.Width, y))
+                    For y As Integer = y1 To y2
+                        Dim pen As New Pen(Color.FromArgb(alpha, renderColor.R, renderColor.G, renderColor.B))
 
-                Alpha = CInt(255 * sys.Sin(offset) ^ 2)
-                offset += delta
-            Next
+                        .DrawLine(pen, New Point(0, y), New Point(.Width, y))
+                        alpha = CInt(255 * sys.Sin(offset) ^ 2)
+                        offset += delta
+                    Next
 
-            Dim Rect = New Rectangle(New Point(0, y2), New Size(Image.Width, Image.Height - y2))
-            Call Gr.Graphics.FillRectangle(New SolidBrush(RenderColor), Rect)
+                    Dim rect As New Rectangle With {
+                        .Location = New Point(0, y2),
+                        .Size = New Size(.Width, .Height - y2)
+                    }
+                    Call .FillRectangle(New SolidBrush(renderColor), rect)
 
-            Return Gr.ImageResource
+                    Return .ImageResource
+                End With
+            End Using
         End Function
 
         ''' <summary>

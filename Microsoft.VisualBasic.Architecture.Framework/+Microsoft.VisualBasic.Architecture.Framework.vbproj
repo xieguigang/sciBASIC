@@ -10,7 +10,7 @@
     <AssemblyName>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
@@ -307,6 +307,48 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Biodeep\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Biodeep\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\..\..\..\smartnucl_integrative\biodeepDB\METLINApp\plot\bin\x86\Biodeep\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="Microsoft.VisualC.STLCLR" />
@@ -421,7 +463,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\LineValue.vb" />
-    <Compile Include="Extensions\Utils.vb" />
+    <Compile Include="ApplicationServices\Utils.vb" />
     <Compile Include="Extensions\CodeDOM\References.vb" />
     <Compile Include="Extensions\Collection\VectorAssertExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
@@ -508,20 +550,20 @@
     <Compile Include="Scripting\Expressions\StringInterpolation.vb" />
     <Compile Include="Scripting\Runtime\CType\NumberConversionRoutines.vb" />
     <Compile Include="Scripting\ScriptBuilder.vb" />
-    <Compile Include="Terminal\InteractiveIODevice\Shell.vb" />
-    <Compile Include="Terminal\PipelineCLI.vb" />
-    <Compile Include="Terminal\InnerQueue.vb" />
-    <Compile Include="Terminal\InteractiveIODevice\TerminalExtensions.vb" />
-    <Compile Include="Terminal\PrintAsTable.vb" />
-    <Compile Include="Terminal\ProgressBar\AbstractBar.vb" />
-    <Compile Include="Terminal\ProgressBar\AnimatedBar.vb" />
-    <Compile Include="Terminal\ProgressBar\ProgressBar.vb" />
-    <Compile Include="Terminal\ProgressBar\Program.vb" />
-    <Compile Include="Terminal\ProgressBar\SwayBar.vb" />
-    <Compile Include="Terminal\Utility\EventProc.vb" />
-    <Compile Include="Terminal\Utility\ConsolePasswordInput.vb" />
+    <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\Shell.vb" />
+    <Compile Include="ApplicationServices\Terminal\PipelineCLI.vb" />
+    <Compile Include="ApplicationServices\Terminal\InnerQueue.vb" />
+    <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb" />
+    <Compile Include="ApplicationServices\Terminal\PrintAsTable.vb" />
+    <Compile Include="ApplicationServices\Terminal\ProgressBar\AbstractBar.vb" />
+    <Compile Include="ApplicationServices\Terminal\ProgressBar\AnimatedBar.vb" />
+    <Compile Include="ApplicationServices\Terminal\ProgressBar\ProgressBar.vb" />
+    <Compile Include="ApplicationServices\Terminal\ProgressBar\Program.vb" />
+    <Compile Include="ApplicationServices\Terminal\ProgressBar\SwayBar.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\EventProc.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
-    <Compile Include="Terminal\xConsole\Helpers.vb" />
+    <Compile Include="ApplicationServices\Terminal\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
     <Compile Include="Extensions\Debugger\Config.vb" />
     <Compile Include="Extensions\Image\Colors\HexColor.vb" />
@@ -625,30 +667,30 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
-    <Compile Include="Tools\Network\MIME\Type.vb" />
-    <Compile Include="Tools\Network\Tcp\IPTools\AddressEnumerator.vb" />
-    <Compile Include="Tools\SoftwareToolkits\LicenseMgr.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectType.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\URLBuilder.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Libraries.vb" />
-    <Compile Include="Tools\Win32\HardwareInfo.vb" />
-    <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
-    <Compile Include="Tools\Win32\TaskManager.vb" />
-    <Compile Include="Tools\Win32\PriorityClass.vb" />
-    <Compile Include="Tools\WinForm\ChromeUIRender.vb" />
-    <Compile Include="Tools\WinForm\Extensions.vb" />
-    <Compile Include="Tools\WinForm\VistaSecurity.vb" />
-    <Compile Include="Tools\Win32\Win32API.vb" />
-    <Compile Include="Tools\Win32\Win32File.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\MIME\Type.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\IPTools\AddressEnumerator.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\LicenseMgr.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Project.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\ProjectType.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\URLBuilder.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Libraries.vb" />
+    <Compile Include="ApplicationServices\Tools\Win32\HardwareInfo.vb" />
+    <Compile Include="ApplicationServices\Tools\Win32\GetLastErrorAPI.vb" />
+    <Compile Include="ApplicationServices\Tools\Win32\TaskManager.vb" />
+    <Compile Include="ApplicationServices\Tools\Win32\PriorityClass.vb" />
+    <Compile Include="ApplicationServices\Tools\WinForm\ChromeUIRender.vb" />
+    <Compile Include="ApplicationServices\Tools\WinForm\Extensions.vb" />
+    <Compile Include="ApplicationServices\Tools\WinForm\VistaSecurity.vb" />
+    <Compile Include="ApplicationServices\Tools\Win32\Win32API.vb" />
+    <Compile Include="ApplicationServices\Tools\Win32\Win32File.vb" />
     <None Include="app.config" />
-    <None Include="Terminal\xConsole\TestProgram.txt" />
-    <Compile Include="Terminal\xConsole\xConsole.vb" />
+    <None Include="ApplicationServices\Terminal\xConsole\TestProgram.txt" />
+    <Compile Include="ApplicationServices\Terminal\xConsole\xConsole.vb" />
     <Compile Include="Language\lang\UnixBash\Cowsay.vb" />
-    <Compile Include="Extensions\App.vb" />
+    <Compile Include="ApplicationServices\App.vb" />
     <Compile Include="Extensions\CodeDOM\CodeDOM.vb" />
     <Compile Include="Extensions\CodeDOM\CodeDOMExpressions.vb" />
     <Compile Include="Extensions\CodeDOM\VBC.vb" />
@@ -694,7 +736,7 @@
     <Compile Include="Language\ClassObject.vb" />
     <Compile Include="Language\Value\Numeric\Numeric.vb" />
     <Compile Include="Language\lang\UnixBash\Shell\Text\Grep.vb" />
-    <Compile Include="Tools\MMFProtocol\WorkFlow.vb" />
+    <Compile Include="ApplicationServices\Tools\MMFProtocol\WorkFlow.vb" />
     <Compile Include="Parallel\Tasks\CallbackTask.vb" />
     <Compile Include="Parallel\Tasks\TaskQueue.vb" />
     <Compile Include="Parallel\Threads\Groups\DataGroup.vb" />
@@ -704,9 +746,9 @@
     <Compile Include="Serialization\Controls\Contrls.vb" />
     <Compile Include="Text\Splitter.vb" />
     <Compile Include="Text\IO\EncodingHelper.vb" />
-    <Compile Include="Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
-    <Compile Include="Tools\Network\Protocol\Streams\VarArray.vb" />
-    <Compile Include="Tools\SoftwareToolkits\ApplicationDetails.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\VarArray.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\ApplicationDetails.vb" />
     <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
     <Compile Include="Extensions\Reflection\Marshal\MarshalExtensions.vb" />
@@ -718,14 +760,14 @@
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
     <Compile Include="Extensions\WebServices\Base64Codec.vb" />
     <Compile Include="Extensions\WebServices\NetResponse.vb" />
-    <Compile Include="Tools\Win32\WindowsServices.vb" />
+    <Compile Include="ApplicationServices\Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinDistance.vb" />
-    <Compile Include="Tools\MMFProtocol\Pipeline\API.vb" />
-    <Compile Include="Tools\MMFProtocol\Pipeline\PipeBuffer.vb" />
-    <Compile Include="Tools\MMFProtocol\Pipeline\PipeStream.vb" />
-    <Compile Include="Tools\MMFProtocol\Pipeline\Pipeline.vb" />
+    <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\API.vb" />
+    <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\PipeBuffer.vb" />
+    <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\PipeStream.vb" />
+    <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\Pipeline.vb" />
     <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\MetaData\Type.vb" />
     <Compile Include="Scripting\TokenIcer\ParserCommon.vb" />
@@ -737,8 +779,8 @@
     <Compile Include="Scripting\TokenIcer\TokenParser.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryReader.vb" />
     <Compile Include="Serialization\JSON\JsonSerialization.vb" />
-    <Compile Include="Tools\MMFProtocol\MapStream\MSWriter.vb" />
-    <Compile Include="Tools\MMFProtocol\MapStream\MSReader.vb" />
+    <Compile Include="ApplicationServices\Tools\MMFProtocol\MapStream\MSWriter.vb" />
+    <Compile Include="ApplicationServices\Tools\MMFProtocol\MapStream\MSReader.vb" />
     <Compile Include="Parallel\Tasks\AsyncHandle.vb" />
     <Compile Include="Parallel\Threads\ServicesFolk.vb" />
     <Compile Include="Parallel\Tasks\UpdateThread.vb" />
@@ -753,75 +795,75 @@
     <Compile Include="Text\StringSimilarity\Similarity.vb" />
     <Compile Include="Text\SearchEngine\TextIndexing\TextIndexing.vb" />
     <Compile Include="Text\IO\GB2312.vb" />
-    <Compile Include="Tools\Logging\LogFile\ISupportLoggingClient.vb" />
-    <Compile Include="Tools\Logging\LogFile\LogReader.vb" />
-    <Compile Include="Tools\Logging\LogFile\LogEntry.vb" />
-    <Compile Include="Tools\Logging\LogFile\MSG_TYPES.vb" />
+    <Compile Include="ApplicationServices\Tools\Logging\LogFile\ISupportLoggingClient.vb" />
+    <Compile Include="ApplicationServices\Tools\Logging\LogFile\LogReader.vb" />
+    <Compile Include="ApplicationServices\Tools\Logging\LogFile\LogEntry.vb" />
+    <Compile Include="ApplicationServices\Tools\Logging\LogFile\MSG_TYPES.vb" />
     <Compile Include="CommandLine\CliResCommon.vb" />
     <Compile Include="Parallel\Tasks\Task.vb" />
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
-    <Compile Include="Tools\Logging\EventLog.vb" />
+    <Compile Include="ApplicationServices\Tools\Logging\EventLog.vb" />
     <Compile Include="Extensions\Debugger\NETDebugger.vb" />
-    <Compile Include="Tools\Network\Mailto\MailConfigure.vb" />
-    <Compile Include="Tools\Network\Mailto\MailContents.vb" />
-    <Compile Include="Tools\Network\Abstract.vb" />
-    <Compile Include="Tools\Network\MIME\MIME.vb" />
-    <Compile Include="Tools\Network\MIME\ContentType.vb" />
-    <Compile Include="Tools\Network\Protocol\Abstract.vb" />
-    <Compile Include="Tools\Network\Protocol\Streams\Array.vb" />
-    <Compile Include="Tools\Network\Protocol\Streams\ArrayBase.vb" />
-    <Compile Include="Tools\Network\Protocol\Streams\String.vb" />
-    <Compile Include="Tools\Network\SSL\Certificate.vb" />
-    <Compile Include="Tools\Network\Protocol\IVerifySession.vb" />
-    <Compile Include="Tools\Network\Protocol\Reflection\AppMgr.vb" />
-    <Compile Include="Tools\Network\Protocol\Reflection\ProtocolInvoker.vb" />
-    <Compile Include="Tools\Network\Protocol\Reflection\Protocol.vb" />
-    <Compile Include="Tools\Network\Protocol\Reflection\ProtocolHandler.vb" />
-    <Compile Include="Tools\Network\SSL\Extensions.vb" />
-    <Compile Include="Tools\Network\SSL\Protocol.vb" />
-    <Compile Include="Tools\Network\SSL\SSLSynchronizationServicesSocket.vb" />
-    <Compile Include="Tools\Network\Protocol\RequestStream.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\Protocols\UserId.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\Protocols\POST.vb" />
-    <Compile Include="Tools\Network\wGetTools.vb" />
-    <Compile Include="Tools\Network\Tcp\StateObject.vb" />
-    <Compile Include="Tools\Network\Tcp\IPTools\IPEndPoint.vb" />
-    <Compile Include="Tools\Network\Tcp\IPTools\LAN.vb" />
-    <Compile Include="Tools\Network\DomainParser.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\SSLClient.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\Abstract.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\Socket\WorkSocket.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\Protocols\Protocol.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\User.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\MessagePushServer.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\Socket\TcpClient.vb" />
-    <Compile Include="Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb" />
-    <Compile Include="Tools\Network\Tcp\PingUtility.vb" />
-    <Compile Include="Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb" />
-    <Compile Include="Tools\OSVersionInfo.vb" />
-    <Compile Include="Tools\WinForm\MockForm.vb" />
-    <Compile Include="Tools\WinForm\SingleInstanceFormEntry.vb" />
-    <Compile Include="Tools\SoftwareToolkits\Resources.vb" />
-    <Compile Include="Tools\SoftwareToolkits\LanguageHelper\StringResources.vb" />
-    <Compile Include="Tools\SoftwareToolkits\Ngen\Ngen.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Mailto\MailConfigure.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Mailto\MailContents.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Abstract.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\MIME\MIME.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\MIME\ContentType.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Abstract.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\Array.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\ArrayBase.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\String.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\SSL\Certificate.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\IVerifySession.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Reflection\AppMgr.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Reflection\ProtocolInvoker.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Reflection\Protocol.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\Reflection\ProtocolHandler.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\SSL\Extensions.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\SSL\Protocol.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\SSL\SSLSynchronizationServicesSocket.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Protocol\RequestStream.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Protocols\UserId.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Protocols\POST.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\wGetTools.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\StateObject.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\IPTools\IPEndPoint.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\IPTools\LAN.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\DomainParser.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\MessagePushServices\SSLClient.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\MessagePushServices\Abstract.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Socket\WorkSocket.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Protocols\Protocol.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\MessagePushServices\User.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\MessagePushServices\MessagePushServer.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Socket\TcpClient.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\PingUtility.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb" />
+    <Compile Include="ApplicationServices\Tools\OSVersionInfo.vb" />
+    <Compile Include="ApplicationServices\Tools\WinForm\MockForm.vb" />
+    <Compile Include="ApplicationServices\Tools\WinForm\SingleInstanceFormEntry.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\Resources.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\LanguageHelper\StringResources.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\Ngen\Ngen.vb" />
     <Compile Include="Extensions\Security\AES.vb" />
     <Compile Include="Extensions\Security\SHA.vb" />
     <Compile Include="Extensions\Security\RSACrypto.vb" />
     <Compile Include="Extensions\Security\SecurityString.vb" />
     <Compile Include="Parallel\OperationTimeOut.vb" />
-    <Compile Include="Tools\Network\Tcp\TCPExtensions.vb" />
-    <Compile Include="Tools\Network\Tcp\AsynInvoke.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\TCPExtensions.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Tcp\AsynInvoke.vb" />
     <Compile Include="Parallel\Threading.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
     <Compile Include="Extensions\Image\GDI+\GraphicsExtensions.vb" />
     <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />
-    <Compile Include="Terminal\InteractiveIODevice\InteractiveDevice.vb" />
-    <Compile Include="Terminal\InteractiveIODevice\HistoryStacks.vb" />
-    <Compile Include="Terminal\InteractiveIODevice\Terminal.vb" />
-    <Compile Include="Terminal\Utility\ManualPages.vb" />
+    <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb" />
+    <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb" />
+    <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\ManualPages.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\CPOLLicense.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsMedian.vb" />
@@ -838,19 +880,19 @@
     <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />
     <Compile Include="Text\TextGrepScriptEngine.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Member.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb" />
-    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb" />
-    <Compile Include="Tools\ZipLib.vb" />
-    <Compile Include="Tools\SoftwareToolkits\ChangeLog.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Member.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb" />
+    <Compile Include="ApplicationServices\Tools\ZipLib.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
-    <Compile Include="Terminal\Utility\CBusyIndicator.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\CBusyIndicator.vb" />
     <Compile Include="Extensions\Doc\LargeTextFile.vb" />
-    <Compile Include="Tools\SoftwareToolkits\ToolkitAPI.vb" />
-    <Compile Include="Tools\SoftwareToolkits\UpdatesEditor.Designer.vb">
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\ToolkitAPI.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\UpdatesEditor.Designer.vb">
       <DependentUpon>UpdatesEditor.vb</DependentUpon>
     </Compile>
-    <Compile Include="Tools\SoftwareToolkits\UpdatesEditor.vb">
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\UpdatesEditor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Text\IO\TextFileEncodingDetector.vb" />
@@ -874,18 +916,18 @@
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
     <Compile Include="Extensions\Math\Math.vb" />
-    <Compile Include="Tools\Network\Mailto\GMailClient.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Mailto\GMailClient.vb" />
     <Compile Include="CommandLine\CLI\IORedirect.vb" />
-    <Compile Include="Tools\SoftwareToolkits\LanguageHelper\LanguageAttribute.vb" />
-    <Compile Include="Tools\SoftwareToolkits\LanguageHelper\LanguageHelper.vb" />
-    <Compile Include="Tools\Logging\LogFile\LogFile.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\LanguageHelper\LanguageAttribute.vb" />
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\LanguageHelper\LanguageHelper.vb" />
+    <Compile Include="ApplicationServices\Tools\Logging\LogFile\LogFile.vb" />
     <Compile Include="Extensions\Extensions.vb" />
-    <Compile Include="Tools\MMFProtocol\MMFSocket.vb" />
-    <Compile Include="Tools\MMFProtocol\ProcessLock.vb" />
-    <Compile Include="Terminal\STDIO__\Shell.vb" />
-    <Compile Include="Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
+    <Compile Include="ApplicationServices\Tools\MMFProtocol\MMFSocket.vb" />
+    <Compile Include="ApplicationServices\Tools\MMFProtocol\ProcessLock.vb" />
+    <Compile Include="ApplicationServices\Terminal\STDIO__\Shell.vb" />
+    <Compile Include="ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
     <Compile Include="Language\lang\C\CFormatProvider.vb" />
-    <Compile Include="Terminal\STDIO__\STDIO.vb" />
+    <Compile Include="ApplicationServices\Terminal\STDIO__\STDIO.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
     <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -911,7 +953,7 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\SoftwareToolkits\UpdatesEditor.resx">
+    <EmbeddedResource Include="ApplicationServices\Tools\SoftwareToolkits\UpdatesEditor.resx">
       <DependentUpon>UpdatesEditor.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -949,7 +991,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Serialization\JSON\Formatter\readme.md" />
-    <None Include="Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
+    <None Include="ApplicationServices\Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\Copyright.txt" />
@@ -957,7 +999,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tools\Utility\" />
+    <Folder Include="ApplicationServices\Tools\Utility\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

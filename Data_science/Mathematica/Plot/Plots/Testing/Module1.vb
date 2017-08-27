@@ -49,6 +49,11 @@ Module Module1
         Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x ^ 2 + y ^ 3") _
             .Save("./scatter-heatmap.png")
 
+        f = Function(x, y) x * Math.Sin(y) + y * Math.Sin(x)
+
+        Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x * Sin(y) + y * Sin(x)") _
+            .Save("./scatter-heatmap-demo2.png")
+
         'Dim matrix As New List(Of DataSet)
 
         'Call ScatterHeatmap _
@@ -111,6 +116,10 @@ Module Module1
     End Sub
 
     Sub Main()
+
+        scatterHeatmapTest()
+
+        Pause()
 
         'Call App.JoinVariable("graphic_driver", "svg")
 
