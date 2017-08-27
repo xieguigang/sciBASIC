@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Reflection
+Imports Microsoft.VisualBasic.Scripting
 
 Namespace StorageProvider.ComponentModels
 
@@ -114,8 +115,9 @@ Namespace StorageProvider.ComponentModels
 
         Sub New(BindProperty As PropertyInfo, ElementType As Type)
             Me.BindProperty = BindProperty
-            If Scripting.CasterString.ContainsKey(ElementType) Then
-                Me.LoadMethod = Scripting.CasterString(ElementType)
+
+            If CasterString.ContainsKey(ElementType) Then
+                Me.LoadMethod = AddressOf CasterString(ElementType).Invoke
             Else
                 ' Meta 字典类型，则忽略掉
             End If

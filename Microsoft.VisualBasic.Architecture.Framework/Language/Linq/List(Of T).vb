@@ -32,8 +32,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Who = Microsoft.VisualBasic.Which
-Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Who = Microsoft.VisualBasic.Linq.Which
 
 Namespace Language
 
@@ -207,7 +206,7 @@ Namespace Language
 
         Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
             Get
-                Return Me(Who.IsTrue(booleans))
+                Return Me(Which.IsTrue(booleans))
             End Get
             Set(value As T())
                 For Each i In booleans.SeqIterator

@@ -35,43 +35,22 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
 
-    Public Module ClassAPI
+    'Public Module ClassAPI
 
-        ''' <summary>
-        ''' Example of the extension property in VisualBasic
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function Uid(Of T As ClassObject)(x As T) As PropertyValue(Of Long)
-            Return PropertyValue(Of Long).Read(Of T)(x, NameOf(Uid))
+    '    ''' <summary>
+    '    ''' Example of the extension property in VisualBasic
+    '    ''' </summary>
+    '    ''' <typeparam name="T"></typeparam>
+    '    ''' <param name="x"></param>
+    '    ''' <returns></returns>
+    '    <Extension>
+    '    Public Function Uid(Of T As ClassObject)(x As T) As PropertyValue(Of Long)
+    '        Return PropertyValue(Of Long).Read(Of T)(x, NameOf(Uid))
 
-            ' Just copy this statement without any big modification. just modify the generics type constraint.
-            Return PropertyValue(Of Long).Read(Of T)(x, MethodBase.GetCurrentMethod)
-        End Function
-
-        ''' <summary>
-        ''' Extension method for VisualBasic ``With`` anonymous variable syntax source reference helper
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        <Extension> Public Function ref(Of T)(x As T) As T
-            Return x
-        End Function
-
-        ''' <summary>
-        ''' Extension method for VisualBasic ``With`` anonymous variable syntax for determine that source reference is nothing or not?
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function IsNothing(Of T As Class)(x As T) As Boolean
-            Return x Is Nothing
-        End Function
-    End Module
+    '        ' Just copy this statement without any big modification. just modify the generics type constraint.
+    '        Return PropertyValue(Of Long).Read(Of T)(x, MethodBase.GetCurrentMethod)
+    '    End Function
+    'End Module
 
     ''' <summary>
     ''' The base class object in VisualBasic

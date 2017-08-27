@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
-''' IO函数拓展
+''' The extension API for system file io.(IO函数拓展)
 ''' </summary>
 <Package("IO")>
 Public Module IOExtensions
@@ -61,16 +61,23 @@ Public Module IOExtensions
         Return path$
     End Function
 
+    ''' <summary>
+    ''' Read target text file as a numeric vector, each line in the target text file should be a number, 
+    ''' so that if the target text file have n lines, then the returned vector have n elements.
+    ''' (这个文本文件之中的每一行都是一个数字，所以假设这个文本文件有n行，那么所返回的向量的长度就是n)
+    ''' </summary>
+    ''' <param name="path">The file path of the target text file.</param>
+    ''' <returns></returns>
     <Extension>
     Public Function ReadVector(path As String) As Double()
         Return IO.File.ReadAllLines(path).ToArray(Function(x) CDbl(x))
     End Function
 
     ''' <summary>
-    ''' 打开本地文件指针，这是一个安全的函数，会自动创建不存在的文件夹
+    ''' Safe open a local file handle.(打开本地文件指针，这是一个安全的函数，会自动创建不存在的文件夹)
     ''' </summary>
     ''' <param name="path">文件的路径</param>
-    ''' <param name="mode">文件指针的打开模式</param>
+    ''' <param name="mode">File open mode, default is create a new file.(文件指针的打开模式)</param>
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
@@ -80,14 +87,14 @@ Public Module IOExtensions
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Open a text file and returns its file handle.
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="encoding">使用系统默认的编码方案</param>
     ''' <returns></returns>
     <ExportAPI("Open.Reader")>
     <Extension>
-    Public Function OpenReader(path As String, Optional encoding As Encoding = Nothing) As StreamReader
+    Public Function OpenReader(path$, Optional encoding As Encoding = Nothing) As StreamReader
         encoding = If(encoding Is Nothing, Encoding.Default, encoding)
         Return New StreamReader(IO.File.Open(path, FileMode.OpenOrCreate), encoding)
     End Function
@@ -126,8 +133,8 @@ Public Module IOExtensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(buf As IEnumerable(Of Byte), <Parameter("Path.Save")> path As String) As Boolean
-        Using write As BinaryWriter = New BinaryWriter(path.Open)
+    <Extension> Public Function FlushStream(buf As IEnumerable(Of Byte), <Parameter("Path.Save")> path$) As Boolean
+        Using write As New BinaryWriter(path.Open)
             For Each b As Byte In buf
                 Call write.Write(b)
             Next

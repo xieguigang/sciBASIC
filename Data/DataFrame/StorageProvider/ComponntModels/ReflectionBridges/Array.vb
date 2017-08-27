@@ -68,15 +68,15 @@ Namespace StorageProvider.ComponentModels
                 Me.Delimiter = delimiter
                 Me.Element = type
 
-                Cast = Scripting.CasterString(type)
+                Cast = AddressOf Scripting.CasterString(type).Invoke
             End Sub
 
             Public Function LoadData(cellData As String) As Object
                 If String.IsNullOrEmpty(cellData) Then
                     Return Nothing
                 End If
-                Dim Tokens As String() = Strings.Split(cellData, Delimiter)
-                Dim array As Object() = Tokens.ToArray(Cast)
+                Dim tokens As String() = Strings.Split(cellData, Delimiter)
+                Dim array As Object() = tokens.ToArray(Cast)
                 Return Scripting.InputHandler.DirectCast(array, Element)
             End Function
 

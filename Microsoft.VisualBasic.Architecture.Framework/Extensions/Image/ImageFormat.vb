@@ -31,6 +31,7 @@ Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
+Imports defaultFormat = Microsoft.VisualBasic.Language.DefaultValue(Of System.Drawing.Imaging.ImageFormat)
 
 Namespace Imaging
 
@@ -89,6 +90,12 @@ Namespace Imaging
     ''' Specifies the file format of the image. Not inheritable.
     ''' </summary>
     Public Module ImageFormatExtensions
+
+        ''' <summary>
+        ''' 获取 W3C 可移植网络图形 (PNG) 图像格式。
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Png As defaultFormat = ImageFormat.Png
 
         ''' <summary>
         ''' default is <see cref="ImageFormat.Png"/>

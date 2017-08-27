@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::88998e489187bdf8112b8717eccf264b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\IORedirectFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Text.RegularExpressions
 Imports System.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace CommandLine
 
@@ -129,12 +130,15 @@ Namespace CommandLine
             Dim BAT As New StringBuilder(1024)
 
             '切换工作目录至当前的进程所处的文件夹
-            Dim Drive As String =
-                FileIO.FileSystem.GetDirectoryInfo(FileIO.FileSystem.CurrentDirectory) _
-                .Root.Name.Replace("\", "").Replace("/", "")
+            Dim Drive As String = FileIO.FileSystem _
+                .GetDirectoryInfo(App.CurrentDirectory) _
+                .Root _
+                .Name _
+                .Replace("\", "") _
+                .Replace("/", "")
 
             Call BAT.AppendLine(Drive)
-            Call BAT.AppendLine("CD " & FileIO.FileSystem.CurrentDirectory.CLIPath)
+            Call BAT.AppendLine("CD " & App.CurrentDirectory.CLIPath)
 
             If Not environment.IsNullOrEmpty Then '写入临时的环境变量
                 For Each para As KeyValuePair(Of String, String) In environment

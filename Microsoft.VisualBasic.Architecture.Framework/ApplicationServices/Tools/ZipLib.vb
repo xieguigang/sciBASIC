@@ -1,35 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::d99f419f6ac03b95895408915d9d5532, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\ZipLib.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 #If NET_40 = 0 Then
@@ -37,13 +39,14 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 ''' <summary>
 ''' Creating Zip Files Easily in .NET 4.5
 ''' Tim Corey, 11 May 2012
+''' 
 ''' http://www.codeproject.com/Articles/381661/Creating-Zip-Files-Easily-in-NET
 ''' </summary>
 ''' <remarks></remarks>
 ''' 
 <Package("IO.ZIP", Description:="Creating Zip Files Easily in .NET 4.6",
-                  Publisher:="Tim Corey",
-                  Url:="http://www.codeproject.com/Articles/381661/Creating-Zip-Files-Easily-in-NET")>
+         Publisher:="Tim Corey",
+         Url:="http://www.codeproject.com/Articles/381661/Creating-Zip-Files-Easily-in-NET")>
 Public Module GZip
 
     ''' <summary>
@@ -86,9 +89,9 @@ Public Module GZip
     ''' 
     <ExportAPI("ExtractToDir", Info:="Unzips the specified file to the given folder in a safe manner. This plans for missing paths and existing files and handles them gracefully.")>
     Public Sub ImprovedExtractToDirectory(<Parameter("Zip", "The name of the zip file to be extracted")> sourceArchiveFileName As String,
-                                              <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName As String,
-                                              <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>
-                                              Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
+                                          <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName As String,
+                                          <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>
+                                          Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
         'Opens the zip file up to be read
         Using archive As ZipArchive = ZipFile.OpenRead(sourceArchiveFileName)
             'Loops through each file in the zip file
@@ -100,7 +103,7 @@ Public Module GZip
 
     Public Function ExtractToSelfDirectory(zip As String, Optional overwriteMethod As Overwrite = Overwrite.IfNewer) As String
         Dim Dir As String = FileIO.FileSystem.GetParentPath(zip)
-        Dim Name As String = basename(zip)
+        Dim Name As String = BaseName(zip)
         Dir = Dir & "/" & Name
         Call ImprovedExtractToDirectory(zip, Dir, overwriteMethod)
 
@@ -122,9 +125,10 @@ Public Module GZip
     ''' </param>
     ''' 
     <ExportAPI("Extract", Info:="Safely extracts a single file from a zip file.")>
-        <Extension> Public Sub ImprovedExtractToFile(<Parameter("Zip.Entry", "The zip entry we are pulling the file from")> file__1 As ZipArchiveEntry,
-                                                     destinationPath As String,
-                                                     Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
+    <Extension> Public Sub ImprovedExtractToFile(<Parameter("Zip.Entry", "The zip entry we are pulling the file from")> file__1 As ZipArchiveEntry,
+                                                 destinationPath As String,
+                                                 Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
+
         'Gets the complete path for the destination file, including any
         'relative paths that were in the zip file
         Dim destinationFileName As String = IO.Path.Combine(destinationPath, file__1.FullName)
@@ -165,12 +169,13 @@ Public Module GZip
     End Sub
 
     <ExportAPI("File.Zip")>
-    Public Sub FileArchive(File As String, SaveZip As String,
-                               Optional action As ArchiveAction = ArchiveAction.Replace,
-                               Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
-                               Optional compression As CompressionLevel = CompressionLevel.Optimal)
-        Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(SaveZip))
-        Call AddToArchive(SaveZip, New List(Of String) From {File}, action, fileOverwrite, compression)
+    Public Sub FileArchive(File$, SaveZip$,
+                           Optional action As ArchiveAction = ArchiveAction.Replace,
+                           Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
+                           Optional compression As CompressionLevel = CompressionLevel.Optimal)
+
+        Call SaveZip.ParentPath.MkDIR
+        Call {File}.AddToArchive(SaveZip, action, fileOverwrite, compression)
     End Sub
 
     <ExportAPI("DIR.Zip")>
@@ -178,8 +183,8 @@ Public Module GZip
                                 Optional action As ArchiveAction = ArchiveAction.Replace,
                                 Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
                                 Optional compression As CompressionLevel = CompressionLevel.Optimal)
-        Dim files = FileIO.FileSystem.GetFiles(DIR)
-        Call AddToArchive(saveZip, files.AsList, action, fileOverwrite, compression)
+        Call (ls - l - r - "*.*" <= DIR) _
+            .AddToArchive(saveZip, action, fileOverwrite, compression, relativeDIR:=DIR)
     End Sub
 
     ''' <summary>
@@ -200,11 +205,13 @@ Public Module GZip
     ''' </param>
     ''' 
     <ExportAPI("Zip.Add.Files", Info:="Allows you to add files to an archive, whether the archive already exists or not")>
-    Public Sub AddToArchive(<Parameter("Zip", "The name of the archive to you want to add your files to")> archiveFullName As String,
-                                <Parameter("files", "A set of file names that are to be added")> files As Generic.IEnumerable(Of String),
-                                Optional action As ArchiveAction = ArchiveAction.Replace,
-                                Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
-                                Optional compression As CompressionLevel = CompressionLevel.Optimal)
+    <Extension>
+    Public Sub AddToArchive(<Parameter("files", "A set of file names that are to be added")> files As IEnumerable(Of String),
+                            <Parameter("Zip", "The name of the archive to you want to add your files to")> archiveFullName$,
+                            Optional action As ArchiveAction = ArchiveAction.Replace,
+                            Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
+                            Optional compression As CompressionLevel = CompressionLevel.Optimal,
+                            Optional relativeDIR$ = Nothing)
 
         'Identifies the mode we will be using - the default is Create
         Dim mode As ZipArchiveMode = ZipArchiveMode.Create
@@ -245,53 +252,67 @@ Public Module GZip
         End Select
 
         'Opens the zip file in the mode we specified
-        Using zipFile__1 As ZipArchive = ZipFile.Open(archiveFullName, mode)
+        Using zipFile As ZipArchive = IO.Compression.ZipFile.Open(archiveFullName, mode)
+
             'This is a bit of a hack and should be refactored - I am
             'doing a similar foreach loop for both modes, but for Create
             'I am doing very little work while Update gets a lot of
             'code.  This also does not handle any other mode (of
             'which there currently wouldn't be one since we don't
             'use Read here).
+
             If mode = ZipArchiveMode.Create Then
-                For Each file__2 As String In files
-                    'Adds the file to the archive
-                    zipFile__1.CreateEntryFromFile(file__2, IO.Path.GetFileName(file__2), compression)
+                Dim entryName$
+
+                For Each path As String In files
+                    ' Adds the file to the archive
+                    If relativeDIR.StringEmpty Then
+                        entryName = IO.Path.GetFileName(path)
+                    Else
+                        entryName = RelativePath(relativeDIR, path, appendParent:=False)
+                    End If
+
+                    Call zipFile.CreateEntryFromFile(path, entryName, compression)
                 Next
             Else
-                For Each file__2 As String In files
-                    Dim fileInZip = (From f In zipFile__1.Entries Where f.Name = IO.Path.GetFileName(file__2)).FirstOrDefault()
+                For Each path As String In files
+                    Dim fileInZip = (From f In zipFile.Entries Where f.Name = IO.Path.GetFileName(path)).FirstOrDefault()
 
                     Select Case fileOverwrite
                         Case Overwrite.Always
+
                             'Deletes the file if it is found
                             If fileInZip IsNot Nothing Then
                                 fileInZip.Delete()
                             End If
 
                             'Adds the file to the archive
-                            zipFile__1.CreateEntryFromFile(file__2, IO.Path.GetFileName(file__2), compression)
-
+                            zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
 
                         Case Overwrite.IfNewer
+
                             'This is a bit trickier - we only delete the file if it is
                             'newer, but if it is newer or if the file isn't already in
                             'the zip file, we will write it to the zip file
+
                             If fileInZip IsNot Nothing Then
+
                                 'Deletes the file only if it is older than our file.
                                 'Note that the file will be ignored if the existing file
                                 'in the archive is newer.
-                                If fileInZip.LastWriteTime < IO.File.GetLastWriteTime(file__2) Then
+                                If fileInZip.LastWriteTime < IO.File.GetLastWriteTime(path) Then
                                     fileInZip.Delete()
 
                                     'Adds the file to the archive
-                                    zipFile__1.CreateEntryFromFile(file__2, IO.Path.GetFileName(file__2), compression)
+                                    zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
                                 End If
                             Else
                                 'The file wasn't already in the zip file so add it to the archive
-                                zipFile__1.CreateEntryFromFile(file__2, IO.Path.GetFileName(file__2), compression)
+                                zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
                             End If
 
                         Case Overwrite.Never
+
                             'Don't do anything - this is a decision that you need to
                             'consider, however, since this will mean that no file will
                             'be writte.  You could write a second copy to the zip with
@@ -302,8 +323,6 @@ Public Module GZip
                     End Select
                 Next
             End If
-
-            Call zipFile__1.Dispose()
         End Using
     End Sub
 
