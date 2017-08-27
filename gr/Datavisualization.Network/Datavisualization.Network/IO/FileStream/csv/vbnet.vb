@@ -58,8 +58,8 @@ Namespace FileStream
 
             Call net.Save(tmp)
             Call GZip.AddToArchive(
-                vbnet,
                 ls - r - l - "*.*" <= tmp,
+                vbnet,
                 ArchiveAction.Replace,
                 Overwrite.Always,
                 CompressionLevel.Fastest)

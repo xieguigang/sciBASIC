@@ -190,6 +190,7 @@
   <ItemGroup>
     <Compile Include="FindPath\Dijkstra\LDM.vb" />
     <Compile Include="FindPath\Dijkstra\DijkstraAPI.vb" />
+    <Compile Include="FindPath\Extensions.vb" />
     <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Graph\Selector.vb" />
