@@ -80,6 +80,7 @@ Namespace Hierarchy
 
         Public Function compareTo(o As HierarchyTreeNode) As Integer Implements IComparable(Of HierarchyTreeNode).CompareTo
             Dim result As Integer
+
             If o Is Nothing OrElse o.LinkageDistance = 0 Then
                 result = -1
             ElseIf LinkageDistance = 0 Then
