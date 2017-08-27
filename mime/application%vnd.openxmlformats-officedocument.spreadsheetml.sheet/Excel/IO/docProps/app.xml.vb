@@ -28,11 +28,28 @@
 
 Namespace docProps
 
-    Public Class app
+    Public Class app : Inherits IXml
 
         Public Property Application As String
         Public Property DocSecurity As String
         Public Property ScaleCrop As Boolean
+        Public Property HeadingPairs As HeadingPairs
+        Public Property Company As String
+        Public Property LinksUpToDate As Boolean
+        Public Property SharedDoc As Boolean
+        Public Property HyperlinksChanged As Boolean
+        Public Property AppVersion As String
+
+        Protected Overrides Function filePath() As String
+            Return "docProps/app.xml"
+        End Function
+
+        Protected Overrides Function toXml() As String
+            Throw New NotImplementedException()
+        End Function
+    End Class
+
+    Public Class HeadingPairs
 
     End Class
 End Namespace
