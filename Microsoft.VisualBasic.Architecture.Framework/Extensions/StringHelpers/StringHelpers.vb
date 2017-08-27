@@ -686,7 +686,7 @@ Public Module StringHelpers
                                       Optional regex As Boolean = False,
                                       Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
 
-        Dim delimiterTest As Func(Of String, Boolean)
+        Dim delimiterTest As Assert(Of String)
 
         If regex Then
             Dim regexp As New Regex(delimiter, opt)
@@ -709,7 +709,7 @@ Public Module StringHelpers
     ''' <returns></returns>
     <Extension>
     Public Iterator Function Split(source As IEnumerable(Of String),
-                                   assertionDelimiter As Func(Of String, Boolean),
+                                   assertionDelimiter As Assert(Of String),
                                    Optional includes As Boolean = True) As IEnumerable(Of String())
 
         Dim list As New List(Of String)

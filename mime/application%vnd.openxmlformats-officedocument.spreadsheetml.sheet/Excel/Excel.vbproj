@@ -42,6 +42,27 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Office.Excel.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Office.Excel.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -63,9 +84,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="docProps\app.xml.vb" />
-    <Compile Include="docProps\custom.xml.vb" />
-    <Compile Include="docProps\core.xml.vb" />
+    <Compile Include="IO\docProps\app.xml.vb" />
+    <Compile Include="IO\docProps\custom.xml.vb" />
+    <Compile Include="IO\docProps\core.xml.vb" />
     <Compile Include="File.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -82,11 +103,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="xl\theme\theme.xml.vb" />
-    <Compile Include="xl\workbook.xml.vb" />
-    <Compile Include="xl\styles.xml.vb" />
-    <Compile Include="xl\sharedStrings.xml.vb" />
-    <Compile Include="xl\worksheets\sheet.xml.vb" />
+    <Compile Include="IO\xl\theme\theme.xml.vb" />
+    <Compile Include="IO\xl\workbook.xml.vb" />
+    <Compile Include="IO\xl\styles.xml.vb" />
+    <Compile Include="IO\xl\sharedStrings.xml.vb" />
+    <Compile Include="IO\xl\worksheets\sheet.xml.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

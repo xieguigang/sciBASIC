@@ -31,12 +31,26 @@ Imports System.Xml.Serialization
 Namespace xl.worksheets
 
     Public Class worksheet
+        Public Property dimension As dimension
+
+        Public Property cols As col()
         Public Property sheetData As row()
+        Public Property phoneticPr As phoneticPr
+        Public Property pageMargins As pageMargins
     End Class
 
     Public Structure dimension
         <XmlAttribute> Public Property ref As String
     End Structure
+
+    Public Class col
+        <XmlAttribute> Public Property min As String
+        <XmlAttribute> Public Property max As String
+        <XmlAttribute> Public Property width As String
+        <XmlAttribute> Public Property style As String
+        <XmlAttribute> Public Property bestFit As String
+        <XmlAttribute> Public Property customWidth As String
+    End Class
 
     Public Structure row
         <XmlAttribute> Public Property r As String
@@ -53,4 +67,13 @@ Namespace xl.worksheets
         <XmlAttribute> Public Property t As String
         Public Property v As String
     End Structure
+
+    Public Class pageMargins
+        <XmlAttribute> Public Property left As Double
+        <XmlAttribute> Public Property right As Double
+        <XmlAttribute> Public Property top As Double
+        <XmlAttribute> Public Property bottom As Double
+        <XmlAttribute> Public Property header As Double
+        <XmlAttribute> Public Property footer As Double
+    End Class
 End Namespace
