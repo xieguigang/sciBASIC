@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -259,21 +260,27 @@ Namespace Heatmap
 
                     ' 2. 然后才能够进行绘图
                     If drawDendrograms.HasFlag(DrawElements.Rows) Then
-                        ' 绘制出聚类树
-                        Dim cluster As Cluster = Time(AddressOf array.RunCluster)
-                        Dim topleft As New Point With {
-                            .X = rect.Padding.Left,
-                            .Y = top
-                        }
-                        Dim dsize As New Size With {
-                            .Width = dendrogramLayout.A,
-                            .Height = dh
-                        }
-                        rowKeys = configDendrogramCanvas(cluster) _
-                            .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
-                            .OrderBy(Function(x) x.Value.Y) _
-                            .Keys
-                        ' Call g.DrawRectangle(Pens.Red, New Rectangle(topleft, dsize))
+
+                        Try
+                            ' 绘制出聚类树
+                            Dim cluster As Cluster = Time(AddressOf array.RunCluster)
+                            Dim topleft As New Point With {
+                                .X = rect.Padding.Left,
+                                .Y = top
+                            }
+                            Dim dsize As New Size With {
+                                .Width = dendrogramLayout.A,
+                                .Height = dh
+                            }
+                            rowKeys = configDendrogramCanvas(cluster) _
+                                .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
+                                .OrderBy(Function(x) x.Value.Y) _
+                                .Keys
+                        Catch ex As Exception
+                            ex.PrintException
+                            rowKeys = array.Keys
+                        End Try
+
                     Else
                         rowKeys = array.Keys
                     End If

@@ -27,12 +27,25 @@
 #End Region
 
 Imports System.IO.Compression
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' ``*.xlsx`` document file
 ''' </summary>
 Public Class File
+
+    ''' <summary>
+    ''' 使用序列化写入数据到xlsx文件之中
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="sheetName$"></param>
+    ''' <returns></returns>
+    Public Function WriteSheetTable(Of T)(data As IEnumerable(Of T), sheetName$) As Boolean
+        Dim table As csv = data.ToCsvDoc
+    End Function
 
     Public Function WriteXlsx(path$) As Boolean
 
