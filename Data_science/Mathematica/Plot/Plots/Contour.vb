@@ -95,7 +95,7 @@ Public Module Contour
                          Optional padding$ = "padding: 100 400 100 400;",
                          Optional unit% = 5,
                          Optional legendTitle$ = "",
-                         Optional legendFont As Font = Nothing,
+                         Optional legendFont$ = CSSFont.Win7Large,
                          Optional xsteps! = Single.NaN,
                          Optional ysteps! = Single.NaN,
                          Optional ByRef matrix As List(Of DataSet) = Nothing) As GraphicsData
@@ -144,7 +144,7 @@ Public Module Contour
                          Optional padding$ = "padding: 100 400 100 400",
                          Optional unit% = 5,
                          Optional legendTitle$ = "Scatter Heatmap",
-                         Optional legendFont As Font = Nothing,
+                         Optional legendFont$ = CSSFont.Win7Large,
                          Optional xsteps! = Single.NaN,
                          Optional ysteps! = Single.NaN,
                          Optional parallel As Boolean = False,
@@ -154,7 +154,8 @@ Public Module Contour
                          Optional xlabel$ = "X",
                          Optional ylabel$ = "Y",
                          Optional logbase# = -1.0R,
-                         Optional scale# = 1.0#) As GraphicsData
+                         Optional scale# = 1.0#,
+                         Optional tickFont$ = CSSFont.Win7Normal) As GraphicsData
 
         Dim plotInternal As New __plotHelper With {
             .func = fun,
@@ -165,7 +166,7 @@ Public Module Contour
             .xsteps = xsteps,
             .ysteps = ysteps,
             .colorMap = colorMap,
-            .legendFont = legendFont,
+            .legendFont = CSSFont.TryParse(legendFont),
             .legendTitle = legendTitle,
             .mapLevels = mapLevels,
             .matrix = matrix,
@@ -175,7 +176,8 @@ Public Module Contour
             .logBase = logbase,
             .maxZ = maxZ,
             .minZ = minZ,
-            .scale = scale
+            .scale = scale,
+            .tickFont = CSSFont.TryParse(tickFont)
         }
 
         Return GraphicsPlots(
@@ -235,23 +237,19 @@ Public Module Contour
         Public logBase#
         Public minZ, maxZ As Double
         Public scale# = 1
+        Public tickFont As Font
 
         Public Function GetData(plotSize As Size) As (x#, y#, z#)()
             If func Is Nothing Then
                 ' 直接返回矩阵数据
-                Return LinqAPI.Exec(Of (x#, y#, Z#)) <=
-                    From line As DataSet
-                    In matrix
-                    Let xi = Val(line.ID)
-                    Let data = line.Properties.Select(Function(o) (x:=xi, y:=Val(o.Key), Z:=o.Value))
-                    Select data
+                Return LinqAPI.Exec(Of (x#, y#, Z#))() <= From line As DataSet                      In matrix                      Let xi = Val(line.ID)                      Let data = line.Properties.Select(Function(o) (x:=xi, y:=Val(o.Key), Z:=o.Value))                      Select  Data
             Else
-                Return func _
-                    .__getData(plotSize,  ' 得到通过计算返回来的数据
-                          xrange, yrange,
-                          xsteps, ysteps,
-                          parallel, matrix,
-                          unit)
+                    Return func _
+                        .__getData(plotSize,  ' 得到通过计算返回来的数据
+                              xrange, yrange,
+                              xsteps, ysteps,
+                              parallel, matrix,
+                              unit)
             End If
         End Function
 
@@ -318,6 +316,15 @@ Public Module Contour
             Dim getColors = GetColor(data.ToArray(Function(o) o.z), colorDatas)
             Dim size As Size = region.Size
             Dim margin = region.Padding
+            Dim plotWidth! = region.PlotRegion.Width
+            Dim plotHeight! = region.PlotRegion.Height
+            ' 图例位于右边，占1/5的绘图区域的宽度，高度为绘图区域的高度的2/3
+            Dim legendLayout As New Rectangle With {
+                .Width = plotWidth / 5,
+                .Height = plotHeight * (2 / 3),
+                .X = region.Width - margin.Right - .Width,
+                .Y = margin.Top + (plotHeight - .Height) / 2
+            }
 
             Call g.DrawAxis(size, margin, scaler, False, offset, xlabel, ylabel)
 
@@ -344,17 +351,9 @@ Public Module Contour
                     z >= minZ AndAlso
                     z <= maxZ) _
                 .ToArray
-            Dim legend As GraphicsData = colorDatas.ColorMapLegend(
-                haveUnmapped:=False,
-                min:=realData.Min.FormatNumeric(1),
-                max:=realData.Max.FormatNumeric(1),
-                title:=legendTitle,
-                titleFont:=legendFont)
-            Dim lsize As Size = legend.Size
-            Dim left% = size.Width - lsize.Width + 150
-            Dim top% = size.Height / 3
+            Dim range As DoubleRange = realData
 
-            Call g.DrawImageUnscaled(legend, left, top)
+            Call g.ColorMapLegend(legendLayout, colorDatas, range, legendFont, legendTitle, tickFont, New Pen(Color.Black, 2), NameOf(Color.Gray))
         End Sub
     End Class
 
