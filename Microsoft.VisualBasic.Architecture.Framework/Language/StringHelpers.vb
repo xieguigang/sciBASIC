@@ -53,7 +53,7 @@ Namespace Language
         ''' <param name="args"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function xFormat(args As String()) As FormatHelper
+        Public Function StringFormat(args As String()) As FormatHelper
             Return New FormatHelper With {.args = args}
         End Function
     End Module
