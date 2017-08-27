@@ -50,15 +50,15 @@ Public Class Project : Implements ISaveHandle
     Public Property Targets As Target()
 
     Public Function GetProfile(condition As String) As PropertyGroup
-        Return LinqAPI.DefaultFirst(Of PropertyGroup) <=
+        Return LinqAPI.DefaultFirst(Of PropertyGroup) _
  _
-            From x As PropertyGroup
-            In PropertyGroups
-            Where String.Equals(
-                condition,
-                x.Condition,
-                StringComparison.OrdinalIgnoreCase)
-            Select x
+        () <= From x As PropertyGroup
+              In PropertyGroups
+              Where String.Equals(
+                  condition,
+                  x.Condition,
+                  StringComparison.OrdinalIgnoreCase)
+              Select x
 
     End Function
 
@@ -81,11 +81,12 @@ Public Class Project : Implements ISaveHandle
         xml.xmlns.xsd = ""
         xml.xmlns.xsi = ""
         xml.encoding = XmlEncodings.UTF8
+        xml.standalone = True
         Return xml.ToString.SaveTo(path, encoding)
     End Function
 
     Public Function Save(Optional path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-        Return Save(path, encoding.GetEncodings)
+        Return Save(path, encoding.CodePage)
     End Function
 End Class
 
