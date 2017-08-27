@@ -9,9 +9,21 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' </summary>
 Public Class BoxData
 
+    ''' <summary>
+    ''' The sample groups
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Groups As NamedValue(Of Vector)()
+    ''' <summary>
+    ''' The serials name
+    ''' </summary>
+    ''' <returns></returns>
     Public Property SerialName As String
 
+    ''' <summary>
+    ''' Get all of the name property values from <see cref="Groups"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GroupNames As String()
         Get
             Return Groups.Keys.ToArray
@@ -25,7 +37,7 @@ Public Class BoxData
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="path$"></param>
+    ''' <param name="path$">The csv file path</param>
     ''' <param name="groupDesigner"></param>
     ''' <returns></returns>
     Public Shared Iterator Function Load(path$, groupDesigner As NamedCollection(Of String)()) As IEnumerable(Of BoxData)
@@ -39,7 +51,7 @@ Public Class BoxData
                 .Select(Function(x)
                             Dim values As Vector = datasets(x.Value).Vector([property]:=name)
                             Return New NamedValue(Of Vector) With {
-                                .name = x.Name,
+                                .Name = x.Name,
                                 .Description = x.Description,
                                 .Value = values
                             }

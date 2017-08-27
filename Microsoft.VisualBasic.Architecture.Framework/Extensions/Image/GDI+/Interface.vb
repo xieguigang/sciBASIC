@@ -4474,48 +4474,27 @@ Namespace Imaging
         '     This method returns an array of System.Drawing.Region objects, each of which
         '     bounds a range of character positions within the specified string.
         Public MustOverride Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified by the text parameter as drawn with the font parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
+
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' </summary>
+        ''' <param name="text">String to measure.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified by the text parameter as drawn with the font parameter.
+        ''' </returns>
         Public MustOverride Function MeasureString(text As String, font As Font) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the format of the string.
-        '
-        '   width:
-        '     Maximum width of the string in pixels.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified in the text parameter as drawn with the font parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
+
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' </summary>
+        ''' <param name="text">String to measure.</param>
+        ''' <param name="font">System.Drawing.Font that defines the format of the string.</param>
+        ''' <param name="width">Maximum width of the string in pixels.</param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified in the text parameter as drawn with the font parameter.</returns>
         Public MustOverride Function MeasureString(text As String, font As Font, width As Integer) As SizeF
         '
         ' Summary:
