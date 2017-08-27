@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::54eb1f00c8c5e191a2726e9f25cab3c6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Array
 Imports System.Drawing
 Imports System.IO
 Imports System.Reflection
@@ -33,29 +34,24 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
 Namespace Scripting
 
     ''' <summary>
-    ''' 转换从终端或者脚本文件之中输入的字符串的类型的转换
+    ''' Handles the input text string from commandline or scripting, dealing with the 
+    ''' conversion of this input string to .NET object in a more easy way.
+    ''' (转换从终端或者脚本文件之中输入的字符串的类型的转换)
     ''' </summary>
     Public Module InputHandler
-
-        ''' <summary>
-        ''' 在脚本编程之中将用户输入的字符串数据转换为目标类型的方法接口
-        ''' </summary>
-        ''' <param name="value"></param>
-        ''' <returns></returns>
-        Public Delegate Function LoadObject(value$) As Object
-        Public Delegate Function LoadObject(Of T)(value$) As T
 
         ''' <summary>
         ''' Object为字符串类型，这个字典可以讲字符串转为目标类型
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property CasterString As New Dictionary(Of Type, Func(Of String, Object)) From {
+        Public ReadOnly Property CasterString As New Dictionary(Of Type, LoadObject) From {
  _
             {GetType(String), Function(s$) s},
             {GetType(Char), AddressOf Casting.CastChar},
@@ -96,8 +92,8 @@ Namespace Scripting
                 Return Nothing
             End If
             If _CasterString.ContainsKey(target) Then
-                Dim Caster As Func(Of String, Object) = _CasterString(target)
-                Return Caster(expression$)
+                Dim caster As LoadObject = _CasterString(target)
+                Return caster(expression$)
             End If
 
             Try
@@ -143,11 +139,14 @@ Namespace Scripting
         ''' <param name="briefName"></param>
         ''' <param name="stringConvertType"></param>
         ''' <param name="cast"></param>
-        Public Sub CapabilityPromise(briefName As String, stringConvertType As Type, cast As Func(Of String, Object))
-            If CasterString.ContainsKey(stringConvertType) Then
-                Call CasterString.Remove(stringConvertType)
-            End If
-            Call CasterString.Add(stringConvertType, cast)
+        Public Sub CapabilityPromise(briefName As String, stringConvertType As Type, cast As LoadObject)
+            With _CasterString
+                If .ContainsKey(stringConvertType) Then
+                    Call .Remove(stringConvertType)
+                End If
+
+                Call .Add(stringConvertType, cast)
+            End With
 
             Dim key$ = briefName.ToLower
 
@@ -160,8 +159,7 @@ Namespace Scripting
         ''' <summary>
         ''' Enumerate all of the types that can be handled in this module. All of the key string is in lower case.(键值都是小写的)
         ''' </summary>
-        Public ReadOnly Property Types As SortedDictionary(Of String, Type) =
-            New SortedDictionary(Of String, Type) From {
+        Public ReadOnly Property Types As New SortedDictionary(Of String, Type) From {
  _
                 {"string", GetType(String)},
                 {"integer", GetType(Integer)},
@@ -192,18 +190,17 @@ Namespace Scripting
         }
 
         ''' <summary>
-        ''' 类型获取失败会返回空值，大小写不敏感
+        ''' Get .NET <see cref="Type"/> definition info from its name.
+        ''' (类型获取失败会返回空值，大小写不敏感)
         ''' </summary>
-        ''' <param name="name">类型的名称简写</param>
-        ''' <param name="ObjectGeneric">是否出错的时候返回Object类型，默认返回Nothing</param>
+        ''' <param name="name">Case insensitive.(类型的名称简写)</param>
+        ''' <param name="ObjectGeneric">是否出错的时候返回<see cref="Object"/>类型，默认返回Nothing</param>
         ''' <returns></returns>
-        Public Function [GetType](name As String, Optional ObjectGeneric As Boolean = False) As Type
-            name = name.ToLower
-
-            If Types.ContainsKey(name) Then
+        Public Function [GetType](name As Value(Of String), Optional ObjectGeneric As Boolean = False) As Type
+            If Types.ContainsKey(name = name.Value.ToLower) Then
                 Return Types(name)
             Else
-                Dim typeInfo As Type = System.Type.GetType(name, False, True)
+                Dim typeInfo As Type = Type.GetType(name, False, True)
 
                 If typeInfo Is Nothing AndAlso ObjectGeneric Then
                     Return GetType(Object)
@@ -276,20 +273,15 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Cast the <see cref="Object"/> array to typed object array.
         ''' </summary>
         ''' <param name="array"></param>
         ''' <param name="type">数组里面的元素的类型</param>
         ''' <returns></returns>
         Public Function [DirectCast](array As Object(), type As Type) As Object
-            Dim typedArray = System.Array.CreateInstance(type, array.Length)
-            'For i As Integer = 0 To array.Length - 1
-            '    Call typedArray.SetValue(array(i), i)
-            'Next
-            Call System.Array.Copy(array, typedArray, array.Length) '直接复制不能够正常工作
-
-            Return typedArray
+            Dim out = CreateInstance(type, array.Length)
+            Call Copy(array, out, array.Length) ' 直接复制不能够正常工作
+            Return out
         End Function
-
     End Module
 End Namespace
