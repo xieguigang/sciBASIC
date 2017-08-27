@@ -57,7 +57,7 @@ Namespace CommandLine.InteropService.SharedORM
                         .Value = api.Usage.CommandLineModel
                     }
                 Catch ex As Exception
-                    ex = New Exception(api.EntryPointFullName(False))
+                    ex = New Exception(api.EntryPointFullName(False), ex)
                     Throw ex
                 End Try
             Next

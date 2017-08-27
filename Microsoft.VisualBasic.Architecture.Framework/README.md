@@ -9,3 +9,6 @@ This core runtime consists of two parts:
 2. Data Extensions
 
 The first part of code is trying to help people to build a commandline application using VisualBasic in a more easy way, and the second part of the code is try to help people
+
+
+Retarget .NET framework version using [TargetFrameworkMigrator](https://marketplace.visualstudio.com/items?itemName=PavelSamokha.TargetFrameworkMigrator)
