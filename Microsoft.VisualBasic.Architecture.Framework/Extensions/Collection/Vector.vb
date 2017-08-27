@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::870571be4634724ba5bdbd16c133994f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
@@ -183,20 +184,6 @@ Public Module VectorExtensions
         Return System.Array.IndexOf(array, value:=o)
     End Function
 
-    <Extension>
-    Public Function GetMinIndex(values As List(Of Double)) As Integer
-        Dim min As Double = Double.MaxValue
-        Dim minIndex As Integer = 0
-        For i As Integer = 0 To values.Count - 1
-            If values(i) < min Then
-                min = values(i)
-                minIndex = i
-            End If
-        Next
-
-        Return minIndex
-    End Function
-
     ''' <summary>
     ''' 从后往前访问集合之中的元素，请注意请不要使用Linq查询表达式，尽量使用``list``或者``array``
     ''' </summary>
@@ -324,7 +311,7 @@ Public Module VectorExtensions
     ''' <param name="delimiter">和字符串的Split函数一样，这里作为delimiter的元素都不会出现在结果之中</param>
     ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
-    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), delimiter As Func(Of T, Boolean), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As T()()
+    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As T()()
         Dim array As T() = source.ToArray
         Dim blocks As New List(Of T())  ' The returned split blocks
         Dim tmp As New List(Of T)
@@ -359,6 +346,7 @@ Public Module VectorExtensions
         If Not tmp.Count = 0 Then
             blocks += tmp.ToArray
         End If
+
         Return blocks.ToArray
     End Function
 

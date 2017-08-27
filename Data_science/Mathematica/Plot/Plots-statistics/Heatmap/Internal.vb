@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -13,9 +14,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Heatmap
 
@@ -49,6 +48,9 @@ Namespace Heatmap
     ''' heatmap plot internal
     ''' </summary>
     Module Internal
+
+        ' 假若只有一个数据分组，那么在进行聚类树的构建的时候就会出错
+        ' 对于只有一个数据分组的时候，假若是采用的rowscale的方式，那么所有的数值所对应的颜色都是一样的，因为每一行都只有一个数，且该数值为该行的最大值，即自己除以自己总是为1的，所以所有行的样色都会一样
 
         ''' <summary>
         ''' 返回来的都是0-1之间的数，乘以颜色数组长度之后即可庸作为颜色的index
@@ -258,21 +260,27 @@ Namespace Heatmap
 
                     ' 2. 然后才能够进行绘图
                     If drawDendrograms.HasFlag(DrawElements.Rows) Then
-                        ' 绘制出聚类树
-                        Dim cluster As Cluster = Time(AddressOf array.RunCluster)
-                        Dim topleft As New Point With {
-                            .X = rect.Padding.Left,
-                            .Y = top
-                        }
-                        Dim dsize As New Size With {
-                            .Width = dendrogramLayout.A,
-                            .Height = dh
-                        }
-                        rowKeys = configDendrogramCanvas(cluster) _
-                            .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
-                            .OrderBy(Function(x) x.Value.Y) _
-                            .Keys
-                        ' Call g.DrawRectangle(Pens.Red, New Rectangle(topleft, dsize))
+
+                        Try
+                            ' 绘制出聚类树
+                            Dim cluster As Cluster = Time(AddressOf array.RunCluster)
+                            Dim topleft As New Point With {
+                                .X = rect.Padding.Left,
+                                .Y = top
+                            }
+                            Dim dsize As New Size With {
+                                .Width = dendrogramLayout.A,
+                                .Height = dh
+                            }
+                            rowKeys = configDendrogramCanvas(cluster) _
+                                .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
+                                .OrderBy(Function(x) x.Value.Y) _
+                                .Keys
+                        Catch ex As Exception
+                            ex.PrintException
+                            rowKeys = array.Keys
+                        End Try
+
                     Else
                         rowKeys = array.Keys
                     End If

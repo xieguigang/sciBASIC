@@ -61,6 +61,10 @@ Namespace Scripting.SymbolBuilder
             "|Xor|" &
             "|Yield|"
 
+        ''' <summary>
+        ''' Tokenize of <see cref="VBKeywords"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Words As String()
             Get
                 Return VBKeywords _
@@ -73,6 +77,14 @@ Namespace Scripting.SymbolBuilder
         Private Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Escaping the vb variable name when it conflicts with VB keywords name, 
+        ''' this function can be using for the VB.NET related code generator.
+        ''' </summary>
+        ''' <param name="name$">The identifier name.</param>
+        ''' <returns>If the identifier is a VB.NET keyword, then it will be escaping and returns, 
+        ''' otherwise, will do nothing, function returns the raw input identifier.
+        ''' </returns>
         Public Shared Function AutoEscapeVBKeyword(name$) As String
             If InStr(VBKeywords, $"|{name}|", CompareMethod.Text) > 0 Then
                 Return $"[{name}]"
