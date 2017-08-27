@@ -42,12 +42,17 @@ Module Program
 
     Const Condition$ = " '$(Configuration)|$(Platform)' == '%s|%s' "
 
+    ''' <summary>
+    ''' 为某个解决方案的文件夹之中的每一个项目文件配置统一的输出文件夹
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     <ExportAPI("/config.output")>
     <Usage("/config.output /in <*.vbproj/DIR> /output <DIR> /c 'config=<Name>;platform=<type>'")>
     <Description("Config the output location of the project file.")>
     Public Function ConfigOutputPath(args As CommandLine) As Integer
         Dim [in] As String = args <= "/in"
-        Dim output As String = args <= "/output"
+        Dim output As String = args.GetFullDIRPath("/output")
         Dim c As Dictionary(Of String, String) = args.GetDictionary("/c")
         Dim files$()
         Dim condition$ = ""
@@ -56,7 +61,7 @@ Module Program
             Try
                 condition$ = Program.Condition <= {
                     !config, !platform
-                }.xFormat
+                }.StringFormat
             Catch ex As Exception
                 ex = New Exception(.GetJson, ex)
                 Throw ex
@@ -74,7 +79,12 @@ Module Program
         For Each xml As String In files
             Dim vbproj As Project = xml.LoadXml(Of Project)(,, AddressOf Project.RemoveNamespace)
             Dim config = vbproj.GetProfile(condition$)
-            Dim relOut$ = RelativePath(xml.ParentPath, output)
+            Dim relOut$ = RelativePath(xml.ParentPath, output) ' 获取得到的是相对于vbproj文件的目标文件夹的相对路径
+
+            If config Is Nothing Then
+                Call $"Project: {xml.GetFullPath} didn't have target config profile, ignore this project item...".EchoLine
+            End If
+
 #If DEBUG Then
             xml = xml.TrimSuffix & "_updated.vbproj"
 #End If

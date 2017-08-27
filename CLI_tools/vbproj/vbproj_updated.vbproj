@@ -36,7 +36,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>./test</OutputPath>
+    <OutputPath>..\vbproj\bin\Debug\test</OutputPath>
     <DefineConstants>A=3,BB=2333</DefineConstants>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <DocumentationFile>vbproj.xml</DocumentationFile>
