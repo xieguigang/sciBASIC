@@ -83,6 +83,7 @@ Module Program
 
             If config Is Nothing Then
                 Call $"Project: {xml.GetFullPath} didn't have target config profile, ignore this project item...".EchoLine
+                Continue For
             End If
 
 #If DEBUG Then
