@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::01d4d95ae26fe7718cd3ff33918a17e3, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Heatmaps\Contour.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -43,6 +43,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Scripting.Types
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
 ''' ###### 等高线图
@@ -90,7 +91,7 @@ Public Module Contour
                          Optional colorMap$ = "Spectral:c10",
                          Optional mapLevels% = 25,
                          Optional bg$ = "white",
-                         Optional size As Size = Nothing,
+                         Optional size$ = "3000,2700",
                          Optional padding$ = "padding: 100 400 100 400;",
                          Optional unit% = 5,
                          Optional legendTitle$ = "",
@@ -139,7 +140,7 @@ Public Module Contour
                          Optional colorMap$ = "Spectral:c10",
                          Optional mapLevels% = 25,
                          Optional bg$ = "white",
-                         Optional size As Size = Nothing,
+                         Optional size$ = "3000,2700",
                          Optional padding$ = "padding: 100 400 100 400",
                          Optional unit% = 5,
                          Optional legendTitle$ = "Scatter Heatmap",
@@ -155,36 +156,32 @@ Public Module Contour
                          Optional logbase# = -1.0R,
                          Optional scale# = 1.0#) As GraphicsData
 
-        Dim margin As Padding = padding
-
-        If size.IsEmpty Then
-            size = New Size(3000, 2400)
-        End If
+        Dim plotInternal As New __plotHelper With {
+            .func = fun,
+            .offset = New Point(-300, 0),
+            .xrange = xrange,
+            .yrange = yrange,
+            .parallel = parallel,
+            .xsteps = xsteps,
+            .ysteps = ysteps,
+            .colorMap = colorMap,
+            .legendFont = legendFont,
+            .legendTitle = legendTitle,
+            .mapLevels = mapLevels,
+            .matrix = matrix,
+            .unit = unit,
+            .xlabel = xlabel,
+            .ylabel = ylabel,
+            .logBase = logbase,
+            .maxZ = maxZ,
+            .minZ = minZ,
+            .scale = scale
+        }
 
         Return GraphicsPlots(
-           size, margin,
-           bg$, AddressOf New __plotHelper With {
-                .func = fun,
-                .margin = margin,
-                .offset = New Point(-300, 0),
-                .xrange = xrange,
-                .yrange = yrange,
-                .parallel = parallel,
-                .xsteps = xsteps,
-                .ysteps = ysteps,
-                .colorMap = colorMap,
-                .legendFont = legendFont,
-                .legendTitle = legendTitle,
-                .mapLevels = mapLevels,
-                .matrix = matrix,
-                .unit = unit,
-                .xlabel = xlabel,
-                .ylabel = ylabel,
-                .logBase = logbase,
-                .maxZ = maxZ,
-                .minZ = minZ,
-                .scale = scale
-           }.Plot)
+            size.SizeParser, padding,
+            bg$,
+            AddressOf plotInternal.Plot)
     End Function
 
     <Extension>
@@ -192,7 +189,7 @@ Public Module Contour
                          Optional colorMap$ = "Spectral:c10",
                          Optional mapLevels% = 25,
                          Optional bg$ = "white",
-                         Optional size As Size = Nothing,
+                         Optional size$ = "3000,2700",
                          Optional padding$ = "padding: 100 400 100 400;",
                          Optional legendTitle$ = "Scatter Heatmap",
                          Optional legendFont As Font = Nothing,
@@ -204,10 +201,9 @@ Public Module Contour
         Dim margin As Padding = padding
 
         Return GraphicsPlots(
-           If(size.IsEmpty, New Size(3000, 2400), size),
+           size.SizeParser,
            margin,
            bg$, AddressOf New __plotHelper With {
-                .margin = margin,
                 .offset = New Point(-300, 0),
                 .colorMap = colorMap,
                 .legendFont = legendFont,
@@ -226,7 +222,7 @@ Public Module Contour
     ''' </summary>
     Private Class __plotHelper
 
-        Public margin As Padding, offset As Point
+        Public offset As Point
         Public func As Func(Of Double, Double, Double)
         Public xrange As DoubleRange, yrange As DoubleRange
         Public xsteps!, ysteps!
@@ -321,6 +317,7 @@ Public Module Contour
             Dim colorDatas As SolidBrush() = Nothing
             Dim getColors = GetColor(data.ToArray(Function(o) o.z), colorDatas)
             Dim size As Size = region.Size
+            Dim margin = region.Padding
 
             Call g.DrawAxis(size, margin, scaler, False, offset, xlabel, ylabel)
 

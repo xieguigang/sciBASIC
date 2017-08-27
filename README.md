@@ -179,7 +179,7 @@ Call Plot3D.ScatterHeatmap.Plot(
 
 ![](./Data_science/Mathematica/images/3d-heatmap.png)
 
-###### Scatter Heatmap
+###### Contour Heatmap
 
 You can using a lambda expression as the plot data source:
 
