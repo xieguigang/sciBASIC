@@ -50,7 +50,7 @@ Module Program
         Dim output As String = args <= "/output"
         Dim c As Dictionary(Of String, String) = args.GetDictionary("/c")
         Dim files$()
-        Dim condition$
+        Dim condition$ = ""
 
         With c
             Try
@@ -60,6 +60,8 @@ Module Program
             Catch ex As Exception
                 ex = New Exception(.GetJson, ex)
                 Throw ex
+            Finally
+                Call $" ==> {condition}".__INFO_ECHO
             End Try
         End With
 
