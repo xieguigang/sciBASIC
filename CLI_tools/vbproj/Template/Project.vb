@@ -81,6 +81,7 @@ Public Class Project : Implements ISaveHandle
         xml.xmlns.xsd = ""
         xml.xmlns.xsi = ""
         xml.encoding = XmlEncodings.UTF8
+        xml.standalone = True
         Return xml.ToString.SaveTo(path, encoding)
     End Function
 

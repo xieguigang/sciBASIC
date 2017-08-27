@@ -79,7 +79,7 @@ Module Program
         For Each xml As String In files
             Dim vbproj As Project = xml.LoadXml(Of Project)(,, AddressOf Project.RemoveNamespace)
             Dim config = vbproj.GetProfile(condition$)
-            Dim relOut$ = RelativePath(xml.ParentPath, output) ' 获取得到的是相对于vbproj文件的目标文件夹的相对路径
+            Dim relOut$ = RelativePath(xml.ParentPath, output, appendParent:=False) ' 获取得到的是相对于vbproj文件的目标文件夹的相对路径
 
             If config Is Nothing Then
                 Call $"Project: {xml.GetFullPath} didn't have target config profile, ignore this project item...".EchoLine
