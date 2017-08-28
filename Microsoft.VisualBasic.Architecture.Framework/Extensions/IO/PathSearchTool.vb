@@ -357,7 +357,8 @@ Public Module ProgramPathSearchTool
             Call FileIO.FileSystem.CopyFile(source, copyTo)
         Catch ex As Exception
             ex = New Exception({source, copyTo}.GetJson, ex)
-            Call App.LogException(ex)
+            App.LogException(ex)
+
             Return False
         End Try
 
