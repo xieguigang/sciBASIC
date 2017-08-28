@@ -96,6 +96,7 @@ Namespace Drawing2D.Colors
                                        Optional titleFont As Font = Nothing,
                                        Optional labelFont As Font = Nothing,
                                        Optional legendWidth! = -1) As GraphicsData
+
             Dim margin As Padding = padding
 
             If lsize.IsEmpty Then
@@ -110,58 +111,104 @@ Namespace Drawing2D.Colors
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Dim graphicsRegion As Rectangle = region.PlotRegion
-                    Dim size As Size = region.Size
-                    Dim grayHeight As Integer = size.Height * 0.05
-                    Dim y As Single
-                    Dim fSize As SizeF
-                    Dim pt As Point
-                    Dim rectWidth As Integer = If(legendWidth <= 0, size.Width - margin.Horizontal, legendWidth)
-                    Dim legendsHeight As Integer = size.Height - (margin.Top * 3) - grayHeight * 3
-                    Dim d As Single = legendsHeight / designer.Length
-                    Dim left As Integer = margin.Left + 30 + rectWidth
 
-                    Call g.DrawString(title, titleFont, Brushes.Black, New Point(margin.Left, 0))
-
-                    fSize = g.MeasureString(max, labelFont)
-                    y = margin.Top * 2
-
-                    Call g.DrawString(max, labelFont, Brushes.Black, New Point(left, y - fSize.Height / 2))
-
-                    For i As Integer = designer.Length - 1 To 0 Step -1
-                        Call g.FillRectangle(
-                            brush:=designer(i),
-                            rect:=New RectangleF With {
-                                .Location = New PointF(margin.Left, y),
-                                .Size = New SizeF(rectWidth, d)
-                            })
-                        y += d
-                    Next
-
-                    fSize = g.MeasureString(min, labelFont)
-                    Call g.DrawString(
-                        min, labelFont, Brushes.Black,
-                        New Point With {
-                            .X = left,
-                            .Y = If(designer.Length > 100, d, 0) + y - fSize.Height / 2
-                        })
-
-                    If haveUnmapped Then
-                        y = size.Height - margin.Top - grayHeight
-                        fSize = g.MeasureString("Unknown", labelFont)
-                        pt = New Point(left, y + (grayHeight - fSize.Height) / 2)
-                        graphicsRegion = New Rectangle With {
-                            .Location = New Point(margin.Left, y),
-                            .Size = New Size(rectWidth, grayHeight)
-                        }
-
-                        Call g.DrawString("Unknown", labelFont, Brushes.Black, pt)
-                        Call g.FillRectangle(Brushes.LightGray, graphicsRegion)
-                    End If
                 End Sub
 
             Return GraphicsPlots(lsize, margin, bg, plotInternal)
         End Function
+
+        ''' <summary>
+        ''' 垂直的颜色谱的绘制：左边为颜色谱，右边为标尺，左边的颜色谱的上方为标题
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="layout">legend的大小和位置</param>
+        ''' 
+        <Extension>
+        Public Sub ColorMapLegend(ByRef g As IGraphics, layout As Rectangle,
+                                  designer As SolidBrush(),
+                                  range As DoubleRange,
+                                  titleFont As Font, title$,
+                                  tickFont As Font,
+                                  tickAxisStroke As Pen,
+                                  Optional unmapColor$ = Nothing)
+
+            Dim titleSize As SizeF = g.MeasureString(title, titleFont)
+            Dim legendTop!
+            Dim legendWidth! = layout.Width / 3 ' 颜色谱的宽度为layout的 1/3
+            Dim legendLeft!
+            Dim legendHeight!
+            Dim d!
+
+            ' 首先计算出layout
+            legendTop = titleSize.Height + 5
+
+            ' 下面的三个元素在宽度上面各自占1/3
+            ' 空白 | legend | 标尺
+            legendLeft = legendWidth
+
+            If unmapColor.StringEmpty Then
+                ' 没有unmap的颜色，则颜色谱的高度占据剩下的所有高度
+                legendHeight = layout.Height - legendTop
+                d = legendHeight / designer.Length
+            Else
+                legendHeight = (layout.Height - legendTop)
+                d = legendHeight / (designer.Length + 2)
+                legendHeight = legendHeight - d * designer.Length
+            End If
+
+            Dim point As PointF
+            Dim x!, y!
+            Dim rect As RectangleF
+
+            ' 绘制标题
+            x = legendLeft + (legendWidth - titleSize.Width) / 2
+            y = layout.Top
+            point = New PointF(x, y)
+
+            Call g.DrawString(title, titleFont, Brushes.Black, point)
+
+            ' 绘制出颜色谱
+            y = legendTop
+
+            For i As Integer = designer.Length - 1 To 0 Step -1
+                rect = New RectangleF With {
+                    .Location = New PointF(legendLeft, y),
+                    .Size = New SizeF(legendWidth, d)
+                }
+                g.FillRectangle(brush:=designer(i), rect:=rect)
+                y += d
+            Next
+
+            ' 绘制出标尺
+            x = legendLeft + legendWidth + 5
+            g.DrawLine(tickAxisStroke, x, legendTop, x, legendTop + legendHeight)
+
+            ' 绘制最大值和最小值
+            g.DrawLine(Pens.Black, x, legendTop, x + 5, legendTop)
+            g.DrawLine(Pens.Black, x, legendTop + legendHeight, x + 5, legendTop + legendHeight)
+
+            x += 10
+            point = New PointF(x, legendTop - tickFont.Height / 2)
+            g.DrawString(range.Max, tickFont, Brushes.Black, point)
+
+            point = New PointF(x, legendTop + legendHeight - tickFont.Height / 2)
+            g.DrawString(range.Min, tickFont, Brushes.Black, point)
+
+            If Not unmapColor.StringEmpty Then
+                Dim color As Brush = unmapColor.GetBrush
+
+                rect = New RectangleF With {
+                    .Location = New PointF(legendLeft, y),
+                    .Size = New SizeF(legendWidth, d)
+                }
+                point = New PointF With {
+                    .X = legendLeft + legendWidth + 5,
+                    .Y = y + (d - tickFont.Height) / 2
+                }
+                g.FillRectangle(color, rect:=rect)
+                g.DrawString("Unknown", tickFont, Brushes.Black, point)
+            End If
+        End Sub
 
         ''' <summary>
         ''' 横向的颜色legend

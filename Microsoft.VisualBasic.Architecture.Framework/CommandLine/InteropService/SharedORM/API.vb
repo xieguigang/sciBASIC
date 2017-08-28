@@ -96,7 +96,7 @@ Namespace CommandLine.InteropService.SharedORM
             booleans = GetLogicalArguments(optionals, Nothing)
             out += optionals _
                 .CreateParameterValues(False, note:=NameOf(optionals)) _
-                .As(Of IEnumerable(Of NamedValue(Of String)))
+                .ToArray
 
             Return out
         End Function

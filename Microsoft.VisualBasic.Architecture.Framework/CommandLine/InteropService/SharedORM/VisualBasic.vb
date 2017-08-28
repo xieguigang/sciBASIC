@@ -49,6 +49,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("Imports " & GetType(StringBuilder).Namespace)
             Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
             Call vb.AppendLine("Imports " & GetType(InteropService).Namespace)
+            Call vb.AppendLine("Imports Microsoft.VisualBasic.ApplicationServices")
             Call vb.AppendLine()
             Call vb.AppendLine("' Microsoft VisualBasic CommandLine Code AutoGenerator")
             Call vb.AppendLine("' assembly: " & App.Type.Assembly.Location.GetFullPath)

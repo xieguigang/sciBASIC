@@ -34,7 +34,6 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -43,13 +42,13 @@ Module Module1
 
 
     Public Sub scatterHeatmapTest()
-        Dim f As Func(Of Double, Double, Double) =
-            Function(x, y) Math.Sqrt(x * x + y * y)
+        'Dim f As Func(Of Double, Double, Double) =
+        '    Function(x, y) Math.Sqrt(x * x + y * y)
 
-        Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x ^ 2 + y ^ 3") _
-            .Save("./scatter-heatmap.png")
+        'Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x ^ 2 + y ^ 3") _
+        '    .Save("./scatter-heatmap.png")
 
-        f = Function(x, y) x * Math.Sin(y) + y * Math.Sin(x)
+        Dim f = Function(x#, y#) x * Math.Sin(y) + y * Math.Sin(x)
 
         Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x * Sin(y) + y * Sin(x)") _
             .Save("./scatter-heatmap-demo2.png")
