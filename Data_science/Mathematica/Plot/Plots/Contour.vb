@@ -327,8 +327,8 @@ Public Module Contour
             ' 图例位于右边，占1/5的绘图区域的宽度，高度为绘图区域的高度的2/3
             Dim legendLayout As New Rectangle With {
                 .Width = plotWidth / 5,
-                .Height = plotHeight * (2 / 3),
-                .X = region.Width - margin.Right - .Width,
+                .Height = plotHeight * (1.5 / 3),
+                .X = region.Width - margin.Right / 2 - .Width,
                 .Y = margin.Top + (plotHeight - .Height) / 2
             }
 

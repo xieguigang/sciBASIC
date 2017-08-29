@@ -131,7 +131,8 @@ Namespace Drawing2D.Colors
                                   tickFont As Font,
                                   tickAxisStroke As Pen,
                                   Optional unmapColor$ = Nothing,
-                                  Optional ruleOffset! = 10)
+                                  Optional ruleOffset! = 10,
+                                  Optional roundDigit% = 2)
 
             Dim titleSize As SizeF = g.MeasureString(title, titleFont)
             Dim legendOffsetLeft!, legendOffsetTop!
@@ -208,10 +209,10 @@ Namespace Drawing2D.Colors
 
             x += 10
             point = New PointF(x, y - tickFont.Height / 2)
-            g.DrawString(range.Max, tickFont, Brushes.Black, point)
+            g.DrawString(range.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
 
             point = New PointF(x, y + legendHeight - tickFont.Height / 2)
-            g.DrawString(range.Min, tickFont, Brushes.Black, point)
+            g.DrawString(range.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
         End Sub
 
         ''' <summary>

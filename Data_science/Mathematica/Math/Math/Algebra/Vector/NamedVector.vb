@@ -33,7 +33,7 @@ Namespace LinearAlgebra
         Public Function Translate(vector As Vector) As Dictionary(Of String, Double)
             Return factors.ToDictionary(
                 Function(factor) factor.FactorValue,
-                Function(i) vector(i.Value))
+                Function(i) vector(CInt(i.Value)))
         End Function
 
         Public Overrides Function ToString() As String
