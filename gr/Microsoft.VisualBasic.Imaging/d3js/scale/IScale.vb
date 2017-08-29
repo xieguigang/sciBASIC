@@ -9,9 +9,9 @@ Namespace d3js.scale
 
         Protected _range As DoubleRange = {0, 1}
 
-        Public MustOverride Function domain(values#()) As T
-        Public MustOverride Function domain(values$()) As T
-        Public MustOverride Function domain(values%()) As T
+        Public MustOverride Function domain(values As IEnumerable(Of Double)) As T
+        Public MustOverride Function domain(values As IEnumerable(Of String)) As T
+        Public MustOverride Function domain(values As IEnumerable(Of Integer)) As T
 
         ''' <summary>
         ''' If range is specified, sets the range of the ordinal scale to the specified array of values. 
@@ -22,8 +22,8 @@ Namespace d3js.scale
         ''' </summary>
         ''' <param name="values"></param>
         ''' <returns></returns>
-        Public Function range(Optional values#() = Nothing) As T
-            _range = values
+        Public Function range(Optional values As IEnumerable(Of Double) = Nothing) As T
+            _range = values.ToArray
             Return Me
         End Function
 

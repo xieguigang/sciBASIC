@@ -34,17 +34,17 @@ Namespace d3js.scale
             Return $"[{_domain.Min}, {_domain.Max}] --> [{_range.Min}, {_range.Max}]"
         End Function
 
-        Public Overrides Function domain(values() As Double) As LinearScale
-            _domain = values
+        Public Overrides Function domain(values As IEnumerable(Of Double)) As LinearScale
+            _domain = values.ToArray
             Return Me
         End Function
 
-        Public Overrides Function domain(values() As String) As LinearScale
-            Return domain(values.Select(AddressOf Val).ToArray)
+        Public Overrides Function domain(values As IEnumerable(Of String)) As LinearScale
+            Return domain(values.Select(AddressOf Val))
         End Function
 
-        Public Overrides Function domain(values() As Integer) As LinearScale
-            Return domain(values.Select(Function(x) CDbl(x)).ToArray)
+        Public Overrides Function domain(values As IEnumerable(Of Integer)) As LinearScale
+            Return domain(values.Select(Function(x) CDbl(x)))
         End Function
     End Class
 End Namespace

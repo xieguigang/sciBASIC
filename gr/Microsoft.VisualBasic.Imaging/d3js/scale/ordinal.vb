@@ -71,7 +71,7 @@ Namespace d3js.scale
             End Get
         End Property
 
-        Public Overrides Function domain(values() As Double) As OrdinalScale
+        Public Overrides Function domain(values As IEnumerable(Of Double)) As OrdinalScale
             Return domain(values.ToStringArray)
         End Function
 
@@ -93,7 +93,7 @@ Namespace d3js.scale
         ''' </summary>
         ''' <param name="values"></param>
         ''' <returns></returns>
-        Public Overrides Function domain(values() As String) As OrdinalScale
+        Public Overrides Function domain(values As IEnumerable(Of String)) As OrdinalScale
             factors = values.factors
             index = factors _
                 .Select(Function(x) x.FactorValue) _
@@ -101,7 +101,7 @@ Namespace d3js.scale
             Return Me
         End Function
 
-        Public Overrides Function domain(values() As Integer) As OrdinalScale
+        Public Overrides Function domain(values As IEnumerable(Of Integer)) As OrdinalScale
             Return domain(values.ToStringArray)
         End Function
 

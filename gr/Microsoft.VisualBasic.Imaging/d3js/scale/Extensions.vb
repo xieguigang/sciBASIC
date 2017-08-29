@@ -90,7 +90,7 @@ Namespace d3js.scale
         ''' </summary>
         ''' <returns></returns>
         Public Function linear() As LinearScale
-
+            Return New LinearScale
         End Function
     End Module
 End Namespace
