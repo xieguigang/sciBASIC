@@ -242,14 +242,20 @@ Public Module Contour
         Public Function GetData(plotSize As Size) As (x#, y#, z#)()
             If func Is Nothing Then
                 ' 直接返回矩阵数据
-                Return LinqAPI.Exec(Of (x#, y#, Z#))() <= From line As DataSet                      In matrix                      Let xi = Val(line.ID)                      Let data = line.Properties.Select(Function(o) (x:=xi, y:=Val(o.Key), Z:=o.Value))                      Select  Data
+                Return LinqAPI.Exec(Of (x#, y#, Z#)) _
+					() <= From line As DataSet 
+						  In matrix 
+						  Let xi = Val(line.ID) 
+						  Let data = line.Properties.Select(Function(o) (x:=xi, y:=Val(o.Key), Z:=o.Value)) 
+						  Select Data
             Else
+
                     Return func _
                         .__getData(plotSize,  ' 得到通过计算返回来的数据
-                              xrange, yrange,
-                              xsteps, ysteps,
-                              parallel, matrix,
-                              unit)
+                                   xrange, yrange,
+                                   xsteps, ysteps,
+                                   parallel, matrix,
+                                   unit)
             End If
         End Function
 
