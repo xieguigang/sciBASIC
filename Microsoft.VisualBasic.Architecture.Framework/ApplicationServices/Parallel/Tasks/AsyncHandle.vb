@@ -32,13 +32,26 @@ Namespace Parallel.Tasks
     ''' Represents the status of an asynchronous operation.(背景线程加载数据)
     ''' </summary>
     ''' <typeparam name="TOut"></typeparam>
+    ''' <remarks>
+    ''' 这个后台任务模块是为了更加方便的构建出匿名方法的调用过程，因为这个对象的
+    ''' 工作原理是基于匿名方法的``BeginInvoke``函数来工作的。
+    ''' </remarks>
     Public Class AsyncHandle(Of TOut)
 
+        ''' <summary>
+        ''' 封装一个方法，该方法不具有参数，且返回由<typeparamref name="TOut"></typeparamref>参数指定的类型的值。
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Task As Func(Of TOut)
+        ''' <summary>
+        ''' 对后台任务的访问
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Handle As IAsyncResult
 
         ''' <summary>
         ''' Gets a value that indicates whether the asynchronous operation has completed.
+        ''' (获取一个值，该值指示异步操作是否已完成。)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property IsCompleted As Boolean
@@ -65,22 +78,27 @@ Namespace Parallel.Tasks
         ''' <returns></returns>
         Public Function Run() As AsyncHandle(Of TOut)
             If IsCompleted Then
-                Me._Handle = Task.BeginInvoke(Nothing, Nothing) ' 假若没有执行完毕也调用的话，会改变handle
+                _Handle = Task.BeginInvoke(Nothing, Nothing) ' 假若没有执行完毕也调用的话，会改变handle
             End If
 
             Return Me
         End Function
 
         ''' <summary>
-        ''' 没有完成会一直阻塞线程在这里
+        ''' Current thread will be blocked at here if the background task not finished.
+        ''' (没有完成的时候会一直在这里阻塞当前的线程)
         ''' </summary>
         ''' <returns></returns>
         Public Function GetValue() As TOut
             If Handle Is Nothing Then
-                Return Me._Task()
+                Return _Task()
             Else
-                Return Me.Task.EndInvoke(Handle)
+                Return Task.EndInvoke(Handle)
             End If
+        End Function
+
+        Public Async Function GetValueAsyn() As Threading.Tasks.Task(Of TOut)
+            Return Await New Threading.Tasks.Task(Of TOut)(AddressOf GetValue)
         End Function
     End Class
 End Namespace

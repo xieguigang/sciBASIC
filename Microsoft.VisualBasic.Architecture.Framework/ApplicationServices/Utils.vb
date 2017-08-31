@@ -1,10 +1,31 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace ApplicationServices
 
     Public Module Utils
+
+        ''' <summary>
+        ''' Run background task, if the <see cref="AsyncHandle(Of Exception).GetValue()"/> returns nothing, 
+        ''' then means the task run no errors.
+        ''' </summary>
+        ''' <param name="task"></param>
+        ''' <param name="stack">进行调用堆栈的上一层的栈名称</param>
+        ''' <returns></returns>
+        <Extension> Public Function TaskRun(task As Action, <CallerMemberName> Optional stack$ = Nothing) As AsyncHandle(Of Exception)
+            Dim handle = Function() As Exception
+                             Try
+                                 Call task()
+                             Catch ex As Exception
+                                 Return New Exception(stack, ex)
+                             End Try
+
+                             Return Nothing
+                         End Function
+            Return New AsyncHandle(Of Exception)(handle).Run
+        End Function
 
         ''' <summary>
         ''' Returns the total executation time of the target <paramref name="work"/>.
