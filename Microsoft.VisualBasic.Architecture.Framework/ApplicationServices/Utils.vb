@@ -8,9 +8,11 @@ Namespace ApplicationServices
     Public Module Utils
 
         ''' <summary>
-        ''' Run background task
+        ''' Run background task, if the <see cref="AsyncHandle(Of Exception).GetValue()"/> returns nothing, 
+        ''' then means the task run no errors.
         ''' </summary>
         ''' <param name="task"></param>
+        ''' <param name="stack">进行调用堆栈的上一层的栈名称</param>
         ''' <returns></returns>
         <Extension> Public Function TaskRun(task As Action, <CallerMemberName> Optional stack$ = Nothing) As AsyncHandle(Of Exception)
             Dim handle = Function() As Exception
