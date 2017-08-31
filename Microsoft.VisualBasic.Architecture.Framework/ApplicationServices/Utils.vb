@@ -7,6 +7,15 @@ Namespace ApplicationServices
     Public Module Utils
 
         ''' <summary>
+        ''' Run background task
+        ''' </summary>
+        ''' <param name="task"></param>
+        ''' <returns></returns>
+        <Extension> Public Function TaskRun(task As Action)
+
+        End Function
+
+        ''' <summary>
         ''' Returns the total executation time of the target <paramref name="work"/>.
         ''' (性能测试工具，函数之中会自动输出整个任务所经历的处理时长)
         ''' </summary>
