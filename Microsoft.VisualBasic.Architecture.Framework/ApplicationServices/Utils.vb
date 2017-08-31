@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace ApplicationServices
 
@@ -11,8 +12,17 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="task"></param>
         ''' <returns></returns>
-        <Extension> Public Function TaskRun(task As Action)
+        <Extension> Public Function TaskRun(task As Action, <CallerMemberName> Optional stack$ = Nothing) As AsyncHandle(Of Exception)
+            Dim handle = Function() As Exception
+                             Try
+                                 Call task()
+                             Catch ex As Exception
+                                 Return New Exception(stack, ex)
+                             End Try
 
+                             Return Nothing
+                         End Function
+            Return New AsyncHandle(Of Exception)(handle).Run
         End Function
 
         ''' <summary>
