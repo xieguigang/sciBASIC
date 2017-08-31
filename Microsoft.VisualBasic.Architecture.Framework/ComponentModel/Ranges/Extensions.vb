@@ -36,6 +36,20 @@ Namespace ComponentModel.Ranges
     Public Module Extensions
 
         ''' <summary>
+        ''' 对称的的范围，假若X为正数，那么其为max，而-x为min。假若x为负数，那么-x为max
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function SymmetricalRange(x#) As DoubleRange
+            If x > 0 Then
+                Return {-x, x}
+            Else
+                Return {x, -x}
+            End If
+        End Function
+
+        ''' <summary>
         ''' + ``min -> max``
         ''' + ``[min,max]``
         ''' + ``{min,max}``

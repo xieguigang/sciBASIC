@@ -48,6 +48,17 @@ Namespace ComponentModel
         Function Save(Optional path$ = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean
     End Interface
 
+    ''' <summary>
+    ''' 表示一个对文件的引用接口
+    ''' </summary>
+    Public Interface IFileReference
+        ''' <summary>
+        ''' 进行文件引用的路径
+        ''' </summary>
+        ''' <returns></returns>
+        Property FilePath As String
+    End Interface
+
     Public Interface IDocumentEditor : Inherits ISaveHandle
         Property DocumentPath As String
         Function LoadDocument(path As String) As Boolean

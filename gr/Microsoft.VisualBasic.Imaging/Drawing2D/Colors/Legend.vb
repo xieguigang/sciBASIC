@@ -130,30 +130,31 @@ Namespace Drawing2D.Colors
                                   titleFont As Font, title$,
                                   tickFont As Font,
                                   tickAxisStroke As Pen,
-                                  Optional unmapColor$ = Nothing)
+                                  Optional unmapColor$ = Nothing,
+                                  Optional ruleOffset! = 10,
+                                  Optional roundDigit% = 2)
 
             Dim titleSize As SizeF = g.MeasureString(title, titleFont)
-            Dim legendTop!
+            Dim legendOffsetLeft!, legendOffsetTop!
             Dim legendWidth! = layout.Width / 3 ' 颜色谱的宽度为layout的 1/3
-            Dim legendLeft!
             Dim legendHeight!
             Dim d!
 
             ' 首先计算出layout
-            legendTop = titleSize.Height + 5
+            legendOffsetTop = titleSize.Height * 2 + 5
 
             ' 下面的三个元素在宽度上面各自占1/3
             ' 空白 | legend | 标尺
-            legendLeft = legendWidth
+            legendOffsetLeft = legendWidth
 
             If unmapColor.StringEmpty Then
                 ' 没有unmap的颜色，则颜色谱的高度占据剩下的所有高度
-                legendHeight = layout.Height - legendTop
+                legendHeight = layout.Height - legendOffsetTop
                 d = legendHeight / designer.Length
             Else
-                legendHeight = (layout.Height - legendTop)
+                legendHeight = layout.Height - legendOffsetTop
                 d = legendHeight / (designer.Length + 2)
-                legendHeight = legendHeight - d * designer.Length
+                legendHeight -= 2 * d
             End If
 
             Dim point As PointF
@@ -161,53 +162,57 @@ Namespace Drawing2D.Colors
             Dim rect As RectangleF
 
             ' 绘制标题
-            x = legendLeft + (legendWidth - titleSize.Width) / 2
+            x = layout.Left + legendOffsetLeft + (legendWidth - titleSize.Width) / 2
             y = layout.Top
             point = New PointF(x, y)
 
             Call g.DrawString(title, titleFont, Brushes.Black, point)
 
             ' 绘制出颜色谱
-            y = legendTop
+            y = legendOffsetTop + layout.Top
+            legendOffsetLeft += layout.Left
 
             For i As Integer = designer.Length - 1 To 0 Step -1
                 rect = New RectangleF With {
-                    .Location = New PointF(legendLeft, y),
+                    .Location = New PointF(legendOffsetLeft, y),
                     .Size = New SizeF(legendWidth, d)
                 }
                 g.FillRectangle(brush:=designer(i), rect:=rect)
                 y += d
             Next
 
-            ' 绘制出标尺
-            x = legendLeft + legendWidth + 5
-            g.DrawLine(tickAxisStroke, x, legendTop, x, legendTop + legendHeight)
-
-            ' 绘制最大值和最小值
-            g.DrawLine(Pens.Black, x, legendTop, x + 5, legendTop)
-            g.DrawLine(Pens.Black, x, legendTop + legendHeight, x + 5, legendTop + legendHeight)
-
-            x += 10
-            point = New PointF(x, legendTop - tickFont.Height / 2)
-            g.DrawString(range.Max, tickFont, Brushes.Black, point)
-
-            point = New PointF(x, legendTop + legendHeight - tickFont.Height / 2)
-            g.DrawString(range.Min, tickFont, Brushes.Black, point)
+            y += d
 
             If Not unmapColor.StringEmpty Then
                 Dim color As Brush = unmapColor.GetBrush
 
                 rect = New RectangleF With {
-                    .Location = New PointF(legendLeft, y),
+                    .Location = New PointF(legendOffsetLeft, y),
                     .Size = New SizeF(legendWidth, d)
                 }
                 point = New PointF With {
-                    .X = legendLeft + legendWidth + 5,
+                    .X = legendOffsetLeft + legendWidth + 5,
                     .Y = y + (d - tickFont.Height) / 2
                 }
                 g.FillRectangle(color, rect:=rect)
                 g.DrawString("Unknown", tickFont, Brushes.Black, point)
             End If
+
+            ' 绘制出标尺
+            x = legendOffsetLeft + legendWidth + ruleOffset
+            y = layout.Top + legendOffsetTop
+            g.DrawLine(tickAxisStroke, x, y, x, y + legendHeight)
+
+            ' 绘制最大值和最小值
+            g.DrawLine(Pens.Black, x, y, x + ruleOffset, y)
+            g.DrawLine(Pens.Black, x, y + legendHeight, x + ruleOffset, y + legendHeight)
+
+            x += 10
+            point = New PointF(x, y - tickFont.Height / 2)
+            g.DrawString(range.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+
+            point = New PointF(x, y + legendHeight - tickFont.Height / 2)
+            g.DrawString(range.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
         End Sub
 
         ''' <summary>

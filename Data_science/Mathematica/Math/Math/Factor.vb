@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-Public Class Factor(Of T As IComparable(Of T)) : Inherits int
+Public Class Factor(Of T As IComparable(Of T)) : Inherits float
     Implements Value(Of T).IValueOf
 
     Public Property FactorValue As T Implements Value(Of T).IValueOf.Value
@@ -39,7 +39,7 @@ Public Class Factor(Of T As IComparable(Of T)) : Inherits int
     Sub New()
     End Sub
 
-    Sub New(value As T, factor%)
+    Sub New(value As T, factor#)
         Me.Value = factor
         Me.FactorValue = value
     End Sub
@@ -76,22 +76,26 @@ Public Module FactorExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
+    ''' <param name="step">取默认值1是为了保持与Integer类型的index的兼容</param>
     ''' <returns></returns>
     <Extension>
-    Public Function factors(Of T As IComparable(Of T))(source As IEnumerable(Of T)) As Factor(Of T)()
+    Public Function factors(Of T As IComparable(Of T))(source As IEnumerable(Of T), Optional step! = 1) As Factor(Of T)()
         Dim array = source.ToArray
-        Dim unique As Index(Of T) = array _
+        Dim unique As IEnumerable(Of T) = array _
             .Distinct _
-            .OrderBy(Function(x) x) _
-            .Indexing
-        Dim out = array _
-            .Select(Function(x)
-                        Return New Factor(Of T) With {
-                            .value = unique.IndexOf(x),
-                            .FactorValue = x
-                        }
-                    End Function) _
+            .OrderBy(Function(x) x)
+        Dim factorValues As New Dictionary(Of T, Factor(Of T))
+        Dim y#
+
+        For Each x As T In unique
+            factorValues.Add(x, New Factor(Of T)(x, y))
+            y += [step]
+        Next
+
+        Dim out As Factor(Of T)() = array _
+            .Select(Function(x) New Factor(Of T)(x, factorValues(x).Value)) _
             .ToArray
+
         Return out
     End Function
 End Module

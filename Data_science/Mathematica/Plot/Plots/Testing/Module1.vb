@@ -50,7 +50,7 @@ Module Module1
 
         Dim f = Function(x#, y#) x * Math.Sin(y) + y * Math.Sin(x)
 
-        Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x * Sin(y) + y * Sin(x)") _
+        Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x * Sin(y) + y * Sin(x)", mapLevels:=50) _
             .Save("./scatter-heatmap-demo2.png")
 
         'Dim matrix As New List(Of DataSet)

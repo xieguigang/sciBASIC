@@ -46,6 +46,8 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
+''' Contour heatmap 
+''' 
 ''' ###### 等高线图
 ''' 
 ''' 和普通的heatmap相比，这里的坐标轴是连续的数值变量，而普通的heatmap，其坐标轴都是离散的分类变量
@@ -191,7 +193,7 @@ Public Module Contour
                          Optional colorMap$ = "Spectral:c10",
                          Optional mapLevels% = 25,
                          Optional bg$ = "white",
-                         Optional size$ = "3000,2700",
+                         Optional size$ = "3000,2500",
                          Optional padding$ = "padding: 100 400 100 400;",
                          Optional legendTitle$ = "Scatter Heatmap",
                          Optional legendFont As Font = Nothing,
@@ -242,14 +244,20 @@ Public Module Contour
         Public Function GetData(plotSize As Size) As (x#, y#, z#)()
             If func Is Nothing Then
                 ' 直接返回矩阵数据
-                Return LinqAPI.Exec(Of (x#, y#, Z#))() <= From line As DataSet                      In matrix                      Let xi = Val(line.ID)                      Let data = line.Properties.Select(Function(o) (x:=xi, y:=Val(o.Key), Z:=o.Value))                      Select  Data
+                Return LinqAPI.Exec(Of (x#, y#, Z#)) _
+					() <= From line As DataSet 
+						  In matrix 
+						  Let xi = Val(line.ID) 
+						  Let data = line.Properties.Select(Function(o) (x:=xi, y:=Val(o.Key), Z:=o.Value)) 
+						  Select Data
             Else
+
                     Return func _
                         .__getData(plotSize,  ' 得到通过计算返回来的数据
-                              xrange, yrange,
-                              xsteps, ysteps,
-                              parallel, matrix,
-                              unit)
+                                   xrange, yrange,
+                                   xsteps, ysteps,
+                                   parallel, matrix,
+                                   unit)
             End If
         End Function
 
@@ -309,9 +317,14 @@ Public Module Contour
 
         Public Sub Plot(ByRef g As IGraphics, region As GraphicsRegion)
             Dim data = GetData(region.PlotRegion.Size)
-            Dim scaler As New Mapper(New Scaling(data))
-            Dim xf = scaler.XScaler(region.Size, region.Padding)
-            Dim yf = scaler.YScaler(region.Size, region.Padding)
+            Dim xTicks = data.Select(Function(d) d.x).Range.CreateAxisTicks
+            Dim yTicks = data.Select(Function(d) d.y).Range.CreateAxisTicks
+            Dim x = d3js.scale.linear() _
+                .domain(xTicks) _
+                .range({region.PlotRegion.Left, region.PlotRegion.Right})
+            Dim y = d3js.scale.linear() _
+                .domain(yTicks) _
+                .range({region.PlotRegion.Top, region.PlotRegion.Bottom})
             Dim colorDatas As SolidBrush() = Nothing
             Dim getColors = GetColor(data.ToArray(Function(o) o.z), colorDatas)
             Dim size As Size = region.Size
@@ -321,12 +334,12 @@ Public Module Contour
             ' 图例位于右边，占1/5的绘图区域的宽度，高度为绘图区域的高度的2/3
             Dim legendLayout As New Rectangle With {
                 .Width = plotWidth / 5,
-                .Height = plotHeight * (2 / 3),
-                .X = region.Width - margin.Right - .Width,
+                .Height = plotHeight * (1 / 3),
+                .X = region.Width - margin.Right / 2 - .Width,
                 .Y = margin.Top + (plotHeight - .Height) / 2
             }
 
-            Call g.DrawAxis(size, margin, scaler, False, offset, xlabel, ylabel)
+            ' Call g.DrawAxis(size, margin, scaler, False, offset, xlabel, ylabel)
 
             offset = New Point(offset.X, offset.Y - unit / 2)
 
@@ -335,7 +348,7 @@ Public Module Contour
             For i As Integer = 0 To data.Length - 1
                 Dim p As (X#, y#, Z#) = data(i)
                 Dim c As SolidBrush = getColors(i)
-                Dim fill As New RectangleF(xf(p.X) + offset.X, yf(p.y) + offset.Y, us, us)
+                Dim fill As New RectangleF(x(p.X) + offset.X, y(p.y) + offset.Y, us, us)
 
                 Call g.FillRectangle(c, fill)
                 Call g.DrawRectangle(New Pen(c),

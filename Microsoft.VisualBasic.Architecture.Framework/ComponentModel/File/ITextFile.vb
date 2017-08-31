@@ -43,6 +43,7 @@ Namespace ComponentModel
     Public MustInherit Class ITextFile : Inherits ClassObject
         Implements IDisposable
         Implements ISaveHandle
+        Implements IFileReference
 #If NET_40 = 0 Then
         Implements Settings.IProfile
 #End If
@@ -56,7 +57,7 @@ Namespace ComponentModel
         '''
 #If NET_40 = 0 Then
         <XmlIgnore> <ScriptIgnore>
-        Public Overridable Property FilePath As String Implements Settings.IProfile.FilePath
+        Public Overridable Property FilePath As String Implements Settings.IProfile.FilePath, IFileReference.FilePath
 #Else
         <XmlIgnore> <ScriptIgnore>
         Public Overridable Property FilePath As String
