@@ -111,7 +111,7 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' 对目标序列进行排序生成新的序列
+    ''' 对目标序列进行排序生成新的序列，这个拓展函数尝试将升序排序和降序排序这两种操作的接口统一起来
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -121,15 +121,9 @@ Public Module VectorExtensions
     Public Function Sort(Of T)(source As IEnumerable(Of T), Optional by As Func(Of T, IComparable) = Nothing, Optional desc As Boolean = False) As IEnumerable(Of T)
         If by Is Nothing Then
             If Not desc Then
-                Return From x As T
-                       In source
-                       Select x
-                       Order By x Ascending
+                Return From x In source Select x Order By x Ascending
             Else
-                Return From x As T
-                       In source
-                       Select x
-                       Order By x Descending
+                Return From x In source Select x Order By x Descending
             End If
         Else
             If Not desc Then

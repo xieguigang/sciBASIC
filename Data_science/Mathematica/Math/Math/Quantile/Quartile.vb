@@ -9,6 +9,12 @@ Namespace Quantile
     ''' </summary>
     Public Module Quartile
 
+        Public Enum Levels
+            Q1 = 1
+            Q2 = 2
+            Q3 = 3
+        End Enum
+
         ''' <summary>
         ''' + 第一四分位数 (Q1)，又称“较小四分位数”，等于该样本中所有数值由小到大排列后第25%的数字。
         ''' + 第二四分位数 (Q2)，又称“中位数”，等于该样本中所有数值由小到大排列后第50%的数字。

@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::6229f4ea29112ab03e1bde46efcbbfad, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Linq\Linq.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml
+Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Xml.Linq
 
@@ -43,6 +44,9 @@ Namespace Text.Xml.Linq
         ''' </summary>
         ''' <param name="pathOrDoc"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' using internally XDocument.Load to parse whole XML at once
+        ''' </remarks>
         <Extension>
         Public Function LoadXmlDocument(pathOrDoc$) As XmlDocument
             Dim XmlDoc As New XmlDocument()
@@ -110,37 +114,69 @@ Namespace Text.Xml.Linq
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
+        Public Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
             Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
-            Dim o As T
-            Dim sb As New StringBuilder
             Dim source As IEnumerable(Of String)
-            Dim replaceXmlns As Boolean
 
             If XML.FileLength > 1024 * 1024 * 128 Then
                 ' 这是一个超大的XML文档
                 source = NodeIterator.IterateArrayNodes(XML, nodeName)
-                replaceXmlns = False
+                xmlns = Nothing
             Else
                 source = InternalIterates(XML, nodeName)
-                replaceXmlns = True
             End If
 
-            For Each XML In source
+            Return source.NodeInstanceBuilder(Of T)(xmlns)
+        End Function
+
+        <Extension>
+        Private Iterator Function NodeInstanceBuilder(Of T As Class)(nodes As IEnumerable(Of String), replaceXmlns$) As IEnumerable(Of T)
+            Dim o As T
+            Dim sb As New StringBuilder
+
+            For Each xml As String In nodes
 
                 Call sb.Clear()
                 Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
-                Call sb.AppendLine(XML)
+                Call sb.AppendLine(xml)
 
-                If replaceXmlns AndAlso Not xmlns.StringEmpty Then
-                    Call sb.Replace($"xmlns=""{xmlns}""", "")
+                If Not replaceXmlns.StringEmpty Then
+                    Call sb.Replace($"xmlns=""{replaceXmlns}""", "")
                 End If
 
-                XML = sb.ToString
-                o = XML.LoadFromXml(Of T)
+                xml = sb.ToString
+                o = xml.LoadFromXml(Of T)
 
                 Yield o
             Next
+        End Function
+
+        <Extension>
+        Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
+            Return GetType(T) _
+                .GetTypeName([default]:=typeName) _
+                .UltraLargeXmlNodesIterator(path) _
+                .NodeInstanceBuilder(Of T)(xmlns)
+        End Function
+
+        <Extension>
+        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of String)
+            Dim el As New Value(Of XElement)
+            Dim XML$
+
+            Using reader As XmlReader = XmlReader.Create(path)
+
+                reader.MoveToContent()
+
+                Do While (reader.Read()) ' Parse the file And return each of the child_node
+                    If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
+                        If (Not (el = XNode.ReadFrom(reader)) Is Nothing) Then
+                            XML = el.Value.ToString
+                            Yield XML
+                        End If
+                    End If
+                Loop
+            End Using
         End Function
     End Module
 End Namespace
