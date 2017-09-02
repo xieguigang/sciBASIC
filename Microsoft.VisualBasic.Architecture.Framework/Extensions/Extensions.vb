@@ -373,7 +373,7 @@ Public Module Extensions
     ''' <param name="index"></param>
     ''' <param name="[default]">Default value for return when the array object is nothing or index outside of the boundary.</param>
     ''' <returns></returns>
-    <Extension> Public Function [Get](Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
+    <Extension> Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
         If array.IsNullOrEmpty Then
             Return [default]
         End If

@@ -111,7 +111,7 @@ Namespace Parallel
                 Dim result As String = request.GetUTF8String
 
                 Portal = Scripting.CTypeDynamic(Of Integer)(result)
-                addArgs = CommandLine.GetTokens(result).Get(1)
+                addArgs = CommandLine.GetTokens(result).ElementAtOrDefault(1)
 
                 Return NetResponse.RFC_OK
             End Function
