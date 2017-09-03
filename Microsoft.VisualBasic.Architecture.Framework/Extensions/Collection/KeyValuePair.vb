@@ -39,6 +39,13 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    <Extension>
+    Public Iterator Function EnumerateTuples(Of T)(table As Dictionary(Of String, T)) As IEnumerable(Of (name As String, obj As T))
+        For Each entry In table
+            Yield (entry.Key, entry.Value)
+        Next
+    End Function
+
     <Extension> Public Function AsNamedVector(Of T)(groups As IEnumerable(Of IGrouping(Of String, T))) As IEnumerable(Of NamedCollection(Of T))
         Return groups.Select(Function(group)
                                  Return New NamedCollection(Of T) With {
