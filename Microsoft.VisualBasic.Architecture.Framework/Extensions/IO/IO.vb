@@ -42,6 +42,16 @@ Imports Microsoft.VisualBasic.Text
 Public Module IOExtensions
 
     ''' <summary>
+    ''' 将指定的字符串的数据值写入到目标可写的输出流之中
+    ''' </summary>
+    ''' <param name="data$"></param>
+    ''' <param name="out"></param>
+    <Extension>
+    Public Sub FlushTo(data$, out As StreamWriter)
+        Call out.WriteLine(data)
+    End Sub
+
+    ''' <summary>
     ''' 为了方便在linux上面使用，这里会处理一下file://这种情况，请注意参数是ByRef引用的
     ''' </summary>
     ''' <param name="path$"></param>
