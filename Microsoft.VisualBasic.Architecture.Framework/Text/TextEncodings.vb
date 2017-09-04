@@ -135,9 +135,8 @@ Namespace Text
                     .CodePage
             End If
 
+            ' 如果检测到了gb2312编码被映射为了utf8编码，则提示用户为服务器安装gb2312编码
             If TextEncodings(Encodings.GB2312) Is Encoding.UTF8 Then
-
-                ' 如果检测到了gb2312编码被映射为了utf8编码，则提示用户为服务器安装gb2312编码
                 Call {
                     "You can just ignore this warning, or fix this warning by enable the gb2312 encoding on your server.",
                     "For enable the gb2312 encoding, you can run commands:",
