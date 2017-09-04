@@ -219,7 +219,7 @@ Namespace Text.HtmlParser
                 name = list(i)
                 p = InStr(tag, name)
                 s = Mid(tag, p)
-                s = Regex.Split(s, "\S+=").ElementAtOrDefault(1) ' value
+                s = CType(Regex.Split(s, "\S+="), IEnumerable(Of String)).ElementAtOrDefault(1) ' value
 
                 name = name.Split("="c).First
 

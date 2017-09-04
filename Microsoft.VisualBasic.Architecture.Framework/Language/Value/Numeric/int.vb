@@ -136,7 +136,8 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' 自增1然后返回之前的值
+        ''' Auto increment value with step 1 and then returns the previous value.
+        ''' (自增1然后返回之前的值)
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>

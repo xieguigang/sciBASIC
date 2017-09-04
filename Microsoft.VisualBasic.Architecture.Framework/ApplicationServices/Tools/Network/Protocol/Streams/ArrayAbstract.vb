@@ -46,7 +46,7 @@ Namespace Net.Protocols.Streams.Array
         ''' <returns></returns>
         Default Public Property value(index As Integer) As T
             Get
-                Return Values.Get(index)
+                Return Values.ElementAtOrDefault(index)
             End Get
             Set(value As T)
                 Call Values.Set(index, value)

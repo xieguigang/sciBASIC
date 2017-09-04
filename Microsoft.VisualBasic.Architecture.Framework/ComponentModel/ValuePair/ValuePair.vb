@@ -87,7 +87,7 @@ Namespace ComponentModel
         Public Overloads Shared Widening Operator CType(obj As String()) As KeyValuePair
             Return New KeyValuePair With {
                 .Key = obj.First,
-                .Value = obj.Get(1)
+                .Value = obj.ElementAtOrDefault(1)
             }
         End Operator
 

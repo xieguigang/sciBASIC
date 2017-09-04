@@ -101,7 +101,7 @@ Namespace Text.Xml.Linq
 
         ''' <summary>
         ''' Only works for the xml file that contains a list or array of xml element, and then this function using this list element as linq data source.
-        ''' (这个函数只建议在读取超大的XML文件的时候使用，并且这个XML文件仅仅是一个数组或者列表的序列化结果)
+        ''' (这个函数只建议在读取比较小的XML文件的时候使用，并且这个XML文件仅仅是一个数组或者列表的序列化结果)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="XML$">超大的XML文件的文件路径</param>
@@ -151,6 +151,14 @@ Namespace Text.Xml.Linq
             Next
         End Function
 
+        ''' <summary>
+        ''' Apply on a ultra large size XML database, which its data size is greater than 1GB to 100GB or even more.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="path$"></param>
+        ''' <param name="typeName$"></param>
+        ''' <param name="xmlns$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
             Return GetType(T) _
