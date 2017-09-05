@@ -34,7 +34,7 @@ Module ZScorePlotTest
     End Sub
 
     Sub analysis()
-        plotBox()
+        ' plotBox()
         plotHeatmap()
     End Sub
 
@@ -75,6 +75,7 @@ Module ZScorePlotTest
     End Sub
 
     Sub plotHeatmap()
-
+        Dim csv$ = "D:\OneDrive\Report_soil\16s-Desktop\8.24\predictions_ko.L3.csv"
+        Call Heatmap.Heatmap.Plot(DataSet.LoadDataSet(csv)).Save(csv.TrimSuffix & ".png")
     End Sub
 End Module

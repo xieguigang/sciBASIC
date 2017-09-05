@@ -64,7 +64,7 @@ Public Class PDistClusteringAlgorithm
         ' Process 
         Dim builder As New HierarchyBuilder(clusters, linkages)
         Do While Not builder.TreeComplete
-            builder.agglomerate(linkageStrategy)
+            builder.Agglomerate(linkageStrategy)
         Loop
 
         Return builder.RootCluster
