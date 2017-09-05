@@ -39,6 +39,12 @@ Namespace LinearAlgebra
     ''' </summary>
     Public Module NumericsVector
 
+        ''' <summary>
+        ''' Convert the numeric collection as a math vector
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension> Public Function AsVector(Of T As {Structure, IComparable, IComparable(Of T), IEquatable(Of T), IConvertible, IFormattable})(source As IEnumerable(Of T)) As Vector
             Return New Vector(source.Select(Function(x) CDbl(CObj(x))))
         End Function
