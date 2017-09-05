@@ -4,11 +4,15 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Module ZScorePlotTest
 
     Sub Main()
+
+        Call analysis()
+        Call Pause()
 
         Dim csv$ = "D:\OneDrive\Report_soil\16s-Desktop\8.24\predictions_ko.L3.xls"
         Dim labels = Microsoft.VisualBasic.Data.csv.IO.Tokenizer.CharsParser(csv.ReadFirstLine, ASCII.TAB).Skip(1).AsList
@@ -36,7 +40,7 @@ Module ZScorePlotTest
 
     Sub plotBox()
         Dim csv$ = "D:\OneDrive\Report_soil\16s-Desktop\8.24\predictions_ko.L3.csv"
-        Dim labels = Microsoft.VisualBasic.Data.csv.IO.Tokenizer.CharsParser(csv.ReadFirstLine, ASCII.TAB).Skip(1).AsList
+        Dim labels = Microsoft.VisualBasic.Data.csv.IO.Tokenizer.CharsParser(csv.ReadFirstLine).Skip(1).AsList
 
         With New Dictionary(Of String, String())
             !Case = {
@@ -45,6 +49,8 @@ Module ZScorePlotTest
                 "7_4", "6_4", "1_3", "1_4", "1_5"
             }
             !Control = labels - !Case
+
+            Call .GetJson.__DEBUG_ECHO
 
             Dim data = DataSet.LoadDataSet(csv)
 
@@ -63,6 +69,7 @@ Module ZScorePlotTest
                     .Groups = groups
                 }
 
+                Call boxData.Plot.Save(save)
             Next
         End With
     End Sub
