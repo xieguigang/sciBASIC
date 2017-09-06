@@ -123,9 +123,10 @@ Public Module ZScoresPlot
                     For Each group In groups
                         Dim color As New SolidBrush(colors(group.Key))
 
-                        For Each Z As Double In serial _
-                            .TakeValues(group.Value) _
-                            .Where(Function(n) Not n.IsNaNImaginary)
+                        For Each Z As Double In serial(group.Value) _
+                            .Where(Function(n)
+                                       Return Not n.IsNaNImaginary
+                                   End Function)
 
                             pt = New PointF(X(Z), yPoints)
                             g.FillEllipse(color, New RectangleF(pt, pointSize))

@@ -58,6 +58,9 @@ Namespace Graphic.Axis
             Dim zeroFlag As Boolean = False
             Dim range = max - min
 
+            If range = 0R Then
+                Return {}
+            End If
             If (min <= 0 AndAlso max >= 0) Then
                 zeroFlag = True
             End If

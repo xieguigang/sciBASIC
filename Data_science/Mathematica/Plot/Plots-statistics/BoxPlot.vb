@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
@@ -86,7 +87,7 @@ Public Module BoxPlot
             .IteratesALL _
             .Range _
             .CreateAxisTicks
-        Dim ranges As DoubleRange = ticks
+        Dim ranges As DoubleRange = ticks Or [Default]({0R}, Function(x) TryCast(x, Double()).IsNullOrEmpty)
 
         ranges *= rangeScale
 
@@ -96,6 +97,10 @@ Public Module BoxPlot
                 Dim plotRegion = rect.PlotRegion
                 Dim leftPart = yAxisLabelFont.Height + tickLabelFont.Height + 50
                 Dim bottomPart = groupLabelFont.Height + 50
+
+                If ranges.Length = 0 Then
+                    Return  ' 没有数据的话，则直接退出绘图操作 
+                End If
 
                 With plotRegion
 
