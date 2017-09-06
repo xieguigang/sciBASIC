@@ -145,6 +145,31 @@ Public Module App
     ''' <returns>Gets the command-line arguments for this process.</returns>
     Public ReadOnly Property CommandLine As CommandLine.CommandLine = __CLI()
 
+    ''' <summary>
+    ''' Get argument value from <see cref="CommandLine"/>.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="name$"></param>
+    ''' <returns></returns>
+    Public Function Argument(Of T)(name$) As T
+        With CommandLine(name)
+            If .StringEmpty Then
+                Return Nothing
+            Else
+                Return Scripting.CTypeDynamic(Of T)(.ref)
+            End If
+        End With
+    End Function
+
+    ''' <summary>
+    ''' Get argument value string from <see cref="CommandLine"/>.
+    ''' </summary>
+    ''' <param name="name$"></param>
+    ''' <returns></returns>
+    Public Function Argument(name$) As String
+        Return CommandLine(name)
+    End Function
+
     Const gitBash As String = "C:/Program Files/Git"
 
     ''' <summary>
