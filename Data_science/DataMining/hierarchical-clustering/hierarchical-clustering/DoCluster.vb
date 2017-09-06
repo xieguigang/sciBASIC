@@ -24,7 +24,7 @@ Public Module DoCluster
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Run hierarchical clustering
     ''' </summary>
     ''' <param name="objects"></param>
     ''' <param name="algorithm">Default is <see cref="DefaultClusteringAlgorithm"/></param>
@@ -38,8 +38,17 @@ Public Module DoCluster
         Dim list = objects.ToArray
         Dim distances = list.DistanceMatrix
         Dim names$() = list.Keys
-        Dim alg As ClusteringAlgorithm = algorithm Or New DefaultClusteringAlgorithm().AsDefault
-        Dim cluster As Cluster = alg.performClustering(distances, names, linkageStrategy Or New AverageLinkageStrategy().AsDefault)
-        Return cluster
+
+        ' with (algorithm or new DefaultClusteringAlgorithm as default) if algorithm is nothing
+        With algorithm Or New DefaultClusteringAlgorithm().AsDefault ' (Function(alg) alg Is Nothing)
+
+            ' using (linkageStrategy or new AverageLinkageStrategy as default) if linkageStrategy is nothing
+            Dim cluster As Cluster = .performClustering(
+                distances,
+                names,
+                linkageStrategy Or New AverageLinkageStrategy().AsDefault)
+
+            Return cluster
+        End With
     End Function
 End Module
