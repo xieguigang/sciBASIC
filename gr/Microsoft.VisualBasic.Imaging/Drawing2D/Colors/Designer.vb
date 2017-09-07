@@ -136,29 +136,88 @@ Namespace Drawing2D.Colors
                  End Function) _
          .ToArray
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <remarks>
+        ''' ###### 2017-9-7
+        ''' 
+        ''' mono的Json反序列化任然存在问题
+        ''' 
+        ''' [ERROR 2017/9/7 10:03:20] &lt;Print>::System.Exception: Print ---> System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.TypeInitializationException: The type initializer for 'Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Designer' threw an exception. ---> System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.ArgumentNullException: Value cannot be null.
+        ''' Parameter name :  key
+        '''   at System.Collections.Generic.Dictionary`2[TKey,TValue].TryInsert (TKey key, TValue value, System.Collections.Generic.InsertionBehavior behavior) [0x00008] In &lt;902ab9e386384bec9c07fa19aa938869>:0
+        '''   at System.Collections.Generic.Dictionary`2[TKey,TValue].Add (TKey key, TValue value) [0x00000] In &lt;902ab9e386384bec9c07fa19aa938869>:0
+        '''   at (wrapper managed-to-native) System.Reflection.MonoMethod:InternalInvoke (System.Reflection.MonoMethod,object,object[],System.Exception&)
+        '''   at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00032] In &lt;902ab9e386384bec9c07fa19aa938869>:0
+        '''    --- End of inner exception stack trace ---
+        '''   at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00048] In &lt;902ab9e386384bec9c07fa19aa938869>:0
+        '''   at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] In &lt;902ab9e386384bec9c07fa19aa938869>:0
+        '''   at System.Runtime.Serialization.Json.JsonFormatReaderInterpreter.ReadSimpleDictionary (System.Runtime.Serialization.CollectionDataContract collectionContract, System.Type keyValueType) [0x0014a] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.JsonFormatReaderInterpreter.ReadCollection (System.Runtime.Serialization.CollectionDataContract collectionContract) [0x000fe] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.JsonFormatReaderInterpreter.ReadCollectionFromJson (System.Runtime.Serialization.XmlReaderDelegator xmlReader, System.Runtime.Serialization.Json.XmlObjectSerializerReadContextComplexJson context, System.Xml.XmlDictionaryString emptyDictionaryString, System.Xml.XmlDictionaryString itemName, System.Runtime.Serialization.CollectionDataContract collectionContract) [0x00025] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.JsonFormatReaderGenerator+CriticalHelper+&lt;>c__DisplayClass1_0.&lt;GenerateCollectionReader>b__0 (System.Runtime.Serialization.XmlReaderDelegator xr, System.Runtime.Serialization.Json.XmlObjectSerializerReadContextComplexJson ctx, System.Xml.XmlDictionaryString emptyDS, System.Xml.XmlDictionaryString inm, System.Runtime.Serialization.CollectionDataContract cc) [0x0000c] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.JsonCollectionDataContract.ReadJsonValueCore (System.Runtime.Serialization.XmlReaderDelegator jsonReader, System.Runtime.Serialization.Json.XmlObjectSerializerReadContextComplexJson context) [0x0004f] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.JsonDataContract.ReadJsonValue (System.Runtime.Serialization.XmlReaderDelegator jsonReader, System.Runtime.Serialization.Json.XmlObjectSerializerReadContextComplexJson context) [0x00007] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadJsonValue (System.Runtime.Serialization.DataContract contract, System.Runtime.Serialization.XmlReaderDelegator reader, System.Runtime.Serialization.Json.XmlObjectSerializerReadContextComplexJson context) [0x00006] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.XmlObjectSerializerReadContextComplexJson.ReadDataContractValue (System.Runtime.Serialization.DataContract dataContract, System.Runtime.Serialization.XmlReaderDelegator reader) [0x00000] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.XmlObjectSerializerReadContext.InternalDeserialize (System.Runtime.Serialization.XmlReaderDelegator reader, System.String name, System.String ns, System.Type declaredType, System.Runtime.Serialization.DataContract& dataContract) [0x00264] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.XmlObjectSerializerReadContext.InternalDeserialize (System.Runtime.Serialization.XmlReaderDelegator xmlReader, System.Type declaredType, System.Runtime.Serialization.DataContract dataContract, System.String name, System.String ns) [0x0000b] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.XmlObjectSerializerReadContextComplex.InternalDeserialize (System.Runtime.Serialization.XmlReaderDelegator xmlReader, System.Type declaredType, System.Runtime.Serialization.DataContract dataContract, System.String name, System.String ns) [0x00010] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalReadObject (System.Runtime.Serialization.XmlReaderDelegator xmlReader, System.Boolean verifyObjectName) [0x000c5] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.XmlObjectSerializer.InternalReadObject (System.Runtime.Serialization.XmlReaderDelegator reader, System.Boolean verifyObjectName, System.Runtime.Serialization.DataContractResolver dataContractResolver) [0x00000] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.XmlObjectSerializer.ReadObjectHandleExceptions (System.Runtime.Serialization.XmlReaderDelegator reader, System.Boolean verifyObjectName, System.Runtime.Serialization.DataContractResolver dataContractResolver) [0x00072] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.XmlObjectSerializer.ReadObjectHandleExceptions (System.Runtime.Serialization.XmlReaderDelegator reader, System.Boolean verifyObjectName) [0x00000] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadObject (System.Xml.XmlDictionaryReader reader) [0x0000d] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadObject (System.IO.Stream stream) [0x00017] In &lt;8a29d8bc61874dfaa700acd3dd58b577>:0
+        '''   at Microsoft.VisualBasic.Serialization.JSON.JsonContract.LoadObject (System.String json, System.Type type, System.Boolean simpleDict) [0x0003e] In &lt;fb45d3e2e23e49ecae88d0914baf5cb7>:0
+        '''   at Microsoft.VisualBasic.Serialization.JSON.JsonContract.LoadObject[T] (System.String json, System.Boolean simpleDict) [0x00000] In &lt;fb45d3e2e23e49ecae88d0914baf5cb7>:0
+        '''   at Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Designer..cctor () [0x0040f] In &lt;fe90788c758b4b75b8659df0623dea4b>:0
+        '''    --- End of inner exception stack trace ---
+        '''   at json.Program.Convert (System.String In, System.String nodesTable, System.String kegKCF, System.Boolean degreeSize, System.Boolean compress, System.String style, System.Boolean nodeID, System.String[] maps) [0x00058] In &lt;f0aa82bd17214027b520f8953095c372>:0
+        '''   at Biodeep.KEGG.Network.Common.KEGG.BuildNetworkJSON (System.Collections.Generic.IEnumerable`1[T] compounds, System.String repo, System.String out, System.String[] mapIDs) [0x00145] In &lt;598a64b776e440d8b3f5e763e2b2cdd0>:0
+        '''   at cytonetwork.Program.BiodeepKEGGNetwork (Microsoft.VisualBasic.CommandLine.CommandLine args) [0x000c1] In &lt;2ebe3e57fb4d4cafb0d4cd22a0a764c2>:0
+        '''   at (wrapper managed-to-native) System.Reflection.MonoMethod:InternalInvoke (System.Reflection.MonoMethod,object,object[],System.Exception&)
+        '''   at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00032] In &lt;902ab9e386384bec9c07fa19aa938869>:0
+        '''    --- End of inner exception stack trace ---
+        '''   at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00048] In &lt;902ab9e386384bec9c07fa19aa938869>:0
+        '''   at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] In &lt;902ab9e386384bec9c07fa19aa938869>:0
+        '''   at Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints.APIEntryPoint.__directInvoke (System.Object[] callParameters, System.Object target, System.Boolean Throw) [0x0000c] In &lt;fb45d3e2e23e49ecae88d0914baf5cb7>:0
+        '''    --- End of inner exception stack trace ---
+        ''' </remarks>
         Sub New()
-            Dim colors As Dictionary(Of String, String()) = My.Resources _
-                .designer_colors _
-                .LoadObject(Of Dictionary(Of String, String()))
-            Dim valids As New Dictionary(Of Color, Color())
+            Try
 
-            For Each x In colors
-                valids(ColorTranslator.FromHtml(x.Key)) =
-                    x.Value.ToArray(AddressOf ColorTranslator.FromHtml)
-            Next
+                Dim colors As Dictionary(Of String, String()) = My.Resources _
+                    .designer_colors _
+                    .LoadObject(Of Dictionary(Of String, String()))
+                Dim valids As New Dictionary(Of Color, Color())
 
-            AvailableInterpolates = valids
+                For Each x In colors
+                    valids(ColorTranslator.FromHtml(x.Key)) =
+                        x.Value.ToArray(AddressOf ColorTranslator.FromHtml)
+                Next
 
-            Dim ns = Regex.Matches(My.Resources.colorbrewer, """\d+""") _
-                .ToArray(Function(m) m.Trim(""""c))
-            Dim sb As New StringBuilder(My.Resources.colorbrewer)
+                AvailableInterpolates = valids
 
-            For Each n In ns.Distinct
-                Call sb.Replace($"""{n}""", $"""c{n}""")
-            Next
+                Dim ns = Regex.Matches(My.Resources.colorbrewer, """\d+""") _
+                    .ToArray(Function(m) m.Trim(""""c))
+                Dim sb As New StringBuilder(My.Resources.colorbrewer)
 
-            ColorBrewer = sb.ToString _
-                .LoadObject(Of Dictionary(Of String, ColorBrewer))
+                For Each n In ns.Distinct
+                    Call sb.Replace($"""{n}""", $"""c{n}""")
+                Next
+
+                ColorBrewer = sb.ToString _
+                    .LoadObject(Of Dictionary(Of String, ColorBrewer))
+
+            Catch ex As Exception
+                Call App.LogException(ex)
+                Call "ColorBrewer module is not available on Linux server".Warning
+
+                ColorBrewer = New Dictionary(Of String, ColorBrewer)
+                AvailableInterpolates = New Dictionary(Of Color, Color())
+            End Try
         End Sub
 
         ReadOnly __allColorMapNames$() = {
