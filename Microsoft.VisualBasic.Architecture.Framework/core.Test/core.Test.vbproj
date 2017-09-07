@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="DefaultValueTest.vb" />
+    <Compile Include="CLI.vb" />
     <Compile Include="VectorTest.vb" />
     <Compile Include="ParallelTemplate.vb" />
     <Compile Include="ParallelLoadingTest.vb" />
