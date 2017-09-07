@@ -1000,17 +1000,19 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     '''
     <ExportAPI("Dir.FullPath", Info:="Gets the full path of the directory.")>
-    <Extension> Public Function GetDirectoryFullPath(dir As String) As String
+    <Extension> Public Function GetDirectoryFullPath(dir$, <CallerMemberName> Optional stack$ = Nothing) As String
         Try
             Return FileIO.FileSystem _
                 .GetDirectoryInfo(dir) _
                 .FullName _
                 .Replace("\", "/")
         Catch ex As Exception
+            stack = stack & " --> " & NameOf(GetDirectoryFullPath)
+
             If dir = "/" AndAlso Not App.IsMicrosoftPlatform Then
                 Return "/"  ' Linux上面已经是全路径了，root
             Else
-                ex = New Exception(dir, ex)
+                ex = New Exception(stack & ": " & dir, ex)
                 Call App.LogException(ex)
                 Call ex.PrintException
                 Return dir
