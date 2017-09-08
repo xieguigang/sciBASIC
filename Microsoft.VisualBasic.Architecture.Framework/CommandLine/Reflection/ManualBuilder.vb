@@ -162,8 +162,8 @@ Namespace CommandLine.Reflection
                         l = "(optional) ".Length + s.Length
                     Else
                         s = param.Example
-                        s = "   " & New String(" ", maxPrefix) & s
-                        l = s.Length
+                        s = "   " & s
+                        l = s.Length - 2
                     End If
 
                     With param
