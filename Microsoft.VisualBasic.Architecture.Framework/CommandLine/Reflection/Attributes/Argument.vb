@@ -85,7 +85,16 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Example As String
+        Public ReadOnly Property Example As String
+            Get
+                If TokenType = CLITypes.Boolean Then
+                    Return $"(boolean) {Name}"
+                Else
+                    Return $"{Name} {ExampleValue}"
+                End If
+            End Get
+        End Property
+
         ''' <summary>
         ''' The usage syntax information about this parameter switch.(本开关参数的使用语法)
         ''' </summary>

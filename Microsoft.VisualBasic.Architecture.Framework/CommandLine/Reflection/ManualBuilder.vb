@@ -87,60 +87,44 @@ Namespace CommandLine.Reflection
                 Call Console.WriteLine("  ============================")
                 Call Console.WriteLine()
 
-                Dim maxLen As Integer = Aggregate x As NamedValue(Of Argument)
-                                        In api.Arguments
-                                        Into Max(x.Name.Length + 2)
+                Dim maxLen% = Aggregate x As NamedValue(Of Argument)
+                              In api.Arguments
+                              Let isOptional As String = If(x.Value.Optional, "(optional) ", "")
+                              Let stringL = (isOptional & x.Name & " " & x.Value.Example)
+                              Into Max(stringL.Length)
                 Dim l%
+                Dim s$
 
                 For Each param As Argument In api.Arguments.Select(Function(x) x.Value)
                     fore = Console.ForegroundColor
 
                     If param.[Optional] Then
-                        Call Console.Write("  [")
+                        Call Console.Write("  (")
                         Console.ForegroundColor = ConsoleColor.Green
-                        Call Console.Write(param.Name)
+                        Call Console.Write("optional")
                         Console.ForegroundColor = fore
-                        Call Console.Write("]")
-                        l = param.Name.Length
+                        Call Console.Write(") ")
+                        Call Console.Write(param.Example)
+                        l = ("(optional) " & param.Example).Length
                     Else
-                        Call Console.Write("   " & param.Name)
-                        l = param.Name.Length - 1
+                        s = param.Example
+                        Call Console.Write("   " & s)
+                        l = s.Length - 1
                     End If
 
-                    Dim blank As String = New String(" "c, maxLen - l + 1)
+                    Dim blank As New String(" "c, maxLen - l)
                     Dim descriptLines = Paragraph.Split(param.Description, 120).ToArray
 
                     Call Console.Write(blank)
-                    Call Console.WriteLine($"Description:  {descriptLines.FirstOrDefault}")
+                    Call Console.WriteLine($"{descriptLines.FirstOrDefault}")
 
                     If descriptLines.Length > 1 Then
-                        blank = New String(" "c, maxLen + 11)
+                        blank = New String(" "c, maxLen + 10)
 
                         For Each line In descriptLines.Skip(1)
                             Call Console.WriteLine(blank & "        " & line)
                         Next
                     End If
-
-                    blank = New String(" "c, maxLen + 5)
-
-                    ' Call Console.WriteLine()
-                    Call Console.Write(blank)
-
-                    blank = blank & "              "
-
-                    If param.TokenType = CLITypes.Boolean Then
-                        Call Console.WriteLine($"Example:      {param.Name}")
-                        Call Console.Write(blank)
-                        Call Console.WriteLine(boolFlag)
-                    Else
-                        Dim example$ = param.ExampleValue
-                        Call Console.WriteLine($"Example:      {param.Name} {example}")
-                        If param.Pipeline <> PipelineTypes.undefined Then
-                            Call Console.WriteLine(blank & param.Pipeline.Description)
-                        End If
-                    End If
-
-                    Call Console.WriteLine()
                 Next
             End If
 
@@ -154,22 +138,20 @@ Namespace CommandLine.Reflection
 
         <Extension>
         Public Function ExampleValue(arg As Argument) As String
-            Dim example$ = arg.Example
+            Dim example$
 
-            If String.IsNullOrEmpty(example) Then
-                Select Case arg.TokenType
-                    Case CLITypes.Double
-                        example = "<float>"
-                    Case CLITypes.Integer
-                        example = "<int32>"
-                    Case CLITypes.String
-                        example = "<term_string>"
-                    Case CLITypes.File
-                        example = "<file/directory>"
-                End Select
-            Else
-                example = example.CLIToken
-            End If
+            Select Case arg.TokenType
+                Case CLITypes.Double
+                    example = "<float>"
+                Case CLITypes.Integer
+                    example = "<int32>"
+                Case CLITypes.String
+                    example = "<term_string>"
+                Case CLITypes.File
+                    example = "<file/directory>"
+                Case Else
+                    example = "unknown"
+            End Select
 
             Return example
         End Function
