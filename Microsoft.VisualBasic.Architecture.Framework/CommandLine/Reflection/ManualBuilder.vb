@@ -88,61 +88,109 @@ Namespace CommandLine.Reflection
 
             End With
 
-
-
             If Not api.Arguments.IsNullOrEmpty Then
                 Call Console.WriteLine()
-                Call Console.WriteLine("  Arguments:")
-                Call Console.WriteLine("  ============================")
+                Call Console.WriteLine("  Command with arguments:")
+                Call Console.WriteLine("  ====================================================")
                 Call Console.WriteLine()
 
-                Dim maxLen% = Aggregate x As NamedValue(Of Argument)
-                              In api.Arguments
-                              Let isOptional As String = If(x.Value.Optional, "(optional) ", "")
-                              Let stringL = (isOptional & x.Name & " " & x.Value.Example)
-                              Into Max(stringL.Length)
-                Dim l%
+                ' 先计算出可能的最长的前导字符串的组合
+                Dim maxPrefix% = -999
                 Dim s$
                 Dim std_in As Boolean = False
                 Dim std_out As Boolean = False
                 Dim bool As Boolean = False
+                Dim haveOptional As Boolean = False
 
+                For Each arg In api.Arguments
+                    With arg.Value
+
+                        If .TokenType = CLITypes.Boolean Then
+                            ' 逻辑值类型的只能够是可选类型
+                            s = "(optional) (boolean)"
+                            bool = True
+                        Else
+
+                            If .Pipeline = PipelineTypes.std_in Then
+                                s = "(*std_in)"
+                                std_in = True
+                            ElseIf .Pipeline = PipelineTypes.std_out Then
+                                s = "(*std_out)"
+                                std_out = True
+                            Else
+                                s = ""
+                            End If
+
+                            If .Optional Then
+                                s &= " (optional)"
+                                haveOptional = True
+                            End If
+                        End If
+                    End With
+
+                    If s.Length > maxPrefix Then
+                        maxPrefix = s.Length
+                    End If
+                Next
+
+                ' 这里计算出来的是name usage的最大长度
+                Dim maxLen% = Aggregate x As NamedValue(Of Argument)
+                              In api.Arguments
+                              Let stringL = x.Value.Example.Length
+                              Into Max(stringL)
+                Dim l%
+                Dim helpOffset% = maxPrefix + maxLen + 3
+                Dim skipOptionalLine As Boolean = False
+
+                ' 必须的参数放在前面，可选的参数都是在后面的位置
                 For Each param As Argument In api.Arguments.Select(Function(x) x.Value)
                     If param.[Optional] Then
                         Dim fore = Console.ForegroundColor
+
+                        If Not skipOptionalLine Then
+                            skipOptionalLine = True
+                            Call Console.WriteLine()
+                        End If
 
                         Call Console.Write("  (")
                         Console.ForegroundColor = ConsoleColor.Green
                         Call Console.Write("optional")
                         Console.ForegroundColor = fore
                         Call Console.Write(") ")
-                        Call Console.Write(param.Example)
-                        l = ("(optional) " & param.Example).Length
+
+                        s = param.Example
+                        l = "(optional) ".Length + s.Length
                     Else
                         s = param.Example
-                        Call Console.Write("   " & s)
-                        l = s.Length - 1
+                        s = "   " & New String(" ", maxPrefix) & s
+                        l = s.Length
                     End If
 
-                    If param.TokenType = CLITypes.Boolean Then
-                        bool = True
-                    End If
-                    If param.Pipeline = PipelineTypes.std_in Then
-                        std_in = True
-                    End If
-                    If param.Pipeline = PipelineTypes.std_out Then
-                        std_out = True
-                    End If
+                    With param
+                        If .Pipeline = PipelineTypes.std_in Then
+                            s = "(*std_in)  " & s
+                        ElseIf .Pipeline = PipelineTypes.std_out Then
+                            s = "(*std_out) " & s
+                        ElseIf .TokenType = CLITypes.Boolean Then
+                            s = "(boolean)  " & s
+                        End If
+
+                        If Not .Pipeline = PipelineTypes.undefined OrElse .TokenType = CLITypes.Boolean Then
+                            l += 11
+                        End If
+                    End With
+
+                    Call Console.Write(s)
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
-                    blank = New String(" "c, maxLen - l - 3)
+                    blank = New String(" "c, helpOffset - l)
                     infoLines$ = Paragraph.Split(param.Description, 120).ToArray
 
                     Call Console.Write(blank)
                     Call Console.WriteLine($"{infoLines.FirstOrDefault}")
 
                     If infoLines.Length > 1 Then
-                        blank = New String(" "c, maxLen - 1)
+                        blank = New String(" "c, helpOffset + 2)
 
                         For Each line In infoLines.Skip(1)
                             Call Console.WriteLine(blank & line)

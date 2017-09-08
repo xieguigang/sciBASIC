@@ -81,6 +81,10 @@ Namespace CommandLine.Reflection
 
         ''' <summary>
         ''' The usage example of this parameter switch.(该开关的值的示例)
+        ''' 
+        ''' ```
+        ''' name example
+        ''' ```
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -88,15 +92,9 @@ Namespace CommandLine.Reflection
         Public ReadOnly Property Example As String
             Get
                 If TokenType = CLITypes.Boolean Then
-                    Return $"(boolean) {Name}"
+                    Return Name
                 Else
-                    If Pipeline = PipelineTypes.std_in Then
-                        Return $"(*std_in) {Name} {ExampleValue}"
-                    ElseIf Pipeline = PipelineTypes.std_out Then
-                        Return $"(*std_out) {Name} {ExampleValue}"
-                    Else
-                        Return $"{Name} {ExampleValue}"
-                    End If
+                    Return $"{Name} {ExampleValue}"
                 End If
             End Get
         End Property
