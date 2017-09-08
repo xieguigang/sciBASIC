@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
@@ -41,13 +42,14 @@ Namespace CommandLine.Reflection
 
         ''' <summary>
         ''' Prints the formatted help information on the console.
+        ''' (用于生成打印在终端上面的命令行帮助信息)
         ''' </summary>
         ''' <param name="api"></param>
         ''' <returns></returns>
-        <Extension>
-        Public Function PrintHelp(api As APIEntryPoint) As Integer
+        <Extension> Public Function PrintHelp(api As APIEntryPoint) As Integer
             Dim infoLines = Paragraph.Split(api.Info, 90).ToArray
 
+            ' print API name and description
             Call Console.WriteLine($"Help for command '{api.Name}':")
             Call Console.WriteLine()
             Call Console.WriteLine($"  Information:  {infoLines.FirstOrDefault}")
@@ -58,6 +60,7 @@ Namespace CommandLine.Reflection
                 Next
             End If
 
+            ' print usage
             Call Console.Write($"  Usage:        ")
 
             Dim fore As ConsoleColor = Console.ForegroundColor
@@ -84,8 +87,10 @@ Namespace CommandLine.Reflection
                 Call Console.WriteLine("  ============================")
                 Call Console.WriteLine()
 
-                Dim maxLen As Integer = (From x In api.Arguments Select x.Name.Length + 2).Max
-                Dim l As Integer
+                Dim maxLen As Integer = Aggregate x As NamedValue(Of Argument)
+                                        In api.Arguments
+                                        Into Max(x.Name.Length + 2)
+                Dim l%
 
                 For Each param As Argument In api.Arguments.Select(Function(x) x.Value)
                     fore = Console.ForegroundColor
