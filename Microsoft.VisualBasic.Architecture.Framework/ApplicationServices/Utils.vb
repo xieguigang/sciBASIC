@@ -7,6 +7,16 @@ Namespace ApplicationServices
 
     Public Module Utils
 
+        <Extension>
+        Public Sub TryRun(task As Action, <CallerMemberName> Optional stack$ = Nothing)
+            Try
+                Call task()
+            Catch ex As Exception
+                Call $"[{stack}] {task.Method.ToString} failure!".Warning
+                Call App.LogException(ex)
+            End Try
+        End Sub
+
         ''' <summary>
         ''' Run background task, if the <see cref="AsyncHandle(Of Exception).GetValue()"/> returns nothing, 
         ''' then means the task run no errors.

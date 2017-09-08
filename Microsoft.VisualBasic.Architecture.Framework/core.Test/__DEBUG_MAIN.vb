@@ -53,22 +53,22 @@ Imports Microsoft.VisualBasic.Text.Levenshtein
 
 Public Module __DEBUG_MAIN
 
-    <Argument("", True, AcceptTypes:={GetType(String), GetType(Boolean), GetType(NamedValue(Of Double))})>
-    Private Sub TestExtensionProperty()
-        Dim x As New ClassObject
-        Dim n As Long = x.Uid  ' The init value is zero
+    '<Argument("", True, AcceptTypes:={GetType(String), GetType(Boolean), GetType(NamedValue(Of Double))})>
+    'Private Sub TestExtensionProperty()
+    '    Dim x As New ClassObject
+    '    Dim n As Long = x.Uid  ' The init value is zero
 
-        Call n.__DEBUG_ECHO
+    '    Call n.__DEBUG_ECHO
 
-        ' Assign value to this extension property
-        x.Uid.value = Rnd() * 1000000000000L
+    '    ' Assign value to this extension property
+    '    x.Uid.value = Rnd() * 1000000000000L
 
-        ' display the extension property value
-        Call x.Uid.__DEBUG_ECHO
-        Call Pause()
+    '    ' display the extension property value
+    '    Call x.Uid.__DEBUG_ECHO
+    '    Call Pause()
 
-        Call RunApp("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\TestProject\Test2\bin\Debug\Test2.exe", cs:=True)
-    End Sub
+    '    Call RunApp("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\TestProject\Test2\bin\Debug\Test2.exe", cs:=True)
+    'End Sub
 
     'Public Function tt() As Tuple
     '    Return New Tuple <= New With {
@@ -303,7 +303,7 @@ Public Module __DEBUG_MAIN
 
         Call Pause()
 
-        Call TestExtensionProperty()
+        '    Call TestExtensionProperty()
 
         Call VBDebugger.Warning("ddddddddd")
         Call VBDebugger.PrintException("123123123", Reflection.MethodBase.GetCurrentMethod.GetFullName)

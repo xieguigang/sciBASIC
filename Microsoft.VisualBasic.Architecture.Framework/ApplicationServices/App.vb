@@ -77,11 +77,11 @@ Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 
 ''' <summary>
 ''' Provides information about, and means to manipulate, the current environment Application information collection.
-''' (More easily runtime environment information provider on <see cref="PlatformID.Unix"/>/LINUX platform for visualbasic program.)
+''' (More easily runtime environment information provider on <see cref="PlatformID.Unix"/>/LINUX server platform for VisualBasic program.)
 ''' (从命令行之中使用``/@set``参数赋值环境变量的时候，每一个变量之间使用分号进行分隔)
 ''' </summary>
 '''
-<Package("App", Description:="More easily runtime environment information provider on LINUX platform for visualbasic program.",
+<Package("App", Description:="More easily runtime environment information provider on LINUX platform for VisualBasic program.",
                   Publisher:="amethyst.asuka@gcmodeller.org",
                   Url:="http://SourceForge.net/projects/shoal")>
 Public Module App
@@ -144,6 +144,31 @@ Public Module App
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
     Public ReadOnly Property CommandLine As CommandLine.CommandLine = __CLI()
+
+    ''' <summary>
+    ''' Get argument value from <see cref="CommandLine"/>.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="name$"></param>
+    ''' <returns></returns>
+    Public Function Argument(Of T)(name$) As T
+        With CommandLine(name)
+            If .StringEmpty Then
+                Return Nothing
+            Else
+                Return Scripting.CTypeDynamic(Of T)(.ref)
+            End If
+        End With
+    End Function
+
+    ''' <summary>
+    ''' Get argument value string from <see cref="CommandLine"/>.
+    ''' </summary>
+    ''' <param name="name$"></param>
+    ''' <returns></returns>
+    Public Function Argument(name$) As String
+        Return CommandLine(name)
+    End Function
 
     Const gitBash As String = "C:/Program Files/Git"
 
@@ -338,7 +363,7 @@ Public Module App
     Public ReadOnly Property ProductSharedDIR As String
 
     Sub New()
-        On Error Resume Next
+        ' On Error Resume Next ' 在Linux服务器上面不起作用？？？
 
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
         Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
@@ -350,27 +375,30 @@ Public Module App
         ' 现在放在这个构造函数之中，强制忽略掉错误继续执行，提升一些稳定性，防止出现程序无法启动的情况出现。
 
         ' 请注意，这里的变量都是有先后的初始化顺序的
+        Try
+            App.RunTimeDirectory = FileIO.FileSystem _
+                .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
+                .FullName _
+                .Replace("/", "\")
+            App.Desktop = My.Computer.FileSystem.SpecialDirectories.Desktop
+            App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
+            App.Info = ApplicationDetails.CurrentExe()
+            App.AssemblyName = BaseName(App.ExecutablePath)
+            App.ProductName = If(
+                String.IsNullOrEmpty(Application.ProductName.Trim),
+                AssemblyName,
+                Application.ProductName.Trim)
+            App.HOME = FileIO.FileSystem.GetParentPath(App.ExecutablePath)
+            App.UserHOME = PathMapper.HOME.GetDirectoryFullPath("App.New(.cctor)")
+            App.ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath("App.New(.cctor)")
+            App.ProductSharedDIR = $"{ProductProgramData}/.shared".GetDirectoryFullPath
+            App.LocalData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath("App.New(.cctor)")
+            App.CurrentProcessTemp = GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath("App.New(.cctor)")
+            App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
+            App.LogErrDIR = App.LocalData & $"/.logs/err/"
+        Catch ex As Exception
 
-        App.RunTimeDirectory = FileIO.FileSystem _
-            .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
-            .FullName _
-            .Replace("/", "\")
-        App.Desktop = My.Computer.FileSystem.SpecialDirectories.Desktop
-        App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
-        App.Info = ApplicationDetails.CurrentExe()
-        App.AssemblyName = BaseName(App.ExecutablePath)
-        App.ProductName = If(
-            String.IsNullOrEmpty(Application.ProductName.Trim),
-            AssemblyName,
-            Application.ProductName.Trim)
-        App.HOME = FileIO.FileSystem.GetParentPath(App.ExecutablePath)
-        App.UserHOME = PathMapper.HOME.GetDirectoryFullPath
-        App.ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath
-        App.ProductSharedDIR = $"{ProductProgramData}/.shared".GetDirectoryFullPath
-        App.LocalData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath
-        App.CurrentProcessTemp = GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath
-        App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
-        App.LogErrDIR = App.LocalData & $"/.logs/err/"
+        End Try
 #End Region
     End Sub
 

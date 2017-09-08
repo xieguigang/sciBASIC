@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Public Module DoCluster
@@ -22,13 +23,32 @@ Public Module DoCluster
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' Run hierarchical clustering
+    ''' </summary>
+    ''' <param name="objects"></param>
+    ''' <param name="algorithm">Default is <see cref="DefaultClusteringAlgorithm"/></param>
+    ''' <param name="linkageStrategy">Default is <see cref="AverageLinkageStrategy"/></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function RunCluster(objects As IEnumerable(Of DataSet)) As Cluster
+    Public Function RunCluster(objects As IEnumerable(Of DataSet),
+                               Optional algorithm As ClusteringAlgorithm = Nothing,
+                               Optional linkageStrategy As LinkageStrategy = Nothing) As Cluster
+
         Dim list = objects.ToArray
         Dim distances = list.DistanceMatrix
         Dim names$() = list.Keys
-        Dim alg As ClusteringAlgorithm = New DefaultClusteringAlgorithm
-        Dim cluster As Cluster = alg.performClustering(distances, names, New AverageLinkageStrategy)
-        Return cluster
+
+        ' with (algorithm or new DefaultClusteringAlgorithm as default) if algorithm is nothing
+        With algorithm Or New DefaultClusteringAlgorithm().AsDefault ' (Function(alg) alg Is Nothing)
+
+            ' using (linkageStrategy or new AverageLinkageStrategy as default) if linkageStrategy is nothing
+            Dim cluster As Cluster = .performClustering(
+                distances,
+                names,
+                linkageStrategy Or New AverageLinkageStrategy().AsDefault)
+
+            Return cluster
+        End With
     End Function
 End Module

@@ -11,7 +11,7 @@
     <AssemblyName>TestProject</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="DefaultValueTest.vb" />
+    <Compile Include="CLI.vb" />
     <Compile Include="VectorTest.vb" />
     <Compile Include="ParallelTemplate.vb" />
     <Compile Include="ParallelLoadingTest.vb" />
