@@ -58,8 +58,8 @@ Namespace CommandLine.Reflection
 
         ''' <summary>
         ''' The description and brief help information about this parameter switch, 
-        ''' you can using the \n escape string to gets a VbCrLf value.
-        ''' (对这个开关参数的具体的描述以及帮助信息，可以使用\n转义字符进行换行)
+        ''' you can using the ``\n`` escape string to gets a ``VbCrLf`` value.
+        ''' (对这个开关参数的具体的描述以及帮助信息，可以使用``\n``转义字符进行换行)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -90,7 +90,13 @@ Namespace CommandLine.Reflection
                 If TokenType = CLITypes.Boolean Then
                     Return $"(boolean) {Name}"
                 Else
-                    Return $"{Name} {ExampleValue}"
+                    If Pipeline = PipelineTypes.std_in Then
+                        Return $"(*std_in) {Name} {ExampleValue}"
+                    ElseIf Pipeline = PipelineTypes.std_out Then
+                        Return $"(*std_out) {Name} {ExampleValue}"
+                    Else
+                        Return $"{Name} {ExampleValue}"
+                    End If
                 End If
             End Get
         End Property
@@ -130,8 +136,12 @@ Namespace CommandLine.Reflection
         ''' <param name="Name">The name of this command line parameter switch.(该命令开关的名称)</param>
         ''' <param name="Optional">Is this parameter switch is an optional value.(本开关是否为可选的参数)</param>
         ''' <remarks></remarks>
-        Sub New(Name As String, Optional [Optional] As Boolean = False, Optional type As CLITypes = CLITypes.String, Optional pip As PipelineTypes = PipelineTypes.undefined)
-            Call MyBase.New(Name)
+        Sub New(name$,
+                Optional [Optional] As Boolean = False,
+                Optional type As CLITypes = CLITypes.String,
+                Optional pip As PipelineTypes = PipelineTypes.undefined)
+
+            Call MyBase.New(name)
 
             Me.[Optional] = [Optional]
             Me.TokenType = type

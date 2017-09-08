@@ -94,6 +94,9 @@ Namespace CommandLine.Reflection
                               Into Max(stringL.Length)
                 Dim l%
                 Dim s$
+                Dim std_in As Boolean = False
+                Dim std_out As Boolean = False
+                Dim bool As Boolean = False
 
                 For Each param As Argument In api.Arguments.Select(Function(x) x.Value)
                     fore = Console.ForegroundColor
@@ -112,20 +115,50 @@ Namespace CommandLine.Reflection
                         l = s.Length - 1
                     End If
 
-                    Dim blank As New String(" "c, maxLen - l)
-                    Dim descriptLines = Paragraph.Split(param.Description, 120).ToArray
+                    If param.TokenType = CLITypes.Boolean Then
+                        bool = True
+                    End If
+                    If param.Pipeline = PipelineTypes.std_in Then
+                        std_in = True
+                    End If
+                    If param.Pipeline = PipelineTypes.std_out Then
+                        std_out = True
+                    End If
+
+                    ' 这里的blank调整的是命令开关名称与描述之间的字符间距
+                    Dim blank As New String(" "c, maxLen - l - 3)
+                    Dim helpLines$() = Paragraph.Split(param.Description, 120).ToArray
 
                     Call Console.Write(blank)
-                    Call Console.WriteLine($"{descriptLines.FirstOrDefault}")
+                    Call Console.WriteLine($"{helpLines.FirstOrDefault}")
 
-                    If descriptLines.Length > 1 Then
-                        blank = New String(" "c, maxLen + 10)
+                    If helpLines.Length > 1 Then
+                        blank = New String(" "c, maxLen - 1)
 
-                        For Each line In descriptLines.Skip(1)
-                            Call Console.WriteLine(blank & "        " & line)
+                        For Each line In helpLines.Skip(1)
+                            Call Console.WriteLine(blank & line)
                         Next
                     End If
                 Next
+
+                If std_in OrElse std_out OrElse bool Then
+                    Call Console.WriteLine()
+                End If
+
+                If std_in Then
+                    If std_out Then
+                        Call Console.WriteLine("  *std_in:  " & PipelineTypes.std_in.Description)
+                    Else
+                        Call Console.WriteLine("  *std_in: " & PipelineTypes.std_in.Description)
+                    End If
+                End If
+                If std_out Then
+                    Call Console.WriteLine("  *std_out: " & PipelineTypes.std_out.Description)
+                End If
+                If bool Then
+                    Call Console.WriteLine()
+                    Call Console.WriteLine("  " & boolFlag)
+                End If
             End If
 
             Return 0
