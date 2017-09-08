@@ -51,12 +51,12 @@ Namespace CommandLine.Reflection
 
             ' print API name and description
             Call Console.WriteLine()
-            Call Console.WriteLine($"  '{api.Name}' - {infoLines.FirstOrDefault}")
+            Call Console.WriteLine($"   '{api.Name}' - {infoLines.FirstOrDefault}")
 
             If infoLines.Length > 1 Then
                 blank = New String(
                     " ",
-                    2 + ' 两个前导空格
+                    3 + ' 三个前导空格
                     2 + ' 两个命令行名称左右的单引号
                     3 + ' 空格-空格
                     api.Name.Length)
@@ -70,7 +70,7 @@ Namespace CommandLine.Reflection
             With Console.ForegroundColor
 
                 Call Console.WriteLine()
-                Call Console.WriteLine($" Usage:")
+                Call Console.WriteLine($"Usage:")
                 Call Console.WriteLine()
 
                 Console.ForegroundColor = ConsoleColor.Cyan
@@ -122,7 +122,7 @@ Namespace CommandLine.Reflection
                             End If
 
                             If .Optional Then
-                                s &= " (optional)"
+                                s &= "(optional)"
                                 haveOptional = True
                             End If
                         End If
@@ -139,7 +139,7 @@ Namespace CommandLine.Reflection
                               Let stringL = x.Value.Example.Length
                               Into Max(stringL)
                 Dim l%
-                Dim helpOffset% = maxPrefix + maxLen + 3
+                Dim helpOffset% = maxPrefix + maxLen + 5
                 Dim skipOptionalLine As Boolean = False
 
                 ' 必须的参数放在前面，可选的参数都是在后面的位置
@@ -162,8 +162,10 @@ Namespace CommandLine.Reflection
                         l = "(optional) ".Length + s.Length
                     Else
                         s = param.Example
-                        s = "   " & s
-                        l = s.Length - 2
+                        s = s
+                        l = s.Length
+
+                        Console.Write("  ")
                     End If
 
                     With param
