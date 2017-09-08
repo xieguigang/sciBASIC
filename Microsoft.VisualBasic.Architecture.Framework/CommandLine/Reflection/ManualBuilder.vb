@@ -27,10 +27,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
@@ -48,38 +47,48 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         <Extension> Public Function PrintHelp(api As APIEntryPoint) As Integer
             Dim infoLines = Paragraph.Split(api.Info, 90).ToArray
+            Dim blank$
 
             ' print API name and description
-            Call Console.WriteLine($"Help for command '{api.Name}':")
             Call Console.WriteLine()
-            Call Console.WriteLine($"  Information:  {infoLines.FirstOrDefault}")
+            Call Console.WriteLine($"  '{api.Name}' - {infoLines.FirstOrDefault}")
 
             If infoLines.Length > 1 Then
+                blank = New String(
+                    " ",
+                    2 + ' 两个前导空格
+                    2 + ' 两个命令行名称左右的单引号
+                    3 + ' 空格-空格
+                    api.Name.Length)
+
                 For Each line$ In infoLines.Skip(1)
-                    Call Console.WriteLine($"                {line}")
+                    Call Console.WriteLine($"{blank}{line}")
                 Next
             End If
 
             ' print usage
-            Call Console.Write($"  Usage:        ")
+            With Console.ForegroundColor
 
-            Dim fore As ConsoleColor = Console.ForegroundColor
+                Call Console.WriteLine()
+                Call Console.WriteLine($" Usage:")
+                Call Console.WriteLine()
 
-            Console.ForegroundColor = ConsoleColor.Cyan
-            Call Console.Write(
-                If(App.Platform = PlatformID.Unix OrElse
-                App.Platform = PlatformID.MacOSX,
-                App.ExecutablePath.TrimSuffix,
-                App.ExecutablePath) & " ")
-            Console.ForegroundColor = ConsoleColor.Green
-            Call Console.WriteLine(api.Usage)
-            Console.ForegroundColor = fore
+                Console.ForegroundColor = ConsoleColor.Cyan
 
-            If String.IsNullOrEmpty(api.Example) Then
-                Call Console.WriteLine($"  Example:      CLI usage example not found!")
-            Else
-                Call Console.WriteLine($"  Example:      {App.AssemblyName} {api.Example}")
-            End If
+                Call Console.Write("  ")
+                Call Console.Write(
+                    If(App.Platform = PlatformID.Unix OrElse
+                    App.Platform = PlatformID.MacOSX,
+                    App.ExecutablePath.TrimSuffix,
+                    App.ExecutablePath) & " ")
+
+                Console.ForegroundColor = ConsoleColor.Green
+                Call Console.WriteLine(api.Usage)
+                Console.ForegroundColor = .ref
+
+            End With
+
+
 
             If Not api.Arguments.IsNullOrEmpty Then
                 Call Console.WriteLine()
@@ -99,9 +108,9 @@ Namespace CommandLine.Reflection
                 Dim bool As Boolean = False
 
                 For Each param As Argument In api.Arguments.Select(Function(x) x.Value)
-                    fore = Console.ForegroundColor
-
                     If param.[Optional] Then
+                        Dim fore = Console.ForegroundColor
+
                         Call Console.Write("  (")
                         Console.ForegroundColor = ConsoleColor.Green
                         Call Console.Write("optional")
@@ -126,16 +135,16 @@ Namespace CommandLine.Reflection
                     End If
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
-                    Dim blank As New String(" "c, maxLen - l - 3)
-                    Dim helpLines$() = Paragraph.Split(param.Description, 120).ToArray
+                    blank = New String(" "c, maxLen - l - 3)
+                    infoLines$ = Paragraph.Split(param.Description, 120).ToArray
 
                     Call Console.Write(blank)
-                    Call Console.WriteLine($"{helpLines.FirstOrDefault}")
+                    Call Console.WriteLine($"{infoLines.FirstOrDefault}")
 
-                    If helpLines.Length > 1 Then
+                    If infoLines.Length > 1 Then
                         blank = New String(" "c, maxLen - 1)
 
-                        For Each line In helpLines.Skip(1)
+                        For Each line In infoLines.Skip(1)
                             Call Console.WriteLine(blank & line)
                         Next
                     End If
