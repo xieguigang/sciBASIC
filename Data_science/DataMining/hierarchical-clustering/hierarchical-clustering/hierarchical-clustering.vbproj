@@ -243,6 +243,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DendrogramVisualize\NodeLayout.vb" />
+    <Compile Include="HierarchyBuilder\HierarchyLink.vb" />
     <Compile Include="PrintHelper.vb" />
     <Compile Include="DoCluster.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />

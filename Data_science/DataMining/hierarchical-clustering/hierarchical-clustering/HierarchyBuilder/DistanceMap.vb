@@ -27,11 +27,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 
 Namespace Hierarchy
-
 
     ''' <summary>
     ''' Container for linkages
@@ -40,57 +38,29 @@ Namespace Hierarchy
     ''' </summary>
     Public Class DistanceMap
 
-        Private pairTable As Dictionary(Of String, Item)
-        Private data As PriorityQueueTable(Of Item)
-
-        Private Class Item : Implements IComparable, IComparable(Of Item), IReadOnlyId
-
-            Private ReadOnly outerInstance As DistanceMap
-
-            Friend ReadOnly pair As HierarchyTreeNode
-            Friend removed As Boolean = False
-
-            Public ReadOnly Property hash As String Implements IReadOnlyId.Identity
-
-            Friend Sub New(outerInstance As DistanceMap, p As HierarchyTreeNode)
-                Me.outerInstance = outerInstance
-                pair = p
-                hash = outerInstance.hashCodePair(p)
-            End Sub
-
-            Public Function compareTo(o As Item) As Integer Implements IComparable(Of Item).CompareTo
-                Return pair.compareTo(o.pair)
-            End Function
-
-            Public Overrides Function ToString() As String
-                Return hash
-            End Function
-
-            Private Function __compareTo(obj As Object) As Integer Implements IComparable.CompareTo
-                Return compareTo(obj)
-            End Function
-        End Class
+        Dim linkTable As Dictionary(Of String, HierarchyLink)
+        Dim data As PriorityQueueTable(Of HierarchyLink)
 
         Public Sub New()
-            data = New PriorityQueue(Of Item)
-            pairTable = New Dictionary(Of String, Item)
+            data = New PriorityQueueTable(Of HierarchyLink)
+            linkTable = New Dictionary(Of String, HierarchyLink)
         End Sub
 
-        Public Function list() As IList(Of HierarchyTreeNode)
+        Public Function ToList() As IList(Of HierarchyTreeNode)
             Dim l As IList(Of HierarchyTreeNode) = New List(Of HierarchyTreeNode)
-            For Each clusterPair As Item In data
+            For Each clusterPair As HierarchyLink In data
                 l.Add(clusterPair.pair)
             Next
             Return l
         End Function
 
-        Public Function findByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
+        Public Function FindByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Dim inCode As String = hashCodePair(c1, c2)
-            Return pairTable(inCode).pair
+            Return linkTable(inCode).pair
         End Function
 
         Public Function RemoveFirst() As HierarchyTreeNode
-            Dim poll As Item = data.Dequeue
+            Dim poll As HierarchyLink = data.Dequeue
 
             Do While poll IsNot Nothing AndAlso poll.removed
                 poll = data.Dequeue
@@ -100,14 +70,14 @@ Namespace Hierarchy
                 Return Nothing
             Else
                 With poll.pair
-                    Call pairTable.Remove(poll.hash)
+                    Call linkTable.Remove(poll.hash)
                     Return .ref
                 End With
             End If
         End Function
 
         Public Function Remove(link As HierarchyTreeNode) As Boolean
-            Dim ___remove As Item = pairTable.RemoveAndGet(hashCodePair(link))
+            Dim ___remove As HierarchyLink = linkTable.RemoveAndGet(hashCodePair(link))
             If ___remove Is Nothing Then
                 Return False
             End If
@@ -117,14 +87,14 @@ Namespace Hierarchy
         End Function
 
         Public Function Add(link As HierarchyTreeNode) As Boolean
-            Dim e As New Item(Me, link)
+            Dim e As New HierarchyLink(Me, link)
 
-            If pairTable.ContainsKey(e.hash) Then
-                Dim existingItem As Item = pairTable(e.hash)
+            If linkTable.ContainsKey(e.hash) Then
+                Dim existingItem As HierarchyLink = linkTable(e.hash)
                 Console.Error.WriteLine("hashCode = " & existingItem.hash & " adding redundant link:" & link.ToString & " (exist:" & existingItem.ToString & ")")
                 Return False
             Else
-                pairTable(e.hash) = e
+                linkTable(e.hash) = e
                 data.Enqueue(e)
                 Return True
             End If
@@ -135,30 +105,12 @@ Namespace Hierarchy
         ''' @return
         ''' </summary>
         Public Function minDist() As Double
-            Dim peek As Item = data.Peek()
+            Dim peek As HierarchyLink = data.Peek()
+
             If peek IsNot Nothing Then
                 Return peek.pair.LinkageDistance
             Else
                 Return Nothing
-            End If
-        End Function
-
-        ''' <summary>
-        ''' Compute some kind of unique ID for a given cluster pair. </summary>
-        ''' <returns> The ID </returns>
-        Friend Function hashCodePair(link As HierarchyTreeNode) As String
-            Return hashCodePair(link.lCluster(), link.rCluster())
-        End Function
-
-        Friend Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As String
-            Return hashCodePairNames(lCluster.Name, rCluster.Name)
-        End Function
-
-        Friend Shared Function hashCodePairNames(lName As String, rName As String) As String
-            If lName.CompareTo(rName) < 0 Then
-                Return lName & "~~~" & rName 'getlCluster().hashCode() + 31 * (getrCluster().hashCode());
-            Else
-                Return rName & "~~~" & lName 'return getrCluster().hashCode() + 31 * (getlCluster().hashCode());
             End If
         End Function
 
