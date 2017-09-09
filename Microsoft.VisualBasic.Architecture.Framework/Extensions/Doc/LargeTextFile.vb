@@ -108,36 +108,39 @@ Public Module LargeTextFile
     End Function
 
     ''' <summary>
-    ''' 尝试查看大文件的尾部的数据
+    ''' Peek the tails of a large text file.(尝试查看大文件的尾部的数据)
     ''' </summary>
-    ''' <param name="path"></param>
-    ''' <param name="length">字符的数目</param>
+    ''' <param name="path">If the file is not exists, then this function will returns nothing.</param>
+    ''' <param name="length">Peeks of the number of characters.(字符的数目)</param>
+    ''' <param name="encoding">Default value is <see cref="DefaultEncoding"/></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    ''' 
     <ExportAPI("Tails")>
-    Public Function Tails(path As String,
-                          <Parameter("characters", "The number of the characters, not the bytes value.")>
-                          length As Integer) As String
-        length *= 8
+    <Extension>
+    Public Function Tails(path$, <Parameter("characters", "The number of the characters, not the bytes value.")> length%, Optional encoding As Encoding = Nothing) As String
+        If Not path.FileExists Then
+            Return Nothing
+        Else
+            length *= 8
+        End If
 
-        Using Reader = New IO.FileStream(path, IO.FileMode.OpenOrCreate)
-            If Reader.Length < length Then
-                length = Reader.Length
+        Using reader As New FileStream(path, FileMode.Open)
+            If reader.Length < length Then
+                length = reader.Length
             End If
 
-            Dim ChunkBuffer As Byte() = New Byte(length - 1) {}
+            Dim chunkBuffer As Byte() = New Byte(length - 1) {}
 
-            Call Reader.Seek(Reader.Length - length, IO.SeekOrigin.Begin)
-            Call Reader.Read(ChunkBuffer, 0, ChunkBuffer.Length)
+            Call reader.Seek(reader.Length - length, SeekOrigin.Begin)
+            Call reader.Read(chunkBuffer, 0, chunkBuffer.Length)
 
-            Dim value As String = System.Text.Encoding.Default.GetString(ChunkBuffer)
+            Dim value$ = (encoding Or DefaultEncoding).GetString(chunkBuffer)
             Return value
         End Using
     End Function
 
     <ExportAPI(".Merge", Info:="Please make sure all of the file in the target directory is text file not binary file.")>
-    Public Function Merge(<Parameter("Dir", "The default directory parameter value is the current directory.")> Optional dir As String = "./") As String
+    Public Function Merge(<Parameter("Dir", "The default directory parameter value is the current directory.")> Optional dir$ = "./") As String
         Dim Texts = From file As String
                     In FileIO.FileSystem.GetFiles(dir, FileIO.SearchOption.SearchAllSubDirectories, "*.*")
                     Select FileIO.FileSystem.ReadAllText(file)
