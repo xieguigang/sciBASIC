@@ -53,9 +53,9 @@ Public Class PDistClusteringAlgorithm
     Public Function performClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performClustering
 
         ' Argument checks 
-        If distances Is Nothing OrElse distances.Length = 0 Then Throw New System.ArgumentException("Invalid distance matrix")
-        If distances(0).Length <> clusterNames.Length * (clusterNames.Length - 1) \ 2 Then Throw New System.ArgumentException("Invalid cluster name array")
-        If linkageStrategy Is Nothing Then Throw New System.ArgumentException("Undefined linkage strategy")
+        If distances Is Nothing OrElse distances.Length = 0 Then Throw New ArgumentException("Invalid distance matrix")
+        If distances(0).Length <> clusterNames.Length * (clusterNames.Length - 1) \ 2 Then Throw New ArgumentException("Invalid cluster name array")
+        If linkageStrategy Is Nothing Then Throw New ArgumentException("Undefined linkage strategy")
 
         ' Setup model 
         Dim clusters As IList(Of Cluster) = createClusters(clusterNames)
@@ -63,6 +63,7 @@ Public Class PDistClusteringAlgorithm
 
         ' Process 
         Dim builder As New HierarchyBuilder(clusters, linkages)
+
         Do While Not builder.TreeComplete
             builder.Agglomerate(linkageStrategy)
         Loop
@@ -92,32 +93,42 @@ Public Class PDistClusteringAlgorithm
 
     Private Function createLinkages(distances As Double()(), clusters As IList(Of Cluster)) As DistanceMap
         Dim linkages As New DistanceMap
+
         For col As Integer = 0 To clusters.Count - 1
             Dim cluster_col As Cluster = clusters(col)
             For row As Integer = col + 1 To clusters.Count - 1
                 Dim link As New HierarchyTreeNode
                 Dim d As Double = distances(0)(accessFunction(row, col, clusters.Count))
                 link.LinkageDistance = d
-                link.lCluster = (cluster_col)
-                link.rCluster = (clusters(row))
-                linkages.add(link)
-            Next row
-        Next col
+                link.Left = (cluster_col)
+                link.Right = (clusters(row))
+                linkages.Add(link)
+            Next
+        Next
+
         Return linkages
     End Function
 
     Private Function createClusters(clusterNames As String()) As IList(Of Cluster)
         Dim clusters As IList(Of Cluster) = New List(Of Cluster)
+
         For Each clusterName As String In clusterNames
             Dim cluster As New Cluster(clusterName)
             cluster.AddLeafName(clusterName)
             clusters.Add(cluster)
-        Next clusterName
+        Next
+
         Return clusters
     End Function
 
-    ' Credit to this function goes to
-    ' http://stackoverflow.com/questions/13079563/how-does-condensed-distance-matrix-work-pdist
+    ''' <summary>
+    ''' Credit to this function goes to
+    ''' http://stackoverflow.com/questions/13079563/how-does-condensed-distance-matrix-work-pdist
+    ''' </summary>
+    ''' <param name="i"></param>
+    ''' <param name="j"></param>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
     Private Shared Function accessFunction(i As Integer, j As Integer, n As Integer) As Integer
         Return n * j - j * (j + 1) \ 2 + i - 1 - j
     End Function

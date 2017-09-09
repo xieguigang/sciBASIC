@@ -121,6 +121,11 @@ Namespace ComponentModel.Collection
             End If
         End Sub
 
+        Public Sub Clear()
+            Call maps.Clear()
+            Call index.Clear()
+        End Sub
+
         ''' <summary>
         ''' Display the input source sequence.
         ''' </summary>

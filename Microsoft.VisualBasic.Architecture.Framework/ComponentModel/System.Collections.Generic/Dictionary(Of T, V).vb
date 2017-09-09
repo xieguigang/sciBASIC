@@ -242,12 +242,20 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
         Return source.ToDictionary
     End Operator
 
+    Public Shared Widening Operator CType(table As Dictionary(Of String, V)) As Dictionary(Of V)
+        Return New Dictionary(Of V)(table)
+    End Operator
+
     Public Shared Widening Operator CType(source As V()) As Dictionary(Of V)
         Return source.ToDictionary
     End Operator
 
     Public Shared Narrowing Operator CType(source As Dictionary(Of V)) As List(Of V)
         Return New List(Of V)(source.Values)
+    End Operator
+
+    Public Shared Narrowing Operator CType(table As Dictionary(Of V)) As Dictionary(Of String, V)
+        Return New Dictionary(Of String, V)(table)
     End Operator
 
     ''' <summary>
