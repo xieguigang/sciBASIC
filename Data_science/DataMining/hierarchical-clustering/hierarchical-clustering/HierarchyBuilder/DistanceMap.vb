@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 
 Namespace Hierarchy
@@ -40,15 +41,16 @@ Namespace Hierarchy
     Public Class DistanceMap
 
         Private pairTable As Dictionary(Of String, Item)
-        Private data As PriorityQueue(Of Item)
+        Private data As PriorityQueueTable(Of Item)
 
-        Private Class Item : Implements IComparable, IComparable(Of Item)
+        Private Class Item : Implements IComparable, IComparable(Of Item), IReadOnlyId
 
             Private ReadOnly outerInstance As DistanceMap
 
             Friend ReadOnly pair As HierarchyTreeNode
-            Friend ReadOnly hash As String
             Friend removed As Boolean = False
+
+            Public ReadOnly Property hash As String Implements IReadOnlyId.Identity
 
             Friend Sub New(outerInstance As DistanceMap, p As HierarchyTreeNode)
                 Me.outerInstance = outerInstance
@@ -164,5 +166,4 @@ Namespace Hierarchy
             Return data.ToString()
         End Function
     End Class
-
 End Namespace

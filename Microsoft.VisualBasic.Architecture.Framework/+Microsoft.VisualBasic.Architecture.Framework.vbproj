@@ -542,6 +542,7 @@
     <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileTable.vb" />
     <Compile Include="ComponentModel\SingletonHolder.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueueTable.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
