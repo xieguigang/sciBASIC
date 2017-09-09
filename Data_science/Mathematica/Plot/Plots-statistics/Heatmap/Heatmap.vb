@@ -100,6 +100,7 @@ Namespace Heatmap
                              Optional drawScaleMethod As DrawElements = DrawElements.Cols,
                              Optional drawLabels As DrawElements = DrawElements.Both,
                              Optional drawDendrograms As DrawElements = DrawElements.Rows,
+                             Optional drawClass As DrawElements = DrawElements.Cols,
                              Optional dendrogramLayout$ = "200,200",
                              Optional rowLabelfontStyle$ = CSSFont.Win7Normal,
                              Optional colLabelFontStyle$ = CSSFont.Win7LargerBold,
@@ -191,7 +192,7 @@ Namespace Heatmap
 
             Return __plotInterval(
                 plotInternal, array,
-                rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject, logTransform, drawScaleMethod, drawLabels, drawDendrograms, dlayout,
+                rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject, logTransform, drawScaleMethod, drawLabels, drawDendrograms, drawClass, dlayout,
                 reverseClrSeq, customColors.GetBrushes, mapLevels, mapName,
                 size.SizeParser, margin, bg,
                 legendTitle, legendFont, Nothing,

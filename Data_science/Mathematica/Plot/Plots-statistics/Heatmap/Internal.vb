@@ -37,10 +37,25 @@ Namespace Heatmap
 
     End Class
 
+    ''' <summary>
+    ''' Draw a specific heatmap element
+    ''' </summary>
     Public Enum DrawElements As Byte
+        ''' <summary>
+        ''' Draw nothing
+        ''' </summary>
         None = 0
+        ''' <summary>
+        ''' Only draw the heatmap element on matrix row
+        ''' </summary>
         Rows = 2
+        ''' <summary>
+        ''' Only draw the heatmap element on the column
+        ''' </summary>
         Cols = 4
+        ''' <summary>
+        ''' Draw both row and column heatmap elements
+        ''' </summary>
         Both = 8
     End Enum
 
@@ -162,6 +177,7 @@ Namespace Heatmap
                                        scaleMethod As DrawElements,
                                        drawLabels As DrawElements,
                                        drawDendrograms As DrawElements,
+                                       drawClass As DrawElements,
                                        dendrogramLayout As (A%, B%),
                                        reverseClrSeq As Boolean,
                                        Optional colors As SolidBrush() = Nothing,
