@@ -92,7 +92,7 @@ Namespace Heatmap
                              Optional customColors As Color() = Nothing,
                              Optional reverseClrSeq As Boolean = False,
                              Optional mapLevels% = 100,
-                             Optional mapName$ = ColorMap.PatternJet,
+                             Optional mapName$ = ColorBrewer.DivergingSchemes.RdYlBu11,
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
@@ -148,7 +148,10 @@ Namespace Heatmap
                                 If(level% > colors.Length - 1,
                                     colors.Length - 1,
                                     level))
-                            Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
+                            Dim rect As New RectangleF With {
+                                .Location = New PointF(args.left, args.top),
+                                .Size = blockSize
+                            }
 #If DEBUG Then
                             ' Call $"{level} -> {b.Color.ToString}".__DEBUG_ECHO
 #End If
