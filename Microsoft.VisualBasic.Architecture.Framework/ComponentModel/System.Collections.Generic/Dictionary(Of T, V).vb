@@ -254,6 +254,10 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
         Return New List(Of V)(source.Values)
     End Operator
 
+    Public Shared Narrowing Operator CType(table As Dictionary(Of V)) As Dictionary(Of String, V)
+        Return New Dictionary(Of String, V)(table)
+    End Operator
+
     ''' <summary>
     ''' Get value by key.
     ''' </summary>
