@@ -57,6 +57,19 @@ Namespace Hierarchy
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(links As IEnumerable(Of HierarchyLink))
+            For Each x In links
+                If Not linkTable.ContainsKey(x.HashKey) Then
+                    Call linkTable.Add(x.HashKey, x)
+                End If
+            Next
+
+            data = New PriorityQueue(Of HierarchyLink)(links)
+        End Sub
+
         Public Function ToList() As IList(Of HierarchyTreeNode)
             Dim l As IList(Of HierarchyTreeNode) = New List(Of HierarchyTreeNode)
             For Each clusterPair As HierarchyLink In data

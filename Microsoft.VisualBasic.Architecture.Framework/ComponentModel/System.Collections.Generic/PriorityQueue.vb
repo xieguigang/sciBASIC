@@ -83,6 +83,14 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(source As IEnumerable(Of T))
+            list = source.ToList
+            list.Sort()
+        End Sub
+
         Public Overridable Sub Enqueue(queueItem As T)
             Call list.Add(queueItem)
             Call list.Sort()
