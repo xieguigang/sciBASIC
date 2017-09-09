@@ -1057,25 +1057,15 @@ Namespace Math
         Public Function DivRem(a As Integer, b As Integer, ByRef result As Integer) As Integer
             Return sys.DivRem(a, b, result)
         End Function
-        '
-        ' Summary:
-        '     Rounds a double-precision floating-point value to a specified number of fractional
-        '     digits.
-        '
-        ' Parameters:
-        '   value:
-        '     A double-precision floating-point number to be rounded.
-        '
-        '   digits:
-        '     The number of fractional digits in the return value.
-        '
-        ' Returns:
-        '     The number nearest to value that contains a number of fractional digits equal
-        '     to digits.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentOutOfRangeException:
-        '     digits is less than 0 or greater than 15.
+
+        ''' <summary>
+        ''' Rounds a double-precision floating-point value to a specified number of fractional
+        ''' digits.
+        ''' </summary>
+        ''' <param name="value">A double-precision floating-point number to be rounded.</param>
+        ''' <param name="digits">The number of fractional digits in the return value.</param>
+        ''' <returns>The number nearest to value that contains a number of fractional digits equal
+        ''' to digits.</returns>
         Public Function Round(value As Double, digits As Integer) As Double
             Return sys.Round(value, digits)
         End Function

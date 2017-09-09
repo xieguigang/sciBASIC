@@ -72,6 +72,18 @@ Namespace ComponentModel.DataSourceModel
         End Property
 
         ''' <summary>
+        ''' Returns object gettype
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ValueType As Type
+            Get
+                ' 假若类型参数T是基类型的话，则直接使用GetType(T)只能够得到基类型的信息，无法得到当前的实现类型的信息
+                ' 故而要在这里使用对象自身的GetType方法来获取真正的类型信息
+                Return Value.GetType
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Creates a object bind with a specific <see cref="Name"/>.
         ''' </summary>
         ''' <param name="name"></param>

@@ -67,7 +67,7 @@ Namespace CommandLine.InteropService.SharedORM
 
             Dim model As New CommandLine With {
                 .Name = name,
-                .__listArguments = params.AsList,
+                .__arguments = params.AsList,
                 .BoolFlags = booleans,
                 ._CLICommandArgvs = usage
             }

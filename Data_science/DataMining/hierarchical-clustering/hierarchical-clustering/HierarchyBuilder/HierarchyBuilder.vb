@@ -54,6 +54,10 @@ Namespace Hierarchy
         Public ReadOnly Property Distances As DistanceMap
         Public ReadOnly Property Clusters As List(Of Cluster)
 
+        ''' <summary>
+        ''' 当<see cref="Clusters"/>的数量最终只有一个节点的时候，就认为完成了层次聚类操作了
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property TreeComplete As Boolean
             Get
                 Return Clusters.Count = 1
@@ -86,7 +90,7 @@ Namespace Hierarchy
             Do While ((Not TreeComplete)) AndAlso (Distances.minDist() <= threshold)
                 'System.out.println("Cluster Distances: " + distances.toString());
                 'System.out.println("Cluster Size: " + clusters.size());
-                agglomerate(linkageStrategy)
+                Agglomerate(linkageStrategy)
             Loop
 
             'System.out.println("Final MinDistance: " + distances.minDist());
@@ -94,47 +98,48 @@ Namespace Hierarchy
             Return Clusters
         End Function
 
-        Public Sub agglomerate(linkageStrategy As LinkageStrategy)
+        Public Sub Agglomerate(linkageStrategy As LinkageStrategy)
             Dim minDistLink As HierarchyTreeNode = Distances.removeFirst()
 
-            If minDistLink IsNot Nothing Then
-                Clusters.Remove(minDistLink.rCluster())
-                Clusters.Remove(minDistLink.lCluster())
+            If minDistLink Is Nothing Then Return
 
-                Dim oldClusterL As Cluster = minDistLink.lCluster()
-                Dim oldClusterR As Cluster = minDistLink.rCluster()
-                Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
+            Clusters.Remove(minDistLink.rCluster())
+            Clusters.Remove(minDistLink.lCluster())
 
-                For Each iClust As Cluster In Clusters
-                    Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
-                    Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
-                    Dim newLinkage As New HierarchyTreeNode With {
-                        .lCluster = iClust,
-                        .rCluster = newCluster
-                    }
-                    Dim distanceValues As New List(Of Distance)
+            Dim oldClusterL As Cluster = minDistLink.lCluster()
+            Dim oldClusterR As Cluster = minDistLink.rCluster()
+            Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
 
-                    If link1 IsNot Nothing Then
-                        Dim distVal As Double = link1.LinkageDistance
-                        Dim weightVal As Double = link1.GetOtherCluster(iClust).WeightValue
-                        distanceValues.Add(New Distance(distVal, weightVal))
-                        Distances.remove(link1)
-                    End If
-                    If link2 IsNot Nothing Then
-                        Dim distVal As Double = link2.LinkageDistance
-                        Dim weightVal As Double = link2.GetOtherCluster(iClust).WeightValue
-                        distanceValues.Add(New Distance(distVal, weightVal))
-                        Distances.remove(link2)
-                    End If
+            For Each iClust As Cluster In Clusters
+                Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
+                Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
+                Dim newLinkage As New HierarchyTreeNode With {
+                    .lCluster = iClust,
+                    .rCluster = newCluster
+                }
+                Dim distanceValues As New List(Of Distance)
 
-                    Dim newDistance As Distance = linkageStrategy.CalculateDistance(distanceValues)
+                If link1 IsNot Nothing Then
+                    Dim distVal As Double = link1.LinkageDistance
+                    Dim weightVal As Double = link1.GetOtherCluster(iClust).WeightValue
+                    distanceValues.Add(New Distance(distVal, weightVal))
+                    Distances.remove(link1)
+                End If
 
-                    newLinkage.LinkageDistance = newDistance.Distance
-                    Distances.add(newLinkage)
-                Next
+                If link2 IsNot Nothing Then
+                    Dim distVal As Double = link2.LinkageDistance
+                    Dim weightVal As Double = link2.GetOtherCluster(iClust).WeightValue
+                    distanceValues.Add(New Distance(distVal, weightVal))
+                    Distances.remove(link2)
+                End If
 
-                Call Clusters.Add(newCluster)
-            End If
+                Dim newDistance As Distance = linkageStrategy.CalculateDistance(distanceValues)
+
+                newLinkage.LinkageDistance = newDistance.Distance
+                Distances.add(newLinkage)
+            Next
+
+            Call Clusters.Add(newCluster)
         End Sub
 
         Private Function findByClusters(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode

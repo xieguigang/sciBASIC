@@ -29,16 +29,24 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Public Module PrintHelper
 
+    ''' <summary>
+    ''' Helper for print the cluster tree
+    ''' </summary>
+    ''' <param name="cluster"></param>
+    ''' <param name="out">
+    ''' If this output pointer is nothing, then by default is print onto the <see cref="Console.OpenStandardOutput"/>
+    ''' </param>
     <Extension> Public Sub Print(cluster As Cluster, Optional out As StreamWriter = Nothing)
-        If out Is Nothing Then
-            out = New StreamWriter(Console.OpenStandardOutput)
-        End If
 
-        Call out.WriteLine(cluster.ToConsoleLine(indent:=Scan0))
-        Call out.Flush()
+        With out Or New StreamWriter(Console.OpenStandardOutput).AsDefault
+            Call .WriteLine(cluster.ToConsoleLine(indent:=Scan0))
+            Call .Flush()
+        End With
+
     End Sub
 
     <Extension>

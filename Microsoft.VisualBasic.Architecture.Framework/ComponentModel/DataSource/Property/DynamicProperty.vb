@@ -94,9 +94,16 @@ Namespace ComponentModel.DataSourceModel
             End Set
         End Property
 
-        Public Function TakeValues(keys$()) As T()
-            Return keys.Select(Function(s) Me(s)).ToArray
-        End Function
+        Default Public Overloads Property ItemValue(keys As IEnumerable(Of String)) As T()
+            Get
+                Return keys.Select(Function(s) Me(s)).ToArray
+            End Get
+            Set(value As T())
+                For Each key As SeqValue(Of String) In keys.SeqIterator
+                    Me(key.value) = value(key)
+                Next
+            End Set
+        End Property
 
         ''' <summary>
         ''' Determines whether the System.Collections.Generic.Dictionary`2 contains the specified
