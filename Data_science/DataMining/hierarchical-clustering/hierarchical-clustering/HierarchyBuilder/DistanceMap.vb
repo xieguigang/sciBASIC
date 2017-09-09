@@ -41,17 +41,33 @@ Namespace Hierarchy
         Dim linkTable As New Dictionary(Of String, HierarchyLink)
         Dim data As New PriorityQueue(Of HierarchyLink)
 
+        ''' <summary>
+        ''' Peak into the minimum distance
+        ''' @return
+        ''' </summary>
+        Public ReadOnly Property MinimalDistance() As Double
+            Get
+                Dim peek As HierarchyLink = data.Peek()
+
+                If peek IsNot Nothing Then
+                    Return peek.Tree.LinkageDistance
+                Else
+                    Return Nothing
+                End If
+            End Get
+        End Property
+
         Public Function ToList() As IList(Of HierarchyTreeNode)
             Dim l As IList(Of HierarchyTreeNode) = New List(Of HierarchyTreeNode)
             For Each clusterPair As HierarchyLink In data
-                l.Add(clusterPair.pair)
+                l.Add(clusterPair.Tree)
             Next
             Return l
         End Function
 
         Public Function FindByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Dim inCode As String = hashCodePair(c1, c2)
-            Return linkTable(inCode).pair
+            Return linkTable(inCode).Tree
         End Function
 
         Public Function RemoveFirst() As HierarchyTreeNode
@@ -64,7 +80,7 @@ Namespace Hierarchy
             If poll Is Nothing Then
                 Return Nothing
             Else
-                With poll.pair
+                With poll.Tree
                     Call linkTable.Remove(poll.HashKey)
                     Return .ref
                 End With
@@ -82,10 +98,10 @@ Namespace Hierarchy
         End Function
 
         Public Function Add(link As HierarchyTreeNode) As Boolean
-            Dim e As New HierarchyLink(Me, link)
+            Dim hlink As New HierarchyLink(link)
 
-            If linkTable.ContainsKey(e.HashKey) Then
-                Dim existingItem As HierarchyLink = linkTable(e.HashKey)
+            If linkTable.ContainsKey(hlink.HashKey) Then
+                Dim existingItem As HierarchyLink = linkTable(hlink.HashKey)
 #If DEBUG Then
                 Call Console _
                     .Error _
@@ -93,28 +109,14 @@ Namespace Hierarchy
 #End If
                 Return False
             Else
-                linkTable(e.HashKey) = e
-                data.Enqueue(e)
+                linkTable(hlink.HashKey) = hlink
+                data.Enqueue(hlink)
                 Return True
             End If
         End Function
 
-        ''' <summary>
-        ''' Peak into the minimum distance
-        ''' @return
-        ''' </summary>
-        Public Function minDist() As Double
-            Dim peek As HierarchyLink = data.Peek()
-
-            If peek IsNot Nothing Then
-                Return peek.pair.LinkageDistance
-            Else
-                Return Nothing
-            End If
-        End Function
-
         Public Overloads Function ToString() As String
-            Return data.ToString()
+            Return $"Have {linkTable.Count} linkage with minimal distance {MinimalDistance}"
         End Function
     End Class
 End Namespace

@@ -84,7 +84,7 @@ Namespace Hierarchy
         ''' <param name="threshold">
         ''' @return </param>
         Public Function flatAgg(linkageStrategy As LinkageStrategy, threshold As Double) As IList(Of Cluster)
-            Do While ((Not TreeComplete)) AndAlso (Distances.minDist() <= threshold)
+            Do While ((Not TreeComplete)) AndAlso (Distances.MinimalDistance() <= threshold)
                 'System.out.println("Cluster Distances: " + distances.toString());
                 'System.out.println("Cluster Size: " + clusters.size());
                 Agglomerate(linkageStrategy)
@@ -102,22 +102,20 @@ Namespace Hierarchy
         Public Sub Agglomerate(linkageStrategy As LinkageStrategy)
             Dim minDistLink As HierarchyTreeNode = Distances.RemoveFirst()
 
-            If minDistLink Is Nothing Then Return
+            If minDistLink Is Nothing Then
+                Return
+            End If
 
-            Clusters.Remove(minDistLink.rCluster())
-            Clusters.Remove(minDistLink.lCluster())
+            Clusters.Remove(minDistLink.Right())
+            Clusters.Remove(minDistLink.Left())
 
-            Dim oldClusterL As Cluster = minDistLink.lCluster()
-            Dim oldClusterR As Cluster = minDistLink.rCluster()
+            Dim oldClusterL As Cluster = minDistLink.Left()
+            Dim oldClusterR As Cluster = minDistLink.Right()
             Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
 
             For Each iClust As Cluster In Clusters
                 Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
                 Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
-                Dim newLinkage As New HierarchyTreeNode With {
-                    .lCluster = iClust,
-                    .rCluster = newCluster
-                }
                 Dim distanceValues As New List(Of Distance)
 
                 If link1 IsNot Nothing Then
@@ -134,10 +132,15 @@ Namespace Hierarchy
                     Distances.Remove(link2)
                 End If
 
-                Dim newDistance As Distance = linkageStrategy.CalculateDistance(distanceValues)
+                Dim newLinkage As New HierarchyTreeNode With {
+                    .Left = iClust,
+                    .Right = newCluster,
+                    .LinkageDistance = linkageStrategy _
+                        .CalculateDistance(distanceValues) _
+                        .Distance
+                }
 
-                newLinkage.LinkageDistance = newDistance.Distance
-                Distances.Add(newLinkage)
+                Call Distances.Add(newLinkage)
             Next
 
             Call Clusters.Add(newCluster)

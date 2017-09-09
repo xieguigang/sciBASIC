@@ -121,8 +121,8 @@ Public Class DefaultClusteringAlgorithm
                 Dim lCluster As Cluster = clusters(col)
                 Dim rCluster As Cluster = clusters(row)
                 link.LinkageDistance = distances(col)(row)
-                link.lCluster = (lCluster)
-                link.rCluster = (rCluster)
+                link.Left = (lCluster)
+                link.Right = (rCluster)
 
                 linkages.Add(link)
             Next
