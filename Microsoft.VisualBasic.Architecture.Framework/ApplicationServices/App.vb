@@ -512,16 +512,18 @@ Public Module App
     ''' <param name="s$"></param>
     ''' <param name="args"></param>
     Public Sub println(s$, ParamArray args As Object())
-        If args.IsNullOrEmpty Then
-            Call Console.WriteLine(s)
-        Else
-            Dim out As String = sprintf(s, args)
-            Call Console.WriteLine(out)
+        If Not args.IsNullOrEmpty Then
+            s = sprintf(s, args)
         End If
+
+        Call InnerQueue.AddToQueue(
+            Sub()
+                Call Console.WriteLine(s)
+            End Sub)
     End Sub
 
     Public Sub println()
-        Call Console.WriteLine()
+        Call InnerQueue.AddToQueue(AddressOf Console.WriteLine)
     End Sub
 
     Public Declare Function SetProcessWorkingSetSize Lib "kernel32.dll" (process As IntPtr, minimumWorkingSetSize As Integer, maximumWorkingSetSize As Integer) As Integer
