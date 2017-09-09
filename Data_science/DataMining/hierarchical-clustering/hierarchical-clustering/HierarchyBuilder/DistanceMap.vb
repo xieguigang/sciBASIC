@@ -65,7 +65,7 @@ Namespace Hierarchy
                 Return Nothing
             Else
                 With poll.pair
-                    Call linkTable.Remove(poll.hash)
+                    Call linkTable.Remove(poll.HashKey)
                     Return .ref
                 End With
             End If
@@ -84,12 +84,16 @@ Namespace Hierarchy
         Public Function Add(link As HierarchyTreeNode) As Boolean
             Dim e As New HierarchyLink(Me, link)
 
-            If linkTable.ContainsKey(e.hash) Then
-                Dim existingItem As HierarchyLink = linkTable(e.hash)
-                Console.Error.WriteLine("hashCode = " & existingItem.hash & " adding redundant link:" & link.ToString & " (exist:" & existingItem.ToString & ")")
+            If linkTable.ContainsKey(e.HashKey) Then
+                Dim existingItem As HierarchyLink = linkTable(e.HashKey)
+#If DEBUG Then
+                Call Console _
+                    .Error _
+                    .WriteLine("hashCode = " & existingItem.HashKey & " adding redundant link:" & link.ToString & " (exist:" & existingItem.ToString & ")")
+#End If
                 Return False
             Else
-                linkTable(e.hash) = e
+                linkTable(e.HashKey) = e
                 data.Enqueue(e)
                 Return True
             End If

@@ -10,12 +10,12 @@ Namespace Hierarchy
         Friend ReadOnly pair As HierarchyTreeNode
         Friend removed As Boolean = False
 
-        Public ReadOnly Property hash As String Implements IReadOnlyId.Identity
+        Public ReadOnly Property HashKey As String Implements IReadOnlyId.Identity
 
         Friend Sub New(outerInstance As DistanceMap, p As HierarchyTreeNode)
             Me.outerInstance = outerInstance
             pair = p
-            hash = p.hashCodePair
+            HashKey = p.hashCodePair
         End Sub
 
         Public Function compareTo(o As HierarchyLink) As Integer Implements IComparable(Of HierarchyLink).CompareTo
@@ -23,7 +23,7 @@ Namespace Hierarchy
         End Function
 
         Public Overrides Function ToString() As String
-            Return hash
+            Return HashKey
         End Function
 
         Private Function __compareTo(obj As Object) As Integer Implements IComparable.CompareTo
