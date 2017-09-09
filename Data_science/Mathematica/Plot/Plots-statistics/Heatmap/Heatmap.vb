@@ -100,7 +100,7 @@ Namespace Heatmap
                              Optional drawScaleMethod As DrawElements = DrawElements.Cols,
                              Optional drawLabels As DrawElements = DrawElements.Both,
                              Optional drawDendrograms As DrawElements = DrawElements.Rows,
-                             Optional drawClass As DrawElements = DrawElements.Cols,
+                             Optional drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)) = Nothing,
                              Optional dendrogramLayout$ = "200,200",
                              Optional rowLabelfontStyle$ = CSSFont.Win7Normal,
                              Optional colLabelFontStyle$ = CSSFont.Win7LargerBold,

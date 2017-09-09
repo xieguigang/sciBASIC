@@ -177,7 +177,7 @@ Namespace Heatmap
                                        scaleMethod As DrawElements,
                                        drawLabels As DrawElements,
                                        drawDendrograms As DrawElements,
-                                       drawClass As DrawElements,
+                                       drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)),
                                        dendrogramLayout As (A%, B%),
                                        reverseClrSeq As Boolean,
                                        Optional colors As SolidBrush() = Nothing,
@@ -264,6 +264,10 @@ Namespace Heatmap
                     Else
                         layoutA = 0
                     End If
+                    If Not drawClass.rowClass.IsNullOrEmpty Then
+                        layoutA += dendrogramLayout.A / 3
+                    End If
+
                     ' 有列的聚类树
                     If drawDendrograms.HasFlag(DrawElements.Cols) Then
                         ' B
@@ -273,6 +277,22 @@ Namespace Heatmap
                     Else
                         layoutB = 0
                     End If
+                    If Not drawClass.colClass.IsNullOrEmpty Then
+                        layoutB += dendrogramLayout.B / 3
+                    End If
+
+                    Dim interval% = 10  ' 层次聚类树与热图矩阵之间的距离
+
+                    left += interval
+                    top += interval
+
+                    Dim matrixPlotRegion As New Rectangle With {
+                        .Location = New Point(left, top),
+                        .Size = New Size With {
+                            .Width = dw - interval,
+                            .Height = dh - interval
+                        }
+                    }
 
                     ' 2. 然后才能够进行绘图
                     If drawDendrograms.HasFlag(DrawElements.Rows) Then
@@ -317,13 +337,6 @@ Namespace Heatmap
                     Else
                         colKeys = array.PropertyNames
                     End If
-
-                    left += 10
-
-                    Dim matrixPlotRegion As New Rectangle With {
-                        .Location = New Point(left, top),
-                        .Size = New Size(dw, dh)
-                    }
 
                     dw /= keys.Length
                     dh /= array.Length
