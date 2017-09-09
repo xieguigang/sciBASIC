@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 Public Class DefaultClusteringAlgorithm
     Implements ClusteringAlgorithm
 
-    Public Function performClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performClustering
+    Public Function performClustering(distances As Double()(), clusterNames$(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performClustering
 
         Call checkArguments(distances, clusterNames, linkageStrategy)
 
@@ -67,7 +67,7 @@ Public Class DefaultClusteringAlgorithm
         Return builder.RootCluster
     End Function
 
-    Public Function performFlatClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy, threshold As Double) As IList(Of Cluster) Implements ClusteringAlgorithm.performFlatClustering
+    Public Function performFlatClustering(distances As Double()(), clusterNames$(), linkageStrategy As LinkageStrategy, threshold As Double) As IList(Of Cluster) Implements ClusteringAlgorithm.performFlatClustering
 
         Call checkArguments(distances, clusterNames, linkageStrategy)
 
