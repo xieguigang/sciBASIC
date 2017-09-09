@@ -124,7 +124,7 @@ Public Class DefaultClusteringAlgorithm
                 link.lCluster = (lCluster)
                 link.rCluster = (rCluster)
 
-                linkages.add(link)
+                linkages.Add(link)
             Next
         Next
 

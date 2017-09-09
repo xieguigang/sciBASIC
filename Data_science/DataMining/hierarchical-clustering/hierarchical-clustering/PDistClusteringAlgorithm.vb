@@ -100,7 +100,7 @@ Public Class PDistClusteringAlgorithm
                 link.LinkageDistance = d
                 link.lCluster = (cluster_col)
                 link.rCluster = (clusters(row))
-                linkages.add(link)
+                linkages.Add(link)
             Next row
         Next col
         Return linkages

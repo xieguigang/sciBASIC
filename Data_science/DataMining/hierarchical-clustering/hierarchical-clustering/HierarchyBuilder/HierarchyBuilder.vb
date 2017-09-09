@@ -98,8 +98,12 @@ Namespace Hierarchy
             Return Clusters
         End Function
 
+        ''' <summary>
+        ''' 进行层次聚类的迭代计算操作，主要的限速步骤
+        ''' </summary>
+        ''' <param name="linkageStrategy"></param>
         Public Sub Agglomerate(linkageStrategy As LinkageStrategy)
-            Dim minDistLink As HierarchyTreeNode = Distances.removeFirst()
+            Dim minDistLink As HierarchyTreeNode = Distances.RemoveFirst()
 
             If minDistLink Is Nothing Then Return
 
@@ -123,20 +127,20 @@ Namespace Hierarchy
                     Dim distVal As Double = link1.LinkageDistance
                     Dim weightVal As Double = link1.GetOtherCluster(iClust).WeightValue
                     distanceValues.Add(New Distance(distVal, weightVal))
-                    Distances.remove(link1)
+                    Distances.Remove(link1)
                 End If
 
                 If link2 IsNot Nothing Then
                     Dim distVal As Double = link2.LinkageDistance
                     Dim weightVal As Double = link2.GetOtherCluster(iClust).WeightValue
                     distanceValues.Add(New Distance(distVal, weightVal))
-                    Distances.remove(link2)
+                    Distances.Remove(link2)
                 End If
 
                 Dim newDistance As Distance = linkageStrategy.CalculateDistance(distanceValues)
 
                 newLinkage.LinkageDistance = newDistance.Distance
-                Distances.add(newLinkage)
+                Distances.Add(newLinkage)
             Next
 
             Call Clusters.Add(newCluster)
