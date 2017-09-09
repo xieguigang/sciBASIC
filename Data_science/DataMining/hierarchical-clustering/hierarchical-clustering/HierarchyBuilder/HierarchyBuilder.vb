@@ -63,13 +63,28 @@ Namespace Hierarchy
 
         Const NoRoot$ = "No root available"
 
+        ''' <summary>
+        ''' Gets the root cluster of the hierarchy tree
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property RootCluster As Cluster
             Get
                 If Not TreeComplete Then
                     Throw New EvaluateException(NoRoot)
                 Else
-                    Return Clusters(0)
+                    Return Me.First
                 End If
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The first element in this <see cref="HierarchyBuilder"/>, 
+        ''' if <see cref="TreeComplete"/> then this first element is the root cluster.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property First As Cluster
+            Get
+                Return Clusters(Scan0)
             End Get
         End Property
 
