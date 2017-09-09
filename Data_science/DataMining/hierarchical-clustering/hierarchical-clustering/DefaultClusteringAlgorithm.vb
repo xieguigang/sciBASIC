@@ -26,7 +26,7 @@
 
 #End Region
 
-Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 Imports Microsoft.VisualBasic.Linq
 
@@ -102,7 +102,7 @@ Public Class DefaultClusteringAlgorithm
 
         ' Setup model 
         Dim clusters As IList(Of Cluster) = createClusters(clusterNames, weights)
-        Dim linkages As DistanceMap = createLinkages(distances, clusters)
+        Dim linkages As DistanceMap = Time(Function() createLinkages(distances, clusters))
 
         ' Process 
         Dim builder As New HierarchyBuilder(clusters, linkages)
@@ -133,26 +133,34 @@ Public Class DefaultClusteringAlgorithm
             Return linkages
         Else
             ' 当数量很大的时候，这里也是一个限速步骤，需要使用并行
-            Dim links = clusters.Count _
-                .Sequence _
-                .AsParallel _
-                .Select(Function(col)
-                            Dim list As New List(Of HierarchyTreeNode)
+            Dim LQuery = From c As SeqValue(Of Cluster)
+                         In clusters.SeqIterator.AsParallel
+                         Let col As Integer = c.i
+                         Let lCluster As Cluster = c.value
+                         Let factory =
+                             Function()
+                                 Dim list As New List(Of HierarchyTreeNode)
+                                 Dim n = clusters.Count
+                                 Dim copy = clusters.ToArray
 
-                            For row As Integer = col + 1 To clusters.Count - 1
-                                Dim link As New HierarchyTreeNode
-                                Dim lCluster As Cluster = clusters(col)
-                                Dim rCluster As Cluster = clusters(row)
-                                link.LinkageDistance = distances(col)(row)
-                                link.Left = (lCluster)
-                                link.Right = (rCluster)
+                                 For row As Integer = col + 1 To n - 1
+                                     Dim rCluster As Cluster = copy(row)
+                                     Dim link As New HierarchyTreeNode With {
+                                         .LinkageDistance = distances(col)(row),
+                                         .Left = (lCluster),
+                                         .Right = (rCluster)
+                                     }
 
-                                Call list.Add(link)
-                            Next
+                                     Call list.Add(link)
+                                 Next
 
-                            Return list
-                        End Function) _
-                .IteratesALL
+                                 Return list
+                             End Function
+                         Select factory()
+
+            Dim links = LQuery _
+                .IteratesALL _
+                .ToArray
 
             Return New DistanceMap(links)
         End If

@@ -60,14 +60,16 @@ Namespace Hierarchy
         Sub New()
         End Sub
 
-        Sub New(links As IEnumerable(Of HierarchyLink))
+        Sub New(links As IEnumerable(Of HierarchyTreeNode))
             For Each x In links
-                If Not linkTable.ContainsKey(x.HashKey) Then
-                    Call linkTable.Add(x.HashKey, x)
+                Dim link As New HierarchyLink(x)
+
+                If Not linkTable.ContainsKey(link.HashKey) Then
+                    Call linkTable.Add(link.HashKey, link)
                 End If
             Next
 
-            data = New PriorityQueue(Of HierarchyLink)(links)
+            data = New PriorityQueue(Of HierarchyLink)(linkTable.Values)
         End Sub
 
         Public Function ToList() As IList(Of HierarchyTreeNode)
@@ -110,7 +112,11 @@ Namespace Hierarchy
             Return True
         End Function
 
-        Public Function Add(link As HierarchyTreeNode) As Boolean
+        Public Sub Sort()
+            Call data.Sort()
+        End Sub
+
+        Public Function Add(link As HierarchyTreeNode, Optional direct As Boolean = False) As Boolean
             Dim hlink As New HierarchyLink(link)
 
             If linkTable.ContainsKey(hlink.HashKey) Then
@@ -122,8 +128,14 @@ Namespace Hierarchy
 #End If
                 Return False
             Else
-                linkTable(hlink.HashKey) = hlink
-                data.Enqueue(hlink)
+                Call linkTable.Add(hlink.HashKey, hlink)
+
+                If Not direct Then
+                    Call data.Enqueue(hlink)
+                Else
+                    Call data.Add(hlink)
+                End If
+
                 Return True
             End If
         End Function

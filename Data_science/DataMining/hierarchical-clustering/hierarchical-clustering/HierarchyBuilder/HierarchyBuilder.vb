@@ -140,9 +140,10 @@ Namespace Hierarchy
                         .Distance
                 }
 
-                Call Distances.Add(newLinkage)
+                Call Distances.Add(newLinkage, direct:=True)
             Next
 
+            Call Distances.Sort()
             Call Clusters.Add(newCluster)
         End Sub
 

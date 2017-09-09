@@ -96,6 +96,18 @@ Namespace ComponentModel.Collection
             Call list.Sort()
         End Sub
 
+        ''' <summary>
+        ''' Add without sort
+        ''' </summary>
+        ''' <param name="x"></param>
+        Public Sub Add(x As T)
+            Call list.Add(x)
+        End Sub
+
+        Public Sub Sort()
+            Call list.Sort()
+        End Sub
+
         Public Overridable Sub Clear()
             Call list.Clear()
         End Sub
