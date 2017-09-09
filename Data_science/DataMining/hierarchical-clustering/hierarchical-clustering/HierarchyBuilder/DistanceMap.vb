@@ -38,13 +38,8 @@ Namespace Hierarchy
     ''' </summary>
     Public Class DistanceMap
 
-        Dim linkTable As Dictionary(Of String, HierarchyLink)
-        Dim data As PriorityQueueTable(Of HierarchyLink)
-
-        Public Sub New()
-            data = New PriorityQueueTable(Of HierarchyLink)
-            linkTable = New Dictionary(Of String, HierarchyLink)
-        End Sub
+        Dim linkTable As New Dictionary(Of String, HierarchyLink)
+        Dim data As New PriorityQueue(Of HierarchyLink)
 
         Public Function ToList() As IList(Of HierarchyTreeNode)
             Dim l As IList(Of HierarchyTreeNode) = New List(Of HierarchyTreeNode)

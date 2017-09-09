@@ -7,17 +7,17 @@ Module PriorityQueueTest
     Sub Main()
 
         Dim q As New PriorityQueue(Of XXX)
-        Dim h As New PriorityQueueTable(Of XXX)
+        '   Dim h As New PriorityQueueTable(Of XXX)
 
         Call Time(Sub()
                       Call Test(q)
                   End Sub)
 
-        Call "table......................".__INFO_ECHO
+        'Call "table......................".__INFO_ECHO
 
-        Call Time(Sub()
-                      Call Test(h)
-                  End Sub)
+        'Call Time(Sub()
+        '              Call Test(h)
+        '          End Sub)
 
         Pause()
     End Sub
