@@ -108,7 +108,7 @@ Namespace FileIO
                 file = writeNew()
             End If
 
-            Dim writer As New StreamWriter(file, encoding) With {
+            Dim writer As New StreamWriter(file, encoding Or UTF8) With {
                 .NewLine =
                 If(newLine Is Nothing OrElse newLine.Length = 0,
                 vbLf,
