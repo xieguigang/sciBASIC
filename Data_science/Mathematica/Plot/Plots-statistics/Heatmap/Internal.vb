@@ -15,6 +15,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Heatmap
 
@@ -299,13 +300,15 @@ Namespace Heatmap
                         .ClassTable = [class]
                     }
                 End Function
-            Dim DATA#() = array _
+            Dim DATArange As DoubleRange = array _
                 .Select(Function(x) x.Properties.Values) _
                 .IteratesALL _
                 .Join(min, max) _
                 .Distinct _
                 .ToArray
-            Dim ticks = AxisScalling.CreateAxisTicks(DATA, ticks:=5)
+            Dim ticks = DATArange.CreateAxisTicks(ticks:=5)
+
+            Call $"{DATArange.ToString} -> {ticks.GetJson}".__INFO_ECHO
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
