@@ -76,6 +76,6 @@ Module ZScorePlotTest
 
     Sub plotHeatmap()
         Dim csv$ = "D:\OneDrive\Report_soil\16s-Desktop\8.24\predictions_ko.L3.csv"
-        Call Heatmap.Heatmap.Plot(DataSet.LoadDataSet(csv)).Save(csv.TrimSuffix & ".png")
+        Call Heatmap.Heatmap.Plot(DataSet.LoadDataSet(csv), size:="3200,4500", drawScaleMethod:=Heatmap.DrawElements.Rows).Save(csv.TrimSuffix & ".png")
     End Sub
 End Module

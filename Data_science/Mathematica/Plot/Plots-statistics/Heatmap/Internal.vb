@@ -81,18 +81,29 @@ Namespace Heatmap
         ''' <param name="data"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
+        Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels#) As IEnumerable(Of DataSet)
             Dim levelRange As DoubleRange = {0R, levels}
             Return data _
                 .Select(Function(x)
                             Dim range As DoubleRange = x.Properties.Values.Range
-                            Return New DataSet With {
-                                .ID = x.ID,
-                                .Properties = x _
+                            Dim values As Dictionary(Of String, Double)
+
+                            If range.Length = 0 Then
+                                values = x.Properties _
+                                    .Keys _
+                                    .ToDictionary(Function(key) key,
+                                                  Function(key) levels)
+                            Else
+                                values = x _
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
                                                   Function(key) range.ScaleMapping(x(key), levelRange))
+                            End If
+
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = values
                             }
                         End Function)
         End Function
@@ -393,8 +404,10 @@ Namespace Heatmap
                     Else
                         rowKeys = array.Keys
 
-                        ' 没有绘制层次聚类树，但是行的class有值，则会绘制行的class legend
-                        Call g.DrawClass(rowKeys, drawClass.rowClass, matrixPlotRegion, True, dendrogramLayout.A, interval)
+                        If Not drawClass.rowClass.IsNullOrEmpty Then
+                            ' 没有绘制层次聚类树，但是行的class有值，则会绘制行的class legend
+                            Call g.DrawClass(rowKeys, drawClass.rowClass, matrixPlotRegion, True, dendrogramLayout.A, interval)
+                        End If
                     End If
 
                     If drawDendrograms.HasFlag(DrawElements.Cols) Then
@@ -407,8 +420,10 @@ Namespace Heatmap
                     Else
                         colKeys = array.PropertyNames
 
-                        ' 没有绘制层次聚类树，但是列的class有值，则会绘制列的class legend
-                        Call g.DrawClass(colKeys, drawClass.colClass, matrixPlotRegion, False, dendrogramLayout.B, interval)
+                        If Not drawClass.colClass.IsNullOrEmpty Then
+                            ' 没有绘制层次聚类树，但是列的class有值，则会绘制列的class legend
+                            Call g.DrawClass(colKeys, drawClass.colClass, matrixPlotRegion, False, dendrogramLayout.B, interval)
+                        End If
                     End If
 
                     Dim levels As New Dictionary(Of String, DataSet)
