@@ -104,7 +104,8 @@ Module ZScorePlotTest
                                       min:=0,
                                       colLabelFontStyle:=CSSFont.Win7LittleLarge,
                                       mapName:=ColorBrewer.SequentialSchemes.YlGnBu9,
-                                      drawClass:=(Nothing, colors)).Save(csv.TrimSuffix & ".png")
+                                      drawClass:=(Nothing, colors),
+                                      mainTitle:="predictions_ko.L3").Save(csv.TrimSuffix & ".png")
         End With
 
         End
