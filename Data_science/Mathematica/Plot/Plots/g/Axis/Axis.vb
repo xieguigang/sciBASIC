@@ -327,7 +327,7 @@ Namespace Graphic.Axis
             Dim ZERO As New Point(padding.Left + offset.X, Y)                       ' 坐标轴原点
             Dim right As New Point(size.Width - padding.Right + offset.X, Y)        ' X轴
             Dim sx = scaler.XScaler(size, padding)
-            Dim d! = If(overridesTickLine <= 0, padding.Bottom * 0.18, overridesTickLine)
+            Dim d! = If(overridesTickLine <= 0, padding.Bottom * 0.1, overridesTickLine)
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
