@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a192a5998f88a2d7fb2ae618a881c2c, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\RSyntax\Vectors\BooleanVector.vb"
+﻿#Region "Microsoft.VisualBasic::9a192a5998f88a2d7fb2ae618a881c2c, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\BooleanVector.vb"
 
     ' Author:
     ' 
@@ -71,7 +71,7 @@ Namespace SyntaxAPI.Vectors
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        Public Shared Operator &(x As Boolean, y As BooleanVector) As BooleanVector
+        Public Overloads Shared Operator &(x As Boolean, y As BooleanVector) As BooleanVector
             Return New BooleanVector(From b As Boolean In y Select b AndAlso x)
         End Operator
 
@@ -81,7 +81,7 @@ Namespace SyntaxAPI.Vectors
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        Public Shared Operator &(x As BooleanVector, y As BooleanVector) As BooleanVector
+        Public Overloads Shared Operator &(x As BooleanVector, y As BooleanVector) As BooleanVector
             Return New BooleanVector(From i As SeqValue(Of Boolean) In x.SeqIterator Select i.value AndAlso y(i))
         End Operator
 

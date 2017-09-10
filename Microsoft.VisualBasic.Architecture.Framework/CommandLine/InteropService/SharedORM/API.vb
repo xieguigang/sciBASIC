@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcdeddae476c92fc4895b5b6129797a8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\SharedORM\API.vb"
+﻿#Region "Microsoft.VisualBasic::9847edce9549879588136c531769a7e9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\SharedORM\API.vb"
 
     ' Author:
     ' 
@@ -67,7 +67,7 @@ Namespace CommandLine.InteropService.SharedORM
 
             Dim model As New CommandLine With {
                 .Name = name,
-                .__listArguments = params.AsList,
+                .__arguments = params.AsList,
                 .BoolFlags = booleans,
                 ._CLICommandArgvs = usage
             }
@@ -96,7 +96,7 @@ Namespace CommandLine.InteropService.SharedORM
             booleans = GetLogicalArguments(optionals, Nothing)
             out += optionals _
                 .CreateParameterValues(False, note:=NameOf(optionals)) _
-                .As(Of IEnumerable(Of NamedValue(Of String)))
+                .ToArray
 
             Return out
         End Function

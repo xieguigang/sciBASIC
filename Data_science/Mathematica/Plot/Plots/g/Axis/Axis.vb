@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ac976e81c602157ce27692629e3b6a0, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::622df45bf8c9b9f10b6a38d76e990985, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\Axis.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,29 @@ Imports Microsoft.VisualBasic.Text.HtmlParser
 Namespace Graphic.Axis
 
     Public Module Axis
+
+        ''' <summary>
+        ''' 绘制按照任意角度旋转的文本
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="text"></param>
+        ''' <param name="font"></param>
+        ''' <param name="brush"></param>
+        ''' <param name="x!"></param>
+        ''' <param name="y!"></param>
+        ''' <param name="angle!"></param>
+        <Extension>
+        Public Sub DrawString(g As IGraphics, text$, font As Font, brush As Brush, x!, y!, angle!)
+            With g
+                Call g.TranslateTransform(.Size.Width / 2, .Size.Height / 2)
+                Call g.RotateTransform(angle)
+
+                ' 不清楚旋转之后会不会对字符串的大小产生影响，所以measureString放在旋转之后
+                Dim textSize As SizeF = g.MeasureString(text, font)
+                Call g.DrawString(text, font, brush, -(textSize.Width / 2), -(textSize.Height / 2))
+                Call g.ResetTransform()
+            End With
+        End Sub
 
         <Extension>
         Public Sub DrawAxis(ByRef g As IGraphics, region As GraphicsRegion,
@@ -304,7 +327,7 @@ Namespace Graphic.Axis
             Dim ZERO As New Point(padding.Left + offset.X, Y)                       ' 坐标轴原点
             Dim right As New Point(size.Width - padding.Right + offset.X, Y)        ' X轴
             Dim sx = scaler.XScaler(size, padding)
-            Dim d! = If(overridesTickLine <= 0, padding.Bottom * 0.18, overridesTickLine)
+            Dim d! = If(overridesTickLine <= 0, padding.Bottom * 0.1, overridesTickLine)
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 

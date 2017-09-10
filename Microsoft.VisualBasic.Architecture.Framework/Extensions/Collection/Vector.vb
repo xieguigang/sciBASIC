@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46b13b2abf82831ddbb8a0a1f43ee057, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::870571be4634724ba5bdbd16c133994f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
 ' Author:
 ' 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
@@ -110,7 +111,7 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' 对目标序列进行排序生成新的序列
+    ''' 对目标序列进行排序生成新的序列，这个拓展函数尝试将升序排序和降序排序这两种操作的接口统一起来
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -120,15 +121,9 @@ Public Module VectorExtensions
     Public Function Sort(Of T)(source As IEnumerable(Of T), Optional by As Func(Of T, IComparable) = Nothing, Optional desc As Boolean = False) As IEnumerable(Of T)
         If by Is Nothing Then
             If Not desc Then
-                Return From x As T
-                       In source
-                       Select x
-                       Order By x Ascending
+                Return From x In source Select x Order By x Ascending
             Else
-                Return From x As T
-                       In source
-                       Select x
-                       Order By x Descending
+                Return From x In source Select x Order By x Descending
             End If
         Else
             If Not desc Then
@@ -181,20 +176,6 @@ Public Module VectorExtensions
     <Extension>
     Public Function IndexOf(Of T)(array As T(), o As T) As Integer
         Return System.Array.IndexOf(array, value:=o)
-    End Function
-
-    <Extension>
-    Public Function GetMinIndex(values As List(Of Double)) As Integer
-        Dim min As Double = Double.MaxValue
-        Dim minIndex As Integer = 0
-        For i As Integer = 0 To values.Count - 1
-            If values(i) < min Then
-                min = values(i)
-                minIndex = i
-            End If
-        Next
-
-        Return minIndex
     End Function
 
     ''' <summary>
@@ -324,7 +305,7 @@ Public Module VectorExtensions
     ''' <param name="delimiter">和字符串的Split函数一样，这里作为delimiter的元素都不会出现在结果之中</param>
     ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
-    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), delimiter As Func(Of T, Boolean), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As T()()
+    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As T()()
         Dim array As T() = source.ToArray
         Dim blocks As New List(Of T())  ' The returned split blocks
         Dim tmp As New List(Of T)
@@ -359,6 +340,7 @@ Public Module VectorExtensions
         If Not tmp.Count = 0 Then
             blocks += tmp.ToArray
         End If
+
         Return blocks.ToArray
     End Function
 

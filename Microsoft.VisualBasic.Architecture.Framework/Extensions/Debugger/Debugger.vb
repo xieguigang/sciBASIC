@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83877ce9e6078f7ba2b5496f9d4e34fa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::e667a5ef34e398bde870e9a67b98ac31, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
 
 ' Author:
 ' 
@@ -30,6 +30,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Debugging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -48,13 +49,10 @@ Public Module VBDebugger
     ''' <param name="message$">The exception message</param>
     ''' <param name="failure">If this expression test is True, then die expression will raise an exception</param>
     ''' <returns></returns>
-    Public Function die(message$, Optional failure As Func(Of Object, Boolean) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandler
-        If failure Is Nothing Then
-            failure = Function(o) o Is Nothing
-        End If
+    Public Function die(message$, Optional failure As Assert(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandler
         Return New ExceptionHandler With {
             .Message = message,
-            .failure = failure
+            .failure = failure Or defaultAssert
         }
     End Function
 

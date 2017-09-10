@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::f3d09ff483e8ebdd258f40e97253bca1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::81d2849986e047e897f7b55fd5f7e07a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -53,7 +53,7 @@ Namespace CommandLine
         Implements ICollection(Of NamedValue(Of String))
         Implements INamedValue
 
-        Friend __listArguments As New List(Of NamedValue(Of String))
+        Friend __arguments As New List(Of NamedValue(Of String))
         ''' <summary>
         ''' 原始的命令行字符串
         ''' </summary>
@@ -92,7 +92,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public ReadOnly Property ParameterList As NamedValue(Of String)()
             Get
-                Return __listArguments.ToArray
+                Return __arguments.ToArray
             End Get
         End Property
 
@@ -102,7 +102,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public ReadOnly Property Keys As String()
             Get
-                Return __listArguments.ToArray(Function(v) v.Name)
+                Return __arguments.ToArray(Function(v) v.Name)
             End Get
         End Property
 
@@ -148,7 +148,7 @@ Namespace CommandLine
         Default Public ReadOnly Property Item(paramName As String) As String
             Get
                 Dim LQuery As NamedValue(Of String) =
-                    __listArguments _
+                    __arguments _
                         .Where(Function(x) String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)) _
                         .FirstOrDefault
 
@@ -230,15 +230,15 @@ Namespace CommandLine
             Call sb.AppendLine("---------------------------------------------------------")
             Call sb.AppendLine()
 
-            If __listArguments.Count = 0 Then
+            If __arguments.Count = 0 Then
                 Call sb.AppendLine("No parameter was define in this commandline.")
                 Return sb.ToString
             End If
 
             Dim MaxSwitchName As Integer = (From item As NamedValue(Of String)
-                                            In __listArguments
+                                            In __arguments
                                             Select Len(item.Name)).Max
-            For Each sw As NamedValue(Of String) In __listArguments
+            For Each sw As NamedValue(Of String) In __arguments
                 Call sb.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.Value}"";")
             Next
 
@@ -304,7 +304,7 @@ Namespace CommandLine
             Dim namer As String = If(trim, parameterName.TrimParamPrefix, parameterName)
             Dim LQuery As Integer =
                 LinqAPI.DefaultFirst(Of Integer) <= From para As NamedValue(Of String)
-                                                    In Me.__listArguments  '  名称都是没有处理过的
+                                                    In Me.__arguments  '  名称都是没有处理过的
                                                     Where String.Equals(namer, para.Name, StringComparison.OrdinalIgnoreCase)
                                                     Select 100
             Return LQuery > 50
@@ -354,6 +354,13 @@ Namespace CommandLine
             End If
         End Function
 
+        Public Function IsTrue(parameter$) As Boolean
+            If Me.HavebFlag(parameter) Then
+                Return True
+            End If
+            Return Me(parameter).ParseBoolean
+        End Function
+
 #Region "Pipeline"
 
         ''' <summary>About <paramref name="s"/>:
@@ -385,20 +392,22 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' [管道函数] 假若参数名存在，则返回本地文件的文件指针，否则返回标准输出的指针
+        ''' If the <see cref="StreamWriter.BaseStream"/> is <see cref="FileStream"/>, then it means not a ``std_out`` pointer.
+        ''' ([管道函数] 假若参数名存在，则返回本地文件的文件指针，否则返回标准输出的指针)
         ''' </summary>
         ''' <param name="param"></param>
         ''' <returns></returns>
-        Public Function OpenStreamOutput(param As String) As StreamWriter
+        Public Function OpenStreamOutput(param$, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
             Dim path As String = Me(param)
+            Dim textEncode As Encoding = encoding.CodePage
 
             If path.StringEmpty Then
-                Return New StreamWriter(Console.OpenStandardOutput)
+                Return New StreamWriter(Console.OpenStandardOutput, textEncode)
             Else
                 Call path.ParentPath.MkDIR
 
                 Dim fs As New FileStream(path, FileMode.OpenOrCreate, access:=FileAccess.ReadWrite)
-                Return New StreamWriter(fs)
+                Return New StreamWriter(fs, textEncode)
             End If
         End Function
 
@@ -427,10 +436,7 @@ Namespace CommandLine
         ''' <param name="parameter">可以包含有开关参数</param>
         ''' <returns></returns>
         Public Function GetBoolean(parameter As String) As Boolean
-            If Me.HavebFlag(parameter) Then
-                Return True
-            End If
-            Return Me(parameter).ParseBoolean
+            Return Me.IsTrue(parameter)
         End Function
 
         ''' <summary>
@@ -447,8 +453,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function GetBytes(parameter As String) As Byte()
-            Dim Tokens As String() = Me(parameter).Split(","c)
-            Return (From s As String In Tokens Select CByte(Val(s))).ToArray
+            Dim tokens As String() = Me(parameter).Split(","c)
+            Return (From s As String In tokens Select CByte(Val(s))).ToArray
         End Function
 
         ''' <summary>
@@ -545,9 +551,9 @@ Namespace CommandLine
             Dim i As Integer =
                 LinqAPI.DefaultFirst(Of Integer)(-1) <=
                 From entry As NamedValue(Of String)
-                In Me.__listArguments
+                In Me.__arguments
                 Where String.Equals(parameter, entry.Name, StringComparison.OrdinalIgnoreCase)
-                Select __listArguments.IndexOf(entry)
+                Select __arguments.IndexOf(entry)
 
             Return i
         End Function
@@ -575,14 +581,11 @@ Namespace CommandLine
         ''' <param name="parameter">Command parameter name in the command line inputs.</param>
         ''' <param name="__getObject"></param>
         ''' <returns></returns>
-        Public Function GetObject(Of T)(parameter As String, __getObject As Func(Of String, T)) As T
-            If __getObject Is Nothing Then
-                Return Nothing
-            End If
-
-            Dim value As String = Me(parameter)
-            Dim obj As T = __getObject(arg:=value)
-            Return obj
+        Public Function GetObject(Of T)(parameter$, Optional __getObject As Func(Of String, Object) = Nothing) As T
+            Dim value$ = Me(parameter)
+            Dim obj = (__getObject Or StringParser(GetType(T)))(arg:=value)
+            Dim x As T = DirectCast(obj, T)
+            Return x
         End Function
 
         ''' <summary>
@@ -636,7 +639,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements IEnumerable(Of NamedValue(Of String)).GetEnumerator
-            Dim source As New List(Of NamedValue(Of String))(Me.__listArguments)
+            Dim source As New List(Of NamedValue(Of String))(Me.__arguments)
 
             If Not Me.BoolFlags.IsNullOrEmpty Then
                 source += From name As String
@@ -658,7 +661,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="item"></param>
         Public Sub Add(item As NamedValue(Of String)) Implements ICollection(Of NamedValue(Of String)).Add
-            Call __listArguments.Add(item)
+            Call __arguments.Add(item)
         End Sub
 
         ''' <summary>
@@ -677,10 +680,10 @@ Namespace CommandLine
             }
 
             If Not allowDuplicated Then
-                For i As Integer = 0 To __listArguments.Count - 1
-                    With __listArguments(i)
+                For i As Integer = 0 To __arguments.Count - 1
+                    With __arguments(i)
                         If .Name.TextEquals(key) Then
-                            __listArguments(i) = item
+                            __arguments(i) = item
                             Return
                         End If
                     End With
@@ -689,14 +692,14 @@ Namespace CommandLine
                 ' 没有查找到需要被替换掉的下标，则直接在下面的代码之中进行添加
             End If
 
-            __listArguments += item
+            __arguments += item
         End Sub
 
         ''' <summary>
         ''' Clear the inner list buffer
         ''' </summary>
         Public Sub Clear() Implements ICollection(Of NamedValue(Of String)).Clear
-            Call __listArguments.Clear()
+            Call __arguments.Clear()
         End Sub
 
         ''' <summary>
@@ -707,14 +710,14 @@ Namespace CommandLine
         Public Function Contains(item As NamedValue(Of String)) As Boolean Implements ICollection(Of NamedValue(Of String)).Contains
             Dim LQuery As Integer =
                 LinqAPI.DefaultFirst(-1) <= From obj As NamedValue(Of String)
-                                            In Me.__listArguments
+                                            In Me.__arguments
                                             Where String.Equals(obj.Name, item.Name, StringComparison.OrdinalIgnoreCase)
                                             Select 100
             Return LQuery > 50
         End Function
 
         Public Sub CopyTo(array() As NamedValue(Of String), arrayIndex As Integer) Implements ICollection(Of NamedValue(Of String)).CopyTo
-            Call __listArguments.ToArray.CopyTo(array, arrayIndex)
+            Call __arguments.ToArray.CopyTo(array, arrayIndex)
         End Sub
 
         ''' <summary>
@@ -725,7 +728,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property Count As Integer Implements ICollection(Of NamedValue(Of String)).Count
             Get
-                Return Me.__listArguments.Count
+                Return Me.__arguments.Count
             End Get
         End Property
 
@@ -744,14 +747,14 @@ Namespace CommandLine
             Dim LQuery As NamedValue(Of String) =
                 LinqAPI.DefaultFirst(Of NamedValue(Of String)) <=
                     From obj As NamedValue(Of String)
-                    In Me.__listArguments
+                    In Me.__arguments
                     Where String.Equals(obj.Name, paramName, StringComparison.OrdinalIgnoreCase)
                     Select obj
 
             If LQuery.IsEmpty Then
                 Return False
             Else
-                Call __listArguments.Remove(LQuery)
+                Call __arguments.Remove(LQuery)
                 Return True
             End If
         End Function
@@ -775,19 +778,20 @@ Namespace CommandLine
         Public Function ToArgumentVector() As NamedValue(Of String)()
             Dim list As New List(Of NamedValue(Of String))
 
-            If Not Me.__listArguments.IsNullOrEmpty Then
-                list += From obj As NamedValue(Of String)
-                        In __listArguments
-                        Select New NamedValue(Of String)(obj.Name, obj.Value)
-            End If
+            list += From arg As NamedValue(Of String)
+                    In __arguments.SafeQuery
+                    Select New NamedValue(Of String) With {
+                        .Name = arg.Name,
+                        .Value = arg.Value
+                    }
+            list += From bs As String
+                    In BoolFlags.SafeQuery
+                    Select New NamedValue(Of String) With {
+                        .Name = bs.TrimParamPrefix(bs),
+                        .Value = "True"
+                    }
 
-            If Not Me.BoolFlags.IsNullOrEmpty Then
-                list += From bs As String
-                        In Me.BoolFlags
-                        Select New NamedValue(Of String)(TrimParamPrefix(bs), "True")
-            End If
-
-            Return list.ToArray
+            Return list
         End Function
 
         ''' <summary>

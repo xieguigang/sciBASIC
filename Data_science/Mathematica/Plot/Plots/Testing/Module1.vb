@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::819b47857f01f9b6788313ce24f44c2f, ..\sciBASIC#\Data_science\Mathematical\Plots\Testing\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::19e931b3330a75b6e57a1b92d20755fa, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\Module1.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,8 +31,10 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Module Module1
@@ -40,11 +42,16 @@ Module Module1
 
 
     Public Sub scatterHeatmapTest()
-        Dim f As Func(Of Double, Double, Double) =
-            Function(x, y) Math.Sqrt(x * x + y * y)
+        'Dim f As Func(Of Double, Double, Double) =
+        '    Function(x, y) Math.Sqrt(x * x + y * y)
 
-        Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x ^ 2 + y ^ 3") _
-            .Save("./scatter-heatmap.png")
+        'Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x ^ 2 + y ^ 3") _
+        '    .Save("./scatter-heatmap.png")
+
+        Dim f = Function(x#, y#) x * Math.Sin(y) + y * Math.Sin(x)
+
+        Call Contour.Plot(f, "(-10,10)", "(-10,10)", legendTitle:="z = x * Sin(y) + y * Sin(x)", mapLevels:=50) _
+            .Save("./scatter-heatmap-demo2.png")
 
         'Dim matrix As New List(Of DataSet)
 
@@ -109,11 +116,15 @@ Module Module1
 
     Sub Main()
 
-        Call App.JoinVariable("graphic_driver", "svg")
+        scatterHeatmapTest()
 
-        Call TestYlinePlot()
+        Pause()
 
-        Call axisScallingTest()
+        'Call App.JoinVariable("graphic_driver", "svg")
+
+        'Call TestYlinePlot()
+
+        'Call axisScallingTest()
 
         '        Call heatmap2()
 
@@ -128,13 +139,15 @@ Module Module1
         'Call CMeansVisualize()
         'Pause()
 
-        Dim datahm = Heatmap.LoadDataSet("C:\Users\xieguigang\OneDrive\1.5\hh.csv")
-        Call Heatmap.Plot(datahm, mapName:=ColorMap.PatternHot,
-                          kmeans:=AddressOf KmeansReorder,
-                          mapLevels:=20,
+        Dim datahm = DataSet.LoadDataSet("C:\Users\xieguigang\Desktop\ttttttt.csv")
+        Call Heatmap.Heatmap.Plot(datahm, mapName:=ColorBrewer.DivergingSchemes.RdYlGn11,
+                                   size:="2000,3600",
+                                  drawScaleMethod:=Heatmap.DrawElements.Cols,
+                                  logTransform:=2,
+                          mapLevels:=120,
                           padding:="padding: 300",
                           legendTitle:="Spearman correlations",
-                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("x:\spcc.png")
+                          rowLabelfontStyle:=CSSFont.Win10Normal).Save("C:\Users\xieguigang\Desktop\ttttttt.png")
         Pause()
         Dim data = csv.LoadBarData(
     "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",

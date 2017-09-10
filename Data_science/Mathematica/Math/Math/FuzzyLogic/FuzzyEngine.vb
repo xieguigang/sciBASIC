@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd3dfa7a4fa52fbe8df3a0979220daae, ..\sciBASIC#\Data_science\Mathematical\Math\FuzzyLogic\FuzzyEngine.vb"
+﻿#Region "Microsoft.VisualBasic::dd3dfa7a4fa52fbe8df3a0979220daae, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyEngine.vb"
 
     ' Author:
     ' 

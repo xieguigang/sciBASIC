@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c434a480682a10b055b07ed47b2aeec7, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
+﻿#Region "Microsoft.VisualBasic::2c6aa2188da87e2ccf42bd13b75ee7f3, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
 
     ' Author:
     ' 

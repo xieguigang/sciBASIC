@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ef44277aafbfd47ce17df15ec40503b, ..\sciBASIC#\Data_science\Mathematical\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::bf43e26d32ce27e5f2a123f28c84950e, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -117,7 +117,9 @@ Public Module PieChart
 
                     For Each x As Fractions In data
                         br = New SolidBrush(x.Color)
-                        Call g.FillPie(br, rect, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.value, sweep)
+                        Call g.FillPie(br, rect,
+                                       CSng(start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - CSng(sweep.Value),
+                                       CSng(sweep))
 
                         alpha = (+start) - (+sweep / 2)
                         pt = (r / 1.5).ToPoint(alpha)  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部

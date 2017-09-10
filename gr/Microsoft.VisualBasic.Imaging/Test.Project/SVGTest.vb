@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::290b49880414749321f430713001aaea, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\SVGTest.vb"
+﻿#Region "Microsoft.VisualBasic::2c45b965e5967335e4355d84518eb2fc, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\SVGTest.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Module SVGTest
         Pause()
     End Sub
 End Module
-

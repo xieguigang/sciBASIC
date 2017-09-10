@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e33a3586a2558a9eaa0ada6e2de0b238, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ed42981e98c61dc18f07b9d24ccb8eac, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
 ' Author:
 ' 
@@ -32,15 +32,16 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
@@ -78,6 +79,16 @@ Public Module Extensions
 #End If
 
     ''' <summary>
+    ''' Create the numeric range from a numeric value collection
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Range(data As IEnumerable(Of Double)) As DoubleRange
+        Return New DoubleRange(data)
+    End Function
+
+    ''' <summary>
     ''' ``Math.Log(x, newBase:=2)``
     ''' </summary>
     ''' <param name="x#"></param>
@@ -99,9 +110,39 @@ Public Module Extensions
         Return num
     End Function
 
+    ''' <summary>
+    ''' Save as a tsv file, with data format like: 
+    ''' 
+    ''' ```
+    ''' <see cref="NamedValue(Of String).Name"/>\t<see cref="NamedValue(Of String).Value"/>\t<see cref="NamedValue(Of String).Description"/>
+    ''' ```
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
-        Return source.Select(Function(row) $"{row.Name}{ASCII.TAB}{row.Value}").SaveTo(path, encoding.CodePage)
+    Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)),
+                                         path$,
+                                         Optional saveDescrib As Boolean = False,
+                                         Optional saveHeaders$() = Nothing,
+                                         Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Dim content = source _
+            .Select(Function(row)
+                        With row
+                            If saveDescrib Then
+                                Return $"{ .Name}{ASCII.TAB}{ .Value}{ASCII.TAB}{ .Description}"
+                            Else
+                                Return $"{ .Name}{ASCII.TAB}{ .Value}"
+                            End If
+                        End With
+                    End Function)
+
+        If saveHeaders.IsNullOrEmpty Then
+            Return content.SaveTo(path, encoding.CodePage)
+        Else
+            Return {saveHeaders.JoinBy(ASCII.TAB)}.JoinIterates(content).SaveTo(path, encoding.CodePage)
+        End If
     End Function
 
     ''' <summary>
@@ -235,66 +276,6 @@ Public Module Extensions
         Return source.ToArray(Function(x) x.Key)
     End Function
 
-    ''' <summary>
-    ''' Returns the total executation time of the target <paramref name="work"/>.
-    ''' (性能测试工具，函数之中会自动输出整个任务所经历的处理时长)
-    ''' </summary>
-    ''' <param name="work">
-    ''' Function pointer of the task work that needs to be tested.(需要测试性能的工作对象)
-    ''' </param>
-    ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
-    Public Function Time(work As Action, Optional echo As Boolean = True) As Long
-        Dim startTick As Long = App.NanoTime
-        Call work()
-        Dim endTick As Long = App.NanoTime
-        Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
-        If echo Then
-            Call $"[{work.Method.Name}] takes {t}ms...".__DEBUG_ECHO
-        End If
-        Return t
-    End Function
-
-    Public Function Time(Of T)(work As Func(Of T)) As T
-        Dim startTick As Long = App.NanoTime
-        Dim value As T = work()
-        Dim endTick As Long = App.NanoTime
-        Dim ms& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
-        Call $"Work takes {ms}ms...".__DEBUG_ECHO
-        Return value
-    End Function
-
-    Public Delegate Function WaitHandle() As Boolean
-
-    ''' <summary>
-    ''' 假若条件判断<paramref name="handle"/>不为真的话，函数会一直阻塞线程，直到条件判断<paramref name="handle"/>为真
-    ''' </summary>
-    ''' <param name="handle"></param>
-    <Extension> Public Sub Wait(handle As Func(Of Boolean))
-        If handle Is Nothing Then
-            Return
-        End If
-
-        Do While handle() = False
-            Call Threading.Thread.Sleep(10)
-            Call Application.DoEvents()
-        Loop
-    End Sub
-
-    ''' <summary>
-    ''' 假若条件判断<paramref name="handle"/>不为真的话，函数会一直阻塞线程，直到条件判断<paramref name="handle"/>为真
-    ''' </summary>
-    ''' <param name="handle"></param>
-    <Extension> Public Sub Wait(handle As WaitHandle)
-        If handle Is Nothing Then
-            Return
-        End If
-
-        Do While handle() = False
-            Call Threading.Thread.Sleep(10)
-            Call Application.DoEvents()
-        Loop
-    End Sub
-
     <Extension>
     Public Function Switch(Of T)(b As Boolean, [true] As T, [false] As T) As T
         Return If(b, [true], [false])
@@ -427,7 +408,7 @@ Public Module Extensions
     ''' <param name="index"></param>
     ''' <param name="[default]">Default value for return when the array object is nothing or index outside of the boundary.</param>
     ''' <returns></returns>
-    <Extension> Public Function [Get](Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
+    <Extension> Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
         If array.IsNullOrEmpty Then
             Return [default]
         End If
@@ -553,20 +534,25 @@ Public Module Extensions
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="hash"></param>
-    ''' <param name="Index"></param>
+    ''' <param name="index"></param>
     ''' <param name="[default]"></param>
     ''' <returns></returns>
-    <Extension> Public Function TryGetValue(Of TKey, TValue)(hash As Dictionary(Of TKey, TValue), Index As TKey, Optional [default] As TValue = Nothing) As TValue
+    <Extension> Public Function TryGetValue(Of TKey, TValue)(hash As Dictionary(Of TKey, TValue),
+                                                             index As TKey,
+                                                             Optional [default] As TValue = Nothing,
+                                                             <CallerMemberName> Optional trace$ = Nothing) As TValue
         If hash Is Nothing Then
+#If DEBUG Then
             Call PrintException("hash table is nothing!")
+#End If
             Return [default]
         End If
 
-        If hash.ContainsKey(Index) Then
-            Return hash(Index)
+        If hash.ContainsKey(index) Then
+            Return hash(index)
         Else
 #If DEBUG Then
-            Call PrintException($"Index:={Scripting.ToString(Index)} is not exist in the hash table!")
+            Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
 #End If
             Return [default]
         End If
@@ -601,40 +587,6 @@ Public Module Extensions
             Call hash.Add(obj.Key, obj.Value)
         Next
         Return hash
-    End Function
-
-    ''' <summary>
-    ''' If the path string value is already wrappered by quot, then this function will returns the original string (DO_NOTHING).
-    ''' (假若命令行之中的文件名参数之中含有空格的话，则可能会造成错误，需要添加一个双引号来消除歧义)
-    ''' </summary>
-    ''' <param name="Path"></param>
-    ''' <returns></returns>
-    '''
-    <ExportAPI("CLI_PATH")>
-    <Extension> Public Function CLIPath(Path As String) As String
-        If String.IsNullOrEmpty(Path) Then
-            Return ""
-        Else
-            Path = Path.Replace("\", "/")  '这个是R、Java、Perl等程序对路径的要求所导致的
-            Return Path.CLIToken
-        End If
-    End Function
-
-    ''' <summary>
-    ''' <see cref="CLIPath(String)"/>函数为了保持对Linux系统的兼容性会自动替换\为/符号，这个函数则不会执行这个替换
-    ''' </summary>
-    ''' <param name="Token"></param>
-    ''' <returns></returns>
-    <Extension> Public Function CLIToken(Token As String) As String
-        If String.IsNullOrEmpty(Token) OrElse Not Len(Token) > 2 Then
-            Return Token
-        End If
-
-        If Token.First = """"c AndAlso Token.Last = """"c Then
-            Return Token
-        End If
-        If Token.Contains(" "c) Then Token = $"""{Token}"""
-        Return Token
     End Function
 
     ''' <summary>
@@ -815,21 +767,6 @@ Public Module Extensions
         Dim list As New List(Of T) From {obj}
         Call list.AddRange(collection)
         Return list
-    End Function
-
-    ''' <summary>
-    ''' *.txt -> text
-    ''' </summary>
-    ''' <param name="ext$"></param>
-    ''' <returns></returns>
-    <Extension> Public Function GetMIMEDescrib(ext$) As ContentType
-        Dim key$ = LCase(ext).Trim("*"c)
-
-        If MIME.SuffixTable.ContainsKey(key) Then
-            Return MIME.SuffixTable(key)
-        Else
-            Return MIME.UnknownType
-        End If
     End Function
 
 #If FRAMEWORD_CORE Then
@@ -1976,6 +1913,13 @@ Public Module Extensions
         Return False
     End Function
 
+    ''' <summary>
+    ''' 字典之中是否是没有任何数据的？
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="dict"></param>
+    ''' <returns></returns>
     <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As Dictionary(Of TKey, TValue)) As Boolean
         If dict Is Nothing Then
             Return True
@@ -1983,6 +1927,12 @@ Public Module Extensions
         Return dict.Count = 0
     End Function
 
+    ''' <summary>
+    ''' 这个队列之中是否是没有任何数据的?
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="queue"></param>
+    ''' <returns></returns>
     <Extension> Public Function IsNullOrEmpty(Of T)(queue As Queue(Of T)) As Boolean
         If queue Is Nothing Then
             Return True
@@ -1990,6 +1940,12 @@ Public Module Extensions
         Return queue.Count = 0
     End Function
 
+    ''' <summary>
+    ''' 这个动态列表之中是否是没有任何数据的？
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
     <Extension> Public Function IsNullOrEmpty(Of T)(list As List(Of T)) As Boolean
         If list Is Nothing Then
             Return True

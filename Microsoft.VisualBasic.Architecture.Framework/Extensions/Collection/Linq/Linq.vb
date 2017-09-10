@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::098dca7e3918c9c3086e4a04551ff631, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::40c588296a525cb20a3f5a2d4ba1bd0a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Linq.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -160,6 +160,14 @@ Namespace Linq
             Next
         End Function
 
+        ''' <summary>
+        ''' First, iterate populates the elements in collection <paramref name="a"/>, 
+        ''' and then populate out all of the elements on collection <paramref name="b"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a">Object collection</param>
+        ''' <param name="b">Another object collection.</param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As IEnumerable(Of T)
             If Not a Is Nothing Then
@@ -186,7 +194,8 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' 删除制定的键之后返回剩下的数据
+        ''' Removes the specific key in the dicitonary and returns the last content.
+        ''' (删除指定的键之后返回剩下的数据)
         ''' </summary>
         ''' <typeparam name="TKey"></typeparam>
         ''' <typeparam name="TValue"></typeparam>
@@ -195,7 +204,12 @@ Namespace Linq
         ''' <returns></returns>
         <Extension>
         Public Function RemoveLeft(Of TKey, TValue)(ByRef source As Dictionary(Of TKey, TValue), key As TKey) As Dictionary(Of TKey, TValue)
-            Call source.Remove(key)
+            With source
+                If .ContainsKey(key) Then
+                    Call .Remove(key)
+                End If
+            End With
+
             Return source
         End Function
 
@@ -206,10 +220,17 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <param name="n"></param>
         ''' <returns>An array consist of source with n elements.</returns>
-        <Extension> Public Function Repeats(Of T)(source As T, n As Integer) As T()
+        <Extension> Public Function Repeats(Of T)(source As T, n%) As T()
             Return n.ToArray(Function(x) source)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="n"></param>
+        ''' <param name="source">The object factory</param>
+        ''' <returns></returns>
         <Extension>
         Public Function CopyVector(Of T)(n As Integer, source As Func(Of T)) As T()
             Return n.ToArray(Function(x) source())

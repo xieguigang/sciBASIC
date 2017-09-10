@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4553b8a60b5a6cd0ec32ff3e84245886, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\CLIBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::8689b809aaf316fe5c515173c4049a97, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\CLIBuilder.vb"
 
 ' Author:
 ' 
@@ -30,6 +30,7 @@ Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language

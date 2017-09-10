@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::3de5825866652d97f3559642bbe6def1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::b2a201d1e5cac6d5e130e0fb27c11c89, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GeomTransform.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -38,6 +38,25 @@ Imports sys = System.Math
 Namespace Imaging
 
     <Package("GDI.Transform")> Public Module GeomTransform
+
+        ''' <summary>
+        ''' <see cref="Graphics.DrawEllipse(Pen, RectangleF)"/>
+        ''' </summary>
+        ''' <param name="center"></param>
+        ''' <param name="r!"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function CircleRectangle(center As PointF, r!) As RectangleF
+            Dim d = r * 2
+            Return New RectangleF(center.OffSet2D(-r, -r), New SizeF(d, d))
+        End Function
+
+        <Extension>
+        Public Function CenterAlign(rect As RectangleF, size As SizeF) As PointF
+            Dim x! = (rect.Width - size.Width) / 2 + rect.Left
+            Dim y! = (rect.Height - size.Height) / 2 + rect.Top
+            Return New PointF(x, y)
+        End Function
 
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
             Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
@@ -92,6 +111,27 @@ Namespace Imaging
         <ExportAPI("Center")>
         <Extension> Public Function Centre(rect As Rectangle) As Point
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
+        End Function
+
+        ''' <summary>
+        ''' Resize the rectangle
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <param name="factor"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Scale(rect As RectangleF, factor As SizeF) As RectangleF
+            Dim size = New SizeF(rect.Width * factor.Width, rect.Height * factor.Height)
+            Dim delta = size - rect.Size
+            Dim location As New PointF(rect.Left - delta.Width / 2, rect.Top - delta.Height / 2)
+            Return New RectangleF(location, size)
+        End Function
+
+        <Extension> Public Function Scale(rect As Rectangle, factor As SizeF) As Rectangle
+            With rect
+                With New RectangleF(.Location.PointF, .Size.SizeF).Scale(factor)
+                    Return New Rectangle(.Location.ToPoint, .Size.ToSize)
+                End With
+            End With
         End Function
 
         ''' <summary>

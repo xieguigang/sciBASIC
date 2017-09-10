@@ -63,10 +63,65 @@ Namespace Debugging
             Dim log As String = $"{PS1.Fedora12.ToString} {CLI}"
             Dim logFile As String = App.LogErrDIR.ParentPath & "/.shells.log"
 
-            If FileHandles.Wait(file:=logFile) Then
-                Call FileIO.FileSystem.CreateDirectory(logFile.ParentPath)
-                Call FileIO.FileSystem.WriteAllText(logFile, log & vbCrLf, True)
+            If InStr(logFile.ParentPath, "/sbin/") = 1 Then
+                ' 当程序运行在apache+linux web服务器上面的时候，
+                ' 对于apache用户，linux服务器上面得到的文件夹是/sbin，则会出现权限错误，这个时候重定向到应用程序自身的文件夹之中
+                logFile = App.HOME & "/.logs/.shells.log"
             End If
+
+            Try
+                If FileHandles.Wait(file:=logFile) Then
+                    Call FileIO.FileSystem.CreateDirectory(logFile.ParentPath)
+                    Call FileIO.FileSystem.WriteAllText(logFile, log & vbCrLf, True)
+                End If
+            Catch ex As Exception
+                ' 连日志记录都出错了，已经没有地方可以写日志了，则只能够直接将错误信息以警告的方式打印出来
+                Call ex.Message.Warning
+
+                '[ERROR 09/07/2017 1052:12] :System.Exception : LogException ---> System.Exception: Exception of type 'System.Exception' was thrown. ---> System.ArgumentNullException: Value cannot be null.
+                'Parameter name: path
+                '                at System.IO.DirectoryInfo.CheckPath(System.String path) [0x00003] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.DirectoryInfo..ctor(System.String path, System.Boolean simpleOriginalPath) [0x00006] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.DirectoryInfo..ctor(System.String path) [0x00000] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at(wrapper remoting-invoke-With-check) System.IO.DirectoryInfo:.ctor(Of String)
+                '                at Microsoft.VisualBasic.FileIO.FileSystem.GetDirectoryInfo(System.String directory) [0x00000] in <828807dda9f14f24a7db780c6c644162>:0 
+                '  at Microsoft.VisualBasic.ProgramPathSearchTool.GetDirectoryFullPath(System.String dir) [0x00000] in :0 
+                '   --- End of inner exception stack trace ---
+                '   --- End of inner exception stack trace ---
+                '[ERROR 09/07/2017 10:52:12] :System.Exception : GetDirectoryFullPath ---> System.Exception: Exception of type 'System.Exception' was thrown. ---> System.ArgumentNullException: Value cannot be null.
+                'Parameter name: path
+                '                at System.IO.DirectoryInfo.CheckPath(System.String path) [0x00003] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.DirectoryInfo..ctor(System.String path, System.Boolean simpleOriginalPath) [0x00006] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.DirectoryInfo..ctor(System.String path) [0x00000] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at(wrapper remoting-invoke-With-check) System.IO.DirectoryInfo:.ctor(Of String)
+                '                at Microsoft.VisualBasic.FileIO.FileSystem.GetDirectoryInfo(System.String directory) [0x00000] in <828807dda9f14f24a7db780c6c644162>:0 
+                '  at Microsoft.VisualBasic.ProgramPathSearchTool.GetDirectoryFullPath(System.String dir) [0x00000] in :0 
+                '   --- End of inner exception stack trace ---
+                '   --- End of inner exception stack trace ---
+                '[ERROR 09/07/2017 10:52:12] :System.Exception : InitDebuggerEnvir ---> System.UnauthorizedAccessException: Access to the path "/sbin/.local" Is denied.
+                '  at System.IO.Directory.CreateDirectoriesInternal(System.String path) [0x0005e] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.Directory.CreateDirectory(System.String path) [0x0008f] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.DirectoryInfo.Create() [0x00000] in <902ab9e386384bec9c07fa19aa938869>: 0 
+                '  at(wrapper remoting-invoke-With-check) System.IO.DirectoryInfo:Create()
+                '                at System.IO.Directory.CreateDirectoriesInternal(System.String path) [0x00036] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.Directory.CreateDirectory(System.String path) [0x0008f] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.DirectoryInfo.Create() [0x00000] in <902ab9e386384bec9c07fa19aa938869>: 0 
+                '  at(wrapper remoting-invoke-With-check) System.IO.DirectoryInfo:Create()
+                '                at System.IO.Directory.CreateDirectoriesInternal(System.String path) [0x00036] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.Directory.CreateDirectory(System.String path) [0x0008f] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.DirectoryInfo.Create() [0x00000] in <902ab9e386384bec9c07fa19aa938869>: 0 
+                '  at(wrapper remoting-invoke-With-check) System.IO.DirectoryInfo:Create()
+                '                at System.IO.Directory.CreateDirectoriesInternal(System.String path) [0x00036] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.Directory.CreateDirectory(System.String path) [0x0008f] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.DirectoryInfo.Create() [0x00000] in <902ab9e386384bec9c07fa19aa938869>: 0 
+                '  at(wrapper remoting-invoke-With-check) System.IO.DirectoryInfo:Create()
+                '                at System.IO.Directory.CreateDirectoriesInternal(System.String path) [0x00036] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at System.IO.Directory.CreateDirectory(System.String path) [0x0008f] in <902ab9e386384bec9c07fa19aa938869>:0 
+                '  at Microsoft.VisualBasic.FileIO.FileSystem.CreateDirectory(System.String directory) [0x00025] in <828807dda9f14f24a7db780c6c644162>:0 
+                '  at Microsoft.VisualBasic.Debugging.DebuggerArgs.__logShell(Microsoft.VisualBasic.CommandLine.CommandLine args) [0x00056] in :0 
+                '  at Microsoft.VisualBasic.Debugging.DebuggerArgs.InitDebuggerEnvir(Microsoft.VisualBasic.CommandLine.CommandLine args, System.String caller) [0x00018] in :0 
+                '   --- End of inner exception stack trace ---
+            End Try
         End Sub
 
         ''' <summary>

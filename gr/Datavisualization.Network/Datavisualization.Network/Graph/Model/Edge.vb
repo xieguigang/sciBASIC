@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8ee6bb568fde771fd4162efbee6ae5c, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::b8ee6bb568fde771fd4162efbee6ae5c, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Model\Edge.vb"
 
     ' Author:
     ' 

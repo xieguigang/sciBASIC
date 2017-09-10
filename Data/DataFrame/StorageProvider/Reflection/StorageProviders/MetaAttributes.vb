@@ -68,17 +68,17 @@ Namespace StorageProvider.Reflection
             End If
 
             Dim MetaEntry As ComponentModels.MetaAttribute = Schema.MetaAttributes
-            Dim typeCast As Func(Of String, Object) =
-                Scripting.CasterString(MetaEntry.MetaAttribute.TypeId)
-            Dim attrs As KeyValuePair(Of String, Integer)() =
-                LinqAPI.Exec(Of KeyValuePair(Of String, Integer)) <=
-                    From Name As KeyValuePair(Of String, Integer)
-                    In DataSource.First.Schema
-                    Where Not String.IsNullOrEmpty(Name.Key) AndAlso
-                        Not Schema.ContainsField(Name.Key)
-                    Select Name
-            Dim hashType As Type =
-                MakeDictionaryType(MetaEntry.MetaAttribute.TypeId)
+            Dim type As Type = MetaEntry.MetaAttribute.TypeId
+            Dim typeCast As Scripting.LoadObject = Scripting.CasterString(type)
+            Dim attrs = LinqAPI.Exec(Of KeyValuePair(Of String, Integer)) _
+ _
+                () <= From Name As KeyValuePair(Of String, Integer)
+                      In DataSource.First.Schema
+                      Where Not String.IsNullOrEmpty(Name.Key) AndAlso
+                          Not Schema.ContainsField(Name.Key)
+                      Select Name
+
+            Dim hashType As Type = MakeDictionaryType(type)
             Dim o As Object
 
             For Each x As SeqValue(Of T) In buf.SeqIterator

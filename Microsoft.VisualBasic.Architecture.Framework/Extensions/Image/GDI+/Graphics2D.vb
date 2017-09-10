@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::cf3c21e38c7c9a644c86a8735311e1df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::b079e808b9d727f7db9831b222a30482, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Graphics2D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,7 +37,8 @@ Imports System.Reflection
 Namespace Imaging
 
     ''' <summary>
-    ''' GDI+ device handle for encapsulates a GDI+ drawing surface.(GDI+绘图设备句柄，这个对象其实是为了将gdi+绘图与图形模块的SVG绘图操作统一起来的)
+    ''' GDI+ device handle for encapsulates a GDI+ drawing surface.
+    ''' (GDI+绘图设备句柄，这个对象其实是为了将gdi+绘图与图形模块的SVG绘图操作统一起来的)
     ''' </summary>
     ''' <remarks></remarks>
     Public Class Graphics2D : Inherits IGraphics
@@ -87,9 +88,16 @@ Namespace Imaging
             Call Me.New(context.size, context.color.TranslateColor)
         End Sub
 
+        ''' <summary>
+        ''' Can be serialize as a XML file node.
+        ''' </summary>
         Public Structure Context
             Dim size As Size
             Dim color$
+
+            Public Function Create() As Graphics2D
+                Return size.CreateGDIDevice(color.TranslateColor)
+            End Function
         End Structure
 
         Public ReadOnly Property Width As Integer
@@ -116,7 +124,7 @@ Namespace Imaging
         Public Property Font As Font
 
         ''' <summary>
-        ''' Gets the width and height, in pixels, of this image.(图像的大小)
+        ''' Gets the width and height, in pixels, of this <see cref="ImageResource"/>.(图像的大小)
         ''' </summary>
         ''' <returns>A System.Drawing.Size structure that represents the width and height, in pixels,
         ''' of this image.</returns>
@@ -145,12 +153,8 @@ Namespace Imaging
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
         Public Overloads Function Save(path$, Optional Format As ImageFormat = Nothing) As Boolean
-            If Format Is Nothing Then
-                Format = ImageFormat.Png
-            End If
-
             Try
-                Call __save(path, Format)
+                Call __save(path, Format Or Png)
             Catch ex As Exception
                 Return App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
             End Try
@@ -238,13 +242,11 @@ Namespace Imaging
 
 #Region "Implements Class Graphics"
 
-        '
-        ' Summary:
-        '     Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     A System.Drawing.Region that limits the portion of this System.Drawing.Graphics
-        '     that is currently available for drawing.
+        ''' <summary>
+        ''' Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>A System.Drawing.Region that limits the portion of this System.Drawing.Graphics
+        ''' that is currently available for drawing.</returns>
         Public Overrides Property Clip As Region
             Get
                 Return Graphics.Clip
@@ -314,12 +316,11 @@ Namespace Imaging
                 Return Graphics.DpiX
             End Get
         End Property
-        '
-        ' Summary:
-        '     Gets the vertical resolution of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.
+
+        ''' <summary>
+        ''' Gets the vertical resolution of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.</returns>
         Public Overrides ReadOnly Property DpiY As Single
             Get
                 Return Graphics.DpiY
@@ -364,13 +365,12 @@ Namespace Imaging
                 Return Graphics.IsVisibleClipEmpty
             End Get
         End Property
-        '
-        ' Summary:
-        '     Gets or sets the scaling between world units and page units for this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a value for the scaling between world units and page
-        '     units for this System.Drawing.Graphics.
+
+        ''' <summary>
+        ''' Gets or sets the scaling between world units and page units for this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>This property specifies a value for the scaling between world units and page
+        ''' units for this System.Drawing.Graphics.</returns>
         Public Overrides Property PageScale As Single
             Get
                 Return Graphics.PageScale
@@ -511,15 +511,13 @@ Namespace Imaging
         Public Overrides Sub AddMetafileComment(data() As Byte)
             Call Graphics.AddMetafileComment(data)
         End Sub
-        '
-        ' Summary:
-        '     Clears the entire drawing surface and fills it with the specified background
-        '     color.
-        '
-        ' Parameters:
-        '   color:
-        '     System.Drawing.Color structure that represents the background color of the drawing
-        '     surface.
+
+        ''' <summary>
+        ''' Clears the entire drawing surface and fills it with the specified background
+        ''' color.
+        ''' </summary>
+        ''' <param name="color">System.Drawing.Color structure that represents the background color of the drawing
+        ''' surface.</param>
         Public Overrides Sub Clear(color As Color)
             Call Graphics.Clear(color)
         End Sub
@@ -1479,58 +1477,34 @@ Namespace Imaging
         Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
 
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified portion of the specified System.Drawing.Image at the specified
-        '     location and with the specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   destPoints:
-        '     Array of three System.Drawing.PointF structures that define a parallelogram.
-        '
-        '   srcRect:
-        '     System.Drawing.RectangleF structure that specifies the portion of the image object
-        '     to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
-        '     of measure used by the srcRect parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws the specified portion of the specified System.Drawing.Image at the specified
+        ''' location and with the specified size.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="destPoints">Array of three System.Drawing.PointF structures that define a parallelogram.</param>
+        ''' <param name="srcRect">System.Drawing.RectangleF structure that specifies the portion of the image object
+        ''' to draw.</param>
+        ''' <param name="srcUnit">Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
+        ''' of measure used by the srcRect parameter.</param>
         Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
-
+            Call Graphics.DrawImage(image, destPoints, srcRect, srcUnit)
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified portion of the specified System.Drawing.Image at the specified
-        '     location and with the specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   destRect:
-        '     System.Drawing.RectangleF structure that specifies the location and size of the
-        '     drawn image. The image is scaled to fit the rectangle.
-        '
-        '   srcRect:
-        '     System.Drawing.RectangleF structure that specifies the portion of the image object
-        '     to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
-        '     of measure used by the srcRect parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public Overrides Sub DrawImage(image As Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
 
+        ''' <summary>
+        ''' Draws the specified portion of the specified System.Drawing.Image at the specified
+        ''' location and with the specified size.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="destRect">System.Drawing.RectangleF structure that specifies the location and size of the
+        ''' drawn image. The image is scaled to fit the rectangle.</param>
+        ''' <param name="srcRect">System.Drawing.RectangleF structure that specifies the portion of the image object
+        ''' to draw.</param>
+        ''' <param name="srcUnit">Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
+        ''' of measure used by the srcRect parameter.</param>
+        Public Overrides Sub DrawImage(image As Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
+            Call Graphics.DrawImage(image, destRect, srcRect, srcUnit)
         End Sub
         '
         ' Summary:
@@ -4579,7 +4553,7 @@ Namespace Imaging
         '     Resets the world transformation matrix of this System.Drawing.Graphics to the
         '     identity matrix.
         Public Overrides Sub ResetTransform()
-
+            Call Graphics.ResetTransform()
         End Sub
         '
         ' Summary:
@@ -4601,7 +4575,7 @@ Namespace Imaging
         '   angle:
         '     Angle of rotation in degrees.
         Public Overrides Sub RotateTransform(angle As Single)
-
+            Call Graphics.RotateTransform(angle)
         End Sub
         '
         ' Summary:
@@ -5142,7 +5116,16 @@ Namespace Imaging
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
             Return Graphics.MeasureString(text, font)
         End Function
-        '
+
+        ''' <summary>
+        ''' Using <see cref="Font"/>
+        ''' </summary>
+        ''' <param name="text"></param>
+        ''' <returns></returns>
+        Public Overloads Function MeasureString(text As String) As SizeF
+            Return Graphics.MeasureString(text, Font)
+        End Function
+
         ' Summary:
         '     Measures the specified string when drawn with the specified System.Drawing.Font.
         '

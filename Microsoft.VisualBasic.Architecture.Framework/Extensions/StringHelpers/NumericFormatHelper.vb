@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9210900633f200acb6840a493a76652, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\NumericFormatHelper.vb"
+﻿#Region "Microsoft.VisualBasic::4153889b4f625e707f14884c3b933eef, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\NumericFormatHelper.vb"
 
 ' Author:
 ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+
 ''' <summary>
 ''' ###### ``C``货币
 '''
@@ -119,4 +120,3 @@ Public Module NumericFormatHelper
             .ToArray
     End Function
 End Module
-

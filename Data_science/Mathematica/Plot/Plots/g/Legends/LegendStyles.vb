@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a078d8355f04beaeca3061182d5630e, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Legends\LegendStyles.vb"
+﻿#Region "Microsoft.VisualBasic::6a078d8355f04beaeca3061182d5630e, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Legends\LegendStyles.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Namespace Graphic.Legend
     ''' Vector shapes that drawing of this legend.
     ''' </summary>
     Public Enum LegendStyles
+
         ''' <summary>
         ''' 矩形
         ''' </summary>
@@ -68,6 +69,9 @@ Namespace Graphic.Legend
         ''' 正方形
         ''' </summary>
         Square
+        ''' <summary>
+        ''' 圆角矩形
+        ''' </summary>
         RoundRectangle
     End Enum
 End Namespace

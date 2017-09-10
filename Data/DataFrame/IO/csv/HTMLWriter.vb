@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f151a5d56c0cfae8c675f665c839c21, ..\sciBASIC#\Data\DataFrame\IO\csv\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::84a80ea196c0b955e1eeca69c0a870d4, ..\sciBASIC#\Data\DataFrame\IO\csv\HTMLWriter.vb"
 
     ' Author:
     ' 

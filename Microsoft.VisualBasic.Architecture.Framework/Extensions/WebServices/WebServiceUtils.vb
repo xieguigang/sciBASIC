@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5315fc6c3abdc77ba17ffd773c3bd460, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::9b4abb4d986022e5e2dc1c7e581191c4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -671,7 +671,7 @@ RETRY:      Return __get(url, headers, proxy, UA)
                                              save As String,
                                              Optional proxy As String = Nothing,
                                              Optional ua As String = UserAgent.FireFox,
-                                             Optional retry As Integer = 10) As Boolean
+                                             Optional retry As Integer = 0) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::bef8fefc10826d423962fb07c0a92ba1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::6a531a037648a15021792f7acbe0d071, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\List(Of T).vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,8 +32,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Who = Microsoft.VisualBasic.Which
-Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Who = Microsoft.VisualBasic.Linq.Which
 
 Namespace Language
 
@@ -207,7 +206,7 @@ Namespace Language
 
         Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
             Get
-                Return Me(Who.IsTrue(booleans))
+                Return Me(Which.IsTrue(booleans))
             End Get
             Set(value As T())
                 For Each i In booleans.SeqIterator
@@ -456,6 +455,12 @@ Namespace Language
             Return LQuery
         End Operator
 
+        ''' <summary>
+        ''' Elements count not equals to a specific number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
         Public Shared Operator <>(list As List(Of T), count%) As Boolean
             If list Is Nothing Then
                 Return True
@@ -463,8 +468,28 @@ Namespace Language
             Return list.Count <> count
         End Operator
 
+        ''' <summary>
+        ''' Assert that the element counts of this list object is equals to a specifc number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
         Public Shared Operator =(list As List(Of T), count%) As Boolean
             Return Not (list <> count)
+        End Operator
+
+        ''' <summary>
+        ''' <see cref="Enumerable.SequenceEqual(Of T)"/>
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="collection"></param>
+        ''' <returns></returns>
+        Public Shared Operator =(list As List(Of T), collection As IEnumerable(Of T)) As Boolean
+            Return list.SequenceEqual(collection)
+        End Operator
+
+        Public Shared Operator <>(list As List(Of T), collection As IEnumerable(Of T)) As Boolean
+            Return Not list.SequenceEqual(collection)
         End Operator
 
         ''' <summary>

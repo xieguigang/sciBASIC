@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfc787c2c39b1a6dfcd1caca22003d3a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::65e499bb1b7b4d14d5335e2965becb50, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Value.vb"
 
 ' Author:
 ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Scripting
 
 Namespace Language
 
@@ -48,45 +49,37 @@ Namespace Language
             Property Value As T
         End Interface
 
-        '
-        ' Summary:
-        '     Gets a value indicating whether the current System.Nullable`1 object has a valid
-        '     value of its underlying type.
-        '
-        ' Returns:
-        '     true if the current System.Nullable`1 object has a value; false if the current
-        '     System.Nullable`1 object has no value.
+        ''' <summary>
+        ''' Gets a value indicating whether the current System.Nullable`1 object has a valid
+        ''' value of its underlying type.
+        ''' </summary>
+        ''' <returns>true if the current System.Nullable`1 object has a value; false if the current
+        ''' System.Nullable`1 object has no value.</returns>
         Public ReadOnly Property HasValue As Boolean
             Get
                 Return Not Value Is Nothing
             End Get
         End Property
 
-        '
-        ' Summary:
-        '     Retrieves the value of the current System.Nullable`1 object, or the object's
-        '     default value.
-        '
-        ' Returns:
-        '     The value of the System.Nullable`1.Value property if the System.Nullable`1.HasValue
-        '     property is true; otherwise, the default value of the current System.Nullable`1
-        '     object. The type of the default value is the type argument of the current System.Nullable`1
-        '     object, and the value of the default value consists solely of binary zeroes.
+        ''' <summary>
+        ''' Retrieves the value of the current System.Nullable`1 object, or the object's
+        ''' default value.
+        ''' </summary>
+        ''' <returns>The value of the System.Nullable`1.Value property if the System.Nullable`1.HasValue
+        ''' property is true; otherwise, the default value of the current System.Nullable`1
+        ''' object. The type of the default value is the type argument of the current System.Nullable`1
+        ''' object, and the value of the default value consists solely of binary zeroes.</returns>
         Public Function GetValueOrDefault() As T
             Return GetValueOrDefault(Nothing)
         End Function
-        '
-        ' Summary:
-        '     Retrieves the value of the current System.Nullable`1 object, or the specified
-        '     default value.
-        '
-        ' Parameters:
-        '   defaultValue:
-        '     A value to return if the System.Nullable`1.HasValue property is false.
-        '
-        ' Returns:
-        '     The value of the System.Nullable`1.Value property if the System.Nullable`1.HasValue
-        '     property is true; otherwise, the defaultValue parameter.
+
+        ''' <summary>
+        ''' Retrieves the value of the current System.Nullable`1 object, or the specified
+        ''' default value.
+        ''' </summary>
+        ''' <param name="defaultValue">A value to return if the System.Nullable`1.HasValue property is false.</param>
+        ''' <returns>The value of the System.Nullable`1.Value property if the System.Nullable`1.HasValue
+        ''' property is true; otherwise, the defaultValue parameter.</returns>
         Public Function GetValueOrDefault(defaultValue As T) As T
             If Value Is Nothing Then
                 Return defaultValue
@@ -94,28 +87,24 @@ Namespace Language
                 Return Value
             End If
         End Function
-        '
-        ' Summary:
-        '     Indicates whether the current System.Nullable`1 object is equal to a specified
-        '     object.
-        '
-        ' Parameters:
-        '   other:
-        '     An object.
-        '
-        ' Returns:
-        '     true if the other parameter is equal to the current System.Nullable`1 object;
-        '     otherwise, false. This table describes how equality is defined for the compared
-        '     values: Return ValueDescriptiontrueThe System.Nullable`1.HasValue property is
-        '     false, and the other parameter is null. That is, two null values are equal by
-        '     definition.-or-The System.Nullable`1.HasValue property is true, and the value
-        '     returned by the System.Nullable`1.Value property is equal to the other parameter.falseThe
-        '     System.Nullable`1.HasValue property for the current System.Nullable`1 structure
-        '     is true, and the other parameter is null.-or-The System.Nullable`1.HasValue property
-        '     for the current System.Nullable`1 structure is false, and the other parameter
-        '     is not null.-or-The System.Nullable`1.HasValue property for the current System.Nullable`1
-        '     structure is true, and the value returned by the System.Nullable`1.Value property
-        '     is not equal to the other parameter.
+
+        ''' <summary>
+        ''' Indicates whether the current System.Nullable`1 object is equal to a specified
+        ''' object.
+        ''' </summary>
+        ''' <param name="other">An object.</param>
+        ''' <returns>true if the other parameter is equal to the current System.Nullable`1 object;
+        ''' otherwise, false. This table describes how equality is defined for the compared
+        ''' values: Return ValueDescriptiontrueThe System.Nullable`1.HasValue property is
+        ''' false, and the other parameter is null. That is, two null values are equal by
+        ''' definition.-or-The System.Nullable`1.HasValue property is true, and the value
+        ''' returned by the System.Nullable`1.Value property is equal to the other parameter.falseThe
+        ''' System.Nullable`1.HasValue property for the current System.Nullable`1 structure
+        ''' is true, and the other parameter is null.-or-The System.Nullable`1.HasValue property
+        ''' for the current System.Nullable`1 structure is false, and the other parameter
+        ''' is not null.-or-The System.Nullable`1.HasValue property for the current System.Nullable`1
+        ''' structure is true, and the value returned by the System.Nullable`1.Value property
+        ''' is not equal to the other parameter.</returns>
         Public Overrides Function Equals(other As Object) As Boolean
             If other Is Nothing Then
                 Return False
@@ -165,7 +154,7 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Scripting.InputHandler.ToString(Value)
+            Return InputHandler.ToString(Value)
         End Function
 
         Public Overloads Shared Operator +(list As Generic.List(Of Value(Of T)), x As Value(Of T)) As Generic.List(Of Value(Of T))

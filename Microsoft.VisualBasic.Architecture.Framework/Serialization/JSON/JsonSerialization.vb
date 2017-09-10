@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f109d7f42b69a4758cf63a54ebb13d54, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::ad13f492e159e124870763ade14248f1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonSerialization.vb"
 
 ' Author:
 ' 
@@ -30,10 +30,13 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization.Json
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Serialization.JSON
 
@@ -64,7 +67,7 @@ Namespace Serialization.JSON
 
                 Call jsonSer.WriteObject(ms, obj)
 
-                Dim json As String = Encoding.UTF8.GetString(ms.ToArray())
+                Dim json$ = Encoding.UTF8.GetString(ms.ToArray())
                 If indent Then
                     json = Formatter.Format(json)
                 End If
@@ -164,21 +167,37 @@ Namespace Serialization.JSON
             Return json.LoadObject(Of T)(simpleDict)
         End Function
 
-        <Extension>
-        Public Function NamedProperty(Of T)(name As String, value As T) As String
-            Dim json As String = value.GetJson
-            Return $"""{name}"": " & json
-        End Function
+        Const JsonLongTime$ = "\d+-\d+-\d+T\d+:\d+:\d+\.\d+"
 
-        ''' <summary>
-        ''' 生成Json之中的动态属性
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function NamedProperty(Of T)(x As NamedValue(Of T)) As String
-            Return x.Name.NamedProperty(Of T)(x.Value)
+        Public Function EnsureDate(json$, Optional propertyName$ = Nothing) As String
+            Dim pattern$ = $"""{JsonLongTime}"""
+
+            If Not propertyName.StringEmpty Then
+                pattern = $"""{propertyName}""\s*:\s*" & pattern
+            End If
+
+            Dim dates = r.Matches(json, pattern, RegexICSng)
+            Dim sb As New StringBuilder(json)
+            Dim [date] As Date
+
+            For Each m As Match In dates
+                Dim s$ = m.Value
+
+                If Not propertyName.StringEmpty Then
+                    With r.Replace(s, $"""{propertyName}""\s*:", "", RegexICSng) _
+                        .Trim _
+                        .Trim(ASCII.Quot)
+
+                        [date] = Date.Parse(.ref)
+                    End With
+                    sb.Replace(s, $"""{propertyName}"":" & [date].GetJson)
+                Else
+                    [date] = Date.Parse(s.Trim(ASCII.Quot))
+                    sb.Replace(s, [date].GetJson)
+                End If
+            Next
+
+            Return sb.ToString
         End Function
     End Module
 End Namespace

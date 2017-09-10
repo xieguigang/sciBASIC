@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6d5e6f8578503000bca2fb70f978556, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\ExpressionBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::51cefe095d658060cd66c2ccdbc1fb2b, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\ExpressionBuilder.vb"
 
     ' Author:
     ' 

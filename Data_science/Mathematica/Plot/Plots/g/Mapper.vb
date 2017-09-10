@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2b5f6467446c03dc8d9ca08b6314f6c, ..\sciBASIC#\Data_science\Mathematical\Plots\g\Mapper.vb"
+﻿#Region "Microsoft.VisualBasic::21a43f59f2fdd7b00fa665d9a4729d01, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Mapper.vb"
 
     ' Author:
     ' 
@@ -84,12 +84,12 @@ Namespace Graphic
             If Not ignoreAxis Then
 
                 If Not ignoreX Then
-                    xAxis = New Vector(xrange.GetAxisValues(parts, XabsoluteScalling))
+                    xAxis = New Vector(xrange.CreateAxisTicks(parts))
                 Else
                     xAxis = New Vector({0R})
                 End If
                 If Not ignoreY Then
-                    yAxis = New Vector(yrange.GetAxisValues(parts, YabsoluteScalling))
+                    yAxis = New Vector(yrange.CreateAxisTicks(parts))
                 Else
                     yAxis = New Vector({0R})
                 End If

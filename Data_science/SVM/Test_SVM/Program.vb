@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09b037961ffc3c36b4db467c3c5320b5, ..\sciBASIC#\Data_science\SVM\Test_SVM\Program.vb"
+﻿#Region "Microsoft.VisualBasic::9409aeb529bbc0f6c1253b55ea50c0c2, ..\sciBASIC#\Data_science\SVM\Test_SVM\Program.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Module Program
         Return cartesianCoordinateSystem
     End Function
 End Module
-

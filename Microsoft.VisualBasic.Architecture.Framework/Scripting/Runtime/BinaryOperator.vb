@@ -1,34 +1,68 @@
-﻿Imports System.Reflection
+﻿#Region "Microsoft.VisualBasic::79678fcd8dfe7d863c90f766693e85e1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\BinaryOperator.vb"
+
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
 Namespace Scripting.Runtime
 
     ''' <summary>
     ''' Binary operator invoker
     ''' </summary>
-    Public Class BinaryOperator
+    Public Class BinaryOperator : Implements INamedValue
 
-        Dim name$
-        Dim methods As MethodInfo()
+        ReadOnly methods As MethodInfo()
+
+        ''' <summary>
+        ''' The name of this binary operator
+        ''' </summary>
+        Public Property Name As String Implements IKeyedEntity(Of String).Key
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="[overloads]">重名的运算符函数方法</param>
         Sub New([overloads] As MethodInfo())
-            name = [overloads](Scan0).Name
+            Name = [overloads](Scan0).Name
             methods = [overloads]
         End Sub
 
         Public Overrides Function ToString() As String
             If methods.Length = 1 Then
-                Return name
+                Return Name
             Else
-                Return $"{name} (+{methods.Length} Overloads)"
+                Return $"{Name} (+{methods.Length} Overloads)"
             End If
         End Function
 
         ''' <summary>
-        ''' 参数在左边
+        ''' ``args op me``.(参数在左边)
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
@@ -37,7 +71,7 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' 参数在右边
+        ''' ``me op args``.(参数在右边)
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>

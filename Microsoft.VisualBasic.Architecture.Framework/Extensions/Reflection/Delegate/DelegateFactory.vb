@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b42bcb9402a873d9a4ef7a0b25c432cc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\DelegateFactory.vb"
+﻿#Region "Microsoft.VisualBasic::62cf209917c0e51500f46b878d9e0bcb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\DelegateFactory.vb"
 
     ' Author:
     ' 
@@ -563,7 +563,7 @@ Namespace Emit.Delegates
             Return DirectCast(Expression.Lambda(returnExpression, sourceObjectParam).Compile(), Func(Of Object, Object))
         End Function
 
-        Public Function PropertyGet(Of TSource, TProperty)(propertyInfo As PropertyInfo) As Func(Of TSource, TProperty)
+        <Extension> Public Function PropertyGet(Of TSource, TProperty)(propertyInfo As PropertyInfo) As Func(Of TSource, TProperty)
             Return PropertyGet(Of TSource, TProperty)(Nothing, propertyInfo)
         End Function
 

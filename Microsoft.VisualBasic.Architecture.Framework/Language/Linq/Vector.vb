@@ -1,17 +1,56 @@
-﻿Imports System.Dynamic
+﻿#Region "Microsoft.VisualBasic::c6022c1beb03ce9b3d5eb7b374896bb7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\Vector.vb"
+
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Dynamic
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Who = Microsoft.VisualBasic.Which
+Imports CollectionSet = Microsoft.VisualBasic.ComponentModel.DataStructures.Set
 
 Namespace Language
 
+    ''' <summary>
+    ''' VB.NET object collection
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class Vector(Of T) : Inherits DynamicObject
         Implements IEnumerable(Of T)
 
+        ''' <summary>
+        ''' Array that hold the .NET object in this collection
+        ''' </summary>
         Protected buffer As T()
 
+        ''' <summary>
+        ''' Gets the element counts in this vector collection
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Length As Integer
             Get
                 Return buffer.Length
@@ -116,6 +155,11 @@ Namespace Language
         '    End Set
         'End Property
 
+        ''' <summary>
+        ''' Direct get the element in the array by its index.
+        ''' </summary>
+        ''' <param name="index%"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(index%) As T
             Get
                 Return buffer(index)
@@ -154,6 +198,11 @@ Namespace Language
             End Set
         End Property
 
+        ''' <summary>
+        ''' Get subset of the collection by using a continues index
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(range As IntRange) As List(Of T)
             Get
                 Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
@@ -167,6 +216,11 @@ Namespace Language
             End Set
         End Property
 
+        ''' <summary>
+        ''' Gets subset of the collection by using a discontinues index
+        ''' </summary>
+        ''' <param name="indices"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(indices As IEnumerable(Of Integer)) As List(Of T)
             Get
                 Return New List(Of T)(indices.Select(Function(i) buffer(i)))
@@ -189,11 +243,16 @@ Namespace Language
             End Get
         End Property
 
-        Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
+        ''' <summary>
+        ''' Select elements by logical condiction result.
+        ''' </summary>
+        ''' <param name="booleans"></param>
+        ''' <returns></returns>
+        Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of T)
             Get
-                Return Me(Who.IsTrue(booleans))
+                Return New Vector(Of T)(Me(Which.IsTrue(booleans)))
             End Get
-            Set(value As T())
+            Set(value As Vector(Of T))
                 For Each i In booleans.SeqIterator
                     If i.value Then
                         buffer(i) = value(i)
@@ -233,6 +292,17 @@ Namespace Language
         ''' <returns></returns>
         Public Overloads Shared Narrowing Operator CType(v As Vector(Of T)) As T()
             Return v.ToArray
+        End Operator
+
+        ''' <summary>
+        ''' Union two collection directly without <see cref="Enumerable.Distinct"/> operation.
+        ''' (请注意，使用<see cref="CollectionSet"/>集合对象的Union功能会去除重复，而这个操作符则是直接进行合并取``并集``而不去重)
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator &(a As Vector(Of T), b As Vector(Of T)) As Vector(Of T)
+            Return New Vector(Of T)(a.buffer.AsList + b.buffer)
         End Operator
     End Class
 End Namespace

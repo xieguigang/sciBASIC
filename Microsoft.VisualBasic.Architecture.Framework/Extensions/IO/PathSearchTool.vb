@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1716d4a74d6acf549444d9ab70829df8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::e8366e956915b17e58fc0b896323550b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
@@ -357,7 +357,8 @@ Public Module ProgramPathSearchTool
             Call FileIO.FileSystem.CopyFile(source, copyTo)
         Catch ex As Exception
             ex = New Exception({source, copyTo}.GetJson, ex)
-            Call App.LogException(ex)
+            App.LogException(ex)
+
             Return False
         End Try
 
@@ -405,6 +406,17 @@ Public Module ProgramPathSearchTool
     Public Function DirectoryExists(DIR As String) As Boolean
         Return Not String.IsNullOrEmpty(DIR) AndAlso
             FileIO.FileSystem.DirectoryExists(DIR)
+    End Function
+
+    ''' <summary>
+    ''' Get the directory its name of the target <paramref name="dir"/> directory
+    ''' </summary>
+    ''' <param name="dir$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function DirectoryName(dir$) As String
+        Return dir.TrimDIR _
+            .Split("\"c).Last _
+            .Split("/"c).Last
     End Function
 
     ''' <summary>
@@ -899,11 +911,11 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="pcFrom">生成相对路径的参考文件夹</param>
     ''' <param name="pcTo">所需要生成相对路径的目标文件系统对象的绝对路径或者相对路径</param>
+    ''' <param name="appendParent">是否将父目录的路径也添加进入相对路径之中？默认是</param>
     ''' <returns></returns>
-    '''
     <ExportAPI(NameOf(RelativePath),
                Info:="Gets the relative path value of pcTo file system object relative to a reference directory pcFrom")>
-    Public Function RelativePath(pcFrom As String, pcTo As String) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
+    Public Function RelativePath(pcFrom$, pcTo$, Optional appendParent As Boolean = True) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
         Dim lcRelativePath As String = Nothing
         Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim()))
         Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim()))
@@ -958,8 +970,16 @@ Public Module ProgramPathSearchTool
                 lcEndPart = "..\" & lcEndPart
             End While
         End If
+
         lcRelativePath = lcEndPart & lcFileTo
-        Return "..\" & lcRelativePath
+
+        If appendParent Then
+            Return "..\" & lcRelativePath
+        Else
+            ' 2017-8-26
+            ' 为Xlsx打包模块进行的修复
+            Return lcRelativePath.Split("\"c).Skip(1).JoinBy("\")
+        End If
     End Function
 
     ''' <summary>
@@ -980,17 +1000,19 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     '''
     <ExportAPI("Dir.FullPath", Info:="Gets the full path of the directory.")>
-    <Extension> Public Function GetDirectoryFullPath(dir As String) As String
+    <Extension> Public Function GetDirectoryFullPath(dir$, <CallerMemberName> Optional stack$ = Nothing) As String
         Try
             Return FileIO.FileSystem _
                 .GetDirectoryInfo(dir) _
                 .FullName _
                 .Replace("\", "/")
         Catch ex As Exception
+            stack = stack & " --> " & NameOf(GetDirectoryFullPath)
+
             If dir = "/" AndAlso Not App.IsMicrosoftPlatform Then
                 Return "/"  ' Linux上面已经是全路径了，root
             Else
-                ex = New Exception(dir, ex)
+                ex = New Exception(stack & ": " & dir, ex)
                 Call App.LogException(ex)
                 Call ex.PrintException
                 Return dir

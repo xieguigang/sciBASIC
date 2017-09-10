@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::e0e273615bd139e71819a47b6b0ed7dc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::1868f9b8353e26d25ec1c3a3c2b03ad9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -57,19 +57,13 @@ Namespace Math
         Public Const E# = sys.E
 
 #Region "Imports System.Math"
-        '
-        ' Summary:
-        '     Returns the smaller of two 8-bit unsigned integers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two 8-bit unsigned integers to compare.
-        '
-        '   val2:
-        '     The second of two 8-bit unsigned integers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is smaller.
+
+        ''' <summary>
+        ''' Returns the smaller of two 8-bit unsigned integers.
+        ''' </summary>
+        ''' <param name="val1">The first of two 8-bit unsigned integers to compare.</param>
+        ''' <param name="val2">The second of two 8-bit unsigned integers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Min(val1 As Byte, val2 As Byte) As Byte
             If val1 < val2 Then
@@ -78,19 +72,13 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the smaller of two 8-bit signed integers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two 8-bit signed integers to compare.
-        '
-        '   val2:
-        '     The second of two 8-bit signed integers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is smaller.
+
+        ''' <summary>
+        ''' Returns the smaller of two 8-bit signed integers.
+        ''' </summary>
+        ''' <param name="val1">The first of two 8-bit signed integers to compare.</param>
+        ''' <param name="val2">The second of two 8-bit signed integers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Min(val1 As SByte, val2 As SByte) As SByte
             If val1 < val2 Then
@@ -99,19 +87,13 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the larger of two decimal numbers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two decimal numbers to compare.
-        '
-        '   val2:
-        '     The second of two decimal numbers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is larger.
+
+        ''' <summary>
+        ''' Returns the larger of two decimal numbers.
+        ''' </summary>
+        ''' <param name="val1">The first of two decimal numbers to compare.</param>
+        ''' <param name="val2">The second of two decimal numbers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is larger.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Max(val1 As Decimal, val2 As Decimal) As Decimal
             If val1 > val2 Then
@@ -120,20 +102,14 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the larger of two double-precision floating-point numbers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two double-precision floating-point numbers to compare.
-        '
-        '   val2:
-        '     The second of two double-precision floating-point numbers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is larger. If val1, val2, or both val1 and
-        '     val2 are equal to System.Double.NaN, System.Double.NaN is returned.
+
+        ''' <summary>
+        ''' Returns the larger of two double-precision floating-point numbers.
+        ''' </summary>
+        ''' <param name="val1">The first of two double-precision floating-point numbers to compare.</param>
+        ''' <param name="val2">The second of two double-precision floating-point numbers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is larger. If val1, val2, or both val1 and
+        ''' val2 are equal to System.Double.NaN, System.Double.NaN is returned.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Max(val1 As Double, val2 As Double) As Double
             If val1 > val2 Then
@@ -142,20 +118,14 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the larger of two single-precision floating-point numbers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two single-precision floating-point numbers to compare.
-        '
-        '   val2:
-        '     The second of two single-precision floating-point numbers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is larger. If val1, or val2, or both val1 and
-        '     val2 are equal to System.Single.NaN, System.Single.NaN is returned.
+
+        ''' <summary>
+        ''' Returns the larger of two single-precision floating-point numbers.
+        ''' </summary>
+        ''' <param name="val1">The first of two single-precision floating-point numbers to compare.</param>
+        ''' <param name="val2">The second of two single-precision floating-point numbers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is larger. If val1, or val2, or both val1 and
+        ''' val2 are equal to System.Single.NaN, System.Single.NaN is returned.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Max(val1 As Single, val2 As Single) As Single
             If val1 > val2 Then
@@ -625,19 +595,13 @@ Namespace Math
         Public Function Log(a As Double, newBase As Double) As Double
             Return sys.Log(a, newBase)
         End Function
-        '
-        ' Summary:
-        '     Returns the smaller of two decimal numbers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two decimal numbers to compare.
-        '
-        '   val2:
-        '     The second of two decimal numbers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is smaller.
+
+        ''' <summary>
+        ''' Returns the smaller of two decimal numbers.
+        ''' </summary>
+        ''' <param name="val1">The first of two decimal numbers to compare.</param>
+        ''' <param name="val2">The second of two decimal numbers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         Public Function Min(val1 As Decimal, val2 As Decimal) As Decimal
             If val1 < val2 Then
@@ -1093,25 +1057,15 @@ Namespace Math
         Public Function DivRem(a As Integer, b As Integer, ByRef result As Integer) As Integer
             Return sys.DivRem(a, b, result)
         End Function
-        '
-        ' Summary:
-        '     Rounds a double-precision floating-point value to a specified number of fractional
-        '     digits.
-        '
-        ' Parameters:
-        '   value:
-        '     A double-precision floating-point number to be rounded.
-        '
-        '   digits:
-        '     The number of fractional digits in the return value.
-        '
-        ' Returns:
-        '     The number nearest to value that contains a number of fractional digits equal
-        '     to digits.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentOutOfRangeException:
-        '     digits is less than 0 or greater than 15.
+
+        ''' <summary>
+        ''' Rounds a double-precision floating-point value to a specified number of fractional
+        ''' digits.
+        ''' </summary>
+        ''' <param name="value">A double-precision floating-point number to be rounded.</param>
+        ''' <param name="digits">The number of fractional digits in the return value.</param>
+        ''' <returns>The number nearest to value that contains a number of fractional digits equal
+        ''' to digits.</returns>
         Public Function Round(value As Double, digits As Integer) As Double
             Return sys.Round(value, digits)
         End Function
@@ -1295,18 +1249,19 @@ Namespace Math
         Public Function Log(d As Double) As Double
             Return sys.Log(d)
         End Function
-        '
-        ' Summary:
-        '     Calculates the integral part of a specified double-precision floating-point number.
-        '
-        ' Parameters:
-        '   d:
-        '     A number to truncate.
-        '
-        ' Returns:
-        '     The integral part of d; that is, the number that remains after any fractional
-        '     digits have been discarded, or one of the values listed in the following table.
-        '     dReturn valueSystem.Double.NaNSystem.Double.NaNSystem.Double.NegativeInfinitySystem.Double.NegativeInfinitySystem.Double.PositiveInfinitySystem.Double.PositiveInfinity
+
+        ''' <summary>
+        ''' Calculates the integral part of a specified double-precision floating-point number.
+        ''' </summary>
+        ''' <param name="d">A number to truncate.</param>
+        ''' <returns>The integral part of d; that is, the number that remains after any fractional
+        ''' digits have been discarded, or one of the values listed in the following table.
+        ''' |<paramref name="d"/>          |Return value                  |
+        ''' |------------------------------|------------------------------|
+        ''' |System.Double.NaN             |System.Double.NaN             |
+        ''' |System.Double.NegativeInfinity|System.Double.NegativeInfinity|
+        ''' |System.Double.PositiveInfinity|System.Double.PositiveInfinity|
+        ''' </returns>
         Public Function Truncate(d As Double) As Double
             Return sys.Truncate(d)
         End Function
@@ -1745,16 +1700,25 @@ Namespace Math
         End Function
 
         ''' <summary>
-        ''' Standard Deviation
+        ''' ## Standard Deviation
+        ''' 
+        ''' In statistics, the standard deviation (SD, also represented by the Greek letter sigma σ or the Latin letter s) 
+        ''' is a measure that is used to quantify the amount of variation or dispersion of a set of data values. A low 
+        ''' standard deviation indicates that the data points tend to be close to the mean (also called the expected value) 
+        ''' of the set, while a high standard deviation indicates that the data points are spread out over a wider range of 
+        ''' values.
+        ''' 
+        ''' > https://en.wikipedia.org/wiki/Standard_deviation
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("STD", Info:="Standard Deviation")>
-        <Extension> Public Function STD(values As IEnumerable(Of Double)) As Double
-            Dim Avg As Double = values.Average
-            Dim LQuery = (From n As Double In values Select (n - Avg) ^ 2).ToArray
-            Return sys.Sqrt(LQuery.Sum / LQuery.Length)
+        <Extension> Public Function SD(values As IEnumerable(Of Double)) As Double
+            Dim data#() = values.ToArray
+            Dim avg# = data.Average
+            Dim sumValue# = Aggregate n As Double In data Into Sum((n - avg) ^ 2)
+            Return sys.Sqrt(sumValue / data.Length)
         End Function
 
         ''' <summary>
@@ -1764,8 +1728,8 @@ Namespace Math
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("STD", Info:="Standard Deviation")>
-        <Extension> Public Function STD(values As IEnumerable(Of Integer)) As Double
-            Return values.Select(Function(x) CDbl(x)).STD
+        <Extension> Public Function SD(values As IEnumerable(Of Integer)) As Double
+            Return values.Select(Function(x) CDbl(x)).SD
         End Function
 
         ''' <summary>
@@ -1775,8 +1739,8 @@ Namespace Math
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("STD", Info:="Standard Deviation")>
-        <Extension> Public Function STD(values As IEnumerable(Of Long)) As Double
-            Return values.Select(Function(x) CDbl(x)).STD
+        <Extension> Public Function SD(values As IEnumerable(Of Long)) As Double
+            Return values.Select(Function(x) CDbl(x)).SD
         End Function
 
         ''' <summary>
@@ -1786,8 +1750,8 @@ Namespace Math
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("STD", Info:="Standard Deviation")>
-        <Extension> Public Function STD(values As IEnumerable(Of Single)) As Double
-            Return values.Select(Function(x) CDbl(x)).STD
+        <Extension> Public Function SD(values As IEnumerable(Of Single)) As Double
+            Return values.Select(Function(x) CDbl(x)).SD
         End Function
 
         ''' <summary>

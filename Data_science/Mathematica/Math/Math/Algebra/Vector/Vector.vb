@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6a1e3f8914a4e5d956c3a0e9cf6115f, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\Vector\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::9e8c8f6677b6f5186f5463db19876f6e, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Vector.vb"
 
 ' Author:
 ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -87,10 +88,10 @@ Namespace LinearAlgebra
         End Sub
 
         ''' <summary>
-        ''' 创建一个空的向量
+        ''' 创建一个空的向量，包含有零个元素
         ''' </summary>
-        Sub New()
-            Call MyBase.New(8)
+        Private Sub New()
+            Call MyBase.New()
         End Sub
 
         ''' <summary>
@@ -545,6 +546,14 @@ Namespace LinearAlgebra
 
         Public Shared Operator <=(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d <= n)
+        End Operator
+
+        Public Shared Operator >=(x As Vector, y As Vector) As BooleanVector
+            Return New BooleanVector(From a In x.SeqIterator Select a.value >= y.buffer(a))
+        End Operator
+
+        Public Shared Operator <=(x As Vector, y As Vector) As BooleanVector
+            Return New BooleanVector(From a In x.SeqIterator Select a.value <= y.buffer(a))
         End Operator
 
 #Region "Syntax support for: Dim v As Vector = {1, 2, 3, 4, 5, 6}"

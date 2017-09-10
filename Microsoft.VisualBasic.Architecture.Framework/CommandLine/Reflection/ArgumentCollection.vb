@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::3f85af5995c68cfd72b54cdd3cff8dea, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ArgumentCollection.vb"
+﻿#Region "Microsoft.VisualBasic::c11d79534caa663d531d0ab88a66ece5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ArgumentCollection.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -119,7 +119,7 @@ Namespace CommandLine.Reflection
 
         Public ReadOnly Property EmptyUsage As Boolean
             Get
-                Dim LQuery = From switch In _params.Values Where String.IsNullOrEmpty(switch.Usage) Select 1 '
+                Dim LQuery = From arg In _params.Values Where String.IsNullOrEmpty(arg.Usage) Select 1 '
                 Return LQuery.Sum = _params.Count
             End Get
         End Property
@@ -158,7 +158,7 @@ Namespace CommandLine.Reflection
                 Let parameter As Argument =
                     TryCast(attr, Argument)
                 Select parameter
-                Order By parameter.Optional Ascending '
+                Order By parameter.Optional Ascending ' 必须参数都在前面，可选参数都在后面
 
             For Each param As Argument In LQuery
                 Call _params.Add(param.Name, param)

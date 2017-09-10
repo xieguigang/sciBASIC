@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::92d5e890fa74de3ae9a93c718af0dc03, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Represents a collection of keys and values.To browse the .NET Framework source
@@ -45,7 +46,25 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
             MyBase.Item(o.Key) = value
         End Set
     End Property
-    
+
+    ''' <summary>
+    ''' The <paramref name="keys"/> element counts should equals to the value length when invoke property set.
+    ''' </summary>
+    ''' <param name="keys"></param>
+    ''' <returns></returns>
+    Default Public Overloads Property Item(keys As IEnumerable(Of String)) As V()
+        Get
+            Return keys _
+                .Select(Function(key) MyBase.Item(key)) _
+                .ToArray
+        End Get
+        Set(value As V())
+            For Each key As SeqValue(Of String) In keys.SeqIterator
+                MyBase.Item(key.value) = value(key)
+            Next
+        End Set
+    End Property
+
     Sub New()
         Call MyBase.New
     End Sub
@@ -223,12 +242,20 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
         Return source.ToDictionary
     End Operator
 
+    Public Shared Widening Operator CType(table As Dictionary(Of String, V)) As Dictionary(Of V)
+        Return New Dictionary(Of V)(table)
+    End Operator
+
     Public Shared Widening Operator CType(source As V()) As Dictionary(Of V)
         Return source.ToDictionary
     End Operator
 
     Public Shared Narrowing Operator CType(source As Dictionary(Of V)) As List(Of V)
         Return New List(Of V)(source.Values)
+    End Operator
+
+    Public Shared Narrowing Operator CType(table As Dictionary(Of V)) As Dictionary(Of String, V)
+        Return New Dictionary(Of String, V)(table)
     End Operator
 
     ''' <summary>
@@ -245,8 +272,24 @@ Public Class Dictionary(Of V As INamedValue) : Inherits SortedDictionary(Of Stri
         Throw New NotSupportedException
     End Operator
 
+    ''' <summary>
+    ''' <see cref="ContainsKey(String)"/>
+    ''' </summary>
+    ''' <param name="hash"></param>
+    ''' <param name="null"></param>
+    ''' <returns></returns>
     Public Shared Operator &(hash As Dictionary(Of V), null As String) As Boolean
         Return hash.ContainsKey(null)
+    End Operator
+
+    ''' <summary>
+    ''' <see cref="ContainsKey(String)"/>
+    ''' </summary>
+    ''' <param name="table"></param>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Public Shared Operator &(table As Dictionary(Of V), x As V) As Boolean
+        Return table & x.Key
     End Operator
 
     Public Shared Narrowing Operator CType(map As Dictionary(Of V)) As V()

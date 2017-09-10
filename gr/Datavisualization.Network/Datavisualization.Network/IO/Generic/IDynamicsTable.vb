@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::270744367dacd1e8402895fc9fd7621f, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\Generic\INetComponent.vb"
+﻿#Region "Microsoft.VisualBasic::c4bb460cea8150dbec72af12b2a03dee, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\Generic\IDynamicsTable.vb"
 
     ' Author:
     ' 

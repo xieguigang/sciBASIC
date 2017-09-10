@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e2defc0ea5ce8fddf9a381fe4d2c792, ..\sciBASIC#\Data_science\Mathematical\Math\HashMaps\HashBlizzard.vb"
+﻿#Region "Microsoft.VisualBasic::6e2defc0ea5ce8fddf9a381fe4d2c792, ..\sciBASIC#\Data_science\Mathematica\Math\Math\HashMaps\HashBlizzard.vb"
 
     ' Author:
     ' 

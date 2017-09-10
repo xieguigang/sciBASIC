@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::c9b7bfe47a9a0edb8e9bfba67f713c04, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::cf4032e44d9e3c50709823c824e1a188, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -107,33 +107,33 @@ Public Module ListExtensions
     End Function
 
     ''' <summary>
-    '''
+    ''' Take elements by <paramref name="index"/> list. 
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="indexs">所要获取的目标对象的下表的集合</param>
+    ''' <param name="index">所要获取的目标对象的下表的集合</param>
     ''' <param name="reversed">是否为反向选择，即返回所有不在目标index集合之中的元素列表</param>
     ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("takes")>
     <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T),
-                                            indexs%(),
+                                            index%(),
                                             Optional offSet% = 0,
                                             Optional reversed As Boolean = False) As T()
         If reversed Then
-            Return source.__reversedTake(indexs)
+            Return source.__reversedTake(index)
         End If
 
-        Dim result As T() = New T(indexs.Length - 1) {}
+        Dim result As T() = New T(index.Length - 1) {}
         Dim indices As New Index(Of Integer)(
-            indexs.Select(Function(oi) oi + offSet))
+            index.Select(Function(oi) oi + offSet))
 
         For Each x As SeqValue(Of T) In source.SeqIterator
             Dim i As Integer = indices(x.i)  ' 在这里得到的是x的index在indexs参数之中的索引位置
 
             If i > -1 Then  ' 当前的原始的下表位于indexs参数值中，则第i个indexs元素所指向的source的元素就是x，将其放入对应的结果列表之中
-                result(i) = +x
+                result(i) = x.value
             End If
         Next
 

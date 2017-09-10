@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43877972980d5b272b42619859d5d8d2, ..\sciBASIC#\Data_science\Mathematical\Math\LinearAlgebra\RSyntax\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::b472410d8bce600e295391d8b87e348a, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\RSyntax\Math\Math.vb"
 
 ' Author:
 ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -84,9 +85,29 @@ Namespace SyntaxAPI.MathExtension
             Return x.Max
         End Function
 
+        Public Function Max(x As Vector, y#) As Vector
+            Return x.Select(Function(xi) sys.Max(xi, y)).AsVector
+        End Function
+
+        Public Function Max(x As Vector, y As Vector) As Vector
+            Return x.SeqIterator _
+                .Select(Function(i) sys.Max(i.value, y(i))) _
+                .AsVector
+        End Function
+
         <ExportAPI("Min")>
         Public Function Min(x As Vector) As Double
             Return x.Min
+        End Function
+
+        Public Function Min(x As Vector, y#) As Vector
+            Return x.Select(Function(xi) sys.Min(xi, y)).AsVector
+        End Function
+
+        Public Function Min(x As Vector, y As Vector) As Vector
+            Return x.SeqIterator _
+                .Select(Function(i) sys.Min(i.value, y(i))) _
+                .AsVector
         End Function
 
         ''' <summary>
