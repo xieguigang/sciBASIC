@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -161,13 +162,15 @@ Namespace Heatmap
                                 Call g.DrawRectangles(Pens.WhiteSmoke, {rect})
                             End If
                             If drawValueLabel Then
-                                key = c.FormatNumeric(2)
-                                Dim ksz As SizeF = g.MeasureString(key, valuelabelFont)
-                                Dim kpos As New PointF With {
-                                    .X = rect.Left + (rect.Width - ksz.Width) / 2,
-                                    .Y = rect.Top + (rect.Height - ksz.Height) / 2
-                                }
-                                Call g.DrawString(key, valuelabelFont, Brushes.White, kpos)
+
+                                With c.ToString("F2")
+                                    Dim ksz As SizeF = g.MeasureString(.ref, valuelabelFont)
+                                    Dim kpos As New PointF With {
+                                        .X = rect.Left + (rect.Width - ksz.Width) / 2,
+                                        .Y = rect.Top + (rect.Height - ksz.Height) / 2
+                                    }
+                                    Call g.DrawString(.ref, valuelabelFont, Brushes.White, kpos)
+                                End With
                             End If
 
                             args.left += dw!

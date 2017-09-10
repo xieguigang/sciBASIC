@@ -212,7 +212,7 @@ Namespace Heatmap
                 Next
             Else
                 ' 绘制列标签的class
-                Dim width% = layout.Width + interval / 3
+                Dim width% = layout.Width
                 Dim height% = widthOrHeight / 3
                 Dim step! = width / orders.Length
                 Dim top = layout.Top - height - interval
