@@ -581,14 +581,11 @@ Namespace CommandLine
         ''' <param name="parameter">Command parameter name in the command line inputs.</param>
         ''' <param name="__getObject"></param>
         ''' <returns></returns>
-        Public Function GetObject(Of T)(parameter As String, __getObject As Func(Of String, T)) As T
-            If __getObject Is Nothing Then
-                Return Nothing
-            End If
-
-            Dim value As String = Me(parameter)
-            Dim obj As T = __getObject(arg:=value)
-            Return obj
+        Public Function GetObject(Of T)(parameter$, Optional __getObject As Func(Of String, T) = Nothing) As T
+            Dim value$ = Me(parameter)
+            Dim obj = (__getObject Or StringParser(GetType(T)))(arg:=value)
+            Dim x As T = DirectCast(obj, T)
+            Return x
         End Function
 
         ''' <summary>

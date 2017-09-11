@@ -80,6 +80,10 @@ Namespace Scripting
             {GetType(SizeF), AddressOf FloatSizeParser}
         }
 
+        Public Function StringParser(type As Type) As DefaultValue(Of Func(Of String, Object))
+            Return New Func(Of String, Object)(Function(s$) s.CTypeDynamic(type))
+        End Function
+
         ''' <summary>
         ''' Converts a string expression which was input from the console or script file to the specified type.
         ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值，空字符串也会返回空值)
