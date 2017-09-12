@@ -38,7 +38,7 @@ Namespace IO
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
 
-        Public Property ID As String Implements INamedValue.Key
+        Public Overridable Property ID As String Implements INamedValue.Key
 
         Sub New()
         End Sub

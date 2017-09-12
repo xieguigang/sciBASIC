@@ -29,8 +29,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Axis
 
@@ -57,6 +58,7 @@ Namespace Graphic.Axis
             ' if 0 Is between Then the min And max, And Get the range Of the data.
             Dim zeroFlag As Boolean = False
             Dim range = max - min
+            Dim inputRange As New DoubleRange(min, max)
 
             If range = 0R Then
                 Return {}
@@ -134,35 +136,45 @@ Namespace Graphic.Axis
                 Loop
 
                 ' this arbitrarily enforces step_arrays of length between 4 And 10
-                If (stepArray.Count < 11 AndAlso stepArray.Count > 4) Then
 
-                    ' All that remains is to score all the candidate arrays. 
-                    ' I’m not going to include my scorer, because there are a 
-                    ' lot of arbitrary choices involved, but basically I look at 
-                    ' how much space each array wastes compared to the data use 
-                    ' that as a starting value. Each array gets the score 10^percent 
-                    ' wasted space – then I further penalize the array for large 
-                    ' values of ticks, tick values that I don’t like as much 
-                    ' (.15 for example, is great in certain cases, but probably 
-                    ' shouldn’t be liked as much by the function as .1). 
-                    ' The array with the lowest score ‘wins’.
-                    candidateArray += stepArray.ToArray
-                End If
+                ' 2017-9-12 假若在这里直接使用个数来限制最终的结果的话，很可能会出现candidateArray为空的情况
+                ' 所以为了避免出现这个问题，在这里就不进行限制了，直接添加结果到候选的数据集之中
+                ' If (stepArray.Count < 11 AndAlso stepArray.Count > 4) Then
+
+                ' All that remains is to score all the candidate arrays. 
+                ' I’m not going to include my scorer, because there are a 
+                ' lot of arbitrary choices involved, but basically I look at 
+                ' how much space each array wastes compared to the data use 
+                ' that as a starting value. Each array gets the score 10^percent 
+                ' wasted space – then I further penalize the array for large 
+                ' values of ticks, tick values that I don’t like as much 
+                ' (.15 for example, is great in certain cases, but probably 
+                ' shouldn’t be liked as much by the function as .1). 
+                ' The array with the lowest score ‘wins’.
+                candidateArray += stepArray.ToArray
+                ' End If
             Next
 
-            With candidateArray.Select(Function(ar) Math.Abs(ar.Length - ticks))
+            ' 通过分别计算ticks的数量差值，是否容纳了输入的[min,max]范围来判断是否合适
+            With candidateArray _
+                .Select(Function(ar)
+                            If ar.Range.IsInside(inputRange) Then
+                                ' +1 是为了防止乘以0，导致整个结果都为零，出现min的index被误判的情况出现
+                                Return {
+                                    Abs(ar.Length - ticks) + 1,
+                                    Abs(ar.Min - inputRange.Min) + 1,
+                                    Abs(ar.Max - inputRange.Max) + 1
+                                }.ProductALL
+                            Else
+                                Return Integer.MaxValue
+                            End If
+                        End Function)
+
                 Dim tickArray#() = candidateArray(Which.Min(.ref))
 
                 For i As Integer = 0 To tickArray.Length - 1
                     tickArray(i) = Math.Round(tickArray(i), decimalDigits)
                 Next
-
-                'If candidateArray.All(Function(x) Val(x.ToString.Split("."c).Last) = 0) Then
-                '    ' 全部都是整数，将小数点后面的零都去掉
-                '    For i As Integer = 0 To candidateArray.Length - 1
-                '        candidateArray(i) = CInt(candidateArray(i))
-                '    Next
-                'End If
 
                 Return tickArray
             End With

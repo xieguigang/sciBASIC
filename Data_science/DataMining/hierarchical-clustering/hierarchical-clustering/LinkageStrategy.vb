@@ -1,32 +1,31 @@
 ﻿#Region "Microsoft.VisualBasic::396377552d340d33653dbf49ed4b55e9, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\LinkageStrategy.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 '
@@ -76,7 +75,7 @@ Public Class WeightedLinkageStrategy
         For Each distance As Distance In distances
             weightTotal += distance.Weight
             sum += distance.Distance * distance.Weight
-        Next distance
+        Next
 
         Return New Distance(sum / weightTotal, weightTotal)
     End Function
@@ -90,7 +89,8 @@ Public Class CompleteLinkageStrategy
 
         For Each dist As Distance In distances
             If Double.IsNaN(max) OrElse dist.Distance > max Then max = dist.Distance
-        Next dist
+        Next
+
         Return New Distance(max)
     End Function
 End Class
@@ -104,12 +104,14 @@ Public Class AverageLinkageStrategy
 
         For Each dist As Distance In distances
             sum += dist.Distance
-        Next dist
+        Next
+
         If distances.Count > 0 Then
             result = sum / distances.Count
         Else
             result = 0.0
         End If
+
         Return New Distance(result)
     End Function
 End Class

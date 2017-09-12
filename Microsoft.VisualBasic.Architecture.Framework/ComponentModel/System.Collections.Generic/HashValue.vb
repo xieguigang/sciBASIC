@@ -27,25 +27,27 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Structure HashValue : Implements INamedValue
+Namespace ComponentModel.Collection
 
-    Public Property Identifier As String Implements INamedValue.Key
-    Public Property value As String
+    Public Structure HashValue : Implements INamedValue
 
-    Sub New(name As String, value As String)
-        Me.Identifier = name
-        Me.value = value
-    End Sub
+        Public Property key As String Implements INamedValue.Key
+        Public Property value As String
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
+        Sub New(name As String, value As String)
+            Me.key = name
+            Me.value = value
+        End Sub
 
-    Public Shared Operator +(hash As Dictionary(Of String, String), tag As HashValue) As Dictionary(Of String, String)
-        Call hash.Add(tag.Identifier, tag.value)
-        Return hash
-    End Operator
-End Structure
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
+        Public Shared Operator +(hash As Dictionary(Of String, String), tag As HashValue) As Dictionary(Of String, String)
+            Call hash.Add(tag.key, tag.value)
+            Return hash
+        End Operator
+    End Structure
+End Namespace

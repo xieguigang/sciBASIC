@@ -364,34 +364,37 @@ Public Module KeyValuePairExtensions
         Return hash
     End Function
 
+    Const sourceEmpty$ = "Source is nothing, returns empty dictionary table!"
+
     ''' <summary>
     ''' Creates a <see cref="System.Collections.Generic.Dictionary"/>`2 from an <see cref="System.Collections.Generic.IEnumerable"/>`1
     ''' according to a specified key selector function.
     ''' </summary>
-    ''' <typeparam name="T">Unique identifier provider</typeparam>
+    ''' <typeparam name="T">Unique identifier provider <see cref="INamedValue.Key"/></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
     <Extension>
     Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T)) As Dictionary(Of T)
-        Dim hash As Dictionary(Of T) = New Dictionary(Of T)
-        Dim i As Integer = 0
-
         If source Is Nothing Then
-            Call VBDebugger.Warning("Source is nothing, returns empty dictionary table!")
-            Return hash
+            Call sourceEmpty.Warning
+            Return New Dictionary(Of T)
         End If
 
+        Dim i As Integer = 0
+
         Try
-            For Each item As T In source
-                Call hash.Add(item.Key, item)
-                i += 1
-            Next
+            With New Dictionary(Of T)
+                For Each item As T In source
+                    Call .Add(item.Key, item)
+                    i += 1
+                Next
+
+                Return .ref
+            End With
         Catch ex As Exception
-            ex = New Exception("Identifier -> [ " & source(i).Key & " ]", ex)
+            ex = New Exception("key --> [ " & source(i).Key & " ]", ex)
             Throw ex
         End Try
-
-        Return hash
     End Function
 
     <Extension> Public Function Add(Of TKey, TValue)(ByRef list As List(Of KeyValuePair(Of TKey, TValue)), key As TKey, value As TValue) As List(Of KeyValuePair(Of TKey, TValue))

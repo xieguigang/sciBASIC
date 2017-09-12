@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 
 Namespace Quantile
 
@@ -45,9 +46,9 @@ Namespace Quantile
 
                 With exp.Split(":"c).Last.Trim
                     If .IsPattern("\d+(\.\d+)?[%]") Then
-                        q = Val(exp) / 100
+                        q = Val(.ref) / 100
                     Else
-                        q = Val(exp)
+                        q = Val(.ref)
                     End If
                 End With
 
@@ -76,6 +77,8 @@ Namespace Quantile
             Dim quantile = array.Select(Function(o) o.x).GKQuantile
             Dim threshold# = quantile.Query(q)
 
+            Call $"quantile {q * 100}% => {threshold}".__INFO_ECHO
+
             Return array _
                 .Where(Function(o) o.x >= threshold) _
                 .Select(Function(x) x.obj)
@@ -94,6 +97,8 @@ Namespace Quantile
                 Case Else
                     Throw New NotSupportedException("???" & name.ToString)
             End Select
+
+            Call $"quartile {name.ToString} => {q}".__INFO_ECHO
 
             Return array _
                 .Where(Function(o) o.x >= q#) _

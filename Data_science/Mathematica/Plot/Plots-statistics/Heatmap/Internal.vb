@@ -15,6 +15,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Heatmap
 
@@ -24,7 +25,15 @@ Namespace Heatmap
         ''' <summary>
         ''' 绘制矩阵之中的方格在xy上面的步进值
         ''' </summary>
-        Public dStep As SizeF
+        Public ReadOnly Property dStep As SizeF
+            Get
+                Return New SizeF With {
+                    .Width = matrixPlotRegion.Width / ColOrders.Length,
+                    .Height = matrixPlotRegion.Height / RowOrders.Length
+                }
+            End Get
+        End Property
+
         ''' <summary>
         ''' 矩阵区域的大小和位置
         ''' </summary>
@@ -37,10 +46,25 @@ Namespace Heatmap
 
     End Class
 
+    ''' <summary>
+    ''' Draw a specific heatmap element
+    ''' </summary>
     Public Enum DrawElements As Byte
+        ''' <summary>
+        ''' Draw nothing
+        ''' </summary>
         None = 0
+        ''' <summary>
+        ''' Only draw the heatmap element on matrix row
+        ''' </summary>
         Rows = 2
+        ''' <summary>
+        ''' Only draw the heatmap element on the column
+        ''' </summary>
         Cols = 4
+        ''' <summary>
+        ''' Draw both row and column heatmap elements
+        ''' </summary>
         Both = 8
     End Enum
 
@@ -58,18 +82,29 @@ Namespace Heatmap
         ''' <param name="data"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
+        Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels#) As IEnumerable(Of DataSet)
             Dim levelRange As DoubleRange = {0R, levels}
             Return data _
                 .Select(Function(x)
                             Dim range As DoubleRange = x.Properties.Values.Range
-                            Return New DataSet With {
-                                .ID = x.ID,
-                                .Properties = x _
+                            Dim values As Dictionary(Of String, Double)
+
+                            If range.Length = 0 Then
+                                values = x.Properties _
+                                    .Keys _
+                                    .ToDictionary(Function(key) key,
+                                                  Function(key) levels)
+                            Else
+                                values = x _
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
                                                   Function(key) range.ScaleMapping(x(key), levelRange))
+                            End If
+
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = values
                             }
                         End Function)
         End Function
@@ -143,6 +178,62 @@ Namespace Heatmap
         End Function
 
         ''' <summary>
+        ''' 如果没有绘制层次聚类树，但是仍然需要绘制出class的颜色条的话，则可以使用这个方法来完成绘制操作
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="orders$"></param>
+        ''' <param name="colors"></param>
+        ''' <param name="layout">这个是热图矩阵的绘制区域，但是这个函数会使用这个值来计算出class的绘制区域</param>
+        ''' <param name="rowClass"></param>
+        ''' <param name="widthOrHeight">``row -> width/col -> height``</param>
+        <Extension>
+        Private Sub DrawClass(g As IGraphics, orders$(), colors As Dictionary(Of String, String), layout As Rectangle, rowClass As Boolean, widthOrHeight%, interval%)
+            Dim color As SolidBrush
+
+            If rowClass Then
+                ' 绘制行标签的class
+                Dim width% = widthOrHeight / 3
+                Dim height = layout.Height
+                Dim step! = height / orders.Length
+                Dim top = layout.Top
+                Dim left = layout.Left - width - interval
+
+                For Each rowName$ In orders
+                    color = colors(rowName).GetBrush
+                    layout = New Rectangle With {
+                        .X = left,
+                        .Y = top,
+                        .Width = width,
+                        .Height = height
+                    }
+
+                    g.FillRectangle(color, layout)
+                    top += [step]
+                Next
+            Else
+                ' 绘制列标签的class
+                Dim width% = layout.Width
+                Dim height% = widthOrHeight / 3
+                Dim step! = width / orders.Length
+                Dim top = layout.Top - height - interval
+                Dim left = layout.Left
+
+                For Each colName$ In orders
+                    color = colors(colName).GetBrush
+                    layout = New Rectangle With {
+                        .X = left,
+                        .Y = top,
+                        .Width = [step],
+                        .Height = height
+                    }
+
+                    g.FillRectangle(color, layout)
+                    left += [step]
+                Next
+            End If
+        End Sub
+
+        ''' <summary>
         ''' 一些共同的绘图元素过程
         ''' </summary>
         ''' <param name="drawLabels">是否绘制下面的标签，对于下三角形的热图而言，是不需要绘制下面的标签的，则设置这个参数为False</param>
@@ -162,6 +253,7 @@ Namespace Heatmap
                                        scaleMethod As DrawElements,
                                        drawLabels As DrawElements,
                                        drawDendrograms As DrawElements,
+                                       drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)),
                                        dendrogramLayout As (A%, B%),
                                        reverseClrSeq As Boolean,
                                        Optional colors As SolidBrush() = Nothing,
@@ -195,7 +287,7 @@ Namespace Heatmap
             Dim colKeys$()
 
             Dim configDendrogramCanvas =
-                Function(cluster As Cluster)
+                Function(cluster As Cluster, [class] As Dictionary(Of String, String))
                     Return New DendrogramPanel With {
                         .LineColor = Color.Black,
                         .ScaleValueDecimals = 0,
@@ -204,16 +296,19 @@ Namespace Heatmap
                         .ShowScale = False,
                         .ShowDistanceValues = False,
                         .ShowLeafLabel = False,
-                        .LinkDotRadius = 0
+                        .LinkDotRadius = 0,
+                        .ClassTable = [class]
                     }
                 End Function
-            Dim DATA#() = array _
+            Dim DATArange As DoubleRange = array _
                 .Select(Function(x) x.Properties.Values) _
                 .IteratesALL _
                 .Join(min, max) _
                 .Distinct _
                 .ToArray
-            Dim ticks = AxisScalling.CreateAxisTicks(DATA, ticks:=5)
+            Dim ticks = DATArange.CreateAxisTicks(ticks:=5)
+
+            Call $"{DATArange.ToString} -> {ticks.GetJson}".__INFO_ECHO
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
@@ -248,6 +343,14 @@ Namespace Heatmap
                     Else
                         layoutA = 0
                     End If
+                    If Not drawClass.rowClass.IsNullOrEmpty Then
+                        Dim d = dendrogramLayout.A / 3
+
+                        layoutA += d
+                        left += d
+                        dw -= d
+                    End If
+
                     ' 有列的聚类树
                     If drawDendrograms.HasFlag(DrawElements.Cols) Then
                         ' B
@@ -257,6 +360,26 @@ Namespace Heatmap
                     Else
                         layoutB = 0
                     End If
+                    If Not drawClass.colClass.IsNullOrEmpty Then
+                        Dim d = dendrogramLayout.B / 3
+
+                        layoutB += d
+                        top += d
+                        dh -= d
+                    End If
+
+                    Dim interval% = 10  ' 层次聚类树与热图矩阵之间的距离
+
+                    left += interval
+                    top += interval
+
+                    Dim matrixPlotRegion As New Rectangle With {
+                        .Location = New Point(left, top),
+                        .Size = New Size With {
+                            .Width = dw - interval,
+                            .Height = dh - interval
+                        }
+                    }
 
                     ' 2. 然后才能够进行绘图
                     If drawDendrograms.HasFlag(DrawElements.Rows) Then
@@ -270,9 +393,9 @@ Namespace Heatmap
                             }
                             Dim dsize As New Size With {
                                 .Width = dendrogramLayout.A,
-                                .Height = dh
+                                .Height = matrixPlotRegion.Height
                             }
-                            rowKeys = configDendrogramCanvas(cluster) _
+                            rowKeys = configDendrogramCanvas(cluster, drawClass.rowClass) _
                                 .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
                                 .OrderBy(Function(x) x.Value.Y) _
                                 .Keys
@@ -283,34 +406,28 @@ Namespace Heatmap
 
                     Else
                         rowKeys = array.Keys
+
+                        If Not drawClass.rowClass.IsNullOrEmpty Then
+                            ' 没有绘制层次聚类树，但是行的class有值，则会绘制行的class legend
+                            Call g.DrawClass(rowKeys, drawClass.rowClass, matrixPlotRegion, True, dendrogramLayout.A, interval)
+                        End If
                     End If
+
                     If drawDendrograms.HasFlag(DrawElements.Cols) Then
                         Dim cluster As Cluster = Time(AddressOf array.Transpose.RunCluster)
-                        Dim dp As New DendrogramPanel With {
-                            .LineColor = Color.Black,
-                            .ScaleValueDecimals = 0,
-                            .ScaleValueInterval = 1,
-                            .Model = cluster,
-                            .ShowScale = False,
-                            .ShowDistanceValues = False
-                        }
-                        colKeys = dp _
+
+                        colKeys = configDendrogramCanvas(cluster, drawClass.colClass) _
                             .Paint(DirectCast(g, Graphics2D), New Rectangle(300, 100, 500, 500)) _
                             .OrderBy(Function(x) x.Value.X) _
                             .Keys
                     Else
                         colKeys = array.PropertyNames
+
+                        If Not drawClass.colClass.IsNullOrEmpty Then
+                            ' 没有绘制层次聚类树，但是列的class有值，则会绘制列的class legend
+                            Call g.DrawClass(colKeys, drawClass.colClass, matrixPlotRegion, False, dendrogramLayout.B, interval)
+                        End If
                     End If
-
-                    left += 10
-
-                    Dim matrixPlotRegion As New Rectangle With {
-                        .Location = New Point(left, top),
-                        .Size = New Size(dw, dh)
-                    }
-
-                    dw /= keys.Length
-                    dh /= array.Length
 
                     Dim levels As New Dictionary(Of String, DataSet)
                     Dim scaleData As DataSet()
@@ -353,7 +470,6 @@ Namespace Heatmap
 
                     Dim args As New PlotArguments With {
                         .colors = colors,
-                        .dStep = New SizeF(dw, dh),
                         .left = left,
                         .levels = levels,
                         .top = top,
@@ -367,6 +483,7 @@ Namespace Heatmap
                     ' 绘制heatmap之中的矩阵内容
                     Call plot(g, rect, args)
 
+                    dw = args.dStep.Width
                     left = args.left
                     top = args.top
                     left += dw / 2

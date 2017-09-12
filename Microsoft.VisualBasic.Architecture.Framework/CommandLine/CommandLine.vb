@@ -392,20 +392,22 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' [管道函数] 假若参数名存在，则返回本地文件的文件指针，否则返回标准输出的指针
+        ''' If the <see cref="StreamWriter.BaseStream"/> is <see cref="FileStream"/>, then it means not a ``std_out`` pointer.
+        ''' ([管道函数] 假若参数名存在，则返回本地文件的文件指针，否则返回标准输出的指针)
         ''' </summary>
         ''' <param name="param"></param>
         ''' <returns></returns>
-        Public Function OpenStreamOutput(param As String) As StreamWriter
+        Public Function OpenStreamOutput(param$, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
             Dim path As String = Me(param)
+            Dim textEncode As Encoding = encoding.CodePage
 
             If path.StringEmpty Then
-                Return New StreamWriter(Console.OpenStandardOutput)
+                Return New StreamWriter(Console.OpenStandardOutput, textEncode)
             Else
                 Call path.ParentPath.MkDIR
 
                 Dim fs As New FileStream(path, FileMode.OpenOrCreate, access:=FileAccess.ReadWrite)
-                Return New StreamWriter(fs)
+                Return New StreamWriter(fs, textEncode)
             End If
         End Function
 
@@ -579,14 +581,11 @@ Namespace CommandLine
         ''' <param name="parameter">Command parameter name in the command line inputs.</param>
         ''' <param name="__getObject"></param>
         ''' <returns></returns>
-        Public Function GetObject(Of T)(parameter As String, __getObject As Func(Of String, T)) As T
-            If __getObject Is Nothing Then
-                Return Nothing
-            End If
-
-            Dim value As String = Me(parameter)
-            Dim obj As T = __getObject(arg:=value)
-            Return obj
+        Public Function GetObject(Of T)(parameter$, Optional __getObject As Func(Of String, T) = Nothing) As T
+            Dim value$ = Me(parameter)
+            Dim obj = (__getObject Or StringParser(GetType(T)))(arg:=value)
+            Dim x As T = DirectCast(obj, T)
+            Return x
         End Function
 
         ''' <summary>

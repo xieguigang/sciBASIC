@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -92,7 +93,7 @@ Namespace Heatmap
                              Optional customColors As Color() = Nothing,
                              Optional reverseClrSeq As Boolean = False,
                              Optional mapLevels% = 100,
-                             Optional mapName$ = ColorMap.PatternJet,
+                             Optional mapName$ = ColorBrewer.DivergingSchemes.RdYlBu11,
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
@@ -100,6 +101,7 @@ Namespace Heatmap
                              Optional drawScaleMethod As DrawElements = DrawElements.Cols,
                              Optional drawLabels As DrawElements = DrawElements.Both,
                              Optional drawDendrograms As DrawElements = DrawElements.Rows,
+                             Optional drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)) = Nothing,
                              Optional dendrogramLayout$ = "200,200",
                              Optional rowLabelfontStyle$ = CSSFont.Win7Normal,
                              Optional colLabelFontStyle$ = CSSFont.Win7LargerBold,
@@ -147,7 +149,10 @@ Namespace Heatmap
                                 If(level% > colors.Length - 1,
                                     colors.Length - 1,
                                     level))
-                            Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
+                            Dim rect As New RectangleF With {
+                                .Location = New PointF(args.left, args.top),
+                                .Size = blockSize
+                            }
 #If DEBUG Then
                             ' Call $"{level} -> {b.Color.ToString}".__DEBUG_ECHO
 #End If
@@ -157,13 +162,15 @@ Namespace Heatmap
                                 Call g.DrawRectangles(Pens.WhiteSmoke, {rect})
                             End If
                             If drawValueLabel Then
-                                key = c.FormatNumeric(2)
-                                Dim ksz As SizeF = g.MeasureString(key, valuelabelFont)
-                                Dim kpos As New PointF With {
-                                    .X = rect.Left + (rect.Width - ksz.Width) / 2,
-                                    .Y = rect.Top + (rect.Height - ksz.Height) / 2
-                                }
-                                Call g.DrawString(key, valuelabelFont, Brushes.White, kpos)
+
+                                With c.ToString("F2")
+                                    Dim ksz As SizeF = g.MeasureString(.ref, valuelabelFont)
+                                    Dim kpos As New PointF With {
+                                        .X = rect.Left + (rect.Width - ksz.Width) / 2,
+                                        .Y = rect.Top + (rect.Height - ksz.Height) / 2
+                                    }
+                                    Call g.DrawString(.ref, valuelabelFont, Brushes.White, kpos)
+                                End With
                             End If
 
                             args.left += dw!
@@ -191,7 +198,7 @@ Namespace Heatmap
 
             Return __plotInterval(
                 plotInternal, array,
-                rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject, logTransform, drawScaleMethod, drawLabels, drawDendrograms, dlayout,
+                rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject, logTransform, drawScaleMethod, drawLabels, drawDendrograms, drawClass, dlayout,
                 reverseClrSeq, customColors.GetBrushes, mapLevels, mapName,
                 size.SizeParser, margin, bg,
                 legendTitle, legendFont, Nothing,
