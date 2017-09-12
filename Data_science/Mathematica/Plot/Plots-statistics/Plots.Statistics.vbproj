@@ -176,6 +176,7 @@
     <Compile Include="Heatmap\HeatmapTable.vb" />
     <Compile Include="Heatmap\Internal.vb" />
     <Compile Include="Heatmap\PlotExtensions.vb" />
+    <Compile Include="Bihistogram.vb" />
     <Compile Include="QQPlot.vb" />
     <Compile Include="ZScores.vb" />
     <Compile Include="PCAPlot.vb" />
