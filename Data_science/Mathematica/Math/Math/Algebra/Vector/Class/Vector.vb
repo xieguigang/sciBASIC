@@ -402,13 +402,7 @@ Namespace LinearAlgebra
         ''' <remarks></remarks>
         Public ReadOnly Property [Mod] As Double
             Get
-                Dim sum As Double
-
-                For Each x# In Me
-                    sum += x ^ 2
-                Next
-
-                Return sum
+                Return (Me ^ 2).Sum
             End Get
         End Property
 
@@ -476,7 +470,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return "[" & Me.ToString("F2").JoinBy(", ") & "]"
+            Return "[" & Me.ToString("G4").JoinBy(", ") & "]"
         End Function
 
         Public Overloads Function ToString(format$) As String()
