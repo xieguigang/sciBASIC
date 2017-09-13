@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-Namespace Drawing2D.Vector.Shapes
+Namespace Drawing2D.Shapes
 
     ''' <summary>
     ''' 绘制圆角矩形

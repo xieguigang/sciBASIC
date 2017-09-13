@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Language
 
-Namespace Drawing2D.Vector.Shapes
+Namespace Drawing2D.Shapes
 
     ''' <summary>
     ''' 按照任意角度旋转的箭头对象
@@ -130,12 +130,12 @@ Namespace Drawing2D.Vector.Shapes
             Dim prePoint As New Value(Of Point)
 
             Call Path.AddLine(Me.Location, prePoint = New Point(Left + Direction * HeadLength, Top))                        '/
-            Call Path.AddLine(prePoint.value, prePoint = New Point(Left + Direction * HeadLength, Top + HeadSemiHeight))    ' |
-            Call Path.AddLine(prePoint.value, prePoint = New Point(Right, Top + HeadSemiHeight))                            '  ----
-            Call Path.AddLine(prePoint.value, prePoint = New Point(Right, Bottom - HeadSemiHeight))                         '      |
-            Call Path.AddLine(prePoint.value, prePoint = New Point(Left + Direction * HeadLength, Bottom - HeadSemiHeight)) '  ----
-            Call Path.AddLine(prePoint.value, prePoint = New Point(Left + Direction * HeadLength, Bottom))                  ' |
-            Call Path.AddLine(prePoint.value, Me.Location)                                                                  '\
+            Call Path.AddLine(prePoint.Value, prePoint = New Point(Left + Direction * HeadLength, Top + HeadSemiHeight))    ' |
+            Call Path.AddLine(prePoint.Value, prePoint = New Point(Right, Top + HeadSemiHeight))                            '  ----
+            Call Path.AddLine(prePoint.Value, prePoint = New Point(Right, Bottom - HeadSemiHeight))                         '      |
+            Call Path.AddLine(prePoint.Value, prePoint = New Point(Left + Direction * HeadLength, Bottom - HeadSemiHeight)) '  ----
+            Call Path.AddLine(prePoint.Value, prePoint = New Point(Left + Direction * HeadLength, Bottom))                  ' |
+            Call Path.AddLine(prePoint.Value, Me.Location)                                                                  '\
             Call Path.CloseFigure()
 
             Call g.FillPath(New SolidBrush(Me.Color), Path)
