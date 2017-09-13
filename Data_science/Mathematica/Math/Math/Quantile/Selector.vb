@@ -39,8 +39,29 @@ Namespace Quantile
             }.ApplySelector(exp)
         End Function
 
+        ''' <summary>
+        ''' 可以使用``|``管道进行组合使用
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="exp$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ApplySelector(Of T)(source As Provider(Of T), exp$) As IEnumerable(Of T)
+            For Each op As String In exp.Split("|"c)
+                source = New Provider(Of T) With {
+                    .getValue = source.getValue,
+                    .source = source _
+                        .SelectorInternal(op) _
+                        .ToArray
+                }
+            Next
+
+            Return source.source
+        End Function
+
+        <Extension>
+        Private Function SelectorInternal(Of T)(source As Provider(Of T), exp$) As IEnumerable(Of T)
             If InStr(exp, "quantile:", CompareMethod.Text) > 0 Then
                 Dim q#
 
@@ -107,6 +128,8 @@ Namespace Quantile
 
         <Extension>
         Public Function SelectByRankAsc(Of T)(source As Provider(Of T), n%, desc As Boolean) As IEnumerable(Of T)
+            Call $"{If(desc, "desc", "asc")} => {n}".__INFO_ECHO
+
             Return source _
                 .CreateArray _
                 .Sort(Function(o) o.x, desc) _

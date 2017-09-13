@@ -38,7 +38,7 @@ Namespace IO
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
 
-        Public Property ID As String Implements INamedValue.Key
+        Public Overridable Property ID As String Implements INamedValue.Key
 
         Sub New()
         End Sub
@@ -61,6 +61,21 @@ Namespace IO
 
         Public Overrides Function ToString() As String
             Return $"{ID} has ({Properties.Keys.Take(5).JoinBy(", ")}...) {MyBase.ToString}"
+        End Function
+
+        ''' <summary>
+        ''' 直接使用<paramref name="labels"/>取出<see cref="Properties"/>之中的一个子集
+        ''' 对于不存在的属性，默认值为零
+        ''' </summary>
+        ''' <param name="labels"></param>
+        ''' <returns></returns>
+        Public Function SubSet(labels As IEnumerable(Of String)) As DataSet
+            Return New DataSet With {
+                .ID = ID,
+                .Properties = labels _
+                    .ToDictionary(Function(x) x,
+                                  Function(x) Me(x))
+            }
         End Function
 
         ''' <summary>

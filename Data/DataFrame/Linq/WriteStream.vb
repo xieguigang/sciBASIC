@@ -29,11 +29,8 @@
 Option Strict Off
 
 Imports System.IO
-Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace IO.Linq
 
@@ -72,7 +69,8 @@ Namespace IO.Linq
                 Optional Explicit As Boolean = False,
                 Optional metaBlank As String = "",
                 Optional metaKeys As String() = Nothing,
-                Optional maps As Dictionary(Of String, String) = Nothing)
+                Optional maps As Dictionary(Of String, String) = Nothing,
+                Optional layout As Dictionary(Of String, Integer) = Nothing)
 
             Dim typeDef As Type = GetType(T)
             Dim Schema As SchemaProvider =
@@ -82,7 +80,7 @@ Namespace IO.Linq
 
             Call path.ParentPath.MkDIR
 
-            RowWriter = New RowWriter(Schema, metaBlank)
+            RowWriter = New RowWriter(Schema, metaBlank, layout)
             handle = FileIO.FileSystem.GetFileInfo(path).FullName
 
             Call "".SaveTo(handle)

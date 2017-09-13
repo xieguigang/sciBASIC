@@ -215,8 +215,16 @@ Public Module Extensions
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path As String, Optional encoding As Encoding = Nothing) As Boolean
-        Return Reflector.Save(data, False).SaveDataFrame(path, encoding)
+    <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path$, Optional encoding As Encoding = Nothing) As Boolean
+        ' 假若序列之中的第一个元素为Nothing的话，则尝试使用第二个元素来获取type信息
+        Dim type As Type = (data.First Or [Default](data.SecondOrNull)).GetType
+
+        Return Reflector _
+            .__save(___source:=data,
+                    typeDef:=type,
+                    strict:=False,
+                    schemaOut:=Nothing) _
+            .SaveDataFrame(path, encoding:=encoding)
     End Function
 
     <ExportAPI("Write.Csv")>
@@ -384,7 +392,8 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                              Optional metaBlank As String = "",
                                              Optional nonParallel As Boolean = False,
                                              Optional maps As Dictionary(Of String, String) = Nothing,
-                                             Optional reorderKeys As Integer = 0) As Boolean
+                                             Optional reorderKeys As Integer = 0,
+                                             Optional layout As Dictionary(Of String, Integer) = Nothing) As Boolean
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
@@ -401,7 +410,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             strict,
             maps,
             Not nonParallel,
-            metaBlank, reorderKeys)
+            metaBlank, reorderKeys, layout)
 
         Dim success As Boolean = StreamIO.SaveDataFrame(
             csv,
@@ -415,6 +424,19 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
         Return success
     End Function
 
+    ''' <summary>
+    ''' 如果直接使用<see cref="SaveTo"/>函数来保存数据集的话，可能列的顺序是被打乱的，
+    ''' 则下次加载的时候<see cref="EntityObject.ID"/>列可能就不是第一列了，会出错，
+    ''' 故而需要使用这个专门的函数来进行数据集的保存操作
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="KeyMap$">将<see cref="EntityObject.ID"/>重命名为这个参数的值，假若这个参数值不是空字符串的话</param>
+    ''' <param name="blank$"></param>
+    ''' <param name="reorderKeys"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T),
                                                       path$,
@@ -424,12 +446,19 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                                       Optional reorderKeys As Integer = 0) As Boolean
 
         Dim modify As Dictionary(Of String, String) = Nothing
-        If Not KeyMap Is Nothing Then
+        Dim layout As New Dictionary(Of String, Integer) From {
+            {NameOf(EntityObject.ID), -10000}
+        }
+
+        If Not KeyMap.StringEmpty Then
             modify = New Dictionary(Of String, String) From {
                 {NameOf(EntityObject.ID), KeyMap}
             }
+            layout.Clear()
+            layout.Add(KeyMap, -10000)
         End If
-        Return source.SaveTo(path, , encoding.CodePage, blank,, modify, reorderKeys)
+
+        Return source.SaveTo(path, , encoding.CodePage, blank,, modify, reorderKeys, layout)
     End Function
 
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
@@ -470,7 +499,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <remarks></remarks>
     '''
     <ExportAPI("Write.Csv", Info:="Save the data collection vector as a csv document.")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path As String, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+    <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Dim row As IEnumerable(Of String) = From n As Double
                                             In data
                                             Select s =

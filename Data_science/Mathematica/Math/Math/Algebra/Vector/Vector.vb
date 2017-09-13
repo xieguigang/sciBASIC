@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
@@ -608,6 +609,10 @@ Namespace LinearAlgebra
                 Return New Vector(array)
 
             End If
+        End Operator
+
+        Public Shared Widening Operator CType(vector As VectorShadows(Of Double)) As Vector
+            Return vector.As(Of Double).AsVector
         End Operator
     End Class
 End Namespace
