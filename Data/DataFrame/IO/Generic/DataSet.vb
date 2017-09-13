@@ -63,6 +63,12 @@ Namespace IO
             Return $"{ID} has ({Properties.Keys.Take(5).JoinBy(", ")}...) {MyBase.ToString}"
         End Function
 
+        ''' <summary>
+        ''' 直接使用<paramref name="labels"/>取出<see cref="Properties"/>之中的一个子集
+        ''' 对于不存在的属性，默认值为零
+        ''' </summary>
+        ''' <param name="labels"></param>
+        ''' <returns></returns>
         Public Function SubSet(labels As IEnumerable(Of String)) As DataSet
             Return New DataSet With {
                 .ID = ID,
