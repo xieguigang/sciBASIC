@@ -423,6 +423,19 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
         Return success
     End Function
 
+    ''' <summary>
+    ''' 如果直接使用<see cref="SaveTo"/>函数来保存数据集的话，可能列的顺序是被打乱的，
+    ''' 则下次加载的时候<see cref="EntityObject.ID"/>列可能就不是第一列了，会出错，
+    ''' 故而需要使用这个专门的函数来进行数据集的保存操作
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="KeyMap$"></param>
+    ''' <param name="blank$"></param>
+    ''' <param name="reorderKeys"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T),
                                                       path$,
