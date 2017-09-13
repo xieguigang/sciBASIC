@@ -51,7 +51,9 @@ Namespace Quantile
             For Each op As String In exp.Split("|"c)
                 source = New Provider(Of T) With {
                     .getValue = source.getValue,
-                    .source = source.SelectorInternal(exp)
+                    .source = source _
+                        .SelectorInternal(op) _
+                        .ToArray
                 }
             Next
 
@@ -126,6 +128,8 @@ Namespace Quantile
 
         <Extension>
         Public Function SelectByRankAsc(Of T)(source As Provider(Of T), n%, desc As Boolean) As IEnumerable(Of T)
+            Call $"{If(desc, "desc", "asc")} => {n}".__INFO_ECHO
+
             Return source _
                 .CreateArray _
                 .Sort(Function(o) o.x, desc) _

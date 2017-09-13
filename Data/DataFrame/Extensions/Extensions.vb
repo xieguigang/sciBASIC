@@ -215,8 +215,16 @@ Public Module Extensions
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path As String, Optional encoding As Encoding = Nothing) As Boolean
-        Return Reflector.Save(data, False).SaveDataFrame(path, encoding)
+    <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path$, Optional encoding As Encoding = Nothing) As Boolean
+        ' 假若序列之中的第一个元素为Nothing的话，则尝试使用第二个元素来获取type信息
+        Dim type As Type = (data.First Or [Default](data.SecondOrNull)).GetType
+
+        Return Reflector _
+            .__save(___source:=data,
+                    typeDef:=type,
+                    strict:=False,
+                    schemaOut:=Nothing) _
+            .SaveDataFrame(path, encoding:=encoding)
     End Function
 
     <ExportAPI("Write.Csv")>

@@ -63,6 +63,15 @@ Namespace IO
             Return $"{ID} has ({Properties.Keys.Take(5).JoinBy(", ")}...) {MyBase.ToString}"
         End Function
 
+        Public Function SubSet(labels As IEnumerable(Of String)) As DataSet
+            Return New DataSet With {
+                .ID = ID,
+                .Properties = labels _
+                    .ToDictionary(Function(x) x,
+                                  Function(x) Me(x))
+            }
+        End Function
+
         ''' <summary>
         ''' <paramref name="uidMap"/>一般情况下会自动进行判断，不需要具体的设置
         ''' </summary>

@@ -158,7 +158,7 @@ Namespace CommandLine.Reflection
                             Call sb.AppendLine("###### " & param.Name)
 
                             For Each pType As Type In param.Value.AcceptTypes
-                                Call sb.AppendLine(Actives.DisplayType(pType))
+                                Call sb.AppendLine(Activity.DisplayType(pType))
                             Next
                         Next
                     End If
