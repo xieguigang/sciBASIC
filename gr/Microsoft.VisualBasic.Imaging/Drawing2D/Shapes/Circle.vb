@@ -31,7 +31,7 @@ Imports System.Math
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-Namespace Drawing2D.Vector.Shapes
+Namespace Drawing2D.Shapes
 
     Public Class Circle : Inherits Shape
 

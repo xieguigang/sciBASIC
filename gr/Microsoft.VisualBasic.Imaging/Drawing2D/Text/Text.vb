@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
-Namespace Drawing2D.Vector.Text
+Namespace Drawing2D.Text
 
     ''' <summary>
     ''' 基于HTML语法的字符串的绘制描述信息的解析
