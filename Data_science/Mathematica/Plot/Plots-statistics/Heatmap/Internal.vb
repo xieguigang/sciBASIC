@@ -486,7 +486,7 @@ Namespace Heatmap
                     dw = args.dStep.Width
                     left = args.left
                     top = args.top
-                    left += dw / 2
+                    left += dw / 2   ' x坐标已经向方格的中间移动了，后面就不需要额外的移动操作了
 
                     ' 绘制下方的矩阵的列标签
                     If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
@@ -497,8 +497,8 @@ Namespace Heatmap
 
                         For Each key$ In keys
                             Dim sz = g.MeasureString(key$, colLabelFont) ' 得到斜边的长度
-                            Dim dx! = sz.Width * Math.Cos(angle)
-                            Dim dy! = sz.Width * Math.Sin(angle)
+                            Dim dx! = sz.Width * Math.Cos(angle) + sz.Height / 2
+                            Dim dy! = sz.Width * Math.Sin(angle) + (sz.Width / 2) * Math.Cos(angle) - sz.Height
                             Dim pos As New PointF(left - dx, top - dy)
 
                             Call text.DrawString(key$, colLabelFont, Brushes.Black, pos, angle, format)
