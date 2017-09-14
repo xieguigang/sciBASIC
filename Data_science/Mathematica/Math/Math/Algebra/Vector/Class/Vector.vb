@@ -551,6 +551,14 @@ Namespace LinearAlgebra
             Return New BooleanVector(From a In x.SeqIterator Select a.value <= y.buffer(a))
         End Operator
 
+        Public Shared Operator <=(x#, y As Vector) As BooleanVector
+            Return New BooleanVector(From a In y Select x <= a)
+        End Operator
+
+        Public Shared Operator >=(x#, y As Vector) As BooleanVector
+            Return Not x <= y
+        End Operator
+
 #Region "Syntax support for: Dim v As Vector = {1, 2, 3, 4, 5, 6}"
         Public Shared Widening Operator CType(v As Double()) As Vector
             Return New Vector(v)
