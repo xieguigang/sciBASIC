@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -55,6 +55,7 @@ Namespace Heatmap
                              Optional bg$ = "white",
                              Optional logScale# = 0,
                              Optional rowDendrogramHeight% = 200,
+                             Optional rowDendrogramClass As Dictionary(Of String, String) = Nothing,
                              Optional rowLabelFontStyle$ = CSSFont.Win10Normal,
                              Optional legendTitle$ = "Heatmap Color Legend",
                              Optional legendFont$ = CSSFont.Win7Large,
@@ -169,7 +170,7 @@ Namespace Heatmap
 
             Return __plotInterval(
                 plotInternal, data.ToArray,
-                rowLabelFont, rowLabelFont, logScale, DrawElements.None, DrawElements.Rows, DrawElements.Rows, (rowDendrogramHeight, 0),
+                rowLabelFont, rowLabelFont, logScale, DrawElements.None, DrawElements.Rows, DrawElements.Rows, (rowDendrogramClass, Nothing), (rowDendrogramHeight, 0),
                 False,, mapLevels, mapName,
                 gsize, margin, bg,
                 legendTitle,

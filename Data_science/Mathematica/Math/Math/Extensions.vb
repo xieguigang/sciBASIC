@@ -48,6 +48,11 @@ Public Module Extensions
         Return Sum(q * s) / Sqrt(Sum(q ^ 2) * Sum(s ^ 2))
     End Function
 
+    ''' <summary>
+    ''' Construct the <see cref="Vector"/> class from a numeric collecton.
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function AsVector(data As IEnumerable(Of Double)) As Vector
         Return New Vector(data)

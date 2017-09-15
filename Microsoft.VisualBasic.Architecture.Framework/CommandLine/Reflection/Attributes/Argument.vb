@@ -58,8 +58,8 @@ Namespace CommandLine.Reflection
 
         ''' <summary>
         ''' The description and brief help information about this parameter switch, 
-        ''' you can using the \n escape string to gets a VbCrLf value.
-        ''' (对这个开关参数的具体的描述以及帮助信息，可以使用\n转义字符进行换行)
+        ''' you can using the ``\n`` escape string to gets a ``VbCrLf`` value.
+        ''' (对这个开关参数的具体的描述以及帮助信息，可以使用``\n``转义字符进行换行)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -81,11 +81,24 @@ Namespace CommandLine.Reflection
 
         ''' <summary>
         ''' The usage example of this parameter switch.(该开关的值的示例)
+        ''' 
+        ''' ```
+        ''' name example
+        ''' ```
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Example As String
+        Public ReadOnly Property Example As String
+            Get
+                If TokenType = CLITypes.Boolean Then
+                    Return Name
+                Else
+                    Return $"{Name} {ExampleValue}"
+                End If
+            End Get
+        End Property
+
         ''' <summary>
         ''' The usage syntax information about this parameter switch.(本开关参数的使用语法)
         ''' </summary>
@@ -121,8 +134,12 @@ Namespace CommandLine.Reflection
         ''' <param name="Name">The name of this command line parameter switch.(该命令开关的名称)</param>
         ''' <param name="Optional">Is this parameter switch is an optional value.(本开关是否为可选的参数)</param>
         ''' <remarks></remarks>
-        Sub New(Name As String, Optional [Optional] As Boolean = False, Optional type As CLITypes = CLITypes.String, Optional pip As PipelineTypes = PipelineTypes.undefined)
-            Call MyBase.New(Name)
+        Sub New(name$,
+                Optional [Optional] As Boolean = False,
+                Optional type As CLITypes = CLITypes.String,
+                Optional pip As PipelineTypes = PipelineTypes.undefined)
+
+            Call MyBase.New(name)
 
             Me.[Optional] = [Optional]
             Me.TokenType = type

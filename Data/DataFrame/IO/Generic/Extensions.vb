@@ -66,6 +66,25 @@ Namespace IO
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 可以使用这个拓展函数进行重排序
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="keys$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Project(data As IEnumerable(Of DataSet), keys$()) As IEnumerable(Of DataSet)
+            Return data _
+                .Select(Function(x)
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = keys.ToDictionary(
+                                    Function(k) k,
+                                    Function(k) x.ItemValue(k))
+                            }
+                        End Function)
+        End Function
+
         <Extension>
         Public Function PropertyNames(table As IDictionary(Of String, DataSet)) As String()
             Return table.Values.PropertyNames
@@ -151,6 +170,29 @@ Namespace IO
             Return data _
                 .Select(Function(r) r(key$)) _
                 .ToArray
+        End Function
+
+        <Extension>
+        Public Function AsDataSet(data As IEnumerable(Of EntityObject), Optional blank# = 0) As IEnumerable(Of DataSet)
+            Dim array = data.ToArray
+            Dim allKeys = array _
+                .Select(Function(x) x.Properties.Keys) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+            Dim ToDouble = Function(obj As EntityObject, key$)
+                               Return If(obj.Properties.ContainsKey(key), Val(obj(key)), blank)
+                           End Function
+
+            Return data _
+                .Select(Function(obj)
+                            Return New DataSet With {
+                                .ID = obj.ID,
+                                .Properties = allKeys _
+                                    .ToDictionary(Function(x) x,
+                                                  Function(x) ToDouble(obj, key:=x))
+                            }
+                        End Function)
         End Function
     End Module
 End Namespace

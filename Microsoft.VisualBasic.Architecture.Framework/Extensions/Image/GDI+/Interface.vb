@@ -2275,28 +2275,16 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     rects is a zero-length array.
         Public MustOverride Sub DrawRectangles(pen As Pen, rects() As Rectangle)
-        '
-        ' Summary:
-        '     Draws the specified text string at the specified location with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   point:
-        '     System.Drawing.PointF structure that specifies the upper-left corner of the drawn
-        '     text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
+
+        ''' <summary>
+        ''' Draws the specified text string at the specified location with the specified
+        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' </summary>
+        ''' <param name="s">String to draw.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
+        ''' <param name="point">System.Drawing.PointF structure that specifies the upper-left corner of the drawn
+        ''' text.</param>
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
         '
         ' Summary:

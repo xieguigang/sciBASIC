@@ -58,24 +58,24 @@ Namespace Hierarchy
         End Sub
 
         Public Sub New(left As Cluster, right As Cluster, distance As Double)
-            lCluster = left
-            rCluster = right
+            Me.Left = left
+            Me.Right = right
             LinkageDistance = distance
         End Sub
 
         Public Function GetOtherCluster(c As Cluster) As Cluster
-            Return If(lCluster Is c, rCluster, lCluster)
+            Return If(Left Is c, Right, Left)
         End Function
 
-        Public Property lCluster As Cluster
-        Public Property rCluster As Cluster
+        Public Property Left As Cluster
+        Public Property Right As Cluster
         Public Property LinkageDistance As Double
 
         ''' <returns> 
         ''' a new ClusterPair with the two left/right inverted
         ''' </returns>
         Public Function Reverse() As HierarchyTreeNode
-            Return New HierarchyTreeNode(rCluster(), lCluster(), LinkageDistance)
+            Return New HierarchyTreeNode(Right(), Left(), LinkageDistance)
         End Function
 
         Public Function compareTo(o As HierarchyTreeNode) As Integer Implements IComparable(Of HierarchyTreeNode).CompareTo
@@ -101,33 +101,38 @@ Namespace Hierarchy
             Dim cluster As New Cluster(name) With {
                 .Distance = New Distance(LinkageDistance)
             }
+
             ' New clusters will track their children's leaf names; i.e. each cluster knows what part of the original data it contains
-            cluster.AppendLeafNames(lCluster.LeafNames)
-            cluster.AppendLeafNames(rCluster.LeafNames)
-            cluster.AddChild(lCluster)
-            cluster.AddChild(rCluster)
-            lCluster.Parent = cluster
-            rCluster.Parent = cluster
+            cluster.AppendLeafNames(Left.LeafNames)
+            cluster.AppendLeafNames(Right.LeafNames)
+            cluster.AddChild(Left)
+            cluster.AddChild(Right)
+            Left.Parent = cluster
+            Right.Parent = cluster
 
-            Dim lWeight As Double = lCluster.WeightValue
-            Dim rWeight As Double = rCluster.WeightValue
-            Dim weight As Double = lWeight + rWeight
-
-            cluster.Distance.Weight = weight
+            cluster.Distance.Weight = Left.WeightValue + Right.WeightValue
 
             Return cluster
         End Function
 
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder
-            If lCluster IsNot Nothing Then sb.Append(lCluster.Name)
-            If rCluster IsNot Nothing Then
+
+            If Left IsNot Nothing Then
+                sb.Append(Left.Name)
+            End If
+
+            If Right IsNot Nothing Then
                 If sb.Length > 0 Then
                     sb.Append(" + ")
                 End If
-                sb.Append(rCluster.Name)
+                sb.Append(Right.Name)
             End If
-            sb.Append(" : ").Append(LinkageDistance)
+
+            Call sb _
+                .Append(" : ") _
+                .Append(LinkageDistance)
+
             Return sb.ToString()
         End Function
     End Class

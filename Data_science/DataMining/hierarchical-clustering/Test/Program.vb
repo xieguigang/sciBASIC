@@ -78,7 +78,9 @@ Module Program
             distances.RowIterator.ToArray,
             names,
             New AverageLinkageStrategy)
-        cluster.Print
+
+        Call cluster.Print()
+
         Return cluster
     End Function
 End Module

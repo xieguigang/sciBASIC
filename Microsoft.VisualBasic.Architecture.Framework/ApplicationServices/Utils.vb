@@ -1,10 +1,42 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace ApplicationServices
 
     Public Module Utils
+
+        <Extension>
+        Public Sub TryRun(task As Action, <CallerMemberName> Optional stack$ = Nothing)
+            Try
+                Call task()
+            Catch ex As Exception
+                Call $"[{stack}] {task.Method.ToString} failure!".Warning
+                Call App.LogException(ex)
+            End Try
+        End Sub
+
+        ''' <summary>
+        ''' Run background task, if the <see cref="AsyncHandle(Of Exception).GetValue()"/> returns nothing, 
+        ''' then means the task run no errors.
+        ''' </summary>
+        ''' <param name="task"></param>
+        ''' <param name="stack">进行调用堆栈的上一层的栈名称</param>
+        ''' <returns></returns>
+        <Extension> Public Function TaskRun(task As Action, <CallerMemberName> Optional stack$ = Nothing) As AsyncHandle(Of Exception)
+            Dim handle = Function() As Exception
+                             Try
+                                 Call task()
+                             Catch ex As Exception
+                                 Return New Exception(stack, ex)
+                             End Try
+
+                             Return Nothing
+                         End Function
+            Return New AsyncHandle(Of Exception)(handle).Run
+        End Function
 
         ''' <summary>
         ''' Returns the total executation time of the target <paramref name="work"/>.
@@ -25,11 +57,26 @@ Namespace ApplicationServices
             Return t
         End Function
 
-        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0) As T
+        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0, Optional tick As Boolean = True) As T
             Dim startTick As Long = App.NanoTime
+            Dim tickTask
+
+            If tick Then
+                tickTask = Utils.TaskRun(
+                    Sub()
+                        Do While tick
+                            Call Console.Write(".")
+                            Call Thread.Sleep(1000)
+                        Loop
+                    End Sub)
+            End If
+
             Dim value As T = work()
             Dim endTick As Long = App.NanoTime
+
             ms& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
+            tick = False
+
             Call $"Work takes {ms}ms...".__DEBUG_ECHO
             Return value
         End Function

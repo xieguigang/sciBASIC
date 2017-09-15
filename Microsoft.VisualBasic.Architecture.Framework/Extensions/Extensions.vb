@@ -78,6 +78,11 @@ Imports v = System.Array
 Public Module Extensions
 #End If
 
+    ''' <summary>
+    ''' Create the numeric range from a numeric value collection
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Range(data As IEnumerable(Of Double)) As DoubleRange
         Return New DoubleRange(data)
@@ -105,9 +110,39 @@ Public Module Extensions
         Return num
     End Function
 
+    ''' <summary>
+    ''' Save as a tsv file, with data format like: 
+    ''' 
+    ''' ```
+    ''' <see cref="NamedValue(Of String).Name"/>\t<see cref="NamedValue(Of String).Value"/>\t<see cref="NamedValue(Of String).Description"/>
+    ''' ```
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
-        Return source.Select(Function(row) $"{row.Name}{ASCII.TAB}{row.Value}").SaveTo(path, encoding.CodePage)
+    Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)),
+                                         path$,
+                                         Optional saveDescrib As Boolean = False,
+                                         Optional saveHeaders$() = Nothing,
+                                         Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Dim content = source _
+            .Select(Function(row)
+                        With row
+                            If saveDescrib Then
+                                Return $"{ .Name}{ASCII.TAB}{ .Value}{ASCII.TAB}{ .Description}"
+                            Else
+                                Return $"{ .Name}{ASCII.TAB}{ .Value}"
+                            End If
+                        End With
+                    End Function)
+
+        If saveHeaders.IsNullOrEmpty Then
+            Return content.SaveTo(path, encoding.CodePage)
+        Else
+            Return {saveHeaders.JoinBy(ASCII.TAB)}.JoinIterates(content).SaveTo(path, encoding.CodePage)
+        End If
     End Function
 
     ''' <summary>
@@ -373,7 +408,7 @@ Public Module Extensions
     ''' <param name="index"></param>
     ''' <param name="[default]">Default value for return when the array object is nothing or index outside of the boundary.</param>
     ''' <returns></returns>
-    <Extension> Public Function [Get](Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
+    <Extension> Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
         If array.IsNullOrEmpty Then
             Return [default]
         End If
@@ -722,16 +757,23 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' X, ....
+    ''' ``X, ....``
+    ''' 
+    ''' (这个函数是一个安全的函数，当<paramref name="collection"/>为空值的时候回忽略掉<paramref name="collection"/>，
+    ''' 只返回包含有一个<paramref name="obj"/>元素的列表)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="obj"></param>
     ''' <param name="collection"></param>
     ''' <returns></returns>
     <Extension> Public Function Join(Of T)(obj As T, collection As IEnumerable(Of T)) As List(Of T)
-        Dim list As New List(Of T) From {obj}
-        Call list.AddRange(collection)
-        Return list
+        With New List(Of T) From {obj}
+            If Not collection.IsNullOrEmpty Then
+                Call .AddRange(collection)
+            End If
+
+            Return .ref
+        End With
     End Function
 
 #If FRAMEWORD_CORE Then
@@ -1878,6 +1920,13 @@ Public Module Extensions
         Return False
     End Function
 
+    ''' <summary>
+    ''' 字典之中是否是没有任何数据的？
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="dict"></param>
+    ''' <returns></returns>
     <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As Dictionary(Of TKey, TValue)) As Boolean
         If dict Is Nothing Then
             Return True
@@ -1885,6 +1934,12 @@ Public Module Extensions
         Return dict.Count = 0
     End Function
 
+    ''' <summary>
+    ''' 这个队列之中是否是没有任何数据的?
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="queue"></param>
+    ''' <returns></returns>
     <Extension> Public Function IsNullOrEmpty(Of T)(queue As Queue(Of T)) As Boolean
         If queue Is Nothing Then
             Return True
@@ -1892,6 +1947,12 @@ Public Module Extensions
         Return queue.Count = 0
     End Function
 
+    ''' <summary>
+    ''' 这个动态列表之中是否是没有任何数据的？
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
     <Extension> Public Function IsNullOrEmpty(Of T)(list As List(Of T)) As Boolean
         If list Is Nothing Then
             Return True

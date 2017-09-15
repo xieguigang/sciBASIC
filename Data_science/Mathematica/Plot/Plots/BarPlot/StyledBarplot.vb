@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -110,7 +110,7 @@ Namespace BarPlot
             Dim labelLeft%
 
             With region
-                Call g.DrawAxis(.Size, .Padding, scaler, showGrid:=True)
+                ' Call g.DrawAxis(.Size, .Padding, scaler, showGrid:=True)
             End With
 
             For Each s As BarSerial In data

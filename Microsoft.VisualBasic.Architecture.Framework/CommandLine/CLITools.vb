@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::9e50b1a4d8f91494f84c18bc3f762715, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports StringList = System.Collections.Generic.IEnumerable(Of String)
 
 Namespace CommandLine
 
@@ -111,7 +112,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="tokens">要求第一个对象不能够是命令的名称</param>
         ''' <returns></returns>
-        Public Function GetLogicalArguments(tokens As String(), ByRef SingleValue$) As String()
+        <Extension> Public Function GetLogicalArguments(tokens$(), ByRef SingleValue$) As String()
             If tokens.IsNullOrEmpty Then
                 Return New String() {}
             ElseIf tokens.Length = 1 Then  '只有一个元素，则肯定为开关
@@ -162,19 +163,19 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
-        Public Function TryParse(args As IEnumerable(Of String),
-                                 Optional DuplicatedAllowed As Boolean = False) As CommandLine
+        Public Function TryParse(args As StringList, Optional DuplicatedAllowed As Boolean = False) As CommandLine
+            Dim tokens$() = args.SafeQuery.ToArray
+            Dim singleValue As String = ""
 
-            If args.IsNullOrEmpty Then
+            If tokens.Length = 0 Then
                 Return New CommandLine
             End If
 
-            Dim SingleValue As String = ""
             Dim CLI As New CommandLine With {
-                .Name = args(Scan0).ToLower,
-                .Tokens = args.ToArray,
-                .BoolFlags = GetLogicalArguments(args.Skip(1).ToArray, SingleValue),
-                ._CLICommandArgvs = Join(args)
+                .Name = tokens(Scan0).ToLower,
+                .Tokens = tokens,
+                .BoolFlags = tokens.Skip(1).ToArray.GetLogicalArguments(singleValue),
+                ._CLICommandArgvs = Join(tokens)
             }
 
             CLI.SingleValue = SingleValue
@@ -183,12 +184,14 @@ Namespace CommandLine
                 CLI.SingleValue = CLI.Parameters(0)
             End If
 
-            If args.Count > 1 Then
-                CLI.__listArguments = CreateParameterValues(args.Skip(1).ToArray, False)
-                Dim Dk As String() = __checkKeyDuplicated(CLI.__listArguments)
+            If tokens.Length > 1 Then
+                CLI.__arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
+
+                Dim Dk As String() = __checkKeyDuplicated(CLI.__arguments)
+
                 If Not DuplicatedAllowed AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key As String = String.Join(", ", Dk)
-                    Dim msg As String = String.Format(EX_KEY_DUPLICATED, Key, String.Join(" ", args.Skip(1).ToArray))
+                    Dim msg As String = String.Format(EX_KEY_DUPLICATED, Key, String.Join(" ", tokens.Skip(1).ToArray))
 
                     Throw New Exception(msg)
                 End If
@@ -399,17 +402,14 @@ Namespace CommandLine
         ''' <summary>
         ''' Creates command line object from a set obj <see cref="KeyValuePair(Of String, String)"/>
         ''' </summary>
-        ''' <param name="Name"></param>
+        ''' <param name="name"></param>
         ''' <param name="args"></param>
         ''' <param name="bFlags"></param>
         ''' <returns></returns>
         <ExportAPI("CreateObject")>
-        Public Function CreateObject(Name As String,
-                                     args As IEnumerable(Of KeyValuePair(Of String, String)),
-                                     Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
-
+        Public Function CreateObject(name$, args As IEnumerable(Of KeyValuePair(Of String, String)), Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
             Dim parameters As New List(Of NamedValue(Of String))
-            Dim Tokens As New List(Of String) From {Name}
+            Dim Tokens As New List(Of String) From {name}
 
             For Each Item As KeyValuePair(Of String, String) In args
                 Dim key As String = Item.Key.ToLower
@@ -419,27 +419,28 @@ Namespace CommandLine
             Next
 
             Return New CommandLine With {
-                .Name = Name,
-                .__listArguments = parameters,
+                .Name = name,
+                .__arguments = parameters,
                 .Tokens = Tokens.Join(bFlags).ToArray,
                 .BoolFlags = If(bFlags.IsNullOrEmpty, New String() {}, bFlags.ToArray)
             }
         End Function
 
         ''' <summary>
-        ''' 修剪命令行参数名称的前置符号
+        ''' Trim the CLI argument name its prefix symbols.
+        ''' (修剪命令行参数名称的前置符号)
         ''' </summary>
-        ''' <param name="obj"></param>
+        ''' <param name="argName"></param>
         ''' <returns></returns>
         <ExportAPI("Trim.Prefix.BoolFlag")>
         <Extension>
-        Public Function TrimParamPrefix(obj As String) As String
-            If obj.StartsWith("--") Then
-                Return Mid(obj, 3)
-            ElseIf obj.StartsWith("-") OrElse obj.StartsWith("\") OrElse obj.StartsWith("/") Then
-                Return Mid(obj, 2)
+        Public Function TrimParamPrefix(argName$) As String
+            If argName.StartsWith("--") Then
+                Return Mid(argName, 3)
+            ElseIf argName.StartsWith("-") OrElse argName.StartsWith("\") OrElse argName.StartsWith("/") Then
+                Return Mid(argName, 2)
             Else
-                Return obj
+                Return argName
             End If
         End Function
 
@@ -462,7 +463,7 @@ Namespace CommandLine
                 End If
             Next
 
-            For Each arg As NamedValue(Of String) In args1.__listArguments
+            For Each arg As NamedValue(Of String) In args1.__arguments
                 Dim value2 As String = args2(arg.Name)
                 If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then
                     Return False

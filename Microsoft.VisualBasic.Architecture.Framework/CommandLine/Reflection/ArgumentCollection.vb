@@ -119,7 +119,7 @@ Namespace CommandLine.Reflection
 
         Public ReadOnly Property EmptyUsage As Boolean
             Get
-                Dim LQuery = From switch In _params.Values Where String.IsNullOrEmpty(switch.Usage) Select 1 '
+                Dim LQuery = From arg In _params.Values Where String.IsNullOrEmpty(arg.Usage) Select 1 '
                 Return LQuery.Sum = _params.Count
             End Get
         End Property
@@ -158,7 +158,7 @@ Namespace CommandLine.Reflection
                 Let parameter As Argument =
                     TryCast(attr, Argument)
                 Select parameter
-                Order By parameter.Optional Ascending '
+                Order By parameter.Optional Ascending ' 必须参数都在前面，可选参数都在后面
 
             For Each param As Argument In LQuery
                 Call _params.Add(param.Name, param)

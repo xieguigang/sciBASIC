@@ -345,7 +345,7 @@ Namespace Plot3D
                 Yield New Line3D With {
                     .a = line.a,
                     .b = line.b,
-                    .pen = New Pen(colors.Get(levels(Math.Round((.a.Z + .b.Z) / 2, 1)) - 1))
+                    .pen = New Pen(colors.ElementAtOrDefault(levels(Math.Round((.a.Z + .b.Z) / 2, 1)) - 1))
                 }
             Next
         End Function

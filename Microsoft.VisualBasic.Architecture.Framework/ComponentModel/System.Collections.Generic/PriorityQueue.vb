@@ -75,24 +75,44 @@ Namespace ComponentModel.Collection
     Public Class PriorityQueue(Of T As IComparable)
         Implements IEnumerable(Of T)
 
-        Dim list As New List(Of T)
+        Protected list As New List(Of T)
 
-        Public ReadOnly Property Count() As Integer
+        Public Overridable ReadOnly Property Count() As Integer
             Get
                 Return list.Count
             End Get
         End Property
 
-        Public Sub Enqueue(queueItem As T)
+        Sub New()
+        End Sub
+
+        Sub New(source As IEnumerable(Of T))
+            list = source.ToList
+            list.Sort()
+        End Sub
+
+        Public Overridable Sub Enqueue(queueItem As T)
             Call list.Add(queueItem)
             Call list.Sort()
         End Sub
 
-        Public Sub Clear()
+        ''' <summary>
+        ''' Add without sort
+        ''' </summary>
+        ''' <param name="x"></param>
+        Public Sub Add(x As T)
+            Call list.Add(x)
+        End Sub
+
+        Public Sub Sort()
+            Call list.Sort()
+        End Sub
+
+        Public Overridable Sub Clear()
             Call list.Clear()
         End Sub
 
-        Public Sub Remove(o As T)
+        Public Overridable Sub Remove(o As T)
             Call list.Remove(o)
         End Sub
 
@@ -100,13 +120,13 @@ Namespace ComponentModel.Collection
         ''' Poll
         ''' </summary>
         ''' <returns></returns>
-        Public Function Dequeue() As T
+        Public Overridable Function Dequeue() As T
             Dim frontItem As T = list(0)
             list.RemoveAt(0)
             Return frontItem
         End Function
 
-        Public Function Peek() As T
+        Public Overridable Function Peek() As T
             Dim frontItem As T = list(0)
             Return frontItem
         End Function
@@ -115,11 +135,11 @@ Namespace ComponentModel.Collection
             Return $"Queue {list.Count} items, 1st_item:={Peek.GetJson}"
         End Function
 
-        Public Function Contains(queueItem As T) As Boolean
+        Public Overridable Function Contains(queueItem As T) As Boolean
             Return list.Contains(queueItem)
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+        Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each x As T In list
                 Yield x
             Next

@@ -38,7 +38,7 @@ Namespace StorageProvider.Reflection
                     AllowMultiple:=False,
                     Inherited:=False)>
     Public Class ColumnAttribute : Inherits DataAttribute
-        Implements Reflection.IAttributeComponent
+        Implements IAttributeComponent
 
         Public Overridable ReadOnly Property ProviderId As ProviderIds Implements IAttributeComponent.ProviderId
             Get

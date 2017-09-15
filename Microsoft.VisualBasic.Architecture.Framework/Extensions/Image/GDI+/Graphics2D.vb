@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b079e808b9d727f7db9831b222a30482, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Graphics2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Reflection
+Imports Microsoft.VisualBasic.Language
 
 Namespace Imaging
 
@@ -207,12 +208,20 @@ Namespace Imaging
         ''' <param name="res">绘图的基础图像对象</param>
         ''' <returns></returns>
         Friend Shared Function CreateObject(g As Graphics, res As Image) As Graphics2D
-            Return New Graphics2D With {
+            With New Graphics2D With {
                 .ImageResource = res,
                 ._Graphics = g,
                 .Font = New Font(FontFace.MicrosoftYaHei, 12),
-                .Stroke = Pens.Black
+                .Stroke = Pens.Black,
+                .InterpolationMode = InterpolationMode.HighQualityBicubic,
+                .PixelOffsetMode = PixelOffsetMode.HighQuality,
+                .CompositingQuality = CompositingQuality.HighQuality,
+                .SmoothingMode = SmoothingMode.HighQuality,
+                .TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
             }
+                ' .Clear(Color.Transparent)
+                Return .ref
+            End With
         End Function
 
         ''' <summary>
@@ -398,14 +407,13 @@ Namespace Imaging
                 Graphics.PageUnit = value
             End Set
         End Property
-        '
-        ' Summary:
-        '     Gets or set a value specifying how pixels are offset during rendering of this
-        '     System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a member of the System.Drawing.Drawing2D.PixelOffsetMode
-        '     enumeration
+
+        ''' <summary>
+        ''' Gets or set a value specifying how pixels are offset during rendering of this
+        ''' System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>This property specifies a member of the System.Drawing.Drawing2D.PixelOffsetMode
+        ''' enumeration</returns>
         Public Overrides Property PixelOffsetMode As PixelOffsetMode
             Get
                 Return Graphics.PixelOffsetMode
@@ -431,12 +439,11 @@ Namespace Imaging
                 Graphics.RenderingOrigin = value
             End Set
         End Property
-        '
-        ' Summary:
-        '     Gets or sets the rendering quality for this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Drawing2D.SmoothingMode values.
+
+        ''' <summary>
+        ''' Gets or sets the rendering quality for this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>One of the System.Drawing.Drawing2D.SmoothingMode values.</returns>
         Public Overrides Property SmoothingMode As SmoothingMode
             Get
                 Return Graphics.SmoothingMode
@@ -459,12 +466,11 @@ Namespace Imaging
                 Graphics.TextContrast = value
             End Set
         End Property
-        '
-        ' Summary:
-        '     Gets or sets the rendering mode for text associated with this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Text.TextRenderingHint values.
+
+        ''' <summary>
+        ''' Gets or sets the rendering mode for text associated with this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>One of the System.Drawing.Text.TextRenderingHint values.</returns>
         Public Overrides Property TextRenderingHint As TextRenderingHint
             Get
                 Return Graphics.TextRenderingHint

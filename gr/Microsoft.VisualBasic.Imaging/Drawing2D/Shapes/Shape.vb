@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 
-Namespace Drawing2D.Vector.Shapes
+Namespace Drawing2D.Shapes
 
     ''' <summary>
     ''' 矢量图形

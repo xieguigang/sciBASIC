@@ -55,7 +55,8 @@ Namespace CommandLine.Reflection
         ''' </summary>
         [Boolean]
         ''' <summary>
-        ''' File path, is equals most string.(对于指定为路径类型的参数值，在生成命令行的时候会自动调用<see cref="CLIPath"/>函数)
+        ''' File/directory path, is equals most string.
+        ''' (对于指定为路径类型的参数值，在生成命令行的时候会自动调用<see cref="CLIPath"/>函数，在Linux系统之中，文件夹也是一种文件)
         ''' </summary>
         File
     End Enum

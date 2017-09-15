@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::1f082df64991cc765497d359d85cef43, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\CType\Casting.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -42,6 +42,40 @@ Namespace Scripting.Runtime
     ''' Methods for convert the <see cref="System.String"/> to some .NET data types.
     ''' </summary>
     Public Module Casting
+
+        <Extension>
+        Public Iterator Function [As](Of T)(source As IEnumerable) As IEnumerable(Of T)
+            Dim l As New List(Of Object)
+
+            For Each x In source
+                l.Add(x)
+
+                If l.Count > 1 Then
+                    Exit For
+                End If
+            Next
+
+            If l.Count = 1 AndAlso Not l.First.GetType Is GetType(T) Then
+
+                Dim x = l.First
+
+                ' If x.GetType() Is GetType(IEnumerator) Then
+                With DirectCast(x, IEnumerator)
+                    Do While .MoveNext
+                        Yield DirectCast(.Current, T)
+                    Loop
+                End With
+
+                'Return
+                'Else
+                '    source = x
+                'End If
+            Else
+                For Each o As Object In source
+                    Yield DirectCast(o, T)
+                Next
+            End If
+        End Function
 
         <Extension>
         Public Function Expression(size As Size) As String

@@ -73,7 +73,7 @@ Namespace Linq
             Dim y As T2() = follows.ToArray
 
             For i As Integer = 0 To x.Length - 1
-                Yield New SeqValue(Of T1, T2)(i + offset, x(i), y.Get(i))
+                Yield New SeqValue(Of T1, T2)(i + offset, x(i), y.ElementAtOrDefault(i))
             Next
         End Function
 

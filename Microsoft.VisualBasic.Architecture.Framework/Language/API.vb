@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.Language.Perl
 
 Namespace Language
 
+    ''' <summary>
+    ''' The VisualBasic language syntax helper API.
+    ''' </summary>
     Public Module LanguageAPI
 
         ''' <summary>
@@ -16,6 +19,8 @@ Namespace Language
         }
 
         ''' <summary>
+        ''' simulate the ``%||%`` operator in R language.
+        ''' 
         ''' 模拟R语言之中的``%||%``操作符
         ''' 
         ''' ```R
@@ -39,6 +44,13 @@ Namespace Language
             }
         End Function
 
+        ''' <summary>
+        ''' Using this value as the default value for this <typeparamref name="T"/> type.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="isNothing"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsDefault(Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As DefaultValue(Of T)
             Return [Default](x, isNothing)

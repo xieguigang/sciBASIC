@@ -1,33 +1,30 @@
 ﻿#Region "Microsoft.VisualBasic::9c412a6454c814791af96392d7662ec0, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
-Imports System
-Imports System.Collections.Generic
 
 '
 '*****************************************************************************
@@ -54,6 +51,10 @@ Namespace Hierarchy
         Public ReadOnly Property Distances As DistanceMap
         Public ReadOnly Property Clusters As List(Of Cluster)
 
+        ''' <summary>
+        ''' 当<see cref="Clusters"/>的数量最终只有一个节点的时候，就认为完成了层次聚类操作了
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property TreeComplete As Boolean
             Get
                 Return Clusters.Count = 1
@@ -62,13 +63,28 @@ Namespace Hierarchy
 
         Const NoRoot$ = "No root available"
 
+        ''' <summary>
+        ''' Gets the root cluster of the hierarchy tree
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property RootCluster As Cluster
             Get
                 If Not TreeComplete Then
                     Throw New EvaluateException(NoRoot)
                 Else
-                    Return Clusters(0)
+                    Return Me.First
                 End If
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The first element in this <see cref="HierarchyBuilder"/>, 
+        ''' if <see cref="TreeComplete"/> then this first element is the root cluster.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property First As Cluster
+            Get
+                Return Clusters(Scan0)
             End Get
         End Property
 
@@ -83,10 +99,10 @@ Namespace Hierarchy
         ''' <param name="threshold">
         ''' @return </param>
         Public Function flatAgg(linkageStrategy As LinkageStrategy, threshold As Double) As IList(Of Cluster)
-            Do While ((Not TreeComplete)) AndAlso (Distances.minDist() <= threshold)
+            Do While ((Not TreeComplete)) AndAlso (Distances.MinimalDistance() <= threshold)
                 'System.out.println("Cluster Distances: " + distances.toString());
                 'System.out.println("Cluster Size: " + clusters.size());
-                agglomerate(linkageStrategy)
+                Agglomerate(linkageStrategy)
             Loop
 
             'System.out.println("Final MinDistance: " + distances.minDist());
@@ -94,51 +110,60 @@ Namespace Hierarchy
             Return Clusters
         End Function
 
-        Public Sub agglomerate(linkageStrategy As LinkageStrategy)
-            Dim minDistLink As HierarchyTreeNode = Distances.removeFirst()
+        ''' <summary>
+        ''' 进行层次聚类的迭代计算操作，主要的限速步骤
+        ''' </summary>
+        ''' <param name="linkageStrategy"></param>
+        Public Sub Agglomerate(linkageStrategy As LinkageStrategy)
+            Dim minDistLink As HierarchyTreeNode = Distances.RemoveFirst()
 
-            If minDistLink IsNot Nothing Then
-                Clusters.Remove(minDistLink.rCluster())
-                Clusters.Remove(minDistLink.lCluster())
-
-                Dim oldClusterL As Cluster = minDistLink.lCluster()
-                Dim oldClusterR As Cluster = minDistLink.rCluster()
-                Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
-
-                For Each iClust As Cluster In Clusters
-                    Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
-                    Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
-                    Dim newLinkage As New HierarchyTreeNode With {
-                        .lCluster = iClust,
-                        .rCluster = newCluster
-                    }
-                    Dim distanceValues As New List(Of Distance)
-
-                    If link1 IsNot Nothing Then
-                        Dim distVal As Double = link1.LinkageDistance
-                        Dim weightVal As Double = link1.GetOtherCluster(iClust).WeightValue
-                        distanceValues.Add(New Distance(distVal, weightVal))
-                        Distances.remove(link1)
-                    End If
-                    If link2 IsNot Nothing Then
-                        Dim distVal As Double = link2.LinkageDistance
-                        Dim weightVal As Double = link2.GetOtherCluster(iClust).WeightValue
-                        distanceValues.Add(New Distance(distVal, weightVal))
-                        Distances.remove(link2)
-                    End If
-
-                    Dim newDistance As Distance = linkageStrategy.CalculateDistance(distanceValues)
-
-                    newLinkage.LinkageDistance = newDistance.Distance
-                    Distances.add(newLinkage)
-                Next
-
-                Call Clusters.Add(newCluster)
+            If minDistLink Is Nothing Then
+                Return
             End If
+
+            Clusters.Remove(minDistLink.Right())
+            Clusters.Remove(minDistLink.Left())
+
+            Dim oldClusterL As Cluster = minDistLink.Left()
+            Dim oldClusterR As Cluster = minDistLink.Right()
+            Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
+
+            For Each iClust As Cluster In Clusters
+                Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
+                Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
+                Dim distanceValues As New List(Of Distance)
+
+                If link1 IsNot Nothing Then
+                    Dim distVal As Double = link1.LinkageDistance
+                    Dim weightVal As Double = link1.GetOtherCluster(iClust).WeightValue
+                    distanceValues.Add(New Distance(distVal, weightVal))
+                    Distances.Remove(link1)
+                End If
+
+                If link2 IsNot Nothing Then
+                    Dim distVal As Double = link2.LinkageDistance
+                    Dim weightVal As Double = link2.GetOtherCluster(iClust).WeightValue
+                    distanceValues.Add(New Distance(distVal, weightVal))
+                    Distances.Remove(link2)
+                End If
+
+                Dim newLinkage As New HierarchyTreeNode With {
+                    .Left = iClust,
+                    .Right = newCluster,
+                    .LinkageDistance = linkageStrategy _
+                        .CalculateDistance(distanceValues) _
+                        .Distance
+                }
+
+                Call Distances.Add(newLinkage, direct:=True)
+            Next
+
+            Call Distances.Sort()
+            Call Clusters.Add(newCluster)
         End Sub
 
         Private Function findByClusters(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
-            Return Distances.findByCodePair(c1, c2)
+            Return Distances.FindByCodePair(c1, c2)
         End Function
     End Class
 End Namespace
