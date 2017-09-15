@@ -84,12 +84,12 @@ Namespace Graphic
             If Not ignoreAxis Then
 
                 If Not ignoreX Then
-                    xAxis = New Vector(xrange.GetAxisValues(parts, XabsoluteScalling))
+                    xAxis = New Vector(xrange.CreateAxisTicks(parts))
                 Else
                     xAxis = New Vector({0R})
                 End If
                 If Not ignoreY Then
-                    yAxis = New Vector(yrange.GetAxisValues(parts, YabsoluteScalling))
+                    yAxis = New Vector(yrange.CreateAxisTicks(parts))
                 Else
                     yAxis = New Vector({0R})
                 End If

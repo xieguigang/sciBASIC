@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-Namespace Drawing2D.Vector.Shapes
+Namespace Drawing2D.Shapes
 
     ''' <summary>
     ''' 五角星

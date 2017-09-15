@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-Namespace Drawing2D.Vector.Shapes
+Namespace Drawing2D.Shapes
 
     Public Class Box : Inherits Shape
 

@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-Namespace Drawing2D.Vector.Text
+Namespace Drawing2D.Text
 
     Public Class FontMetrics
 

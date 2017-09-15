@@ -84,6 +84,13 @@ Namespace Quantile
             Return estimator
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="epsilon#"></param>
+        ''' <param name="compact_size%"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GKQuantile(source As IEnumerable(Of Double),
                                    Optional epsilon# = Extensions.epsilon,

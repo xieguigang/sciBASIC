@@ -87,10 +87,10 @@ Public Module Bubble
                      logR, Function(r) Math.Log(r + 1) + 1,
                            Function(r) r)
 
-                Call g.DrawAxis(size, margin, mapper, True,
-                                xlabel:=xlabel,
-                                ylabel:=ylabel,
-                                labelFontStyle:=axisLabelFontCSS)
+                'Call g.DrawAxis(size, margin, mapper, True,
+                '                xlabel:=xlabel,
+                '                ylabel:=ylabel,
+                '                labelFontStyle:=axisLabelFontCSS)
                 Dim bubblePen As Pen = Nothing
 
                 If Not bubbleBorder Is Nothing Then

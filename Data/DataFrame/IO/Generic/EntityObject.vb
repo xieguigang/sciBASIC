@@ -47,7 +47,7 @@ Namespace IO
         ''' </summary>
         ''' <returns></returns>
         <Column("ID")>
-        Public Property ID As String Implements INamedValue.Key
+        Public Overridable Property ID As String Implements INamedValue.Key
 
         Sub New()
         End Sub

@@ -9,12 +9,13 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisual
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Heatmap
 
@@ -81,18 +82,29 @@ Namespace Heatmap
         ''' <param name="data"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
+        Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels#) As IEnumerable(Of DataSet)
             Dim levelRange As DoubleRange = {0R, levels}
             Return data _
                 .Select(Function(x)
                             Dim range As DoubleRange = x.Properties.Values.Range
-                            Return New DataSet With {
-                                .ID = x.ID,
-                                .Properties = x _
+                            Dim values As Dictionary(Of String, Double)
+
+                            If range.Length = 0 Then
+                                values = x.Properties _
+                                    .Keys _
+                                    .ToDictionary(Function(key) key,
+                                                  Function(key) levels)
+                            Else
+                                values = x _
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
                                                   Function(key) range.ScaleMapping(x(key), levelRange))
+                            End If
+
+                            Return New DataSet With {
+                                .ID = x.ID,
+                                .Properties = values
                             }
                         End Function)
         End Function
@@ -288,13 +300,15 @@ Namespace Heatmap
                         .ClassTable = [class]
                     }
                 End Function
-            Dim DATA#() = array _
+            Dim DATArange As DoubleRange = array _
                 .Select(Function(x) x.Properties.Values) _
                 .IteratesALL _
                 .Join(min, max) _
                 .Distinct _
                 .ToArray
-            Dim ticks = AxisScalling.CreateAxisTicks(DATA, ticks:=5)
+            Dim ticks = DATArange.CreateAxisTicks(ticks:=5)
+
+            Call $"{DATArange.ToString} -> {ticks.GetJson}".__INFO_ECHO
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
@@ -393,8 +407,10 @@ Namespace Heatmap
                     Else
                         rowKeys = array.Keys
 
-                        ' 没有绘制层次聚类树，但是行的class有值，则会绘制行的class legend
-                        Call g.DrawClass(rowKeys, drawClass.rowClass, matrixPlotRegion, True, dendrogramLayout.A, interval)
+                        If Not drawClass.rowClass.IsNullOrEmpty Then
+                            ' 没有绘制层次聚类树，但是行的class有值，则会绘制行的class legend
+                            Call g.DrawClass(rowKeys, drawClass.rowClass, matrixPlotRegion, True, dendrogramLayout.A, interval)
+                        End If
                     End If
 
                     If drawDendrograms.HasFlag(DrawElements.Cols) Then
@@ -407,8 +423,10 @@ Namespace Heatmap
                     Else
                         colKeys = array.PropertyNames
 
-                        ' 没有绘制层次聚类树，但是列的class有值，则会绘制列的class legend
-                        Call g.DrawClass(colKeys, drawClass.colClass, matrixPlotRegion, False, dendrogramLayout.B, interval)
+                        If Not drawClass.colClass.IsNullOrEmpty Then
+                            ' 没有绘制层次聚类树，但是列的class有值，则会绘制列的class legend
+                            Call g.DrawClass(colKeys, drawClass.colClass, matrixPlotRegion, False, dendrogramLayout.B, interval)
+                        End If
                     End If
 
                     Dim levels As New Dictionary(Of String, DataSet)
@@ -468,7 +486,7 @@ Namespace Heatmap
                     dw = args.dStep.Width
                     left = args.left
                     top = args.top
-                    left += dw / 2
+                    left += dw / 2   ' x坐标已经向方格的中间移动了，后面就不需要额外的移动操作了
 
                     ' 绘制下方的矩阵的列标签
                     If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
@@ -479,8 +497,8 @@ Namespace Heatmap
 
                         For Each key$ In keys
                             Dim sz = g.MeasureString(key$, colLabelFont) ' 得到斜边的长度
-                            Dim dx! = sz.Width * Math.Cos(angle)
-                            Dim dy! = sz.Width * Math.Sin(angle)
+                            Dim dx! = sz.Width * Math.Cos(angle) + sz.Height / 2
+                            Dim dy! = sz.Width * Math.Sin(angle) + (sz.Width / 2) * Math.Cos(angle) - sz.Height
                             Dim pos As New PointF(left - dx, top - dy)
 
                             Call text.DrawString(key$, colLabelFont, Brushes.Black, pos, angle, format)

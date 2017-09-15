@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -56,11 +57,26 @@ Namespace ApplicationServices
             Return t
         End Function
 
-        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0) As T
+        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0, Optional tick As Boolean = True) As T
             Dim startTick As Long = App.NanoTime
+            Dim tickTask
+
+            If tick Then
+                tickTask = Utils.TaskRun(
+                    Sub()
+                        Do While tick
+                            Call Console.Write(".")
+                            Call Thread.Sleep(1000)
+                        Loop
+                    End Sub)
+            End If
+
             Dim value As T = work()
             Dim endTick As Long = App.NanoTime
+
             ms& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
+            tick = False
+
             Call $"Work takes {ms}ms...".__DEBUG_ECHO
             Return value
         End Function

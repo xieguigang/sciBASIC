@@ -39,7 +39,7 @@ Namespace Scripting
     ''' <summary>
     ''' Display the object instance object json from the type definition by using <see cref="Activator"/>.
     ''' </summary>
-    Public Module Actives
+    Public Module Activity
 
         ''' <summary>
         ''' 请注意，所需要进行显示的类型必须要Public类型的，假若该目标类型在Module之中，请保证Module也是Public访问的
@@ -74,6 +74,15 @@ Namespace Scripting
         Public Function Active(type As Type) As String
             Dim obj As Object = type.__active
             Return GetObjectJson(obj, type)
+        End Function
+
+        ''' <summary>
+        ''' 与<see cref="Activator.CreateInstance(Type)"/>所不同的是，这个函数还会对属性进行一些Demo值得赋值操作
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <Extension> Public Function ActiveObject(type As Type) As Object
+            Return type.__active
         End Function
 
         ''' <summary>

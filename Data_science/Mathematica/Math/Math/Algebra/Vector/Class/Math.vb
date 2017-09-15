@@ -33,10 +33,9 @@ Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports sys = System.Math
 
-Namespace SyntaxAPI.MathExtension
+Namespace LinearAlgebra
 
-    <Package("R.Math.Vector", Url:="", Publisher:="", Category:=APICategories.UtilityTools, Description:="")>
-    Public Module VectorMath
+    Partial Class Vector
 
         ''' <summary>
         ''' abs(x) computes the absolute value of x, sqrt(x) computes the (principal) square root of x, √{x}.
@@ -46,7 +45,7 @@ Namespace SyntaxAPI.MathExtension
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Sqrt")>
-        Public Function Sqrt(x As Vector) As Vector
+        Public Shared Function Sqrt(x As Vector) As Vector
             Return New Vector(From n In x Select sys.Sqrt(n))
         End Function
 
@@ -63,7 +62,7 @@ Namespace SyntaxAPI.MathExtension
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Exp")>
-        Public Function Exp(x As Vector) As Vector
+        Public Shared Function Exp(x As Vector) As Vector
             Return New Vector(From n As Double In x Select sys.Exp(n))
         End Function
 
@@ -76,35 +75,35 @@ Namespace SyntaxAPI.MathExtension
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Log")>
-        Public Function Log(x As Vector, Optional base As Double = sys.E) As Vector
+        Public Shared Function Log(x As Vector, Optional base As Double = sys.E) As Vector
             Return New Vector(From n As Double In x Select sys.Log(n, base))
         End Function
 
         <ExportAPI("Max")>
-        Public Function Max(x As Vector) As Double
+        Public Shared Function Max(x As Vector) As Double
             Return x.Max
         End Function
 
-        Public Function Max(x As Vector, y#) As Vector
+        Public Shared Function Max(x As Vector, y#) As Vector
             Return x.Select(Function(xi) sys.Max(xi, y)).AsVector
         End Function
 
-        Public Function Max(x As Vector, y As Vector) As Vector
+        Public Shared Function Max(x As Vector, y As Vector) As Vector
             Return x.SeqIterator _
                 .Select(Function(i) sys.Max(i.value, y(i))) _
                 .AsVector
         End Function
 
         <ExportAPI("Min")>
-        Public Function Min(x As Vector) As Double
+        Public Shared Function Min(x As Vector) As Double
             Return x.Min
         End Function
 
-        Public Function Min(x As Vector, y#) As Vector
+        Public Shared Function Min(x As Vector, y#) As Vector
             Return x.Select(Function(xi) sys.Min(xi, y)).AsVector
         End Function
 
-        Public Function Min(x As Vector, y As Vector) As Vector
+        Public Shared Function Min(x As Vector, y As Vector) As Vector
             Return x.SeqIterator _
                 .Select(Function(i) sys.Min(i.value, y(i))) _
                 .AsVector
@@ -118,12 +117,12 @@ Namespace SyntaxAPI.MathExtension
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Trunc")>
-        Public Function Trunc(x As Vector) As Vector
+        Public Shared Function Trunc(x As Vector) As Vector
             Return New Vector(x.Select(AddressOf sys.Truncate))
         End Function
 
         <ExportAPI("Abs")>
-        Public Function Abs(x As Vector) As Vector
+        Public Shared Function Abs(x As Vector) As Vector
             Return New Vector(From d As Double In x Select sys.Abs(d))
         End Function
 
@@ -138,44 +137,44 @@ Namespace SyntaxAPI.MathExtension
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Besseli")>
-        Public Function BesselI(x As Vector, nu As Vector,
+        Public Shared Function BesselI(x As Vector, nu As Vector,
                                 <Parameter("expon.scaled", "logical; if TRUE, the results are exponentially scaled in order to avoid overflow (I(nu)) or underflow (K(nu)), respectively.")>
                                 Optional ExponScaled As Boolean = False) As Vector
             Throw New NotImplementedException
         End Function
 
         <ExportAPI("Floor")>
-        Public Function floor(x As Vector) As Vector
+        Public Shared Function floor(x As Vector) As Vector
             Return New Vector(x.Select(AddressOf sys.Floor))
         End Function
 
         <ExportAPI("Round")>
-        Public Function round(x As Vector, Optional digits As Integer = 4) As Vector
+        Public Shared Function round(x As Vector, Optional digits As Integer = 4) As Vector
             Return New Vector(x.Select(Function(n) sys.Round(n, digits)))
         End Function
 
         <ExportAPI("Sinh")>
-        Public Function Sinh(x As Vector) As Vector
+        Public Shared Function Sinh(x As Vector) As Vector
             Return New Vector(x.Select(AddressOf sys.Sinh))
         End Function
 
         <ExportAPI("Sign")>
-        Public Function Sign(x As Vector) As Vector
+        Public Shared Function Sign(x As Vector) As Vector
             Return New Vector(x.Select(AddressOf sys.Sign))
         End Function
 
         <ExportAPI("pchisq")>
-        Public Function pchisq(q As Vector, df As Vector, Optional ncp As Integer = 0, Optional lowertail As Boolean = True, Optional logp As Boolean = False) As Vector
+        Public Shared Function pchisq(q As Vector, df As Vector, Optional ncp As Integer = 0, Optional lowertail As Boolean = True, Optional logp As Boolean = False) As Vector
             Throw New NotImplementedException
         End Function
 
         <ExportAPI("Sum")>
-        Public Function Sum(x As Vector, Optional NaRM As Boolean = False) As Vector
+        Public Shared Function Sum(x As Vector, Optional NaRM As Boolean = False) As Vector
             Return New Vector({x.Sum})
         End Function
 
         <ExportAPI("Sum")>
-        Public Function Sum(x As BooleanVector, Optional NaRM As Boolean = False) As Vector
+        Public Shared Function Sum(x As BooleanVector, Optional NaRM As Boolean = False) As Vector
             Dim data = (From b As Boolean In x Select If(b, 1, 0)).ToArray
             Return New Vector(integers:={data.Sum})
         End Function
@@ -188,7 +187,7 @@ Namespace SyntaxAPI.MathExtension
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Sort")>
-        Public Function Sort(x As Vector, Optional decreasing As Boolean = False) As Vector
+        Public Shared Function Sort(x As Vector, Optional decreasing As Boolean = False) As Vector
             Return If(
                 Not decreasing,
                 New Vector(x.OrderBy(Function(n) n)),
@@ -202,8 +201,8 @@ Namespace SyntaxAPI.MathExtension
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Order")>
-        Public Function Order(x As Vector, Optional nalast As Boolean = True, Optional decreasing As Boolean = False) As Vector
+        Public Shared Function Order(x As Vector, Optional nalast As Boolean = True, Optional decreasing As Boolean = False) As Vector
             Throw New NotImplementedException
         End Function
-    End Module
+    End Class
 End Namespace

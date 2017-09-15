@@ -80,22 +80,32 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="SchemaProvider"></param>
         ''' <param name="metaBlank"></param>
-        Sub New(SchemaProvider As SchemaProvider, metaBlank As String)
+        Sub New(SchemaProvider As SchemaProvider, metaBlank As String, layoutOrder As Dictionary(Of String, Integer))
             Me.SchemaProvider = SchemaProvider
             Me.Columns =
                 SchemaProvider.Columns _
-                    .ToList(Function(field) DirectCast(field, StorageProvider)) +
+                    .ToList(Function(field)
+                                Return DirectCast(field, StorageProvider)
+                            End Function) +
                 SchemaProvider.EnumColumns _
-                    .ToArray(Function(field) DirectCast(field, StorageProvider)) +
+                    .ToArray(Function(field)
+                                 Return DirectCast(field, StorageProvider)
+                             End Function) +
                 SchemaProvider.KeyValuePairColumns _
-                    .ToArray(Function(field) DirectCast(field, StorageProvider)) +
+                    .ToArray(Function(field)
+                                 Return DirectCast(field, StorageProvider)
+                             End Function) +
                 SchemaProvider.CollectionColumns _
-                    .ToArray(Function(field) DirectCast(field, StorageProvider))
-            Me.Columns =
-                LinqAPI.Exec(Of StorageProvider) <= From field As StorageProvider
-                                                    In Me.Columns
-                                                    Where Not field Is Nothing
-                                                    Select field
+                    .ToArray(Function(field)
+                                 Return DirectCast(field, StorageProvider)
+                             End Function)
+            Me.Columns = LinqAPI.Exec(Of StorageProvider) _
+ _
+                () <= From field As StorageProvider
+                      In Me.Columns
+                      Where Not field Is Nothing
+                      Select field
+
             Me.MetaRow = SchemaProvider.MetaAttributes
             Me._metaBlank = metaBlank
             Me.HaveMeta = Not MetaRow Is Nothing
@@ -136,6 +146,15 @@ Namespace StorageProvider.ComponentModels
 
                               Return True
                           End Function)
+
+            If Not layoutOrder Is Nothing Then
+                ' 列的顺序需要通过layoutOrder进行重排序
+                Columns = Columns _
+                    .OrderBy(Function(c)
+                                 Return If(layoutOrder.ContainsKey(c.Name), layoutOrder(c.Name), 1000)
+                             End Function) _
+                    .ToArray
+            End If
         End Sub
 
         Public Function GetRowNames(Optional maps As Dictionary(Of String, String) = Nothing) As RowObject
@@ -174,13 +193,13 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="obj"></param>
         ''' <returns></returns>
         Private Function __buildRowNullMeta(obj As Object) As RowObject
-            Dim row As List(Of String) = LinqAPI.MakeList(Of String) <=
+            Dim row = LinqAPI.MakeList(Of String) _
  _
-                From colum As StorageProvider
-                In Columns
-                Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
-                Let strData As String = colum.ToString(value)
-                Select strData
+            () <= From colum As StorageProvider
+                  In Columns
+                  Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
+                  Let strData As String = colum.ToString(value)
+                  Select strData
 
             Return New RowObject(row)
         End Function
@@ -218,13 +237,15 @@ Namespace StorageProvider.ComponentModels
                 Return Me
             End If
 
-            Dim hashMetas As IDictionary() =
-                LinqAPI.Exec(Of IDictionary) <= From obj As Object
-                                                In source.AsParallel
-                                                Let x As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
-                                                Where Not x Is Nothing
-                                                Let hash As IDictionary = DirectCast(x, IDictionary)
-                                                Select hash  ' 获取每一个实体对象的字典属性的值
+            Dim hashMetas = LinqAPI.Exec(Of IDictionary) _
+ _
+                () <= From obj As Object
+                      In source.AsParallel
+                      Let x As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
+                      Where Not x Is Nothing
+                      Let hash As IDictionary = DirectCast(x, IDictionary)
+                      Select hash  ' 获取每一个实体对象的字典属性的值
+
             ' 得到所有的键名Keys
             Dim indexs As IEnumerable(Of String) = (From x As IDictionary
                                                     In hashMetas.AsParallel
