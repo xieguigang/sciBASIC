@@ -209,8 +209,8 @@ Namespace Graphic.Axis
                     X = offset.X
             End Select
 
-            Dim ZERO As New Point(X, size.Height + offset.Y) ' 坐标轴原点，需要在这里修改layout
-            Dim top As New Point(X, offset.Y)                ' Y轴
+            Dim top As New Point(X, scaler.ChartRegion.Y + offset.Y)                ' Y轴
+            Dim ZERO As New Point(X, size.Height + top.Y) ' 坐标轴原点，需要在这里修改layout
 
             If showAxisLine Then
                 Call g.DrawLine(pen, ZERO, top)     ' y轴
@@ -316,8 +316,8 @@ Namespace Graphic.Axis
                     Y = size.Height + offset.Y
             End Select
 
-            Dim ZERO As New Point(offset.X, Y)                 ' 坐标轴原点
-            Dim right As New Point(size.Width + offset.X, Y)   ' X轴
+            Dim ZERO As New Point(scaler.ChartRegion.Left + offset.X, Y)                 ' 坐标轴原点
+            Dim right As New Point(ZERO.X + size.Width, Y)   ' X轴
             Dim d! = If(overridesTickLine <= 0, 10, overridesTickLine)
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
@@ -337,10 +337,12 @@ Namespace Graphic.Axis
 
             If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
                 Dim labelImage As Image = label.__plotLabel(labelFont)
-                Call g.DrawImageUnscaled(
-                    labelImage,
-                    New Point((size.Width - labelImage.Width) / 2,
-                              size.Height + (labelImage.Height) * 0.5))
+                Dim point As New Point With {
+                    .X = (size.Width - labelImage.Width) / 2 + scaler.ChartRegion.Left,
+                    .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height * 1.5
+                }
+
+                Call g.DrawImageUnscaled(labelImage, point)
             End If
         End Sub
     End Module
