@@ -1,3 +1,5 @@
 
-Public MustInherit Class DatasetItemBase
-End Class
+Namespace DBSCAN
+    Public MustInherit Class DatasetItemBase
+    End Class
+End Namespace

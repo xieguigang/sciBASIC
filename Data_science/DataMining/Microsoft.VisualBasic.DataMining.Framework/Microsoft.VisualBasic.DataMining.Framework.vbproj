@@ -284,8 +284,6 @@
     <Compile Include="DBSCAN\DatasetItemBase.vb" />
     <Compile Include="DBSCAN\DbscanAlgorithm.vb" />
     <Compile Include="DBSCAN\DbscanPoint.vb" />
-    <Compile Include="DBSCAN\MyCustomDatasetItem.vb" />
-    <Compile Include="DBSCAN\Program.vb" />
     <Compile Include="PCA\PCA.vb" />
     <Compile Include="PCA\Method.vb" />
     <Compile Include="FuzzyCMeans\AlgorithmsUtils.vb" />

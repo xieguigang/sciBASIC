@@ -170,7 +170,7 @@ Module TestingMain
 
         Dim data = {StudentA, StudentB, StudentC, StudentD, StudentE}.Shuffles
 
-        clusters = KMeans.ClusterDataSet(2, data)
+        clusters = KMeans.ClusterDataSet(data, 2)
 
 
         Dim distance = KMeans.EuclideanDistance(StudentA.Properties, StudentB.Properties)
@@ -204,7 +204,7 @@ Module TestingMain
         Dim Data0 = Microsoft.VisualBasic.Data.csv.IO.File.FastLoad("E:\xcb_vcell\xcb_model\Result\MAT_OUT.csv")
         Dim MAT = Microsoft.VisualBasic.DataMining.Serials.PeriodAnalysis.SerialsVarialble.Load(Data0)
 
-        Dim datad = Microsoft.VisualBasic.Mathematical.Interpolation.BezierCurve.BezierSmoothInterpolation(MAT(1).SerialsData, 100)
+        Dim datad = Microsoft.VisualBasic.Math.Interpolation.BezierCurve.BezierSmoothInterpolation(MAT(1).SerialsData, 100)
 
         Call datad.SaveTo("./Bezier.csv")
 
