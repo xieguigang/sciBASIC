@@ -78,7 +78,6 @@ Namespace Graphic.Axis
                             Optional gridFill$ = "rgb(245,245,245)")
             With region
                 Call g.DrawAxis(
-                    .Size, .Padding,
                     scaler,
                     showGrid,
                     offset,
@@ -92,17 +91,13 @@ Namespace Graphic.Axis
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="padding">需要根据这个值来计算出坐标轴的layout.</param>
         ''' <param name="g"></param>
-        ''' <param name="size"></param>
         ''' <param name="scaler">Drawing Point data auto scaler</param>
         ''' <param name="showGrid">Show axis grid on the plot region?</param>
         ''' <param name="xlayout">修改y属性</param>
         ''' <param name="ylayout">修改x属性</param>
         <Extension>
         Public Sub DrawAxis(ByRef g As IGraphics,
-                            size As Size,
-                            padding As Padding,
                             scaler As DataScaler,
                             showGrid As Boolean,
                             Optional offset As Point = Nothing,
@@ -113,11 +108,12 @@ Namespace Graphic.Axis
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
                             Optional gridFill$ = "rgb(245,245,245)",
                             Optional gridColor$ = "white",
-                            Optional axisStroke$ = Stroke.AxisStroke)
+                            Optional axisStroke$ = Stroke.AxisStroke,
+                            Optional tickFontStyle$ = CSSFont.Win7Normal)
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
-            Dim rect As Rectangle = padding.GetCanvasRegion(size)
-            Dim tickFont As New Font(FontFace.MicrosoftYaHei, 14)
+            Dim rect As Rectangle = scaler.ChartRegion
+            Dim tickFont As Font = CSSFont.TryParse(tickFontStyle)
             Dim gridPenX As New Pen(gridColor.TranslateColor, 2) With {
                 .DashStyle = Drawing2D.DashStyle.Dash
             }
@@ -152,10 +148,10 @@ Namespace Graphic.Axis
             Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
 
             If xlayout <> XAxisLayoutStyles.None Then
-                Call g.DrawX(size, padding, pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont)
+                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont)
             End If
             If ylayout <> YAxisLayoutStyles.None Then
-                Call g.DrawY(size, padding, pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont)
+                Call g.DrawY(pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont)
             End If
         End Sub
 
@@ -180,8 +176,7 @@ Namespace Graphic.Axis
                     Call g.DrawLine(gridPen, left, right)
                 Next
 
-                Call g.DrawY(.Size, .Padding,
-                             pen, label,
+                Call g.DrawY(pen, label,
                              scaler,
                              YAxisLayoutStyles.Left,
                              offset,
@@ -192,7 +187,7 @@ Namespace Graphic.Axis
 
         Public Property delta As Integer = 10
 
-        <Extension> Public Sub DrawY(ByRef g As IGraphics, size As Size, padding As Padding,
+        <Extension> Public Sub DrawY(ByRef g As IGraphics,
                                      pen As Pen, label$,
                                      scaler As DataScaler,
                                      layout As YAxisLayoutStyles, offset As Point,
@@ -201,20 +196,21 @@ Namespace Graphic.Axis
                                      Optional showAxisLine As Boolean = True)
 
             Dim X%  ' y轴的layout的变化只需要变换x的值即可
+            Dim size = scaler.ChartRegion.Size
 
             Select Case layout
                 Case YAxisLayoutStyles.Centra
-                    X = padding.Left + (size.Width - padding.Horizontal) / 2 + offset.X
+                    X = (size.Width) / 2 + offset.X
                 Case YAxisLayoutStyles.Right
-                    X = size.Width - padding.Right + offset.X
+                    X = size.Width - offset.X
                 Case YAxisLayoutStyles.ZERO
                     X = scaler.X(0) + offset.X
                 Case Else
-                    X = padding.Left + offset.X
+                    X = offset.X
             End Select
 
-            Dim ZERO As New Point(X, size.Height - padding.Bottom + offset.Y) ' 坐标轴原点，需要在这里修改layout
-            Dim top As New Point(X, padding.Top + offset.Y)                   ' Y轴
+            Dim ZERO As New Point(X, size.Height + offset.Y) ' 坐标轴原点，需要在这里修改layout
+            Dim top As New Point(X, offset.Y)                ' Y轴
 
             If showAxisLine Then
                 Call g.DrawLine(pen, ZERO, top)     ' y轴
@@ -244,7 +240,7 @@ Namespace Graphic.Axis
                 labelImage = labelImage.RotateImage(-90)
 
                 Dim location As New Point(
-                    (padding.Left - labelImage.Width) / 2,
+                    (labelImage.Width) / 2,
                     (size.Height - labelImage.Height) / 2)
 
                 Call g.DrawImageUnscaled(labelImage, location)
@@ -300,7 +296,7 @@ Namespace Graphic.Axis
             End Using
         End Function
 
-        <Extension> Public Sub DrawX(ByRef g As IGraphics, size As Size, padding As Padding,
+        <Extension> Public Sub DrawX(ByRef g As IGraphics,
                                      pen As Pen, label$,
                                      scaler As DataScaler,
                                      layout As XAxisLayoutStyles, offset As Point,
@@ -309,19 +305,20 @@ Namespace Graphic.Axis
                                      Optional overridesTickLine% = -1,
                                      Optional noTicks As Boolean = False)
             Dim Y%
+            Dim size = scaler.ChartRegion.Size
 
             Select Case layout
                 Case XAxisLayoutStyles.Centra
-                    Y = padding.Top + (size.Height - padding.Vertical) / 2 + offset.Y
+                    Y = size.Height / 2 + offset.Y
                 Case XAxisLayoutStyles.Top
-                    Y = padding.Top + offset.Y
+                    Y = offset.Y
                 Case Else
-                    Y = size.Height - padding.Bottom + offset.Y
+                    Y = size.Height + offset.Y
             End Select
 
-            Dim ZERO As New Point(padding.Left + offset.X, Y)                       ' 坐标轴原点
-            Dim right As New Point(size.Width - padding.Right + offset.X, Y)        ' X轴
-            Dim d! = If(overridesTickLine <= 0, padding.Bottom * 0.1, overridesTickLine)
+            Dim ZERO As New Point(offset.X, Y)                 ' 坐标轴原点
+            Dim right As New Point(size.Width + offset.X, Y)   ' X轴
+            Dim d! = If(overridesTickLine <= 0, 10, overridesTickLine)
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
@@ -343,7 +340,7 @@ Namespace Graphic.Axis
                 Call g.DrawImageUnscaled(
                     labelImage,
                     New Point((size.Width - labelImage.Width) / 2,
-                              size.Height - padding.Bottom + (padding.Bottom - labelImage.Height) * 0.5))
+                              size.Height + (labelImage.Height) * 0.5))
             End If
         End Sub
     End Module
