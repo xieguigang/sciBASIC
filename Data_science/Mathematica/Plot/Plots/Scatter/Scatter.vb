@@ -104,7 +104,7 @@ Public Module Scatter
                 End If
 
                 If drawAxis Then
-                    Call g.DrawAxis(size, margin, mapper, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
+                    '  Call g.DrawAxis(size, margin, mapper, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
                 End If
 
                 For Each line As SerialData In mapper.ForEach(size, margin)

@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -76,6 +77,37 @@ Module ZScorePlotTest
 
     Sub plotHeatmap()
         Dim csv$ = "D:\OneDrive\Report_soil\16s-Desktop\8.24\predictions_ko.L3.csv"
-        Call Heatmap.Heatmap.Plot(DataSet.LoadDataSet(csv)).Save(csv.TrimSuffix & ".png")
+        Dim labels = Microsoft.VisualBasic.Data.csv.IO.Tokenizer.CharsParser(csv.ReadFirstLine).Skip(1).AsList
+
+        With New Dictionary(Of String, String())
+            !Case = {
+                "20_1", "18_1", "17_1", "16_1", "15_2", "15_1", "14_1",
+                "13_1", "12_1", "11_1", "11_2", "11_2_1", "11_2_2",
+                "7_4", "6_4", "1_3", "1_4", "1_5"
+            }
+            !Control = labels - !Case
+
+            Dim colors = New Dictionary(Of String, String)
+
+            For Each label In !Case
+                colors.Add(label, "green")
+            Next
+            For Each label In !Control
+                colors.Add(label, "darkblue")
+            Next
+
+            Dim matrix = DataSet.LoadDataSet(csv).Project(colors.Keys.ToArray).ToArray
+
+            Call Heatmap.Heatmap.Plot(matrix,
+                                      size:="3800,5000",
+                                      drawScaleMethod:=Heatmap.DrawElements.Rows,
+                                      min:=0,
+                                      colLabelFontStyle:=CSSFont.Win7LittleLarge,
+                                      mapName:=ColorBrewer.SequentialSchemes.YlGnBu9,
+                                      drawClass:=(Nothing, colors),
+                                      mainTitle:="predictions_ko.L3").Save(csv.TrimSuffix & ".png")
+        End With
+
+        End
     End Sub
 End Module

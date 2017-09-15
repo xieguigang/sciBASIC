@@ -182,6 +182,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Templates\TemplateHelper.vb" />
+    <Compile Include="Templates\TemplateAttribute.vb" />
     <Compile Include="Writer.vb" />
     <Compile Include="Field.vb" />
     <Compile Include="Extensions.vb" />

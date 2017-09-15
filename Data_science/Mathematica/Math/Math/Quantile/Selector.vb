@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 
 Namespace Quantile
 
@@ -38,16 +39,37 @@ Namespace Quantile
             }.ApplySelector(exp)
         End Function
 
+        ''' <summary>
+        ''' 可以使用``|``管道进行组合使用
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="exp$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ApplySelector(Of T)(source As Provider(Of T), exp$) As IEnumerable(Of T)
+            For Each op As String In exp.Split("|"c)
+                source = New Provider(Of T) With {
+                    .getValue = source.getValue,
+                    .source = source _
+                        .SelectorInternal(op) _
+                        .ToArray
+                }
+            Next
+
+            Return source.source
+        End Function
+
+        <Extension>
+        Private Function SelectorInternal(Of T)(source As Provider(Of T), exp$) As IEnumerable(Of T)
             If InStr(exp, "quantile:", CompareMethod.Text) > 0 Then
                 Dim q#
 
                 With exp.Split(":"c).Last.Trim
                     If .IsPattern("\d+(\.\d+)?[%]") Then
-                        q = Val(exp) / 100
+                        q = Val(.ref) / 100
                     Else
-                        q = Val(exp)
+                        q = Val(.ref)
                     End If
                 End With
 
@@ -76,6 +98,8 @@ Namespace Quantile
             Dim quantile = array.Select(Function(o) o.x).GKQuantile
             Dim threshold# = quantile.Query(q)
 
+            Call $"quantile {q * 100}% => {threshold}".__INFO_ECHO
+
             Return array _
                 .Where(Function(o) o.x >= threshold) _
                 .Select(Function(x) x.obj)
@@ -95,6 +119,8 @@ Namespace Quantile
                     Throw New NotSupportedException("???" & name.ToString)
             End Select
 
+            Call $"quartile {name.ToString} => {q}".__INFO_ECHO
+
             Return array _
                 .Where(Function(o) o.x >= q#) _
                 .Select(Function(x) x.obj)
@@ -102,6 +128,8 @@ Namespace Quantile
 
         <Extension>
         Public Function SelectByRankAsc(Of T)(source As Provider(Of T), n%, desc As Boolean) As IEnumerable(Of T)
+            Call $"{If(desc, "desc", "asc")} => {n}".__INFO_ECHO
+
             Return source _
                 .CreateArray _
                 .Sort(Function(o) o.x, desc) _

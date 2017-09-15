@@ -29,18 +29,54 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Graphic
 
-    Public Module DataScaler
+    Public Module DataScalerExtensions
 
+        ''' <summary>
+        ''' Translate the x/y value as a geom point.
+        ''' </summary>
+        ''' <param name="scaler"></param>
+        ''' <param name="bottom">
+        ''' 如果是正常的坐标系，那么这个值就必须是一个正数，值为绘图区域的<paramref name="bottom"/>的y值，
+        ''' 否则获取得到的y值将会是颠倒过来的，除非将<see cref="Graphics"/>的旋转矩阵给颠倒了
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
-        Public Function TupleScaler(scaler As (x As d3js.scale.LinearScale, y As d3js.scale.LinearScale)) As Func(Of Double, Double, PointF)
+        Public Function TupleScaler(scaler As (x As d3js.scale.LinearScale, y As d3js.scale.LinearScale), Optional bottom% = -1) As Func(Of Double, Double, PointF)
             With scaler
-                Return Function(x, y)
-                           Return New PointF(.x(x), .y(y))
-                       End Function
+                If bottom > 0 Then
+                    Return Function(x, y)
+                               Return New PointF(.x(x), bottom - .y(y))
+                           End Function
+                Else
+                    Return Function(x, y)
+                               Return New PointF(.x(x), .y(y))
+                           End Function
+                End If
             End With
         End Function
     End Module
+
+    Public Structure DataScaler
+
+        Dim X As LinearScale
+        Dim Y As LinearScale
+        Dim AxisTicks As (X As Vector, Y As Vector)
+        Dim ChartRegion As Rectangle
+
+        Public Function Translate(x#, y#) As PointF
+            Return New PointF With {
+                .X = Me.X(x),
+                .Y = ChartRegion.Bottom - Me.Y(y)
+            }
+        End Function
+
+        Public Function TranslateY(y#) As Double
+            Return ChartRegion.Bottom - Me.Y(y)
+        End Function
+    End Structure
 End Namespace

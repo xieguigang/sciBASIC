@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Math
 
-Namespace Drawing2D.Vector.Shapes
+Namespace Drawing2D.Shapes
 
     Public Class Line : Inherits Shape
 
@@ -135,8 +135,8 @@ Namespace Drawing2D.Vector.Shapes
                 Dim offset As New Point(dx, -dy)
 
                 Return New Line(
-                    pt1.OffSet2D(Offset),
-                    pt2.OffSet2D(Offset),
+                    pt1.OffSet2D(offset),
+                    pt2.OffSet2D(offset),
                     color, .Width)
             End With
         End Function

@@ -80,7 +80,7 @@ Namespace BarPlot
                     Dim interval As Double = margin.Vertical / n
                     Dim sx As Func(Of Single, Single) = mapper.XScaler(size, margin)
 
-                    Call g.DrawAxis(size, margin, mapper, showGrid)
+                    ' Call g.DrawAxis(size, margin, mapper, showGrid)
 
                     For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
                         Dim y = top + interval

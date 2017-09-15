@@ -36,7 +36,6 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -198,9 +197,9 @@ Namespace BarPlot.Histogram
                             range:=scalerData)
                     End If
 
-                    Call g.DrawAxis(size, margin, mapper, showGrid,
-                                    xlabel:=xlabel,
-                                    labelFontStyle:=axisLabelFontStyle)
+                    'Call g.DrawAxis(size, margin, mapper, showGrid,
+                    '                xlabel:=xlabel,
+                    '                labelFontStyle:=axisLabelFontStyle)
 
                     For Each hist As HistProfile In mapper.ForEach_histSample(size, margin)
                         Dim ann As NamedValue(Of Color) = annotations(hist.legend.title)

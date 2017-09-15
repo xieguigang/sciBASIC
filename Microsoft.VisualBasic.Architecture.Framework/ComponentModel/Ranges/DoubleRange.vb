@@ -127,14 +127,13 @@ Namespace ComponentModel.Ranges
         End Function
 
         ''' <summary>
-        ''' Check if the specified range is inside this range
+        ''' Check if the specified <paramref name="range"/> is inside this range.
+        ''' (如果函数参数<paramref name="range"/>在当前的这个range之中，则返回真)
         ''' </summary>
-        ''' 
         ''' <param name="range">Range to check</param>
-        ''' 
-        ''' <returns><b>True</b> if the specified range is inside this range or
-        ''' <b>false</b> otherwise.</returns>
-        ''' 
+        ''' <returns>
+        ''' + <b>True</b> if the specified input <paramref name="range"/> parameter is inside this range or
+        ''' + <b>false</b> otherwise.</returns>
         Public Function IsInside(range As DoubleRange) As Boolean
             Return ((IsInside(range.Min)) AndAlso (IsInside(range.Max)))
         End Function

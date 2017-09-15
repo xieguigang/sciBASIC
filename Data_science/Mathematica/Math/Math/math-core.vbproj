@@ -306,7 +306,7 @@
     <Compile Include="Algebra\Helpers\Variable.vb" />
     <Compile Include="Algebra\Matrix\Matrix.vb" />
     <Compile Include="Algebra\Matrix\MatrixMath.vb" />
-    <Compile Include="Algebra\RSyntax\Math\Math.vb" />
+    <Compile Include="Algebra\Vector\Class\Math.vb" />
     <Compile Include="Algebra\RSyntax\Math\Poisson.vb" />
     <Compile Include="Algebra\RSyntax\Math\Skellam.vb" />
     <Compile Include="Algebra\RSyntax\PrimitiveAPI\Etc.vb" />
@@ -318,7 +318,7 @@
     <Compile Include="Algebra\Solvers\ISolver.vb" />
     <Compile Include="Algebra\Helpers\MatrixArithmetic.vb" />
     <Compile Include="Algebra\Vector\VectorEqualityComparer.vb" />
-    <Compile Include="Algebra\Vector\Vector.vb" />
+    <Compile Include="Algebra\Vector\Class\Vector.vb" />
     <Compile Include="HashMaps\HashMap.vb" />
     <Compile Include="Scripting\ParameterCompute.vb" />
     <Compile Include="Spline\BezierCurve.vb" />

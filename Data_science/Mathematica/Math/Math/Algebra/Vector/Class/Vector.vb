@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
@@ -401,13 +402,7 @@ Namespace LinearAlgebra
         ''' <remarks></remarks>
         Public ReadOnly Property [Mod] As Double
             Get
-                Dim sum As Double
-
-                For Each x# In Me
-                    sum += x ^ 2
-                Next
-
-                Return sum
+                Return (Me ^ 2).Sum
             End Get
         End Property
 
@@ -475,7 +470,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return "[" & Me.ToString("F2").JoinBy(", ") & "]"
+            Return "[" & Me.ToString("G4").JoinBy(", ") & "]"
         End Function
 
         Public Overloads Function ToString(format$) As String()
@@ -556,6 +551,14 @@ Namespace LinearAlgebra
             Return New BooleanVector(From a In x.SeqIterator Select a.value <= y.buffer(a))
         End Operator
 
+        Public Shared Operator <=(x#, y As Vector) As BooleanVector
+            Return New BooleanVector(From a In y Select x <= a)
+        End Operator
+
+        Public Shared Operator >=(x#, y As Vector) As BooleanVector
+            Return Not x <= y
+        End Operator
+
 #Region "Syntax support for: Dim v As Vector = {1, 2, 3, 4, 5, 6}"
         Public Shared Widening Operator CType(v As Double()) As Vector
             Return New Vector(v)
@@ -608,6 +611,10 @@ Namespace LinearAlgebra
                 Return New Vector(array)
 
             End If
+        End Operator
+
+        Public Shared Widening Operator CType(vector As VectorShadows(Of Double)) As Vector
+            Return vector.As(Of Double).AsVector
         End Operator
     End Class
 End Namespace

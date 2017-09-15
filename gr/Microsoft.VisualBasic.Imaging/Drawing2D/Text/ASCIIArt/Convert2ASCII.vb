@@ -33,7 +33,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports sys = System.Math
 
-Namespace Drawing2D.Vector.Text.ASCIIArt
+Namespace Drawing2D.Text.ASCIIArt
 
     ''' <summary>
     ''' Program that converts images to ASCII art images

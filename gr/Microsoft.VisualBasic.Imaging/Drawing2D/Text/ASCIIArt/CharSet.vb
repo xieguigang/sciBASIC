@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Math
 
-Namespace Drawing2D.Vector.Text.ASCIIArt
+Namespace Drawing2D.Text.ASCIIArt
 
     Public Module CharSet
 
