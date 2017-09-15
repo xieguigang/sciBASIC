@@ -215,7 +215,8 @@ Namespace Imaging
                 .InterpolationMode = InterpolationMode.HighQualityBicubic,
                 .PixelOffsetMode = PixelOffsetMode.HighQuality,
                 .CompositingQuality = CompositingQuality.HighQuality,
-                .SmoothingMode = SmoothingMode.HighQuality
+                .SmoothingMode = SmoothingMode.HighQuality,
+                .TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
             }
         End Function
 
@@ -461,12 +462,11 @@ Namespace Imaging
                 Graphics.TextContrast = value
             End Set
         End Property
-        '
-        ' Summary:
-        '     Gets or sets the rendering mode for text associated with this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Text.TextRenderingHint values.
+
+        ''' <summary>
+        ''' Gets or sets the rendering mode for text associated with this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>One of the System.Drawing.Text.TextRenderingHint values.</returns>
         Public Overrides Property TextRenderingHint As TextRenderingHint
             Get
                 Return Graphics.TextRenderingHint
