@@ -211,7 +211,11 @@ Namespace Imaging
                 .ImageResource = res,
                 ._Graphics = g,
                 .Font = New Font(FontFace.MicrosoftYaHei, 12),
-                .Stroke = Pens.Black
+                .Stroke = Pens.Black,
+                .InterpolationMode = InterpolationMode.HighQualityBicubic,
+                .PixelOffsetMode = PixelOffsetMode.HighQuality,
+                .CompositingQuality = CompositingQuality.HighQuality,
+                .SmoothingMode = SmoothingMode.HighQuality
             }
         End Function
 
@@ -398,14 +402,13 @@ Namespace Imaging
                 Graphics.PageUnit = value
             End Set
         End Property
-        '
-        ' Summary:
-        '     Gets or set a value specifying how pixels are offset during rendering of this
-        '     System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a member of the System.Drawing.Drawing2D.PixelOffsetMode
-        '     enumeration
+
+        ''' <summary>
+        ''' Gets or set a value specifying how pixels are offset during rendering of this
+        ''' System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>This property specifies a member of the System.Drawing.Drawing2D.PixelOffsetMode
+        ''' enumeration</returns>
         Public Overrides Property PixelOffsetMode As PixelOffsetMode
             Get
                 Return Graphics.PixelOffsetMode
@@ -431,12 +434,11 @@ Namespace Imaging
                 Graphics.RenderingOrigin = value
             End Set
         End Property
-        '
-        ' Summary:
-        '     Gets or sets the rendering quality for this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Drawing2D.SmoothingMode values.
+
+        ''' <summary>
+        ''' Gets or sets the rendering quality for this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>One of the System.Drawing.Drawing2D.SmoothingMode values.</returns>
         Public Overrides Property SmoothingMode As SmoothingMode
             Get
                 Return Graphics.SmoothingMode
