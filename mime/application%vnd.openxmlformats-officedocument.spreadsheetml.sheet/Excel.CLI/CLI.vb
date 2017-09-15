@@ -4,8 +4,12 @@ Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Text
 Imports Contract = Microsoft.VisualBasic.Data.csv.DATA.DataFrame
+Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 <CLI> Module CLI
 
@@ -33,7 +37,7 @@ Imports Contract = Microsoft.VisualBasic.Data.csv.DATA.DataFrame
               Description:="A directory path that contains csv files that will be merge into one file directly.")>
     Public Function rbind(args As CommandLine) As Integer
         Dim [in] As String = args("/in")
-        Dim out As String = args.GetValue("/out", [in].TrimSuffix & ".MERGE.csv")
+        Dim out As String = args.GetValue("/out", [in].TrimSuffix & ".rbind.csv")
 
         Return DocumentExtensions _
             .MergeTable(
@@ -41,17 +45,42 @@ Imports Contract = Microsoft.VisualBasic.Data.csv.DATA.DataFrame
     End Function
 
     <ExportAPI("/push")>
-    Public Function pushTable(args As CommandLine) As Integer
+    <Usage("/push /write <xlsx> /table <csv> /sheetName <name_string>")>
+    Public Function PushTable(args As CommandLine) As Integer
+        With args <= "/write"
 
+            Dim Excel As Xlsx = Xlsx.Open(.ref)
+            Dim table As csv = args <= "/csv"
+
+            Call Excel.WriteSheetTable(table, args <= "/sheetName")
+            Call Excel.WriteXlsx(.ref)
+
+            Return 0
+        End With
     End Function
 
     <ExportAPI("/Create")>
+    <Usage("/Create /target <xlsx>")>
     Public Function newEmpty(args As CommandLine) As Integer
-
+        Return "" _
+            .SaveTo(args <= "/target", Encodings.ASCII) _
+            .CLICode
     End Function
 
-    <ExportAPI("Extract")>
-    Public Function extract(args As CommandLine) As Integer
+    <ExportAPI("/Extract")>
+    <Usage("/Extract /open <xlsx> /sheetName <name_string> [/out <out.csv>]")>
+    <Description("Open target excel file and get target table and save into a csv file.")>
+    Public Function Extract(args As CommandLine) As Integer
+        Dim sheet$ = args <= "/sheetName"
+        Dim defaultOut As DefaultValue(Of String) =
+            (args <= "/open").TrimSuffix & $"-{sheet}.csv"
 
+        With (args <= "/out") Or defaultOut
+
+            Return Xlsx.Open(args <= "/open") _
+                .GetTable(sheet) _
+                .Save(.ref, encoding:=Encodings.UTF8) _
+                .CLICode
+        End With
     End Function
 End Module

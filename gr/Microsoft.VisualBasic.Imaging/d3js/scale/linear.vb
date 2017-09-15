@@ -46,5 +46,9 @@ Namespace d3js.scale
         Public Overrides Function domain(values As IEnumerable(Of Integer)) As LinearScale
             Return domain(values.Select(Function(x) CDbl(x)))
         End Function
+
+        Public Shared Narrowing Operator CType(scale As LinearScale) As Func(Of Double, Double)
+            Return Function(x#) scale(x)
+        End Operator
     End Class
 End Namespace

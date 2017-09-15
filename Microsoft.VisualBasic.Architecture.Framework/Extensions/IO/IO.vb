@@ -44,8 +44,8 @@ Public Module IOExtensions
     ''' <summary>
     ''' 将指定的字符串的数据值写入到目标可写的输出流之中
     ''' </summary>
-    ''' <param name="data$"></param>
-    ''' <param name="out"></param>
+    ''' <param name="data$">所需要写入的字符串数据</param>
+    ''' <param name="out">输出流</param>
     <Extension>
     Public Sub FlushTo(data$, out As StreamWriter)
         Call out.WriteLine(data)

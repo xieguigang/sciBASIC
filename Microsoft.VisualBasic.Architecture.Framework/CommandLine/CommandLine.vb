@@ -344,11 +344,15 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <returns></returns>
-        Public Function GetDictionary(name$) As Dictionary(Of String, String)
+        Public Function GetDictionary(name$, Optional default$ = Nothing) As Dictionary(Of String, String)
             Dim s$ = Me(name$)
 
             If String.IsNullOrEmpty(s$) Then
-                Return Nothing
+                If [default].StringEmpty Then
+                    Return Nothing
+                Else
+                    Return DictionaryParser.TryParse([default])
+                End If
             Else
                 Return DictionaryParser.TryParse(s$)
             End If

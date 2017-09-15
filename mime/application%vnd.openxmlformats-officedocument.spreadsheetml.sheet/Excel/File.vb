@@ -45,10 +45,23 @@ Public Class File
     ''' <returns></returns>
     Public Function WriteSheetTable(Of T)(data As IEnumerable(Of T), sheetName$) As Boolean
         Dim table As csv = data.ToCsvDoc
+        Return WriteSheetTable(table, sheetName)
+    End Function
+
+    Public Function WriteSheetTable(table As csv, sheetName$) As Boolean
+
     End Function
 
     Public Function WriteXlsx(path$) As Boolean
 
+    End Function
+
+    Public Function GetTable(sheetName$) As csv
+
+    End Function
+
+    Public Function LoadDataSet(Of T As Class)(sheetName$) As T()
+        Return GetTable(sheetName).AsDataSource(Of T)
     End Function
 
     Public Shared Function CreatePackage(tmp$, xlsx$) As Boolean
@@ -64,5 +77,9 @@ Public Class File
         End Try
 
         Return True
+    End Function
+
+    Public Shared Function Open(path$) As File
+
     End Function
 End Class

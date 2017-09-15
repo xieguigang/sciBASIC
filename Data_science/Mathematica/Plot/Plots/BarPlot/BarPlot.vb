@@ -124,7 +124,7 @@ Namespace BarPlot
             Dim angle! = -45
             Dim leftMargins As New List(Of Single)
 
-            Call g.DrawAxis(grect.Size, grect.Padding, mapper, showGrid)
+            ' Call g.DrawAxis(grect.Size, grect.Padding, mapper, showGrid)
 
             For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
                 Dim x = left + interval

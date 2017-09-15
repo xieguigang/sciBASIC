@@ -197,9 +197,9 @@ Namespace BarPlot.Histogram
                             range:=scalerData)
                     End If
 
-                    Call g.DrawAxis(size, margin, mapper, showGrid,
-                                    xlabel:=xlabel,
-                                    labelFontStyle:=axisLabelFontStyle)
+                    'Call g.DrawAxis(size, margin, mapper, showGrid,
+                    '                xlabel:=xlabel,
+                    '                labelFontStyle:=axisLabelFontStyle)
 
                     For Each hist As HistProfile In mapper.ForEach_histSample(size, margin)
                         Dim ann As NamedValue(Of Color) = annotations(hist.legend.title)
