@@ -351,7 +351,7 @@ Namespace CommandLine
                 If [default].StringEmpty Then
                     Return Nothing
                 Else
-                    Return DictionaryParser.TryParse(s$)
+                    Return DictionaryParser.TryParse([default])
                 End If
             Else
                 Return DictionaryParser.TryParse(s$)

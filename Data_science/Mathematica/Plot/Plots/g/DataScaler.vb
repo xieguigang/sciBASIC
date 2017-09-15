@@ -34,12 +34,27 @@ Namespace Graphic
 
     Public Module DataScaler
 
+        ''' <summary>
+        ''' Translate the x/y value as a geom point.
+        ''' </summary>
+        ''' <param name="scaler"></param>
+        ''' <param name="bottom">
+        ''' 如果是正常的坐标系，那么这个值就必须是一个正数，值为绘图区域的<paramref name="bottom"/>的y值，
+        ''' 否则获取得到的y值将会是颠倒过来的，除非将<see cref="Graphics"/>的旋转矩阵给颠倒了
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
-        Public Function TupleScaler(scaler As (x As d3js.scale.LinearScale, y As d3js.scale.LinearScale)) As Func(Of Double, Double, PointF)
+        Public Function TupleScaler(scaler As (x As d3js.scale.LinearScale, y As d3js.scale.LinearScale), Optional bottom% = -1) As Func(Of Double, Double, PointF)
             With scaler
-                Return Function(x, y)
-                           Return New PointF(.x(x), .y(y))
-                       End Function
+                If bottom > 0 Then
+                    Return Function(x, y)
+                               Return New PointF(.x(x), bottom - .y(y))
+                           End Function
+                Else
+                    Return Function(x, y)
+                               Return New PointF(.x(x), .y(y))
+                           End Function
+                End If
             End With
         End Function
     End Module
