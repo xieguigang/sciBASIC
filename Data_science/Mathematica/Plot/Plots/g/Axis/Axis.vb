@@ -200,13 +200,13 @@ Namespace Graphic.Axis
 
             Select Case layout
                 Case YAxisLayoutStyles.Centra
-                    X = (size.Width) / 2 + offset.X
+                    X = scaler.ChartRegion.Left + (size.Width) / 2 + offset.X
                 Case YAxisLayoutStyles.Right
-                    X = size.Width - offset.X
+                    X = scaler.ChartRegion.Left + size.Width + offset.X
                 Case YAxisLayoutStyles.ZERO
                     X = scaler.X(0) + offset.X
                 Case Else
-                    X = offset.X
+                    X = scaler.ChartRegion.Left + offset.X
             End Select
 
             Dim top As New Point(X, scaler.ChartRegion.Y + offset.Y)                ' Y轴
@@ -239,9 +239,10 @@ Namespace Graphic.Axis
                 ' y轴标签文本是旋转90度绘制于左边
                 labelImage = labelImage.RotateImage(-90)
 
-                Dim location As New Point(
-                    (labelImage.Width) / 2,
-                    (size.Height - labelImage.Height) / 2)
+                Dim location As New Point With {
+                    .X = scaler.ChartRegion.Left - labelImage.Width * 1.5,
+                    .Y = (size.Height - labelImage.Height) / 2
+                }
 
                 Call g.DrawImageUnscaled(labelImage, location)
             End If
@@ -304,16 +305,17 @@ Namespace Graphic.Axis
                                      tickFont As Font,
                                      Optional overridesTickLine% = -1,
                                      Optional noTicks As Boolean = False)
-            Dim Y%
+
+            Dim Y% = scaler.ChartRegion.Top + offset.Y
             Dim size = scaler.ChartRegion.Size
 
             Select Case layout
                 Case XAxisLayoutStyles.Centra
-                    Y = size.Height / 2 + offset.Y
+                    Y += size.Height / 2 + offset.Y
                 Case XAxisLayoutStyles.Top
-                    Y = offset.Y
+                    Y += 0
                 Case Else
-                    Y = size.Height + offset.Y
+                    Y += size.Height
             End Select
 
             Dim ZERO As New Point(scaler.ChartRegion.Left + offset.X, Y)                 ' 坐标轴原点
@@ -339,7 +341,7 @@ Namespace Graphic.Axis
                 Dim labelImage As Image = label.__plotLabel(labelFont)
                 Dim point As New Point With {
                     .X = (size.Width - labelImage.Width) / 2 + scaler.ChartRegion.Left,
-                    .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height * 1.5
+                    .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height + d * 3
                 }
 
                 Call g.DrawImageUnscaled(labelImage, point)
