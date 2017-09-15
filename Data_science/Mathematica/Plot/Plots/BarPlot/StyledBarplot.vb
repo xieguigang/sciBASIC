@@ -110,7 +110,7 @@ Namespace BarPlot
             Dim labelLeft%
 
             With region
-                Call g.DrawAxis(.Size, .Padding, scaler, showGrid:=True)
+                ' Call g.DrawAxis(.Size, .Padding, scaler, showGrid:=True)
             End With
 
             For Each s As BarSerial In data

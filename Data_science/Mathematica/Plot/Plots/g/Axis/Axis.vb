@@ -66,7 +66,7 @@ Namespace Graphic.Axis
 
         <Extension>
         Public Sub DrawAxis(ByRef g As IGraphics, region As GraphicsRegion,
-                            scaler As Mapper,
+                            scaler As DataScaler,
                             showGrid As Boolean,
                             Optional offset As Point = Nothing,
                             Optional xlabel$ = "",
@@ -103,7 +103,7 @@ Namespace Graphic.Axis
         Public Sub DrawAxis(ByRef g As IGraphics,
                             size As Size,
                             padding As Padding,
-                            scaler As Mapper,
+                            scaler As DataScaler,
                             showGrid As Boolean,
                             Optional offset As Point = Nothing,
                             Optional xlabel$ = "",
@@ -118,8 +118,6 @@ Namespace Graphic.Axis
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim rect As Rectangle = padding.GetCanvasRegion(size)
             Dim tickFont As New Font(FontFace.MicrosoftYaHei, 14)
-            Dim sx = scaler.XScaler(size, padding)
-            Dim sy = scaler.YScaler(size, padding)
             Dim gridPenX As New Pen(gridColor.TranslateColor, 2) With {
                 .DashStyle = Drawing2D.DashStyle.Dash
             }
@@ -129,9 +127,9 @@ Namespace Graphic.Axis
 
             Call g.FillRectangle(gridFill.GetBrush, rect)
 
-            If scaler.dx <> 0R Then
-                For Each tick In scaler.xAxis
-                    Dim x = sx(tick) + offset.X
+            If Not scaler.AxisTicks.X.IsNullOrEmpty Then
+                For Each tick In scaler.AxisTicks.X
+                    Dim x = scaler.X(tick) + offset.X
                     Dim top As New Point(x, rect.Top)
                     Dim bottom As New Point(x, rect.Bottom)
 
@@ -140,9 +138,9 @@ Namespace Graphic.Axis
                 Next
             End If
 
-            If scaler.dy <> 0R Then
-                For Each tick In scaler.yAxis
-                    Dim y = sy(tick) + offset.Y
+            If Not scaler.AxisTicks.Y.IsNullOrEmpty Then
+                For Each tick In scaler.AxisTicks.Y
+                    Dim y = scaler.TranslateY(tick) + offset.Y
                     Dim left As New Point(rect.Left, y)
                     Dim right As New Point(rect.Right, y)
 
@@ -162,7 +160,7 @@ Namespace Graphic.Axis
         End Sub
 
         <Extension>
-        Public Sub DrawYGrid(scaler As Mapper, g As IGraphics, region As GraphicsRegion,
+        Public Sub DrawYGrid(scaler As DataScaler, g As IGraphics, region As GraphicsRegion,
                              pen As Pen,
                              label$,
                              Optional offset As Point = Nothing,
@@ -170,12 +168,11 @@ Namespace Graphic.Axis
                              Optional tickFont$ = CSSFont.Win10NormalLarger,
                              Optional gridStroke$ = Stroke.AxisGridStroke)
             With region
-                Dim sy = scaler.YScaler(.Size, .Padding)
                 Dim rect As Rectangle = .Padding.GetCanvasRegion(.Size)
                 Dim gridPen As Pen = Stroke.TryParse(css:=gridStroke)
 
-                For Each tick As Double In scaler.yAxis
-                    Dim y = sy(tick) + offset.Y
+                For Each tick As Double In scaler.AxisTicks.Y
+                    Dim y = scaler.TranslateY(tick) + offset.Y
                     Dim left As New Point(rect.Left, y)
                     Dim right As New Point(rect.Right, y)
 
@@ -197,7 +194,7 @@ Namespace Graphic.Axis
 
         <Extension> Public Sub DrawY(ByRef g As IGraphics, size As Size, padding As Padding,
                                      pen As Pen, label$,
-                                     scaler As Mapper,
+                                     scaler As DataScaler,
                                      layout As YAxisLayoutStyles, offset As Point,
                                      labelFont$,
                                      tickFont As Font,
@@ -211,23 +208,21 @@ Namespace Graphic.Axis
                 Case YAxisLayoutStyles.Right
                     X = size.Width - padding.Right + offset.X
                 Case YAxisLayoutStyles.ZERO
-                    X = scaler.XScaler(size, padding)(0) + offset.X
+                    X = scaler.X(0) + offset.X
                 Case Else
                     X = padding.Left + offset.X
             End Select
 
             Dim ZERO As New Point(X, size.Height - padding.Bottom + offset.Y) ' 坐标轴原点，需要在这里修改layout
             Dim top As New Point(X, padding.Top + offset.Y)                   ' Y轴
-            Dim sy As Func(Of Single, Single) = scaler.YScaler(size, padding)
 
             If showAxisLine Then
                 Call g.DrawLine(pen, ZERO, top)     ' y轴
             End If
 
-            For Each tick# In scaler.yAxis
-
-                If scaler.dy <> 0R Then
-                    Dim y! = sy(tick) + offset.Y
+            If Not scaler.AxisTicks.Y.IsNullOrEmpty Then
+                For Each tick# In scaler.AxisTicks.Y
+                    Dim y! = scaler.TranslateY(tick) + offset.Y
                     Dim axisY As New PointF(ZERO.X, y)
 
                     If showAxisLine Then
@@ -239,8 +234,8 @@ Namespace Graphic.Axis
                     Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
 
                     g.DrawString(labelText, tickFont, Brushes.Black, p)
-                End If
-            Next
+                Next
+            End If
 
             If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
                 Dim labelImage As Image = label.__plotLabel(labelFont)
@@ -307,7 +302,7 @@ Namespace Graphic.Axis
 
         <Extension> Public Sub DrawX(ByRef g As IGraphics, size As Size, padding As Padding,
                                      pen As Pen, label$,
-                                     scaler As Mapper,
+                                     scaler As DataScaler,
                                      layout As XAxisLayoutStyles, offset As Point,
                                      labelFont$,
                                      tickFont As Font,
@@ -326,14 +321,13 @@ Namespace Graphic.Axis
 
             Dim ZERO As New Point(padding.Left + offset.X, Y)                       ' 坐标轴原点
             Dim right As New Point(size.Width - padding.Right + offset.X, Y)        ' X轴
-            Dim sx = scaler.XScaler(size, padding)
             Dim d! = If(overridesTickLine <= 0, padding.Bottom * 0.1, overridesTickLine)
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
-            For Each tick# In scaler.xAxis
-                If Not noTicks AndAlso scaler.dx <> 0R Then
-                    Dim x As Single = sx(tick) + offset.X
+            If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
+                For Each tick# In scaler.AxisTicks.X
+                    Dim x As Single = scaler.X(tick) + offset.X
                     Dim axisX As New PointF(x, ZERO.Y)
 
                     Dim labelText = (tick).FormatNumeric(2)
@@ -341,8 +335,8 @@ Namespace Graphic.Axis
 
                     Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
                     Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
-                End If
-            Next
+                Next
+            End If
 
             If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
                 Dim labelImage As Image = label.__plotLabel(labelFont)

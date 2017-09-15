@@ -29,10 +29,12 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Graphic
 
-    Public Module DataScaler
+    Public Module DataScalerExtensions
 
         ''' <summary>
         ''' Translate the x/y value as a geom point.
@@ -58,4 +60,23 @@ Namespace Graphic
             End With
         End Function
     End Module
+
+    Public Structure DataScaler
+
+        Dim X As LinearScale
+        Dim Y As LinearScale
+        Dim AxisTicks As (X As Vector, Y As Vector)
+        Dim ChartRegion As Rectangle
+
+        Public Function Translate(x#, y#) As PointF
+            Return New PointF With {
+                .X = Me.X(x),
+                .Y = ChartRegion.Bottom - Me.Y(y)
+            }
+        End Function
+
+        Public Function TranslateY(y#) As Double
+            Return ChartRegion.Bottom - Me.Y(y)
+        End Function
+    End Structure
 End Namespace
