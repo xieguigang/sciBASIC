@@ -4,4 +4,5 @@
     Public Const dcterms$ = "http://purl.org/dc/terms/"
     Public Const dcmitype$ = "http://purl.org/dc/dcmitype/"
     Public Const xsi$ = "http://www.w3.org/2001/XMLSchema-instance"
+    Public Const vt$ = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
 End Module

@@ -36,6 +36,14 @@ Namespace XML.docProps
         <XmlElement("property")>
         Public Property properties As [property]()
 
+        <XmlNamespaceDeclarations()>
+        Public xmlns As XmlSerializerNamespaces
+
+        Sub New()
+            xmlns = New XmlSerializerNamespaces
+            xmlns.Add("vt", Excel.Xmlns.vt)
+        End Sub
+
         Protected Overrides Function filePath() As String
             Return "docProps/custom.xml"
         End Function
@@ -51,6 +59,7 @@ Namespace XML.docProps
         <XmlAttribute> Public Property pid As String
         <XmlAttribute> Public Property name As String
 
+        <XmlElement(NameOf(lpwstr), [Namespace]:=vt)>
         Public Property lpwstr As String
 
         Public Overrides Function ToString() As String

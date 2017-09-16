@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::88f5e903b81987a7dfedf5163765ddc1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,7 @@ Imports System.Text.RegularExpressions
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
@@ -101,21 +102,21 @@ Public Module XmlExtensions
                                         Optional preprocess As Func(Of String, String) = Nothing,
                                         Optional stripInvalidsCharacter As Boolean = False) As Object
 
-        If encoding Is Nothing Then encoding = Encoding.Default
-
         If Not XmlFile.FileExists(ZERO_Nonexists:=True) Then
-            Dim exMsg As String =
-                $"{XmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
-            Dim ex As New Exception(exMsg)
-            Call App.LogException(ex)
-            If ThrowEx Then
-                Throw ex
-            Else
-                Return Nothing
-            End If
+            Dim exMsg$ = $"{XmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
+
+            With New Exception(exMsg)
+                Call App.LogException(.ref)
+
+                If ThrowEx Then
+                    Throw .ref
+                Else
+                    Return Nothing
+                End If
+            End With
         End If
 
-        Dim XmlDoc As String = IO.File.ReadAllText(XmlFile, encoding)
+        Dim XmlDoc$ = File.ReadAllText(XmlFile, encoding Or UTF8)
 
         If Not preprocess Is Nothing Then
             XmlDoc = preprocess(XmlDoc)
@@ -124,9 +125,9 @@ Public Module XmlExtensions
             XmlDoc = XmlDoc.StripInvalidCharacters
         End If
 
-        Using Stream As New StringReader(s:=XmlDoc)
+        Using stream As New StringReader(s:=XmlDoc)
             Try
-                Dim obj = New XmlSerializer(type).Deserialize(Stream)
+                Dim obj = New XmlSerializer(type).Deserialize(stream)
                 Return obj
             Catch ex As Exception
                 ex = New Exception(type.FullName, ex)

@@ -65,7 +65,8 @@ Namespace XML.docProps
     End Class
 
     Public Structure W3CDTF
-        <XmlAttribute("type", [Namespace]:=xsi)> Public Property type As String
+        <XmlAttribute("type", [Namespace]:=xsi)>
+        Public Property type As String
         <XmlText> Public Property [Date] As Date
     End Structure
 End Namespace
