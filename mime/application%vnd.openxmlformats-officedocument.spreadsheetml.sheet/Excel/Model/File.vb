@@ -55,6 +55,10 @@ Public Class File : Implements IFileReference
         End Set
     End Property
 
+    Public Overrides Function ToString() As String
+        Return FilePath
+    End Function
+
     ''' <summary>
     ''' 使用序列化写入数据到xlsx文件之中
     ''' </summary>

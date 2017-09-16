@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML._rels
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 
 Public Module IO
@@ -20,14 +19,15 @@ Public Module IO
         Dim rels As New _rels(ROOT)
         Dim docProps As New docProps(ROOT)
         Dim xl As New xl(ROOT)
-
-        Return New File With {
+        Dim file As New File With {
             .ContentTypes = contentType,
             ._rels = rels,
             .docProps = docProps,
             .xl = xl,
             .FilePath = xlsx
         }
+
+        Return file
     End Function
 
     <Extension>

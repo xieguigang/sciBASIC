@@ -49,7 +49,11 @@ Namespace Text.Xml.OpenXml
         <XmlAttribute> Public Property PartName As String
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            If PartName.StringEmpty Then
+                Return ContentType
+            Else
+                Return $"({PartName}) {ContentType}"
+            End If
         End Function
     End Structure
 End Namespace
