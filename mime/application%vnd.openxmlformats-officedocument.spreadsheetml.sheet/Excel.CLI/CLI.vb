@@ -37,15 +37,16 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
               Description:="A directory path that contains csv files that will be merge into one file directly.")>
     Public Function rbind(args As CommandLine) As Integer
         Dim [in] As String = args("/in")
-        Dim out As String = args.GetValue("/out", [in].TrimSuffix & ".rbind.csv")
+        Dim out$ = args.GetValue("/out", [in].TrimSuffix & ".rbind.csv")
 
-        Return DocumentExtensions _
-            .MergeTable(
-            out, ls - l - r - "*.csv" <= [in])
+        Return (ls - l - r - "*.csv" <= [in]) _
+            .DirectAppends(EXPORT:=out) _
+            .CLICode
     End Function
 
     <ExportAPI("/push")>
     <Usage("/push /write <xlsx> /table <csv> /sheetName <name_string>")>
+    <Description("Write target csv table its content data as a worksheet into the target Excel package.")>
     Public Function PushTable(args As CommandLine) As Integer
         With args <= "/write"
 
@@ -61,6 +62,9 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
     <ExportAPI("/Create")>
     <Usage("/Create /target <xlsx>")>
+    <Description("Create an empty Excel xlsx package file on a specific file path")>
+    <Argument("/Create", False, CLITypes.File,
+              Description:="The file path for save this new created Excel xlsx package.")>
     Public Function newEmpty(args As CommandLine) As Integer
         Return "" _
             .SaveTo(args <= "/target", Encodings.ASCII) _
@@ -70,6 +74,12 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     <ExportAPI("/Extract")>
     <Usage("/Extract /open <xlsx> /sheetName <name_string> [/out <out.csv>]")>
     <Description("Open target excel file and get target table and save into a csv file.")>
+    <Argument("/open", False, CLITypes.File,
+              Description:="File path of the Excel ``*.xlsx`` file for open and read.")>
+    <Argument("/sheetName", False, CLITypes.String,
+              Description:="The worksheet table name for read data and save as csv file.")>
+    <Argument("/out", True, CLITypes.File,
+              Description:="The csv output file path.")>
     Public Function Extract(args As CommandLine) As Integer
         Dim sheet$ = args <= "/sheetName"
         Dim defaultOut As DefaultValue(Of String) =
