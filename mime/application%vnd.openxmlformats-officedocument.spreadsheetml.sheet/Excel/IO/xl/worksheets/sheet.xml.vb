@@ -28,7 +28,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace xl.worksheets
+Namespace XML.xl.worksheets
 
     Public Class worksheet
         Public Property dimension As dimension

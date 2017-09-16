@@ -27,7 +27,9 @@
 #End Region
 
 Imports System.IO.Compression
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
@@ -35,9 +37,23 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 ''' <summary>
 ''' ``*.xlsx`` document file
 ''' </summary>
-Public Class File
+Public Class File : Implements IFileReference
 
     Public Property ContentTypes As ContentTypes
+    Public Property _rels As _rels
+    Public Property docProps As docProps
+    Public Property xl As xl
+
+    Dim _filePath As DefaultValue(Of String)
+
+    Public Property FilePath As String Implements IFileReference.FilePath
+        Get
+            Return _filePath.Value
+        End Get
+        Friend Set(value As String)
+            _filePath = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' 使用序列化写入数据到xlsx文件之中
@@ -55,8 +71,8 @@ Public Class File
 
     End Function
 
-    Public Function WriteXlsx(path$) As Boolean
-
+    Public Function WriteXlsx(Optional path$ = Nothing) As Boolean
+        Return Me.Save(path Or _filePath)
     End Function
 
     Public Function GetTable(sheetName$) As csv

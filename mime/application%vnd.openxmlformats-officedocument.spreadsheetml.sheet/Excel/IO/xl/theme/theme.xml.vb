@@ -28,7 +28,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace xl.theme
+Namespace XML.xl.theme
 
     <XmlRoot("theme", Namespace:="http://schemas.openxmlformats.org/drawingml/2006/main")>
     Public Class theme

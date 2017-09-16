@@ -28,7 +28,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace docProps
+Namespace XML.docProps
 
     <XmlRoot("coreProperties")>
     Public Class core : Inherits IXml

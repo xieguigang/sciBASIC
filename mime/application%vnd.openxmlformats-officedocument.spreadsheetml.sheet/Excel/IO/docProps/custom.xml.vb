@@ -28,7 +28,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace docProps
+Namespace XML.docProps
 
     <XmlRoot("Properties", [Namespace]:="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties")>
     Public Class custom : Inherits IXml

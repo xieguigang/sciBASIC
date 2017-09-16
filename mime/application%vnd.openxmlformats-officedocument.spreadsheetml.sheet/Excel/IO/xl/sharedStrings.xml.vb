@@ -28,7 +28,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace xl
+Namespace XML.xl
 
     <XmlRoot("sst", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class sharedStrings

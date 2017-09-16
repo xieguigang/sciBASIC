@@ -28,7 +28,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace xl
+Namespace XML.xl
 
     <XmlRoot("styleSheet")>
     Public Class styles
