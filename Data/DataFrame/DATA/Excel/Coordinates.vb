@@ -47,14 +47,12 @@ Namespace Excel
         Public Function Index(c$) As Point
             Dim Y As New List(Of Char)
             Dim X%
-            Dim i%
 
             For Each [char] As Char In c
                 If AZ.IndexOf([char]) > -1 Then
                     Y.Add([char])
-                    i += 1
                 Else
-                    x = CInt(Val(Mid(c, i)))
+                    X = CInt(Val(c.Skip(Y.Count).CharString))
                     Exit For
                 End If
             Next

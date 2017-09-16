@@ -42,7 +42,7 @@ Public Module StoreProcedure
                 End If
             End With
 
-            csv(colIndex) = [string]
+            csv(colIndex - 1) = [string]
         Next
 
         Return csv
