@@ -36,7 +36,7 @@ Namespace Text.Xml.OpenXml
     ''' </summary>
     ''' 
     <XmlRoot("Types", Namespace:="http://schemas.openxmlformats.org/package/2006/content-types")>
-    Public Class Content_Types
+    Public Class ContentTypes
         <XmlElement> Public Property [Default] As Type()
         <XmlElement("Override")>
         Public Property [Overrides] As Type()

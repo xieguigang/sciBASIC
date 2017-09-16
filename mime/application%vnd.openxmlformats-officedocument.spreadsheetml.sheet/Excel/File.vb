@@ -29,12 +29,15 @@
 Imports System.IO.Compression
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' ``*.xlsx`` document file
 ''' </summary>
 Public Class File
+
+    Public Property ContentTypes As ContentTypes
 
     ''' <summary>
     ''' 使用序列化写入数据到xlsx文件之中
@@ -79,7 +82,12 @@ Public Class File
         Return True
     End Function
 
+    ''' <summary>
+    ''' 读取Excel文件
+    ''' </summary>
+    ''' <param name="path$">``*.xlsx``</param>
+    ''' <returns></returns>
     Public Shared Function Open(path$) As File
-
+        Return IO.CreateReader(xlsx:=path)
     End Function
 End Class
