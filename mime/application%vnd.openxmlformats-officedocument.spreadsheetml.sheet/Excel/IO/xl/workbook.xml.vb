@@ -44,6 +44,9 @@ Namespace XML.xl
         Public Property workbookPr As workbookPr
         Public Property fileRecoveryPr As fileRecoveryPr
 
+        <XmlElement("AlternateContent", [Namespace]:=mc)>
+        Public Property AlternateContent As AlternateContent
+
         <XmlAttribute(NameOf(Ignorable), [Namespace]:=mc)>
         Public Property Ignorable As String
 

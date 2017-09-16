@@ -42,8 +42,13 @@ Namespace XML.xl
     End Class
 
     Public Class si
+
         Public Property t As String
         Public Property phoneticPr As phoneticPr
+
+        Public Overrides Function ToString() As String
+            Return t
+        End Function
     End Class
 
     Public Class phoneticPr

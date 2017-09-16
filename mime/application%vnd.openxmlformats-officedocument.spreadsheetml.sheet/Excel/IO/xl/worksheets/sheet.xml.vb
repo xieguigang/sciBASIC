@@ -30,13 +30,49 @@ Imports System.Xml.Serialization
 
 Namespace XML.xl.worksheets
 
+    <XmlRoot("worksheet", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class worksheet
+
         Public Property dimension As dimension
 
         Public Property cols As col()
         Public Property sheetData As row()
         Public Property phoneticPr As phoneticPr
         Public Property pageMargins As pageMargins
+        Public Property sheetViews As sheetView()
+
+        <XmlAttribute("uid", [Namespace]:=xr)>
+        Public Property uid As String
+        <XmlAttribute(NameOf(Ignorable), [Namespace]:=mc)>
+        Public Property Ignorable As String
+
+        <XmlNamespaceDeclarations()>
+        Public xmlns As XmlSerializerNamespaces
+
+        Sub New()
+            xmlns = New XmlSerializerNamespaces
+            xmlns.Add("r", r)
+            xmlns.Add("mc", mc)
+            xmlns.Add("x14ac", x14ac)
+            xmlns.Add("xr", xr)
+            xmlns.Add("xr2", xr2)
+            xmlns.Add("xr3", xr3)
+        End Sub
+    End Class
+
+    Public Class sheetData
+
+    End Class
+
+    Public Class sheetView
+        <XmlAttribute> Public Property tabSelected As String
+        <XmlAttribute> Public Property workbookViewId As String
+        Public Property selection As selection
+    End Class
+
+    Public Class selection
+        <XmlAttribute> Public Property activeCell As String
+        <XmlAttribute> Public Property sqref As String
     End Class
 
     Public Structure dimension
@@ -55,6 +91,10 @@ Namespace XML.xl.worksheets
     Public Structure row
         <XmlAttribute> Public Property r As String
         <XmlAttribute> Public Property spans As String
+
+        <XmlAttribute(NameOf(dyDescent), [Namespace]:=x14ac)>
+        Public Property dyDescent As String
+
         <XmlAttribute> Public Property ht As String
         <XmlAttribute> Public Property customHeight As String
         <XmlAttribute> Public Property customFormat As String

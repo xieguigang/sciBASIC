@@ -1,6 +1,8 @@
-﻿Imports System.Text
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML._rels
+﻿Imports Microsoft.VisualBasic.MIME.Office.Excel.XML._rels
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.docProps
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Public Class _rels : Inherits Directory
 
@@ -11,7 +13,7 @@ Public Class _rels : Inherits Directory
     Public Property rels As rels
 
     Protected Overrides Sub _loadContents()
-        rels = (Folder & "/.rels").LoadXml(Of rels)(Encoding.UTF8)
+        rels = (Folder & "/.rels").LoadXml(Of rels)
     End Sub
 
     Protected Overrides Function _name() As String
@@ -30,9 +32,9 @@ Public Class docProps : Inherits Directory
     End Sub
 
     Protected Overrides Sub _loadContents()
-        core = (Folder & "/core.xml").LoadXml(Of core)(Encoding.UTF8)
-        custom = (Folder & "/custom.xml").LoadXml(Of custom)(Encoding.UTF8)
-        app = (Folder & "/app.xml").LoadXml(Of XML.docProps.app)(Encoding.UTF8)
+        core = (Folder & "/core.xml").LoadXml(Of core)
+        custom = (Folder & "/custom.xml").LoadXml(Of custom)
+        app = (Folder & "/app.xml").LoadXml(Of XML.docProps.app)
     End Sub
 
     Protected Overrides Function _name() As String
@@ -42,16 +44,42 @@ End Class
 
 Public Class xl : Inherits Directory
 
+    Public Property workbook As workbook
+    Public Property styles As styles
+    Public Property sharedStrings As sharedStrings
+    Public Property worksheets As worksheets
+
     Sub New(ROOT$)
         Call MyBase.New(ROOT)
     End Sub
 
     Protected Overrides Sub _loadContents()
-
+        sharedStrings = (Folder & "/sharedStrings.xml").LoadXml(Of sharedStrings)
+        workbook = (Folder & "/workbook.xml").LoadXml(Of workbook)
+        worksheets = New worksheets(Folder)
     End Sub
 
     Protected Overrides Function _name() As String
         Return NameOf(xl)
+    End Function
+End Class
+
+Public Class worksheets : Inherits Directory
+
+    Public Property worksheets As worksheet()
+
+    Sub New(ROOT$)
+        Call MyBase.New(ROOT)
+    End Sub
+
+    Protected Overrides Sub _loadContents()
+        worksheets = (ls - l - "*.xml" <= Folder) _
+            .Select(Function(path) path.LoadXml(Of worksheet)) _
+            .ToArray
+    End Sub
+
+    Protected Overrides Function _name() As String
+        Return NameOf(worksheets)
     End Function
 End Class
 

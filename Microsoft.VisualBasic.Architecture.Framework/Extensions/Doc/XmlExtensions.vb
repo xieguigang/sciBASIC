@@ -65,6 +65,7 @@ Public Module XmlExtensions
     ''' <param name="preprocess">
     ''' The preprocessing on the xml document text, you can doing the text replacement or some trim operation from here.(Xml文件的预处理操作)
     ''' </param>
+    ''' <param name="encoding">Default is <see cref="UTF8"/> text encoding.</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function LoadXml(Of T)(XmlFile As String,
@@ -94,7 +95,7 @@ Public Module XmlExtensions
     ''' <param name="preprocess">Xml文件的预处理操作</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
+    ''' <param name="encoding">Default is <see cref="UTF8"/> text encoding.</param>
     <ExportAPI("LoadXml")>
     <Extension> Public Function LoadXml(XmlFile As String, type As Type,
                                         Optional encoding As Encoding = Nothing,
