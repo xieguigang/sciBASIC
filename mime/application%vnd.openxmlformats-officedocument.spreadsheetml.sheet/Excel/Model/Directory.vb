@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MIME.Office.Excel.XML._rels
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.docProps
 
 Public Class _rels : Inherits Directory
 
@@ -19,12 +20,14 @@ End Class
 
 Public Class docProps : Inherits Directory
 
+    Public Property core As core
+
     Sub New(ROOT$)
         Call MyBase.New(ROOT)
     End Sub
 
     Protected Overrides Sub _loadContents()
-
+        core = (Folder & "/core.xml").LoadXml(Of core)
     End Sub
 
     Protected Overrides Function _name() As String
