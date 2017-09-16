@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.docProps
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Language
 
 Public Class _rels : Inherits Directory
 
@@ -53,6 +54,21 @@ Public Class xl : Inherits Directory
         Call MyBase.New(ROOT)
     End Sub
 
+    ''' <summary>
+    ''' Get <see cref="worksheet"/> by name.
+    ''' </summary>
+    ''' <param name="name$"></param>
+    ''' <returns></returns>
+    Public Function GetWorksheet(name$) As worksheet
+        Dim sheetID$ = workbook.GetSheetIDByName(name)
+
+        If sheetID.StringEmpty Then
+            Return Nothing
+        Else
+            Return worksheets.GetWorksheet(sheetID)
+        End If
+    End Function
+
     Protected Overrides Sub _loadContents()
         sharedStrings = (Folder & "/sharedStrings.xml").LoadXml(Of sharedStrings)
         workbook = (Folder & "/workbook.xml").LoadXml(Of workbook)
@@ -66,16 +82,30 @@ End Class
 
 Public Class worksheets : Inherits Directory
 
-    Public Property worksheets As worksheet()
+    Public Property worksheets As Dictionary(Of String, worksheet)
 
     Sub New(ROOT$)
         Call MyBase.New(ROOT)
     End Sub
 
+    Public Function HaveWorksheet(sheetID$) As Boolean
+        Return worksheets.ContainsKey("sheet" & sheetID)
+    End Function
+
+    Public Function GetWorksheet(sheetID$) As worksheet
+        With "sheet" & sheetID
+            If worksheets.ContainsKey(.ref) Then
+                Return worksheets(.ref)
+            Else
+                Return Nothing
+            End If
+        End With
+    End Function
+
     Protected Overrides Sub _loadContents()
         worksheets = (ls - l - "*.xml" <= Folder) _
-            .Select(Function(path) path.LoadXml(Of worksheet)) _
-            .ToArray
+            .ToDictionary(Function(name) name.BaseName,
+                          Function(path) path.LoadXml(Of worksheet))
     End Sub
 
     Protected Overrides Function _name() As String
