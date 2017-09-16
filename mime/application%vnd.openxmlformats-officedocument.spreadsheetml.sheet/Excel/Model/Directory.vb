@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language
+Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 Public Class _rels : Inherits Directory
 
@@ -67,6 +68,10 @@ Public Class xl : Inherits Directory
         Else
             Return worksheets.GetWorksheet(sheetID)
         End If
+    End Function
+
+    Public Function GetTableData(worksheet As worksheet) As csv
+        Return worksheet.ToTableFrame(sharedStrings)
     End Function
 
     Protected Overrides Sub _loadContents()

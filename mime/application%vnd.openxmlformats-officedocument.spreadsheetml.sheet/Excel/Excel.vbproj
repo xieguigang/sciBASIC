@@ -116,6 +116,7 @@
     <Compile Include="Model\File.vb" />
     <Compile Include="IO.vb" />
     <Compile Include="Model\Directory.vb" />
+    <Compile Include="Model\StoreProcedure.vb" />
     <Compile Include="Model\Xmlns.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

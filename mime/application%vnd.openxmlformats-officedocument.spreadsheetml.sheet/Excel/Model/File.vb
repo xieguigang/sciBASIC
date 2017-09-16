@@ -30,6 +30,7 @@ Imports System.IO.Compression
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
@@ -80,7 +81,13 @@ Public Class File : Implements IFileReference
     End Function
 
     Public Function GetTable(sheetName$) As csv
+        Dim worksheet As worksheet = xl.GetWorksheet(sheetName)
 
+        If worksheet Is Nothing Then
+            Return Nothing
+        Else
+            Return xl.GetTableData(worksheet)
+        End If
     End Function
 
     Public Function LoadDataSet(Of T As Class)(sheetName$) As T()

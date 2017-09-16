@@ -58,6 +58,10 @@ Namespace XML.xl.worksheets
             xmlns.Add("xr2", xr2)
             xmlns.Add("xr3", xr3)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return uid
+        End Function
     End Class
 
     Public Class sheetData
