@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 
 '查看程序集特性的值
 
-<Assembly: AssemblyTitle("Excel.CLI")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("Excel CLI tool")>
+<Assembly: AssemblyDescription("Excel CLI tool")>
 <Assembly: AssemblyCompany("Microsoft")>
 <Assembly: AssemblyProduct("Excel.CLI")>
 <Assembly: AssemblyCopyright("Copyright © Microsoft 2017")>
