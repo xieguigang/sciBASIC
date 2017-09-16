@@ -45,21 +45,21 @@ Namespace Excel
         ReadOnly ZERO% = Asc("A"c) - 1
 
         Public Function Index(c$) As Point
-            Dim X As New List(Of Char)
-            Dim Y%
+            Dim Y As New List(Of Char)
+            Dim X%
             Dim i%
 
             For Each [char] As Char In c
                 If AZ.IndexOf([char]) > -1 Then
-                    X.Add([char])
+                    Y.Add([char])
                     i += 1
                 Else
-                    Y = CInt(Val(Mid(c, i)))
+                    x = CInt(Val(Mid(c, i)))
                     Exit For
                 End If
             Next
 
-            Return New Point(X.XValue(), Y)
+            Return New Point(X, Y.YValue)
         End Function
 
         ''' <summary>
@@ -67,7 +67,7 @@ Namespace Excel
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        <Extension> Public Function XValue(x As IEnumerable(Of Char)) As Integer
+        <Extension> Public Function YValue(x As IEnumerable(Of Char)) As Integer
             Dim value#
             Dim power% = 0
 
