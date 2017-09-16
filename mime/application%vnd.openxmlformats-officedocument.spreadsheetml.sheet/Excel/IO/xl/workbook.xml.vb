@@ -31,11 +31,69 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace XML.xl
 
+    ''' <summary>
+    ''' workbook.xml
+    ''' </summary>
+    <XmlRoot("workbook", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class workbook
+
         Public Property fileVersion As fileVersion
         Public Property bookViews As workbookView()
         Public Property sheets As sheet()
         Public Property calcPr As calcPr
+        Public Property workbookPr As workbookPr
+        Public Property fileRecoveryPr As fileRecoveryPr
+
+        <XmlAttribute(NameOf(Ignorable), [Namespace]:=mc)>
+        Public Property Ignorable As String
+
+        <XmlNamespaceDeclarations()>
+        Public xmlns As XmlSerializerNamespaces
+
+        Sub New()
+            xmlns = New XmlSerializerNamespaces
+
+            xmlns.Add("r", Excel.Xmlns.r)
+            xmlns.Add("mc", Excel.Xmlns.mc)
+            xmlns.Add("x15", Excel.Xmlns.x15)
+            xmlns.Add("xr2", Excel.Xmlns.xr2)
+        End Sub
+    End Class
+
+    <XmlRoot("AlternateContent", [Namespace]:=mc)>
+    Public Class AlternateContent
+        Public Property Choice As Choice
+    End Class
+
+    Public Class Choice
+
+        <XmlAttribute>
+        Public Property Requires As String
+        Public Property absPath As absPath
+    End Class
+
+    <XmlRoot("absPath", [Namespace]:=x15ac)>
+    Public Class absPath
+
+        <XmlAttribute>
+        Public Property url As String
+
+        <XmlNamespaceDeclarations()>
+        Public xmlns As XmlSerializerNamespaces
+
+        Sub New()
+            xmlns = New XmlSerializerNamespaces
+            xmlns.Add("x15ac", x15ac)
+        End Sub
+    End Class
+
+    Public Class fileRecoveryPr
+        <XmlAttribute> Public Property autoRecover As String
+    End Class
+
+    Public Class workbookPr
+        <XmlAttribute>
+        Public Property defaultThemeVersion As String
     End Class
 
     Public Structure calcPr
@@ -45,7 +103,13 @@ Namespace XML.xl
     Public Structure sheet
         <XmlAttribute> Public Property name As String
         <XmlAttribute> Public Property sheetId As String
-        <XmlAttribute> Public Property rid As String
+
+        <XmlAttribute("id", [Namespace]:=r)>
+        Public Property rid As String
+
+        Public Overrides Function ToString() As String
+            Return name
+        End Function
     End Structure
 
     Public Structure workbookView
@@ -54,6 +118,9 @@ Namespace XML.xl
         <XmlAttribute> Public Property windowWidth As String
         <XmlAttribute> Public Property windowHeight As String
         <XmlAttribute> Public Property activeTab As String
+
+        <XmlAttribute("uid", [Namespace]:=xr2)>
+        Public Property uid As String
     End Structure
 
     Public Structure fileVersion
