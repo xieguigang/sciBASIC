@@ -36,7 +36,7 @@ Namespace XML.xl.worksheets
         Public Property dimension As dimension
 
         Public Property cols As col()
-        Public Property sheetData As row()
+        Public Property sheetData As sheetData
         Public Property phoneticPr As phoneticPr
         Public Property pageMargins As pageMargins
         Public Property sheetViews As sheetView()
@@ -61,7 +61,7 @@ Namespace XML.xl.worksheets
     End Class
 
     Public Class sheetData
-
+        <XmlElement("row")> Public Property rows As row()
     End Class
 
     Public Class sheetView
@@ -102,10 +102,48 @@ Namespace XML.xl.worksheets
     End Structure
 
     Public Structure c
+
+        ''' <summary>
+        ''' Reference location, cell ID
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property r As String
         <XmlAttribute> Public Property s As String
+        ''' <summary>
+        ''' Type, if this property value is ``s``, then it means value <see cref="v"/> refernece from <see cref="sharedStrings"/>
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property t As String
+
+        ''' <summary>
+        ''' Value
+        ''' </summary>
+        ''' <returns></returns>
         Public Property v As String
+
+        ''' <summary>
+        ''' 返回-1表示非引用类型，即<see cref="v"/>直接可以用作为值
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property sharedStringsRef As Integer
+            Get
+                If t.TextEquals("s") Then
+                    Return Val(v)
+                Else
+                    Return -1
+                End If
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            Dim value$ = v
+
+            If t.TextEquals("s") Then
+                value = $"sharedStrings({value})"
+            End If
+
+            Return $"[{r}] {value}"
+        End Function
     End Structure
 
     Public Class pageMargins
