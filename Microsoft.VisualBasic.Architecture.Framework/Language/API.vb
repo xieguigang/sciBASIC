@@ -84,6 +84,8 @@ Namespace Language
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ref(Of T)(x As T) As T
             Return x
         End Function
