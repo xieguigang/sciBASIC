@@ -1,6 +1,7 @@
 ﻿Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 
@@ -49,20 +50,20 @@ Public Module IO
             With xlsx.xl
                 Call .worksheets.Save()
                 Call .workbook _
-                    .GetXml(xmlEncoding:=XmlEncodings.UTF8) _
+                    .ToXML _
                     .SaveTo(workbook, Encoding.UTF8)
                 Call .sharedStrings _
-                    .GetXml(xmlEncoding:=XmlEncodings.UTF8) _
+                    .ToXML _
                     .SaveTo(sharedStrings, Encoding.UTF8)
 
                 Call xlsx.ContentTypes _
-                    .GetXml(xmlEncoding:=XmlEncodings.UTF8) _
+                    .ToXML _
                     .SaveTo(ContentTypes, Encoding.UTF8)
             End With
         ElseIf xlsx.modify("worksheet.update") > -1 Then
             Call xlsx.xl.worksheets.Save()
             Call xlsx.xl.sharedStrings _
-                .GetXml(xmlEncoding:=XmlEncodings.UTF8) _
+                .ToXML _
                 .SaveTo(sharedStrings, Encoding.UTF8)
         End If
 
@@ -70,5 +71,16 @@ Public Module IO
         Call GZip.DirectoryArchive(xlsx.ROOT, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
 
         Return True
+    End Function
+
+    <Extension>
+    Public Function ToXML(Of T)(obj As T) As String
+        Dim xml As New XmlDoc(obj.GetXml(xmlEncoding:=XmlEncodings.UTF8))
+        xml.xmlns.xsi = Nothing
+        xml.xmlns.xsd = Nothing
+        xml.standalone = True
+
+        Dim out$ = ASCII.TrimNonPrintings(xml.ToString)
+        Return out
     End Function
 End Module
