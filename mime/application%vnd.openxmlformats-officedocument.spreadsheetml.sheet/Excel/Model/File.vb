@@ -28,6 +28,7 @@
 
 Imports System.IO.Compression
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
@@ -45,7 +46,8 @@ Public Class File : Implements IFileReference
     Public Property docProps As docProps
     Public Property xl As xl
 
-    Friend ReadOnly modify
+    Friend ReadOnly modify As New Index(Of String)
+    Friend ROOT$
 
     Dim _filePath As DefaultValue(Of String)
 
@@ -87,10 +89,18 @@ Public Class File : Implements IFileReference
         If Not sheetID.StringEmpty Then
             ' 进行替换
             xl.worksheets.worksheets(sheetID) = worksheet
+
+            If modify.NotExists("worksheet.update") Then
+                modify.Add("worksheet.update")
+            End If
         Else
             ' 进行添加
             sheetID = xl.workbook.Add(sheetName)
             xl.worksheets.Add(sheetID, worksheet)
+
+            If modify.NotExists("worksheet.add") Then
+                modify.Add("worksheet.add")
+            End If
         End If
 
         Return True

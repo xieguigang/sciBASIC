@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports System.Text
 
 Public Class _rels : Inherits Directory
 
@@ -126,6 +127,17 @@ Public Class worksheets : Inherits Directory
         worksheets = (ls - l - "*.xml" <= Folder) _
             .ToDictionary(Function(name) name.BaseName,
                           Function(path) path.LoadXml(Of worksheet))
+    End Sub
+
+    Public Sub Save()
+        Dim path$
+
+        For Each sheet In worksheets
+            path = $"{Folder}/sheet{sheet.Key}.xml"
+            sheet.Value _
+                .GetXml _
+                .SaveTo(path, Encoding.UTF8)
+        Next
     End Sub
 
     Protected Overrides Function _name() As String

@@ -1,4 +1,6 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.IO.Compression
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 
 Public Module IO
@@ -24,7 +26,8 @@ Public Module IO
             ._rels = rels,
             .docProps = docProps,
             .xl = xl,
-            .FilePath = xlsx
+            .FilePath = xlsx,
+            .ROOT = ROOT
         }
 
         Return file
@@ -37,6 +40,29 @@ Public Module IO
     ''' <param name="path$"></param>
     ''' <returns></returns>
     <Extension> Public Function SaveTo(xlsx As File, path$) As Boolean
+        Dim workbook$ = xlsx.ROOT & "/xl/workbook.xml"
+        Dim sharedStrings = xlsx.ROOT & "/xl/sharedStrings.xml"
 
+        If xlsx.modify("worksheet.add") > -1 Then
+            With xlsx.xl
+                Call .worksheets.Save()
+                Call .workbook _
+                    .GetXml _
+                    .SaveTo(workbook, Encoding.UTF8)
+                Call xlsx.xl.sharedStrings _
+                    .GetXml _
+                    .SaveTo(sharedStrings, Encoding.UTF8)
+            End With
+        ElseIf xlsx.modify("worksheet.update") > -1 Then
+            Call xlsx.xl.worksheets.Save()
+            Call xlsx.xl.sharedStrings _
+                .GetXml _
+                .SaveTo(sharedStrings, Encoding.UTF8)
+        End If
+
+        ' 重新进行zip打包
+        Call GZip.DirectoryArchive(xlsx.ROOT, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
+
+        Return True
     End Function
 End Module
