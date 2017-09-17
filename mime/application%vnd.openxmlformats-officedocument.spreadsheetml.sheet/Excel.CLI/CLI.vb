@@ -45,8 +45,10 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     End Function
 
     <ExportAPI("/push")>
-    <Usage("/push /write <xlsx> /table <csv> /sheetName <name_string>")>
+    <Usage("/push /write <xlsx> /table <csv> [/sheetName <name_string>]")>
     <Description("Write target csv table its content data as a worksheet into the target Excel package.")>
+    <Argument("/sheetName", True, CLITypes.String, PipelineTypes.std_in,
+              Description:="The new sheet table name, if this argument is not presented, then the program will using the file basename as the sheet table name. If the sheet table name is exists in current xlsx file, then the exists table value will be updated, otherwise will add new table.")>
     Public Function PushTable(args As CommandLine) As Integer
         With args <= "/write"
 

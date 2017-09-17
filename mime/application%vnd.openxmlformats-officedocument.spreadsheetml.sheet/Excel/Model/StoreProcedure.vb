@@ -50,6 +50,13 @@ Public Module StoreProcedure
 
     <Extension>
     Public Function CreateWorksheet(table As csv, strings As sharedStrings) As worksheet
+        Dim worksheet As New worksheet
+        Dim stringTable = strings.ToHashTable
 
+
+
+        strings += stringTable
+
+        Return worksheet
     End Function
 End Module
