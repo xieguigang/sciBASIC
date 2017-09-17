@@ -108,6 +108,10 @@ Public Class worksheets : Inherits Directory
         Return worksheets.ContainsKey("sheet" & sheetID)
     End Function
 
+    Public Sub Add(sheetID As String, worksheet As worksheet)
+        Call worksheets.Add(sheetID.Replace("sheet", ""), worksheet)
+    End Sub
+
     Public Function GetWorksheet(sheetID$) As worksheet
         With "sheet" & sheetID
             If worksheets.ContainsKey(.ref) Then

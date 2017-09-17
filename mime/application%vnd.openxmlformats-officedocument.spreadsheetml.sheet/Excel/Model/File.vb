@@ -45,6 +45,8 @@ Public Class File : Implements IFileReference
     Public Property docProps As docProps
     Public Property xl As xl
 
+    Friend ReadOnly modify
+
     Dim _filePath As DefaultValue(Of String)
 
     Public Property FilePath As String Implements IFileReference.FilePath
@@ -80,18 +82,29 @@ Public Class File : Implements IFileReference
     ''' <returns></returns>
     Public Function WriteSheetTable(table As csv, sheetName$) As Boolean
         Dim worksheet As worksheet = table.CreateWorksheet(xl.sharedStrings)
+        Dim sheetID = xl.workbook.GetSheetIDByName(sheetName)
 
-        If xl.Exists(sheetName) Then
+        If Not sheetID.StringEmpty Then
             ' 进行替换
-
+            xl.worksheets.worksheets(sheetID) = worksheet
         Else
             ' 进行添加
-
+            sheetID = xl.workbook.Add(sheetName)
+            xl.worksheets.Add(sheetID, worksheet)
         End If
+
+        Return True
     End Function
 
+    ''' <summary>
+    ''' 默认是写入原来的文件位置
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
     Public Function WriteXlsx(Optional path$ = Nothing) As Boolean
-        Return Me.Save(path Or _filePath)
+        ' Save to the user specific path or original source _filePath 
+        ' If the path Is Not specific by user
+        Return Me.SaveTo(path Or _filePath)
     End Function
 
     Public Function GetTable(sheetName$) As csv

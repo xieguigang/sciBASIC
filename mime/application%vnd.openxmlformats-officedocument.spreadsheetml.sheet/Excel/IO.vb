@@ -30,8 +30,13 @@ Public Module IO
         Return file
     End Function
 
-    <Extension>
-    Public Function Save(xlsx As File, path$) As Boolean
+    ''' <summary>
+    ''' Save the Xlsx file data to a specific <paramref name="path"/> location.
+    ''' </summary>
+    ''' <param name="xlsx"></param>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function SaveTo(xlsx As File, path$) As Boolean
 
     End Function
 End Module
