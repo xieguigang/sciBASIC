@@ -45,7 +45,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     End Function
 
     <ExportAPI("/push")>
-    <Usage("/push /write <xlsx> /table <csv> [/sheetName <name_string>]")>
+    <Usage("/push /write <*.xlsx> /table <*.csv> [/sheetName <name_string> /saveAs <*.xlsx>]")>
     <Description("Write target csv table its content data as a worksheet into the target Excel package.")>
     <Argument("/sheetName", True, CLITypes.String, PipelineTypes.std_in,
               Description:="The new sheet table name, if this argument is not presented, then the program will using the file basename as the sheet table name. If the sheet table name is exists in current xlsx file, then the exists table value will be updated, otherwise will add new table.")>
@@ -53,10 +53,12 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         With args <= "/write"
 
             Dim Excel As Xlsx = Xlsx.Open(.ref)
-            Dim table As csv = args <= "/csv"
+            Dim table As csv = args <= "/table"
+            Dim sheetName$ = (args <= "/sheetName") Or .ref.BaseName.AsDefault
 
-            Call Excel.WriteSheetTable(table, args <= "/sheetName")
-            Call Excel.WriteXlsx(.ref)
+            Call Excel.WriteSheetTable(table, sheetName)
+            Call Excel.WriteXlsx(
+                (args <= "/saveAs") Or .ref.AsDefault)
 
             Return 0
         End With

@@ -54,7 +54,7 @@ Public Module StoreProcedure
         Dim stringTable = strings.ToHashTable
         Dim rows As row() = table _
             .SeqIterator _
-            .Select(Function(i) StoreProcedure.CreateRow(i, i, stringTable)) _
+            .Select(Function(i) StoreProcedure.CreateRow(i.i + 1, i, stringTable)) _
             .ToArray
         Dim worksheet As New worksheet With {
             .sheetData = New sheetData With {

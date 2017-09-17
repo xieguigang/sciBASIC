@@ -84,6 +84,11 @@ Namespace Excel
             Dim bottom = notEmptyRows.Max
             Dim right = Aggregate s In allSpans Where s.ends > 0 Into Max(s.ends)
 
+            left -= 1
+            right -= 1
+            top += 1
+            bottom += 1
+
             Return $"{left.ColumnIndex}{top}:{right.ColumnIndex}{bottom}"
         End Function
 

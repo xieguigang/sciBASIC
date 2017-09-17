@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::40a0b1528f5404b4bc404a9da594b3b1, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xl\worksheets\sheet.xml.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace XML.xl.worksheets
 
@@ -80,7 +81,13 @@ Namespace XML.xl.worksheets
     End Class
 
     Public Structure dimension
-        <XmlAttribute> Public Property ref As String
+
+        <XmlAttribute>
+        Public Property ref As String
+
+        Public Overrides Function ToString() As String
+            Return ref
+        End Function
     End Structure
 
     Public Class col
@@ -103,6 +110,13 @@ Namespace XML.xl.worksheets
         <XmlAttribute> Public Property customHeight As String
         <XmlAttribute> Public Property customFormat As String
         <XmlElement("c")> Public Property columns As c()
+
+        Public Overrides Function ToString() As String
+            Return columns _
+                .Select(Function(c) c.r) _
+                .ToArray _
+                .GetJson
+        End Function
     End Structure
 
     Public Structure c

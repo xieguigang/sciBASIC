@@ -78,7 +78,7 @@ Namespace XML.xl
         End Function
 
         Public Function Add(sheetName$) As String
-            Dim n$ = sheets.Count
+            Dim n$ = sheets.Count + 1
 
             sheets += New sheet With {
                 .name = sheetName,

@@ -99,6 +99,10 @@ End Class
 
 Public Class worksheets : Inherits Directory
 
+    ''' <summary>
+    ''' Key都是格式``sheet%d``的字符串
+    ''' </summary>
+    ''' <returns></returns>
     Public Property worksheets As Dictionary(Of String, worksheet)
 
     Sub New(ROOT$)
@@ -110,7 +114,7 @@ Public Class worksheets : Inherits Directory
     End Function
 
     Public Sub Add(sheetID As String, worksheet As worksheet)
-        Call worksheets.Add(sheetID.Replace("sheet", ""), worksheet)
+        Call worksheets.Add(sheetID, worksheet)
     End Sub
 
     Public Function GetWorksheet(sheetID$) As worksheet
@@ -133,7 +137,7 @@ Public Class worksheets : Inherits Directory
         Dim path$
 
         For Each sheet In worksheets
-            path = $"{Folder}/sheet{sheet.Key}.xml"
+            path = $"{Folder}/{sheet.Key}.xml"
             sheet.Value _
                 .GetXml _
                 .SaveTo(path, Encoding.UTF8)
