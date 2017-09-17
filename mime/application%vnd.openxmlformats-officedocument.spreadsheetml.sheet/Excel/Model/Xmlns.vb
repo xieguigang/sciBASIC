@@ -1,4 +1,5 @@
 ﻿Public Module Xmlns
+
     Public Const cp$ = "http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
     Public Const dc$ = "http://purl.org/dc/elements/1.1/"
     Public Const dcterms$ = "http://purl.org/dc/terms/"
@@ -15,5 +16,7 @@
     Public Const x14ac$ = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"
     Public Const xr$ = "http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
     Public Const xr3$ = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3"
+
+    Public Const worksheet$ = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
 
 End Module

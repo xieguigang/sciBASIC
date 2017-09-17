@@ -97,6 +97,10 @@ Public Class File : Implements IFileReference
             ' 进行添加
             sheetID = xl.workbook.Add(sheetName)
             xl.worksheets.Add(sheetID, worksheet)
+            ContentTypes.Overrides += New Type With {
+                .ContentType = Xmlns.worksheet,
+                .PartName = $"/xl/worksheets/{sheetID}.xml"
+            }
 
             If modify.NotExists("worksheet.add") Then
                 modify.Add("worksheet.add")

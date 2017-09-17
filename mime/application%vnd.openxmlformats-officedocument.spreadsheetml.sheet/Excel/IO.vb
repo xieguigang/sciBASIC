@@ -42,6 +42,7 @@ Public Module IO
     <Extension> Public Function SaveTo(xlsx As File, path$) As Boolean
         Dim workbook$ = xlsx.ROOT & "/xl/workbook.xml"
         Dim sharedStrings = xlsx.ROOT & "/xl/sharedStrings.xml"
+        Dim ContentTypes$ = xlsx.ROOT & "/[Content_Types].xml"
 
         If xlsx.modify("worksheet.add") > -1 Then
             With xlsx.xl
@@ -49,9 +50,13 @@ Public Module IO
                 Call .workbook _
                     .GetXml _
                     .SaveTo(workbook, Encoding.UTF8)
-                Call xlsx.xl.sharedStrings _
+                Call .sharedStrings _
                     .GetXml _
                     .SaveTo(sharedStrings, Encoding.UTF8)
+
+                Call xlsx.ContentTypes _
+                    .GetXml _
+                    .SaveTo(ContentTypes, Encoding.UTF8)
             End With
         ElseIf xlsx.modify("worksheet.update") > -1 Then
             Call xlsx.xl.worksheets.Save()
