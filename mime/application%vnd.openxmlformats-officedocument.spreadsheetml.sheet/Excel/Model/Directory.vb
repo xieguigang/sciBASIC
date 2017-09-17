@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports System.Text
+Imports Microsoft.VisualBasic.Text.Xml
 
 Public Class _rels : Inherits Directory
 
@@ -139,7 +140,7 @@ Public Class worksheets : Inherits Directory
         For Each sheet In worksheets
             path = $"{Folder}/{sheet.Key}.xml"
             sheet.Value _
-                .GetXml _
+                .GetXml(XmlEncodings.UTF8) _
                 .SaveTo(path, Encoding.UTF8)
         Next
     End Sub

@@ -1,6 +1,7 @@
 ﻿Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 
 Public Module IO
@@ -48,20 +49,20 @@ Public Module IO
             With xlsx.xl
                 Call .worksheets.Save()
                 Call .workbook _
-                    .GetXml _
+                    .GetXml(XmlEncodings.UTF8) _
                     .SaveTo(workbook, Encoding.UTF8)
                 Call .sharedStrings _
-                    .GetXml _
+                    .GetXml(XmlEncodings.UTF8) _
                     .SaveTo(sharedStrings, Encoding.UTF8)
 
                 Call xlsx.ContentTypes _
-                    .GetXml _
+                    .GetXml(XmlEncodings.UTF8) _
                     .SaveTo(ContentTypes, Encoding.UTF8)
             End With
         ElseIf xlsx.modify("worksheet.update") > -1 Then
             Call xlsx.xl.worksheets.Save()
             Call xlsx.xl.sharedStrings _
-                .GetXml _
+                .GetXml(XmlEncodings.UTF8) _
                 .SaveTo(sharedStrings, Encoding.UTF8)
         End If
 
