@@ -29,6 +29,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports worksheet = System.Collections.Generic.List(Of Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.sheet)
 
 Namespace XML.xl
 
@@ -40,7 +41,7 @@ Namespace XML.xl
 
         Public Property fileVersion As fileVersion
         Public Property bookViews As workbookView()
-        Public Property sheets As sheet()
+        Public Property sheets As New worksheet
         Public Property calcPr As calcPr
         Public Property workbookPr As workbookPr
         Public Property fileRecoveryPr As fileRecoveryPr

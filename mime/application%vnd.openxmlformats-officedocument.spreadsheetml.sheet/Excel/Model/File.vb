@@ -72,8 +72,22 @@ Public Class File : Implements IFileReference
         Return WriteSheetTable(table, sheetName)
     End Function
 
+    ''' <summary>
+    ''' 如果表明不存在，会追加，否则会直接替换现有的表数据
+    ''' </summary>
+    ''' <param name="table"></param>
+    ''' <param name="sheetName$"></param>
+    ''' <returns></returns>
     Public Function WriteSheetTable(table As csv, sheetName$) As Boolean
+        Dim worksheet As worksheet = table.CreateWorksheet(xl.sharedStrings)
 
+        If xl.Exists(sheetName) Then
+            ' 进行替换
+
+        Else
+            ' 进行添加
+
+        End If
     End Function
 
     Public Function WriteXlsx(Optional path$ = Nothing) As Boolean

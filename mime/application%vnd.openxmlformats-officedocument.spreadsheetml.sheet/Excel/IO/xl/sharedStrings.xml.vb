@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 Namespace XML.xl
 
@@ -39,6 +40,12 @@ Namespace XML.xl
         <XmlElement("si")>
         Public Property strings As si()
 
+        Public Function ToHashTable() As Dictionary(Of String, Integer)
+            Return strings _
+                .SeqIterator _
+                .ToDictionary(Function(x) x.value.t,
+                              Function(x) x.i)
+        End Function
     End Class
 
     Public Class si

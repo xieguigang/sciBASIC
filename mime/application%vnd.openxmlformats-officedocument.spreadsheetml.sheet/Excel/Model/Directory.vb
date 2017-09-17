@@ -56,6 +56,17 @@ Public Class xl : Inherits Directory
     End Sub
 
     ''' <summary>
+    ''' 使用表名称来判断目标工作簿是否存在？
+    ''' </summary>
+    ''' <param name="worksheet$"></param>
+    ''' <returns></returns>
+    Public Function Exists(worksheet$) As Boolean
+        Return Not workbook _
+            .GetSheetIDByName(worksheet) _
+            .StringEmpty
+    End Function
+
+    ''' <summary>
     ''' Get <see cref="worksheet"/> by name.
     ''' </summary>
     ''' <param name="name$"></param>

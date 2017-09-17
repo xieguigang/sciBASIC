@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Perl
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Language
 
@@ -54,6 +55,25 @@ Namespace Language
         <Extension>
         Public Function AsDefault(Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As DefaultValue(Of T)
             Return [Default](x, isNothing)
+        End Function
+
+        ''' <summary>
+        ''' Helper for update the value property of <see cref="Value(Of T)"/>
+        ''' 
+        ''' ```vbnet
+        ''' Call Let$(<see cref="Value(Of T)"/> = x)
+        ''' ```
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function Let$(Of T)(value As T)
+            Try
+                Return CStrSafe(value)
+            Catch ex As Exception
+                ' 在这里知识进行帮助值的设置，所以这个错误无所谓，直接忽略掉
+                Return Nothing
+            End Try
         End Function
 
 #Region "Helper for ``With``"

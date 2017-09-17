@@ -47,4 +47,9 @@ Public Module StoreProcedure
 
         Return csv
     End Function
+
+    <Extension>
+    Public Function CreateWorksheet(table As csv, strings As sharedStrings) As worksheet
+
+    End Function
 End Module

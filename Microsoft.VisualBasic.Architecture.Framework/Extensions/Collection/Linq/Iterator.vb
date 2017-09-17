@@ -148,6 +148,10 @@ Namespace Linq
         End Function
     End Structure
 
+    ''' <summary>
+    ''' Value <typeparamref name="T"/> with sequence index <see cref="i"/>.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Structure SeqValue(Of T) : Implements IAddressOf
         Implements IComparable(Of Integer)
         Implements IComparable
