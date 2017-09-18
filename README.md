@@ -66,12 +66,17 @@ PM> Install-Package sciBASIC -Pre
 
 ## Namespace
 
-|Namespace                      |Description                                                                       |
-|-------------------------------|----------------------------------------------------------------------------------|
-|Microsoft.VisualBasic.Data     |Raw data processing related code                                                  |
-|Microsoft.VisualBasic.Imaging  |``sciBASIC`` graphics system based on the GDI+ API from ``System.Drawing``        |
-|Microsoft.VisualBasic.Math     |``sciBASIC`` math library                                                         |
-|Microsoft.VisualBasic.Scripting|String expression related API for CLI programming and optional parameter scripting|
+|Namespace                                |Description                                                                       |
+|-----------------------------------------|----------------------------------------------------------------------------------|
+|Microsoft.VisualBasic.ApplicationServices|Application tool and Utils for build software in a more easy way                  |
+|Microsoft.VisualBasic.CommandLine        |CLI framework system                                                              |
+|Microsoft.VisualBasic.Data               |Raw data processing related code                                                  |
+|Microsoft.VisualBasic.DataMining         |``sciBASIC`` data mining library                                                  |
+|Microsoft.VisualBasic.Imaging            |``sciBASIC`` graphics system based on the GDI+ API from ``System.Drawing``        |
+|Microsoft.VisualBasic.MachineLearning    |``sciBASIC`` machine learning library                                             |
+|Microsoft.VisualBasic.Math               |``sciBASIC`` math library                                                         |
+|Microsoft.VisualBasic.MIME               |MIME type text document parser                                                    |
+|Microsoft.VisualBasic.Scripting          |String expression related API for CLI programming and optional parameter scripting|
 
 ## ODEs scripting language feature
 
