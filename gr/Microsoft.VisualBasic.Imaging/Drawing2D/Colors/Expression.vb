@@ -1,76 +1,113 @@
+Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports r = System.Text.RegularExpressions.Regex
+
 Namespace Drawing2D.Colors
 
-' lighter(term, percentage)
-' darker(term, percentage)
-' alpha(term, percentage)
-' reverse(term)
-' skip(term, n)
-' take(term, n)
+    ''' <summary>
+    ''' ```vbnet
+    ''' lighter(term, percentage)
+    ''' darker(term, percentage)
+    ''' alpha(term, percentage)
+    ''' reverse(term)
+    ''' skip(term, n)
+    ''' take(term, n)
+    ''' ```
+    ''' </summary>
+    Public Structure DesignerExpression
 
-Public Structure DesignerExpression
+        Dim Term$
+        Dim API As NamedValue(Of String)
 
-Dim Term$
-Dim Modification As NamedValue(Of String)
+        Const FunctionPattern$ = "[a-z0-9_]+\(.+\)"
 
+        Sub New(exp$)
+            If exp.IsPattern(FunctionPattern) Then
+                With exp.GetTagValue("(", trim:=True)
+                    Dim api$ = .Name
+                    Dim arg$
 
-Public Overrides Function ToString() As String 
+                    With .Value.GetTagValue(",", trim:=True)
+                        Term = .Name.Trim
+                        arg = .Value
+                    End With
 
-If Modification.StringEmpty() Then
- Return Term
- Else
- With Modification
- If .Value.StringEmpty Then
-  Return  $"{.Name} ( {Term} )"
- Else
-  Return  $"{.Name} ( {Term}, {.Value} )"
- End If
+                    Me.API = New NamedValue(Of String) With {
+                        .Name = api,
+                        .Value = arg
+                    }
+                End With
+            Else
+                Term = exp
+            End If
+        End Sub
 
- End With
-End If
+        Public Overrides Function ToString() As String
+            If API.IsEmpty Then
+                Return Term
+            Else
+                With API
+                    If .Value.StringEmpty Then
+                        Return $"{ .Name} ( {Term} )"
+                    Else
+                        Return $"{ .Name} ( {Term}, { .Value} )"
+                    End If
+                End With
+            End If
+        End Function
 
-End Function
+        Delegate Function Apply(colors As Color(), value$) As Color()
 
-Delegate Function Apply(colors As Color(), value$) As Color()
+        Friend Shared ReadOnly actions As New Dictionary(Of String, Apply) From {
+            {"lighter", New Apply(AddressOf lighter)},
+            {"darker", New Apply(AddressOf darker)},
+            {"alpha", New Apply(AddressOf alpha)},
+            {"reverse", New Apply(AddressOf reverse)},
+            {"skip", New Apply(AddressOf skip)},
+            {"take", New Apply(AddressOf take)}
+        }
 
+        Public Function Modify(colors As Color()) As Color()
+            With API
+                Return actions(.Name.ToLower)(colors, .Value)
+            End With
+        End Function
 
-Friend Shared Readonly actions As New Dictionary(Of String, Apply) From {
-	{"lighter", new Apply(AddressOf lighter)},
-	{"darker", new Apply(AddressOf darker)},
-	{"alpha", new Apply(AddressOf alpha)},
-	{"reverse", new Apply(AddressOf reverse)},
-	{"skip", new Apply(AddressOf skip)},
-	{"take", new Apply(AddressOf take)}
-}
+        Private Shared Function lighter(colors As Color(), value$) As Color()
+            Dim percentage# = value.ParseDouble
 
-Public Function Modify(colors As Color()) As Color()
+            Return colors _
+                .Select(Function(c)
+                            Return HSLColor _
+                                .GetHSL(c) _
+                                .Lighten(percentage, Color.White)
+                        End Function) _
+                .ToArray
+        End Function
 
+        Private Shared Function darker(colors As Color(), value$) As Color()
+            Dim percentage# = value.ParseDouble
 
-End Function
+            Return colors _
+                .Select(Function(c) c.Dark(percentage)) _
+                .ToArray
+        End Function
 
-private shared function lighter(colors As Color(), value$) As Color()
-End function
+        Private Shared Function alpha(colors As Color(), value$) As Color()
+            Dim percentage# = value.ParseDouble
+            Return colors.Alpha(255 * percentage)
+        End Function
 
-private shared  function darker(colors As Color(), value$) As color()
+        Private Shared Function reverse(colors As Color(), value$) As Color()
+            Return colors.Reverse.ToArray
+        End Function
 
-End function 
+        Private Shared Function skip(colors As Color(), value$) As Color()
+            Return colors.Skip(CInt(Val(value))).ToArray
+        End Function
 
-private shared  function alpha (colors as color(), value$) as color()
-return colors.alpha(255 * val(value))
-end function
-
-private shared  function reverse(colors as color(), value$)  as color()
-return colors.reverse.toarray
-end function
-
-private  shared function skip (colors as  color(), value$)  as  color()
-return colors.skip(cint(val(value))).toarray
-end function 
-
-private  shared function take(colors  as color(), value$) as color()
-
-return colors.Take(cint(val(value))).toarray
-end function 
-
-End Structure
-
+        Private Shared Function take(colors As Color(), value$) As Color()
+            Return colors.Take(CInt(Val(value))).ToArray
+        End Function
+    End Structure
 End Namespace
