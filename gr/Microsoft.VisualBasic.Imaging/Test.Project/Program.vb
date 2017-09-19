@@ -28,7 +28,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text.ASCIIArt
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.ASCIIArt
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -118,7 +118,7 @@ log<sub>2</sub> ratio
             Call g.Render(html, New PointF(10, 10), 500)
 
 
-            Call Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text.TextRender.RenderHTML(g, "<span style=""color:lime"">Green Color Text</span>", CSSFont.PlotTitle, New PointF(0, 200))
+            Call Microsoft.VisualBasic.Imaging.Drawing2D.Text.TextRender.RenderHTML(g, "<span style=""color:lime"">Green Color Text</span>", CSSFont.PlotTitle, New PointF(0, 200))
 
 
         End Using

@@ -220,6 +220,9 @@ Namespace Drawing2D.Colors
             End Try
         End Sub
 
+        ''' <summary>
+        ''' <see cref="ColorMap"/> pattern names
+        ''' </summary>
         ReadOnly __allColorMapNames$() = {
             ColorMap.PatternAutumn,
             ColorMap.PatternCool,
@@ -265,15 +268,26 @@ Namespace Drawing2D.Colors
         ''' <summary>
         ''' 对于无效的键名称，默认是返回<see cref="Office2016"/>，请注意，如果是所有的.net的颜色的话，这里面还会包含有白色，所以还需要手工去除掉白色
         ''' </summary>
-        ''' <param name="term$">假若这里所输入的是一组颜色值，则必须是htmlcolor或者颜色名称，RGB表达式将不会被允许</param>
+        ''' <param name="exp$">
+        ''' <see cref="DesignerExpression"/>.
+        ''' (假若这里所输入的是一组颜色值，则必须是htmlcolor或者颜色名称，RGB表达式将不会被允许)
+        ''' </param>
         ''' <returns></returns>
-        Public Function GetColors(term$) As Color()
-            If term.IsColorNameList Then
-                Return term _
+        Public Function GetColors(exp$) As Color()
+            If exp.IsColorNameList Then
+                ' 设计器的表达式解析器目前不兼容颜色列表的表达式
+                Return exp _
                     .StringSplit(",\s*") _
                     .Select(Function(c) c.TranslateColor) _
                     .ToArray
+            Else
+                With New DesignerExpression(exp)
+                    Return .Modify(Designer.GetColorsInternal(.Term))
+                End With
             End If
+        End Function
+
+        Private Function GetColorsInternal(term$) As Color()
             If Array.IndexOf(__allColorMapNames, term.ToLower) > -1 Then
                 Return New ColorMap(20, 255).ColorSequence(term)
             End If

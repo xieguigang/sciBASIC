@@ -212,7 +212,7 @@ Namespace HTML
                 Do While Not str.EndRead AndAlso str.Current <> "="c
                     If str.Current = " "c Then
                         If chars.Count > 0 Then
-                            Do While Not str.EndRead AndAlso +str <> "="c
+                            Do While Not str.EndRead AndAlso ++str <> "="c
                             Loop
                             Exit Do   ' 在这里进行解析的是属性的名称，不允许有空格
                         Else
