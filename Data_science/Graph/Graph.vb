@@ -41,6 +41,7 @@ Public Class Graph
 #Region "Let G=(V, E) be a simple graph"
     Dim edges As List(Of Edge)
     Dim vertices As Dictionary(Of Vertex)
+    Dim buffer As HandledList(Of Vertex)
 #End Region
 
     Public Function AddEdge(u As Vertex, v As Vertex) As Graph
@@ -50,10 +51,30 @@ Public Class Graph
         }
         If Not vertices.ContainsKey(u.Label) Then
             vertices += u
+            buffer.Add(u)
         End If
         If Not vertices.ContainsKey(v.Label) Then
             vertices += v
+            buffer.Add(v)
         End If
+
+        Return Me
+    End Function
+
+    Public Function AddEdge(i%, j%) As Graph
+        edges += New Edge With {
+            .U = buffer(i),
+            .V = buffer(j)
+        }
+
+        Return Me
+    End Function
+
+    Public Function AddEdge(u$, v$) As Graph
+        edges += New Edge With {
+            .U = vertices(u),
+            .V = vertices(v)
+        }
 
         Return Me
     End Function
@@ -63,7 +84,7 @@ End Class
 ''' 图之中的节点
 ''' </summary>
 Public Class Vertex : Implements INamedValue
-    Implements IAddress(Of Integer)
+    Implements IAddressOf
 
     Public Property Label As String Implements IKeyedEntity(Of String).Key
     Public Property ID As Integer Implements IAddress(Of Integer).Address
