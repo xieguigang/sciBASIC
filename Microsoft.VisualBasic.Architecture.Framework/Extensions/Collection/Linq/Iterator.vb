@@ -1,35 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::1cab641f8aff80ea9250b99b72073b08, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Linq
@@ -161,21 +161,12 @@ Namespace Linq
         ''' The position of this object value in the original sequence.
         ''' </summary>
         ''' <returns></returns>
-        Public Property i%
+        Public Property i As Integer Implements IAddressOf.Address
         ''' <summary>
         ''' The Object data
         ''' </summary>
         ''' <returns></returns>
-        Public Property value As T Implements Value(Of T).IValueOf.value
-
-        Private Property Address As Integer Implements IAddressOf.Address
-            Get
-                Return CLng(i)
-            End Get
-            Set
-                i = CInt(Value)
-            End Set
-        End Property
+        Public Property value As T Implements Value(Of T).IValueOf.Value
 
         Sub New(i%, x As T)
             Me.i = i
@@ -208,10 +199,23 @@ Namespace Linq
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' Syntax helper for the <see cref="Pointer(Of T)"/>:
+        ''' 
+        ''' ```vbnet
+        ''' Dim p As Pointer(Of T) = T()
+        ''' Dim x As T = ++p
+        ''' ```
+        ''' </remarks>
         Public Shared Operator +(x As SeqValue(Of T)) As T
             Return x.value
         End Operator
 
+        ''' <summary>
+        ''' Compares the index value <see cref="i"/>.
+        ''' </summary>
+        ''' <param name="other"></param>
+        ''' <returns></returns>
         Public Function CompareTo(other As Integer) As Integer Implements IComparable(Of Integer).CompareTo
             Return i.CompareTo(other)
         End Function
