@@ -565,6 +565,7 @@
     <Compile Include="Extensions\Image\Math\VecMath2D.vb" />
     <Compile Include="Extensions\Image\Math\Vector2D.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
+    <Compile Include="Extensions\Math\NumeralSystem.vb" />
     <Compile Include="Extensions\Math\Correlations\Ranking.vb" />
     <Compile Include="Extensions\Math\Matrix.vb" />
     <Compile Include="Extensions\Math\ScientificNotation.vb" />

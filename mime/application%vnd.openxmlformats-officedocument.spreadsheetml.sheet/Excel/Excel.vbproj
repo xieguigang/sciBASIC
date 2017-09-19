@@ -87,6 +87,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -113,7 +114,11 @@
     <Compile Include="IO\docProps\app.xml.vb" />
     <Compile Include="IO\docProps\custom.xml.vb" />
     <Compile Include="IO\docProps\core.xml.vb" />
-    <Compile Include="File.vb" />
+    <Compile Include="Model\File.vb" />
+    <Compile Include="IO.vb" />
+    <Compile Include="Model\Directory.vb" />
+    <Compile Include="Model\StoreProcedure.vb" />
+    <Compile Include="Model\Xmlns.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
