@@ -85,6 +85,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis.vb" />
     <Compile Include="GraphTree.vb" />
     <Compile Include="Model\Graph.vb" />
     <Compile Include="Model\Component.vb" />
