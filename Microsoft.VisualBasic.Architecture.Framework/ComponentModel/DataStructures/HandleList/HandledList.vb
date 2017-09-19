@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -65,6 +66,7 @@ Namespace ComponentModel
         ''' <param name="index%"></param>
         ''' <returns></returns>
         Default Public Property Item(index%) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If index < 0 Then
                     index = list.Count + index
@@ -72,6 +74,7 @@ Namespace ComponentModel
 
                 Return list(index)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As T)
                 If index < 0 Then
                     index = list.Count + index
@@ -106,6 +109,7 @@ Namespace ComponentModel
             Next
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(x As T)
             If list.Count <= x.Address Then
                 For i As Integer = 0 To x.Address - list.Count

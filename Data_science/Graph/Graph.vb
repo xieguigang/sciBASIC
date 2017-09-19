@@ -26,10 +26,11 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
@@ -39,7 +40,7 @@ Imports Microsoft.VisualBasic.Language
 Public Class Graph
 
 #Region "Let G=(V, E) be a simple graph"
-    Dim edges As List(Of Edge)
+    Dim edges As Dictionary(Of Edge)
     Dim vertices As Dictionary(Of Vertex)
     Dim buffer As HandledList(Of Vertex)
 #End Region
@@ -78,6 +79,31 @@ Public Class Graph
 
         Return Me
     End Function
+
+    ''' <summary>
+    ''' 只会删除边，并不会删除节点<paramref name="U"/>和<paramref name="V"/>
+    ''' </summary>
+    ''' <param name="U"></param>
+    ''' <param name="V"></param>
+    ''' <returns></returns>
+    Public Function Delete(U As Vertex, V As Vertex) As Graph
+        Return Delete(U.ID, V.ID)
+    End Function
+
+    Public Function Delete(u$, v$) As Graph
+        Return Delete(vertices(u).ID, vertices(v).ID)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Delete(u%, v%) As Graph
+        Dim key$ = $"{u}-{v}"
+
+        If edges.ContainsKey(key) Then
+            Call edges.Remove(key)
+        End If
+
+        Return Me
+    End Function
 End Class
 
 ''' <summary>
@@ -86,20 +112,42 @@ End Class
 Public Class Vertex : Implements INamedValue
     Implements IAddressOf
 
-    Public Property Label As String Implements IKeyedEntity(Of String).Key
-    Public Property ID As Integer Implements IAddress(Of Integer).Address
+    <XmlAttribute> Public Property Label As String Implements IKeyedEntity(Of String).Key
+    <XmlAttribute> Public Property ID As Integer Implements IAddress(Of Integer).Address
 
+    Public Overrides Function ToString() As String
+        Return $"({ID}) {Label}"
+    End Function
 End Class
 
 ''' <summary>
 ''' 节点之间的边
 ''' </summary>
-Public Class Edge
+Public Class Edge : Implements INamedValue
 
     Public Property U As Vertex
     Public Property V As Vertex
 
+    ''' <summary>
+    ''' ReadOnly unique-ID
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    Private Property Key As String Implements IKeyedEntity(Of String).Key
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return $"{U.ID}-{V.ID}"
+        End Get
+        Set(value As String)
+            ' DO Nothing
+        End Set
+    End Property
+
+    Public Overrides Function GetHashCode() As Integer
+        Return Key.GetHashCode
+    End Function
+
     Public Overrides Function ToString() As String
-        Return $"{U} => {V}"
+        Return $"({GetHashCode()}) {U} => {V}"
     End Function
 End Class
