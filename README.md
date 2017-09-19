@@ -156,6 +156,7 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 Imports Microsoft.VisualBasic.Data.ChartPlots
 ```
 ![](./Data_science/DataMining/hierarchical-clustering/test.png)
+![](./Data_science/Mathematica/images/identity_pie.png)
 ![](./Data_science/Mathematica/images/heatmap/Sample.SPCC.png)
 ![](./Data_science/Mathematica/images/log2FC_heatmap.png)
 ![](./Data_science/algorithms/CMeans/CMeans.png)
