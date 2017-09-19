@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices.Marshal
 Imports Microsoft.VisualBasic.Emit.Marshal
 
 ''' <summary>
