@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::888beafc0bc7eecf62a2378738607cc2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\Pointer(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Emit.Marshal
 
@@ -61,6 +62,12 @@ Namespace Emit.Marshal
             End Get
         End Property
 
+        ''' <summary>
+        ''' 返回指定维度的一个数组，最高可用的下标。
+        ''' </summary>
+        ''' <returns>
+        ''' <see cref="Integer"/>。 指定维度的下标可以包含的最大值。 如果 Array 只有一个元素， UBound ，则返回 0。 如果 Array 不包含任何元素，例如，如果它是零长度字符串，
+        ''' UBound 返回-1。</returns>
         Public ReadOnly Property UBound As Integer
             Get
                 Return Information.UBound(buffer)
@@ -72,7 +79,7 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="p">相对于当前的位置的offset偏移量</param>
         ''' <returns></returns>
-        Default Public Property Value(p As Integer) As T
+        Default Public Property Value(p%) As T
             Get
                 p += __index
 
@@ -230,10 +237,14 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="ptr"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator +(ptr As Pointer(Of T)) As T
-            Dim i As Integer = ptr.__index
+        Public Overloads Shared Operator +(ptr As Pointer(Of T)) As SeqValue(Of T)
+            Dim i% = ptr.__index
             ptr.__index += 1
-            Return ptr.buffer(i)
+
+            Return New SeqValue(Of T) With {
+                .i = i,
+                .value = ptr.buffer(i)
+            }
         End Operator
 
         ''' <summary>
@@ -241,10 +252,14 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="ptr"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator -(ptr As Pointer(Of T)) As T
-            Dim i As Integer = ptr.__index
+        Public Overloads Shared Operator -(ptr As Pointer(Of T)) As SeqValue(Of T)
+            Dim i% = ptr.__index
             ptr.__index -= 1
-            Return ptr.buffer(i)
+
+            Return New SeqValue(Of T) With {
+                .i = i,
+                .value = ptr.buffer(i)
+            }
         End Operator
 
         Public Overloads Shared Operator <=(a As Pointer(Of T), b As Pointer(Of T)) As SwapHelper(Of T)
