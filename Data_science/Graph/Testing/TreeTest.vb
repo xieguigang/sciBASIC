@@ -1,6 +1,6 @@
-﻿Imports Graph
+﻿Imports Microsoft.VisualBasic.Data.Graph
 
-Module Module1
+Module TreeTest
 
     Sub Main()
         Dim tree As BinaryTree(Of String) = BinaryTree(Of String).ROOT
