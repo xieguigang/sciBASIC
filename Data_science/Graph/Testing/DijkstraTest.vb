@@ -22,6 +22,7 @@ Module DijkstraTest
         g.AddEdge(8, 9, weight.NextDouble)
         g.AddEdge(3, 7, weight.NextDouble)
         g.AddEdge(7, 9, weight.NextDouble)
+        g.AddEdge(9, 6, weight.NextDouble)
 
         Dim Dijkstra As New Dijkstra.DijkstraRouteFind(g)
         Dim route = Dijkstra.CalculateMinCost(g.Vertex(0))

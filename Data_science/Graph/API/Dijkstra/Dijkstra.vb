@@ -119,6 +119,7 @@ Namespace Dijkstra
                 handledLocations.Add(locationToProcess)
             End While
 
+            shortestPaths.Remove(startPos)
             Return shortestPaths
         End Function
 
