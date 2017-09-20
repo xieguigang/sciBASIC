@@ -37,9 +37,9 @@ Imports Microsoft.VisualBasic.ComponentModel
 Public Class Graph : Implements IEnumerable(Of Edge)
 
 #Region "Let G=(V, E) be a simple graph"
-    Dim edges As Dictionary(Of Edge)
-    Dim vertices As Dictionary(Of Vertex)
-    Dim buffer As HandledList(Of Vertex)
+    Dim edges As New Dictionary(Of Edge)
+    Dim vertices As New Dictionary(Of Vertex)
+    Dim buffer As New HandledList(Of Vertex)
 #End Region
 
     Public ReadOnly Property Size As (Vertex%, Edges%)

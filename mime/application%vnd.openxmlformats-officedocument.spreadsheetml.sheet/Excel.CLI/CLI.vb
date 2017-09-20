@@ -23,9 +23,11 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     Public Function cbind(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim append$ = args <= "/append"
-        Dim out$ = args.GetValue("/out", [in].TrimSuffix & "+" & append.BaseName & ".csv")
-
-        Return Contract.Append(EntityObject.LoadDataSet([in]), Contract.Load(append)) _
+        Dim out$ = (args <= "/out") Or ([in].TrimSuffix & "+" & append.BaseName & ".csv").AsDefault
+        Dim a = EntityObject.LoadDataSet([in])
+        Dim b = Contract.Load(append)
+        
+        Return Contract.Append(a, b) _
             .SaveTo(out) _
             .CLICode
     End Function
@@ -37,7 +39,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
               Description:="A directory path that contains csv files that will be merge into one file directly.")>
     Public Function rbind(args As CommandLine) As Integer
         Dim [in] As String = args("/in")
-        Dim out$ = args.GetValue("/out", [in].TrimSuffix & ".rbind.csv")
+        Dim out$ = (args <= "/out") Or ([in].TrimSuffix & ".rbind.csv").AsDefault
 
         Return (ls - l - r - "*.csv" <= [in]) _
             .DirectAppends(EXPORT:=out) _
