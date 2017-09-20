@@ -86,11 +86,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analysis.vb" />
-    <Compile Include="GraphTree.vb" />
     <Compile Include="Model\BinaryTree.vb" />
     <Compile Include="Model\Graph.vb" />
     <Compile Include="Model\Component.vb" />
     <Compile Include="Model\Tree.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
