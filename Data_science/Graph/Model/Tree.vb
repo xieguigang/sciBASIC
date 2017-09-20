@@ -1,17 +1,28 @@
+Imports Microsoft.VisualBasic.Linq
+
 Public Class Tree(Of T) : Inherits Vertex
 
     Public Property Childs As Tree(Of T)()
     Public Property Parent As Tree(Of T)
     Public Property Data As T
 
+    ''' <summary>
+    ''' Not null child count in this tree node.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Count As Integer
         Get
-            If Childs.IsNullOrEmpty Then
+            Dim childs = Me.Childs _
+                .SafeQuery _
+                .Where(Function(c) Not c Is Nothing) _
+                .ToArray
+
+            If childs.IsNullOrEmpty Then
                 Return 1  ' 自己算一个节点，所以数量总是1的
             Else
-                Dim n% = Childs.Length
+                Dim n% = childs.Length
 
-                For Each node In Childs
+                For Each node In childs
                     n += node.Count ' 如果节点没有childs，则会返回1，因为他自身就是一个节点
                 Next
 

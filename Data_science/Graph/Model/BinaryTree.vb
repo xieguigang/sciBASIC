@@ -2,7 +2,6 @@
 Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
 
 #Region "Childs"
-
     Public Property Left As BinaryTree(Of T)
         Get
             Return Childs.ElementAtOrDefault(0)
@@ -28,10 +27,20 @@ Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
             End If
         End Set
     End Property
-
 #End Region
 
     Const Duplicated$ = "Duplicated node was found!"
+
+    Sub New()
+    End Sub
+
+    Sub New(name$)
+        Label = name
+    End Sub
+
+    Public Shared Function ROOT() As BinaryTree(Of T)
+        Return New BinaryTree(Of T)("<ROOT>")
+    End Function
 
     ''' <summary>
     ''' Recursively locates an empty slot in the binary tree and inserts the node
@@ -43,7 +52,7 @@ Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
     ''' &lt;0  LEFT
     ''' >0 RIGHT
     ''' </param>
-    Private Sub InternalAdd(node As BinaryTree(Of T), ByRef tree As BinaryTree(Of T), overrides%)
+    Private Sub InternalAdd(node As BinaryTree(Of T), ByRef tree As BinaryTree(Of T), Optional overrides% = 0)
         If tree Is Nothing Then
             tree = node
         Else
@@ -63,9 +72,11 @@ Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
 
             ' 在这里进行递归的比较查找，直到二叉树节点是一个空节点为止
             If comparison < 0 Then
-                Call InternalAdd(node, tree.Left, comparison)
+                InternalAdd(node, tree.Left)
+                tree.Left.Parent = tree
             Else
-                Call InternalAdd(node, tree.Right, comparison)
+                InternalAdd(node, tree.Right)
+                tree.Right.Parent = tree
             End If
         End If
     End Sub
@@ -86,7 +97,7 @@ Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
         }
 
         Try
-            Call InternalAdd(node, Me, 0)
+            Call InternalAdd(node, Me)
             Return node
         Catch e As Exception
             Dim ex As New Exception(node.ToString, e)
