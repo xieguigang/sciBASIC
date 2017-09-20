@@ -63,86 +63,7 @@ Namespace DendrogramVisualize
         Public Property Cluster As Cluster
         Public Property PrintName As Boolean
 
-        Public Sub New(cluster As Cluster, printName As Boolean, initPoint As PointF)
-            Me.PrintName = printName
-            Me.Cluster = cluster
-            Me.InitPoint = initPoint
-            Me.LinkPoint = initPoint
-        End Sub
-
-        ''' <summary>
-        ''' 绘制具体的聚类结果
-        ''' </summary>
-        ''' <param name="g"></param>
-        Public Sub paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF))) Implements IPaintable.paint
-            Dim x1, y1, x2, y2 As Integer
-            Dim fontMetrics As FontMetrics = g.FontMetrics
-
-            With args
-
-                x1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .xDisplayOffset))
-                y1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
-                x2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
-                y2 = y1
-
-                If .LinkDotRadius > 0 Then
-                    Dim dotRadius = .LinkDotRadius
-                    Dim d% = dotRadius * 2
-                    g.FillEllipse(Brushes.Black, x1 - dotRadius, y1 - dotRadius, d, d)
-                End If
-                g.DrawLine(.stroke, x1, y1, x2, y2)
-
-                If Cluster.Leaf Then
-                    Dim nx! = x1 + NamePadding
-                    Dim ny! = y1
-                    Dim location As New PointF With {
-                        .X = nx,
-                        .Y = y1 - (fontMetrics.Height / 2) - 2
-                    }
-
-                    ' 绘制叶节点
-                    If args.ShowLabelName Then
-                        g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, location)
-                    End If
-                    labels += New NamedValue(Of PointF) With {
-                        .Name = Cluster.Name,
-                        .Value = location
-                    }
-
-                    If Not .classTable Is Nothing Then
-                        ' 如果还存在分类信息的话，会绘制分类的颜色条
-                        Dim color As Brush = .classTable(Cluster.Name).GetBrush
-                        Dim topleft As New PointF(nx + .classLegendPadding, y1 - .classLegendSize.Height / 2)
-                        Dim rect As New RectangleF(topleft, .classLegendSize)
-
-                        g.FillRectangle(color, rect)
-                    End If
-                End If
-                If .decorated AndAlso
-                    Cluster.Distance IsNot Nothing AndAlso
-                    (Not Cluster.Distance.NaN) AndAlso
-                    Cluster.Distance.Distance > 0 Then
-
-                    Dim s As String = String.Format("{0:F2}", Cluster.Distance)
-                    Dim rect As RectangleF = fontMetrics.GetStringBounds(s, g.Graphics)
-                    Dim location As New PointF With {
-                        .X = x1 - CInt(Fix(rect.Width)),
-                        .Y = y1 - 2 - rect.Height
-                    }
-
-                    g.DrawString(s, fontMetrics, Brushes.Black, location)
-                End If
-
-                x1 = x2
-                y1 = y2
-                y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
-                g.DrawLine(.stroke, x1, y1, x2, y2)
-
-                For Each child As ClusterComponent In Children
-                    child.paint(g, args, labels)
-                Next
-            End With
-        End Sub
+#Region "Layout"
 
         Public ReadOnly Property RectMinX As Double
             Get
@@ -195,18 +116,100 @@ Namespace DendrogramVisualize
                 Return val
             End Get
         End Property
+#End Region
 
-        Public Function getNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
+        Public Sub New(cluster As Cluster, printName As Boolean, initPoint As PointF)
+            Me.PrintName = printName
+            Me.Cluster = cluster
+            Me.InitPoint = initPoint
+            Me.LinkPoint = initPoint
+        End Sub
+
+        ''' <summary>
+        ''' 绘制具体的聚类结果
+        ''' </summary>
+        ''' <param name="g"></param>
+        Public Sub paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF))) Implements IPaintable.paint
+            Dim x1, y1, x2, y2 As Integer
+            Dim fontMetrics As FontMetrics = g.FontMetrics
+
+            With args
+
+                x1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .xDisplayOffset))
+                y1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
+                x2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
+                y2 = y1
+
+                If .LinkDotRadius > 0 Then
+                    Dim dotRadius = .LinkDotRadius
+                    Dim d% = dotRadius * 2
+                    g.FillEllipse(Brushes.Black, x1 - dotRadius, y1 - dotRadius, d, d)
+                End If
+                g.DrawLine(.stroke, x1, y1, x2, y2)
+
+                If Cluster.IsLeaf Then
+                    Dim nx! = x1 + NamePadding
+                    Dim ny! = y1
+                    Dim location As New PointF With {
+                        .X = nx,
+                        .Y = y1 - (fontMetrics.Height / 2) - 2
+                    }
+
+                    ' 绘制叶节点
+                    If args.ShowLabelName Then
+                        g.DrawString(Cluster.Label, fontMetrics, Brushes.Black, location)
+                    End If
+                    labels += New NamedValue(Of PointF) With {
+                        .Name = Cluster.Label,
+                        .Value = location
+                    }
+
+                    If Not .classTable Is Nothing Then
+                        ' 如果还存在分类信息的话，会绘制分类的颜色条
+                        Dim color As Brush = .classTable(Cluster.Label).GetBrush
+                        Dim topleft As New PointF(nx + .classLegendPadding, y1 - .classLegendSize.Height / 2)
+                        Dim rect As New RectangleF(topleft, .classLegendSize)
+
+                        g.FillRectangle(color, rect)
+                    End If
+                End If
+                If .decorated AndAlso
+                    Cluster.Distance IsNot Nothing AndAlso
+                    (Not Cluster.Distance.NaN) AndAlso
+                    Cluster.Distance.Distance > 0 Then
+
+                    Dim s As String = String.Format("{0:F2}", Cluster.Distance)
+                    Dim rect As RectangleF = fontMetrics.GetStringBounds(s, g.Graphics)
+                    Dim location As New PointF With {
+                        .X = x1 - CInt(Fix(rect.Width)),
+                        .Y = y1 - 2 - rect.Height
+                    }
+
+                    g.DrawString(s, fontMetrics, Brushes.Black, location)
+                End If
+
+                x1 = x2
+                y1 = y2
+                y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
+                g.DrawLine(.stroke, x1, y1, x2, y2)
+
+                For Each child As ClusterComponent In Children
+                    child.paint(g, args, labels)
+                Next
+            End With
+        End Sub
+
+        Public Function GetNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = 0
-            If includeNonLeafs OrElse Cluster.Leaf Then
-                Dim rect As RectangleF = g.FontMetrics.GetStringBounds(Cluster.Name, g.Graphics)
+            If includeNonLeafs OrElse Cluster.IsLeaf Then
+                Dim rect As RectangleF = g.FontMetrics.GetStringBounds(Cluster.Label, g.Graphics)
                 width = CInt(Fix(rect.Width))
             End If
             Return width
         End Function
 
         Public Function GetMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
-            Dim width As Integer = getNameWidth(g, includeNonLeafs)
+            Dim width As Integer = GetNameWidth(g, includeNonLeafs)
             For Each comp As ClusterComponent In Children
                 Dim childWidth As Integer = comp.GetMaxNameWidth(g, includeNonLeafs)
                 If childWidth > width Then width = childWidth

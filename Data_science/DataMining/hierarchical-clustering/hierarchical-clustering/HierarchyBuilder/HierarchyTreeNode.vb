@@ -119,14 +119,14 @@ Namespace Hierarchy
             Dim sb As New StringBuilder
 
             If Left IsNot Nothing Then
-                sb.Append(Left.Name)
+                sb.Append(Left.Label)
             End If
 
             If Right IsNot Nothing Then
                 If sb.Length > 0 Then
                     sb.Append(" + ")
                 End If
-                sb.Append(Right.Name)
+                sb.Append(Right.Label)
             End If
 
             Call sb _
