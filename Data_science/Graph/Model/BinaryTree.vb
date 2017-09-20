@@ -8,7 +8,7 @@ Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
         End Get
         Set
             If Childs.IsNullOrEmpty Then
-                Childs = {Value, Nothing}
+                Childs = New List(Of Tree(Of T)) From {Value, Nothing}
             Else
                 Childs(0) = Value
             End If
@@ -20,8 +20,8 @@ Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
             Return Childs.ElementAtOrDefault(1)
         End Get
         Set
-            If Childs.IsNullOrEmpty OrElse Childs.Length < 2 Then
-                Childs = {Nothing, Value}
+            If Childs.IsNullOrEmpty OrElse Childs.Count < 2 Then
+                Childs = New List(Of Tree(Of T)) From {Nothing, Value}
             Else
                 Childs(1) = Value
             End If
