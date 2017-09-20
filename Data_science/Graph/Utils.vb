@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
-Public Module AnalysisExtensions
+Public Module Utils
 
     ''' <summary>
     ''' Tree to string
