@@ -55,7 +55,7 @@ Namespace Dijkstra
             End Get
         End Property
 
-        Public Property Cost As Integer
+        Public Property Cost As Double
 
         Public Overrides Function ToString() As String
             Return "Id:" & Identity & " Cost:" & Cost

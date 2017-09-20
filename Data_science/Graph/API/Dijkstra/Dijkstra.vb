@@ -38,89 +38,99 @@ Namespace Dijkstra
     ''' </summary>
     Public Class DijkstraRouteFind
 
-        Public ReadOnly Property Locations() As Vertex()
-
         ''' <summary>
         ''' 存在方向的
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Connections() As Edge()
+        Public ReadOnly Property Links() As Edge()
+        Public ReadOnly Property Points() As Vertex()
 
         ''' <summary>
         ''' 
         ''' </summary>
         Sub New(g As Graph, Optional undirected As Boolean = False)
-            Locations = g.Vertex
+            Points = g.Vertex
 
             If undirected Then
-                Connections = g + g _
+                Links = g + g _
                     .Select(Function(e) e.Reverse) _
                     .AsList
             Else
-                Connections = g.ToArray
+                Links = g.ToArray
             End If
         End Sub
 
+        Public Function GetLocation(label$) As Vertex
+            Return Points.Where(Function(x) x.Label = label).FirstOrDefault
+        End Function
+
         ''' <summary>
-        ''' Calculates the shortest route to all the other locations
+        ''' Calculates the shortest route to all the other locations.
+        ''' (这个函数会枚举出从出发点<paramref name="startPos"/>到网络之中的所有节点的最短路径)
         ''' </summary>
         ''' <param name="startPos"></param>
         ''' <returns>List of all locations and their shortest route</returns>
         Public Function CalculateMinCost(startPos As Vertex) As Dictionary(Of Vertex, Route)
             ' Initialise a new empty route list
-            Dim _shortestPaths As New Dictionary(Of Vertex, Route)()
+            Dim shortestPaths As New Dictionary(Of Vertex, Route)()
             ' Initialise a new empty handled locations list
-            Dim _handledLocations As New List(Of Vertex)()
+            Dim handledLocations As New List(Of Vertex)()
 
             ' Initialise the new routes. the constructor will set the route weight to in.max
-            For Each location As Vertex In _Locations
-                _shortestPaths.Add(location, New Route(location.ID))
+            For Each location As Vertex In _Points
+                shortestPaths.Add(location, New Route(location.ID))
             Next
 
             ' The startPosition has a weight 0. 
-            _shortestPaths(startPos).Cost = 0
+            shortestPaths(startPos).Cost = 0
 
             ' If all locations are handled, stop the engine and return the result
-            While _handledLocations.Count <> _Locations.Length
+            While handledLocations.Count <> _Points.Length
                 ' Order the locations
-                Dim _shortestLocations As List(Of Vertex) = (From s In _shortestPaths Order By s.Value.Cost Select s.Key).AsList()
-                Dim _locationToProcess As Vertex = Nothing
+                Dim shortestLocations = From s In shortestPaths Order By s.Value.Cost Select s.Key
+                Dim locationToProcess As Vertex = Nothing
 
                 ' Search for the nearest location that isn't handled
-                For Each _location As Vertex In _shortestLocations
-                    If Not _handledLocations.Contains(_location) Then
+                For Each location As Vertex In shortestLocations
+                    If Not handledLocations.Contains(location) Then
                         ' If the cost equals int.max, there are no more possible connections to the remaining locations
-                        If _shortestPaths(_location).Cost = Integer.MaxValue Then
-                            Return _shortestPaths
+                        If shortestPaths(location).Cost = Integer.MaxValue Then
+                            Return shortestPaths
                         End If
-                        _locationToProcess = _location
+
+                        locationToProcess = location
                         Exit For
                     End If
                 Next
 
                 ' Select all connections where the startposition is the location to Process
-                Dim _selectedConnections = (From c In _Connections Where c.U Is _locationToProcess Select c).ToArray
+                Dim selectedConnections = From c In _Links Where c.U Is locationToProcess Select c
 
                 ' Iterate through all connections and search for a connection which is shorter
-                For Each conn As Edge In _selectedConnections
-                    If _shortestPaths(conn.V).Cost > conn.Weight + _shortestPaths(conn.U).Cost Then
-                        _shortestPaths(conn.V).SetValue(_shortestPaths(conn.U).Connections)
-                        _shortestPaths(conn.V).Add(conn)
-                        _shortestPaths(conn.V).Cost = conn.Weight + _shortestPaths(conn.U).Cost
+                For Each conn As Edge In selectedConnections
+                    If shortestPaths(conn.V).Cost > conn.Weight + shortestPaths(conn.U).Cost Then
+                        shortestPaths(conn.V).SetValue(shortestPaths(conn.U).Connections)
+                        shortestPaths(conn.V).Add(conn)
+                        shortestPaths(conn.V).Cost = conn.Weight + shortestPaths(conn.U).Cost
                     End If
                 Next
+
                 ' Add the location to the list of processed locations
-                _handledLocations.Add(_locationToProcess)
+                handledLocations.Add(locationToProcess)
             End While
 
-            Return _shortestPaths
+            Return shortestPaths
+        End Function
+
+        Public Function CalculateMinCost(startPos As Vertex, endPos As Vertex) As Route
+            Return CalculateMinCost(startPos)(endPos)
         End Function
 
         Public Function CalculateMinCost(startVertex$) As Dictionary(Of Vertex, Route)
             Dim startPos = LinqAPI.DefaultFirst(Of Vertex) _
  _
                 () <= From node As Vertex
-                      In _Locations
+                      In _Points
                       Where node.Label = startVertex
                       Select node
 

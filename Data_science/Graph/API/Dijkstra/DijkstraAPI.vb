@@ -33,10 +33,10 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Namespace Dijkstra
 
     <Package("Path.Find.Dijkstra",
-                        Publisher:="Michael Demeersseman",
-                        Category:=APICategories.UtilityTools,
-                        Description:="Calculation of the shortest path between x points",
-                        Url:="http://www.codeproject.com/Articles/22647/Dijkstra-Shortest-Route-Calculation-Object-Oriente")>
+             Publisher:="Michael Demeersseman",
+             Category:=APICategories.UtilityTools,
+             Description:="Calculation of the shortest path between x points",
+             Url:="http://www.codeproject.com/Articles/22647/Dijkstra-Shortest-Route-Calculation-Object-Oriente")>
     Public Module DijkstraAPI
 
         <ExportAPI("Finder.Creates")>
@@ -46,20 +46,11 @@ Namespace Dijkstra
         End Function
 
         <ExportAPI("Find.Path.Shortest")>
+        <Extension>
         Public Function FindShortestPath(finder As DijkstraRouteFind, start$, ends$) As Route
-            Return FindAllPath(finder, start, ends).FirstOrDefault
-        End Function
-
-        <ExportAPI("Network.Path.FindAll")>
-        Public Function FindAllPath(finder As DijkstraRouteFind, start$, ends$) As Route()
-            Dim route = finder.CalculateMinCost(start)
-            Dim endIndex% = finder _
-                .Locations _
-                .Where(Function(v) v.Label = ends) _
-                .FirstOrDefault _
-               ?.ID
-            Dim LQuery = (From rt In route.Values Where rt.ContainsNode(endIndex) Select rt Order By rt.Cost Ascending).ToArray
-            Return LQuery
+            Dim startPos As Vertex = finder.GetLocation(start)
+            Dim endPos As Vertex = finder.GetLocation(ends)
+            Return finder.CalculateMinCost(startPos, endPos)
         End Function
     End Module
 End Namespace

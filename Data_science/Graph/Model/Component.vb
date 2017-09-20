@@ -26,7 +26,7 @@ Public Class Edge : Implements INamedValue
 
     Public Property U As Vertex
     Public Property V As Vertex
-    Public Property Weight As Integer
+    Public Property Weight As Double
 
     ''' <summary>
     ''' ReadOnly unique-ID
