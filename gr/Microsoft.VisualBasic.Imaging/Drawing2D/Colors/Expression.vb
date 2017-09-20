@@ -68,9 +68,13 @@ Namespace Drawing2D.Colors
         }
 
         Public Function Modify(colors As Color()) As Color()
-            With API
-                Return actions(.Name.ToLower)(colors, .Value)
-            End With
+            If API.IsEmpty Then
+                Return colors
+            Else
+                With API
+                    Return actions(.Name.ToLower)(colors, .Value)
+                End With
+            End If
         End Function
 
         Private Shared Function lighter(colors As Color(), value$) As Color()
