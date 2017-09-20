@@ -88,8 +88,7 @@
     <Compile Include="Analysis.vb" />
     <Compile Include="API\Dijkstra\Dijkstra.vb" />
     <Compile Include="API\Dijkstra\DijkstraAPI.vb" />
-    <Compile Include="API\Dijkstra\LDM.vb" />
-    <Compile Include="GraphTree.vb" />
+    <Compile Include="API\Dijkstra\Route.vb" />
     <Compile Include="Model\BinaryTree.vb" />
     <Compile Include="Model\Graph.vb" />
     <Compile Include="Model\Component.vb" />

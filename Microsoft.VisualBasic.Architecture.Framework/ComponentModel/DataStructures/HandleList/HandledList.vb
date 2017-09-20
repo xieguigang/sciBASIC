@@ -68,6 +68,10 @@ Namespace ComponentModel
         Default Public Property Item(index%) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
+                If index > list.Count - 1 Then
+                    Return Nothing
+                End If
+
                 If index < 0 Then
                     index = list.Count + index
                 End If
@@ -90,6 +94,10 @@ Namespace ComponentModel
         Sub New(source As IEnumerable(Of T))
             Call Add(source)
         End Sub
+
+        Public Function Contains(x As T) As Boolean
+            Return Not Me(x.Address) Is Nothing
+        End Function
 
         Public Sub Clear()
             Call list.Clear()

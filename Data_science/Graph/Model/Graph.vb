@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
@@ -47,6 +48,20 @@ Public Class Graph : Implements IEnumerable(Of Edge)
             Return (vertices.Count, edges.Count)
         End Get
     End Property
+
+    Public ReadOnly Property Vertex As Vertex()
+        Get
+            Return buffer
+        End Get
+    End Property
+
+    Public Function GetConnectedVertex() As Vertex()
+        Return edges.Values _
+            .Select(Function(e) {e.U, e.V}) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+    End Function
 
     Public Function AddVertex(u As Vertex) As Graph
         vertices += u
