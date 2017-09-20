@@ -60,6 +60,34 @@ Namespace ComponentModel
             End Get
         End Property
 
+        Public ReadOnly Property EmptySlots As Integer()
+            Get
+                Return list _
+                    .SeqIterator _
+                    .Where(Function(x) isNothing(x.value)) _
+                    .Select(Function(x) x.i) _
+                    .ToArray
+            End Get
+        End Property
+
+        Public Function GetAvailablePos() As Integer
+            With list _
+                .SeqIterator _
+                .Where(Function(x) isNothing(x.value)) _
+                .FirstOrDefault
+
+                If list.Count > 0 And .i = 0 Then
+                    If list(0) Is Nothing Then
+                        Return 0
+                    Else
+                        Return list.Count
+                    End If
+                Else
+                    Return .i
+                End If
+            End With
+        End Function
+
         ''' <summary>
         ''' 与迭代器<see cref="GetEnumerator()"/>函数所不同的是，迭代器函数返回的都是非空元素，而这个读写属性则是可以直接接触到内部的
         ''' </summary>

@@ -6,9 +6,10 @@ Module DijkstraTest
         Dim g As New Graph
 
         For i As Integer = 10 To 20
-            g.AddVertex(New Vertex With {.Label = i})
+            g.AddVertex(label:=i)
         Next
 
+        g.AddEdge(0, 1)
         g.AddEdge(1, 2)
         g.AddEdge(2, 3)
         g.AddEdge(3, 4)
