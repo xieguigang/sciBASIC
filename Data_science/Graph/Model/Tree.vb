@@ -4,6 +4,23 @@ Public Class Tree(Of T): inherits Vertex
 	Public Property Parent As Tree(Of T)
 	Public Property Data As T
 	
+	Public ReadOnly Property Count As Integer
+	Get 
+	If Childs.isNullorEmpty then 
+	return 1  ' 自己算一个节点，所以数量总是1的
+	else 
+	Dim n% = Childs.Length	
+	
+	for each node in childs
+		n += node .count ' 如果节点没有childs，则会返回1，因为他自身就是一个节点
+	next 
+	
+	return n
+	end if 
+	
+	End Get
+	End Property
+	
 	Public ReadOnly Property QualifyName As String 
 Get
 If Not Parent Is nothing then
