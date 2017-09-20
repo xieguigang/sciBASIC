@@ -26,6 +26,11 @@ Public Module Extensions
         Return g
     End Function
 
+    ''' <summary>
+    ''' Swap the location of <see cref="Edge.U"/> and <see cref="Edge.V"/> in <paramref name="edge"/>.
+    ''' </summary>
+    ''' <param name="edge"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Reverse(edge As Edge) As Edge
         Return New Edge With {

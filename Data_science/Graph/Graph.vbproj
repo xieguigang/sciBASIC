@@ -85,7 +85,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analysis.vb" />
+    <Compile Include="Utils.vb" />
     <Compile Include="API\Dijkstra\Dijkstra.vb" />
     <Compile Include="API\Dijkstra\DijkstraAPI.vb" />
     <Compile Include="API\Dijkstra\Route.vb" />

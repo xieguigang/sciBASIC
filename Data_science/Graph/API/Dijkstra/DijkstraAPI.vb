@@ -42,28 +42,23 @@ Namespace Dijkstra
         <ExportAPI("Finder.Creates")>
         <Extension>
         Public Function CreatePathwayFinder(g As Graph, Optional undirected As Boolean = False) As DijkstraRouteFind
-            Dim lstNode As List(Of FileStream.Node) = New List(Of FileStream.Node)
-            For Each edge As Connection In Net
-                Call lstNode.Add(edge.A)
-                Call lstNode.Add(edge.B)
-            Next
-
-            If undirected Then
-                Return DijkstraRouteFind.UndirectFinder(Net, lstNode.Distinct)
-            Else
-                Return New DijkstraRouteFind(g)
-            End If
+            Return New DijkstraRouteFind(g, undirected)
         End Function
 
         <ExportAPI("Find.Path.Shortest")>
-        Public Function FindShortestPath(finder As DijkstraRouteFind, start As String, ends As String) As Route
+        Public Function FindShortestPath(finder As DijkstraRouteFind, start$, ends$) As Route
             Return FindAllPath(finder, start, ends).FirstOrDefault
         End Function
 
         <ExportAPI("Network.Path.FindAll")>
-        Public Function FindAllPath(finder As DijkstraRouteFind, start As String, ends As String) As Route()
-            Dim Route = finder.CalculateMinCost(start)
-            Dim LQuery = (From item In Route Where item.ContainsNode(ends) Select item Order By item.Cost Ascending).ToArray
+        Public Function FindAllPath(finder As DijkstraRouteFind, start$, ends$) As Route()
+            Dim route = finder.CalculateMinCost(start)
+            Dim endIndex% = finder _
+                .Locations _
+                .Where(Function(v) v.Label = ends) _
+                .FirstOrDefault _
+               ?.ID
+            Dim LQuery = (From rt In route.Values Where rt.ContainsNode(endIndex) Select rt Order By rt.Cost Ascending).ToArray
             Return LQuery
         End Function
     End Module
