@@ -73,8 +73,22 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="flag"></param>
         ''' <param name="nonIndex"><see cref="PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
         ''' <returns></returns>
-        Public Function Schema(Of T)(flag As PropertyAccess, Optional nonIndex As Boolean = False) As Dictionary(Of String, PropertyInfo)
-            Return GetType(T).Schema(flag,, nonIndex)
+        Public Function Schema(Of T)(flag As PropertyAccess,
+                                     Optional nonIndex As Boolean = False,
+                                     Optional primitive As Boolean = False) As Dictionary(Of String, PropertyInfo)
+
+            With GetType(T).Schema(flag,, nonIndex)
+                If primitive Then
+                    Return .Keys _
+                        .Where(Function(k)
+                                   Return .ref(k).PropertyType.IsPrimitive
+                               End Function) _
+                        .ToDictionary(Function(key) key,
+                                      Function(key) .ref(key))
+                Else
+                    Return .ref
+                End If
+            End With
         End Function
 
         ''' <summary>

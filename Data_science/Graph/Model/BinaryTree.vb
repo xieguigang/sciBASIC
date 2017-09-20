@@ -1,6 +1,8 @@
 ﻿
 Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
 
+#Region "Childs"
+
     Public Property Left As BinaryTree(Of T)
         Get
             Return Childs.ElementAtOrDefault(0)
@@ -26,6 +28,8 @@ Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
             End If
         End Set
     End Property
+
+#End Region
 
     Const Duplicated$ = "Duplicated node was found!"
 
