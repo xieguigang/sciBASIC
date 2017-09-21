@@ -50,9 +50,10 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 Namespace Hierarchy
 
-    Public Class HierarchyTreeNode : Implements IComparable(Of HierarchyTreeNode)
+    Public Class HierarchyTreeNode
+        Implements IComparable(Of HierarchyTreeNode)
 
-        Private Shared globalIndex As Long = 0
+        Shared globalIndex As Long = 0
 
         Public Sub New()
         End Sub

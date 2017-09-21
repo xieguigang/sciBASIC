@@ -1,13 +1,11 @@
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
-''' Tree node with data
+''' Tree node with data.(可以直接被使用的树对象类型)
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
 Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T))
-
     Public Property Data As T
-
 End Class
 
 Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex

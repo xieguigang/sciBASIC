@@ -1,5 +1,4 @@
-﻿
-Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
+﻿Public Class BinaryTree(Of T As IComparable(Of T)) : Inherits Tree(Of T)
 
 #Region "Childs"
     Public Property Left As BinaryTree(Of T)
