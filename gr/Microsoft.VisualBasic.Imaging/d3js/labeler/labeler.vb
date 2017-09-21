@@ -19,8 +19,8 @@ Namespace d3js
         Dim anc As Anchor()
         Dim w As Double = 1, h As Double = 1 ' box width/height
 
-        Dim max_move As Double = 5
-        Dim max_angle As Double = 0.5
+        Dim maxMove As Double = 5
+        Dim maxAngle As Double = 0.5
         Dim acc As Double = 0
         Dim rej As Double = 0
 
@@ -149,13 +149,20 @@ Namespace d3js
             Return False
         End Function
 
+#Region "Monte Carlo"
+
         ''' <summary>
         ''' Monte Carlo translation move
         ''' </summary>
-        ''' <param name="currT#"></param>
-        Private Sub mcmove(currT#)
+        Private Sub mclMove(i%)
+            ' random translation
+            lab(i).X += (Rnd() - 0.5) * maxMove
+            lab(i).Y += (Rnd() - 0.5) * maxMove
+        End Sub
+
+        Private Sub MonteCarlo(currT#, action As Action(Of Integer))
             ' select a random label
-            Dim i% = Math.Floor(Rnd() * lab.Length)
+            Dim i = Math.Floor(Rnd() * lab.Length)
 
             ' save old coordinates
             Dim x_old = lab(i).X
@@ -164,9 +171,7 @@ Namespace d3js
             ' old energy
             Dim old_energy# = calcEnergy(i, lab, anc)
 
-            ' random translation
-            lab(i).X += (Rnd() - 0.5) * max_move
-            lab(i).Y += (Rnd() - 0.5) * max_move
+            Call action(i)
 
             ' hard wall boundaries
             If (lab(i).X > w) Then lab(i).X = x_old
@@ -192,19 +197,9 @@ Namespace d3js
         ''' <summary>
         ''' Monte Carlo rotation move
         ''' </summary>
-        ''' <param name="currT"></param>
-        Private Sub mcrotate(currT#)
-            ' select a random label
-            Dim i = Math.Floor(Rnd() * lab.Length)
-
-            ' save old coordinates
-            Dim x_old = lab(i).X
-            Dim y_old = lab(i).Y
-
-            ' old energy
-            Dim old_energy# = calcEnergy(i, lab, anc)
+        Private Sub mclRotate(i%)
             ' random angle
-            Dim angle = (Rnd() - 0.5) * max_angle
+            Dim angle = (Rnd() - 0.5) * maxAngle
 
             Dim s = Math.Sin(angle)
             Dim c = Math.Cos(angle)
@@ -220,30 +215,11 @@ Namespace d3js
             ' translate label back
             lab(i).X = x_new + anc(i).x
             lab(i).Y = y_new + anc(i).y
-
-            ' hard wall boundaries
-            If (lab(i).X > w) Then lab(i).X = x_old
-            If (lab(i).X < 0) Then lab(i).X = x_old
-            If (lab(i).Y > h) Then lab(i).Y = y_old
-            If (lab(i).Y < 0) Then lab(i).Y = y_old
-
-            ' New energy
-            Dim new_energy# = calcEnergy(i, lab, anc)
-            ' delta E
-            Dim delta_energy = new_energy - old_energy
-
-            If (Rnd() < Math.Exp(-delta_energy / currT)) Then
-                acc += 1
-            Else
-                ' move back to old coordinates
-                lab(i).X = x_old
-                lab(i).Y = y_old
-                rej += 1
-            End If
         End Sub
+#End Region
 
         ''' <summary>
-        ''' linear cooling
+        ''' Default is using linear cooling
         ''' </summary>
         ''' <param name="currT#"></param>
         ''' <param name="initialT#"></param>
@@ -258,21 +234,21 @@ Namespace d3js
         ''' </summary>
         ''' <param name="nsweeps"></param>
         ''' <returns></returns>
-        Public Function start(nsweeps) As Labeler
-            Dim m = lab.Length,
-                currT = 1.0,
-                initialT = 1.0
+        Public Function Start(Optional nsweeps% = 2000, Optional T# = 1, Optional initialT# = 1, Optional rotate# = 0.5) As Labeler
+            Dim moves As Action(Of Integer) = AddressOf mclMove
+            Dim rotat As Action(Of Integer) = AddressOf mclRotate
+            Dim rand As New Random
 
-            For i As Integer = 0 To nsweeps - 1
-                For j As Integer = 0 To m - 1
-                    If (Rnd() < 0.5) Then
-                        Call mcmove(currT)
+            For i As Integer = 0 To nsweeps
+                For j As Integer = 0 To lab.Length
+                    If (rand.NextDouble < rotate) Then
+                        Call MonteCarlo(T, moves)
                     Else
-                        Call mcrotate(currT)
+                        Call MonteCarlo(T, rotat)
                     End If
                 Next
 
-                currT = definedCoolingSchedule(currT, initialT, nsweeps)
+                T = definedCoolingSchedule(T, initialT, nsweeps)
             Next
 
             Return Me
@@ -283,7 +259,7 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function width(x#) As Labeler
+        Public Function Width(x#) As Labeler
             w = x
             Return Me
         End Function
@@ -293,7 +269,7 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function height(x#) As Labeler
+        Public Function Height(x#) As Labeler
             h = x
             Return Me
         End Function
@@ -312,7 +288,7 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function label(x As Label()) As Labeler
+        Public Function Labels(x As Label()) As Labeler
             lab = x
             Return Me
         End Function
@@ -322,7 +298,7 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function anchor(x As Anchor()) As Labeler
+        Public Function Anchors(x As Anchor()) As Labeler
             anc = x
             Return Me
         End Function
@@ -332,7 +308,7 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function Energy(x As Func(Of Integer, Label(), Anchor(), Double)) As Labeler
+        Public Function EnergyFunction(x As Func(Of Integer, Label(), Anchor(), Double)) As Labeler
             calcEnergy = x
             Return Me
         End Function
