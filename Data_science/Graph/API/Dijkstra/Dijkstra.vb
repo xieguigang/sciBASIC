@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 
 Namespace Dijkstra
@@ -74,7 +75,7 @@ Namespace Dijkstra
             ' Initialise a new empty route list
             Dim shortestPaths As New Dictionary(Of Vertex, Route)()
             ' Initialise a new empty handled locations list
-            Dim handledLocations As New List(Of Vertex)()
+            Dim handledLocations As New HandledList(Of Vertex)(Points.Length)
 
             ' Initialise the new routes. the constructor will set the route weight to in.max
             For Each location As Vertex In _Points
@@ -104,14 +105,17 @@ Namespace Dijkstra
                 Next
 
                 ' Select all connections where the startposition is the location to Process
-                Dim selectedConnections = From c In _Links Where c.U Is locationToProcess Select c
+                Dim selectedConnections = From c As Edge In _Links Where c.U Is locationToProcess Select c
+                Dim cost#
 
                 ' Iterate through all connections and search for a connection which is shorter
                 For Each conn As Edge In selectedConnections
-                    If shortestPaths(conn.V).Cost > conn.Weight + shortestPaths(conn.U).Cost Then
+                    cost = conn.Weight + shortestPaths(conn.U).Cost
+
+                    If shortestPaths(conn.V).Cost > cost Then
                         shortestPaths(conn.V).SetValue(shortestPaths(conn.U).Connections)
                         shortestPaths(conn.V).Add(conn)
-                        shortestPaths(conn.V).Cost = conn.Weight + shortestPaths(conn.U).Cost
+                        shortestPaths(conn.V).Cost = cost
                     End If
                 Next
 

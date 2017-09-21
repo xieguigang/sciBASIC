@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
 
 Namespace Imaging
@@ -669,7 +670,12 @@ Namespace Imaging
         ''' <param name="blankColor">默认白色为空白色</param>
         ''' <returns></returns>
         <ExportAPI("Image.CorpBlank")>
-        <Extension> Public Function CorpBlank(res As Image, Optional margin As Integer = 0, Optional blankColor As Color = Nothing) As Image
+        <Extension> Public Function CorpBlank(res As Image,
+                                              Optional margin% = 0,
+                                              Optional blankColor As Color = Nothing,
+                                              <CallerMemberName>
+                                              Optional trace$ = Nothing) As Image
+
             If blankColor.IsNullOrEmpty Then
                 blankColor = Color.White
             ElseIf blankColor.Name = NameOf(Color.Transparent) Then
@@ -679,12 +685,25 @@ Namespace Imaging
                 blankColor = New Color
             End If
 
-            Dim top As Integer
-            Dim left As Integer
-            Dim bmp As New Bitmap(res)
+            Dim bmp As Bitmap
+            Dim top%, left%
+
+            Try
+                bmp = New Bitmap(res)
+            Catch ex As Exception
+
+                ' 2017-9-21 ???
+                ' 未经处理的异常: 
+                ' System.ArgumentException: 参数无效。
+                '    在 System.Drawing.Bitmap..ctor(Int32 width, Int32 height, PixelFormat format)
+                '    在 System.Drawing.Bitmap..ctor(Image original, Int32 width, Int32 height)
+                '    在 System.Drawing.Bitmap..ctor(Image original)
+
+                ex = New Exception(trace & " --> " & res.Size.GetJson, ex)
+                Throw ex
+            End Try
 
             ' top
-
             For top = 0 To res.Height - 1
                 Dim find As Boolean = False
 
@@ -707,7 +726,6 @@ Namespace Imaging
             bmp = New Bitmap(res)
 
             ' left
-
             For left = 0 To res.Width - 1
                 Dim find As Boolean = False
 
@@ -733,7 +751,6 @@ Namespace Imaging
             Dim bottom As Integer
 
             ' bottom
-
             For bottom = res.Height - 1 To 0 Step -1
                 Dim find As Boolean = False
 
@@ -756,7 +773,6 @@ Namespace Imaging
             bmp = New Bitmap(res)
 
             ' right
-
             For right = res.Width - 1 To 0 Step -1
                 Dim find As Boolean = False
 

@@ -164,7 +164,10 @@ Namespace Imaging
         ''' <param name="path">path string</param>
         ''' <param name="format">Image formats enumeration.</param>
         ''' <returns></returns>
-        <Extension> Public Function SaveAs(res As Image, path$, Optional format As ImageFormats = ImageFormats.Png) As Boolean
+        <Extension> Public Function SaveAs(ByRef res As Image,
+                                           path$,
+                                           Optional format As ImageFormats = ImageFormats.Png,
+                                           Optional autoDispose As Boolean = False) As Boolean
             Try
                 Call path.ParentPath.MkDIR
 
@@ -182,6 +185,12 @@ Namespace Imaging
                 Call App.LogException(ex)
                 Call ex.PrintException
                 Return False
+            Finally
+                If autoDispose Then
+                    Call res.Dispose()
+                    Call GC.SuppressFinalize(res)
+                    Call GC.Collect()
+                End If
             End Try
 
             Return True

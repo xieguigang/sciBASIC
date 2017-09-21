@@ -54,6 +54,10 @@ Namespace ComponentModel
         Dim list As New List(Of T)
         Dim isNothing As Assert(Of T) = Function(x) x Is Nothing
 
+        ''' <summary>
+        ''' 返回所有不为空的元素的数量，因为本列表的存储特性的关系，为空的位置实际上是没有值的，所以不会返回这些为空的值的统计数量
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Count As Integer
             Get
                 Return list.Where(Function(x) Not isNothing(x)).Count
@@ -119,6 +123,12 @@ Namespace ComponentModel
         Sub New()
         End Sub
 
+        Sub New(capacity%)
+            For i As Integer = 0 To capacity - 1
+                Call list.Add(Nothing)
+            Next
+        End Sub
+
         Sub New(source As IEnumerable(Of T))
             Call Add(source)
         End Sub
@@ -156,11 +166,8 @@ Namespace ComponentModel
             list(x.Address) = x
         End Sub
 
-        Shared Narrowing Operator CType(src As HandledList(Of T)) As T()
-            Return src _
-                .list _
-                .Where(Function(x) Not src.isNothing(x)) _
-                .ToArray
+        Public Shared Narrowing Operator CType(src As HandledList(Of T)) As T()
+            Return src.ToArray
         End Operator
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator

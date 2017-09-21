@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Language
@@ -53,10 +54,12 @@ Imports sys = System.Math
 
 Namespace DendrogramVisualize
 
-    Public Class ClusterComponent
+    ''' <summary>
+    ''' 树
+    ''' </summary>
+    Public Class ClusterComponent : Inherits AbstractTree(Of ClusterComponent)
         Implements IPaintable
 
-        Public Property Children As New List(Of ClusterComponent)
         Public Property NamePadding As Integer = 6
         Public Property LinkPoint As PointF
         Public Property InitPoint As PointF
@@ -71,7 +74,7 @@ Namespace DendrogramVisualize
                 ' TODO Better use closure / callback here
                 '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
                 Dim val As Double = sys.Min(InitPoint.X, LinkPoint.X)
-                For Each child As ClusterComponent In Children
+                For Each child As ClusterComponent In Childs
                     val = sys.Min(val, child.RectMinX)
                 Next
                 Return val
@@ -84,7 +87,7 @@ Namespace DendrogramVisualize
                 ' TODO Better use closure here
                 ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
                 Dim val As Double = sys.Min(InitPoint.Y, LinkPoint.Y)
-                For Each child As ClusterComponent In Children
+                For Each child As ClusterComponent In Childs
                     val = sys.Min(val, child.RectMinY)
                 Next
                 Return val
@@ -97,7 +100,7 @@ Namespace DendrogramVisualize
                 ' TODO Better use closure here
                 ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
                 Dim val As Double = Math.Max(InitPoint.X, LinkPoint.X)
-                For Each child As ClusterComponent In Children
+                For Each child As ClusterComponent In Childs
                     val = Math.Max(val, child.RectMaxX)
                 Next
                 Return val
@@ -110,7 +113,7 @@ Namespace DendrogramVisualize
                 ' TODO Better use closure here
                 '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
                 Dim val As Double = Math.Max(InitPoint.Y, LinkPoint.Y)
-                For Each child As ClusterComponent In Children
+                For Each child As ClusterComponent In Childs
                     val = Math.Max(val, child.RectMaxY)
                 Next
                 Return val
@@ -193,7 +196,7 @@ Namespace DendrogramVisualize
                 y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
-                For Each child As ClusterComponent In Children
+                For Each child As ClusterComponent In Childs
                     child.paint(g, args, labels)
                 Next
             End With
@@ -210,7 +213,7 @@ Namespace DendrogramVisualize
 
         Public Function GetMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = GetNameWidth(g, includeNonLeafs)
-            For Each comp As ClusterComponent In Children
+            For Each comp As ClusterComponent In Childs
                 Dim childWidth As Integer = comp.GetMaxNameWidth(g, includeNonLeafs)
                 If childWidth > width Then width = childWidth
             Next comp

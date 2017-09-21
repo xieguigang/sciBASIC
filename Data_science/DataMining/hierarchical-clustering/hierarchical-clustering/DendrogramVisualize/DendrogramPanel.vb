@@ -135,7 +135,7 @@ Namespace DendrogramVisualize
                     Dim childComp As ClusterComponent = createComponent(child, childInitCoord, childHeight)
 
                     childComp.LinkPoint = pt0
-                    comp.Children.Add(childComp)
+                    comp.Childs.Add(childComp)
                 Next
             End If
 

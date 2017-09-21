@@ -279,7 +279,11 @@ Namespace Graphic.Axis
         ''' <param name="label$"></param>
         ''' <param name="font"></param>
         ''' <param name="fcolor$"></param>
-        ''' <param name="size$"></param>
+        ''' <param name="size$">
+        ''' 假若程序是运行在低内存的机器之上，则大小值应该尽量设置小些，避免内存被浪费，
+        ''' 测试发现在32bit系统上经常会出现OutOfmemory的错误，将这个大小值改小之后
+        ''' 一切恢复正常
+        ''' </param>
         ''' <returns></returns>
         <Extension>
         Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
@@ -289,7 +293,8 @@ Namespace Graphic.Axis
 
                     Call .DrawString(label, font, b, New Point)
 
-                    Dim img As Image = .ImageResource _
+                    Dim img As Image =
+                        .ImageResource _
                         .CorpBlank(blankColor:=Color.Transparent) _
                         .RotateImage(-90)
                     Return img
