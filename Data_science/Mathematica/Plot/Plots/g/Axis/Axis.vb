@@ -289,7 +289,8 @@ Namespace Graphic.Axis
 
                     Call .DrawString(label, font, b, New Point)
 
-                    Dim img As Image = .ImageResource _
+                    Dim img As Image =
+                        .ImageResource _
                         .CorpBlank(blankColor:=Color.Transparent) _
                         .RotateImage(-90)
                     Return img

@@ -249,11 +249,12 @@ Namespace BarPlot
 
                         ' Y 坐标轴
                         Call g.DrawLine(axisPen, .Location, New Point(.Left, .Bottom))
+
                         Select Case yAxislabelPosition
                             Case YlabelPosition.InsidePlot
-                                Call g.DrawImageUnscaled(Axis.DrawLabel(ylab, labelFont, ), New Point(.Left + 3, .Top))
+                                Call g.DrawImageUnscaled(Axis.DrawLabel(ylab, labelFont, size:="500,500"), New Point(.Left + 3, .Top))
                             Case YlabelPosition.LeftCenter
-                                Dim labelImage = Axis.DrawLabel(ylab, labelFont, )
+                                Dim labelImage = Axis.DrawLabel(ylab, labelFont, size:="500,200")
                                 Dim yLabelPoint As New Point(
                                     (.Left - labelImage.Width) / 3,
                                     .Top + (.Height - labelImage.Height) / 2)
