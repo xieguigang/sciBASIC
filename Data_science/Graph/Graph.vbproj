@@ -87,6 +87,11 @@
   <ItemGroup>
     <Compile Include="API\PageRank\GraphMatrix.vb" />
     <Compile Include="API\PageRank\PageRank.vb" />
+    <Compile Include="API\PQDijkstra\BasicHeap.vb" />
+    <Compile Include="API\PQDijkstra\DijkstraFast.vb" />
+    <Compile Include="API\PQDijkstra\Example.vb" />
+    <Compile Include="API\PQDijkstra\HeapNode.vb" />
+    <Compile Include="API\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Utils.vb" />
     <Compile Include="API\Dijkstra\Dijkstra.vb" />
     <Compile Include="API\Dijkstra\DijkstraAPI.vb" />

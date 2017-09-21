@@ -249,7 +249,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FindPath\Extensions.vb" />
-    <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Graph\Selector.vb" />
     <Compile Include="IO\FileStream\Json\json.vb" />
@@ -285,10 +284,6 @@
     <Compile Include="IO\FileStream\csv\Edge.vb" />
     <Compile Include="IO\Generic\Network%28Of T%29.vb" />
     <Compile Include="IO\FileStream\csv\Node.vb" />
-    <Compile Include="FindPath\PQDijkstra\BasicHeap.vb" />
-    <Compile Include="FindPath\PQDijkstra\DijkstraFast.vb" />
-    <Compile Include="FindPath\PQDijkstra\Example.vb" />
-    <Compile Include="FindPath\PQDijkstra\HeapNode.vb" />
     <Compile Include="Graph\Abstract.vb" />
     <Compile Include="NetworkAPI.vb" />
     <Compile Include="FindPath\PathFinder.vb" />
