@@ -248,8 +248,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FindPath\Dijkstra\LDM.vb" />
-    <Compile Include="FindPath\Dijkstra\DijkstraAPI.vb" />
     <Compile Include="FindPath\Extensions.vb" />
     <Compile Include="FindPath\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Graph\GraphTree.vb" />
@@ -287,7 +285,6 @@
     <Compile Include="IO\FileStream\csv\Edge.vb" />
     <Compile Include="IO\Generic\Network%28Of T%29.vb" />
     <Compile Include="IO\FileStream\csv\Node.vb" />
-    <Compile Include="FindPath\Dijkstra\Dijkstra.vb" />
     <Compile Include="FindPath\PQDijkstra\BasicHeap.vb" />
     <Compile Include="FindPath\PQDijkstra\DijkstraFast.vb" />
     <Compile Include="FindPath\PQDijkstra\Example.vb" />
