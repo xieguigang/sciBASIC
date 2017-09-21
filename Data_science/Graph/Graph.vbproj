@@ -85,6 +85,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\PageRank\GraphMatrix.vb" />
+    <Compile Include="API\PageRank\PageRank.vb" />
     <Compile Include="Utils.vb" />
     <Compile Include="API\Dijkstra\Dijkstra.vb" />
     <Compile Include="API\Dijkstra\DijkstraAPI.vb" />
