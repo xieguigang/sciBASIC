@@ -1,4 +1,6 @@
-﻿Namespace d3js
+﻿Imports Microsoft.VisualBasic.Imaging.d3js.Layout
+
+Namespace d3js
 
     Public Module ModuleAPI
 

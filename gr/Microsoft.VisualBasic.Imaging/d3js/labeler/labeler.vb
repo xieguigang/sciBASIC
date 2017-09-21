@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing
 Imports sys = System.Math
 
-Namespace d3js
+Namespace d3js.Layout
 
     Public Delegate Function CoolingSchedule(currT#, initialT#, nsweeps#) As Double
 
