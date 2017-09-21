@@ -9,13 +9,13 @@ Namespace d3js
     ''' D3 layouts.
     ''' </summary>
     ''' <remarks>
-    ''' https://github.com/tinker10/D3-Labeler
+    ''' https:'github.com/tinker10/D3-Labeler
     ''' </remarks>
     Public Class Labeler
+
         Dim lab As Label()
         Dim anc As Anchor()
-        Dim w = 1, h = 1 ' box width/height
-        Dim labeler
+        Dim w As Double = 1, h As Double = 1 ' box width/height
 
         Dim max_move As Double = 5
         Dim max_angle As Double = 0.5
@@ -78,8 +78,10 @@ Namespace d3js
                 If (i <> index) Then
 
                     ' penalty for intersection of leader lines
-                    overlap = intersect(anc(index).x, lab(index).X, anc(i).x, lab(i).X,
-            anc(index).y, lab(index).Y, anc(i).y, lab(i).Y)
+                    overlap = intersect(
+                        anc(index).x, lab(index).X, anc(i).x, lab(i).X,
+                        anc(index).y, lab(index).Y, anc(i).y, lab(i).Y)
+
                     If (overlap) Then
                         ener += w_inter
                     End If
@@ -100,8 +102,10 @@ Namespace d3js
                 y11 = anc(i).y - anc(i).r
                 x12 = anc(i).x + anc(i).r
                 y12 = anc(i).y + anc(i).r
+
                 x_overlap = Math.Max(0, sys.Min(x12, x22) - Math.Max(x11, x21))
                 y_overlap = Math.Max(0, sys.Min(y12, y22) - Math.Max(y11, y21))
+
                 overlap_area = x_overlap * y_overlap
                 ener += (overlap_area * w_lab_anc)
             Next
@@ -109,13 +113,22 @@ Namespace d3js
             Return ener
         End Function
 
+        ''' <summary>
+        ''' returns true if two lines intersect, else false
+        ''' from http:'paulbourke.net/geometry/lineline2d/
+        ''' </summary>
+        ''' <param name="x1#"></param>
+        ''' <param name="x2#"></param>
+        ''' <param name="x3#"></param>
+        ''' <param name="x4#"></param>
+        ''' <param name="y1#"></param>
+        ''' <param name="y2#"></param>
+        ''' <param name="y3#"></param>
+        ''' <param name="y4#"></param>
+        ''' <returns></returns>
         Private Shared Function intersect(x1#, x2#, x3#, x4#, y1#, y2#, y3#, y4#) As Boolean
-
-            ' returns true if two lines intersect, else false
-            ' from http://paulbourke.net/geometry/lineline2d/
-
-            Dim mua, mub
-            Dim denom, numera, numerb
+            Dim mua, mub As Double
+            Dim denom, numera, numerb As Double
 
             denom = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1)
             numera = (x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)
@@ -130,6 +143,226 @@ Namespace d3js
             End If
 
             Return False
+        End Function
+
+        ''' <summary>
+        ''' Monte Carlo translation move
+        ''' </summary>
+        ''' <param name="currT#"></param>
+        Public Sub mcmove(currT#)
+            ' select a random label
+            Dim i = Math.Floor(Rnd() * lab.Length)
+
+            ' save old coordinates
+            Dim x_old = lab(i).X
+            Dim y_old = lab(i).Y
+
+            ' old energy
+            Dim old_energy#
+
+            If (user_energy) Then
+                old_energy = user_defined_energy(i, lab, anc)
+
+            Else
+                old_energy = energy(i)
+            End If
+
+            ' random translation
+            lab(i).X += (Rnd() - 0.5) * max_move
+            lab(i).Y += (Rnd() - 0.5) * max_move
+
+            ' hard wall boundaries
+            If (lab(i).X > w) Then lab(i).X = x_old
+            If (lab(i).X < 0) Then lab(i).X = x_old
+            If (lab(i).Y > h) Then lab(i).Y = y_old
+            If (lab(i).Y < 0) Then lab(i).Y = y_old
+
+            ' New energy
+            Dim new_energy#
+
+            If (user_energy) Then
+                new_energy = user_defined_energy(i, lab, anc)
+
+            Else
+                new_energy = energy(i)
+            End If
+
+            ' delta E
+            Dim delta_energy = new_energy - old_energy
+
+            If (Rnd() < Math.Exp(-delta_energy / currT)) Then
+                acc += 1
+            Else
+                ' move back to old coordinates
+                lab(i).X = x_old
+                lab(i).Y = y_old
+                rej += 1
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Monte Carlo rotation move
+        ''' </summary>
+        ''' <param name="currT"></param>
+        Public Sub mcrotate(currT#)
+            ' select a random label
+            Dim i = Math.Floor(Rnd() * lab.Length)
+
+            ' save old coordinates
+            Dim x_old = lab(i).X
+            Dim y_old = lab(i).Y
+
+            ' old energy
+            Dim old_energy#
+
+            If (user_energy) Then
+                old_energy = user_defined_energy(i, lab, anc)
+            Else
+                old_energy = energy(i)
+            End If
+
+            ' random angle
+            Dim angle = (Rnd() - 0.5) * max_angle
+
+            Dim s = Math.Sin(angle)
+            Dim c = Math.Cos(angle)
+
+            ' translate label (relative to anchor at origin):
+            lab(i).X -= anc(i).x
+            lab(i).Y -= anc(i).y
+
+            ' rotate label
+            Dim x_new = lab(i).X * c - lab(i).Y * s,
+                y_new = lab(i).X * s + lab(i).Y * c
+
+            ' translate label back
+            lab(i).X = x_new + anc(i).x
+            lab(i).Y = y_new + anc(i).y
+
+            ' hard wall boundaries
+            If (lab(i).X > w) Then lab(i).X = x_old
+            If (lab(i).X < 0) Then lab(i).X = x_old
+            If (lab(i).Y > h) Then lab(i).Y = y_old
+            If (lab(i).Y < 0) Then lab(i).Y = y_old
+
+            ' New energy
+            Dim new_energy#
+
+            If (user_energy) Then
+                new_energy = user_defined_energy(i, lab, anc)
+            Else
+                new_energy = energy(i)
+            End If
+
+            ' delta E
+            Dim delta_energy = new_energy - old_energy
+
+            If (Rnd() < Math.Exp(-delta_energy / currT)) Then
+                acc += 1
+            Else
+                ' move back to old coordinates
+                lab(i).X = x_old
+                lab(i).Y = y_old
+                rej += 1
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' linear cooling
+        ''' </summary>
+        ''' <param name="currT#"></param>
+        ''' <param name="initialT#"></param>
+        ''' <param name="nsweeps#"></param>
+        ''' <returns></returns>
+        Public Function cooling_schedule(currT#, initialT#, nsweeps#) As Double
+            Return (currT - (initialT / nsweeps))
+        End Function
+
+        ''' <summary>
+        ''' main simulated annealing function
+        ''' </summary>
+        ''' <param name="nsweeps"></param>
+        ''' <returns></returns>
+        Public Function start(nsweeps) As Labeler
+            Dim m = lab.Length,
+                currT = 1.0,
+                initialT = 1.0
+
+            For i As Integer = 0 To nsweeps - 1
+                For j As Integer = 0 To m - 1
+                    If (Rnd() < 0.5) Then
+                        Call mcmove(currT)
+                    Else
+                        Call mcrotate(currT)
+                    End If
+                Next
+
+                currT = cooling_schedule(currT, initialT, nsweeps)
+            Next
+
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' users insert graph width
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function width(x) As Labeler
+            w = x
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' users insert graph height
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function height(x) As Labeler
+            h = x
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' users insert label positions
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function label(x) As Labeler
+            lab = x
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' users insert anchor positions
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function anchor(x) As Labeler
+            anc = x
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' user defined energy
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function alt_energy(x) As Labeler
+            user_defined_energy = x
+            user_energy = True
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' user defined cooling_schedule
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Function alt_schedule(x) As Labeler
+            user_defined_schedule = x
+            user_schedule = True
+            Return Me
         End Function
     End Class
 End Namespace
