@@ -53,6 +53,9 @@ Imports sys = System.Math
 
 Namespace DendrogramVisualize
 
+    ''' <summary>
+    ''' 树
+    ''' </summary>
     Public Class ClusterComponent
         Implements IPaintable
 
