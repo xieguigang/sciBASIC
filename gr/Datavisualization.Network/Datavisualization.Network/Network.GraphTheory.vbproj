@@ -292,7 +292,6 @@
     <Compile Include="FindPath\PQDijkstra\DijkstraFast.vb" />
     <Compile Include="FindPath\PQDijkstra\Example.vb" />
     <Compile Include="FindPath\PQDijkstra\HeapNode.vb" />
-    <Compile Include="FindPath\PQDijkstra\PriorityQueue.vb" />
     <Compile Include="Graph\Abstract.vb" />
     <Compile Include="NetworkAPI.vb" />
     <Compile Include="FindPath\PathFinder.vb" />

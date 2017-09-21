@@ -542,11 +542,12 @@
     <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileTable.vb" />
     <Compile Include="ComponentModel\SingletonHolder.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueueTable.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\BinaryPriorityQueue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\LineValue.vb" />
     <Compile Include="ApplicationServices\Utils.vb" />
     <Compile Include="Extensions\CodeDOM\References.vb" />
@@ -619,7 +620,7 @@
     <Compile Include="ComponentModel\Settings\DataModels\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
     <Compile Include="Extensions\IO\CollectionIO.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\Binding.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />

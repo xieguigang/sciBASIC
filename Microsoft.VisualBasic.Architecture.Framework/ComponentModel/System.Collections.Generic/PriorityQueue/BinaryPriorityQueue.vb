@@ -1,46 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::3ed6502d1f55ff68738166e4be0d78e5, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\FindPath\PQDijkstra\PriorityQueue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections
+Imports System.Runtime.CompilerServices
 
-Namespace Dijkstra.PQDijkstra
+Namespace ComponentModel.Collection
 
-    Public Interface IPriorityQueue
-        Inherits ICollection
-        Inherits ICloneable
-        Inherits IList
-        Function Push(O As Object) As Integer
-        Function Pop() As Object
-        Function Peek() As Object
-        Sub Update(i As Integer)
-    End Interface
     Public Class BinaryPriorityQueue
-        Implements IPriorityQueue
+        Implements IPriorityQueue(Of Object)
         Implements ICollection
         Implements ICloneable
         Implements IList
@@ -51,12 +42,15 @@ Namespace Dijkstra.PQDijkstra
         Public Sub New()
             Me.New(System.Collections.Comparer.[Default])
         End Sub
+
         Public Sub New(c As IComparer)
             Comparer = c
         End Sub
+
         Public Sub New(C As Integer)
             Me.New(System.Collections.Comparer.[Default], C)
         End Sub
+
         Public Sub New(c As IComparer, Capacity As Integer)
             Comparer = c
             InnerList.Capacity = Capacity
@@ -70,25 +64,28 @@ Namespace Dijkstra.PQDijkstra
             End If
             Comparer = Comp
         End Sub
-
 #End Region
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Sub SwitchElements(i As Integer, j As Integer)
             Dim h As Object = InnerList(i)
             InnerList(i) = InnerList(j)
             InnerList(j) = h
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overridable Function OnCompare(i As Integer, j As Integer) As Integer
             Return Comparer.Compare(InnerList(i), InnerList(j))
         End Function
 
-#Region "public methods"
+#Region "Public methods of Queue"
+
         ''' <summary>
         ''' Push an object onto the PQ
         ''' </summary>
         ''' <param name="O">The new object</param>
         ''' <returns>The index in the list where the object is _now_. This will change when objects are taken from or put onto the PQ.</returns>
-        Public Function Push(O As Object) As Integer Implements IPriorityQueue.Push
+        Public Function Push(O As Object) As Integer Implements IPriorityQueue(Of Object).Push
             Dim p As Integer = InnerList.Count, p2 As Integer
             InnerList.Add(O)
             ' E[p] = O
@@ -104,6 +101,7 @@ Namespace Dijkstra.PQDijkstra
                     Exit Do
                 End If
             Loop While True
+
             Return p
         End Function
 
@@ -111,7 +109,7 @@ Namespace Dijkstra.PQDijkstra
         ''' Get the smallest object and remove it.
         ''' </summary>
         ''' <returns>The smallest object</returns>
-        Public Function Pop() As Object Implements IPriorityQueue.Pop
+        Public Function Pop() As Object Implements IPriorityQueue(Of Object).Pop
             Dim result As Object = InnerList(0)
             Dim p As Integer = 0, p1 As Integer, p2 As Integer, pn As Integer
             InnerList(0) = InnerList(InnerList.Count - 1)
@@ -134,6 +132,7 @@ Namespace Dijkstra.PQDijkstra
                 End If
                 SwitchElements(p, pn)
             Loop While True
+
             Return result
         End Function
 
@@ -145,7 +144,7 @@ Namespace Dijkstra.PQDijkstra
         ''' what you do.
         ''' </summary>
         ''' <param name="i">The index of the changed object.</param>
-        Public Sub Update(i As Integer) Implements IPriorityQueue.Update
+        Public Sub Update(i As Integer)
             Dim p As Integer = i, pn As Integer
             Dim p1 As Integer, p2 As Integer
             Do
@@ -189,13 +188,15 @@ Namespace Dijkstra.PQDijkstra
         ''' Get the smallest object without removing it.
         ''' </summary>
         ''' <returns>The smallest object</returns>
-        Public Function Peek() As Object Implements IPriorityQueue.Peek
+        Public Function Peek() As Object Implements IPriorityQueue(Of Object).Peek
             If InnerList.Count > 0 Then
                 Return InnerList(0)
             End If
             Return Nothing
         End Function
+#End Region
 
+#Region "explicit implementation"
         Public Function Contains(value As Object) As Boolean Implements IList.Contains
             Return InnerList.Contains(value)
         End Function
@@ -209,6 +210,7 @@ Namespace Dijkstra.PQDijkstra
                 Return InnerList.Count
             End Get
         End Property
+
         Private Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Return InnerList.GetEnumerator()
         End Function
@@ -232,8 +234,7 @@ Namespace Dijkstra.PQDijkstra
                 Return Me
             End Get
         End Property
-#End Region
-#Region "explicit implementation"
+
         Private ReadOnly Property IList_IsReadOnly() As Boolean Implements IList.IsReadOnly
             Get
                 Return False

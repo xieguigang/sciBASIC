@@ -146,7 +146,7 @@ Namespace FileStream
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function GetConnectedNode(Node As String) As String
-            Return Abstract.GetConnectedNode(Me, Node)
+            Return Graph.Abstract.GetConnectedNode(Me, Node)
         End Function
 
         Public Overloads Function Equals(Id1 As String, Id2 As String) As Boolean
