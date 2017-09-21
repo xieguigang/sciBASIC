@@ -11,25 +11,31 @@ Namespace d3js.Layout
     ''' D3 layouts.
     ''' </summary>
     ''' <remarks>
-    ''' https:'github.com/tinker10/D3-Labeler
+    ''' https://github.com/tinker10/D3-Labeler
     ''' </remarks>
     Public Class Labeler
 
         Dim lab As Label()
         Dim anc As Anchor()
-        Dim w As Double = 1, h As Double = 1 ' box width/height
 
-        Dim maxMove As Double = 5
-        Dim maxAngle As Double = 0.5
+        ''' <summary>
+        ''' box width/height
+        ''' </summary>
+        Dim w As Double = 1, h As Double = 1
+
         Dim acc As Double = 0
         Dim rej As Double = 0
 
-        ' weights
-        Dim w_len As Double = 0.2 ' leader line length 
-        Dim w_inter As Double = 1.0 ' leader line intersection
-        Dim w_lab2 As Double = 30.0 ' label-label overlap
-        Dim w_lab_anc As Double = 30.0 ' label-anchor overlap
-        Dim w_orient As Double = 3.0 ' orientation bias
+        Friend maxMove As Double = 5
+        Friend maxAngle As Double = 0.5
+
+#Region "weights"
+        Friend w_len As Double = 0.2      ' leader line length 
+        Friend w_inter As Double = 1.0    ' leader line intersection
+        Friend w_lab2 As Double = 30.0    ' label-label overlap
+        Friend w_lab_anc As Double = 30.0 ' label-anchor overlap
+        Friend w_orient As Double = 3.0   ' orientation bias
+#End Region
 
         Dim calcEnergy As Func(Of Integer, Label(), Anchor(), Double) =
             Function(i, labels, anchor)

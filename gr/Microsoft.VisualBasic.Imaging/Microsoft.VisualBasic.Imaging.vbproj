@@ -254,7 +254,7 @@
   <ItemGroup>
     <Compile Include="d3js\labeler\Anchor.vb" />
     <Compile Include="d3js\labeler\Label.vb" />
-    <Compile Include="d3js\labeler\labeler.vb" />
+    <Compile Include="d3js\labeler\Labeler.vb" />
     <Compile Include="d3js\ModuleAPI.vb" />
     <Compile Include="d3js\ScaleChromatic.vb" />
     <Compile Include="d3js\CSSModel.vb" />
