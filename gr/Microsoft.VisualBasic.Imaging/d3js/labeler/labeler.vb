@@ -3,6 +3,8 @@ Imports sys = System.Math
 
 Namespace d3js
 
+    Public Delegate Function CoolingSchedule(currT#, initialT#, nsweeps#) As Double
+
     ''' <summary>
     ''' A D3 plug-in for automatic label placement using simulated annealing that 
     ''' easily incorporates into existing D3 code, with syntax mirroring other 
@@ -29,18 +31,20 @@ Namespace d3js
         Dim w_lab_anc As Double = 30.0 ' label-anchor overlap
         Dim w_orient As Double = 3.0 ' orientation bias
 
-        ' booleans for user defined functions
-        Dim user_energy As Boolean = False
-        Dim user_schedule As Boolean = False
+        Dim calcEnergy As Func(Of Integer, Label(), Anchor(), Double) =
+            Function(i, labels, anchor)
+                Return energy(i)
+            End Function
 
-        Dim user_defined_energy, user_defined_schedule
+        Dim definedCoolingSchedule As CoolingSchedule =
+            AddressOf coolingSchedule
 
         ''' <summary>
         ''' energy function, tailored for label placement
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Public Function energy(index%) As Double
+        Private Function energy(index%) As Double
             Dim m = lab.Length,
                 ener# = 0,
                 dx = lab(index).X - anc(index).x,
@@ -149,23 +153,16 @@ Namespace d3js
         ''' Monte Carlo translation move
         ''' </summary>
         ''' <param name="currT#"></param>
-        Public Sub mcmove(currT#)
+        Private Sub mcmove(currT#)
             ' select a random label
-            Dim i = Math.Floor(Rnd() * lab.Length)
+            Dim i% = Math.Floor(Rnd() * lab.Length)
 
             ' save old coordinates
             Dim x_old = lab(i).X
             Dim y_old = lab(i).Y
 
             ' old energy
-            Dim old_energy#
-
-            If (user_energy) Then
-                old_energy = user_defined_energy(i, lab, anc)
-
-            Else
-                old_energy = energy(i)
-            End If
+            Dim old_energy# = calcEnergy(i, lab, anc)
 
             ' random translation
             lab(i).X += (Rnd() - 0.5) * max_move
@@ -178,15 +175,7 @@ Namespace d3js
             If (lab(i).Y < 0) Then lab(i).Y = y_old
 
             ' New energy
-            Dim new_energy#
-
-            If (user_energy) Then
-                new_energy = user_defined_energy(i, lab, anc)
-
-            Else
-                new_energy = energy(i)
-            End If
-
+            Dim new_energy# = calcEnergy(i, lab, anc)
             ' delta E
             Dim delta_energy = new_energy - old_energy
 
@@ -204,7 +193,7 @@ Namespace d3js
         ''' Monte Carlo rotation move
         ''' </summary>
         ''' <param name="currT"></param>
-        Public Sub mcrotate(currT#)
+        Private Sub mcrotate(currT#)
             ' select a random label
             Dim i = Math.Floor(Rnd() * lab.Length)
 
@@ -213,14 +202,7 @@ Namespace d3js
             Dim y_old = lab(i).Y
 
             ' old energy
-            Dim old_energy#
-
-            If (user_energy) Then
-                old_energy = user_defined_energy(i, lab, anc)
-            Else
-                old_energy = energy(i)
-            End If
-
+            Dim old_energy# = calcEnergy(i, lab, anc)
             ' random angle
             Dim angle = (Rnd() - 0.5) * max_angle
 
@@ -246,14 +228,7 @@ Namespace d3js
             If (lab(i).Y < 0) Then lab(i).Y = y_old
 
             ' New energy
-            Dim new_energy#
-
-            If (user_energy) Then
-                new_energy = user_defined_energy(i, lab, anc)
-            Else
-                new_energy = energy(i)
-            End If
-
+            Dim new_energy# = calcEnergy(i, lab, anc)
             ' delta E
             Dim delta_energy = new_energy - old_energy
 
@@ -274,7 +249,7 @@ Namespace d3js
         ''' <param name="initialT#"></param>
         ''' <param name="nsweeps#"></param>
         ''' <returns></returns>
-        Public Function cooling_schedule(currT#, initialT#, nsweeps#) As Double
+        Private Shared Function coolingSchedule(currT#, initialT#, nsweeps#) As Double
             Return (currT - (initialT / nsweeps))
         End Function
 
@@ -297,7 +272,7 @@ Namespace d3js
                     End If
                 Next
 
-                currT = cooling_schedule(currT, initialT, nsweeps)
+                currT = definedCoolingSchedule(currT, initialT, nsweeps)
             Next
 
             Return Me
@@ -308,7 +283,7 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function width(x) As Labeler
+        Public Function width(x#) As Labeler
             w = x
             Return Me
         End Function
@@ -318,8 +293,17 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function height(x) As Labeler
+        Public Function height(x#) As Labeler
             h = x
+            Return Me
+        End Function
+
+        Public Function Size(x As SizeF) As Labeler
+            With x
+                w = .Width
+                h = .Height
+            End With
+
             Return Me
         End Function
 
@@ -328,7 +312,7 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function label(x) As Labeler
+        Public Function label(x As Label()) As Labeler
             lab = x
             Return Me
         End Function
@@ -338,7 +322,7 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function anchor(x) As Labeler
+        Public Function anchor(x As Anchor()) As Labeler
             anc = x
             Return Me
         End Function
@@ -348,9 +332,8 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function alt_energy(x) As Labeler
-            user_defined_energy = x
-            user_energy = True
+        Public Function Energy(x As Func(Of Integer, Label(), Anchor(), Double)) As Labeler
+            calcEnergy = x
             Return Me
         End Function
 
@@ -359,9 +342,8 @@ Namespace d3js
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function alt_schedule(x) As Labeler
-            user_defined_schedule = x
-            user_schedule = True
+        Public Function CoolingSchedule(x As CoolingSchedule) As Labeler
+            definedCoolingSchedule = x
             Return Me
         End Function
     End Class
