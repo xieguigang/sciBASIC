@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.Graph
+Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 '
@@ -50,6 +51,7 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 Public Class Cluster : Inherits AbstractTree(Of Cluster)
     Implements INamedValue
+    Implements IComparable(Of Cluster)
 
     Public Property Distance As Distance
 
@@ -107,29 +109,35 @@ Public Class Cluster : Inherits AbstractTree(Of Cluster)
     Public Overrides Function Equals(obj As Object) As Boolean
         If obj Is Nothing Then
             Return False
-        End If
-        If Me Is obj Then
-            Return True
-        End If
-
-        If Me.GetType() IsNot obj.GetType() Then
+        ElseIf Me.GetType() IsNot obj.GetType() Then
             Return False
+        Else
+            Return CompareTo(DirectCast(obj, Cluster))
         End If
-
-        Dim other As Cluster = CType(obj, Cluster)
-
-        If Label Is Nothing Then
-            If other.Label IsNot Nothing Then
-                Return False
-            End If
-        ElseIf Not Label.Equals(other.Label) Then
-            Return False
-        End If
-
-        Return True
     End Function
 
     Public Overrides Function GetHashCode() As Integer
         Return If(Label Is Nothing, 0, Label.GetHashCode())
+    End Function
+
+    Public Function CompareTo(other As Cluster) As Integer Implements IComparable(Of Cluster).CompareTo
+        If other Is Nothing Then
+            Return 1
+        End If
+        If Me Is other Then
+            Return 0
+        End If
+
+        If Label Is Nothing Then
+            If other.Label IsNot Nothing Then
+                Return -1
+            Else
+                Return 0
+            End If
+        ElseIf other.Label Is Nothing Then
+            Return 1
+        Else
+            Return Label.CompareTo(other.Label)
+        End If
     End Function
 End Class
