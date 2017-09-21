@@ -19,12 +19,14 @@ Public Class Vertex : Implements INamedValue
 End Class
 
 ''' <summary>
-''' 节点之间的边
+''' Direction: ``<see cref="U"/> -> <see cref="V"/>``.
+''' (节点之间的边)
 ''' </summary>
 Public Class Edge : Implements INamedValue
 
     Public Property U As Vertex
     Public Property V As Vertex
+    Public Property Weight As Double
 
     ''' <summary>
     ''' ReadOnly unique-ID

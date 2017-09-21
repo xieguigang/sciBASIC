@@ -274,6 +274,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Graph\Graph.vbproj">
+      <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
+      <Name>Graph</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>

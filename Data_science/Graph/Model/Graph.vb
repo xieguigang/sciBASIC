@@ -28,6 +28,8 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
@@ -48,16 +50,46 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         End Get
     End Property
 
+    Public ReadOnly Property Vertex As Vertex()
+        Get
+            Return buffer
+        End Get
+    End Property
+
+    Public Function GetConnectedVertex() As Vertex()
+        Return edges.Values _
+            .Select(Function(e) {e.U, e.V}) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+    End Function
+
+    ''' <summary>
+    ''' <see cref="Data.Graph.Vertex.ID"/> should contains its index value before this method was called.
+    ''' </summary>
+    ''' <param name="u"></param>
+    ''' <returns></returns>
     Public Function AddVertex(u As Vertex) As Graph
         vertices += u
         buffer.Add(u)
         Return Me
     End Function
 
-    Public Function AddEdge(u As Vertex, v As Vertex) As Graph
+    Public Function AddVertex(label$) As Vertex
+        With New Vertex With {
+            .ID = buffer.GetAvailablePos,
+            .Label = label
+        }
+            Call AddVertex(.ref)
+            Return .ref
+        End With
+    End Function
+
+    Public Function AddEdge(u As Vertex, v As Vertex, Optional weight# = 0) As Graph
         edges += New Edge With {
             .U = u,
-            .V = v
+            .V = v,
+            .Weight = weight
         }
         If Not vertices.ContainsKey(u.Label) Then
             vertices += u
@@ -71,19 +103,21 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         Return Me
     End Function
 
-    Public Function AddEdge(i%, j%) As Graph
+    Public Function AddEdge(i%, j%, Optional weight# = 0) As Graph
         edges += New Edge With {
             .U = buffer(i),
-            .V = buffer(j)
+            .V = buffer(j),
+            .Weight = weight
         }
 
         Return Me
     End Function
 
-    Public Function AddEdge(u$, v$) As Graph
+    Public Function AddEdge(u$, v$, Optional weight# = 0) As Graph
         edges += New Edge With {
             .U = vertices(u),
-            .V = vertices(v)
+            .V = vertices(v),
+            .Weight = weight
         }
 
         Return Me

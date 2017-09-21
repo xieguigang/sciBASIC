@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Text
-Imports System.Text.RegularExpressions
 
 Namespace ComponentModel.DataStructures.BinaryTree
 

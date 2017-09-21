@@ -64,11 +64,11 @@ Public Module PrintHelper
 
         With c
             ' 获取当前的cluster的显示文本
-            Dim name$ = .Name & (If(.Leaf, " (leaf)", "")) & (If(.Distance IsNot Nothing, "  distance: " & .Distance.ToString, ""))
+            Dim name$ = .Label & (If(.IsLeaf, " (leaf)", "")) & (If(.Distance IsNot Nothing, "  distance: " & .Distance.ToString, ""))
             Call sb.AppendLine(name)
 
             ' 然后递归的将所有子节点的文本也生成出来
-            For Each child As Cluster In .Children
+            For Each child As Cluster In .Childs
                 Call child.__consoleLine(sb, indent + 1)
             Next
         End With
