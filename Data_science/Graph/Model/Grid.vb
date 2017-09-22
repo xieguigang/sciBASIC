@@ -8,8 +8,15 @@ Imports Microsoft.VisualBasic.Imaging
 Public Class Grid
 
     ReadOnly X, Y As OrderSelector(Of Double)
-    ReadOnly steps As SizeF
     ReadOnly rect As RectangleF
+
+    Public ReadOnly Property Layout As RectangleF
+        Get
+            Return rect
+        End Get
+    End Property
+
+    Public ReadOnly Property Steps As SizeF
 
     Sub New(size As Size, steps As SizeF)
         Call Me.New(New Rectangle(New Point, size), steps)
