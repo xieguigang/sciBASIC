@@ -40,7 +40,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Heatmap
 
-    Public Module HeatmapTable
+    Public Module CorrelationHeatmap
 
         ''' <summary>
         ''' 只能够用来表示两两变量之间的相关度
