@@ -318,7 +318,10 @@ Namespace Heatmap
                     ' 计算出右边的行标签的最大的占用宽度
                     Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, rowLabelfont)
                     Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, colLabelFont)
-                    Dim llayout As New Rectangle(New Point(left, top), legendSize)
+                    Dim llayout As New Rectangle With {
+                        .Location = New Point(left, top),
+                        .Size = legendSize
+                    }
 
                     ' legend位于整个图片的左上角
                     Call Legends.ColorLegendHorizontal(colors, ticks, g, llayout, scientificNotation:=True)

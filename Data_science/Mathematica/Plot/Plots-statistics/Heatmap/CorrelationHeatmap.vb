@@ -50,7 +50,7 @@ Namespace Heatmap
         ''' <param name="rowLabelFontStyle">因为是三角形的矩阵，所以行和列的字体都使用相同的值了</param>
         ''' <returns></returns>
         Public Function Plot(data As IEnumerable(Of DataSet),
-                             Optional mapLevels% = 20,
+                             Optional mapLevels% = 40,
                              Optional mapName$ = ColorBrewer.DivergingSchemes.RdBu11,
                              Optional size$ = "1600,1600",
                              Optional padding$ = g.DefaultPadding,
@@ -168,7 +168,10 @@ Namespace Heatmap
             End With
 
             Dim gSize As Size = size.SizeParser
-            Dim llayout As New Size(gSize.Width / 3, gSize.Height / 3)
+            Dim llayout As New Size With {
+                .Width = gSize.Width / 2,
+                .Height = gSize.Height / 20
+            }
 
             Return __plotInterval(
                 plotInternal, data.ToArray,
