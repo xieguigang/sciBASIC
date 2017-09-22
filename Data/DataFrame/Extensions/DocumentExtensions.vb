@@ -125,8 +125,15 @@ Public Module DocumentExtensions
             .SaveAsDataFrame(path)
     End Function
 
+    ''' <summary>
+    ''' Directly merges the csv table files from the target source <paramref name="files"/>, 
+    ''' and save the result to a specific file location <paramref name="EXPORT"/>
+    ''' </summary>
+    ''' <param name="files"></param>
+    ''' <param name="EXPORT$"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function MergeTable(EXPORT$, files As IEnumerable(Of String)) As Boolean
+    Public Function DirectAppends(files As IEnumerable(Of String), EXPORT$) As Boolean
         Dim data As New List(Of GenericTable)
 
         For Each path$ In files

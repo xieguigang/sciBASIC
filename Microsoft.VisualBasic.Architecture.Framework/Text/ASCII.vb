@@ -260,6 +260,14 @@ Namespace Text
         ''' </summary>
         Public Const Mark As Char = "'"c
 
+        Public Shared Function TrimNonPrintings(s$) As String
+            For Each c As Char In Nonprintings
+                Call s.Trim(c, "")
+            Next
+
+            Return s
+        End Function
+
         ''' <summary>
         ''' 分别替换英文双引号，中文双引号为指定的字符串
         ''' </summary>

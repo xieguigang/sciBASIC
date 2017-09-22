@@ -217,7 +217,7 @@ Public Module Module1
     Public Class node : Inherits MassPoint
 
         Sub New()
-            Point = New Vector({Rnd() * 1000, Rnd() * 1000})
+            Point = New Vector(shorts:={Rnd() * 1000, Rnd() * 1000})
             Charge = 0.01
         End Sub
 

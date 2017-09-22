@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26621.2
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Network.GraphTheory", "Datavisualization.Network\Network.GraphTheory.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
 EndProject
@@ -11,7 +11,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\..\Data
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{2BB7D1CC-C62A-4D89-87BB-D52EC130F2A7}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "..\..\Data_science\Mathematical\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "math-core", "..\..\Data_science\Mathematica\Math\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GraphTesting", "Datavisualization.Network\GraphTesting\GraphTesting.vbproj", "{23A002A3-DEA8-4823-946B-D0C8CE113F67}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\..\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "physics", "..\physics\physics.vbproj", "{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Graph", "..\..\Data_science\Graph\Graph.vbproj", "{203BC68F-A0CD-443A-AB62-4AF4110F752F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -312,6 +314,36 @@ Global
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.Release2|x64.Build.0 = Release|Any CPU
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.Release2|x86.ActiveCfg = Release|Any CPU
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.Release2|x86.Build.0 = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Debug|x64.ActiveCfg = Debug|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Debug|x64.Build.0 = Debug|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Debug|x86.Build.0 = Debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.docs|x64.ActiveCfg = Debug|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.docs|x64.Build.0 = Debug|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.docs|x86.ActiveCfg = Debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.docs|x86.Build.0 = Debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Publish|x64.ActiveCfg = Release|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Publish|x64.Build.0 = Release|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Publish|x86.ActiveCfg = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Publish|x86.Build.0 = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release|x64.ActiveCfg = Release|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release|x64.Build.0 = Release|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release|x86.ActiveCfg = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release|x86.Build.0 = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release2|x64.ActiveCfg = Release|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release2|x64.Build.0 = Release|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release2|x86.ActiveCfg = Release|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Release2|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

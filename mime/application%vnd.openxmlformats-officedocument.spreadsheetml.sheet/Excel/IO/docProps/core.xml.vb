@@ -28,22 +28,45 @@
 
 Imports System.Xml.Serialization
 
-Namespace docProps
+Namespace XML.docProps
 
-    <XmlRoot("coreProperties")>
+    <XmlRoot("coreProperties", [Namespace]:=cp)>
     Public Class core : Inherits IXml
 
+        <XmlNamespaceDeclarations()>
+        Public xmlns As XmlSerializerNamespaces
+
+        Sub New()
+            xmlns = New XmlSerializerNamespaces
+
+            xmlns.Add("cp", Excel.Xmlns.cp)
+            xmlns.Add("dc", Excel.Xmlns.dc)
+            xmlns.Add("dcterms", Excel.Xmlns.dcterms)
+            xmlns.Add("dcmitype", Excel.Xmlns.dcmitype)
+            xmlns.Add("xsi", Excel.Xmlns.xsi)
+        End Sub
+
+        <XmlElement(ElementName:=NameOf(creator), [Namespace]:=dc)>
         Public Property creator As String
+        <XmlElement(ElementName:=NameOf(lastModifiedBy), [Namespace]:=cp)>
         Public Property lastModifiedBy As String
-        Public Property created As Date
-        Public Property modified As Date
+        <XmlElement(NameOf(created), [Namespace]:=dcterms)>
+        Public Property created As W3CDTF
+        <XmlElement(NameOf(modified), [Namespace]:=dcterms)>
+        Public Property modified As W3CDTF
 
         Protected Overrides Function filePath() As String
             Return "docProps/core.xml"
         End Function
 
         Protected Overrides Function toXml() As String
-            Throw New NotImplementedException()
+            Return Me.GetXml
         End Function
     End Class
+
+    Public Structure W3CDTF
+        <XmlAttribute("type", [Namespace]:=xsi)>
+        Public Property type As String
+        <XmlText> Public Property [Date] As Date
+    End Structure
 End Namespace

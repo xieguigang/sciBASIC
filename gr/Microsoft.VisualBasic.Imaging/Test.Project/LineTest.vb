@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Shapes
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging
 
 Module LineTest

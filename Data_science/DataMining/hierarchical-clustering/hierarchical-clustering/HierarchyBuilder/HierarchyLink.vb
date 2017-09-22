@@ -38,8 +38,8 @@ Namespace Hierarchy
         End Function
 
         Public Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As String
-            Dim lName = lCluster.Name
-            Dim rName = rCluster.Name
+            Dim lName = lCluster.Label
+            Dim rName = rCluster.Label
 
             If lName.CompareTo(rName) < 0 Then
                 Return lName & "~~~" & rName ' getlCluster().hashCode() + 31 * (getrCluster().hashCode());

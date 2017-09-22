@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Text.HtmlParser
 ''' <summary>
 ''' VisualBasic interface wrapper of Microsoft bing.com search engine.
 ''' </summary>
-<[PackageNamespace]("Bing",
+<[Package]("Bing",
                     Publisher:="",
                     Category:=APICategories.UtilityTools,
                     Description:="",

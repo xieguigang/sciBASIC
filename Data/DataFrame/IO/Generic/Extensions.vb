@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace IO
@@ -37,6 +38,17 @@ Namespace IO
     ''' Data extension for <see cref="DataSet"/> and <see cref="EntityObject"/>
     ''' </summary>
     Public Module Extensions
+
+        <Extension>
+        Public Iterator Function Matrix(data As IEnumerable(Of DataSet)) As IEnumerable(Of Double())
+            With data.ToArray
+                Dim allKeys = .Keys(distinct:=True)
+
+                For Each x As DataSet In .ref
+                    Yield x.ItemValue(allKeys)
+                Next
+            End With
+        End Function
 
         <Extension>
         Public Function EuclideanDistance(a As DataSet, b As DataSet, names$()) As Double
