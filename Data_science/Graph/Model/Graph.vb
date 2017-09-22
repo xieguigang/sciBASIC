@@ -75,6 +75,10 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         Return Me
     End Function
 
+    Public Function ExistVertex(name$) As Boolean
+        Return vertices.ContainsKey(name)
+    End Function
+
     Public Function AddVertex(label$) As Vertex
         With New Vertex With {
             .ID = buffer.GetAvailablePos,
