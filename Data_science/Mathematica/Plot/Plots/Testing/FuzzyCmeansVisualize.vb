@@ -148,7 +148,7 @@ Module FuzzyCMeansVisualize
                 style:=LegendStyles.Triangle)
         Next
 
-        Call Scatter.Plot(plotData, New Size(5000, 3000), fillPie:=True, showLegend:=False) _
+        Call Scatter.Plot(plotData, "5000,3000", fillPie:=True, showLegend:=False) _
             .Save("./CMeans.png")
     End Sub
 End Module
