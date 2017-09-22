@@ -85,10 +85,10 @@ Namespace Math.Correlations
         ''' <returns></returns>
         <ExportAPI("SW", Info:="Sandelin-Wasserman similarity function")>
         Public Function SW(x As Double(), y As Double()) As Double
-            Dim p As IEnumerable(Of Double) = From i As Integer
-                                              In x.Sequence
-                                              Select x(i) - y(i)
-            Dim s As Double = (From n As Double In p Select n * n).Sum
+            Dim p = From i As Integer
+                    In x.Sequence
+                    Select x(i) - y(i)
+            Dim s# = Aggregate n As Double In p Into Sum(n ^ 2)
             s = 2 - s
             Return s
         End Function
