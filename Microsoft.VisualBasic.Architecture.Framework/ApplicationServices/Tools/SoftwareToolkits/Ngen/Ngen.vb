@@ -320,7 +320,7 @@ Namespace ApplicationServices.SoftwareToolkits
         ''' 将当前目录下的所有的.NET程序都进行安装
         ''' </summary>
         <ExportAPI("--install", Info:="Install all of the .NET program in the current directory.")>
-        Public Sub Install(Optional PATH$ = "./", Optional installExe As Boolean = False)
+        Public Function Install(Optional PATH$ = "./", Optional installExe As Boolean = False) As String()
             Dim files As IEnumerable(Of String)
 
             If installExe Then
@@ -335,7 +335,9 @@ Namespace ApplicationServices.SoftwareToolkits
                       In files
                       Let std_out = NgenInstaller.Install(assemblyName:=assembly, scenarios:=Scenarios.Profile)
                       Select std_out
-        End Sub
+
+            Return runInstall
+        End Function
 
         Public Sub Uninstall(savedState As IDictionary)
             NgenFile(InstallTypes.Uninstall)
