@@ -67,17 +67,21 @@ Namespace Heatmap
                              Optional mainTitle$ = "heatmap",
                              Optional titleFont As Font = Nothing,
                              Optional drawGrid As Boolean = False,
-                             Optional gridColor$ = NameOf(Color.Gray),
                              Optional drawValueLabel As Boolean = False,
                              Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
-                             Optional variantSize As Boolean = True) As GraphicsData
+                             Optional variantSize As Boolean = True,
+                             Optional gridCSS$ = Stroke.HighlightStroke) As GraphicsData
 
             Dim margin As Padding = padding
             Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
             Dim array = data.ToArray
             Dim min#, max#
-            Dim gridBrush As New Pen(gridColor.TranslateColor, 2)
+            Dim gridBrush As Pen = Stroke.TryParse(gridCSS).GDIObject
             Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelFontStyle).GDIObject
+            Dim keys$() = array(Scan0) _
+                .Properties _
+                .Keys _
+                .ToArray
 
             With range Or array _
                 .Select(Function(x) x.Properties.Values) _
@@ -96,8 +100,8 @@ Namespace Heatmap
                 Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
 
                     ' 在绘制上三角的时候假设每一个对象的keys的顺序都是相同的
-                    Dim dw! = args.dStep.Width, dh! = args.dStep.Height
-                    Dim keys$() = array(Scan0).Properties.Keys.ToArray
+                    Dim dw! = args.dStep.Width - gridBrush.Width * 2
+                    Dim dh! = args.dStep.Height - gridBrush.Width * 2
                     Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小是不变的
                     Dim i% = 1
                     Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
@@ -197,7 +201,7 @@ Namespace Heatmap
                 plotInternal, data.ToArray,
                 rowLabelFont, rowLabelFont, logScale,
                 scaleMethod:=DrawElements.None, drawLabels:=DrawElements.Rows, drawDendrograms:=DrawElements.None, drawClass:=(rowDendrogramClass, Nothing), dendrogramLayout:=(rowDendrogramHeight, 0),
-                reverseClrSeq:=False, mapLevels:=mapLevels, mapName:=mapName,
+                reverseClrSeq:=True, mapLevels:=mapLevels, mapName:=mapName,
                 size:=gSize, padding:=margin, bg:=bg,
                 legendTitle:=legendTitle,
                 legendFont:=CSSFont.TryParse(legendFont), legendLabelFont:=CSSFont.TryParse(legendLabelFont), min:=min, max:=max,
