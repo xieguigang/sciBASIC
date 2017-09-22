@@ -143,6 +143,20 @@ Namespace ComponentModel.Ranges
         End Function
 
         ''' <summary>
+        ''' Transform a numeric value in this <see cref="IntRange"/> into 
+        ''' target numeric range: ``<paramref name="valueRange"/>``.
+        ''' (将当前的范围内的一个实数映射到另外的一个范围内的实数区间之中)
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <param name="valueRange"></param>
+        ''' <returns></returns>
+        Public Function ScaleMapping(x%, valueRange As IntRange) As Double
+            Dim percent# = (x - Min) / Length
+            Dim value# = percent * valueRange.Length + valueRange.Min
+            Return value
+        End Function
+
+        ''' <summary>
         ''' 枚举出这个数值范围内的所有整数值，步长为1
         ''' </summary>
         ''' <returns></returns>
@@ -160,6 +174,12 @@ Namespace ComponentModel.Ranges
             Dim r As New IntRange
             Call exp.Parser(r.Min, r.Max)
             Return r
+        End Operator
+
+        Public Shared Widening Operator CType(values%()) As IntRange
+            With values
+                Return New IntRange(.Min, .Max)
+            End With
         End Operator
     End Class
 End Namespace

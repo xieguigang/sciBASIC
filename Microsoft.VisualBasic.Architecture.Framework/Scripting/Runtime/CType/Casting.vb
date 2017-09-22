@@ -79,6 +79,12 @@ Namespace Scripting.Runtime
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        Public Function [As](Of T As {IComparable(Of T), Structure})(x As Double) As T
+            Return CType(CObj(x), T)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
         Public Function Expression(size As Size) As String
             With size
                 Return $"{ .Width},{ .Height}"

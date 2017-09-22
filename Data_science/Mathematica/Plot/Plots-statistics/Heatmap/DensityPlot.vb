@@ -1,11 +1,13 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.Graph
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Heatmap
@@ -30,14 +32,23 @@ Namespace Heatmap
                              Optional bg$ = "white",
                              Optional schema$ = "Jet",
                              Optional levels% = 20,
-                             Optional steps$ = Nothing) As GraphicsData
+                             Optional steps$ = Nothing,
+                             Optional ptSize! = 5) As GraphicsData
 
             Dim data = points.VectorShadows
             Dim xrange As DoubleRange = data.X ' As IEnumerable(Of Single)
             Dim yrange As DoubleRange = data.Y ' As IEnumerable(Of Single)
+            Dim pointData = DirectCast(data, VectorShadows(Of PointF))
+            Dim colors$() = Designer _
+                .GetColors(schema, levels) _
+                .Select(Function(c) c.ToHtmlColor) _
+                .ToArray
             Dim matrix = (xrange, yrange) _
                 .Grid(steps.FloatSizeParser) _
-                .DensityMatrix(DirectCast(data, VectorShadows(Of PointF)))
+                .DensityMatrix(
+                    pointData,
+                    schema:=colors,
+                    r:=ptSize)
 
             Return Contour.Plot(
                 matrix,
@@ -52,8 +63,41 @@ Namespace Heatmap
         ''' <param name="points"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function DensityMatrix(grid As Grid, points As IEnumerable(Of PointF)) As DataSet()
+        Public Function DensityMatrix(grid As Grid, points As IEnumerable(Of PointF), schema$(), r!) As SerialData
+            ' 先统计出网络之中的每一个方格的点的数量，然后将数量转换为颜色值，生成散点图的模型
+            Dim pointData As PointF() = points.ToArray
+            Dim gridIndex = pointData _
+                .Select(AddressOf grid.Index) _
+                .ToArray
+            Dim counts = gridIndex _
+                .GroupBy(Function(index) index.ToString) _
+                .ToDictionary(Function(index) index.Key,
+                              Function(n) n.Count)
+            Dim range As New IntRange(counts.Values)
+            Dim colorIndex As IntRange = {0, schema.Length - 1}
+            Dim density = gridIndex _
+                .Select(Function(index) counts(index.ToString)) _
+                .Select(Function(d)
+                            Return range _
+                                .ScaleMapping(d, colorIndex) _
+                                .As(Of Integer)
+                        End Function) _
+                .ToArray
+            Dim serialData = pointData _
+                .SeqIterator _
+                .Select(Function(pt)
+                            Return New PointData With {
+                                .color = schema(density(pt)),
+                                .pt = pt
+                            }
+                        End Function) _
+                .ToArray
 
+            Return New SerialData With {
+                .color = Color.Black,
+                .pts = serialData,
+                .PointSize = r!
+            }
         End Function
     End Module
 End Namespace
