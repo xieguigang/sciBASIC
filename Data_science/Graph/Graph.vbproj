@@ -67,6 +67,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -92,6 +93,7 @@
     <Compile Include="API\PQDijkstra\Example.vb" />
     <Compile Include="API\PQDijkstra\HeapNode.vb" />
     <Compile Include="API\PQDijkstra\PQDijkstraProvider.vb" />
+    <Compile Include="Model\Grid.vb" />
     <Compile Include="Utils.vb" />
     <Compile Include="API\Dijkstra\Dijkstra.vb" />
     <Compile Include="API\Dijkstra\DijkstraAPI.vb" />
