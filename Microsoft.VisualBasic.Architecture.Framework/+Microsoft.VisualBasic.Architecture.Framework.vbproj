@@ -518,6 +518,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\Ngen\Registry.vb" />
     <Compile Include="CommandLine\InteropService\Abstract.vb" />
     <Compile Include="CommandLine\InteropService\CLIAbstractor.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\API.vb" />
