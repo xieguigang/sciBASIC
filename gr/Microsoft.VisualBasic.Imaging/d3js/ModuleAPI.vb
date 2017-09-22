@@ -1,4 +1,8 @@
-﻿Imports Microsoft.VisualBasic.Imaging.d3js.Layout
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.d3js.Layout
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace d3js
 
@@ -9,6 +13,8 @@ Namespace d3js
         ''' incorporates into existing D3 code, with syntax mirroring other D3 layouts.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function labeler(Optional maxMove# = 5,
                                 Optional maxAngle# = 0.5,
                                 Optional w_len# = 0.2,      ' leader line length 
@@ -27,6 +33,25 @@ Namespace d3js
                 .w_len = w_len,
                 .w_orient = w_orient
             }
+        End Function
+
+        <Extension>
+        Public Function Label(g As Graphics2D, labels As IEnumerable(Of String), Optional fontCSS$ = CSSFont.Win7Normal) As IEnumerable(Of Label)
+            Dim font As Font = CSSFont _
+                .TryParse(fontCSS) _
+                .GDIObject
+
+            Return labels _
+                .SafeQuery _
+                .Select(Function(s$)
+                            Dim size As SizeF = g.MeasureString(s, font)
+
+                            Return New Label With {
+                                .name = s,
+                                .width = size.Width,
+                                .height = size.Height
+                            }
+                        End Function)
         End Function
     End Module
 End Namespace

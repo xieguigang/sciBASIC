@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Terminal
 Imports sys = System.Math
 
 Namespace d3js.Layout
@@ -13,7 +14,7 @@ Namespace d3js.Layout
     ''' <remarks>
     ''' https://github.com/tinker10/D3-Labeler
     ''' </remarks>
-    Public Class Labeler
+    Public Class Labeler : Implements IEnumerable(Of Label)
 
         Dim lab As Label()
         Dim anc As Anchor()
@@ -240,10 +241,26 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="nsweeps"></param>
         ''' <returns></returns>
-        Public Function Start(Optional nsweeps% = 2000, Optional T# = 1, Optional initialT# = 1, Optional rotate# = 0.5) As Labeler
+        Public Function Start(Optional nsweeps% = 2000, Optional T# = 1, Optional initialT# = 1, Optional rotate# = 0.5, Optional showProgress As Boolean = True) As Labeler
             Dim moves As Action(Of Integer) = AddressOf mclMove
             Dim rotat As Action(Of Integer) = AddressOf mclRotate
             Dim rand As New Random
+            Dim progress As ProgressBar = Nothing
+            Dim tick As Action(Of Double)
+
+            If showProgress Then
+                Dim tickProvider As New ProgressProvider(nsweeps)
+                Dim p#
+
+                progress = New ProgressBar("Labels layouting...", CLS:=True)
+                tick = Sub(currT#)
+                           p = tickProvider.StepProgress
+                           progress.SetProgress(p, currT.ToString("F2"))
+                       End Sub
+            Else
+                tick = Sub()
+                       End Sub
+            End If
 
             For i As Integer = 0 To nsweeps
                 For j As Integer = 0 To lab.Length
@@ -255,7 +272,10 @@ Namespace d3js.Layout
                 Next
 
                 T = definedCoolingSchedule(T, initialT, nsweeps)
+                tick(T)
             Next
+
+            Call progress?.Dispose()
 
             Return Me
         End Function
@@ -294,8 +314,8 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function Labels(x As Label()) As Labeler
-            lab = x
+        Public Function Labels(x As IEnumerable(Of Label)) As Labeler
+            lab = x.ToArray
             Return Me
         End Function
 
@@ -304,8 +324,8 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function Anchors(x As Anchor()) As Labeler
-            anc = x
+        Public Function Anchors(x As IEnumerable(Of Anchor)) As Labeler
+            anc = x.ToArray
             Return Me
         End Function
 
@@ -327,6 +347,16 @@ Namespace d3js.Layout
         Public Function CoolingSchedule(x As CoolingSchedule) As Labeler
             definedCoolingSchedule = x
             Return Me
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Label) Implements IEnumerable(Of Label).GetEnumerator
+            For Each label As Label In lab
+                Yield label
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
