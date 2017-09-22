@@ -50,10 +50,10 @@ Module Program
 
     Public Sub heatmap2()
         Dim data = DataSet.LoadDataSet("../../../../\Quick_correlation_matrix_heatmap\mtcars.csv")
-        Dim spcc = data.Vectors.CorrelationMatrix(AddressOf Spearman)
+        Dim spcc = data.Vectors.CorrelationMatrix(AddressOf Spearman).AsDataSet
 
         Call CorrelationHeatmap.Plot(spcc, legendTitle:="", mainTitle:="", drawGrid:=True) _
-            .Save("X:\Sample.SPCC.png")
+            .Save("D:\Sample.SPCC.png")
     End Sub
 
     'Public Sub heatmap1()

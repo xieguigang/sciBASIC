@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -145,18 +146,17 @@ Namespace Heatmap
                     Next
                 End Sub
 
-            If range Is Nothing Then
-                range = New DoubleRange(
-                    array _
-                    .Select(Function(x) x.Properties.Values) _
-                    .IteratesALL _
-                    .ToArray)
-            End If
+            With range Or array _
+                .Select(Function(x) x.Properties.Values) _
+                .IteratesALL _
+                .ToArray _
+                .Range _
+                .AsDefault
 
-            With range
                 min = .Min
                 max = .Max
             End With
+
             With margin
                 .Left = array _
                     .Keys _
@@ -165,18 +165,20 @@ Namespace Heatmap
                     .Width * 1.5
                 .Bottom = 50
             End With
-            Dim gsize As Size = size.SizeParser
-            Dim llayout As New Size(gsize.Width / 3, gsize.Height / 3)
+
+            Dim gSize As Size = size.SizeParser
+            Dim llayout As New Size(gSize.Width / 3, gSize.Height / 3)
 
             Return __plotInterval(
                 plotInternal, data.ToArray,
-                rowLabelFont, rowLabelFont, logScale, DrawElements.None, DrawElements.Rows, DrawElements.Rows, (rowDendrogramClass, Nothing), (rowDendrogramHeight, 0),
-                False,, mapLevels, mapName,
-                gsize, margin, bg,
-                legendTitle,
-                CSSFont.TryParse(legendFont), CSSFont.TryParse(legendLabelFont), min, max,
-                mainTitle, titleFont,
-                120, legendSize:=llayout)
+                rowLabelFont, rowLabelFont, logScale,
+                scaleMethod:=DrawElements.None, drawLabels:=DrawElements.Rows, drawDendrograms:=DrawElements.None, drawClass:=(rowDendrogramClass, Nothing), dendrogramLayout:=(rowDendrogramHeight, 0),
+                reverseClrSeq:=False, mapLevels:=mapLevels, mapName:=mapName,
+                size:=gSize, padding:=margin, bg:=bg,
+                legendTitle:=legendTitle,
+                legendFont:=CSSFont.TryParse(legendFont), legendLabelFont:=CSSFont.TryParse(legendLabelFont), min:=min, max:=max,
+                mainTitle:=mainTitle, titleFont:=titleFont,
+                legendWidth:=120, legendSize:=llayout)
         End Function
     End Module
 
