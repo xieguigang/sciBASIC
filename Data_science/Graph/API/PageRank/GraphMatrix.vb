@@ -27,8 +27,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -41,53 +39,54 @@ Namespace Analysis.PageRank
     Public Class GraphMatrix
 
         Dim indices As New Dictionary(Of String, List(Of Integer))
-        Dim nodes As FileStream.Node()
-        Dim edges As NetworkEdge()
+        Dim nodes As Vertex()
+        Dim edges As Edge()
 
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="net"></param>
         ''' <param name="skipCount">
         ''' 对于文本处理的时候，textrank的这部分数据可能会比较有用，这个时候这里可以设置为False.
         ''' </param>
-        Sub New(net As FileStream.NetworkTables, Optional skipCount As Boolean = True)
-            nodes = net.Nodes
-            edges = net.Edges
+        Sub New(g As Graph, Optional skipCount As Boolean = True)
+            nodes = g.Vertex
+            edges = g.ToArray
 
-            Dim index As New Index(Of String)(nodes.Select(Function(x) x.ID))
+            Dim index As New Index(Of String)(nodes.Keys)
 
-            For Each node As FileStream.Node In nodes
+            For Each node As Vertex In nodes
                 Call indices.Add(
-                    node.ID,
+                    node.Label,
                     New List(Of Integer))
             Next
 
-            For Each edge As NetworkEdge In edges
-                Call indices(edge.FromNode) _
-                    .Add(index(edge.ToNode))
+            For Each edge As Edge In edges
+                With edge
+                    Call indices(.U.Label) _
+                        .Add(index(.V.Label))
+                End With
             Next
 
             If Not skipCount Then
 
                 ' 对于文本处理的时候，textrank的这部分数据可能会比较有用
-                Dim counts As New Dictionary(Of String, (Edge As NetworkEdge, C As int))
+                Dim counts As New Dictionary(Of String, (Edge As Edge, C As int))
                 Dim uid$
 
-                For Each edge As NetworkEdge In edges
-                    uid = edge.GetDirectedGuid
+                For Each edge As Edge In edges
+                    uid = edge.Key
 
                     If Not counts.ContainsKey(uid) Then
                         Call counts.Add(uid, (edge, 1))
                     Else
-                        counts(uid).C.value += 1
+                        counts(uid).C.Value += 1
                     End If
                 Next
 
                 ' 统计计数完毕之后再重新赋值
-                For Each edge As NetworkEdge In edges
-                    uid = edge.GetDirectedGuid
-                    edge.Properties.Add("c", counts(uid).C)
+                For Each edge As Edge In edges
+                    uid = edge.Key
+                    ' edge.Properties.Add("c", counts(uid).C)
                 Next
             End If
 
@@ -96,31 +95,21 @@ Namespace Analysis.PageRank
             Next
         End Sub
 
-        Sub New(g As NetworkGraph)
-            Call Me.New(g.Tabular)
-        End Sub
+        Public Function Graph() As Graph
+            With New Graph
 
-        ''' <summary>
-        ''' Save network
-        ''' </summary>
-        ''' <param name="DIR$"></param>
-        Public Sub Save(DIR$)
-            Call GetNetwork.Save(DIR)
-        End Sub
-
-        Public Function GetNetwork() As FileStream.NetworkTables
-            Return New FileStream.NetworkTables With {
-                .Nodes = nodes,
-                .Edges = edges
-            }
+            End With
+            'Return New FileStream.NetworkTables With {
+            '    .nodes = nodes,
+            '    .edges = edges
+            '}
         End Function
 
         Public Function TranslateVector(v#(), Optional reorder As Boolean = False) As Dictionary(Of String, Double)
             If Not reorder Then
                 Return nodes _
-                    .SeqIterator _
-                    .ToDictionary(Function(n) (+n).ID,
-                                  Function(i) v(i))
+                    .ToDictionary(Function(n) n.Label,
+                                  Function(i) v(i.ID))
             Else
                 Dim orders As SeqValue(Of Double)() = v _
                     .SeqIterator _
@@ -128,7 +117,7 @@ Namespace Analysis.PageRank
                     .ToArray
 
                 Return orders.ToDictionary(
-                    Function(i) nodes(i).ID,
+                    Function(i) nodes(i).Label,
                     Function(value) +value)
             End If
         End Function

@@ -160,11 +160,16 @@ Namespace Imaging
         ''' Saves this <see cref="System.Drawing.Image"/> to the specified file in the specified format.
         ''' (这个函数可以很容易的将图像对象保存为tiff文件)
         ''' </summary>
-        ''' <param name="res">The image resource data that will be saved to the disk</param>
+        ''' <param name="res">
+        ''' The image resource data that will be saved to the disk.
+        ''' (因为这个函数可能会被<see cref="Graphics2D.ImageResource"/>所调用，
+        ''' 由于该属性的Set方法是不公开可见的，所以将会不兼容这个方法，如果这个
+        ''' 参数被设置为ByRef的话)
+        ''' </param>
         ''' <param name="path">path string</param>
         ''' <param name="format">Image formats enumeration.</param>
         ''' <returns></returns>
-        <Extension> Public Function SaveAs(ByRef res As Image,
+        <Extension> Public Function SaveAs(res As Image,
                                            path$,
                                            Optional format As ImageFormats = ImageFormats.Png,
                                            Optional autoDispose As Boolean = False) As Boolean

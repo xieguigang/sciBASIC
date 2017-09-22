@@ -1,4 +1,4 @@
-﻿Namespace d3js
+﻿Namespace d3js.Layout
 
     Public Class Label
 

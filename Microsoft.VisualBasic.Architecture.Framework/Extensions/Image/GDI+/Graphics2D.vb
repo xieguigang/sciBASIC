@@ -59,7 +59,7 @@ Namespace Imaging
             Get
                 Return __innerImage
             End Get
-            Protected Set(value As Image)
+            Protected Friend Set(value As Image)
                 __innerImage = value
                 If Not value Is Nothing Then
                     _Size = value.Size

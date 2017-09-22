@@ -33,7 +33,7 @@ Public Class Edge : Implements INamedValue
     ''' </summary>
     ''' <returns></returns>
     ''' 
-    Private Property Key As String Implements IKeyedEntity(Of String).Key
+    Friend Property Key As String Implements IKeyedEntity(Of String).Key
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return $"{U.ID}-{V.ID}"
