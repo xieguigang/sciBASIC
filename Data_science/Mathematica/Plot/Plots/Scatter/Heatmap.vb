@@ -122,7 +122,7 @@ Partial Module Scatter
             }) _
             .ToArray
         Dim leftWidth% = rect.Size.Width * 0.9
-        Dim scatterPlotSize As New Size(width:=leftWidth, height:=rect.Size.Height)
+        Dim scatterPlotSize$ = $"{leftWidth},{rect.Size.Height}"
         Dim left As GraphicsData = Scatter.Plot(
             serials, scatterPlotSize,
             Xlabel:=labelX, Ylabel:=labelY, drawLine:=False, showLegend:=False)

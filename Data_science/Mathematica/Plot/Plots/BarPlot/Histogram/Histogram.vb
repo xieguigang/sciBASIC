@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::97d8c5de8b7529b059bb1ef5399052b3, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Histogram.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -42,6 +42,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace BarPlot.Histogram
 
@@ -63,7 +64,7 @@ Namespace BarPlot.Histogram
         Public Function Plot(data As IEnumerable(Of HistogramData),
                              Optional color$ = "darkblue",
                              Optional bg$ = "white",
-                             Optional size As Size = Nothing,
+                             Optional size$ = "1600,1200",
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True) As GraphicsData
 
@@ -103,7 +104,7 @@ Namespace BarPlot.Histogram
         Public Function Plot(data As IEnumerable(Of Double), xrange As DoubleRange,
                              Optional color$ = "darkblue",
                              Optional bg$ = "white",
-                             Optional size As Size = Nothing,
+                             Optional size$ = "1600,1200",
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True) As GraphicsData
 
@@ -115,7 +116,7 @@ Namespace BarPlot.Histogram
                          Optional steps# = 0.01,
                          Optional color$ = "darkblue",
                          Optional bg$ = "white",
-                         Optional size As Size = Nothing,
+                         Optional size$ = "1600,1200",
                          Optional padding$ = g.DefaultPadding,
                          Optional showGrid As Boolean = True) As GraphicsData
             Dim data As IEnumerable(Of Double) =
@@ -140,7 +141,7 @@ Namespace BarPlot.Histogram
                              Optional steps# = 0.01,
                              Optional color$ = "darkblue",
                              Optional bg$ = "white",
-                             Optional size As Size = Nothing,
+                             Optional size$ = "1600,1200",
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True) As GraphicsData
             Dim data As New List(Of Double)
@@ -168,7 +169,7 @@ Namespace BarPlot.Histogram
         <Extension>
         Public Function Plot(groups As HistogramGroup,
                              Optional bg$ = "white",
-                             Optional size As Size = Nothing,
+                             Optional size$ = "1600,1200",
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True,
                              Optional legendPos As Point = Nothing,
@@ -187,6 +188,7 @@ Namespace BarPlot.Histogram
                     Dim scalerData As New Scaling(groups, False)
                     Dim mapper As Mapper ' 这里也不是使用y值来表示数量的，也用相对值
                     Dim annotations = groups.Serials.ToDictionary
+                    Dim gSize As Size = region.Size
 
                     If xAxis.StringEmpty Then
                         mapper = New Mapper(scalerData)
@@ -201,7 +203,7 @@ Namespace BarPlot.Histogram
                     '                xlabel:=xlabel,
                     '                labelFontStyle:=axisLabelFontStyle)
 
-                    For Each hist As HistProfile In mapper.ForEach_histSample(size, margin)
+                    For Each hist As HistProfile In mapper.ForEach_histSample(gSize, margin)
                         Dim ann As NamedValue(Of Color) = annotations(hist.legend.title)
                         Dim b As New SolidBrush(Color.FromArgb(alpha, ann.Value))
 
@@ -238,12 +240,12 @@ Namespace BarPlot.Histogram
                             drawAxis:=False)
 
                         ' 合并图层
-                        Call g.DrawImageUnscaled(chart, New Rectangle(New Point, size))
+                        Call g.DrawImageUnscaled(chart, New Rectangle(New Point, gSize))
                     End If
 
                     If legendPos.IsEmpty Then
                         legendPos = New Point(
-                            CInt(size.Width * 0.7),
+                            CInt(gSize.Width * 0.7),
                             margin.Top)
                     End If
 
@@ -255,7 +257,7 @@ Namespace BarPlot.Histogram
                         legendBorder)
                 End Sub
 
-            Return GraphicsPlots(size, margin, bg$, plotInternal)
+            Return GraphicsPlots(size.SizeParser, margin, bg$, plotInternal)
         End Function
 
         ''' <summary>
@@ -275,7 +277,7 @@ Namespace BarPlot.Histogram
                                       Optional serialsTitle$ = "histogram plot",
                                       Optional color$ = "lightblue",
                                       Optional bg$ = "white",
-                                      Optional size As Size = Nothing,
+                                      Optional size$ = "1600,1200",
                                       Optional padding$ = DefaultPadding,
                                       Optional showGrid As Boolean = True,
                                       Optional ByRef histData As IntegerTagged(Of Double)() = Nothing,

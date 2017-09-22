@@ -72,7 +72,7 @@ Namespace Text.Xml
         End Sub
 
         Protected Friend Shared Function __rootString(xml As String) As String
-            xml = Regex.Match(xml, XmlDeclares & ".+?<.+?>", RegexICSng).Value
+            xml = Regex.Match(xml, XmlDeclares & ".*?<.+?>", RegexICSng).Value
             xml = xml.Replace(Regex.Match(xml, XmlDeclares, RegexICSng).Value, "").Trim
             Return xml
         End Function

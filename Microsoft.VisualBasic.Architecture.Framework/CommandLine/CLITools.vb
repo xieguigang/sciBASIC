@@ -274,18 +274,6 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Is this token value string is a number?
-        ''' </summary>
-        ''' <param name="str"></param>
-        ''' <returns></returns>
-        <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
-        Public Function IsNumeric(str As String) As Boolean
-            str = str.GetString("""")
-            Dim s As String = Regex.Match(str, "[-]?\d*(\.\d+)?([eE][-]?\d*)?").Value
-            Return String.Equals(str, s)
-        End Function
-
-        ''' <summary>
         ''' ReGenerate the cli command line argument string text.(重新生成命令行字符串)
         ''' </summary>
         ''' <param name="tokens">If the token value have a space character, then this function will be wrap that token with quot character automatically.</param>

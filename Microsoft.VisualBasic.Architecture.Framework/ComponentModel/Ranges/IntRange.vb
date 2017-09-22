@@ -33,13 +33,11 @@
 '
 
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
 
     ''' <summary>
-    ''' Represents an integer range with minimum and maximum values
+    ''' Represents an <see cref="Integer"/> range with minimum and maximum values
     ''' </summary>
     Public Class IntRange : Inherits ClassObject
         Implements IRanges(Of Integer)
@@ -70,15 +68,16 @@ Namespace ComponentModel.Ranges
         '''
         ''' <param name="min">Minimum value of the range</param>
         ''' <param name="max">Maximum value of the range</param>
-        Public Sub New(min As Integer, max As Integer)
+        Public Sub New(min%, max%)
             Me.Min = min
             Me.Max = max
         End Sub
 
         Sub New(source As IEnumerable(Of Integer))
-            Dim array As Integer() = source.ToArray
-            Me.Min = array.Min
-            Me.Max = array.Max
+            With source.ToArray
+                Min = .Min
+                Max = .Max
+            End With
         End Sub
 
         Sub New()
@@ -143,6 +142,20 @@ Namespace ComponentModel.Ranges
         End Function
 
         ''' <summary>
+        ''' Transform a numeric value in this <see cref="IntRange"/> into 
+        ''' target numeric range: ``<paramref name="valueRange"/>``.
+        ''' (将当前的范围内的一个实数映射到另外的一个范围内的实数区间之中)
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <param name="valueRange"></param>
+        ''' <returns></returns>
+        Public Function ScaleMapping(x%, valueRange As IntRange) As Double
+            Dim percent# = (x - Min) / Length
+            Dim value# = percent * valueRange.Length + valueRange.Min
+            Return value
+        End Function
+
+        ''' <summary>
         ''' 枚举出这个数值范围内的所有整数值，步长为1
         ''' </summary>
         ''' <returns></returns>
@@ -160,6 +173,12 @@ Namespace ComponentModel.Ranges
             Dim r As New IntRange
             Call exp.Parser(r.Min, r.Max)
             Return r
+        End Operator
+
+        Public Shared Widening Operator CType(values%()) As IntRange
+            With values
+                Return New IntRange(.Min, .Max)
+            End With
         End Operator
     End Class
 End Namespace

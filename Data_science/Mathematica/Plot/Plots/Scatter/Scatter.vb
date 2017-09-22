@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::df8105237486edb3ee7b2308b04674dc, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -45,6 +45,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module Scatter
 
@@ -65,7 +66,7 @@ Public Module Scatter
     ''' <returns></returns>
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
-                         Optional size As Size = Nothing,
+                         Optional size$ = "1600,1200",
                          Optional padding$ = g.DefaultLargerPadding,
                          Optional bg As String = "white",
                          Optional showGrid As Boolean = True,
@@ -89,10 +90,11 @@ Public Module Scatter
 
         Dim margin As Padding = padding
         Dim plotInternal =
-            Sub(ByRef g As IGraphics, grect As GraphicsRegion)
+            Sub(ByRef g As IGraphics, rect As GraphicsRegion)
                 Dim array As SerialData() = c.ToArray
                 Dim mapper As Mapper
                 Dim serialsData As New Scaling(array, absoluteScaling)
+                Dim gSize As Size = rect.Size
 
                 If xaxis.StringEmpty OrElse yaxis.StringEmpty Then
                     mapper = New Mapper(
@@ -107,7 +109,7 @@ Public Module Scatter
                     '  Call g.DrawAxis(size, margin, mapper, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
                 End If
 
-                For Each line As SerialData In mapper.ForEach(size, margin)
+                For Each line As SerialData In mapper.ForEach(gSize, margin)
                     Dim pts = line.pts.SlideWindows(2)
                     Dim pen As New Pen(color:=line.color, width:=line.width) With {
                         .DashStyle = line.lineType
@@ -115,7 +117,7 @@ Public Module Scatter
                     Dim br As New SolidBrush(line.color)
                     Dim d = line.PointSize
                     Dim r As Single = line.PointSize / 2
-                    Dim bottom! = size.Height - margin.Bottom
+                    Dim bottom! = gSize.Height - margin.Bottom
 
                     For Each pt In pts
                         Dim a As PointData = pt.First
@@ -148,7 +150,7 @@ Public Module Scatter
                         Dim raw = array.Where(Function(s) s.title = line.title).First
 
                         For Each annotation As Annotation In line.DataAnnotations
-                            Call annotation.Draw(g, mapper, raw, grect)
+                            Call annotation.Draw(g, mapper, raw, rect)
                         Next
                     End If
 
@@ -169,7 +171,7 @@ Public Module Scatter
 
                         If legendPosition.IsEmpty Then
                             legendPosition = New Point(
-                                CInt(size.Width * 0.7),
+                                CInt(gSize.Width * 0.7),
                                 margin.Bottom)
                         End If
 
@@ -180,11 +182,11 @@ Public Module Scatter
                 Next
             End Sub
 
-        Return GraphicsPlots(size, margin, bg, plotInternal)
+        Return GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
     End Function
 
     Public Function Plot(x As Vector,
-                         Optional size As Size = Nothing,
+                         Optional size$ = "1600,1200",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional ptSize As Single = 15,

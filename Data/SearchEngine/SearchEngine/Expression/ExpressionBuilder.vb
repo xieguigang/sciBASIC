@@ -121,7 +121,7 @@ Public Module ExpressionBuilder
         Dim meta As MetaExpression
 
         Do While Not tks.EndRead
-            Dim t = +tks
+            Dim t = ++tks
 
             meta = New MetaExpression
 

@@ -29,7 +29,6 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -188,6 +187,22 @@ Public Module Contour
             AddressOf plotInternal.Plot)
     End Function
 
+    ''' <summary>
+    ''' 从现有的矩阵数据之中绘制等高线图
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <param name="colorMap$"></param>
+    ''' <param name="mapLevels%"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="padding$"></param>
+    ''' <param name="legendTitle$"></param>
+    ''' <param name="legendFont"></param>
+    ''' <param name="xlabel$"></param>
+    ''' <param name="ylabel$"></param>
+    ''' <param name="minZ#"></param>
+    ''' <param name="maxZ#"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Plot(matrix As IEnumerable(Of DataSet),
                          Optional colorMap$ = "Spectral:c10",
@@ -252,12 +267,12 @@ Public Module Contour
 						  Select Data
             Else
 
-                    Return func _
-                        .__getData(plotSize,  ' 得到通过计算返回来的数据
-                                   xrange, yrange,
-                                   xsteps, ysteps,
-                                   parallel, matrix,
-                                   unit)
+                Return func _
+                    .__getData(plotSize,  ' 得到通过计算返回来的数据
+                               xrange, yrange,
+                               xsteps, ysteps,
+                               parallel, matrix,
+                               unit)
             End If
         End Function
 

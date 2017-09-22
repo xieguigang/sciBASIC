@@ -1,34 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::2413633368656c3403aeae4bbb89ab15, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyTreeNode.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System
 Imports System.Text
-Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 '
 '*****************************************************************************
@@ -52,7 +50,11 @@ Namespace Hierarchy
 
     Public Class HierarchyTreeNode : Implements IComparable(Of HierarchyTreeNode)
 
-        Private Shared globalIndex As Long = 0
+        Public Property Left As Cluster
+        Public Property Right As Cluster
+        Public Property LinkageDistance As Double
+
+        Shared globalIndex As Long = 0
 
         Public Sub New()
         End Sub
@@ -60,16 +62,13 @@ Namespace Hierarchy
         Public Sub New(left As Cluster, right As Cluster, distance As Double)
             Me.Left = left
             Me.Right = right
+
             LinkageDistance = distance
         End Sub
 
         Public Function GetOtherCluster(c As Cluster) As Cluster
             Return If(Left Is c, Right, Left)
         End Function
-
-        Public Property Left As Cluster
-        Public Property Right As Cluster
-        Public Property LinkageDistance As Double
 
         ''' <returns> 
         ''' a new ClusterPair with the two left/right inverted
@@ -119,14 +118,14 @@ Namespace Hierarchy
             Dim sb As New StringBuilder
 
             If Left IsNot Nothing Then
-                sb.Append(Left.Name)
+                sb.Append(Left.Label)
             End If
 
             If Right IsNot Nothing Then
                 If sb.Length > 0 Then
                     sb.Append(" + ")
                 End If
-                sb.Append(Right.Name)
+                sb.Append(Right.Label)
             End If
 
             Call sb _

@@ -77,6 +77,13 @@ Namespace Scripting.Runtime
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [As](Of T As {IComparable(Of T), Structure})(x As Double) As T
+            Return CType(CObj(x), T)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Expression(size As Size) As String
             With size
@@ -84,6 +91,7 @@ Namespace Scripting.Runtime
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Expression(size As SizeF) As String
             With size
@@ -103,17 +111,20 @@ Namespace Scripting.Runtime
             Return New PointF(x, y)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function SizeParser(pt$) As Size
-            Dim x, y As Double
-            Call Ranges.Parser(pt, x, y)
-            Return New Size(x, y)
+            Return pt.FloatSizeParser.ToSize
         End Function
 
         <Extension>
         Public Function FloatSizeParser(pt$) As SizeF
-            Dim x, y As Double
-            Call Ranges.Parser(pt, x, y)
-            Return New SizeF(x, y)
+            If pt.StringEmpty Then
+                Return Nothing
+            Else
+                Dim x, y As Double
+                Call Ranges.Parser(pt, x, y)
+                Return New SizeF(x, y)
+            End If
         End Function
 
         ' 因为和向量的As类型转换有冲突，所以在这里移除下面的这个As拓展
@@ -162,7 +173,7 @@ Namespace Scripting.Runtime
         ''' <param name="s"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Double.Match")>
         <Extension> Public Function RegexParseDouble(s As String) As Double
             Return Val(s.Match(RegexpFloat))
@@ -212,6 +223,8 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastChar(obj As String) As Char
             Return If(String.IsNullOrEmpty(obj), ASCII.NUL, obj.First)
         End Function
@@ -221,22 +234,28 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastInteger(obj As String) As Integer
             Return CInt(ParseNumeric(obj))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastLong(obj As String) As Long
             Return CLng(ParseNumeric(obj))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastCharArray(obj As String) As Char()
             Return obj.ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastDate(obj As String) As DateTime
             Return DateTime.Parse(obj)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastStringBuilder(obj As String) As StringBuilder
             Return New StringBuilder(obj)
         End Function
@@ -246,6 +265,8 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastCommandLine(obj As String) As CommandLine.CommandLine
             Return CommandLine.TryParse(obj)
         End Function
@@ -255,34 +276,43 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastImage(path As String) As Image
             Return LoadImage(path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastFileInfo(path As String) As FileInfo
             Return FileIO.FileSystem.GetFileInfo(path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastGDIPlusDeviceHandle(path As String) As Graphics2D
             Return GDIPlusDeviceHandleFromImageFile(path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastFont(face As String) As Font
             Return New Font(face, 10)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastIPEndPoint(addr As String) As System.Net.IPEndPoint
             Return New Net.IPEndPoint(addr).GetIPEndPoint
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastLogFile(path As String) As Logging.LogFile
             Return New Logging.LogFile(path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastProcess(exe As String) As Process
             Return Process.Start(exe)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastSingle(n As String) As Single
             Return CSng(ParseNumeric(n))
         End Function

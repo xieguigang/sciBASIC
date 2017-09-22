@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Language
@@ -53,15 +54,72 @@ Imports sys = System.Math
 
 Namespace DendrogramVisualize
 
-    Public Class ClusterComponent
+    ''' <summary>
+    ''' 树
+    ''' </summary>
+    Public Class ClusterComponent : Inherits AbstractTree(Of ClusterComponent)
         Implements IPaintable
 
-        Public Property Children As New List(Of ClusterComponent)
         Public Property NamePadding As Integer = 6
         Public Property LinkPoint As PointF
         Public Property InitPoint As PointF
         Public Property Cluster As Cluster
         Public Property PrintName As Boolean
+
+#Region "Layout"
+
+        Public ReadOnly Property RectMinX As Double
+            Get
+
+                ' TODO Better use closure / callback here
+                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = sys.Min(InitPoint.X, LinkPoint.X)
+                For Each child As ClusterComponent In Childs
+                    val = sys.Min(val, child.RectMinX)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public ReadOnly Property RectMinY As Double
+            Get
+
+                ' TODO Better use closure here
+                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = sys.Min(InitPoint.Y, LinkPoint.Y)
+                For Each child As ClusterComponent In Childs
+                    val = sys.Min(val, child.RectMinY)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public ReadOnly Property RectMaxX As Double
+            Get
+
+                ' TODO Better use closure here
+                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = Math.Max(InitPoint.X, LinkPoint.X)
+                For Each child As ClusterComponent In Childs
+                    val = Math.Max(val, child.RectMaxX)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public ReadOnly Property RectMaxY As Double
+            Get
+
+                ' TODO Better use closure here
+                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = Math.Max(InitPoint.Y, LinkPoint.Y)
+                For Each child As ClusterComponent In Childs
+                    val = Math.Max(val, child.RectMaxY)
+                Next
+                Return val
+            End Get
+        End Property
+#End Region
 
         Public Sub New(cluster As Cluster, printName As Boolean, initPoint As PointF)
             Me.PrintName = printName
@@ -92,7 +150,7 @@ Namespace DendrogramVisualize
                 End If
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
-                If Cluster.Leaf Then
+                If Cluster.IsLeaf Then
                     Dim nx! = x1 + NamePadding
                     Dim ny! = y1
                     Dim location As New PointF With {
@@ -102,16 +160,16 @@ Namespace DendrogramVisualize
 
                     ' 绘制叶节点
                     If args.ShowLabelName Then
-                        g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, location)
+                        g.DrawString(Cluster.Label, fontMetrics, Brushes.Black, location)
                     End If
                     labels += New NamedValue(Of PointF) With {
-                        .Name = Cluster.Name,
+                        .Name = Cluster.Label,
                         .Value = location
                     }
 
                     If Not .classTable Is Nothing Then
                         ' 如果还存在分类信息的话，会绘制分类的颜色条
-                        Dim color As Brush = .classTable(Cluster.Name).GetBrush
+                        Dim color As Brush = .classTable(Cluster.Label).GetBrush
                         Dim topleft As New PointF(nx + .classLegendPadding, y1 - .classLegendSize.Height / 2)
                         Dim rect As New RectangleF(topleft, .classLegendSize)
 
@@ -138,76 +196,24 @@ Namespace DendrogramVisualize
                 y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
-                For Each child As ClusterComponent In Children
+                For Each child As ClusterComponent In Childs
                     child.paint(g, args, labels)
                 Next
             End With
         End Sub
 
-        Public ReadOnly Property RectMinX As Double
-            Get
-
-                ' TODO Better use closure / callback here
-                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = sys.Min(InitPoint.X, LinkPoint.X)
-                For Each child As ClusterComponent In Children
-                    val = sys.Min(val, child.RectMinX)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public ReadOnly Property RectMinY As Double
-            Get
-
-                ' TODO Better use closure here
-                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = sys.Min(InitPoint.Y, LinkPoint.Y)
-                For Each child As ClusterComponent In Children
-                    val = sys.Min(val, child.RectMinY)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public ReadOnly Property RectMaxX As Double
-            Get
-
-                ' TODO Better use closure here
-                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = Math.Max(InitPoint.X, LinkPoint.X)
-                For Each child As ClusterComponent In Children
-                    val = Math.Max(val, child.RectMaxX)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public ReadOnly Property RectMaxY As Double
-            Get
-
-                ' TODO Better use closure here
-                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = Math.Max(InitPoint.Y, LinkPoint.Y)
-                For Each child As ClusterComponent In Children
-                    val = Math.Max(val, child.RectMaxY)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public Function getNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
+        Public Function GetNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = 0
-            If includeNonLeafs OrElse Cluster.Leaf Then
-                Dim rect As RectangleF = g.FontMetrics.GetStringBounds(Cluster.Name, g.Graphics)
+            If includeNonLeafs OrElse Cluster.IsLeaf Then
+                Dim rect As RectangleF = g.FontMetrics.GetStringBounds(Cluster.Label, g.Graphics)
                 width = CInt(Fix(rect.Width))
             End If
             Return width
         End Function
 
         Public Function GetMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
-            Dim width As Integer = getNameWidth(g, includeNonLeafs)
-            For Each comp As ClusterComponent In Children
+            Dim width As Integer = GetNameWidth(g, includeNonLeafs)
+            For Each comp As ClusterComponent In Childs
                 Dim childWidth As Integer = comp.GetMaxNameWidth(g, includeNonLeafs)
                 If childWidth > width Then width = childWidth
             Next comp

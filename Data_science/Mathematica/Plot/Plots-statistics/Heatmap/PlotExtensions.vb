@@ -271,7 +271,7 @@ Public Module PlotExtensions
     ''' <param name="bg"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Plot(ode As ODE, Optional size As Size = Nothing, Optional padding$ = g.DefaultPadding, Optional bg As String = "white") As GraphicsData
+    Public Function Plot(ode As ODE, Optional size$ = "1600,1200", Optional padding$ = g.DefaultPadding, Optional bg$ = "white") As GraphicsData
         Return Scatter.Plot({ode.FromODE("cyan")}, size, padding, bg)
     End Function
 
@@ -286,7 +286,7 @@ Public Module PlotExtensions
     ''' <returns></returns>
     <Extension>
     Public Function Plot(ode As ODEsOut,
-                         Optional size As Size = Nothing,
+                         Optional size$ = "1600,1200",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional ptSize As Single = 30,

@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports sys = System.Math
 
-Namespace Imaging
+Namespace Imaging.BitmapImage
 
     ''' <summary>
     ''' 线程不安全的图片数据对象
@@ -88,11 +88,13 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' Gets the color of the specified pixel in this System.Drawing.Bitmap.
+        ''' Gets the color of the specified pixel in this <see cref="Bitmap"/>.
         ''' </summary>
         ''' <param name="x">The x-coordinate of the pixel to retrieve.</param>
         ''' <param name="y">The y-coordinate of the pixel to retrieve.</param>
-        ''' <returns>A System.Drawing.Color structure that represents the color of the specified pixel.</returns>
+        ''' <returns>
+        ''' A <see cref="Color"/> structure that represents the color of the specified pixel.
+        ''' </returns>
         Public Function GetPixel(x As Integer, y As Integer) As Color
             Dim i As Integer = GetIndex(x, y)
             Dim iR As Byte = buffer(i + 2)
@@ -112,6 +114,7 @@ Namespace Imaging
         ''' pixel.</param>
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
+
             buffer(i + 2) = color.R
             buffer(i + 1) = color.G
             buffer(i + 0) = color.B
@@ -129,8 +132,11 @@ Namespace Imaging
         Public Shared Function FromBitmap(curBitmap As Bitmap) As BitmapBuffer
             ' Lock the bitmap's bits.  
             Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
-            Dim bmpData As BitmapData =
-            curBitmap.LockBits(rect, ImageLockMode.ReadWrite, curBitmap.PixelFormat)
+            Dim bmpData As BitmapData = curBitmap.LockBits(
+                rect,
+                ImageLockMode.ReadWrite,
+                curBitmap.PixelFormat)
+
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.

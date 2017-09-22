@@ -28,7 +28,7 @@
 
 Imports System.Linq
 Imports Microsoft.VisualBasic.DataMining.SVM.Model
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Method
 
@@ -128,7 +128,7 @@ Namespace Method
         Private Shared Function newtonMethod(normVecOffset As SvmArgument, derivates As Dictionary(Of String, Vector)) As SvmArgument
             Dim vecOffs As SvmArgument = normVecOffset.Clone()
 
-            Dim firstDerivates As Vector = derivates(FIRST_DERIVATE_W).Join(derivates(FIRST_DERIVATE_B))
+            Dim firstDerivates As Vector = derivates(FIRST_DERIVATE_W).Join(derivates(FIRST_DERIVATE_B)).AsVector
             Dim functionProduct As Double() = secondDerTimesfirstDer(
                 invertHesse(derivates(SECOND_DERIVATE_W),
                             derivates(SECOND_DERIVATE_B)(0),

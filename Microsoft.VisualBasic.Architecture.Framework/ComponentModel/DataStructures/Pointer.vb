@@ -30,6 +30,10 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.DataStructures
 
+    ''' <summary>
+    ''' 进行集合之中的元素的取出操作的帮助类
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class Pointer(Of T) : Inherits Pointer
 
         ''' <summary>
@@ -38,7 +42,6 @@ Namespace ComponentModel.DataStructures
         ''' <param name="array"></param>
         ''' <param name="i"></param>
         ''' <returns></returns>
-
         Public Overloads Shared Operator +(array As T(), i As Pointer(Of T)) As T
             Return array(+i)
         End Operator
