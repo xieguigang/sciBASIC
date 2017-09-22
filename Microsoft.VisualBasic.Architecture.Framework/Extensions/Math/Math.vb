@@ -65,6 +65,7 @@ Namespace Math
         ''' <param name="val2">The second of two 8-bit unsigned integers to compare.</param>
         ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As Byte, val2 As Byte) As Byte
             If val1 < val2 Then
                 Return val1
@@ -80,6 +81,7 @@ Namespace Math
         ''' <param name="val2">The second of two 8-bit signed integers to compare.</param>
         ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As SByte, val2 As SByte) As SByte
             If val1 < val2 Then
                 Return val1

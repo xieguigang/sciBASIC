@@ -5112,14 +5112,14 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' Measures the specified string when drawn with the specified <see cref="Font"/>.
         ''' </summary>
         ''' <param name="text">String to measure.</param>
-        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
-        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' in the units specified by the <see cref="PageUnit"/> property, of the
         ''' string specified by the text parameter as drawn with the font parameter.</returns>
-        Public Overrides Function MeasureString(text As String, font As Font) As SizeF
+        Public Overrides Function MeasureString(text$, font As Font) As SizeF
             Return Graphics.MeasureString(text, font)
         End Function
 

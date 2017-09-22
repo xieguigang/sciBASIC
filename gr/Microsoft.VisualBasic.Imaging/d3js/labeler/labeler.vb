@@ -13,7 +13,7 @@ Namespace d3js.Layout
     ''' <remarks>
     ''' https://github.com/tinker10/D3-Labeler
     ''' </remarks>
-    Public Class Labeler
+    Public Class Labeler : Implements IEnumerable(Of Label)
 
         Dim lab As Label()
         Dim anc As Anchor()
@@ -294,8 +294,8 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function Labels(x As Label()) As Labeler
-            lab = x
+        Public Function Labels(x As IEnumerable(Of Label)) As Labeler
+            lab = x.ToArray
             Return Me
         End Function
 
@@ -304,8 +304,8 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function Anchors(x As Anchor()) As Labeler
-            anc = x
+        Public Function Anchors(x As IEnumerable(Of Anchor)) As Labeler
+            anc = x.ToArray
             Return Me
         End Function
 
@@ -327,6 +327,16 @@ Namespace d3js.Layout
         Public Function CoolingSchedule(x As CoolingSchedule) As Labeler
             definedCoolingSchedule = x
             Return Me
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Label) Implements IEnumerable(Of Label).GetEnumerator
+            For Each label As Label In lab
+                Yield label
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
