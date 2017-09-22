@@ -30,10 +30,10 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
-Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -219,7 +219,10 @@ Namespace Heatmap
                 legendFont:=CSSFont.TryParse(legendFont), legendLabelFont:=CSSFont.TryParse(legendLabelFont), min:=min, max:=max,
                 mainTitle:=mainTitle, titleFont:=titleFont,
                 legendWidth:=120, legendSize:=llayout,
-                rowXOffset:=leftOffSet).AsGDIImage.CorpBlank(margin.Left)
+                rowXOffset:=leftOffSet) _
+ _
+                .AsGDIImage _
+                .CorpBlank(margin.Left)
 
         End Function
     End Module
