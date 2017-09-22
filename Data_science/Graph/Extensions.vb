@@ -55,7 +55,17 @@ Public Module Extensions
             Dim min As New PointF(.X.Min, .Y.Min)
             Dim rect As New RectangleF(min, size)
 
-            Return New Grid(rect, steps Or New SizeF(size.Width / 50, size.Height / 50).AsDefault)
+            Return New Grid(rect, steps Or size.DefaultSteps())
         End With
+    End Function
+
+    <Extension>
+    Public Function DefaultSteps(size As SizeF, Optional n% = 50) As DefaultValue(Of SizeF)
+        Return New SizeF With {
+            .Width = size.Width / 50,
+            .Height = size.Height / 50
+        }.AsDefault(Function(sz)
+                        Return DirectCast(sz, SizeF).IsEmpty
+                    End Function)
     End Function
 End Module
