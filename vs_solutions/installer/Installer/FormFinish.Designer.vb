@@ -46,7 +46,7 @@ Partial Class FormFinish
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(427, 232)
+        Me.LinkLabel1.Location = New System.Drawing.Point(400, 232)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(135, 19)
         Me.LinkLabel1.TabIndex = 5
@@ -58,9 +58,10 @@ Partial Class FormFinish
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(173, 213)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(262, 38)
+        Me.Label5.Size = New System.Drawing.Size(294, 38)
         Me.Label5.TabIndex = 6
-        Me.Label5.Text = "sciBASIC framework is an open source project, " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "you can get latest source code from: "
+        Me.Label5.Text = "sciBASIC framework is an open source project, " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "you can get latest source code fr" &
+    "om: "
         '
         'FormFinish
         '

@@ -240,3 +240,4 @@ pip-log.txt
 /vs_solutions/installer/bootstrap/Resources/Installer.exe.config
 /vs_solutions/installer/bootstrap/Resources/Installer.exe
 /vs_solutions/installer/Installer/Resources/installer.zip
+/vs_solutions/installer/output
