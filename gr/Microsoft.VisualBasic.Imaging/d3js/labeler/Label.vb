@@ -1,4 +1,6 @@
-﻿Namespace d3js.Layout
+﻿Imports System.Drawing
+
+Namespace d3js.Layout
 
     Public Class Label
 
@@ -31,5 +33,12 @@
         Public Overrides Function ToString() As String
             Return $"{name}@({X.ToString("F2")},{Y.ToString("F2")})"
         End Function
+
+        Public Shared Narrowing Operator CType(label As Label) As PointF
+            Return New PointF With {
+                .X = label.X,
+                .Y = label.Y
+            }
+        End Operator
     End Class
 End Namespace

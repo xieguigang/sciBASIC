@@ -29,7 +29,7 @@ Module LabelingTest
                 .Width(g.Width) _
                 .Labels(labels) _
                 .Anchors(anchors) _
-                .Start _
+                .Start(2500) _
                 .ToArray
 
             For Each i As SeqValue(Of Label) In labels.SeqIterator
@@ -38,6 +38,7 @@ Module LabelingTest
 
                 Call g.DrawCircle(anchor, anchor.r, Brushes.Red)
                 Call g.DrawString(label.name, labelFont, Brushes.Black, New PointF(label.X, label.Y))
+                Call g.DrawLine(Pens.Green, anchor, label)
             Next
 
             Call g.Save("./test_labels.png", ImageFormats.Png)

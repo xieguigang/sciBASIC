@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Terminal
 Imports sys = System.Math
 
 Namespace d3js.Layout
@@ -240,10 +241,26 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="nsweeps"></param>
         ''' <returns></returns>
-        Public Function Start(Optional nsweeps% = 2000, Optional T# = 1, Optional initialT# = 1, Optional rotate# = 0.5) As Labeler
+        Public Function Start(Optional nsweeps% = 2000, Optional T# = 1, Optional initialT# = 1, Optional rotate# = 0.5, Optional showProgress As Boolean = True) As Labeler
             Dim moves As Action(Of Integer) = AddressOf mclMove
             Dim rotat As Action(Of Integer) = AddressOf mclRotate
             Dim rand As New Random
+            Dim progress As ProgressBar = Nothing
+            Dim tick As Action(Of Double)
+
+            If showProgress Then
+                Dim tickProvider As New ProgressProvider(nsweeps)
+                Dim p#
+
+                progress = New ProgressBar("Labels layouting...", CLS:=True)
+                tick = Sub(currT#)
+                           p = tickProvider.StepProgress
+                           progress.SetProgress(p, currT.ToString("F2"))
+                       End Sub
+            Else
+                tick = Sub()
+                       End Sub
+            End If
 
             For i As Integer = 0 To nsweeps
                 For j As Integer = 0 To lab.Length
@@ -255,7 +272,10 @@ Namespace d3js.Layout
                 Next
 
                 T = definedCoolingSchedule(T, initialT, nsweeps)
+                tick(T)
             Next
+
+            Call progress?.Dispose()
 
             Return Me
         End Function
