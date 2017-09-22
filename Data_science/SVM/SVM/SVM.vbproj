@@ -71,7 +71,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
-    <OutputPath>bin\x64\installer_x64\</OutputPath>
+    <OutputPath>..\..\..\.vs\installer\</OutputPath>
     <DefineConstants>TRACE=1</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>

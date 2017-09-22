@@ -116,7 +116,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\installer_x64\</OutputPath>
+    <OutputPath>..\..\.vs\installer\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Webservices.Github.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
