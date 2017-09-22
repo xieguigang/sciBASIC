@@ -53,7 +53,7 @@ Module Program
         Dim spcc = data.Vectors.CorrelationMatrix(AddressOf Spearman).AsDataSet
 
         Call CorrelationHeatmap.Plot(spcc, legendTitle:="", mainTitle:="", drawGrid:=True, range:="-1,1") _
-            .Save("D:\Sample.SPCC.png")
+            .SaveAs("D:\Sample.SPCC.png")
     End Sub
 
     'Public Sub heatmap1()

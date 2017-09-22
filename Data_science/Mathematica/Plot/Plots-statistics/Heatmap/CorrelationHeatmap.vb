@@ -52,9 +52,9 @@ Namespace Heatmap
         ''' <returns></returns>
         Public Function Plot(data As IEnumerable(Of DataSet),
                              Optional mapLevels% = 40,
-                             Optional mapName$ = ColorBrewer.DivergingSchemes.RdBu11,
+                             Optional mapName$ = "lighter(" & ColorBrewer.DivergingSchemes.RdBu11 & ",0.05)",
                              Optional size$ = "1600,1600",
-                             Optional padding$ = g.DefaultPadding,
+                             Optional padding$ = g.SmallPadding,
                              Optional bg$ = "white",
                              Optional logScale# = 0,
                              Optional rowDendrogramHeight% = 200,
@@ -70,7 +70,7 @@ Namespace Heatmap
                              Optional drawValueLabel As Boolean = False,
                              Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
                              Optional variantSize As Boolean = True,
-                             Optional gridCSS$ = Stroke.HighlightStroke) As GraphicsData
+                             Optional gridCSS$ = Stroke.HighlightStroke) As Image
 
             Dim margin As Padding = padding
             Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
@@ -82,6 +82,7 @@ Namespace Heatmap
                 .Properties _
                 .Keys _
                 .ToArray
+            Dim leftOffSet% = margin.Left / 1.5
 
             With range Or array _
                 .Select(Function(x) x.Properties.Values) _
@@ -116,32 +117,39 @@ Namespace Heatmap
                                     End Function
                     Dim r!
                     Dim dr!
+                    Dim left!
 
-                    args.top += region.Padding.Top * 1.25
+                    args.top += region.Padding.Top / 2
 
                     For Each x As SeqValue(Of DataSet) In array.SeqIterator(offset:=1)  ' 在这里绘制具体的矩阵
                         Dim levelRow As DataSet = args.levels(x.value.ID)
+
+                        left = args.left
 
                         ' X为矩阵之中的行数据
                         ' 下面的循环为横向绘制出三角形的每一行的图形
                         For Each key As String In keys
                             Dim c# = (+x)(key)
-                            Dim rect As New RectangleF(New PointF(args.left, args.top), blockSize)
                             Dim labelbrush As SolidBrush = Nothing
                             Dim gridDraw As Boolean = drawGrid
+                            Dim rect As New RectangleF With {
+                                .Location = New PointF(left, args.top),
+                                .Size = blockSize
+                            }
 
                             If i > x.i Then ' 上三角部分不绘制任何图形
                                 gridDraw = False
                                 ' 绘制标签
                                 If i = x.i + 1 Then
-                                    Call text.DrawString(key, rowLabelFont, Brushes.Black, rect.Location, angle:=-45)
+                                    ' Call text.DrawString(key, rowLabelFont, Brushes.Black, rect.Location, angle:=-45)
                                 End If
                             Else
-                                Dim level% = levelRow(key)  '  得到等级
-                                Dim b As SolidBrush = colors(   ' 得到当前的方格的颜色
-                                    If(level% > colors.Length - 1,
+                                Dim level% = levelRow(key)          ' 得到等级
+                                Dim index% = If(
+                                    level% > colors.Length - 1,
                                     colors.Length - 1,
-                                    level))
+                                    level)
+                                Dim b As SolidBrush = colors(index) ' 得到当前的方格的颜色
 
                                 If drawValueLabel Then
                                     labelbrush = Brushes.White
@@ -157,29 +165,33 @@ Namespace Heatmap
                                 Call g.DrawRectangle(gridBrush, rect)
                             End If
                             If Not labelbrush Is Nothing Then
-                                key = c.FormatNumeric(2)
-                                Dim ksz As SizeF = g.MeasureString(key, valuelabelFont)
-                                Dim kpos As New PointF With {
-                                    .X = rect.Left + (rect.Width - ksz.Width) / 2,
-                                    .Y = rect.Top + (rect.Height - ksz.Height) / 2
-                                }
-                                Call g.DrawString(key, valuelabelFont, labelbrush, kpos)
+
+                                With c.ToString("F2")
+                                    Dim ksz As SizeF = g.MeasureString(.ref, valuelabelFont)
+                                    Dim kpos As New PointF With {
+                                        .X = rect.Left + (rect.Width - ksz.Width) / 2,
+                                        .Y = rect.Top + (rect.Height - ksz.Height) / 2
+                                    }
+                                    Call g.DrawString(.ref, valuelabelFont, labelbrush, kpos)
+                                End With
                             End If
 
-                            args.left += dw!
+                            left += dw!
                             i += 1
                         Next
 
-                        args.left = margin.Left
+                        left = args.left
                         args.top += dw!
                         i = 1
 
                         Dim sz As SizeF = g.MeasureString((+x).ID, rowLabelFont)
                         Dim y As Single = args.top - dw - (sz.Height - dw) / 2
-                        Dim lx! = margin.Left - sz.Width - margin.Horizontal * 0.1
+                        Dim lx! = args.left - sz.Width - margin.Horizontal * 0.1
 
                         Call g.DrawString((+x).ID, rowLabelFont, Brushes.Black, New PointF(lx, y))
                     Next
+
+                    args.left -= dw / 1.5
                 End Sub
 
             With margin
@@ -197,16 +209,18 @@ Namespace Heatmap
                 .Height = gSize.Height / 20
             }
 
-            Return __plotInterval(
+            Return Internal.__plotInterval(
                 plotInternal, data.ToArray,
                 rowLabelFont, rowLabelFont, logScale,
-                scaleMethod:=DrawElements.None, drawLabels:=DrawElements.Rows, drawDendrograms:=DrawElements.None, drawClass:=(rowDendrogramClass, Nothing), dendrogramLayout:=(rowDendrogramHeight, 0),
+                scaleMethod:=DrawElements.None, drawLabels:=DrawElements.Both, drawDendrograms:=DrawElements.None, drawClass:=(rowDendrogramClass, Nothing), dendrogramLayout:=(rowDendrogramHeight, 0),
                 reverseClrSeq:=True, mapLevels:=mapLevels, mapName:=mapName,
                 size:=gSize, padding:=margin, bg:=bg,
                 legendTitle:=legendTitle,
                 legendFont:=CSSFont.TryParse(legendFont), legendLabelFont:=CSSFont.TryParse(legendLabelFont), min:=min, max:=max,
                 mainTitle:=mainTitle, titleFont:=titleFont,
-                legendWidth:=120, legendSize:=llayout)
+                legendWidth:=120, legendSize:=llayout,
+                rowXOffset:=leftOffSet).AsGDIImage.CorpBlank(margin.Left)
+
         End Function
     End Module
 
