@@ -320,8 +320,15 @@ Namespace ApplicationServices.SoftwareToolkits
         ''' 将当前目录下的所有的.NET程序都进行安装
         ''' </summary>
         <ExportAPI("--install", Info:="Install all of the .NET program in the current directory.")>
-        Public Sub Install(Optional PATH$ = "./")
-            Dim files = ls - l - r - {"*.exe", "*.dll"} <= PATH$
+        Public Sub Install(Optional PATH$ = "./", Optional installExe As Boolean = False)
+            Dim files As IEnumerable(Of String)
+
+            If installExe Then
+                files = ls - l - r - {"*.exe", "*.dll"} <= PATH$
+            Else
+                files = ls - l - r - {"*.dll"} <= PATH$
+            End If
+
             Dim runInstall = LinqAPI.Exec(Of String) _
  _
                 () <= From assembly As String
