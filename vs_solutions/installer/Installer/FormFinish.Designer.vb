@@ -60,7 +60,7 @@ Partial Class FormFinish
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(262, 38)
         Me.Label5.TabIndex = 6
-        Me.Label5.Text = "sciBASIC framework is open source, " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "and you can get latest source code from: "
+        Me.Label5.Text = "sciBASIC framework is an open source project, " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "you can get latest source code from: "
         '
         'FormFinish
         '
