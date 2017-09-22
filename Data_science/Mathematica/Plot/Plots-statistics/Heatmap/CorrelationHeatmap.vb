@@ -48,6 +48,7 @@ Namespace Heatmap
         ''' 只能够用来表示两两变量之间的相关度
         ''' </summary>
         ''' <param name="rowLabelFontStyle">因为是三角形的矩阵，所以行和列的字体都使用相同的值了</param>
+        ''' <param name="variantSize">热图之中的圆圈的半径大小是否随着相关度的值而发生改变？</param>
         ''' <returns></returns>
         Public Function Plot(data As IEnumerable(Of DataSet),
                              Optional mapLevels% = 40,
@@ -68,7 +69,8 @@ Namespace Heatmap
                              Optional drawGrid As Boolean = False,
                              Optional gridColor$ = NameOf(Color.Gray),
                              Optional drawValueLabel As Boolean = False,
-                             Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal) As GraphicsData
+                             Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
+                             Optional variantSize As Boolean = True) As GraphicsData
 
             Dim margin As Padding = padding
             Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
@@ -76,16 +78,42 @@ Namespace Heatmap
             Dim min#, max#
             Dim gridBrush As New Pen(gridColor.TranslateColor, 2)
             Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelFontStyle).GDIObject
+
+            With range Or array _
+                .Select(Function(x) x.Properties.Values) _
+                .IteratesALL _
+                .ToArray _
+                .Range _
+                .AsDefault
+
+                min = .Min
+                max = .Max
+
+                range = {0, .Max}
+            End With
+
             Dim plotInternal =
                 Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
 
                     ' 在绘制上三角的时候假设每一个对象的keys的顺序都是相同的
                     Dim dw! = args.dStep.Width, dh! = args.dStep.Height
                     Dim keys$() = array(Scan0).Properties.Keys.ToArray
-                    Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小
+                    Dim blockSize As New SizeF(dw, dw)  ' 每一个方格的大小是不变的
                     Dim i% = 1
                     Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                     Dim colors = args.colors
+                    Dim radius As DoubleRange = {0R, dw}
+                    Dim getRadius = Function(corr#) As Double
+                                        If variantSize Then
+                                            Return range.ScaleMapping(Math.Abs(corr), radius)
+                                        Else
+                                            Return dw
+                                        End If
+                                    End Function
+                    Dim r!
+                    Dim dr!
+
+                    args.top += region.Padding.Top * 1.25
 
                     For Each x As SeqValue(Of DataSet) In array.SeqIterator(offset:=1)  ' 在这里绘制具体的矩阵
                         Dim levelRow As DataSet = args.levels(x.value.ID)
@@ -115,7 +143,10 @@ Namespace Heatmap
                                     labelbrush = Brushes.White
                                 End If
 
-                                Call g.FillPie(b, rect.Left, rect.Top, dw, dw, 0, 360)
+                                r = getRadius(corr:=c)
+                                dr = (dw - r) / 2
+
+                                Call g.FillPie(b, rect.Left + dr, rect.Top + dr, r, r, 0, 360)
                             End If
 
                             If gridDraw Then
@@ -146,17 +177,6 @@ Namespace Heatmap
                         Call g.DrawString((+x).ID, rowLabelFont, Brushes.Black, New PointF(lx, y))
                     Next
                 End Sub
-
-            With range Or array _
-                .Select(Function(x) x.Properties.Values) _
-                .IteratesALL _
-                .ToArray _
-                .Range _
-                .AsDefault
-
-                min = .Min
-                max = .Max
-            End With
 
             With margin
                 .Left = array _
