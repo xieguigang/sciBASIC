@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
@@ -50,7 +51,7 @@ Namespace Heatmap
         ''' <returns></returns>
         Public Function Plot(data As IEnumerable(Of DataSet),
                              Optional mapLevels% = 20,
-                             Optional mapName$ = ColorMap.PatternJet,
+                             Optional mapName$ = ColorBrewer.DivergingSchemes.RdBu11,
                              Optional size$ = "1600,1600",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
