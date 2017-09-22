@@ -98,7 +98,8 @@ Namespace Imaging.BitmapImage
                     End If
 
                     For y As Integer = y1 To y2
-                        Dim pen As New Pen(Color.FromArgb(alpha, renderColor.R, renderColor.G, renderColor.B))
+                        Dim color As Color = Color.FromArgb(alpha, renderColor.R, renderColor.G, renderColor.B)
+                        Dim pen As New Pen(color)
 
                         .DrawLine(pen, New Point(0, y), New Point(.Width, y))
                         alpha = CInt(255 * sys.Sin(offset) ^ 2)
@@ -139,11 +140,11 @@ Namespace Imaging.BitmapImage
                 blankColor = New Color
             End If
 
-            Dim bmp As Bitmap
+            Dim bmp As BitmapBuffer
             Dim top%, left%
 
             Try
-                bmp = New Bitmap(res)
+                bmp = BitmapBuffer.FromImage(res)
             Catch ex As Exception
 
                 ' 2017-9-21 ???
@@ -163,6 +164,7 @@ Namespace Imaging.BitmapImage
 
                 For left = 0 To res.Width - 1
                     Dim p = bmp.GetPixel(left, top)
+
                     If Not GDIColors.Equals(p, blankColor) Then
                         ' 在这里确定了左右
                         find = True
@@ -177,7 +179,7 @@ Namespace Imaging.BitmapImage
 
             Dim region As New Rectangle(0, top, res.Width, res.Height - top)
             res = res.ImageCrop(region.Location, region.Size)
-            bmp = New Bitmap(res)
+            bmp = BitmapBuffer.FromImage(res)
 
             ' left
             For left = 0 To res.Width - 1
@@ -199,7 +201,7 @@ Namespace Imaging.BitmapImage
 
             region = New Rectangle(left, 0, res.Width - left, res.Height)
             res = res.ImageCrop(region.Location, region.Size)
-            bmp = New Bitmap(res)
+            bmp = BitmapBuffer.FromImage(res)
 
             Dim right As Integer
             Dim bottom As Integer
@@ -224,7 +226,7 @@ Namespace Imaging.BitmapImage
 
             region = New Rectangle(0, 0, res.Width, bottom)
             res = res.ImageCrop(region.Location, region.Size)
-            bmp = New Bitmap(res)
+            bmp = BitmapBuffer.FromImage(res)
 
             ' right
             For right = res.Width - 1 To 0 Step -1

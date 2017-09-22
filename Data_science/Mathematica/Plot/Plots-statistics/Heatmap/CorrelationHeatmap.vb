@@ -222,7 +222,7 @@ Namespace Heatmap
                 rowXOffset:=leftOffSet) _
  _
                 .AsGDIImage _
-                .CorpBlank(margin.Left)
+                .CorpBlank(margin.Left / 2)
 
         End Function
     End Module
