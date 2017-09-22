@@ -33,7 +33,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit
 Imports sys = System.Math
 
-Namespace Imaging
+Namespace Imaging.BitmapImage
 
     ''' <summary>
     ''' Grayscale and binarization extensions
@@ -137,6 +137,7 @@ Namespace Imaging
                 If newValue > 255 Then
                     newValue = 255
                 End If
+
                 contrastLookup(i) = CByte(Truncate(newValue))
             Next
 

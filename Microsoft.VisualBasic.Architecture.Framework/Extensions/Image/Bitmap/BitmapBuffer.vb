@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports sys = System.Math
 
-Namespace Imaging
+Namespace Imaging.BitmapImage
 
     ''' <summary>
     ''' 线程不安全的图片数据对象
@@ -112,6 +112,7 @@ Namespace Imaging
         ''' pixel.</param>
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
+
             buffer(i + 2) = color.R
             buffer(i + 1) = color.G
             buffer(i + 0) = color.B
@@ -129,8 +130,11 @@ Namespace Imaging
         Public Shared Function FromBitmap(curBitmap As Bitmap) As BitmapBuffer
             ' Lock the bitmap's bits.  
             Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
-            Dim bmpData As BitmapData =
-            curBitmap.LockBits(rect, ImageLockMode.ReadWrite, curBitmap.PixelFormat)
+            Dim bmpData As BitmapData = curBitmap.LockBits(
+                rect,
+                ImageLockMode.ReadWrite,
+                curBitmap.PixelFormat)
+
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.

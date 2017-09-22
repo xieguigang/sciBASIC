@@ -558,6 +558,7 @@
     <Compile Include="Extensions\Collection\Which.vb" />
     <Compile Include="Extensions\Debugger\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
+    <Compile Include="Extensions\Image\Bitmap\Utils.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
