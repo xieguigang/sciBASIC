@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Imaging
 
 ''' <summary>
 ''' 网格也可以看作为一种网络
@@ -8,13 +9,17 @@ Public Class Grid
 
     ReadOnly X, Y As OrderSelector(Of Double)
     ReadOnly steps As SizeF
-    ReadOnly rect As Rectangle
+    ReadOnly rect As RectangleF
 
     Sub New(size As Size, steps As SizeF)
         Call Me.New(New Rectangle(New Point, size), steps)
     End Sub
 
     Sub New(layout As Rectangle, steps As SizeF)
+        Call Me.New(layout.ToFloat, steps)
+    End Sub
+
+    Sub New(layout As RectangleF, steps As SizeF)
         X = New OrderSelector(Of Double)(Math.seq(layout.X, layout.Right, steps.Width))
         Y = New OrderSelector(Of Double)(Math.seq(layout.Y, layout.Bottom, steps.Height))
 

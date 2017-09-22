@@ -71,6 +71,16 @@ Namespace Imaging
             Return False
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ToFloat(rect As Rectangle) As RectangleF
+            Return New RectangleF With {
+                .Location = rect.Location.PointF,
+                .Size = rect.Size.SizeF
+            }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function PointF(pf As Point) As PointF
             Return New PointF(pf.X, pf.Y)
@@ -126,6 +136,8 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="colors"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetBrushes(colors As IEnumerable(Of Color)) As SolidBrush()
             Return colors _
@@ -166,6 +178,8 @@ Namespace Imaging
         ''' <param name="y!"></param>
         ''' <param name="r!"></param>
         ''' <param name="fill"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub DrawCircle(ByRef g As Graphics, color As Pen, x!, y!, r!, Optional fill As Boolean = True)
             Call g.DrawCircle(New PointF(x, y), r, color, fill)
@@ -206,6 +220,8 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="rect"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Area(rect As Rectangle) As Double
             Return rect.Width * rect.Height
@@ -228,6 +244,8 @@ Namespace Imaging
         ''' <param name="x"></param>
         ''' <param name="rect"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function InRegion(x As Point, rect As Rectangle) As Boolean
             Return New PointF(x.X, x.Y).InRegion(rect)
@@ -256,6 +274,8 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="size"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function GetCenter(size As Size) As Point
             Return New Point(size.Width / 2, size.Height / 2)
         End Function
@@ -265,6 +285,8 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="res"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("To.Icon")>
         <Extension> Public Function GetIcon(res As Image) As Icon
             Return Drawing.Icon.FromHandle(New Bitmap(res).GetHicon)
@@ -275,6 +297,8 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="res"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("To.Icon")>
         <Extension> Public Function GetIcon(res As Bitmap) As Icon
             Return Drawing.Icon.FromHandle(res.GetHicon)
@@ -300,6 +324,7 @@ Namespace Imaging
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("LoadImage")>
         <Extension> Public Function LoadImage(rawStream As Byte()) As Image
             Dim res = Image.FromStream(stream:=New IO.MemoryStream(rawStream))
@@ -389,7 +414,7 @@ Namespace Imaging
         ''' <param name="filled">默认的背景填充颜色为白色</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GDI+.Create")>
         <Extension> Public Function CreateGDIDevice(r As SizeF, Optional filled As Color = Nothing) As Graphics2D
             Return (New Size(CInt(r.Width), CInt(r.Height))).CreateGDIDevice(filled)

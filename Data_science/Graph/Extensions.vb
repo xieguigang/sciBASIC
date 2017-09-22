@@ -1,4 +1,6 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -38,5 +40,22 @@ Public Module Extensions
             .V = edge.U,
             .Weight = edge.Weight
         }
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="xy"></param>
+    ''' <param name="steps">如果这个参数为空的话，默认分为50份</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Grid(xy As (X As DoubleRange, Y As DoubleRange), Optional steps As SizeF = Nothing) As Grid
+        With xy
+            Dim size As New SizeF(.X.Length, .Y.Length)
+            Dim min As New PointF(.X.Min, .Y.Min)
+            Dim rect As New RectangleF(min, size)
+
+            Return New Grid(rect, steps Or New SizeF(size.Width / 50, size.Height / 50).AsDefault)
+        End With
     End Function
 End Module
