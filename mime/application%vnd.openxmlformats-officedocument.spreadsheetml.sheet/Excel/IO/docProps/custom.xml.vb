@@ -28,13 +28,21 @@
 
 Imports System.Xml.Serialization
 
-Namespace docProps
+Namespace XML.docProps
 
     <XmlRoot("Properties", [Namespace]:="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties")>
     Public Class custom : Inherits IXml
 
         <XmlElement("property")>
         Public Property properties As [property]()
+
+        <XmlNamespaceDeclarations()>
+        Public xmlns As XmlSerializerNamespaces
+
+        Sub New()
+            xmlns = New XmlSerializerNamespaces
+            xmlns.Add("vt", Excel.Xmlns.vt)
+        End Sub
 
         Protected Overrides Function filePath() As String
             Return "docProps/custom.xml"
@@ -51,6 +59,7 @@ Namespace docProps
         <XmlAttribute> Public Property pid As String
         <XmlAttribute> Public Property name As String
 
+        <XmlElement(NameOf(lpwstr), [Namespace]:=vt)>
         Public Property lpwstr As String
 
         Public Overrides Function ToString() As String

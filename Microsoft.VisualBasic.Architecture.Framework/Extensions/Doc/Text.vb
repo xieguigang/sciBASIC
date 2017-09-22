@@ -265,7 +265,7 @@ Public Module TextDoc
 
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
-            Call FileIO.FileSystem.WriteAllText(path, text, append:=append, encoding:=encoding Or DefaultEncoding)
+            Call File.WriteAllText(path, text, encoding Or DefaultEncoding)
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)

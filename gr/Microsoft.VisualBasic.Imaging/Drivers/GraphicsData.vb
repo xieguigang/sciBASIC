@@ -199,9 +199,14 @@ Namespace Driver
 
         Dim engine As GraphicsSVG
 
+        ''' <summary>
+        ''' <paramref name="img"/> parameter is <see cref="GraphicsSVG"/>
+        ''' </summary>
+        ''' <param name="img"></param>
+        ''' <param name="size"></param>
         Public Sub New(img As Object, size As Size)
             MyBase.New(img, size)
-            Me.engine = img
+            Me.engine = DirectCast(img, GraphicsSVG)
         End Sub
 
         Public Overrides ReadOnly Property Driver As Drivers

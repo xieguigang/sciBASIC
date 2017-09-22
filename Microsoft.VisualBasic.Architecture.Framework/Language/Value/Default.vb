@@ -10,10 +10,27 @@ Namespace Language
     ''' <typeparam name="T"></typeparam>
     Public Structure DefaultValue(Of T)
 
+        Public ReadOnly Property DefaultValue As T
+            Get
+                If LazyValue Is Nothing Then
+                    Return Value
+                Else
+                    ' using lazy loading, if the default value takes time to creates.
+                    Return LazyValue()
+                End If
+            End Get
+        End Property
+
         ''' <summary>
-        ''' The default value
+        ''' The default value for <see cref="DefaultValue"/>
         ''' </summary>
         Dim Value As T
+
+        ''' <summary>
+        ''' 假若生成目标值的时间比较久，可以将其申明为Lambda表达式，这样子可以进行惰性加载
+        ''' </summary>
+        Dim LazyValue As Func(Of T)
+
         ''' <summary>
         ''' asset that if target value is null?
         ''' </summary>
@@ -56,6 +73,13 @@ Namespace Language
         Public Shared Widening Operator CType(obj As T) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .Value = obj,
+                .assert = AddressOf ExceptionHandler.Default
+            }
+        End Operator
+
+        Public Shared Widening Operator CType(lazy As Func(Of T)) As DefaultValue(Of T)
+            Return New DefaultValue(Of T) With {
+                .LazyValue = lazy,
                 .assert = AddressOf ExceptionHandler.Default
             }
         End Operator

@@ -1,6 +1,6 @@
 ﻿Imports System.Xml.Serialization
 
-Namespace _rels
+Namespace XML._rels
 
     <XmlRoot("Relationships", [Namespace]:="http://schemas.openxmlformats.org/package/2006/relationships")>
     Public Class rels : Inherits IXml
@@ -13,7 +13,7 @@ Namespace _rels
         End Function
 
         Protected Overrides Function toXml() As String
-            Throw New NotImplementedException()
+            Return Me.GetXml
         End Function
     End Class
 

@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Linq
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports [Class] = Microsoft.VisualBasic.DataMining.ComponentModel.ColorClass
 

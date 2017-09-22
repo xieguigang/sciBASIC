@@ -66,12 +66,19 @@ PM> Install-Package sciBASIC -Pre
 
 ## Namespace
 
-|Namespace                      |Description                                                                       |
-|-------------------------------|----------------------------------------------------------------------------------|
-|Microsoft.VisualBasic.Data     |Raw data processing related code                                                  |
-|Microsoft.VisualBasic.Imaging  |``sciBASIC`` graphics system based on the GDI+ API from ``System.Drawing``        |
-|Microsoft.VisualBasic.Math     |``sciBASIC`` math library                                                         |
-|Microsoft.VisualBasic.Scripting|String expression related API for CLI programming and optional parameter scripting|
+|Namespace                                  |Description                                                                       |
+|-------------------------------------------|----------------------------------------------------------------------------------|
+|Microsoft.VisualBasic.ApplicationServices  |Application tool and Utils for build software in a more easy way                  |
+|Microsoft.VisualBasic.CommandLine          |CLI framework system                                                              |
+|\*Microsoft.VisualBasic.Data               |Raw data processing related code and charting plot library for data visualization |
+|\*Microsoft.VisualBasic.DataMining         |``sciBASIC`` data mining library                                                  |
+|\*Microsoft.VisualBasic.Imaging            |``sciBASIC`` graphics system based on the GDI+ API from ``System.Drawing``        |
+|\*Microsoft.VisualBasic.MachineLearning    |``sciBASIC`` machine learning library                                             |
+|\*Microsoft.VisualBasic.Math               |``sciBASIC`` math library                                                         |
+|Microsoft.VisualBasic.MIME                 |MIME type text document parser                                                    |
+|Microsoft.VisualBasic.Scripting            |String expression related API for CLI programming and optional parameter scripting|
+
+sciBASIC runtime can be split as two part: Part1 is the general application runtime, like scripting helper, commandline system, and text document parser; Another part of the runtime is the data science runtime, like math function, cluster function, or charting runtime for data visualization. All of the data science related namespace in sciBASIC are mark as **asterisk**. 
 
 ## ODEs scripting language feature
 
@@ -149,6 +156,7 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 Imports Microsoft.VisualBasic.Data.ChartPlots
 ```
 ![](./Data_science/DataMining/hierarchical-clustering/test.png)
+![](./Data_science/Mathematica/images/identity_pie.png)
 ![](./Data_science/Mathematica/images/heatmap/Sample.SPCC.png)
 ![](./Data_science/Mathematica/images/log2FC_heatmap.png)
 ![](./Data_science/algorithms/CMeans/CMeans.png)

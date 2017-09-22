@@ -64,6 +64,7 @@ Namespace Math.Correlations
             FractionalRanking = 1 + 2.5 + 2.5 + 4
         End Enum
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Ranking(Of C As IComparable)(list As IEnumerable(Of C), Optional strategy As Strategies = Strategies.OrdinalRanking, Optional desc As Boolean = False) As Double()
             If strategy = Strategies.OrdinalRanking Then
