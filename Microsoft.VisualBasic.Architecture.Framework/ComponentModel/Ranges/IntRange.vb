@@ -33,13 +33,11 @@
 '
 
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
 
     ''' <summary>
-    ''' Represents an integer range with minimum and maximum values
+    ''' Represents an <see cref="Integer"/> range with minimum and maximum values
     ''' </summary>
     Public Class IntRange : Inherits ClassObject
         Implements IRanges(Of Integer)
@@ -70,15 +68,16 @@ Namespace ComponentModel.Ranges
         '''
         ''' <param name="min">Minimum value of the range</param>
         ''' <param name="max">Maximum value of the range</param>
-        Public Sub New(min As Integer, max As Integer)
+        Public Sub New(min%, max%)
             Me.Min = min
             Me.Max = max
         End Sub
 
         Sub New(source As IEnumerable(Of Integer))
-            Dim array As Integer() = source.ToArray
-            Me.Min = array.Min
-            Me.Max = array.Max
+            With source.ToArray
+                Min = .Min
+                Max = .Max
+            End With
         End Sub
 
         Sub New()

@@ -18,7 +18,7 @@ Namespace Heatmap
     Public Module DensityPlot
 
         ''' <summary>
-        ''' Similar to the <see cref="Contour"/> plot.
+        ''' Similar to the <see cref="Contour"/> plot but plot in scatter mode.
         ''' </summary>
         ''' <param name="points"></param>
         ''' <param name="size$"></param>
@@ -43,17 +43,28 @@ Namespace Heatmap
                 .GetColors(schema, levels) _
                 .Select(Function(c) c.ToHtmlColor) _
                 .ToArray
-            Dim matrix = (xrange, yrange) _
+            Dim density = (xrange, yrange) _
                 .Grid(steps.FloatSizeParser) _
                 .DensityMatrix(
                     pointData,
                     schema:=colors,
                     r:=ptSize)
 
-            Return Contour.Plot(
-                matrix,
-                colorMap:=schema, mapLevels:=levels,
-                bg:=bg, size:=size, padding:=padding)
+            Using g As IGraphics = Scatter.Plot(
+                c:={density},
+                size:=size, padding:=padding, bg:=bg,
+                drawLine:=False,
+                showLegend:=False,
+                fillPie:=True).CreateGraphics
+
+                ' 在这里还需要绘制颜色谱的legend
+
+                If TypeOf g Is Graphics2D Then
+                    Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size)
+                Else
+                    Return New SVGData(g, g.Size)
+                End If
+            End Using
         End Function
 
         ''' <summary>
