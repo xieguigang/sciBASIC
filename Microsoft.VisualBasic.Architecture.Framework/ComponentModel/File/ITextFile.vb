@@ -40,7 +40,7 @@ Namespace ComponentModel
     ''' Object model of the text file doucment.(文本文件的对象模型，这个文本文件对象在Disposed的时候会自动保存其中的数据)
     ''' </summary>
     ''' <remarks></remarks>
-    Public MustInherit Class ITextFile : Inherits ClassObject
+    Public MustInherit Class ITextFile : Inherits BaseClass
         Implements IDisposable
         Implements ISaveHandle
         Implements IFileReference

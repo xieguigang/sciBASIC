@@ -56,7 +56,7 @@ Namespace Logical.FuzzyLogic
     ''' <summary>
     ''' Represents a rule.
     ''' </summary>
-    Public Class FuzzyRule : Inherits ClassObject
+    Public Class FuzzyRule : Inherits BaseClass
 
 #Region "Private Properties"
 

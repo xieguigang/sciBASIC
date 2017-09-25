@@ -122,7 +122,7 @@ Namespace ComponentModel.DataSourceModel
         End Sub
 
         ''' <summary>
-        ''' Creates a new extension property for the target <see cref="ClassObject"/>
+        ''' Creates a new extension property for the target <see cref="BaseClass"/>
         ''' </summary>
         ''' <typeparam name="Cls"></typeparam>
         ''' <param name="x"></param>
@@ -136,7 +136,7 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' Gets the tag property value from the <see cref="ClassObject"/>.(读取<see cref="ClassObject"/>对象之中的一个拓展属性)
+        ''' Gets the tag property value from the <see cref="BaseClass"/>.(读取<see cref="BaseClass"/>对象之中的一个拓展属性)
         ''' </summary>
         ''' <typeparam name="Cls"></typeparam>
         ''' <param name="x"></param>

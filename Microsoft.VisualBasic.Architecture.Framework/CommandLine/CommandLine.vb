@@ -49,7 +49,7 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    Public Class CommandLine : Inherits ClassObject
+    Public Class CommandLine : Inherits BaseClass
         Implements ICollection(Of NamedValue(Of String))
         Implements INamedValue
 

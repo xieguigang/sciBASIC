@@ -821,7 +821,7 @@
     <Compile Include="Language\Class.vb" />
     <Compile Include="Language\lang\UnixBash\Shell\ls.vb" />
     <Compile Include="Language\lang\UnixBash\FileSystem\File.vb" />
-    <Compile Include="Language\ClassObject.vb" />
+    <Compile Include="Language\BaseClass.vb" />
     <Compile Include="Language\Value\Numeric\Numeric.vb" />
     <Compile Include="Language\lang\UnixBash\Shell\Text\Grep.vb" />
     <Compile Include="ApplicationServices\Tools\MMFProtocol\WorkFlow.vb" />

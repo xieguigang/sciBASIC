@@ -41,7 +41,7 @@ Namespace ComponentModel.Ranges
     ''' <summary>
     ''' Represents an integer range with minimum and maximum values
     ''' </summary>
-    Public Class IntRange : Inherits ClassObject
+    Public Class IntRange : Inherits BaseClass
         Implements IRanges(Of Integer)
         Implements IEnumerable(Of Integer)
 

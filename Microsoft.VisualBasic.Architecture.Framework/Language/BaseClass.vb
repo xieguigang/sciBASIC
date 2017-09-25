@@ -53,9 +53,9 @@ Namespace Language
     'End Module
 
     ''' <summary>
-    ''' The base class object in VisualBasic
+    ''' The base class object in VisualBasic language
     ''' </summary>
-    Public Class ClassObject : Implements IClassObject
+    Public Class BaseClass : Implements IClassObject
 
         ''' <summary>
         ''' The extension property.(为了节省内存的需要，这个附加属性尽量不要被自动初始化)
@@ -96,7 +96,7 @@ Namespace Language
         End Function
 
         ''' <summary>
-        ''' String source for operator <see cref="ClassObject.Operator &(ClassObject, String)"/>
+        ''' String source for operator <see cref="BaseClass.Operator &(BaseClass, String)"/>
         ''' </summary>
         ''' <returns>Default is using <see cref="ToString"/> method as provider</returns>
         Protected Friend Overridable Function __toString() As String
@@ -109,7 +109,7 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <param name="s"></param>
         ''' <returns></returns>
-        Public Shared Operator &(x As ClassObject, s As String) As String
+        Public Shared Operator &(x As BaseClass, s As String) As String
             Return x.__toString & s
         End Operator
 
@@ -119,12 +119,28 @@ Namespace Language
         ''' <param name="s"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Shared Operator &(s As String, x As ClassObject) As String
+        Public Shared Operator &(s As String, x As BaseClass) As String
             Return s & x.__toString
         End Operator
 
-        Protected Sub Copy(ByRef x As ClassObject)
+        Protected Sub Copy(ByRef x As BaseClass)
             x = Me
         End Sub
+
+        Public Shared Operator IsTrue(x As BaseClass) As Boolean
+            Return Not x Is Nothing
+        End Operator
+
+        Public Shared Operator IsFalse(x As BaseClass) As Boolean
+            Return x Is Nothing
+        End Operator
+
+        Public Shared Operator Not(x As BaseClass) As Boolean
+            If x Is Nothing Then
+                Return True
+            Else
+                Return False
+            End If
+        End Operator
     End Class
 End Namespace

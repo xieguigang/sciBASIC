@@ -35,7 +35,7 @@ Namespace Language.UnixBash
     ''' <summary>
     ''' PS (Prompt Sign)
     ''' </summary>
-    Public Class PS1 : Inherits ClassObject
+    Public Class PS1 : Inherits BaseClass
 
         ''' <summary>
         ''' ``\H`` 完整的主机名称

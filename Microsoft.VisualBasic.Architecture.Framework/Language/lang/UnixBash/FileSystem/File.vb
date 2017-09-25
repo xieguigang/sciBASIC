@@ -39,7 +39,7 @@ Namespace Language.UnixBash.FileSystem
     ''' <summary>
     ''' Asbtract file IO model
     ''' </summary>
-    Public MustInherit Class File : Inherits ClassObject
+    Public MustInherit Class File : Inherits BaseClass
         Implements ISaveHandle
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save

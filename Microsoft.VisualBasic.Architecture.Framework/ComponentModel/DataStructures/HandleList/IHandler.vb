@@ -62,7 +62,7 @@ Namespace ComponentModel
     Public Interface IHashHandle : Inherits IAddressOf, INamedValue
     End Interface
 
-    Public Class IHashValue(Of T As INamedValue) : Inherits ClassObject
+    Public Class IHashValue(Of T As INamedValue) : Inherits BaseClass
         Implements IHashHandle
 
         Public Property obj As T
