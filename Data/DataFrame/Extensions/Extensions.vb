@@ -393,11 +393,12 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                              Optional nonParallel As Boolean = False,
                                              Optional maps As Dictionary(Of String, String) = Nothing,
                                              Optional reorderKeys As Integer = 0,
-                                             Optional layout As Dictionary(Of String, Integer) = Nothing) As Boolean
+                                             Optional layout As Dictionary(Of String, Integer) = Nothing,
+                                             Optional tsv As Boolean = False) As Boolean
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
-            Throw New Exception(path, ex)
+            Throw New Exception("Probably invalid path value: " & path, ex)
         End Try
 
         Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
@@ -412,10 +413,10 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             Not nonParallel,
             metaBlank, reorderKeys, layout)
 
-        Dim success As Boolean = StreamIO.SaveDataFrame(
-            csv,
+        Dim success = csv.SaveDataFrame(
             path:=path,
-            encoding:=encoding)
+            encoding:=encoding,
+            tsv:=tsv)
 
         If success Then
             Call "CSV saved!".EchoLine

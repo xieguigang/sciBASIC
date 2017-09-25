@@ -559,17 +559,13 @@ Namespace Math
                 Return 0
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the absolute value of a double-precision floating-point number.
-        '
-        ' Parameters:
-        '   value:
-        '     A number that is greater than or equal to System.Double.MinValue, but less than
-        '     or equal to System.Double.MaxValue.
-        '
-        ' Returns:
-        '     A double-precision floating-point number, x, such that 0 ≤ x ≤System.Double.MaxValue.
+
+        ''' <summary>
+        ''' Returns the absolute value of a double-precision floating-point number.
+        ''' </summary>
+        ''' <param name="value">A number that is greater than or equal to System.Double.MinValue, but less than
+        ''' or equal to System.Double.MaxValue.</param>
+        ''' <returns>A double-precision floating-point number, x, such that 0 ≤ x ≤System.Double.MaxValue.</returns>
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Double) As Double

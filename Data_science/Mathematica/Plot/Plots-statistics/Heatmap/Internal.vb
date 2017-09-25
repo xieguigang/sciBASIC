@@ -271,7 +271,8 @@ Namespace Heatmap
                                        Optional titleFont As Font = Nothing,
                                        Optional legendWidth! = -1,
                                        Optional legendHasUnmapped As Boolean = True,
-                                       Optional legendSize As Size = Nothing) As GraphicsData
+                                       Optional legendSize As Size = Nothing,
+                                       Optional rowXOffset% = 0) As GraphicsData
 
             Dim keys$() = array.PropertyNames
             Dim angle! = -45
@@ -314,11 +315,14 @@ Namespace Heatmap
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
                     ' 根据布局计算出矩阵的大小和位置
-                    Dim left! = padding.Left, top! = padding.Top    ' 绘图区域的左上角位置
+                    Dim left! = padding.Left + rowXOffset, top! = padding.Top    ' 绘图区域的左上角位置
                     ' 计算出右边的行标签的最大的占用宽度
                     Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, rowLabelfont)
                     Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, colLabelFont)
-                    Dim llayout As New Rectangle(New Point(left, top), legendSize)
+                    Dim llayout As New Rectangle With {
+                        .Location = New Point(left, top),
+                        .Size = legendSize
+                    }
 
                     ' legend位于整个图片的左上角
                     Call Legends.ColorLegendHorizontal(colors, ticks, g, llayout, scientificNotation:=True)

@@ -27,14 +27,15 @@
 #End Region
 
 Imports System.ComponentModel
-Imports System.IO
 Imports System.Runtime.InteropServices
-Imports System.Runtime.Remoting.Contexts
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
 
-Namespace SoftwareToolkits
+Namespace ApplicationServices.SoftwareToolkits
 
     ''' <summary>
     ''' Ngen.exe (Native Image Generator)
@@ -172,13 +173,14 @@ Namespace SoftwareToolkits
         ''' for example, the version of a dependency that is loaded. The /ExeConfig switch gives Ngen.exe guidance on which dependencies would be loaded at run time.</param>
         ''' <param name="AppBase">directoryPath, When locating dependencies, use the specified directory as the application base.</param>
         ''' <param name="queue">If /queue is specified, the action is queued for the native image service. The default priority is 3. See the Priority Levels table.</param>
-        Public Function Install(assemblyName As String,
-                            scenarios As NgenInstaller.Scenarios,
-                            Optional ExeConfig As String = "",
-                            Optional AppBase As Boolean = False,
-                            Optional queue As NgenInstaller.PriorityLevels = PriorityLevels.null) As String
+        Public Function Install(assemblyName$,
+                                scenarios As NgenInstaller.Scenarios,
+                                Optional ExeConfig$ = "",
+                                Optional AppBase As Boolean = False,
+                                Optional queue As NgenInstaller.PriorityLevels = PriorityLevels.null) As String
 
-            Dim cliBuilder As StringBuilder = New StringBuilder("install ", 1024)
+            Dim cliBuilder As New StringBuilder("install ", 1024)
+
             Call cliBuilder.Append(assemblyName.CLIPath & " ")
             Call cliBuilder.Append(scenarios.Description & " ")
 
@@ -194,7 +196,7 @@ Namespace SoftwareToolkits
                 Call cliBuilder.Append($"/queue:{CInt(queue)}")
             End If
 
-            Dim NGen = New CommandLine.IORedirectFile(NgenInstaller.Ngen, cliBuilder.ToString & " /verbose")
+            Dim NGen As New IORedirectFile(NgenInstaller.Ngen, cliBuilder.ToString & " /verbose")
             Call NGen.Run()
             Return NGen.StandardOutput
         End Function
@@ -222,9 +224,9 @@ Namespace SoftwareToolkits
         ''' for example, the version of a dependency that is loaded. The /ExeConfig switch gives Ngen.exe guidance on which dependencies would be loaded at run time.</param>
         ''' <param name="AppBase">directoryPath, When locating dependencies, use the specified directory as the application base.</param>
         Public Function Uninstall(assemblyName As String,
-                              scenarios As NgenInstaller.Scenarios,
-                              Optional ExeConfig As String = "",
-                              Optional AppBase As Boolean = False) As String
+                                  scenarios As NgenInstaller.Scenarios,
+                                  Optional ExeConfig As String = "",
+                                  Optional AppBase As Boolean = False) As String
 
             Dim cliBuilder As StringBuilder = New StringBuilder("uninstall ", 1024)
             Call cliBuilder.Append(assemblyName.CLIPath & " ")
@@ -238,7 +240,7 @@ Namespace SoftwareToolkits
                 Call cliBuilder.Append("/AppBase")
             End If
 
-            Dim NGen = New CommandLine.IORedirectFile(NgenInstaller.Ngen, cliBuilder.ToString & " /verbose")
+            Dim NGen = New IORedirectFile(NgenInstaller.Ngen, cliBuilder.ToString & " /verbose")
             Call NGen.Run()
             Return NGen.StandardOutput
         End Function
@@ -318,12 +320,24 @@ Namespace SoftwareToolkits
         ''' 将当前目录下的所有的.NET程序都进行安装
         ''' </summary>
         <ExportAPI("--install", Info:="Install all of the .NET program in the current directory.")>
-        Public Sub Install()
-            Dim Files = FileIO.FileSystem.GetFiles(FileIO.FileSystem.CurrentDirectory, FileIO.SearchOption.SearchTopLevelOnly, "*.exe", "*.dll")
-            Dim LQuery = (From assembly As String
-                      In Files'.AsParallel
-                          Select NgenInstaller.Install(assemblyName:=assembly, scenarios:=Scenarios.Debug)).ToArray
-        End Sub
+        Public Function Install(Optional PATH$ = "./", Optional installExe As Boolean = False) As String()
+            Dim files As IEnumerable(Of String)
+
+            If installExe Then
+                files = ls - l - r - {"*.exe", "*.dll"} <= PATH$
+            Else
+                files = ls - l - r - {"*.dll"} <= PATH$
+            End If
+
+            Dim runInstall = LinqAPI.Exec(Of String) _
+ _
+                () <= From assembly As String
+                      In files
+                      Let std_out = NgenInstaller.Install(assemblyName:=assembly, scenarios:=Scenarios.Profile)
+                      Select std_out
+
+            Return runInstall
+        End Function
 
         Public Sub Uninstall(savedState As IDictionary)
             NgenFile(InstallTypes.Uninstall)

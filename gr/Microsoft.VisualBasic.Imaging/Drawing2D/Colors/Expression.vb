@@ -19,7 +19,7 @@ Namespace Drawing2D.Colors
         Dim Term$
         Dim API As NamedValue(Of String)
 
-        Const FunctionPattern$ = "[a-z0-9_]+\(.+\)"
+        Public Const FunctionPattern$ = "[a-z0-9_]+\(.+\)"
 
         Sub New(exp$)
             If exp.IsPattern(FunctionPattern) Then
@@ -27,7 +27,10 @@ Namespace Drawing2D.Colors
                     Dim api$ = .Name
                     Dim arg$
 
-                    With .Value.GetTagValue(",", trim:=True)
+                    With .Value _
+                        .Trim(")"c) _
+                        .GetTagValue(",", trim:=True)
+
                         Term = .Name.Trim
                         arg = .Value
                     End With

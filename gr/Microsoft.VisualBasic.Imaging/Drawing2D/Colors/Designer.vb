@@ -254,7 +254,7 @@ Namespace Drawing2D.Colors
 
         <Extension>
         Private Function IsColorNameList(exp$) As Boolean
-            If InStr(exp, ",") > 0 Then
+            If Not exp.IsPattern(DesignerExpression.FunctionPattern) AndAlso InStr(exp, ",") > 0 Then
                 If exp.IsPattern("rgb\(\d+\s*(,\s*\d+\s*)+\)") Then
                     Return False
                 Else

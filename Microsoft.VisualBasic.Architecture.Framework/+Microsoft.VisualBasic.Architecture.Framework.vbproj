@@ -78,11 +78,10 @@
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>scibasic.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -433,6 +432,48 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\installer_x64\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\.vs\installer\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\installer_x64\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="Microsoft.VisualC.STLCLR" />
@@ -476,6 +517,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\Ngen\Registry.vb" />
     <Compile Include="CommandLine\InteropService\Abstract.vb" />
     <Compile Include="CommandLine\InteropService\CLIAbstractor.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\API.vb" />
@@ -532,6 +574,7 @@
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Algorithm\DataSample.vb" />
+    <Compile Include="ComponentModel\Ranges\IndexSelector.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
     <Compile Include="ComponentModel\Ranges\IRanges.vb" />
@@ -557,6 +600,7 @@
     <Compile Include="Extensions\Collection\Which.vb" />
     <Compile Include="Extensions\Debugger\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
+    <Compile Include="Extensions\Image\Bitmap\Utils.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
@@ -1078,6 +1122,7 @@
     <None Include="Resources\CPOL.htm" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="scibasic.pfx" />
     <None Include="Serialization\JSON\Formatter\readme.md" />
     <None Include="ApplicationServices\Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
