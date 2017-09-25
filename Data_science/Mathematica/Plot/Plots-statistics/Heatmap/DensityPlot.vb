@@ -35,9 +35,17 @@ Namespace Heatmap
                              Optional steps$ = Nothing,
                              Optional ptSize! = 5) As GraphicsData
 
-            Dim data = points.VectorShadows
-            Dim xrange As DoubleRange = data.X ' As IEnumerable(Of Single)
-            Dim yrange As DoubleRange = data.Y ' As IEnumerable(Of Single)
+            Dim data = points _
+                .Where(Function(pt)
+                           Return Not New Double() {
+                               pt.X, pt.Y
+                           }.Any(Function(x)
+                                     Return x.IsNaNImaginary
+                                 End Function)
+                       End Function) _
+                .VectorShadows
+            Dim xrange As DoubleRange = DirectCast(data.X, VectorShadows(Of Single)) ' As IEnumerable(Of Single)
+            Dim yrange As DoubleRange = DirectCast(data.Y, VectorShadows(Of Single)) ' As IEnumerable(Of Single)
             Dim pointData = DirectCast(data, VectorShadows(Of PointF))
             Dim colors$() = Designer _
                 .GetColors(schema, levels) _

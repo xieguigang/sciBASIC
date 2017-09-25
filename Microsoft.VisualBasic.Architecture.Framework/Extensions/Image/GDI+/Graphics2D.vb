@@ -127,7 +127,7 @@ Namespace Imaging
         ''' <summary>
         ''' Gets the width and height, in pixels, of this <see cref="ImageResource"/>.(图像的大小)
         ''' </summary>
-        ''' <returns>A System.Drawing.Size structure that represents the width and height, in pixels,
+        ''' <returns>A <see cref="System.Drawing.Size"/> structure that represents the width and height, in pixels,
         ''' of this image.</returns>
         Public Overrides ReadOnly Property Size As Size
 
@@ -225,13 +225,13 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' Creates a new System.Drawing.Graphics from the specified System.Drawing.Image.
+        ''' Creates a new <see cref="System.Drawing.Graphics"/> from the specified <see cref="Image"/>.
         ''' </summary>
         ''' <param name="image">
-        ''' System.Drawing.Image from which to create the new System.Drawing.Graphics.
+        ''' <see cref="Image"/> from which to create the new System.Drawing.Graphics.
         ''' </param>
         ''' <returns>
-        ''' This method returns a new System.Drawing.Graphics for the specified System.Drawing.Image.
+        ''' This method returns a new <see cref="System.Drawing.Graphics"/> for the specified <see cref="Image"/>.
         ''' </returns>
         Public Shared Function Open(image As Image) As Graphics2D
             Dim g As Graphics = Graphics.FromImage(image)
@@ -239,7 +239,7 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' Releases all resources used by this System.Drawing.Graphics.
+        ''' Releases all resources used by this <see cref="System.Drawing.Graphics"/>.
         ''' </summary>
         Public Overrides Sub Dispose() Implements IDisposable.Dispose
             Call Me.Graphics.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
