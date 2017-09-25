@@ -126,7 +126,7 @@ Namespace Drawing2D.Colors
         <Extension>
         Public Sub ColorMapLegend(ByRef g As IGraphics, layout As Rectangle,
                                   designer As SolidBrush(),
-                                  range As DoubleRange,
+                                  ticks#(),
                                   titleFont As Font, title$,
                                   tickFont As Font,
                                   tickAxisStroke As Pen,
@@ -209,10 +209,10 @@ Namespace Drawing2D.Colors
 
             x += 10
             point = New PointF(x, y - tickFont.Height / 2)
-            g.DrawString(range.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(Range.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
 
             point = New PointF(x, y + legendHeight - tickFont.Height / 2)
-            g.DrawString(range.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(Range.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
         End Sub
 
         ''' <summary>

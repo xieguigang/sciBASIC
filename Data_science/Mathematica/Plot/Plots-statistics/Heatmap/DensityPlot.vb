@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -35,7 +36,10 @@ Namespace Heatmap
                              Optional levels% = 20,
                              Optional steps$ = Nothing,
                              Optional ptSize! = 5,
-                             Optional legendWidth% = 150) As GraphicsData
+                             Optional legendWidth% = 150,
+                             Optional legendTitleFontCSS$ = CSSFont.Win7LargerNormal,
+                             Optional legendTickFontCSS$ = CSSFont.Win7Normal,
+                             Optional legendTickStrokeCSS$ = Stroke.StrongHighlightStroke) As GraphicsData
 
             Dim data = points _
                 .Where(Function(pt)
@@ -93,8 +97,17 @@ Namespace Heatmap
                     .Select(AddressOf TranslateColor) _
                     .Select(Function(c) New SolidBrush(c)) _
                     .ToArray
+                Dim rangeTicks = density.pts.Select(Function(pt) pt.Statics).IteratesALL.Range.CreateAxisTicks
+                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject
+                Dim legendTickFont As Font = CSSFont.TryParse(legendTickFontCSS).GDIObject
+                Dim legendTickStroke As Pen = Stroke.TryParse(legendTickStrokeCSS).GDIObject
 
-                '  Call Legends.ColorMapLegend(g, legendLayout, designer,)
+                Call Legends.ColorMapLegend(
+                    g, legendLayout, designer, rangeTicks,
+                    legendTitleFont, "Density",
+                    tickFont:=legendTickFont,
+                    tickAxisStroke:=legendTickStroke,
+                    unmapColor:=NameOf(Color.Gray))
 
                 If TypeOf g Is Graphics2D Then
                     Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size)
@@ -137,7 +150,10 @@ Namespace Heatmap
                             Return New PointData With {
                                 .value = density(pt),
                                 .color = schema(CInt(.value)),
-                                .pt = pt
+                                .pt = pt,
+                                .Statics = {
+                                    CDbl(counts(gridIndex(pt).ToString))
+                                }
                             }
                         End Function) _
                 .OrderBy(Function(pt) pt.value) _
