@@ -81,8 +81,12 @@ Namespace Heatmap
                         .Y = (scatterRegion.Height - legendHeight) / 2 + scatterPadding.Top
                     }
                 }
+                Dim designer As SolidBrush() = colors _
+                    .Select(AddressOf TranslateColor) _
+                    .Select(Function(c) New SolidBrush(c)) _
+                    .ToArray
 
-                Call Legends.ColorMapLegend()
+                Call Legends.ColorMapLegend(g, legendLayout, designer,)
 
                 If TypeOf g Is Graphics2D Then
                     Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size)
