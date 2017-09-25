@@ -118,6 +118,13 @@ Public Module Scatter
                     Dim d = line.PointSize
                     Dim r As Single = line.PointSize / 2
                     Dim bottom! = gSize.Height - margin.Bottom
+                    Dim getPointBrush = Function(pt As PointData)
+                                            If pt.color.StringEmpty Then
+                                                Return br
+                                            Else
+                                                Return pt.color.GetBrush
+                                            End If
+                                        End Function
 
                     For Each pt In pts
                         Dim a As PointData = pt.First
@@ -141,8 +148,8 @@ Public Module Scatter
                         End If
 
                         If fillPie Then
-                            Call g.FillPie(br, a.pt.X - r, a.pt.Y - r, d, d, 0, 360)
-                            Call g.FillPie(br, b.pt.X - r, b.pt.Y - r, d, d, 0, 360)
+                            Call g.FillPie(getPointBrush(a), a.pt.X - r, a.pt.Y - r, d, d, 0, 360)
+                            Call g.FillPie(getPointBrush(b), b.pt.X - r, b.pt.Y - r, d, d, 0, 360)
                         End If
                     Next
 

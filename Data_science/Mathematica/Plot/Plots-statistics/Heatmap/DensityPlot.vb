@@ -37,9 +37,17 @@ Namespace Heatmap
                              Optional ptSize! = 5,
                              Optional legendWidth% = 150) As GraphicsData
 
-            Dim data = points.VectorShadows
-            Dim xrange As DoubleRange = data.X ' As IEnumerable(Of Single)
-            Dim yrange As DoubleRange = data.Y ' As IEnumerable(Of Single)
+            Dim data = points _
+                .Where(Function(pt)
+                           Return Not New Double() {
+                               pt.X, pt.Y
+                           }.Any(Function(x)
+                                     Return x.IsNaNImaginary
+                                 End Function)
+                       End Function) _
+                .VectorShadows
+            Dim xrange As DoubleRange = DirectCast(data.X, VectorShadows(Of Single)) ' As IEnumerable(Of Single)
+            Dim yrange As DoubleRange = DirectCast(data.Y, VectorShadows(Of Single)) ' As IEnumerable(Of Single)
             Dim pointData = DirectCast(data, VectorShadows(Of PointF))
             Dim colors$() = Designer _
                 .GetColors(schema, levels) _
@@ -127,10 +135,12 @@ Namespace Heatmap
                 .SeqIterator _
                 .Select(Function(pt)
                             Return New PointData With {
-                                .color = schema(density(pt)),
+                                .value = density(pt),
+                                .color = schema(CInt(.value)),
                                 .pt = pt
                             }
                         End Function) _
+                .OrderBy(Function(pt) pt.value) _
                 .ToArray
 
             Return New SerialData With {

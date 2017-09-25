@@ -226,7 +226,7 @@ THE SOFTWARE.",
 
 #End Region
 
-    Public Class LicenseInfo : Inherits ClassObject
+    Public Class LicenseInfo : Inherits BaseClass
         Public Property Authors As NamedValue(Of String)()
         Public Property Title As String
         Public Property Copyright As String

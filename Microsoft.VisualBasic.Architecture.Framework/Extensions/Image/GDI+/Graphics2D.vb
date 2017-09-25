@@ -127,7 +127,7 @@ Namespace Imaging
         ''' <summary>
         ''' Gets the width and height, in pixels, of this <see cref="ImageResource"/>.(图像的大小)
         ''' </summary>
-        ''' <returns>A System.Drawing.Size structure that represents the width and height, in pixels,
+        ''' <returns>A <see cref="System.Drawing.Size"/> structure that represents the width and height, in pixels,
         ''' of this image.</returns>
         Public Overrides ReadOnly Property Size As Size
 
@@ -225,13 +225,13 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' Creates a new System.Drawing.Graphics from the specified System.Drawing.Image.
+        ''' Creates a new <see cref="System.Drawing.Graphics"/> from the specified <see cref="Image"/>.
         ''' </summary>
         ''' <param name="image">
-        ''' System.Drawing.Image from which to create the new System.Drawing.Graphics.
+        ''' <see cref="Image"/> from which to create the new System.Drawing.Graphics.
         ''' </param>
         ''' <returns>
-        ''' This method returns a new System.Drawing.Graphics for the specified System.Drawing.Image.
+        ''' This method returns a new <see cref="System.Drawing.Graphics"/> for the specified <see cref="Image"/>.
         ''' </returns>
         Public Shared Function Open(image As Image) As Graphics2D
             Dim g As Graphics = Graphics.FromImage(image)
@@ -239,7 +239,7 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' Releases all resources used by this System.Drawing.Graphics.
+        ''' Releases all resources used by this <see cref="System.Drawing.Graphics"/>.
         ''' </summary>
         Public Overrides Sub Dispose() Implements IDisposable.Dispose
             Call Me.Graphics.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
@@ -4180,42 +4180,24 @@ Namespace Imaging
         Public Overrides Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
             Call Graphics.FillPie(brush, x, y, width, height, startAngle, sweepAngle)
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of a pie section defined by an ellipse specified by a pair
-        '     of coordinates, a width, a height, and two radial lines.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse from which the pie section comes.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse from which the pie section comes.
-        '
-        '   width:
-        '     Width of the bounding rectangle that defines the ellipse from which the pie section
-        '     comes.
-        '
-        '   height:
-        '     Height of the bounding rectangle that defines the ellipse from which the pie
-        '     section comes.
-        '
-        '   startAngle:
-        '     Angle in degrees measured clockwise from the x-axis to the first side of the
-        '     pie section.
-        '
-        '   sweepAngle:
-        '     Angle in degrees measured clockwise from the startAngle parameter to the second
-        '     side of the pie section.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of a pie section defined by an ellipse specified by a pair
+        ''' of coordinates, a width, a height, and two radial lines.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse from which the pie section comes.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse from which the pie section comes.</param>
+        ''' <param name="width">Width of the bounding rectangle that defines the ellipse from which the pie section
+        ''' comes.</param>
+        ''' <param name="height">Height of the bounding rectangle that defines the ellipse from which the pie
+        ''' section comes.</param>
+        ''' <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the first side of the
+        ''' pie section.</param>
+        ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second
+        ''' side of the pie section.</param>
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
             Call Graphics.FillPie(brush, x, y, width, height, startAngle, sweepAngle)
         End Sub

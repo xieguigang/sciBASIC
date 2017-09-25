@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Parallel.Threads
 
-    Public MustInherit Class CodeThread : Inherits ClassObject
+    Public MustInherit Class CodeThread : Inherits BaseClass
 
         Protected ReadOnly __thread As Thread
 

@@ -50,7 +50,7 @@ Namespace Language
     ''' <see cref="System.Type"/>
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class [Class](Of T) : Inherits ClassObject
+    Public Class [Class](Of T) : Inherits BaseClass
 
         Public ReadOnly Property Type As Type
         Public ReadOnly Property Schema As Dictionary(Of BindProperty(Of Field))

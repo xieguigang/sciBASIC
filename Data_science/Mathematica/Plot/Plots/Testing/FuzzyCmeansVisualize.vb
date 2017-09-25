@@ -58,6 +58,7 @@ Module FuzzyCMeansVisualize
         Next
     End Sub
 
+	' 进行cmeans聚类
     Private Function CMeans() As (raw As Entity(), n%, trace As Dictionary(Of Integer, List(Of Entity)))
         Dim raw As New List(Of Entity)
         Dim rnd As New Random(Now.Millisecond)

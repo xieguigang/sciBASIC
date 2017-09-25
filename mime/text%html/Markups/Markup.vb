@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Serialization
 ''' <summary>
 ''' The markup document(*.html, *.md) its document syntax structure object. 
 ''' </summary>
-Public Class Markup : Inherits ClassObject
+Public Class Markup : Inherits BaseClass
     Implements IEnumerable(Of PlantText)
 
     Public Property nodes As List(Of PlantText)

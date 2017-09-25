@@ -36,7 +36,7 @@ Namespace ComponentModel
     '''
     ''' </summary>
     ''' <typeparam name="T">只允许数值类型</typeparam>
-    Public MustInherit Class EntityBase(Of T) : Inherits ClassObject
+    Public MustInherit Class EntityBase(Of T) : Inherits BaseClass
 
         <XmlAttribute("T")>
         Public Overridable Property Properties As T()

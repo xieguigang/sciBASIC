@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Collection
 
-    Public Class CapacityQueue(Of T) : Inherits Language.ClassObject
+    Public Class CapacityQueue(Of T) : Inherits Language.BaseClass
         Implements IEnumerable(Of T)
 
         ReadOnly _queue As Queue(Of T)
