@@ -1,6 +1,8 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics.Heatmap
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
 Module DensityPlotTest
 
@@ -10,6 +12,10 @@ Module DensityPlotTest
                                      Return New PointF(x!log2FC, -Math.Log10(x("p.value")))
                                  End Function).ToArray
 
-        Call DensityPlot.Plot(points, ptSize:=15, levels:=50).Save("./test.png")
+        Call DensityPlot.Plot(
+            points,
+            ptSize:=15,
+            levels:=65,
+            schema:=ColorMap.PatternJet).Save("./test.png")
     End Sub
 End Module
