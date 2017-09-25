@@ -39,7 +39,7 @@ Namespace Heatmap
                              Optional legendWidth% = 150,
                              Optional legendTitleFontCSS$ = CSSFont.Win7LargerNormal,
                              Optional legendTickFontCSS$ = CSSFont.Win7Normal,
-                             Optional legendTickStrokeCSS$ = Stroke.StrongHighlightStroke) As GraphicsData
+                             Optional legendTickStrokeCSS$ = Stroke.AxisStroke) As GraphicsData
 
             Dim data = points _
                 .Where(Function(pt)
