@@ -35,7 +35,7 @@ Namespace d3js.scale
         End Function
 
         ''' <summary>
-        ''' 输入的绘图数据
+        ''' 输入的绘图数据，建议输入由原始数据所计算出来的Ticks的结果
         ''' </summary>
         ''' <param name="values"></param>
         ''' <returns></returns>
@@ -53,7 +53,7 @@ Namespace d3js.scale
         End Function
 
         Public Overloads Function domain(singles As IEnumerable(Of Single)) As LinearScale
-            Return domain(Values.Select(Function(x) CDbl(x)))
+            Return domain(singles.Select(Function(x) CDbl(x)))
         End Function
 
         Public Shared Narrowing Operator CType(scale As LinearScale) As Func(Of Double, Double)
