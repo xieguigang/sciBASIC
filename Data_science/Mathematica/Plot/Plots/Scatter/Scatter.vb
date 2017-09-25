@@ -111,7 +111,7 @@ Public Module Scatter
 
                 Dim region As Rectangle = rect.PlotRegion
                 Dim X = d3js.scale.linear.domain(XTicks).range({region.Left, region.Right})
-                Dim Y = d3js.scale.linear.domain(YTicks).range({region.Top, region.Bottom})
+                Dim Y = d3js.scale.linear.domain(YTicks).range({0, region.Bottom - region.Top}) ' Y 为什么是从零开始的？
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,

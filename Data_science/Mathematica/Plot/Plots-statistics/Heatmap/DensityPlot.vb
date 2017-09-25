@@ -97,7 +97,12 @@ Namespace Heatmap
                     .Select(AddressOf TranslateColor) _
                     .Select(Function(c) New SolidBrush(c)) _
                     .ToArray
-                Dim rangeTicks = density.pts.Select(Function(pt) pt.Statics).IteratesALL.Range.CreateAxisTicks
+                Dim rangeTicks = density _
+                    .pts _
+                    .Select(Function(pt) pt.Statics) _
+                    .IteratesALL _
+                    .Range _
+                    .CreateAxisTicks
                 Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject
                 Dim legendTickFont As Font = CSSFont.TryParse(legendTickFontCSS).GDIObject
                 Dim legendTickStroke As Pen = Stroke.TryParse(legendTickStrokeCSS).GDIObject

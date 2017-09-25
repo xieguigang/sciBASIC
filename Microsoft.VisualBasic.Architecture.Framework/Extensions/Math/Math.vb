@@ -1926,7 +1926,7 @@ Namespace Math
 
         <Extension>
         Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
-            Return v.ToArray(Function(x) x.FormatNumeric(digitals))
+            Return v.ToArray(Function(x) x.ToString("F" & digitals))
         End Function
     End Module
 End Namespace

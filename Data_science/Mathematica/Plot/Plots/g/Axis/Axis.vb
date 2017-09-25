@@ -226,7 +226,7 @@ Namespace Graphic.Axis
                         Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
                     End If
 
-                    Dim labelText = (tick).FormatNumeric(2)
+                    Dim labelText = (tick).ToString("F" & 2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
                     Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
 
@@ -335,7 +335,7 @@ Namespace Graphic.Axis
                     Dim x As Single = scaler.X(tick) + offset.X
                     Dim axisX As New PointF(x, ZERO.Y)
 
-                    Dim labelText = (tick).FormatNumeric(2)
+                    Dim labelText = (tick).ToString("F" & 2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
