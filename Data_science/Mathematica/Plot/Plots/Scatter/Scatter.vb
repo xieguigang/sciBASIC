@@ -89,9 +89,13 @@ Public Module Scatter
                          Optional xaxis$ = Nothing) As GraphicsData
 
         Dim margin As Padding = padding
+        Dim array As SerialData() = c.ToArray
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rect As GraphicsRegion)
-                Dim array As SerialData() = c.ToArray
+
+                Dim region As Rectangle = rect.PlotRegion
+                Dim X = d3js.scale.linear.domain(singles:=array.Select(Function(s) s.pts.Select(Function(pt) pt.pt.X))).range({region.Left, region.Right})
+                Dim Y = d3js.scale.linear.domain(singles:=array.Select(Function(s) s.pts.Select(Function(pt) pt.pt.Y))).range({region.Top, region.Bottom})
                 Dim mapper As Mapper
                 Dim serialsData As New Scaling(array, absoluteScaling)
                 Dim gSize As Size = rect.Size
@@ -106,7 +110,7 @@ Public Module Scatter
                 End If
 
                 If drawAxis Then
-                    '  Call g.DrawAxis(size, margin, mapper, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
+                    Call g.DrawAxis(size, margin, mapper, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
                 End If
 
                 For Each line As SerialData In mapper.ForEach(gSize, margin)
