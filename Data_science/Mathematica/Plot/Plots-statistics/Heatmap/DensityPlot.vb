@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Heatmap
@@ -33,7 +34,8 @@ Namespace Heatmap
                              Optional schema$ = "Jet",
                              Optional levels% = 20,
                              Optional steps$ = Nothing,
-                             Optional ptSize! = 5) As GraphicsData
+                             Optional ptSize! = 5,
+                             Optional legendWidth% = 150) As GraphicsData
 
             Dim data = points.VectorShadows
             Dim xrange As DoubleRange = data.X ' As IEnumerable(Of Single)
@@ -49,15 +51,38 @@ Namespace Heatmap
                     pointData,
                     schema:=colors,
                     r:=ptSize)
+            Dim scatterPadding As Padding = padding
+
+            scatterPadding.Right += legendWidth
 
             Using g As IGraphics = Scatter.Plot(
                 c:={density},
-                size:=size, padding:=padding, bg:=bg,
+                size:=size, padding:=scatterPadding, bg:=bg,
                 drawLine:=False,
                 showLegend:=False,
                 fillPie:=True).CreateGraphics
 
                 ' 在这里还需要绘制颜色谱的legend
+                ' 计算出legend的layout信息
+                ' 竖直样式的legend：右边居中，宽度为legendwidth，高度则是plotregion的高度的2/3
+                Dim plotRegion As New GraphicsRegion With {
+                    .Size = g.Size,
+                    .Padding = scatterPadding
+                }
+                Dim scatterRegion As Rectangle = plotRegion.PlotRegion
+                Dim legendHeight! = scatterRegion.Height * 2 / 3
+                Dim legendLayout As New Rectangle With {
+                    .Size = New Size With {
+                        .Width = legendWidth,
+                        .Height = legendHeight
+                    },
+                    .Location = New Point With {
+                        .X = scatterRegion.Right,
+                        .Y = (scatterRegion.Height - legendHeight) / 2 + scatterPadding.Top
+                    }
+                }
+
+                Call Legends.ColorMapLegend()
 
                 If TypeOf g Is Graphics2D Then
                     Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size)
