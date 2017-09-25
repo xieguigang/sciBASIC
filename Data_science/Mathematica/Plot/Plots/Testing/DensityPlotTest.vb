@@ -10,6 +10,6 @@ Module DensityPlotTest
                                      Return New PointF(x!log2FC, -Math.Log10(x("p.value")))
                                  End Function).ToArray
 
-        Call DensityPlot.Plot(points, ptSize:=20).Save("./test.png")
+        Call DensityPlot.Plot(points, ptSize:=15).Save("./test.png")
     End Sub
 End Module

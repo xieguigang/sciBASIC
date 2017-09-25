@@ -106,10 +106,12 @@ Namespace Heatmap
                 .SeqIterator _
                 .Select(Function(pt)
                             Return New PointData With {
-                                .color = schema(density(pt)),
+                                .value = density(pt),
+                                .color = schema(CInt(.value)),
                                 .pt = pt
                             }
                         End Function) _
+                .OrderBy(Function(pt) pt.value) _
                 .ToArray
 
             Return New SerialData With {
