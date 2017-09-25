@@ -4216,6 +4216,16 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="brush"></param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="width"></param>
+        ''' <param name="height"></param>
+        ''' <param name="startAngle"></param>
+        ''' <param name="sweepAngle"></param>
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
             Call Graphics.FillPie(brush, x, y, width, height, startAngle, sweepAngle)
         End Sub
