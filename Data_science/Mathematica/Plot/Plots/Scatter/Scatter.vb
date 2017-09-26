@@ -133,8 +133,15 @@ Public Module Scatter
                     Call g.DrawAxis(rect, scaler, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
                 End If
 
+                Dim canvas = g
                 Dim drawErrorLine = Sub(err#, sign%, pt As PointF)
+                                        Dim d = -sign * Y(err)
+                                        Dim p0 As New PointF With {
+                                            .X = pt.X,
+                                            .Y = pt.Y + d
+                                        }
 
+                                        Call canvas.DrawLine(Pens.Black, pt, p0)
                                     End Sub
 
                 For Each line As SerialData In array
