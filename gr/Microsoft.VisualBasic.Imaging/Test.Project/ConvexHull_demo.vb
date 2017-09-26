@@ -78,7 +78,7 @@ Module ConvexHull_demo
             }
 
             Call g.DrawPolygon(red, vex)
-            Call g.DrawPolygon(Pens.Blue, vex.BSpline)
+            Call g.DrawPolygon(Pens.Blue, vex.BSpline(degree:=2))
 
             Call g.Save(App.HOME & $"/{method}.png", ImageFormats.Png)
 
