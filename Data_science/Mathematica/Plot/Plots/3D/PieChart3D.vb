@@ -45,7 +45,7 @@ Namespace Plot3D
 
         <Extension>
         Public Function Plot3D(data As IEnumerable(Of NamedValue(Of Integer)), camera As Camera, Optional schema$ = "Paired:c12") As GraphicsData
-            Return data.FromData(schema).Plot3D(camera)
+            Return data.Fractions(schema).Plot3D(camera)
         End Function
 
         <Extension>

@@ -64,6 +64,14 @@ Namespace Imaging
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Distance(points As IEnumerable(Of Point), anchor As Point) As Double()
+            Return points _
+                .Select(Function(pt) Distance(pt.X, pt.Y, anchor.X, anchor.Y)) _
+                .ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
             Dim xDiff As Single = p2.X - p1.X
             Dim yDiff As Single = p2.Y - p1.Y

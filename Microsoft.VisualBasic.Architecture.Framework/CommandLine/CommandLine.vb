@@ -804,7 +804,7 @@ Namespace CommandLine
         ''' <param name="args"></param>
         ''' <param name="fs"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator +(args As CommandLine, fs As String) As Integer
+        Public Overloads Shared Operator +(args As CommandLine, fs$) As Integer
             Dim path As String = args(fs)
             Return FileHandles.OpenHandle(path)
         End Operator
@@ -815,7 +815,7 @@ Namespace CommandLine
         ''' <param name="args"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator <=(args As CommandLine, name As String) As String
+        Public Overloads Shared Operator <=(args As CommandLine, name$) As String
             If args Is Nothing Then
                 Return Nothing
             Else
