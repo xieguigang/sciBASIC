@@ -84,8 +84,8 @@ Public Module Extensions
     ''' <param name="data"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Range(data As IEnumerable(Of Double)) As DoubleRange
-        Return New DoubleRange(data)
+    Public Function Range(data As IEnumerable(Of Double), Optional scale# = 1) As DoubleRange
+        Return New DoubleRange(data) * scale
     End Function
 
     ''' <summary>

@@ -50,6 +50,18 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module Scatter
 
+    <Extension>
+    Private Sub drawErrorLine(canvas As IGraphics, scaler As DataScaler, pt As PointF, value#, width!)
+        Dim p0 As New PointF With {
+            .X = pt.X,
+            .Y = scaler.TranslateY(value)
+        }
+
+        ' 下面分别绘制竖线误差线以及横线
+        Call canvas.DrawLine(Pens.Black, pt, p0)
+        Call canvas.DrawLine(Pens.Black, CSng(p0.X - width), p0.Y, CSng(p0.X + width), p0.Y)
+    End Sub
+
     ''' <summary>
     ''' Scatter plot function.(绘图函数，默认的输出大小为``4300px,2000px``)
     ''' </summary>
@@ -96,13 +108,17 @@ Public Module Scatter
                         Return s.pts.Select(Function(pt) CDbl(pt.pt.X))
                     End Function) _
             .IteratesALL _
-            .Range _
+            .Range(1.2) _
             .CreateAxisTicks
         Dim YTicks = array _
             .Select(Function(s)
-                        Return s.pts.Select(Function(pt)
-                                                Return {pt.pt.Y - pt.errMinus, pt.pt.Y + pt.errPlus}
-                                            End Function)
+                        Return s.pts _
+                            .Select(Function(pt)
+                                        Return {
+                                            pt.pt.Y - pt.errMinus,
+                                            pt.pt.Y + pt.errPlus
+                                        }
+                                    End Function)
                     End Function) _
             .IteratesALL _
             .IteratesALL _
@@ -136,15 +152,7 @@ Public Module Scatter
                     Call g.DrawAxis(rect, scaler, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
                 End If
 
-                Dim canvas = g
-                Dim drawErrorLine = Sub(err#, sign%, pt As PointF, value#)
-                                        Dim p0 As New PointF With {
-                                            .X = pt.X,
-                                            .Y = Y(value + (sign * err))
-                                        }
-
-                                        Call canvas.DrawLine(Pens.Black, pt, p0)
-                                    End Sub
+                Dim width = rect.PlotRegion.Width / 200
 
                 For Each line As SerialData In array
                     Dim pts = line.pts.SlideWindows(2)
@@ -197,16 +205,16 @@ Public Module Scatter
                         ' 首先计算出误差的长度，然后可pt1,pt2的Y相加减即可得到新的位置
                         ' 最后划线即可
                         If a.errPlus > 0 Then
-                            Call drawErrorLine(a.errPlus, 1, pt1, a.pt.Y)
+                            Call g.drawErrorLine(scaler, pt1, a.errPlus + a.pt.Y, width)
                         End If
                         If a.errMinus > 0 Then
-                            Call drawErrorLine(a.errMinus, -1, pt1, a.pt.Y)
+                            Call g.drawErrorLine(scaler, pt1, a.pt.Y - a.errMinus, width)
                         End If
                         If b.errPlus > 0 Then
-                            Call drawErrorLine(b.errPlus, 1, pt2, b.pt.Y)
+                            Call g.drawErrorLine(scaler, pt2, b.errPlus + b.pt.Y, width)
                         End If
                         If b.errMinus > 0 Then
-                            Call drawErrorLine(b.errMinus, -1, pt2, b.pt.Y)
+                            Call g.drawErrorLine(scaler, pt2, b.pt.Y - b.errMinus, width)
                         End If
                     Next
 

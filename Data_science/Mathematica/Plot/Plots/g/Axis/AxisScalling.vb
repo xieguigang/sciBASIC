@@ -90,6 +90,7 @@ Namespace Graphic.Axis
                 For i = 0 To places.Length - 1
                     If (places(i) <> "0" AndAlso firstPlace = 0) Then
                         firstPlace = i
+                        Exit For
                     End If
                 Next
 
