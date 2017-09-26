@@ -65,7 +65,7 @@ Namespace Drawing2D
         ''' 所有的页边距都是零
         ''' </summary>
         Public Const ZeroPadding$ = "padding: 0px 0px 0px 0px;"
-
+        Public Const MediumPadding$ = "padding: 45px 45px 45px 45px;"
         Public Const SmallPadding$ = "padding: 30px 30px 30px 30px;"
 
         ''' <summary>

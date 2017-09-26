@@ -51,15 +51,15 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Public Module Scatter
 
     <Extension>
-    Private Sub drawErrorLine(canvas As IGraphics, scaler As DataScaler, pt As PointF, value#, width!)
+    Private Sub drawErrorLine(canvas As IGraphics, scaler As DataScaler, pt As PointF, value#, width!, color As SolidBrush)
         Dim p0 As New PointF With {
             .X = pt.X,
             .Y = scaler.TranslateY(value)
         }
 
         ' 下面分别绘制竖线误差线以及横线
-        Call canvas.DrawLine(Pens.Black, pt, p0)
-        Call canvas.DrawLine(Pens.Black, CSng(p0.X - width), p0.Y, CSng(p0.X + width), p0.Y)
+        Call canvas.DrawLine(New Pen(color), pt, p0)
+        Call canvas.DrawLine(New Pen(color), CSng(p0.X - width), p0.Y, CSng(p0.X + width), p0.Y)
     End Sub
 
     ''' <summary>
@@ -80,18 +80,18 @@ Public Module Scatter
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
                          Optional size$ = "1600,1200",
-                         Optional padding$ = g.DefaultLargerPadding,
+                         Optional padding$ = g.MediumPadding,
                          Optional bg$ = "white",
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,
                          Optional legendPosition As Point = Nothing,
-                         Optional legendSize As Size = Nothing,
+                         Optional legendSize$ = "100,20",
                          Optional drawLine As Boolean = True,
                          Optional legendBorder As Stroke = Nothing,
                          Optional legendRegionBorder As Stroke = Nothing,
                          Optional fill As Boolean = False,
                          Optional fillPie As Boolean = True,
-                         Optional legendFontSize! = 24,
+                         Optional legendFontSize! = 14,
                          Optional absoluteScaling As Boolean = True,
                          Optional XaxisAbsoluteScalling As Boolean = False,
                          Optional YaxisAbsoluteScalling As Boolean = False,
@@ -205,16 +205,16 @@ Public Module Scatter
                         ' 首先计算出误差的长度，然后可pt1,pt2的Y相加减即可得到新的位置
                         ' 最后划线即可
                         If a.errPlus > 0 Then
-                            Call g.drawErrorLine(scaler, pt1, a.errPlus + a.pt.Y, width)
+                            Call g.drawErrorLine(scaler, pt1, a.errPlus + a.pt.Y, width, br)
                         End If
                         If a.errMinus > 0 Then
-                            Call g.drawErrorLine(scaler, pt1, a.pt.Y - a.errMinus, width)
+                            Call g.drawErrorLine(scaler, pt1, a.pt.Y - a.errMinus, width, br)
                         End If
                         If b.errPlus > 0 Then
-                            Call g.drawErrorLine(scaler, pt2, b.errPlus + b.pt.Y, width)
+                            Call g.drawErrorLine(scaler, pt2, b.errPlus + b.pt.Y, width, br)
                         End If
                         If b.errMinus > 0 Then
-                            Call g.drawErrorLine(scaler, pt2, b.pt.Y - b.errMinus, width)
+                            Call g.drawErrorLine(scaler, pt2, b.pt.Y - b.errMinus, width, br)
                         End If
                     Next
 
@@ -242,16 +242,21 @@ Public Module Scatter
                                   .style = LegendStyles.Circle,
                                   .title = s.title
                                   }
+                        Dim lsize As Size = legendSize.SizeParser
 
                         If legendPosition.IsEmpty Then
+                            Dim maxLen = legends.Select(Function(l) l.title).MaxLengthString
+                            Dim lFont As Font = CSSFont.TryParse(legends.First.fontstyle).GDIObject
+                            Dim maxWidth = g.MeasureString(maxLen, lFont).Width
+
                             legendPosition = New Point With {
-                                .X = CInt(gSize.Width * 0.7),
-                                .Y = margin.Bottom
+                                .X = region.Size.Width - lsize.Width / 2 - maxWidth,
+                                .Y = margin.Top + lFont.Height
                             }
                         End If
 
                         Call g.DrawLegends(
-                            legendPosition, legends, legendSize,,
+                            legendPosition, legends, lsize,,
                             legendBorder,
                             legendRegionBorder)
                     End If
