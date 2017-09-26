@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Module ConvexHull_demo
@@ -77,7 +78,7 @@ Module ConvexHull_demo
             }
 
             Call g.DrawPolygon(red, vex)
-            Call g.DrawPolygon(Pens.Blue, vex.PointF.BezierCurve)
+            Call g.DrawPolygon(Pens.Blue, vex.BSpline)
 
             Call g.Save(App.HOME & $"/{method}.png", ImageFormats.Png)
 

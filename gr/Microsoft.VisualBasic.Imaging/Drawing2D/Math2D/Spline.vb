@@ -17,8 +17,9 @@ Namespace Drawing2D.Math2D
         <Extension>
         Public Function BezierCurve(points As IEnumerable(Of PointF), Optional iteration% = 10) As PointF()
             Dim smooth As New List(Of PointF)
+            Dim pointData = points.ToArray
 
-            For Each block In points.Join({points.First, points.ElementAt(1)}).SlideWindows(3, offset:=2)
+            For Each block In pointData.Join({pointData.First, pointData(1)}).SlideWindows(3)
                 Dim bezier As New BezierCurve(block(0), block(1), block(2), iteration)
                 smooth += bezier.BezierPoints.AsEnumerable
             Next
