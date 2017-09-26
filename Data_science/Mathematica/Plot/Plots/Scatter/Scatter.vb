@@ -137,11 +137,10 @@ Public Module Scatter
                 End If
 
                 Dim canvas = g
-                Dim drawErrorLine = Sub(err#, sign%, pt As PointF)
-                                        Dim d = -sign * Y(err)  ' 负号是因为绘图的时候坐标系是反过来的，值越大，Y越小
+                Dim drawErrorLine = Sub(err#, sign%, pt As PointF, value#)
                                         Dim p0 As New PointF With {
                                             .X = pt.X,
-                                            .Y = pt.Y + d
+                                            .Y = Y(value + (sign * err))
                                         }
 
                                         Call canvas.DrawLine(Pens.Black, pt, p0)
@@ -198,16 +197,16 @@ Public Module Scatter
                         ' 首先计算出误差的长度，然后可pt1,pt2的Y相加减即可得到新的位置
                         ' 最后划线即可
                         If a.errPlus > 0 Then
-                            Call drawErrorLine(a.errPlus, 1, pt1)
+                            Call drawErrorLine(a.errPlus, 1, pt1, a.pt.Y)
                         End If
                         If a.errMinus > 0 Then
-                            Call drawErrorLine(a.errMinus, -1, pt1)
+                            Call drawErrorLine(a.errMinus, -1, pt1, a.pt.Y)
                         End If
                         If b.errPlus > 0 Then
-                            Call drawErrorLine(b.errPlus, 1, pt2)
+                            Call drawErrorLine(b.errPlus, 1, pt2, b.pt.Y)
                         End If
                         If b.errMinus > 0 Then
-                            Call drawErrorLine(b.errMinus, -1, pt2)
+                            Call drawErrorLine(b.errMinus, -1, pt2, b.pt.Y)
                         End If
                     Next
 
