@@ -28,10 +28,10 @@ Namespace d3js.Layout
         ''' the label text.
         ''' </summary>
         ''' <returns></returns>
-        Public Property name As String
+        Public Property text As String
 
         Public Overrides Function ToString() As String
-            Return $"{name}@({X.ToString("F2")},{Y.ToString("F2")})"
+            Return $"{text}@({X.ToString("F2")},{Y.ToString("F2")})"
         End Function
 
         Public Shared Narrowing Operator CType(label As Label) As PointF

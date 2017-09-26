@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -35,10 +36,14 @@ Module LabelingTest
             For Each i As SeqValue(Of Label) In labels.SeqIterator
                 Dim label As Label = i
                 Dim anchor = anchors(i)
+                Dim labelLayout As New Rectangle With {
+                    .Location = New Point(label.X, label.Y),
+                    .Size = g.MeasureString(label.text, labelFont).ToSize
+                }
 
                 Call g.DrawCircle(anchor, anchor.r, Brushes.Red)
-                Call g.DrawString(label.name, labelFont, Brushes.Black, New PointF(label.X, label.Y))
-                Call g.DrawLine(Pens.Green, anchor, label)
+                Call g.DrawString(label.text, labelFont, Brushes.Black, labelLayout.Location)
+                Call g.DrawLine(Pens.Green, anchor, labelLayout.GetTextAnchor(anchor))
             Next
 
             Call g.Save("./test_labels.png", ImageFormats.Png)

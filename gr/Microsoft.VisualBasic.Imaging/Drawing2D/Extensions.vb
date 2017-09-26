@@ -28,12 +28,34 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 
 Namespace Drawing2D
 
     Public Module Extensions
+
+        ''' <summary>
+        ''' 分别计算出<paramref name="textLayout"/>的上下左右对<paramref name="anchor"/>的距离，取最小的距离的位置并返回
+        ''' </summary>
+        ''' <param name="textLayout">标签文本的大小和位置，生成一个<see cref="Rectangle"/>布局对象</param>
+        ''' <param name="anchor">这个标签文本所属的对象的锚点</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetTextAnchor(textLayout As Rectangle, anchor As PointF) As Point
+            With textLayout
+                Dim points As Point() = {
+                    New Point(.Left + .Width / 2, .Top),    ' top
+                    New Point(.Left + .Width / 2, .Bottom), ' bottom,
+                    New Point(.Left, .Top + .Height / 2),   ' left,
+                    New Point(.Right, .Top + .Height / 2)   ' right
+                }
+                Dim d#() = points.Distance(anchor.ToPoint)
+
+                Return points(Which.Min(d))
+            End With
+        End Function
 
         <Extension>
         Public Function Enlarge(size As SizeF, fold#) As SizeF

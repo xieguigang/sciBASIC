@@ -47,7 +47,7 @@ Namespace d3js
                             Dim size As SizeF = g.MeasureString(s, font)
 
                             Return New Label With {
-                                .name = s,
+                                .text = s,
                                 .width = size.Width,
                                 .height = size.Height
                             }
