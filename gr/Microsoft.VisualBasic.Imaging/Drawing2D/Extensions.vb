@@ -36,6 +36,14 @@ Namespace Drawing2D
 
     Public Module Extensions
 
+        <Extension>
+        Public Function Move(pt As Point, distance#, angle#) As Point
+            Dim X = pt.X + distance * Math.Sin(angle * Math.PI / 180)
+            Dim Y = pt.Y + distance * Math.Cos(angle * Math.PI / 180)
+
+            Return New Point(X, Y)
+        End Function
+
         ''' <summary>
         ''' 分别计算出<paramref name="textLayout"/>的上下左右对<paramref name="anchor"/>的距离，取最小的距离的位置并返回
         ''' </summary>

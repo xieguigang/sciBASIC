@@ -135,6 +135,7 @@ Namespace Drawing2D
 
             If g.__getDriver(developerValue:=driver) = Drivers.SVG Then
                 Dim svg As New GraphicsSVG(size)
+
                 Call svg.Clear(bg.TranslateColor)
                 Call plotAPI(svg, New GraphicsRegion With {
                        .Size = size,
@@ -189,7 +190,7 @@ Namespace Drawing2D
             If Not bgColor.IsEmpty Then
                 Call g.FillRectangle(New SolidBrush(bgColor), rect)
             Else
-                Dim res As Drawing.Image
+                Dim res As Image
 
                 If bg.FileExists Then
                     res = LoadImage(path:=bg$)
@@ -232,8 +233,16 @@ Namespace Drawing2D
             End If
         End Function
 
+        ''' <summary>
+        ''' Draw shadow of a specifc <paramref name="polygon"/>
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="polygon"></param>
+        ''' <param name="shadowColor$"></param>
+        ''' <param name="alphaLevels$"></param>
+        ''' <param name="gradientLevels$"></param>
         <Extension> Public Sub DropdownShadows(g As IGraphics,
-                                               path As GraphicsPath,
+                                               polygon As GraphicsPath,
                                                Optional shadowColor$ = NameOf(Color.Gray),
                                                Optional alphaLevels$ = "0,120,150,200",
                                                Optional gradientLevels$ = "[0,0.125,0.5,1]")
@@ -262,12 +271,12 @@ Namespace Drawing2D
             ' this Is where we create the shadow effect, so we will use a 
             ' pathgradientbursh And assign our GraphicsPath that we created of a 
             ' Rounded Rectangle
-            Using pgBrush As New PathGradientBrush(path) With {
+            Using pgBrush As New PathGradientBrush(polygon) With {
                 .WrapMode = WrapMode.Clamp,
                 .InterpolationColors = colorBlend
             }
                 ' fill the shadow with our pathgradientbrush
-                Call g.FillPath(pgBrush, path)
+                Call g.FillPath(pgBrush, polygon)
             End Using
         End Sub
 

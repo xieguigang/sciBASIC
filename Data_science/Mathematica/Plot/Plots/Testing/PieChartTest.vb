@@ -12,11 +12,14 @@ Public Module PieChartTest
         For i As Integer = 0 To 6
             data.Add(
                 New NamedValue(Of Integer) With {
-                     .Name = Guid.NewGuid.ToString,
+                     .Name = "block#" & i,
                      .Value = rnd.Next(300)
                 })
         Next
 
-        Call data.Fractions(ColorBrewer.QualitativeSchemes.Set3_12).Plot().Save("./test_pie.png")
+        Call data _
+            .Fractions(ColorBrewer.QualitativeSchemes.Accent8) _
+            .Plot(legendAlt:=True) _
+            .Save("./test_pie.png")
     End Sub
 End Module
