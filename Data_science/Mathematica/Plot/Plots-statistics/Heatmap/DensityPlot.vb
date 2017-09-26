@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -8,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Heatmap
@@ -33,7 +35,11 @@ Namespace Heatmap
                              Optional schema$ = "Jet",
                              Optional levels% = 20,
                              Optional steps$ = Nothing,
-                             Optional ptSize! = 5) As GraphicsData
+                             Optional ptSize! = 5,
+                             Optional legendWidth% = 150,
+                             Optional legendTitleFontCSS$ = CSSFont.Win7LargerNormal,
+                             Optional legendTickFontCSS$ = CSSFont.Win7Normal,
+                             Optional legendTickStrokeCSS$ = Stroke.AxisStroke) As GraphicsData
 
             Dim data = points _
                 .Where(Function(pt)
@@ -57,15 +63,56 @@ Namespace Heatmap
                     pointData,
                     schema:=colors,
                     r:=ptSize)
+            Dim scatterPadding As Padding = padding
+
+            scatterPadding.Right += legendWidth
 
             Using g As IGraphics = Scatter.Plot(
                 c:={density},
-                size:=size, padding:=padding, bg:=bg,
+                size:=size, padding:=scatterPadding, bg:=bg,
                 drawLine:=False,
                 showLegend:=False,
                 fillPie:=True).CreateGraphics
 
                 ' 在这里还需要绘制颜色谱的legend
+                ' 计算出legend的layout信息
+                ' 竖直样式的legend：右边居中，宽度为legendwidth，高度则是plotregion的高度的2/3
+                Dim plotRegion As New GraphicsRegion With {
+                    .Size = g.Size,
+                    .Padding = scatterPadding
+                }
+                Dim scatterRegion As Rectangle = plotRegion.PlotRegion
+                Dim legendHeight! = scatterRegion.Height * 2 / 3
+                Dim legendLayout As New Rectangle With {
+                    .Size = New Size With {
+                        .Width = legendWidth,
+                        .Height = legendHeight
+                    },
+                    .Location = New Point With {
+                        .X = scatterRegion.Right,
+                        .Y = (scatterRegion.Height - legendHeight) / 2 + scatterPadding.Top
+                    }
+                }
+                Dim designer As SolidBrush() = colors _
+                    .Select(AddressOf TranslateColor) _
+                    .Select(Function(c) New SolidBrush(c)) _
+                    .ToArray
+                Dim rangeTicks = density _
+                    .pts _
+                    .Select(Function(pt) pt.Statics) _
+                    .IteratesALL _
+                    .Range _
+                    .CreateAxisTicks
+                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject
+                Dim legendTickFont As Font = CSSFont.TryParse(legendTickFontCSS).GDIObject
+                Dim legendTickStroke As Pen = Stroke.TryParse(legendTickStrokeCSS).GDIObject
+
+                Call Legends.ColorMapLegend(
+                    g, legendLayout, designer, rangeTicks,
+                    legendTitleFont, "Density",
+                    tickFont:=legendTickFont,
+                    tickAxisStroke:=legendTickStroke,
+                    unmapColor:=NameOf(Color.Gray))
 
                 If TypeOf g Is Graphics2D Then
                     Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size)
@@ -108,7 +155,10 @@ Namespace Heatmap
                             Return New PointData With {
                                 .value = density(pt),
                                 .color = schema(CInt(.value)),
-                                .pt = pt
+                                .pt = pt,
+                                .Statics = {
+                                    CDbl(counts(gridIndex(pt).ToString))
+                                }
                             }
                         End Function) _
                 .OrderBy(Function(pt) pt.value) _

@@ -379,9 +379,13 @@ Public Module Contour
                     z >= minZ AndAlso
                     z <= maxZ) _
                 .ToArray
-            Dim range As DoubleRange = realData
+            Dim rangeTicks#() = realData.Range.CreateAxisTicks
 
-            Call g.ColorMapLegend(legendLayout, colorDatas, range, legendFont, legendTitle, tickFont, New Pen(Color.Black, 2), NameOf(Color.Gray))
+            Call g.ColorMapLegend(
+                legendLayout, colorDatas, rangeTicks,
+                legendFont, legendTitle, tickFont,
+                New Pen(Color.Black, 2),
+                NameOf(Color.Gray))
         End Sub
     End Class
 

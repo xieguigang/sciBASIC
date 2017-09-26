@@ -124,6 +124,7 @@
     <Compile Include="ColorLegendTest.vb" />
     <Compile Include="Module3.vb" />
     <Compile Include="DensityPlotTest.vb" />
+    <Compile Include="ScatterTest.vb" />
     <Compile Include="ZScorePlotTest.vb" />
     <Compile Include="PCAPlotTest.vb" />
     <Compile Include="ImageDataPlots.vb" />

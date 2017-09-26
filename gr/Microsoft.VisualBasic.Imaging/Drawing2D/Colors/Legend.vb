@@ -126,7 +126,7 @@ Namespace Drawing2D.Colors
         <Extension>
         Public Sub ColorMapLegend(ByRef g As IGraphics, layout As Rectangle,
                                   designer As SolidBrush(),
-                                  range As DoubleRange,
+                                  ticks#(),
                                   titleFont As Font, title$,
                                   tickFont As Font,
                                   tickAxisStroke As Pen,
@@ -207,12 +207,37 @@ Namespace Drawing2D.Colors
             g.DrawLine(Pens.Black, x, y, x + ruleOffset, y)
             g.DrawLine(Pens.Black, x, y + legendHeight, x + ruleOffset, y + legendHeight)
 
-            x += 10
+            x += ruleOffset + 5
             point = New PointF(x, y - tickFont.Height / 2)
-            g.DrawString(range.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
 
             point = New PointF(x, y + legendHeight - tickFont.Height / 2)
-            g.DrawString(range.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+
+            ticks = ticks _
+                .Skip(1) _
+                .Take(ticks.Length - 2) _
+                .OrderByDescending(Function(n) n) _
+                .ToArray
+
+            Dim delta = legendHeight / (ticks.Length + 1)
+
+            y += delta
+            x -= ruleOffset
+            tickFont = New Font(tickFont.FontFamily, tickFont.Size * 2.5 / 3)
+
+            ' 画出剩余的小标尺
+            For Each tick In ticks
+
+                point = New PointF With {
+                    .X = x + 2,
+                    .Y = y - tickFont.Height / 2
+                }
+                g.DrawLine(Pens.Black, x, y, x - 5, y)
+                g.DrawString(tick.ToString($"F{roundDigit}"), tickFont, Brushes.Gray, point)
+
+                y += delta
+            Next
         End Sub
 
         ''' <summary>

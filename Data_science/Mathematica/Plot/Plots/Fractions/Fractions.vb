@@ -65,7 +65,7 @@ Public Class Fractions
             Case ValueLabels.None
                 Return Nothing
             Case ValueLabels.Value
-                Return Value.FormatNumeric(2)
+                Return Value.ToString("F" & 2)
             Case ValueLabels.Percentage
                 Return (Percentage * 100).ToString("F2") & "%"
             Case Else

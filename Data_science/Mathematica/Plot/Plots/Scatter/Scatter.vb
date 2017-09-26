@@ -44,6 +44,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -68,7 +69,7 @@ Public Module Scatter
     Public Function Plot(c As IEnumerable(Of SerialData),
                          Optional size$ = "1600,1200",
                          Optional padding$ = g.DefaultLargerPadding,
-                         Optional bg As String = "white",
+                         Optional bg$ = "white",
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,
                          Optional legendPosition As Point = Nothing,
@@ -89,27 +90,50 @@ Public Module Scatter
                          Optional xaxis$ = Nothing) As GraphicsData
 
         Dim margin As Padding = padding
+        Dim array As SerialData() = c.ToArray
+        Dim XTicks = array _
+            .Select(Function(s)
+                        Return s.pts.Select(Function(pt) CDbl(pt.pt.X))
+                    End Function) _
+            .IteratesALL _
+            .Range _
+            .CreateAxisTicks
+        Dim YTicks = array _
+            .Select(Function(s)
+                        Return s.pts.Select(Function(pt) CDbl(pt.pt.Y))
+                    End Function) _
+            .IteratesALL _
+            .Range _
+            .CreateAxisTicks
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rect As GraphicsRegion)
-                Dim array As SerialData() = c.ToArray
-                Dim mapper As Mapper
-                Dim serialsData As New Scaling(array, absoluteScaling)
+
+                Dim region As Rectangle = rect.PlotRegion
+                Dim X = d3js.scale.linear.domain(XTicks).range({region.Left, region.Right})
+                Dim Y = d3js.scale.linear.domain(YTicks).range({0, region.Bottom - region.Top}) ' Y 为什么是从零开始的？
+                Dim scaler As New DataScaler With {
+                    .X = X,
+                    .Y = Y,
+                    .ChartRegion = region,
+                    .AxisTicks = (XTicks, YTicks)
+                }
                 Dim gSize As Size = rect.Size
 
-                If xaxis.StringEmpty OrElse yaxis.StringEmpty Then
-                    mapper = New Mapper(
-                        serialsData,
-                        XabsoluteScalling:=XaxisAbsoluteScalling,
-                        YabsoluteScalling:=YaxisAbsoluteScalling)
-                Else
-                    mapper = New Mapper(x:=xaxis, y:=yaxis, range:=serialsData)
-                End If
+                'If xaxis.StringEmpty OrElse yaxis.StringEmpty Then
+                '    Mapper = New Mapper(
+                '        serialsData,
+                '        XabsoluteScalling:=XaxisAbsoluteScalling,
+                '        YabsoluteScalling:=YaxisAbsoluteScalling)
+                'Else
+                '    Mapper = New Mapper(x:=xaxis, y:=yaxis, range:=serialsData)
+                'End If
 
                 If drawAxis Then
-                    '  Call g.DrawAxis(size, margin, mapper, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
+                    Call g.DrawAxis(rect, scaler, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
                 End If
 
-                For Each line As SerialData In mapper.ForEach(gSize, margin)
+                For Each line As SerialData In array
                     Dim pts = line.pts.SlideWindows(2)
                     Dim pen As New Pen(color:=line.color, width:=line.width) With {
                         .DashStyle = line.lineType
@@ -125,31 +149,35 @@ Public Module Scatter
                                                 Return pt.color.GetBrush
                                             End If
                                         End Function
+                    Dim pt1, pt2 As PointF
 
                     For Each pt In pts
                         Dim a As PointData = pt.First
                         Dim b As PointData = pt.Last
 
+                        pt1 = scaler.Translate(a.pt.X, a.pt.Y)
+                        pt2 = scaler.Translate(b.pt.X, b.pt.Y)
+
                         If drawLine Then
-                            Call g.DrawLine(pen, a.pt, b.pt)
+                            Call g.DrawLine(pen, pt1, pt2)
                         End If
                         If fill Then
                             Dim path As New GraphicsPath
-                            Dim ptbr As New PointF(b.pt.X, bottom)
-                            Dim ptbl As New PointF(a.pt.X, bottom)
+                            Dim ptbr As New PointF(pt1.X, bottom)
+                            Dim ptbl As New PointF(pt2.X, bottom)
 
-                            path.AddLine(a.pt, b.pt)
-                            path.AddLine(b.pt, ptbr)
+                            path.AddLine(pt1, pt2)
+                            path.AddLine(pt2, ptbr)
                             path.AddLine(ptbr, ptbl)
-                            path.AddLine(ptbl, a.pt)
+                            path.AddLine(ptbl, pt1)
                             path.CloseFigure()
 
                             Call g.FillPath(br, path)
                         End If
 
                         If fillPie Then
-                            Call g.FillPie(getPointBrush(a), a.pt.X - r, a.pt.Y - r, d, d, 0, 360)
-                            Call g.FillPie(getPointBrush(b), b.pt.X - r, b.pt.Y - r, d, d, 0, 360)
+                            Call g.FillPie(getPointBrush(a), pt1.X - r, pt1.Y - r, d, d, 0, 360)
+                            Call g.FillPie(getPointBrush(b), pt2.X - r, pt2.Y - r, d, d, 0, 360)
                         End If
                     Next
 
@@ -157,23 +185,25 @@ Public Module Scatter
                         Dim raw = array.Where(Function(s) s.title = line.title).First
 
                         For Each annotation As Annotation In line.DataAnnotations
-                            Call annotation.Draw(g, mapper, raw, rect)
+                            Call annotation.Draw(g, scaler, raw, rect)
                         Next
                     End If
 
                     If showLegend Then
                         Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
  _
-                            From x As SerialData
+                            From s As SerialData
                             In array
+                            Let sColor As String = s.color.RGBExpression
+                            Let legendFont = CSSFont.GetFontStyle(
+                                FontFace.SegoeUI,
+                                FontStyle.Regular,
+                                legendFontSize)
                             Select New Legend With {
-                                .color = x.color.RGBExpression,
-                                .fontstyle = CSSFont.GetFontStyle(
-                                    FontFace.SegoeUI,
-                                    FontStyle.Regular,
-                                    legendFontSize),
+                                .color = sColor,
+                                .fontstyle = legendFont,
                                 .style = LegendStyles.Circle,
-                                .title = x.title
+                                .title = s.title
                             }
 
                         If legendPosition.IsEmpty Then

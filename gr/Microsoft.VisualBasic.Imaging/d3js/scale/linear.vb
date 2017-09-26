@@ -34,6 +34,11 @@ Namespace d3js.scale
             Return $"[{_domain.Min}, {_domain.Max}] --> [{_range.Min}, {_range.Max}]"
         End Function
 
+        ''' <summary>
+        ''' 输入的绘图数据，建议输入由原始数据所计算出来的Ticks的结果
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
         Public Overrides Function domain(values As IEnumerable(Of Double)) As LinearScale
             _domain = values.ToArray
             Return Me
@@ -45,6 +50,10 @@ Namespace d3js.scale
 
         Public Overrides Function domain(values As IEnumerable(Of Integer)) As LinearScale
             Return domain(values.Select(Function(x) CDbl(x)))
+        End Function
+
+        Public Overloads Function domain(singles As IEnumerable(Of Single)) As LinearScale
+            Return domain(singles.Select(Function(x) CDbl(x)))
         End Function
 
         Public Shared Narrowing Operator CType(scale As LinearScale) As Func(Of Double, Double)

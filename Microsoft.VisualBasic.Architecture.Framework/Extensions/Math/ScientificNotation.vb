@@ -67,33 +67,6 @@ Namespace Math
         End Function
 
         ''' <summary>
-        ''' 分别处理正常的小数或者科学记数法的小数
-        ''' </summary>
-        ''' <param name="n#"></param>
-        ''' <param name="decimal%"></param>
-        ''' <returns></returns>
-        <Extension> Public Function FormatNumeric(n#, decimal%) As String
-            Dim s$ = n.ToString
-
-            If InStr(s, "E", CompareMethod.Text) > 0 Then
-                ' 科学记数法
-                Dim t$() = s.Split("e"c, "E"c)
-                t(0) = sys.Round(Val(t(0)), [decimal])
-                s = t(0) & "E" & t(1)
-
-                Return s
-            End If
-
-            If UsingScientificNotation(n) Then
-                s = FormatScientificNotation(n, [decimal])
-            Else
-                s = sys.Round(n, [decimal]).ToString
-            End If
-
-            Return s
-        End Function
-
-        ''' <summary>
         ''' 强制格式化为科学记数法
         ''' </summary>
         ''' <param name="decimal%"></param>
