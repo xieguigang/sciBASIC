@@ -113,6 +113,10 @@ Public Module PieChart
                     Dim label$
                     Dim br As SolidBrush
 
+                    ' 首先需要进行阴影的绘制
+
+
+                    ' 填充浅灰色底层
                     Call g.FillPie(Brushes.LightGray, rect, 0, 360)
 
                     For Each x As Fractions In data
@@ -209,7 +213,7 @@ Public Module PieChart
     ''' <param name="colors"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors As String() = Nothing) As Fractions()
+    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors$() = Nothing) As Fractions()
         Dim array As NamedValue(Of Integer)() = data.ToArray
         Dim all = array.Select(Function(x) x.Value).Sum
         Dim s = From x
@@ -229,7 +233,7 @@ Public Module PieChart
     ''' <param name="schema"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional schema$ = NameOf(Office2016)) As Fractions()
+    Public Function Fractions(data As IEnumerable(Of NamedValue(Of Integer)), Optional schema$ = NameOf(Office2016)) As Fractions()
         Dim array As NamedValue(Of Integer)() = data.ToArray
         Dim all As Integer = array _
             .Select(Function(x) x.Value) _
