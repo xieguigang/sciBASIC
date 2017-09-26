@@ -13,7 +13,7 @@ Module LabelingTest
                 .TryParse(CSSFont.PlotLabelNormal) _
                 .GDIObject
             Dim rand As New Random
-            Dim labels As Label() = g.Label(100.SeqRandom.Select(Function(i) rand.NextDouble.ToString("F4"))).ToArray
+            Dim labels As Label() = g.Label(130.SeqRandom.Select(Function(i) rand.NextDouble.ToString("F4"))).ToArray
             Dim anchors = labels _
                 .Select(Function(i)
                             Return New Anchor With {
@@ -24,12 +24,12 @@ Module LabelingTest
                         End Function) _
                 .ToArray
 
-            labels = d3js.labeler _
+            labels = d3js.labeler(maxMove:=20, maxAngle:=2) _
                 .Height(g.Height) _
                 .Width(g.Width) _
                 .Labels(labels) _
                 .Anchors(anchors) _
-                .Start(2500) _
+                .Start(500) _
                 .ToArray
 
             For Each i As SeqValue(Of Label) In labels.SeqIterator

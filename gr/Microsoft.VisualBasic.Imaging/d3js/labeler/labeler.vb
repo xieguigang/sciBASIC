@@ -248,6 +248,12 @@ Namespace d3js.Layout
             Dim progress As ProgressBar = Nothing
             Dim tick As Action(Of Double)
 
+            ' 在计算之前需要将label的坐标赋值为anchor的值，否则会无法正常的生成label的最终位置
+            For i As Integer = 0 To lab.Length - 1
+                lab(i).X = anc(i).x
+                lab(i).Y = anc(i).y
+            Next
+
             If showProgress Then
                 Dim tickProvider As New ProgressProvider(nsweeps)
                 Dim p#
