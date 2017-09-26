@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Scripting.Runtime
 
@@ -15,6 +16,21 @@ Namespace Scripting.Runtime
         <Extension>
         Public Function AsDouble(source As IEnumerable(Of String)) As Double()
             Return source.AsType(Of Double).ToArray
+        End Function
+
+        <Extension>
+        Public Function AsNumeric(source As IEnumerable(Of String)) As Double()
+            Return source _
+                .Select(Function(s) s.ParseNumeric) _
+                .ToArray
+        End Function
+
+        <Extension>
+        Public Function AsDouble(singles As IEnumerable(Of Single)) As Double()
+            Return singles _
+                .SafeQuery _
+                .Select(Function(s) CDbl(s)) _
+                .ToArray
         End Function
 
         <Extension>

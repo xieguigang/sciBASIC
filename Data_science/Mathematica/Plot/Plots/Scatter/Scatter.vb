@@ -100,8 +100,11 @@ Public Module Scatter
             .CreateAxisTicks
         Dim YTicks = array _
             .Select(Function(s)
-                        Return s.pts.Select(Function(pt) CDbl(pt.pt.Y))
+                        Return s.pts.Select(Function(pt)
+                                                Return {pt.pt.Y - pt.errMinus, pt.pt.Y + pt.errPlus}
+                                            End Function)
                     End Function) _
+            .IteratesALL _
             .IteratesALL _
             .Range _
             .CreateAxisTicks
@@ -135,7 +138,7 @@ Public Module Scatter
 
                 Dim canvas = g
                 Dim drawErrorLine = Sub(err#, sign%, pt As PointF)
-                                        Dim d = -sign * Y(err)
+                                        Dim d = -sign * Y(err)  ' 负号是因为绘图的时候坐标系是反过来的，值越大，Y越小
                                         Dim p0 As New PointF With {
                                             .X = pt.X,
                                             .Y = pt.Y + d
