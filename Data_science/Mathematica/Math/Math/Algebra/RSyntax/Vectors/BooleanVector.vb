@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a192a5998f88a2d7fb2ae618a881c2c, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\BooleanVector.vb"
+﻿#Region "Microsoft.VisualBasic::b946e6b608687d601f8ea8357a841ac2, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\BooleanVector.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39af66f7c97b0329f39a08cf036d2591, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\InteractiveIODevice\HistoryStacks.vb"
+﻿#Region "Microsoft.VisualBasic::39af66f7c97b0329f39a08cf036d2591, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
 
     ' Author:
     ' 

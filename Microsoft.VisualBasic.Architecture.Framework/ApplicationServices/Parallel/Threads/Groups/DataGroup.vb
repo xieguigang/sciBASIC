@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68e66e23e35508140358bb613168c342, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\Groups\DataGroup.vb"
+﻿#Region "Microsoft.VisualBasic::68e66e23e35508140358bb613168c342, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\Groups\DataGroup.vb"
 
     ' Author:
     ' 
