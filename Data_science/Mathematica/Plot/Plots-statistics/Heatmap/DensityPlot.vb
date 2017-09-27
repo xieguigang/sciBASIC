@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::aa7907b934a50ba547739cf33d671bf9, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\DensityPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -67,7 +68,11 @@ Namespace Heatmap
                              Optional legendWidth% = 150,
                              Optional legendTitleFontCSS$ = CSSFont.Win7LargerNormal,
                              Optional legendTickFontCSS$ = CSSFont.Win7Normal,
-                             Optional legendTickStrokeCSS$ = Stroke.AxisStroke) As GraphicsData
+                             Optional legendTickStrokeCSS$ = Stroke.AxisStroke,
+                             Optional ablines As Line() = Nothing,
+                             Optional labX$ = "X",
+                             Optional labY$ = "Y",
+                             Optional labelFontCSS$ = CSSFont.Win10Normal) As GraphicsData
 
             Dim data = points _
                 .Where(Function(pt)
@@ -100,7 +105,10 @@ Namespace Heatmap
                 size:=size, padding:=scatterPadding, bg:=bg,
                 drawLine:=False,
                 showLegend:=False,
-                fillPie:=True).CreateGraphics
+                fillPie:=True,
+                ablines:=ablines,
+                Xlabel:=labX,
+                Ylabel:=labY).CreateGraphics
 
                 ' 在这里还需要绘制颜色谱的legend
                 ' 计算出legend的layout信息

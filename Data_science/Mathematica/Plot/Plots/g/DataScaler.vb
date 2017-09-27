@@ -77,6 +77,11 @@ Namespace Graphic
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Translate(point As PointF) As PointF
+            Return Translate(point.X, point.Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TranslateX(x#) As Double
             Return Me.X(x)
         End Function

@@ -235,7 +235,7 @@ Namespace Graphic.Axis
             End If
 
             If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
-                Dim labelImage As Image = label.__plotLabel(labelFont)
+                Dim labelImage As Image = label.__plotLabel(labelFont, False)
 
                 ' y轴标签文本是旋转90度绘制于左边
                 labelImage = labelImage.RotateImage(-90)
@@ -255,8 +255,17 @@ Namespace Graphic.Axis
         ''' <param name="label$"></param>
         ''' <param name="css$"></param>
         ''' <returns></returns>
-        <Extension> Private Function __plotLabel(label$, css$) As Image
-            Return TextRender.DrawHtmlText(label, css)
+        <Extension> Private Function __plotLabel(label$, css$, Optional throwEx As Boolean = True) As Image
+            Try
+                Return TextRender.DrawHtmlText(label, css)
+            Catch ex As Exception
+                If throwEx Then
+                    Throw ex
+                Else
+                    Call App.LogException(ex)
+                    Return New Bitmap(1, 1)
+                End If
+            End Try
         End Function
 
         ''' <summary>
@@ -344,7 +353,7 @@ Namespace Graphic.Axis
             End If
 
             If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
-                Dim labelImage As Image = label.__plotLabel(labelFont)
+                Dim labelImage As Image = label.__plotLabel(labelFont, False)
                 Dim point As New Point With {
                     .X = (size.Width - labelImage.Width) / 2 + scaler.ChartRegion.Left,
                     .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height + d * 3

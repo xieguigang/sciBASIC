@@ -82,15 +82,16 @@ Namespace Drawing2D.Text
         ''' <param name="cssFont$">For html ``&lt;p>...&lt;/p>`` css style</param>
         ''' <param name="maxSize$"></param>
         ''' <returns></returns>
-        Public Function DrawHtmlText(label$, cssFont$, Optional maxSize$ = "1600,600") As Drawing.Image
-            Dim g As Graphics2D = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
-            Dim out As Drawing.Image
+        Public Function DrawHtmlText(label$, cssFont$, Optional maxSize$ = "1600,600") As Image
+            Using g As Graphics2D = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
+                Dim out As Image
 
-            TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
-            out = g.ImageResource
-            out = out.CorpBlank(blankColor:=Color.Transparent)
+                TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
+                out = g.ImageResource
+                out = out.CorpBlank(blankColor:=Color.Transparent)
 
-            Return out
+                Return out
+            End Using
         End Function
     End Module
 End Namespace

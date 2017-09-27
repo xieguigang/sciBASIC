@@ -39,6 +39,16 @@ Namespace Drawing2D.Shapes
         Dim pt1 As PointF, pt2 As PointF
 
         Public Property Stroke As Pen
+        Public ReadOnly Property A As PointF
+            Get
+                Return pt1
+            End Get
+        End Property
+        Public ReadOnly Property B As PointF
+            Get
+                Return pt2
+            End Get
+        End Property
 
         Public Overrides ReadOnly Property Size As Size
             Get
@@ -102,6 +112,14 @@ Namespace Drawing2D.Shapes
             Me.pt1 = a
             Me.pt2 = b
             Me.Stroke = New Pen(New SolidBrush(c), width)
+        End Sub
+
+        Sub New(a As PointF, b As PointF, pen As Pen)
+            Call MyBase.New(a.ToPoint)
+
+            pt1 = a
+            pt2 = b
+            Stroke = pen
         End Sub
 
         Sub New(x1#, y1#, x2#, y2#)
