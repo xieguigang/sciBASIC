@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 
 Public Module Kmeans
 
@@ -63,7 +64,8 @@ Public Module Kmeans
                               Optional bg$ = "white",
                               Optional padding$ = g.DefaultPadding,
                               Optional clusterN% = 6,
-                              Optional schema$ = Designer.Clusters) As GraphicsData
+                              Optional schema$ = Designer.Clusters,
+                              Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle) As GraphicsData
 
         Dim clusters As Dictionary(Of String, EntityLDM()) = data _
             .ToKMeansModels _
@@ -76,9 +78,17 @@ Public Module Kmeans
         ' 不同的分组之中的数据点则会被绘制为不同的形状
         Dim clusterColors As Color() = Designer.GetColors(schema)
         Dim serials As New List(Of Serial3D)
+        Dim shapeList As LegendStyles() = GetAllEnumFlags(Of LegendStyles)(shapes)
 
         For Each cluster In clusters.SeqIterator
+            Dim color As Color = clusterColors(cluster)
+            Dim shape As LegendStyles = shapeList(cluster)
 
+            For Each member As EntityLDM In (+cluster).Value
+                For Each cat As String In catagory.Keys
+                    Dim numerics#() = member(catagory(cat).Value)
+                Next
+            Next
         Next
     End Function
 End Module

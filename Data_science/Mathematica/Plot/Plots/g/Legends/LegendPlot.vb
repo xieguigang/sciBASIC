@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::5792f4adbc02aed80a83813397788f74, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Legends\LegendPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,12 +31,49 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports sys = System.Math
 
 Namespace Graphic.Legend
 
     Public Module LegendPlotExtensions
+
+        Private ReadOnly legendExpressions As Dictionary(Of String, LegendStyles) =
+            Enums(Of LegendStyles).ToDictionary(
+                Function(l)
+                    Return l.ToString.ToLower
+                End Function)
+
+        ''' <summary>
+        ''' 从字符串表达式之中解析出<see cref="LegendStyles"/>
+        ''' </summary>
+        ''' <param name="str$"></param>
+        ''' <param name="defaultStyle"></param>
+        ''' <returns></returns>
+        Public Function GetStyle(str$, Optional defaultStyle As LegendStyles = LegendStyles.Circle) As LegendStyles
+            With LCase(str)
+                If legendExpressions.ContainsKey(.ref) Then
+                    Return legendExpressions(.ref)
+                Else
+                    Return defaultStyle
+                End If
+            End With
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="expr$">``a,b,c,d...``</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function LegendStyls(expr$) As LegendStyles()
+            Return expr _
+                .Split(","c) _
+                .Select(AddressOf Trim) _
+                .Select(AddressOf GetStyle) _
+                .ToArray
+        End Function
 
         ''' <summary>
         ''' 
