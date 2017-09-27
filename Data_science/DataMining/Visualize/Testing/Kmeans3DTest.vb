@@ -36,7 +36,7 @@ Module Kmeans3DTest
 
     Sub Main()
 
-        Dim matrix As DataSet() = DataSet.LoadDataSet("D:\projects\杨先友-山核桃蛋白组\3. DEPs\Time_series.heatmap\Time_series.heatmap.csv").ToArray
+        Dim matrix As DataSet() = DataSet.LoadDataSet("D:\OneDrive\2017-8-31\转录组\matrix.csv").ToArray
         Dim cata As New Dictionary(Of NamedCollection(Of String))
 
         cata += New NamedCollection(Of String) With {
@@ -47,11 +47,11 @@ Module Kmeans3DTest
             .Name = "T4 vs T3", .Value = {"D1.C1", "D1.C2", "D2.C1", "D2.C2"}}
 
         Dim camera As New Camera With {
-            .fov = 30000,
+            .fov = 500000,
             .screen = New Size(1200, 1000),
-            .ViewDistance = 150,
-            .angleX = 0,
-            .angleY = 20,
+            .ViewDistance = 3300,
+            .angleX = 10,
+            .angleY = 45,
             .angleZ = 0
         }
 

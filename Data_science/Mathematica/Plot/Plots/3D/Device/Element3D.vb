@@ -18,6 +18,10 @@ Namespace Plot3D.Device
         Protected Function GetPosition(g As IGraphics) As PointF
             Return Location.PointXY(g.Size)
         End Function
+
+        Public Overrides Function ToString() As String
+            Return Location.ToString
+        End Function
     End Class
 
     Public Class Label : Inherits Element3D
@@ -28,6 +32,30 @@ Namespace Plot3D.Device
 
         Public Overrides Sub Draw(g As IGraphics)
             Call g.DrawString(Text, Font, Color, GetPosition(g))
+        End Sub
+    End Class
+
+    Public Class Line : Inherits Element3D
+
+        Public ReadOnly Property A As Point3D
+        Public ReadOnly Property B As Point3D
+        Public Property Stroke As Pen
+
+        Sub New(a As Point3D, b As Point3D)
+            Me.A = a
+            Me.B = b
+            Me.Location = New Point3D With {
+                .X = (a.X + b.X) / 2,
+                .Y = (a.Y + b.Y) / 2,
+                .Z = (a.Z + b.Z) / 2
+            }
+        End Sub
+
+        Public Overrides Sub Draw(g As IGraphics)
+            Dim p1 As Point = A.PointXY(g.Size)
+            Dim p2 As Point = B.PointXY(g.Size)
+
+            Call g.DrawLine(Stroke, p1, p2)
         End Sub
     End Class
 End Namespace
