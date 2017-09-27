@@ -44,6 +44,7 @@ Namespace Plot3D.Model
                              yrange As DoubleRange,
                              zrange As DoubleRange,
                              labelFont As Font,
+                             labels As (X$, Y$, Z$),
                              Optional strokeCSS$ = Stroke.AxisStroke) As Element3D()
 
             ' 交汇于xmax, ymin, zmin
@@ -62,9 +63,9 @@ Namespace Plot3D.Model
             Dim Yaxis As New Line(ZERO, Y) With {.Stroke = color}
             Dim Zaxis As New Line(ZERO, Z) With {.Stroke = color}
 
-            Dim labX As New Label With {.Location = X, .Font = labelFont, .Color = Brushes.Black, .Text = "X"}
-            Dim labY As New Label With {.Location = Y, .Font = labelFont, .Color = Brushes.Black, .Text = "Y"}
-            Dim labZ As New Label With {.Location = Z, .Font = labelFont, .Color = Brushes.Black, .Text = "Z"}
+            Dim labX As New Label With {.Location = X, .Font = labelFont, .Color = Brushes.Black, .Text = labels.X}
+            Dim labY As New Label With {.Location = Y, .Font = labelFont, .Color = Brushes.Black, .Text = labels.Y}
+            Dim labZ As New Label With {.Location = Z, .Font = labelFont, .Color = Brushes.Black, .Text = labels.Z}
 
             Return New Element3D() {Xaxis, Yaxis, Zaxis, labX, labY, labZ}
         End Function

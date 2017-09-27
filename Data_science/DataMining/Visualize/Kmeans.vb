@@ -71,7 +71,10 @@ Public Module Kmeans
                               Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
                               Optional pointSize! = 20,
                               Optional boxStroke$ = Stroke.StrongHighlightStroke,
-                              Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
+                              Optional axisStroke$ = Stroke.AxisStroke,
+                              Optional labX$ = "X",
+                              Optional labY$ = "Y",
+                              Optional labZ$ = "Z") As GraphicsData
 
         Dim clusters As Dictionary(Of String, EntityLDM()) = data _
             .ToKMeansModels _
@@ -115,7 +118,8 @@ Public Module Kmeans
         Return serials.Plot(
             camera, bg, padding,
             boxStroke:=boxStroke,
-            axisStroke:=axisStroke)
+            axisStroke:=axisStroke,
+            labX:=labX, labY:=labY, labZ:=labZ)
     End Function
 End Module
 

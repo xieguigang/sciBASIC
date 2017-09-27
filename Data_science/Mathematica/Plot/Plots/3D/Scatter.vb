@@ -72,7 +72,10 @@ Namespace Plot3D
                              Optional padding$ = g.DefaultPadding,
                              Optional axisLabelFontCSS$ = CSSFont.Win7Normal,
                              Optional boxStroke$ = Stroke.StrongHighlightStroke,
-                             Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
+                             Optional axisStroke$ = Stroke.AxisStroke,
+                             Optional labX$ = "X",
+                             Optional labY$ = "Y",
+                             Optional labZ$ = "Z") As GraphicsData
 
             Dim list = serials.ToArray
             Dim points = list _
@@ -94,7 +97,7 @@ Namespace Plot3D
             Dim model As New List(Of Element3D)
 
             model += GridBottom.Grid(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
-            model += AxisDraw.Axis(X, Y, Z, font, axisStroke)
+            model += AxisDraw.Axis(X, Y, Z, font, (labX, labY, labZ), axisStroke)
 
             ' 最后混合进入系列点
             For Each serial As Serial3D In list
@@ -120,6 +123,8 @@ Namespace Plot3D
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Call model.RenderAs3DChart(g, camera, region)
+
+                    ' 绘制图例？？
                 End Sub
             Dim plotRegion As New GraphicsRegion With {
                 .Size = camera.screen,

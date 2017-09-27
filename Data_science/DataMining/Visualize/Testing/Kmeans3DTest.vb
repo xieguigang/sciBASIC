@@ -55,7 +55,7 @@ Module Kmeans3DTest
             .angleZ = -45
         }
 
-        Call Kmeans.Scatter3D(matrix, cata, camera).Save("./kmeans3D.png")
+        Call Kmeans.Scatter3D(matrix, cata, camera, labX:="T2 vs T1", labY:="T3 vs T2", labZ:="T4 vs T3").Save("./kmeans3D.png")
     End Sub
 End Module
 
