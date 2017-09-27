@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -71,7 +72,8 @@ Public Module Kmeans
                               Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
                               Optional pointSize! = 20,
                               Optional boxStroke$ = Stroke.StrongHighlightStroke,
-                              Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
+                              Optional axisStroke$ = Stroke.AxisStroke,
+                              Optional DIR$ = "./") As GraphicsData
 
         Dim clusters As Dictionary(Of String, EntityLDM()) = data _
             .ToKMeansModels _
@@ -79,6 +81,10 @@ Public Module Kmeans
             .GroupBy(Function(point) point.Cluster) _
             .ToDictionary(Function(cluster) cluster.Key,
                           Function(group) group.ToArray)
+
+        If Not DIR.StringEmpty Then
+            Call clusters.Values.IteratesALL.ToArray.SaveTo($"{DIR}/{catagory.Keys.JoinBy(",").NormalizePathString}-Kmeans.csv")
+        End If
 
         ' 相同的cluster的对象都会被染上同一种颜色
         ' 不同的分组之中的数据点则会被绘制为不同的形状
