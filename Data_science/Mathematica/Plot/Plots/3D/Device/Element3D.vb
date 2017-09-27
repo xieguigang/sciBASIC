@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
@@ -15,7 +16,10 @@ Namespace Plot3D.Device
         Public Property Location As Point3D
 
         Public MustOverride Sub Draw(g As IGraphics)
-        Public MustOverride Sub Transform(camera As Camera)
+
+        Public Overridable Sub Transform(camera As Camera)
+            Location = camera.Project(camera.Rotate(Location))
+        End Sub
 
         Protected Function GetPosition(g As IGraphics) As Point
             Return Location.PointXY(g.Size)
@@ -46,10 +50,16 @@ Namespace Plot3D.Device
         Sub New(a As Point3D, b As Point3D)
             Me.A = a
             Me.B = b
+
+            Call Me.__init()
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub __init()
             Me.Location = New Point3D With {
-                .X = (a.X + b.X) / 2,
-                .Y = (a.Y + b.Y) / 2,
-                .Z = (a.Z + b.Z) / 2
+                .X = (A.X + B.X) / 2,
+                .Y = (A.Y + B.Y) / 2,
+                .Z = (A.Z + B.Z) / 2
             }
         End Sub
 
@@ -58,6 +68,15 @@ Namespace Plot3D.Device
             Dim p2 As Point = B.PointXY(g.Size)
 
             Call g.DrawLine(Stroke, p1, p2)
+        End Sub
+
+        Public Overrides Sub Transform(camera As Camera)
+            Dim list = camera.Project(camera.Rotate({A, B})).ToArray
+
+            _A = list(0)
+            _B = list(1)
+
+            Call Me.__init()
         End Sub
     End Class
 
