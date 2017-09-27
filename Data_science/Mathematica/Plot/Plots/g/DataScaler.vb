@@ -68,13 +68,20 @@ Namespace Graphic
         Dim AxisTicks As (X As Vector, Y As Vector)
         Dim ChartRegion As Rectangle
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Translate(x#, y#) As PointF
             Return New PointF With {
-                .X = Me.X(x),
-                .Y = ChartRegion.Bottom - Me.Y(y)
+                .X = TranslateX(x),
+                .Y = TranslateY(y)
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function TranslateX(x#) As Double
+            Return Me.X(x)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TranslateY(y#) As Double
             Return ChartRegion.Bottom - Me.Y(y)
         End Function

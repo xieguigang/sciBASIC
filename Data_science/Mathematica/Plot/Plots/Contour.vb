@@ -336,10 +336,10 @@ Public Module Contour
             Dim yTicks = data.Select(Function(d) d.y).Range.CreateAxisTicks
             Dim x = d3js.scale.linear() _
                 .domain(xTicks) _
-                .range({region.PlotRegion.Left, region.PlotRegion.Right})
+                .range(integers:={region.PlotRegion.Left, region.PlotRegion.Right})
             Dim y = d3js.scale.linear() _
                 .domain(yTicks) _
-                .range({region.PlotRegion.Top, region.PlotRegion.Bottom})
+                .range(integers:={region.PlotRegion.Top, region.PlotRegion.Bottom})
             Dim colorDatas As SolidBrush() = Nothing
             Dim getColors = GetColor(data.ToArray(Function(o) o.z), colorDatas)
             Dim size As Size = region.Size

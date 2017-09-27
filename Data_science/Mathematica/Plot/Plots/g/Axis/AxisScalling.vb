@@ -37,8 +37,15 @@ Namespace Graphic.Axis
 
     Public Module AxisScalling
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Function CreateAxisTicks(range As DoubleRange, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+        Public Function CreateAxisTicks(data As IEnumerable(Of Double), Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+            Return data.Range.CreateAxisTicks(ticks, decimalDigits)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CreateAxisTicks(range As DoubleRange, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
             With range
                 Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits)
             End With
@@ -52,7 +59,7 @@ Namespace Graphic.Axis
         ''' <param name="decimalDigits%"></param>
         ''' <returns></returns>
         <Extension>
-        Function CreateAxisTicks(min#, max#, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+        Public Function CreateAxisTicks(min#, max#, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
 
             ' First, get the minimum and maximum of the series, toggle the zero_flag variable 
             ' if 0 Is between Then the min And max, And Get the range Of the data.
