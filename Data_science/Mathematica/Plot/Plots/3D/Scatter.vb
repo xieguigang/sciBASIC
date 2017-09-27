@@ -71,13 +71,17 @@ Namespace Plot3D
                         For Each serial As Serial3D In list
 
                             Dim data As Point3D() = serial.Points
+                            Dim size As New Size With {
+                                .Width = serial.PointSize,
+                                .Height = serial.PointSize
+                            }
 
                             For Each pt As Point3D In data
                                 pt = .Project(.Rotate(pt))      ' 3d project to 2d
                                 cur = pt.PointXY(camera.screen)
 
                                 ' draw legend shape
-                                Call g.DrawLegendShape(cur, New Size(5, 5), serial.Shape, serial.Color)
+                                Call g.DrawLegendShape(cur, size, serial.Shape, serial.Color)
                             Next
                         Next
                     End With

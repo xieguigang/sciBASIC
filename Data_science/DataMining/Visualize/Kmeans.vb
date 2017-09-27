@@ -67,7 +67,8 @@ Public Module Kmeans
                               Optional padding$ = g.DefaultPadding,
                               Optional clusterN% = 6,
                               Optional schema$ = Designer.Clusters,
-                              Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle) As GraphicsData
+                              Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
+                              Optional pointSize! = 10) As GraphicsData
 
         Dim clusters As Dictionary(Of String, EntityLDM()) = data _
             .ToKMeansModels _
@@ -103,7 +104,8 @@ Public Module Kmeans
                 .Title = (+cluster).Key,
                 .Color = color,
                 .Points = point3D,
-                .Shape = LegendStyles.Triangle
+                .Shape = LegendStyles.Triangle,
+                .PointSize = pointSize
             }
         Next
 

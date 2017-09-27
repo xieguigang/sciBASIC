@@ -13,6 +13,7 @@ Namespace Plot3D
         Public Property Color As Color
         Public Property Shape As LegendStyles
         Public Property Points As Point3D()
+        Public Property PointSize As Single
 
         Public Overrides Function ToString() As String
             Return $"[{Shape.ToString}, {Color.ToString}] {Title}"

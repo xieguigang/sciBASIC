@@ -47,9 +47,12 @@ Module Kmeans3DTest
             .Name = "T4 vs T3", .Value = {"D1.C1", "D1.C2", "D2.C1", "D2.C2"}}
 
         Dim camera As New Camera With {
-            .fov = 1000,
+            .fov = 30000,
             .screen = New Size(2000, 1600),
-            .ViewDistance = 50
+            .ViewDistance = 100,
+            .angleX = 0,
+            .angleY = 20,
+            .angleZ = 0
         }
 
         Call Kmeans.Scatter3D(matrix, cata, camera).Save("./kmeans3D.png")
