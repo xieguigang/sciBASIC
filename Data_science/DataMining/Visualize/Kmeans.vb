@@ -63,13 +63,13 @@ Public Module Kmeans
     Public Function Scatter3D(data As IEnumerable(Of DataSet),
                               catagory As Dictionary(Of NamedCollection(Of String)),
                               camera As Camera,
-                              Optional size$ = "1600,1200",
+                              Optional size$ = "1200,1000",
                               Optional bg$ = "white",
                               Optional padding$ = g.DefaultPadding,
                               Optional clusterN% = 6,
                               Optional schema$ = Designer.Clusters,
                               Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
-                              Optional pointSize! = 10,
+                              Optional pointSize! = 20,
                               Optional boxStroke$ = Stroke.StrongHighlightStroke,
                               Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
 

@@ -2278,7 +2278,7 @@ Namespace Imaging
 
         ''' <summary>
         ''' Draws the specified text string at the specified location with the specified
-        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' <see cref="Brush"/> and <see cref="Font"/> objects.
         ''' </summary>
         ''' <param name="s">String to draw.</param>
         ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>

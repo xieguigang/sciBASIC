@@ -254,6 +254,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3D\Axis.vb" />
+    <Compile Include="3D\Device\Element3D.vb" />
     <Compile Include="3D\Serial3D.vb" />
     <Compile Include="3D\Device\Canvas.vb">
       <SubType>UserControl</SubType>

@@ -61,7 +61,6 @@ Namespace Plot3D
                 .ToArray
             Dim font As Font = CSSFont.TryParse(axisLabelFontCSS).GDIObject
             Dim cur As Point
-            Dim rect As Rectangle
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
