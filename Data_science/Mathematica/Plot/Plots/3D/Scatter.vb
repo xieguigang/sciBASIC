@@ -117,11 +117,15 @@ Namespace Plot3D
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-
+                    Call model.RenderAs3DChart(g, camera, region)
                 End Sub
+            Dim plotRegion As New GraphicsRegion With {
+                .Size = camera.screen,
+                .Padding = padding
+            }
 
-            Return camera _
-                .screen _
+            Return plotRegion _
+                .Size _
                 .GraphicsPlots(padding, bg, plotInternal)
         End Function
 

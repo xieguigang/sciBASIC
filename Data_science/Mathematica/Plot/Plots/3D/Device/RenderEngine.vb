@@ -1,6 +1,7 @@
 ﻿
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 Namespace Plot3D.Device
@@ -11,7 +12,7 @@ Namespace Plot3D.Device
     Public Module RenderEngine
 
         <Extension>
-        Public Sub RenderAs3DChart(elements As IEnumerable(Of Element3D), canvas As IGraphics, camera As Camera)
+        Public Sub RenderAs3DChart(elements As IEnumerable(Of Element3D), canvas As IGraphics, camera As Camera, region As GraphicsRegion)
 
         End Sub
     End Module
