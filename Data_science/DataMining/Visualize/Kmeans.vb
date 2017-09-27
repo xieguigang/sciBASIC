@@ -34,6 +34,9 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports System.Drawing
+Imports Microsoft.VisualBasic.Linq
 
 Public Module Kmeans
 
@@ -59,9 +62,24 @@ Public Module Kmeans
                               Optional size$ = "1600,1200",
                               Optional bg$ = "white",
                               Optional padding$ = g.DefaultPadding,
-                              Optional clusterN% = 6) As GraphicsData
+                              Optional clusterN% = 6,
+                              Optional schema$ = Designer.Clusters) As GraphicsData
 
-        Dim clusters As EntityLDM() = data.ToKMeansModels.Kmeans(expected:=clusterN)
+        Dim clusters As Dictionary(Of String, EntityLDM()) = data _
+            .ToKMeansModels _
+            .Kmeans(expected:=clusterN) _
+            .GroupBy(Function(point) point.Cluster) _
+            .ToDictionary(Function(cluster) cluster.Key,
+                          Function(group) group.ToArray)
+
+        ' 相同的cluster的对象都会被染上同一种颜色
+        ' 不同的分组之中的数据点则会被绘制为不同的形状
+        Dim clusterColors As Color() = Designer.GetColors(schema)
+        Dim serials As New List(Of Serial3D)
+
+        For Each cluster In clusters.SeqIterator
+
+        Next
     End Function
 End Module
 
