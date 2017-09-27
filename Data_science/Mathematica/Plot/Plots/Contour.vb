@@ -53,6 +53,11 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' </summary>
 Public Module Contour
 
+    ''' <summary>
+    ''' Compile the math expression as a lambda expression for producing numeric values.
+    ''' </summary>
+    ''' <param name="exp$">A string math function expression: ``f(x,y)``</param>
+    ''' <returns></returns>
     Public Function Compile(exp$) As Func(Of Double, Double, Double)
         With New Expression
 
@@ -356,14 +361,22 @@ Public Module Contour
 
             ' Call g.DrawAxis(size, margin, scaler, False, offset, xlabel, ylabel)
 
-            offset = New Point(offset.X, offset.Y - unit / 2)
+            offset = New Point With {
+                .X = offset.X,
+                .Y = offset.Y - unit / 2
+            }
 
             Dim us% = unit * scale
 
             For i As Integer = 0 To data.Length - 1
                 Dim p As (X#, y#, Z#) = data(i)
                 Dim c As SolidBrush = getColors(i)
-                Dim fill As New RectangleF(x(p.X) + offset.X, y(p.y) + offset.Y, us, us)
+                Dim fill As New RectangleF With {
+                    .X = x(p.X) + offset.X,
+                    .Y = y(p.y) + offset.Y,
+                    .Width = us,
+                    .Height = us
+                }
 
                 Call g.FillRectangle(c, fill)
                 Call g.DrawRectangle(New Pen(c),
@@ -412,13 +425,9 @@ Public Module Contour
                                parallel As Boolean,
                                ByRef matrix As List(Of DataSet), unit%) As (X#, y#, z#)()
 
-        If Single.IsNaN(xsteps) Then
-            xsteps = xrange.Length / size.Width
-        End If
-        If Single.IsNaN(ysteps) Then
-            ysteps = yrange.Length / size.Height
-        End If
 
+        xsteps = xsteps Or (xrange.Length / size.Width).AsDefault(Function(n) Single.IsNaN(CSng(n)))
+        ysteps = ysteps Or (yrange.Length / size.Height).AsDefault(Function(n) Single.IsNaN(CSng(n)))
         xsteps *= unit%
         ysteps *= unit%
 
