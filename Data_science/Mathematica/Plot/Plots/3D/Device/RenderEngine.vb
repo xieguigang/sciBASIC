@@ -13,7 +13,21 @@ Namespace Plot3D.Device
 
         <Extension>
         Public Sub RenderAs3DChart(elements As IEnumerable(Of Element3D), canvas As IGraphics, camera As Camera, region As GraphicsRegion)
+            ' 首先对模型执行rotate和project，然后再进行Z排序
+            Dim model As Element3D() = elements.ToArray
 
+            For Each element As Element3D In model
+                Call element.Transform(camera)
+            Next
+
+            Dim orders = PainterAlgorithm _
+                .OrderProvider(model, Function(e) e.Location.Z) _
+                .ToArray
+
+            For i As Integer = 0 To model.Length - 1
+                Dim index = orders(i)
+                Call model(index).Draw(canvas)
+            Next
         End Sub
     End Module
 End Namespace

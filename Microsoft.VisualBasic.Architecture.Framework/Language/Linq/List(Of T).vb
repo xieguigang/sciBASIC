@@ -1,38 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::fb3e4c2382ec4278561303d641a4092c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\List(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Who = Microsoft.VisualBasic.Linq.Which
 
 Namespace Language
 
@@ -112,6 +112,7 @@ Namespace Language
         ''' <param name="address"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(address As IAddress(Of Integer)) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Item(address.Address)
             End Get
@@ -170,6 +171,7 @@ Namespace Language
         End Property
 
         Default Public Overloads Property Item(range As IntRange) As List(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
             End Get
@@ -183,6 +185,7 @@ Namespace Language
         End Property
 
         Default Public Overloads Property Item(indices As IEnumerable(Of Integer)) As List(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New List(Of T)(indices.Select(Function(i) Item(index:=i)))
             End Get
@@ -199,12 +202,14 @@ Namespace Language
         ''' <param name="[where]"></param>
         ''' <returns></returns>
         Default Public Overloads ReadOnly Property Item([where] As Predicate(Of T)) As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return MyBase.Where(Function(o) where(o)).ToArray
             End Get
         End Property
 
         Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me(Which.IsTrue(booleans))
             End Get
@@ -425,6 +430,8 @@ Namespace Language
         ''' </summary>
         ''' <param name="list"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(list As List(Of T)) As T()
             If list Is Nothing Then
                 Return {}
@@ -474,6 +481,7 @@ Namespace Language
         ''' <param name="list"></param>
         ''' <param name="count%"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(list As List(Of T), count%) As Boolean
             Return Not (list <> count)
         End Operator
@@ -484,10 +492,12 @@ Namespace Language
         ''' <param name="list"></param>
         ''' <param name="collection"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(list As List(Of T), collection As IEnumerable(Of T)) As Boolean
             Return list.SequenceEqual(collection)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(list As List(Of T), collection As IEnumerable(Of T)) As Boolean
             Return Not list.SequenceEqual(collection)
         End Operator
@@ -498,10 +508,12 @@ Namespace Language
         ''' <param name="source"></param>
         ''' <param name="path"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >(source As List(Of T), path As String) As Boolean
             Return CollectionIO.DefaultHandle()(source, path, System.Text.Encoding.UTF8)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >>(source As List(Of T), path As Integer) As Boolean
             Dim file As FileHandle = __getHandle(path)
             Return source > file.FileName
@@ -519,7 +531,7 @@ Namespace Language
             Dim o As New Value(Of T)
 
             For Each x As T In Me
-                o.value = x
+                o.Value = x
                 Yield o
             Next
         End Function

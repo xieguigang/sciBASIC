@@ -15,6 +15,7 @@ Namespace Plot3D.Device
         Public Property Location As Point3D
 
         Public MustOverride Sub Draw(g As IGraphics)
+        Public MustOverride Sub Transform(camera As Camera)
 
         Protected Function GetPosition(g As IGraphics) As Point
             Return Location.PointXY(g.Size)
