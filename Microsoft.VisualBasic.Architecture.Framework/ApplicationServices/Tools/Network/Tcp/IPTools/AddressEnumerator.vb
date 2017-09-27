@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f8c6151177cfe095a53de8901e19930, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\IPTools\AddressEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::8f8c6151177cfe095a53de8901e19930, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Tcp\IPTools\AddressEnumerator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2039ea9f1eb23623ad588a63763cfaf5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations\Ranking.vb"
+﻿#Region "Microsoft.VisualBasic::a525089530604eb2b0647ab829289f61, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations\Ranking.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq

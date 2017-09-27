@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29b0d68f981eede5e9c3facef45ac9f9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\VecMath2D.vb"
+﻿#Region "Microsoft.VisualBasic::dacd296a4dcdcebba75e9fb16fa9e583, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\VecMath2D.vb"
 
     ' Author:
     ' 
@@ -205,4 +205,3 @@ Namespace Imaging.Math2D
         End Function
     End Class
 End Namespace
-

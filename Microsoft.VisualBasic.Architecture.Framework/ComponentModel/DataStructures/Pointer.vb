@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab48d1aa28d8e7e99aad21f8e143ea14, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::0c118f269e92d3295ecf727bc3e30ca3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Pointer.vb"
 
     ' Author:
     ' 

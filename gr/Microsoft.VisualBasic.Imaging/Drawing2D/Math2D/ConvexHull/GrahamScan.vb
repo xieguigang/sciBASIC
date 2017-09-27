@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48c56d911bd61b41143908899ea65e51, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\GrahamScan.vb"
+﻿#Region "Microsoft.VisualBasic::f17e4119181a75d3c70ccb75d6ae6f33, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\GrahamScan.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Namespace Drawing2D.Math2D.ConvexHull
         End Function
     End Module
 End Namespace
-

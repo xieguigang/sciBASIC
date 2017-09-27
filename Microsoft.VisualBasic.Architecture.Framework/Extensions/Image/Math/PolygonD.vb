@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b549be3cd83a6996de4a78805a976849, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\PolygonD.vb"
+﻿#Region "Microsoft.VisualBasic::2fda1bc37e8674386c1df752ce8fc55b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\PolygonD.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace Imaging.Math2D
         End Function
     End Class
 End Namespace
-

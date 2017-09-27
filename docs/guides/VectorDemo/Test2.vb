@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c7ec01951f6db11b47c4dac01cba41a, ..\sciBASIC#\docs\guides\VectorDemo\Test2.vb"
+﻿#Region "Microsoft.VisualBasic::c8f35eac7497559cb38a473c2a7da695, ..\sciBASIC#\docs\guides\VectorDemo\Test2.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Module Test2
         Pause()
     End Sub
 End Module
-

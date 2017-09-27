@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::3774ca6402944bd02b15279b4ffae1c1, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::7f1fe2ac872df73ac98bc49da75e81b3, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -65,7 +65,7 @@ Namespace Drawing2D
         ''' 所有的页边距都是零
         ''' </summary>
         Public Const ZeroPadding$ = "padding: 0px 0px 0px 0px;"
-
+        Public Const MediumPadding$ = "padding: 45px 45px 45px 45px;"
         Public Const SmallPadding$ = "padding: 30px 30px 30px 30px;"
 
         ''' <summary>
@@ -135,6 +135,7 @@ Namespace Drawing2D
 
             If g.__getDriver(developerValue:=driver) = Drivers.SVG Then
                 Dim svg As New GraphicsSVG(size)
+
                 Call svg.Clear(bg.TranslateColor)
                 Call plotAPI(svg, New GraphicsRegion With {
                        .Size = size,
@@ -189,7 +190,7 @@ Namespace Drawing2D
             If Not bgColor.IsEmpty Then
                 Call g.FillRectangle(New SolidBrush(bgColor), rect)
             Else
-                Dim res As Drawing.Image
+                Dim res As Image
 
                 If bg.FileExists Then
                     res = LoadImage(path:=bg$)
@@ -232,8 +233,16 @@ Namespace Drawing2D
             End If
         End Function
 
+        ''' <summary>
+        ''' Draw shadow of a specifc <paramref name="polygon"/>
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="polygon"></param>
+        ''' <param name="shadowColor$"></param>
+        ''' <param name="alphaLevels$"></param>
+        ''' <param name="gradientLevels$"></param>
         <Extension> Public Sub DropdownShadows(g As IGraphics,
-                                               path As GraphicsPath,
+                                               polygon As GraphicsPath,
                                                Optional shadowColor$ = NameOf(Color.Gray),
                                                Optional alphaLevels$ = "0,120,150,200",
                                                Optional gradientLevels$ = "[0,0.125,0.5,1]")
@@ -262,12 +271,12 @@ Namespace Drawing2D
             ' this Is where we create the shadow effect, so we will use a 
             ' pathgradientbursh And assign our GraphicsPath that we created of a 
             ' Rounded Rectangle
-            Using pgBrush As New PathGradientBrush(path) With {
+            Using pgBrush As New PathGradientBrush(polygon) With {
                 .WrapMode = WrapMode.Clamp,
                 .InterpolationColors = colorBlend
             }
                 ' fill the shadow with our pathgradientbrush
-                Call g.FillPath(pgBrush, path)
+                Call g.FillPath(pgBrush, polygon)
             End Using
         End Sub
 

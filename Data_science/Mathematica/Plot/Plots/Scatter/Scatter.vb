@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::df8105237486edb3ee7b2308b04674dc, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::74d64613d9f9a9b65db4c4148b311af6, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Scatter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -50,6 +50,18 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module Scatter
 
+    <Extension>
+    Private Sub drawErrorLine(canvas As IGraphics, scaler As DataScaler, pt As PointF, value#, width!, color As SolidBrush)
+        Dim p0 As New PointF With {
+            .X = pt.X,
+            .Y = scaler.TranslateY(value)
+        }
+
+        ' 下面分别绘制竖线误差线以及横线
+        Call canvas.DrawLine(New Pen(color), pt, p0)
+        Call canvas.DrawLine(New Pen(color), CSng(p0.X - width), p0.Y, CSng(p0.X + width), p0.Y)
+    End Sub
+
     ''' <summary>
     ''' Scatter plot function.(绘图函数，默认的输出大小为``4300px,2000px``)
     ''' </summary>
@@ -68,18 +80,18 @@ Public Module Scatter
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
                          Optional size$ = "1600,1200",
-                         Optional padding$ = g.DefaultLargerPadding,
+                         Optional padding$ = g.MediumPadding,
                          Optional bg$ = "white",
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,
                          Optional legendPosition As Point = Nothing,
-                         Optional legendSize As Size = Nothing,
+                         Optional legendSize$ = "100,20",
                          Optional drawLine As Boolean = True,
                          Optional legendBorder As Stroke = Nothing,
                          Optional legendRegionBorder As Stroke = Nothing,
                          Optional fill As Boolean = False,
                          Optional fillPie As Boolean = True,
-                         Optional legendFontSize! = 24,
+                         Optional legendFontSize! = 14,
                          Optional absoluteScaling As Boolean = True,
                          Optional XaxisAbsoluteScalling As Boolean = False,
                          Optional YaxisAbsoluteScalling As Boolean = False,
@@ -96,12 +108,19 @@ Public Module Scatter
                         Return s.pts.Select(Function(pt) CDbl(pt.pt.X))
                     End Function) _
             .IteratesALL _
-            .Range _
+            .Range(1.2) _
             .CreateAxisTicks
         Dim YTicks = array _
             .Select(Function(s)
-                        Return s.pts.Select(Function(pt) CDbl(pt.pt.Y))
+                        Return s.pts _
+                            .Select(Function(pt)
+                                        Return {
+                                            pt.pt.Y - pt.errMinus,
+                                            pt.pt.Y + pt.errPlus
+                                        }
+                                    End Function)
                     End Function) _
+            .IteratesALL _
             .IteratesALL _
             .Range _
             .CreateAxisTicks
@@ -133,6 +152,8 @@ Public Module Scatter
                     Call g.DrawAxis(rect, scaler, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
                 End If
 
+                Dim width = rect.PlotRegion.Width / 200
+
                 For Each line As SerialData In array
                     Dim pts = line.pts.SlideWindows(2)
                     Dim pen As New Pen(color:=line.color, width:=line.width) With {
@@ -151,7 +172,7 @@ Public Module Scatter
                                         End Function
                     Dim pt1, pt2 As PointF
 
-                    For Each pt In pts
+                    For Each pt As SlideWindow(Of PointData) In pts
                         Dim a As PointData = pt.First
                         Dim b As PointData = pt.Last
 
@@ -179,6 +200,22 @@ Public Module Scatter
                             Call g.FillPie(getPointBrush(a), pt1.X - r, pt1.Y - r, d, d, 0, 360)
                             Call g.FillPie(getPointBrush(b), pt2.X - r, pt2.Y - r, d, d, 0, 360)
                         End If
+
+                        ' 绘制误差线
+                        ' 首先计算出误差的长度，然后可pt1,pt2的Y相加减即可得到新的位置
+                        ' 最后划线即可
+                        If a.errPlus > 0 Then
+                            Call g.drawErrorLine(scaler, pt1, a.errPlus + a.pt.Y, width, br)
+                        End If
+                        If a.errMinus > 0 Then
+                            Call g.drawErrorLine(scaler, pt1, a.pt.Y - a.errMinus, width, br)
+                        End If
+                        If b.errPlus > 0 Then
+                            Call g.drawErrorLine(scaler, pt2, b.errPlus + b.pt.Y, width, br)
+                        End If
+                        If b.errMinus > 0 Then
+                            Call g.drawErrorLine(scaler, pt2, b.pt.Y - b.errMinus, width, br)
+                        End If
                     Next
 
                     If Not line.DataAnnotations.IsNullOrEmpty Then
@@ -190,31 +227,38 @@ Public Module Scatter
                     End If
 
                     If showLegend Then
-                        Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+                        Dim legends = LinqAPI.Exec(Of Legend) _
  _
-                            From s As SerialData
-                            In array
-                            Let sColor As String = s.color.RGBExpression
-                            Let legendFont = CSSFont.GetFontStyle(
-                                FontFace.SegoeUI,
-                                FontStyle.Regular,
-                                legendFontSize)
-                            Select New Legend With {
-                                .color = sColor,
-                                .fontstyle = legendFont,
-                                .style = LegendStyles.Circle,
-                                .title = s.title
-                            }
+                        () <= From s As SerialData
+                              In array
+                              Let sColor As String = s.color.RGBExpression
+                              Let legendFont = CSSFont.GetFontStyle(
+                                  FontFace.SegoeUI,
+                                  FontStyle.Regular,
+                                  legendFontSize)
+                              Select New Legend With {
+                                  .color = sColor,
+                                  .fontstyle = legendFont,
+                                  .style = LegendStyles.Circle,
+                                  .title = s.title
+                                  }
+                        Dim lsize As Size = legendSize.SizeParser
 
                         If legendPosition.IsEmpty Then
-                            legendPosition = New Point(
-                                CInt(gSize.Width * 0.7),
-                                margin.Bottom)
+                            Dim maxLen = legends.Select(Function(l) l.title).MaxLengthString
+                            Dim lFont As Font = CSSFont.TryParse(legends.First.fontstyle).GDIObject
+                            Dim maxWidth = g.MeasureString(maxLen, lFont).Width
+
+                            legendPosition = New Point With {
+                                .X = region.Size.Width - lsize.Width / 2 - maxWidth,
+                                .Y = margin.Top + lFont.Height
+                            }
                         End If
 
-                        Call g.DrawLegends(legendPosition, legends, legendSize,,
-                                           legendBorder,
-                                           legendRegionBorder)
+                        Call g.DrawLegends(
+                            legendPosition, legends, lsize,,
+                            legendBorder,
+                            legendRegionBorder)
                     End If
                 Next
             End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d55a2b3c72c6e0b8f8001e08f834bbde, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\VectorEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::b7e95140344da3cb1b22c5e3b530b992, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\VectorEqualityComparer.vb"
 
     ' Author:
     ' 

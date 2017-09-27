@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cdacf6a6608c81e347cec8af9688956, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::ce5332dbde8adb38ed44392489324658, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IntRange.vb"
 
     ' Author:
     ' 

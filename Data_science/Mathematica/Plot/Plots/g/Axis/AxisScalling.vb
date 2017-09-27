@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::879e63ac0e7ff0f8b60489dab4dd3fea, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::db58f4a11cf4968ba6e1ae7e3e6a5a91, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\AxisScalling.vb"
 
     ' Author:
     ' 
@@ -90,6 +90,7 @@ Namespace Graphic.Axis
                 For i = 0 To places.Length - 1
                     If (places(i) <> "0" AndAlso firstPlace = 0) Then
                         firstPlace = i
+                        Exit For
                     End If
                 Next
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10a854194c79e6e0a93f21577272dedb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\InteractiveIODevice\TerminalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::10a854194c79e6e0a93f21577272dedb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76c245de0d1a4b3d4d720d5dfec3520d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\IEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::293384dd5db8c84cfb33172e73903674, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\IEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Public Class StringEqualityHelper : Implements IEqualityComparer(Of String)
         Return obj.GetHashCode
     End Function
 End Class
-

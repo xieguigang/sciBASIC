@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d2b6eb6b05600d67dae10c011b0c155, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\TestingMain.vb"
+﻿#Region "Microsoft.VisualBasic::13bb62e53c66c6f324f57420a816b0cf, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\TestingMain.vb"
 
     ' Author:
     ' 

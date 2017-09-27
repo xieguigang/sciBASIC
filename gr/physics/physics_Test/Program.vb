@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaec308e9bb3d9e3c27144f079a33b63, ..\sciBASIC#\gr\physics\physics_Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c3b52a3090011adbd361e08ae411ec0b, ..\sciBASIC#\gr\physics\physics_Test\Program.vb"
 
     ' Author:
     ' 
@@ -99,4 +99,3 @@ Public Module Program
         Call $"||{f1.ToString}|| + ||{f2.ToString}||  =>  ||{(f1 + f2).ToString}||".__DEBUG_ECHO
     End Sub
 End Module
-

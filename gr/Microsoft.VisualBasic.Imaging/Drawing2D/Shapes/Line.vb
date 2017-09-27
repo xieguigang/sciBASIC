@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b71564bccbef4d0eef7707425ec36f12, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
+﻿#Region "Microsoft.VisualBasic::6694a66b0e5218cb8655fd97725d759d, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
 
     ' Author:
     ' 
