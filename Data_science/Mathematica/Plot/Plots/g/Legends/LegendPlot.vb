@@ -140,22 +140,28 @@ Namespace Graphic.Legend
 
                     Dim dw As Integer = gSize.Width * 0.1
                     Dim dh As Integer = gSize.Height * 0.2
+                    Dim size As New Size With {
+                        .Width = gSize.Width - dw * 2,
+                        .Height = gSize.Height - dh * 2
+                    }
 
                     Call Box.DrawRectangle(
                         g, New Point(pos.X + dw, pos.Y + dh),
-                        New Size(gSize.Width - dw * 2,
-                                 gSize.Height - dh * 2),
+                        size,
                         color, border)
 
                 Case LegendStyles.RoundRectangle
 
                     Dim dw As Integer = gSize.Width * 0.1
                     Dim dh As Integer = gSize.Height * 0.2
+                    Dim size As New Size With {
+                        .Width = gSize.Width - dw * 2,
+                        .Height = gSize.Height - dh * 2
+                    }
 
                     Call RoundRect.Draw(
                         g, New Point(pos.X + dw, pos.Y + dh),
-                        New Size(gSize.Width - dw * 2,
-                                 gSize.Height - dh * 2),
+                        size,
                         radius,
                         color, border)
 
@@ -270,9 +276,10 @@ Namespace Graphic.Legend
             For Each l As Legend In legendList
                 n += 1
                 size = g.DrawLegend(topLeft, graphicSize, l, border, radius)
-                topLeft = New Point(
-                    topLeft.X,
-                    size.Height + d + topLeft.Y)
+                topLeft = New Point With {
+                    .X = topLeft.X,
+                    .Y = size.Height + d + topLeft.Y
+                }
             Next
 
             If Not regionBorder Is Nothing Then
