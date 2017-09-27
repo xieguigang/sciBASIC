@@ -45,6 +45,7 @@ Namespace Plot3D
     ''' </summary>
     Public Module Scatter
 
+        <Extension>
         Public Function Plot(serials As IEnumerable(Of Serial3D),
                              camera As Camera,
                              Optional bg$ = "white",

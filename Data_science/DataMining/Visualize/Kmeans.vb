@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Language
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
@@ -60,6 +61,7 @@ Public Module Kmeans
     <Extension>
     Public Function Scatter3D(data As IEnumerable(Of DataSet),
                               catagory As Dictionary(Of NamedCollection(Of String)),
+                              camera As Camera,
                               Optional size$ = "1600,1200",
                               Optional bg$ = "white",
                               Optional padding$ = g.DefaultPadding,
@@ -79,17 +81,33 @@ Public Module Kmeans
         Dim clusterColors As Color() = Designer.GetColors(schema)
         Dim serials As New List(Of Serial3D)
         Dim shapeList As LegendStyles() = GetAllEnumFlags(Of LegendStyles)(shapes)
+        Dim keys$() = catagory.Keys.ToArray
 
         For Each cluster In clusters.SeqIterator
             Dim color As Color = clusterColors(cluster)
-            Dim shape As LegendStyles = shapeList(cluster)
+            Dim point3D As New List(Of Point3D)
 
             For Each member As EntityLDM In (+cluster).Value
-                For Each cat As String In catagory.Keys
-                    Dim numerics#() = member(catagory(cat).Value)
-                Next
+                With keys _
+                    .Select(Function(cat)
+                                Return member(catagory(cat).Value).Average
+                            End Function) _
+                    .ToArray
+
+                    Dim point As New Point3D(.ref(0), .ref(1), .ref(2))
+                    point3D += point
+                End With
             Next
+
+            serials += New Serial3D With {
+                .Title = (+cluster).Key,
+                .Color = color,
+                .Points = point3D,
+                .Shape = LegendStyles.Triangle
+            }
         Next
+
+        Return serials.Plot(camera, bg, padding)
     End Function
 End Module
 
