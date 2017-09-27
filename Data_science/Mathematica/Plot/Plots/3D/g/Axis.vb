@@ -57,7 +57,9 @@ Namespace Plot3D.Model
             Dim Z As New Point3D With {.X = xrange.Max, .Y = yrange.Min, .Z = zrange.Max}
             Dim color As Pen = Stroke.TryParse(strokeCSS).GDIObject
 
-            color.EndCap = LineCap.Triangle
+            Dim bigArrow As New AdjustableArrowCap(color.Width * 3, color.Width * 3)
+
+            color.CustomEndCap = bigArrow
 
             Dim Xaxis As New Line(ZERO, X) With {.Stroke = color}
             Dim Yaxis As New Line(ZERO, Y) With {.Stroke = color}
