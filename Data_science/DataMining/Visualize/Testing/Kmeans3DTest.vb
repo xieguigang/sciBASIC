@@ -50,9 +50,9 @@ Module Kmeans3DTest
             .fov = 500000,
             .screen = New Size(1200, 1000),
             .ViewDistance = 3300,
-            .angleX = 10,
-            .angleY = 45,
-            .angleZ = 0
+            .angleX = 30,
+            .angleY = 60,
+            .angleZ = -45
         }
 
         Call Kmeans.Scatter3D(matrix, cata, camera).Save("./kmeans3D.png")
