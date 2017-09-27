@@ -44,6 +44,49 @@ Namespace Plot3D
     ''' </summary>
     Public Module Scatter
 
+        Public Function Plot(serials As IEnumerable(Of Serial3D),
+                             camera As Camera,
+                             Optional bg$ = "white",
+                             Optional padding$ = g.DefaultPadding,
+                             Optional axisLabelFontCSS$ = CSSFont.Win7Normal) As GraphicsData
+
+            Dim list = serials.ToArray
+            Dim points = list _
+                .Select(Function(s) s.Points) _
+                .IteratesALL _
+                .ToArray
+            Dim font As Font = CSSFont.TryParse(axisLabelFontCSS).GDIObject
+            Dim cur As Point
+            Dim rect As Rectangle
+
+            Dim plotInternal =
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
+
+                    Call AxisDraw.DrawAxis(g, points, camera, Font)
+
+                    With camera
+
+                        For Each serial As Serial3D In list
+
+                            Dim data As Point3D() = serial.Points
+
+                            For Each pt As Point3D In data
+                                pt = .Project(.Rotate(pt))      ' 3d project to 2d
+                                cur = pt.PointXY(camera.screen)
+                                rect = New Rectangle(cur, New Size(5, 5))
+
+                                ' draw legend shape
+
+                            Next
+                        Next
+                    End With
+                End Sub
+
+            Return camera _
+                .screen _
+                .GraphicsPlots(padding, bg, plotInternal)
+        End Function
+
         ''' <summary>
         ''' 绘制三维散点图
         ''' </summary>
@@ -67,7 +110,7 @@ Namespace Plot3D
                              Optional lineColor$ = "red",
                              Optional font As Font = Nothing,
                              Optional bg$ = "white",
-                             Optional padding As Padding = Nothing) As GraphicsData
+                             Optional padding$ = "padding: 5px 5px 5px 5px;") As GraphicsData
 
             Dim data As Point3D() = func _
                 .Evaluate(x, y, xsteps, ysteps) _
@@ -77,10 +120,6 @@ Namespace Plot3D
             Dim previous As Point
             Dim cur As Point
             Dim lcolor As New Pen(lineColor.ToColor)
-
-            If padding.IsEmpty Then
-                padding = "padding: 5px 5px 5px 5px;"
-            End If
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)

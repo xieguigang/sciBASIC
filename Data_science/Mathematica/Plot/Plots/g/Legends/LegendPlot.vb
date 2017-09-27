@@ -38,6 +38,116 @@ Namespace Graphic.Legend
 
     Public Module LegendPlotExtensions
 
+        <Extension>
+        Public Sub DrawLegendShape(g As IGraphics,
+                                   pos As Point,
+                                   graphicsSize As SizeF,
+                                   style As LegendStyles,
+                                   color As Color,
+                                   Optional border As Stroke = Nothing,
+                                   Optional radius% = 5)
+            Select Case style
+
+                Case LegendStyles.Circle
+                    Dim r As Single = sys.Min(graphicsSize.Height, graphicsSize.Width) / 2
+                    Dim c As New Point(pos.X + graphicsSize.Height,
+                                       pos.Y + graphicsSize.Height / 2)
+
+                    Call Circle.Draw(g, c, r, New SolidBrush(color), border)
+
+                Case LegendStyles.DashLine
+
+                    Dim d As Integer = graphicsSize.Width * 0.2
+                    Dim a As New Point(pos.X + d, pos.Y + graphicsSize.Height / 2)
+                    Dim b As New Point(pos.X + graphicsSize.Width - d, a.Y)
+                    Dim pen As New Pen(color, 3) With {
+                        .DashStyle = DashStyle.Dash
+                    }
+
+                    Call g.DrawLine(pen, a, b)
+
+                Case LegendStyles.Diamond
+
+                    Dim d As Integer = sys.Min(graphicsSize.Height, graphicsSize.Width)
+                    Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
+                                             pos.Y + (graphicsSize.Height - d) / 2)
+                    Dim b As New SolidBrush(color)
+
+                    Call Diamond.Draw(g, topLeft, New Size(d, d), b, border)
+
+                Case LegendStyles.Hexagon
+
+                    Dim d As Integer = sys.Min(graphicsSize.Height, graphicsSize.Width)
+                    Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
+                                             pos.Y + (graphicsSize.Height - d) / 2)
+                    Dim b As New SolidBrush(color)
+
+                    Call Hexagon.Draw(g, topLeft, New Size(d * 1.15, d), b, border)
+
+                Case LegendStyles.Rectangle
+
+                    Dim dw As Integer = graphicsSize.Width * 0.1
+                    Dim dh As Integer = graphicsSize.Height * 0.2
+
+                    Call Box.DrawRectangle(
+                        g, New Point(pos.X + dw, pos.Y + dh),
+                        New Size(graphicsSize.Width - dw * 2,
+                                 graphicsSize.Height - dh * 2),
+                        New SolidBrush(color), border)
+
+                Case LegendStyles.RoundRectangle
+
+                    Dim dw As Integer = graphicsSize.Width * 0.1
+                    Dim dh As Integer = graphicsSize.Height * 0.2
+
+                    Call RoundRect.Draw(
+                        g, New Point(pos.X + dw, pos.Y + dh),
+                        New Size(graphicsSize.Width - dw * 2,
+                                 graphicsSize.Height - dh * 2),
+                        radius,
+                        New SolidBrush(color), border)
+
+                Case LegendStyles.Square
+                    Dim r As Single = sys.Min(graphicsSize.Height, graphicsSize.Width)
+                    Dim location As New Point(
+                        pos.X + graphicsSize.Width - r,
+                        pos.Y + graphicsSize.Height - r)
+
+                    Call Box.DrawRectangle(
+                        g, location,
+                        New Size(r, r),
+                        New SolidBrush(color), border)
+
+                Case LegendStyles.SolidLine
+
+                    Dim d As Integer = graphicsSize.Width * 0.2
+                    Dim a As New Point(pos.X + d, pos.Y + graphicsSize.Height / 2)
+                    Dim b As New Point(pos.X + graphicsSize.Width - d, a.Y)
+                    Dim pen As New Pen(color, 3) With {
+                        .DashStyle = DashStyle.Solid
+                    }
+
+                    Call g.DrawLine(pen, a, b)
+
+                Case LegendStyles.Triangle
+
+                    Dim d As Integer = sys.Min(graphicsSize.Height, graphicsSize.Width)
+                    Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
+                                             pos.Y + (graphicsSize.Height - d) / 2)
+
+                    Call Triangle.Draw(g, topLeft, New Size(d, d), New SolidBrush(color), border)
+
+                Case LegendStyles.Pentacle
+
+                    Call Pentacle.Draw(g, pos, graphicsSize, New SolidBrush(color), border)
+
+                Case Else
+                    Throw New NotSupportedException(
+                        style.ToString & " currently is not supported yet!")
+
+            End Select
+        End Sub
+
         ''' <summary>
         ''' 函数返回最大的那个rectange的大小
         ''' </summary>
@@ -51,113 +161,12 @@ Namespace Graphic.Legend
         Public Function DrawLegend(ByRef g As IGraphics, pos As Point, graphicsSize As SizeF, l As Legend, Optional border As Stroke = Nothing, Optional radius% = 5) As SizeF
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
-
-            Select Case l.style
-
-                Case LegendStyles.Circle
-                    Dim r As Single = sys.Min(graphicsSize.Height, graphicsSize.Width) / 2
-                    Dim c As New Point(pos.X + graphicsSize.Height,
-                                       pos.Y + graphicsSize.Height / 2)
-
-                    Call Circle.Draw(g, c, r, New SolidBrush(l.color.ToColor), border)
-
-                Case LegendStyles.DashLine
-
-                    Dim d As Integer = graphicsSize.Width * 0.2
-                    Dim a As New Point(pos.X + d, pos.Y + graphicsSize.Height / 2)
-                    Dim b As New Point(pos.X + graphicsSize.Width - d, a.Y)
-                    Dim pen As New Pen(l.color.ToColor, 3) With {
-                        .DashStyle = DashStyle.Dash
-                    }
-
-                    Call g.DrawLine(pen, a, b)
-
-                Case LegendStyles.Diamond
-
-                    Dim d As Integer = sys.Min(graphicsSize.Height, graphicsSize.Width)
-                    Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
-                                             pos.Y + (graphicsSize.Height - d) / 2)
-                    Dim b As New SolidBrush(l.color.ToColor)
-
-                    Call Diamond.Draw(g, topLeft, New Size(d, d), b, border)
-
-                Case LegendStyles.Hexagon
-
-                    Dim d As Integer = sys.Min(graphicsSize.Height, graphicsSize.Width)
-                    Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
-                                             pos.Y + (graphicsSize.Height - d) / 2)
-                    Dim b As New SolidBrush(l.color.ToColor)
-
-                    Call Hexagon.Draw(g, topLeft, New Size(d * 1.15, d), b, border)
-
-                Case LegendStyles.Rectangle
-
-                    Dim dw As Integer = graphicsSize.Width * 0.1
-                    Dim dh As Integer = graphicsSize.Height * 0.2
-
-                    Call Box.DrawRectangle(
-                        g, New Point(pos.X + dw, pos.Y + dh),
-                        New Size(graphicsSize.Width - dw * 2,
-                                 graphicsSize.Height - dh * 2),
-                        New SolidBrush(l.color.ToColor), border)
-
-                Case LegendStyles.RoundRectangle
-
-                    Dim dw As Integer = graphicsSize.Width * 0.1
-                    Dim dh As Integer = graphicsSize.Height * 0.2
-
-                    Call RoundRect.Draw(
-                        g, New Point(pos.X + dw, pos.Y + dh),
-                        New Size(graphicsSize.Width - dw * 2,
-                                 graphicsSize.Height - dh * 2),
-                        radius,
-                        New SolidBrush(l.color.ToColor), border)
-
-                Case LegendStyles.Square
-                    Dim r As Single = sys.Min(graphicsSize.Height, graphicsSize.Width)
-                    Dim location As New Point(
-                        pos.X + graphicsSize.Width - r,
-                        pos.Y + graphicsSize.Height - r)
-
-                    Call Box.DrawRectangle(
-                        g, location,
-                        New Size(r, r),
-                        New SolidBrush(l.color.ToColor), border)
-
-                Case LegendStyles.SolidLine
-
-                    Dim d As Integer = graphicsSize.Width * 0.2
-                    Dim a As New Point(pos.X + d, pos.Y + graphicsSize.Height / 2)
-                    Dim b As New Point(pos.X + graphicsSize.Width - d, a.Y)
-                    Dim pen As New Pen(l.color.ToColor, 3) With {
-                        .DashStyle = DashStyle.Solid
-                    }
-
-                    Call g.DrawLine(pen, a, b)
-
-                Case LegendStyles.Triangle
-
-                    Dim d As Integer = sys.Min(graphicsSize.Height, graphicsSize.Width)
-                    Dim topLeft As New Point(pos.X + (graphicsSize.Width - d) / 2,
-                                             pos.Y + (graphicsSize.Height - d) / 2)
-
-                    Call Triangle.Draw(g, topLeft, New Size(d, d), New SolidBrush(l.color.ToColor), border)
-
-                Case LegendStyles.Pentacle
-
-                    Call Pentacle.Draw(g, pos, graphicsSize, New SolidBrush(l.color.ToColor), border)
-
-                Case Else
-                    Throw New NotSupportedException(
-                        l.style.ToString & " currently is not supported yet!")
-
-            End Select
-
             Dim labelPosition As New Point With {
                 .X = pos.X + graphicsSize.Height * 2.5,
                 .Y = pos.Y + (graphicsSize.Height - fSize.Height) / 2
             }
 
+            Call g.DrawLegendShape(pos, graphicsSize, l.style, l.color.TranslateColor, border, radius)
             Call g.DrawString(l.title, font, Brushes.Black, labelPosition)
 
             If fSize.Height > graphicsSize.Height Then
