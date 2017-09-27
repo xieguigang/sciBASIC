@@ -65,6 +65,7 @@ Namespace Drawing3D.Math3D
             Return out
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function OffSets(polygon As IEnumerable(Of Point3D), offset As Point3D) As Point3D()
             Return polygon.Select(Function(point) point - offset).ToArray
@@ -133,7 +134,7 @@ Namespace Drawing3D.Math3D
         ''' <summary>
         ''' Translate a point from a given dx, dy, and dz
         ''' </summary>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Translate(base As Point3D, dx As Double, dy As Double, dz As Double) As Point3D
             With base
@@ -144,7 +145,7 @@ Namespace Drawing3D.Math3D
         ''' <summary>
         ''' Scale a point about a given origin
         ''' </summary>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Scale(base As Point3D, origin As Point3D, dx As Double, dy As Double, dz As Double) As Point3D
             With base
@@ -155,11 +156,13 @@ Namespace Drawing3D.Math3D
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Scale(base As Point3D, origin As Point3D, dx As Double) As Point3D
             Return base.Scale(origin, dx, dx, dx)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Scale(base As Point3D, origin As Point3D, dx As Double, dy As Double) As Point3D
             Return base.Scale(origin, dx, dy, 1)

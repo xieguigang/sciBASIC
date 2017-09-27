@@ -65,6 +65,7 @@ Namespace Drawing2D
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Enlarge(size As SizeF, fold#) As SizeF
             With size
@@ -154,6 +155,7 @@ Namespace Drawing2D
 
         'End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function MoveTo(shape As IEnumerable(Of Point), location As PointF, Optional type As MoveTypes = MoveTypes.BoundsBoxTopLeft) As Point()
             Return shape _

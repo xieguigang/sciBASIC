@@ -33,20 +33,30 @@ Imports Microsoft.VisualBasic.Data.Visualize.DataMining
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Language
 
 Module Kmeans3DTest
 
     Sub Main()
 
-        Dim matrix As DataSet() = DataSet.LoadDataSet("D:\OneDrive\2017-8-31\转录组\matrix.csv").ToArray
+        Dim matrix As New List(Of DataSet)
         Dim cata As New Dictionary(Of NamedCollection(Of String))
 
         cata += New NamedCollection(Of String) With {
-            .Name = "T2 vs T1", .Value = {"B1.A1", "B1.A2", "B2.A1", "B2.A2"}}
+            .Name = "T2 vs T1", .Value = {"1", "2", "3", "4"}}
         cata += New NamedCollection(Of String) With {
-            .Name = "T3 vs T2", .Value = {"C1.B1", "C1.B2", "C2.B1", "C2.B2"}}
+            .Name = "T3 vs T2", .Value = {"5", "6", "7", "8"}}
         cata += New NamedCollection(Of String) With {
-            .Name = "T4 vs T3", .Value = {"D1.C1", "D1.C2", "D2.C1", "D2.C2"}}
+            .Name = "T4 vs T3", .Value = {"9", "10", "11", "12"}}
+
+        Dim rnd As New Random
+
+        For i As Integer = 0 To 1000
+            matrix += New DataSet With {
+                .ID = i,
+                .Properties = 12.SeqRandom.ToDictionary(Function(id) CStr(id + 1), Function() rnd.NextDouble * 1000000)
+            }
+        Next
 
         Dim camera As New Camera With {
             .fov = 500000,
@@ -57,11 +67,7 @@ Module Kmeans3DTest
             .angleZ = -56.25
         }
 
-        Call Kmeans.Scatter3D(
-            matrix, cata, camera,
-            labX:="T2 vs T1",
-            labY:="T3 vs T2",
-            labZ:="T4 vs T3").AsGDIImage.CorpBlank(30, Color.White).SaveAs("./kmeans3D.png")
+        Call Kmeans.Scatter3D(matrix, cata, camera).AsGDIImage.CorpBlank(30, Color.White).SaveAs("./kmeans3D.png")
     End Sub
 End Module
 

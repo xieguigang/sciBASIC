@@ -71,10 +71,7 @@ Public Module Kmeans
                               Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
                               Optional pointSize! = 20,
                               Optional boxStroke$ = Stroke.StrongHighlightStroke,
-                              Optional axisStroke$ = Stroke.AxisStroke,
-                              Optional labX$ = "X",
-                              Optional labY$ = "Y",
-                              Optional labZ$ = "Z") As GraphicsData
+                              Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
 
         Dim clusters As Dictionary(Of String, EntityLDM()) = data _
             .ToKMeansModels _
@@ -89,6 +86,7 @@ Public Module Kmeans
         Dim serials As New List(Of Serial3D)
         Dim shapeList As LegendStyles() = GetAllEnumFlags(Of LegendStyles)(shapes)
         Dim keys$() = catagory.Keys.ToArray
+        Dim labX$ = keys(0), labY$ = keys(1), labZ$ = keys(2)
 
         For Each cluster In clusters.SeqIterator
             Dim color As Color = clusterColors(cluster)

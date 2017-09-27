@@ -17,10 +17,12 @@ Namespace Plot3D.Device
 
         Public MustOverride Sub Draw(g As IGraphics)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub Transform(camera As Camera)
             Location = camera.Project(camera.Rotate(Location))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Function GetPosition(g As IGraphics) As Point
             Return Location.PointXY(g.Size)
         End Function
