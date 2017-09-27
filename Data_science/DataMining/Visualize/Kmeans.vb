@@ -27,9 +27,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DataMining.KMeans
 
 Public Module Kmeans
 
@@ -37,12 +41,27 @@ Public Module Kmeans
 
     End Function
 
+    ''' <summary>
+    ''' 这个函数主要是生成<see cref="Serial3D"/>数据模型组
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="catagory">
+    ''' How to read the data and construct the <see cref="Serial3D"/> model group
+    ''' </param>
+    ''' <param name="size$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="padding$"></param>
+    ''' <param name="clusterN">Expected kmeans cluster resulted number, default is 6 cluster</param>
+    ''' <returns></returns>
     <Extension>
-    Public Function Scatter3D(points As IEnumerable(Of Point3D),
+    Public Function Scatter3D(data As IEnumerable(Of DataSet),
+                              catagory As Dictionary(Of NamedCollection(Of String)),
                               Optional size$ = "1600,1200",
                               Optional bg$ = "white",
-                              Optional padding$ = g.DefaultPadding) As GraphicsData
+                              Optional padding$ = g.DefaultPadding,
+                              Optional clusterN% = 6) As GraphicsData
 
+        Dim clusters As EntityLDM() = data.ToKMeansModels.Kmeans(expected:=clusterN)
     End Function
 End Module
 

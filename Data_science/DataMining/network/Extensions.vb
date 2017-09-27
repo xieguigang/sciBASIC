@@ -43,12 +43,12 @@ Public Module Extensions
         Using reader As StreamReader = path.OpenReader
             Dim header As New RowObject(reader.ReadLine)
             Dim cluster% = header.IndexOf(NameOf(EntityLDM.Cluster))
-            Dim name% = header.IndexOf(NameOf(EntityLDM.Name))
+            Dim name% = header.IndexOf(NameOf(EntityLDM.ID))
             Dim row As New Value(Of RowObject)
 
             Do While Not reader.EndOfStream
                 Yield New EntityLDM With {
-                    .Name = (row = New RowObject(reader.ReadLine))(name),
+                    .ID = (row = New RowObject(reader.ReadLine))(name),
                     .Cluster = (+row)(cluster)
                 }
             Loop
