@@ -62,7 +62,7 @@ Module Kmeans3DTest
 
         Call matrix.SaveTo("./matrix.csv")
 
-        Call Kmeans.Scatter3D(matrix, cata, camera).AsGDIImage.CorpBlank(30, Color.White).SaveAs("./kmeans3D.png")
+        Call Kmeans.Scatter3D(matrix, cata, camera, clusterN:=7).AsGDIImage.CorpBlank(30, Color.White).SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\kmeans3D.png")
     End Sub
 End Module
 
