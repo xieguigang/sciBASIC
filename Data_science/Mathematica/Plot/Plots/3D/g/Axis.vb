@@ -27,114 +27,37 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Runtime.CompilerServices
+Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Plot3D
+Namespace Plot3D.Model
 
     ''' <summary>
     ''' 在这个模块之中生成Axis的绘制元素
     ''' </summary>
     Public Module AxisDraw
 
-        ''' <summary>
-        ''' 绘制3D空间之中的xyz坐标轴
-        ''' </summary>
-        ''' <param name="g"></param>
-        ''' <param name="data"></param>
-        ''' <param name="camera"></param>
-        ''' <param name="font"></param>
-        ''' <param name="axisStroke$"></param>
-        <Extension>
-        Public Sub DrawAxis(ByRef g As IGraphics,
-                            data As Point3D(),
-                            camera As Camera,
-                            font As Font,
-                            Optional axisStroke$ = Stroke.AxisStroke)
+        Public Function Axis(xrange As DoubleRange, yrange As DoubleRange, zrange As DoubleRange, Optional strokeCSS$ = Stroke.AxisStroke) As Line()
+            ' 交汇于xmax, ymin, zmin
+            Dim ZERO As New Point3D With {.X = xrange.Max, .Y = yrange.Min, .Z = zrange.Min}
+            ' X: xmin, ymin, zmin
+            ' Y: ymax, xmax, zmin
+            ' Z: xmax, ymin, zmax
+            Dim X As New Point3D With {.X = xrange.Min, .Y = yrange.Min, .Z = zrange.Min}
+            Dim Y As New Point3D With {.X = xrange.Max, .Y = yrange.Max, .Z = zrange.Min}
+            Dim Z As New Point3D With {.X = xrange.Max, .Y = yrange.Min, .Z = zrange.Max}
+            Dim color As Pen = Stroke.TryParse(strokeCSS).GDIObject
 
-            Dim x = data.ToArray(Function(o) o.X)
-            Dim y = data.ToArray(Function(o) o.Y)
-            Dim z = data.ToArray(Function(o) o.Z)
+            color.EndCap = LineCap.Triangle
 
-            Call g.DrawAxis(camera,
-                            font,
-                            x:=New DoubleRange(x.Min, x.Max),
-                            y:=New DoubleRange(y.Min, y.Max),
-                            z:=New DoubleRange(z.Min, z.Max),
-                            axisStroke:=axisStroke)
-        End Sub
+            Dim Xaxis As New Line(ZERO, X) With {.Stroke = color}
+            Dim Yaxis As New Line(ZERO, Y) With {.Stroke = color}
+            Dim Zaxis As New Line(ZERO, Z) With {.Stroke = color}
 
-        <Extension>
-        Public Sub DrawAxis(ByRef g As IGraphics,
-                            camera As Camera,
-                            font As Font,
-                            x As DoubleRange,
-                            y As DoubleRange,
-                            z As DoubleRange,
-                            Optional axisStroke$ = Stroke.AxisStroke)
-
-            Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
-            Dim axis As New Axis With {
-                .x1 = x.Min,
-                .x2 = x.Max,
-                .y1 = y.Min,
-                .y2 = y.Max,
-                .z1 = z.Min,
-                .z2 = z.Max,
-                .penX = pen,
-                .penY = pen,
-                .penZ = pen
-            }
-
-            Call g.DrawAxis(camera, font, axis)
-        End Sub
-
-        <Extension>
-        Public Sub DrawAxis(ByRef g As IGraphics, camera As Camera, font As Font, axis As Axis)
-            With camera
-                Dim a As New Point3D(axis.x1, axis.y1, axis.z1)
-                Dim b As New Point3D(axis.x1, axis.y2, axis.z1)
-                Dim c As New Point3D(axis.x2, axis.y1, axis.z1)
-                Dim d As New Point3D(axis.x2, axis.y2, axis.z1)
-                Dim a1 As New Point3D(axis.x1, axis.y1, axis.z2)
-                Dim b1 As New Point3D(axis.x1, axis.y2, axis.z2)
-                Dim c1 As New Point3D(axis.x2, axis.y1, axis.z2)
-                Dim d1 As New Point3D(axis.x2, axis.y2, axis.z2)
-
-                Call g.DrawLine(axis.penX, .Project(.Rotate(a)).PointXY(.screen), .Project(.Rotate(b)).PointXY(.screen))
-                Call g.DrawLine(axis.penY, .Project(.Rotate(a)).PointXY(.screen), .Project(.Rotate(c)).PointXY(.screen))
-                Call g.DrawLine(axis.penZ, .Project(.Rotate(b)).PointXY(.screen), .Project(.Rotate(d)).PointXY(.screen))
-                Call g.DrawLine(axis.penZ, .Project(.Rotate(c)).PointXY(.screen), .Project(.Rotate(d)).PointXY(.screen))
-
-                Call g.DrawLine(axis.penX, .Project(.Rotate(a1)).PointXY(.screen), .Project(.Rotate(b1)).PointXY(.screen))
-                Call g.DrawLine(axis.penY, .Project(.Rotate(a1)).PointXY(.screen), .Project(.Rotate(c1)).PointXY(.screen))
-                Call g.DrawLine(axis.penZ, .Project(.Rotate(b1)).PointXY(.screen), .Project(.Rotate(d1)).PointXY(.screen))
-                Call g.DrawLine(axis.penZ, .Project(.Rotate(c1)).PointXY(.screen), .Project(.Rotate(d1)).PointXY(.screen))
-
-                Call g.DrawLine(axis.penX, .Project(.Rotate(a)).PointXY(.screen), .Project(.Rotate(a1)).PointXY(.screen))
-                Call g.DrawLine(axis.penY, .Project(.Rotate(b)).PointXY(.screen), .Project(.Rotate(b1)).PointXY(.screen))
-                Call g.DrawLine(axis.penZ, .Project(.Rotate(c)).PointXY(.screen), .Project(.Rotate(c1)).PointXY(.screen))
-                Call g.DrawLine(axis.penZ, .Project(.Rotate(d)).PointXY(.screen), .Project(.Rotate(d1)).PointXY(.screen))
-            End With
-        End Sub
-    End Module
-
-    Public Structure Axis
-
-        Dim x1, x2 As Single
-        Dim y1, y2 As Single
-        Dim z1, z2 As Single
-
-        Dim penX, penY, penZ As Pen
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return {Xaxis, Yaxis, Zaxis}
         End Function
-    End Structure
+    End Module
 End Namespace

@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
+Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
@@ -93,6 +94,7 @@ Namespace Plot3D
             Dim model As New List(Of Element3D)
 
             model += GridBottom.Grid(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
+            model += AxisDraw.Axis(X, Y, Z, axisStroke)
 
             ' 最后混合进入系列点
             For Each serial As Serial3D In list
@@ -165,7 +167,7 @@ Namespace Plot3D
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Call AxisDraw.DrawAxis(g, data, camera, font)
+                    '  Call AxisDraw.DrawAxis(g, data, camera, font)
 
                     With camera
 

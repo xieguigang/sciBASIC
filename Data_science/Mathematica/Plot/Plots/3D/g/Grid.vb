@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-Namespace Plot3D
+Namespace Plot3D.Model
 
     Public Module GridBottom
 
