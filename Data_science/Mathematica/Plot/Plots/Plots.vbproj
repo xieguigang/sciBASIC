@@ -253,7 +253,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\Axis.vb" />
+    <Compile Include="3D\g\Axis.vb" />
     <Compile Include="3D\Device\Canvas.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -264,6 +264,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="3D\Device\Display.vb" />
+    <Compile Include="3D\Device\RenderEngine.vb" />
     <Compile Include="3D\PieChart3D.vb" />
     <Compile Include="3D\ScatterHeatmap.vb" />
     <Compile Include="3D\Scatter.vb" />

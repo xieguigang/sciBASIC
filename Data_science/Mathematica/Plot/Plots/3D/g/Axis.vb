@@ -37,6 +37,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Plot3D
 
+    ''' <summary>
+    ''' 在这个模块之中生成Axis的绘制元素
+    ''' </summary>
     Public Module AxisDraw
 
         <Extension>
