@@ -40,7 +40,12 @@ Namespace Plot3D.Model
     ''' </summary>
     Public Module AxisDraw
 
-        Public Function Axis(xrange As DoubleRange, yrange As DoubleRange, zrange As DoubleRange, Optional strokeCSS$ = Stroke.AxisStroke) As Line()
+        Public Function Axis(xrange As DoubleRange,
+                             yrange As DoubleRange,
+                             zrange As DoubleRange,
+                             labelFont As Font,
+                             Optional strokeCSS$ = Stroke.AxisStroke) As Element3D()
+
             ' 交汇于xmax, ymin, zmin
             Dim ZERO As New Point3D With {.X = xrange.Max, .Y = yrange.Min, .Z = zrange.Min}
             ' X: xmin, ymin, zmin
@@ -57,7 +62,11 @@ Namespace Plot3D.Model
             Dim Yaxis As New Line(ZERO, Y) With {.Stroke = color}
             Dim Zaxis As New Line(ZERO, Z) With {.Stroke = color}
 
-            Return {Xaxis, Yaxis, Zaxis}
+            Dim labX As New Label With {.Location = X, .Font = labelFont, .Color = Brushes.Black, .Text = "X"}
+            Dim labY As New Label With {.Location = Y, .Font = labelFont, .Color = Brushes.Black, .Text = "Y"}
+            Dim labZ As New Label With {.Location = Z, .Font = labelFont, .Color = Brushes.Black, .Text = "Z"}
+
+            Return New Element3D() {Xaxis, Yaxis, Zaxis, labX, labY, labZ}
         End Function
     End Module
 End Namespace

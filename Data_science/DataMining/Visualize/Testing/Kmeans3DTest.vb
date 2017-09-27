@@ -49,7 +49,7 @@ Module Kmeans3DTest
         Dim camera As New Camera With {
             .fov = 500000,
             .screen = New Size(1200, 1000),
-            .ViewDistance = 3300,
+            .ViewDistance = 4300,
             .angleX = 30,
             .angleY = 60,
             .angleZ = -45

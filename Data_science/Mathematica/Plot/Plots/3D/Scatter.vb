@@ -94,7 +94,7 @@ Namespace Plot3D
             Dim model As New List(Of Element3D)
 
             model += GridBottom.Grid(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
-            model += AxisDraw.Axis(X, Y, Z, axisStroke)
+            model += AxisDraw.Axis(X, Y, Z, font, axisStroke)
 
             ' 最后混合进入系列点
             For Each serial As Serial3D In list
