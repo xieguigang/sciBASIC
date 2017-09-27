@@ -75,7 +75,8 @@ Namespace Plot3D
                              Optional axisStroke$ = Stroke.AxisStroke,
                              Optional labX$ = "X",
                              Optional labY$ = "Y",
-                             Optional labZ$ = "Z") As GraphicsData
+                             Optional labZ$ = "Z",
+                             Optional legendSize! = 20) As GraphicsData
 
             Dim list = serials.ToArray
             Dim points = list _
@@ -120,11 +121,35 @@ Namespace Plot3D
                             End Function)
             Next
 
+            Dim legends As Legend() = list _
+                .Select(Function(s)
+                            Return New Legend With {
+                                .color = s.Color.RGBExpression,
+                                .fontstyle = axisLabelFontCSS,
+                                .style = s.Shape,
+                                .title = s.Title
+                            }
+                        End Function) _
+                .ToArray
+
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
+
+                    ' 要先绘制三维图形，要不然会将图例遮住的
                     Call model.RenderAs3DChart(g, camera, region)
 
                     ' 绘制图例？？
+                    Dim legendHeight! = (legends.Length * (font.Height + 5))
+                    Dim legendTop! = (region.PlotRegion.Height - legendHeight) / 2
+                    Dim maxL = g.MeasureString(legends.Select(Function(s) s.title).MaxLengthString, font).Width
+                    Dim legendLeft! = region.PlotRegion.Right - maxL - legendSize
+                    Dim topLeft As New Point With {
+                        .X = legendLeft,
+                        .Y = legendTop
+                    }
+
+                    Call g.DrawLegends(topLeft, legends, $"{legendSize},{legendSize}", d:=5, regionBorder:=Stroke.AxisStroke)
+
                 End Sub
             Dim plotRegion As New GraphicsRegion With {
                 .Size = camera.screen,

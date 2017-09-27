@@ -261,7 +261,7 @@ Public Module Scatter
                         End If
 
                         Call g.DrawLegends(
-                            legendPosition, legends, lsize,,
+                            legendPosition, legends, legendSize,,
                             legendBorder,
                             legendRegionBorder)
                     End If

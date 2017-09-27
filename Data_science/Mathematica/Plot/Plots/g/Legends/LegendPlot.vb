@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sys = System.Math
 
 Namespace Graphic.Legend
@@ -222,7 +223,7 @@ Namespace Graphic.Legend
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
             Dim labelPosition As New Point With {
-                .X = pos.X + canvas.Height * 2.5,
+                .X = pos.X + canvas.Height * 2,
                 .Y = pos.Y + (canvas.Height - fSize.Height) / 2
             }
             Dim color As Brush = l.color.GetBrush
@@ -238,12 +239,12 @@ Namespace Graphic.Legend
         End Function
 
         ''' <summary>
-        ''' <paramref name="graphicSize"/>的默认值是(120,45)
+        ''' <paramref name="gsize"/>的默认值是(120,45)
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="topLeft"></param>
         ''' <param name="legends"></param>
-        ''' <param name="graphicSize">
+        ''' <param name="gSize">
         ''' 单个legend图形的绘图区域的大小，图例之中的shap的大小都是根据这个参数来进行限制自动调整的
         ''' </param>
         ''' <param name="d%">Interval distance between the legend graphics.</param>
@@ -253,7 +254,7 @@ Namespace Graphic.Legend
         Public Sub DrawLegends(ByRef g As IGraphics,
                                topLeft As Point,
                                legends As IEnumerable(Of Legend),
-                               Optional graphicSize As SizeF = Nothing,
+                               Optional gSize$ = "120,45",
                                Optional d% = 10,
                                Optional border As Stroke = Nothing,
                                Optional regionBorder As Stroke = Nothing,
@@ -264,10 +265,7 @@ Namespace Graphic.Legend
             Dim n As Integer
             Dim size As SizeF
             Dim legendList As Legend() = legends.ToArray
-
-            If graphicSize.IsEmpty Then
-                graphicSize = New SizeF(120.0!, 45.0!)
-            End If
+            Dim graphicSize As SizeF = gSize.FloatSizeParser
 
             For Each l As Legend In legendList
                 n += 1

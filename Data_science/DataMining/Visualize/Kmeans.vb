@@ -107,7 +107,7 @@ Public Module Kmeans
             Next
 
             serials += New Serial3D With {
-                .Title = (+cluster).Key,
+                .Title = "Cluster:  #" & (+cluster).Key,
                 .Color = color,
                 .Points = point3D,
                 .Shape = LegendStyles.Triangle,
