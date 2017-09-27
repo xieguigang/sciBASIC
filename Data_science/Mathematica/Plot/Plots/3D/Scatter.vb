@@ -29,14 +29,19 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Plot3D
 
@@ -45,6 +50,20 @@ Namespace Plot3D
     ''' </summary>
     Public Module Scatter
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="serials"></param>
+        ''' <param name="camera"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="padding$"></param>
+        ''' <param name="axisLabelFontCSS$"></param>
+        ''' <param name="boxStroke$"></param>
+        ''' <param name="axisStroke$"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 首先要生成3维图表的模型元素，然后将这些元素混合在一起，最后按照Z深度的排序结果顺序绘制出来，才能够生成一幅有层次感的3维图表
+        ''' </remarks>
         <Extension>
         Public Function Plot(serials As IEnumerable(Of Serial3D),
                              camera As Camera,
@@ -60,32 +79,45 @@ Namespace Plot3D
                 .IteratesALL _
                 .ToArray
             Dim font As Font = CSSFont.TryParse(axisLabelFontCSS).GDIObject
-            Dim cur As Point
+
+            ' 首先需要获取得到XYZ值的范围
+            Dim X, Y, Z As Vector
+
+            With points.VectorShadows
+                X = DirectCast(.X, IEnumerable(Of Single)).AsDouble.Range.CreateAxisTicks
+                Y = DirectCast(.Y, IEnumerable(Of Single)).AsDouble.Range.CreateAxisTicks
+                Z = DirectCast(.Z, IEnumerable(Of Single)).AsDouble.Range.CreateAxisTicks
+            End With
+
+            ' 然后生成底部的网格
+            Dim model As New List(Of Element3D)
+
+            model += GridBottom.Grid(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
+
+            ' 最后混合进入系列点
+            For Each serial As Serial3D In list
+
+                Dim data As Point3D() = serial.Points
+                Dim size As New Size With {
+                    .Width = serial.PointSize,
+                    .Height = serial.PointSize
+                }
+                Dim color As New SolidBrush(serial.Color)
+
+                model += data _
+                    .Select(Function(pt)
+                                Return New ShapePoint With {
+                                    .Fill = color,
+                                    .Location = pt,
+                                    .Size = size,
+                                    .Style = serial.Shape
+                                }
+                            End Function)
+            Next
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
-                    Call AxisDraw.DrawAxis(g, points, camera, font, axisStroke:=axisStroke)
-
-                    With camera
-
-                        For Each serial As Serial3D In list
-
-                            Dim data As Point3D() = serial.Points
-                            Dim size As New Size With {
-                                .Width = serial.PointSize,
-                                .Height = serial.PointSize
-                            }
-
-                            For Each pt As Point3D In data
-                                pt = .Project(.Rotate(pt))      ' 3d project to 2d
-                                cur = pt.PointXY(camera.screen)
-
-                                ' draw legend shape
-                                Call g.DrawLegendShape(cur, size, serial.Shape, serial.Color)
-                            Next
-                        Next
-                    End With
                 End Sub
 
             Return camera _
