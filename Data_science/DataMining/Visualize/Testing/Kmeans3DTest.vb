@@ -31,6 +31,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.Visualize.DataMining
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Module Kmeans3DTest
 
@@ -49,13 +51,17 @@ Module Kmeans3DTest
         Dim camera As New Camera With {
             .fov = 500000,
             .screen = New Size(1200, 1000),
-            .ViewDistance = 4300,
+            .ViewDistance = 3400,
             .angleX = 30,
             .angleY = 60,
-            .angleZ = -45
+            .angleZ = -56.25
         }
 
-        Call Kmeans.Scatter3D(matrix, cata, camera, labX:="T2 vs T1", labY:="T3 vs T2", labZ:="T4 vs T3").Save("./kmeans3D.png")
+        Call Kmeans.Scatter3D(
+            matrix, cata, camera,
+            labX:="T2 vs T1",
+            labY:="T3 vs T2",
+            labZ:="T4 vs T3").AsGDIImage.CorpBlank(30, Color.White).SaveAs("./kmeans3D.png")
     End Sub
 End Module
 
