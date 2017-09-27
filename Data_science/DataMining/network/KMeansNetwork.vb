@@ -70,7 +70,7 @@ Namespace KMeans
                            End Function
             Dim nodes As Dictionary(Of Node) = data _
                 .Select(Function(n) New Node With {
-                    .ID = n.Name,
+                    .ID = n.ID,
                     .NodeType = n.Cluster,
                     .Properties = New Dictionary(Of String, String) From {
                         {
@@ -84,7 +84,7 @@ Namespace KMeans
             End If
 
             For Each vector As EntityLDM In data
-                Dim from$ = vector.Name
+                Dim from$ = vector.ID
                 Dim color$
 
                 For Each hit In vector.Properties.Where(Function(h) cut(h.Value))

@@ -43,6 +43,7 @@ Namespace Drawing3D.Math3D
                       Description:="3D coordinate transformation tools.")>
     Public Module Projection
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Projection(points As IEnumerable(Of Point3D), camera As Camera) As Point()
             Dim result As Point() = camera _
                 .Project(points) _
@@ -53,6 +54,7 @@ Namespace Drawing3D.Math3D
             Return result
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Rotate(polygon As IEnumerable(Of Point3D), camera As Camera) As IEnumerable(Of Point3D)
             Return camera.Rotate(polygon)

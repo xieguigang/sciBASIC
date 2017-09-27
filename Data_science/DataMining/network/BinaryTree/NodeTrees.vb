@@ -140,7 +140,7 @@ Namespace KMeans
                                 .uids = allChilds.ToArray(Function(x) x.EntityID),
                                 .members = allChilds.ToArray(
                                     Function(x) New EntityLDM With {
-                                        .Name = x.EntityID,
+                                        .ID = x.EntityID,
                                         .Cluster = x.FullyQualifiedName
                                     })
                            }

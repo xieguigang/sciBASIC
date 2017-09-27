@@ -100,7 +100,11 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Try
-                Return $"{Name} --> {Value.GetJson}"
+                If Description.StringEmpty Then
+                    Return $"{Name} --> {Value.GetJson}"
+                Else
+                    Return $"{Name} --> {Value.GetJson} ({Description})"
+                End If
             Catch ex As Exception
                 Return Name
             End Try

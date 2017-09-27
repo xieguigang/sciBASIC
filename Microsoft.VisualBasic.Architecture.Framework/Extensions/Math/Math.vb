@@ -1827,13 +1827,14 @@ Namespace Math
         ''' <param name="vector"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
             ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
             Return sys.Sqrt((From n In vector Select n ^ 2).Sum)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
             Return sys.Sqrt((From n In Vector Select n ^ 2).Sum)
@@ -1848,6 +1849,7 @@ Namespace Math
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(a As IEnumerable(Of Double), b As IEnumerable(Of Double)) As Double
             Return EuclideanDistance(a.ToArray, b.ToArray)
@@ -1883,16 +1885,19 @@ Namespace Math
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Double, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Integer, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Long, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
@@ -1905,8 +1910,19 @@ Namespace Math
         ''' 
         <ExportAPI("RMS", Info:="Root mean square")>
         <Extension> Public Function RMS(data As IEnumerable(Of Double)) As Double
-            Dim LQuery = (From n In data.AsParallel Select n ^ 2).ToArray
-            Return sys.Sqrt(LQuery.Sum / LQuery.Length)
+            With (From n In data Select n ^ 2).ToArray
+                Return sys.Sqrt(.Sum / .Length)
+            End With
+        End Function
+
+        ''' <summary>
+        ''' ``相对标准偏差（RSD）= 标准偏差（SD）/ 计算结果的算术平均值（X）* 100%``
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RSD(data As IEnumerable(Of Double)) As Double
+            Return data.SD / data.Average
         End Function
 
         ''' <summary>
@@ -1917,13 +1933,16 @@ Namespace Math
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
             Dim result As Double = sys.Exp(-lambda)
             Dim k As Integer = x
+
             While k >= 1
                 result *= lambda / k
                 k -= 1
             End While
+
             Return result
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
             Return v.ToArray(Function(x) x.ToString("F" & digitals))

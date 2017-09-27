@@ -42,6 +42,13 @@ Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 Public Module VectorExtensions
 
     <Extension>
+    Public Iterator Function Replicate(Of T)(template As T, n%) As IEnumerable(Of T)
+        For i As Integer = 0 To n - 1
+            Yield template
+        Next
+    End Function
+
+    <Extension>
     Public Function RepeatCalls(Of T)(factory As Func(Of T), n%, Optional sleep% = 0) As T()
         Return n _
             .SeqIterator _

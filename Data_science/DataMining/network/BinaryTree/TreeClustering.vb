@@ -53,17 +53,17 @@ Namespace KMeans
             Dim mapNames As String() = source(Scan0).Properties.Keys.ToArray   ' 得到所有属性的名称
             Dim ds As Entity() = source.ToArray(
                 Function(x) New KMeans.Entity With {
-                    .uid = x.Name,
+                    .uid = x.ID,
                     .Properties = mapNames.ToArray(Function(s) x.Properties(s))
                 })  ' 在这里生成计算模型
             Dim tree As KMeans.Entity() = TreeCluster(ds, parallel, [stop], parallelDepth)   ' 二叉树聚类操作
             Dim saveResult As EntityLDM() = tree.ToArray(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
 
-            For Each name As String In source.Select(Function(x) x.Name)
+            For Each name As String In source.Select(Function(x) x.ID)
                 For Each x As EntityLDM In saveResult
-                    If InStr(x.Name, name) > 0 Then
-                        x.Cluster = x.Name.Replace(name & ".", "")
-                        x.Name = name
+                    If InStr(x.ID, name) > 0 Then
+                        x.Cluster = x.ID.Replace(name & ".", "")
+                        x.ID = name
                         Exit For
                     End If
                 Next

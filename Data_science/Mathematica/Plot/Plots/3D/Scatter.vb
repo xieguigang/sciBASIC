@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::e0ffa564643c4fd271acd5d9e2895590, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
@@ -43,6 +44,54 @@ Namespace Plot3D
     ''' 3D scatter charting
     ''' </summary>
     Public Module Scatter
+
+        <Extension>
+        Public Function Plot(serials As IEnumerable(Of Serial3D),
+                             camera As Camera,
+                             Optional bg$ = "white",
+                             Optional padding$ = g.DefaultPadding,
+                             Optional axisLabelFontCSS$ = CSSFont.Win7Normal,
+                             Optional boxStroke$ = Stroke.StrongHighlightStroke,
+                             Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
+
+            Dim list = serials.ToArray
+            Dim points = list _
+                .Select(Function(s) s.Points) _
+                .IteratesALL _
+                .ToArray
+            Dim font As Font = CSSFont.TryParse(axisLabelFontCSS).GDIObject
+            Dim cur As Point
+
+            Dim plotInternal =
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
+
+                    Call AxisDraw.DrawAxis(g, points, camera, font, axisStroke:=axisStroke)
+
+                    With camera
+
+                        For Each serial As Serial3D In list
+
+                            Dim data As Point3D() = serial.Points
+                            Dim size As New Size With {
+                                .Width = serial.PointSize,
+                                .Height = serial.PointSize
+                            }
+
+                            For Each pt As Point3D In data
+                                pt = .Project(.Rotate(pt))      ' 3d project to 2d
+                                cur = pt.PointXY(camera.screen)
+
+                                ' draw legend shape
+                                Call g.DrawLegendShape(cur, size, serial.Shape, serial.Color)
+                            Next
+                        Next
+                    End With
+                End Sub
+
+            Return camera _
+                .screen _
+                .GraphicsPlots(padding, bg, plotInternal)
+        End Function
 
         ''' <summary>
         ''' 绘制三维散点图
@@ -67,7 +116,7 @@ Namespace Plot3D
                              Optional lineColor$ = "red",
                              Optional font As Font = Nothing,
                              Optional bg$ = "white",
-                             Optional padding As Padding = Nothing) As GraphicsData
+                             Optional padding$ = "padding: 5px 5px 5px 5px;") As GraphicsData
 
             Dim data As Point3D() = func _
                 .Evaluate(x, y, xsteps, ysteps) _
@@ -77,10 +126,6 @@ Namespace Plot3D
             Dim previous As Point
             Dim cur As Point
             Dim lcolor As New Pen(lineColor.ToColor)
-
-            If padding.IsEmpty Then
-                padding = "padding: 5px 5px 5px 5px;"
-            End If
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)

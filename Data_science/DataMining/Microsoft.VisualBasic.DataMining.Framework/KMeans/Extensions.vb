@@ -45,7 +45,7 @@ Namespace KMeans
         <Extension> Public Function ValueGroups(array As IEnumerable(Of Double), nd As Integer) As List(Of EntityLDM)
             Dim entities As EntityLDM() = array.ToArray(
                 Function(x, i) New EntityLDM With {
-                    .Name = i & ":" & x,
+                    .ID = i & ":" & x,
                     .Properties = New Dictionary(Of String, Double) From {
                         {"val", x}
                     }
@@ -94,7 +94,7 @@ Namespace KMeans
         Public Function ToKMeansModels(data As IEnumerable(Of DataSet)) As EntityLDM()
             Return data.Select(
                 Function(d) New EntityLDM With {
-                    .Name = d.ID,
+                    .ID = d.ID,
                     .Cluster = "",
                     .Properties = New Dictionary(Of String, Double)(d.Properties)
                 }).ToArray
