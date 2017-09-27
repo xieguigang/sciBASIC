@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Kmeans
 
@@ -68,7 +69,9 @@ Public Module Kmeans
                               Optional clusterN% = 6,
                               Optional schema$ = Designer.Clusters,
                               Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
-                              Optional pointSize! = 10) As GraphicsData
+                              Optional pointSize! = 10,
+                              Optional boxStroke$ = Stroke.StrongHighlightStroke,
+                              Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
 
         Dim clusters As Dictionary(Of String, EntityLDM()) = data _
             .ToKMeansModels _
@@ -109,7 +112,10 @@ Public Module Kmeans
             }
         Next
 
-        Return serials.Plot(camera, bg, padding)
+        Return serials.Plot(
+            camera, bg, padding,
+            boxStroke:=boxStroke,
+            axisStroke:=axisStroke)
     End Function
 End Module
 

@@ -50,7 +50,9 @@ Namespace Plot3D
                              camera As Camera,
                              Optional bg$ = "white",
                              Optional padding$ = g.DefaultPadding,
-                             Optional axisLabelFontCSS$ = CSSFont.Win7Normal) As GraphicsData
+                             Optional axisLabelFontCSS$ = CSSFont.Win7Normal,
+                             Optional boxStroke$ = Stroke.StrongHighlightStroke,
+                             Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
 
             Dim list = serials.ToArray
             Dim points = list _
@@ -64,7 +66,7 @@ Namespace Plot3D
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
-                    Call AxisDraw.DrawAxis(g, points, camera, font)
+                    Call AxisDraw.DrawAxis(g, points, camera, font, axisStroke:=axisStroke)
 
                     With camera
 
