@@ -101,7 +101,8 @@ Public Module Scatter
                          Optional Ylabel$ = "Y",
                          Optional yaxis$ = Nothing,
                          Optional xaxis$ = Nothing,
-                         Optional ablines As Line() = Nothing) As GraphicsData
+                         Optional ablines As Line() = Nothing,
+                         Optional htmlLabel As Boolean = True) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -151,7 +152,9 @@ Public Module Scatter
                 'End If
 
                 If drawAxis Then
-                    Call g.DrawAxis(rect, scaler, showGrid, xlabel:=Xlabel, ylabel:=Ylabel)
+                    Call g.DrawAxis(
+                        rect, scaler, showGrid, xlabel:=Xlabel, ylabel:=Ylabel,
+                        htmlLabel:=htmlLabel)
                 End If
 
                 Dim width = rect.PlotRegion.Width / 200

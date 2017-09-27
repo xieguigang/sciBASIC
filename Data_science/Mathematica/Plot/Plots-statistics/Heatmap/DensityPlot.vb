@@ -72,7 +72,8 @@ Namespace Heatmap
                              Optional ablines As Line() = Nothing,
                              Optional labX$ = "X",
                              Optional labY$ = "Y",
-                             Optional labelFontCSS$ = CSSFont.Win10Normal) As GraphicsData
+                             Optional labelFontCSS$ = CSSFont.Win10Normal,
+                             Optional htmlLabel As Boolean = True) As GraphicsData
 
             Dim data = points _
                 .Where(Function(pt)
@@ -108,7 +109,8 @@ Namespace Heatmap
                 fillPie:=True,
                 ablines:=ablines,
                 Xlabel:=labX,
-                Ylabel:=labY).CreateGraphics
+                Ylabel:=labY,
+                htmlLabel:=htmlLabel).CreateGraphics
 
                 ' 在这里还需要绘制颜色谱的legend
                 ' 计算出legend的layout信息
