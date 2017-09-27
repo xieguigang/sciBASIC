@@ -40,24 +40,24 @@ Module Kmeans3DTest
 
     Sub Main()
 
-        Dim matrix As List(Of DataSet) = DataSet.LoadDataSet("G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Quick_correlation_matrix_heatmap\mtcars.csv")
+        Dim matrix As List(Of DataSet) = DataSet.LoadDataSet("C:\Users\xieguigang\Desktop\testGL.csv")
         Dim cata As New Dictionary(Of NamedCollection(Of String))
 
         cata += New NamedCollection(Of String) With {
-            .Name = "Degree 1", .Value = {"mpg", "cyl", "disp", "hp"}}
+            .Name = "Degree 1", .Value = {"1.A4", "1.A5", "1.A6"}}
         cata += New NamedCollection(Of String) With {
-            .Name = "Degree 2", .Value = {"drat", "wt", "qsec", "qsec2"}}
+            .Name = "Degree 2", .Value = {"2.C4", "2.C5", "2.C6"}}
         cata += New NamedCollection(Of String) With {
-            .Name = "Degree 3", .Value = {"vs", "am", "gear", "carb"}}
+            .Name = "Degree 3", .Value = {"3.A4", "3.A5", "3.A6"}}
 
         Dim camera As New Camera With {
             .fov = 500000,
-            .screen = New Size(1200, 1000),
-            .ViewDistance = 31000,
+            .screen = New Size(1600, 1600),
+            .ViewDistance = 3000,
             .angleX = 30,
             .angleY = 60,
             .angleZ = -56.25,
-            .offset = New Point(-100, 300)
+            .offset = New Point(-1500, 1600)
         }
 
         Call matrix.SaveTo("./matrix.csv")

@@ -67,7 +67,7 @@ Public Module Kmeans
                               Optional size$ = "1200,1000",
                               Optional bg$ = "white",
                               Optional padding$ = g.DefaultPadding,
-                              Optional clusterN% = 6,
+                              Optional clusterN% = 10,
                               Optional schema$ = Designer.Clusters,
                               Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
                               Optional pointSize! = 20,
