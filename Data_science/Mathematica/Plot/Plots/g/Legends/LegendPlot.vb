@@ -223,7 +223,7 @@ Namespace Graphic.Legend
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
             Dim labelPosition As New Point With {
-                .X = pos.X + canvas.Height * 2,
+                .X = pos.X + canvas.Height * 1.5,
                 .Y = pos.Y + (canvas.Height - fSize.Height) / 2
             }
             Dim color As Brush = l.color.GetBrush
@@ -279,8 +279,12 @@ Namespace Graphic.Legend
                 Dim maxTitleSize As SizeF = legendList.MaxLegendSize(g)
 
                 With graphicSize
-                    size = New SizeF(.Width + d + maxTitleSize.Width, Math.Max(.Height, maxTitleSize.Height) * (n + 1))
-                    ZERO = New Point(ZERO.X - d / 2, ZERO.Y - d * 1.2)
+
+                    Dim width! = .Width + .Height * 1.25 + maxTitleSize.Width
+                    Dim height! = (Math.Max(.Height, maxTitleSize.Height) + d + 1) * (n)
+
+                    size = New SizeF(width, height)
+                    ZERO = New Point(ZERO.X - d, ZERO.Y - d * 1.2)
 
                     If roundRectRegion Then
                         Call RoundRect.Draw(g, ZERO, size, 15,, regionBorder)
