@@ -90,7 +90,7 @@ Namespace Graphic.Legend
                                    pos As Point,
                                    gSize As SizeF,
                                    style As LegendStyles,
-                                   color As Color,
+                                   color As Brush,
                                    Optional border As Stroke = Nothing,
                                    Optional radius% = 5)
             Select Case style
@@ -102,7 +102,7 @@ Namespace Graphic.Legend
                         .Y = pos.Y + gSize.Height / 2
                     }
 
-                    Call Circle.Draw(g, c, r, New SolidBrush(color), border)
+                    Call Circle.Draw(g, c, r, color, border)
 
                 Case LegendStyles.DashLine
 
@@ -122,9 +122,8 @@ Namespace Graphic.Legend
                         .X = pos.X + (gSize.Width - d) / 2,
                         .Y = pos.Y + (gSize.Height - d) / 2
                     }
-                    Dim b As New SolidBrush(color)
 
-                    Call Diamond.Draw(g, topLeft, New Size(d, d), b, border)
+                    Call Diamond.Draw(g, topLeft, New Size(d, d), color, border)
 
                 Case LegendStyles.Hexagon
 
@@ -133,9 +132,8 @@ Namespace Graphic.Legend
                         .X = pos.X + (gSize.Width - d) / 2,
                         .Y = pos.Y + (gSize.Height - d) / 2
                     }
-                    Dim b As New SolidBrush(color)
 
-                    Call Hexagon.Draw(g, topLeft, New Size(d * 1.15, d), b, border)
+                    Call Hexagon.Draw(g, topLeft, New Size(d * 1.15, d), color, border)
 
                 Case LegendStyles.Rectangle
 
@@ -146,7 +144,7 @@ Namespace Graphic.Legend
                         g, New Point(pos.X + dw, pos.Y + dh),
                         New Size(gSize.Width - dw * 2,
                                  gSize.Height - dh * 2),
-                        New SolidBrush(color), border)
+                        color, border)
 
                 Case LegendStyles.RoundRectangle
 
@@ -158,7 +156,7 @@ Namespace Graphic.Legend
                         New Size(gSize.Width - dw * 2,
                                  gSize.Height - dh * 2),
                         radius,
-                        New SolidBrush(color), border)
+                        color, border)
 
                 Case LegendStyles.Square
                     Dim r As Single = sys.Min(gSize.Height, gSize.Width)
@@ -170,7 +168,7 @@ Namespace Graphic.Legend
                     Call Box.DrawRectangle(
                         g, location,
                         New Size(r, r),
-                        New SolidBrush(color), border)
+                        color, border)
 
                 Case LegendStyles.SolidLine
 
@@ -191,11 +189,11 @@ Namespace Graphic.Legend
                         .Y = pos.Y + (gSize.Height - d) / 2
                     }
 
-                    Call Triangle.Draw(g, topLeft, New Size(d, d), New SolidBrush(color), border)
+                    Call Triangle.Draw(g, topLeft, New Size(d, d), color, border)
 
                 Case LegendStyles.Pentacle
 
-                    Call Pentacle.Draw(g, pos, gSize, New SolidBrush(color), border)
+                    Call Pentacle.Draw(g, pos, gSize, color, border)
 
                 Case Else
                     Throw New NotSupportedException(
@@ -227,8 +225,9 @@ Namespace Graphic.Legend
                 .X = pos.X + canvas.Height * 2.5,
                 .Y = pos.Y + (canvas.Height - fSize.Height) / 2
             }
+            Dim color As Brush = l.color.GetBrush
 
-            Call g.DrawLegendShape(pos, canvas, l.style, l.color.TranslateColor, border, radius)
+            Call g.DrawLegendShape(pos, canvas, l.style, color, border, radius)
             Call g.DrawString(l.title, font, Brushes.Black, labelPosition)
 
             If fSize.Height > canvas.Height Then

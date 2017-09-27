@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
@@ -15,7 +16,7 @@ Namespace Plot3D.Device
 
         Public MustOverride Sub Draw(g As IGraphics)
 
-        Protected Function GetPosition(g As IGraphics) As PointF
+        Protected Function GetPosition(g As IGraphics) As Point
             Return Location.PointXY(g.Size)
         End Function
 
@@ -56,6 +57,18 @@ Namespace Plot3D.Device
             Dim p2 As Point = B.PointXY(g.Size)
 
             Call g.DrawLine(Stroke, p1, p2)
+        End Sub
+    End Class
+
+    Public Class ShapePoint : Inherits Element3D
+
+        Public Property Size As Size
+        Public Property Fill As Brush
+        Public Property Style As LegendStyles
+
+        Public Overrides Sub Draw(g As IGraphics)
+            Dim position As Point = GetPosition(g)
+            Call g.DrawLegendShape(position, Size, Style, Fill)
         End Sub
     End Class
 End Namespace
