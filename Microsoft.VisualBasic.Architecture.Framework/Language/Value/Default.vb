@@ -90,8 +90,16 @@ Namespace Language
         ''' <returns></returns>
         Public Shared Operator Or(obj As T, [default] As DefaultValue(Of T)) As T
             With [default]
-                If .assert(obj) Then
-                    Return .Value
+                Dim assert As Assert(Of Object)
+
+                If .assert Is Nothing Then
+                    assert = AddressOf ExceptionHandler.Default
+                Else
+                    assert = .assert
+                End If
+
+                If assert(obj) Then
+                    Return .DefaultValue
                 Else
                     Return obj
                 End If

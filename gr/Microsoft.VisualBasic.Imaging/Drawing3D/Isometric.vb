@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::be398c82f327e67894d62f3570e2dcb8, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
@@ -39,8 +40,7 @@ Namespace Drawing3D
     ''' <summary>
     ''' Isometric 3d graphics painter
     ''' </summary>
-    Public Class IsometricEngine
-        Implements IEnumerable(Of Surface)
+    Public Class IsometricEngine : Implements IEnumerable(Of Surface)
 
         Dim transformation As Double()()
         Dim originX, originY As Double
@@ -73,12 +73,14 @@ Namespace Drawing3D
         ''' + Y rides perpendicular to this angle (in isometric view: PI - angle)
         ''' + Z affects the y coordinate of the drawn point
         ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TranslatePoint(point As Point3D) As Point3D
             Return New Point3D(
                 Me.originX + point.X * Me.transformation(0)(0) + point.Y * Me.transformation(1)(0),
                 Me.originY - point.X * Me.transformation(0)(1) - point.Y * Me.transformation(1)(1) - (point.Z * Me.scale))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(path As Path3D, color As Color)
             AddPath(path, color)
         End Sub
@@ -98,6 +100,7 @@ Namespace Drawing3D
             Next
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Clear()
             Call models.Clear()
         End Sub

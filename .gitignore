@@ -17,6 +17,7 @@ local.properties
 .loadpath
 
 storage.ide
+storage.ide-journal
 
 # External tool builders
 .externalToolBuilders/

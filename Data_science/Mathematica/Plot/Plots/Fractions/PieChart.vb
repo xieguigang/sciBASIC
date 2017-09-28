@@ -219,7 +219,7 @@ Public Module PieChart
                         }
                     Next
 
-                    Call g.DrawLegends(New Point(left, top), legends, legendUnitSize.SizeParser, d, legendBorder)
+                    Call g.DrawLegends(New Point(left, top), legends, legendUnitSize, d, legendBorder)
                 End If
             End Sub
 

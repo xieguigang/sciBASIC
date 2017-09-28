@@ -77,7 +77,7 @@ End Class
 ''' <remarks>
 ''' 2016.5.29
 ''' 
-''' 请注意，在这里的对<see cref="ClassObject"/>类型的继承是为了解决simpleContent的BUG的:
+''' 请注意，在这里的对<see cref="BaseClass"/>类型的继承是为了解决simpleContent的BUG的:
 ''' 
 ''' System.Exception: 
 ''' SMRUCC.genomics.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.GraphAttribute 

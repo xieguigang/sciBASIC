@@ -1,31 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::cfe12a9395cb6b08b0add514f73d71a0, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
@@ -401,6 +403,7 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property [Mod] As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return (Me ^ 2).Sum
             End Get
@@ -413,12 +416,14 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property SumMagnitude As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return sys.Sqrt(Me.Mod)
             End Get
         End Property
 
         Public ReadOnly Property Unit As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me / SumMagnitude
             End Get
@@ -444,6 +449,7 @@ Namespace LinearAlgebra
         ''' 返回这个向量之中的所有的元素的乘积
         ''' </summary>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Product() As Double
             Return Me.ProductALL
         End Function
@@ -473,6 +479,7 @@ Namespace LinearAlgebra
             Return "[" & Me.ToString("G4").JoinBy(", ") & "]"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function ToString(format$) As String()
             Return Me _
                 .Select(Function(x) x.ToString(format)) _
@@ -485,6 +492,7 @@ Namespace LinearAlgebra
         ''' <param name="x1"></param>
         ''' <param name="x2"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function SumMagnitudes(x1 As Vector, x2 As Vector) As Double
             Return (x1 + x2).Mod
         End Function
@@ -499,14 +507,17 @@ Namespace LinearAlgebra
             Return result
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function rand(size%) As Vector
             Return Extensions.rand(size)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(x As Vector, n As Integer) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d = n)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <>(x As Vector, n As Integer) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d <> n)
         End Operator
@@ -517,14 +528,17 @@ Namespace LinearAlgebra
         ''' <param name="v"></param>
         ''' <param name="n"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator ^(v As Vector, n As Integer) As Vector
             Return New Vector(From d As Double In v Select d ^ n)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator >(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d > n)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d < n)
         End Operator
@@ -535,26 +549,32 @@ Namespace LinearAlgebra
         ''' <param name="x"></param>
         ''' <param name="n"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >=(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d >= n)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d <= n)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >=(x As Vector, y As Vector) As BooleanVector
             Return New BooleanVector(From a In x.SeqIterator Select a.value >= y.buffer(a))
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(x As Vector, y As Vector) As BooleanVector
             Return New BooleanVector(From a In x.SeqIterator Select a.value <= y.buffer(a))
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(x#, y As Vector) As BooleanVector
             Return New BooleanVector(From a In y Select x <= a)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >=(x#, y As Vector) As BooleanVector
             Return Not x <= y
         End Operator
@@ -577,8 +597,14 @@ Namespace LinearAlgebra
         End Operator
 #End Region
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(v As Vector) As Double()
             Return v.ToArray
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(v As Vector) As DoubleRange
+            Return New DoubleRange(v)
         End Operator
 
         ''' <summary>
@@ -613,6 +639,7 @@ Namespace LinearAlgebra
             End If
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(vector As VectorShadows(Of Double)) As Vector
             Return vector.As(Of Double).AsVector
         End Operator

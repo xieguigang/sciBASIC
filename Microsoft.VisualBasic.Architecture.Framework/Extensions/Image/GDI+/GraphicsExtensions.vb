@@ -499,6 +499,7 @@ Namespace Imaging
         ''' <param name="y"></param>
         ''' <returns></returns>
         <ExportAPI("Offset")>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function OffSet2D(p As Point, x As Integer, y As Integer) As Point
             Return New Point(x + p.X, y + p.Y)
         End Function
@@ -510,22 +511,38 @@ Namespace Imaging
         ''' <param name="offset"></param>
         ''' <returns></returns>
         <ExportAPI("Offset")>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function OffSet2D(p As Point, offset As Point) As Point
+            Return p.OffSet2D(offset.PointF)
+        End Function
+
+        ''' <summary>
+        ''' 返回位置的新的点位置值
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        <ExportAPI("Offset")>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function OffSet2D(p As Point, offset As PointF) As Point
             Return New Point(offset.X + p.X, offset.Y + p.Y)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function OffSet2D(pt As PointF, offset As PointF) As PointF
             With pt
                 Return New PointF(offset.X + .X, offset.Y + .Y)
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function OffSet2D(pt As PointF, x!, y!) As PointF
             With pt
                 Return New PointF(x + .X, y + .Y)
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function IsValidGDIParameter(size As Size) As Boolean
             Return size.Width > 0 AndAlso size.Height > 0
         End Function
