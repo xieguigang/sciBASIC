@@ -128,6 +128,10 @@ Public Module Kmeans
             .ToDictionary(Function(cluster) cluster.Key,
                           Function(group) group.ToArray)
 
+        If Not DIR.StringEmpty Then
+            Call clusters.Values.IteratesALL.ToArray.SaveTo($"{DIR}/{catagory.Keys.JoinBy(",").NormalizePathString}-Kmeans.csv")
+        End If
+
         ' 相同的cluster的对象都会被染上同一种颜色
         ' 不同的分组之中的数据点则会被绘制为不同的形状
         Dim clusterColors As Color() = Designer.GetColors(schema)
