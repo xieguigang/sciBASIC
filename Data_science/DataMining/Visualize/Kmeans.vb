@@ -83,6 +83,10 @@ Public Module Kmeans
             Call clusters.SaveTo($"{DIR}/{catagory.Keys.JoinBy(",").NormalizePathString}-Kmeans.csv")
         End If
 
+        For Each member As EntityLDM In clusters
+            member.Cluster = "Cluster:  #" & member.Cluster
+        Next
+
         Return Scatter3D(
             clusters, catagory, camera,
             size:=size, bg:=bg, axisStroke:=axisStroke, boxStroke:=boxStroke, padding:=padding,
@@ -128,10 +132,6 @@ Public Module Kmeans
             .ToDictionary(Function(cluster) cluster.Key,
                           Function(group) group.ToArray)
 
-        If Not DIR.StringEmpty Then
-            Call clusters.Values.IteratesALL.ToArray.SaveTo($"{DIR}/{catagory.Keys.JoinBy(",").NormalizePathString}-Kmeans.csv")
-        End If
-
         ' 相同的cluster的对象都会被染上同一种颜色
         ' 不同的分组之中的数据点则会被绘制为不同的形状
         Dim clusterColors As Color() = Designer.GetColors(schema)
@@ -157,7 +157,7 @@ Public Module Kmeans
             Next
 
             serials += New Serial3D With {
-                .Title = "Cluster:  #" & (+cluster).Key,
+                .Title = (+cluster).Key,
                 .Color = color,
                 .Points = point3D,
                 .Shape = LegendStyles.Triangle,
