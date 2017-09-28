@@ -57,7 +57,7 @@ Public Module CorrelationNetwork
     End Function
 
     <Extension>
-    Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#) As NetworkTables
+    Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#) As (net As NetworkTables, matrix As DataSet())
         Dim matrix As DataSet() = data.CorrelationMatrix.ToArray
         Dim nodes As New Dictionary(Of Node)
         Dim edges As New Dictionary(Of String, NetworkEdge) ' 关联网络是没有方向的
@@ -87,7 +87,9 @@ Public Module CorrelationNetwork
             Next
         Next
 
-        Return New NetworkTables(nodes.Values, edges.Values)
+        Dim net As New NetworkTables(nodes.Values, edges.Values)
+
+        Return (net, matrix)
     End Function
 
     Private Function HowStrong(c#) As String
