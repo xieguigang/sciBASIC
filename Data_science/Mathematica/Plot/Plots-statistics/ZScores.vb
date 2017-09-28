@@ -182,7 +182,7 @@ Public Module ZScoresPlot
                 Call g.DrawLegends(
                     topLeft:=legendLocation,
                     legends:=legends,
-                    graphicSize:=New Size(maxLegendLabelSize.Width, legendLabelFont.Height),
+                    gSize:=$"{maxLegendLabelSize.Width},{legendLabelFont.Height}",
                     regionBorder:=legendBoxBorder)
             End Sub
 

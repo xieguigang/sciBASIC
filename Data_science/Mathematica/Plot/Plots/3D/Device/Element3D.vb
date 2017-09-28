@@ -15,7 +15,7 @@ Namespace Plot3D.Device
 
         Public Property Location As Point3D
 
-        Public MustOverride Sub Draw(g As IGraphics)
+        Public MustOverride Sub Draw(g As IGraphics, offset As PointF)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub Transform(camera As Camera)
@@ -23,7 +23,7 @@ Namespace Plot3D.Device
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Function GetPosition(g As IGraphics) As Point
+        Public Function GetPosition(g As IGraphics) As Point
             Return Location.PointXY(g.Size)
         End Function
 
@@ -32,14 +32,23 @@ Namespace Plot3D.Device
         End Function
     End Class
 
+    Public Class Polygon : Inherits Element3D
+
+        Public Property Path As PointF()
+
+        Public Overrides Sub Draw(g As IGraphics, offset As PointF)
+
+        End Sub
+    End Class
+
     Public Class Label : Inherits Element3D
 
         Public Property Text As String
         Public Property Font As Font
         Public Property Color As Brush
 
-        Public Overrides Sub Draw(g As IGraphics)
-            Call g.DrawString(Text, Font, Color, GetPosition(g))
+        Public Overrides Sub Draw(g As IGraphics, offset As PointF)
+            Call g.DrawString(Text, Font, Color, GetPosition(g).OffSet2D(offset))
         End Sub
     End Class
 
@@ -65,9 +74,9 @@ Namespace Plot3D.Device
             }
         End Sub
 
-        Public Overrides Sub Draw(g As IGraphics)
-            Dim p1 As Point = A.PointXY(g.Size)
-            Dim p2 As Point = B.PointXY(g.Size)
+        Public Overrides Sub Draw(g As IGraphics, offset As PointF)
+            Dim p1 As Point = A.PointXY(g.Size).OffSet2D(offset)
+            Dim p2 As Point = B.PointXY(g.Size).OffSet2D(offset)
 
             Call g.DrawLine(Stroke, p1, p2)
         End Sub
@@ -88,8 +97,8 @@ Namespace Plot3D.Device
         Public Property Fill As Brush
         Public Property Style As LegendStyles
 
-        Public Overrides Sub Draw(g As IGraphics)
-            Dim position As Point = GetPosition(g)
+        Public Overrides Sub Draw(g As IGraphics, offset As PointF)
+            Dim position As Point = GetPosition(g).OffSet2D(offset)
             Call g.DrawLegendShape(position, Size, Style, Fill)
         End Sub
     End Class

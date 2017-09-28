@@ -75,16 +75,62 @@ Public Module Kmeans
                               Optional axisStroke$ = Stroke.AxisStroke,
                               Optional DIR$ = "./") As GraphicsData
 
-        Dim clusters As Dictionary(Of String, EntityLDM()) = data _
+        Dim clusters As EntityLDM() = data _
             .ToKMeansModels _
-            .Kmeans(expected:=clusterN) _
-            .GroupBy(Function(point) point.Cluster) _
-            .ToDictionary(Function(cluster) cluster.Key,
-                          Function(group) group.ToArray)
+            .Kmeans(expected:=clusterN)
 
         If Not DIR.StringEmpty Then
-            Call clusters.Values.IteratesALL.ToArray.SaveTo($"{DIR}/{catagory.Keys.JoinBy(",").NormalizePathString}-Kmeans.csv")
+            Call clusters.SaveTo($"{DIR}/{catagory.Keys.JoinBy(",").NormalizePathString}-Kmeans.csv")
         End If
+
+        For Each member As EntityLDM In clusters
+            member.Cluster = "Cluster:  #" & member.Cluster
+        Next
+
+        Return Scatter3D(
+            clusters, catagory, camera,
+            size:=size, bg:=bg, axisStroke:=axisStroke, boxStroke:=boxStroke, padding:=padding,
+            schema:=schema, shapes:=shapes,
+            pointSize:=pointSize)
+    End Function
+
+    ''' <summary>
+    ''' 至少需要三个维度的信息来进行Kmeans结果数据的可视化
+    ''' </summary>
+    ''' <param name="clusterData"></param>
+    ''' <param name="catagory">
+    ''' 用于生成坐标信息的，只能够包含三个元素。当这个表之中的元素的数目多余三个的时候，将只会取出前三个
+    ''' </param>
+    ''' <param name="camera"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="padding$"></param>
+    ''' <param name="schema$"></param>
+    ''' <param name="shapes"></param>
+    ''' <param name="pointSize!"></param>
+    ''' <param name="boxStroke$"></param>
+    ''' <param name="axisStroke$"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 使用这个函数是对现有的kmeans的结果数据之上进行可视化绘图操作
+    ''' </remarks>
+    <Extension>
+    Public Function Scatter3D(clusterData As IEnumerable(Of EntityLDM),
+                              catagory As Dictionary(Of NamedCollection(Of String)),
+                              camera As Camera,
+                              Optional size$ = "1200,1000",
+                              Optional bg$ = "white",
+                              Optional padding$ = g.DefaultPadding,
+                              Optional schema$ = Designer.Clusters,
+                              Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
+                              Optional pointSize! = 20,
+                              Optional boxStroke$ = Stroke.StrongHighlightStroke,
+                              Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
+
+        Dim clusters = clusterData _
+            .GroupBy(Function(member) member.Cluster) _
+            .ToDictionary(Function(cluster) cluster.Key,
+                          Function(group) group.ToArray)
 
         ' 相同的cluster的对象都会被染上同一种颜色
         ' 不同的分组之中的数据点则会被绘制为不同的形状
@@ -111,7 +157,7 @@ Public Module Kmeans
             Next
 
             serials += New Serial3D With {
-                .Title = "Cluster:  #" & (+cluster).Key,
+                .Title = (+cluster).Key,
                 .Color = color,
                 .Points = point3D,
                 .Shape = LegendStyles.Triangle,

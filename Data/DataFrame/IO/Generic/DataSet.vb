@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::4182802d304cc47c6ffd053892e93c67, ..\sciBASIC#\Data\DataFrame\IO\Generic\DataSet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 
 Namespace IO
 
@@ -87,14 +88,23 @@ Namespace IO
         ''' </param>
         ''' <returns></returns>
         Public Shared Function LoadDataSet(path$, Optional uidMap$ = Nothing) As IEnumerable(Of DataSet)
-            If uidMap Is Nothing Then
-                Dim first As New RowObject(path.ReadFirstLine)
-                uidMap = first.First
-            End If
+            Return LoadDataSet(Of DataSet)(path, uidMap)
+        End Function
+
+        Public Shared Function LoadDataSet(Of T As DataSet)(path$, Optional uidMap$ = Nothing) As IEnumerable(Of T)
             Dim map As New Dictionary(Of String, String) From {
-                {uidMap, NameOf(DataSet.ID)}
+                {
+                    uidMap Or New DefaultValue(Of String) With {
+                        .LazyValue = Function() __getID(path)
+                    }, NameOf(DataSet.ID)
+                }
             }
-            Return path.LoadCsv(Of DataSet)(explicit:=False, maps:=map)
+            Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
+        End Function
+
+        Private Shared Function __getID(path$) As String
+            Dim first As New RowObject(path.ReadFirstLine)
+            Return first.First
         End Function
     End Class
 End Namespace

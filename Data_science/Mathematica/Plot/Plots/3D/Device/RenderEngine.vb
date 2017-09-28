@@ -1,4 +1,5 @@
 ﻿
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -20,13 +21,19 @@ Namespace Plot3D.Device
                 Call element.Transform(camera)
             Next
 
+            ' 进行投影之后只需要直接取出XY即可得到二维的坐标
+            ' 然后生成多边形，进行画布的居中处理
+            Dim polygon As Point() = model _
+                .Select(Function(element) element.GetPosition(canvas)) _
+                .ToArray
+            Dim centra As PointF = polygon.CentralOffset(canvas.Size)
             Dim orders = PainterAlgorithm _
                 .OrderProvider(model, Function(e) e.Location.Z) _
                 .ToArray
 
             For i As Integer = 0 To model.Length - 1
                 Dim index = orders(i)
-                Call model(index).Draw(canvas)
+                Call model(index).Draw(canvas, centra)
             Next
         End Sub
     End Module

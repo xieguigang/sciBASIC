@@ -740,6 +740,7 @@ Public Module App
     ''' </summary>
     Dim _tmpHash As New Uid(Not IsMicrosoftPlatform)
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __getTEMPhash() As String
         SyncLock _tmpHash
             Return FormatZero(+_tmpHash, "00000")
@@ -750,6 +751,7 @@ Public Module App
     ''' 由于可能会运行多个使用本模块的进程，单独考哈希来作为表示会产生冲突，所以这里使用应用程序的启动时间戳以及当前的哈希值来生成唯一标示
     ''' </summary>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __getTEMP() As String
         Return $"tmp{App.__getTEMPhash}"
     End Function
@@ -759,6 +761,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property NextTempName As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return __getTEMP()
         End Get
@@ -816,6 +819,7 @@ Public Module App
     ''' <param name="Trace"></param>
     ''' <returns></returns>
     <ExportAPI("Exception.Log")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LogException(exMsg$, <CallerMemberName> Optional Trace$ = "") As Object
         Return App.LogException(New Exception(exMsg), Trace)
     End Function
@@ -825,6 +829,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ExceptionLogFile As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return App.LocalData & "/error.log"
         End Get
@@ -1072,6 +1077,7 @@ Public Module App
     ''' <param name="b"></param>
     ''' <param name="Failed"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function CLICode(b As Boolean, Optional Failed As Integer = -100) As Integer
         Return If(b, 0, Failed)
     End Function
@@ -1152,7 +1158,7 @@ Public Module App
     ''' </summary>
     ''' <param name="CLI"></param>
     ''' <returns></returns>
-    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Folk.Self")>
     Public Function SelfFolk(CLI As String) As IIORedirectAbstract
         Return Shell(App.ExecutablePath, CLI, CLR:=True)
@@ -1331,6 +1337,7 @@ Public Module App
     ''' <summary>
     ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
     ''' </summary>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub RunAsAdmin(Optional args$ = "")
         Call RestartElevated(args)
     End Sub

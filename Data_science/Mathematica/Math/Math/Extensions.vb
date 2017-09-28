@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::b2042fd0adbbf3d1d69af4119e796b3e, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
@@ -44,6 +45,7 @@ Public Module Extensions
     ''' <param name="q"></param>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SSM(q As Vector, s As Vector) As Double
         Return Sum(q * s) / Sqrt(Sum(q ^ 2) * Sum(s ^ 2))
     End Function
@@ -53,9 +55,16 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="data"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsVector(data As IEnumerable(Of Double)) As Vector
         Return New Vector(data)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsVector(data As DynamicPropertyBase(Of Double), keys$()) As Vector
+        Return data.ItemValue(keys).AsVector
     End Function
 
     ''' <summary>
@@ -84,6 +93,7 @@ Public Module Extensions
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Range(data As IEnumerable(Of Double)) As (min#, max#)
         With data.ToArray
@@ -91,6 +101,7 @@ Public Module Extensions
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Range(data As IEnumerable(Of Integer)) As (min#, max#)
         With data.ToArray
@@ -98,6 +109,7 @@ Public Module Extensions
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IntRange(range As (From%, To%)) As IntRange
         With range
@@ -105,6 +117,7 @@ Public Module Extensions
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DoubleRange(range As (From#, To#)) As DoubleRange
         With range
@@ -201,6 +214,7 @@ Public Module Extensions
     ''' <param name="x"></param>
     ''' <param name="y"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Sim(x As Vector, y As Vector) As Double
         Return (x * y).Sum / (x.Mod * y.Mod)
@@ -219,6 +233,7 @@ Public Module Extensions
     ''' <remarks>
     ''' http://xiao5461.blog.163.com/blog/static/22754562201211237567238/
     ''' </remarks>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Tanimoto(x As Vector, y As Vector) As Double
         Return (x * y).Sum / ((x * x).Sum + (y * y).Sum - (x * y).Sum)
