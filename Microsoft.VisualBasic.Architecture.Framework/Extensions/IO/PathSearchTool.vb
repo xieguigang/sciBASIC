@@ -55,6 +55,7 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="path$"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ExtensionSuffix(path$) As String
         Return path.Split("."c).Last
@@ -75,11 +76,13 @@ Public Module ProgramPathSearchTool
     ''' <param name="d"></param>
     ''' <param name="name"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function DIR(d As IO.DirectoryInfo, name As String) As String
+    Public Function DIR(d As DirectoryInfo, name$) As String
         Return $"{d.FullName}/{name}"
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function UnixPath(path As String) As String
         Return FileIO.FileSystem.GetFileInfo(path).FullName.Replace("\", "/")
@@ -131,6 +134,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="DIR$"></param>
     ''' <param name="pattern$"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ListFiles(DIR$, Optional pattern$ = "*.*") As IEnumerable(Of String)
         Return ls - l - r - pattern <= DIR
@@ -232,6 +236,7 @@ Public Module ProgramPathSearchTool
     ''' <remarks></remarks>
     '''
     <ExportAPI("NormalizePathString")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function NormalizePathString(str As String, Optional OnlyASCII As Boolean = True) As String
         Return NormalizePathString(str, "_", OnlyASCII)
     End Function

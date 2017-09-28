@@ -104,6 +104,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="keys"></param>
         ''' <returns></returns>
         Default Public Overloads Property ItemValue(keys As IEnumerable(Of String)) As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return keys.Select(Function(s) Me(s)).ToArray
             End Get
@@ -164,6 +165,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Protected ReadOnly Property MyHashCode As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetHashCode()
             End Get

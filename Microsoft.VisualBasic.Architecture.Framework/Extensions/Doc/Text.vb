@@ -107,6 +107,7 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function OpenWriter(path$,
                                Optional encoding As Encodings = Encodings.UTF8,
@@ -219,6 +220,7 @@ Public Module TextDoc
     ''' <param name="path$"></param>
     ''' <returns></returns>
     <Extension>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SaveWithHTMLEncoding(html$, path$) As Boolean
         Return html.SaveTo(path, Encoding.UTF8)
     End Function
@@ -289,6 +291,7 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <ExportAPI("Write.Text")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function SaveTo(value As XElement, path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
         Return value.Value.SaveTo(path, encoding)
     End Function
@@ -303,18 +306,19 @@ Public Module TextDoc
     ''' <remarks>2012年12月5日</remarks>
     '''
     <ExportAPI("IsTextFile")>
-    <Extension> Public Function IsTextFile(FilePath As String, Optional chunkSize As Integer = 4 * 1024) As Boolean
-        Dim file As IO.FileStream = New FileStream(FilePath, IO.FileMode.Open, IO.FileAccess.Read)
-        Dim byteData(1) As Byte
-        Dim i As Integer
-        Dim p As Integer
+    <Extension> Public Function IsTextFile(FilePath$, Optional chunkSize% = 4 * 1024) As Boolean
+        Using file As New FileStream(FilePath, FileMode.Open, FileAccess.Read)
+            Dim byteData(1) As Byte
+            Dim i As Integer
+            Dim p As Integer
 
-        While file.Read(byteData, 0, byteData.Length) > 0
-            If byteData(0) = 0 Then i += 1
-            If p <= chunkSize Then p += 1 Else Exit While
-        End While
+            While file.Read(byteData, 0, byteData.Length) > 0
+                If byteData(0) = 0 Then i += 1
+                If p <= chunkSize Then p += 1 Else Exit While
+            End While
 
-        Return i <= 0.1 * p
+            Return i <= 0.1 * p
+        End Using
     End Function
 
     ''' <summary>
@@ -351,6 +355,7 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <ExportAPI("Write.Text")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function SaveTo(sBuilder As StringBuilder, path As String, Optional encoding As Encoding = Nothing) As Boolean
         Return sBuilder.ToString.SaveTo(path, encoding)
     End Function
