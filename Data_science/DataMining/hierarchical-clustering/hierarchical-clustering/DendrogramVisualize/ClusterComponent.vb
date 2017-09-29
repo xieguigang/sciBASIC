@@ -1,34 +1,33 @@
-﻿#Region "Microsoft.VisualBasic::422d17dbe0761b9ee40eee04db13a6a5, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\ClusterComponent.vb"
+﻿#Region "Microsoft.VisualBasic::b84e2e514c3a2addc2bda973f1aaf54d, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\ClusterComponent.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Language
@@ -54,79 +53,21 @@ Imports sys = System.Math
 
 Namespace DendrogramVisualize
 
-    ''' <summary>
-    ''' 树
-    ''' </summary>
-    Public Class ClusterComponent : Inherits AbstractTree(Of ClusterComponent)
+    Public Class ClusterComponent
         Implements IPaintable
 
+        Public Property Children As New List(Of ClusterComponent)
         Public Property NamePadding As Integer = 6
         Public Property LinkPoint As PointF
         Public Property InitPoint As PointF
         Public Property Cluster As Cluster
         Public Property PrintName As Boolean
 
-#Region "Layout"
-
-        Public ReadOnly Property RectMinX As Double
-            Get
-
-                ' TODO Better use closure / callback here
-                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = sys.Min(InitPoint.X, LinkPoint.X)
-                For Each child As ClusterComponent In Childs
-                    val = sys.Min(val, child.RectMinX)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public ReadOnly Property RectMinY As Double
-            Get
-
-                ' TODO Better use closure here
-                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = sys.Min(InitPoint.Y, LinkPoint.Y)
-                For Each child As ClusterComponent In Childs
-                    val = sys.Min(val, child.RectMinY)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public ReadOnly Property RectMaxX As Double
-            Get
-
-                ' TODO Better use closure here
-                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = Math.Max(InitPoint.X, LinkPoint.X)
-                For Each child As ClusterComponent In Childs
-                    val = Math.Max(val, child.RectMaxX)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public ReadOnly Property RectMaxY As Double
-            Get
-
-                ' TODO Better use closure here
-                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = Math.Max(InitPoint.Y, LinkPoint.Y)
-                For Each child As ClusterComponent In Childs
-                    val = Math.Max(val, child.RectMaxY)
-                Next
-                Return val
-            End Get
-        End Property
-#End Region
-
         Public Sub New(cluster As Cluster, printName As Boolean, initPoint As PointF)
             Me.PrintName = printName
             Me.Cluster = cluster
             Me.InitPoint = initPoint
             Me.LinkPoint = initPoint
-            Me.Childs = New List(Of ClusterComponent)
         End Sub
 
         ''' <summary>
@@ -151,7 +92,7 @@ Namespace DendrogramVisualize
                 End If
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
-                If Cluster.IsLeaf Then
+                If Cluster.Leaf Then
                     Dim nx! = x1 + NamePadding
                     Dim ny! = y1
                     Dim location As New PointF With {
@@ -161,16 +102,16 @@ Namespace DendrogramVisualize
 
                     ' 绘制叶节点
                     If args.ShowLabelName Then
-                        g.DrawString(Cluster.Label, fontMetrics, Brushes.Black, location)
+                        g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, location)
                     End If
                     labels += New NamedValue(Of PointF) With {
-                        .Name = Cluster.Label,
+                        .Name = Cluster.Name,
                         .Value = location
                     }
 
                     If Not .classTable Is Nothing Then
                         ' 如果还存在分类信息的话，会绘制分类的颜色条
-                        Dim color As Brush = .classTable(Cluster.Label).GetBrush
+                        Dim color As Brush = .classTable(Cluster.Name).GetBrush
                         Dim topleft As New PointF(nx + .classLegendPadding, y1 - .classLegendSize.Height / 2)
                         Dim rect As New RectangleF(topleft, .classLegendSize)
 
@@ -197,24 +138,76 @@ Namespace DendrogramVisualize
                 y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
-                For Each child As ClusterComponent In Childs
+                For Each child As ClusterComponent In Children
                     child.paint(g, args, labels)
                 Next
             End With
         End Sub
 
-        Public Function GetNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
+        Public ReadOnly Property RectMinX As Double
+            Get
+
+                ' TODO Better use closure / callback here
+                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = sys.Min(InitPoint.X, LinkPoint.X)
+                For Each child As ClusterComponent In Children
+                    val = sys.Min(val, child.RectMinX)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public ReadOnly Property RectMinY As Double
+            Get
+
+                ' TODO Better use closure here
+                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = sys.Min(InitPoint.Y, LinkPoint.Y)
+                For Each child As ClusterComponent In Children
+                    val = sys.Min(val, child.RectMinY)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public ReadOnly Property RectMaxX As Double
+            Get
+
+                ' TODO Better use closure here
+                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = Math.Max(InitPoint.X, LinkPoint.X)
+                For Each child As ClusterComponent In Children
+                    val = Math.Max(val, child.RectMaxX)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public ReadOnly Property RectMaxY As Double
+            Get
+
+                ' TODO Better use closure here
+                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = Math.Max(InitPoint.Y, LinkPoint.Y)
+                For Each child As ClusterComponent In Children
+                    val = Math.Max(val, child.RectMaxY)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public Function getNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = 0
-            If includeNonLeafs OrElse Cluster.IsLeaf Then
-                Dim rect As RectangleF = g.FontMetrics.GetStringBounds(Cluster.Label, g.Graphics)
+            If includeNonLeafs OrElse Cluster.Leaf Then
+                Dim rect As RectangleF = g.FontMetrics.GetStringBounds(Cluster.Name, g.Graphics)
                 width = CInt(Fix(rect.Width))
             End If
             Return width
         End Function
 
         Public Function GetMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
-            Dim width As Integer = GetNameWidth(g, includeNonLeafs)
-            For Each comp As ClusterComponent In Childs
+            Dim width As Integer = getNameWidth(g, includeNonLeafs)
+            For Each comp As ClusterComponent In Children
                 Dim childWidth As Integer = comp.GetMaxNameWidth(g, includeNonLeafs)
                 If childWidth > width Then width = childWidth
             Next comp

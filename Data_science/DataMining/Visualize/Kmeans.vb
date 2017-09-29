@@ -44,7 +44,33 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Kmeans
 
-    Public Function Scatter2D()
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ClusterGroups(clusters As IEnumerable(Of EntityLDM)) As Dictionary(Of String, EntityLDM())
+        Return clusters _
+            .GroupBy(Function(c) c.Cluster) _
+            .ToDictionary(Function(cluster) cluster.Key,
+                          Function(cluster) cluster.ToArray)
+    End Function
+
+    ''' <summary>
+    ''' 绘制kmeans的二维散点图可视化
+    ''' </summary>
+    ''' <param name="clusterData"></param>
+    ''' <param name="catagory"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="padding$"></param>
+    ''' <param name="bg$"></param>
+    ''' <returns></returns>
+    Public Function Scatter2D(clusterData As IEnumerable(Of EntityLDM),
+                              catagory As (X As NamedCollection(Of String), Y As NamedCollection(Of String)),
+                              Optional size$ = "1600,1600",
+                              Optional padding$ = g.DefaultPadding,
+                              Optional bg$ = "white",
+                              Optional schema$ = Designer.Clusters) As GraphicsData
+
+        Dim clusters = clusterData.ClusterGroups
+        Dim colors = Designer.GetColors(schema)
 
     End Function
 
@@ -127,10 +153,7 @@ Public Module Kmeans
                               Optional boxStroke$ = Stroke.StrongHighlightStroke,
                               Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
 
-        Dim clusters = clusterData _
-            .GroupBy(Function(member) member.Cluster) _
-            .ToDictionary(Function(cluster) cluster.Key,
-                          Function(group) group.ToArray)
+        Dim clusters = clusterData.ClusterGroups
 
         ' 相同的cluster的对象都会被染上同一种颜色
         ' 不同的分组之中的数据点则会被绘制为不同的形状

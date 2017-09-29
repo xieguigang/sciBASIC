@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::e84b39d0c4acb971d809d86417700140, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\DendrogramPanel.vb"
+﻿#Region "Microsoft.VisualBasic::61cf7327f9c2a90624466d5c1cafcd3f, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\DendrogramPanel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -90,7 +90,7 @@ Namespace DendrogramVisualize
         End Property
 
         ''' <summary>
-        ''' ``<see cref="Cluster.Label"/> --> Class Color``
+        ''' ``<see cref="Cluster.Name"/> --> Class Color``
         ''' </summary>
         ''' <returns></returns>
         Public Property ClassTable As Dictionary(Of String, String)
@@ -122,9 +122,9 @@ Namespace DendrogramVisualize
                 Dim yChild As Double = pt0.Y - (clusterHeight / 2)
                 Dim distance As Double = cluster.DistanceValue
 
-                comp = New ClusterComponent(cluster, cluster.IsLeaf, pt0)
+                comp = New ClusterComponent(cluster, cluster.Leaf, pt0)
 
-                For Each child As Cluster In cluster.Childs
+                For Each child As Cluster In cluster.Children
                     Dim childLeafCount As Integer = child.CountLeafs()
                     Dim childHeight As Double = childLeafCount * leafHeight
                     Dim childDistance As Double = child.DistanceValue
@@ -135,7 +135,7 @@ Namespace DendrogramVisualize
                     Dim childComp As ClusterComponent = createComponent(child, childInitCoord, childHeight)
 
                     childComp.LinkPoint = pt0
-                    comp.Childs.Add(childComp)
+                    comp.Children.Add(childComp)
                 Next
             End If
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f7665102698526e5269de898c7f7e67, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::9c412a6454c814791af96392d7662ec0, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
 
 ' Author:
 ' 
@@ -43,8 +43,6 @@
 ' limitations under the License.
 ' *****************************************************************************
 '
-
-Imports System.Runtime.CompilerServices
 
 Namespace Hierarchy
 
@@ -135,10 +133,6 @@ Namespace Hierarchy
                 Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
                 Dim distanceValues As New List(Of Distance)
 
-                If link1 Is Nothing AndAlso link2 Is Nothing Then
-                    Continue For
-                End If
-
                 If link1 IsNot Nothing Then
                     Dim distVal As Double = link1.LinkageDistance
                     Dim weightVal As Double = link1.GetOtherCluster(iClust).WeightValue
@@ -168,7 +162,6 @@ Namespace Hierarchy
             Call Clusters.Add(newCluster)
         End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function findByClusters(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Return Distances.FindByCodePair(c1, c2)
         End Function
