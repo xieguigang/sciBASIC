@@ -115,7 +115,8 @@ Namespace Heatmap
                              Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
                              Optional legendWidth! = -1,
                              Optional legendHasUnmapped As Boolean = True,
-                             Optional legendSize$ = "600,100") As GraphicsData
+                             Optional legendSize$ = "600,100",
+                             Optional tick# = -1) As GraphicsData
 
             Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
             Dim array As DataSet() = data.ToArray
@@ -203,7 +204,8 @@ Namespace Heatmap
                 legendTitle, legendFont, Nothing,
                 min, max,
                 mainTitle, titleFont,
-                legendWidth, legendHasUnmapped, legendSize.SizeParser)
+                legendWidth, legendHasUnmapped, legendSize.SizeParser,
+                tick:=tick)
         End Function
     End Module
 End Namespace

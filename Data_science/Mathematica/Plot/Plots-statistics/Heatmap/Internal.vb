@@ -300,7 +300,8 @@ Namespace Heatmap
                                        Optional legendWidth! = -1,
                                        Optional legendHasUnmapped As Boolean = True,
                                        Optional legendSize As Size = Nothing,
-                                       Optional rowXOffset% = 0) As GraphicsData
+                                       Optional rowXOffset% = 0,
+                                       Optional tick# = -1) As GraphicsData
 
             Dim keys$() = array.PropertyNames
             Dim angle! = -45
@@ -335,7 +336,13 @@ Namespace Heatmap
                 .Join(min, max) _
                 .Distinct _
                 .ToArray
-            Dim ticks = DATArange.CreateAxisTicks(ticks:=5)
+            Dim ticks#()
+
+            If tick > 0 Then
+                ticks = AxisScalling.GetAxisByTick(DATArange, tick)
+            Else
+                ticks = DATArange.CreateAxisTicks(ticks:=5)
+            End If
 
             Call $"{DATArange.ToString} -> {ticks.GetJson}".__INFO_ECHO
 
@@ -419,15 +426,15 @@ Namespace Heatmap
                         ' Try
                         ' 绘制出聚类树
                         Dim cluster As Cluster = Time(AddressOf array.RunCluster)
-                            Dim topleft As New Point With {
+                        Dim topleft As New Point With {
                                 .X = rect.Padding.Left,
                                 .Y = top
                             }
-                            Dim dsize As New Size With {
+                        Dim dsize As New Size With {
                                 .Width = dendrogramLayout.A,
                                 .Height = matrixPlotRegion.Height
                             }
-                            rowKeys = configDendrogramCanvas(cluster, drawClass.rowClass) _
+                        rowKeys = configDendrogramCanvas(cluster, drawClass.rowClass) _
                                 .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
                                 .OrderBy(Function(x) x.Value.Y) _
                                 .Keys
