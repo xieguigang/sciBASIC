@@ -40,10 +40,10 @@ Namespace Driver.CSS
         ''' 因为考虑到手动输入参数可能会出现大小写不匹配的问题，故而在这里会首先尝试使用字典查找，
         ''' 没有找到键名的时候才会进行字符串大小写不敏感的字符串比较
         ''' </remarks>
-        Public Function RunPlot(driver As [Delegate], CSS As CssBlock, ParamArray args As Argument()) As GraphicsData
+        Public Function RunPlot(driver As [Delegate], CSS As CssBlock, ParamArray args As ArgumentReference()) As GraphicsData
             Dim type As MethodInfo = driver.Method
             Dim parameters = type.GetParameters
-            Dim values As Dictionary(Of String, Argument) = args.ToDictionary(Function(arg) arg.name)
+            Dim values As Dictionary(Of String, ArgumentReference) = args.ToDictionary(Function(arg) arg.name)
             Dim arguments As New List(Of Object)
 
             ' 因为args是必须参数，所以要首先进行赋值遍历

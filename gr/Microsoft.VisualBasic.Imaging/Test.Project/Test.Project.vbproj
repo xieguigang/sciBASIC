@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1A566414-428F-403B-84A6-6B9F36FB1117}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.Project.ConvexHull_demo</StartupObject>
+    <StartupObject>Test.Project.CSSTest</StartupObject>
     <RootNamespace>Test.Project</RootNamespace>
     <AssemblyName>Test.Project</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -122,6 +122,7 @@
     <Compile Include="ConcaveHull_demo.vb" />
     <Compile Include="LineTest.vb" />
     <Compile Include="LabelingTest.vb" />
+    <Compile Include="CSSTest.vb" />
     <Compile Include="ShadowsTest.vb" />
     <Compile Include="SVGTest.vb" />
     <Compile Include="Program.vb" />

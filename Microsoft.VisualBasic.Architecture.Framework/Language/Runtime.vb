@@ -2,7 +2,7 @@
 
 Namespace Language
 
-    Public Class Argument
+    Public Class ArgumentReference
 
         Public name$, value
 
@@ -17,12 +17,12 @@ Namespace Language
         ''' <param name="value">argument value</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator =(var As Argument, value As Object) As Argument
+        Public Shared Operator =(var As ArgumentReference, value As Object) As ArgumentReference
             var.value = value
             Return var
         End Operator
 
-        Public Shared Operator <>(var As Argument, value As Object) As Argument
+        Public Shared Operator <>(var As ArgumentReference, value As Object) As ArgumentReference
             Throw New NotImplementedException
         End Operator
     End Class
@@ -43,10 +43,10 @@ Namespace Language
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property Argument(name$) As Argument
+        Default Public ReadOnly Property Argument(name$) As ArgumentReference
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Argument With {
+                Return New ArgumentReference With {
                     .name = name
                 }
             End Get
