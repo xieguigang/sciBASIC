@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::2f7665102698526e5269de898c7f7e67, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -43,6 +43,8 @@
 ' limitations under the License.
 ' *****************************************************************************
 '
+
+Imports System.Runtime.CompilerServices
 
 Namespace Hierarchy
 
@@ -133,6 +135,10 @@ Namespace Hierarchy
                 Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
                 Dim distanceValues As New List(Of Distance)
 
+                If link1 Is Nothing AndAlso link2 Is Nothing Then
+                    Continue For
+                End If
+
                 If link1 IsNot Nothing Then
                     Dim distVal As Double = link1.LinkageDistance
                     Dim weightVal As Double = link1.GetOtherCluster(iClust).WeightValue
@@ -162,6 +168,7 @@ Namespace Hierarchy
             Call Clusters.Add(newCluster)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function findByClusters(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Return Distances.FindByCodePair(c1, c2)
         End Function
