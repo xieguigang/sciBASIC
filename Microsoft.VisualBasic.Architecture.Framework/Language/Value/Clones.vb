@@ -40,10 +40,10 @@ Namespace Language.Values
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <typeparam name="V"></typeparam>
-        ''' <param name="hash"></param>
+        ''' <param name="table"></param>
         ''' <returns></returns>
-        <Extension> Public Function Clone(Of T, V)(hash As IDictionary(Of T, V)) As Dictionary(Of T, V)
-            Return New Dictionary(Of T, V)(hash)
+        <Extension> Public Function Clone(Of T, V)(table As IDictionary(Of T, V)) As Dictionary(Of T, V)
+            Return New Dictionary(Of T, V)(table)
         End Function
 
         <Extension> Public Function Clone(Of T)(list As List(Of T)) As List(Of T)

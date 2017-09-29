@@ -126,6 +126,7 @@ Namespace DendrogramVisualize
             Me.Cluster = cluster
             Me.InitPoint = initPoint
             Me.LinkPoint = initPoint
+            Me.Childs = New List(Of ClusterComponent)
         End Sub
 
         ''' <summary>
