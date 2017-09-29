@@ -66,6 +66,7 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <param name="isNothing"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [Default](Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .Value = x,
@@ -80,6 +81,7 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <param name="isNothing"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsDefault(Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As DefaultValue(Of T)
             Return [Default](x, isNothing)
@@ -95,6 +97,7 @@ Namespace Language
         ''' <typeparam name="T"></typeparam>
         ''' <param name="value"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Let$(Of T)(value As T)
             Try
                 Return CStrSafe(value)
@@ -124,6 +127,7 @@ Namespace Language
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsNothing(Of T As Class)(x As T) As Boolean
             Return x Is Nothing

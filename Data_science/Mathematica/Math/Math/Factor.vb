@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::e16e6aff55de812931e6559245409b8d, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Factor.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Class Factor(Of T As IComparable(Of T)) : Inherits float
     Implements Value(Of T).IValueOf
@@ -97,5 +98,21 @@ Public Module FactorExtensions
             .ToArray
 
         Return out
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsCharacter(values As Dictionary(Of String, Double)) As Dictionary(Of String, String)
+        Return values.ToDictionary(
+            Function(x) x.Key,
+            Function(x) CStr(x.Value))
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsNumeric(values As Dictionary(Of String, String)) As Dictionary(Of String, Double)
+        Return values.ToDictionary(
+            Function(x) x.Key,
+            Function(x) x.Value.ParseNumeric)
     End Function
 End Module
