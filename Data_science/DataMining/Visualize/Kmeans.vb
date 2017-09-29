@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.csv
@@ -67,11 +68,42 @@ Public Module Kmeans
                               Optional size$ = "1600,1600",
                               Optional padding$ = g.DefaultPadding,
                               Optional bg$ = "white",
-                              Optional schema$ = Designer.Clusters) As GraphicsData
+                              Optional schema$ = Designer.Clusters,
+                              Optional pointSize! = 10) As GraphicsData
 
         Dim clusters = clusterData.ClusterGroups
-        Dim colors = Designer.GetColors(schema)
+        Dim clusterColors = Designer.GetColors(schema)
+        Dim serials As New List(Of SerialData)
+        Dim labX$ = catagory.X.Name, labY$ = catagory.Y.Name
 
+        For Each cluster In clusters.SeqIterator
+            Dim color As Color = clusterColors(cluster)
+            Dim points As New List(Of PointData)
+
+            For Each member As EntityLDM In (+cluster).Value
+                points += New PointData With {
+                    .pt = New PointF With {
+                        .X = member(catagory.X.Value).Average,
+                        .Y = member(catagory.Y.Value).Average
+                    }
+                }
+            Next
+
+            serials += New SerialData With {
+                .title = (+cluster).Key,
+                .color = color,
+                .pts = points,
+                .Shape = LegendStyles.Triangle,
+                .PointSize = pointSize
+            }
+        Next
+
+        Return ChartPlots.Scatter.Plot(
+            serials,
+            size:=size, padding:=padding, bg:=bg,
+            drawLine:=False,
+            Xlabel:=labX, Ylabel:=labY,
+            htmlLabel:=False)
     End Function
 
     ''' <summary>
