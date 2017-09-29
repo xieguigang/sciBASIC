@@ -369,6 +369,7 @@
     <Compile Include="Drawing3D\Math3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
+    <Compile Include="Drivers\CSS\RuntimeInvoker.vb" />
     <Compile Include="Drivers\GraphicsData.vb" />
     <Compile Include="Drivers\Drivers.vb" />
     <Compile Include="Drivers\ImageSynthesis.vb" />
