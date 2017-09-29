@@ -39,6 +39,7 @@ Namespace HTML.CSS.Render
     Friend NotInheritable Class CssDrawingHelper
         Private Sub New()
         End Sub
+
         ''' <summary>
         ''' Border specifiers
         ''' </summary>

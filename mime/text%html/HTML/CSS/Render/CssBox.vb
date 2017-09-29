@@ -34,7 +34,6 @@ Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
 
 Namespace HTML.CSS.Render
@@ -92,6 +91,7 @@ Namespace HTML.CSS.Render
             _cssproperties = New List(Of PropertyInfo)()
 
             Dim props As PropertyInfo() = GetType(CssBox).GetProperties()
+
             For i As Integer = 0 To props.Length - 1
                 Dim att As CssPropertyAttribute = TryCast(Attribute.GetCustomAttribute(props(i), GetType(CssPropertyAttribute)), CssPropertyAttribute)
 
@@ -109,7 +109,6 @@ Namespace HTML.CSS.Render
             Next
             '#End Region
 
-
             Empty = New CssBox()
         End Sub
 
@@ -123,11 +122,10 @@ Namespace HTML.CSS.Render
 
             If att Is Nothing Then
                 Return String.Empty
+            Else
+                Dim s As String = Convert.ToString(att.Value)
+                Return If(String.IsNullOrEmpty(s), String.Empty, s)
             End If
-
-            Dim s As String = Convert.ToString(att.Value)
-
-            Return If(String.IsNullOrEmpty(s), String.Empty, s)
         End Function
 
 #End Region
@@ -139,10 +137,6 @@ Namespace HTML.CSS.Render
         Private _backgroundGradientAngle As String
         Private _BackgroundImage As String
         Private _backgroundRepeat As String
-        Private _borderTopWidth As String
-        Private _borderRightWidth As String
-        Private _borderBottomWidth As String
-        Private _borderLeftWidth As String
         Private _borderWidth As String
         Private _borderTopColor As String
         Private _borderRightColor As String
@@ -178,13 +172,7 @@ Namespace HTML.CSS.Render
         Private _fontVariant As String
         Private _fontWeight As String
         Private _float As String
-        Private _height As String
-        Private _marginBottom As String
-        Private _marginLeft As String
-        Private _marginRight As String
-        Private _marginTop As String
         Private _margin As String
-        Private _left As String
         Private _lineHeight As String
         Private _listStyleType As String
         Private _listStyleImage As String
@@ -200,10 +188,8 @@ Namespace HTML.CSS.Render
         Private _textAlign As String
         Private _textDecoration As String
         Private _textIndent As String
-        Private _top As String
         Private _position As String
         Private _verticalAlign As String
-        Private _width As String
         Private _wordSpacing As String
         Private _whiteSpace As String
 
@@ -257,9 +243,9 @@ Namespace HTML.CSS.Render
             Next
         End Sub
 
-        Public Sub New(parentBox__1 As CssBox)
+        Public Sub New(parentBox As CssBox)
             Me.New()
-            ParentBox = parentBox__1
+            Me.ParentBox = parentBox
         End Sub
 
         Friend Sub New(parentBox As CssBox, tag As HtmlTag)
@@ -280,46 +266,18 @@ Namespace HTML.CSS.Render
         <CssProperty("border-bottom-width")>
         <DefaultValue("medium")>
         Public Property BorderBottomWidth() As String
-            Get
-                Return _borderBottomWidth
-            End Get
-            Set
-                _borderBottomWidth = Value
-            End Set
-        End Property
 
         <CssProperty("border-left-width")>
         <DefaultValue("medium")>
         Public Property BorderLeftWidth() As String
-            Get
-                Return _borderLeftWidth
-            End Get
-            Set
-                _borderLeftWidth = Value
-            End Set
-        End Property
 
         <CssProperty("border-right-width")>
         <DefaultValue("medium")>
         Public Property BorderRightWidth() As String
-            Get
-                Return _borderRightWidth
-            End Get
-            Set
-                _borderRightWidth = Value
-            End Set
-        End Property
 
         <CssProperty("border-top-width")>
         <DefaultValue("medium")>
         Public Property BorderTopWidth() As String
-            Get
-                Return _borderTopWidth
-            End Get
-            Set
-                _borderTopWidth = Value
-            End Set
-        End Property
 
         <CssProperty("border-width")>
         <DefaultValue("")>
@@ -823,47 +781,18 @@ Namespace HTML.CSS.Render
         <CssProperty("margin-bottom")>
         <DefaultValue("0")>
         Public Property MarginBottom() As String
-            Get
-                Return _marginBottom
-            End Get
-            Set
-                _marginBottom = Value
-            End Set
-        End Property
 
         <CssProperty("margin-left")>
         <DefaultValue("0")>
         Public Property MarginLeft() As String
-            Get
-                Return _marginLeft
-            End Get
-            Set
-                _marginLeft = Value
-            End Set
-        End Property
 
         <CssProperty("margin-right")>
         <DefaultValue("0")>
         Public Property MarginRight() As String
-            Get
-                Return _marginRight
-            End Get
-            Set
-                _marginRight = Value
-            End Set
-        End Property
 
         <CssProperty("margin-top")>
         <DefaultValue("0")>
         Public Property MarginTop() As String
-            Get
-                Return _marginTop
-            End Get
-            Set
-                _marginTop = Value
-            End Set
-        End Property
-
 #End Region
 
 #Region "Padding"
@@ -957,24 +886,10 @@ Namespace HTML.CSS.Render
         <CssProperty("left")>
         <DefaultValue("auto")>
         Public Property Left() As String
-            Get
-                Return _left
-            End Get
-            Set
-                _left = Value
-            End Set
-        End Property
 
         <CssProperty("top")>
         <DefaultValue("auto")>
         Public Property Top() As String
-            Get
-                Return _top
-            End Get
-            Set
-                _top = Value
-            End Set
-        End Property
 
         '[CssProperty("right")]
         '[DefaultValue("auto")]
@@ -995,26 +910,10 @@ Namespace HTML.CSS.Render
         <CssProperty("width")>
         <DefaultValue("auto")>
         Public Property Width() As String
-            Get
-                Return _width
-            End Get
-            Set
-                _width = Value
-            End Set
-        End Property
 
         <CssProperty("height")>
         <DefaultValue("auto")>
         Public Property Height() As String
-            Get
-                Return _height
-            End Get
-            Set
-                _height = Value
-            End Set
-        End Property
-
-
 #End Region
 
 #End Region
@@ -3193,7 +3092,7 @@ Namespace HTML.CSS.Render
                 x2 -= ActualPaddingRight + ActualBorderRightWidth
             End If
 
-            g.DrawLine(New Drawing.Pen(ActualColor), x1, y, x2, y)
+            g.DrawLine(New Pen(ActualColor), x1, y, x2, y)
         End Sub
 
         ''' <summary>
