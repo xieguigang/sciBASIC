@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::0f35905ae0d50690da3b6ffb8f32319b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\GraphicsData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
@@ -69,6 +70,7 @@ Namespace Driver
         ''' </summary>
         ''' <param name="img">其实这个参数在基类<see cref="GraphicsData"/>之中是无用的，只是为了统一接口而设置的</param>
         ''' <param name="size"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(img As Object, size As Size)
             Me.Size = size
         End Sub
@@ -141,6 +143,14 @@ Namespace Driver
             End If
         End Sub
 
+        Sub New(image As System.Drawing.Image)
+            Call Me.New(image, image.Size)
+        End Sub
+
+        Sub New(bitmap As Bitmap)
+            Call Me.New(bitmap, bitmap.Size)
+        End Sub
+
         ''' <summary>
         ''' Default image save format for <see cref="Bitmap"/>
         ''' </summary>
@@ -153,6 +163,8 @@ Namespace Driver
             End Get
         End Property
 
+        Const InvalidSuffix$ = "The gdi+ image file save path: {0} ending with *.svg file extension suffix!"
+
         ''' <summary>
         ''' Save the image as png
         ''' </summary>
@@ -160,7 +172,7 @@ Namespace Driver
         ''' <returns></returns>
         Public Overrides Function Save(path As String) As Boolean
             If path.ExtensionSuffix.TextEquals("svg") Then
-                Call $"The gdi+ image file save path: {path.ToFileURL} ending with *.svg file extension suffix!".Warning
+                Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
             Return Image.SaveAs(path, ImageData.DefaultFormat)
         End Function
@@ -204,9 +216,14 @@ Namespace Driver
         ''' </summary>
         ''' <param name="img"></param>
         ''' <param name="size"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(img As Object, size As Size)
             MyBase.New(img, size)
             Me.engine = DirectCast(img, GraphicsSVG)
+        End Sub
+
+        Sub New(canvas As GraphicsSVG)
+            Call Me.New(canvas, canvas.Size)
         End Sub
 
         Public Overrides ReadOnly Property Driver As Drivers
@@ -215,6 +232,8 @@ Namespace Driver
             End Get
         End Property
 
+        Const InvalidSuffix$ = "The SVG image file save path: {0} not ending with *.svg file extension suffix!"
+
         ''' <summary>
         ''' Save the image as svg file.
         ''' </summary>
@@ -222,7 +241,7 @@ Namespace Driver
         ''' <returns></returns>
         Public Overrides Function Save(path As String) As Boolean
             If Not path.ExtensionSuffix.TextEquals("svg") Then
-                Call $"The SVG image file save path: {path.ToFileURL} not ending with *.svg file extension suffix!".Warning
+                Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
 
             With Size
