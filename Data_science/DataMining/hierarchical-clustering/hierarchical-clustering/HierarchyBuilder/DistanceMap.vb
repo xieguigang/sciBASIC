@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::64b6081e78d49216be3125eea4a83cc6, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
@@ -82,7 +83,12 @@ Namespace Hierarchy
 
         Public Function FindByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Dim inCode As String = hashCodePair(c1, c2)
-            Return linkTable(inCode).Tree
+
+            If linkTable.ContainsKey(inCode) Then
+                Return linkTable(inCode).Tree
+            Else
+                Return Nothing
+            End If
         End Function
 
         Public Function RemoveFirst() As HierarchyTreeNode
@@ -103,15 +109,18 @@ Namespace Hierarchy
         End Function
 
         Public Function Remove(link As HierarchyTreeNode) As Boolean
-            Dim ___remove As HierarchyLink = linkTable.RemoveAndGet(hashCodePair(link))
-            If ___remove Is Nothing Then
+            Dim removed As HierarchyLink = linkTable.RemoveAndGet(hashCodePair(link))
+
+            If removed Is Nothing Then
                 Return False
+            Else
+                removed.removed = True
+                data.Remove(removed)
+                Return True
             End If
-            ___remove.removed = True
-            data.Remove(___remove)
-            Return True
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Sort()
             Call data.Sort()
         End Sub
