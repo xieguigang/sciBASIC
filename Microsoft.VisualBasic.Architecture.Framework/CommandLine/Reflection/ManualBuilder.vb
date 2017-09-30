@@ -32,7 +32,6 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
@@ -104,6 +103,7 @@ Namespace CommandLine.Reflection
                 Dim std_out As Boolean = False
                 Dim bool As Boolean = False
                 Dim haveOptional As Boolean = False
+                Dim boolSeperator As Boolean = False
 
                 ' 先输出必须的参数
                 ' 之后为可选参数，但是可选参数会分为下面的顺序输出
@@ -154,6 +154,14 @@ Namespace CommandLine.Reflection
 
                 ' 必须的参数放在前面，可选的参数都是在后面的位置
                 For Each param As Argument In api.Arguments.Select(Function(x) x.Value)
+
+                    If param.TokenType = CLITypes.Boolean AndAlso Not boolSeperator Then
+                        boolSeperator = True
+                        Call Console.WriteLine()
+                        Call Console.WriteLine("  Options:")
+                        Call Console.WriteLine()
+                    End If
+
                     If param.[Optional] Then
                         Dim fore = Console.ForegroundColor
 
@@ -195,7 +203,7 @@ Namespace CommandLine.Reflection
                     Call Console.Write(s)
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
-                    blank = New String(" "c, helpOffset - l)
+                    blank = New String(" "c, If(helpOffset - l < 0, 0, helpOffset - 1))
                     infoLines$ = Paragraph _
                         .Split(param.Description, 120) _
                         .ToArray
