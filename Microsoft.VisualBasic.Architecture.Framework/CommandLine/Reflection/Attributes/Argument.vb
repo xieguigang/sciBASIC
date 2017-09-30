@@ -54,7 +54,7 @@ Namespace CommandLine.Reflection
             End Get
         End Property
 
-        Dim _Description As String
+        Dim describ As String
 
         ''' <summary>
         ''' The description and brief help information about this parameter switch, 
@@ -66,16 +66,17 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         Public Property Description As String
             Get
-                Return _Description
+                Return describ
             End Get
             Set(value As String)
-                Dim Tokens As String() = Strings.Split(value, "\n")
-                Dim sBuilder As StringBuilder = New StringBuilder(Tokens.First & vbCrLf)
-                For i As Integer = 1 To Tokens.Length - 1
-                    Call sBuilder.AppendLine("              " & Tokens(i))
+                Dim tokens$() = Strings.Split(value, "\n")
+                Dim sb As New StringBuilder(tokens.First & vbCrLf)
+
+                For i As Integer = 1 To tokens.Length - 1
+                    Call sb.AppendLine("              " & tokens(i))
                 Next
 
-                _Description = sBuilder.ToString
+                describ = sb.ToString
             End Set
         End Property
 
@@ -127,6 +128,19 @@ Namespace CommandLine.Reflection
         ''' </summary>
         ''' <returns></returns>
         Public Property AcceptTypes As Type()
+
+        ''' <summary>
+        ''' Example:
+        ''' 
+        ''' ```
+        ''' csv, json, txt
+        ''' ```
+        ''' 
+        ''' Extension for the document format <see cref="AcceptTypes"/> if this argument its <see cref="TokenType"/> is a <see cref="CLITypes.File"/>
+        ''' If supports multiple extension, delimiter using ``,`` comma symbol.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Extensions As String
 
         ''' <summary>
         ''' 对命令行之中的某一个参数进行描述性信息的创建，包括用法和含义

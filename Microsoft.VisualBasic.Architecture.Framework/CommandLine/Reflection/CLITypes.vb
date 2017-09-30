@@ -34,30 +34,32 @@ Namespace CommandLine.Reflection
     ''' The data type enumeration of the target optional parameter switch.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Enum CLITypes
-        ''' <summary>
-        ''' String.(对于指定为字符串类型的参数，在调用的时候回自动调用<see cref="Utils.CLIToken"/>函数)
-        ''' </summary>
-        ''' <remarks></remarks>
-        [String]
-        ''' <summary>
-        ''' Int
-        ''' </summary>
-        ''' <remarks></remarks>
-        [Integer]
-        ''' <summary>
-        ''' Real
-        ''' </summary>
-        ''' <remarks></remarks>
-        [Double]
-        ''' <summary>
-        ''' This is a flag value, if this flag presents in the CLI, then this named Boolean value is TRUE, otherwise is FALSE.
-        ''' </summary>
-        [Boolean]
+    Public Enum CLITypes As Byte
+
         ''' <summary>
         ''' File/directory path, is equals most string.
         ''' (对于指定为路径类型的参数值，在生成命令行的时候会自动调用<see cref="CLIPath"/>函数，在Linux系统之中，文件夹也是一种文件)
         ''' </summary>
-        File
+        File = 1
+
+        ''' <summary>
+        ''' String.(对于指定为字符串类型的参数，在调用的时候回自动调用<see cref="Utils.CLIToken"/>函数)
+        ''' </summary>
+        ''' <remarks></remarks>
+        [String] = 2
+        ''' <summary>
+        ''' Int
+        ''' </summary>
+        ''' <remarks></remarks>
+        [Integer] = 3
+        ''' <summary>
+        ''' Real
+        ''' </summary>
+        ''' <remarks></remarks>
+        [Double] = 4
+        ''' <summary>
+        ''' This is a flag value, if this flag presents in the CLI, then this named Boolean value is TRUE, otherwise is FALSE.
+        ''' </summary>
+        [Boolean] = 5
     End Enum
 End Namespace
