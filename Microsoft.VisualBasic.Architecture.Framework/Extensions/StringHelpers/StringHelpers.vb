@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::94a5a5f0ebb2b74f5170cdfc6190ee42, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -426,6 +426,14 @@ Public Module StringHelpers
         End If
     End Function
 
+    ''' <summary>
+    ''' Get sub string value from the region that between the <paramref name="left"/> and <paramref name="right"/>.
+    ''' (这个函数是直接分别查找左右两边的定位字符串来进行切割的) 
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="left$"></param>
+    ''' <param name="right$"></param>
+    ''' <returns></returns>
     <ExportAPI("Get.Stackvalue")>
     <Extension>
     Public Function GetStackValue(str$, left$, right$) As String
@@ -443,6 +451,30 @@ Public Module StringHelpers
         Else
             str = Mid(str, p, q - p)
             Return str
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 和<see cref="GetStackValue(String, String, String)"/>相似，这个函数也是查找起始和终止字符串之间的字符串，
+    ''' 但是这个函数是查找相邻的两个标记，而非像<see cref="GetStackValue(String, String, String)"/>函数一样
+    ''' 直接查找字符串的两端的定位结果
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="strStart$"></param>
+    ''' <param name="strEnd$"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function GetBetween(str$, strStart$, strEnd$) As String
+        Dim start%, end%
+
+        If str.Contains(strStart) AndAlso str.Contains(strEnd) Then
+            start = str.IndexOf(strStart, 0) + strStart.Length
+            [end] = str.IndexOf(strEnd, start)
+
+            Return str.Substring(start, [end] - start)
+        Else
+            Return Nothing
         End If
     End Function
 

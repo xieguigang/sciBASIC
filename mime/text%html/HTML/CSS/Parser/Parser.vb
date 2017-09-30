@@ -12,30 +12,25 @@ Imports System.Text.RegularExpressions
 ''' </remarks>
 Public Class CssParser
 
-    Public Class NULL_TAG
-        Inherits Exception
+    Public Class NULL_TAG : Inherits Exception
+
         Public Sub New()
             MyBase.New("Tag name is null.")
         End Sub
     End Class
-    Public Class NULL_PRORERTY_VALUE
-        Inherits Exception
+
+    Public Class NULL_PRORERTY_VALUE : Inherits Exception
+
         Public Sub New()
             MyBase.New("Property value is null.")
         End Sub
     End Class
 
+    Dim PrpertyValue As Dictionary(Of CssProperty, String)
+    Dim tag As Dictionary(Of Tag, String)
 
+    ReadOnly TagWithCSSList As List(Of TagWithCSS)
 
-    '
-    '
-    ' Private
-    '
-    '
-    Private PrpertyValue As Dictionary(Of CssProperty, String)
-    Private tag As Dictionary(Of Tag, String)
-
-    Private TagWithCSSList As List(Of TagWithCSS)
     Private Function GetTagWithCSS(input As String) As List(Of TagWithCSS)
         Dim TagWithCSSList As New List(Of TagWithCSS)()
         Dim IndivisualTag As List(Of String) = IndivisualTags(input)
@@ -50,27 +45,19 @@ Public Class CssParser
         Next
         Return TagWithCSSList
     End Function
-    Private Function getBetween(strSource As String, strStart As String, strEnd As String) As String
-        Dim Start As Integer, [End] As Integer
-        If strSource.Contains(strStart) AndAlso strSource.Contains(strEnd) Then
-            Start = strSource.IndexOf(strStart, 0) + strStart.Length
-            [End] = strSource.IndexOf(strEnd, Start)
-            Return strSource.Substring(Start, [End] - Start)
-        Else
-            Return Nothing
-        End If
-    End Function
-    Private Function IndivisualTags(input As String) As List(Of String)
-        Dim pattern As String = "(?<selector>(?:(?:[^,{]+),?)*?)\{(?:(?<name>[^}:]+):?(?<value>[^};]+);?)*?\}"
 
+    Const IndivisualTagsPattern$ = "(?<selector>(?:(?:[^,{]+),?)*?)\{(?:(?<name>[^}:]+):?(?<value>[^};]+);?)*?\}"
+
+    Private Function IndivisualTags(input As String) As List(Of String)
         Dim b As New List(Of String)()
 
-        For Each m As Match In Regex.Matches(input, pattern)
+        For Each m As Match In Regex.Matches(input, IndivisualTagsPattern)
             b.Add(m.Value)
         Next
 
         Return b
     End Function
+
     Private Function GetProperty(input As String) As List(Of [Property])
         Dim p As New List(Of [Property])()
         Dim s As String() = Regex.Split(input, "[;]")
