@@ -2,7 +2,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Render
-Imports VB = Microsoft.VisualBasic.Language.Runtime
 
 Namespace Driver.CSS
 
@@ -13,9 +12,10 @@ Namespace Driver.CSS
     ''' </summary>
     Public Module RuntimeInvoker
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function LoadDriver(container As Type, api$) As MethodInfo
-            Dim entryPoints As MethodInfo = container _
+            Return container _
                 .GetMethods(BindingFlags.Public) _
                 .Select(Function(m)
                             Return (entry:=m.GetCustomAttribute(Of Driver), Driver:=m)
@@ -26,8 +26,6 @@ Namespace Driver.CSS
                        End Function) _
                 .Select(Function(m) m.Driver) _
                 .FirstOrDefault
-
-            Return entryPoints
         End Function
 
         ' CSS文件说明
