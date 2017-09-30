@@ -39,7 +39,7 @@ Public Class CssParser
             Dim TWCSS As New TagWithCSS()
             If RemoveWhitespace(tagname(0)) <> "" Then
                 TWCSS.TagName = RemoveWitespaceFormStartAndEnd(tagname(0))
-                TWCSS.Properties = GetProperty(getBetween(tag, "{", "}"))
+                TWCSS.Properties = GetProperty(GetBetween(tag, "{", "}"))
                 TagWithCSSList.Add(TWCSS)
             End If
         Next
@@ -315,7 +315,7 @@ Public Class CssParser
     ''' <param name="PropertValue">Property's valueto add/overwrite</param>
     ''' <param name="Type">Type of tag (HTML tag ,Class or Id).Deffalt HTML Tag.</param>
     ''' <returns>Added/Overwrited or not.</returns>
-    Public Function AddPropery(Tag As String, [property] As CssProperty, PropertValue As String, Optional Type As TagType = TagType.Tag) As Boolean
+    Public Function AddPropery(Tag As String, [property] As CssProperty, PropertValue As String, Optional Type As CSSTagTypes = CSSTagTypes.tag) As Boolean
         If Tag = "" OrElse Tag = String.Empty OrElse Tag = "" Then
             Throw New NULL_TAG()
         End If
@@ -330,10 +330,10 @@ Public Class CssParser
         Dim tagcannotexist As Boolean = True
         Dim tagExist As Boolean = False
 
-        If Type = TagType.[Class] Then
+        If Type = CSSTagTypes.[class] Then
             Tag = "." & Tag
         End If
-        If Type = TagType.Id Then
+        If Type = CSSTagTypes.id Then
             Tag = "#" & Tag
         End If
 
