@@ -31,6 +31,9 @@ Module DriverTest
             Call testPlot(A:=666, b:=4444, css:="direct calls")
 
         End With
+
+
+        Pause()
     End Sub
 
     ''' <summary>
@@ -41,7 +44,7 @@ Module DriverTest
     ''' <param name="css$"></param>
     ''' <returns></returns>
     <Driver("test.plot")>
-    Private Function testPlot(A!, b!, Optional css$ = "1234", Optional testFont$ = CSSFont.Win7LargerBold) As GraphicsData
+    Public Function testPlot(A!, b!, Optional css$ = "1234", Optional testFont$ = CSSFont.Win7LargerBold) As GraphicsData
         Call Console.WriteLine(A)
         Call Console.WriteLine(b)
         Call Console.WriteLine(css)

@@ -15,8 +15,8 @@ Namespace Driver.CSS
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function LoadDriver(container As Type, api$) As MethodInfo
-            Return container _
-                .GetMethods(BindingFlags.Public) _
+            Return DirectCast(container, TypeInfo) _
+                .DeclaredMethods _
                 .Select(Function(m)
                             Return (entry:=m.GetCustomAttribute(Of Driver), Driver:=m)
                         End Function) _
@@ -73,7 +73,7 @@ Namespace Driver.CSS
             ' 因为args是必须参数，所以要首先进行赋值遍历
             For Each arg As ParameterInfo In parameters
                 If values.ContainsKey(arg.Name) Then
-                    arguments += values(arg.Name)
+                    arguments += values(arg.Name).value
                 Else
                     arguments += arg.ScanValue(values, CSS)
                 End If
@@ -86,7 +86,7 @@ Namespace Driver.CSS
         Private Function ScanValue(arg As ParameterInfo, values As Dictionary(Of ArgumentReference), CSS As CSSFile) As Object
             With values.Keys.Where(Function(s) s.TextEquals(arg.Name)).FirstOrDefault
                 If Not .StringEmpty Then
-                    Return values(.ref)
+                    Return values(.ref).value
                 End If
             End With
 
