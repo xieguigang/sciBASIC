@@ -27,7 +27,7 @@ Public Class CssParser
     End Class
 
     Dim PrpertyValue As Dictionary(Of CssProperty, String)
-    Dim tag As Dictionary(Of Tag, String)
+    Dim tag As Dictionary(Of HtmlTags, String)
 
     ReadOnly TagWithCSSList As List(Of TagWithCSS)
 
@@ -147,7 +147,7 @@ Public Class CssParser
         Next
     End Sub
     Private Sub setHTML()
-        tag = New Dictionary(Of Tag, String)()
+        tag = New Dictionary(Of HtmlTags, String)()
         Dim tags As String() = {"h1", "h2", "h3", "h4", "h5", "h6",
             "body", "a", "img", "ol", " ul", "li",
             "table", "tr", "th", "nav", "heder", "footer",
@@ -156,7 +156,7 @@ Public Class CssParser
             "pre", "p", "span"}
         Dim i As Integer = 0
         For Each T As String In tags
-            tag.Add(CType(i, Tag), T)
+            tag.Add(CType(i, HtmlTags), T)
             i += 1
         Next
     End Sub
@@ -216,7 +216,7 @@ Public Class CssParser
     ''' <param name="Tag">Tage to remove property.</param>
     ''' <param name="Proverty">Property to remove.</param>
     ''' <returns>True if removed.</returns>
-    Public Function RemoveProperty(tag As Tag, Proverty As CssProperty) As Boolean
+    Public Function RemoveProperty(tag As HtmlTags, Proverty As CssProperty) As Boolean
         Return RemoveProperty(Me.tag(tag), Proverty)
     End Function
     ''' <summary>
@@ -244,7 +244,7 @@ Public Class CssParser
     ''' </summary>
     ''' <param name="Tag">Tag to remove.</param>
     ''' <returns>True if removed.</returns>
-    Public Function RemoveTag(tag As Tag) As Boolean
+    Public Function RemoveTag(tag As HtmlTags) As Boolean
         Return RemoveTag(Me.tag(tag))
     End Function
     ''' <summary>
@@ -271,7 +271,7 @@ Public Class CssParser
     ''' </summary>
     ''' <param name="Tag">Tag to get properties</param>
     ''' <returns>Property List</returns>
-    Public Function GetProperties(tag As Tag) As List(Of [Property])
+    Public Function GetProperties(tag As HtmlTags) As List(Of [Property])
         Return GetProperties(Me.tag(tag))
     End Function
     ''' <summary>
@@ -304,7 +304,7 @@ Public Class CssParser
     ''' <param name="Tag">Name of tag.</param>
     ''' <param name="Property">Property to value.</param>
     ''' <returns>Property</returns>
-    Public Function GetPropertie(tag As Tag, [Property] As CssProperty) As [Property]
+    Public Function GetPropertie(tag As HtmlTags, [Property] As CssProperty) As [Property]
         Return GetPropertie(Me.tag(tag), [Property])
     End Function
     ''' <summary>
@@ -395,7 +395,7 @@ Public Class CssParser
     ''' <param name="PropertValue">Property's valueto add/overwrite</param>
     ''' <param name="Type">Type of tag (HTML tag ,Class or Id).Deffalt HTML Tag.</param>
     ''' <returns>Added/Overwrited or not.</returns>
-    Public Function AddPropery(tag As Tag, [property] As CssProperty, PropertValue As String) As Boolean
+    Public Function AddPropery(tag As HtmlTags, [property] As CssProperty, PropertValue As String) As Boolean
         Return AddPropery(Me.tag(tag), [property], PropertValue)
     End Function
     ''' <summary>
@@ -429,7 +429,7 @@ Public Class CssParser
     ''' </summary>
     ''' <param name="Tag">Name of tag.</param>
     ''' <returns>True if exist.</returns>
-    Public Function TagExist(tag As Tag) As Boolean
+    Public Function TagExist(tag As HtmlTags) As Boolean
         Return TagExist(Me.tag(tag))
     End Function
 End Class

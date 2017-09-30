@@ -20,7 +20,7 @@ End Enum
 ''' <summary>
 ''' HTML Tags. 
 ''' </summary>
-Public Enum Tag
+Public Enum HtmlTags
     h1
     h2
     h3
