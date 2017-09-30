@@ -40,7 +40,7 @@ Namespace Driver.CSS
         ''' 因为考虑到手动输入参数可能会出现大小写不匹配的问题，故而在这里会首先尝试使用字典查找，
         ''' 没有找到键名的时候才会进行字符串大小写不敏感的字符串比较
         ''' </remarks>
-        Public Function RunPlot(driver As [Delegate], CSS As CssBlock, ParamArray args As ArgumentReference()) As GraphicsData
+        Public Function RunPlot(driver As [Delegate], CSS As CSSFile, ParamArray args As ArgumentReference()) As GraphicsData
             Dim type As MethodInfo = driver.Method
             Dim parameters = type.GetParameters
             Dim values As Dictionary(Of String, ArgumentReference) = args.ToDictionary(Function(arg) arg.name)
@@ -53,13 +53,27 @@ Namespace Driver.CSS
                 Else
                     With values.Keys.Where(Function(s) s.TextEquals(arg.Name)).FirstOrDefault
                         If .StringEmpty Then
-                            ' 查看CSS样式文件之中是否存在？
 
-                            If Not arg.IsOptional Then
-                                Throw New ArgumentNullException($"Parameter '{arg.Name}' which is required by the graphics driver function is not found!")
+                            ' 在values参数列表之中查找不到，则可能是在CSS之中定义的样式，查看CSS样式文件之中是否存在？
+                            Dim style As Selector = CSS("#" & arg.Name)
+
+                            If style Is Nothing Then
+                                ' 在CSS之中没有定义，则判断这个参数是否为可选参数，如果不是可选参数，则抛出错误
+                                If Not arg.IsOptional Then
+                                    Throw New ArgumentNullException(String.Format(RequiredArgvNotFound, arg.Name))
+                                Else
+                                    arguments += arg.DefaultValue
+                                End If
+
                             Else
-                                arguments += arg.DefaultValue
+
+                                ' 因为绘图的样式值都是使用CSS字符串来完成的，所以
+                                ' 在这里就直接调用CSS样式的ToString方法来得到参数值了
+                                Dim cssValue$ = style.ToString
+                                arguments += cssValue
+
                             End If
+
                         Else
                             arguments += values(.ref)
                         End If
@@ -70,12 +84,6 @@ Namespace Driver.CSS
             Return type.Invoke(driver.Target, arguments.ToArray)
         End Function
 
-        Sub test()
-
-            With New VB
-
-                RunPlot(Nothing, Nothing, !A = 99, !B = 123, !C = "dertfff")
-            End With
-        End Sub
+        Const RequiredArgvNotFound$ = "Parameter '{0}' which is required by the graphics driver function is not found!"
     End Module
 End Namespace

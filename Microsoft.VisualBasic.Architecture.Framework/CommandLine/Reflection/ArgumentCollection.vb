@@ -1,34 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::f031b3316ac13dc36d999dcfffc50d58, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ArgumentCollection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine.Reflection
 
@@ -60,6 +62,7 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         ''' <remarks></remarks>
         Default Public ReadOnly Property Parameter(Name As String) As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _params(Name).ToString
             End Get
@@ -151,14 +154,14 @@ Namespace CommandLine.Reflection
         ReadOnly __flag As Type = GetType(Argument)
 
         Sub New(methodInfo As MethodInfo)
-            Dim attrs As Object() = methodInfo.GetCustomAttributes(__flag, inherit:=False)
-            Dim LQuery As IEnumerable(Of Argument) =
-                From attr As Object
-                In attrs
-                Let parameter As Argument =
-                    TryCast(attr, Argument)
-                Select parameter
-                Order By parameter.Optional Ascending ' 必须参数都在前面，可选参数都在后面
+            Dim attrs() = methodInfo.GetCustomAttributes(__flag, inherit:=False)
+            Dim LQuery = LinqAPI.Exec(Of Argument) _
+ _
+                () <= From attr As Object
+                      In attrs
+                      Let parameter As Argument = TryCast(attr, Argument)
+                      Select parameter
+                      Order By parameter.Optional, parameter.TokenType Ascending ' 必须参数都在前面，可选参数都在后面
 
             For Each param As Argument In LQuery
                 Call _params.Add(param.Name, param)

@@ -90,7 +90,9 @@ Namespace Net.Protocols.ContentTypes
                     ' Not sure why a bugs happed here, there is no bugs here before!
                     Yield ContentType.__createObject(line)
                 Catch ex As Exception
+#If DEBUG Then
                     Call line.Warning
+#End If
                 End Try
             Next
         End Function
