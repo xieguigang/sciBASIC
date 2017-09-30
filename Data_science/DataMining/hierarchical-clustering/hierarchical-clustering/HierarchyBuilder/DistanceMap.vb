@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64b6081e78d49216be3125eea4a83cc6, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
+﻿#Region "Microsoft.VisualBasic::238eccb892af3f4ace656cfc34d160df, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
 
 ' Author:
 ' 
@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
@@ -83,12 +82,7 @@ Namespace Hierarchy
 
         Public Function FindByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Dim inCode As String = hashCodePair(c1, c2)
-
-            If linkTable.ContainsKey(inCode) Then
-                Return linkTable(inCode).Tree
-            Else
-                Return Nothing
-            End If
+            Return linkTable(inCode).Tree
         End Function
 
         Public Function RemoveFirst() As HierarchyTreeNode
@@ -109,18 +103,15 @@ Namespace Hierarchy
         End Function
 
         Public Function Remove(link As HierarchyTreeNode) As Boolean
-            Dim removed As HierarchyLink = linkTable.RemoveAndGet(hashCodePair(link))
-
-            If removed Is Nothing Then
+            Dim ___remove As HierarchyLink = linkTable.RemoveAndGet(hashCodePair(link))
+            If ___remove Is Nothing Then
                 Return False
-            Else
-                removed.removed = True
-                data.Remove(removed)
-                Return True
             End If
+            ___remove.removed = True
+            data.Remove(___remove)
+            Return True
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Sort()
             Call data.Sort()
         End Sub

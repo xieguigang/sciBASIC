@@ -1,34 +1,32 @@
-﻿#Region "Microsoft.VisualBasic::d11e87082e9b3318150ebbbf7a6bce01, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Cluster.vb"
+﻿#Region "Microsoft.VisualBasic::008f877f0901d03814c157c8ab57af29, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Cluster.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.Graph
-Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 '
@@ -49,9 +47,7 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 ' *****************************************************************************
 '
 
-Public Class Cluster : Inherits AbstractTree(Of Cluster)
-    Implements INamedValue
-    Implements IComparable(Of Cluster)
+Public Class Cluster : Implements INamedValue
 
     Public Property Distance As Distance
 
@@ -67,22 +63,19 @@ Public Class Cluster : Inherits AbstractTree(Of Cluster)
         End Get
     End Property
 
+    Public Property Parent As Cluster
+    ''' <summary>
+    ''' 名称是唯一的？
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Name As String Implements INamedValue.Key
+    Public ReadOnly Property Children As IList(Of Cluster)
     Public ReadOnly Property LeafNames As List(Of String)
 
-    Public ReadOnly Property TotalDistance As Double
-        Get
-            Dim dist As Double = If(Distance Is Nothing, 0, Distance.Distance)
-            If Childs.Count > 0 Then
-                dist += Childs(0).TotalDistance
-            End If
-            Return dist
-        End Get
-    End Property
-
     Public Sub New(name$)
-        Label = name
+        Me.Name = name
         LeafNames = New List(Of String)
-        Childs = New List(Of Cluster)
+        Children = New List(Of Cluster)
         Distance = New Distance
     End Sub
 
@@ -95,49 +88,81 @@ Public Class Cluster : Inherits AbstractTree(Of Cluster)
     End Sub
 
     Public Sub AddChild(cluster As Cluster)
-        Childs.Add(cluster)
+        Children.Add(cluster)
     End Sub
 
-    Public Function Contains(cluster As Cluster) As Boolean
-        Return Childs.Contains(cluster)
+    Public Function contains(cluster As Cluster) As Boolean
+        Return Children.Contains(cluster)
     End Function
 
     Public Overrides Function ToString() As String
-        Return "Cluster " & Label
+        Return "Cluster " & Name
     End Function
 
     Public Overrides Function Equals(obj As Object) As Boolean
         If obj Is Nothing Then
             Return False
-        ElseIf Me.GetType() IsNot obj.GetType() Then
-            Return False
-        Else
-            Return CompareTo(DirectCast(obj, Cluster))
         End If
+        If Me Is obj Then
+            Return True
+        End If
+
+        If Me.GetType() IsNot obj.GetType() Then
+            Return False
+        End If
+
+        Dim other As Cluster = CType(obj, Cluster)
+
+        If Name Is Nothing Then
+            If other.Name IsNot Nothing Then
+                Return False
+            End If
+        ElseIf Not Name.Equals(other.Name) Then
+            Return False
+        End If
+
+        Return True
     End Function
 
     Public Overrides Function GetHashCode() As Integer
-        Return If(Label Is Nothing, 0, Label.GetHashCode())
+        Return If(Name Is Nothing, 0, Name.GetHashCode())
     End Function
 
-    Public Function CompareTo(other As Cluster) As Integer Implements IComparable(Of Cluster).CompareTo
-        If other Is Nothing Then
-            Return 1
-        End If
-        If Me Is other Then
-            Return 0
-        End If
+    Public ReadOnly Property Leaf As Boolean
+        Get
+            Return Children.Count = 0
+        End Get
+    End Property
 
-        If Label Is Nothing Then
-            If other.Label IsNot Nothing Then
-                Return -1
-            Else
-                Return 0
+    ''' <summary>
+    ''' 计算出所有的叶节点的总数，包括自己的child的叶节点
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function CountLeafs() As Integer
+        Return CountLeafs(Me, 0)
+    End Function
+
+    ''' <summary>
+    ''' 对某一个节点的所有的叶节点进行计数
+    ''' </summary>
+    ''' <param name="node"></param>
+    ''' <param name="count"></param>
+    ''' <returns></returns>
+    Public Shared Function CountLeafs(node As Cluster, count As Integer) As Integer
+        If node.Leaf Then count += 1
+        For Each child As Cluster In node.Children
+            count += child.CountLeafs()
+        Next
+        Return count
+    End Function
+
+    Public ReadOnly Property TotalDistance As Double
+        Get
+            Dim dist As Double = If(Distance Is Nothing, 0, Distance.Distance)
+            If Children.Count > 0 Then
+                dist += Children(0).TotalDistance
             End If
-        ElseIf other.Label Is Nothing Then
-            Return 1
-        Else
-            Return Label.CompareTo(other.Label)
-        End If
-    End Function
+            Return dist
+        End Get
+    End Property
 End Class

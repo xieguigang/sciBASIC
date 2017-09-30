@@ -52,6 +52,7 @@ Public Class SerialData : Implements INamedValue
     Public PointSize As Single = 1
     Public color As Color = Color.Black
     Public width As Single = 1
+    Public Shape As LegendStyles = LegendStyles.Circle
 
     ''' <summary>
     ''' 对一系列特定的数据点的注释数据

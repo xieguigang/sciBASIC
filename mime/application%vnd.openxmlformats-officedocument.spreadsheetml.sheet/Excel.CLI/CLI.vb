@@ -42,7 +42,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 <CLI> Module CLI
 
     <ExportAPI("/Cbind")>
-    <Usage("/cbind /in <a.csv> /append <b.csv> [/out <ALL.csv>]")>
+    <Usage("/cbind /in <a.csv> /append <b.csv> [/token0.ID <deli, default=<SPACE> /out <ALL.csv>]")>
     <Description("Join of two table by a unique ID.")>
     <Argument("/in", False, CLITypes.File,
               Description:="The table for append by column, its row ID can be duplicated.")>
@@ -54,7 +54,15 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         Dim out$ = (args <= "/out") Or ([in].TrimSuffix & "+" & append.BaseName & ".csv").AsDefault
         Dim a = EntityObject.LoadDataSet([in])
         Dim b = Contract.Load(append)
-        
+
+        With args <= "/token0.ID"
+            If Not String.IsNullOrEmpty(.ref) Then
+                For Each obj As EntityObject In a
+                    obj.ID = Strings.Split(obj.ID, Delimiter:= .ref)(0)
+                Next
+            End If
+        End With
+
         Return Contract.Append(a, b) _
             .SaveTo(out) _
             .CLICode
