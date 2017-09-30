@@ -1,10 +1,15 @@
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Text.RegularExpressions
 
 ''' <summary>
 ''' Parser css code to add/remove or manage it.
 ''' </summary>
+''' <remarks>
+''' #### Jo-CSS-Parser
+''' 
+''' https://github.com/rizwan3d/Jo-CSS-Parser
+''' 
+''' > Complete Css Parser Writen in C#
+''' </remarks>
 Public Class CssParser
 
     Public Class NULL_TAG
