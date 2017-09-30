@@ -85,13 +85,5 @@ Namespace Driver.CSS
         End Function
 
         Const RequiredArgvNotFound$ = "Parameter '{0}' which is required by the graphics driver function is not found!"
-
-        Sub test()
-
-            With New VB
-
-                RunPlot(Nothing, Nothing, !A = 99, !B = 123, !C = "dertfff")
-            End With
-        End Sub
     End Module
 End Namespace

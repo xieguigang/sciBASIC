@@ -49,6 +49,8 @@ Namespace HTML.CSS.Render
             End Get
         End Property
 
+        Public ReadOnly Property 
+
         ''' <summary>
         ''' Get the selector text name
         ''' </summary>
