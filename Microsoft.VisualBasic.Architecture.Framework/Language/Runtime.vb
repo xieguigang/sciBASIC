@@ -39,6 +39,8 @@ Namespace Language
     End Class
 
     ''' <summary>
+    ''' Runtime helper
+    ''' 
     ''' ```vbnet
     ''' Imports VB = Microsoft.VisualBasic.Language.Runtime
     ''' 

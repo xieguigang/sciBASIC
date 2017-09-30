@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.Imaging.Driver.CSS
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Render
-Imports VB = Microsoft.VisualBasic.Language.Runtime
+Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
 Module DriverTest
     Sub Main()
@@ -14,7 +14,7 @@ Module DriverTest
             }
         }
 
-        With New VB
+        With New VisualBasic
 
             ' Call (AddressOf testPlot).RunPlot(css, !A = 99, !B = 123, !CSS = "dertfff")
 
@@ -22,7 +22,11 @@ Module DriverTest
 
             Dim driver As Func(Of Single, Single, String, GraphicsData) = AddressOf testPlot
 
-            Call driver.RunPlot(css, !A = 99, !B = 123, !CSS = "from delegate: 1234567890")
+            Call driver.RunPlot(
+                css, !A = 99,
+                     !B = 123,
+                     !CSS = "from delegate: 1234567890",
+                     !testfont = "12345")
 
             Call testPlot(A:=666, b:=4444, css:="direct calls")
 
