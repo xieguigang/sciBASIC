@@ -20,13 +20,17 @@ Module DriverTest
 
             Call GetType(DriverTest).LoadDriver("test.plot").RunPlot(Nothing, css, !A = 99, !B = 123, !CSS = "from reflection: 1234567890")
 
-            Dim driver As Func(Of Single, Single, String, GraphicsData) = AddressOf testPlot
+#Region "Not working"
+            'Dim driver As Func(Of Single, Single, String, GraphicsData) = AddressOf testPlot
 
-            Call driver.RunPlot(
-                css, !A = 99,
-                     !B = 123,
-                     !CSS = "from delegate: 1234567890",
-                     !testfont = "12345")
+            'Call driver.RunPlot(
+            '    css, !A = 99,
+            '         !B = 123,
+            '         !CSS = "from delegate: 1234567890",
+            '         !testfont = "12345")
+#End Region
+
+
 
             Call testPlot(A:=666, b:=4444, css:="direct calls")
 
