@@ -13,6 +13,23 @@ Namespace Driver.CSS
     ''' </summary>
     Public Module RuntimeInvoker
 
+        <Extension>
+        Public Function LoadDriver(container As Type, api$) As MethodInfo
+            Dim entryPoints As MethodInfo = container _
+                .GetMethods(BindingFlags.Public) _
+                .Select(Function(m)
+                            Return (entry:=m.GetCustomAttribute(Of Driver), Driver:=m)
+                        End Function) _
+                .Where(Function(m)
+                           Return Not m.entry Is Nothing AndAlso
+                                      m.entry.Name.TextEquals(api)
+                       End Function) _
+                .Select(Function(m) m.Driver) _
+                .FirstOrDefault
+
+            Return entryPoints
+        End Function
+
         ' CSS文件说明
         ' 
         ' selector为函数参数的名称
