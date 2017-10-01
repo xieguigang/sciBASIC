@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
@@ -248,15 +249,38 @@ Namespace CommandLine.Reflection
                     .Select(Function(arg) arg.Value.GetFileExtensions) _
                     .IteratesALL _
                     .Distinct _
+                    .OrderBy(Function(ext) ext) _
                     .ToArray
 
                 If allExts.Length > 0 Then
                     Call Console.WriteLine()
 
-                    For Each ext As String In allExts
-                        With ext.GetMIMEDescrib
-                            Call Console.WriteLine($"  {ext}{vbTab}{vbTab}({ .MIMEType}) { .Name}")
+                    Dim allContentTypes = allExts _
+                        .Select(Function(ext) (ext:=ext, Type:=ext.GetMIMEDescrib)) _
+                        .ToArray
+                    Dim mime$
+
+                    maxLen = allContentTypes _
+                        .Select(Function(content)
+                                    With content.Type
+                                        Return $"{content.ext} ({ .MIMEType})"
+                                    End With
+                                End Function) _
+                        .MaxLengthString _
+                        .Length
+                    maxLen +=
+                        2 +   ' 前面的两个空格
+                        10    ' 名字和说明之间间隔10个空格
+
+                    For Each contentType As (ext$, type As ContentType) In allContentTypes
+                        With contentType.type
+                            mime = contentType.ext & " " & "(" & .MIMEType & ")"
+                            l% = mime.Length
+                            helpOffset = maxLen - l
+                            s = .Name
                         End With
+
+                        Call Console.WriteLine($"  {mime}{New String(" "c, helpOffset)}{s}")
                     Next
                 End If
 
