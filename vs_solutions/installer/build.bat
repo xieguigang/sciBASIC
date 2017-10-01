@@ -74,7 +74,9 @@ MSBuild %installer_sln% /t:Rebuild /p:Configuration=installer_x64;Platform=x64 /
 REM now installer program is located at the bootstrap loader resource folder
 REM zip the output as a zip file
 
+SET output="./bootstrap/Resources"
 SET zip="./bootstrap/Resources/installer.zip"
+echo "  --> %output%"
 %WinRAR% a -r %zip% %output%
 
 REM Rebuild the installer project
