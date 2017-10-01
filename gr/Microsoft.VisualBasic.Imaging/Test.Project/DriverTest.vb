@@ -1,11 +1,15 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Driver.CSS
+Imports Microsoft.VisualBasic.MIME.Markup
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Render
 Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
 Module DriverTest
     Sub Main()
+
+        Dim cssfile As New CssParser("G:\GCModeller\src\runtime\sciBASIC#\gr\SVG\demo.css".ReadAllText)
+
 
         Dim css As New CSSFile With {
             .Selectors = {

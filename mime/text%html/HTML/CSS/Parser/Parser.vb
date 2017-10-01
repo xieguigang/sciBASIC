@@ -1,4 +1,6 @@
+Imports System.Text
 Imports System.Text.RegularExpressions
+Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' Parser css code to add/remove or manage it.
@@ -35,7 +37,7 @@ Public Class CssParser
         Dim TagWithCSSList As New List(Of TagWithCSS)()
         Dim IndivisualTag As List(Of String) = IndivisualTags(input)
         For Each tag As String In IndivisualTag
-            Dim tagname As String() = Regex.Split(tag, "[{]")
+            Dim tagname As String() = r.Split(tag, "[{]")
             Dim TWCSS As New TagWithCSS()
             If RemoveWhitespace(tagname(0)) <> "" Then
                 TWCSS.TagName = RemoveWitespaceFormStartAndEnd(tagname(0))
@@ -48,10 +50,29 @@ Public Class CssParser
 
     Const IndivisualTagsPattern$ = "(?<selector>(?:(?:[^,{]+),?)*?)\{(?:(?<name>[^}:]+):?(?<value>[^};]+);?)*?\}"
 
+    ''' <summary>
+    ''' CSS的注释总是以/*起始，以*/结束的
+    ''' </summary>
+    Const CommentBlock$ = "/\*.+?\*/"
+
+    ''' <summary>
+    ''' ###### 2017-10-1
+    ''' 
+    ''' 原来的这个解析函数还没有考虑到注释的问题
+    ''' 当CSS之中存在注释的时候就无法正常工作了
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <returns></returns>
     Private Function IndivisualTags(input As String) As List(Of String)
         Dim b As New List(Of String)()
+        Dim s As New StringBuilder(input)
 
-        For Each m As Match In Regex.Matches(input, IndivisualTagsPattern)
+        ' 首先需要移除掉CSS的注释文本
+        For Each block As Match In r.Matches(input, CommentBlock)
+            Call s.Replace(block.Value, "")
+        Next
+
+        For Each m As Match In r.Matches(s.ToString, IndivisualTagsPattern)
             b.Add(m.Value)
         Next
 
@@ -60,11 +81,11 @@ Public Class CssParser
 
     Private Function GetProperty(input As String) As List(Of [Property])
         Dim p As New List(Of [Property])()
-        Dim s As String() = Regex.Split(input, "[;]")
+        Dim s As String() = r.Split(input, "[;]")
         Dim i As Integer = 0
         For Each b As String In s
             If b <> "" Then
-                Dim t As String() = Regex.Split(s(i), "[:]")
+                Dim t As String() = r.Split(s(i), "[:]")
                 Dim g As New [Property]()
                 If t.Length = 2 Then
                     If t(0) <> "" Then
