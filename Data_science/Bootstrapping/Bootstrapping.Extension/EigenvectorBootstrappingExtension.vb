@@ -59,7 +59,7 @@ Public Module EigenvectorBootstrappingExtension
         Dim uid As New Uid
         Dim datasets As EntityLDM() = strTags.ToArray(
             Function(x) New EntityLDM With {
-                .Name = "boot" & uid.Plus,
+                .ID = "boot" & uid.Plus,
                 .Properties = x.Value.Tag _
                     .SeqIterator _
                     .ToDictionary(Function(o) CStr(o.i),

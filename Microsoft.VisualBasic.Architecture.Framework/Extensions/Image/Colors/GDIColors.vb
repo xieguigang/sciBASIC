@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9daf5273fe3af8bcf515aed95ce7f5e2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::360aa85246bbb9de6afaa1b89a4eed61, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -294,6 +294,19 @@ Namespace Imaging
             Return Color = Nothing OrElse Color.IsEmpty
         End Function
 
+        ' 透明色
+        ' 
+        '    A,R,G,B
+        ' 1. 0,0,0,0
+        ' 2. 0,255,255,255
+        ' 3. 255,0,0,0
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IsTransparent(c As Color) As Boolean
+            Return c.A = 0 OrElse (c.R = 0 AndAlso c.G = 0 AndAlso c.B = 0)
+        End Function
+
         ''' <summary>
         ''' 分别比较A,R,G,B这些属性值来判断这样个颜色对象值是否相等
         ''' </summary>
@@ -301,6 +314,10 @@ Namespace Imaging
         ''' <param name="b"></param>
         ''' <returns></returns>
         <Extension> Public Function Equals(a As Color, b As Color) As Boolean
+            If a.IsTransparent AndAlso b.IsTransparent Then
+                Return True
+            End If
+
             If a.A = b.A Then
                 If a.A = 0 Then
                     ' 只要是alpha值为零，肯定是透明色

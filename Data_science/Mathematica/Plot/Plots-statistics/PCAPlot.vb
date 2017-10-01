@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82122e0c6707262c065a520d3837b7f0, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\PCAPlot.vb"
+﻿#Region "Microsoft.VisualBasic::39e2a6e8a06b59e764fc88b69c9accdd, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\PCAPlot.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Public Module PCAPlot
         Return Bubble.Plot(serials, size.SizeParser, xAxis:=xaxis, strokeColorAsMainColor:=True)
     End Function
 End Module
-

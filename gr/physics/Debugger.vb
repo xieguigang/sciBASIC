@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40c150f91a967513947d3690c358ff98, ..\sciBASIC#\gr\physics\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::addb1457fa6b0d03b11117f07aa31687, ..\sciBASIC#\gr\physics\Debugger.vb"
 
     ' Author:
     ' 
@@ -73,4 +73,3 @@ Public Module Debugger
         End With
     End Sub
 End Module
-

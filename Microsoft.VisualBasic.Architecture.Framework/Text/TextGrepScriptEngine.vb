@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d0bfbb2cd56a947bfa932dd4a159d96, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::136621648ed0a505b52bef889a16ace1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\TextGrepScriptEngine.vb"
 
     ' Author:
     ' 
@@ -46,12 +46,13 @@ Namespace Text
     Public Delegate Function TextGrepMethod(source As String) As String
 
     ''' <summary>
-    ''' A script object for grep the gene id in the blast output query and subject title.(用于解析基因名称的脚本类，这个对象是在项目的初始阶段，为了方便命令行操作而设置的)
+    ''' A script object for grep the gene id in the blast output query and subject title.
+    ''' (用于解析基因名称的脚本类，这个对象是在项目的初始阶段，为了方便命令行操作而设置的)
     ''' </summary>
     ''' <remarks></remarks>
     Public NotInheritable Class TextGrepScriptEngine
 
-        Public Shared ReadOnly Property MethodsHash As New SortedDictionary(Of String, TextGrepMethodToken) From {
+        Public Shared ReadOnly Property MethodPointers As New SortedDictionary(Of String, TextGrepMethodToken) From {
  _
             {"tokens", AddressOf TextGrepScriptEngine.Tokens},
             {"match", AddressOf TextGrepScriptEngine.Match},
@@ -65,8 +66,8 @@ Namespace Text
         ''' Source,Script,ReturnValue
         ''' </summary>
         ''' <remarks></remarks>
-        Dim _Operations As Token()
-        Dim _Script As String
+        Dim _operations As Token()
+        Dim _script$
 
         ''' <summary>
         ''' 对用户所输入的脚本进行编译，对于内部的空格，请使用单引号'进行分割
@@ -82,24 +83,25 @@ Namespace Text
                 In Script
                 Let tokens As String() = TryParse(sToken, TokenDelimited:=" ", InnerDelimited:="'"c)
                 Let EntryPoint As String = sToken.Split.First.ToLower
-                Where MethodsHash.ContainsKey(EntryPoint)
-                Select New Token(tokens, _MethodsHash(EntryPoint))
+                Where MethodPointers.ContainsKey(EntryPoint)
+                Select New Token(tokens, _MethodPointers(EntryPoint))
 
             If Script.Length > builder.Length Then
                 Return Nothing         ' 有非法的命令短语，则为了保护数据的一致性，这个含有错误的语法的脚本是不能够用于操作的，则函数返回空指针
             Else
                 Return New TextGrepScriptEngine With {
-                    ._Script = scriptText,
-                    ._Operations = builder
+                    ._script = scriptText,
+                    ._operations = builder
                 }
             End If
         End Function
 
         ''' <summary>
+        ''' <see cref="Grep"/>
         ''' 字符串剪裁操作的函数指针
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Method As TextGrepMethod
+        Public ReadOnly Property PipelinePointer As TextGrepMethod
             Get
                 Return AddressOf Me.Grep
             End Get
@@ -119,7 +121,7 @@ Namespace Text
                 End Function
 
             ' 这里是迭代计算，所以请不要使用并行拓展
-            For Each operation As Token In _Operations
+            For Each operation As Token In _operations
                 Call __parser(source, operation)
             Next
 
@@ -127,7 +129,7 @@ Namespace Text
         End Function
 
         Public Overrides Function ToString() As String
-            Return _Script
+            Return _script
         End Function
 
         Protected Friend Sub New()
@@ -152,7 +154,7 @@ Namespace Text
         ''' <remarks></remarks>
         <ExportAPI("Tokens", Info:="", Usage:="tokens p_str pointer", Example:="")>
         <Argument("pointer", False,
-        Description:="pointer must be a zero base integer number which is smaller than the tokens array's length; pointer can also be assign of a specific string ""last"" to get the last element and ""first"" to get the first element in the tokens array.")>
+                  Description:="pointer must be a zero base integer number which is smaller than the tokens array's length; pointer can also be assign of a specific string ""last"" to get the last element and ""first"" to get the first element in the tokens array.")>
         Private Shared Function Tokens(source As String, script As String()) As String
             Dim Delimiter As String = script(1)
             Dim Tstr As String() = Strings.Split(source, Delimiter)
@@ -172,8 +174,8 @@ Namespace Text
 
         <ExportAPI("match", Info:="", Usage:="match pattern", Example:="")>
         Private Shared Function Match(source As String, script As String()) As String
-            Dim Pattern As String = script.Last
-            Return Regex.Match(source, Pattern).Value
+            Dim pattern As String = script.Last
+            Return Regex.Match(source, pattern).Value
         End Function
 
         ''' <summary>

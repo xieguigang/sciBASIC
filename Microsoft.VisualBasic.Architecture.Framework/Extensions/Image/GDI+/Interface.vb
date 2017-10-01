@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7093debff05de3c8c8886a374c6c575, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::bad7ad4c354370073a6f353e07ddef62, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -1885,41 +1885,21 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public MustOverride Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
-        '
-        ' Summary:
-        '     Draws a line connecting two System.Drawing.PointF structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line.
-        '
-        '   pt1:
-        '     System.Drawing.PointF structure that represents the first point to connect.
-        '
-        '   pt2:
-        '     System.Drawing.PointF structure that represents the second point to connect.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a line connecting two System.Drawing.PointF structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+        ''' <param name="pt1">System.Drawing.PointF structure that represents the first point to connect.</param>
+        ''' <param name="pt2">System.Drawing.PointF structure that represents the second point to connect.</param>
         Public MustOverride Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
-        '
-        ' Summary:
-        '     Draws a line connecting two System.Drawing.Point structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line.
-        '
-        '   pt1:
-        '     System.Drawing.Point structure that represents the first point to connect.
-        '
-        '   pt2:
-        '     System.Drawing.Point structure that represents the second point to connect.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a line connecting two System.Drawing.Point structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+        ''' <param name="pt1">System.Drawing.Point structure that represents the first point to connect.</param>
+        ''' <param name="pt2">System.Drawing.Point structure that represents the second point to connect.</param>
         Public MustOverride Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
         '
         ' Summary:
@@ -2278,7 +2258,7 @@ Namespace Imaging
 
         ''' <summary>
         ''' Draws the specified text string at the specified location with the specified
-        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' <see cref="Brush"/> and <see cref="Font"/> objects.
         ''' </summary>
         ''' <param name="s">String to draw.</param>
         ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>

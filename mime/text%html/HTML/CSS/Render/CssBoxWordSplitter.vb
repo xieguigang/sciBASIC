@@ -59,10 +59,9 @@ Namespace HTML.CSS.Render
 #End Region
 
 #Region "Fields"
-        Private _box As CssBox
-        Private _text As String
-        Private _words As List(Of CssBoxWord)
-        Private _curword As CssBoxWord
+
+
+        Dim _curword As CssBoxWord
 
 #End Region
 
@@ -77,37 +76,13 @@ Namespace HTML.CSS.Render
             Me.New()
             _box = box
             _text = text.Replace(vbCr, String.Empty)
-
-
         End Sub
 
 #End Region
 
-#Region "Props"
-
-
         Public ReadOnly Property Words() As List(Of CssBoxWord)
-            Get
-                Return _words
-            End Get
-        End Property
-
-
         Public ReadOnly Property Text() As String
-            Get
-                Return _text
-            End Get
-        End Property
-
-
         Public ReadOnly Property Box() As CssBox
-            Get
-                Return _box
-            End Get
-        End Property
-
-
-#End Region
 
 #Region "Public Metods"
 
@@ -172,7 +147,6 @@ Namespace HTML.CSS.Render
         Private Function IsTab(c As Char) As Boolean
             Return c = ControlChars.Tab
         End Function
-
 #End Region
     End Class
 

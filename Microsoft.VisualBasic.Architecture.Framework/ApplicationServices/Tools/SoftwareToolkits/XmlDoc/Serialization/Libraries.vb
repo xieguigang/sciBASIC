@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::516f8c6e6a6e7260a5b64da7fb7cbd4e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\Libraries.vb"
+﻿#Region "Microsoft.VisualBasic::516f8c6e6a6e7260a5b64da7fb7cbd4e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Libraries.vb"
 
     ' Author:
     ' 

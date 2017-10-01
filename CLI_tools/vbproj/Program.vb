@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2c7fa94fdcef75dbfd4958e582f794c, ..\sciBASIC#\CLI_tools\vbproj\Program.vb"
+﻿#Region "Microsoft.VisualBasic::571d1cdba0fd647f7e80b40c51225b5b, ..\sciBASIC#\CLI_tools\vbproj\Program.vb"
 
 ' Author:
 ' 
@@ -33,6 +33,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeHelper
+Imports System.Text
 
 Module Program
 
@@ -94,5 +96,20 @@ Module Program
         Next
 
         Return 0
+    End Function
+
+    <ExportAPI("/strings.enum.Code")>
+    <Usage("/strings.enum.code /in <data.txt> /name <enumName> [/pascal /out <out.vb>]")>
+    Public Function GenerateEnumFromString(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim name$ = args <= "/name"
+        Dim pascal As Boolean = args.IsTrue("/pascal")
+        Dim out$ = (args <= "/out") Or ([in].TrimSuffix & "_" & name & ".vb").AsDefault
+        Dim members$() = [in].ReadAllLines
+
+        Return members _
+            .EnumCodeHelper(name,, pascalStyle:=pascal) _
+            .SaveTo(out, Encoding.UTF8) _
+            .CLICode
     End Function
 End Module

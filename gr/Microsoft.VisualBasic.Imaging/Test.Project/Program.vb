@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d1950167114048f1f6dff519acbd2cd, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
+﻿#Region "Microsoft.VisualBasic::14984a9973aeb13ab395745ee8e7660f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.ASCIIArt
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes

@@ -34,6 +34,7 @@ Namespace Drawing3D.Models
 
     Public Module Extensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Model3D(path As Path3D, color As Color) As Surface
             Return New Surface With {
                 .brush = New SolidBrush(color),
@@ -41,6 +42,7 @@ Namespace Drawing3D.Models
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Model3D(shape As Shape3D, color As Color) As Surface()
             Return shape _
                 .paths _

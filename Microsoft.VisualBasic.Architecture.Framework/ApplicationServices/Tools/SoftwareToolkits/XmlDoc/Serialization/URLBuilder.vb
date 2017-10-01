@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0953c5a937b8e49206e0b0b6e7f37f31, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\XmlDoc\Serialization\URLBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::0953c5a937b8e49206e0b0b6e7f37f31, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\URLBuilder.vb"
 
     ' Author:
     ' 

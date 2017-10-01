@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::557390929d4192b66cdc525b6d00a811, ..\sciBASIC#\gr\physics\Force.vb"
+﻿#Region "Microsoft.VisualBasic::38a10d3ed253e9bc1ec4971674a64c07, ..\sciBASIC#\gr\physics\Force.vb"
 
     ' Author:
     ' 
@@ -133,4 +133,3 @@ Public Class Force
         Return Math.ParallelogramLaw(f1, f2)
     End Operator
 End Class
-

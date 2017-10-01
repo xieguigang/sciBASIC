@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60f3bf4059b369964fb9ae74fc024a4d, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\PieChart3D.vb"
+﻿#Region "Microsoft.VisualBasic::3eb6b2d2070d225311e7e0df7cbf46c9, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\PieChart3D.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@ Namespace Plot3D
 
         <Extension>
         Public Function Plot3D(data As IEnumerable(Of NamedValue(Of Integer)), camera As Camera, Optional schema$ = "Paired:c12") As GraphicsData
-            Return data.FromData(schema).Plot3D(camera)
+            Return data.Fractions(schema).Plot3D(camera)
         End Function
 
         <Extension>

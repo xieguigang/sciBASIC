@@ -66,10 +66,22 @@ Namespace Language.UnixBash
             End If
         End Operator
 
+        ''' <summary>
+        ''' Add a set of wildcards patterns for path match
+        ''' </summary>
+        ''' <param name="ls"></param>
+        ''' <param name="wildcards$"></param>
+        ''' <returns></returns>
         Public Shared Operator -(ls As Search, wildcards$()) As Search
             Return ls - ShellSyntax.wildcards(wildcards$)
         End Operator
 
+        ''' <summary>
+        ''' Add wildcard pattern for path match
+        ''' </summary>
+        ''' <param name="ls"></param>
+        ''' <param name="wildcards$"></param>
+        ''' <returns></returns>
         Public Shared Operator -(ls As Search, wildcards$) As Search
             Return ls - wildcards.Split(","c)
         End Operator

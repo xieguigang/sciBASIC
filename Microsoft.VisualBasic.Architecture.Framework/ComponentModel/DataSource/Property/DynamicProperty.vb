@@ -1,31 +1,32 @@
-﻿#Region "Microsoft.VisualBasic::11680c49bf26c1c644badad0d6db83a1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::6dbc68055d25ec6d5acfdc48e4f2f3d3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
@@ -82,6 +83,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="name"></param>
         ''' <returns></returns>
         Default Public Overloads Property ItemValue(name$) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If Properties.ContainsKey(name) Then
                     Return Properties(name)
@@ -94,7 +96,15 @@ Namespace ComponentModel.DataSourceModel
             End Set
         End Property
 
+        ''' <summary>
+        ''' Get a value package at once using a key collection, 
+        ''' if the key is not exists in the property, then its 
+        ''' correspoding value is nothing.
+        ''' </summary>
+        ''' <param name="keys"></param>
+        ''' <returns></returns>
         Default Public Overloads Property ItemValue(keys As IEnumerable(Of String)) As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return keys.Select(Function(s) Me(s)).ToArray
             End Get
@@ -155,6 +165,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Protected ReadOnly Property MyHashCode As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetHashCode()
             End Get
@@ -183,7 +194,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         ''' </summary>
         ''' <returns></returns>
-        <ScriptIgnore> Public Iterator Property source As IEnumerable(Of NamedValue(Of T))
+        <ScriptIgnore> Public Iterator Property src As IEnumerable(Of NamedValue(Of T))
             Get
                 For Each x In Properties
                     Yield New NamedValue(Of T) With {
@@ -192,6 +203,7 @@ Namespace ComponentModel.DataSourceModel
                     }
                 Next
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As IEnumerable(Of NamedValue(Of T)))
                 Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
             End Set

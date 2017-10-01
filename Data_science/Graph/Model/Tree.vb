@@ -1,7 +1,35 @@
+ï»¿#Region "Microsoft.VisualBasic::3c4c5fbd6f3e93a444806d6c3749496c, ..\sciBASIC#\Data_science\Graph\Model\Tree.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
-''' Tree node with data.(¿ÉÒÔÖ±½Ó±»Ê¹ÓÃµÄÊ÷¶ÔÏóÀàÐÍ)
+''' Tree node with data.(ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó±ï¿½Ê¹ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
 Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T))
@@ -25,12 +53,12 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
                 .ToArray
 
             If childs.IsNullOrEmpty Then
-                Return 1  ' ×Ô¼ºËãÒ»¸ö½Úµã£¬ËùÒÔÊýÁ¿×ÜÊÇ1µÄ
+                Return 1  ' ï¿½Ô¼ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Úµã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½
             Else
                 Dim n% = childs.Length
 
                 For Each node In childs
-                    n += node.Count ' Èç¹û½ÚµãÃ»ÓÐchilds£¬Ôò»á·µ»Ø1£¬ÒòÎªËû×ÔÉí¾ÍÊÇÒ»¸ö½Úµã
+                    n += node.Count ' ï¿½ï¿½ï¿½ï¿½Úµï¿½Ã»ï¿½ï¿½childsï¿½ï¿½ï¿½ï¿½á·µï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Úµï¿½
                 Next
 
                 Return n
@@ -65,7 +93,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     End Function
 
     ''' <summary>
-    ''' ¼ÆËã³öËùÓÐµÄÒ¶½ÚµãµÄ×ÜÊý£¬°üÀ¨×Ô¼ºµÄchildµÄÒ¶½Úµã
+    ''' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ò¶ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½childï¿½ï¿½Ò¶ï¿½Úµï¿½
     ''' </summary>
     ''' <returns></returns>
     Public Function CountLeafs() As Integer
@@ -73,7 +101,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     End Function
 
     ''' <summary>
-    ''' ¶ÔÄ³Ò»¸ö½ÚµãµÄËùÓÐµÄÒ¶½Úµã½øÐÐ¼ÆÊý
+    ''' ï¿½ï¿½Ä³Ò»ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ò¶ï¿½Úµï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½
     ''' </summary>
     ''' <param name="node"></param>
     ''' <param name="count"></param>
@@ -90,3 +118,4 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
         Return count
     End Function
 End Class
+

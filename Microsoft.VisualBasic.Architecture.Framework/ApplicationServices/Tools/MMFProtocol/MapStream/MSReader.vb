@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65525e4d64b78f52b8642e2e423677a2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\MMFProtocol\MapStream\MSReader.vb"
+﻿#Region "Microsoft.VisualBasic::65525e4d64b78f52b8642e2e423677a2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\MMFProtocol\MapStream\MSReader.vb"
 
     ' Author:
     ' 

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::9dfcdfdc234432a79bb84c33f4d863a0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6135d2670b7a03d7b6a05dda3ccda600, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -114,7 +114,7 @@ Namespace Imaging
         ''' <param name="res$"></param>
         ''' <returns></returns>
         <Extension> Public Function GetBrush(res$) As Brush
-            Dim bgColor As Color = res.ToColor(onFailure:=Nothing)
+            Dim bgColor As Color = res.TranslateColor
 
             If Not bgColor.IsEmpty Then
                 Return New SolidBrush(bgColor)
@@ -499,6 +499,7 @@ Namespace Imaging
         ''' <param name="y"></param>
         ''' <returns></returns>
         <ExportAPI("Offset")>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function OffSet2D(p As Point, x As Integer, y As Integer) As Point
             Return New Point(x + p.X, y + p.Y)
         End Function
@@ -510,22 +511,38 @@ Namespace Imaging
         ''' <param name="offset"></param>
         ''' <returns></returns>
         <ExportAPI("Offset")>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function OffSet2D(p As Point, offset As Point) As Point
+            Return p.OffSet2D(offset.PointF)
+        End Function
+
+        ''' <summary>
+        ''' 返回位置的新的点位置值
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        <ExportAPI("Offset")>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function OffSet2D(p As Point, offset As PointF) As Point
             Return New Point(offset.X + p.X, offset.Y + p.Y)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function OffSet2D(pt As PointF, offset As PointF) As PointF
             With pt
                 Return New PointF(offset.X + .X, offset.Y + .Y)
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function OffSet2D(pt As PointF, x!, y!) As PointF
             With pt
                 Return New PointF(x + .X, y + .Y)
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function IsValidGDIParameter(size As Size) As Boolean
             Return size.Width > 0 AndAlso size.Height > 0
         End Function

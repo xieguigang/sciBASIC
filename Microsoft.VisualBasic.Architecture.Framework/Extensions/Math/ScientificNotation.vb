@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::802852f0d79e82ca1291eb57bb927c6d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScientificNotation.vb"
+﻿#Region "Microsoft.VisualBasic::81dc3bbe4b63f750c4ac4b1effa1ee76, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScientificNotation.vb"
 
     ' Author:
     ' 
@@ -64,33 +64,6 @@ Namespace Math
         ''' <returns></returns>
         Public Function UsingScientificNotation(x#, Optional INF% = 5) As Boolean
             Return ScientificNotation.PowerLog10(x, INF) <> 0!
-        End Function
-
-        ''' <summary>
-        ''' 分别处理正常的小数或者科学记数法的小数
-        ''' </summary>
-        ''' <param name="n#"></param>
-        ''' <param name="decimal%"></param>
-        ''' <returns></returns>
-        <Extension> Public Function FormatNumeric(n#, decimal%) As String
-            Dim s$ = n.ToString
-
-            If InStr(s, "E", CompareMethod.Text) > 0 Then
-                ' 科学记数法
-                Dim t$() = s.Split("e"c, "E"c)
-                t(0) = sys.Round(Val(t(0)), [decimal])
-                s = t(0) & "E" & t(1)
-
-                Return s
-            End If
-
-            If UsingScientificNotation(n) Then
-                s = FormatScientificNotation(n, [decimal])
-            Else
-                s = sys.Round(n, [decimal]).ToString
-            End If
-
-            Return s
         End Function
 
         ''' <summary>

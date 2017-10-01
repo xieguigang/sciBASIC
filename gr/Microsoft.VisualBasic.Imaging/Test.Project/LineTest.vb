@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28c7479e1455a2c3a840024a726176d3, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\LineTest.vb"
+﻿#Region "Microsoft.VisualBasic::cac828278f38759bfa7f6182053a756a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\LineTest.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Module LineTest
         Pause()
     End Sub
 End Module
-

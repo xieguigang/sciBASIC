@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80412fa7e76926120d28c68e20891085, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\PS1.vb"
+﻿#Region "Microsoft.VisualBasic::f73afee797372f78495c7773df5c8e09, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\PS1.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@ Namespace Language.UnixBash
     ''' <summary>
     ''' PS (Prompt Sign)
     ''' </summary>
-    Public Class PS1 : Inherits ClassObject
+    Public Class PS1 : Inherits BaseClass
 
         ''' <summary>
         ''' ``\H`` 完整的主机名称

@@ -253,7 +253,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3D\Axis.vb" />
+    <Compile Include="3D\Device\Element3D.vb" />
+    <Compile Include="3D\Device\RenderEngine.vb" />
+    <Compile Include="3D\g\Axis.vb" />
+    <Compile Include="3D\g\Grid.vb" />
+    <Compile Include="3D\Serial3D.vb" />
     <Compile Include="3D\Device\Canvas.vb">
       <SubType>UserControl</SubType>
     </Compile>

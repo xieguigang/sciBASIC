@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3fbc603226f39a59953581345b9fa2b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Analysis\PageRank\PageRank.vb"
+﻿#Region "Microsoft.VisualBasic::a3fbc603226f39a59953581345b9fa2b, ..\sciBASIC#\Data_science\Graph\API\PageRank\PageRank.vb"
 
     ' Author:
     ' 

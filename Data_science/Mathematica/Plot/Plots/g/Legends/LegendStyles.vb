@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a078d8355f04beaeca3061182d5630e, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Legends\LegendStyles.vb"
+﻿#Region "Microsoft.VisualBasic::c7722e2baf5f9bf222cf71c9dfef9157, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Legends\LegendStyles.vb"
 
     ' Author:
     ' 
@@ -31,47 +31,47 @@ Namespace Graphic.Legend
     ''' <summary>
     ''' Vector shapes that drawing of this legend.
     ''' </summary>
-    Public Enum LegendStyles
+    Public Enum LegendStyles As Integer
 
         ''' <summary>
         ''' 矩形
         ''' </summary>
-        Rectangle
+        Rectangle = 2
         ''' <summary>
         ''' 圆形
         ''' </summary>
-        Circle
+        Circle = 4
         ''' <summary>
         ''' 实线
         ''' </summary>
-        SolidLine
+        SolidLine = 8
         ''' <summary>
         ''' 虚线
         ''' </summary>
-        DashLine
+        DashLine = 16
         ''' <summary>
         ''' 菱形
         ''' </summary>
-        Diamond
+        Diamond = 32
         ''' <summary>
         ''' 三角形
         ''' </summary>
-        Triangle
+        Triangle = 64
         ''' <summary>
         ''' 六边形
         ''' </summary>
-        Hexagon
+        Hexagon = 128
         ''' <summary>
         ''' 五角星
         ''' </summary>
-        Pentacle
+        Pentacle = 256
         ''' <summary>
         ''' 正方形
         ''' </summary>
-        Square
+        Square = 512
         ''' <summary>
         ''' 圆角矩形
         ''' </summary>
-        RoundRectangle
+        RoundRectangle = 1024
     End Enum
 End Namespace

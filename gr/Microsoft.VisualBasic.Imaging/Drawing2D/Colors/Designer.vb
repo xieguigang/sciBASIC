@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::9f59435564b10840e80278c48aeb56e6, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::46773dc9ae6e5a527082b1051f0da259, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace Drawing2D.Colors
 
@@ -105,6 +106,11 @@ Namespace Drawing2D.Colors
             Color.FromArgb(78, 45, 69),
             Color.FromArgb(202, 161, 169)
         }
+
+        ''' <summary>
+        ''' <see cref="Designer.GetColors(String)"/> schema name for color profile: <see cref="ClusterColour"/>.
+        ''' </summary>
+        Public Const Clusters$ = NameOf(Clusters)
 
         ''' <summary>
         ''' From TSF launcher on Android
@@ -190,6 +196,7 @@ Namespace Drawing2D.Colors
 
                 Dim colors As Dictionary(Of String, String()) = My.Resources _
                     .designer_colors _
+                    .GetString(Encodings.UTF8) _
                     .LoadObject(Of Dictionary(Of String, String()))
                 Dim valids As New Dictionary(Of Color, Color())
 
@@ -200,9 +207,10 @@ Namespace Drawing2D.Colors
 
                 AvailableInterpolates = valids
 
-                Dim ns = Regex.Matches(My.Resources.colorbrewer, """\d+""") _
+                Dim colorBrewerJSON$ = My.Resources.colorbrewer.GetString(Encodings.UTF8)
+                Dim ns = Regex.Matches(colorBrewerJSON, """\d+""") _
                     .ToArray(Function(m) m.Trim(""""c))
-                Dim sb As New StringBuilder(My.Resources.colorbrewer)
+                Dim sb As New StringBuilder(colorBrewerJSON)
 
                 For Each n In ns.Distinct
                     Call sb.Replace($"""{n}""", $"""c{n}""")
@@ -311,7 +319,7 @@ Namespace Drawing2D.Colors
                 Return ChartColors
             ElseIf term.TextEquals("scibasic.category31()") Then
                 Return Category31
-            ElseIf term.TextEquals("clusters") Then
+            ElseIf term.TextEquals(Designer.Clusters) Then
                 Return ClusterColour
             End If
 

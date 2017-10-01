@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2d2faceb59ff4c8f1a75b8fc07be51d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::09103db9f3b42def3f59569a98d7d368, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\PropertyValue.vb"
 
     ' Author:
     ' 
@@ -122,7 +122,7 @@ Namespace ComponentModel.DataSourceModel
         End Sub
 
         ''' <summary>
-        ''' Creates a new extension property for the target <see cref="ClassObject"/>
+        ''' Creates a new extension property for the target <see cref="BaseClass"/>
         ''' </summary>
         ''' <typeparam name="Cls"></typeparam>
         ''' <param name="x"></param>
@@ -136,7 +136,7 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' Gets the tag property value from the <see cref="ClassObject"/>.(读取<see cref="ClassObject"/>对象之中的一个拓展属性)
+        ''' Gets the tag property value from the <see cref="BaseClass"/>.(读取<see cref="BaseClass"/>对象之中的一个拓展属性)
         ''' </summary>
         ''' <typeparam name="Cls"></typeparam>
         ''' <param name="x"></param>

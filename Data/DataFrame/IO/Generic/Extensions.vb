@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::bbe72b7c06a9489793d27d7898450803, ..\sciBASIC#\Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::20c137fce00eaec8abea5929330c9c36, ..\sciBASIC#\Data\DataFrame\IO\Generic\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -182,6 +182,11 @@ Namespace IO
             Return data _
                 .Select(Function(r) r(key$)) _
                 .ToArray
+        End Function
+
+        <Extension>
+        Public Function AsDataSet(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of DataSet)
+            Return data.Select(Function(obj) New DataSet With {.ID = obj.Name, .Properties = obj.Value})
         End Function
 
         <Extension>

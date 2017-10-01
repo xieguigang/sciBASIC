@@ -29,7 +29,6 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.HtmlParser
 
@@ -65,7 +64,7 @@ Public Class WebResult : Inherits Http.WebResult
     End Function
 End Class
 
-Public Class SearchResult : Inherits ClassObject
+Public Class SearchResult : Inherits BaseClass
 
     Public Property Title As String
     ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6022c1beb03ce9b3d5eb7b374896bb7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::0d475f74c584f80e484e9e8b585e6c37, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\Vector.vb"
 
 ' Author:
 ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Dynamic
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
@@ -52,6 +53,7 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Length As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer.Length
             End Get

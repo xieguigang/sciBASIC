@@ -33,4 +33,8 @@ Namespace HTML.CSS
         Public Property fill As String
 
     End Class
+
+    Public Class Background
+
+    End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2359528d2e73414b4255bbf69bb748f6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::2834584562fc27e6bd7df948cd692fd6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5.vb"
 
     ' Author:
     ' 
@@ -160,7 +160,7 @@ Namespace SecurityString
         End Function
 
         <Extension>
-        Public Function GetMd5Hash(Of T As Language.ClassObject)(x As T) As String
+        Public Function GetMd5Hash(Of T As Language.BaseClass)(x As T) As String
             Dim raw As String = x.__toString & x.GetHashCode
             Return raw.GetMd5Hash
         End Function

@@ -55,14 +55,15 @@ Namespace KMeans
             Dim data As EntityLDM() = EntityLDM.Load(path, map)
             Dim source As Entity() = data.ToArray(
                 Function(x) New Entity With {
-                    .uid = x.Name,
-                    .Properties = x.Properties.Values.ToArray})
+                    .uid = x.ID,
+                    .Properties = x.Properties.Values.ToArray
+                })
             Return source
         End Function
 
         Public Function ToLDM() As EntityLDM
             Return New EntityLDM With {
-                .Name = uid,
+                .ID = uid,
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) CStr(x.i),
@@ -72,7 +73,7 @@ Namespace KMeans
 
         Public Function ToLDM(maps As String()) As EntityLDM
             Return New EntityLDM With {
-                .Name = uid,
+                .ID = uid,
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) maps(x.i),

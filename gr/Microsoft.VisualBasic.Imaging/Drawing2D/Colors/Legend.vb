@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::8224a4cac2a315d5ef14a92af9cf071c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::3f2bc824f49b392cf8c7f7534249da85, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -126,7 +126,7 @@ Namespace Drawing2D.Colors
         <Extension>
         Public Sub ColorMapLegend(ByRef g As IGraphics, layout As Rectangle,
                                   designer As SolidBrush(),
-                                  range As DoubleRange,
+                                  ticks#(),
                                   titleFont As Font, title$,
                                   tickFont As Font,
                                   tickAxisStroke As Pen,
@@ -207,12 +207,37 @@ Namespace Drawing2D.Colors
             g.DrawLine(Pens.Black, x, y, x + ruleOffset, y)
             g.DrawLine(Pens.Black, x, y + legendHeight, x + ruleOffset, y + legendHeight)
 
-            x += 10
+            x += ruleOffset + 5
             point = New PointF(x, y - tickFont.Height / 2)
-            g.DrawString(range.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
 
             point = New PointF(x, y + legendHeight - tickFont.Height / 2)
-            g.DrawString(range.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+
+            ticks = ticks _
+                .Skip(1) _
+                .Take(ticks.Length - 2) _
+                .OrderByDescending(Function(n) n) _
+                .ToArray
+
+            Dim delta = legendHeight / (ticks.Length + 1)
+
+            y += delta
+            x -= ruleOffset
+            tickFont = New Font(tickFont.FontFamily, tickFont.Size * 2.5 / 3)
+
+            ' 画出剩余的小标尺
+            For Each tick In ticks
+
+                point = New PointF With {
+                    .X = x + 2,
+                    .Y = y - tickFont.Height / 2
+                }
+                g.DrawLine(Pens.Black, x, y, x - 5, y)
+                g.DrawString(tick.ToString($"F{roundDigit}"), tickFont, Brushes.Gray, point)
+
+                y += delta
+            Next
         End Sub
 
         ''' <summary>
