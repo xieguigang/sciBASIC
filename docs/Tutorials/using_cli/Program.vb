@@ -88,7 +88,7 @@ Module CLI
     <Argument("/KO.class", True, CLITypes.Boolean,
               AcceptTypes:={GetType(Boolean)},
               Description:="If this argument was set, then the KO class information for uniprotID will be draw on the output heatmap.")>
-    <Argument("/sampleInfo", True, CLITypes.File,
+    <Argument("/sampleInfo_looooooooooooooooooooooong_name", True, CLITypes.File,
               Extensions:="*.csv",
               Description:="Describ the experimental group information")>
     <Argument("/data", False, CLITypes.File, PipelineTypes.std_in,
@@ -100,7 +100,7 @@ Module CLI
     <Argument("/schema", True, CLITypes.String,
               Description:="The color patterns of the heatmap visualize, by default is using ``ColorBrewer`` colors.")>
     <Argument("/out", True, CLITypes.File,
-              Extensions:="*.csv, *.svg, *.png",
+              Extensions:="*.csv, *.svg, *.png, jpg, gif, tiff",
               Description:="A directory path where will save the output heatmap plot image and the kmeans cluster details info.")>
     <Argument("/title", True,
               Description:="The main title of this chart plot.")>
