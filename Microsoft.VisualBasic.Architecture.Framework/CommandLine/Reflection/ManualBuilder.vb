@@ -219,13 +219,15 @@ Namespace CommandLine.Reflection
                                 s = New String(" "c, maxPrefix + 1) & s
                             End If
                         End If
-
-                        'If Not .Pipeline = PipelineTypes.undefined OrElse .TokenType = CLITypes.Boolean Then
-                        '    l += 11
-                        'End If
                     End With
 
                     Call Console.Write(s)
+
+                    If param.TokenType = CLITypes.Boolean Then
+                        l += 11
+                    ElseIf param.Pipeline = PipelineTypes.std_out Then
+                        l += 11
+                    End If
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
                     blank = New String(" "c, helpOffset - l + 2)
@@ -237,7 +239,13 @@ Namespace CommandLine.Reflection
                     Call Console.WriteLine($"{infoLines.FirstOrDefault}")
 
                     If infoLines.Length > 1 Then
-                        blank = New String(" "c, helpOffset + 2)
+                        Dim d% = 0
+
+                        If param.Optional Then
+                            d = 13
+                        End If
+
+                        blank = New String(" "c, helpOffset + d + 2)
 
                         For Each line In infoLines.Skip(1)
                             Call Console.WriteLine(blank & line)
