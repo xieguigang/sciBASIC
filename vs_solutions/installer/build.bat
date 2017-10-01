@@ -85,12 +85,9 @@ MSBuild %installer_sln% /t:Rebuild/p:Configuration=installer_x64;Platform=x64 /f
 
 if exist %output%/sciBASIC_installer.exe (
     echo [Done] Build sciBASIC# Framework installer success!
+	
+    REM open the output directory
+    explorer %output%
 ) else (
     echo "Build installer project failured!"	
-    pause
-	
-    exit -500
 )
-
-REM open the output directory
-explorer %output%
