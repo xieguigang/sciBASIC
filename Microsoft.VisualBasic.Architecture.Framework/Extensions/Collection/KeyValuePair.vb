@@ -121,6 +121,7 @@ Public Module KeyValuePairExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Values(Of T)(source As IEnumerable(Of NamedValue(Of T))) As T()
         Return source _
@@ -128,12 +129,11 @@ Public Module KeyValuePairExtensions
             .ToArray
     End Function
 
-    '<Extension>
-    'Public Function Values(Of T, V As Value(Of T).IValueOf)(source As IEnumerable(Of V)) As T()
-    '    Return source _
-    '        .Select(Function(x) x.value) _
-    '        .ToArray
-    'End Function
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Values(Of T, V)(src As IEnumerable(Of KeyValuePair(Of T, V))) As V()
+        Return src.SafeQuery.Select(Function(x) x.Value).ToArray
+    End Function
 
     ''' <summary>
     ''' gets all <see cref="INamedValue.Key"/> values
