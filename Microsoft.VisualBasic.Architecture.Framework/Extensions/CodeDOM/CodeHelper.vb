@@ -16,7 +16,7 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="pascalStyle"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function EnumHelper(items As IEnumerable(Of String), enumName$, Optional type$ = NameOf(Int32), Optional pascalStyle As Boolean = True) As String
+        Public Function EnumCodeHelper(items As IEnumerable(Of String), enumName$, Optional type$ = NameOf(Int32), Optional pascalStyle As Boolean = True) As String
             Dim src$ = GetType(DescriptionAttribute).Namespace
             Dim code As New StringBuilder
 
