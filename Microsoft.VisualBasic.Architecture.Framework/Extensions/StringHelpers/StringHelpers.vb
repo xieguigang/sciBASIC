@@ -47,6 +47,26 @@ Imports r = System.Text.RegularExpressions.Regex
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    ''' <summary>
+    ''' Replace the <see cref="vbCrLf"/> with the specific string.
+    ''' </summary>
+    ''' <param name="src"></param>
+    ''' <param name="VbCRLF_Replace"></param>
+    ''' <returns></returns>
+#If FRAMEWORD_CORE Then
+    <ExportAPI("Trim")>
+    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace$ = " ") As String
+#Else
+    <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
+#End If
+        src = src.Replace(vbCrLf, VbCRLF_Replace) _
+                 .Replace(vbCr, VbCRLF_Replace) _
+                 .Replace(vbLf, VbCRLF_Replace) _
+                 .Replace("  ", " ")
+
+        Return Strings.Trim(src)
+    End Function
+
     <Extension>
     Public Function ReplaceChars(src$, chars As IEnumerable(Of Char), replaceAs As Char) As String
         Dim s As New StringBuilder(src)
