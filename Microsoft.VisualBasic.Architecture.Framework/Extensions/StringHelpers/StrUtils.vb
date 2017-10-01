@@ -507,6 +507,8 @@ Public Module StrUtils
     ''' </summary>
     ''' <param name="name">The name.</param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function StartWithUpperCase(name As String) As Boolean
         Return name.Length >= 1 AndAlso Char.IsUpper(name(0))
     End Function
@@ -516,12 +518,14 @@ Public Module StrUtils
     ''' </summary>
     ''' <param name="name">The name.</param>
     ''' <returns></returns>
+    <Extension>
     Public Function UpperCaseFirstChar(name As String) As String
         If name.Length >= 1 AndAlso Char.IsLower(name(0)) Then
             Dim chars As Char() = name.ToCharArray()
             chars(0) = [Char].ToUpper(chars(0))
             Return New String(chars)
         End If
+
         Return name
     End Function
 

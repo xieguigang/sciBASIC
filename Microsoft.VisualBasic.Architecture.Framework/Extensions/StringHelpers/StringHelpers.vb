@@ -47,6 +47,17 @@ Imports r = System.Text.RegularExpressions.Regex
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    <Extension>
+    Public Function ReplaceChars(src$, chars As IEnumerable(Of Char), replaceAs As Char) As String
+        Dim s As New StringBuilder(src)
+
+        For Each c As Char In chars
+            Call s.Replace(c, replaceAs)
+        Next
+
+        Return s.ToString
+    End Function
+
     ''' <summary>
     ''' 判断这个字符串数组之中的所有的元素都是空字符串？
     ''' </summary>
