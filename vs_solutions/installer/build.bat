@@ -51,7 +51,7 @@ REM cleanup the output workspace at first and then run build
 SET output=../../.vs/installer
 
 RD /S /Q %output%
-MSBuild %sciBASIC_sln% /t:Rebuild/p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./sciBASIC-build.log;verbosity=diagnostic
+MSBuild %sciBASIC_sln% /t:Rebuild /p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./sciBASIC-build.log;verbosity=diagnostic
 
 REM package the output into a zip package
 SET zip=%output%/installer.zip
@@ -68,7 +68,7 @@ REM and then run msbuild for installer project
 SET output="./bootstrap/Resources/"
 
 RD /S /Q %output%
-MSBuild %installer_sln% /t:Rebuild/p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./installer-build-1.log;verbosity=diagnostic 
+MSBuild %installer_sln% /t:Rebuild /p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./installer-build-1.log;verbosity=diagnostic 
 
 REM now installer program is located at the bootstrap loader resource folder
 REM zip the output as a zip file
@@ -81,7 +81,7 @@ REM and then we can generates the final installer file
 SET output=./output/
 
 RD /S /Q %output%
-MSBuild %installer_sln% /t:Rebuild/p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./installer-build-2.log;verbosity=diagnostic 
+MSBuild %installer_sln% /t:Rebuild /p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./installer-build-2.log;verbosity=diagnostic 
 
 if exist %output%/sciBASIC_installer.exe (
     echo [Done] Build sciBASIC# Framework installer success!
