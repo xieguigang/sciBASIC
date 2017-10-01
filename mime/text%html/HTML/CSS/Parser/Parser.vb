@@ -12,16 +12,16 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' 
 ''' > Complete Css Parser Writen in C#
 ''' </remarks>
-Public Class CssParser
+Public Module CssParser
 
-    Public Class NULL_TAG : Inherits Exception
+    Public Class EmptyTagNameException : Inherits Exception
 
         Public Sub New()
-            MyBase.New("Tag name is null.")
+            Call MyBase.New("Tag name is null.")
         End Sub
     End Class
 
-    Public Class NULL_PRORERTY_VALUE : Inherits Exception
+    Public Class EmptyPropertyValueException : Inherits Exception
 
         Public Sub New()
             MyBase.New("Property value is null.")
@@ -31,11 +31,15 @@ Public Class CssParser
     Dim PrpertyValue As Dictionary(Of CssProperty, String)
     Dim tag As Dictionary(Of HtmlTags, String)
 
-    ReadOnly TagWithCSSList As List(Of TagWithCSS)
-
-    Private Function GetTagWithCSS(input As String) As List(Of TagWithCSS)
+    ''' <summary>
+    ''' 主要的CSS解析函数
+    ''' </summary>
+    ''' <param name="CSS"></param>
+    ''' <returns></returns>
+    Public Function GetTagWithCSS(CSS As String) As TagWithCSS()
         Dim TagWithCSSList As New List(Of TagWithCSS)()
-        Dim IndivisualTag As List(Of String) = IndivisualTags(input)
+        Dim IndivisualTag As List(Of String) = IndivisualTags(CSS)
+
         For Each tag As String In IndivisualTag
             Dim tagname As String() = r.Split(tag, "[{]")
             Dim TWCSS As New TagWithCSS()
@@ -45,7 +49,8 @@ Public Class CssParser
                 TagWithCSSList.Add(TWCSS)
             End If
         Next
-        Return TagWithCSSList
+
+        Return TagWithCSSList.ToArray
     End Function
 
     Const IndivisualTagsPattern$ = "(?<selector>(?:(?:[^,{]+),?)*?)\{(?:(?<name>[^}:]+):?(?<value>[^};]+);?)*?\}"
@@ -101,14 +106,17 @@ Public Class CssParser
         Next
         Return p
     End Function
+
     Private Function RemoveWhitespace(input As String) As String
         Return New String(input.ToCharArray().Where(Function(c) Not [Char].IsWhiteSpace(c)).ToArray())
     End Function
+
     Private Function RemoveWitespaceFormStartAndEnd(input As String) As String
         input = input.Trim()
         input = input.TrimEnd()
         Return input
     End Function
+
     Private Sub SetPrpertyValue()
         PrpertyValue = New Dictionary(Of CssProperty, String)()
         Dim csskey As String() = {"font-weight", "border-radius", "color-stop", "alignment-adjust", "alignment-baseline", "animation",
@@ -167,6 +175,7 @@ Public Class CssParser
             i += 1
         Next
     End Sub
+
     Private Sub setHTML()
         tag = New Dictionary(Of HtmlTags, String)()
         Dim tags As String() = {"h1", "h2", "h3", "h4", "h5", "h6",
@@ -181,275 +190,12 @@ Public Class CssParser
             i += 1
         Next
     End Sub
-    '
-    '
-    '  Public 
-    '
-    '
-    Public Overrides Function ToString() As String
-        Dim ToRreturn As String = String.Empty
-        For Each T As TagWithCSS In TagWithCSSList
-#If DEBUG Then
-            ToRreturn += "//---------------------------" & T.TagName & "-----------------------------" & vbLf
-#End If
-            ToRreturn += T.TagName
-            ToRreturn += vbLf & "{" & vbLf
-            For Each p As [Property] In T.Properties
-                ToRreturn += vbTab & p.PropertyName & ":" & p.PropertyValue & ";" & vbLf
-            Next
 
-            ToRreturn += "}" & vbLf
-        Next
-        Return ToRreturn
-    End Function
-
-    ''' <summary>
-    ''' Remove property form given tag.
-    ''' </summary>
-    ''' <param name="Tag">Tage to remove property.</param>
-    ''' <param name="Proverty">Property to remove.</param>
-    ''' <returns>True if removed.</returns>
-    Public Function RemoveProperty(Tag As String, Proverty As CssProperty) As Boolean
-        If Tag = "" OrElse Tag = String.Empty OrElse Tag = "" Then
-            Throw New NULL_TAG()
-        End If
-        Dim pointinTagWithCSSList As Integer = 0
-        Dim pointinProperties As Integer = 0
-        Dim ProvertyName As String = PrpertyValue(Proverty)
-        For Each T As TagWithCSS In TagWithCSSList
-            If T.TagName.Equals(Tag, StringComparison.InvariantCultureIgnoreCase) Then
-                For Each p As [Property] In T.Properties
-                    If p.PropertyName.Equals(ProvertyName, StringComparison.InvariantCultureIgnoreCase) Then
-                        TagWithCSSList(pointinTagWithCSSList).Properties.RemoveAt(pointinProperties)
-                        Return True
-                    End If
-                    pointinProperties += 1
-
-                Next
-            End If
-            pointinTagWithCSSList += 1
-        Next
-        Return False
-    End Function
-    ''' <summary>
-    ''' Remove property form given tag.
-    ''' </summary>
-    ''' <param name="Tag">Tage to remove property.</param>
-    ''' <param name="Proverty">Property to remove.</param>
-    ''' <returns>True if removed.</returns>
-    Public Function RemoveProperty(tag As HtmlTags, Proverty As CssProperty) As Boolean
-        Return RemoveProperty(Me.tag(tag), Proverty)
-    End Function
-    ''' <summary>
-    ''' Remove Tag and it's properties.
-    ''' </summary>
-    ''' <param name="Tag">Tag to remove.</param>
-    ''' <returns>True if removed.</returns>
-    Public Function RemoveTag(Tag As String) As Boolean
-        If Tag = "" OrElse Tag = String.Empty OrElse Tag = "" Then
-            Throw New NULL_TAG()
-        End If
-        Dim pointinTagWithCSSList As Integer = 0
-
-        For Each T As TagWithCSS In TagWithCSSList
-            If T.TagName.Equals(Tag, StringComparison.InvariantCultureIgnoreCase) Then
-                TagWithCSSList.RemoveAt(pointinTagWithCSSList)
-                Return True
-            End If
-            pointinTagWithCSSList += 1
-        Next
-        Return False
-    End Function
-    ''' <summary>
-    ''' Remove Tag and it's properties.
-    ''' </summary>
-    ''' <param name="Tag">Tag to remove.</param>
-    ''' <returns>True if removed.</returns>
-    Public Function RemoveTag(tag As HtmlTags) As Boolean
-        Return RemoveTag(Me.tag(tag))
-    End Function
-    ''' <summary>
-    ''' Get list of properties on tag.
-    ''' </summary>
-    ''' <param name="Tag">Tag to get properties</param>
-    ''' <returns>Property List</returns>
-    Public Function GetProperties(Tag As String) As List(Of [Property])
-        If Tag = "" OrElse Tag = String.Empty OrElse Tag = "" Then
-            Throw New NULL_TAG()
-        End If
-        Dim pointinTagWithCSSList As Integer = 0
-
-        For Each T As TagWithCSS In TagWithCSSList
-            If T.TagName.Equals(Tag, StringComparison.InvariantCultureIgnoreCase) Then
-                Return T.Properties
-            End If
-            pointinTagWithCSSList += 1
-        Next
-        Return New List(Of [Property])()
-    End Function
-    ''' <summary>
-    ''' Get list of properties on tag.
-    ''' </summary>
-    ''' <param name="Tag">Tag to get properties</param>
-    ''' <returns>Property List</returns>
-    Public Function GetProperties(tag As HtmlTags) As List(Of [Property])
-        Return GetProperties(Me.tag(tag))
-    End Function
-    ''' <summary>
-    ''' Get property.
-    ''' </summary>
-    ''' <param name="Tag">Name of tag.</param>
-    ''' <param name="Property">Property to value.</param>
-    ''' <returns>Property</returns>
-    Public Function GetPropertie(Tag As String, [Property] As CssProperty) As [Property]
-        If Tag = "" OrElse Tag = String.Empty OrElse Tag = "" Then
-            Throw New NULL_TAG()
-        End If
-        Dim pointinTagWithCSSList As Integer = 0
-
-        For Each T As TagWithCSS In TagWithCSSList
-            If T.TagName.Equals(Tag, StringComparison.InvariantCultureIgnoreCase) Then
-                For Each p As [Property] In T.Properties
-                    If p.PropertyName.Equals(PrpertyValue([Property]), StringComparison.InvariantCultureIgnoreCase) Then
-                        Return p
-                    End If
-                Next
-            End If
-            pointinTagWithCSSList += 1
-        Next
-        Return New [Property]()
-    End Function
-    ''' <summary>
-    ''' Get property.
-    ''' </summary>
-    ''' <param name="Tag">Name of tag.</param>
-    ''' <param name="Property">Property to value.</param>
-    ''' <returns>Property</returns>
-    Public Function GetPropertie(tag As HtmlTags, [Property] As CssProperty) As [Property]
-        Return GetPropertie(Me.tag(tag), [Property])
-    End Function
-    ''' <summary>
-    ''' Add/Overwrite property or property's value of tag.  
-    ''' </summary>
-    ''' <param name="Tag">Tag name.</param>
-    ''' <param name="property">Property to add/overwrite</param>
-    ''' <param name="PropertValue">Property's valueto add/overwrite</param>
-    ''' <param name="Type">Type of tag (HTML tag ,Class or Id).Deffalt HTML Tag.</param>
-    ''' <returns>Added/Overwrited or not.</returns>
-    Public Function AddPropery(Tag As String, [property] As CssProperty, PropertValue As String, Optional Type As CSSTagTypes = CSSTagTypes.tag) As Boolean
-        If Tag = "" OrElse Tag = String.Empty OrElse Tag = "" Then
-            Throw New NULL_TAG()
-        End If
-        If PropertValue = "" OrElse PropertValue = String.Empty OrElse PropertValue = "" Then
-            Throw New NULL_PRORERTY_VALUE()
-        End If
-        Dim pointinTagWithCSSList As Integer = 0
-        Dim pointinProperties As Integer = 0
-        Dim notfound As Boolean = False
-        Dim added As Boolean = False
-
-        Dim tagcannotexist As Boolean = True
-        Dim tagExist As Boolean = False
-
-        If Type = CSSTagTypes.[class] Then
-            Tag = "." & Tag
-        End If
-        If Type = CSSTagTypes.id Then
-            Tag = "#" & Tag
-        End If
-
-        Dim ProvertyName As String = PrpertyValue([property])
-
-        For Each T__1 As TagWithCSS In TagWithCSSList
-            If T__1.TagName.Equals(Tag, StringComparison.InvariantCultureIgnoreCase) Then
-                For Each p As [Property] In T__1.Properties
-                    If p.PropertyName.Equals(ProvertyName, StringComparison.InvariantCultureIgnoreCase) Then
-                        Dim np As New [Property]()
-                        np.PropertyName = ProvertyName
-                        np.PropertyValue = PropertValue
-                        TagWithCSSList(pointinTagWithCSSList).Properties(pointinProperties) = np
-                        added = True
-                        'break;
-                        Return True
-                    End If
-                    notfound = True
-                    pointinProperties += 1
-                Next
-
-                If notfound AndAlso Not added Then
-                    Dim np As New [Property]()
-                    np.PropertyName = ProvertyName
-                    np.PropertyValue = PropertValue
-                    TagWithCSSList(pointinTagWithCSSList).Properties.Add(np)
-                    added = True
-                    'break;                 
-                    Return True
-                End If
-                tagExist = True
-                tagcannotexist = False
-            Else
-                tagExist = False
-                tagcannotexist = True
-            End If
-            pointinTagWithCSSList += 1
-        Next
-        If tagcannotexist AndAlso Not tagExist Then
-            Dim t__2 As New TagWithCSS()
-            t__2.TagName = Tag
-            Dim p As New [Property]()
-            p.PropertyName = ProvertyName
-            p.PropertyValue = PropertValue
-            Dim pl As New List(Of [Property])()
-            pl.Add(p)
-            t__2.Properties = pl
-            TagWithCSSList.Add(t__2)
-            'break;
-            Return True
-        End If
-        Return False
-    End Function
-    ''' <summary>
-    ''' Add/Overwrite property or property's value of tag.  
-    ''' </summary>
-    ''' <param name="Tag">Tag name.</param>
-    ''' <param name="property">Property to add/overwrite</param>
-    ''' <param name="PropertValue">Property's valueto add/overwrite</param>
-    ''' <returns>Added/Overwrited or not.</returns>
-    Public Function AddPropery(tag As HtmlTags, [property] As CssProperty, PropertValue As String) As Boolean
-        Return AddPropery(Me.tag(tag), [property], PropertValue)
-    End Function
     ''' <summary>
     ''' Initilise the pasrser with Css code.
     ''' </summary>
-    ''' <param name="input">CSS code.</param>
-    Public Sub New(input As String)
+    Sub New()
         setHTML()
         SetPrpertyValue()
-        TagWithCSSList = GetTagWithCSS(input)
     End Sub
-
-    ''' <summary>
-    ''' Check the existance of tag.
-    ''' </summary>
-    ''' <param name="Tag">Name of tag.</param>
-    ''' <returns>True if exist.</returns>
-    Public Function TagExist(Tag As String) As Boolean
-        If Tag = "" OrElse Tag = String.Empty OrElse Tag = "" Then
-            Throw New NULL_TAG()
-        End If
-        For Each T As TagWithCSS In TagWithCSSList
-            If T.TagName.Equals(Tag, StringComparison.InvariantCultureIgnoreCase) Then
-                Return True
-            End If
-        Next
-        Return False
-    End Function
-    ''' <summary>
-    ''' Check the existance of tag.
-    ''' </summary>
-    ''' <param name="Tag">Name of tag.</param>
-    ''' <returns>True if exist.</returns>
-    Public Function TagExist(tag As HtmlTags) As Boolean
-        Return TagExist(Me.tag(tag))
-    End Function
-End Class
+End Module

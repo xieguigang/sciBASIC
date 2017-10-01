@@ -74,13 +74,13 @@ Namespace HTML.CSS
         Public Const UbuntuBold$ = "font-style: strong; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
 
         ''' <summary>
-        ''' The System.Drawing.FontStyle of the new font.
+        ''' The <see cref="FontStyle"/> of the new font.
         ''' </summary>
         ''' <returns></returns>
         Public Property style As FontStyle = FontStyle.Regular
         Public Property size As Single
         ''' <summary>
-        ''' A string representation of the System.Drawing.FontFamily for the new System.Drawing.Font.
+        ''' A string representation of the <see cref="FontFamily"/> for the new System.Drawing.Font.
         ''' </summary>
         ''' <returns></returns>
         Public Property family As String
