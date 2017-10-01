@@ -11,9 +11,7 @@ echo Current workspace: %currentWork% is located at Drive %drive%
 CALL %vs_dev%
 
 REM restore the workspace location
-
-%driver%
-CD %currentWork%
+CD /D %currentWork%
 echo %cd%
 
 pause
