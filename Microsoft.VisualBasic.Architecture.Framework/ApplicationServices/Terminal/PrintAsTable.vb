@@ -113,6 +113,7 @@ Namespace ApplicationServices.Terminal
             Call sb.Append(values.Last)
         End Sub
 
+        <Extension>
         Public Sub Print(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
             With dev Or Console.Out.AsDefault
 
@@ -144,6 +145,8 @@ Namespace ApplicationServices.Terminal
                         Call .Write(New String(sep, offset) & row(i))
                         offset = maxLen(i) - row(i).Length
                     Next
+
+                    Call .WriteLine()
                 Next
 
                 Call .Flush()

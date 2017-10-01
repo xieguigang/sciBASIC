@@ -28,11 +28,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection
@@ -258,30 +258,15 @@ Namespace CommandLine.Reflection
                     Dim allContentTypes = allExts _
                         .Select(Function(ext) (ext:=ext, Type:=ext.GetMIMEDescrib)) _
                         .ToArray
-                    Dim mime$
-
-                    maxLen = allContentTypes _
+                    Dim table$()() = allContentTypes _
                         .Select(Function(content)
                                     With content.Type
-                                        Return $"{content.ext} ({ .MIMEType})"
+                                        Return {"  " & content.ext & "  ", $"({ .MIMEType})  ", .Name}
                                     End With
                                 End Function) _
-                        .MaxLengthString _
-                        .Length
-                    maxLen +=
-                        2 +   ' 前面的两个空格
-                        10    ' 名字和说明之间间隔10个空格
+                        .ToArray
 
-                    For Each contentType As (ext$, type As ContentType) In allContentTypes
-                        With contentType.type
-                            mime = contentType.ext & " " & "(" & .MIMEType & ")"
-                            l% = mime.Length
-                            helpOffset = maxLen - l
-                            s = .Name
-                        End With
-
-                        Call Console.WriteLine($"  {mime}{New String(" "c, helpOffset)}{s}")
-                    Next
+                    Call table.Print
                 End If
 
                 If bool Then
