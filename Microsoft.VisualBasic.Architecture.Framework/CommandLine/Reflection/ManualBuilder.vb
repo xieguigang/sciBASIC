@@ -138,6 +138,8 @@ Namespace CommandLine.Reflection
                         End If
                     End With
 
+                    ' 计算出诸如像(optional) (*std_in) (*std_out) (optional) (boolean)这类开关类型前导的
+                    ' 最大长度
                     If s.Length > maxPrefix Then
                         maxPrefix = s.Length
                     End If
@@ -149,7 +151,10 @@ Namespace CommandLine.Reflection
                               Let stringL = x.Value.Example.Length
                               Into Max(stringL)
                 Dim l%
-                Dim helpOffset% = maxPrefix + maxLen
+
+                ' 加上开关名字的最大长度就是前面的开关说明部分的最大字符串长度
+                ' 后面的description帮助信息的偏移量都是依据这个值计算出来的
+                Dim helpOffset% = maxPrefix + maxLen - 10
                 Dim skipOptionalLine As Boolean = False
 
                 ' 必须的参数放在前面，可选的参数都是在后面的位置
@@ -157,6 +162,7 @@ Namespace CommandLine.Reflection
 
                     If param.TokenType = CLITypes.Boolean AndAlso Not boolSeperator Then
                         boolSeperator = True
+
                         Call Console.WriteLine()
                         Call Console.WriteLine("  Options:")
                         Call Console.WriteLine()
@@ -203,7 +209,7 @@ Namespace CommandLine.Reflection
                     Call Console.Write(s)
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
-                    blank = New String(" "c, If(helpOffset - l < 0, 0, helpOffset - 1))
+                    blank = New String(" "c, helpOffset - 1)
                     infoLines$ = Paragraph _
                         .Split(param.Description, 120) _
                         .ToArray

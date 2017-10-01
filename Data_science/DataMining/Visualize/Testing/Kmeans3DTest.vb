@@ -34,7 +34,10 @@ Imports Microsoft.VisualBasic.Data.Visualize.DataMining
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Driver.CSS
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
+Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
 Module Kmeans3DTest
 
@@ -63,6 +66,16 @@ Module Kmeans3DTest
         Call matrix.SaveTo("./matrix.csv")
 
         Call Kmeans.Scatter3D(matrix, cata, camera, clusterN:=7).AsGDIImage.CorpBlank(30, Color.White).SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\kmeans3D.png")
+    End Sub
+
+    Sub CSSdriverTest()
+        With New VisualBasic
+
+            Dim CSS As CSSFile = CssParser.GetTagWithCSS("".ReadAllText)
+
+            Call GetType(Kmeans).LoadDriver("kmeans.scatter.3D").RunPlot(Nothing, CSS)
+
+        End With
     End Sub
 End Module
 

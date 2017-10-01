@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::c26f70a30569396ad107756a71f9af19, ..\sciBASIC#\docs\guides\Example\CLI_Example\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -48,7 +49,6 @@ Module CLI
     <Argument("/msg", False, CLITypes.String,
               AcceptTypes:={GetType(String)},
               Description:="The output message text.",
-              Example:="""Hello world!""",
               Out:=False)>
     <Group(CLIGrouping.TestGroup1)>
     Public Function API1(args As CommandLine) As Integer
@@ -78,6 +78,34 @@ Module CLI
         Return vb.GetSourceCode _
             .SaveTo(out) _
             .CLICode
+    End Function
+
+    <ExportAPI("/DEP.heatmap")>
+    <Description("Generates the heatmap plot input data. The default label profile is using for the iTraq result.")>
+    <Usage("/DEP.heatmap /data <Directory/csv_file> [/schema <color_schema, default=RdYlGn:c11> /no-clrev /KO.class /annotation <annotation.csv> /hide.labels /cluster.n <default=6> /sampleInfo <sampleinfo.csv> /non_DEP.blank /title ""Heatmap of DEPs log2FC"" /t.log2 /tick <-1> /size <size, default=2000,3000> /out <out.DIR>]")>
+    <Argument("/non_DEP.blank", True, CLITypes.Boolean,
+              Description:="If this parameter present, then all of the non-DEP that bring by the DEP set union, will strip as blank on its foldchange value, and set to 1 at finally. Default is reserve this non-DEP foldchange value.")>
+    <Argument("/KO.class", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="If this argument was set, then the KO class information for uniprotID will be draw on the output heatmap.")>
+    <Argument("/sampleInfo", True, CLITypes.File,
+              Extensions:="*.csv",
+              Description:="Describ the experimental group information")>
+    <Argument("/data", False, CLITypes.File, PipelineTypes.std_in,
+              Description:="This file path parameter can be both a directory which contains a set of DEPs result or a single csv file path.")>
+    <Argument("/hide.labels", True, CLITypes.Boolean,
+              Description:="Hide the row labels?")>
+    <Argument("/cluster.n", True, CLITypes.Integer,
+              Description:="Expects the kmeans cluster result number, default is output 6 kmeans clusters.")>
+    <Argument("/schema", True, CLITypes.String,
+              Description:="The color patterns of the heatmap visualize, by default is using ``ColorBrewer`` colors.")>
+    <Argument("/out", True, CLITypes.File,
+              Extensions:="*.csv, *.svg, *.png",
+              Description:="A directory path where will save the output heatmap plot image and the kmeans cluster details info.")>
+    <Argument("/title", True,
+              Description:="The main title of this chart plot.")>
+    Public Function CLIHelpInfoDemo(args As CommandLine) As Integer
+
     End Function
 End Module
 
