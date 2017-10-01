@@ -68,12 +68,12 @@ Public Class CssParser
         Dim s As New StringBuilder(input)
 
         ' 首先需要移除掉CSS的注释文本
-        For Each block As Match In r.Matches(input, CommentBlock)
+        For Each block As Match In r.Matches(input, CommentBlock, RegexICSng)
             Call s.Replace(block.Value, "")
         Next
 
         For Each m As Match In r.Matches(s.ToString, IndivisualTagsPattern)
-            b.Add(m.Value)
+            b.Add(m.Value.StripBlank)
         Next
 
         Return b
