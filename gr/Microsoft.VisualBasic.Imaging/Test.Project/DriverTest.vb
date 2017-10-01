@@ -9,7 +9,7 @@ Module DriverTest
 
         Dim css As New CSSFile With {
             .Selectors = {
-                New Selector With {.Selector = "#CSS", .Properties = New Dictionary(Of String, String) From {{"XXX", "123"}}},
+                New Selector With {.Selector = "@canvas", .Properties = New Dictionary(Of String, String) From {{"bg", "123"}}},
                 New Selector With {.Selector = "#testfont", .Properties = New Dictionary(Of String, String) From {{"font-size", "15px"}}}
             }
         }
@@ -18,7 +18,7 @@ Module DriverTest
 
             ' Call (AddressOf testPlot).RunPlot(css, !A = 99, !B = 123, !CSS = "dertfff")
 
-            Call GetType(DriverTest).LoadDriver("test.plot").RunPlot(Nothing, css, !A = 99, !B = 123, !CSS = "from reflection: 1234567890")
+            Call GetType(DriverTest).LoadDriver("test.plot").RunPlot(Nothing, css, !A = 99, !B = 123, !bg = "from reflection: 1234567890")
 
 #Region "Not working"
             'Dim driver As Func(Of Single, Single, String, GraphicsData) = AddressOf testPlot
@@ -32,7 +32,7 @@ Module DriverTest
 
 
 
-            Call testPlot(A:=666, b:=4444, css:="direct calls")
+            Call testPlot(A:=666, b:=4444, bg:="direct calls")
 
         End With
 
@@ -45,13 +45,12 @@ Module DriverTest
     ''' </summary>
     ''' <param name="A!"></param>
     ''' <param name="b!"></param>
-    ''' <param name="css$"></param>
     ''' <returns></returns>
     <Driver("test.plot")>
-    Public Function testPlot(A!, b!, Optional css$ = "1234", Optional testFont$ = CSSFont.Win7LargerBold) As GraphicsData
+    Public Function testPlot(A!, b!, Optional bg$ = "1234", Optional testFont$ = CSSFont.Win7LargerBold) As GraphicsData
         Call Console.WriteLine(A)
         Call Console.WriteLine(b)
-        Call Console.WriteLine(css)
+        Call Console.WriteLine(bg)
         Call Console.WriteLine(testFont)
 
         Call Console.WriteLine(New String("+"c, 20))
