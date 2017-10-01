@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Drawing
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -80,30 +81,27 @@ Module CLI
             .CLICode
     End Function
 
-    <ExportAPI("/DEP.heatmap")>
-    <Description("Generates the heatmap plot input data. The default label profile is using for the iTraq result.")>
-    <Usage("/DEP.heatmap /data <Directory/csv_file> [/schema <color_schema, default=RdYlGn:c11> /no-clrev /KO.class /annotation <annotation.csv> /hide.labels /cluster.n <default=6> /sampleInfo <sampleinfo.csv> /non_DEP.blank /title ""Heatmap of DEPs log2FC"" /t.log2 /tick <-1> /size <size, default=2000,3000> /out <out.DIR>]")>
-    <Argument("/non_DEP.blank", True, CLITypes.Boolean,
-              Description:="If this parameter present, then all of the non-DEP that bring by the DEP set union, will strip as blank on its foldchange value, and set to 1 at finally. Default is reserve this non-DEP foldchange value.")>
-    <Argument("/KO.class", True, CLITypes.Boolean,
-              AcceptTypes:={GetType(Boolean)},
-              Description:="If this argument was set, then the KO class information for uniprotID will be draw on the output heatmap.")>
-    <Argument("/sampleInfo_looooooooooooooooooooooong_name", True, CLITypes.File,
+    <ExportAPI("/DEP.heatmap.scatter.3D")>
+    <Description("Visualize the DEPs' kmeans cluster result by using 3D scatter plot.")>
+    <Usage("/DEP.heatmap.scatter.3D /in <kmeans.csv> /sampleInfo <sampleInfo.csv> [/cluster.prefix <default=""cluster: #""> /size <default=1600,1400> /schema <default=clusters> /view.angle <default=30,60,-56.25> /view.distance <default=2500> /out <out.png>]")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
               Extensions:="*.csv",
-              Description:="Describ the experimental group information")>
-    <Argument("/data", False, CLITypes.File, PipelineTypes.std_in,
-              Description:="This file path parameter can be both a directory which contains a set of DEPs result or a single csv file path.")>
-    <Argument("/hide.labels", True, CLITypes.Boolean,
-              Description:="Hide the row labels?")>
-    <Argument("/cluster.n", True, CLITypes.Integer,
-              Description:="Expects the kmeans cluster result number, default is output 6 kmeans clusters.")>
-    <Argument("/schema", True, CLITypes.String,
-              Description:="The color patterns of the heatmap visualize, by default is using ``ColorBrewer`` colors.")>
+              Description:="The kmeans cluster result from ``/DEP.heatmap`` command.")>
+    <Argument("/sampleInfo", False, CLITypes.File,
+              Extensions:="*.csv",
+              Description:="Sample info fot grouping the matrix column data and generates the 3d plot ``<x,y,z>`` coordinations.")>
+    <Argument("/cluster.prefix", True, CLITypes.String,
+              Description:="The term prefix of the kmeans cluster name when display on the legend title.")>
+    <Argument("/size", True,
+              AcceptTypes:={GetType(Size)},
+              Description:="The output 3D scatter plot image size.")>
+    <Argument("/view.angle", True,
+              Description:="The view angle of the 3D scatter plot objects, in 3D direction of ``<X>,<Y>,<Z>``")>
+    <Argument("/view.distance", True, CLITypes.Integer,
+              Description:="The view distance from the 3D camera screen to the 3D objects.")>
     <Argument("/out", True, CLITypes.File,
-              Extensions:="*.csv, *.svg, *.png, jpg, gif, tiff",
-              Description:="A directory path where will save the output heatmap plot image and the kmeans cluster details info.")>
-    <Argument("/title", True,
-              Description:="The main title of this chart plot.")>
+              Extensions:="*.png, *.svg",
+              Description:="The file path of the output plot image.")>
     Public Function CLIHelpInfoDemo(args As CommandLine) As Integer
 
     End Function

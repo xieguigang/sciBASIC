@@ -105,6 +105,7 @@ Namespace CommandLine.Reflection
                 Dim bool As Boolean = False
                 Dim haveOptional As Boolean = False
                 Dim boolSeperator As Boolean = False
+                Dim stringL$()
 
                 ' 先输出必须的参数
                 ' 之后为可选参数，但是可选参数会分为下面的顺序输出
@@ -113,49 +114,60 @@ Namespace CommandLine.Reflection
                 ' 3. 数值
                 ' 4. 整数
                 ' 5. 逻辑值
-                For Each arg In api.Arguments
-                    With arg.Value
+                stringL = api.Arguments _
+                    .Select(Function(arg)
+                                With arg.Value
 
-                        If .TokenType = CLITypes.Boolean Then
-                            ' 逻辑值类型的只能够是可选类型
-                            s = "(optional) (boolean)"
-                            bool = True
-                        Else
+                                    If .TokenType = CLITypes.Boolean Then
+                                        ' 逻辑值类型的只能够是可选类型
+                                        s = "(optional) (boolean)"
+                                        bool = True
+                                    Else
 
-                            If .Pipeline = PipelineTypes.std_in Then
-                                s = "(*std_in)"
-                                std_in = True
-                            ElseIf .Pipeline = PipelineTypes.std_out Then
-                                s = "(*std_out)"
-                                std_out = True
-                            Else
-                                s = ""
-                            End If
+                                        If .Pipeline = PipelineTypes.std_in Then
+                                            s = "(*std_in)"
+                                            std_in = True
+                                        ElseIf .Pipeline = PipelineTypes.std_out Then
+                                            s = "(*std_out)"
+                                            std_out = True
+                                        Else
+                                            s = ""
+                                        End If
 
-                            If .Optional Then
-                                s &= "(optional)"
-                                haveOptional = True
-                            End If
-                        End If
-                    End With
+                                        If .Optional Then
+                                            s &= "(optional)"
+                                            haveOptional = True
+                                        End If
+                                    End If
+                                End With
 
-                    ' 计算出诸如像(optional) (*std_in) (*std_out) (optional) (boolean)这类开关类型前导的
-                    ' 最大长度
-                    If s.Length > maxPrefix Then
-                        maxPrefix = s.Length
-                    End If
-                Next
+                                Return s
+                            End Function) _
+                    .ToArray
+
+                ' println("\n%s", stringL.MaxLengthString)
+
+                ' 计算出诸如像(optional) (*std_in) (*std_out) (optional) (boolean)这类开关类型前导的
+                ' 最大长度
+                maxPrefix = stringL.MaxLengthString.Length
 
                 ' 这里计算出来的是name usage的最大长度
-                Dim maxLen% = Aggregate x As NamedValue(Of Argument)
-                              In api.Arguments
-                              Let stringL = x.Value.Example.Length
-                              Into Max(stringL)
+                stringL$ = api.Arguments _
+                    .Select(Function(x) x.Value.Example) _
+                    .ToArray
+
+                ' println("\n%s", stringL.MaxLengthString)
+
                 Dim l%
+                Dim maxLen% = stringL _
+                    .MaxLengthString _
+                    .Length
+
+                ' Call stringL.MaxLengthString.__DEBUG_ECHO
 
                 ' 加上开关名字的最大长度就是前面的开关说明部分的最大字符串长度
                 ' 后面的description帮助信息的偏移量都是依据这个值计算出来的
-                Dim helpOffset% = maxPrefix + maxLen - 5
+                Dim helpOffset% = maxPrefix + maxLen
                 Dim skipOptionalLine As Boolean = False
 
                 ' 必须的参数放在前面，可选的参数都是在后面的位置
@@ -188,13 +200,12 @@ Namespace CommandLine.Reflection
                         Call Console.Write(") ")
 
                         s = param.Example
-                        l = "(optional) ".Length + s.Length
                     Else
                         s = param.Example
-                        l = s.Length
-
                         Console.Write("  ")
                     End If
+
+                    l = s.Length
 
                     With param
                         If .Pipeline = PipelineTypes.std_in Then
@@ -203,17 +214,21 @@ Namespace CommandLine.Reflection
                             s = "(*std_out) " & s
                         ElseIf .TokenType = CLITypes.Boolean Then
                             s = "(boolean)  " & s
+                        Else
+                            If Not .Optional Then
+                                s = New String(" "c, maxPrefix + 1) & s
+                            End If
                         End If
 
-                        If Not .Pipeline = PipelineTypes.undefined OrElse .TokenType = CLITypes.Boolean Then
-                            l += 11
-                        End If
+                        'If Not .Pipeline = PipelineTypes.undefined OrElse .TokenType = CLITypes.Boolean Then
+                        '    l += 11
+                        'End If
                     End With
 
                     Call Console.Write(s)
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
-                    blank = New String(" "c, helpOffset - l)
+                    blank = New String(" "c, helpOffset - l + 2)
                     infoLines$ = Paragraph _
                         .Split(param.Description, 120) _
                         .ToArray
