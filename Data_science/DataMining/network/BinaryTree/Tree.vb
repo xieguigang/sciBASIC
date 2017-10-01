@@ -92,7 +92,7 @@ Namespace KMeans
                 list -= LQuery
                 partitions += New Partition With {
                     .Tag = tag,
-                    .uids = LQuery.ToArray(Function(x) x.Name),
+                    .uids = LQuery.ToArray(Function(x) x.ID),
                     .members = LQuery
                 }
             Next
@@ -100,7 +100,7 @@ Namespace KMeans
             If Not list.IsNullOrEmpty Then
                 partitions += New Partition With {
                     .Tag = "Unclass",
-                    .uids = list.ToArray(Function(x) x.Name),
+                    .uids = list.ToArray(Function(x) x.ID),
                     .members = list.ToArray
                 }
             End If
@@ -118,7 +118,7 @@ Namespace KMeans
             Public node As EntityLDM
 
             Public Overrides Function ToString() As String
-                Return $"[{node.Cluster}] --> {node.Name}"
+                Return $"[{node.Cluster}] --> {node.ID}"
             End Function
         End Structure
 
@@ -154,7 +154,7 @@ Namespace KMeans
                     End If
 
                     Return New FileStream.Node With {
-                        .ID = x.node.Name,
+                        .ID = x.node.ID,
                         .NodeType = Tree.EntityType,
                         .Properties = props
                     }
@@ -197,7 +197,7 @@ Namespace KMeans
                 Return array.ToArray(
                     Function(x) New NetworkEdge With {
                         .FromNode = parent.ID,
-                        .ToNode = x.node.Name,
+                        .ToNode = x.node.ID,
                         .Interaction = "Leaf-X"
                     })
             End If
@@ -217,7 +217,7 @@ Namespace KMeans
 
                     edges += New NetworkEdge With {
                         .FromNode = parent.ID,
-                        .ToNode = leaf.node.Name,
+                        .ToNode = leaf.node.ID,
                         .Interaction = "Leaf"
                     }
                 Else     ' 继续递归

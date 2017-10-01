@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::622df45bf8c9b9f10b6a38d76e990985, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::08a5d73265a99d7f8c2145748595679b, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\Axis.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,7 +33,6 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text.HtmlParser
@@ -76,7 +75,8 @@ Namespace Graphic.Axis
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
                             Optional labelFont$ = CSSFont.PlotSubTitle,
                             Optional axisStroke$ = Stroke.AxisStroke,
-                            Optional gridFill$ = "rgb(245,245,245)")
+                            Optional gridFill$ = "rgb(245,245,245)",
+                            Optional htmlLabel As Boolean = True)
             With region
                 Call g.DrawAxis(
                     scaler,
@@ -85,7 +85,7 @@ Namespace Graphic.Axis
                     xlabel, ylabel,
                     xlayout:=xlayout, ylayout:=ylayout,
                     labelFontStyle:=labelFont,
-                    axisStroke:=axisStroke, gridFill:=gridFill)
+                    axisStroke:=axisStroke, gridFill:=gridFill, htmlLabel:=htmlLabel)
             End With
         End Sub
 
@@ -110,7 +110,8 @@ Namespace Graphic.Axis
                             Optional gridFill$ = "rgb(245,245,245)",
                             Optional gridColor$ = "white",
                             Optional axisStroke$ = Stroke.AxisStroke,
-                            Optional tickFontStyle$ = CSSFont.Win7Normal)
+                            Optional tickFontStyle$ = CSSFont.Win7Normal,
+                            Optional htmlLabel As Boolean = True)
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim rect As Rectangle = scaler.ChartRegion
@@ -148,11 +149,17 @@ Namespace Graphic.Axis
 
             Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
 
+            If htmlLabel Then
+                Call "Axis Labeling using HTML render is enable.".__INFO_ECHO
+            Else
+                Call "Axis Labeling using HTML render was disabled!".__INFO_ECHO
+            End If
+
             If xlayout <> XAxisLayoutStyles.None Then
-                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont)
+                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel)
             End If
             If ylayout <> YAxisLayoutStyles.None Then
-                Call g.DrawY(pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont)
+                Call g.DrawY(pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel)
             End If
         End Sub
 
@@ -188,13 +195,29 @@ Namespace Graphic.Axis
 
         Public Property delta As Integer = 10
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="pen"></param>
+        ''' <param name="label$"></param>
+        ''' <param name="scaler"></param>
+        ''' <param name="layout"></param>
+        ''' <param name="offset"></param>
+        ''' <param name="labelFont$"></param>
+        ''' <param name="tickFont"></param>
+        ''' <param name="showAxisLine"></param>
+        ''' <param name="htmlLabel">
+        ''' Parameter <paramref name="label"/> is using html text format, function will using html renderer to draw this label
+        ''' </param>
         <Extension> Public Sub DrawY(ByRef g As IGraphics,
                                      pen As Pen, label$,
                                      scaler As DataScaler,
                                      layout As YAxisLayoutStyles, offset As Point,
                                      labelFont$,
                                      tickFont As Font,
-                                     Optional showAxisLine As Boolean = True)
+                                     Optional showAxisLine As Boolean = True,
+                                     Optional htmlLabel As Boolean = True)
 
             Dim X%  ' y轴的layout的变化只需要变换x的值即可
             Dim size = scaler.ChartRegion.Size
@@ -217,6 +240,8 @@ Namespace Graphic.Axis
                 Call g.DrawLine(pen, ZERO, top)     ' y轴
             End If
 
+            Dim maxYTickSize!
+
             If Not scaler.AxisTicks.Y.IsNullOrEmpty Then
                 For Each tick# In scaler.AxisTicks.Y
                     Dim y! = scaler.TranslateY(tick) + offset.Y
@@ -226,26 +251,43 @@ Namespace Graphic.Axis
                         Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
                     End If
 
-                    Dim labelText = (tick).FormatNumeric(2)
+                    Dim labelText = (tick).ToString("F" & 2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
                     Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
+
+                    If sz.Width > maxYTickSize Then
+                        maxYTickSize = sz.Width
+                    End If
 
                     g.DrawString(labelText, tickFont, Brushes.Black, p)
                 Next
             End If
 
             If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
-                Dim labelImage As Image = label.__plotLabel(labelFont)
+                If htmlLabel Then
+                    Dim labelImage As Image = label.__plotLabel(labelFont, False)
 
-                ' y轴标签文本是旋转90度绘制于左边
-                labelImage = labelImage.RotateImage(-90)
+                    ' y轴标签文本是旋转90度绘制于左边
+                    labelImage = labelImage.RotateImage(-90)
 
-                Dim location As New Point With {
-                    .X = scaler.ChartRegion.Left - labelImage.Width * 1.5,
-                    .Y = (size.Height - labelImage.Height) / 2
-                }
+                    Dim location As New Point With {
+                        .X = scaler.ChartRegion.Left - labelImage.Width + maxYTickSize,
+                        .Y = (size.Height - labelImage.Height) / 2
+                    }
 
-                Call g.DrawImageUnscaled(labelImage, location)
+                    Call g.DrawImageUnscaled(labelImage, location)
+                Else
+                    Dim font As Font = CSSFont.TryParse(labelFont)
+                    Dim fSize As SizeF = g.MeasureString(label, font)
+                    Dim location As New PointF With {
+                        .X = scaler.ChartRegion.Left - fSize.Height - maxYTickSize * 1.5,
+                        .Y = size.Height / 2 + scaler.ChartRegion.Top
+                    }
+
+                    With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                        Call .DrawString(label, font, Brushes.Black, location, -90)
+                    End With
+                End If
             End If
         End Sub
 
@@ -255,8 +297,17 @@ Namespace Graphic.Axis
         ''' <param name="label$"></param>
         ''' <param name="css$"></param>
         ''' <returns></returns>
-        <Extension> Private Function __plotLabel(label$, css$) As Image
-            Return TextRender.DrawHtmlText(label, css)
+        <Extension> Private Function __plotLabel(label$, css$, Optional throwEx As Boolean = True) As Image
+            Try
+                Return TextRender.DrawHtmlText(label, css)
+            Catch ex As Exception
+                If throwEx Then
+                    Throw ex
+                Else
+                    Call App.LogException(ex)
+                    Return New Bitmap(1, 1)
+                End If
+            End Try
         End Function
 
         ''' <summary>
@@ -303,6 +354,22 @@ Namespace Graphic.Axis
             End Using
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="pen"></param>
+        ''' <param name="label$"></param>
+        ''' <param name="scaler"></param>
+        ''' <param name="layout"></param>
+        ''' <param name="offset"></param>
+        ''' <param name="labelFont$"></param>
+        ''' <param name="tickFont"></param>
+        ''' <param name="overridesTickLine%"></param>
+        ''' <param name="noTicks"></param>
+        ''' <param name="htmlLabel">
+        ''' Parameter <paramref name="label"/> is using html text format, function will using html renderer to draw this label
+        ''' </param>
         <Extension> Public Sub DrawX(ByRef g As IGraphics,
                                      pen As Pen, label$,
                                      scaler As DataScaler,
@@ -310,7 +377,8 @@ Namespace Graphic.Axis
                                      labelFont$,
                                      tickFont As Font,
                                      Optional overridesTickLine% = -1,
-                                     Optional noTicks As Boolean = False)
+                                     Optional noTicks As Boolean = False,
+                                     Optional htmlLabel As Boolean = True)
 
             Dim Y% = scaler.ChartRegion.Top + offset.Y
             Dim size = scaler.ChartRegion.Size
@@ -335,7 +403,7 @@ Namespace Graphic.Axis
                     Dim x As Single = scaler.X(tick) + offset.X
                     Dim axisX As New PointF(x, ZERO.Y)
 
-                    Dim labelText = (tick).FormatNumeric(2)
+                    Dim labelText = (tick).ToString("F" & 2)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
@@ -344,13 +412,24 @@ Namespace Graphic.Axis
             End If
 
             If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
-                Dim labelImage As Image = label.__plotLabel(labelFont)
-                Dim point As New Point With {
-                    .X = (size.Width - labelImage.Width) / 2 + scaler.ChartRegion.Left,
-                    .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height + d * 3
-                }
+                If htmlLabel Then
+                    Dim labelImage As Image = label.__plotLabel(labelFont, False)
+                    Dim point As New Point With {
+                        .X = (size.Width - labelImage.Width) / 2 + scaler.ChartRegion.Left,
+                        .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height + d * 3
+                    }
 
-                Call g.DrawImageUnscaled(labelImage, point)
+                    Call g.DrawImageUnscaled(labelImage, point)
+                Else
+                    Dim font As Font = CSSFont.TryParse(labelFont).GDIObject
+                    Dim fSize As SizeF = g.MeasureString(label, font)
+                    Dim point As New PointF With {
+                        .X = (size.Width - fSize.Width) / 2 + scaler.ChartRegion.Left,
+                        .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height + d * 3
+                    }
+
+                    Call g.DrawString(label, font, Brushes.Black, point)
+                End If
             End If
         End Sub
     End Module

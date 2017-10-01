@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::01d4d95ae26fe7718cd3ff33918a17e3, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Heatmaps\Contour.vb"
+﻿#Region "Microsoft.VisualBasic::7df9cb6c02453be3cca00f4453dc6934, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Contour.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -53,6 +53,11 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' </summary>
 Public Module Contour
 
+    ''' <summary>
+    ''' Compile the math expression as a lambda expression for producing numeric values.
+    ''' </summary>
+    ''' <param name="exp$">A string math function expression: ``f(x,y)``</param>
+    ''' <returns></returns>
     Public Function Compile(exp$) As Func(Of Double, Double, Double)
         With New Expression
 
@@ -336,10 +341,10 @@ Public Module Contour
             Dim yTicks = data.Select(Function(d) d.y).Range.CreateAxisTicks
             Dim x = d3js.scale.linear() _
                 .domain(xTicks) _
-                .range({region.PlotRegion.Left, region.PlotRegion.Right})
+                .range(integers:={region.PlotRegion.Left, region.PlotRegion.Right})
             Dim y = d3js.scale.linear() _
                 .domain(yTicks) _
-                .range({region.PlotRegion.Top, region.PlotRegion.Bottom})
+                .range(integers:={region.PlotRegion.Top, region.PlotRegion.Bottom})
             Dim colorDatas As SolidBrush() = Nothing
             Dim getColors = GetColor(data.ToArray(Function(o) o.z), colorDatas)
             Dim size As Size = region.Size
@@ -356,14 +361,22 @@ Public Module Contour
 
             ' Call g.DrawAxis(size, margin, scaler, False, offset, xlabel, ylabel)
 
-            offset = New Point(offset.X, offset.Y - unit / 2)
+            offset = New Point With {
+                .X = offset.X,
+                .Y = offset.Y - unit / 2
+            }
 
             Dim us% = unit * scale
 
             For i As Integer = 0 To data.Length - 1
                 Dim p As (X#, y#, Z#) = data(i)
                 Dim c As SolidBrush = getColors(i)
-                Dim fill As New RectangleF(x(p.X) + offset.X, y(p.y) + offset.Y, us, us)
+                Dim fill As New RectangleF With {
+                    .X = x(p.X) + offset.X,
+                    .Y = y(p.y) + offset.Y,
+                    .Width = us,
+                    .Height = us
+                }
 
                 Call g.FillRectangle(c, fill)
                 Call g.DrawRectangle(New Pen(c),
@@ -379,9 +392,13 @@ Public Module Contour
                     z >= minZ AndAlso
                     z <= maxZ) _
                 .ToArray
-            Dim range As DoubleRange = realData
+            Dim rangeTicks#() = realData.Range.CreateAxisTicks
 
-            Call g.ColorMapLegend(legendLayout, colorDatas, range, legendFont, legendTitle, tickFont, New Pen(Color.Black, 2), NameOf(Color.Gray))
+            Call g.ColorMapLegend(
+                legendLayout, colorDatas, rangeTicks,
+                legendFont, legendTitle, tickFont,
+                New Pen(Color.Black, 2),
+                NameOf(Color.Gray))
         End Sub
     End Class
 
@@ -408,13 +425,9 @@ Public Module Contour
                                parallel As Boolean,
                                ByRef matrix As List(Of DataSet), unit%) As (X#, y#, z#)()
 
-        If Single.IsNaN(xsteps) Then
-            xsteps = xrange.Length / size.Width
-        End If
-        If Single.IsNaN(ysteps) Then
-            ysteps = yrange.Length / size.Height
-        End If
 
+        xsteps = xsteps Or (xrange.Length / size.Width).AsDefault(Function(n) Single.IsNaN(CSng(n)))
+        ysteps = ysteps Or (yrange.Length / size.Height).AsDefault(Function(n) Single.IsNaN(CSng(n)))
         xsteps *= unit%
         ysteps *= unit%
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db3d71840eac80fa8dbfa67a54a133ac, ..\sciBASIC#\Data\Trinity\Html\UrlUtility.vb"
+﻿#Region "Microsoft.VisualBasic::646a1d3a7c15b25ecab4717fe20763b8, ..\sciBASIC#\Data\Trinity\Html\UrlUtility.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Public Class UrlUtility
         Return html
     End Function
 End Class
-

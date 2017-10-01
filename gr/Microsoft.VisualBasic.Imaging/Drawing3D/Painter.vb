@@ -39,6 +39,7 @@ Namespace Drawing3D
     ''' </summary>
     Public Module PainterAlgorithm
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CreateCanvas2D(camera As Camera, Optional bg$ = "white") As Graphics2D
             Return camera.screen.CreateGDIDevice(filled:=bg.TranslateColor)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f53abe96c05a1293f506835fa82a052, ..\sciBASIC#\mime\text%html\HTML\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::fa3ac491c458af4bc0c0409003987b1b, ..\sciBASIC#\mime\text%html\HTML\CSS\FontStyle.vb"
 
     ' Author:
     ' 
@@ -74,13 +74,13 @@ Namespace HTML.CSS
         Public Const UbuntuBold$ = "font-style: strong; font-size: 12; font-family: " & FontFace.Ubuntu & ";"
 
         ''' <summary>
-        ''' The System.Drawing.FontStyle of the new font.
+        ''' The <see cref="FontStyle"/> of the new font.
         ''' </summary>
         ''' <returns></returns>
         Public Property style As FontStyle = FontStyle.Regular
         Public Property size As Single
         ''' <summary>
-        ''' A string representation of the System.Drawing.FontFamily for the new System.Drawing.Font.
+        ''' A string representation of the <see cref="FontFamily"/> for the new System.Drawing.Font.
         ''' </summary>
         ''' <returns></returns>
         Public Property family As String

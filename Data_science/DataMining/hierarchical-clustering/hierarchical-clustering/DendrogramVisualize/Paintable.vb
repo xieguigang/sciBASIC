@@ -66,7 +66,7 @@ Namespace DendrogramVisualize
         Dim decorated As Boolean
         Dim classHeight!
         ''' <summary>
-        ''' ``<see cref="Cluster.Label"/> --> Color``
+        ''' ``<see cref="Cluster.Name"/> --> Color``
         ''' </summary>
         Dim classTable As Dictionary(Of String, String)
         Dim stroke As Pen

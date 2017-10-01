@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81d2849986e047e897f7b55fd5f7e07a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::2a00b689e3958747fcf912082911d3d4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    Public Class CommandLine : Inherits ClassObject
+    Public Class CommandLine : Inherits BaseClass
         Implements ICollection(Of NamedValue(Of String))
         Implements INamedValue
 
@@ -804,7 +804,7 @@ Namespace CommandLine
         ''' <param name="args"></param>
         ''' <param name="fs"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator +(args As CommandLine, fs As String) As Integer
+        Public Overloads Shared Operator +(args As CommandLine, fs$) As Integer
             Dim path As String = args(fs)
             Return FileHandles.OpenHandle(path)
         End Operator
@@ -815,7 +815,7 @@ Namespace CommandLine
         ''' <param name="args"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator <=(args As CommandLine, name As String) As String
+        Public Overloads Shared Operator <=(args As CommandLine, name$) As String
             If args Is Nothing Then
                 Return Nothing
             Else

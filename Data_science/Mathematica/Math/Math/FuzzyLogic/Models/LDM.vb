@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98286c0da9d9f3f9b705beeda06e9eba, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\Models\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::fb2fe4803e11fa164acd5d2daf9d1b06, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\Models\LDM.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Logical.FuzzyLogic.Models
 
-    Public Class Value : Inherits ClassObject
+    Public Class Value : Inherits BaseClass
         Implements INamedValue
 
         <XmlAttribute> Public Property Identifier As String Implements INamedValue.Key
@@ -50,7 +50,7 @@ Namespace Logical.FuzzyLogic.Models
         End Sub
     End Class
 
-    Public Class Term : Inherits ClassObject
+    Public Class Term : Inherits BaseClass
         Implements INamedValue
 
         <XmlAttribute> Public Property Identifier As String Implements INamedValue.Key
@@ -66,7 +66,7 @@ Namespace Logical.FuzzyLogic.Models
 
     End Class
 
-    Public Class Fuzzify : Inherits ClassObject
+    Public Class Fuzzify : Inherits BaseClass
         Implements INamedValue
 
         <XmlAttribute> Public Property Identifier As String Implements INamedValue.Key
@@ -98,7 +98,7 @@ Namespace Logical.FuzzyLogic.Models
 
     End Class
 
-    Public Class Rule : Inherits ClassObject
+    Public Class Rule : Inherits BaseClass
         Implements INamedValue
 
         <XmlAttribute> Public Property Identifier As String Implements INamedValue.Key
@@ -114,7 +114,7 @@ Namespace Logical.FuzzyLogic.Models
         End Sub
     End Class
 
-    Public Class RuleBlock : Inherits ClassObject
+    Public Class RuleBlock : Inherits BaseClass
 
         <XmlAttribute> Public Property [AND] As String
         <XmlAttribute> Public Property [OR] As String

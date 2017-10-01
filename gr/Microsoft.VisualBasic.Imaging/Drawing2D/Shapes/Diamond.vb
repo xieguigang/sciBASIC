@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::585f4b6eef216c65e3e4479feec104cb, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Diamond.vb"
+﻿#Region "Microsoft.VisualBasic::e5f1c7b2629511f136a7d2d58a36927e, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Diamond.vb"
 
     ' Author:
     ' 

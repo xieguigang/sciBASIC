@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10ddbab1257604facac99b528c85f6be, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Mailto\MailContents.vb"
+﻿#Region "Microsoft.VisualBasic::10ddbab1257604facac99b528c85f6be, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Mailto\MailContents.vb"
 
     ' Author:
     ' 

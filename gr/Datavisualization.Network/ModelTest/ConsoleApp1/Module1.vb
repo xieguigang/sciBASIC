@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94d118469f5ab8c87f931bac827ab719, ..\sciBASIC#\gr\Datavisualization.Network\ModelTest\ConsoleApp1\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::af19bbf14bf90bd7e0677ac9e00bef58, ..\sciBASIC#\gr\Datavisualization.Network\ModelTest\ConsoleApp1\Module1.vb"
 
     ' Author:
     ' 
@@ -226,4 +226,3 @@ Public Module Module1
         End Function
     End Class
 End Module
-

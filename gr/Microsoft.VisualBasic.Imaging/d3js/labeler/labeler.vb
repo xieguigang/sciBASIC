@@ -1,4 +1,32 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::bd8d3c01ed08c3fd33aa60c5e849b3b4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Terminal
 Imports sys = System.Math
 
@@ -248,6 +276,12 @@ Namespace d3js.Layout
             Dim progress As ProgressBar = Nothing
             Dim tick As Action(Of Double)
 
+            ' 在计算之前需要将label的坐标赋值为anchor的值，否则会无法正常的生成label的最终位置
+            For i As Integer = 0 To lab.Length - 1
+                lab(i).X = anc(i).x
+                lab(i).Y = anc(i).y
+            Next
+
             If showProgress Then
                 Dim tickProvider As New ProgressProvider(nsweeps)
                 Dim p#
@@ -360,3 +394,4 @@ Namespace d3js.Layout
         End Function
     End Class
 End Namespace
+

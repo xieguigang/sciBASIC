@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ed569c7cec03f626407b6f76611019d, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b20b214790fb17a6a4027b8089114d6d, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Public Module Extensions
         Next
     End Sub
 End Module
-

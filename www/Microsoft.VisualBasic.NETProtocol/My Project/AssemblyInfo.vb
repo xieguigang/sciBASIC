@@ -11,9 +11,9 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("Network Utility Tools library")>
 <Assembly: AssemblyDescription("Network Utility Tools library")>
 <Assembly: AssemblyCompany("GPL3")>
-<Assembly: AssemblyProduct("")>
+<Assembly: AssemblyProduct("Microsoft VisualBasic")>
 <Assembly: AssemblyCopyright("Copyright © xie.guigang@gmail.com 2016")>
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTrademark("Microsoft VisualBasic")>
 
 <Assembly: ComVisible(False)>
 

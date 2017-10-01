@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6eeed8cc6e99003d9e8e3e28f096ff8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\MSG_TYPES.vb"
+﻿#Region "Microsoft.VisualBasic::c6eeed8cc6e99003d9e8e3e28f096ff8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Logging\LogFile\MSG_TYPES.vb"
 
     ' Author:
     ' 

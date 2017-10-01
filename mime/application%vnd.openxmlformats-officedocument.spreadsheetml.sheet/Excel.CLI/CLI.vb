@@ -1,4 +1,32 @@
-﻿Imports System.ComponentModel
+﻿#Region "Microsoft.VisualBasic::6e70b41a26a2c1d33209d727c2ba6d07, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -14,7 +42,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 <CLI> Module CLI
 
     <ExportAPI("/Cbind")>
-    <Usage("/cbind /in <a.csv> /append <b.csv> [/out <ALL.csv>]")>
+    <Usage("/cbind /in <a.csv> /append <b.csv> [/token0.ID <deli, default=<SPACE> /out <ALL.csv>]")>
     <Description("Join of two table by a unique ID.")>
     <Argument("/in", False, CLITypes.File,
               Description:="The table for append by column, its row ID can be duplicated.")>
@@ -26,7 +54,15 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         Dim out$ = (args <= "/out") Or ([in].TrimSuffix & "+" & append.BaseName & ".csv").AsDefault
         Dim a = EntityObject.LoadDataSet([in])
         Dim b = Contract.Load(append)
-        
+
+        With args <= "/token0.ID"
+            If Not String.IsNullOrEmpty(.ref) Then
+                For Each obj As EntityObject In a
+                    obj.ID = Strings.Split(obj.ID, Delimiter:= .ref)(0)
+                Next
+            End If
+        End With
+
         Return Contract.Append(a, b) _
             .SaveTo(out) _
             .CLICode
@@ -100,3 +136,4 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         End With
     End Function
 End Module
+

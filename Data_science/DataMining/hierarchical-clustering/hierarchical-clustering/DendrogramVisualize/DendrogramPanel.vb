@@ -90,7 +90,7 @@ Namespace DendrogramVisualize
         End Property
 
         ''' <summary>
-        ''' ``<see cref="Cluster.Label"/> --> Class Color``
+        ''' ``<see cref="Cluster.Name"/> --> Class Color``
         ''' </summary>
         ''' <returns></returns>
         Public Property ClassTable As Dictionary(Of String, String)
@@ -122,9 +122,9 @@ Namespace DendrogramVisualize
                 Dim yChild As Double = pt0.Y - (clusterHeight / 2)
                 Dim distance As Double = cluster.DistanceValue
 
-                comp = New ClusterComponent(cluster, cluster.IsLeaf, pt0)
+                comp = New ClusterComponent(cluster, cluster.Leaf, pt0)
 
-                For Each child As Cluster In cluster.Childs
+                For Each child As Cluster In cluster.Children
                     Dim childLeafCount As Integer = child.CountLeafs()
                     Dim childHeight As Double = childLeafCount * leafHeight
                     Dim childDistance As Double = child.DistanceValue
@@ -135,7 +135,7 @@ Namespace DendrogramVisualize
                     Dim childComp As ClusterComponent = createComponent(child, childInitCoord, childHeight)
 
                     childComp.LinkPoint = pt0
-                    comp.Childs.Add(childComp)
+                    comp.Children.Add(childComp)
                 Next
             End If
 

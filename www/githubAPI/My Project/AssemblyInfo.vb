@@ -13,7 +13,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyCompany("gpl3")>
 <Assembly: AssemblyProduct("GithubAPI")>
 <Assembly: AssemblyCopyright("Copyright © gpl3 2016")>
-<Assembly: AssemblyTrademark("VisualBasic")>
+<Assembly: AssemblyTrademark("Microsoft VisualBasic")>
 
 <Assembly: ComVisible(False)>
 

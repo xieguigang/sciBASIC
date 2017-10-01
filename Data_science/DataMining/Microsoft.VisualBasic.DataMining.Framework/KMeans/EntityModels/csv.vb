@@ -30,28 +30,19 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
 Namespace KMeans
 
     ''' <summary>
     ''' 存储在Csv文件里面的数据模型，近似等价于<see cref="DataSet"/>，只不过多带了一个用来描述cluster的<see cref="Cluster"/>属性标签
     ''' </summary>
-    Public Class EntityLDM : Inherits DynamicPropertyBase(Of Double)
+    Public Class EntityLDM : Inherits DataSet
         Implements INamedValue
 
-        Public Property Name As String Implements INamedValue.Key
-
-        <Meta(GetType(Double))>
-        Public Overrides Property Properties As Dictionary(Of String, Double)
-            Get
-                Return MyBase.Properties
-            End Get
-            Set(value As Dictionary(Of String, Double))
-                MyBase.Properties = value
-            End Set
-        End Property
-
+        ''' <summary>
+        ''' 聚类结果的类编号
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Cluster As String
 
         Public Sub Add(key As String, n As Double)
@@ -59,7 +50,7 @@ Namespace KMeans
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Name
+            Return ID
         End Function
 
         Public Shared Function Load(path As String) As Entity()
@@ -68,14 +59,14 @@ Namespace KMeans
 
         Public Function ToModel() As Entity
             Return New Entity With {
-                .uid = Name,
+                .uid = ID,
                 .Properties = Properties.Values.ToArray
             }
         End Function
 
         Public Shared Function Load(path As String, map As String) As EntityLDM()
             Dim maps As New Dictionary(Of String, String) From {
-                {map, NameOf(EntityLDM.Name)}
+                {map, NameOf(EntityLDM.ID)}
             }
             Return path.LoadCsv(Of EntityLDM)(maps:=maps).ToArray
         End Function
@@ -83,7 +74,7 @@ Namespace KMeans
         Public Shared Iterator Function FromModel(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of EntityLDM)
             For Each x As NamedValue(Of Dictionary(Of String, Double)) In data
                 Yield New EntityLDM With {
-                    .Name = x.Name,
+                    .ID = x.Name,
                     .Properties = x.Value
                 }
             Next

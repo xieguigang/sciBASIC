@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2a201d1e5cac6d5e130e0fb27c11c89, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::fa2ca1194b5f77e8fb8a1a1281243d65, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,14 @@ Namespace Imaging
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
             Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Distance(points As IEnumerable(Of Point), anchor As Point) As Double()
+            Return points _
+                .Select(Function(pt) Distance(pt.X, pt.Y, anchor.X, anchor.Y)) _
+                .ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
