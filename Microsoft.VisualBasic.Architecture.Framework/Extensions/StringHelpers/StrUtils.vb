@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::c620c4a3b30a4ebaadef56930952d712, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StrUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -63,8 +63,15 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 
 Public Module StrUtils
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetString(bytes As IEnumerable(Of Byte), Optional encoding As Encodings = Encodings.UTF8) As String
+        Return encoding.CodePage.GetString(bytes.ToArray)
+    End Function
 
     ''' <summary>
     ''' 从第一个字符开始，比较出最长的label串，注意，这个不是LCS问题
@@ -97,6 +104,7 @@ Public Module StrUtils
     ''' <param name="s"></param>
     ''' <returns></returns>
     <Extension>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CharCodes(s As IEnumerable(Of Char)) As Integer()
         Return s.SafeQuery.Select(AddressOf AscW).ToArray
     End Function
@@ -126,6 +134,7 @@ Public Module StrUtils
     ''' <returns></returns>
     Public ReadOnly Property InvariantCulture As CultureInfo = CultureInfo.InvariantCulture
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function StartsWith(str1 As String, str2 As String) As Boolean
         Return StartsWith(str1, str2, False)
     End Function
@@ -144,6 +153,7 @@ Public Module StrUtils
         Return (0 = String.Compare(str1, 0, str2, 0, l2, ignore_case, StrUtils.InvariantCulture))
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function EndsWith(str1 As String, str2 As String) As Boolean
         Return EndsWith(str1, str2, False)
     End Function
@@ -185,6 +195,7 @@ Public Module StrUtils
         Return attributeValue
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SplitRemoveEmptyEntries(value As String, separator As Char()) As String()
         Return value.Split(separator, StringSplitOptions.RemoveEmptyEntries)
     End Function
