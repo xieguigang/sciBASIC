@@ -48,5 +48,28 @@ SET resource="./Installer/Resources/installer.zip"
 DEL /a /f %resource%
 MOVE %zip% %resource%
 
- 
+REM cleanup the installer output folder
+REM and then run msbuild for installer project
 
+SET output="./bootstrap/Resources/"
+
+RD /S /Q %output%
+MSBuild %installer_sln% /t:Rebuild/p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./installer-build-1.log;verbosity=diagnostic 
+
+REM now installer program is located at the bootstrap loader resource folder
+REM zip the output as a zip file
+
+SET zip="./bootstrap/Resources/installer.zip"
+WinRAR a -r %zip% %output%
+
+REM Rebuild the installer project
+REM and then we can generates the final installer file
+SET output="./output/"
+
+RD /S /Q %output%
+MSBuild %installer_sln% /t:Rebuild/p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./installer-build-2.log;verbosity=diagnostic 
+
+echo [Done] Build sciBASIC# Framework installer success!
+
+REM open the output directory
+explorer %output%
