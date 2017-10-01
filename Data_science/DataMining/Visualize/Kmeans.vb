@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.Driver.CSS
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -63,6 +64,7 @@ Public Module Kmeans
     ''' <param name="padding$"></param>
     ''' <param name="bg$"></param>
     ''' <returns></returns>
+    <Driver("kmeans.scatter.2D")>
     Public Function Scatter2D(clusterData As IEnumerable(Of EntityLDM),
                               catagory As (X As NamedCollection(Of String), Y As NamedCollection(Of String)),
                               Optional size$ = "1600,1600",
@@ -173,6 +175,7 @@ Public Module Kmeans
     ''' 使用这个函数是对现有的kmeans的结果数据之上进行可视化绘图操作
     ''' </remarks>
     <Extension>
+    <Driver("kmeans.scatter.3D")>
     Public Function Scatter3D(clusterData As IEnumerable(Of EntityLDM),
                               catagory As Dictionary(Of NamedCollection(Of String)),
                               camera As Camera,
