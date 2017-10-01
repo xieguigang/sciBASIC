@@ -194,7 +194,7 @@ Namespace Drawing2D.Colors
             Try
 
                 Dim colors As Dictionary(Of String, String()) = My.Resources _
-                    .designer_colors _
+                    .designer_colors.getstring() _
                     .LoadObject(Of Dictionary(Of String, String()))
                 Dim valids As New Dictionary(Of Color, Color())
 
