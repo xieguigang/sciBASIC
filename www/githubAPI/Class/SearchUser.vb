@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace [Class]
 
-    Public Class SearchResult(Of T As Class) : Inherits ClassObject
+    Public Class SearchResult(Of T As Class) : Inherits BaseClass
         Public Property total_count As Integer
         Public Property incomplete_results As Boolean
         Public Property items As T()
@@ -42,7 +42,7 @@ Namespace [Class]
     ''' <summary>
     ''' <see cref="login"/>是主键<see cref="INamedValue.Key"/>
     ''' </summary>
-    Public Class User : Inherits ClassObject
+    Public Class User : Inherits BaseClass
         Implements INamedValue
 
         Public Property score As Double
