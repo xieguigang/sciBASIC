@@ -1,5 +1,7 @@
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Language
 Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
@@ -14,23 +16,6 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </remarks>
 Public Module CssParser
 
-    Public Class EmptyTagNameException : Inherits Exception
-
-        Public Sub New()
-            Call MyBase.New("Tag name is null.")
-        End Sub
-    End Class
-
-    Public Class EmptyPropertyValueException : Inherits Exception
-
-        Public Sub New()
-            MyBase.New("Property value is null.")
-        End Sub
-    End Class
-
-    Dim PrpertyValue As Dictionary(Of CssProperty, String)
-    Dim tag As Dictionary(Of HtmlTags, String)
-
     ''' <summary>
     ''' 主要的CSS解析函数
     ''' </summary>
@@ -41,12 +26,18 @@ Public Module CssParser
         Dim IndivisualTag As List(Of String) = IndivisualTags(CSS)
 
         For Each tag As String In IndivisualTag
-            Dim tagname As String() = r.Split(tag, "[{]")
-            Dim TWCSS As New TagWithCSS()
+            Dim tagname$() = r.Split(tag, "[{]")
+
             If RemoveWhitespace(tagname(0)) <> "" Then
-                TWCSS.TagName = RemoveWitespaceFormStartAndEnd(tagname(0))
-                TWCSS.Properties = GetProperty(GetBetween(tag, "{", "}"))
-                TagWithCSSList.Add(TWCSS)
+                Dim TWCSS As New TagWithCSS() With {
+                    .TagName = RemoveWitespaceFormStartAndEnd(tagname(0)),
+                    .Properties = tag _
+                        .GetBetween("{", "}") _
+                        .GetProperty() _
+                        .ToArray
+                }
+
+                TagWithCSSList += TWCSS
             End If
         Next
 
@@ -78,35 +69,42 @@ Public Module CssParser
         Next
 
         For Each m As Match In r.Matches(s.ToString, IndivisualTagsPattern)
-            b.Add(m.Value.StripBlank)
+            b += m.Value.StripBlank
         Next
 
         Return b
     End Function
 
-    Private Function GetProperty(input As String) As List(Of [Property])
-        Dim p As New List(Of [Property])()
+    <Extension>
+    Private Iterator Function GetProperty(input As String) As IEnumerable(Of [Property])
         Dim s As String() = r.Split(input, "[;]")
-        Dim i As Integer = 0
+
         For Each b As String In s
-            If b <> "" Then
-                Dim t As String() = r.Split(s(i), "[:]")
-                Dim g As New [Property]()
-                If t.Length = 2 Then
-                    If t(0) <> "" Then
-                        g.PropertyName = RemoveWhitespace(t(0))
-                    End If
-                    If t(1) <> "" Then
-                        g.PropertyValue = RemoveWitespaceFormStartAndEnd(t(1))
-                    End If
-                    p.Add(g)
-                End If
+            If b.StringEmpty Then
+                Continue For
             End If
-            i += 1
+
+            Dim t As String() = r.Split(b, "[:]")
+
+            If t.Length = 2 Then
+                Dim propertyName$ = Nothing, propertyValue$ = Nothing
+
+                If t(0) <> "" Then
+                    propertyName = RemoveWhitespace(t(0))
+                End If
+                If t(1) <> "" Then
+                    propertyValue = RemoveWitespaceFormStartAndEnd(t(1))
+                End If
+
+                Yield New [Property] With {
+                    .PropertyName = propertyName,
+                    .PropertyValue = propertyValue
+                }
+            End If
         Next
-        Return p
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function RemoveWhitespace(input As String) As String
         Return New String(input.ToCharArray().Where(Function(c) Not [Char].IsWhiteSpace(c)).ToArray())
     End Function
@@ -118,7 +116,6 @@ Public Module CssParser
     End Function
 
     Private Sub SetPrpertyValue()
-        PrpertyValue = New Dictionary(Of CssProperty, String)()
         Dim csskey As String() = {"font-weight", "border-radius", "color-stop", "alignment-adjust", "alignment-baseline", "animation",
             "animation-delay", "animation-direction", "animation-duration", "animation-iteration-count", "animation-name", "animation-play-state",
             "animation-timing-function", "appearance", "azimuth", "backface-visibility", "background", "background-attachment",
@@ -169,33 +166,5 @@ Public Module CssParser
             "-webkit-flex", "flex", "row-reverse", "space-around", "first", "justify",
             "inter-word", "uppercase", "lowercase", "capitalize", "nowrap", "break-all",
             "break-word", "overline", "line-through", "wavy", "myFirstFont", "sensation"}
-        Dim i As Integer = 0
-        For Each T As String In csskey
-            PrpertyValue.Add(CType(i, CssProperty), T)
-            i += 1
-        Next
-    End Sub
-
-    Private Sub setHTML()
-        tag = New Dictionary(Of HtmlTags, String)()
-        Dim tags As String() = {"h1", "h2", "h3", "h4", "h5", "h6",
-            "body", "a", "img", "ol", " ul", "li",
-            "table", "tr", "th", "nav", "heder", "footer",
-            "form", "option", "select", "button", "textarea", "input",
-            "audio", "video", "iframe", "hr", "em", "div",
-            "pre", "p", "span"}
-        Dim i As Integer = 0
-        For Each T As String In tags
-            tag.Add(CType(i, HtmlTags), T)
-            i += 1
-        Next
-    End Sub
-
-    ''' <summary>
-    ''' Initilise the pasrser with Css code.
-    ''' </summary>
-    Sub New()
-        setHTML()
-        SetPrpertyValue()
     End Sub
 End Module
