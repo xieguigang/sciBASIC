@@ -1,5 +1,8 @@
 @echo off
 
+REM Imports MSBuild environment
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
+
 REM batch script for build sciBASIC# installer project
 REM output location is at ``./output`` directory
 REM redistribute the ``sciBASIC_installer.exe``
@@ -64,12 +67,19 @@ WinRAR a -r %zip% %output%
 
 REM Rebuild the installer project
 REM and then we can generates the final installer file
-SET output="./output/"
+SET output=./output/
 
 RD /S /Q %output%
 MSBuild %installer_sln% /t:Rebuild/p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./installer-build-2.log;verbosity=diagnostic 
 
-echo [Done] Build sciBASIC# Framework installer success!
+if exist %output%/sciBASIC_installer.exe (
+    echo [Done] Build sciBASIC# Framework installer success!
+) else (
+    echo "Build installer project failured!"	
+	pause
+	
+	exit -500
+)
 
 REM open the output directory
 explorer %output%
