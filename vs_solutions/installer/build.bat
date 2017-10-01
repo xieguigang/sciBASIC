@@ -34,14 +34,19 @@ echo "Now run build for the sciBASIC# framework"
 
 REM cleanup the output workspace at first and then run build
 
-SET output="../../.vs/installer/"
+SET output=../../.vs/installer
 
 RD /S /Q %output%
 MSBuild %sciBASIC_sln% /t:Rebuild/p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./sciBASIC-build.log;verbosity=diagnostic
 
 REM package the output into a zip package
+SET zip=%output%/installer.zip
+WinRAR a -r %zip% %output%
 
+REM add it as installer project resource file
+SET resource="./Installer/Resources/installer.zip"
+DEL /a /f %resource%
+MOVE %zip% %resource%
 
-
-
+ 
 
