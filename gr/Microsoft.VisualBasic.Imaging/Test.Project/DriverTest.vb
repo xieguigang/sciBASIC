@@ -1,8 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Driver.CSS
-Imports Microsoft.VisualBasic.MIME.Markup
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Render
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
 Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
 Module DriverTest

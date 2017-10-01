@@ -1,7 +1,7 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Render
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
 
 Namespace Driver.CSS
 

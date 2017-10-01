@@ -28,7 +28,7 @@
 
 Imports System.Reflection
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
+Imports HTMLParser = Microsoft.VisualBasic.MIME.Markup.HTML.Render.Parser
 
 Namespace HTML.CSS.Render
 
@@ -60,7 +60,7 @@ Namespace HTML.CSS.Render
             _BlockSource = blockSource
 
             'Extract property assignments
-            Dim matches As MatchCollection = Parser.Match(Parser.CssProperties, blockSource)
+            Dim matches As MatchCollection = HTMLParser.Match(HTMLParser.CssProperties, blockSource)
 
             'Scan matches
             For Each match As Match In matches
