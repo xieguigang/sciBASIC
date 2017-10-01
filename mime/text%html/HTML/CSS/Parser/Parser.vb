@@ -393,7 +393,6 @@ Public Class CssParser
     ''' <param name="Tag">Tag name.</param>
     ''' <param name="property">Property to add/overwrite</param>
     ''' <param name="PropertValue">Property's valueto add/overwrite</param>
-    ''' <param name="Type">Type of tag (HTML tag ,Class or Id).Deffalt HTML Tag.</param>
     ''' <returns>Added/Overwrited or not.</returns>
     Public Function AddPropery(tag As HtmlTags, [property] As CssProperty, PropertValue As String) As Boolean
         Return AddPropery(Me.tag(tag), [property], PropertValue)
