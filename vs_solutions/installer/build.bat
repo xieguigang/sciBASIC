@@ -3,8 +3,20 @@
 REM Imports MSBuild environment
 REM run this script directly will not working???
 SET vs_dev="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
+SET currentWork=%cd%
+SET drive=%currentWork:~0,2%
+
+echo Current workspace: %currentWork% is located at Drive %drive%
 
 CALL %vs_dev%
+
+REM restore the workspace location
+
+%driver%
+CD %currentWork%
+echo %cd%
+
+pause
 
 REM batch script for build sciBASIC# installer project
 REM output location is at ``./output`` directory
