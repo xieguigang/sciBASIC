@@ -34,10 +34,13 @@ echo "Now run build for the sciBASIC# framework"
 
 REM cleanup the output workspace at first and then run build
 
-SET output=""
+SET output="../../.vs/installer/"
 
 RD /S /Q %output%
-MSBuild 
+MSBuild %sciBASIC_sln% /t:Rebuild/p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./sciBASIC-build.log;verbosity=diagnostic
+
+REM package the output into a zip package
+
 
 
 
