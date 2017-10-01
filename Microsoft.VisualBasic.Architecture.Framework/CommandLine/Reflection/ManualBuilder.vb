@@ -154,7 +154,7 @@ Namespace CommandLine.Reflection
 
                 ' 加上开关名字的最大长度就是前面的开关说明部分的最大字符串长度
                 ' 后面的description帮助信息的偏移量都是依据这个值计算出来的
-                Dim helpOffset% = maxPrefix + maxLen - 10
+                Dim helpOffset% = maxPrefix + maxLen - 5
                 Dim skipOptionalLine As Boolean = False
 
                 ' 必须的参数放在前面，可选的参数都是在后面的位置
@@ -167,6 +167,10 @@ Namespace CommandLine.Reflection
                         Call Console.WriteLine("  Options:")
                         Call Console.WriteLine()
                     End If
+
+                    ' Dim l% 这个参数就是当前的这个命令的前半部的标识符部分的字符串长度
+                    ' helpOffset%的值减去当前的长度l，即可得到当前的命令的help info的
+                    ' 偏移量
 
                     If param.[Optional] Then
                         Dim fore = Console.ForegroundColor
@@ -186,7 +190,6 @@ Namespace CommandLine.Reflection
                         l = "(optional) ".Length + s.Length
                     Else
                         s = param.Example
-                        s = s
                         l = s.Length
 
                         Console.Write("  ")
@@ -209,7 +212,7 @@ Namespace CommandLine.Reflection
                     Call Console.Write(s)
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
-                    blank = New String(" "c, helpOffset - 1)
+                    blank = New String(" "c, helpOffset - l)
                     infoLines$ = Paragraph _
                         .Split(param.Description, 120) _
                         .ToArray
