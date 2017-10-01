@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
-Namespace HTML.CSS.Render
+Namespace HTML.CSS.Parser
 
     Public Class CSSFile
 
