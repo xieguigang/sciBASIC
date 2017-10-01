@@ -14,8 +14,6 @@ REM restore the workspace location
 CD /D %currentWork%
 echo %cd%
 
-pause
-
 REM batch script for build sciBASIC# installer project
 REM output location is at ``./output`` directory
 REM redistribute the ``sciBASIC_installer.exe``
@@ -31,18 +29,18 @@ if exist %sciBASIC_sln% (
     echo "%sciBASIC_sln% exist!"
 ) else (
     echo "Can not found sciBASIC# project!"	
-	pause
+    pause
 	
-	exit -100
+    exit -100
 )
 
 if exist %installer_sln% (
     echo "%installer_sln% exist!"
 ) else (
     echo "Can not found sciBASIC# installer project!"	
-	pause
+    pause
 	
-	exit -120
+    exit -120
 )
 
 echo "[ALL] check success!"
@@ -89,9 +87,9 @@ if exist %output%/sciBASIC_installer.exe (
     echo [Done] Build sciBASIC# Framework installer success!
 ) else (
     echo "Build installer project failured!"	
-	pause
+    pause
 	
-	exit -500
+    exit -500
 )
 
 REM open the output directory
