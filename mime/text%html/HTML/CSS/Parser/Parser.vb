@@ -116,7 +116,8 @@ Public Module CssParser
     End Function
 
     Private Sub SetPrpertyValue()
-        Dim csskey As String() = {"font-weight", "border-radius", "color-stop", "alignment-adjust", "alignment-baseline", "animation",
+        Dim csskey As String() = {
+            "font-weight", "border-radius", "color-stop", "alignment-adjust", "alignment-baseline", "animation",
             "animation-delay", "animation-direction", "animation-duration", "animation-iteration-count", "animation-name", "animation-play-state",
             "animation-timing-function", "appearance", "azimuth", "backface-visibility", "background", "background-attachment",
             "background-break", "background-clip", "background-color", "background-image", "background-origin", "background-position",

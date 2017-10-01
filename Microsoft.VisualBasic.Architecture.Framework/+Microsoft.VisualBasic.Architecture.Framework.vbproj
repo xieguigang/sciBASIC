@@ -593,6 +593,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\LineValue.vb" />
     <Compile Include="ApplicationServices\Utils.vb" />
+    <Compile Include="Extensions\CodeDOM\CodeHelper.vb" />
     <Compile Include="Extensions\CodeDOM\References.vb" />
     <Compile Include="Extensions\Collection\VectorAssertExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
