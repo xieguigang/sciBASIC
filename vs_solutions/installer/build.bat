@@ -2,7 +2,7 @@
 
 REM Imports MSBuild environment
 REM run this script directly will not working???
-"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
+CALL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
 
 REM batch script for build sciBASIC# installer project
 REM output location is at ``./output`` directory
