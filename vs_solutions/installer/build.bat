@@ -56,7 +56,10 @@ MSBuild %sciBASIC_sln% /t:Rebuild /p:Configuration=installer_x64;Platform=x64 /f
 REM package the output into a zip package
 SET WinRAR="C:\Program Files\WinRAR\RAR.exe"
 SET zip=%output%/installer.zip
-%WinRAR% a -r %zip% %output%
+
+CD /D %output%
+%WinRAR% a -r "./installer.zip" "./"
+CD /D %currentWork%
 
 REM add it as installer project resource file
 SET resource="./Installer/Resources/installer.zip"
@@ -77,7 +80,9 @@ REM zip the output as a zip file
 SET output="./bootstrap/Resources"
 SET zip="./bootstrap/Resources/installer.zip"
 echo "  --> %output%"
-%WinRAR% a -r %zip% %output%
+CD %output%
+%WinRAR% a -r "./installer.zip" "./"
+CD %currentWork%
 
 REM Rebuild the installer project
 REM and then we can generates the final installer file
