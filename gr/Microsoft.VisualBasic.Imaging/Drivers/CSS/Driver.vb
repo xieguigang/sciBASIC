@@ -24,6 +24,7 @@ Namespace Driver.CSS
     End Class
 
     Public Enum Types
+
         ''' <summary>
         ''' <see cref="CSSFont"/>
         ''' </summary>
@@ -37,7 +38,7 @@ Namespace Driver.CSS
         ''' </summary>
         Brush
         ''' <summary>
-        ''' <see cref="MIME.Markup.HTML.CSS.Size"/>
+        ''' <see cref="CSSsize"/>
         ''' </summary>
         Size
         ''' <summary>

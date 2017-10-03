@@ -1,6 +1,6 @@
 ﻿Namespace HTML.CSS
 
-    Public Class Size
+    Public Class CSSsize
 
         Public Property width As Double
         Public Property height As Double
