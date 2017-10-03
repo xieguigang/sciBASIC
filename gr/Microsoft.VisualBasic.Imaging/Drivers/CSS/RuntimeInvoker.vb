@@ -52,7 +52,7 @@ Namespace Driver.CSS
             {CSS.Types.Brush, GetType(Fill).__fields},
             {CSS.Types.Font, GetType(CSSFont).__fields},
             {CSS.Types.Padding, GetType(Padding).__fields},
-            {CSS.Types.Size, GetType(Size).__fields},
+            {CSS.Types.Size, GetType(CSSsize).__fields},
             {CSS.Types.Stroke, GetType(Stroke).__fields}
         }
 
@@ -78,19 +78,51 @@ Namespace Driver.CSS
             Call CSS.AppendLine($"/* CSS template for ""{driver.GetCustomAttribute(Of Driver).Name}"" */")
             Call CSS.AppendLine()
 
+            ' global settings
+            Call CSS.AppendLine("@canvas {")
+
+            ' canvas size
+            Call CSS.AppendLine()
+            Call CSS.AppendLine("/* Canvas size */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Size))
+
+            ' canvas drawing paddings
+            Call CSS.AppendLine()
+            Call CSS.AppendLine("/* canvas drawing paddings */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Padding))
+
+            ' background
+            Call CSS.AppendLine()
+            Call CSS.AppendLine("/* Canvas background */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Brush))
+
+            ' default font style
+            Call CSS.AppendLine()
+            Call CSS.AppendLine("/* default CSS font style */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Font))
+
+            Call CSS.AppendLine("}")
+            Call CSS.AppendLine()
+
+            ' optional function parameters for tweaks of CSS styles
             For Each parm In args
                 Call CSS.AppendLine($"#{parm.arg.Name} {{")
-
-                For Each field In types(parm.Type.Type)
-                    Call CSS.AppendLine($"    {field}: <value>;")
-                Next
-
+                Call CSS.AppendFields(types(parm.Type.Type))
                 Call CSS.AppendLine("}")
+
                 Call CSS.AppendLine()
             Next
 
             Return CSS.ToString
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Sub AppendFields(CSS As StringBuilder, fields$())
+            For Each field As String In fields
+                Call CSS.AppendLine($"    {field}: <value>;")
+            Next
+        End Sub
 
         ' CSS文件说明
         ' 
