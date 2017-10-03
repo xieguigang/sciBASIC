@@ -209,10 +209,15 @@ NULL:       If Not strict Then
     '''
     <ExportAPI("Get.Version")>
     Public Function GetVersion(Product As String) As Version
-        Dim assm As System.Reflection.Assembly = System.Reflection.Assembly.LoadFile(Product)
+        Dim assm As Assembly = Assembly.LoadFile(Product)
         Return assm.GetVersion
     End Function
 
+    ''' <summary>
+    ''' 如果不存在<see cref="DescriptionAttribute"/>定义则会返回空白字符串
+    ''' </summary>
+    ''' <param name="prop"></param>
+    ''' <returns></returns>
     <ExportAPI("Get.Description")>
     <Extension> Public Function Description(prop As PropertyInfo) As String
         Dim attrs As Object() = prop.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=True)

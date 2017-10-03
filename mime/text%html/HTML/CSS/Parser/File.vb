@@ -89,6 +89,14 @@ Namespace HTML.CSS.Parser
             End Get
         End Property
 
+        Public ReadOnly Property CSSValue As String
+            Get
+                Return Properties _
+                    .Select(Function(x) $"{x.Key}: {x.Value};") _
+                    .JoinBy(ASCII.LF)
+            End Get
+        End Property
+
         ''' <summary>
         ''' Get the selector text name
         ''' </summary>
@@ -100,11 +108,7 @@ Namespace HTML.CSS.Parser
         End Property
 
         Public Overrides Function ToString() As String
-            Return Selector & " { " &
-                Properties _
-                    .Select(Function(x) $"{x.Key}: {x.Value};") _
-                    .JoinBy(ASCII.LF) &
-            " }"
+            Return Selector & " { " & CSSValue & " }"
         End Function
     End Class
 
