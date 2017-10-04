@@ -64,7 +64,11 @@ Namespace Driver.CSS
         <Extension> Public Function CSSTemplate(driver As MethodInfo) As String
             Dim args = driver _
                 .GetParameters _
-                .Where(Function(parm) parm.ParameterType Is GetType(String)) _
+                .Where(Function(parm)
+                           With parm.ParameterType
+                               Return .ref Is GetType(String) OrElse DataFramework.IsPrimitive(.ref)
+                           End With
+                       End Function) _
                 .Select(Function(parm)
                             Return (
                                 Type:=parm.GetCustomAttribute(Of CSSSelector),
