@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::fa3ac491c458af4bc0c0409003987b1b, ..\sciBASIC#\mime\text%html\HTML\CSS\FontStyle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging
@@ -77,15 +78,65 @@ Namespace HTML.CSS
         ''' The <see cref="FontStyle"/> of the new font.
         ''' </summary>
         ''' <returns></returns>
-        Public Property style As FontStyle = FontStyle.Regular
-        Public Property size As Single
+        <Description("font-style")> Public Property style As FontStyle = FontStyle.Regular
+
+        ''' <summary>
+        ''' 该属性设置元素的字体大小。注意，实际上它设置的是字体中字符框的高度；实际的字符字形可能比这些框高或矮（通常会矮）。
+        ''' 各关键字对应的字体必须比一个最小关键字相应字体要高，并且要小于下一个最大关键字对应的字体。
+        ''' 
+        ''' + ``xx-small``: 把字体的尺寸设置为不同的尺寸，从 xx-small 到 xx-large。
+        ''' + ``x-small``
+        ''' + ``small``
+        ''' + ``medium``:  默认值：medium。
+        ''' + ``large``
+        ''' + ``x-large``
+        ''' + ``xx-large``
+        ''' + ``smaller``: 把 font-size 设置为比父元素更小的尺寸。
+        ''' + ``larger``:  把 font-size 设置为比父元素更大的尺寸。
+        ''' + ``length``:  把 font-size 设置为一个固定的值。
+        ''' + ``%``:       把 font-size 设置为基于父元素的一个百分比值。
+        ''' + ``inherit``: 规定应该从父元素继承字体尺寸。
+        ''' </summary>
+        ''' <returns></returns>
+        <Description("font-size")> Public Property size As Single
         ''' <summary>
         ''' A string representation of the <see cref="FontFamily"/> for the new System.Drawing.Font.
         ''' </summary>
         ''' <returns></returns>
-        Public Property family As String
-        Public Property weight As Single
-        Public Property [variant] As String
+        <Description("font-family")> Public Property family As String
+
+        ''' <summary>
+        ''' 该属性用于设置显示元素的文本中所用的字体加粗。数字值 400 相当于 关键字 normal，700 等价于 bold。
+        ''' 每个数字值对应的字体加粗必须至少与下一个最小数字一样细，而且至少与下一个最大数字一样粗。
+        ''' 
+        ''' + ``normal``:  默认值。定义标准的字符。
+        ''' + ``bold``:    定义粗体字符。
+        ''' + ``bolder``:  定义更粗的字符。
+        ''' + ``lighter``: 定义更细的字符。
+        ''' + ``100``: 定义由粗到细的字符。400 等同于 normal，而 700 等同于 bold。
+        ''' + ``200``: 同上
+        ''' + ``300``: 同上
+        ''' + ``400``: 同上
+        ''' + ``500``: 同上
+        ''' + ``600``: 同上
+        ''' + ``700``: 同上
+        ''' + ``800``: 同上
+        ''' + ``900``: 同上
+        ''' + ``inherit``: 规定应该从父元素继承字体的粗细。
+        ''' </summary>
+        ''' <returns></returns>
+        <Description("font-weight")> Public Property weight As Single
+
+        ''' <summary>
+        ''' ``font-variant``属性设置小型大写字母的字体显示文本，这意味着所有的小写字母均会被转换为大写，
+        ''' 但是所有使用小型大写字体的字母与其余文本相比，其字体尺寸更小。
+        ''' 
+        ''' + ``normal``:     默认值。浏览器会显示一个标准的字体。
+        ''' + ``small-caps``: 浏览器会显示小型大写字母的字体。
+        ''' + ``inherit``:    规定应该从父元素继承 font-variant 属性的值。
+        ''' </summary>
+        ''' <returns></returns>
+        <Description("font-variant")> Public Property [variant] As String
 
         ''' <summary>
         ''' Initializes a new <see cref="System.Drawing.Font"/> using a specified size and style.

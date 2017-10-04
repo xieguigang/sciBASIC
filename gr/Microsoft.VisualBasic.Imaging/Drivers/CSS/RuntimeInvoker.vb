@@ -126,7 +126,7 @@ Namespace Driver.CSS
         <Extension>
         Private Sub AppendFields(CSS As StringBuilder, fields$())
             For Each field As String In fields
-                Call CSS.AppendLine($"{Indent}{field}: <value>;")
+                Call CSS.AppendLine($"{Indent}{field}: value;")
             Next
         End Sub
 
