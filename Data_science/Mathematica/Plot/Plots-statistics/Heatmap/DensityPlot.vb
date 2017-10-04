@@ -62,9 +62,9 @@ Namespace Heatmap
         ''' <returns></returns>
         <Driver(DriverName)>
         Public Function Plot(points As IEnumerable(Of PointF),
-                             <CSSSelector(Types.Size)> Optional size$ = "1600,1200",
-                             <CSSSelector(Types.Padding)> Optional padding$ = g.DefaultPadding,
-                             <CSSSelector(Types.Brush)> Optional bg$ = "white",
+                             <GlobalCSSSelector(Types.Size)> Optional size$ = "1600,1200",
+                             <GlobalCSSSelector(Types.Padding)> Optional padding$ = g.DefaultPadding,
+                             <GlobalCSSSelector(Types.Brush)> Optional bg$ = "white",
                              Optional schema$ = "Jet",
                              Optional levels% = 20,
                              Optional steps$ = Nothing,
