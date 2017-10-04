@@ -56,6 +56,8 @@ Namespace Driver.CSS
             {CSS.Types.Stroke, GetType(Stroke).__fields}
         }
 
+        Const Indent$ = vbTab
+
         ''' <summary>
         ''' Generate CSS template for the plot driver function.
         ''' </summary>
@@ -87,22 +89,22 @@ Namespace Driver.CSS
 
             ' canvas size
             Call CSS.AppendLine()
-            Call CSS.AppendLine("/* Canvas size */")
+            Call CSS.AppendLine(Indent & "/* Canvas size */")
             Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Size))
 
             ' canvas drawing paddings
             Call CSS.AppendLine()
-            Call CSS.AppendLine("/* canvas drawing paddings */")
+            Call CSS.AppendLine(Indent & "/* canvas drawing paddings */")
             Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Padding))
 
             ' background
             Call CSS.AppendLine()
-            Call CSS.AppendLine("/* Canvas background */")
+            Call CSS.AppendLine(Indent & "/* Canvas background */")
             Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Brush))
 
             ' default font style
             Call CSS.AppendLine()
-            Call CSS.AppendLine("/* default CSS font style */")
+            Call CSS.AppendLine(Indent & "/* default CSS font style */")
             Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Font))
 
             Call CSS.AppendLine("}")
@@ -124,7 +126,7 @@ Namespace Driver.CSS
         <Extension>
         Private Sub AppendFields(CSS As StringBuilder, fields$())
             For Each field As String In fields
-                Call CSS.AppendLine($"    {field}: <value>;")
+                Call CSS.AppendLine($"{Indent}{field}: <value>;")
             Next
         End Sub
 
