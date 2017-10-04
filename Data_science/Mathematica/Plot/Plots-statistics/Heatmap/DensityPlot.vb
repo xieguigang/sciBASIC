@@ -49,6 +49,8 @@ Namespace Heatmap
     ''' </summary>
     Public Module DensityPlot
 
+        Public Const DriverName$ = "scatter.density.plot"
+
         ''' <summary>
         ''' Similar to the <see cref="Contour"/> plot but plot in scatter mode.
         ''' </summary>
@@ -58,7 +60,7 @@ Namespace Heatmap
         ''' <param name="bg$"></param>
         ''' <param name="schema$"></param>
         ''' <returns></returns>
-        <Driver("scatter.density.plot")>
+        <Driver(DriverName)>
         Public Function Plot(points As IEnumerable(Of PointF),
                              <CSSSelector(Types.Size)> Optional size$ = "1600,1200",
                              <CSSSelector(Types.Padding)> Optional padding$ = g.DefaultPadding,
