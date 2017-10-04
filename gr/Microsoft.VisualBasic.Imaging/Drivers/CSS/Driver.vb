@@ -45,5 +45,13 @@ Namespace Driver.CSS
         ''' <see cref="MIME.Markup.HTML.CSS.Padding"/>
         ''' </summary>
         Padding
+        ''' <summary>
+        ''' line width, box width, etc, almost the same as <see cref="Size"/>
+        ''' </summary>
+        [Integer]
+        ''' <summary>
+        ''' Circle Radius(examples as node size in ``d3.js``)
+        ''' </summary>
+        Float
     End Enum
 End Namespace
