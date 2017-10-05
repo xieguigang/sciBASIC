@@ -43,6 +43,12 @@ Namespace Scripting.Runtime
     ''' </summary>
     Public Module Casting
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ScriptValue(size As Size) As String
+            Return $"{size.Width},{size.Height}"
+        End Function
+
         <Extension>
         Public Iterator Function [As](Of T)(source As IEnumerable) As IEnumerable(Of T)
             Dim l As New List(Of Object)
