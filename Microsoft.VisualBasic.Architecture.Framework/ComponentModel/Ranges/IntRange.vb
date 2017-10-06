@@ -175,10 +175,12 @@ Namespace ComponentModel.Ranges
             Return r
         End Operator
 
-        Public Shared Widening Operator CType(values%()) As IntRange
-            With values
-                Return New IntRange(.Min, .Max)
-            End With
-        End Operator
+        ' 2017-10-6
+        ' 因为下面的这个隐式转换操作符会和Vector的Item属性产生冲突，所以在这里将这个操作符移除掉
+        'Public Shared Widening Operator CType(values%()) As IntRange
+        '    With values
+        '        Return New IntRange(.Min, .Max)
+        '    End With
+        'End Operator
     End Class
 End Namespace

@@ -182,7 +182,7 @@ Namespace Heatmap
                 .ToDictionary(Function(index) index.Key,
                               Function(n) n.Count)
             Dim range As New IntRange(counts.Values)
-            Dim colorIndex As IntRange = {0, schema.Length - 1}
+            Dim colorIndex As New IntRange({0, schema.Length - 1})
             Dim density = gridIndex _
                 .Select(Function(index) counts(index.ToString)) _
                 .Select(Function(d)
