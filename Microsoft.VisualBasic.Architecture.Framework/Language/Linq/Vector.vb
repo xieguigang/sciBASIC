@@ -252,7 +252,7 @@ Namespace Language
         ''' <returns></returns>
         Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of T)
             Get
-                Return New Vector(Of T)(Me(Which.IsTrue(booleans)))
+                Return New Vector(Of T)(Me(indices:=Which.IsTrue(booleans)))
             End Get
             Set(value As Vector(Of T))
                 For Each i In booleans.SeqIterator
