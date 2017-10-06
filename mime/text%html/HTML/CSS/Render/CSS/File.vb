@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace HTML.CSS.Render
 
+    ''' <summary>
+    ''' CSS文件的对象模型，一个CSS文件是由若干个selector节点选择器所构成的，以及每一个选择器都是由若干样式属性定义所构成
+    ''' </summary>
     Public Class CSSFile
 
         Public Property Selectors As Dictionary(Of Selector)
@@ -26,6 +29,12 @@ Namespace HTML.CSS.Render
             End Get
         End Property
 
+        ''' <summary>
+        ''' 根据类型来获取得到相应的选择器的样式
+        ''' </summary>
+        ''' <param name="name$">没有class或者ID的符号前缀的名称</param>
+        ''' <param name="type">class还是ID或者还是html的标签名称？</param>
+        ''' <returns></returns>
         Public Function FindStyle(name$, type As Types) As Selector
             With ("." & name) Or ("#" & name).AsDefault(Function() type = Types.ID)
                 Return GetSelector(.ref)
@@ -33,9 +42,16 @@ Namespace HTML.CSS.Render
         End Function
     End Class
 
+    ''' <summary>
+    ''' CSS之中的样式选择器
+    ''' </summary>
     Public Class Selector : Inherits [Property](Of String)
         Implements INamedValue
 
+        ''' <summary>
+        ''' 选择器的名称
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Selector As String Implements IKeyedEntity(Of String).Key
         Public ReadOnly Property Type As Types
             Get
