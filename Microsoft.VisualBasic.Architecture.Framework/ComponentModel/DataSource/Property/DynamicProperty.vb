@@ -194,7 +194,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         ''' </summary>
         ''' <returns></returns>
-        <ScriptIgnore> Public Iterator Property source As IEnumerable(Of NamedValue(Of T))
+        <ScriptIgnore> Public Iterator Property src As IEnumerable(Of NamedValue(Of T))
             Get
                 For Each x In Properties
                     Yield New NamedValue(Of T) With {
@@ -203,6 +203,7 @@ Namespace ComponentModel.DataSourceModel
                     }
                 Next
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As IEnumerable(Of NamedValue(Of T)))
                 Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
             End Set

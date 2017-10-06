@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Scripting.Runtime.NumberConversionRoutines
 
 Namespace ComponentModel.DataSourceModel
 
@@ -184,8 +185,9 @@ Namespace ComponentModel.DataSourceModel
         ''' 使用<see cref="Object"/>类型
         ''' </param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function valueToString(o) As String
-            Return CStr(o)
+            Return CStrSafe(o)
         End Function
 
         ''' <summary>
@@ -193,6 +195,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsPrimitive(type As Type) As Boolean
             Return ToStrings.ContainsKey(type)
         End Function
@@ -207,27 +210,29 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function CreateObject(Of T)(source As IEnumerable(Of T)) As DataTable
-            Dim Columns = __initSchema(GetType(T))
-            Dim DataTable As DataTable = New DataTable
+            Dim columns = __initSchema(GetType(T))
+            Dim table As New DataTable
+            Dim type As Type
 
-            For Each column In Columns.Values
-                Call DataTable.Columns.Add(
-                    column.Identity,
-                    DirectCast(column.member, PropertyInfo).PropertyType)
+            For Each column In columns.Values
+                type = DirectCast(column.member, PropertyInfo).PropertyType
+                Call table.Columns.Add(column.Identity, type)
             Next
 
             Dim fields As IEnumerable(Of BindProperty(Of DataFrameColumnAttribute)) =
-                Columns.Values
+                columns.Values
 
             For Each row As T In source
-                Dim LQuery As Object() =
-                    LinqAPI.Exec(Of Object) <= From column As BindProperty(Of DataFrameColumnAttribute)
-                                               In fields
-                                               Select column.GetValue(row)
-                Call DataTable.Rows.Add(LQuery)
+                Dim LQuery = LinqAPI.Exec(Of Object) _
+ _
+                    () <= From column As BindProperty(Of DataFrameColumnAttribute)
+                          In fields
+                          Select column.GetValue(row)
+
+                Call table.Rows.Add(LQuery)
             Next
 
-            Return DataTable
+            Return table
         End Function
 
         ''' <summary>
@@ -274,11 +279,11 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Private Function __initSchema(type As Type) As Dictionary(Of String, BindProperty(Of DataFrameColumnAttribute))
-            Dim DataColumnType As Type = GetType(DataFrameColumnAttribute)
+            Dim dataType As Type = GetType(DataFrameColumnAttribute)
             Dim props As PropertyInfo() = type.GetProperties
             Dim Columns = (From [property] As PropertyInfo
                            In props
-                           Let attrs As Object() = [property].GetCustomAttributes(DataColumnType, True)
+                           Let attrs As Object() = [property].GetCustomAttributes(dataType, True)
                            Where Not attrs.IsNullOrEmpty
                            Select colMaps =
                                DirectCast(attrs.First, DataFrameColumnAttribute), [property]
@@ -290,13 +295,13 @@ Namespace ComponentModel.DataSourceModel
                 End If
             Next
 
-            Dim UnIndexColumn = (From col
+            Dim unIndexColumn = (From col
                                  In Columns
                                  Where col.colMaps.Index <= 0
                                  Select col  ' 未建立索引的对象按照名称排序
                                  Order By col.colMaps.Name Ascending).ToArray ' 由于在后面会涉及到修改list对象，所以在这里使用ToArray来隔绝域list的关系，避免出现冲突
 
-            For Each col In UnIndexColumn
+            For Each col In unIndexColumn
                 Call Columns.Remove(col)
                 Call Columns.Add(col) '将未建立索引的对象放置到列表的最末尾
             Next

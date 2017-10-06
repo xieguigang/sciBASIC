@@ -369,6 +369,7 @@
     <Compile Include="Drawing3D\Math3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
+    <Compile Include="Drivers\CSS\Driver.vb" />
     <Compile Include="Drivers\CSS\RuntimeInvoker.vb" />
     <Compile Include="Drivers\GraphicsData.vb" />
     <Compile Include="Drivers\Drivers.vb" />
@@ -411,9 +412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -446,10 +447,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\designer.colors.js" />
+    <None Include="Resources\designer.colors.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\colorbrewer.js" />
+    <None Include="Resources\colorbrewer.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_Office.xml" />

@@ -45,6 +45,9 @@ Namespace Text.Xml.Models
         End Function
     End Class
 
+    ''' <summary>
+    ''' 键值对集合的键值<see cref="text"/>可能是一大段文本
+    ''' </summary>
     Public Structure NamedValue
         Implements INamedValue
         Implements Value(Of String).IValueOf
@@ -59,6 +62,20 @@ Namespace Text.Xml.Models
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+    End Structure
+
+    ''' <summary>
+    ''' Property Info (Property Name and Property Value).
+    ''' (和<see cref="NamedValue"/>所不同的是，这个对象之中的键值对集合的键值都是小段字符串)
+    ''' </summary>
+    Public Structure [Property]
+
+        <XmlAttribute> Public Property PropertyName As String
+        <XmlAttribute> Public Property PropertyValue As String
+
+        Public Overrides Function ToString() As String
+            Return $"{PropertyName} = ""{PropertyValue}"""
         End Function
     End Structure
 

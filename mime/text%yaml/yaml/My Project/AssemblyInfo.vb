@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("yaml")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("yaml")>
-<Assembly: AssemblyCopyright("Copyright ©  2017")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTitle("YAML I/O provider")>
+<Assembly: AssemblyDescription("YAML I/O provider")>
+<Assembly: AssemblyCompany("GPL3")>
+<Assembly: AssemblyProduct("Microsoft VisualBasic")>
+<Assembly: AssemblyCopyright("Copyright © GPL3 2017")>
+<Assembly: AssemblyTrademark("Microsoft VisualBasic")>
 
 <Assembly: ComVisible(False)>
 

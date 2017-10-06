@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -104,6 +105,7 @@ Namespace CommandLine.Reflection
                 Dim bool As Boolean = False
                 Dim haveOptional As Boolean = False
                 Dim boolSeperator As Boolean = False
+                Dim stringL$()
 
                 ' 先输出必须的参数
                 ' 之后为可选参数，但是可选参数会分为下面的顺序输出
@@ -112,43 +114,59 @@ Namespace CommandLine.Reflection
                 ' 3. 数值
                 ' 4. 整数
                 ' 5. 逻辑值
-                For Each arg In api.Arguments
-                    With arg.Value
+                stringL = api.Arguments _
+                    .Select(Function(arg)
+                                With arg.Value
 
-                        If .TokenType = CLITypes.Boolean Then
-                            ' 逻辑值类型的只能够是可选类型
-                            s = "(optional) (boolean)"
-                            bool = True
-                        Else
+                                    If .TokenType = CLITypes.Boolean Then
+                                        ' 逻辑值类型的只能够是可选类型
+                                        s = "(optional) (boolean)"
+                                        bool = True
+                                    Else
 
-                            If .Pipeline = PipelineTypes.std_in Then
-                                s = "(*std_in)"
-                                std_in = True
-                            ElseIf .Pipeline = PipelineTypes.std_out Then
-                                s = "(*std_out)"
-                                std_out = True
-                            Else
-                                s = ""
-                            End If
+                                        If .Pipeline = PipelineTypes.std_in Then
+                                            s = "(*std_in)"
+                                            std_in = True
+                                        ElseIf .Pipeline = PipelineTypes.std_out Then
+                                            s = "(*std_out)"
+                                            std_out = True
+                                        Else
+                                            s = ""
+                                        End If
 
-                            If .Optional Then
-                                s &= "(optional)"
-                                haveOptional = True
-                            End If
-                        End If
-                    End With
+                                        If .Optional Then
+                                            s &= "(optional)"
+                                            haveOptional = True
+                                        End If
+                                    End If
+                                End With
 
-                    If s.Length > maxPrefix Then
-                        maxPrefix = s.Length
-                    End If
-                Next
+                                Return s
+                            End Function) _
+                    .ToArray
+
+                ' println("\n%s", stringL.MaxLengthString)
+
+                ' 计算出诸如像(optional) (*std_in) (*std_out) (optional) (boolean)这类开关类型前导的
+                ' 最大长度
+                maxPrefix = stringL.MaxLengthString.Length
 
                 ' 这里计算出来的是name usage的最大长度
-                Dim maxLen% = Aggregate x As NamedValue(Of Argument)
-                              In api.Arguments
-                              Let stringL = x.Value.Example.Length
-                              Into Max(stringL)
+                stringL$ = api.Arguments _
+                    .Select(Function(x) x.Value.Example) _
+                    .ToArray
+
+                ' println("\n%s", stringL.MaxLengthString)
+
                 Dim l%
+                Dim maxLen% = stringL _
+                    .MaxLengthString _
+                    .Length
+
+                ' Call stringL.MaxLengthString.__DEBUG_ECHO
+
+                ' 加上开关名字的最大长度就是前面的开关说明部分的最大字符串长度
+                ' 后面的description帮助信息的偏移量都是依据这个值计算出来的
                 Dim helpOffset% = maxPrefix + maxLen
                 Dim skipOptionalLine As Boolean = False
 
@@ -157,10 +175,15 @@ Namespace CommandLine.Reflection
 
                     If param.TokenType = CLITypes.Boolean AndAlso Not boolSeperator Then
                         boolSeperator = True
+
                         Call Console.WriteLine()
                         Call Console.WriteLine("  Options:")
                         Call Console.WriteLine()
                     End If
+
+                    ' Dim l% 这个参数就是当前的这个命令的前半部的标识符部分的字符串长度
+                    ' helpOffset%的值减去当前的长度l，即可得到当前的命令的help info的
+                    ' 偏移量
 
                     If param.[Optional] Then
                         Dim fore = Console.ForegroundColor
@@ -177,14 +200,12 @@ Namespace CommandLine.Reflection
                         Call Console.Write(") ")
 
                         s = param.Example
-                        l = "(optional) ".Length + s.Length
                     Else
                         s = param.Example
-                        s = s
-                        l = s.Length
-
                         Console.Write("  ")
                     End If
+
+                    l = s.Length
 
                     With param
                         If .Pipeline = PipelineTypes.std_in Then
@@ -193,17 +214,23 @@ Namespace CommandLine.Reflection
                             s = "(*std_out) " & s
                         ElseIf .TokenType = CLITypes.Boolean Then
                             s = "(boolean)  " & s
-                        End If
-
-                        If Not .Pipeline = PipelineTypes.undefined OrElse .TokenType = CLITypes.Boolean Then
-                            l += 11
+                        Else
+                            If Not .Optional Then
+                                s = New String(" "c, maxPrefix + 1) & s
+                            End If
                         End If
                     End With
 
                     Call Console.Write(s)
 
+                    If param.TokenType = CLITypes.Boolean Then
+                        l += 11
+                    ElseIf param.Pipeline = PipelineTypes.std_out Then
+                        l += 11
+                    End If
+
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
-                    blank = New String(" "c, If(helpOffset - l < 0, 0, helpOffset - 1))
+                    blank = New String(" "c, helpOffset - l + 2)
                     infoLines$ = Paragraph _
                         .Split(param.Description, 120) _
                         .ToArray
@@ -212,7 +239,13 @@ Namespace CommandLine.Reflection
                     Call Console.WriteLine($"{infoLines.FirstOrDefault}")
 
                     If infoLines.Length > 1 Then
-                        blank = New String(" "c, helpOffset + 2)
+                        Dim d% = 0
+
+                        If param.Optional Then
+                            d = 13
+                        End If
+
+                        blank = New String(" "c, helpOffset + d + 2)
 
                         For Each line In infoLines.Skip(1)
                             Call Console.WriteLine(blank & line)
@@ -239,16 +272,24 @@ Namespace CommandLine.Reflection
                     .Select(Function(arg) arg.Value.GetFileExtensions) _
                     .IteratesALL _
                     .Distinct _
+                    .OrderBy(Function(ext) ext) _
                     .ToArray
 
                 If allExts.Length > 0 Then
                     Call Console.WriteLine()
 
-                    For Each ext As String In allExts
-                        With ext.GetMIMEDescrib
-                            Call Console.WriteLine($"  {ext}{vbTab}{vbTab}({ .MIMEType}) { .Name}")
-                        End With
-                    Next
+                    Dim allContentTypes = allExts _
+                        .Select(Function(ext) (ext:=ext, Type:=ext.GetMIMEDescrib)) _
+                        .ToArray
+                    Dim table$()() = allContentTypes _
+                        .Select(Function(content)
+                                    With content.Type
+                                        Return {"  " & content.ext & "  ", $"({ .MIMEType})  ", .Name}
+                                    End With
+                                End Function) _
+                        .ToArray
+
+                    Call table.Print
                 End If
 
                 If bool Then

@@ -102,7 +102,8 @@ Public Module Scatter
                          Optional yaxis$ = Nothing,
                          Optional xaxis$ = Nothing,
                          Optional ablines As Line() = Nothing,
-                         Optional htmlLabel As Boolean = True) As GraphicsData
+                         Optional htmlLabel As Boolean = True,
+                         Optional ticksY# = -1) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -127,6 +128,10 @@ Public Module Scatter
             .IteratesALL _
             .Range _
             .CreateAxisTicks
+
+        If ticksY > 0 Then
+            YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)
+        End If
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rect As GraphicsRegion)

@@ -1,7 +1,10 @@
 ﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Render
-Imports VB = Microsoft.VisualBasic.Language.Runtime
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
 
 Namespace Driver.CSS
 
@@ -11,6 +14,121 @@ Namespace Driver.CSS
     ''' 来传递这些绘图参数，并且同时也保留对函数式编程的兼容性
     ''' </summary>
     Public Module RuntimeInvoker
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function LoadDriver(container As Type, api$) As MethodInfo
+            Return DirectCast(container, TypeInfo) _
+                .DeclaredMethods _
+                .Select(Function(m)
+                            Return (entry:=m.GetCustomAttribute(Of Driver), Driver:=m)
+                        End Function) _
+                .Where(Function(m)
+                           Return Not m.entry Is Nothing AndAlso
+                                      m.entry.Name.TextEquals(api)
+                       End Function) _
+                .Select(Function(m) m.Driver) _
+                .FirstOrDefault
+        End Function
+
+        ''' <summary>
+        ''' Get all CSS field names
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function __fields(type As Type) As String()
+            Return type _
+                .Schema(PropertyAccess.ReadWrite, nonIndex:=True) _
+                .Values _
+                .Select(Function(prop)
+                            Return prop.Description Or prop.Name.AsDefault(Function(s) DirectCast(s, String).StringEmpty)
+                        End Function) _
+                .ToArray
+        End Function
+
+        ReadOnly types As New Dictionary(Of Types, String()) From {
+            {CSS.Types.Brush, GetType(Fill).__fields},
+            {CSS.Types.Font, GetType(CSSFont).__fields},
+            {CSS.Types.Padding, GetType(Padding).__fields},
+            {CSS.Types.Size, GetType(CSSsize).__fields},
+            {CSS.Types.Stroke, GetType(Stroke).__fields}
+        }
+
+        Const Indent$ = vbTab
+
+        ''' <summary>
+        ''' Generate CSS template for the plot driver function.
+        ''' </summary>
+        ''' <param name="driver"></param>
+        ''' <returns></returns>
+        <Extension> Public Function CSSTemplate(driver As MethodInfo) As String
+            Dim args = driver _
+                .GetParameters _
+                .Where(Function(parm)
+                           With parm.ParameterType
+                               Return .ref Is GetType(String) OrElse DataFramework.IsPrimitive(.ref)
+                           End With
+                       End Function) _
+                .Select(Function(parm)
+                            Return (
+                                Type:=parm.GetCustomAttribute(Of CSSSelector),
+                                arg:=parm)
+                        End Function) _
+                .Where(Function(parm) Not parm.Type Is Nothing) _
+                .ToArray
+
+            Dim CSS As New StringBuilder
+
+            Call CSS.AppendLine($"/* CSS template for ""{driver.GetCustomAttribute(Of Driver).Name}"" */")
+            Call CSS.AppendLine()
+
+            ' global settings
+            Call CSS.AppendLine("@canvas {")
+
+            ' canvas size
+            Call CSS.AppendLine()
+            Call CSS.AppendLine(Indent & "/* Canvas size */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Size))
+
+            ' canvas drawing paddings
+            Call CSS.AppendLine()
+            Call CSS.AppendLine(Indent & "/* canvas drawing paddings */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Padding))
+
+            ' background
+            Call CSS.AppendLine()
+            Call CSS.AppendLine(Indent & "/* Canvas background */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Brush))
+
+            ' default font style
+            Call CSS.AppendLine()
+            Call CSS.AppendLine(Indent & "/* default CSS font style */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Font))
+
+            Call CSS.AppendLine("}")
+            Call CSS.AppendLine()
+
+            ' optional function parameters for tweaks of CSS styles
+            For Each parm In args
+                Call CSS.AppendLine($"#{parm.arg.Name} {{")
+                Call CSS.AppendFields(types(parm.Type.Type))
+                Call CSS.AppendLine("}")
+
+                Call CSS.AppendLine()
+            Next
+
+            Return CSS.ToString
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Sub AppendFields(CSS As StringBuilder, fields$())
+            For Each field As String In fields
+                Call CSS.AppendLine($"{Indent}{field}: value;")
+            Next
+        End Sub
 
         ' CSS文件说明
         ' 
@@ -40,50 +158,60 @@ Namespace Driver.CSS
         ''' 因为考虑到手动输入参数可能会出现大小写不匹配的问题，故而在这里会首先尝试使用字典查找，
         ''' 没有找到键名的时候才会进行字符串大小写不敏感的字符串比较
         ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
         Public Function RunPlot(driver As [Delegate], CSS As CSSFile, ParamArray args As ArgumentReference()) As GraphicsData
-            Dim type As MethodInfo = driver.Method
-            Dim parameters = type.GetParameters
-            Dim values As Dictionary(Of String, ArgumentReference) = args.ToDictionary(Function(arg) arg.name)
+            Return driver.Method.RunPlot(driver.Target, CSS, args)
+        End Function
+
+        Const RequiredArgvNotFound$ = "Parameter '{0}' which is required by the graphics driver function is not found!"
+
+        <Extension>
+        Public Function RunPlot(driver As MethodInfo, target As Object, CSS As CSSFile, ParamArray args As ArgumentReference()) As GraphicsData
+            Dim parameters = driver.GetParameters
             Dim arguments As New List(Of Object)
+            Dim values As Dictionary(Of ArgumentReference) = args.ToDictionary
 
             ' 因为args是必须参数，所以要首先进行赋值遍历
             For Each arg As ParameterInfo In parameters
                 If values.ContainsKey(arg.Name) Then
-                    arguments += values(arg.Name)
+                    arguments += values(arg.Name).value
                 Else
-                    With values.Keys.Where(Function(s) s.TextEquals(arg.Name)).FirstOrDefault
-                        If .StringEmpty Then
-
-                            ' 在values参数列表之中查找不到，则可能是在CSS之中定义的样式，查看CSS样式文件之中是否存在？
-                            Dim style As Selector = CSS("#" & arg.Name)
-
-                            If style Is Nothing Then
-                                ' 在CSS之中没有定义，则判断这个参数是否为可选参数，如果不是可选参数，则抛出错误
-                                If Not arg.IsOptional Then
-                                    Throw New ArgumentNullException(String.Format(RequiredArgvNotFound, arg.Name))
-                                Else
-                                    arguments += arg.DefaultValue
-                                End If
-
-                            Else
-
-                                ' 因为绘图的样式值都是使用CSS字符串来完成的，所以
-                                ' 在这里就直接调用CSS样式的ToString方法来得到参数值了
-                                Dim cssValue$ = style.ToString
-                                arguments += cssValue
-
-                            End If
-
-                        Else
-                            arguments += values(.ref)
-                        End If
-                    End With
+                    arguments += arg.ScanValue(values, CSS)
                 End If
             Next
 
-            Return type.Invoke(driver.Target, arguments.ToArray)
+            Return driver.Invoke(target, arguments.ToArray)
         End Function
 
-        Const RequiredArgvNotFound$ = "Parameter '{0}' which is required by the graphics driver function is not found!"
+        <Extension>
+        Private Function ScanValue(arg As ParameterInfo, values As Dictionary(Of ArgumentReference), CSS As CSSFile) As Object
+            With values.Keys.Where(Function(s) s.TextEquals(arg.Name)).FirstOrDefault
+                If Not .StringEmpty Then
+                    Return values(.ref).value
+                End If
+            End With
+
+            ' 在values参数列表之中查找不到，则可能是在CSS之中定义的样式，
+            ' 查看CSS样式文件之中是否存在？
+            Dim style As Selector = CSS("#" & arg.Name)
+
+            If style Is Nothing Then
+
+                ' 在CSS之中没有定义，则判断这个参数是否为可选参数，
+                ' 如果不是可选参数， 则抛出错误
+                If Not arg.IsOptional Then
+                    Throw New ArgumentNullException(String.Format(RequiredArgvNotFound, arg.Name))
+                Else
+                    Return arg.DefaultValue
+                End If
+            Else
+
+                ' 因为绘图的样式值都是使用CSS字符串来完成的，所以
+                ' 在这里就直接调用CSS样式的ToString方法来得到
+                ' 参数值了
+                Return style.ToString
+            End If
+        End Function
     End Module
 End Namespace

@@ -28,7 +28,6 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace Emit.CodeDOM_VBC

@@ -284,6 +284,8 @@ Namespace Graphic.Axis
                         .Y = size.Height / 2 + scaler.ChartRegion.Top
                     }
 
+                    Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
+
                     With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                         Call .DrawString(label, font, Brushes.Black, location, -90)
                     End With
@@ -428,6 +430,7 @@ Namespace Graphic.Axis
                         .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height + d * 3
                     }
 
+                    Call $"[X:={label}] {point.ToString}".__INFO_ECHO
                     Call g.DrawString(label, font, Brushes.Black, point)
                 End If
             End If

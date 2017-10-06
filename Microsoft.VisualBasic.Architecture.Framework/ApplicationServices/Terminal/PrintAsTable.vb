@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::23487743488d80748e5e43a3e4de2dbb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\PrintAsTable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
@@ -33,7 +34,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports sys = System.Math
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     Public Module PrintAsTable
 
@@ -110,6 +111,46 @@ Namespace Terminal
 
             Call sb.Append(New String(" "c, right))
             Call sb.Append(values.Last)
+        End Sub
+
+        <Extension>
+        Public Sub Print(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
+            With dev Or Console.Out.AsDefault
+
+                Dim table$()() = source.ToArray
+                Dim maxLen As New List(Of Integer)
+                Dim width% = table.Max(Function(row) row.Length)
+                Dim index%
+                Dim offset%
+
+                ' 按照列计算出layout偏移量
+                For i As Integer = 0 To width - 1
+                    index = i
+                    maxLen += table _
+                        .Select(Function(row) row.ElementAtOrDefault(index)) _
+                        .Select(Function(s)
+                                    If String.IsNullOrEmpty(s) Then
+                                        Return 0
+                                    Else
+                                        Return s.Length
+                                    End If
+                                End Function) _
+                        .Max
+                Next
+
+                For Each row As String() In table
+                    offset = 0
+
+                    For i As Integer = 0 To width - 1
+                        Call .Write(New String(sep, offset) & row(i))
+                        offset = maxLen(i) - row(i).Length
+                    Next
+
+                    Call .WriteLine()
+                Next
+
+                Call .Flush()
+            End With
         End Sub
     End Module
 End Namespace

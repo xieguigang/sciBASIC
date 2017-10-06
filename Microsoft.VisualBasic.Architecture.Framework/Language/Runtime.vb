@@ -1,10 +1,21 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
 Namespace Language
 
-    Public Class ArgumentReference
+    Public Class ArgumentReference : Implements INamedValue
 
         Public name$, value
+
+        Private Property Key As String Implements IKeyedEntity(Of String).Key
+            Get
+                Return name
+            End Get
+            Set(value As String)
+                name = value
+            End Set
+        End Property
 
         Public Overrides Function ToString() As String
             Return $"Dim {name} As Object = {Scripting.ToString(value, "null")}"
@@ -28,6 +39,8 @@ Namespace Language
     End Class
 
     ''' <summary>
+    ''' Runtime helper
+    ''' 
     ''' ```vbnet
     ''' Imports VB = Microsoft.VisualBasic.Language.Runtime
     ''' 

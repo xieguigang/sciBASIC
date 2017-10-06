@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.Driver.CSS
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -48,6 +49,8 @@ Namespace Heatmap
     ''' </summary>
     Public Module DensityPlot
 
+        Public Const DriverName$ = "scatter.density.plot"
+
         ''' <summary>
         ''' Similar to the <see cref="Contour"/> plot but plot in scatter mode.
         ''' </summary>
@@ -57,22 +60,23 @@ Namespace Heatmap
         ''' <param name="bg$"></param>
         ''' <param name="schema$"></param>
         ''' <returns></returns>
+        <Driver(DriverName)>
         Public Function Plot(points As IEnumerable(Of PointF),
-                             Optional size$ = "1600,1200",
-                             Optional padding$ = g.DefaultPadding,
-                             Optional bg$ = "white",
+                             <GlobalCSSSelector(Types.Size)> Optional size$ = "1600,1200",
+                             <GlobalCSSSelector(Types.Padding)> Optional padding$ = g.DefaultPadding,
+                             <GlobalCSSSelector(Types.Brush)> Optional bg$ = "white",
                              Optional schema$ = "Jet",
                              Optional levels% = 20,
                              Optional steps$ = Nothing,
-                             Optional ptSize! = 5,
-                             Optional legendWidth% = 150,
-                             Optional legendTitleFontCSS$ = CSSFont.Win7LargerNormal,
-                             Optional legendTickFontCSS$ = CSSFont.Win7Normal,
-                             Optional legendTickStrokeCSS$ = Stroke.AxisStroke,
+                             <CSSSelector(Types.Float)> Optional ptSize! = 5,
+                             <CSSSelector(Types.Integer)> Optional legendWidth% = 150,
+                             <CSSSelector(Types.Font)> Optional legendTitleFontCSS$ = CSSFont.Win7LargerNormal,
+                             <CSSSelector(Types.Font)> Optional legendTickFontCSS$ = CSSFont.Win7Normal,
+                             <CSSSelector(Types.Stroke)> Optional legendTickStrokeCSS$ = Stroke.AxisStroke,
                              Optional ablines As Line() = Nothing,
                              Optional labX$ = "X",
                              Optional labY$ = "Y",
-                             Optional labelFontCSS$ = CSSFont.Win10Normal,
+                             <CSSSelector(Types.Font)> Optional labelFontCSS$ = CSSFont.Win10Normal,
                              Optional htmlLabel As Boolean = True) As GraphicsData
 
             Dim data = points _

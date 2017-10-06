@@ -1,31 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::c26f70a30569396ad107756a71f9af19, ..\sciBASIC#\docs\guides\Example\CLI_Example\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.ComponentModel
+Imports System.Drawing
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -48,7 +50,6 @@ Module CLI
     <Argument("/msg", False, CLITypes.String,
               AcceptTypes:={GetType(String)},
               Description:="The output message text.",
-              Example:="""Hello world!""",
               Out:=False)>
     <Group(CLIGrouping.TestGroup1)>
     Public Function API1(args As CommandLine) As Integer
@@ -78,6 +79,31 @@ Module CLI
         Return vb.GetSourceCode _
             .SaveTo(out) _
             .CLICode
+    End Function
+
+    <ExportAPI("/DEP.heatmap.scatter.3D")>
+    <Description("Visualize the DEPs' kmeans cluster result by using 3D scatter plot.")>
+    <Usage("/DEP.heatmap.scatter.3D /in <kmeans.csv> /sampleInfo <sampleInfo.csv> [/cluster.prefix <default=""cluster: #""> /size <default=1600,1400> /schema <default=clusters> /view.angle <default=30,60,-56.25> /view.distance <default=2500> /out <out.png>]")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+              Extensions:="*.csv",
+              Description:="The kmeans cluster result from ``/DEP.heatmap`` command.")>
+    <Argument("/sampleInfo", False, CLITypes.File,
+              Extensions:="*.csv",
+              Description:="Sample info fot grouping the matrix column data and generates the 3d plot ``<x,y,z>`` coordinations.")>
+    <Argument("/cluster.prefix", True, CLITypes.String,
+              Description:="The term prefix of the kmeans cluster name when display on the legend title.")>
+    <Argument("/size", True,
+              AcceptTypes:={GetType(Size)},
+              Description:="The output 3D scatter plot image size.")>
+    <Argument("/view.angle", True,
+              Description:="The view angle of the 3D scatter plot objects, in 3D direction of ``<X>,<Y>,<Z>``")>
+    <Argument("/view.distance", True, CLITypes.Integer,
+              Description:="The view distance from the 3D camera screen to the 3D objects.")>
+    <Argument("/out", True, CLITypes.File,
+              Extensions:="*.png, *.svg",
+              Description:="The file path of the output plot image.")>
+    Public Function CLIHelpInfoDemo(args As CommandLine) As Integer
+
     End Function
 End Module
 

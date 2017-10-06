@@ -53,7 +53,7 @@ Namespace News
     ''' ```
     ''' </summary>
     <XmlType("rss")>
-    Public Class RSS : Inherits ClassObject
+    Public Class RSS : Inherits BaseClass
 
         <XmlAttribute> Public Property version As String
         Public Property channel As Channel

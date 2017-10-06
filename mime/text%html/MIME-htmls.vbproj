@@ -324,9 +324,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTML\CSS\Size.vb" />
+    <Compile Include="HTML\CSS\Parser\Enums.vb" />
     <Compile Include="HTML\CSS\Fill.vb" />
     <Compile Include="HTML\CSS\ICSSValue.vb" />
-    <Compile Include="HTML\CSS\Render\CSS\File.vb" />
+    <Compile Include="HTML\CSS\Parser\Parser.vb" />
+    <Compile Include="HTML\CSS\Parser\File.vb" />
     <Compile Include="HTML\CSS\Stroke.vb" />
     <Compile Include="HTML\CSS\FontStyle.vb" />
     <Compile Include="HTML\CSS\Padding.vb" />

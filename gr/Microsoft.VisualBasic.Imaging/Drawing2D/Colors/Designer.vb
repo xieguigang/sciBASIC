@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace Drawing2D.Colors
 
@@ -195,6 +196,7 @@ Namespace Drawing2D.Colors
 
                 Dim colors As Dictionary(Of String, String()) = My.Resources _
                     .designer_colors _
+                    .GetString(Encodings.UTF8) _
                     .LoadObject(Of Dictionary(Of String, String()))
                 Dim valids As New Dictionary(Of Color, Color())
 
@@ -205,9 +207,10 @@ Namespace Drawing2D.Colors
 
                 AvailableInterpolates = valids
 
-                Dim ns = Regex.Matches(My.Resources.colorbrewer, """\d+""") _
+                Dim colorBrewerJSON$ = My.Resources.colorbrewer.GetString(Encodings.UTF8)
+                Dim ns = Regex.Matches(colorBrewerJSON, """\d+""") _
                     .ToArray(Function(m) m.Trim(""""c))
-                Dim sb As New StringBuilder(My.Resources.colorbrewer)
+                Dim sb As New StringBuilder(colorBrewerJSON)
 
                 For Each n In ns.Distinct
                     Call sb.Replace($"""{n}""", $"""c{n}""")
