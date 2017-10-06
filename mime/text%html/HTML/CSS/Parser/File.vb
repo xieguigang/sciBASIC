@@ -14,18 +14,30 @@ Namespace HTML.CSS.Parser
 
         Public Property Selectors As Dictionary(Of Selector)
 
+        ''' <summary>
+        ''' GetElementByID
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ByID As Selector()
             Get
                 Return GetAllStylesByType(Types.ID)
             End Get
         End Property
 
+        ''' <summary>
+        ''' GetElementsByClass
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ByClass As Selector()
             Get
                 Return GetAllStylesByType(Types.Class)
             End Get
         End Property
 
+        ''' <summary>
+        ''' By html tags
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ByTag As Selector()
             Get
                 Return Selectors _
@@ -60,10 +72,9 @@ Namespace HTML.CSS.Parser
         End Property
 
         ''' <summary>
-        ''' 根据类型来获取得到相应的选择器的样式
+        ''' 获取某一种类型之下的所有的该类型的CSS的样式定义
         ''' </summary>
-        ''' <param name="name$">没有class或者ID的符号前缀的名称</param>
-        ''' <param name="type">class还是ID或者还是html的标签名称？</param>
+        ''' <param name="type"></param>
         ''' <returns></returns>
         Public Function GetAllStylesByType(type As Types) As Selector()
             Return Selectors.Values _
@@ -71,6 +82,12 @@ Namespace HTML.CSS.Parser
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 根据类型来获取得到相应的选择器的样式
+        ''' </summary>
+        ''' <param name="name$">没有class或者ID的符号前缀的名称</param>
+        ''' <param name="type">class还是ID或者还是html的标签名称？</param>
+        ''' <returns></returns>
         Public Function FindStyle(name$, type As Types) As Selector
             With ("." & name) Or ("#" & name).AsDefault(Function() type = Types.ID)
                 Return GetSelector(.ref)
@@ -105,6 +122,10 @@ Namespace HTML.CSS.Parser
             End Get
         End Property
 
+        ''' <summary>
+        ''' CSS style value without selector name.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property CSSValue As String
             Get
                 Return Properties _
