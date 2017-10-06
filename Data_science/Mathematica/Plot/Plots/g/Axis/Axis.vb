@@ -340,7 +340,7 @@ Namespace Graphic.Axis
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
+        Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "500,300") As Image
             Using g As Graphics2D = size.SizeParser.CreateGDIDevice(Color.Transparent)
                 With g
                     Dim b As Brush = fcolor.GetBrush
