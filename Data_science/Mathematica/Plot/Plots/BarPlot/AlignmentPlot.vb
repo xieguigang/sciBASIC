@@ -266,8 +266,8 @@ Namespace BarPlot
                                 Call g.DrawString(ylab, labelFont, Brushes.Black, labPos)
                             Case YlabelPosition.LeftCenter
                                 labPos = New PointF(
-                                    (.Left - labSize.Height) / 3,
-                                    .Top + (.Height - labSize.Width) / 2)
+                                    (.Left - labSize.Height) / 4,
+                                    .Top * 2.5 + (.Height - labSize.Width) / 2)
 
                                 With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                                     Call .DrawString(ylab, labelFont, Brushes.Black, labPos, -90)
