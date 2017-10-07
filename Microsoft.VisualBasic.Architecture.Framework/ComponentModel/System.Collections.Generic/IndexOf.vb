@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::26c719e0b12af6f63d8ed0a39f5f92e2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -45,6 +46,7 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Count As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return maps.Count
             End Get
@@ -55,6 +57,7 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Objects As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return maps.Keys.ToArray
             End Get
@@ -82,6 +85,7 @@ Namespace ComponentModel.Collection
                 }).AsList
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ParamArray vector As T())
             Call Me.New(source:=DirectCast(vector, IEnumerable(Of T)))
         End Sub
@@ -106,6 +110,7 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function NotExists(x As T) As Boolean
             Return IndexOf(x) = -1
         End Function
@@ -134,6 +139,7 @@ Namespace ComponentModel.Collection
         ''' Display the input source sequence.
         ''' </summary>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return maps.Keys _
                 .Select(Function(x) x.ToString) _
@@ -142,11 +148,13 @@ Namespace ComponentModel.Collection
         End Function
 
         Public ReadOnly Property Map As Dictionary(Of T, Integer)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(index As Index(Of T)) As Dictionary(Of T, Integer)
             Return New Dictionary(Of T, Integer)(index.maps)
         End Operator
