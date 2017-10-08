@@ -135,6 +135,7 @@
     <Compile Include="API\PQDijkstra\HeapNode.vb" />
     <Compile Include="API\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Model\Grid.vb" />
+    <Compile Include="Model\TimeSerialsGraph.vb" />
     <Compile Include="Utils.vb" />
     <Compile Include="API\Dijkstra\Dijkstra.vb" />
     <Compile Include="API\Dijkstra\DijkstraAPI.vb" />

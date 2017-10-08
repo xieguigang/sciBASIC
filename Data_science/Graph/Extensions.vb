@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3caa2c4eb04d3240b2070f40d249306d, ..\sciBASIC#\Data_science\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::96daf42242df7345953a4887afd63bb0, ..\sciBASIC#\Data_science\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -97,4 +97,3 @@ Public Module Extensions
                     End Function)
     End Function
 End Module
-

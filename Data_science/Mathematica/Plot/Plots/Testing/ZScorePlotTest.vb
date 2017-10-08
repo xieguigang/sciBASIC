@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f8cf292bcfc0b51a05f0772804b6e2d, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\ZScorePlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::6f3fa82bfe95c4647ac1606f699abe54, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\ZScorePlotTest.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Module ZScorePlotTest
         End
     End Sub
 End Module
-

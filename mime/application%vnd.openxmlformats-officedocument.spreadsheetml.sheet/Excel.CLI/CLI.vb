@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e70b41a26a2c1d33209d727c2ba6d07, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::8cb6ca66283671e62502b813d2454fff, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
 
     ' Author:
     ' 
@@ -136,4 +136,3 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         End With
     End Function
 End Module
-

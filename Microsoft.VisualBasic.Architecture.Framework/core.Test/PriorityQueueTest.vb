@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bac0745b5316dd2f2ecb86b9b30b2d8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\PriorityQueueTest.vb"
+﻿#Region "Microsoft.VisualBasic::5f1dc2fcde41554eed79153f3ec1b473, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\PriorityQueueTest.vb"
 
     ' Author:
     ' 
@@ -107,4 +107,3 @@ Module PriorityQueueTest
         End Function
     End Structure
 End Module
-

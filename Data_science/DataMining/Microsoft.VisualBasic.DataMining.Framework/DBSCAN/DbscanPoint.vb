@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::163fd3064429b06f220f250861271eae, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DbscanPoint.vb"
+﻿#Region "Microsoft.VisualBasic::43da1ed32b5598bcddeed4a6452a7e64, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DbscanPoint.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace DBSCAN
 

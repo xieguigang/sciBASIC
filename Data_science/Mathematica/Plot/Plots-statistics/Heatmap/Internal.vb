@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6093504e2cc986aa360528737d013d9b, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::64e5b6c5bd2a2eab78f9fad1b45d4bba, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 

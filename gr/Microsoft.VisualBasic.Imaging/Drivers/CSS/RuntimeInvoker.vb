@@ -1,6 +1,37 @@
-﻿Imports System.Reflection
+﻿#Region "Microsoft.VisualBasic::3a7264cc4cd389c58ae105a2dadc590f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
 
 Namespace Driver.CSS
@@ -27,6 +58,105 @@ Namespace Driver.CSS
                 .Select(Function(m) m.Driver) _
                 .FirstOrDefault
         End Function
+
+        ''' <summary>
+        ''' Get all CSS field names
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function __fields(type As Type) As String()
+            Return type _
+                .Schema(PropertyAccess.ReadWrite, nonIndex:=True) _
+                .Values _
+                .Select(Function(prop)
+                            Return prop.Description Or prop.Name.AsDefault(Function(s) DirectCast(s, String).StringEmpty)
+                        End Function) _
+                .ToArray
+        End Function
+
+        ReadOnly types As New Dictionary(Of Types, String()) From {
+            {CSS.Types.Brush, GetType(Fill).__fields},
+            {CSS.Types.Font, GetType(CSSFont).__fields},
+            {CSS.Types.Padding, GetType(Padding).__fields},
+            {CSS.Types.Size, GetType(CSSsize).__fields},
+            {CSS.Types.Stroke, GetType(Stroke).__fields}
+        }
+
+        Const Indent$ = vbTab
+
+        ''' <summary>
+        ''' Generate CSS template for the plot driver function.
+        ''' </summary>
+        ''' <param name="driver"></param>
+        ''' <returns></returns>
+        <Extension> Public Function CSSTemplate(driver As MethodInfo) As String
+            Dim args = driver _
+                .GetParameters _
+                .Where(Function(parm)
+                           With parm.ParameterType
+                               Return .ref Is GetType(String) OrElse DataFramework.IsPrimitive(.ref)
+                           End With
+                       End Function) _
+                .Select(Function(parm)
+                            Return (
+                                Type:=parm.GetCustomAttribute(Of CSSSelector),
+                                arg:=parm)
+                        End Function) _
+                .Where(Function(parm) Not parm.Type Is Nothing) _
+                .ToArray
+
+            Dim CSS As New StringBuilder
+
+            Call CSS.AppendLine($"/* CSS template for ""{driver.GetCustomAttribute(Of Driver).Name}"" */")
+            Call CSS.AppendLine()
+
+            ' global settings
+            Call CSS.AppendLine("@canvas {")
+
+            ' canvas size
+            Call CSS.AppendLine()
+            Call CSS.AppendLine(Indent & "/* Canvas size */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Size))
+
+            ' canvas drawing paddings
+            Call CSS.AppendLine()
+            Call CSS.AppendLine(Indent & "/* canvas drawing paddings */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Padding))
+
+            ' background
+            Call CSS.AppendLine()
+            Call CSS.AppendLine(Indent & "/* Canvas background */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Brush))
+
+            ' default font style
+            Call CSS.AppendLine()
+            Call CSS.AppendLine(Indent & "/* default CSS font style */")
+            Call CSS.AppendFields(types(Imaging.Driver.CSS.Types.Font))
+
+            Call CSS.AppendLine("}")
+            Call CSS.AppendLine()
+
+            ' optional function parameters for tweaks of CSS styles
+            For Each parm In args
+                Call CSS.AppendLine($"#{parm.arg.Name} {{")
+                Call CSS.AppendFields(types(parm.Type.Type))
+                Call CSS.AppendLine("}")
+
+                Call CSS.AppendLine()
+            Next
+
+            Return CSS.ToString
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Sub AppendFields(CSS As StringBuilder, fields$())
+            For Each field As String In fields
+                Call CSS.AppendLine($"{Indent}{field}: value;")
+            Next
+        End Sub
 
         ' CSS文件说明
         ' 
@@ -104,6 +234,7 @@ Namespace Driver.CSS
                     Return arg.DefaultValue
                 End If
             Else
+
                 ' 因为绘图的样式值都是使用CSS字符串来完成的，所以
                 ' 在这里就直接调用CSS样式的ToString方法来得到
                 ' 参数值了

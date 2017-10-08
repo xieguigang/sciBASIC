@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd17b835dc6de51b3216291c40e1f4b3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\Shell\ls.vb"
+﻿#Region "Microsoft.VisualBasic::d8aa00372a977fc6e97fdc75628b7ac4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\Shell\ls.vb"
 
     ' Author:
     ' 

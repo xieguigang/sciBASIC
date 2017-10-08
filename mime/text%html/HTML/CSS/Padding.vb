@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5efd11834aba2566068a96d7199ae6ba, ..\sciBASIC#\mime\text%html\HTML\CSS\Padding.vb"
+﻿#Region "Microsoft.VisualBasic::6f5f15573b686d0b66aa60375da59a1d, ..\sciBASIC#\mime\text%html\HTML\CSS\Padding.vb"
 
     ' Author:
     ' 
@@ -82,7 +82,7 @@ Namespace HTML.CSS
             End With
         End Sub
 
-        Sub New(margin As Size)
+        Sub New(margin As Drawing.Size)
             Call Me.New(margin.Width, margin.Height)
         End Sub
 
@@ -101,12 +101,12 @@ Namespace HTML.CSS
             Left = layoutVector(3)
         End Sub
 
-        Public Function GetCanvasRegion(size As Size) As Rectangle
+        Public Function GetCanvasRegion(size As Drawing.Size) As Rectangle
             Dim location As New Point(Left, Top)
             Dim width = size.Width - Horizontal
             Dim height = size.Height - Vertical
 
-            Return New Rectangle(location, New Size(width, height))
+            Return New Rectangle(location, New Drawing.Size(width, height))
         End Function
 
         ''' <summary>
@@ -203,7 +203,7 @@ Namespace HTML.CSS
                 .GetTagValue(":", trim:=True)
 
             If value.Name.StringEmpty AndAlso css.IndexOf(","c) > -1 Then
-                Dim size As Size = css.SizeParser
+                Dim size As Drawing.Size = css.SizeParser
                 Return New Padding(margin:=size)
             End If
 

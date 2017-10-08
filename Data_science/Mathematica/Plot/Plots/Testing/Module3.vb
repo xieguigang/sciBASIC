@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b093fcfb181e70d9fe962dbac8802b0, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\Module3.vb"
+﻿#Region "Microsoft.VisualBasic::62865e892fb4d8b58978d835778f2699, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\Module3.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Module Module3
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::877294dbb12080cd8fc804df0700fcc5, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\DBSCAN\Program.vb"
+﻿#Region "Microsoft.VisualBasic::2ff5e211f39cd3311812d147e5b3ca43, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\DBSCAN\Program.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Class Program
         Console.ReadKey()
     End Sub
 End Class
-

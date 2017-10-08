@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e221043ac53b3ec89638cb2cd6896250, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\LabelingTest.vb"
+﻿#Region "Microsoft.VisualBasic::1c392ee9d9aa70e9ded8e9dadf71ec54, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\LabelingTest.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Module LabelingTest
         End Using
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4b0d5965fba11972cdf1e5171905d30, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\BarPlotDataExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::85f30c908677ee90c13577b54065c714, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\BarPlotDataExtensions.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace BarPlot

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0151307fa8fd1d6305258e3b33760d74, ..\sciBASIC#\vs_solutions\installer\bootstrap\BootstrapLoader.vb"
+﻿#Region "Microsoft.VisualBasic::48d1b7e9aa058516291f6dfd4b5353b9, ..\sciBASIC#\vs_solutions\installer\bootstrap\BootstrapLoader.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Public Class BootstrapLoader
         End If
     End Sub
 End Class
-

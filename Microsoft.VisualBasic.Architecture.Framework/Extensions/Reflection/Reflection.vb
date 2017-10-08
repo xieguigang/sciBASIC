@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bbb93ec751e3ecc810e5d8f7477b0e0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::5d483d577c0ff8246c869c89c377c2e3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -209,10 +209,15 @@ NULL:       If Not strict Then
     '''
     <ExportAPI("Get.Version")>
     Public Function GetVersion(Product As String) As Version
-        Dim assm As System.Reflection.Assembly = System.Reflection.Assembly.LoadFile(Product)
+        Dim assm As Assembly = Assembly.LoadFile(Product)
         Return assm.GetVersion
     End Function
 
+    ''' <summary>
+    ''' 如果不存在<see cref="DescriptionAttribute"/>定义则会返回空白字符串
+    ''' </summary>
+    ''' <param name="prop"></param>
+    ''' <returns></returns>
     <ExportAPI("Get.Description")>
     <Extension> Public Function Description(prop As PropertyInfo) As String
         Dim attrs As Object() = prop.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=True)

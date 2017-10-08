@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::74d64613d9f9a9b65db4c4148b311af6, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::cb34a9a4c29e1926d3e3f003e96470f9, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Scatter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -102,7 +102,8 @@ Public Module Scatter
                          Optional yaxis$ = Nothing,
                          Optional xaxis$ = Nothing,
                          Optional ablines As Line() = Nothing,
-                         Optional htmlLabel As Boolean = True) As GraphicsData
+                         Optional htmlLabel As Boolean = True,
+                         Optional ticksY# = -1) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -127,6 +128,10 @@ Public Module Scatter
             .IteratesALL _
             .Range _
             .CreateAxisTicks
+
+        If ticksY > 0 Then
+            YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)
+        End If
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rect As GraphicsRegion)

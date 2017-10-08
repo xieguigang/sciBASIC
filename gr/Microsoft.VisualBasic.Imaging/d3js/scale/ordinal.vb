@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a849987c2974155045cabc6e1e0e0fa2, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
+﻿#Region "Microsoft.VisualBasic::790a80df0bd47057f777c43049d0926d, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Scripting
 
 Namespace d3js.scale
 

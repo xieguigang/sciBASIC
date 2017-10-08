@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1fd93d8575a0c69e0cfa0ebc3af70a5, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::31809d3d5aee5ae5ff00ffd68794aed8, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -40,7 +41,8 @@ Namespace SyntaxAPI.Vectors
         ''' 向量维数，就是向量的长度（元素的个数）
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property Dim%
+        Public ReadOnly Property [Dim] As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Count
             End Get
@@ -127,10 +129,12 @@ Namespace SyntaxAPI.Vectors
             Return New BooleanVector(LQuery)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(x As GenericVector(Of T), y As GenericVector(Of T)) As BooleanVector
             Return Not (x <> y)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(v As GenericVector(Of T)) As T()
             Return v.ToArray
         End Operator

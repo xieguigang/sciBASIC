@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be1ae1739608e9b554600507723404c8, ..\sciBASIC#\Data_science\Graph\Testing\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::9b06c4a6eaeff7cb31813c0ae2d0924d, ..\sciBASIC#\Data_science\Graph\Testing\Module1.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-
