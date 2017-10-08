@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0a16db8cbdf06c1ae42a836f1ff1415, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DatasetItemBase.vb"
+﻿#Region "Microsoft.VisualBasic::b481cb5b1097f09db2cce83999a11777, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DatasetItemBase.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace DBSCAN
     Public MustInherit Class DatasetItemBase

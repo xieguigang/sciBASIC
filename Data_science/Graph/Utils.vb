@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce2dea4a19f0c1d672de542cf2707382, ..\sciBASIC#\Data_science\Graph\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::78f0fc27d5c52ec49394f1a6a6764316, ..\sciBASIC#\Data_science\Graph\Utils.vb"
 
     ' Author:
     ' 
@@ -109,4 +109,3 @@ Public Module Utils
         }
     End Function
 End Module
-

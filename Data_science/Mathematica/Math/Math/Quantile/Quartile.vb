@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a041bc892988efff0194cc9f8d12e025, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
+﻿#Region "Microsoft.VisualBasic::239fae7a6c5c2df9e6e0a314c0be6252, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Namespace Quantile
         End Function
     End Module
 End Namespace
-

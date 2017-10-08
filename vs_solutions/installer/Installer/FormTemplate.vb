@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76281fef1a506a679b4a1336667845ba, ..\sciBASIC#\vs_solutions\installer\Installer\FormTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::06c7574d3cd53920f317b43465ce1d60, ..\sciBASIC#\vs_solutions\installer\Installer\FormTemplate.vb"
 
     ' Author:
     ' 
@@ -39,4 +39,3 @@ Public Class FormTemplate
         label.ForeColor = Color.White
     End Sub
 End Class
-

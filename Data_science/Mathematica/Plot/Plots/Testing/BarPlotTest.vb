@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8966a57de5597ecb98829fbacf1a6ede, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\BarPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::9ca486c5bd0b4d944fc9431ef9ffaacf, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\BarPlotTest.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Module BarPlotTest
         Next
     End Sub
 End Module
-

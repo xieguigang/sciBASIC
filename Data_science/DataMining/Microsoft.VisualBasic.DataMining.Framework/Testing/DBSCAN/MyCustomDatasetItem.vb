@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5f604560a011d3f4906007f9daf8d48, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\DBSCAN\MyCustomDatasetItem.vb"
+﻿#Region "Microsoft.VisualBasic::227b4b282bbf0e30f27f1423092b4d68, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\DBSCAN\MyCustomDatasetItem.vb"
 
     ' Author:
     ' 
@@ -38,4 +38,3 @@ Public Class MyCustomDatasetItem
         Y = y__2
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abaea92d7894a7905a95edce51346322, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::ed29aeb70930a4c5d14ec6c76679e0f8, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Xmlns.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Module Xmlns
     Public Const worksheet$ = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
 
 End Module
-

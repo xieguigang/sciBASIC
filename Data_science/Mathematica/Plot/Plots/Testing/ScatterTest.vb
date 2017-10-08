@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e17e4d5cac65aad6deeab44f35986dad, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\ScatterTest.vb"
+﻿#Region "Microsoft.VisualBasic::6101e68b703933beb597a18a11e5f242, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\ScatterTest.vb"
 
     ' Author:
     ' 
@@ -107,4 +107,3 @@ Module ScatterTest
         Next
     End Sub
 End Module
-

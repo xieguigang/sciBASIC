@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76c0516efc0fc9a4b2a4dd2e191fd61a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\ShadowsTest.vb"
+﻿#Region "Microsoft.VisualBasic::030f7829ee69a1b7385ed6984920e083, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\ShadowsTest.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Module ShadowsTest
         End Using
     End Sub
 End Module
-

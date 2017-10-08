@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cbbafb65a313d2d5727b01ccaf3f23b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::35cc9d6a62d5e1abe98556123024d1f2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\CLI.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Module CLI
 
     End Function
 End Module
-

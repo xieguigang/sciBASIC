@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cd8507a7caf663ef5ae16e46d24bbd7, ..\sciBASIC#\Data\DataFrame.Extensions\Templates\TemplateAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::e893d1214dacac3cf8609c97a5c7b005, ..\sciBASIC#\Data\DataFrame.Extensions\Templates\TemplateAttribute.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Public Class TemplateAttribute : Inherits Attribute
         Return Category
     End Function
 End Class
-

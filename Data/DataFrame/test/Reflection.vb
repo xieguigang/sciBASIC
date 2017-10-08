@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2684275875a42450c133eb7659c5f526, ..\sciBASIC#\Data\DataFrame\test\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::733af266d2da7f75214650da38e712ee, ..\sciBASIC#\Data\DataFrame\test\Reflection.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Public Class Visitor
     End Function
 
 End Class
-
