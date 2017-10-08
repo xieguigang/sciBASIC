@@ -1,8 +1,18 @@
 @echo off
 
+REM environment requirement
+REM This installer script required VisualStudio and WinRAR was installed
+REM If the location is not located in C:\Program Files\ on your computer
+REM try modify the value of these two directory path variable
+
+REM 1. "vs_dev" is the sdk imports script file path which is comes from with VisualStudio
+REM 2. "WinRAR" is the file path of the WinRAR CLI app. 
+SET WinRAR="C:\Program Files\WinRAR\RAR.exe"
+
 REM Imports MSBuild environment
 REM run this script directly will not working???
 SET vs_dev="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
+
 SET currentWork=%cd%
 SET drive=%currentWork:~0,2%
 
@@ -54,7 +64,6 @@ RD /S /Q %output%
 MSBuild %sciBASIC_sln% /t:Rebuild /p:Configuration=installer_x64;Platform=x64 /fl /flp:logfile=./sciBASIC-build.log;verbosity=diagnostic
 
 REM package the output into a zip package
-SET WinRAR="C:\Program Files\WinRAR\RAR.exe"
 SET zip=%output%/installer.zip
 
 CD /D %output%
