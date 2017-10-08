@@ -99,7 +99,7 @@ Namespace WebAPI
             Dim sp$
 
             url = String.Format(url, user, page)
-            sp = Splitter.Replace(" /", "")
+            sp = "<div class=""position-relative"">"
             html = url.GET
             html = Strings.Split(html, sp).Last
             sp = UserSplitter.Replace(" /", "")
@@ -115,13 +115,15 @@ Namespace WebAPI
                     .Replace("/", "")
                 Dim avatar As String = Regex.Match(u, "<img .+? />").Value.ImageSource
                 Dim display As String = Regex.Match(u, "<span class=""f4 link-gray-dark"">.*?</span>").Value.GetValue
-                Dim bio As String = Regex.Match(u, "<p class=""text-gray text-small"">.*?</p>").Value.GetValue
+                Dim bio As String = Regex.Match(u, "<p class="".*?text-gray text-small"">.*?</p>").Value.GetValue
+                Dim location = u.GetBetween("</svg>", "</p>").TrimNewLine.Trim
 
                 out += New User With {
                     .login = userName,
                     .avatar_url = avatar,
                     .name = display,
-                    .bio = bio
+                    .bio = bio,
+                    .location = location
                 }
             Next
 
