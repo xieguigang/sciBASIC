@@ -94,6 +94,9 @@ Namespace WebAPI
         ReadOnly UserSplitter$ = (<div class="d-table col-12 width-full py-4 border-bottom border-gray-light"/>).ToString
         ReadOnly Splitter$ = (<div class="js-repo-filter position-relative"/>).ToString
 
+        Const locationPattern$ = "<svg .+? class=""octicon octicon-location"".+?</p>"
+        Const organizationPattern$ = "<svg .+? class=""octicon octicon-organization"".+?</span>"
+
         Private Function ParserInternal(user$, page%, url$) As User()
             Dim html$
             Dim sp$
@@ -116,14 +119,16 @@ Namespace WebAPI
                 Dim avatar As String = Regex.Match(u, "<img .+? />").Value.ImageSource
                 Dim display As String = Regex.Match(u, "<span class=""f4 link-gray-dark"">.*?</span>").Value.GetValue
                 Dim bio As String = Regex.Match(u, "<p class="".*?text-gray text-small"">.*?</p>").Value.GetValue
-                Dim location = TryInvoke(Function() u.GetBetween("</svg>", "</p>").TrimNewLine.Trim)
+                Dim location = TryInvoke(Function() u.Match(locationPattern, RegexICSng).GetBetween("</svg>", "</p>").lTokens.FirstOrDefault?.Trim)
+                Dim org = TryInvoke(Function() u.Match(organizationPattern, RegexICSng).GetBetween("</svg>", "</span>").lTokens.FirstOrDefault?.Trim)
 
                 out += New User With {
                     .login = userName,
                     .avatar_url = avatar,
                     .name = display,
                     .bio = bio,
-                    .location = location
+                    .location = location,
+                    .organizations_url = org
                 }
             Next
 
