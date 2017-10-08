@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48ab3cb88c938357d94976363dc2d122, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ZScores.vb"
+﻿#Region "Microsoft.VisualBasic::05c84cf95e8d52642ea7710326335b83, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ZScores.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 

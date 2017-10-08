@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26c719e0b12af6f63d8ed0a39f5f92e2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::b3096d44d16ecc12ddbecfa4f4020f2f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -45,6 +46,7 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Count As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return maps.Count
             End Get
@@ -55,6 +57,7 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Objects As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return maps.Keys.ToArray
             End Get
@@ -82,6 +85,7 @@ Namespace ComponentModel.Collection
                 }).AsList
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ParamArray vector As T())
             Call Me.New(source:=DirectCast(vector, IEnumerable(Of T)))
         End Sub
@@ -106,6 +110,7 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function NotExists(x As T) As Boolean
             Return IndexOf(x) = -1
         End Function
@@ -134,6 +139,7 @@ Namespace ComponentModel.Collection
         ''' Display the input source sequence.
         ''' </summary>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return maps.Keys _
                 .Select(Function(x) x.ToString) _
@@ -142,11 +148,13 @@ Namespace ComponentModel.Collection
         End Function
 
         Public ReadOnly Property Map As Dictionary(Of T, Integer)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(index As Index(Of T)) As Dictionary(Of T, Integer)
             Return New Dictionary(Of T, Integer)(index.maps)
         End Operator

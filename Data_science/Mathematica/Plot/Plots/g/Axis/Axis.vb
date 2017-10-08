@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08a5d73265a99d7f8c2145748595679b, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::47c75e3918f32f92eb9fd82d79461304, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\Axis.vb"
 
     ' Author:
     ' 
@@ -284,6 +284,8 @@ Namespace Graphic.Axis
                         .Y = size.Height / 2 + scaler.ChartRegion.Top
                     }
 
+                    Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
+
                     With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                         Call .DrawString(label, font, Brushes.Black, location, -90)
                     End With
@@ -338,7 +340,7 @@ Namespace Graphic.Axis
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
+        Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "500,300") As Image
             Using g As Graphics2D = size.SizeParser.CreateGDIDevice(Color.Transparent)
                 With g
                     Dim b As Brush = fcolor.GetBrush
@@ -428,6 +430,7 @@ Namespace Graphic.Axis
                         .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height + d * 3
                     }
 
+                    Call $"[X:={label}] {point.ToString}".__INFO_ECHO
                     Call g.DrawString(label, font, Brushes.Black, point)
                 End If
             End If

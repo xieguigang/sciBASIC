@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c4c5fbd6f3e93a444806d6c3749496c, ..\sciBASIC#\Data_science\Graph\Model\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::16198bd10b3c29360bb8ca688db23a57, ..\sciBASIC#\Data_science\Graph\Model\Tree.vb"
 
     ' Author:
     ' 
@@ -118,4 +118,3 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
         Return count
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11503029bb24665b110d31a4c10dd109, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IXml.vb"
+﻿#Region "Microsoft.VisualBasic::65b8ab3fb4f7136464bfe9d294c3f62a, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IXml.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Public MustInherit Class IXml
         Return xml.SaveTo(path, Encoding.UTF8)
     End Function
 End Class
-

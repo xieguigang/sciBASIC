@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5def78c94da0fbed8e5b70ff7678c9d6, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\PieChartTest.vb"
+﻿#Region "Microsoft.VisualBasic::d56b8961c313d7a846f0fd811625f674, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\PieChartTest.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Public Module PieChartTest
             .Save("./test_pie.png")
     End Sub
 End Module
-

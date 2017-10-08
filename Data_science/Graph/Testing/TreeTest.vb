@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a38f018f8e24c3bb44155815bd0d7d76, ..\sciBASIC#\Data_science\Graph\Testing\TreeTest.vb"
+﻿#Region "Microsoft.VisualBasic::763644d6b47d19b79abfdddadb9041d2, ..\sciBASIC#\Data_science\Graph\Testing\TreeTest.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Module TreeTest
         Pause()
     End Sub
 End Module
-

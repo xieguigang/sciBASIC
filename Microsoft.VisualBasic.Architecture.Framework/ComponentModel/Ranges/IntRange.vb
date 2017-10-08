@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce5332dbde8adb38ed44392489324658, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::afacd252b3748368cdb15c0dd7fe88ad, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IntRange.vb"
 
     ' Author:
     ' 
@@ -175,10 +175,12 @@ Namespace ComponentModel.Ranges
             Return r
         End Operator
 
-        Public Shared Widening Operator CType(values%()) As IntRange
-            With values
-                Return New IntRange(.Min, .Max)
-            End With
-        End Operator
+        ' 2017-10-6
+        ' 因为下面的这个隐式转换操作符会和Vector的Item属性产生冲突，所以在这里将这个操作符移除掉
+        'Public Shared Widening Operator CType(values%()) As IntRange
+        '    With values
+        '        Return New IntRange(.Min, .Max)
+        '    End With
+        'End Operator
     End Class
 End Namespace

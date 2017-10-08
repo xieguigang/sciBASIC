@@ -1,3 +1,31 @@
+ï»¿#Region "Microsoft.VisualBasic::1727d1dc9c3fa71b74ce85d4c6a583f9, ..\sciBASIC#\mime\text%html\HTML\CSS\Parser\Parser.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -19,7 +47,7 @@ Namespace HTML.CSS.Parser
     Public Module CssParser
 
         ''' <summary>
-        ''' Ö÷ÒªµÄCSS½âÎöº¯Êý
+        ''' ï¿½ï¿½Òªï¿½ï¿½CSSï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         ''' </summary>
         ''' <param name="CSS"></param>
         ''' <returns></returns>
@@ -53,15 +81,15 @@ Namespace HTML.CSS.Parser
         Const IndivisualTagsPattern$ = "(?<selector>(?:(?:[^,{]+),?)*?)\{(?:(?<name>[^}:]+):?(?<value>[^};]+);?)*?\}"
 
         ''' <summary>
-        ''' CSSµÄ×¢ÊÍ×ÜÊÇÒÔ/*ÆðÊ¼£¬ÒÔ*/½áÊøµÄ
+        ''' CSSï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/*ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½*/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         ''' </summary>
         Const CommentBlock$ = "/\*.+?\*/"
 
         ''' <summary>
         ''' ###### 2017-10-1
         ''' 
-        ''' Ô­À´µÄÕâ¸ö½âÎöº¯Êý»¹Ã»ÓÐ¿¼ÂÇµ½×¢ÊÍµÄÎÊÌâ
-        ''' µ±CSSÖ®ÖÐ´æÔÚ×¢ÊÍµÄÊ±ºò¾ÍÎÞ·¨Õý³£¹¤×÷ÁË
+        ''' Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð¿ï¿½ï¿½Çµï¿½×¢ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½
+        ''' ï¿½ï¿½CSSÖ®ï¿½Ð´ï¿½ï¿½ï¿½×¢ï¿½Íµï¿½Ê±ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         ''' </summary>
         ''' <param name="input"></param>
         ''' <returns></returns>
@@ -69,7 +97,7 @@ Namespace HTML.CSS.Parser
             Dim b As New List(Of String)()
             Dim s As New StringBuilder(input)
 
-            ' Ê×ÏÈÐèÒªÒÆ³ýµôCSSµÄ×¢ÊÍÎÄ±¾
+            ' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Æ³ï¿½ï¿½ï¿½CSSï¿½ï¿½×¢ï¿½ï¿½ï¿½Ä±ï¿½
             For Each block As Match In r.Matches(input, CommentBlock, RegexICSng)
                 Call s.Replace(block.Value, "")
             Next

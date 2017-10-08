@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6e9ce806d38e9f0e39f6600d5990cd4, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\AlignmentPlot.vb"
+﻿#Region "Microsoft.VisualBasic::27189afbb0857b5f8146ade8e67b4590, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\AlignmentPlot.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -65,6 +66,7 @@ Namespace BarPlot
         ''' <param name="cla$">Color expression for <paramref name="query"/></param>
         ''' <param name="clb$">Color expression for <paramref name="subject"/></param>
         ''' <param name="displayX">是否在信号的柱子上面显示出X坐标的信息</param>
+        ''' <param name="htmlLabel">Draw axis label using html render?? default is no.</param>
         ''' <returns></returns>
         <Extension>
         Public Function PlotAlignment(query As (X#, value#)(), subject As (X#, value#)(),
@@ -88,7 +90,9 @@ Namespace BarPlot
                                       Optional displayX As Boolean = True,
                                       Optional X_CSS$ = CSSFont.Win10Normal,
                                       Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
-                                      Optional labelPlotStrength# = 0.25) As GraphicsData
+                                      Optional labelPlotStrength# = 0.25,
+                                      Optional htmlLabel As Boolean = False) As GraphicsData
+
             Dim q As New Signal With {
                 .Name = queryName,
                 .Color = cla,
@@ -106,7 +110,8 @@ Namespace BarPlot
                                        title, tickCSS, titleCSS,
                                        legendFontCSS, bw, format, displayX, X_CSS,
                                        yAxislabelPosition,
-                                       labelPlotStrength)
+                                       labelPlotStrength,
+                                       htmlLabel:=htmlLabel)
         End Function
 
         Public Structure Signal
@@ -172,7 +177,8 @@ Namespace BarPlot
                                             Optional hitsHightLights As Double() = Nothing,
                                             Optional xError# = 0.5,
                                             Optional highlight$ = Stroke.StrongHighlightStroke,
-                                            Optional highlightMargin! = 2) As GraphicsData
+                                            Optional highlightMargin! = 2,
+                                            Optional htmlLabel As Boolean = False) As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
                     .Select(Function(x) x.signals.Keys) _
@@ -220,7 +226,9 @@ Namespace BarPlot
                         Dim tickFont As Font = CSSFont.TryParse(tickCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!)).GDIObject
                         Dim drawlabel = Sub(c As IGraphics, label$)
                                             Dim tsize = c.MeasureString(label, tickFont)
-                                            Call c.DrawString(label, tickFont, Brushes.Black, New Point(.Left - dt - tsize.Width, y - tsize.Height / 2))
+                                            Dim pos As New Point(.Left - dt - tsize.Width, y - tsize.Height / 2)
+
+                                            Call c.DrawString(label, tickFont, Brushes.Black, pos)
                                         End Sub
 
                         If TypeOf g Is Graphics2D Then
@@ -246,19 +254,24 @@ Namespace BarPlot
                         Next
 
                         Dim labelFont As Font = CSSFont.TryParse(labelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!, FontStyle.Bold)).GDIObject
+                        Dim labSize As SizeF = g.MeasureString(ylab, labelFont)
+                        Dim labPos As PointF
 
                         ' Y 坐标轴
                         Call g.DrawLine(axisPen, .Location, New Point(.Left, .Bottom))
 
                         Select Case yAxislabelPosition
                             Case YlabelPosition.InsidePlot
-                                Call g.DrawImageUnscaled(Axis.DrawLabel(ylab, labelFont, size:="500,500"), New Point(.Left + 3, .Top))
+                                labPos = New Point(.Left + 3, .Top)
+                                Call g.DrawString(ylab, labelFont, Brushes.Black, labPos)
                             Case YlabelPosition.LeftCenter
-                                Dim labelImage = Axis.DrawLabel(ylab, labelFont, size:="500,200")
-                                Dim yLabelPoint As New Point(
-                                    (.Left - labelImage.Width) / 3,
-                                    .Top + (.Height - labelImage.Height) / 2)
-                                Call g.DrawImageUnscaled(labelImage, yLabelPoint)
+                                labPos = New PointF(
+                                    (.Left - labSize.Height) / 4,
+                                    .Top * 2.5 + (.Height - labSize.Width) / 2)
+
+                                With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                                    Call .DrawString(ylab, labelFont, Brushes.Black, labPos, -90)
+                                End With
                             Case Else
                                 ' 不进行标签的绘制
                         End Select

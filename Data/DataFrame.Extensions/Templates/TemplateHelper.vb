@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc8b2b918b7e65a8b297f46abbf07c50, ..\sciBASIC#\Data\DataFrame.Extensions\Templates\TemplateHelper.vb"
+﻿#Region "Microsoft.VisualBasic::be8539d53d21392cc1ad57e163220850, ..\sciBASIC#\Data\DataFrame.Extensions\Templates\TemplateHelper.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Public Module TemplateHelper
         Return typeTable
     End Function
 End Module
-

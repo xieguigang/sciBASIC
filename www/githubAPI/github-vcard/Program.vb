@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cefb8720c3dc5cfa5ad9af3fa543ecc, ..\sciBASIC#\www\githubAPI\github-vcard\Program.vb"
+﻿#Region "Microsoft.VisualBasic::216f38d9f0efc57ce54c857008d6fa84, ..\sciBASIC#\www\githubAPI\github-vcard\Program.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Webservices.Github
 Imports Microsoft.VisualBasic.Webservices.Github.Class
@@ -63,17 +64,17 @@ Module Program
                Usage:="/relationships /user <userName> [/out <out.DIR>]")>
     Public Function relationships(args As CommandLine) As Integer
         Dim user$ = args <= "/user"
-        Dim out$ = args.GetValue("out", App.CurrentDirectory & "/github-relationships/")
-
-        Dim followers As User() = WebAPI.Users.Followers(user)
-        Call followers _
-            .GetJson(True) _
-            .SaveTo(out & "/followers.json")
+        Dim out$ = (args <= "out") Or (App.CurrentDirectory & "/github-relationships/").AsDefault
 
         Dim following As User() = WebAPI.Users.Following(user)
         Call following _
             .GetJson(True) _
             .SaveTo(out & "/following.json")
+
+        Dim followers As User() = WebAPI.Users.Followers(user)
+        Call followers _
+            .GetJson(True) _
+            .SaveTo(out & "/followers.json")
 
         Dim notFollings = following.WhoIsNotFollowMe(followers).ToArray
         Call notFollings _

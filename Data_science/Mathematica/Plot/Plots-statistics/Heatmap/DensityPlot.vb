@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::aa7907b934a50ba547739cf33d671bf9, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\DensityPlot.vb"
+﻿#Region "Microsoft.VisualBasic::93c3181651e594900028ae77f8a22218, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\DensityPlot.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.Driver.CSS
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -48,6 +49,8 @@ Namespace Heatmap
     ''' </summary>
     Public Module DensityPlot
 
+        Public Const DriverName$ = "scatter.density.plot"
+
         ''' <summary>
         ''' Similar to the <see cref="Contour"/> plot but plot in scatter mode.
         ''' </summary>
@@ -57,22 +60,23 @@ Namespace Heatmap
         ''' <param name="bg$"></param>
         ''' <param name="schema$"></param>
         ''' <returns></returns>
+        <Driver(DriverName)>
         Public Function Plot(points As IEnumerable(Of PointF),
-                             Optional size$ = "1600,1200",
-                             Optional padding$ = g.DefaultPadding,
-                             Optional bg$ = "white",
+                             <GlobalCSSSelector(Types.Size)> Optional size$ = "1600,1200",
+                             <GlobalCSSSelector(Types.Padding)> Optional padding$ = g.DefaultPadding,
+                             <GlobalCSSSelector(Types.Brush)> Optional bg$ = "white",
                              Optional schema$ = "Jet",
                              Optional levels% = 20,
                              Optional steps$ = Nothing,
-                             Optional ptSize! = 5,
-                             Optional legendWidth% = 150,
-                             Optional legendTitleFontCSS$ = CSSFont.Win7LargerNormal,
-                             Optional legendTickFontCSS$ = CSSFont.Win7Normal,
-                             Optional legendTickStrokeCSS$ = Stroke.AxisStroke,
+                             <CSSSelector(Types.Float)> Optional ptSize! = 5,
+                             <CSSSelector(Types.Integer)> Optional legendWidth% = 150,
+                             <CSSSelector(Types.Font)> Optional legendTitleFontCSS$ = CSSFont.Win7LargerNormal,
+                             <CSSSelector(Types.Font)> Optional legendTickFontCSS$ = CSSFont.Win7Normal,
+                             <CSSSelector(Types.Stroke)> Optional legendTickStrokeCSS$ = Stroke.AxisStroke,
                              Optional ablines As Line() = Nothing,
                              Optional labX$ = "X",
                              Optional labY$ = "Y",
-                             Optional labelFontCSS$ = CSSFont.Win10Normal,
+                             <CSSSelector(Types.Font)> Optional labelFontCSS$ = CSSFont.Win10Normal,
                              Optional htmlLabel As Boolean = True) As GraphicsData
 
             Dim data = points _
@@ -178,7 +182,7 @@ Namespace Heatmap
                 .ToDictionary(Function(index) index.Key,
                               Function(n) n.Count)
             Dim range As New IntRange(counts.Values)
-            Dim colorIndex As IntRange = {0, schema.Length - 1}
+            Dim colorIndex As New IntRange({0, schema.Length - 1})
             Dim density = gridIndex _
                 .Select(Function(index) counts(index.ToString)) _
                 .Select(Function(d)

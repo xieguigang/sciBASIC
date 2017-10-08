@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fdc139d8532058f04806c956fdc3aa8, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\NamedVector.vb"
+﻿#Region "Microsoft.VisualBasic::792a39df9b7cc0cdd8043f1972d44e88, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVector.vb"
 
     ' Author:
     ' 
@@ -26,9 +26,10 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace LinearAlgebra
+Namespace Scripting
 
     ''' <summary>
     ''' Factory for <see cref="Dictionary(Of String, Double)"/> to <see cref="Vector"/>

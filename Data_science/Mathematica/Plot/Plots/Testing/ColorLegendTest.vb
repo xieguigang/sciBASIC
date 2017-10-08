@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0e2069ce5b12c308936c74f6c622512, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\ColorLegendTest.vb"
+﻿#Region "Microsoft.VisualBasic::fac5c5c296144c482206b7c11466e787, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\ColorLegendTest.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Module ColorLegendTest
         End Using
     End Sub
 End Module
-

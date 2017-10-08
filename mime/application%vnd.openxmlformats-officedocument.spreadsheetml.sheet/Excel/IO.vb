@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::881144abcf6d751711e41865ea6384fe, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
+﻿#Region "Microsoft.VisualBasic::9ea7740f4264bca9bdf9ce82a19bf6c5, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Public Module IO
         Return out
     End Function
 End Module
-

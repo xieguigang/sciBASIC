@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e5fc8a93b1a088bcb52477914b11770, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\QQPlot.vb"
+﻿#Region "Microsoft.VisualBasic::33acba9b10756793a73f6a7b4e816e5d, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\QQPlot.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -108,4 +107,3 @@ Public Module QQPlot
 
     End Function
 End Module
-
