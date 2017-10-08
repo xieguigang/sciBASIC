@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Scripting
 
 Namespace d3js.scale
 

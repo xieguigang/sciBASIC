@@ -26,10 +26,10 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace LinearAlgebra
+Namespace Scripting
 
     ''' <summary>
     ''' Factory for <see cref="Dictionary(Of String, Double)"/> to <see cref="Vector"/>
