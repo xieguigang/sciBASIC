@@ -32,6 +32,10 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Scripting
 
+    ''' <summary>
+    ''' R language like string factor
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class Factor(Of T As IComparable(Of T)) : Inherits float
         Implements Value(Of T).IValueOf
 
