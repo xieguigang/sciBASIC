@@ -66,15 +66,15 @@ Module Program
         Dim user$ = args <= "/user"
         Dim out$ = (args <= "out") Or (App.CurrentDirectory & "/github-relationships/").AsDefault
 
-        Dim followers As User() = WebAPI.Users.Followers(user)
-        Call followers _
-            .GetJson(True) _
-            .SaveTo(out & "/followers.json")
-
         Dim following As User() = WebAPI.Users.Following(user)
         Call following _
             .GetJson(True) _
             .SaveTo(out & "/following.json")
+
+        Dim followers As User() = WebAPI.Users.Followers(user)
+        Call followers _
+            .GetJson(True) _
+            .SaveTo(out & "/followers.json")
 
         Dim notFollings = following.WhoIsNotFollowMe(followers).ToArray
         Call notFollings _

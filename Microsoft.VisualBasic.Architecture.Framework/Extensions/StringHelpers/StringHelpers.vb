@@ -59,6 +59,10 @@ Public Module StringHelpers
 #Else
     <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
 #End If
+        If src Is Nothing Then
+            Return ""
+        End If
+
         src = src.Replace(vbCrLf, VbCRLF_Replace) _
                  .Replace(vbCr, VbCRLF_Replace) _
                  .Replace(vbLf, VbCRLF_Replace) _

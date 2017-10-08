@@ -1297,24 +1297,6 @@ Public Module Extensions
         Return 0
     End Function
 
-    ''' <summary>
-    ''' 尝试将目标对象放入到函数指针之中来运行，运行失败的时候回返回<paramref name="default"/>默认值
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <typeparam name="TOut"></typeparam>
-    ''' <param name="value"></param>
-    ''' <param name="proc"></param>
-    ''' <param name="[default]"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TryInvoke(Of T, TOut)(proc As Func(Of T, TOut), value As T, Optional [default] As TOut = Nothing) As TOut
-        Try
-            Return proc(value)
-        Catch ex As Exception
-            Call App.LogException(ex)
-            Return [default]
-        End Try
-    End Function
-
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' The target parameter <paramref name="n"/> value is NaN or not a real number or not?
