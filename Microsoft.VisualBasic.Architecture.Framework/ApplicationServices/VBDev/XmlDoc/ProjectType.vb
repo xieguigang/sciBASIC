@@ -38,7 +38,7 @@ Imports System.IO
 Imports System.Xml
 Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 
-Namespace SoftwareToolkits.XmlDoc.Assembly
+Namespace ApplicationServices.Development.XmlDoc.Assembly
 
     ''' <summary>
     ''' A type within a project namespace.

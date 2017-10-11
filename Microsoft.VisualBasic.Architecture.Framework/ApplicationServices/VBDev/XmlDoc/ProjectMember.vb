@@ -33,7 +33,7 @@ Imports System.Xml
 Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.Language
 
-Namespace SoftwareToolkits.XmlDoc.Assembly
+Namespace ApplicationServices.Development.XmlDoc.Assembly
 
     ''' <summary>
     ''' Base class for a method or property.

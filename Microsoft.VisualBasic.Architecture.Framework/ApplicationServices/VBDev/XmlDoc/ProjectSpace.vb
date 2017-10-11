@@ -40,7 +40,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 
-Namespace SoftwareToolkits.XmlDoc.Assembly
+Namespace ApplicationServices.Development.XmlDoc.Assembly
 
     ''' <summary>
     ''' A collection of one or more projects put together, and their attendant namespaces.

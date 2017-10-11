@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Assembly
 
-Namespace SoftwareToolkits.XmlDoc.Serialization
+Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     Public Class URLBuilder
 

@@ -28,7 +28,7 @@
 
 Imports Microsoft.Win32
 
-Namespace ApplicationServices.SoftwareToolkits
+Namespace ApplicationServices
 
     Public Module RegistryUtils
 

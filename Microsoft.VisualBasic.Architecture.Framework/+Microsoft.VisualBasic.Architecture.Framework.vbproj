@@ -1017,7 +1017,7 @@
     <Compile Include="Scripting\TextGrepScriptEngine.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Member.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Doc.vb" />
-    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\DocAPI.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
     <Compile Include="ApplicationServices\ZipLib.vb" />
     <Compile Include="ApplicationServices\Tools\SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />

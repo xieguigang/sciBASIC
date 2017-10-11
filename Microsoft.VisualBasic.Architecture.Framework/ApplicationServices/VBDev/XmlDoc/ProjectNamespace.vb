@@ -36,7 +36,7 @@ Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.Text
 
-Namespace SoftwareToolkits.XmlDoc.Assembly
+Namespace ApplicationServices.Development.XmlDoc.Assembly
 
     ''' <summary>
     ''' A namespace within a project -- typically a collection of related types.  Equates to a .net Namespace.
