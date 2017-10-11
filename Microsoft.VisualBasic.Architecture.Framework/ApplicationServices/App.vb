@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2052076df51585142183c2f9b3f4c5e0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::dc5552d8f1d2824d79391cb388a34cf6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\App.vb"
 
     ' Author:
     ' 

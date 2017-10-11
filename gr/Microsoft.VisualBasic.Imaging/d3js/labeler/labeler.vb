@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd8d3c01ed08c3fd33aa60c5e849b3b4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
+﻿#Region "Microsoft.VisualBasic::19e2a85babe4de4ff99077e7167a8244, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
 
     ' Author:
     ' 
@@ -394,4 +394,3 @@ Namespace d3js.Layout
         End Function
     End Class
 End Namespace
-

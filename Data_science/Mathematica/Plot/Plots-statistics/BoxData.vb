@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ec9c6c2f9d8e7f80ebc07c51287c1d0, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\BoxData.vb"
+﻿#Region "Microsoft.VisualBasic::ab817303e7b0d1149a70a30b271a4c1f, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\BoxData.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Public Class BoxData
         Next
     End Function
 End Class
-

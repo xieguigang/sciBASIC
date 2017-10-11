@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::923be7e15bf8886a81448d6fd6a16eac, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::403c079189721e90b797654722e3ed47, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 
@@ -76,4 +76,3 @@ Namespace d3js.Layout
         End Operator
     End Class
 End Namespace
-

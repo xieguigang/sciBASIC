@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::171c0e71110ecc4570ccbc4809163402, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::218972c74de624a70b0f091f1a65cfa0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -1295,24 +1295,6 @@ Public Module Extensions
         Next
 
         Return 0
-    End Function
-
-    ''' <summary>
-    ''' 尝试将目标对象放入到函数指针之中来运行，运行失败的时候回返回<paramref name="default"/>默认值
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <typeparam name="TOut"></typeparam>
-    ''' <param name="value"></param>
-    ''' <param name="proc"></param>
-    ''' <param name="[default]"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TryInvoke(Of T, TOut)(proc As Func(Of T, TOut), value As T, Optional [default] As TOut = Nothing) As TOut
-        Try
-            Return proc(value)
-        Catch ex As Exception
-            Call App.LogException(ex)
-            Return [default]
-        End Try
     End Function
 
 #If FRAMEWORD_CORE Then

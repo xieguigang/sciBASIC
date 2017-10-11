@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9ce834ea8980578c0ed414c771e5877, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::ea2d120698ce4aea950992d6cf6c0a04, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -127,6 +128,22 @@ B21,B22,B23,...
         End Property
 
         ''' <summary>
+        ''' Get column values by column name.
+        ''' </summary>
+        ''' <param name="name$"></param>
+        ''' <returns></returns>
+        Default Public Overloads ReadOnly Property Item(name$) As String()
+            Get
+                Dim match$ = Headers _
+                    .Where(Function(c) c.TextEquals(name)) _
+                    .DefaultFirst(Nothing)
+                Dim index% = Headers.IndexOf(match)
+
+                Return Column(index).ToArray
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Get the max width number of the rows in the table.(返回表中的元素最多的一列的列数目)
         ''' </summary>
         ''' <value></value>
@@ -153,6 +170,7 @@ B21,B22,B23,...
                     Yield row.Column(Index)
                 Next
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As IEnumerable(Of String))
                 Call __setColumn(value.ToArray, Index)
             End Set

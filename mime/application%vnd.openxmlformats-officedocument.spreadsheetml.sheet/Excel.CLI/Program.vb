@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb3feced6614c9eb6e2dc02f9882cc60, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\Program.vb"
+﻿#Region "Microsoft.VisualBasic::cd493eb0aaff69e5e487a2f6dc430586, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\Program.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Module Program
         Pause()
     End Sub
 End Module
-

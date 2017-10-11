@@ -196,6 +196,11 @@ Namespace Imaging.BitmapImage
                     If Not GDIColors.Equals(p, blankColor) Then
                         ' 在这里确定了左右
                         find = True
+
+                        If top > 0 Then
+                            top -= 1
+                        End If
+
                         Exit For
                     End If
                 Next
@@ -218,6 +223,11 @@ Namespace Imaging.BitmapImage
                     If Not GDIColors.Equals(p, blankColor) Then
                         ' 在这里确定了左右
                         find = True
+
+                        If left > 0 Then
+                            left -= 1
+                        End If
+
                         Exit For
                     End If
                 Next
@@ -243,6 +253,9 @@ Namespace Imaging.BitmapImage
                     If Not GDIColors.Equals(p, blankColor) Then
                         ' 在这里确定了左右
                         find = True
+
+                        bottom += 1
+
                         Exit For
                     End If
                 Next
@@ -265,6 +278,8 @@ Namespace Imaging.BitmapImage
                     If Not GDIColors.Equals(p, blankColor) Then
                         ' 在这里确定了左右
                         find = True
+                        right += 1
+
                         Exit For
                     End If
                 Next

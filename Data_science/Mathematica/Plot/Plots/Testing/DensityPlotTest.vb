@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d01c3f1ddab81a59fcdab1691aa2e17, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\DensityPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::fb9c3de33b22c193307c51587bd44614, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\DensityPlotTest.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Module DensityPlotTest
             schema:=ColorMap.PatternJet).Save("./test.png")
     End Sub
 End Module
-

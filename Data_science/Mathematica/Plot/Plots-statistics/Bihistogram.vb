@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98f35fe6cd575bd86e2d3d71cf8a2d0e, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Bihistogram.vb"
+﻿#Region "Microsoft.VisualBasic::da6bf498bd0bb3643e9786e132beff16, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Bihistogram.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging.Driver
 
@@ -67,4 +66,3 @@ Public Module Bihistogram
 
     End Function
 End Module
-

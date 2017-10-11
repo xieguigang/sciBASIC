@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecc39c4c213c432a360b285b99b0ac79, ..\sciBASIC#\www\githubAPI\Visualizer\IsometricContributions.vb"
+﻿#Region "Microsoft.VisualBasic::64a8ffea58335c99a006e5623b2080b0, ..\sciBASIC#\www\githubAPI\Visualizer\IsometricContributions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports Microsoft.VisualBasic.Webservices.Github.WebAPI
 Imports IsometricView = Microsoft.VisualBasic.Imaging.Drawing3D.IsometricEngine

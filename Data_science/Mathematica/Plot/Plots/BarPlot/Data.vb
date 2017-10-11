@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb4184de47db315b30cf9121ad327bfc, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Data.vb"
+﻿#Region "Microsoft.VisualBasic::69fc37a6248c9fe63fc7a9a93f6d349a, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Data.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BarPlot

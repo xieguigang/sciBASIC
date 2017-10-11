@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::594d5b63fea0d151d875e1bb75773be7, ..\sciBASIC#\Data_science\Graph\Model\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::be0b5b537da0f446e63d10fe47f55aec, ..\sciBASIC#\Data_science\Graph\Model\Grid.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Public Class Grid
         Return $"{rect} @ {steps}"
     End Function
 End Class
-

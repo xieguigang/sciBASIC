@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e902a48cb724b9bc6e8800bbc63acb6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\SoftwareToolkits\Ngen\Registry.vb"
+﻿#Region "Microsoft.VisualBasic::4ba8235fd56964ebb23cfba2348edccf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\SoftwareToolkits\Ngen\Registry.vb"
 
     ' Author:
     ' 
@@ -96,4 +96,3 @@ Namespace ApplicationServices.SoftwareToolkits
         End Function
     End Module
 End Namespace
-

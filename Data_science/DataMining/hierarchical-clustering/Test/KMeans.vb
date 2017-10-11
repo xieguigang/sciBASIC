@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aec514a5668e568c407dce85c8d1d7f6, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\Test\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::04ea86674dc0b8206d5f59338f69b709, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\Test\KMeans.vb"
 
     ' Author:
     ' 
@@ -39,4 +39,3 @@ Module KMeans
         data.SaveTo("C:\Users\xieguigang\Desktop\8.27\8.27\2. 17-92 vs ctrl\3. DEPs\heatmap.kmeans.csv")
     End Sub
 End Module
-

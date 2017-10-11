@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83ab7b839d80ce00b9d37a52a929ee3f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\DefaultValueTest.vb"
+﻿#Region "Microsoft.VisualBasic::b40107c81ddc775e65ec933db6eaa70a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\DefaultValueTest.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Module DefaultValueTest
         println(font.ToString)
     End Function
 End Module
-
