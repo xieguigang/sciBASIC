@@ -1014,7 +1014,7 @@
     <Compile Include="Serialization\ConfigMappings\DynamicsConfiguration.vb" />
     <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />
-    <Compile Include="Text\TextGrepScriptEngine.vb" />
+    <Compile Include="Scripting\TextGrepScriptEngine.vb" />
     <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Member.vb" />
     <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb" />
     <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb" />
