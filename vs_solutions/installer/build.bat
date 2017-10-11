@@ -30,7 +30,7 @@ REM redistribute the ``sciBASIC_installer.exe``
 
 REM installer packaged based on the MSBuild platform
 
-SET sciBASIC_sln="../Microsoft.VisualBasic.Architecture.Framework - ALL.sln"
+SET sciBASIC_sln="../sciBASIC.NET - ALL.sln"
 SET installer_sln="./vs_installer.sln"
 
 REM check the visual studio solution file exists or not?
