@@ -30,7 +30,7 @@
 '    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0. 
 
 Imports System.Xml
-Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
+Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.Language
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly

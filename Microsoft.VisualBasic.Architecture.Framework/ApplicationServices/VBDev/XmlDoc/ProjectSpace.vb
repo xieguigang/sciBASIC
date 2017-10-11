@@ -31,14 +31,11 @@
 
 
 Imports System.IO
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
 Imports System.Xml
+Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.SoftwareToolkits.XmlDoc.Serialization
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 

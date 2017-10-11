@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Grouping
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -36,7 +37,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer.Prefix
-Imports Microsoft.VisualBasic.SoftwareToolkits
 Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Text
 

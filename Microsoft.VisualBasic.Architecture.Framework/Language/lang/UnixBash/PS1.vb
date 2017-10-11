@@ -28,7 +28,7 @@
 
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.SoftwareToolkits
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace Language.UnixBash
 
