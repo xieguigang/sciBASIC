@@ -29,7 +29,7 @@
 Imports System.ComponentModel
 Imports System.Reflection
 
-Namespace SoftwareToolkits.Globalization
+Namespace ApplicationServices.Globalization
 
     ''' <summary>
     ''' 
@@ -53,10 +53,10 @@ Namespace SoftwareToolkits.Globalization
         ''' <remarks></remarks>
         Default Public ReadOnly Property Text(Language As TLanguage, res As String) As String
             Get
-                If Not _languageResources.ContainsKey(res) Then
+                If Not _LanguageResources.ContainsKey(res) Then
                     Return ""
                 End If
-                Dim resource = _languageResources(res)
+                Dim resource = _LanguageResources(res)
                 If resource.Resources.ContainsKey(Language) Then
                     Return resource.Resources(Language).Text
                 Else

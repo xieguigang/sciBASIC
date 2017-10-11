@@ -29,7 +29,7 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace SoftwareToolkits.Globalization
+Namespace ApplicationServices.Globalization
 
     Public Class StringResources(Of TLanguage)
 

@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 
-Namespace SoftwareToolkits
+Namespace ApplicationServices
 
     ''' <summary>
     ''' Source code license manager
