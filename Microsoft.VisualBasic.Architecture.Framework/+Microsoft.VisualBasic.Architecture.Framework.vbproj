@@ -520,7 +520,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sciBASIC.NET-test-release|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
+    <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\sciBASIC.NET-test-release\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>

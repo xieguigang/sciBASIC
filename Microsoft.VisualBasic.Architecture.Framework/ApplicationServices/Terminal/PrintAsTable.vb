@@ -88,19 +88,53 @@ Namespace ApplicationServices.Terminal
         ''' <param name="dev"></param>
         ''' <param name="sep"></param>
         <Extension>
-        Public Sub PrintTable(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
-            With dev Or Console.Out.AsDefault
+        Public Sub PrintTable(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c, Optional title$() = Nothing)
+            Dim printHead As Boolean = False
+            Dim table$()() = source.ToArray
+            Dim printOfHead As printOnDevice =
+                Sub(row, width, maxLen, device)
+                    Call device.Write("+")
+                    Call device.Write(maxLen.Select(Function(l) New String("-"c, l)).JoinBy("+"))
+                    Call device.Write("+")
+                    Call device.WriteLine()
+                End Sub
 
-                Dim table$()() = source.ToArray
+            If Not title Is Nothing Then
+                table = title.Join(table).ToArray
+            End If
 
+            Call table.printInternal(
+                dev, 2, Sub(row, width, maxLen, device)
+                            Dim offset% = 0
 
-            End With
+                            If Not printHead Then
+                                Call printOfHead(Nothing, width, maxLen, device)
+                            End If
+
+                            Call device.Write("|")
+
+                            For i As Integer = 0 To width - 1
+                                If row(i) Is Nothing Then
+                                    row(i) = ""
+                                End If
+
+                                offset = maxLen(i) - row(i).Length - 1
+                                device.Write(" " & row(i) & New String(sep, offset) & "|")
+                            Next
+
+                            Call device.WriteLine()
+
+                            If Not printHead Then
+                                Call printOfHead(Nothing, width, maxLen, device)
+                                printHead = True
+                            End If
+                        End Sub, printOfHead)
         End Sub
 
         Private Delegate Sub printOnDevice(row$(), width%, maxLen%(), device As TextWriter)
 
         <Extension>
-        Private Sub printInternal(table$()(), dev As TextWriter, printLayout As printOnDevice)
+        Private Sub printInternal(table$()(), dev As TextWriter, distance%, printLayout As printOnDevice, Optional final As printOnDevice = Nothing)
             With dev Or Console.Out.AsDefault
                 Dim width% = table.Max(Function(row) row.Length)
                 Dim index%
@@ -118,13 +152,14 @@ Namespace ApplicationServices.Terminal
                                         Return s.Length
                                     End If
                                 End Function) _
-                        .Max
+                        .Max + distance
                 Next
 
                 For Each row As String() In table
                     Call printLayout(row, width, maxLen, .ref)
                 Next
 
+                Call final(Nothing, width, maxLen, .ref)
                 Call .Flush()
             End With
         End Sub
@@ -137,24 +172,24 @@ Namespace ApplicationServices.Terminal
         ''' <param name="sep"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Sub Print(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c, Optional distance$ = " ")
+        Public Sub Print(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c, Optional distance% = 2)
             Call source _
                 .ToArray _
                 .printInternal(
-                    dev, Sub(row, width, maxLen, device)
-                             Dim offset% = 0
+                    dev, distance, Sub(row, width, maxLen, device)
+                                       Dim offset% = 0
 
-                             For i As Integer = 0 To width - 1
-                                 If row(i) Is Nothing Then
-                                     row(i) = ""
-                                 End If
+                                       For i As Integer = 0 To width - 1
+                                           If row(i) Is Nothing Then
+                                               row(i) = ""
+                                           End If
 
-                                 device.Write(New String(sep, offset) & row(i) & distance)
-                                 offset = maxLen(i) - row(i).Length
-                             Next
+                                           device.Write(New String(sep, offset) & row(i))
+                                           offset = maxLen(i) - row(i).Length
+                                       Next
 
-                             Call device.WriteLine()
-                         End Sub)
+                                       Call device.WriteLine()
+                                   End Sub)
         End Sub
 
         ''' <summary>
@@ -182,7 +217,7 @@ Namespace ApplicationServices.Terminal
             .Join(data.Select(Function(item)
                                   Return {item.Name, item.Value, item.Description}
                               End Function)) _
-            .Print(dev, sep)
+            .PrintTable(dev, sep)
         End Sub
     End Module
 End Namespace
