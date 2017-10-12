@@ -77,6 +77,7 @@ Namespace IO
             Return out
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function DataFrameWithMeta(Of T)(x As T) As File
             Return New File(x.ToCsvMeta)
@@ -91,6 +92,7 @@ Namespace IO
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToCsvMeta(Of T)(x As T) As RowObject()
             Return ToCsvMeta(x, GetType(T))

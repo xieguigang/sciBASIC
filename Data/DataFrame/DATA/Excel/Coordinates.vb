@@ -38,6 +38,7 @@ Namespace Excel
 
     Public Module Coordinates
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CellValue(data As IO.File, c As String) As String
             With Coordinates.Index(c)
@@ -64,6 +65,7 @@ Namespace Excel
             Return New Point(X, Y.YValue)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ColumnIndex(i%) As String
             Return i.TranslateDecimal(alphas:=AZ.Objects)
         End Function

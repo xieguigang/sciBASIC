@@ -43,6 +43,7 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <param name="[property]"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsDataIgnored([property] As PropertyInfo) As Boolean
             Return Not [property].GetCustomAttributes(attributeType:=ignored, inherit:=True).IsNullOrEmpty OrElse

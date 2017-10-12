@@ -31,8 +31,15 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
+Imports Table = Microsoft.VisualBasic.Data.csv.IO.File
 
 Public Module PipeStream
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function DataFrame(data As IEnumerable(Of RowObject)) As Table
+        Return New Table(data)
+    End Function
 
     <Extension>
     Public Iterator Function LoadStream(Of T As Class)(input As StreamReader, Optional strict As Boolean = False, Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
@@ -50,6 +57,7 @@ Public Module PipeStream
             End Function).ToArray
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Vectors(data As IEnumerable(Of DataSet)) As NamedValue(Of Double())()
         Return data.Select(
@@ -69,7 +77,7 @@ Public Module PipeStream
     ''' <param name="rowNames">csv文件之中是否含有列标题？TRUE的话会跳过第一列</param>
     ''' <returns></returns>
     <Extension>
-    Public Function AsMatrix(data As csv.IO.File, Optional header As Boolean = False, Optional rowNames As Boolean = False) As Double()()
+    Public Function AsMatrix(data As Table, Optional header As Boolean = False, Optional rowNames As Boolean = False) As Double()()
         Dim source As IO.File = data
 
         If header Then

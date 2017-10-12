@@ -1,36 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::a7369a37c6e458941f63a4efb4cef7c1, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.DataImports
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
@@ -56,19 +53,24 @@ Namespace StorageProvider.Reflection
         ''' <returns></returns>
         <Extension> Public Function GetDataFrameworkTypeSchema(type As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
             Dim Schema As SchemaProvider = SchemaProvider.CreateObject(type, Explicit).CopyReadDataFromObject
-            Dim cols = LinqAPI.Exec(Of NamedValue(Of Type)) <=
-                From columAttr As Column
-                In Schema.Columns
-                Select New NamedValue(Of Type) With {
-                    .Name = columAttr.Name,
-                    .Value = columAttr.BindProperty.PropertyType
-                }
+            Dim cols = LinqAPI.Exec(Of NamedValue(Of Type)) _
+ _
+                () <= From columAttr As Column
+                      In Schema.Columns
+                      Let ptype As Type = columAttr.BindProperty.PropertyType
+                      Select New NamedValue(Of Type) With {
+                          .Name = columAttr.Name,
+                          .Value = ptype
+                      }
+
             Dim array = From columnItem As CollectionColumn
                         In Schema.CollectionColumns
+                        Let ptype As Type = columnItem.BindProperty.PropertyType
                         Select New NamedValue(Of Type) With {
                             .Name = columnItem.Name,
-                            .Value = columnItem.BindProperty.PropertyType
+                            .Value = ptype
                         }
+
             Dim hash As Dictionary(Of String, Type) = cols _
                 .Join(array) _
                 .ToDictionary(Function(x) x.Name,
@@ -112,16 +114,17 @@ Namespace StorageProvider.Reflection
         ''' <summary>
         ''' 从文件之中读取数据并转换为对象数据
         ''' </summary>
-        ''' <typeparam name="ItemType"></typeparam>
-        ''' <param name="DataFrame"></param>
+        ''' <typeparam name="TClass"></typeparam>
+        ''' <param name="df"></param>
         ''' <param name="explicit"></param>
         ''' <returns></returns>
         ''' <remarks>在这里查找所有具有写属性的属性对象即可</remarks>
-        Public Function Convert(Of ItemType As Class)(DataFrame As DataFrame, Optional explicit As Boolean = True) As List(Of ItemType)
-            Dim type As Type = GetType(ItemType)
-            Return DataFrame _
-                .LoadDataToObject(type, explicit) _
-                .ToList(Function(x) DirectCast(x, ItemType))
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Convert(Of TClass As Class)(df As DataFrame, Optional explicit As Boolean = True) As List(Of TClass)
+            Return df _
+                .LoadDataToObject(GetType(TClass), explicit) _
+                .ToList(Function(x) DirectCast(x, TClass))
         End Function
 
         ''' <summary>
@@ -163,6 +166,8 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Iterator Function GetsRowData(source As IEnumerable(Of Object), type As Type,
                         Optional Explicit As Boolean = True,
                         Optional maps As Dictionary(Of String, String) = Nothing,
@@ -259,6 +264,8 @@ Namespace StorageProvider.Reflection
         ''' <param name="schemaOut">``ByRef``反向输出的Schema参数</param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Save(Of T)(source As IEnumerable(Of T),
                                    Optional strict As Boolean = True,
                                    Optional metaBlank As String = "",
@@ -267,15 +274,13 @@ Namespace StorageProvider.Reflection
                                    Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing,
                                    Optional reorderKeys As Integer = 0) As File
 
-            Dim type As Type = GetType(T)
-            Dim file As New File(
-                __save(source, type, strict,
-                       schemaOut,
-                       metaBlank,
-                       maps,
-                       parallel,
-                       reorderKeys:=reorderKeys))
-            Return file
+            Return Reflector.__save(
+                source, GetType(T), strict,
+                schemaOut,
+                metaBlank,
+                maps,
+                parallel,
+                reorderKeys:=reorderKeys).DataFrame
         End Function
 
         ''' <summary>
