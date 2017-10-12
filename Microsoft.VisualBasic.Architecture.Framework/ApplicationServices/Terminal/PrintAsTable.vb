@@ -56,6 +56,7 @@ Namespace ApplicationServices.Terminal
                           .Values
                       Where x.IsPrimitive
                       Select x
+
             Dim titles As String() = schema.ToArray(Function(x) x.Identity)
             Dim contents = LinqAPI.Exec(Of Dictionary(Of String, String)) _
  _
@@ -88,29 +89,27 @@ Namespace ApplicationServices.Terminal
         ''' <param name="sep"></param>
         <Extension>
         Public Sub PrintTable(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
-
-        End Sub
-
-        ''' <summary>
-        ''' Print the string matrix collection <paramref name="source"/> in table layout.
-        ''' </summary>
-        ''' <param name="source">The string matrix collection.</param>
-        ''' <param name="dev">The output device</param>
-        ''' <param name="sep"></param>
-        <Extension>
-        Public Sub Print(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
             With dev Or Console.Out.AsDefault
 
                 Dim table$()() = source.ToArray
-                Dim maxLen As New List(Of Integer)
+
+
+            End With
+        End Sub
+
+        Private Delegate Sub printOnDevice(row$(), width%, maxLen%(), device As TextWriter)
+
+        <Extension>
+        Private Sub printInternal(table$()(), dev As TextWriter, printLayout As printOnDevice)
+            With dev Or Console.Out.AsDefault
                 Dim width% = table.Max(Function(row) row.Length)
                 Dim index%
-                Dim offset%
+                Dim maxLen%() = New Integer(width - 1) {}
 
                 ' 按照列计算出layout偏移量
                 For i As Integer = 0 To width - 1
                     index = i
-                    maxLen += table _
+                    maxLen(index) = table _
                         .Select(Function(row) row.ElementAtOrDefault(index)) _
                         .Select(Function(s)
                                     If String.IsNullOrEmpty(s) Then
@@ -123,18 +122,39 @@ Namespace ApplicationServices.Terminal
                 Next
 
                 For Each row As String() In table
-                    offset = 0
-
-                    For i As Integer = 0 To width - 1
-                        Call .Write(New String(sep, offset) & row(i))
-                        offset = maxLen(i) - row(i).Length
-                    Next
-
-                    Call .WriteLine()
+                    Call printLayout(row, width, maxLen, .ref)
                 Next
 
                 Call .Flush()
             End With
+        End Sub
+
+        ''' <summary>
+        ''' Print the string matrix collection <paramref name="source"/> in table layout.
+        ''' </summary>
+        ''' <param name="source">The string matrix collection.</param>
+        ''' <param name="dev">The output device</param>
+        ''' <param name="sep"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Print(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c, Optional distance$ = " ")
+            Call source _
+                .ToArray _
+                .printInternal(
+                    dev, Sub(row, width, maxLen, device)
+                             Dim offset% = 0
+
+                             For i As Integer = 0 To width - 1
+                                 If row(i) Is Nothing Then
+                                     row(i) = ""
+                                 End If
+
+                                 device.Write(New String(sep, offset) & row(i) & distance)
+                                 offset = maxLen(i) - row(i).Length - distance.Length
+                             Next
+
+                             Call device.WriteLine()
+                         End Sub)
         End Sub
 
         ''' <summary>

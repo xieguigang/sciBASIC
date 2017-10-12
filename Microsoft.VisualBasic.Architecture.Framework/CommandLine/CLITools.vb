@@ -56,7 +56,7 @@ Namespace CommandLine
             Dim device As New StringWriter(sb)
 
             Call device.WriteLine()
-            Call device.WriteLine(New String("-"c, args.Name * 2))
+            Call device.WriteLine(New String("-"c, args.Name.Length * 2))
             Call device.WriteLine()
 
             Call args _
