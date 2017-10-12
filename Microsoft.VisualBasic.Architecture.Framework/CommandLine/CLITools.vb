@@ -51,17 +51,21 @@ Namespace CommandLine
     Public Module CLITools
 
         <Extension>
-        Public Function Print(args As CommandLine, Optional sep As Char = " "c) As String
-            Dim sb As New StringBuilder(args.Name)
+        Public Function Print(args As CommandLine, Optional sep As Char = " "c, Optional leftMargin% = 0) As String
+            Dim sb As New StringBuilder("ArgumentsOf: `" & args.Name & "`")
             Dim device As New StringWriter(sb)
 
             Call device.WriteLine()
-            Call device.WriteLine(New String("-"c, args.Name.Length * 2))
+            Call device.WriteLine(New String("-"c, args.Name.Length * 4))
             Call device.WriteLine()
 
             Call args _
                 .ToArgumentVector _
-                .Print(device, sep, trilinearTable:=True)
+                .Print(
+                    device,
+                    sep,
+                    trilinearTable:=True,
+                    leftMargin:=leftMargin)
 
             Return sb.ToString
         End Function

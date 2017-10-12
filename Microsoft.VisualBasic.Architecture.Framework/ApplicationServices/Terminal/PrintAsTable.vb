@@ -92,12 +92,18 @@ Namespace ApplicationServices.Terminal
                               Optional dev As TextWriter = Nothing,
                               Optional sep As Char = " "c,
                               Optional title$() = Nothing,
-                              Optional trilinearTable As Boolean = False)
+                              Optional trilinearTable As Boolean = False,
+                              Optional leftMargin% = 0)
 
             Dim printHead As Boolean = False
             Dim table$()() = source.ToArray
             Dim printOfHead As printOnDevice =
                 Sub(row, width, maxLen, device)
+
+                    If leftMargin > 0 Then
+                        Call device.Write(New String(sep, leftMargin))
+                    End If
+
                     Call device.Write("+")
                     Call device.Write(maxLen.Select(Function(l) New String("-"c, l)).JoinBy("+"))
                     Call device.Write("+")
@@ -115,7 +121,9 @@ Namespace ApplicationServices.Terminal
                             If Not printHead Then
                                 Call printOfHead(Nothing, width, maxLen, device)
                             End If
-
+                            If leftMargin > 0 Then
+                                Call device.Write(New String(sep, leftMargin))
+                            End If
                             If Not trilinearTable Then
                                 Call device.Write("|")
                             End If
@@ -123,6 +131,10 @@ Namespace ApplicationServices.Terminal
                             For i As Integer = 0 To width - 1
                                 If row(i) Is Nothing Then
                                     row(i) = ""
+                                End If
+
+                                If trilinearTable Then
+                                    device.Write(" ")
                                 End If
 
                                 offset = maxLen(i) - row(i).Length - 1
@@ -227,7 +239,8 @@ Namespace ApplicationServices.Terminal
         Public Sub Print(data As IEnumerable(Of NamedValue(Of String)),
                          Optional dev As TextWriter = Nothing,
                          Optional sep As Char = " "c,
-                         Optional trilinearTable As Boolean = False)
+                         Optional trilinearTable As Boolean = False,
+                         Optional leftMargin% = 0)
             Call {
                 New String() {"Name", "Value", "Description"}
             } _
@@ -237,7 +250,8 @@ Namespace ApplicationServices.Terminal
             .PrintTable(
                 dev,
                 sep,
-                trilinearTable:=trilinearTable)
+                trilinearTable:=trilinearTable,
+                leftMargin:=leftMargin)
         End Sub
     End Module
 End Namespace
