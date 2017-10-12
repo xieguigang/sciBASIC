@@ -599,7 +599,7 @@
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
     <Compile Include="Extensions\Collection\NumericSequence.vb" />
     <Compile Include="Extensions\Collection\Which.vb" />
-    <Compile Include="Extensions\Debugger\VisualBasicAppException.vb" />
+    <Compile Include="ApplicationServices\Debugger\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
     <Compile Include="Extensions\Image\Bitmap\Utils.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
@@ -700,7 +700,7 @@
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
-    <Compile Include="Extensions\Debugger\Config.vb" />
+    <Compile Include="ApplicationServices\Debugger\Config.vb" />
     <Compile Include="Extensions\Image\Colors\HexColor.vb" />
     <Compile Include="Extensions\IO\Includes.vb" />
     <Compile Include="Extensions\IO\Extensions.vb" />
@@ -837,9 +837,9 @@
     <Compile Include="Extensions\Collection\Vector.vb" />
     <Compile Include="Extensions\Collection\Linq\Linq.vb" />
     <Compile Include="Extensions\Collection\Matrix.vb" />
-    <Compile Include="Extensions\Debugger\DebuggerLevels.vb" />
-    <Compile Include="Extensions\Debugger\Debugger.vb" />
-    <Compile Include="Extensions\Debugger\DebuggerArgs.vb" />
+    <Compile Include="ApplicationServices\Debugger\DebuggerLevels.vb" />
+    <Compile Include="ApplicationServices\Debugger.vb" />
+    <Compile Include="ApplicationServices\Debugger\DebuggerArgs.vb" />
     <Compile Include="Extensions\Image\GDI+\FontFace.vb" />
     <Compile Include="Extensions\IO\IO.vb" />
     <Compile Include="Extensions\Doc\PartitionedStream.vb" />
@@ -939,7 +939,7 @@
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
     <Compile Include="ApplicationServices\Tools\Logging\EventLog.vb" />
-    <Compile Include="Extensions\Debugger\NETDebugger.vb" />
+    <Compile Include="ApplicationServices\Debugger\NETDebugger.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Mailto\MailConfigure.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Mailto\MailContents.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Abstract.vb" />
