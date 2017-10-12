@@ -142,6 +142,11 @@ Namespace Drawing2D.Colors
                  End Function) _
          .ToArray
 
+        Public ReadOnly Property ConsoleColors As Color() = Enums(Of ConsoleColor) _
+            .Select(Function(c) c.ToString) _
+            .Select(AddressOf TranslateColor) _
+            .ToArray
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -309,6 +314,8 @@ Namespace Drawing2D.Colors
 
             If term.TextEquals("material") Then
                 Return MaterialPalette
+            ElseIf term.TextEquals("console.colors") Then
+                Return ConsoleColors
             ElseIf term.TextEquals("TSF") Then
                 Return TSF
             ElseIf term.TextEquals("rainbow") Then
