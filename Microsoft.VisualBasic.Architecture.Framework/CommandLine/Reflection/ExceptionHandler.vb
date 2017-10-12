@@ -51,6 +51,15 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         Public Property EMailLink As String
 
+        Sub New()
+        End Sub
+
+        Sub New(docs$, debug$, email$)
+            Documentation = docs
+            Debugging = debug
+            EMailLink = email
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
