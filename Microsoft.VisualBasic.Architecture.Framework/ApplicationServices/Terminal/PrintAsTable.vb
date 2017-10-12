@@ -88,7 +88,12 @@ Namespace ApplicationServices.Terminal
         ''' <param name="dev"></param>
         ''' <param name="sep"></param>
         <Extension>
-        Public Sub PrintTable(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c, Optional title$() = Nothing)
+        Public Sub PrintTable(source As IEnumerable(Of String()),
+                              Optional dev As TextWriter = Nothing,
+                              Optional sep As Char = " "c,
+                              Optional title$() = Nothing,
+                              Optional trilinearTable As Boolean = False)
+
             Dim printHead As Boolean = False
             Dim table$()() = source.ToArray
             Dim printOfHead As printOnDevice =
@@ -111,7 +116,9 @@ Namespace ApplicationServices.Terminal
                                 Call printOfHead(Nothing, width, maxLen, device)
                             End If
 
-                            Call device.Write("|")
+                            If Not trilinearTable Then
+                                Call device.Write("|")
+                            End If
 
                             For i As Integer = 0 To width - 1
                                 If row(i) Is Nothing Then
@@ -119,7 +126,11 @@ Namespace ApplicationServices.Terminal
                                 End If
 
                                 offset = maxLen(i) - row(i).Length - 1
-                                device.Write(" " & row(i) & New String(sep, offset) & "|")
+                                device.Write(" " & row(i) & New String(sep, offset))
+
+                                If Not trilinearTable Then
+                                    Call device.Write("|")
+                                End If
                             Next
 
                             Call device.WriteLine()
@@ -200,24 +211,33 @@ Namespace ApplicationServices.Terminal
         ''' <param name="sep"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Sub Print(table As Dictionary(Of String, String), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
+        Public Sub Print(table As Dictionary(Of String, String),
+                         Optional dev As TextWriter = Nothing,
+                         Optional sep As Char = " "c,
+                         Optional distance% = 2)
             Call {
                 New String() {"Item", "Value"}
             } _
             .Join(table.Select(Function(map) {map.Key, map.Value})) _
-            .Print(dev, sep)
+            .Print(dev, sep, distance)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Sub Print(data As IEnumerable(Of NamedValue(Of String)), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
+        Public Sub Print(data As IEnumerable(Of NamedValue(Of String)),
+                         Optional dev As TextWriter = Nothing,
+                         Optional sep As Char = " "c,
+                         Optional trilinearTable As Boolean = False)
             Call {
                 New String() {"Name", "Value", "Description"}
             } _
             .Join(data.Select(Function(item)
                                   Return {item.Name, item.Value, item.Description}
                               End Function)) _
-            .PrintTable(dev, sep)
+            .PrintTable(
+                dev,
+                sep,
+                trilinearTable:=trilinearTable)
         End Sub
     End Module
 End Namespace

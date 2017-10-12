@@ -61,7 +61,7 @@ Namespace CommandLine
 
             Call args _
                 .ToArgumentVector _
-                .Print(device, sep)
+                .Print(device, sep, trilinearTable:=True)
 
             Return sb.ToString
         End Function
