@@ -1,34 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::ed87907082d72fb44f7575b7c956bce2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -47,6 +49,22 @@ Namespace CommandLine
                         Description:="",
                         Revision:=52)>
     Public Module CLITools
+
+        <Extension>
+        Public Function Print(args As CommandLine, Optional sep As Char = " "c) As String
+            Dim sb As New StringBuilder(args.Name)
+            Dim device As New StringWriter(sb)
+
+            Call device.WriteLine()
+            Call device.WriteLine(New String("-"c, args.Name * 2))
+            Call device.WriteLine()
+
+            Call args _
+                .ToArgumentVector _
+                .Print(device, sep)
+
+            Return sb.ToString
+        End Function
 
         ''' <summary>
         ''' Parsing parameters from a specific tokens.
@@ -178,7 +196,7 @@ Namespace CommandLine
                 ._CLICommandArgvs = Join(tokens)
             }
 
-            CLI.SingleValue = SingleValue
+            CLI.SingleValue = singleValue
             If CLI.Parameters.Length = 1 AndAlso
                 String.IsNullOrEmpty(CLI.SingleValue) Then
                 CLI.SingleValue = CLI.Parameters(0)
