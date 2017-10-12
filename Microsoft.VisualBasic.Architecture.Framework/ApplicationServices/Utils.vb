@@ -86,9 +86,8 @@ Namespace ApplicationServices
             Return t
         End Function
 
-        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0, Optional tick As Boolean = True) As T
-            Dim startTick As Long = App.NanoTime
-            Dim tickTask
+        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0, Optional tick As Boolean = True, Optional trace$ = Nothing) As T
+            Dim tickTask As AsyncHandle(Of Exception)
 
             If tick Then
                 tickTask = Utils.TaskRun(
@@ -100,13 +99,12 @@ Namespace ApplicationServices
                     End Sub)
             End If
 
-            Dim value As T = work()
-            Dim endTick As Long = App.NanoTime
+            Dim value As T
+            Dim task As Action = Sub() value = work()
 
-            ms& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
-            tick = False
+            task.BENCHMARK(trace)
+            tick = False  ' 需要使用这个变量的变化来控制 tickTask 里面的过程
 
-            Call $"Work takes {ms.FormatTicks}...".__DEBUG_ECHO
             Return value
         End Function
 
