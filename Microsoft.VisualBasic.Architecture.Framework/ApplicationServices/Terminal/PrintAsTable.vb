@@ -113,6 +113,12 @@ Namespace ApplicationServices.Terminal
             Call sb.Append(values.Last)
         End Sub
 
+        ''' <summary>
+        ''' Print the string matrix collection <paramref name="source"/> in table layout.
+        ''' </summary>
+        ''' <param name="source">The string matrix collection.</param>
+        ''' <param name="dev">The output device</param>
+        ''' <param name="sep"></param>
         <Extension>
         Public Sub Print(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
             With dev Or Console.Out.AsDefault
@@ -151,6 +157,22 @@ Namespace ApplicationServices.Terminal
 
                 Call .Flush()
             End With
+        End Sub
+
+        ''' <summary>
+        ''' Print the string dictionary as table
+        ''' </summary>
+        ''' <param name="table"></param>
+        ''' <param name="dev"></param>
+        ''' <param name="sep"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Print(table As Dictionary(Of String, String), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
+            Call {
+                New String() {"Item", "Value"}
+            } _
+            .Join(table.Select(Function(map) {map.Key, map.Value})) _
+            .Print(dev, sep)
         End Sub
     End Module
 End Namespace
