@@ -32,85 +32,62 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports sys = System.Math
 
 Namespace ApplicationServices.Terminal
 
     Public Module PrintAsTable
 
         <Extension>
-        Public Function Print(Of T)(source As IEnumerable(Of T)) As String
-            If source Is Nothing Then
-                Return ""
-            End If
-
-            Dim totalWidth As Integer = Console.WindowWidth
-            Dim schema As BindProperty(Of DataFrameColumnAttribute)() =
-                LinqAPI.Exec(Of BindProperty(Of DataFrameColumnAttribute)) <=
-                    From x As BindProperty(Of DataFrameColumnAttribute)
-                    In DataFrameColumnAttribute.LoadMapping(Of T)(mapsAll:=True).Values
-                    Where x.IsPrimitive
-                    Select x
-            Dim titles As String() = schema.ToArray(Function(x) x.Identity)
-            Dim table =
-                LinqAPI.Exec(Of Dictionary(Of String, String)) <=
-                    From x As T
-                    In source
-                    Select (From p As BindProperty(Of DataFrameColumnAttribute)
-                            In schema
-                            Select p,
-                                s = p.GetValue(x)) _
-                               .ToDictionary(Function(o) o.p.Identity,
-                                             Function(o) Scripting.ToString(o.s))
-            Dim maxLens As Integer() =
-                LinqAPI.Exec(Of Integer) <= From i As SeqValue(Of String)
-                                            In titles.SeqIterator
-                                            Let maxValues = (From x As Dictionary(Of String, String)
-                                                             In table
-                                                             Select Len(x.Values(i.i))).Max
-                                            Select sys.Max(i.value.Length, maxValues)
-
-            Dim hr As String = New String("="c, totalWidth)
-            Dim sb As New StringBuilder
-            Dim d As Integer = (totalWidth - maxLens.Sum) / titles.Length - 1
-
-            If d < 0 Then
-                d = 0
-            End If
-
-            Call sb.AppendLine(hr)
-            Call sb.__appendLine(maxLens, titles, d)
-            Call sb.AppendLine(hr)
-
-            For Each line As Dictionary(Of String, String) In table
-                Call sb.__appendLine(
-                maxLens,
-                line.Values.ToArray,
-                d)
-            Next
-
-            Call Console.WriteLine(sb.ToString)
-
-            Return sb.ToString
+        Public Function Print(Of T)(source As IEnumerable(Of T), Optional addFrame As Boolean = True) As String
+            Dim out As New StringBuilder
+            Dim dev As New StringWriter(out)
+            Call source.Print(dev, addFrame)
+            Return out.ToString
         End Function
 
         <Extension>
-        Private Sub __appendLine(ByRef sb As StringBuilder,
-                                 maxlens As Integer(),
-                                 values As String(),
-                                 d As Integer)
+        Public Sub Print(Of T)(source As IEnumerable(Of T), Optional dev As TextWriter = Nothing, Optional addFrame As Boolean = True)
+            Dim schema = LinqAPI.Exec(Of BindProperty(Of DataFrameColumnAttribute)) _
+ _
+                () <= From x As BindProperty(Of DataFrameColumnAttribute)
+                      In DataFrameColumnAttribute _
+                          .LoadMapping(Of T)(mapsAll:=True) _
+                          .Values
+                      Where x.IsPrimitive
+                      Select x
+            Dim titles As String() = schema.ToArray(Function(x) x.Identity)
+            Dim contents = LinqAPI.Exec(Of Dictionary(Of String, String)) _
+ _
+                () <= From x As T
+                      In source
+                      Select (From p As BindProperty(Of DataFrameColumnAttribute)
+                              In schema
+                              Select p,
+                                  s = p.GetValue(x)) _
+                          .ToDictionary(Function(o) o.p.Identity,
+                                        Function(o) Scripting.ToString(o.s))
+            Dim table$()() = contents _
+                .Select(Function(line)
+                            Return titles.Select(Function(name) line(name)).ToArray
+                        End Function) _
+                .ToArray
 
-            For i As Integer = 0 To values.Length - 2
-                Dim s As String = values(i)
-                Call sb.Append(s)
-                Call sb.Append(New String(" "c, maxlens(i) - Len(s) + d))
-            Next
+            If addFrame Then
+                Call table.PrintTable(dev, sep:=" "c)
+            Else
+                Call table.Print(dev, sep:=" "c)
+            End If
+        End Sub
 
-            ' 最后一列是右对齐的
-            Dim right As Integer = maxlens(values.Length - 1) - Len(values.Last) + d
+        ''' <summary>
+        ''' 与函数<see cref="Print"/>所不同的是，这个函数还会添加边框
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="dev"></param>
+        ''' <param name="sep"></param>
+        <Extension>
+        Public Sub PrintTable(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
 
-            Call sb.Append(New String(" "c, right))
-            Call sb.Append(values.Last)
         End Sub
 
         ''' <summary>
