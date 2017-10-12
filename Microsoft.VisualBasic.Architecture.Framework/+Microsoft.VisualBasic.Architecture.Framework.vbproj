@@ -955,7 +955,7 @@
     <Compile Include="Text\IO\EncodingHelper.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\VarArray.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\ApplicationDetails.vb" />
+    <Compile Include="ApplicationServices\Tools\ApplicationDetails.vb" />
     <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
     <Compile Include="Extensions\Reflection\Marshal\MarshalExtensions.vb" />
@@ -1052,7 +1052,7 @@
     <Compile Include="ApplicationServices\Tools\OSVersionInfo.vb" />
     <Compile Include="ApplicationServices\Tools\WinForm\MockForm.vb" />
     <Compile Include="ApplicationServices\Tools\WinForm\SingleInstanceFormEntry.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\Resources.vb" />
+    <Compile Include="ApplicationServices\Tools\Resources.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\StringResources.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Ngen.vb" />
     <Compile Include="Extensions\Security\AES.vb" />
@@ -1091,17 +1091,9 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Doc.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
     <Compile Include="ApplicationServices\ZipLib.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\CBusyIndicator.vb" />
     <Compile Include="Extensions\Doc\LargeTextFile.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\ToolkitAPI.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\UpdatesEditor.Designer.vb">
-      <DependentUpon>UpdatesEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\UpdatesEditor.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Text\IO\TextFileEncodingDetector.vb" />
     <Compile Include="ComponentModel\Settings\SimpleConfig.vb" />
     <Compile Include="Extensions\IO\PathSearchTool.vb" />
@@ -1159,9 +1151,6 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ApplicationServices\Tools\SoftwareToolkits\UpdatesEditor.resx">
-      <DependentUpon>UpdatesEditor.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
