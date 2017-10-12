@@ -112,9 +112,9 @@ Public Module VBDebugger
     ''' <returns></returns>
     <Extension>
     Public Function BENCHMARK(test As Action, <CallerMemberName> Optional trace$ = Nothing) As Long
-        Dim start = Now.ToShortTimeString
+        Dim start = Now.ToLongTimeString
         Dim ms& = Utils.Time(test)
-        Dim end$ = Now.ToShortTimeString
+        Dim end$ = Now.ToLongTimeString
 
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
             Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
