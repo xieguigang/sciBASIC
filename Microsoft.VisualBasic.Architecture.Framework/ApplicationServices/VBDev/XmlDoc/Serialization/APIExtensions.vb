@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.HtmlParser
 
-Namespace SoftwareToolkits.XmlDoc.Serialization
+Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     <Package("Assembly.Doc.API")>
     Public Module DocAPI

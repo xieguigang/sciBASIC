@@ -34,7 +34,7 @@ Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
-Namespace SoftwareToolkits
+Namespace ApplicationServices
 
     ''' <summary>
     ''' Represents a resource manager that provides convenient access to culture-specific

@@ -36,7 +36,7 @@ Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Xml
 
-Namespace SoftwareToolkits.XmlDoc.Assembly
+Namespace ApplicationServices.Development.XmlDoc.Assembly
 
     ''' <summary>
     ''' Describes a Project, a collection of related types and namespaces.  In this case, one Project = one DLL.

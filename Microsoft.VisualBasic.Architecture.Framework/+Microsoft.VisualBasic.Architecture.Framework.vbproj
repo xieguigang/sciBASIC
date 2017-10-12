@@ -517,7 +517,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\Ngen\Registry.vb" />
+    <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
     <Compile Include="CommandLine\InteropService\Abstract.vb" />
     <Compile Include="CommandLine\InteropService\CLIAbstractor.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\API.vb" />
@@ -804,14 +804,14 @@
     <Compile Include="Text\Parser\FormattedParser.vb" />
     <Compile Include="ApplicationServices\Tools\Network\MIME\Type.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Tcp\IPTools\AddressEnumerator.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\LicenseMgr.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Project.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\ProjectType.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\URLBuilder.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Libraries.vb" />
+    <Compile Include="ApplicationServices\VBDev\LicenseMgr.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Project.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectMember.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectType.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\URLBuilder.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Libraries.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\HardwareInfo.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\TaskManager.vb" />
@@ -981,8 +981,8 @@
     <Compile Include="ApplicationServices\Tools\WinForm\MockForm.vb" />
     <Compile Include="ApplicationServices\Tools\WinForm\SingleInstanceFormEntry.vb" />
     <Compile Include="ApplicationServices\Tools\SoftwareToolkits\Resources.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\LanguageHelper\StringResources.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\Ngen\Ngen.vb" />
+    <Compile Include="ApplicationServices\LanguageHelper\StringResources.vb" />
+    <Compile Include="ApplicationServices\VBDev\Ngen\Ngen.vb" />
     <Compile Include="Extensions\Security\AES.vb" />
     <Compile Include="Extensions\Security\SHA.vb" />
     <Compile Include="Extensions\Security\RSACrypto.vb" />
@@ -1014,11 +1014,11 @@
     <Compile Include="Serialization\ConfigMappings\DynamicsConfiguration.vb" />
     <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />
-    <Compile Include="Text\TextGrepScriptEngine.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Member.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb" />
-    <Compile Include="ApplicationServices\Tools\ZipLib.vb" />
+    <Compile Include="Scripting\TextGrepScriptEngine.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Member.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Doc.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
+    <Compile Include="ApplicationServices\ZipLib.vb" />
     <Compile Include="ApplicationServices\Tools\SoftwareToolkits\ChangeLog.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\CBusyIndicator.vb" />
@@ -1053,8 +1053,8 @@
     <Compile Include="Extensions\Math\Math.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Mailto\GMailClient.vb" />
     <Compile Include="CommandLine\CLI\IORedirect.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\LanguageHelper\LanguageAttribute.vb" />
-    <Compile Include="ApplicationServices\Tools\SoftwareToolkits\LanguageHelper\LanguageHelper.vb" />
+    <Compile Include="ApplicationServices\LanguageHelper\LanguageAttribute.vb" />
+    <Compile Include="ApplicationServices\LanguageHelper\LanguageHelper.vb" />
     <Compile Include="ApplicationServices\Tools\Logging\LogFile\LogFile.vb" />
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="ApplicationServices\Tools\MMFProtocol\MMFSocket.vb" />
