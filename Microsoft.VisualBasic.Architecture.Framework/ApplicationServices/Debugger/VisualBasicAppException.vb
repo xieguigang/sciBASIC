@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Debugging
+Namespace ApplicationServices.Debugging
 
     ''' <summary>
     ''' VisualBasic application exception wrapper
