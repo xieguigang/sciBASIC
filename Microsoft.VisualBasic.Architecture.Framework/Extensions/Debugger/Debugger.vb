@@ -104,6 +104,12 @@ Public Module VBDebugger
         New String(" ", 9), New String(" ", 10)
     }
 
+    ''' <summary>
+    ''' Test how long this <paramref name="test"/> will takes.
+    ''' </summary>
+    ''' <param name="test"></param>
+    ''' <param name="trace$"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function BENCHMARK(test As Action, <CallerMemberName> Optional trace$ = Nothing) As Long
         Dim start = Now.ToShortTimeString
@@ -112,7 +118,7 @@ Public Module VBDebugger
 
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
             Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
-            Dim str$ = $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
+            Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
 
             Call Terminal.AddToQueue(
                 Sub()
