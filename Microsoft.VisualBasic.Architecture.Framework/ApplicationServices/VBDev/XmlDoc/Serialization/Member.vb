@@ -31,7 +31,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace SoftwareToolkits.XmlDoc.Serialization
+Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     Public Class member : Implements IMember
 

@@ -34,7 +34,7 @@ Imports System.Runtime.InteropServices.Marshal
 Imports System.Text
 #End Region
 
-Namespace SoftwareToolkits
+Namespace ApplicationServices
 
     ''' <summary>
     ''' Provides detailed information about the host operating system.(用于判断操作系统的具体版本信息的工具)

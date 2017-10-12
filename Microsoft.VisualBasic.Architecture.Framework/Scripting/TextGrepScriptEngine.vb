@@ -1,39 +1,40 @@
 ﻿#Region "Microsoft.VisualBasic::136621648ed0a505b52bef889a16ace1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\TextGrepScriptEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Token = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Text.TextGrepMethodToken)
+Imports Token = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Scripting.TextGrepMethodToken)
 
-Namespace Text
+Namespace Scripting
 
     ''' <summary>
     ''' 
@@ -70,7 +71,7 @@ Namespace Text
         Dim _script$
 
         ''' <summary>
-        ''' 对用户所输入的脚本进行编译，对于内部的空格，请使用单引号'进行分割
+        ''' 对用户所输入的脚本进行编译，对于内部的空格，请使用单引号``'``进行分割
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -87,7 +88,10 @@ Namespace Text
                 Select New Token(tokens, _MethodPointers(EntryPoint))
 
             If Script.Length > builder.Length Then
-                Return Nothing         ' 有非法的命令短语，则为了保护数据的一致性，这个含有错误的语法的脚本是不能够用于操作的，则函数返回空指针
+                ' 有非法的命令短语，则为了保护数据的一致性，这个
+                ' 含有错误的语法的脚本是不能够用于操作的， 
+                ' 则函数返回空指针
+                Return Nothing
             Else
                 Return New TextGrepScriptEngine With {
                     ._script = scriptText,
@@ -102,6 +106,7 @@ Namespace Text
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property PipelinePointer As TextGrepMethod
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return AddressOf Me.Grep
             End Get
@@ -128,6 +133,7 @@ Namespace Text
             Return source
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return _script
         End Function
@@ -135,11 +141,13 @@ Namespace Text
         Protected Friend Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("-", Info:="DO_NOTHING")>
         Private Shared Function NoOperation(source As String, script As String()) As String
             Return source
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Reverse")>
         Private Shared Function Reverse(source As String, Script As String()) As String
             Return source.Reverse.ToArray

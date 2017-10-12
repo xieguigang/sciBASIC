@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 
-Namespace ApplicationServices.SoftwareToolkits
+Namespace ApplicationServices
 
     ''' <summary>
     ''' Ngen.exe (Native Image Generator)

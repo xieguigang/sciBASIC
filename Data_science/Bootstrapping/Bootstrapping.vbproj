@@ -181,6 +181,7 @@
     <Compile Include="Darwinism\GAF\Drivers\Fitness.vb" />
     <Compile Include="Darwinism\GAF\Protocol.vb" />
     <Compile Include="Darwinism\GAF\ParameterVector.vb" />
+    <Compile Include="Sampling.vb" />
     <Compile Include="Monte-Carlo\Bifurcation\ParameterBifurcations.vb" />
     <Compile Include="Monte-Carlo\CodeGenerator.vb" />
     <Compile Include="Monte-Carlo\Bifurcation\Bifurcation.vb" />

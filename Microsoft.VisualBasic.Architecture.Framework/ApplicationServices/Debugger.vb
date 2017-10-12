@@ -1,40 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::86fa0babc24a357c66a443fb4291ef77, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Debugging
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Logging
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Terminal.Utility
 
@@ -103,16 +105,41 @@ Public Module VBDebugger
     }
 
     ''' <summary>
+    ''' Test how long this <paramref name="test"/> will takes.
+    ''' </summary>
+    ''' <param name="test"></param>
+    ''' <param name="trace$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function BENCHMARK(test As Action, <CallerMemberName> Optional trace$ = Nothing) As Long
+        Dim start = Now.ToLongTimeString
+        Dim ms& = Utils.Time(test)
+        Dim end$ = Now.ToLongTimeString
+
+        If Not Mute AndAlso __level < DebuggerLevels.Warning Then
+            Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
+            Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
+
+            Call Terminal.AddToQueue(
+                Sub()
+                    Call __print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
+                End Sub)
+        End If
+
+        Return ms
+    End Function
+
+    ''' <summary>
     ''' Output the full debug information while the project is debugging in debug mode.
     ''' (向标准终端和调试终端输出一些带有时间戳的调试信息)
     ''' </summary>
-    ''' <param name="MSG">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
-    ''' <param name="Indent"></param>
+    ''' <param name="msg">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
+    ''' <param name="indent"></param>
     ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
-    <Extension> Public Function __DEBUG_ECHO(MSG As String, Optional Indent As Integer = 0) As String
+    <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0) As String
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
             Dim head As String = $"DEBUG {Now.ToString}"
-            Dim str As String = $"{_Indent(Indent)} {MSG}"
+            Dim str As String = $"{_Indent(indent)} {msg}"
 
             Call Terminal.AddToQueue(
                 Sub()
@@ -147,22 +174,35 @@ Public Module VBDebugger
     ''' <param name="head"></param>
     ''' <param name="str"></param>
     ''' <param name="msgColor"></param>
-    ''' <param name="level"></param>
-    Private Sub __print(head As String, str As String, msgColor As ConsoleColor, level As MSG_TYPES)
+    ''' <param name="level"><see cref="ConsoleColor"/> or <see cref="MSG_TYPES"/></param>
+    Private Sub __print(head As String, str As String, msgColor As ConsoleColor, level As Integer)
         If ForceSTDError Then
             Call Console.Error.WriteLine($"[{head}]{str}")
         Else
             Dim cl As ConsoleColor = Console.ForegroundColor
+            Dim headColor As ConsoleColor = getColor(level)
 
-            Call Console.Write("[")
-            Console.ForegroundColor = DebuggerTagColors(level)
-            Call Console.Write(head)
-            Console.ForegroundColor = cl
-            Call Console.Write("]")
+            If msgColor = headColor Then
+                Console.ForegroundColor = headColor
+                Console.WriteLine($"[{head}]{str}")
+                Console.ForegroundColor = cl
+            Else
+                Call Console.Write("[")
+                Console.ForegroundColor = headColor
+                Call Console.Write(head)
+                Console.ForegroundColor = cl
+                Call Console.Write("]")
 
-            Call WriteLine(str, msgColor)
+                Call WriteLine(str, msgColor)
+            End If
         End If
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Private Function getColor(level As Integer) As ConsoleColor
+        Return If(DebuggerTagColors.ContainsKey(level), DebuggerTagColors(level), CType(level, ConsoleColor))
+    End Function
 
     ''' <summary>
     ''' The function will print the exception details information on the standard <see cref="console"/>, <see cref="debug"/> console, and system <see cref="trace"/> console.
@@ -234,7 +274,10 @@ Public Module VBDebugger
 #End If
     End Sub
 
-    ReadOnly DebuggerTagColors As New Dictionary(Of MSG_TYPES, ConsoleColor) From {
+    ''' <summary>
+    ''' ``<see cref="MSG_TYPES"/> -> <see cref="ConsoleColor"/>``
+    ''' </summary>
+    ReadOnly DebuggerTagColors As New Dictionary(Of Integer, ConsoleColor) From {
         {MSG_TYPES.DEBUG, ConsoleColor.DarkGreen},
         {MSG_TYPES.ERR, ConsoleColor.Red},
         {MSG_TYPES.INF, ConsoleColor.Blue},

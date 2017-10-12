@@ -74,20 +74,20 @@ Namespace ApplicationServices
         ''' Function pointer of the task work that needs to be tested.(需要测试性能的工作对象)
         ''' </param>
         ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
-        Public Function Time(work As Action, Optional echo As Boolean = True) As Long
+        Public Function Time(work As Action) As Long
             Dim startTick As Long = App.NanoTime
+
+            ' -------- start worker ---------
             Call work()
+            ' --------- end worker ---------
+
             Dim endTick As Long = App.NanoTime
             Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
-            If echo Then
-                Call $"[{work.Method.Name}] takes {t}ms...".__DEBUG_ECHO
-            End If
             Return t
         End Function
 
-        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0, Optional tick As Boolean = True) As T
-            Dim startTick As Long = App.NanoTime
-            Dim tickTask
+        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0, Optional tick As Boolean = True, Optional trace$ = Nothing) As T
+            Dim tickTask As AsyncHandle(Of Exception)
 
             If tick Then
                 tickTask = Utils.TaskRun(
@@ -99,14 +99,33 @@ Namespace ApplicationServices
                     End Sub)
             End If
 
-            Dim value As T = work()
-            Dim endTick As Long = App.NanoTime
+            Dim value As T
+            Dim task As Action = Sub() value = work()
 
-            ms& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
-            tick = False
+            task.BENCHMARK(trace)
+            tick = False  ' 需要使用这个变量的变化来控制 tickTask 里面的过程
 
-            Call $"Work takes {ms}ms...".__DEBUG_ECHO
             Return value
+        End Function
+
+        ''' <summary>
+        ''' Format ``ms`` for content print.
+        ''' </summary>
+        ''' <param name="ms"></param>
+        ''' <returns></returns>
+        <Extension> Public Function FormatTicks(ms&) As String
+            If ms > 1000 Then
+                Dim s = ms / 1000
+
+                If s < 1000 Then
+                    Return s & "s"
+                Else
+                    Dim min = s \ 60
+                    Return $"{min}min{s Mod 60}s"
+                End If
+            Else
+                Return ms & "ms"
+            End If
         End Function
 
         Public Delegate Function WaitHandle() As Boolean
@@ -121,7 +140,7 @@ Namespace ApplicationServices
             End If
 
             Do While handle() = False
-                Call Threading.Thread.Sleep(10)
+                Call Thread.Sleep(10)
                 Call Application.DoEvents()
             Loop
         End Sub
@@ -136,7 +155,7 @@ Namespace ApplicationServices
             End If
 
             Do While handle() = False
-                Call Threading.Thread.Sleep(10)
+                Call Thread.Sleep(10)
                 Call Application.DoEvents()
             Loop
         End Sub

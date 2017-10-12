@@ -1,36 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::a73d63575a66581213b802748f4eec52, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ExceptionHandler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
-Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Settings
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 
@@ -53,6 +50,15 @@ Namespace CommandLine.Reflection
         ''' </summary>
         ''' <returns></returns>
         Public Property EMailLink As String
+
+        Sub New()
+        End Sub
+
+        Sub New(docs$, debug$, email$)
+            Documentation = docs
+            Debugging = debug
+            EMailLink = email
+        End Sub
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -147,7 +153,9 @@ Namespace CommandLine.Reflection
                 Call Console.WriteLine("Environment summary:")
                 Call Console.WriteLine(ConfigEngine.Prints(App.GetAppVariables))
                 Call Console.WriteLine()
-                Call Console.WriteLine(App.CommandLine.GetJson(True))
+                Call Console.WriteLine(App.CommandLine.Print(leftMargin:=2))
+                Call Console.WriteLine()
+                Call Console.WriteLine()
                 Call Console.WriteLine("Exception: ")
                 Call STDIO.print(ex.Message, ConsoleColor.Red)
                 Call Console.WriteLine()
