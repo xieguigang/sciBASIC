@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::dfed65f354dbdb070af0cf0fe10100e1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\ConfigEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -59,8 +60,11 @@ Namespace ComponentModel.Settings
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property AllItems As BindMapping()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return ProfileItemCollection.Values.ToArray
+                Return ProfileItemCollection _
+                    .Values _
+                    .ToArray
             End Get
         End Property
 
@@ -155,7 +159,7 @@ Namespace ComponentModel.Settings
         ''' </summary>
         ''' <param name="Name"></param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Node.Exists")>
         Public Overridable Function ExistsNode(Name As String) As Boolean
             Return ProfileItemCollection.ContainsKey(Name.ToLower)
@@ -180,6 +184,7 @@ Namespace ComponentModel.Settings
             Return True
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [Set](var As NamedValue(Of String)) As Boolean
             Return [Set](var.Name, var.Value)
         End Function
@@ -259,7 +264,7 @@ Namespace ComponentModel.Settings
         ''' </summary>
         ''' <param name="Name"></param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GetNode")>
         Public Function GetSettingsNode(Name As String) As BindMapping
             Return ProfileItemCollection(Name.ToLower)

@@ -59,6 +59,7 @@ Namespace ComponentModel.Settings.Inf
     ''' </summary>
     Public Module ClassMapper
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function MapParser(Of T As Class)() As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)())
             Return GetType(T).MapParser
         End Function
@@ -97,9 +98,8 @@ Namespace ComponentModel.Settings.Inf
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function ClassWriter(Of T As Class)(ini As IniFile) As T
-            Dim obj As Object = ClassWriter(ini, GetType(T))
-            Return DirectCast(obj, T)
+        Public Function ClassWriter(Of T As {New, Class})(ini As IniFile) As T
+            Return DirectCast(ClassWriter(ini, GetType(T)), T)
         End Function
 
         Public Function ClassWriter(ini As IniFile, type As Type) As Object
@@ -117,6 +117,7 @@ Namespace ComponentModel.Settings.Inf
             Return obj
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub ClassDumper(Of T As Class)(x As T, ini As IniFile)
             Call ClassDumper(x, GetType(T), ini)
@@ -139,8 +140,10 @@ Namespace ComponentModel.Settings.Inf
         ''' <typeparam name="T">The section mapper</typeparam>
         ''' <param name="path">*.ini file</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function LoadIni(Of T As Class)(path As String) As T
+        Public Function LoadIni(Of T As {New, Class})(path As String) As T
             Return New IniFile(path).ClassWriter(Of T)
         End Function
 

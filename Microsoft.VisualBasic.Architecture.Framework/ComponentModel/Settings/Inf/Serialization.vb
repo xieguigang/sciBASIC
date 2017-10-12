@@ -116,6 +116,8 @@ Namespace ComponentModel.Settings.Inf
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function WriteProfile(Of T As Class)(x As T) As Boolean
             Return x.WriteProfile(__getPath(Of T))

@@ -29,7 +29,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Settings
@@ -52,7 +51,8 @@ Namespace ComponentModel.Settings
             Description = x.Description
         End Sub
 
-        Public Sub SetValue(Of T As IProfile)(config As Settings(Of T))
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub SetValue(Of T As {New, IProfile})(config As Settings(Of T))
             Call config.Set(Name.ToLower, value)
         End Sub
 
@@ -82,7 +82,7 @@ Namespace ComponentModel.Settings
         ''' <param name="x"></param>
         ''' <param name="path"></param>
         <Extension>
-        Public Sub WriteIni(Of T As IProfile)(x As IProfile, path As String)
+        Public Sub WriteIni(Of T As {New, IProfile})(x As IProfile, path As String)
             Dim settings As New Settings(Of T)(x)
             Dim ini As New IniFile(path)
             Dim name As String = GetType(T).Name
@@ -99,7 +99,7 @@ Namespace ComponentModel.Settings
         ''' <param name="path"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function LoadIni(Of T As IProfile)(path As String) As T
+        Public Function LoadIni(Of T As {New, IProfile})(path As String) As T
             Dim config As Settings(Of T) = Settings(Of T).CreateEmpty
             Dim ini As New IniFile(path)
             Dim name As String = GetType(T).Name
