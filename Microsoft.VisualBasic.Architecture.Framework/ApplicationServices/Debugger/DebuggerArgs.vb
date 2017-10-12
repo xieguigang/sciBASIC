@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 
-Namespace Debugging
+Namespace ApplicationServices.Debugging
 
     ''' <summary>
     ''' 调试器设置参数模块

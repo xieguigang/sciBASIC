@@ -29,7 +29,7 @@
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Debugging
+Namespace ApplicationServices.Debugging
 
     Public Class Config
 

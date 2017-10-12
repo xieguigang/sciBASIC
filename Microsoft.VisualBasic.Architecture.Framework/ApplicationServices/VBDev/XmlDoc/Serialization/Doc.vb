@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cb5e1b5aa3e0f39bd35d2acb3ebc42a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Debugger\DebuggerLevels.vb"
+﻿#Region "Microsoft.VisualBasic::2e3baecb6687a5d920a2135901547567, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb"
 
     ' Author:
     ' 
@@ -26,31 +26,32 @@
 
 #End Region
 
-Namespace Debugging
+Imports System.Xml.Serialization
+
+Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     ''' <summary>
-    ''' 默认的参数值是<see cref="DebuggerLevels.On"/>
+    ''' .NET assembly generated XML comments documents file.
     ''' </summary>
-    Public Enum DebuggerLevels
-        ''' <summary>
-        ''' 是否输出调试信息有程序代码来控制，这个是默认的参数
-        ''' </summary>
-        [On]
-        ''' <summary>
-        ''' 不会输出任务调试信息
-        ''' </summary>
-        Off
-        ''' <summary>
-        ''' 强制覆盖掉<see cref="[On]"/>的设置，输出所有类型的信息
-        ''' </summary>
-        All
-        ''' <summary>
-        ''' 只会输出警告或者错误类型的信息
-        ''' </summary>
-        Warning
-        ''' <summary>
-        ''' 只会输出错误类型的信息
-        ''' </summary>
-        [Error]
-    End Enum
+    <XmlType("doc")> Public Class Doc
+        Public Property assembly As assembly
+        Public Property members As member()
+
+        Public Overrides Function ToString() As String
+            Return assembly.name
+        End Function
+    End Class
+
+    Public Class assembly : Implements IMember
+
+        Public Property name As String Implements IMember.name
+
+        Public Overrides Function ToString() As String
+            Return name
+        End Function
+    End Class
+
+    Public Interface IMember
+        Property name As String
+    End Interface
 End Namespace

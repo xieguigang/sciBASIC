@@ -791,7 +791,7 @@ Namespace CommandLine
             list += From bs As String
                     In BoolFlags.SafeQuery
                     Select New NamedValue(Of String) With {
-                        .Name = bs.TrimParamPrefix(bs),
+                        .Name = bs,
                         .Value = "True"
                     }
 
