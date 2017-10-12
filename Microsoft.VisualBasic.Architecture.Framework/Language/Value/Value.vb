@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::77a68a5994c44a1f54eef259e05418fb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Value.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting
 
 Namespace Language
@@ -56,6 +57,7 @@ Namespace Language
         ''' <returns>true if the current System.Nullable`1 object has a value; false if the current
         ''' System.Nullable`1 object has no value.</returns>
         Public ReadOnly Property HasValue As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Not Value Is Nothing
             End Get
@@ -69,6 +71,7 @@ Namespace Language
         ''' property is true; otherwise, the default value of the current System.Nullable`1
         ''' object. The type of the default value is the type argument of the current System.Nullable`1
         ''' object, and the value of the default value consists solely of binary zeroes.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetValueOrDefault() As T
             Return GetValueOrDefault(Nothing)
         End Function
@@ -137,6 +140,7 @@ Namespace Language
             Value = Nothing
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUnderlyingType() As Type
             Return GetType(T)
         End Function
@@ -145,6 +149,7 @@ Namespace Language
         ''' Is the value is nothing.
         ''' </summary>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsNothing() As Boolean
             Return Value Is Nothing
         End Function
@@ -162,6 +167,7 @@ Namespace Language
             Return list
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator +(x As Value(Of T), list As IEnumerable(Of T)) As List(Of T)
             Return (+x).Join(list)
         End Operator
@@ -176,10 +182,12 @@ Namespace Language
             Return o
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(x As Value(Of T)) As T
             Return x.Value
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(x As T) As Value(Of T)
             Return New Value(Of T)(x)
         End Operator
@@ -189,6 +197,7 @@ Namespace Language
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(x As Value(Of T)) As T
             Return x.Value
         End Operator
@@ -199,6 +208,7 @@ Namespace Language
         ''' <param name="value"></param>
         ''' <param name="o"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(value As Value(Of T), o As T) As T
             value.Value = o
             Return o
