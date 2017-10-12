@@ -56,17 +56,20 @@ Namespace ComponentModel.Algorithm
         Public Ranges As IRanges(Of T)
 
         Public ReadOnly Property Length As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return data.Length
             End Get
         End Property
 
         Public ReadOnly Property First As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return data(Scan0)
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SlideWindows(winSize As Integer,
                                      Optional offset As Integer = 1,
                                      Optional extendTails As Boolean = False) As SlideWindow(Of T)()

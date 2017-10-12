@@ -98,6 +98,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return out
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFields(Of T)(Optional explict As Boolean = True) As BindProperty(Of ColumnAttribute)()
             Return GetType(T).GetFields(Of ColumnAttribute)(Function(o) o.Name, explict:=explict)
         End Function

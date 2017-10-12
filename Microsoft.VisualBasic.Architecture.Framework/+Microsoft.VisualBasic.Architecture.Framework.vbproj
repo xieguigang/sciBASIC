@@ -730,8 +730,6 @@
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb" />
     <Compile Include="ComponentModel\File\FileSaveHandle.vb" />
-    <Compile Include="ComponentModel\IO\ReadStream.vb" />
-    <Compile Include="ComponentModel\IO\WriteStream.vb" />
     <Compile Include="ComponentModel\LazyLoader.vb" />
     <Compile Include="ComponentModel\Settings\ConfigEngine.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Serialization.vb" />

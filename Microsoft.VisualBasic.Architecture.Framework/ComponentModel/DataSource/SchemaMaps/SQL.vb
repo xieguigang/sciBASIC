@@ -1,30 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::f6e21c8406455992e5d32d29818dfccd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\SQL.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
@@ -58,6 +60,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' Display the INSERT INTO sql from function <see cref="GetInsertSQL"/>.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return GetInsertSQL()
         End Function
@@ -68,6 +72,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' 的复制这些属性，从而很容易的复制数据表之中的一个行对象)
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function Clone() As Object Implements ICloneable.Clone
             Return MyClass.MemberwiseClone
         End Function
@@ -76,6 +82,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' MemberwiseClone
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Copy() As SQLTable
             Return DirectCast(MyClass.MemberwiseClone, SQLTable)
         End Function
