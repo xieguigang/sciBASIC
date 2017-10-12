@@ -150,7 +150,7 @@ Namespace ApplicationServices.Terminal
                                  End If
 
                                  device.Write(New String(sep, offset) & row(i) & distance)
-                                 offset = maxLen(i) - row(i).Length - distance.Length
+                                 offset = maxLen(i) - row(i).Length
                              Next
 
                              Call device.WriteLine()
