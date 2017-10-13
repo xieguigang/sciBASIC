@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::cf32a9c1cb265d650bcae1d58c17139e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\BinaryOperator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
@@ -48,9 +49,20 @@ Namespace Scripting.Runtime
         ''' 
         ''' </summary>
         ''' <param name="[overloads]">重名的运算符函数方法</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New([overloads] As MethodInfo())
-            Name = [overloads](Scan0).Name
-            methods = [overloads]
+            Call Me.New([overloads](Scan0).Name, [overloads])
+        End Sub
+
+        ''' <summary>
+        ''' 可以通过继承<see cref="MethodInfo"/>类型来自定义函数，再使用这个操作符对象应用于脚本运行时环境之中
+        ''' </summary>
+        ''' <param name="name$"></param>
+        ''' <param name="methods"></param>
+        Sub New(name$, methods As MethodInfo())
+            Me.Name = name
+            Me.methods = methods
         End Sub
 
         Public Overrides Function ToString() As String
@@ -66,6 +78,8 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function MatchLeft(type As Type) As MethodInfo
             Return Match(type, 0)
         End Function
@@ -75,6 +89,8 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function MatchRight(type As Type) As MethodInfo
             Return Match(type, 1)
         End Function
@@ -117,6 +133,8 @@ Namespace Scripting.Runtime
         ''' <param name="obj"></param>
         ''' <param name="result"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function InvokeSelfLeft(self As Object, obj As Object, ByRef result As Object) As Boolean
             Return __invokeInternal(self, obj, 0, result)
         End Function
@@ -145,6 +163,8 @@ Namespace Scripting.Runtime
         ''' <param name="self"></param>
         ''' <param name="result"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function InvokeSelfRight(obj As Object, self As Object, ByRef result As Object) As Boolean
             Return __invokeInternal(self, obj, 1, result)
         End Function
