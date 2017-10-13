@@ -252,5 +252,11 @@ Namespace Text
             Dim tmp$ = If(from Is Nothing, IO.File.ReadAllText(path), IO.File.ReadAllText(path, from))
             Return tmp.SaveTo(path, encoding.CodePage)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CodeArray(chars As IEnumerable(Of Char)) As Integer()
+            Return chars.Select(AddressOf AscW).ToArray
+        End Function
     End Module
 End Namespace
