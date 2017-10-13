@@ -27,10 +27,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace SecurityString
 
@@ -50,6 +49,8 @@ Namespace SecurityString
         ''' </summary>
         ''' <param name="input"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Md5")>
         <Extension>
         Public Function GetMd5Hash(input As String) As String
@@ -74,7 +75,8 @@ Namespace SecurityString
         ''' </summary>
         ''' <returns></returns>
         <ExportAPI("GetHashCode", Info:="Gets the hashcode of the input string.")>
-        Public Function GetHashCode(data As Generic.IEnumerable(Of Byte)) As Long
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetHashCode(data As IEnumerable(Of Byte)) As Long
             Return GetMd5Hash(data.ToArray).ToLong
         End Function
 
@@ -148,6 +150,7 @@ Namespace SecurityString
             Return bytes
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Md5")>
         Public Function GetMd5Hash(input As Byte()) As String
             Return New Md5HashProvider().GetMd5Hash(input)

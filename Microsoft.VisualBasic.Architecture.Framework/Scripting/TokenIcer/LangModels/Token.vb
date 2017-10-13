@@ -152,9 +152,10 @@ Namespace Scripting.TokenIcer
 
         Public Overrides Function ToString() As String
             If UNDEFINED Then
-                Return "UNDEFINED --> " & Value
+                Return "* " & Value
+            Else
+                Return $"[{name}] {Value}"
             End If
-            Return $"[{name}]" & vbTab & Value
         End Function
 
         Public Function GetValue() As Object
