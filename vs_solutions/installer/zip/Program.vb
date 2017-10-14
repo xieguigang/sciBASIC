@@ -21,7 +21,8 @@ Module Program
                 saveZip:=temp,
                 action:=ArchiveAction.Replace,
                 compression:=CompressionLevel.Fastest,
-                fileOverwrite:=Overwrite.Always)
+                fileOverwrite:=Overwrite.Always,
+                flatDirectory:=True)
         Else
             Call args.Tokens _
                 .Skip(3) _
