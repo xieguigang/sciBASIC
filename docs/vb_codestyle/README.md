@@ -11,20 +11,21 @@
 	* 1.3. [Using the VisualBasic CommandLine Parser](#UsingtheVisualBasicCommandLineParser)
 * 2. [List(Of T) operation in VisualBasic](#ListOfToperationinVisualBasic)
 * 3. [The VisualBasic inline assign syntax](#TheVisualBasicinlineassignsyntax)
-* 4. [The Unix bash syntax for listing files](#TheUnixbashsyntaxforlistingfiles)
-* 5. [VB specific ``With`` anonymous variable](#VBspecificWithanonymousvariable)
-* 6. [Type char coding style](#Typecharcodingstyle)
-* 7. [VisualBasic identifer names](#VisualBasicidentifernames)
-		* 7.1. [1. Directory type](#Directorytype)
-		* 7.2. [2. Module variable](#Modulevariable)
-		* 7.3. [3. Local varaible and function parameter](#Localvaraibleandfunctionparameter)
-		* 7.4. [4. Function And Type name](#FunctionAndTypename)
-		* 7.5. [Using underline in namming](#Usingunderlineinnamming)
-* 8. [String manipulate](#Stringmanipulate)
-		* 8.1. [Linq Expression](#LinqExpression)
-		* 8.2. [Instantiation](#Instantiation)
-		* 8.3. [Extension Method And Linq](#ExtensionMethodAndLinq)
-* 9. [Appendix](#Appendix)
+* 4. [Default Value in VisualBasic](#DefaultValueinVisualBasic)
+* 5. [The Unix bash syntax for listing files](#TheUnixbashsyntaxforlistingfiles)
+* 6. [VB specific ``With`` anonymous variable](#VBspecificWithanonymousvariable)
+* 7. [Type char coding style](#Typecharcodingstyle)
+* 8. [VisualBasic identifer names](#VisualBasicidentifernames)
+		* 8.1. [1. Directory type](#Directorytype)
+		* 8.2. [2. Module variable](#Modulevariable)
+		* 8.3. [3. Local varaible and function parameter](#Localvaraibleandfunctionparameter)
+		* 8.4. [4. Function And Type name](#FunctionAndTypename)
+		* 8.5. [Using underline in namming](#Usingunderlineinnamming)
+* 9. [String manipulate](#Stringmanipulate)
+		* 9.1. [Linq Expression](#LinqExpression)
+		* 9.2. [Instantiation](#Instantiation)
+		* 9.3. [Extension Method And Linq](#ExtensionMethodAndLinq)
+* 10. [Appendix](#Appendix)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -302,7 +303,7 @@ Loop
 
 Enable this language syntax just very easy, wrapping your variable object type with ``Value(Of T)`` in VB language.
 
-## Default Value in VisualBasic
+##  4. <a name='DefaultValueinVisualBasic'></a>Default Value in VisualBasic
 
 ```vbnet
 ' using default value is more elegant than using If expression
@@ -324,7 +325,7 @@ Public Sub Print(Optional device As TextWriter = Nothing)
 End Sub
 ```
 
-##  4. <a name='TheUnixbashsyntaxforlistingfiles'></a>The Unix bash syntax for listing files
+##  5. <a name='TheUnixbashsyntaxforlistingfiles'></a>The Unix bash syntax for listing files
 
 Here is how to using this bash syntax that you can used for listing files/folders in VisualBasic language:
 
@@ -356,7 +357,7 @@ For Each file$ In ls - l - r - {"*.csv", "*.tsv"} <= DIR
 Next
 ```
 
-##  5. <a name='VBspecificWithanonymousvariable'></a>VB specific ``With`` anonymous variable
+##  6. <a name='VBspecificWithanonymousvariable'></a>VB specific ``With`` anonymous variable
 
 When you are dealing the variable with an array, usually you are going to do in this style:
 
@@ -422,7 +423,7 @@ End With
 End Function
 ```
 
-##  6. <a name='Typecharcodingstyle'></a>Type char coding style
+##  7. <a name='Typecharcodingstyle'></a>Type char coding style
 
 The type char code just working on the .NET primitive type, like ``String``, ``Integer``, ``Long``, ``Double``, ``Char``, etc. Using the type char code can makes your code more brief and readable, give your code more VisualBasic-ish.
 
@@ -432,9 +433,9 @@ It is recommended that using type char in the parameter declaring of a function 
 ###### Not Recommended
 Not recommended that using type char for ``Class/Structure Property``.
 
-##  7. <a name='VisualBasicidentifernames'></a>VisualBasic identifer names
+##  8. <a name='VisualBasicidentifernames'></a>VisualBasic identifer names
 
-####  7.1. <a name='Directorytype'></a>1. Directory type
+####  8.1. <a name='Directorytype'></a>1. Directory type
 If possible, then all of the directory path variable can be **UPCASE**, such as:
 
 ```vb.net
@@ -442,7 +443,7 @@ Dim DIR As String = "/home/xieguigang/Downloads"
 Dim EXPORT As String = "/usr/lib/GCModeller/"
 ```
 
-####  7.2. <a name='Modulevariable'></a>2. Module variable
+####  8.2. <a name='Modulevariable'></a>2. Module variable
 
 + All of the module variable should in format like **_lowerUpper** if the variable is _private_
 + But if the variable is _Public_ or _Friend_ visible, then it should in format like **UpperUpper**
@@ -459,11 +460,11 @@ Public ReadOnly Property FileName As String
 Public ReadOnly Property InDIR As Directory
 ```
 
-####  7.3. <a name='Localvaraibleandfunctionparameter'></a>3. Local varaible and function parameter
+####  8.3. <a name='Localvaraibleandfunctionparameter'></a>3. Local varaible and function parameter
 
 If possible, all of the local varaible within a function or sub program and the parameters of a function, should be in format **lowerUpper**
 
-####  7.4. <a name='FunctionAndTypename'></a>4. Function And Type name
+####  8.4. <a name='FunctionAndTypename'></a>4. Function And Type name
 
 For **_Public_** member function, the function name is recommended in formats **UpperUpper**, but if the function is **_Private, Friend, or Protected_** visible, then your function is recommended start with two underlines, likes **\_\_lowerUpper**. The definition of the _Class, Structure_ names is in the same rule as function name.
 
@@ -488,7 +489,7 @@ Public Function DensityCis(Of T As I_GeneBrief)(
 + Interface type name should start with a upcase character **I**, like _IEnumerable_, _IList_, etc
 + Enum type name should end with a lower case character **s**, like _MethodTypes_, _FormatStyles_
 
-####  7.5. <a name='Usingunderlineinnamming'></a>Using underline in namming
+####  8.5. <a name='Usingunderlineinnamming'></a>Using underline in namming
 
 When the identifier name require of the underline symbol ``_``, then it is recommended that first word should be an all **UPCASE** brief code and the next word is an all **lowcase** word. For example,
 
@@ -505,7 +506,7 @@ At last, for improves of the code readable, try _**Make your identifier name sho
 
 ![Code standard overview example](./codeStandard.png)
 
-##  8. <a name='Stringmanipulate'></a>String manipulate
+##  9. <a name='Stringmanipulate'></a>String manipulate
 
 ###### 1. String.Format
 
@@ -569,12 +570,12 @@ Dim CLI As String = $"/start /port {port} /home {PathMapper.UserHOME}"
 
 So, using this syntax feature makes your code very easy for reading and understand the code meaning, right?
 
-####  8.1. <a name='LinqExpression'></a>Linq Expression
+####  9.1. <a name='LinqExpression'></a>Linq Expression
 All of the Linq Expression is recommended execute using [**LinqAPI**](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Language/Linq.vb) if the output type of the expression is a known type:
 
 ![](./LinqStyle.png)
 
-####  8.2. <a name='Instantiation'></a>Instantiation
+####  9.2. <a name='Instantiation'></a>Instantiation
 
 For define a new object, a short format is recommended:
 
@@ -596,7 +597,7 @@ _
         }
 ```
 
-####  8.3. <a name='ExtensionMethodAndLinq'></a>Extension Method And Linq
+####  9.3. <a name='ExtensionMethodAndLinq'></a>Extension Method And Linq
 With the extension method, then you can implementes a Fully Object-Oriented coding style, as you can add extend any method or function onto any type of object.
 
 For example:
@@ -679,7 +680,7 @@ Dim exp As Expression = expression _
 Return Function(text) If(exp.Match(text), 1.0R, 0R)
 ```
 
-##  9. <a name='Appendix'></a>Appendix
+##  10. <a name='Appendix'></a>Appendix
 
 Here are tables of names that i used in my programming, and continues updated....
 
