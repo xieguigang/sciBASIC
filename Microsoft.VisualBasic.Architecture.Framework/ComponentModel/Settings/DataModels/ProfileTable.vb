@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c06c449d426752c2f306473d9fae675, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\DataModels\ProfileTable.vb"
+﻿#Region "Microsoft.VisualBasic::8a2da6d1a5aceb5c28dcd94f5134c53d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\DataModels\ProfileTable.vb"
 
     ' Author:
     ' 

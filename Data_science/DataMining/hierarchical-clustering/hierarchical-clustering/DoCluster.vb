@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a4d62ed426f39754cb6439c55030778, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DoCluster.vb"
+﻿#Region "Microsoft.VisualBasic::afe70abdb84d742297b6a4cdd2057bb0, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DoCluster.vb"
 
     ' Author:
     ' 
@@ -80,4 +80,3 @@ Public Module DoCluster
         End With
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f8134ff589e97d9ae076e24d79e43e5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\SoftwareToolkits\LicenseMgr.vb"
+﻿#Region "Microsoft.VisualBasic::a7c6482cd455b2bd5eccaa778f448077, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\VBDev\LicenseMgr.vb"
 
     ' Author:
     ' 

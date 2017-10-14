@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3031b128ff4852037e012e7f2a033596, ..\sciBASIC#\Data_science\Graph\Model\TimeSerialsGraph.vb"
+﻿#Region "Microsoft.VisualBasic::de05da1320c106d357f0b861b1381be5, ..\sciBASIC#\Data_science\Graph\Model\TimeSerialsGraph.vb"
 
     ' Author:
     ' 
@@ -32,4 +32,3 @@
 Public Module TimeSerialsGraph
 
 End Module
-

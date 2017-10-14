@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4be1edb0b659a71ae9c6c3aa364633e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\ClassMapper.vb"
+﻿#Region "Microsoft.VisualBasic::3137a325e2d86e2b9283e59062116172, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\ClassMapper.vb"
 
     ' Author:
     ' 

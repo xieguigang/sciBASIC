@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c338b3c9e3055adb7806204e761aa1e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\DataSample.vb"
+﻿#Region "Microsoft.VisualBasic::79f5f596a931c56c0e7bb4ddc5b88e36, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\DataSample.vb"
 
     ' Author:
     ' 

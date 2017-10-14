@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f78072e9a724883529f6c44c0d4e7852, ..\sciBASIC#\mime\text%html\HTML\CSS\Parser\enums.vb"
+﻿#Region "Microsoft.VisualBasic::1832a06e22224b31f8fa10e2ca2102b9, ..\sciBASIC#\mime\text%html\HTML\CSS\Parser\enums.vb"
 
     ' Author:
     ' 
@@ -1291,4 +1291,3 @@ Public Enum CssProperty As Int32
     ''' </summary>
     <Description("sensation")> sensation
 End Enum
-

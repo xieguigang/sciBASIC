@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43340e8e1bffbe6c483c570b8f32da88, ..\sciBASIC#\Data\DataFrame\Extensions\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::12cb0fbf62230a143bc8dc376e464300, ..\sciBASIC#\Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 

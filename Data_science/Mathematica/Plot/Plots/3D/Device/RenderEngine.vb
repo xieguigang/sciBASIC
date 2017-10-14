@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dab3b603f923b4583db51448d418efcf, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Device\RenderEngine.vb"
+﻿#Region "Microsoft.VisualBasic::b7490c6302cfff54b79a3c0d8b15e92b, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Device\RenderEngine.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
