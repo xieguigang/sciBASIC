@@ -22,7 +22,7 @@ CD /D %currentWork%
 echo %cd%
 
 REM utils tool for create installer zip package
-SET WinZip=./utils/zip.exe
+SET WinZip=%currentWork%/utils/zip.exe
 
 REM first of all, compile this project at first
 REM then we are able to create the zip package
@@ -35,9 +35,8 @@ if exist %WinZip% (
     echo "Create zip tool success."
 ) else (
     echo "Unable to create zip tool for creates the installer zip file!!!"
-	pause
-	
-	exit -1
+		
+	GOTO Q
 )
 
 REM batch script for build sciBASIC# installer project
@@ -55,18 +54,16 @@ if exist %sciBASIC_sln% (
     echo "%sciBASIC_sln% exist!"
 ) else (
     echo "Can not found sciBASIC# project!"	
-    pause
 	
-    exit -100
+    GOTO Q
 )
 
 if exist %installer_sln% (
     echo "%installer_sln% exist!"
 ) else (
     echo "Can not found sciBASIC# installer project!"	
-    pause
 	
-    exit -120
+    GOTO Q
 )
 
 echo "[ALL] check success!"
@@ -124,3 +121,5 @@ if exist %output%/sciBASIC_installer.exe (
 ) else (
     echo "Build installer project failured!"	
 )
+
+:Q
