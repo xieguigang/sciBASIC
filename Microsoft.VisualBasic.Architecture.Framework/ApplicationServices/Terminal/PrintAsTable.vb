@@ -182,7 +182,10 @@ Namespace ApplicationServices.Terminal
                     Call printLayout(row, width, maxLen, .ref)
                 Next
 
-                Call final(Nothing, width, maxLen, .ref)
+                If Not final Is Nothing Then
+                    Call final(Nothing, width, maxLen, .ref)
+                End If
+
                 Call .Flush()
             End With
         End Sub
