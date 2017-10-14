@@ -1,6 +1,38 @@
 # Code style guidelines for Microsoft VisualBasic
 
-## Code Architecture of a VisualBasic CLI program
+# ----======= TOC =======----
+
+
+<!-- vscode-markdown-toc -->
+* 1. [Architecture of VisualBasic CLI program](#ArchitectureofVisualBasicCLIprogram)
+	* 1.1. [How to define the CLI module?](#HowtodefinetheCLImodule)
+	* 1.2. [How to expose the CLI API in your application?](#HowtoexposetheCLIAPIinyourapplication)
+		* 1.2.1. [Auto document feature from VisualBasic CLI framework](#AutodocumentfeaturefromVisualBasicCLIframework)
+	* 1.3. [Using the VisualBasic CommandLine Parser](#UsingtheVisualBasicCommandLineParser)
+* 2. [List(Of T) operation in VisualBasic](#ListOfToperationinVisualBasic)
+* 3. [The VisualBasic inline assign syntax](#TheVisualBasicinlineassignsyntax)
+* 4. [The Unix bash syntax for listing files](#TheUnixbashsyntaxforlistingfiles)
+* 5. [VB specific ``With`` anonymous variable](#VBspecificWithanonymousvariable)
+* 6. [Type char coding style](#Typecharcodingstyle)
+* 7. [VisualBasic identifer names](#VisualBasicidentifernames)
+		* 7.1. [1. Directory type](#Directorytype)
+		* 7.2. [2. Module variable](#Modulevariable)
+		* 7.3. [3. Local varaible and function parameter](#Localvaraibleandfunctionparameter)
+		* 7.4. [4. Function And Type name](#FunctionAndTypename)
+		* 7.5. [Using underline in namming](#Usingunderlineinnamming)
+* 8. [String manipulate](#Stringmanipulate)
+		* 8.1. [Linq Expression](#LinqExpression)
+		* 8.2. [Instantiation](#Instantiation)
+		* 8.3. [Extension Method And Linq](#ExtensionMethodAndLinq)
+* 9. [Appendix](#Appendix)
+
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+##  1. <a name='ArchitectureofVisualBasicCLIprogram'></a>Architecture of VisualBasic CLI program
 
 There is a VisualBasic application helper module that define in the namespace:
 [Microsoft.VisualBasic.App](../../Microsoft.VisualBasic.Architecture.Framework/Extensions/App.vb)
@@ -32,7 +64,7 @@ In the above example, Where, the type **CLI** is the CLI interface which it is a
 
 ![](./CLI_programming.png)
 
-### How to define the CLI module?
+###  1.1. <a name='HowtodefinetheCLImodule'></a>How to define the CLI module?
 
 A **Module** is a static _Class_ type in the VisualBasic, and it usually used for _the API exportation and common method definition for a set of similarity or functional correlated utility functions_.
 
@@ -43,30 +75,35 @@ Here is an example:
 ```vb.net
 Partial Module CLI
 
-    <ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
+    <ExportAPI("/Print")>
+    <Usage("/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
+    <Description("Help info")>
     Public Function Print(args As CommandLine.CommandLine) As Integer
-        Dim ext As String = args.GetValue("/ext", "*.*")
-        Dim inDIR As String = args - "/in"
+        Dim ext$ = (args <= "/ext") Or "*.*".AsDefault
+        Dim inDIR As String = args <= "/in"
         Dim out As String = args.GetValue("/out", inDIR.TrimDIR & ".contents.Csv")
-        Dim files As IEnumerable(Of String) =
-            ls - l - r - ext <= inDIR
-        Dim content As NamedValue(Of String)() =
-            LinqAPI.Exec(Of NamedValue(Of String)) <= From file As String
-                                                      In files
-                                                      Let name As String = file.BaseName
-                                                      Let genome As String = file.ParentDirName
-                                                      Select New NamedValue(Of String) With {
-                                                          .Name = name,
-                                                          .x = genome
-                                                      }
-        Return content.SaveTo(out).CLICode
+        Dim files As IEnumerable(Of String) = ls - l - r - ext <= inDIR
+        Dim content = LinqAPI.Exec(Of NamedValue(Of String)) _
+_
+            () <= From file As String
+                  In files
+                  Let name As String = file.BaseName
+                  Let genome As String = file.ParentDirName
+                  Select New NamedValue(Of String) With {
+                      .Name = name,
+                      .Value = genome
+                  }
+
+        Return content _
+            .SaveTo(out) _
+            .CLICode
     End Function
 End Module
 ```
 
 This example code can be found at: [github](../../docs/guides/Example/Language.sln)
 
-### How to expose the CLI interface API in your application?
+###  1.2. <a name='HowtoexposetheCLIAPIinyourapplication'></a>How to expose the CLI API in your application?
 
 A wrapper for parsing the commandline from your user is already been defined in namespace: [**Microsoft.VisualBasic.CommandLine**](https://github.com/xieguigang/VisualBasic_AppFramework/tree/master/Microsoft.VisualBasic.Architecture.Framework/CommandLine)
 
@@ -76,7 +113,8 @@ And the **CLI** interface should define as in the format of this example:
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
-<ExportAPI("/Print", Usage:="/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
+<ExportAPI("/Print")>
+<Usage("/Print /in <inDIR> [/ext <ext> /out <out.Csv>]")>
 <Group("Function Group Name")>
 <Argument("/in", AcceptTypes:={GetType(String)}, Description:="The input directory path.")>
 <Argument("/out", True, AcceptTypes:={GetType(NamedValue(Of String))}, Description:="The output csv data.")>
@@ -86,8 +124,20 @@ Public Function CLI_API(args As CommandLine) As Integer
 + ``ExportAPI`` attribute that flag this function will be exposed to your user as a CLI command.
 + ``Group`` attribute that can grouping this API into a function group
 + ``Argument`` attribute that records the help information of the parameter in the CLI.
++ ``Usage`` attribute tells your user how to using your CLI API
++ ``Description`` attribute give the brief function description about this CLI command.
 
-### Using the VisualBasic CommandLine Parser
+####  1.2.1. <a name='AutodocumentfeaturefromVisualBasicCLIframework'></a>Auto document feature from VisualBasic CLI framework
+
+Once you have defined these five attribute for your CLI API, then you can using the ``App ? command`` command for get the API summary from the auto document feature, example as:
+
+![](./CLI_docs.png)
+
+Can generates such well formatted auto document:
+
+![](./CLI_auto_docs.png)
+
+###  1.3. <a name='UsingtheVisualBasicCommandLineParser'></a>Using the VisualBasic CommandLine Parser
 For learn how to using the ``CommandLine`` Parser, we first lean the syntax of the VisualBasic commandline arguments.
 A typical commandline arguments in VisualBasic is consist of two parts:
 
@@ -166,7 +216,7 @@ Example CLI is:
 |``Item(String) As String``|Default readonly property for read string value of a specific parameter|``Dim path As String = args("/file")``|
 
 
-## List(Of T) operation in VisualBasic
+##  2. <a name='ListOfToperationinVisualBasic'></a>List(Of T) operation in VisualBasic
 
 For enable this language syntax feature and using the list feature in this section, you should imports the namespace **Microsoft.VisualBasic.Language** at first
 
@@ -236,7 +286,7 @@ genomes.Add(New GenomeBrief With {
 })
 ```
 
-## The VisualBasic inline assign syntax
+##  3. <a name='TheVisualBasicinlineassignsyntax'></a>The VisualBasic inline assign syntax
 
 Like other C family language, VB is also have the inline assign operation syntax, here is how to enable this language syntax in VB:
 
@@ -252,7 +302,29 @@ Loop
 
 Enable this language syntax just very easy, wrapping your variable object type with ``Value(Of T)`` in VB language.
 
-## The Unix bash syntax for listing files
+## Default Value in VisualBasic
+
+```vbnet
+' using default value is more elegant than using If expression
+' and much more natural english language way: 
+Public Sub Print(Optional device As TextWriter = Nothing)
+
+    ' using device object or console output as default if device is nothing
+    With device Or Console.Out.AsDefault
+    
+        ' blablabla
+    End With
+End Sub
+
+Public Sub Print(Optional device As TextWriter = Nothing)
+    With If(device Is Nothing, Console.Out, device)
+    
+        ' blablabla
+    End With
+End Sub
+```
+
+##  4. <a name='TheUnixbashsyntaxforlistingfiles'></a>The Unix bash syntax for listing files
 
 Here is how to using this bash syntax that you can used for listing files/folders in VisualBasic language:
 
@@ -284,7 +356,7 @@ For Each file$ In ls - l - r - {"*.csv", "*.tsv"} <= DIR
 Next
 ```
 
-## VB specific ``With`` anonymous variable
+##  5. <a name='VBspecificWithanonymousvariable'></a>VB specific ``With`` anonymous variable
 
 When you are dealing the variable with an array, usually you are going to do in this style:
 
@@ -350,7 +422,7 @@ End With
 End Function
 ```
 
-## Type char coding style
+##  6. <a name='Typecharcodingstyle'></a>Type char coding style
 
 The type char code just working on the .NET primitive type, like ``String``, ``Integer``, ``Long``, ``Double``, ``Char``, etc. Using the type char code can makes your code more brief and readable, give your code more VisualBasic-ish.
 
@@ -360,9 +432,9 @@ It is recommended that using type char in the parameter declaring of a function 
 ###### Not Recommended
 Not recommended that using type char for ``Class/Structure Property``.
 
-## VisualBasic identifer names
+##  7. <a name='VisualBasicidentifernames'></a>VisualBasic identifer names
 
-#### 1. Directory type
+####  7.1. <a name='Directorytype'></a>1. Directory type
 If possible, then all of the directory path variable can be **UPCASE**, such as:
 
 ```vb.net
@@ -370,7 +442,7 @@ Dim DIR As String = "/home/xieguigang/Downloads"
 Dim EXPORT As String = "/usr/lib/GCModeller/"
 ```
 
-#### 2. Module variable
+####  7.2. <a name='Modulevariable'></a>2. Module variable
 
 + All of the module variable should in format like **_lowerUpper** if the variable is _private_
 + But if the variable is _Public_ or _Friend_ visible, then it should in format like **UpperUpper**
@@ -387,11 +459,11 @@ Public ReadOnly Property FileName As String
 Public ReadOnly Property InDIR As Directory
 ```
 
-#### 3. Local varaible and function parameter
+####  7.3. <a name='Localvaraibleandfunctionparameter'></a>3. Local varaible and function parameter
 
 If possible, all of the local varaible within a function or sub program and the parameters of a function, should be in format **lowerUpper**
 
-#### 4. Function And Type name
+####  7.4. <a name='FunctionAndTypename'></a>4. Function And Type name
 
 For **_Public_** member function, the function name is recommended in formats **UpperUpper**, but if the function is **_Private, Friend, or Protected_** visible, then your function is recommended start with two underlines, likes **\_\_lowerUpper**. The definition of the _Class, Structure_ names is in the same rule as function name.
 
@@ -416,7 +488,7 @@ Public Function DensityCis(Of T As I_GeneBrief)(
 + Interface type name should start with a upcase character **I**, like _IEnumerable_, _IList_, etc
 + Enum type name should end with a lower case character **s**, like _MethodTypes_, _FormatStyles_
 
-#### Using underline in namming
+####  7.5. <a name='Usingunderlineinnamming'></a>Using underline in namming
 
 When the identifier name require of the underline symbol ``_``, then it is recommended that first word should be an all **UPCASE** brief code and the next word is an all **lowcase** word. For example,
 
@@ -433,7 +505,7 @@ At last, for improves of the code readable, try _**Make your identifier name sho
 
 ![Code standard overview example](./codeStandard.png)
 
-## String manipulate
+##  8. <a name='Stringmanipulate'></a>String manipulate
 
 ###### 1. String.Format
 
@@ -497,12 +569,12 @@ Dim CLI As String = $"/start /port {port} /home {PathMapper.UserHOME}"
 
 So, using this syntax feature makes your code very easy for reading and understand the code meaning, right?
 
-#### Linq Expression
+####  8.1. <a name='LinqExpression'></a>Linq Expression
 All of the Linq Expression is recommended execute using [**LinqAPI**](https://github.com/xieguigang/VisualBasic_AppFramework/blob/master/Microsoft.VisualBasic.Architecture.Framework/Language/Linq.vb) if the output type of the expression is a known type:
 
 ![](./LinqStyle.png)
 
-#### Instantiation
+####  8.2. <a name='Instantiation'></a>Instantiation
 
 For define a new object, a short format is recommended:
 
@@ -524,7 +596,7 @@ _
         }
 ```
 
-#### Extension Method And Linq
+####  8.3. <a name='ExtensionMethodAndLinq'></a>Extension Method And Linq
 With the extension method, then you can implementes a Fully Object-Oriented coding style, as you can add extend any method or function onto any type of object.
 
 For example:
@@ -607,7 +679,7 @@ Dim exp As Expression = expression _
 Return Function(text) If(exp.Match(text), 1.0R, 0R)
 ```
 
-## Appendix
+##  9. <a name='Appendix'></a>Appendix
 
 Here are tables of names that i used in my programming, and continues updated....
 
