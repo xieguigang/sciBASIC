@@ -426,6 +426,16 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' 从输入的向量数组之中移除掉列表之中的指定元素，然后返回<paramref name="vector"/>的剩余元素
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(vector As T(), list As List(Of T)) As List(Of T)
+            Return vector.AsList - DirectCast(list, IEnumerable(Of T))
+        End Operator
+
+        ''' <summary>
         ''' 将这个列表对象隐式转换为向量数组
         ''' </summary>
         ''' <param name="list"></param>
