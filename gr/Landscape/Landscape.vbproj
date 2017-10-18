@@ -224,7 +224,7 @@
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>mime-htmls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\mime\text%25yaml\yaml\yaml.vbproj">
+    <ProjectReference Include="..\..\mime\text%25yaml\text.yaml.vbproj">
       <Project>{fb637de6-6beb-4722-968a-f76deb851dfc}</Project>
       <Name>yaml</Name>
     </ProjectReference>
