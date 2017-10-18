@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15123a2a9e0da858cd8bd867b2db9c10, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Numeric\int.vb"
+﻿#Region "Microsoft.VisualBasic::9dda90f740c6267d6afa9a13b9fa0354, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Numeric\int.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 
@@ -37,12 +38,14 @@ Namespace Language
     Public Class int : Inherits Value(Of Integer)
         Implements IComparable
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(Optional x% = Scan0)
-            value = x
+            Value = x
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return value
+            Return Value
         End Function
 
         ''' <summary>
@@ -54,9 +57,9 @@ Namespace Language
             Dim type As Type = obj.GetType
 
             If type.Equals(GetType(Integer)) Then
-                Return value.CompareTo(DirectCast(obj, Integer))
+                Return Value.CompareTo(DirectCast(obj, Integer))
             ElseIf type.Equals(GetType(int)) Then
-                Return value.CompareTo(DirectCast(obj, int).value)
+                Return Value.CompareTo(DirectCast(obj, int).Value)
             Else
                 Throw New Exception($"Miss-match of type:  {GetType(int).FullName} --> {type.FullName}")
             End If
@@ -70,7 +73,7 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Shared Operator <(n As Integer, x As int) As int
-            If n >= x.value Then
+            If n >= x.Value Then
                 Return New int(Integer.MaxValue)
             Else
                 Return x
@@ -83,16 +86,19 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <param name="n"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <(x As int, n As Integer) As Boolean
-            Return x.value < n
+            Return x.Value < n
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <(n As Double, x As int) As Boolean
-            Return n < x.value
+            Return n < x.Value
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >(n As Double, x As int) As Boolean
-            Return n > x.value
+            Return n > x.Value
         End Operator
 
         ''' <summary>
@@ -101,29 +107,46 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <param name="n"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >(x As int, n As Integer) As Boolean
-            Return x.value > n
+            Return x.Value > n
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <=(x As int, n As Integer) As Boolean
-            Return x.value <= n
+            Return x.Value <= n
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator >=(x As int, n As Integer) As Boolean
-            Return x.value >= n
+            Return x.Value >= n
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >(n As Integer, x As int) As int
             Return x
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator -(x As int, n As Integer) As int
-            x.value -= n
+            x.Value -= n
             Return x
         End Operator
 
+        ''' <summary>
+        ''' 正常的减法四则运算
+        ''' </summary>
+        ''' <param name="x%"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator -(x%, n As int) As Integer
+            Return x - n.Value
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator /(x As int, b As Integer) As Double
-            Return x.value / b
+            Return x.Value / b
         End Operator
 
         ''' <summary>
@@ -131,6 +154,7 @@ Namespace Language
         ''' </summary>
         ''' <param name="n"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(n%) As int
             Return New int(n)
         End Operator
@@ -142,8 +166,8 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator +(x As int) As Integer
-            Dim i As Integer = x.value
-            x.value += 1
+            Dim i As Integer = x.Value
+            x.Value += 1
             Return i
         End Operator
 
@@ -162,7 +186,7 @@ Namespace Language
         ''' <param name="n%"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator +(x As int, n%) As int
-            x.value += n
+            x.Value += n
             Return x
         End Operator
 
@@ -171,7 +195,7 @@ Namespace Language
         'End Operator
 
         Public Shared Operator >(source As IEnumerable, handle As int) As Boolean
-            Dim file As FileHandle = FileHandles.__getHandle(handle.value)
+            Dim file As FileHandle = FileHandles.__getHandle(handle.Value)
             Return CollectionIO.DefaultHandle()(source, file.FileName, file.encoding)
         End Operator
 
@@ -186,8 +210,8 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Shared Operator <<(p As int, x%) As Integer
-            Dim i As Integer = p.value
-            p.value += x
+            Dim i As Integer = p.Value
+            p.Value += x
             Return i
         End Operator
     End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7775a2d0756a16b012cf90e4264031d, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::d68f66a87406ca7dc9b483abb479cb31, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -141,6 +141,11 @@ Namespace Drawing2D.Colors
                      Return Color.FromArgb(c(0), c(1), c(2))
                  End Function) _
          .ToArray
+
+        Public ReadOnly Property ConsoleColors As Color() = Enums(Of ConsoleColor) _
+            .Select(Function(c) c.ToString) _
+            .Select(AddressOf TranslateColor) _
+            .ToArray
 
         ''' <summary>
         ''' 
@@ -309,6 +314,8 @@ Namespace Drawing2D.Colors
 
             If term.TextEquals("material") Then
                 Return MaterialPalette
+            ElseIf term.TextEquals("console.colors") Then
+                Return ConsoleColors
             ElseIf term.TextEquals("TSF") Then
                 Return TSF
             ElseIf term.TextEquals("rainbow") Then

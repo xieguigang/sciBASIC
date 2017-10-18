@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::449074170c78fc6dc0c66ed294293aac, ..\sciBASIC#\Data\DataFrame\DATA\Excel\Coordinates.vb"
+﻿#Region "Microsoft.VisualBasic::bdca02441610c315bcd242daa7f51611, ..\sciBASIC#\Data\DataFrame\DATA\Excel\Coordinates.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,7 @@ Namespace Excel
 
     Public Module Coordinates
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CellValue(data As IO.File, c As String) As String
             With Coordinates.Index(c)
@@ -64,6 +65,7 @@ Namespace Excel
             Return New Point(X, Y.YValue)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ColumnIndex(i%) As String
             Return i.TranslateDecimal(alphas:=AZ.Objects)
         End Function

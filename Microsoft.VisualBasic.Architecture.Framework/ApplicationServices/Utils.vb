@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98eed8834b32091fc9d85d18c3dfa122, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::c0f04ba4a368e85f6d19aa3268681428, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Utils.vb"
 
     ' Author:
     ' 

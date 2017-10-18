@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed87907082d72fb44f7575b7c956bce2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::311027726400e182e36070db01a089bf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,9 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -47,6 +49,26 @@ Namespace CommandLine
                         Description:="",
                         Revision:=52)>
     Public Module CLITools
+
+        <Extension>
+        Public Function Print(args As CommandLine, Optional sep As Char = " "c, Optional leftMargin% = 0) As String
+            Dim sb As New StringBuilder("ArgumentsOf: `" & args.Name & "`")
+            Dim device As New StringWriter(sb)
+
+            Call device.WriteLine()
+            Call device.WriteLine(New String("-"c, args.Name.Length * 4))
+            Call device.WriteLine()
+
+            Call args _
+                .ToArgumentVector _
+                .Print(
+                    device,
+                    sep,
+                    trilinearTable:=True,
+                    leftMargin:=leftMargin)
+
+            Return sb.ToString
+        End Function
 
         ''' <summary>
         ''' Parsing parameters from a specific tokens.
@@ -178,7 +200,7 @@ Namespace CommandLine
                 ._CLICommandArgvs = Join(tokens)
             }
 
-            CLI.SingleValue = SingleValue
+            CLI.SingleValue = singleValue
             If CLI.Parameters.Length = 1 AndAlso
                 String.IsNullOrEmpty(CLI.SingleValue) Then
                 CLI.SingleValue = CLI.Parameters(0)

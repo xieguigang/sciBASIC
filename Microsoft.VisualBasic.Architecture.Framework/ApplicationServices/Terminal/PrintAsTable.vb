@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3156107ff56e7a160196e5a79d4048c8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\PrintAsTable.vb"
+﻿#Region "Microsoft.VisualBasic::f361e64c7cebcba4f151d95a6f9fff48, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\PrintAsTable.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -55,6 +56,7 @@ Namespace ApplicationServices.Terminal
                           .Values
                       Where x.IsPrimitive
                       Select x
+
             Dim titles As String() = schema.ToArray(Function(x) x.Identity)
             Dim contents = LinqAPI.Exec(Of Dictionary(Of String, String)) _
  _
@@ -86,24 +88,85 @@ Namespace ApplicationServices.Terminal
         ''' <param name="dev"></param>
         ''' <param name="sep"></param>
         <Extension>
-        Public Sub PrintTable(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
+        Public Sub PrintTable(source As IEnumerable(Of String()),
+                              Optional dev As TextWriter = Nothing,
+                              Optional sep As Char = " "c,
+                              Optional title$() = Nothing,
+                              Optional trilinearTable As Boolean = False,
+                              Optional leftMargin% = 0)
 
+            Dim printHead As Boolean = False
+            Dim table$()() = source.ToArray
+            Dim printOfHead As printOnDevice =
+                Sub(row, width, maxLen, device)
+
+                    If leftMargin > 0 Then
+                        Call device.Write(New String(sep, leftMargin))
+                    End If
+
+                    Call device.Write("+")
+                    Call device.Write(maxLen.Select(Function(l) New String("-"c, l)).JoinBy("+"))
+                    Call device.Write("+")
+                    Call device.WriteLine()
+                End Sub
+
+            If Not title Is Nothing Then
+                table = title.Join(table).ToArray
+            End If
+
+            Call table.printInternal(
+                dev, 2, Sub(row, width, maxLen, device)
+                            Dim offset% = 0
+
+                            If Not printHead Then
+                                Call printOfHead(Nothing, width, maxLen, device)
+                            End If
+                            If leftMargin > 0 Then
+                                Call device.Write(New String(sep, leftMargin))
+                            End If
+                            If Not trilinearTable Then
+                                Call device.Write("|")
+                            End If
+
+                            For i As Integer = 0 To width - 1
+                                If row(i) Is Nothing Then
+                                    row(i) = ""
+                                End If
+
+                                If trilinearTable Then
+                                    device.Write(" ")
+                                End If
+
+                                offset = maxLen(i) - row(i).Length - 1
+                                device.Write(" " & row(i) & New String(sep, offset))
+
+                                If Not trilinearTable Then
+                                    Call device.Write("|")
+                                End If
+                            Next
+
+                            Call device.WriteLine()
+
+                            If Not printHead Then
+                                Call printOfHead(Nothing, width, maxLen, device)
+                                printHead = True
+                            End If
+                        End Sub, printOfHead)
         End Sub
 
-        <Extension>
-        Public Sub Print(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c)
-            With dev Or Console.Out.AsDefault
+        Private Delegate Sub printOnDevice(row$(), width%, maxLen%(), device As TextWriter)
 
-                Dim table$()() = source.ToArray
-                Dim maxLen As New List(Of Integer)
+        <Extension>
+        Private Sub printInternal(table$()(), dev As TextWriter, distance%, printLayout As printOnDevice, Optional final As printOnDevice = Nothing)
+            With dev Or Console.Out.AsDefault
                 Dim width% = table.Max(Function(row) row.Length)
                 Dim index%
-                Dim offset%
+                Dim maxLen%() = New Integer(width - 1) {}
 
                 ' 按照列计算出layout偏移量
                 For i As Integer = 0 To width - 1
                     index = i
-                    maxLen += table _
+                    maxLen(index) = table _
                         .Select(Function(row) row.ElementAtOrDefault(index)) _
                         .Select(Function(s)
                                     If String.IsNullOrEmpty(s) Then
@@ -112,22 +175,86 @@ Namespace ApplicationServices.Terminal
                                         Return s.Length
                                     End If
                                 End Function) _
-                        .Max
+                        .Max + distance
                 Next
 
                 For Each row As String() In table
-                    offset = 0
-
-                    For i As Integer = 0 To width - 1
-                        Call .Write(New String(sep, offset) & row(i))
-                        offset = maxLen(i) - row(i).Length
-                    Next
-
-                    Call .WriteLine()
+                    Call printLayout(row, width, maxLen, .ref)
                 Next
+
+                If Not final Is Nothing Then
+                    Call final(Nothing, width, maxLen, .ref)
+                End If
 
                 Call .Flush()
             End With
+        End Sub
+
+        ''' <summary>
+        ''' Print the string matrix collection <paramref name="source"/> in table layout.
+        ''' </summary>
+        ''' <param name="source">The string matrix collection.</param>
+        ''' <param name="dev">The output device</param>
+        ''' <param name="sep"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Print(source As IEnumerable(Of String()), Optional dev As TextWriter = Nothing, Optional sep As Char = " "c, Optional distance% = 2)
+            Call source _
+                .ToArray _
+                .printInternal(
+                    dev, distance, Sub(row, width, maxLen, device)
+                                       Dim offset% = 0
+
+                                       For i As Integer = 0 To width - 1
+                                           If row(i) Is Nothing Then
+                                               row(i) = ""
+                                           End If
+
+                                           device.Write(New String(sep, offset) & row(i))
+                                           offset = maxLen(i) - row(i).Length
+                                       Next
+
+                                       Call device.WriteLine()
+                                   End Sub)
+        End Sub
+
+        ''' <summary>
+        ''' Print the string dictionary as table
+        ''' </summary>
+        ''' <param name="table"></param>
+        ''' <param name="dev"></param>
+        ''' <param name="sep"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Print(table As Dictionary(Of String, String),
+                         Optional dev As TextWriter = Nothing,
+                         Optional sep As Char = " "c,
+                         Optional distance% = 2)
+            Call {
+                New String() {"Item", "Value"}
+            } _
+            .Join(table.Select(Function(map) {map.Key, map.Value})) _
+            .Print(dev, sep, distance)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Print(data As IEnumerable(Of NamedValue(Of String)),
+                         Optional dev As TextWriter = Nothing,
+                         Optional sep As Char = " "c,
+                         Optional trilinearTable As Boolean = False,
+                         Optional leftMargin% = 0)
+            Call {
+                New String() {"Name", "Value", "Description"}
+            } _
+            .Join(data.Select(Function(item)
+                                  Return {item.Name, item.Value, item.Description}
+                              End Function)) _
+            .PrintTable(
+                dev,
+                sep,
+                trilinearTable:=trilinearTable,
+                leftMargin:=leftMargin)
         End Sub
     End Module
 End Namespace

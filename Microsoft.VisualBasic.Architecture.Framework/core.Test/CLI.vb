@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35cc9d6a62d5e1abe98556123024d1f2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::5aba667920bb9c6fb79d7ef5a020f704, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\CLI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
+<ExceptionHelp("12345", "XXXXXX", "gg@sssss.com")>
 Module CLI
 
     Function Main() As Integer
@@ -47,5 +48,11 @@ Module CLI
     <Argument("/x", False, Description:="not sure......................... looooooooooooooooooooooooooooooooooooooooooooong and looooooooooooooooooooooooooooooooooooooooooooooooooong 2404:6800:4008:c00::71 storage.cloud.google.com")>
     Public Function CLIDocumentTest(args As CommandLine) As Integer
 
+    End Function
+
+    <ExportAPI("/ExceptionHandler.Test")>
+    <Usage("Whatever")>
+    Public Function ExceptionHandlerTest(args As CommandLine) As Integer
+        Throw New Exception
     End Function
 End Module

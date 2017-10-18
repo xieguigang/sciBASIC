@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::218972c74de624a70b0f091f1a65cfa0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::548d8db240539b239a3820852951bfd8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -84,6 +84,7 @@ Public Module Extensions
     ''' <param name="data"></param>
     ''' <returns></returns>
     <Extension>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Range(data As IEnumerable(Of Double), Optional scale# = 1) As DoubleRange
         Return New DoubleRange(data) * scale
     End Function
@@ -93,6 +94,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="x#"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Log2(x#) As Double
         Return sys.Log(x, newBase:=2)
     End Function
@@ -105,6 +108,8 @@ Public Module Extensions
     ''' <remarks>
     ''' 因为直接使用vb的<see cref="Val"/>函数转换，在Linux上面可能会出错，所以需要在这里用.NET自己的方法来转换
     ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetHexInteger(hex$) As Integer
         Dim num% = Integer.Parse(hex, NumberStyles.HexNumber)
         Return num
@@ -150,6 +155,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="t"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function FormatTime(t As TimeSpan) As String
         With t
@@ -169,6 +176,8 @@ Public Module Extensions
     ''' <typeparam name="V"></typeparam>
     ''' <param name="d"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function KeysJson(Of V)(d As Dictionary(Of String, V)) As String
         Return d.Keys.ToArray.GetJson
@@ -196,6 +205,7 @@ Public Module Extensions
         Return Nothing
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function MD5(s$) As String
         Return s.GetMd5Hash
     End Function

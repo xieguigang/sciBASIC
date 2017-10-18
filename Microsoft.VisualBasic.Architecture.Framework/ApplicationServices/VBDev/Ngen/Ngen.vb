@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11ba0577a36baf9ad042d1f0d8132a94, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\SoftwareToolkits\Ngen\Ngen.vb"
+﻿#Region "Microsoft.VisualBasic::6b310ee0f8bdbd4e9321dc03255d2197, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\VBDev\Ngen\Ngen.vb"
 
     ' Author:
     ' 

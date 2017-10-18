@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c974c40710cbb191ea0da34a3623fd4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::e4bc9ff87c03cf015784ab90128223c4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\Mappings.vb"
 
     ' Author:
     ' 
@@ -98,6 +98,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return out
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFields(Of T)(Optional explict As Boolean = True) As BindProperty(Of ColumnAttribute)()
             Return GetType(T).GetFields(Of ColumnAttribute)(Function(o) o.Name, explict:=explict)
         End Function

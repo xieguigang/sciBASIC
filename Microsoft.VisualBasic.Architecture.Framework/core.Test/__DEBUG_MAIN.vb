@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::463663be33f3bae710b60f3db2dab8ca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::ec889a4ba865898bec3dfe77a5165b74, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.Serialization
 Imports System.Text
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
@@ -37,6 +38,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.Extensions
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
@@ -160,7 +162,7 @@ Public Module __DEBUG_MAIN
 
 
         Dim nnnnn = New List(Of NamedValue(Of String)) From {
-            {"1", "1", "1"}, 
+            {"1", "1", "1"},
             {"22", "33"}
         }
 
@@ -287,19 +289,19 @@ Public Module __DEBUG_MAIN
         Call New Shell(PS1.Fedora12, AddressOf System.Console.WriteLine).Run()
 
 
-        Dim iii = SoftwareToolkits.LicenseMgr.Template
+        Dim iii = LicenseMgr.Template
         iii.RootDIR = "G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework"
 
 
-        Call SoftwareToolkits.LicenseMgr.Insert("G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb", iii)
+        Call LicenseMgr.Insert("G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb", iii)
 
-        Dim fff = SoftwareToolkits.LicenseMgr.Inserts(iii)
+        Dim fff = LicenseMgr.Inserts(iii)
 
         Call this.__DEBUG_ECHO
 
         Dim type As Type = GetType(dddddFile)
 
-        Call Scripting.Actives.DisplayType(type).__DEBUG_ECHO
+        Call Scripting.Activity.DisplayType(type).__DEBUG_ECHO
 
         Call Pause()
 

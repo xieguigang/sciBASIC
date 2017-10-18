@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d1f806a374e09dce5559c2fe68115e0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::d8c88f2814f68448a420af814bbfb1f9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\PropertyValue.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -59,7 +60,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' Value text
         ''' </summary>
         ''' <returns></returns>
-        <XmlText> Public Property Value As String Implements IPropertyValue.value
+        <XmlText> Public Property Value As String Implements IPropertyValue.Value
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -86,6 +87,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                 delimiter:=ASCII.TAB)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ImportsLines(data As IEnumerable(Of String), Optional delimiter As Char = ASCII.TAB) As PropertyValue()
             Return data _
                 .Select(Function(t) t.Split(delimiter)) _

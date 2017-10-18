@@ -243,3 +243,10 @@ pip-log.txt
 /vs_solutions/installer/Installer/Resources/installer.zip
 /vs_solutions/installer/output
 /vs_solutions/installer/bootstrap/Resources/Resources.zip
+/vs_solutions/installer/utils
+/vs_solutions/installer/sciBASIC_installer/Resources/Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml
+/vs_solutions/installer/sciBASIC_installer/Resources/Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.dll.config
+/vs_solutions/installer/sciBASIC_installer/Resources/Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.dll
+/vs_solutions/installer/sciBASIC_installer/Resources/Installer.xml
+/vs_solutions/installer/sciBASIC_installer/Resources/Installer.exe.config
+/vs_solutions/installer/sciBASIC_installer/Resources/Installer.exe

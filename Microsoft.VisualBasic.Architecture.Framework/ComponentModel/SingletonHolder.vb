@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eeaab3e083022b22b66c242ae8b58f58, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::923d8969616415108d9842f4375482e3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\SingletonHolder.vb"
 
     ' Author:
     ' 
@@ -64,6 +64,8 @@
 '
 '
 
+Imports System.Runtime.CompilerServices
+
 Namespace ComponentModel
 
     ''' <summary>
@@ -82,6 +84,7 @@ Namespace ComponentModel
         ''' </summary>
         ''' <returns></returns>
         Public Shared ReadOnly Property Instance() As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If _instance Is Nothing Then
                     _instance = New T()

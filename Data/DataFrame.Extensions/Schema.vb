@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c859083254bbfb76bf5f1c3779de8cde, ..\sciBASIC#\Data\DataFrame.Extensions\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::e73c4b755068bd74d895564785f129a0, ..\sciBASIC#\Data\DataFrame.Extensions\Schema.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.TypeSchemaProvider
 Imports Microsoft.VisualBasic.Language
@@ -73,6 +74,7 @@ Public Class Schema : Inherits BaseClass
         Return Me.GetJson
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function GetSchema(Of T As Class)() As Schema
         Return GetSchema(GetType(T))
     End Function
@@ -126,6 +128,7 @@ Public Class Schema : Inherits BaseClass
         Next
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Primitive(type As Type) As Boolean
         Return type.IsPrimitive OrElse
             type.Equals(GetType(String)) OrElse

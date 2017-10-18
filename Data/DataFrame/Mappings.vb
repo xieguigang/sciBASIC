@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a573b1b0f47f05096b70d881e63ef7f, ..\sciBASIC#\Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::d5e8f256ef0973bdf5de2b1c43ec6cc0, ..\sciBASIC#\Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
@@ -92,6 +93,7 @@ Public Class MappingsHelper
     ''' <param name="name$"></param>
     ''' <param name="value$"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function NamedValueMapsWrite(name$, value$, Optional description$ = NameOf(NamedValue(Of Object).Description)) As Dictionary(Of String, String)
         Return New Dictionary(Of String, String) From {
             {NameOf(NamedValue(Of Object).Name), name},

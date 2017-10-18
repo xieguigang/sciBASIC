@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::925ab2836b033903dfb2aa6612acd1cb, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\CSSTest.vb"
+﻿#Region "Microsoft.VisualBasic::c16494163aa4fd9a21e01b46f877ae18, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\CSSTest.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Module CSSTest
     End Sub
 
 End Module
-

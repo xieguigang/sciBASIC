@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd35f8bbdb7562e0b41fb633ea3406b0, ..\sciBASIC#\Data\DataFrame.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7885583d47adbac9a76d3ad150a25551, ..\sciBASIC#\Data\DataFrame.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -72,7 +72,7 @@ Public Module SchemasAPI
     ''' 假若目标类型也继承了<see cref="INamedValue"/>则会自动读取这个属性作为主键
     ''' </param>
     ''' <returns></returns>
-    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Summary(Of T As Class)(source As IEnumerable(Of T), Optional primary$ = Nothing) As EntityObject()
         Return Summary(source, GetType(T), primary)

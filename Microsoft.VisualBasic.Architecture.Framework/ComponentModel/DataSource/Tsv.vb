@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e52956b8a492c2dacb2f99c8ed141e5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Tsv.vb"
+﻿#Region "Microsoft.VisualBasic::c2e1068f6c75fb91a48c15ca92911c90, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Tsv.vb"
 
     ' Author:
     ' 
@@ -32,8 +32,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports RowTokens = System.Collections.Generic.IEnumerable(Of System.String)
 

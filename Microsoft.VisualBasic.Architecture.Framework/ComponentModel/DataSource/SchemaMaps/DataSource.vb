@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dab77db8e6717719c015a49a0ac25f16, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::cf6c69c089546a9b13bd408c2bc3211b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
@@ -41,6 +41,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' Initializes a new instance by name.
         ''' </summary>
         ''' <param name="FieldName">The name.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(FieldName As String)
             Call MyBase.New(FieldName)
         End Sub
@@ -138,6 +140,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadMapping(Of T)(
                       Optional ignores As String() = Nothing,
                       Optional mapsAll As Boolean = False) _
