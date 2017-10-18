@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.MIME.Yaml.Syntax
+Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
 
 Namespace Grammar
 

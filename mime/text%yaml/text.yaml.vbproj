@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CCD693C3-EE09-473A-8344-26E05B373394}</ProjectGuid>
+    <ProjectGuid>{FB637DE6-6BEB-4722-968A-F76DEB851DFC}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape</RootNamespace>
-    <AssemblyName>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.MIME.text.yaml</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.MIME.text.yaml</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +48,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -56,44 +56,38 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
+    <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>X:\nuget_publish\VB_APP\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <OutputPath>bin\Publish\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
+    <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Publish\</OutputPath>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
+    <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\GCModeller%28Release_X64%29\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -101,21 +95,19 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\GCModeller%28Release_X64%29\</OutputPath>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
+    <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\installer_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -123,33 +115,26 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\.vs\installer\</OutputPath>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.xml</DocumentationFile>
+    <OutputPath>..\..\..\.vs\installer\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
+    <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+      <HintPath>..\..\..\..\..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -163,15 +148,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3DBuilder\Project.vb" />
-    <Compile Include="3DBuilder\Extensions.vb" />
-    <Compile Include="3DBuilder\IO.vb" />
-    <Compile Include="3DBuilder\XML\XmlModel3D.vb" />
-    <Compile Include="3DBuilder\XML\models.vb" />
-    <Compile Include="3DBuilder\XML\resources.vb" />
-    <Compile Include="Vector.vb" />
-    <Compile Include="Graphics.vb" />
-    <Compile Include="Surface.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -187,9 +163,38 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="WPF\Canvas.xaml.vb">
-      <DependentUpon>Canvas.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ChompingMethod.vb" />
+    <Compile Include="ParserCustom.vb" />
+    <Compile Include="ParserInput.vb" />
+    <Compile Include="Serialization\Serialization.vb" />
+    <Compile Include="Syntax\BlockScalarModifier.vb" />
+    <Compile Include="Syntax\DataItem.vb" />
+    <Compile Include="Syntax\Directive.vb" />
+    <Compile Include="Syntax\GlobalTagPrefix.vb" />
+    <Compile Include="Syntax\LocalTagPrefix.vb" />
+    <Compile Include="Syntax\Mapping.vb" />
+    <Compile Include="Syntax\MappingEntry.vb" />
+    <Compile Include="Syntax\NamedTagHandle.vb" />
+    <Compile Include="Syntax\NodeProperty.vb" />
+    <Compile Include="Syntax\NonSpecificTag.vb" />
+    <Compile Include="Syntax\PrimaryTagHandle.vb" />
+    <Compile Include="Syntax\ReservedDirective.vb" />
+    <Compile Include="Syntax\Scalar.vb" />
+    <Compile Include="Syntax\SecondaryTagHandle.vb" />
+    <Compile Include="Syntax\Sequence.vb" />
+    <Compile Include="Syntax\ShorthandTag.vb" />
+    <Compile Include="Syntax\Tag.vb" />
+    <Compile Include="Syntax\TagDirective.vb" />
+    <Compile Include="Syntax\TagHandle.vb" />
+    <Compile Include="Syntax\TagPrefix.vb" />
+    <Compile Include="Syntax\VerbatimTag.vb" />
+    <Compile Include="Syntax\YamlDirective.vb" />
+    <Compile Include="Syntax\YamlDocument.vb" />
+    <Compile Include="Syntax\YamlStream.vb" />
+    <Compile Include="Syntax\YamlVersion.vb" />
+    <Compile Include="TextInput.vb" />
+    <Compile Include="TextParserCommon.vb" />
+    <Compile Include="YamlParser.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -209,38 +214,25 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
+    <None Include="YAML.PEG.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="YAML.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="YAML_Sample.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\mime\text%25html\mime-htmls.vbproj">
-      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>mime-htmls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\mime\text%25yaml\text.yaml.vbproj">
-      <Project>{fb637de6-6beb-4722-968a-f76deb851dfc}</Project>
-      <Name>yaml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
-      <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
-      <Name>Microsoft.VisualBasic.Imaging</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="WPF\Canvas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Isometric\" />
+    <Folder Include="YAML\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
