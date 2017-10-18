@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.JSON.Parser
+Imports Microsoft.VisualBasic.MIME.application.json.Parser
 
 Public Module Extensions
 
