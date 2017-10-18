@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("netCDF")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("Microsoft")>
-<Assembly: AssemblyProduct("netCDF")>
+<Assembly: AssemblyProduct("application/netCDF")>
 <Assembly: AssemblyCopyright("Copyright © Microsoft 2017")>
 <Assembly: AssemblyTrademark("")>
 

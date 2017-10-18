@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6FF317FF-1A81-4272-A894-BFBFFB202B41}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>netCDF</RootNamespace>
-    <AssemblyName>netCDF</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.MIME.application.netCDF</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.MIME.application.netCDF</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -18,7 +18,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>netCDF.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.netCDF.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -27,7 +27,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>netCDF.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.netCDF.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
