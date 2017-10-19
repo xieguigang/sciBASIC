@@ -34,11 +34,20 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 ''' <summary>
 ''' KeyValue pair data related extensions API.
 ''' </summary>
 Public Module KeyValuePairExtensions
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function XMLModel(data As IEnumerable(Of NamedValue(Of String))) As NamedValue()
+        Return data _
+            .Select(Function(n) New NamedValue With {.name = n.Name, .text = n.Value}) _
+            .ToArray
+    End Function
 
     <Extension>
     Public Iterator Function EnumerateTuples(Of T)(table As Dictionary(Of String, T)) As IEnumerable(Of (name As String, obj As T))
