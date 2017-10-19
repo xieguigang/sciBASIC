@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::02951e6a001cc791ee46a97d8f4d00dc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\KeyValuePair.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -157,6 +158,47 @@ Public Module KeyValuePairExtensions
             .Select(Function(x) x.Key) _
             .ToArray
     End Function
+
+#If FRAMEWORD_CORE Then
+
+    ''' <summary>
+    ''' Get a specific item value from the target collction data using its UniqueID property，
+    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="INamedValue">
+    ''' </see>类型的集合之中的某一个对象，请尽量先转换为字典对象，在使用该字典对象进行查找以提高代码效率，使用本方法的优点是可以选择忽略<paramref name="uid">
+    ''' </paramref>参数之中的大小写，以及对集合之中的存在相同的Key的这种情况的容忍)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="uid"></param>
+    ''' <param name="IgnoreCase"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <ExportAPI("Get.Item")>
+    <Extension> Public Function GetByKey(Of T As INamedValue)(
+                                       source As IEnumerable(Of T),
+                                          uid As String,
+                          Optional ignoreCase As StringComparison = StringComparison.Ordinal) _
+                                              As T
+
+        Dim find As T = LinqAPI.DefaultFirst(Of T) _
+ _
+            () <= From x As T
+                  In source
+                  Where String.Equals(uid, x.Key, ignoreCase)
+                  Select x
+
+        Return find
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function GetByKey(Of T As INamedValue)(
+                                       source As IEnumerable(Of T),
+                                          uid As String,
+                          Optional ignoreCase As Boolean = False) _
+                                              As T
+        Return source.GetByKey(uid, If(ignoreCase, StringComparison.OrdinalIgnoreCase, StringComparison.Ordinal))
+    End Function
+#End If
 
     ''' <summary>
     ''' Dictionary object contains the specific <see cref="NamedValue(Of T).Name"/>?

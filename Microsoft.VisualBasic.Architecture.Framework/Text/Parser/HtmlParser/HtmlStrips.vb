@@ -201,6 +201,31 @@ Namespace Text.HtmlParser
             Next
         End Function
 
+        Public Function GetSelectOptions(html) As NamedCollection(Of String)
+
+        End Function
+
+        Public Function GetSelectValue(html$) As NamedValue(Of String)
+            Dim select$ = r.Match(html, "<select.+?/select", RegexICSng).Value
+            Dim options$() = r.Matches([select], "<option.+?>", RegexICSng).ToArray
+
+            [select] = r.Match([select], "<select.*?>", RegexICSng).Value
+
+            Dim attrs = [select].TagAttributes.ToArray
+            Dim name$ = attrs.GetByKey("name", True).Value
+            Dim value$ = options _
+                .Where(Function(s) InStr(s, " selected", CompareMethod.Text) > 0) _
+                .FirstOrDefault _
+                .TagAttributes _
+                .GetByKey("value", True) _
+                .Value
+
+            Return New NamedValue(Of String) With {
+                .Name = name,
+                .Value = value
+            }
+        End Function
+
         ' <br><br/>
 
         Const LineFeed$ = "(<br>)|(<br\s*/>)"
