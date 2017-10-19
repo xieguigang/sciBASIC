@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::fe6afd5e90d8935728de35e2b4bd8f21, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\HtmlParser\HtmlStrips.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -75,7 +76,7 @@ Namespace Text.HtmlParser
         End Function
 
         ''' <summary>
-        ''' Removes the html tags from the text string.
+        ''' Removes the html tags from the text string.(这个函数会移除所有的html标签)
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
@@ -181,7 +182,7 @@ Namespace Text.HtmlParser
         Const LineFeed$ = "(<br>)|(<br\s*/>)"
 
         ''' <summary>
-        ''' 
+        ''' Split the html text into lines by tags: ``&lt;br>`` or ``&lt;br/>``
         ''' </summary>
         ''' <param name="html$"></param>
         ''' <returns></returns>
@@ -243,7 +244,18 @@ Namespace Text.HtmlParser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function RemovesScriptBlock(html$) As String
-            Return r.Replace(html, "<script.*?>.*?</script>", "", RegexICSng)
+            ' <script>
+            Return html.RemoveTags("script")
+        End Function
+
+        <Extension>
+        Public Function RemoveTags(html$, ParamArray tags$()) As String
+            For Each tag As String In tags
+                html = r.Replace(html, $"<{tag}.*?>.*?</{tag}>", "", RegexICSng)
+                html = r.Replace(html, $"<{tag}.*?>", "", RegexICSng)
+            Next
+
+            Return html
         End Function
     End Module
 End Namespace
