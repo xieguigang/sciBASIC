@@ -177,6 +177,30 @@ Namespace Text.HtmlParser
             Return html.GetStackValue(">", "<")
         End Function
 
+        <Extension>
+        Public Function GetInput(html$) As NamedValue(Of String)
+            Dim input$ = r.Match(html, "<input.+?>", RegexICSng).Value
+            Dim attrs = input.TagAttributes.ToArray
+            Dim name$ = attrs.Where(Function(a) a.Name.TextEquals("name")).FirstOrDefault.Value
+            Dim value$ = attrs.Where(Function(a) a.Name.TextEquals("value")).FirstOrDefault.Value
+            Dim title$ = attrs.Where(Function(a) a.Name.TextEquals("title")).FirstOrDefault.Value
+
+            Return New NamedValue(Of String) With {
+                .Name = name,
+                .Value = value,
+                .Description = title
+            }
+        End Function
+
+        <Extension>
+        Public Iterator Function GetInputGroup(html$) As IEnumerable(Of NamedValue(Of String))
+            Dim inputs$() = r.Matches(html, "<input.+?>", RegexICSng).ToArray
+
+            For Each input As String In inputs
+                Yield input.GetInput
+            Next
+        End Function
+
         ' <br><br/>
 
         Const LineFeed$ = "(<br>)|(<br\s*/>)"
