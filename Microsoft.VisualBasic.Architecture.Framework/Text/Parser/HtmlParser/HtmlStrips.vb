@@ -226,6 +226,16 @@ Namespace Text.HtmlParser
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetSelectInputGroup(html$) As NamedValue(Of String)()
+            Return r _
+                .Matches(html, "<select.+?/select", RegexICSng) _
+                .ToArray _
+                .Select(AddressOf GetSelectValue) _
+                .ToArray
+        End Function
+
         ' <br><br/>
 
         Const LineFeed$ = "(<br>)|(<br\s*/>)"
