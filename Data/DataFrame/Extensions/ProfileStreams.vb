@@ -48,7 +48,7 @@ Public Module ProfileStreams
     <Extension>
     Public Function WriteProfiles(Of T As {New, IProfile})(x As T, path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean
         Dim buf As ProfileTable() = x.GenerateProfiles
-        Return buf.SaveTo(path, encoding.CodePage)
+        Return buf.SaveTo(path, encoding:=encoding.CodePage)
     End Function
 
     <Extension>
