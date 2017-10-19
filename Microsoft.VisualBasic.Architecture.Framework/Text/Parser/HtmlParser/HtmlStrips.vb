@@ -106,7 +106,6 @@ Namespace Text.HtmlParser
         '''
         <ExportAPI("Html.Href")>
         <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")> html$) As String
-
             If String.IsNullOrEmpty(html) Then
                 Return ""
             End If
@@ -122,19 +121,22 @@ Namespace Text.HtmlParser
             End If
         End Function
 
-        Public Const IMAGE_SOURCE As String = "<img.+?src=.+?>"
+#Region "Parsing image source url from the img html tag."
+
+        Public Const imgHtmlTagPattern As String = "<img.+?src=.+?>"
 
         ''' <summary>
         ''' Parsing image source url from the img html tag.
         ''' </summary>
         ''' <param name="img"></param>
         ''' <returns></returns>
-        <Extension> Public Function ImageSource(img As String) As String
+        <Extension> Public Function src(img$) As String
             If String.IsNullOrEmpty(img) Then
                 Return ""
             Else
                 img = Regex.Match(img, "src="".+?""", RegexOptions.IgnoreCase).Value
             End If
+
             If String.IsNullOrEmpty(img) Then
                 Return ""
             Else
@@ -143,6 +145,18 @@ Namespace Text.HtmlParser
                 Return img
             End If
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function src(img As (tag$, attrs As NamedValue(Of String)())) As String
+            Return img.attrs.GetByKey("src", True).Value
+        End Function
+
+        <Extension>
+        Public Function img(html$) As (tag$, attrs As NamedValue(Of String)())
+            Return ("img", r.Match(html, imgHtmlTagPattern, RegexICSng).Value.TagAttributes.ToArray)
+        End Function
+#End Region
 
         ''' <summary>
         ''' 有些时候后面可能会存在多余的vbCrLf，则使用这个函数去除
@@ -156,6 +170,7 @@ Namespace Text.HtmlParser
 
             Dim l As Integer = Len(value)
             Dim i As Integer = value.LastIndexOf(vbCrLf)
+
             If i = l - 2 Then
                 Return Mid(value, 1, l - 2)
             Else
@@ -171,7 +186,7 @@ Namespace Text.HtmlParser
         ''' <param name="html"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
         <Extension> Public Function GetValue(html As String) As String
             Return html.GetStackValue(">", "<")
@@ -181,9 +196,9 @@ Namespace Text.HtmlParser
         Public Function GetInput(html$) As NamedValue(Of String)
             Dim input$ = r.Match(html, "<input.+?>", RegexICSng).Value
             Dim attrs = input.TagAttributes.ToArray
-            Dim name$ = attrs.Where(Function(a) a.Name.TextEquals("name")).FirstOrDefault.Value
-            Dim value$ = attrs.Where(Function(a) a.Name.TextEquals("value")).FirstOrDefault.Value
-            Dim title$ = attrs.Where(Function(a) a.Name.TextEquals("title")).FirstOrDefault.Value
+            Dim name$ = attrs.GetByKey("name", True).Value
+            Dim value$ = attrs.GetByKey("value", True).Value
+            Dim title$ = attrs.GetByKey("title", True).Value
 
             Return New NamedValue(Of String) With {
                 .Name = name,
@@ -260,7 +275,14 @@ Namespace Text.HtmlParser
 
         <Extension>
         Private Function stripTag(ByRef tag$) As String
-            tag = tag.Trim("<"c).Trim(">"c).Trim("/"c)
+            If tag Is Nothing Then
+                tag = ""
+            Else
+                tag = tag _
+                    .Trim("<"c) _
+                    .Trim(">"c) _
+                    .Trim("/"c)
+            End If
             Return tag
         End Function
 
@@ -280,7 +302,7 @@ Namespace Text.HtmlParser
                 name = list(i)
                 p = InStr(tag, name)
                 s = Mid(tag, p)
-                s = CType(Regex.Split(s, "\S+="), IEnumerable(Of String)).ElementAtOrDefault(1) ' value
+                s = Regex.Split(s, "\S+=").ElementAtOrDefault(1) ' value
 
                 name = name.Split("="c).First
 

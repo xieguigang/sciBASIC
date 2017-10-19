@@ -184,7 +184,7 @@ Public Module KeyValuePairExtensions
  _
             () <= From x As T
                   In source
-                  Where String.Equals(uid, x.Key, ignoreCase)
+                  Where Not String.Equals(uid, x.Key, ignoreCase)
                   Select x
 
         Return find
