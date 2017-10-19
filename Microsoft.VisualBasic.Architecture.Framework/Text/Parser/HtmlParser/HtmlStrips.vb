@@ -223,6 +223,8 @@ Namespace Text.HtmlParser
 
         End Function
 
+        Const selected$ = " " & NameOf(selected)
+
         Public Function GetSelectValue(html$) As NamedValue(Of String)
             Dim select$ = r.Match(html, "<select.+?/select", RegexICSng).Value
             Dim options$() = r.Matches([select], "<option.+?>", RegexICSng).ToArray
@@ -232,8 +234,9 @@ Namespace Text.HtmlParser
             Dim attrs = [select].TagAttributes.ToArray
             Dim name$ = attrs.GetByKey("name", True).Value
             Dim value$ = options _
-                .Where(Function(s) InStr(s, " selected", CompareMethod.Text) > 0) _
+                .Where(Function(s) InStr(s, selected, CompareMethod.Text) > 0) _
                 .FirstOrDefault _
+               ?.Replace(selected, "") _
                 .TagAttributes _
                 .GetByKey("value", True) _
                 .Value
