@@ -256,6 +256,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Description.vb" />
     <Compile Include="DCMI.vb" />
     <Compile Include="DataTypes.vb" />
     <Compile Include="RDFWriter.vb" />
