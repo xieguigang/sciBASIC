@@ -35,7 +35,7 @@ Namespace Parser
     ''' <summary>
     ''' Dictionary/Array in javascript
     ''' </summary>
-    Public Class JsonObject : Inherits JsonElement
+    Public Class JsonObject : Inherits JsonModel
         Implements IEnumerable(Of NamedValue(Of JsonElement))
 
         Dim array As New Dictionary(Of String, JsonElement)
