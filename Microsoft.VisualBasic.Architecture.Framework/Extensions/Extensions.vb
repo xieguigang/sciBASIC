@@ -688,7 +688,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As IEnumerable(Of T())
-        Dim buf As T() = source.ToArray
+        Dim buf As T() = source.SafeQuery.ToArray
         Dim n As Integer = buf.Length
         Dim count As Integer
 
