@@ -31,6 +31,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.HtmlParser
 
@@ -232,6 +233,17 @@ Namespace Text.HtmlParser
                     .Value = s
                 }
             Next
+        End Function
+
+        ''' <summary>
+        ''' 将<paramref name="html"/>中的``&lt;script>&lt;/script>``代码块删除
+        ''' </summary>
+        ''' <param name="html$"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesScriptBlock(html$) As String
+            Return r.Replace(html, "<script.*?>.*?</script>", "", RegexICSng)
         End Function
     End Module
 End Namespace
