@@ -194,7 +194,10 @@ Namespace Text.HtmlParser
 
         <Extension>
         Public Function GetInput(html$) As NamedValue(Of String)
-            Dim input$ = r.Match(html, "<input.+?>", RegexICSng).Value
+            Dim input$ = r.Match(html, "<input.+?>", RegexICSng) _
+                .Value _
+                .Trim("<"c) _
+                .StripHTMLTags(stripBlank:=True)
             Dim attrs = input.TagAttributes.ToArray
             Dim name$ = attrs.GetByKey("name", True).Value
             Dim value$ = attrs.GetByKey("value", True).Value
