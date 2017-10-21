@@ -786,7 +786,7 @@
     <Compile Include="Extensions\Reflection\Delegate\DelegateFactory.vb" />
     <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />
     <Compile Include="Extensions\ValueTypes\DateTimeHelper.vb" />
-    <Compile Include="Extensions\StringHelpers\Wildcards.vb" />
+    <Compile Include="Text\StringSimilarity\Wildcards.vb" />
     <Compile Include="Extensions\WebServices\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
     <Compile Include="Language\lang\C\RandomNumbers.vb" />
