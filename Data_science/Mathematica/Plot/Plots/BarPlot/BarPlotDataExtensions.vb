@@ -217,5 +217,34 @@ Namespace BarPlot
 
             Return data
         End Function
+
+        <Extension>
+        Public Function GroupBy(data As BarDataGroup, groups As Dictionary(Of String, String())) As BarDataGroup
+            If groups.IsNullOrEmpty Then
+                Return data
+            Else
+                Dim groupSamples = data.Samples.ToDictionary()
+                Dim groupData = groups _
+                    .Select(Function(gk)
+                                Dim subsets = groupSamples.Takes(gk.Value)
+                                Dim serials#() = subsets(Scan0) _
+                                    .data _
+                                    .Sequence _
+                                    .Select(Function(i) subsets.SerialDatas(i).Values.Sum) _
+                                    .ToArray
+
+                                Return New BarDataSample With {
+                                    .Tag = gk.Key,
+                                    .data = serials
+                                }
+                            End Function) _
+                    .ToArray
+
+                Return New BarDataGroup With {
+                    .Samples = groupData,
+                    .Serials = data.Serials
+                }
+            End If
+        End Function
     End Module
 End Namespace

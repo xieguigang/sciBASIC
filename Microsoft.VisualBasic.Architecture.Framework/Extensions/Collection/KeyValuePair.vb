@@ -43,6 +43,22 @@ Public Module KeyValuePairExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
+    Public Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional nonExitsNULL As Boolean = True) As T()
+        If nonExitsNULL Then
+            Return keys _
+                .Select(Function(key)
+                            Return If(table.ContainsKey(key), table(key), Nothing)
+                        End Function) _
+                .ToArray
+        Else
+            Return keys _
+                .Select(Function(key) table(key)) _
+                .ToArray
+        End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function XMLModel(data As IEnumerable(Of NamedValue(Of String))) As NamedValue()
         Return data _
             .Select(Function(n) New NamedValue With {.name = n.Name, .text = n.Value}) _
