@@ -48,7 +48,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>XMLFile_828.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -256,8 +257,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Description.vb" />
-    <Compile Include="DCMI.vb" />
+    <Compile Include="DataModel\Bag.vb" />
+    <Compile Include="DataModel\Description.vb" />
+    <Compile Include="DataModel\DCMI.vb" />
     <Compile Include="DataTypes.vb" />
     <Compile Include="RDFWriter.vb" />
     <Compile Include="RDFEntity.vb" />
@@ -303,9 +305,6 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="XMLFile_828.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
