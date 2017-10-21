@@ -44,6 +44,20 @@ Namespace BarPlot
 
     Public Module BarPlotDataExtensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SerialDatas(groups As IEnumerable(Of BarDataSample), serial%, Optional name$ = Nothing) As NamedValue(Of Double)()
+            Return groups _
+                .Select(Function(g)
+                            Return New NamedValue(Of Double) With {
+                                .Name = g.Tag,
+                                .Description = name,
+                                .Value = g.data(serial)
+                            }
+                        End Function) _
+                .ToArray
+        End Function
+
         Public Function LoadDataSet(path$,
                                     Optional schema$ = "scibasic.category31()",
                                     Optional groupByColumn! = yes,
