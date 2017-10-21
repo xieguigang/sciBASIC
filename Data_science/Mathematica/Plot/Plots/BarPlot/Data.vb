@@ -87,6 +87,14 @@ Namespace BarPlot
         End Function
 
         ''' <summary>
+        ''' 按照百分比降序排序
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Desc() As BarDataGroup
+
+        End Function
+
+        ''' <summary>
         ''' 如果系列在这里面，则会一次排在前面，否则任然是按照原始的顺序排布
         ''' </summary>
         ''' <param name="orders$"></param>
@@ -107,6 +115,7 @@ Namespace BarPlot
                 oldOrders.Remove(name)
             Next
 
+            ' 可能还会剩下一部分的对象是没有在orders列表之中的，则将他们补齐
             newOrders += oldOrders _
                 .Select(Function(x)
                             Return New SeqValue(Of String) With {
