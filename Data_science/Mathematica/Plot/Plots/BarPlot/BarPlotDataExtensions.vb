@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::85f30c908677ee90c13577b54065c714, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\BarPlotDataExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -43,12 +44,26 @@ Namespace BarPlot
 
     Public Module BarPlotDataExtensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SerialDatas(groups As IEnumerable(Of BarDataSample), serial%, Optional name$ = Nothing) As NamedValue(Of Double)()
+            Return groups _
+                .Select(Function(g)
+                            Return New NamedValue(Of Double) With {
+                                .Name = g.Tag,
+                                .Description = name,
+                                .Value = g.data(serial)
+                            }
+                        End Function) _
+                .ToArray
+        End Function
+
         Public Function LoadDataSet(path$,
                                     Optional schema$ = "scibasic.category31()",
                                     Optional groupByColumn! = yes,
                                     Optional tsv! = no) As BarDataGroup
 
-            Dim csv As File = File.Load(path)
+            Dim csv As File = path.LoadTable
             Dim samples As New List(Of BarDataSample)
             Dim serialsName$()
             Dim matrix As IEnumerable(Of String())
@@ -201,6 +216,35 @@ Namespace BarPlot
             Next
 
             Return data
+        End Function
+
+        <Extension>
+        Public Function GroupBy(data As BarDataGroup, groups As Dictionary(Of String, String())) As BarDataGroup
+            If groups.IsNullOrEmpty Then
+                Return data
+            Else
+                Dim groupSamples = data.Samples.ToDictionary()
+                Dim groupData = groups _
+                    .Select(Function(gk)
+                                Dim subsets = groupSamples.Takes(gk.Value)
+                                Dim serials#() = subsets(Scan0) _
+                                    .data _
+                                    .Sequence _
+                                    .Select(Function(i) subsets.SerialDatas(i).Values.Sum) _
+                                    .ToArray
+
+                                Return New BarDataSample With {
+                                    .Tag = gk.Key,
+                                    .data = serials
+                                }
+                            End Function) _
+                    .ToArray
+
+                Return New BarDataGroup With {
+                    .Samples = groupData,
+                    .Serials = data.Serials
+                }
+            End If
         End Function
     End Module
 End Namespace

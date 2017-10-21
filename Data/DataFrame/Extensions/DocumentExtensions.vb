@@ -270,4 +270,37 @@ Public Module DocumentExtensions
     Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As IO.File
         Return IO.File.Load(path, encoding.CodePage)
     End Function
+
+    ''' <summary>
+    ''' 这个函数会自动判断对象的格式为tsv还是csv文件格式
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 采样前几行的数据，假若是csv文件的话，则逗号出现的频率要高于tab分隔符，反之亦然
+    ''' </remarks>
+    <Extension>
+    Public Function LoadTable(path$, Optional encoding As Encodings = Encodings.UTF8, Optional sampling% = 20) As IO.File
+        Dim csv%() = New Integer(sampling) {}
+        Dim tsv%() = New Integer(sampling) {}
+        Dim i%
+
+        For Each line As String In path.IterateAllLines(encoding)
+            If i < sampling Then
+                csv(i) = line.Count(","c)
+                tsv(i) = line.Count(ASCII.TAB)
+
+                i += 1
+            Else
+                Exit For
+            End If
+        Next
+
+        If tsv.Average <= csv.Average Then
+            Return IO.File.Load(path, encoding.CodePage)
+        Else
+            Return IO.File.LoadTsv(path, encoding)
+        End If
+    End Function
 End Module

@@ -1,36 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::fe6afd5e90d8935728de35e2b4bd8f21, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\HtmlParser\HtmlStrips.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.HtmlParser
 
@@ -74,7 +76,7 @@ Namespace Text.HtmlParser
         End Function
 
         ''' <summary>
-        ''' Removes the html tags from the text string.
+        ''' Removes the html tags from the text string.(这个函数会移除所有的html标签)
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
@@ -104,7 +106,6 @@ Namespace Text.HtmlParser
         '''
         <ExportAPI("Html.Href")>
         <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")> html$) As String
-
             If String.IsNullOrEmpty(html) Then
                 Return ""
             End If
@@ -120,19 +121,22 @@ Namespace Text.HtmlParser
             End If
         End Function
 
-        Public Const IMAGE_SOURCE As String = "<img.+?src=.+?>"
+#Region "Parsing image source url from the img html tag."
+
+        Public Const imgHtmlTagPattern As String = "<img.+?src=.+?>"
 
         ''' <summary>
         ''' Parsing image source url from the img html tag.
         ''' </summary>
         ''' <param name="img"></param>
         ''' <returns></returns>
-        <Extension> Public Function ImageSource(img As String) As String
+        <Extension> Public Function src(img$) As String
             If String.IsNullOrEmpty(img) Then
                 Return ""
             Else
                 img = Regex.Match(img, "src="".+?""", RegexOptions.IgnoreCase).Value
             End If
+
             If String.IsNullOrEmpty(img) Then
                 Return ""
             Else
@@ -141,6 +145,18 @@ Namespace Text.HtmlParser
                 Return img
             End If
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function src(img As (tag$, attrs As NamedValue(Of String)())) As String
+            Return img.attrs.GetByKey("src", True).Value
+        End Function
+
+        <Extension>
+        Public Function img(html$) As (tag$, attrs As NamedValue(Of String)())
+            Return ("img", r.Match(html, imgHtmlTagPattern, RegexICSng).Value.TagAttributes.ToArray)
+        End Function
+#End Region
 
         ''' <summary>
         ''' 有些时候后面可能会存在多余的vbCrLf，则使用这个函数去除
@@ -154,6 +170,7 @@ Namespace Text.HtmlParser
 
             Dim l As Integer = Len(value)
             Dim i As Integer = value.LastIndexOf(vbCrLf)
+
             If i = l - 2 Then
                 Return Mid(value, 1, l - 2)
             Else
@@ -169,10 +186,75 @@ Namespace Text.HtmlParser
         ''' <param name="html"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
         <Extension> Public Function GetValue(html As String) As String
             Return html.GetStackValue(">", "<")
+        End Function
+
+        <Extension>
+        Public Function GetInput(html$) As NamedValue(Of String)
+            Dim input$ = r.Match(html, "<input.+?>", RegexICSng) _
+                .Value _
+                .Trim("<"c) _
+                .StripHTMLTags(stripBlank:=True)
+            Dim attrs = input.TagAttributes.ToArray
+            Dim name$ = attrs.GetByKey("name", True).Value
+            Dim value$ = attrs.GetByKey("value", True).Value
+            Dim title$ = attrs.GetByKey("title", True).Value
+
+            Return New NamedValue(Of String) With {
+                .Name = name,
+                .Value = value,
+                .Description = title
+            }
+        End Function
+
+        <Extension>
+        Public Iterator Function GetInputGroup(html$) As IEnumerable(Of NamedValue(Of String))
+            Dim inputs$() = r.Matches(html, "<input.+?>", RegexICSng).ToArray
+
+            For Each input As String In inputs
+                Yield input.GetInput
+            Next
+        End Function
+
+        Public Function GetSelectOptions(html) As NamedCollection(Of String)
+
+        End Function
+
+        Const selected$ = " " & NameOf(selected)
+
+        Public Function GetSelectValue(html$) As NamedValue(Of String)
+            Dim select$ = r.Match(html, "<select.+?/select", RegexICSng).Value
+            Dim options$() = r.Matches([select], "<option.+?>", RegexICSng).ToArray
+
+            [select] = r.Match([select], "<select.*?>", RegexICSng).Value
+
+            Dim attrs = [select].TagAttributes.ToArray
+            Dim name$ = attrs.GetByKey("name", True).Value
+            Dim value$ = options _
+                .Where(Function(s) InStr(s, selected, CompareMethod.Text) > 0) _
+                .FirstOrDefault _
+               ?.Replace(selected, "") _
+                .TagAttributes _
+                .GetByKey("value", True) _
+                .Value
+
+            Return New NamedValue(Of String) With {
+                .Name = name,
+                .Value = value
+            }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetSelectInputGroup(html$) As NamedValue(Of String)()
+            Return r _
+                .Matches(html, "<select.+?/select", RegexICSng) _
+                .ToArray _
+                .Select(AddressOf GetSelectValue) _
+                .ToArray
         End Function
 
         ' <br><br/>
@@ -180,7 +262,7 @@ Namespace Text.HtmlParser
         Const LineFeed$ = "(<br>)|(<br\s*/>)"
 
         ''' <summary>
-        ''' 
+        ''' Split the html text into lines by tags: ``&lt;br>`` or ``&lt;br/>``
         ''' </summary>
         ''' <param name="html$"></param>
         ''' <returns></returns>
@@ -199,7 +281,14 @@ Namespace Text.HtmlParser
 
         <Extension>
         Private Function stripTag(ByRef tag$) As String
-            tag = tag.Trim("<"c).Trim(">"c).Trim("/"c)
+            If tag Is Nothing Then
+                tag = ""
+            Else
+                tag = tag _
+                    .Trim("<"c) _
+                    .Trim(">"c) _
+                    .Trim("/"c)
+            End If
             Return tag
         End Function
 
@@ -219,7 +308,7 @@ Namespace Text.HtmlParser
                 name = list(i)
                 p = InStr(tag, name)
                 s = Mid(tag, p)
-                s = CType(Regex.Split(s, "\S+="), IEnumerable(Of String)).ElementAtOrDefault(1) ' value
+                s = Regex.Split(s, "\S+=").ElementAtOrDefault(1) ' value
 
                 name = name.Split("="c).First
 
@@ -232,6 +321,28 @@ Namespace Text.HtmlParser
                     .Value = s
                 }
             Next
+        End Function
+
+        ''' <summary>
+        ''' 将<paramref name="html"/>中的``&lt;script>&lt;/script>``代码块删除
+        ''' </summary>
+        ''' <param name="html$"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesScriptBlock(html$) As String
+            ' <script>
+            Return html.RemoveTags("script")
+        End Function
+
+        <Extension>
+        Public Function RemoveTags(html$, ParamArray tags$()) As String
+            For Each tag As String In tags
+                html = r.Replace(html, $"<{tag}.*?>.*?</{tag}>", "", RegexICSng)
+                html = r.Replace(html, $"<{tag}.*?>", "", RegexICSng)
+            Next
+
+            Return html
         End Function
     End Module
 End Namespace

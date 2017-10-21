@@ -688,7 +688,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As IEnumerable(Of T())
-        Dim buf As T() = source.ToArray
+        Dim buf As T() = source.SafeQuery.ToArray
         Dim n As Integer = buf.Length
         Dim count As Integer
 
@@ -1525,36 +1525,6 @@ Public Module Extensions
         Dim Random As Integer() = source.Shuffles
         Return Random
     End Function
-
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Get a specific item value from the target collction data using its UniqueID property，
-    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="INamedValue">
-    ''' </see>类型的集合之中的某一个对象，请尽量先转换为字典对象，在使用该字典对象进行查找以提高代码效率，使用本方法的优点是可以选择忽略<paramref name="uid">
-    ''' </paramref>参数之中的大小写，以及对集合之中的存在相同的Key的这种情况的容忍)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="uid"></param>
-    ''' <param name="IgnoreCase"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("Get.Item")>
-    <Extension> Public Function GetById(Of T As INamedValue)(
-                                      source As IEnumerable(Of T),
-                                         uid As String,
-                         Optional IgnoreCase As StringComparison = StringComparison.Ordinal) _
-                                             As T
-
-        Dim find As T = LinqAPI.DefaultFirst(Of T) <=
-            From x As T
-            In source
-            Where String.Equals(uid, x.Key, IgnoreCase)
-            Select x
-
-        Return find
-    End Function
-#End If
 
 #If FRAMEWORD_CORE Then
     ''' <summary>

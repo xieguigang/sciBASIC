@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::69fc37a6248c9fe63fc7a9a93f6d349a, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Data.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
@@ -39,6 +40,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BarPlot
 
+    ''' <summary>
+    ''' Named value of double vector.
+    ''' </summary>
     Public Class BarDataSample : Implements INamedValue
 
         ''' <summary>
@@ -87,6 +91,33 @@ Namespace BarPlot
         End Function
 
         ''' <summary>
+        ''' 按照百分比降序排序
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Desc() As BarDataGroup
+            ' 通过平均值生成orders
+            Return Reorder(sortInternal(AddressOf Enumerable.Average, desc:=True))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function sortInternal(method As Func(Of IEnumerable(Of Double), Double), desc As Boolean) As String()
+            Return Serials _
+                .SeqIterator _
+                .Select(Function(s)
+                            Dim name$ = s.value.Name
+                            Dim samples = Me.Samples.SerialDatas(s, name)
+                            Return (avg:=method(samples.Values), name:=name)
+                        End Function) _
+                .Sort(Function(t) t.avg, desc:=desc) _
+                .Select(Function(t) t.name) _
+                .ToArray
+        End Function
+
+        Public Function Asc() As BarDataGroup
+            Return Reorder(sortInternal(AddressOf Enumerable.Average, desc:=False))
+        End Function
+
+        ''' <summary>
         ''' 如果系列在这里面，则会一次排在前面，否则任然是按照原始的顺序排布
         ''' </summary>
         ''' <param name="orders$"></param>
@@ -107,6 +138,7 @@ Namespace BarPlot
                 oldOrders.Remove(name)
             Next
 
+            ' 可能还会剩下一部分的对象是没有在orders列表之中的，则将他们补齐
             newOrders += oldOrders _
                 .Select(Function(x)
                             Return New SeqValue(Of String) With {
