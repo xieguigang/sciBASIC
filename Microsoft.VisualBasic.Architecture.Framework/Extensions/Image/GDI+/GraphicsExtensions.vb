@@ -52,6 +52,22 @@ Namespace Imaging
                   Url:="http://gcmodeller.org")>
     Public Module GraphicsExtensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SizeF(size As Size) As SizeF
+            Return New SizeF(size.Width, size.Height)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function ToPoint(pf As PointF) As Point
+            Return New Point(pf.X, pf.Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
+            Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
+        End Function
+
         <Extension> Public Function SaveIcon(ico As Icon, path$) As Boolean
             Call path.ParentPath.MkDIR
 

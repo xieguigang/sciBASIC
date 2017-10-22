@@ -234,16 +234,6 @@ Namespace Imaging.Math2D
             Return New RectangleF(topLeft, size)
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ToPoint(pf As PointF) As Point
-            Return New Point(pf.X, pf.Y)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
-            Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
-        End Function
-
         ''' <summary>
         ''' Gets the center location of the region rectangle.
         ''' </summary>
@@ -326,12 +316,6 @@ Namespace Imaging.Math2D
             Return pts _
                 .Select(Function(pt) pt.PointF) _
                 .CentralOffset(frameSize.SizeF)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function SizeF(size As Size) As SizeF
-            Return New SizeF(size.Width, size.Height)
         End Function
 
         ''' <summary>
