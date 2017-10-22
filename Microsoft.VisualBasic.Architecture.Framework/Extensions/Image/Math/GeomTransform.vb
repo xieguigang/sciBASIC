@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports sys = System.Math
 
-Namespace Imaging
+Namespace Imaging.Math2D
 
     <Package("GDI.Transform")> Public Module GeomTransform
 
