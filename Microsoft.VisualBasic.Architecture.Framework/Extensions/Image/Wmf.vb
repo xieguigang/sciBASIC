@@ -32,7 +32,7 @@ Imports System.Drawing.Imaging
 
 Namespace Imaging
 
-    Public Class Wmf : Implements System.IDisposable
+    Public Class Wmf : Implements IDisposable
 
         ReadOnly curMetafile As Metafile
         ReadOnly gSource As Graphics
@@ -76,6 +76,7 @@ Namespace Imaging
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
                 ' TODO: set large fields to null.
             End If
+
             Me.disposedValue = True
         End Sub
 
