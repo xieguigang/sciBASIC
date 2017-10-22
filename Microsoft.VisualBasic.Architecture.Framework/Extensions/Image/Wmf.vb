@@ -32,7 +32,7 @@ Imports System.Drawing.Imaging
 
 Namespace Imaging
 
-    Public Class Wmf : Inherits Graphics2D
+    Public Class Wmf : Inherits GDICanvas
         Implements IDisposable
 
         ReadOnly curMetafile As Metafile
@@ -44,18 +44,21 @@ Namespace Imaging
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property FilePath As String
+        Public Overrides ReadOnly Property Size As Size
 
         Sub New(size As Size, save$, Optional backgroundColor$ = NameOf(Color.Transparent))
-            Call MyBase.New(size, backgroundColor.TranslateColor)
-
             Dim bitmap As New Bitmap(size.Width, size.Height)
+
             gSource = Graphics.FromImage(bitmap)
+            gSource.Clear(backgroundColor.TranslateColor)
+
             hdc = gSource.GetHdc()
+            size = bitmap.Size
             curMetafile = New Metafile(save, hdc)
             Graphics = Graphics.FromImage(curMetafile)
             Graphics.SmoothingMode = SmoothingMode.HighQuality
 
-            Me.FilePath = save
+            FilePath = save
         End Sub
 
         Private Sub __release()
