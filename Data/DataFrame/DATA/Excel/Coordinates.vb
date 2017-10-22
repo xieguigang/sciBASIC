@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::cec6d930ae488206ead5b8daa45913ae, ..\sciBASIC#\Data\DataFrame\DATA\Excel\Coordinates.vb"
+﻿#Region "Microsoft.VisualBasic::bdca02441610c315bcd242daa7f51611, ..\sciBASIC#\Data\DataFrame\DATA\Excel\Coordinates.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -38,6 +38,7 @@ Namespace Excel
 
     Public Module Coordinates
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CellValue(data As IO.File, c As String) As String
             With Coordinates.Index(c)
@@ -64,6 +65,7 @@ Namespace Excel
             Return New Point(X, Y.YValue)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ColumnIndex(i%) As String
             Return i.TranslateDecimal(alphas:=AZ.Objects)
         End Function

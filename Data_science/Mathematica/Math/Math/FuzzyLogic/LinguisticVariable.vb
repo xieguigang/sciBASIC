@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5c7daa97c41b2829d80608255415021, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\LinguisticVariable.vb"
+﻿#Region "Microsoft.VisualBasic::681a76c1690369ebf0f0cb2e3c36312d, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\LinguisticVariable.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@ Namespace Logical.FuzzyLogic
     ''' <summary>
     ''' Represents a linguistic variable.
     ''' </summary>
-    Public Class LinguisticVariable : Inherits ClassObject
+    Public Class LinguisticVariable : Inherits BaseClass
         Implements INamedValue
 
 #Region "Constructors"

@@ -314,11 +314,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
-    <Compile Include="Algebra\Vector\NamedVector.vb" />
-    <Compile Include="Factor.vb" />
+    <Compile Include="Scripting\Factors\NamedVector.vb" />
+    <Compile Include="Scripting\Factors\FactorVector.vb" />
+    <Compile Include="Scripting\Factors\Factor.vb" />
     <Compile Include="Algebra\Vector\NumericsVector.vb" />
     <Compile Include="Quantile\Selector.vb" />
     <Compile Include="Quantile\Quartile.vb" />
+    <Compile Include="Scripting\Factors\Extensions.vb" />
     <Compile Include="UncheckInteger.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />

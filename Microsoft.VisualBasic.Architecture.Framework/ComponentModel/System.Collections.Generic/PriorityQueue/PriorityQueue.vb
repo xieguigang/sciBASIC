@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c91af79bc7c5eac144d7fba8a94a764, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\PriorityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::322ede92a24597e1cb6ce8135f668c82, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
 
     ' Author:
     ' 
@@ -64,6 +64,7 @@
 '
 '
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Collection
@@ -91,6 +92,7 @@ Namespace ComponentModel.Collection
             list.Sort()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub Enqueue(queueItem As T)
             Call list.Add(queueItem)
             Call list.Sort()
@@ -100,18 +102,22 @@ Namespace ComponentModel.Collection
         ''' Add without sort
         ''' </summary>
         ''' <param name="x"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(x As T)
             Call list.Add(x)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Sort()
             Call list.Sort()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub Clear()
             Call list.Clear()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub Remove(o As T)
             Call list.Remove(o)
         End Sub
@@ -135,6 +141,7 @@ Namespace ComponentModel.Collection
             Return $"Queue {list.Count} items, 1st_item:={Peek.GetJson}"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function Contains(queueItem As T) As Boolean
             Return list.Contains(queueItem)
         End Function

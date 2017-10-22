@@ -1,32 +1,33 @@
-﻿#Region "Microsoft.VisualBasic::b71564bccbef4d0eef7707425ec36f12, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
+﻿#Region "Microsoft.VisualBasic::5c72d8cbec12ad353518535d7fc09bfc, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math
 
 Namespace Drawing2D.Shapes
@@ -39,6 +40,16 @@ Namespace Drawing2D.Shapes
         Dim pt1 As PointF, pt2 As PointF
 
         Public Property Stroke As Pen
+        Public ReadOnly Property A As PointF
+            Get
+                Return pt1
+            End Get
+        End Property
+        Public ReadOnly Property B As PointF
+            Get
+                Return pt2
+            End Get
+        End Property
 
         Public Overrides ReadOnly Property Size As Size
             Get
@@ -102,6 +113,14 @@ Namespace Drawing2D.Shapes
             Me.pt1 = a
             Me.pt2 = b
             Me.Stroke = New Pen(New SolidBrush(c), width)
+        End Sub
+
+        Sub New(a As PointF, b As PointF, pen As Pen)
+            Call MyBase.New(a.ToPoint)
+
+            pt1 = a
+            pt2 = b
+            Stroke = pen
         End Sub
 
         Sub New(x1#, y1#, x2#, y2#)

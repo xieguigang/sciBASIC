@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11680c49bf26c1c644badad0d6db83a1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::65db21377ce52c6c84139e8b012adb60, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
@@ -82,6 +83,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="name"></param>
         ''' <returns></returns>
         Default Public Overloads Property ItemValue(name$) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If Properties.ContainsKey(name) Then
                     Return Properties(name)
@@ -94,7 +96,15 @@ Namespace ComponentModel.DataSourceModel
             End Set
         End Property
 
+        ''' <summary>
+        ''' Get a value package at once using a key collection, 
+        ''' if the key is not exists in the property, then its 
+        ''' correspoding value is nothing.
+        ''' </summary>
+        ''' <param name="keys"></param>
+        ''' <returns></returns>
         Default Public Overloads Property ItemValue(keys As IEnumerable(Of String)) As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return keys.Select(Function(s) Me(s)).ToArray
             End Get
@@ -155,6 +165,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Protected ReadOnly Property MyHashCode As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetHashCode()
             End Get
@@ -183,7 +194,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         ''' </summary>
         ''' <returns></returns>
-        <ScriptIgnore> Public Iterator Property source As IEnumerable(Of NamedValue(Of T))
+        <ScriptIgnore> Public Iterator Property src As IEnumerable(Of NamedValue(Of T))
             Get
                 For Each x In Properties
                     Yield New NamedValue(Of T) With {
@@ -192,6 +203,7 @@ Namespace ComponentModel.DataSourceModel
                     }
                 Next
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As IEnumerable(Of NamedValue(Of T)))
                 Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
             End Set

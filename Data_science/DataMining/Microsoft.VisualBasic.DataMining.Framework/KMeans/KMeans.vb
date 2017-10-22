@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33881bad576ffa57552a2b28a182b7f0, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::79e1e178f1e280c0d79910d03ca998e4, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,7 @@ Namespace KMeans
         ''' <param name="X">An array with the values of an object or datapoint</param>
         ''' <param name="Y">An array with the values of an object or datapoint</param>
         ''' <returns>Returns the Manhattan Distance Measure Between Points X and Points Y</returns>
-        Public Function ManhattanDistance(X As Double(), Y As Double()) As Double
+        Public Function ManhattanDistance(X#(), Y#()) As Double
             Dim count As Integer = 0
             Dim sum As Double = 0.0
 
@@ -152,7 +152,7 @@ Namespace KMeans
                                                  Source As IEnumerable(Of T),
                                                  clusterCount%,
                                            Optional debug As Boolean = False,
-                                           Optional [stop] As Integer = -1,
+                                           Optional stop% = -1,
                                            Optional parallel As Boolean = True) As ClusterCollection(Of T)
 
             Dim data As T() = Source.ToArray
@@ -167,8 +167,7 @@ Namespace KMeans
             Dim Random As New Random
 
             If clusterCount >= rowCount Then
-                Dim msg As String =
-                    $"[cluster.count:={clusterCount}] >= [source.length:={rowCount}], this will caused a dead loop!"
+                Dim msg$ = $"[cluster.count:={clusterCount}] >= [source.length:={rowCount}], this will caused a dead loop!"
                 Throw New Exception(msg)
             Else
                 If debug Then
@@ -208,10 +207,9 @@ Namespace KMeans
 
                     If x.NumOfEntity = 0 OrElse y.NumOfEntity = 0 Then
 
-                        If debug Then
-                            Call "If (x.NumOfEntity = 0 OrElse y.NumOfEntity = 0) Is True".__DEBUG_ECHO
-                        End If
-
+#If DEBUG Then
+                        Call "If (x.NumOfEntity = 0 OrElse y.NumOfEntity = 0) Is True".__DEBUG_ECHO
+#End If
                         Continue For ' ??? 为什么有些聚类是0？？
                     End If
 
@@ -235,6 +233,8 @@ Namespace KMeans
             Return clusters
         End Function
 
+        Const NoMember$ = "Cluster count cannot be ZERO!"
+
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
@@ -252,7 +252,7 @@ Namespace KMeans
             Next
 
             If clusters.NumOfCluster <= 0 Then
-                Throw New SystemException("Cluster count cannot be ZERO!")
+                Throw New SystemException(NoMember)
             End If
 
             If parallel Then  ' Kmeans并行算法
@@ -340,8 +340,8 @@ Namespace KMeans
                 For fieldPosition As Integer = 0 To fieldCount - 1
                     Try
                         fieldValue = Double.Parse(row(fieldPosition).ToString())
-                    Catch ex As System.Exception
-                        Dim msg As String = $"Invalid row at {rowPosition.ToString()} and field {fieldPosition.ToString()}"
+                    Catch ex As Exception
+                        Dim msg$ = $"Invalid row at {rowPosition.ToString()} and field {fieldPosition.ToString()}"
                         ex = New InvalidCastException(msg, ex)
                         ex.PrintException
 

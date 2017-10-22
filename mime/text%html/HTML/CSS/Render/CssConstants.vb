@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d871b10abace6319d7cefca633878613, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssConstants.vb"
+﻿#Region "Microsoft.VisualBasic::7685676d61273e5052cfe602adf5c688, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssConstants.vb"
 
     ' Author:
     ' 
@@ -26,15 +26,13 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
-
 Namespace HTML.CSS.Render
 
     ''' <summary>
     ''' String constants to avoid typing errors.
     ''' </summary>
     Public Class CssConstants
+
         Public Const Absolute As String = "absolute"
         Public Const Auto As String = "auto"
         Public Const Baseline As String = "baseline"
@@ -103,7 +101,6 @@ Namespace HTML.CSS.Render
         Public Const XSmall As String = "x-small"
         Public Const XXLarge As String = "xx-large"
         Public Const XXSmall As String = "xx-small"
-
 
 #Region "Units"
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c338b3c9e3055adb7806204e761aa1e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\DataSample.vb"
+﻿#Region "Microsoft.VisualBasic::79f5f596a931c56c0e7bb4ddc5b88e36, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\DataSample.vb"
 
     ' Author:
     ' 
@@ -56,17 +56,20 @@ Namespace ComponentModel.Algorithm
         Public Ranges As IRanges(Of T)
 
         Public ReadOnly Property Length As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return data.Length
             End Get
         End Property
 
         Public ReadOnly Property First As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return data(Scan0)
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SlideWindows(winSize As Integer,
                                      Optional offset As Integer = 1,
                                      Optional extendTails As Boolean = False) As SlideWindow(Of T)()

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20ef26769b1e0993b778687268765b54, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e9f86ab1cee1e8d39983b4e73af463ab, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -149,10 +149,12 @@ Public Module RegexExtensions
     ''' <returns></returns>
     <ExportAPI("As.Array")>
     <Extension> Public Function ToArray(source As MatchCollection) As String()
-        Dim LQuery As String() =
-            LinqAPI.Exec(Of String) <= From m As Match
-                                       In source
-                                       Select m.Value
+        Dim LQuery$() = LinqAPI.Exec(Of String) _
+ _
+            () <= From m As Match
+                  In source
+                  Select m.Value
+
         Return LQuery
     End Function
 
@@ -166,12 +168,12 @@ Public Module RegexExtensions
     ''' <returns></returns>
     <Extension>
     Public Function ToArray(Of T)(source As MatchCollection, [ctype] As Func(Of String, T)) As T()
-        Dim LQuery As T() = LinqAPI.Exec(Of T) <=
+        Dim LQuery As T() = LinqAPI.Exec(Of T) _
  _
-            From m As Match
-            In source
-            Let s As String = m.Value
-            Select [ctype](s)
+            () <= From m As Match
+                  In source
+                  Let s As String = m.Value
+                  Select [ctype](s)
 
         Return LQuery
     End Function
@@ -192,7 +194,7 @@ Public Module RegexExtensions
     ''' </summary>
     ''' <param name="raw$"></param>
     ''' <returns></returns>
-    <Extension> Public Function RawRegexp(raw$) As Regex
+    <Extension> Public Function PythonRawRegexp(raw$) As Regex
         Return New Regex(raw, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
     End Function
 

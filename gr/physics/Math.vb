@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90ed3a14d7f2c638b4c178a7b75b05bd, ..\sciBASIC#\gr\physics\Math.vb"
+﻿#Region "Microsoft.VisualBasic::849c2e07292a14c1e094d5de201f9055, ..\sciBASIC#\gr\physics\Math.vb"
 
     ' Author:
     ' 
@@ -233,4 +233,3 @@ Public Module Math
         End With
     End Function
 End Module
-

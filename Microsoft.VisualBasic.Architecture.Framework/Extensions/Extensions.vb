@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::ed42981e98c61dc18f07b9d24ccb8eac, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::548d8db240539b239a3820852951bfd8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -84,8 +84,9 @@ Public Module Extensions
     ''' <param name="data"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Range(data As IEnumerable(Of Double)) As DoubleRange
-        Return New DoubleRange(data)
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Range(data As IEnumerable(Of Double), Optional scale# = 1) As DoubleRange
+        Return New DoubleRange(data) * scale
     End Function
 
     ''' <summary>
@@ -93,6 +94,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="x#"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Log2(x#) As Double
         Return sys.Log(x, newBase:=2)
     End Function
@@ -105,6 +108,8 @@ Public Module Extensions
     ''' <remarks>
     ''' 因为直接使用vb的<see cref="Val"/>函数转换，在Linux上面可能会出错，所以需要在这里用.NET自己的方法来转换
     ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetHexInteger(hex$) As Integer
         Dim num% = Integer.Parse(hex, NumberStyles.HexNumber)
         Return num
@@ -150,6 +155,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="t"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function FormatTime(t As TimeSpan) As String
         With t
@@ -169,6 +176,8 @@ Public Module Extensions
     ''' <typeparam name="V"></typeparam>
     ''' <param name="d"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function KeysJson(Of V)(d As Dictionary(Of String, V)) As String
         Return d.Keys.ToArray.GetJson
@@ -196,6 +205,7 @@ Public Module Extensions
         Return Nothing
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function MD5(s$) As String
         Return s.GetMd5Hash
     End Function
@@ -678,7 +688,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As IEnumerable(Of T())
-        Dim buf As T() = source.ToArray
+        Dim buf As T() = source.SafeQuery.ToArray
         Dim n As Integer = buf.Length
         Dim count As Integer
 
@@ -1165,6 +1175,7 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="sBuilder"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function IsNullOrEmpty(sBuilder As StringBuilder) As Boolean
         Return sBuilder Is Nothing OrElse sBuilder.Length = 0
     End Function
@@ -1176,6 +1187,7 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function ToVector(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T()
         Return Unlist(source).ToArray
     End Function
@@ -1295,24 +1307,6 @@ Public Module Extensions
         Return 0
     End Function
 
-    ''' <summary>
-    ''' 尝试将目标对象放入到函数指针之中来运行，运行失败的时候回返回<paramref name="default"/>默认值
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <typeparam name="TOut"></typeparam>
-    ''' <param name="value"></param>
-    ''' <param name="proc"></param>
-    ''' <param name="[default]"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TryInvoke(Of T, TOut)(proc As Func(Of T, TOut), value As T, Optional [default] As TOut = Nothing) As TOut
-        Try
-            Return proc(value)
-        Catch ex As Exception
-            Call App.LogException(ex)
-            Return [default]
-        End Try
-    End Function
-
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' The target parameter <paramref name="n"/> value is NaN or not a real number or not?
@@ -1324,6 +1318,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     <ExportAPI("Double.Is.NA",
                Info:="Is this double type of the number is an NA type infinity number. this is major comes from the devided by ZERO.")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function IsNaNImaginary(n As Double) As Boolean
 #Else
     <Extension> Public Function Is_NA_UHandle(n As Double) As Boolean
@@ -1392,7 +1387,7 @@ Public Module Extensions
     <ExportAPI("StdError")>
     <Extension> Public Function StdError(data As Generic.IEnumerable(Of Double)) As Double
         Dim Average As Double = data.Average
-        Dim Sum = (From n As Double In data Select (n - Average) ^ 2).ToArray.Sum
+        Dim Sum = (From n As Double In data Select (n - Average) ^ 2).Sum
         Sum /= data.Count
         Return Global.System.Math.Sqrt(Sum)
     End Function
@@ -1533,36 +1528,6 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Get a specific item value from the target collction data using its UniqueID property，
-    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="INamedValue">
-    ''' </see>类型的集合之中的某一个对象，请尽量先转换为字典对象，在使用该字典对象进行查找以提高代码效率，使用本方法的优点是可以选择忽略<paramref name="uid">
-    ''' </paramref>参数之中的大小写，以及对集合之中的存在相同的Key的这种情况的容忍)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="uid"></param>
-    ''' <param name="IgnoreCase"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("Get.Item")>
-    <Extension> Public Function GetById(Of T As INamedValue)(
-                                      source As IEnumerable(Of T),
-                                         uid As String,
-                         Optional IgnoreCase As StringComparison = StringComparison.Ordinal) _
-                                             As T
-
-        Dim find As T = LinqAPI.DefaultFirst(Of T) <=
-            From x As T
-            In source
-            Where String.Equals(uid, x.Key, IgnoreCase)
-            Select x
-
-        Return find
-    End Function
-#End If
-
-#If FRAMEWORD_CORE Then
-    ''' <summary>
     ''' Copy the value in <paramref name="value"></paramref> into target variable <paramref name="target"></paramref> and then return the target variable.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -1689,20 +1654,6 @@ Public Module Extensions
         Return LQuery
     End Function
 
-    ''' <summary>
-    ''' Get a sub set of the string data which is contains in both collection <paramref name="strArray1"></paramref> and <paramref name="strArray2"></paramref>
-    ''' </summary>
-    ''' <param name="strArray1"></param>
-    ''' <param name="strArray2"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Union")>
-    <Extension> Public Function Union(strArray1 As String(), strArray2 As String()) As String()
-        Dim LQuery = (From strItem As String In strArray1 Where Array.IndexOf(strArray2, strItem) > -1 Select strItem).ToArray
-        Return LQuery
-    End Function
-
 #If FRAMEWORD_CORE Then
     <ExportAPI("Swap")>
     Public Sub Swap(Of T)(ByRef obj1 As T, ByRef obj2 As T)
@@ -1753,23 +1704,6 @@ Public Module Extensions
         Call List.RemoveAt(idx_2)
         Call List.Insert(idx_2, obj_2)
     End Sub
-
-    ''' <summary>
-    ''' Replace the <see cref="vbCrLf"/> with the specific string.
-    ''' </summary>
-    ''' <param name="strText"></param>
-    ''' <param name="VbCRLF_Replace"></param>
-    ''' <returns></returns>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Trim")>
-    <Extension> Public Function TrimNewLine(strText As String, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace As String = " ") As String
-#Else
-    <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
-#End If
-        strText = strText.Replace(vbCrLf, VbCRLF_Replace).Replace(vbCr, VbCRLF_Replace).Replace(vbLf, VbCRLF_Replace)
-        strText = strText.Replace("  ", " ")
-        Return Strings.Trim(strText)
-    End Function
 
 #If FRAMEWORD_CORE Then
     ''' <summary>

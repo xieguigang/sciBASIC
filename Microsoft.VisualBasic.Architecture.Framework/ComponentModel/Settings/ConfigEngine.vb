@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfed65f354dbdb070af0cf0fe10100e1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::4e31f2ed74fa6ab8dfc8cc099a771965, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\ConfigEngine.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -59,8 +60,11 @@ Namespace ComponentModel.Settings
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property AllItems As BindMapping()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return ProfileItemCollection.Values.ToArray
+                Return ProfileItemCollection _
+                    .Values _
+                    .ToArray
             End Get
         End Property
 
@@ -155,7 +159,7 @@ Namespace ComponentModel.Settings
         ''' </summary>
         ''' <param name="Name"></param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Node.Exists")>
         Public Overridable Function ExistsNode(Name As String) As Boolean
             Return ProfileItemCollection.ContainsKey(Name.ToLower)
@@ -180,6 +184,7 @@ Namespace ComponentModel.Settings
             Return True
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [Set](var As NamedValue(Of String)) As Boolean
             Return [Set](var.Name, var.Value)
         End Function
@@ -259,7 +264,7 @@ Namespace ComponentModel.Settings
         ''' </summary>
         ''' <param name="Name"></param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GetNode")>
         Public Function GetSettingsNode(Name As String) As BindMapping
             Return ProfileItemCollection(Name.ToLower)

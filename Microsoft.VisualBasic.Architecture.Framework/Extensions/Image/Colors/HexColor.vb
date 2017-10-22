@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1ff24b418575501b12d1ffc74ea9174, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\HexColor.vb"
+﻿#Region "Microsoft.VisualBasic::6641f5239ef62eb6814e59d2f9fe32f0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\HexColor.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,6 @@
 
 Imports System.Drawing
 Imports System.Globalization
-Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
@@ -42,7 +41,7 @@ Namespace Imaging
             Dim Red As String
             Dim Green As String
             Dim Blue As String
-            HexColor = Replace(HexColor, "#", "")
+            HexColor = HexColor.Trim("#"c)
             '"&H" &
             Red = GetHexInteger(Mid(HexColor, 1, 2))
             Green = GetHexInteger(Mid(HexColor, 3, 2))

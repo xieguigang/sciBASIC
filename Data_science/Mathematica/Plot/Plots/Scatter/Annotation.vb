@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14e20c66bf848f7d240e59bb05a28252, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::7de94b10646552feceba79ca090b50d5, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Annotation.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -58,7 +59,7 @@ Public Structure Annotation
     ''' </summary>
     Const PointNull$ = "The target annotation data point is null!"
 
-    Public Sub Draw(ByRef g As IGraphics, scaler As Mapper, s As SerialData, r As GraphicsRegion)
+    Public Sub Draw(ByRef g As IGraphics, scaler As DataScaler, s As SerialData, r As GraphicsRegion)
         Dim pt As PointData = s.GetPointByX(X)
 
         If pt.pt.IsEmpty Then
@@ -71,12 +72,24 @@ Public Structure Annotation
         End If
 
         ' 得到转换坐标
-        Dim point As PointF = scaler.PointScaler(r, pt.pt)
-        ' 将坐标置于区域大小的中间
-        point = New PointF(point.X - size.Width / 2, point.Y - size.Height / 2)
+        Dim point As PointF
+        Dim color$
+
+        With s.color
+            color = Me.color Or $"rgb({ .R},{ .G},{ .B})".AsDefault
+        End With
+
+        With pt.pt
+            point = scaler.Translate(.X, .Y)
+            ' 将坐标置于区域大小的中间
+            point = New PointF With {
+                .X = point.X - size.Width / 2,
+                .Y = point.Y - size.Height / 2
+            }
+        End With
 
         Dim legend As New Legend With {
-            .color = If(String.IsNullOrEmpty(color), $"rgb({s.color.R},{s.color.G},{s.color.B})", color),
+            .color = color,
             .fontstyle = Font,
             .style = Me.Legend,
             .title = Text

@@ -183,6 +183,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTTP\iana.org\MediaTypes.vb" />
     <Compile Include="HTTP\WebSaveAs.vb" />
     <Compile Include="HTTP\WebCrawling.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\APIBase.vb" />

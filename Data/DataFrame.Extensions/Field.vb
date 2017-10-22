@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06e29ce1fab3adbe683124c4d39eda5f, ..\sciBASIC#\Data\DataFrame.Extensions\Field.vb"
+﻿#Region "Microsoft.VisualBasic::c1e22f783d01499e74ec20d2bcbc8e5d, ..\sciBASIC#\Data\DataFrame.Extensions\Field.vb"
 
     ' Author:
     ' 
@@ -27,8 +27,8 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
@@ -73,6 +73,7 @@ Public Class Field : Implements IReadOnlyId
     ''' <returns></returns>
     Public Property InnerClass As [Class]
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetValue(x As Object) As Object
         Return Binding.BindProperty.GetValue(x, Nothing)
     End Function

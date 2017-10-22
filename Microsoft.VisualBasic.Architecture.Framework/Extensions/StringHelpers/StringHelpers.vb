@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb46b04fb0bc92400b19c97e2d1b8252, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::833e8777434184329ef8dcf6681db1d6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
 ' Author:
 ' 
@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Similarity
 Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
@@ -46,6 +47,41 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
+
+    ''' <summary>
+    ''' Replace the <see cref="vbCrLf"/> with the specific string.
+    ''' </summary>
+    ''' <param name="src"></param>
+    ''' <param name="VbCRLF_Replace"></param>
+    ''' <returns></returns>
+#If FRAMEWORD_CORE Then
+    <ExportAPI("Trim")>
+    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace$ = " ") As String
+#Else
+    <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
+#End If
+        If src Is Nothing Then
+            Return ""
+        End If
+
+        src = src.Replace(vbCrLf, VbCRLF_Replace) _
+                 .Replace(vbCr, VbCRLF_Replace) _
+                 .Replace(vbLf, VbCRLF_Replace) _
+                 .Replace("  ", " ")
+
+        Return Strings.Trim(src)
+    End Function
+
+    <Extension>
+    Public Function ReplaceChars(src$, chars As IEnumerable(Of Char), replaceAs As Char) As String
+        Dim s As New StringBuilder(src)
+
+        For Each c As Char In chars
+            Call s.Replace(c, replaceAs)
+        Next
+
+        Return s.ToString
+    End Function
 
     ''' <summary>
     ''' 判断这个字符串数组之中的所有的元素都是空字符串？
@@ -426,6 +462,14 @@ Public Module StringHelpers
         End If
     End Function
 
+    ''' <summary>
+    ''' Get sub string value from the region that between the <paramref name="left"/> and <paramref name="right"/>.
+    ''' (这个函数是直接分别查找左右两边的定位字符串来进行切割的) 
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="left$"></param>
+    ''' <param name="right$"></param>
+    ''' <returns></returns>
     <ExportAPI("Get.Stackvalue")>
     <Extension>
     Public Function GetStackValue(str$, left$, right$) As String
@@ -443,6 +487,30 @@ Public Module StringHelpers
         Else
             str = Mid(str, p, q - p)
             Return str
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 和<see cref="GetStackValue(String, String, String)"/>相似，这个函数也是查找起始和终止字符串之间的字符串，
+    ''' 但是这个函数是查找相邻的两个标记，而非像<see cref="GetStackValue(String, String, String)"/>函数一样
+    ''' 直接查找字符串的两端的定位结果
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="strStart$"></param>
+    ''' <param name="strEnd$"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function GetBetween(str$, strStart$, strEnd$) As String
+        Dim start%, end%
+
+        If str.Contains(strStart) AndAlso str.Contains(strEnd) Then
+            start = str.IndexOf(strStart, 0) + strStart.Length
+            [end] = str.IndexOf(strEnd, start)
+
+            Return str.Substring(start, [end] - start)
+        Else
+            Return Nothing
         End If
     End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::010723568e0f6de28f95d970c2c0cc54, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::d672a5eba1e49c71f50a09c4f92225f9, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssRectangle.vb"
 
     ' Author:
     ' 
@@ -26,9 +26,7 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Text
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace HTML.CSS.Render

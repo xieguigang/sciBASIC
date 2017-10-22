@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c516316d3d4fdcd468efaa8e20f6ecc, ..\sciBASIC#\Data\SearchEngine\NO-SQL\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::3bd8abfa5d7b4fa1cddb69c1e4b16ac0, ..\sciBASIC#\Data\SearchEngine\NO-SQL\Tokenizer.vb"
 
     ' Author:
     ' 
@@ -30,4 +30,3 @@ Public Module Tokenizer
 
 
 End Module
-

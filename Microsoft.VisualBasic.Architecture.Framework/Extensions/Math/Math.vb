@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::1868f9b8353e26d25ec1c3a3c2b03ad9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::2d7f10528e47fd3ed6d8422def08c43f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -1444,18 +1444,14 @@ Namespace Math
         Public Function Round(d As Decimal) As Decimal
             Return sys.Round(d)
         End Function
-        '
-        ' Summary:
-        '     Returns the square root of a specified number.
-        '
-        ' Parameters:
-        '   d:
-        '     The number whose square root is to be found.
-        '
-        ' Returns:
-        '     One of the values in the following table. d parameter Return value Zero or positive
-        '     The positive square root of d. Negative System.Double.NaNEquals System.Double.NaNSystem.Double.NaNEquals
-        '     System.Double.PositiveInfinitySystem.Double.PositiveInfinity
+
+        ''' <summary>
+        ''' Returns the square root of a specified number.
+        ''' </summary>
+        ''' <param name="d">The number whose square root is to be found.</param>
+        ''' <returns>One of the values in the following table. d parameter Return value Zero or positive
+        ''' The positive square root of d. Negative System.Double.NaNEquals System.Double.NaNSystem.Double.NaNEquals
+        ''' System.Double.PositiveInfinitySystem.Double.PositiveInfinity</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)> <SecuritySafeCritical>
         Public Function Sqrt(d As Double) As Double
@@ -1827,13 +1823,14 @@ Namespace Math
         ''' <param name="vector"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
             ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
             Return sys.Sqrt((From n In vector Select n ^ 2).Sum)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
             Return sys.Sqrt((From n In Vector Select n ^ 2).Sum)
@@ -1848,6 +1845,7 @@ Namespace Math
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(a As IEnumerable(Of Double), b As IEnumerable(Of Double)) As Double
             Return EuclideanDistance(a.ToArray, b.ToArray)
@@ -1883,16 +1881,19 @@ Namespace Math
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Double, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Integer, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Long, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
@@ -1905,8 +1906,19 @@ Namespace Math
         ''' 
         <ExportAPI("RMS", Info:="Root mean square")>
         <Extension> Public Function RMS(data As IEnumerable(Of Double)) As Double
-            Dim LQuery = (From n In data.AsParallel Select n ^ 2).ToArray
-            Return sys.Sqrt(LQuery.Sum / LQuery.Length)
+            With (From n In data Select n ^ 2).ToArray
+                Return sys.Sqrt(.Sum / .Length)
+            End With
+        End Function
+
+        ''' <summary>
+        ''' ``相对标准偏差（RSD）= 标准偏差（SD）/ 计算结果的算术平均值（X）* 100%``
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RSD(data As IEnumerable(Of Double)) As Double
+            Return data.SD / data.Average
         End Function
 
         ''' <summary>
@@ -1917,16 +1929,19 @@ Namespace Math
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
             Dim result As Double = sys.Exp(-lambda)
             Dim k As Integer = x
+
             While k >= 1
                 result *= lambda / k
                 k -= 1
             End While
+
             Return result
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
-            Return v.ToArray(Function(x) x.FormatNumeric(digitals))
+            Return v.ToArray(Function(x) x.ToString("F" & digitals))
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dfbc0a3e9e63b44202e5bae2feaf9a7, ..\sciBASIC#\gr\physics\World.vb"
+﻿#Region "Microsoft.VisualBasic::899f372f159ad12937c1e1c18d03b64d, ..\sciBASIC#\gr\physics\World.vb"
 
     ' Author:
     ' 
@@ -155,4 +155,3 @@ Public Class World
                End Function
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dbc6879ddd6532ab014ecc541c9d752, ..\sciBASIC#\Data\DataFrame.Extensions\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::e73c4b755068bd74d895564785f129a0, ..\sciBASIC#\Data\DataFrame.Extensions\Schema.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.TypeSchemaProvider
 Imports Microsoft.VisualBasic.Language
@@ -36,7 +37,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <summary>
 ''' The schema project json file.
 ''' </summary>
-Public Class Schema : Inherits ClassObject
+Public Class Schema : Inherits BaseClass
 
     ''' <summary>
     ''' 默认的主文件的名称
@@ -73,6 +74,7 @@ Public Class Schema : Inherits ClassObject
         Return Me.GetJson
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function GetSchema(Of T As Class)() As Schema
         Return GetSchema(GetType(T))
     End Function
@@ -126,6 +128,7 @@ Public Class Schema : Inherits ClassObject
         Next
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Primitive(type As Type) As Boolean
         Return type.IsPrimitive OrElse
             type.Equals(GetType(String)) OrElse

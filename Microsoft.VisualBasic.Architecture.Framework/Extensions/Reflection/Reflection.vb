@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9459fc69847bb88c00d1cf86da489877, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::04211be7d8266c45845c927b9567fa14, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
@@ -160,20 +161,20 @@ NULL:       If Not strict Then
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
-    Public Function GetAssemblyDetails(path As String) As SoftwareToolkits.ApplicationDetails
-        Return New SoftwareToolkits.ApplicationDetails(Assembly.LoadFile(path))
+    Public Function GetAssemblyDetails(path As String) As ApplicationDetails
+        Return New ApplicationDetails(Assembly.LoadFile(path))
     End Function
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
-    Public Function GetAssemblyDetails(def As Type) As SoftwareToolkits.ApplicationDetails
-        Return New SoftwareToolkits.ApplicationDetails(def.Assembly)
+    Public Function GetAssemblyDetails(def As Type) As ApplicationDetails
+        Return New ApplicationDetails(def.Assembly)
     End Function
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
-    Public Function GetAssemblyDetails(assm As Assembly) As SoftwareToolkits.ApplicationDetails
-        Return New SoftwareToolkits.ApplicationDetails(assm)
+    Public Function GetAssemblyDetails(assm As Assembly) As ApplicationDetails
+        Return New ApplicationDetails(assm)
     End Function
 
     ''' <summary>
@@ -209,10 +210,15 @@ NULL:       If Not strict Then
     '''
     <ExportAPI("Get.Version")>
     Public Function GetVersion(Product As String) As Version
-        Dim assm As System.Reflection.Assembly = System.Reflection.Assembly.LoadFile(Product)
+        Dim assm As Assembly = Assembly.LoadFile(Product)
         Return assm.GetVersion
     End Function
 
+    ''' <summary>
+    ''' 如果不存在<see cref="DescriptionAttribute"/>定义则会返回空白字符串
+    ''' </summary>
+    ''' <param name="prop"></param>
+    ''' <returns></returns>
     <ExportAPI("Get.Description")>
     <Extension> Public Function Description(prop As PropertyInfo) As String
         Dim attrs As Object() = prop.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=True)
@@ -452,6 +458,26 @@ NULL:       If Not strict Then
     End Function
 
     ''' <summary>
+    ''' Get array value from the input flaged enum <paramref name="value"/>.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    Public Function GetAllEnumFlags(Of T As Structure)(value As T) As T()
+        Dim type As Type = GetType(T)
+        Dim array As New List(Of T)
+        Dim enumValue As [Enum] = CType(CObj(value), [Enum])
+
+        For Each flag As [Enum] In Enums(Of T)().Select(Function(o) CType(CObj(o), [Enum]))
+            If enumValue.HasFlag(flag) Then
+                array += DirectCast(CObj(flag), T)
+            End If
+        Next
+
+        Return array
+    End Function
+
+    ''' <summary>
     ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.(只允许枚举类型，其他的都返回空集合)
     ''' </summary>
     ''' <typeparam name="T">泛型类型约束只允许枚举类型，其他的都返回空集合</typeparam>
@@ -600,7 +626,8 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
 #End If
 
     ''' <summary>
-    ''' Get the method reflection entry point for a anonymous lambda expression.(当函数返回Nothing的时候说明目标对象不是一个函数指针)
+    ''' Get the method reflection entry point for a anonymous lambda expression.
+    ''' (当函数返回Nothing的时候说明目标对象不是一个函数指针)
     ''' </summary>
     ''' <param name="obj"></param>
     ''' <returns></returns>
@@ -608,12 +635,15 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     '''
     <ExportAPI("Delegate.GET_Invoke", Info:="Get the method reflection entry point for a anonymous lambda expression.")>
     Public Function GetDelegateInvokeEntryPoint(obj As Object) As MethodInfo
-        Dim TypeInfo As Type = obj.GetType
-        Dim InvokeEntryPoint = (From MethodInfo As MethodInfo
-                                In TypeInfo.GetMethods
-                                Where String.Equals(MethodInfo.Name, "Invoke")
-                                Select MethodInfo).FirstOrDefault
-        Return InvokeEntryPoint
+        Dim type As Type = obj.GetType
+        Dim entryPoint = LinqAPI.DefaultFirst(Of MethodInfo) _
+ _
+            () <= From methodInfo As MethodInfo
+                  In type.GetMethods
+                  Where String.Equals(methodInfo.Name, "Invoke")
+                  Select methodInfo
+
+        Return entryPoint
     End Function
 
     ''' <summary>

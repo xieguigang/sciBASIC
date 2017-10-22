@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::993d8366a694ae57541fa8f078f252be, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBox.vb"
+﻿#Region "Microsoft.VisualBasic::c4e3831af9f7be3dec238c9242614b3a, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBox.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@ Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
+Imports HTMLParser = Microsoft.VisualBasic.MIME.Markup.HTML.Render.Parser
 
 Namespace HTML.CSS.Render
 
@@ -92,6 +92,7 @@ Namespace HTML.CSS.Render
             _cssproperties = New List(Of PropertyInfo)()
 
             Dim props As PropertyInfo() = GetType(CssBox).GetProperties()
+
             For i As Integer = 0 To props.Length - 1
                 Dim att As CssPropertyAttribute = TryCast(Attribute.GetCustomAttribute(props(i), GetType(CssPropertyAttribute)), CssPropertyAttribute)
 
@@ -109,7 +110,6 @@ Namespace HTML.CSS.Render
             Next
             '#End Region
 
-
             Empty = New CssBox()
         End Sub
 
@@ -123,11 +123,10 @@ Namespace HTML.CSS.Render
 
             If att Is Nothing Then
                 Return String.Empty
+            Else
+                Dim s As String = Convert.ToString(att.Value)
+                Return If(String.IsNullOrEmpty(s), String.Empty, s)
             End If
-
-            Dim s As String = Convert.ToString(att.Value)
-
-            Return If(String.IsNullOrEmpty(s), String.Empty, s)
         End Function
 
 #End Region
@@ -139,10 +138,6 @@ Namespace HTML.CSS.Render
         Private _backgroundGradientAngle As String
         Private _BackgroundImage As String
         Private _backgroundRepeat As String
-        Private _borderTopWidth As String
-        Private _borderRightWidth As String
-        Private _borderBottomWidth As String
-        Private _borderLeftWidth As String
         Private _borderWidth As String
         Private _borderTopColor As String
         Private _borderRightColor As String
@@ -178,13 +173,7 @@ Namespace HTML.CSS.Render
         Private _fontVariant As String
         Private _fontWeight As String
         Private _float As String
-        Private _height As String
-        Private _marginBottom As String
-        Private _marginLeft As String
-        Private _marginRight As String
-        Private _marginTop As String
         Private _margin As String
-        Private _left As String
         Private _lineHeight As String
         Private _listStyleType As String
         Private _listStyleImage As String
@@ -200,10 +189,8 @@ Namespace HTML.CSS.Render
         Private _textAlign As String
         Private _textDecoration As String
         Private _textIndent As String
-        Private _top As String
         Private _position As String
         Private _verticalAlign As String
-        Private _width As String
         Private _wordSpacing As String
         Private _whiteSpace As String
 
@@ -257,9 +244,9 @@ Namespace HTML.CSS.Render
             Next
         End Sub
 
-        Public Sub New(parentBox__1 As CssBox)
+        Public Sub New(parentBox As CssBox)
             Me.New()
-            ParentBox = parentBox__1
+            Me.ParentBox = parentBox
         End Sub
 
         Friend Sub New(parentBox As CssBox, tag As HtmlTag)
@@ -280,46 +267,18 @@ Namespace HTML.CSS.Render
         <CssProperty("border-bottom-width")>
         <DefaultValue("medium")>
         Public Property BorderBottomWidth() As String
-            Get
-                Return _borderBottomWidth
-            End Get
-            Set
-                _borderBottomWidth = Value
-            End Set
-        End Property
 
         <CssProperty("border-left-width")>
         <DefaultValue("medium")>
         Public Property BorderLeftWidth() As String
-            Get
-                Return _borderLeftWidth
-            End Get
-            Set
-                _borderLeftWidth = Value
-            End Set
-        End Property
 
         <CssProperty("border-right-width")>
         <DefaultValue("medium")>
         Public Property BorderRightWidth() As String
-            Get
-                Return _borderRightWidth
-            End Get
-            Set
-                _borderRightWidth = Value
-            End Set
-        End Property
 
         <CssProperty("border-top-width")>
         <DefaultValue("medium")>
         Public Property BorderTopWidth() As String
-            Get
-                Return _borderTopWidth
-            End Get
-            Set
-                _borderTopWidth = Value
-            End Set
-        End Property
 
         <CssProperty("border-width")>
         <DefaultValue("")>
@@ -456,7 +415,7 @@ Namespace HTML.CSS.Render
             Set
                 _borderColor = Value
 
-                Dim colors As MatchCollection = Parser.Match(Parser.CssColors, Value)
+                Dim colors As MatchCollection = HTMLParser.Match(HTMLParser.CssColors, Value)
 
                 Dim values As String() = New String(colors.Count - 1) {}
 
@@ -545,9 +504,9 @@ Namespace HTML.CSS.Render
             Set
                 _border = Value
 
-                Dim borderWidth__1 As String = Parser.Search(Parser.CssBorderWidth, Value)
-                Dim borderStyle__2 As String = Parser.Search(Parser.CssBorderStyle, Value)
-                Dim borderColor__3 As String = Parser.Search(Parser.CssColors, Value)
+                Dim borderWidth__1 As String = HTMLParser.Search(HTMLParser.CssBorderWidth, Value)
+                Dim borderStyle__2 As String = HTMLParser.Search(HTMLParser.CssBorderStyle, Value)
+                Dim borderColor__3 As String = HTMLParser.Search(HTMLParser.CssColors, Value)
 
                 If borderWidth__1 IsNot Nothing Then
                     BorderWidth = borderWidth__1
@@ -570,9 +529,9 @@ Namespace HTML.CSS.Render
             Set
                 _borderBottom = Value
 
-                Dim borderWidth As String = Parser.Search(Parser.CssBorderWidth, Value)
-                Dim borderStyle As String = Parser.Search(Parser.CssBorderStyle, Value)
-                Dim borderColor As String = Parser.Search(Parser.CssColors, Value)
+                Dim borderWidth As String = HTMLParser.Search(HTMLParser.CssBorderWidth, Value)
+                Dim borderStyle As String = HTMLParser.Search(HTMLParser.CssBorderStyle, Value)
+                Dim borderColor As String = HTMLParser.Search(HTMLParser.CssColors, Value)
 
                 If borderWidth IsNot Nothing Then
                     BorderBottomWidth = borderWidth
@@ -595,9 +554,9 @@ Namespace HTML.CSS.Render
             Set
                 _borderLeft = Value
 
-                Dim borderWidth As String = Parser.Search(Parser.CssBorderWidth, Value)
-                Dim borderStyle As String = Parser.Search(Parser.CssBorderStyle, Value)
-                Dim borderColor As String = Parser.Search(Parser.CssColors, Value)
+                Dim borderWidth As String = HTMLParser.Search(HTMLParser.CssBorderWidth, Value)
+                Dim borderStyle As String = HTMLParser.Search(HTMLParser.CssBorderStyle, Value)
+                Dim borderColor As String = HTMLParser.Search(HTMLParser.CssColors, Value)
 
                 If borderWidth IsNot Nothing Then
                     BorderLeftWidth = borderWidth
@@ -620,9 +579,9 @@ Namespace HTML.CSS.Render
             Set
                 _borderRight = Value
 
-                Dim borderWidth As String = Parser.Search(Parser.CssBorderWidth, Value)
-                Dim borderStyle As String = Parser.Search(Parser.CssBorderStyle, Value)
-                Dim borderColor As String = Parser.Search(Parser.CssColors, Value)
+                Dim borderWidth As String = HTMLParser.Search(HTMLParser.CssBorderWidth, Value)
+                Dim borderStyle As String = HTMLParser.Search(HTMLParser.CssBorderStyle, Value)
+                Dim borderColor As String = HTMLParser.Search(HTMLParser.CssColors, Value)
 
                 If borderWidth IsNot Nothing Then
                     BorderRightWidth = borderWidth
@@ -645,9 +604,9 @@ Namespace HTML.CSS.Render
             Set
                 _borderTop = Value
 
-                Dim borderWidth As String = Parser.Search(Parser.CssBorderWidth, Value)
-                Dim borderStyle As String = Parser.Search(Parser.CssBorderStyle, Value)
-                Dim borderColor As String = Parser.Search(Parser.CssColors, Value)
+                Dim borderWidth As String = HTMLParser.Search(HTMLParser.CssBorderWidth, Value)
+                Dim borderStyle As String = HTMLParser.Search(HTMLParser.CssBorderStyle, Value)
+                Dim borderColor As String = HTMLParser.Search(HTMLParser.CssColors, Value)
 
                 If borderWidth IsNot Nothing Then
                     BorderTopWidth = borderWidth
@@ -701,7 +660,7 @@ Namespace HTML.CSS.Render
                 Return _cornerRadius
             End Get
             Set
-                Dim r As MatchCollection = Parser.Match(Parser.CssLength, Value)
+                Dim r As MatchCollection = HTMLParser.Match(HTMLParser.CssLength, Value)
 
                 Select Case r.Count
                     Case 1
@@ -823,47 +782,18 @@ Namespace HTML.CSS.Render
         <CssProperty("margin-bottom")>
         <DefaultValue("0")>
         Public Property MarginBottom() As String
-            Get
-                Return _marginBottom
-            End Get
-            Set
-                _marginBottom = Value
-            End Set
-        End Property
 
         <CssProperty("margin-left")>
         <DefaultValue("0")>
         Public Property MarginLeft() As String
-            Get
-                Return _marginLeft
-            End Get
-            Set
-                _marginLeft = Value
-            End Set
-        End Property
 
         <CssProperty("margin-right")>
         <DefaultValue("0")>
         Public Property MarginRight() As String
-            Get
-                Return _marginRight
-            End Get
-            Set
-                _marginRight = Value
-            End Set
-        End Property
 
         <CssProperty("margin-top")>
         <DefaultValue("0")>
         Public Property MarginTop() As String
-            Get
-                Return _marginTop
-            End Get
-            Set
-                _marginTop = Value
-            End Set
-        End Property
-
 #End Region
 
 #Region "Padding"
@@ -957,24 +887,10 @@ Namespace HTML.CSS.Render
         <CssProperty("left")>
         <DefaultValue("auto")>
         Public Property Left() As String
-            Get
-                Return _left
-            End Get
-            Set
-                _left = Value
-            End Set
-        End Property
 
         <CssProperty("top")>
         <DefaultValue("auto")>
         Public Property Top() As String
-            Get
-                Return _top
-            End Get
-            Set
-                _top = Value
-            End Set
-        End Property
 
         '[CssProperty("right")]
         '[DefaultValue("auto")]
@@ -995,26 +911,10 @@ Namespace HTML.CSS.Render
         <CssProperty("width")>
         <DefaultValue("auto")>
         Public Property Width() As String
-            Get
-                Return _width
-            End Get
-            Set
-                _width = Value
-            End Set
-        End Property
 
         <CssProperty("height")>
         <DefaultValue("auto")>
         Public Property Height() As String
-            Get
-                Return _height
-            End Get
-            Set
-                _height = Value
-            End Set
-        End Property
-
-
 #End Region
 
 #End Region
@@ -1248,15 +1148,15 @@ Namespace HTML.CSS.Render
                 _font = Value
 
                 Dim mustBePos As Integer
-                Dim mustBe As String = Parser.Search(Parser.CssFontSizeAndLineHeight, Value, mustBePos)
+                Dim mustBe As String = HTMLParser.Search(HTMLParser.CssFontSizeAndLineHeight, Value, mustBePos)
 
                 If Not String.IsNullOrEmpty(mustBe) Then
                     mustBe = mustBe.Trim()
                     'Check for style||variant||weight on the left
                     Dim leftSide As String = Value.Substring(0, mustBePos)
-                    Dim fontStyle__1 As String = Parser.Search(Parser.CssFontStyle, leftSide)
-                    Dim fontVariant__2 As String = Parser.Search(Parser.CssFontVariant, leftSide)
-                    Dim fontWeight__3 As String = Parser.Search(Parser.CssFontWeight, leftSide)
+                    Dim fontStyle__1 As String = HTMLParser.Search(HTMLParser.CssFontStyle, leftSide)
+                    Dim fontVariant__2 As String = HTMLParser.Search(HTMLParser.CssFontVariant, leftSide)
+                    Dim fontWeight__3 As String = HTMLParser.Search(HTMLParser.CssFontWeight, leftSide)
 
                     'Check for family on the right
                     Dim rightSide As String = Value.Substring(mustBePos + mustBe.Length)
@@ -1347,7 +1247,7 @@ Namespace HTML.CSS.Render
                 Return _fontSize
             End Get
             Set
-                Dim length As String = Parser.Search(Parser.CssLength, Value)
+                Dim length As String = HTMLParser.Search(HTMLParser.CssLength, Value)
 
                 If length IsNot Nothing Then
                     Dim computedValue As String = String.Empty
@@ -2007,7 +1907,7 @@ Namespace HTML.CSS.Render
         Public ReadOnly Property ActualBorderSpacingHorizontal() As Single
             Get
                 If Single.IsNaN(_actualBorderSpacingHorizontal) Then
-                    Dim matches As MatchCollection = Parser.Match(Parser.CssLength, BorderSpacing)
+                    Dim matches As MatchCollection = HTMLParser.Match(HTMLParser.CssLength, BorderSpacing)
 
                     If matches.Count = 0 Then
                         _actualBorderSpacingHorizontal = 0
@@ -2027,7 +1927,7 @@ Namespace HTML.CSS.Render
         Public ReadOnly Property ActualBorderSpacingVertical() As Single
             Get
                 If Single.IsNaN(_actualBorderSpacingVertical) Then
-                    Dim matches As MatchCollection = Parser.Match(Parser.CssLength, BorderSpacing)
+                    Dim matches As MatchCollection = HTMLParser.Match(HTMLParser.CssLength, BorderSpacing)
 
                     If matches.Count = 0 Then
                         _actualBorderSpacingVertical = 0
@@ -2863,7 +2763,7 @@ Namespace HTML.CSS.Render
             _actualWordSpacing = CssLayoutEngine.WhiteSpace(g, Me)
 
             If WordSpacing <> CssConstants.Normal Then
-                Dim len As String = Parser.Search(Parser.CssLength, WordSpacing)
+                Dim len As String = HTMLParser.Search(HTMLParser.CssLength, WordSpacing)
 
                 _actualWordSpacing += CssValue.ParseLength(len, 1, Me)
             End If
@@ -3193,7 +3093,7 @@ Namespace HTML.CSS.Render
                 x2 -= ActualPaddingRight + ActualBorderRightWidth
             End If
 
-            g.DrawLine(New Drawing.Pen(ActualColor), x1, y, x2, y)
+            g.DrawLine(New Pen(ActualColor), x1, y, x2, y)
         End Sub
 
         ''' <summary>

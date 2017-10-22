@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fda6bede1af41f260a3ecc3fb9b4b18, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssDrawingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::85ba822ec5449a86c5b4d81f6a7f0141, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssDrawingHelper.vb"
 
     ' Author:
     ' 
@@ -26,10 +26,8 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
-Imports System.Drawing.Drawing2D
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 
 Namespace HTML.CSS.Render
 
@@ -39,6 +37,7 @@ Namespace HTML.CSS.Render
     Friend NotInheritable Class CssDrawingHelper
         Private Sub New()
         End Sub
+
         ''' <summary>
         ''' Border specifiers
         ''' </summary>

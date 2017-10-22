@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d629113f22067b3f820a49d8422c6663, ..\sciBASIC#\Data_science\MachineLearning\QLearning\Model.vb"
+﻿#Region "Microsoft.VisualBasic::d40f56984ffd01028729c31a9df39318, ..\sciBASIC#\Data_science\MachineLearning\QLearning\Model.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Namespace QLearning.DataModel
     ''' <summary>
     ''' Data model of the <see cref="QTable(Of T)"/>, you can using this object to stores the trained QL_AI into a file.
     ''' </summary>
-    Public Class QModel : Inherits ClassObject
+    Public Class QModel : Inherits BaseClass
 
         Public Property Actions As Action()
         Public Property ActionRange As Integer

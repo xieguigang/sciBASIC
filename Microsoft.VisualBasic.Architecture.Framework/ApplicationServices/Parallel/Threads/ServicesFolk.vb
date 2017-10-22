@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fbebed6fdee5147bf0f662f2761b317, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\ServicesFolk.vb"
+﻿#Region "Microsoft.VisualBasic::c7e50df947308e25d848a41ce34723ba, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\ServicesFolk.vb"
 
     ' Author:
     ' 

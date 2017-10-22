@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d1304b649890642b584336377f8bf07, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::c471e7f815754363d014b274d68c8f9c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 
@@ -26,12 +26,12 @@
 
 #End Region
 
-Imports System.Text
-Imports Microsoft.VisualBasic.SoftwareToolkits
-Imports Microsoft.VisualBasic.Parallel
-Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Terminal.STDIO__
 Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Terminal.STDIO__
 
 Namespace Logging
 

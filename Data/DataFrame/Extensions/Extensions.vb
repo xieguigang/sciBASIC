@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4f776f881dc1264eaabe4d92b1feee4, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8acdeb90a2d235e8e88470234baef917, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -214,8 +214,15 @@ Public Module Extensions
             End Function)
     End Function
 
+    ''' <summary>
+    ''' 这个函数不会被申明为拓展函数了，因为这个object序列类型的函数如果为拓展函数的话，会与T泛型函数产生冲突
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path$, Optional encoding As Encoding = Nothing) As Boolean
+    Public Function SaveTable(data As IEnumerable(Of Object), path$, Optional encoding As Encoding = Nothing) As Boolean
         ' 假若序列之中的第一个元素为Nothing的话，则尝试使用第二个元素来获取type信息
         Dim type As Type = (data.First Or [Default](data.SecondOrNull)).GetType
 
@@ -393,11 +400,12 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                              Optional nonParallel As Boolean = False,
                                              Optional maps As Dictionary(Of String, String) = Nothing,
                                              Optional reorderKeys As Integer = 0,
-                                             Optional layout As Dictionary(Of String, Integer) = Nothing) As Boolean
+                                             Optional layout As Dictionary(Of String, Integer) = Nothing,
+                                             Optional tsv As Boolean = False) As Boolean
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
-            Throw New Exception(path, ex)
+            Throw New Exception("Probably invalid path value: " & path, ex)
         End Try
 
         Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
@@ -412,10 +420,10 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             Not nonParallel,
             metaBlank, reorderKeys, layout)
 
-        Dim success As Boolean = StreamIO.SaveDataFrame(
-            csv,
+        Dim success = csv.SaveDataFrame(
             path:=path,
-            encoding:=encoding)
+            encoding:=encoding,
+            tsv:=tsv)
 
         If success Then
             Call "CSV saved!".EchoLine

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f59435564b10840e80278c48aeb56e6, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::d68f66a87406ca7dc9b483abb479cb31, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace Drawing2D.Colors
 
@@ -107,6 +108,11 @@ Namespace Drawing2D.Colors
         }
 
         ''' <summary>
+        ''' <see cref="Designer.GetColors(String)"/> schema name for color profile: <see cref="ClusterColour"/>.
+        ''' </summary>
+        Public Const Clusters$ = NameOf(Clusters)
+
+        ''' <summary>
         ''' From TSF launcher on Android
         ''' </summary>
         ''' <returns></returns>
@@ -135,6 +141,11 @@ Namespace Drawing2D.Colors
                      Return Color.FromArgb(c(0), c(1), c(2))
                  End Function) _
          .ToArray
+
+        Public ReadOnly Property ConsoleColors As Color() = Enums(Of ConsoleColor) _
+            .Select(Function(c) c.ToString) _
+            .Select(AddressOf TranslateColor) _
+            .ToArray
 
         ''' <summary>
         ''' 
@@ -190,6 +201,7 @@ Namespace Drawing2D.Colors
 
                 Dim colors As Dictionary(Of String, String()) = My.Resources _
                     .designer_colors _
+                    .GetString(Encodings.UTF8) _
                     .LoadObject(Of Dictionary(Of String, String()))
                 Dim valids As New Dictionary(Of Color, Color())
 
@@ -200,9 +212,10 @@ Namespace Drawing2D.Colors
 
                 AvailableInterpolates = valids
 
-                Dim ns = Regex.Matches(My.Resources.colorbrewer, """\d+""") _
+                Dim colorBrewerJSON$ = My.Resources.colorbrewer.GetString(Encodings.UTF8)
+                Dim ns = Regex.Matches(colorBrewerJSON, """\d+""") _
                     .ToArray(Function(m) m.Trim(""""c))
-                Dim sb As New StringBuilder(My.Resources.colorbrewer)
+                Dim sb As New StringBuilder(colorBrewerJSON)
 
                 For Each n In ns.Distinct
                     Call sb.Replace($"""{n}""", $"""c{n}""")
@@ -301,6 +314,8 @@ Namespace Drawing2D.Colors
 
             If term.TextEquals("material") Then
                 Return MaterialPalette
+            ElseIf term.TextEquals("console.colors") Then
+                Return ConsoleColors
             ElseIf term.TextEquals("TSF") Then
                 Return TSF
             ElseIf term.TextEquals("rainbow") Then
@@ -311,7 +326,7 @@ Namespace Drawing2D.Colors
                 Return ChartColors
             ElseIf term.TextEquals("scibasic.category31()") Then
                 Return Category31
-            ElseIf term.TextEquals("clusters") Then
+            ElseIf term.TextEquals(Designer.Clusters) Then
                 Return ClusterColour
             End If
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5aa6401f9a2fc296c8e3d61721c0ece0, ..\sciBASIC#\Data_science\DataMining\network\KMeansNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::22fd644a347b87093fe953173d8f7e9c, ..\sciBASIC#\Data_science\DataMining\network\KMeansNetwork.vb"
 
     ' Author:
     ' 
@@ -70,7 +70,7 @@ Namespace KMeans
                            End Function
             Dim nodes As Dictionary(Of Node) = data _
                 .Select(Function(n) New Node With {
-                    .ID = n.Name,
+                    .ID = n.ID,
                     .NodeType = n.Cluster,
                     .Properties = New Dictionary(Of String, String) From {
                         {
@@ -84,7 +84,7 @@ Namespace KMeans
             End If
 
             For Each vector As EntityLDM In data
-                Dim from$ = vector.Name
+                Dim from$ = vector.ID
                 Dim color$
 
                 For Each hit In vector.Properties.Where(Function(h) cut(h.Value))

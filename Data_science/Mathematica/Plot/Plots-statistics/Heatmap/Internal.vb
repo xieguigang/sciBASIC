@@ -1,4 +1,32 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::64e5b6c5bd2a2eab78f9fad1b45d4bba, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Internal.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
@@ -14,6 +42,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -272,7 +301,8 @@ Namespace Heatmap
                                        Optional legendWidth! = -1,
                                        Optional legendHasUnmapped As Boolean = True,
                                        Optional legendSize As Size = Nothing,
-                                       Optional rowXOffset% = 0) As GraphicsData
+                                       Optional rowXOffset% = 0,
+                                       Optional tick# = -1) As GraphicsData
 
             Dim keys$() = array.PropertyNames
             Dim angle! = -45
@@ -307,7 +337,13 @@ Namespace Heatmap
                 .Join(min, max) _
                 .Distinct _
                 .ToArray
-            Dim ticks = DATArange.CreateAxisTicks(ticks:=5)
+            Dim ticks#()
+
+            If tick > 0 Then
+                ticks = AxisScalling.GetAxisByTick(DATArange, tick)
+            Else
+                ticks = DATArange.CreateAxisTicks(ticks:=5)
+            End If
 
             Call $"{DATArange.ToString} -> {ticks.GetJson}".__INFO_ECHO
 
@@ -388,25 +424,25 @@ Namespace Heatmap
                     ' 2. 然后才能够进行绘图
                     If drawDendrograms.HasFlag(DrawElements.Rows) Then
 
-                        Try
-                            ' 绘制出聚类树
-                            Dim cluster As Cluster = Time(AddressOf array.RunCluster)
-                            Dim topleft As New Point With {
+                        ' Try
+                        ' 绘制出聚类树
+                        Dim cluster As Cluster = Time(AddressOf array.RunCluster)
+                        Dim topleft As New Point With {
                                 .X = rect.Padding.Left,
                                 .Y = top
                             }
-                            Dim dsize As New Size With {
+                        Dim dsize As New Size With {
                                 .Width = dendrogramLayout.A,
                                 .Height = matrixPlotRegion.Height
                             }
-                            rowKeys = configDendrogramCanvas(cluster, drawClass.rowClass) _
+                        rowKeys = configDendrogramCanvas(cluster, drawClass.rowClass) _
                                 .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
                                 .OrderBy(Function(x) x.Value.Y) _
                                 .Keys
-                        Catch ex As Exception
-                            ex.PrintException
-                            rowKeys = array.Keys
-                        End Try
+                        'Catch ex As Exception
+                        '    ex.PrintException
+                        '    rowKeys = array.Keys
+                        'End Try
 
                     Else
                         rowKeys = array.Keys

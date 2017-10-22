@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53cae1cfbdad7b74daf62519184de1a4, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\BoxPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ef5a70a0f48e9f66f50eba737b81422a, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\BoxPlot.vb"
 
 ' Author:
 ' 
@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -254,4 +255,3 @@ Public Module BoxPlot
             plotInternal)
     End Function
 End Module
-

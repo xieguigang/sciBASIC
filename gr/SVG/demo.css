@@ -1,0 +1,86 @@
+/* Demo CSS file for VB.NET Graphics driver */ 
+
+/*
+   The @canvas selector is a system preserved selector, 
+   setting up the driver parameter like:
+   
+   1. size = width,height
+   2. padding = padding
+   3. bg/background = background-color/background-image
+   
+   Here is the global default settings:
+   
+   font-family: the font default family name
+   font-size: the font default size, this value must be a certain px value, can not be a em value
+   color: the default text color on this canvas
+   
+ */
+@canvas {
+	width: 800px;
+	height:1024px;
+	padding: 100 100 100 100;
+	background-color: white;
+	background-image: url(bgimage.gif);
+	font-size: 12px;
+	font-family: Verdana;
+	color: black;
+}
+
+/*
+   The #XXXX selector is the user parameter selector, 
+   which means the parameter in the driver function which 
+   is named as XXXX, whill assign the value from this CSS 
+   selector.
+   
+   Example:
+   
+   tickFont$ = font-size: 14px; color: red;
+   barColor$ = color: #666;
+   
+   all of the css selector name/declaration name is case insensitive
+   all of the VB.NET parameter name is also case insensitive
+
+#tickFont {
+    font-size: 14px;
+    color: red;
+	font-family: Verdana;
+	font-style: italic;
+	text-align: right;
+}
+
+#barcolor {
+	color: #666;
+}
+
+*/
+
+/* CSS format demo */
+
+/* Font */
+
+.Font {
+	
+	/* 
+	   font-size is also can set as @canvas font-size percentage, 
+	   like 1em means 12px, 2em means 24px and 0.5em means 6px is 
+	   the font-size is set up as 12px in the @canvas selector. 
+	   
+	 */
+	font-size: 14px;
+	
+	/*
+	   font name will be set as Verdana global font-family if this 
+	   property name is not presented.
+	   
+	 */
+	font-family: "Microsoft YaHei";
+	font-style: italic;
+	
+	/*
+	   This property will set up the font drawing color to color green, 
+	   or using global default color black if this property is not 
+	   presented.
+	
+	 */
+	color: green;
+}

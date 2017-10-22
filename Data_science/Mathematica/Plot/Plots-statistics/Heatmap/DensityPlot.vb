@@ -1,13 +1,45 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::93c3181651e594900028ae77f8a22218, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\DensityPlot.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.Driver.CSS
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Heatmap
@@ -16,6 +48,8 @@ Namespace Heatmap
     ''' 类似于<see cref="Contour"/>，但是这个是基于点的密度来绘图的
     ''' </summary>
     Public Module DensityPlot
+
+        Public Const DriverName$ = "scatter.density.plot"
 
         ''' <summary>
         ''' Similar to the <see cref="Contour"/> plot but plot in scatter mode.
@@ -26,18 +60,36 @@ Namespace Heatmap
         ''' <param name="bg$"></param>
         ''' <param name="schema$"></param>
         ''' <returns></returns>
+        <Driver(DriverName)>
         Public Function Plot(points As IEnumerable(Of PointF),
-                             Optional size$ = "1600,1200",
-                             Optional padding$ = g.DefaultPadding,
-                             Optional bg$ = "white",
+                             <GlobalCSSSelector(Types.Size)> Optional size$ = "1600,1200",
+                             <GlobalCSSSelector(Types.Padding)> Optional padding$ = g.DefaultPadding,
+                             <GlobalCSSSelector(Types.Brush)> Optional bg$ = "white",
                              Optional schema$ = "Jet",
                              Optional levels% = 20,
                              Optional steps$ = Nothing,
-                             Optional ptSize! = 5) As GraphicsData
+                             <CSSSelector(Types.Float)> Optional ptSize! = 5,
+                             <CSSSelector(Types.Integer)> Optional legendWidth% = 150,
+                             <CSSSelector(Types.Font)> Optional legendTitleFontCSS$ = CSSFont.Win7LargerNormal,
+                             <CSSSelector(Types.Font)> Optional legendTickFontCSS$ = CSSFont.Win7Normal,
+                             <CSSSelector(Types.Stroke)> Optional legendTickStrokeCSS$ = Stroke.AxisStroke,
+                             Optional ablines As Line() = Nothing,
+                             Optional labX$ = "X",
+                             Optional labY$ = "Y",
+                             <CSSSelector(Types.Font)> Optional labelFontCSS$ = CSSFont.Win10Normal,
+                             Optional htmlLabel As Boolean = True) As GraphicsData
 
-            Dim data = points.VectorShadows
-            Dim xrange As DoubleRange = data.X ' As IEnumerable(Of Single)
-            Dim yrange As DoubleRange = data.Y ' As IEnumerable(Of Single)
+            Dim data = points _
+                .Where(Function(pt)
+                           Return Not New Double() {
+                               pt.X, pt.Y
+                           }.Any(Function(x)
+                                     Return x.IsNaNImaginary
+                                 End Function)
+                       End Function) _
+                .VectorShadows
+            Dim xrange As DoubleRange = DirectCast(data.X, VectorShadows(Of Single)) ' As IEnumerable(Of Single)
+            Dim yrange As DoubleRange = DirectCast(data.Y, VectorShadows(Of Single)) ' As IEnumerable(Of Single)
             Dim pointData = DirectCast(data, VectorShadows(Of PointF))
             Dim colors$() = Designer _
                 .GetColors(schema, levels) _
@@ -49,15 +101,60 @@ Namespace Heatmap
                     pointData,
                     schema:=colors,
                     r:=ptSize)
+            Dim scatterPadding As Padding = padding
+
+            scatterPadding.Right += legendWidth
 
             Using g As IGraphics = Scatter.Plot(
                 c:={density},
-                size:=size, padding:=padding, bg:=bg,
+                size:=size, padding:=scatterPadding, bg:=bg,
                 drawLine:=False,
                 showLegend:=False,
-                fillPie:=True).CreateGraphics
+                fillPie:=True,
+                ablines:=ablines,
+                Xlabel:=labX,
+                Ylabel:=labY,
+                htmlLabel:=htmlLabel).CreateGraphics
 
                 ' 在这里还需要绘制颜色谱的legend
+                ' 计算出legend的layout信息
+                ' 竖直样式的legend：右边居中，宽度为legendwidth，高度则是plotregion的高度的2/3
+                Dim plotRegion As New GraphicsRegion With {
+                    .Size = g.Size,
+                    .Padding = scatterPadding
+                }
+                Dim scatterRegion As Rectangle = plotRegion.PlotRegion
+                Dim legendHeight! = scatterRegion.Height * 2 / 3
+                Dim legendLayout As New Rectangle With {
+                    .Size = New Size With {
+                        .Width = legendWidth,
+                        .Height = legendHeight
+                    },
+                    .Location = New Point With {
+                        .X = scatterRegion.Right,
+                        .Y = (scatterRegion.Height - legendHeight) / 2 + scatterPadding.Top
+                    }
+                }
+                Dim designer As SolidBrush() = colors _
+                    .Select(AddressOf TranslateColor) _
+                    .Select(Function(c) New SolidBrush(c)) _
+                    .ToArray
+                Dim rangeTicks = density _
+                    .pts _
+                    .Select(Function(pt) pt.Statics) _
+                    .IteratesALL _
+                    .Range _
+                    .CreateAxisTicks
+                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject
+                Dim legendTickFont As Font = CSSFont.TryParse(legendTickFontCSS).GDIObject
+                Dim legendTickStroke As Pen = Stroke.TryParse(legendTickStrokeCSS).GDIObject
+
+                Call Legends.ColorMapLegend(
+                    g, legendLayout, designer, rangeTicks,
+                    legendTitleFont, "Density",
+                    tickFont:=legendTickFont,
+                    tickAxisStroke:=legendTickStroke,
+                    unmapColor:=NameOf(Color.Gray))
 
                 If TypeOf g Is Graphics2D Then
                     Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size)
@@ -85,7 +182,7 @@ Namespace Heatmap
                 .ToDictionary(Function(index) index.Key,
                               Function(n) n.Count)
             Dim range As New IntRange(counts.Values)
-            Dim colorIndex As IntRange = {0, schema.Length - 1}
+            Dim colorIndex As New IntRange({0, schema.Length - 1})
             Dim density = gridIndex _
                 .Select(Function(index) counts(index.ToString)) _
                 .Select(Function(d)
@@ -98,10 +195,15 @@ Namespace Heatmap
                 .SeqIterator _
                 .Select(Function(pt)
                             Return New PointData With {
-                                .color = schema(density(pt)),
-                                .pt = pt
+                                .value = density(pt),
+                                .color = schema(CInt(.value)),
+                                .pt = pt,
+                                .Statics = {
+                                    CDbl(counts(gridIndex(pt).ToString))
+                                }
                             }
                         End Function) _
+                .OrderBy(Function(pt) pt.value) _
                 .ToArray
 
             Return New SerialData With {

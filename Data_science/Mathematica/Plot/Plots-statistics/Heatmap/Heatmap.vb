@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::6e9eddf5dbaf07f708b12a876ac34839, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Heatmaps\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::a285e3a931681c3516e468b4db258596, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Heatmap.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -115,7 +115,8 @@ Namespace Heatmap
                              Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
                              Optional legendWidth! = -1,
                              Optional legendHasUnmapped As Boolean = True,
-                             Optional legendSize$ = "600,100") As GraphicsData
+                             Optional legendSize$ = "600,100",
+                             Optional tick# = -1) As GraphicsData
 
             Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
             Dim array As DataSet() = data.ToArray
@@ -203,7 +204,8 @@ Namespace Heatmap
                 legendTitle, legendFont, Nothing,
                 min, max,
                 mainTitle, titleFont,
-                legendWidth, legendHasUnmapped, legendSize.SizeParser)
+                legendWidth, legendHasUnmapped, legendSize.SizeParser,
+                tick:=tick)
         End Function
     End Module
 End Namespace

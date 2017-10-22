@@ -1,10 +1,37 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::b72eb059e708db7e240d55ae500adabe, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\Utils.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sys = System.Math
 
 Namespace Imaging.BitmapImage
 
@@ -79,45 +106,6 @@ Namespace Imaging.BitmapImage
         End Function
 
         ''' <summary>
-        ''' 羽化
-        ''' </summary>
-        ''' <param name="Image"></param>
-        ''' <param name="y1"></param>
-        ''' <param name="y2"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <Extension> Public Function Vignette(image As Image, y1%, y2%, Optional renderColor As Color = Nothing) As Image
-            Using g As Graphics2D = image.CreateCanvas2D
-                With g
-                    Dim alpha As Integer = 0
-                    Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
-                    Dim offset As Double = 0
-
-                    If renderColor = Nothing OrElse renderColor.IsEmpty Then
-                        renderColor = Color.White
-                    End If
-
-                    For y As Integer = y1 To y2
-                        Dim color As Color = Color.FromArgb(alpha, renderColor.R, renderColor.G, renderColor.B)
-                        Dim pen As New Pen(color)
-
-                        .DrawLine(pen, New Point(0, y), New Point(.Width, y))
-                        alpha = CInt(255 * sys.Sin(offset) ^ 2)
-                        offset += delta
-                    Next
-
-                    Dim rect As New Rectangle With {
-                        .Location = New Point(0, y2),
-                        .Size = New Size(.Width, .Height - y2)
-                    }
-                    Call .FillRectangle(New SolidBrush(renderColor), rect)
-
-                    Return .ImageResource
-                End With
-            End Using
-        End Function
-
-        ''' <summary>
         ''' 将图像的多余的空白处给剪裁掉，确定边界，然后进行剪裁，使用这个函数需要注意下设置空白色，默认使用的空白色为<see cref="Color.White"/>
         ''' </summary>
         ''' <param name="res"></param>
@@ -168,6 +156,11 @@ Namespace Imaging.BitmapImage
                     If Not GDIColors.Equals(p, blankColor) Then
                         ' 在这里确定了左右
                         find = True
+
+                        If top > 0 Then
+                            top -= 1
+                        End If
+
                         Exit For
                     End If
                 Next
@@ -190,6 +183,11 @@ Namespace Imaging.BitmapImage
                     If Not GDIColors.Equals(p, blankColor) Then
                         ' 在这里确定了左右
                         find = True
+
+                        If left > 0 Then
+                            left -= 1
+                        End If
+
                         Exit For
                     End If
                 Next
@@ -215,6 +213,9 @@ Namespace Imaging.BitmapImage
                     If Not GDIColors.Equals(p, blankColor) Then
                         ' 在这里确定了左右
                         find = True
+
+                        bottom += 1
+
                         Exit For
                     End If
                 Next
@@ -237,6 +238,8 @@ Namespace Imaging.BitmapImage
                     If Not GDIColors.Equals(p, blankColor) Then
                         ' 在这里确定了左右
                         find = True
+                        right += 1
+
                         Exit For
                     End If
                 Next

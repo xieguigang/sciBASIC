@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::484c9978e93184eb9df5b24fcfd8abcb, ..\sciBASIC#\Data\DataFrame\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::39340e94ac53623782bf8ab0f13b421c, ..\sciBASIC#\Data\DataFrame\test\Module1.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-

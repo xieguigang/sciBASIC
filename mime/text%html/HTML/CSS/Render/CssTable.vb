@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2ff4278aa3a15a4bf65975fc0ebff01, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssTable.vb"
+﻿#Region "Microsoft.VisualBasic::39f304b96e1eae7e3019477ff8875cab, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssTable.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render

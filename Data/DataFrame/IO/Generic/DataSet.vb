@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d75ca1647386a054223e978b6d9c84fa, ..\sciBASIC#\Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::ebfeebd8804db826f373292e29bfb1dc, ..\sciBASIC#\Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 
 Namespace IO
 
@@ -87,14 +88,23 @@ Namespace IO
         ''' </param>
         ''' <returns></returns>
         Public Shared Function LoadDataSet(path$, Optional uidMap$ = Nothing) As IEnumerable(Of DataSet)
-            If uidMap Is Nothing Then
-                Dim first As New RowObject(path.ReadFirstLine)
-                uidMap = first.First
-            End If
+            Return LoadDataSet(Of DataSet)(path, uidMap)
+        End Function
+
+        Public Shared Function LoadDataSet(Of T As DataSet)(path$, Optional uidMap$ = Nothing) As IEnumerable(Of T)
             Dim map As New Dictionary(Of String, String) From {
-                {uidMap, NameOf(DataSet.ID)}
+                {
+                    uidMap Or New DefaultValue(Of String) With {
+                        .LazyValue = Function() __getID(path)
+                    }, NameOf(DataSet.ID)
+                }
             }
-            Return path.LoadCsv(Of DataSet)(explicit:=False, maps:=map)
+            Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
+        End Function
+
+        Private Shared Function __getID(path$) As String
+            Dim first As New RowObject(path.ReadFirstLine)
+            Return first.First
         End Function
     End Class
 End Namespace

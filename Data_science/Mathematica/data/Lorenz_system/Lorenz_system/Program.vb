@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ed6bcbdca481ecaead972ddbec9ecc6, ..\sciBASIC#\Data_science\Mathematica\data\Lorenz_system\Lorenz_system\Program.vb"
+﻿#Region "Microsoft.VisualBasic::210c603894c2d6286800acfae1fed3d3, ..\sciBASIC#\Data_science\Mathematica\data\Lorenz_system\Lorenz_system\Program.vb"
 
     ' Author:
     ' 
@@ -140,4 +140,3 @@ Module Program
         End Using
     End Sub
 End Module
-

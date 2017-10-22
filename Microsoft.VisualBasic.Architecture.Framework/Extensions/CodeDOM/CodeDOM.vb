@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2a097df510f15931257216d97bca47b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOM.vb"
+﻿#Region "Microsoft.VisualBasic::ec63574dd918de58cee8a605fb262c7c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeDOM.vb"
 
     ' Author:
     ' 
@@ -28,11 +28,13 @@
 
 Imports System.CodeDom
 Imports System.CodeDom.Compiler
+Imports System.Collections.Specialized
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Emit.CodeDOM_VBC
 
@@ -55,17 +57,16 @@ Namespace Emit.CodeDOM_VBC
         End Function
 
         <Extension> Public Function ImportsNamespace(refList As IEnumerable(Of String)) As CodeDom.CodeNamespaceImport()
-            Dim nsArray As List(Of CodeNamespaceImport) =
-                New List(Of CodeNamespaceImport) From {
-                    New CodeDom.CodeNamespaceImport("Microsoft.VisualBasic"),
-                    New CodeDom.CodeNamespaceImport("System"),
-                    New CodeDom.CodeNamespaceImport("System.Collections"),
-                    New CodeDom.CodeNamespaceImport("System.Collections.Generic"),
-                    New CodeDom.CodeNamespaceImport("System.Data"),
-                    New CodeDom.CodeNamespaceImport("System.Diagnostics"),
-                    New CodeDom.CodeNamespaceImport("System.Linq"),
-                    New CodeDom.CodeNamespaceImport("System.Xml.Linq"),
-                    New CodeDom.CodeNamespaceImport("System.Text.RegularExpressions")
+            Dim nsArray As New List(Of CodeNamespaceImport) From {
+                New CodeDom.CodeNamespaceImport("Microsoft.VisualBasic"),
+                New CodeDom.CodeNamespaceImport("System"),
+                New CodeDom.CodeNamespaceImport("System.Collections"),
+                New CodeDom.CodeNamespaceImport("System.Collections.Generic"),
+                New CodeDom.CodeNamespaceImport("System.Data"),
+                New CodeDom.CodeNamespaceImport("System.Diagnostics"),
+                New CodeDom.CodeNamespaceImport("System.Linq"),
+                New CodeDom.CodeNamespaceImport("System.Xml.Linq"),
+                New CodeDom.CodeNamespaceImport("System.Text.RegularExpressions")
             }
             Call nsArray.Add(refList.ToArray(Function(ns) New CodeNamespaceImport(ns)))
             Return nsArray.ToArray
@@ -82,17 +83,20 @@ Namespace Emit.CodeDOM_VBC
         ''' CodeDomProvider.GetCompilerInfo("VisualBasic").CreateProvider().GenerateCodeFromNamespace([NameSpace], sWriter, Options)
         ''' Modify the VisualBasic in to C#
         ''' </remarks>
-        <Extension> Public Function GenerateCode([NameSpace] As CodeDom.CodeNamespace, Optional CodeStyle As String = "VisualBasic") As String
-            Dim sBuilder As StringBuilder = New StringBuilder()
+        <Extension> Public Function GenerateCode([NameSpace] As CodeNamespace, Optional CodeStyle As String = "VisualBasic") As String
+            Dim code As New StringBuilder()
 
-            Using sWriter As IO.StringWriter = New System.IO.StringWriter(sBuilder)
+            Using sWriter As New StringWriter(code)
                 Dim Options As New CodeGeneratorOptions() With {
                     .IndentString = "  ",
                     .ElseOnClosing = True,
                     .BlankLinesBetweenMembers = True
                 }
-                CodeDomProvider.GetCompilerInfo(CodeStyle).CreateProvider().GenerateCodeFromNamespace([NameSpace], sWriter, Options)
-                Return sBuilder.ToString()
+                CodeDomProvider.GetCompilerInfo(CodeStyle) _
+                    .CreateProvider() _
+                    .GenerateCodeFromNamespace([NameSpace], sWriter, Options)
+
+                Return code.ToString()
             End Using
         End Function
 
@@ -108,8 +112,8 @@ Namespace Emit.CodeDOM_VBC
         <Extension> Public Function Compile(ObjectModel As CodeNamespace,
                                             Reference As String(),
                                             DotNETReferenceAssembliesDir As String,
-                                            Optional CodeStyle As String = "VisualBasic") As System.Reflection.Assembly
-            Dim assembly As New CodeDom.CodeCompileUnit
+                                            Optional CodeStyle As String = "VisualBasic") As Assembly
+            Dim assembly As New CodeCompileUnit
             Call assembly.Namespaces.Add(ObjectModel)
             Return Compile(assembly, Reference, DotNETReferenceAssembliesDir, CodeStyle)
         End Function
@@ -123,14 +127,15 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="CodeStyle">VisualBasic, C#</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function Compile(ObjectModel As CodeDom.CodeNamespace,
+        <Extension> Public Function Compile(ObjectModel As CodeNamespace,
                                             Reference As String(),
                                             DotNETReferenceAssembliesDir As String,
-                                            Options As CodeDom.Compiler.CompilerParameters,
-                                            Optional CodeStyle As String = "VisualBasic") As System.Reflection.Assembly
-            Dim assembly = New CodeDom.CodeCompileUnit
-            Call assembly.Namespaces.Add(ObjectModel)
-            Return Compile(assembly, Reference, DotNETReferenceAssembliesDir, Options, CodeStyle)
+                                            Options As CompilerParameters,
+                                            Optional CodeStyle As String = "VisualBasic") As Assembly
+            With New CodeCompileUnit
+                Call .Namespaces.Add(ObjectModel)
+                Return .Compile(Reference, DotNETReferenceAssembliesDir, Options, CodeStyle)
+            End With
         End Function
 
         ''' <summary>
@@ -142,16 +147,16 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="CodeStyle">VisualBasic, C#</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function Compile(ObjectModel As CodeDom.CodeCompileUnit,
+        <Extension> Public Function Compile(ObjectModel As CodeCompileUnit,
                                             Reference As String(),
                                             DotNETReferenceAssembliesDir As String,
-                                            Optional CodeStyle As String = "VisualBasic") As System.Reflection.Assembly
+                                            Optional CodeStyle As String = "VisualBasic") As Assembly
 
-            Dim Options As CodeDom.Compiler.CompilerParameters = New CodeDom.Compiler.CompilerParameters
-            Options.GenerateInMemory = True
-            Options.IncludeDebugInformation = False
-            Options.GenerateExecutable = False
-
+            Dim Options As New CompilerParameters With {
+                .GenerateInMemory = True,
+                .IncludeDebugInformation = False,
+                .GenerateExecutable = False
+            }
             Return Compile(ObjectModel, Reference, DotNETReferenceAssembliesDir, Options, CodeStyle)
         End Function
 
@@ -159,9 +164,9 @@ Namespace Emit.CodeDOM_VBC
         ''' .exe的编译配置文件
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ExecutableProfile As CodeDom.Compiler.CompilerParameters
+        Public ReadOnly Property ExecutableProfile As CompilerParameters
             Get
-                Dim Options As CompilerParameters = New CompilerParameters
+                Dim Options As New CompilerParameters
                 Options.GenerateInMemory = False
                 Options.IncludeDebugInformation = True
                 Options.GenerateExecutable = True
@@ -174,20 +179,23 @@ Namespace Emit.CodeDOM_VBC
         ''' .Dll的编译配置文件
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property DllProfile As CodeDom.Compiler.CompilerParameters
+        Public ReadOnly Property DllProfile As CompilerParameters
             Get
-                Dim Options As CodeDom.Compiler.CompilerParameters = New CodeDom.Compiler.CompilerParameters
+                Dim Options As New CompilerParameters
                 Options.GenerateInMemory = False
                 Options.IncludeDebugInformation = True
                 Options.GenerateExecutable = False
+
                 Return Options
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CompileExe(assm As CodeCompileUnit, ref As String(), SDK As String, Optional codeStyle As String = "VisualBasic") As Assembly
             Return Compile(assm, ref, SDK, ExecutableProfile, codeStyle)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CompileDll(assm As CodeCompileUnit,
                                    ref As IEnumerable(Of String),
@@ -205,27 +213,33 @@ Namespace Emit.CodeDOM_VBC
         ''' <param name="CodeStyle">VisualBasic, C#</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function Compile(ObjectModel As CodeDom.CodeCompileUnit,
+        <Extension> Public Function Compile(ObjectModel As CodeCompileUnit,
                                             Reference As String(),
                                             DotNETReferenceAssembliesDir As String,
-                                            Options As CodeDom.Compiler.CompilerParameters,
-                                            Optional CodeStyle As String = "VisualBasic") As System.Reflection.Assembly
+                                            Options As CompilerParameters,
+                                            Optional CodeStyle As String = "VisualBasic") As Assembly
 
-            Dim CodeDomProvider As CodeDom.Compiler.CodeDomProvider = CodeDom.Compiler.CodeDomProvider.CreateProvider(CodeStyle)
+            Dim CodeDomProvider As CodeDomProvider = CodeDomProvider.CreateProvider(CodeStyle)
+            Dim refs As StringCollection = Options.ReferencedAssemblies
 
             If Not Reference.IsNullOrEmpty Then
-                Call Options.ReferencedAssemblies.AddRange((From path As String In Reference
-                                                            Where Array.IndexOf(DotNETFramework, basename(path)) = -1
-                                                            Select path).ToArray)
+                With From path As String
+                     In Reference
+                     Where Array.IndexOf(DotNETFramework, BaseName(path)) = -1
+                     Select path
+
+                    Call refs.AddRange(.ref.ToArray)
+                End With
             End If
 
-            Call Options.ReferencedAssemblies.AddRange(New String() {
-               DotNETReferenceAssembliesDir & "\System.dll",
-               DotNETReferenceAssembliesDir & "\System.Core.dll",
-               DotNETReferenceAssembliesDir & "\System.Data.dll",
-               DotNETReferenceAssembliesDir & "\System.Data.DataSetExtensions.dll",
-               DotNETReferenceAssembliesDir & "\System.Xml.dll",
-               DotNETReferenceAssembliesDir & "\System.Xml.Linq.dll"})
+            Call refs.AddRange({
+                DotNETReferenceAssembliesDir & "\System.dll",
+                DotNETReferenceAssembliesDir & "\System.Core.dll",
+                DotNETReferenceAssembliesDir & "\System.Data.dll",
+                DotNETReferenceAssembliesDir & "\System.Data.DataSetExtensions.dll",
+                DotNETReferenceAssembliesDir & "\System.Xml.dll",
+                DotNETReferenceAssembliesDir & "\System.Xml.Linq.dll"
+            })
 
             Dim Compiled = CodeDomProvider.CompileAssemblyFromDom(Options, ObjectModel)
 
@@ -247,22 +261,30 @@ Namespace Emit.CodeDOM_VBC
             "System.Xml.Linq"
         }
 
+        ''' <summary>
+        ''' Output logs
+        ''' </summary>
+        ''' <param name="CompiledResult"></param>
+        ''' <param name="Assembly"></param>
+        ''' <returns></returns>
         <Extension> Public Function GetDebugInformation(CompiledResult As CompilerResults, Assembly As CodeCompileUnit) As String
-            Dim sBuilder As StringBuilder = New StringBuilder
-            Call sBuilder.AppendLine(GenerateCode(Assembly.Namespaces.Item(0)) & vbCrLf)
+            With New StringBuilder
+                Call .AppendLine(GenerateCode(Assembly.Namespaces.Item(0)) & vbCrLf)
 
-            sBuilder.AppendLine("Error Information: ")
-            For Each [Error] In CompiledResult.Errors
-                sBuilder.AppendLine([Error].ToString)
-            Next
-            sBuilder.AppendLine(vbCrLf & "Compiler Output:")
-            For Each Line As String In CompiledResult.Output
-                sBuilder.AppendLine(Line)
-            Next
+                Call .AppendLine("Error Information: ")
 
-            Call sBuilder.ToString.SaveTo(".\CodeDom.log")
+                For Each [Error] In CompiledResult.Errors
+                    .AppendLine([Error].ToString)
+                Next
 
-            Return sBuilder.ToString
+                Call .AppendLine(vbCrLf & "Compiler Output:")
+                For Each Line As String In CompiledResult.Output
+                    .AppendLine(Line)
+                Next
+
+                Call .ToString.SaveTo(".\CodeDom.log")
+                Return .ToString
+            End With
         End Function
     End Module
 End Namespace

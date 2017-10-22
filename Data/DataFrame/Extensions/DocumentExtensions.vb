@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::239c27e46d651f0bccc3bc19d3a8a608, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d1622510ea8bd6fb9b8abf9d6893d8bc, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -269,5 +269,38 @@ Public Module DocumentExtensions
     <Extension>
     Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As IO.File
         Return IO.File.Load(path, encoding.CodePage)
+    End Function
+
+    ''' <summary>
+    ''' 这个函数会自动判断对象的格式为tsv还是csv文件格式
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 采样前几行的数据，假若是csv文件的话，则逗号出现的频率要高于tab分隔符，反之亦然
+    ''' </remarks>
+    <Extension>
+    Public Function LoadTable(path$, Optional encoding As Encodings = Encodings.UTF8, Optional sampling% = 20) As IO.File
+        Dim csv%() = New Integer(sampling) {}
+        Dim tsv%() = New Integer(sampling) {}
+        Dim i%
+
+        For Each line As String In path.IterateAllLines(encoding)
+            If i < sampling Then
+                csv(i) = line.Count(","c)
+                tsv(i) = line.Count(ASCII.TAB)
+
+                i += 1
+            Else
+                Exit For
+            End If
+        Next
+
+        If tsv.Average <= csv.Average Then
+            Return IO.File.Load(path, encoding.CodePage)
+        Else
+            Return IO.File.LoadTsv(path, encoding)
+        End If
     End Function
 End Module

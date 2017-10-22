@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1cfa60fc7dd7bcd3266d034149ef508, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\SimpleConfig.vb"
+﻿#Region "Microsoft.VisualBasic::12b1342bd6c52d96e702bba16ac4a44f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\SimpleConfig.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
@@ -42,6 +43,7 @@ Namespace ComponentModel.Settings
         Public Shared ReadOnly Property TypeInfo As Type = GetType(SimpleConfig)
         Public ReadOnly Property Name As String
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(Optional Name As String = "", Optional toLower As Boolean = True)
             Me._Name = Name
             Me._ToLower = toLower

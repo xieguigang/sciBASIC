@@ -1,4 +1,32 @@
-﻿Imports Microsoft.VisualBasic.Language.Perl
+﻿#Region "Microsoft.VisualBasic::df81643b03c44a190d7685bb4893e39b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Default.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports Microsoft.VisualBasic.Language.Perl
 
 Namespace Language
 
@@ -62,8 +90,16 @@ Namespace Language
         ''' <returns></returns>
         Public Shared Operator Or(obj As T, [default] As DefaultValue(Of T)) As T
             With [default]
-                If .assert(obj) Then
-                    Return .Value
+                Dim assert As Assert(Of Object)
+
+                If .assert Is Nothing Then
+                    assert = AddressOf ExceptionHandler.Default
+                Else
+                    assert = .assert
+                End If
+
+                If assert(obj) Then
+                    Return .DefaultValue
                 Else
                     Return obj
                 End If

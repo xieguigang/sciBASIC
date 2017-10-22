@@ -1,5 +1,34 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::df5acd57da01f9dfc0f1fefdfc405ef0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\CType\CastStringVector.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Scripting.Runtime
 
@@ -15,6 +44,21 @@ Namespace Scripting.Runtime
         <Extension>
         Public Function AsDouble(source As IEnumerable(Of String)) As Double()
             Return source.AsType(Of Double).ToArray
+        End Function
+
+        <Extension>
+        Public Function AsNumeric(source As IEnumerable(Of String)) As Double()
+            Return source _
+                .Select(Function(s) s.ParseNumeric) _
+                .ToArray
+        End Function
+
+        <Extension>
+        Public Function AsDouble(singles As IEnumerable(Of Single)) As Double()
+            Return singles _
+                .SafeQuery _
+                .Select(Function(s) CDbl(s)) _
+                .ToArray
         End Function
 
         <Extension>

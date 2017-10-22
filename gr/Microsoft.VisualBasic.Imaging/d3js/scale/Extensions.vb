@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae1cde17a8a8314dff9c7ad9cd02cbef, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7fe97b8cd48b18d2bfb403c501625f99, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\Extensions.vb"
 
     ' Author:
     ' 

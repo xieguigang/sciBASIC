@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6f063749f236726e3e00d2c26efac29, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssPropertyAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::90ac2d7d69ee44c36d049059919386d5, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssPropertyAttribute.vb"
 
     ' Author:
     ' 
@@ -26,22 +26,18 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
-
 Namespace HTML.CSS.Render
 
     ''' <summary>
     ''' Used to mark a property as a Css property.
     ''' The <see cref="Name"/> property is used to specify the oficial CSS name
     ''' </summary>
-    Public Class CssPropertyAttribute
-        Inherits Attribute
-#Region "Fields"
-        Private _name As String
-#End Region
+    Public Class CssPropertyAttribute : Inherits Attribute
 
-#Region "Ctor"
+        ''' <summary>
+        ''' Gets or sets the name of the CSS property
+        ''' </summary>
+        Public Property Name() As String
 
         ''' <summary>
         ''' Creates a new CssPropertyAttribute
@@ -50,23 +46,9 @@ Namespace HTML.CSS.Render
         Public Sub New(name As String)
             Me.Name = name
         End Sub
-#End Region
 
-#Region "Properties"
-
-        ''' <summary>
-        ''' Gets or sets the name of the CSS property
-        ''' </summary>
-        Public Property Name() As String
-            Get
-                Return _name
-            End Get
-            Set
-                _name = value
-            End Set
-        End Property
-
-
-#End Region
+        Public Overrides Function ToString() As String
+            Return Name
+        End Function
     End Class
 End Namespace
