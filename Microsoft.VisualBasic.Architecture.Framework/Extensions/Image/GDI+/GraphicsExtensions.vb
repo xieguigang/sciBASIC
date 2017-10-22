@@ -53,6 +53,11 @@ Namespace Imaging
     Public Module GraphicsExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function PointF(polygon As IEnumerable(Of Point)) As IEnumerable(Of PointF)
+            Return polygon.Select(Function(pt) New PointF(pt.X, pt.Y))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function SizeF(size As Size) As SizeF
             Return New SizeF(size.Width, size.Height)
