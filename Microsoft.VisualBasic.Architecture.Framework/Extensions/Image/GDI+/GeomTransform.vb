@@ -39,6 +39,30 @@ Namespace Imaging
 
     <Package("GDI.Transform")> Public Module GeomTransform
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MirrorX(pt As PointF, rect As RectangleF) As PointF
+            Return New PointF With {
+                .X = rect.Right - (pt.X - rect.Left),
+                .Y = pt.Y
+            }
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="pt">假设<paramref name="pt"/>是位于<paramref name="rect"/>内部的</param>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MirrorY(pt As PointF, rect As RectangleF) As PointF
+            Return New PointF With {
+                .X = pt.X,
+                .Y = rect.Bottom - (pt.Y - rect.Top)
+            }
+        End Function
+
         ''' <summary>
         ''' <see cref="Graphics.DrawEllipse(Pen, RectangleF)"/>
         ''' </summary>

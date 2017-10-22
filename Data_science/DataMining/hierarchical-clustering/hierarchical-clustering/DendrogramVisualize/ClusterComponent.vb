@@ -90,6 +90,7 @@ Namespace DendrogramVisualize
                     Dim d% = dotRadius * 2
                     g.FillEllipse(Brushes.Black, x1 - dotRadius, y1 - dotRadius, d, d)
                 End If
+
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
                 If Cluster.Leaf Then
@@ -104,6 +105,7 @@ Namespace DendrogramVisualize
                     If args.ShowLabelName Then
                         g.DrawString(Cluster.Name, fontMetrics, Brushes.Black, location)
                     End If
+
                     labels += New NamedValue(Of PointF) With {
                         .Name = Cluster.Name,
                         .Value = location
@@ -118,6 +120,7 @@ Namespace DendrogramVisualize
                         g.FillRectangle(color, rect)
                     End If
                 End If
+
                 If .decorated AndAlso
                     Cluster.Distance IsNot Nothing AndAlso
                     (Not Cluster.Distance.NaN) AndAlso
