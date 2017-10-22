@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea2d120698ce4aea950992d6cf6c0a04, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::645ee7db5b74dd1407f2a3b0fba2f414, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -62,12 +62,14 @@ B21,B22,B23,...
         ''' </summary>
         ''' <returns></returns>
         Public Overridable ReadOnly Property Headers As RowObject
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _innerTable?.FirstOrDefault
             End Get
         End Property
 
         Public ReadOnly Property Rows As RowObject()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _innerTable.ToArray
             End Get
@@ -89,6 +91,8 @@ B21,B22,B23,...
         ''' Creates csv file object from the rows data.
         ''' </summary>
         ''' <param name="data"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(data As IEnumerable(Of RowObject))
             _innerTable = data.AsList
         End Sub
@@ -150,6 +154,7 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property Width As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _innerTable _
                     .Select(Function(row) row.NumbersOfColumn) _
@@ -237,18 +242,22 @@ B21,B22,B23,...
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine(Row As RowObject)
             Call _innerTable.Add(Row)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine(row As IEnumerable(Of String))
             Call _innerTable.Add(New RowObject(row))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine()
             Call _innerTable.Add(New String() {" "})
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Append(dataframe As File)
             Call _innerTable.AddRange(dataframe._innerTable)
         End Sub
@@ -320,18 +329,22 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Cell(X As Integer, Y As Integer) As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _innerTable(X).Column(Y)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As String)
                 _innerTable(X).Column(Y) = value
             End Set
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return FilePath.ToFileURL
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToArray() As RowObject()
             Return _innerTable.ToArray
         End Function

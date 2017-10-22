@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc1cccc2b1a6b02034c82a4b142506a3, ..\sciBASIC#\Data\DataFrame\Extensions\ProfileStreams.vb"
+﻿#Region "Microsoft.VisualBasic::390ee1b617157f74350368dcd042b428, ..\sciBASIC#\Data\DataFrame\Extensions\ProfileStreams.vb"
 
     ' Author:
     ' 
@@ -46,13 +46,13 @@ Public Module ProfileStreams
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function WriteProfiles(Of T As IProfile)(x As T, path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean
+    Public Function WriteProfiles(Of T As {New, IProfile})(x As T, path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean
         Dim buf As ProfileTable() = x.GenerateProfiles
-        Return buf.SaveTo(path, encoding.CodePage)
+        Return buf.SaveTo(path, encoding:=encoding.CodePage)
     End Function
 
     <Extension>
-    Public Function GenerateProfiles(Of T As IProfile)(x As T) As ProfileTable()
+    Public Function GenerateProfiles(Of T As {New, IProfile})(x As T) As ProfileTable()
         Dim settings As New Settings(Of T)(x)
         Dim buf As ProfileTable() =
             LinqAPI.Exec(Of ProfileTable) <= From config As BindMapping
@@ -69,7 +69,7 @@ Public Module ProfileStreams
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function LoadProfiles(Of T As IProfile)(path As String, Optional encoding As Encodings = Encodings.UTF8) As T
+    Public Function LoadProfiles(Of T As {New, IProfile})(path As String, Optional encoding As Encodings = Encodings.UTF8) As T
         Dim buf As ProfileTable() = path.LoadCsv(Of ProfileTable)(encoding:=encoding.CodePage).ToArray
         Dim config As Settings(Of T) = Settings(Of T).CreateEmpty
 

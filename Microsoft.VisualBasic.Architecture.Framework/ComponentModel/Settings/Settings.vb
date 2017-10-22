@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b504a9912edb1c55cd614471517c34bb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::0b3b780cceb518bd7209ca6e519fcbbf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Settings.vb"
 
     ' Author:
     ' 
@@ -26,21 +26,22 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 #If NET_40 = 0 Then
 
 Namespace ComponentModel.Settings
 
-    Public Class Settings(Of T As IProfile) : Inherits ConfigEngine
-        Implements System.IDisposable
+    Public Class Settings(Of T As {New, IProfile}) : Inherits ConfigEngine
+        Implements IDisposable
 
         ''' <summary>
         ''' The target object instance that provides the data source for this config engine.
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property SettingsData As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return DirectCast(_SettingsData, T)
             End Get
@@ -53,6 +54,8 @@ Namespace ComponentModel.Settings
         ''' 从配置数据的实例对象创建配置映射
         ''' </summary>
         ''' <param name="config"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(config As T)
             Call MyBase.New(config)
         End Sub
@@ -90,15 +93,18 @@ Namespace ComponentModel.Settings
         ''' </summary>
         ''' <param name="Data"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Function Load(Data As T) As Settings(Of T)
             Return New Settings(Of T)(Data)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateEmpty() As Settings(Of T)
-            Dim x As T = Activator.CreateInstance(Of T)
-            Return New Settings(Of T)(x)
+            Return New Settings(Of T)(Activator.CreateInstance(Of T))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(Settings As Settings(Of T)) As T
             Return Settings.SettingsData
         End Operator

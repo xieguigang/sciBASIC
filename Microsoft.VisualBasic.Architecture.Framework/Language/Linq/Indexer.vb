@@ -39,11 +39,11 @@ Namespace Language
 
             If type Is GetType(Integer) Then
                 Return {DirectCast(args, Integer)}
-            ElseIf type.ImplementsInterface(GetType(IEnumerable(Of Integer))) Then
+            ElseIf type.ImplementInterface(GetType(IEnumerable(Of Integer))) Then
                 Return DirectCast(args, IEnumerable(Of Integer))
-            ElseIf type.ImplementsInterface(GetType(IEnumerable(Of Boolean))) Then
+            ElseIf type.ImplementInterface(GetType(IEnumerable(Of Boolean))) Then
                 Return Which.IsTrue(DirectCast(args, IEnumerable(Of Boolean)))
-            ElseIf type.ImplementsInterface(GetType(IEnumerable(Of Object))) Then
+            ElseIf type.ImplementInterface(GetType(IEnumerable(Of Object))) Then
                 Dim array = DirectCast(args, IEnumerable(Of Object)).ToArray
 
                 With array(Scan0).GetType

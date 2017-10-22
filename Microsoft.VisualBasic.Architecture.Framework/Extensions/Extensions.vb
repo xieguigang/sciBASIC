@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::218972c74de624a70b0f091f1a65cfa0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::548d8db240539b239a3820852951bfd8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -84,6 +84,7 @@ Public Module Extensions
     ''' <param name="data"></param>
     ''' <returns></returns>
     <Extension>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Range(data As IEnumerable(Of Double), Optional scale# = 1) As DoubleRange
         Return New DoubleRange(data) * scale
     End Function
@@ -93,6 +94,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="x#"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Log2(x#) As Double
         Return sys.Log(x, newBase:=2)
     End Function
@@ -105,6 +108,8 @@ Public Module Extensions
     ''' <remarks>
     ''' 因为直接使用vb的<see cref="Val"/>函数转换，在Linux上面可能会出错，所以需要在这里用.NET自己的方法来转换
     ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetHexInteger(hex$) As Integer
         Dim num% = Integer.Parse(hex, NumberStyles.HexNumber)
         Return num
@@ -150,6 +155,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="t"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function FormatTime(t As TimeSpan) As String
         With t
@@ -169,6 +176,8 @@ Public Module Extensions
     ''' <typeparam name="V"></typeparam>
     ''' <param name="d"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function KeysJson(Of V)(d As Dictionary(Of String, V)) As String
         Return d.Keys.ToArray.GetJson
@@ -196,6 +205,7 @@ Public Module Extensions
         Return Nothing
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function MD5(s$) As String
         Return s.GetMd5Hash
     End Function
@@ -678,7 +688,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As IEnumerable(Of T())
-        Dim buf As T() = source.ToArray
+        Dim buf As T() = source.SafeQuery.ToArray
         Dim n As Integer = buf.Length
         Dim count As Integer
 
@@ -1515,36 +1525,6 @@ Public Module Extensions
         Dim Random As Integer() = source.Shuffles
         Return Random
     End Function
-
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Get a specific item value from the target collction data using its UniqueID property，
-    ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="INamedValue">
-    ''' </see>类型的集合之中的某一个对象，请尽量先转换为字典对象，在使用该字典对象进行查找以提高代码效率，使用本方法的优点是可以选择忽略<paramref name="uid">
-    ''' </paramref>参数之中的大小写，以及对集合之中的存在相同的Key的这种情况的容忍)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="uid"></param>
-    ''' <param name="IgnoreCase"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("Get.Item")>
-    <Extension> Public Function GetById(Of T As INamedValue)(
-                                      source As IEnumerable(Of T),
-                                         uid As String,
-                         Optional IgnoreCase As StringComparison = StringComparison.Ordinal) _
-                                             As T
-
-        Dim find As T = LinqAPI.DefaultFirst(Of T) <=
-            From x As T
-            In source
-            Where String.Equals(uid, x.Key, IgnoreCase)
-            Select x
-
-        Return find
-    End Function
-#End If
 
 #If FRAMEWORD_CORE Then
     ''' <summary>

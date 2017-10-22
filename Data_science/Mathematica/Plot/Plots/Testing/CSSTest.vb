@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bd5957176289c21f33c60ec20888fba, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\CSSTest.vb"
+﻿#Region "Microsoft.VisualBasic::d6efb5d0b795b760c96c7061629a661e, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\CSSTest.vb"
 
     ' Author:
     ' 
@@ -36,4 +36,3 @@ Module CSSTest
         Call GetType(DensityPlot).LoadDriver(DensityPlot.DriverName).CSSTemplate.SaveTo("./density.plot.css")
     End Sub
 End Module
-

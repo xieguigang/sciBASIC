@@ -35,7 +35,7 @@ Namespace Parser
     ''' <summary>
     ''' Dictionary/Array in javascript
     ''' </summary>
-    Public Class JsonObject : Inherits JsonElement
+    Public Class JsonObject : Inherits JsonModel
         Implements IEnumerable(Of NamedValue(Of JsonElement))
 
         Dim array As New Dictionary(Of String, JsonElement)
@@ -50,7 +50,11 @@ Namespace Parser
 
         Default Public Overloads Property Item(key As String) As JsonElement
             Get
-                Return array(key)
+                If array.ContainsKey(key) Then
+                    Return array(key)
+                Else
+                    Return Nothing
+                End If
             End Get
             Set(value As JsonElement)
                 array(key) = value

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f366413a1b5eaf3d72e9e36f364e7b6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\IniFile.vb"
+﻿#Region "Microsoft.VisualBasic::d126a3f20b2b54a2ba888922064440ca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\IniFile.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
@@ -106,6 +107,7 @@ Namespace ComponentModel.Settings.Inf
             Return path.ToFileURL
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteValue(Section As String, Key As String, Value As String)
             Call WritePrivateProfileString(Section, Key, Value, Me.path)
         End Sub

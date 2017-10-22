@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73272ea5d5512347cada1a8d47b14208, ..\sciBASIC#\Data\DataFrame\DATA\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::da1261cbad03f3ac37f143cc55c58e52, ..\sciBASIC#\Data\DataFrame\DATA\DataFrame.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -42,6 +43,7 @@ Namespace DATA
         ''' </summary>
         Dim entityList As Dictionary(Of EntityObject)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(list As IEnumerable(Of EntityObject))
             entityList = list.ToDictionary
         End Sub
@@ -51,6 +53,8 @@ Namespace DATA
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [As](Of T As Class)() As T()
             Return entityList.Values _
                 .ToCsvDoc _
@@ -71,6 +75,7 @@ Namespace DATA
         ''' <param name="path$"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SaveTable(path$, Optional encoding As Encodings = Encodings.UTF8) As Boolean
             Return entityList.Values.SaveTo(path, encoding:=encoding.CodePage, strict:=False)
         End Function
@@ -81,6 +86,8 @@ Namespace DATA
         ''' <param name="path$"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Load(path$, Optional encoding As Encodings = Encodings.Default) As DataFrame
             Return New DataFrame(EntityObject.LoadDataSet(path))
         End Function

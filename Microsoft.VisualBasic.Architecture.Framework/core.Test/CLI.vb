@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35cc9d6a62d5e1abe98556123024d1f2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::5aba667920bb9c6fb79d7ef5a020f704, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\CLI.vb"
 
     ' Author:
     ' 

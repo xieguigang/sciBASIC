@@ -84,6 +84,7 @@ Namespace IO
         ''' <param name="data"></param>
         ''' <param name="keys$"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Project(data As IEnumerable(Of DataSet), keys$()) As IEnumerable(Of DataSet)
             Return data _
@@ -97,6 +98,7 @@ Namespace IO
                         End Function)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function PropertyNames(table As IDictionary(Of String, DataSet)) As String()
             Return table.Values.PropertyNames
@@ -107,6 +109,8 @@ Namespace IO
         ''' </summary>
         ''' <param name="list"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function PropertyNames(list As IEnumerable(Of DataSet)) As String()
             Return list _
@@ -116,6 +120,7 @@ Namespace IO
                 .ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
             Return datasets _
@@ -123,6 +128,7 @@ Namespace IO
                 .ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function NamedMatrix(data As IEnumerable(Of DataSet)) As NamedValue(Of Dictionary(Of String, Double))()
             Return data _
@@ -177,6 +183,7 @@ Namespace IO
         ''' <param name="data"></param>
         ''' <param name="key$"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Values(data As IEnumerable(Of EntityObject), key$) As String()
             Return data _
@@ -184,6 +191,7 @@ Namespace IO
                 .ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsDataSet(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of DataSet)
             Return data.Select(Function(obj) New DataSet With {.ID = obj.Name, .Properties = obj.Value})

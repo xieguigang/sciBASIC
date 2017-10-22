@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d5f0ba3326ed88e3c4645e85cd448c5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::8ee7883ced9f07167e3257fe3cb550cf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -173,14 +173,17 @@ Namespace Linq
             value = x
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return Me.GetJson(False)
+            Return Me.value.GetJson(False)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As T
             Return x.value
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As Integer
             Return x.i
         End Operator
@@ -190,6 +193,7 @@ Namespace Linq
             Return list
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Mod(i As SeqValue(Of T), n%) As Integer
             Return i.i Mod n
         End Operator
@@ -207,6 +211,8 @@ Namespace Linq
         ''' Dim x As T = ++p
         ''' ```
         ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(x As SeqValue(Of T)) As T
             Return x.value
         End Operator
@@ -216,6 +222,8 @@ Namespace Linq
         ''' </summary>
         ''' <param name="other"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CompareTo(other As Integer) As Integer Implements IComparable(Of Integer).CompareTo
             Return i.CompareTo(other)
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e86402302c95ee792934a5e4dcd7b6d3, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\g\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::3e13d3075ae25185f2dd3839ed9ab296, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\g\Grid.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5204d88e2d70d482be5ed01c0edcf2ca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LangModels\Token.vb"
+﻿#Region "Microsoft.VisualBasic::8442b5511d4d38c00b4606303d901d89, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LangModels\Token.vb"
 
     ' Author:
     ' 
@@ -152,9 +152,10 @@ Namespace Scripting.TokenIcer
 
         Public Overrides Function ToString() As String
             If UNDEFINED Then
-                Return "UNDEFINED --> " & Value
+                Return "* " & Value
+            Else
+                Return $"[{name}] {Value}"
             End If
-            Return $"[{name}]" & vbTab & Value
         End Function
 
         Public Function GetValue() As Object

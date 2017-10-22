@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Resource Description Framework")> 
-<Assembly: AssemblyDescription("Resource Description Framework")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("RDF")> 
-<Assembly: AssemblyCopyright("Copyright ©  2014")> 
+<Assembly: AssemblyTitle("Resource Description Framework")>
+<Assembly: AssemblyDescription("Supports for application/rdf+xml MIME type")>
+<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyProduct("application/rdf+xml")>
+<Assembly: AssemblyCopyright("Copyright © gpl3 2017")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
