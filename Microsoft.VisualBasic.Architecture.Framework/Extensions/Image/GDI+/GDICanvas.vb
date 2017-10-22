@@ -8,7 +8,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
-    Public Class GDICanvas : Inherits IGraphics
+    Public MustInherit Class GDICanvas : Inherits IGraphics
         Implements IDisposable
 
         Protected g As Graphics

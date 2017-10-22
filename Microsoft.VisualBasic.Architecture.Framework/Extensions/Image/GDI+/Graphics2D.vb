@@ -192,11 +192,11 @@ Namespace Imaging
                 .g = g,
                 .Font = New Font(FontFace.MicrosoftYaHei, 12),
                 .Stroke = Pens.Black,
-                .InterpolationMode = InterpolationMode.HighQualityBicubic,
-                .PixelOffsetMode = PixelOffsetMode.HighQuality,
-                .CompositingQuality = CompositingQuality.HighQuality,
-                .SmoothingMode = SmoothingMode.HighQuality,
-                .TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+                .InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic,
+                .PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality,
+                .CompositingQuality = Drawing2D.CompositingQuality.HighQuality,
+                .SmoothingMode = Drawing2D.SmoothingMode.HighQuality,
+                .TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit
             }
                 ' .Clear(Color.Transparent)
                 Return .ref
