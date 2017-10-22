@@ -32,7 +32,6 @@ Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sys = System.Math
 
 Namespace Imaging.BitmapImage
 
@@ -104,45 +103,6 @@ Namespace Imaging.BitmapImage
                     Return Bitmap
                 End Using
             End SyncLock
-        End Function
-
-        ''' <summary>
-        ''' 羽化
-        ''' </summary>
-        ''' <param name="Image"></param>
-        ''' <param name="y1"></param>
-        ''' <param name="y2"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <Extension> Public Function Vignette(image As Image, y1%, y2%, Optional renderColor As Color = Nothing) As Image
-            Using g As Graphics2D = image.CreateCanvas2D
-                With g
-                    Dim alpha As Integer = 0
-                    Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
-                    Dim offset As Double = 0
-
-                    If renderColor = Nothing OrElse renderColor.IsEmpty Then
-                        renderColor = Color.White
-                    End If
-
-                    For y As Integer = y1 To y2
-                        Dim color As Color = Color.FromArgb(alpha, renderColor.R, renderColor.G, renderColor.B)
-                        Dim pen As New Pen(color)
-
-                        .DrawLine(pen, New Point(0, y), New Point(.Width, y))
-                        alpha = CInt(255 * sys.Sin(offset) ^ 2)
-                        offset += delta
-                    Next
-
-                    Dim rect As New Rectangle With {
-                        .Location = New Point(0, y2),
-                        .Size = New Size(.Width, .Height - y2)
-                    }
-                    Call .FillRectangle(New SolidBrush(renderColor), rect)
-
-                    Return .ImageResource
-                End With
-            End Using
         End Function
 
         ''' <summary>
