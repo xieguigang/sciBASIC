@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ba8235fd56964ebb23cfba2348edccf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\SoftwareToolkits\Ngen\Registry.vb"
+﻿#Region "Microsoft.VisualBasic::64625ae6702b8f28df8c85a6224313e0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\VBDev\Ngen\Registry.vb"
 
     ' Author:
     ' 
@@ -26,11 +26,29 @@
 
 #End Region
 
+Imports System.Reflection
+Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.Win32
 
 Namespace ApplicationServices
 
     Public Module RegistryUtils
+
+        ''' <summary>
+        ''' Register a .NET dll file as a COM component.(将某一个.NET语言所编写的DLL文件注册为COM组件)
+        ''' </summary>
+        ''' <param name="COM_Dll"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <ExportAPI("RegAsm")>
+        Public Function RegisterCOMDll(<Parameter("COM.Dll", "The file path of the DLL file which will be registered as a COM component.")> COM_Dll As String) As Boolean
+            Dim Asm As Assembly = Assembly.LoadFile(COM_Dll)
+            Dim regAsm As New RegistrationServices
+            Dim bResult As Boolean = regAsm.RegisterAssembly(Asm, AssemblyRegistrationFlags.SetCodeBase)
+            Return bResult
+        End Function
 
         ''' <summary>
         ''' ### Registering Extensions of the .NET Framework

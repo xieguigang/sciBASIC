@@ -25,6 +25,8 @@ Partial Class FormFinish
         Me.Label4 = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.SuspendLayout()
         '
         'ButtonNext
@@ -46,7 +48,7 @@ Partial Class FormFinish
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(400, 232)
+        Me.LinkLabel1.Location = New System.Drawing.Point(402, 222)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(135, 19)
         Me.LinkLabel1.TabIndex = 5
@@ -56,18 +58,39 @@ Partial Class FormFinish
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(173, 213)
+        Me.Label5.Location = New System.Drawing.Point(173, 203)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(294, 38)
         Me.Label5.TabIndex = 6
         Me.Label5.Text = "sciBASIC framework is an open source project, " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "you can get latest source code fr" &
     "om: "
         '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(173, 276)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(81, 19)
+        Me.Label6.TabIndex = 7
+        Me.Label6.Text = "Visit home: "
+        '
+        'LinkLabel2
+        '
+        Me.LinkLabel2.AutoSize = True
+        Me.LinkLabel2.Location = New System.Drawing.Point(249, 276)
+        Me.LinkLabel2.Name = "LinkLabel2"
+        Me.LinkLabel2.Size = New System.Drawing.Size(127, 19)
+        Me.LinkLabel2.TabIndex = 8
+        Me.LinkLabel2.TabStop = True
+        Me.LinkLabel2.Text = "http://sciBASIC.NET"
+        '
         'FormFinish
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(636, 374)
+        Me.Controls.Add(Me.LinkLabel2)
+        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
@@ -77,6 +100,8 @@ Partial Class FormFinish
         Me.Controls.SetChildIndex(Me.Label4, 0)
         Me.Controls.SetChildIndex(Me.Label5, 0)
         Me.Controls.SetChildIndex(Me.LinkLabel1, 0)
+        Me.Controls.SetChildIndex(Me.Label6, 0)
+        Me.Controls.SetChildIndex(Me.LinkLabel2, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -85,4 +110,6 @@ Partial Class FormFinish
     Friend WithEvents Label4 As Label
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents LinkLabel2 As LinkLabel
 End Class

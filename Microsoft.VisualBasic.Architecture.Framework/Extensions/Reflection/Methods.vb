@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0977959c5d4c0a128852915676212d4c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Methods.vb"
+﻿#Region "Microsoft.VisualBasic::35ce4bc0b116e3a595feeb6a2cde5d63, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Methods.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Public Module MethodsExtension
         End Try
     End Function
 End Module
-

@@ -208,7 +208,7 @@ Namespace Language
 
             If op Is Nothing Then
                 If vector.type Is GetType(String) Then
-                    If type.ImplementsInterface(GetType(IEnumerable(Of String))) Then
+                    If type.ImplementInterface(GetType(IEnumerable(Of String))) Then
                         ' 如果是字符串的集合，则分别添加字符串
                         Dim out$() = New String(vector.Length - 1) {}
 
@@ -273,7 +273,7 @@ Namespace Language
                         Dim str$ = obj.ToString
 
                         Return New VectorShadows(Of Boolean)(vector.Select(Function(s) CStrSafe(s) Like str))
-                    ElseIf type.ImplementsInterface(GetType(IEnumerable(Of String))) Then
+                    ElseIf type.ImplementInterface(GetType(IEnumerable(Of String))) Then
                         Dim out As Boolean() = New Boolean(vector.Length - 1) {}
 
                         For Each s In DirectCast(obj, IEnumerable(Of String)).SeqIterator

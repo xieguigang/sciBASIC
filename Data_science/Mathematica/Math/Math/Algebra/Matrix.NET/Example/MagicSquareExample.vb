@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea9479a1001840a4b691d60acaf1393d, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Example\MagicSquareExample.vb"
+﻿#Region "Microsoft.VisualBasic::ad5abd35edd7dd1fb00a13590076af66, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Example\MagicSquareExample.vb"
 
     ' Author:
     ' 
@@ -196,4 +196,3 @@ Namespace DotNetMatrix.examples
         End Sub
     End Class
 End Namespace
-

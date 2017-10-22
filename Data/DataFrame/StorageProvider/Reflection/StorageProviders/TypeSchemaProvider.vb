@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d781e6dfbc21cb83bdaf3a78157ff22, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::c2a054588e8852deeba4c364336bc8fa, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <param name="[property]"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsDataIgnored([property] As PropertyInfo) As Boolean
             Return Not [property].GetCustomAttributes(attributeType:=ignored, inherit:=True).IsNullOrEmpty OrElse

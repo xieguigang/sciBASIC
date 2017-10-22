@@ -1,14 +1,11 @@
 @echo off
 
 REM environment requirement
-REM This installer script required VisualStudio and WinRAR was installed
+REM This installer script required VisualStudio was installed
 REM If the location is not located in C:\Program Files\ on your computer
 REM try modify the value of these two directory path variable
 
-REM 1. "vs_dev" is the sdk imports script file path which is comes from with VisualStudio
-REM 2. "WinRAR" is the file path of the WinRAR CLI app. 
-SET WinRAR="C:\Program Files\WinRAR\RAR.exe"
-
+REM "vs_dev" is the sdk imports script file path which is comes from with VisualStudio
 REM Imports MSBuild environment
 REM run this script directly will not working???
 SET vs_dev="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
@@ -23,6 +20,24 @@ CALL %vs_dev%
 REM restore the workspace location
 CD /D %currentWork%
 echo %cd%
+
+REM utils tool for create installer zip package
+SET WinZip=%currentWork%/utils/zip.exe
+
+REM first of all, compile this project at first
+REM then we are able to create the zip package
+SET zip_sln=./zip.sln
+
+REM Release|x64 profile is config output to the utils folder
+MSBuild %zip_sln% /t:Rebuild /p:Configuration=Release;Platform=x64 /fl /flp:logfile=./zip-build.log;verbosity=diagnostic
+
+if exist %WinZip% (
+    echo "Create zip tool success."
+) else (
+    echo "Unable to create zip tool for creates the installer zip file!!!"
+		
+	GOTO Q
+)
 
 REM batch script for build sciBASIC# installer project
 REM output location is at ``./output`` directory
@@ -39,18 +54,16 @@ if exist %sciBASIC_sln% (
     echo "%sciBASIC_sln% exist!"
 ) else (
     echo "Can not found sciBASIC# project!"	
-    pause
 	
-    exit -100
+    GOTO Q
 )
 
 if exist %installer_sln% (
     echo "%installer_sln% exist!"
 ) else (
     echo "Can not found sciBASIC# installer project!"	
-    pause
 	
-    exit -120
+    GOTO Q
 )
 
 echo "[ALL] check success!"
@@ -67,7 +80,7 @@ REM package the output into a zip package
 SET zip=%output%/installer.zip
 
 CD /D %output%
-%WinRAR% a -r "./installer.zip" "./"
+%WinZip% /Compress /Directory /out "./installer.zip" "./"
 CD /D %currentWork%
 
 REM add it as installer project resource file
@@ -90,7 +103,7 @@ SET output="./bootstrap/Resources"
 SET zip="./bootstrap/Resources/installer.zip"
 echo "  --> %output%"
 CD %output%
-%WinRAR% a -r "./installer.zip" "./"
+%WinZip% /Compress /Directory /out "./installer.zip" "./"
 CD %currentWork%
 
 REM Rebuild the installer project
@@ -108,3 +121,5 @@ if exist %output%/sciBASIC_installer.exe (
 ) else (
     echo "Build installer project failured!"	
 )
+
+:Q

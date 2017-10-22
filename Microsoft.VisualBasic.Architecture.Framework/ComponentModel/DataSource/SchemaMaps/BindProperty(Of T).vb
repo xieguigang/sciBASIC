@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ce362e5db07bcb852e3d57315f41324, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::a3dbf4c6a862102c354b76d80757e1da, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Emit.Delegates
 
@@ -67,6 +68,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <returns></returns>
         Public Property Identity As String Implements IReadOnlyId.Identity, INamedValue.Key
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return member.Name
             End Get
@@ -80,6 +82,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property IsNull As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return member Is Nothing OrElse Field Is Nothing
             End Get
@@ -90,6 +93,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <returns>true if the <see cref="System.Type"/> is one of the primitive types; otherwise, false.</returns>
         Public ReadOnly Property IsPrimitive As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Scripting.IsPrimitive(Type)
             End Get
@@ -107,10 +111,12 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             End With
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New([property] As PropertyInfo)
             Call Me.New(Nothing, [property])
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(field As FieldInfo)
             Call Me.New(Nothing, field)
         End Sub
@@ -194,6 +200,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <param name="x">The object whose property value will be returned.</param>
         ''' <returns>The property value of the specified object.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetValue(x As Object) As Object Implements IProperty.GetValue
             Return __getValue(x)
         End Function
@@ -206,6 +214,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return $"Dim {member.Name} As {Type.FullName}"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromSchemaTable(x As KeyValuePair(Of T, PropertyInfo)) As BindProperty(Of T)
             Return New BindProperty(Of T) With {
                 .Field = x.Key,

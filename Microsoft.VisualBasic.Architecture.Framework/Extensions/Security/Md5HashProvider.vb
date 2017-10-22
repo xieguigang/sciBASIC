@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed0e6b14980b7c2c3a498fd259f2370e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5HashProvider.vb"
+﻿#Region "Microsoft.VisualBasic::5cfd9e1bdd03ae6d86a0d9d35b85b6e4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5HashProvider.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Security.Cryptography
 Imports System.Text
 
@@ -63,6 +64,8 @@ Namespace SecurityString
         ''' </summary>
         ''' <param name="input"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMd5hashLong(input As Byte()) As Long
             Return GetMd5Bytes(input).ToLong
         End Function

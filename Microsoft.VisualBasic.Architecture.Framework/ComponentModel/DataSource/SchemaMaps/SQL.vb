@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6e21c8406455992e5d32d29818dfccd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\SQL.vb"
+﻿#Region "Microsoft.VisualBasic::5b06e4396b4bda66d00a83bb75c598bd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\SQL.vb"
 
     ' Author:
     ' 
@@ -25,6 +25,8 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
@@ -58,6 +60,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' Display the INSERT INTO sql from function <see cref="GetInsertSQL"/>.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return GetInsertSQL()
         End Function
@@ -68,6 +72,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' 的复制这些属性，从而很容易的复制数据表之中的一个行对象)
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function Clone() As Object Implements ICloneable.Clone
             Return MyClass.MemberwiseClone
         End Function
@@ -76,6 +82,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' MemberwiseClone
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Copy() As SQLTable
             Return DirectCast(MyClass.MemberwiseClone, SQLTable)
         End Function

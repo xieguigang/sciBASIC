@@ -215,7 +215,7 @@ Namespace Language
                 Return method
             End If
 
-            If type.ImplementsInterface(GetType(IEnumerable)) Then
+            If type.ImplementInterface(GetType(IEnumerable)) Then
                 vector = True
                 type = type.GetInterfaces _
                     .Where(Function(i) i.Name = NameOf(IEnumerable)) _
@@ -267,7 +267,7 @@ Namespace Language
             End With
 
             ' target还是空值的话，则尝试将目标参数转换为集合类型
-            If Not type.ImplementsInterface(GetType(IEnumerable)) Then
+            If Not type.ImplementInterface(GetType(IEnumerable)) Then
                 Return Nothing
             Else
                 type = type.GetInterfaces _

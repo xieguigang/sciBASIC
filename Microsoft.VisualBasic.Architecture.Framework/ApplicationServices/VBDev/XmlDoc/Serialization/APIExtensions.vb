@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c4e36533ed3f9841feef0a4be2c058a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb"
+﻿#Region "Microsoft.VisualBasic::85b2b96bdd7a2992334ec7a10526ca5e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb"
 
     ' Author:
     ' 
