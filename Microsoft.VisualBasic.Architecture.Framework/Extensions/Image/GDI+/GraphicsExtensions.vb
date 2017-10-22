@@ -39,8 +39,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sys = System.Math
 
 Namespace Imaging
 
@@ -216,18 +214,6 @@ Namespace Imaging
         End Sub
 
         ''' <summary>
-        ''' 这个方形区域的面积
-        ''' </summary>
-        ''' <param name="rect"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function Area(rect As Rectangle) As Double
-            Return rect.Width * rect.Height
-        End Function
-
-        ''' <summary>
         ''' 返回整个图像的区域
         ''' </summary>
         ''' <param name="img"></param>
@@ -236,48 +222,6 @@ Namespace Imaging
         Public Function EntireImage(img As Image) As Rectangle
             Dim size As Size = img.Size
             Return New Rectangle(New Point, size)
-        End Function
-
-        ''' <summary>
-        ''' Is target point in the target region?
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <param name="rect"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function InRegion(x As Point, rect As Rectangle) As Boolean
-            Return New PointF(x.X, x.Y).InRegion(rect)
-        End Function
-
-        ''' <summary>
-        ''' Is target point in the target region?
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <param name="rect"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function InRegion(x As PointF, rect As Rectangle) As Boolean
-            If x.X < rect.Left OrElse x.X > rect.Right Then
-                Return False
-            End If
-            If x.Y < rect.Top OrElse x.Y > rect.Bottom Then
-                Return False
-            End If
-
-            Return True
-        End Function
-
-        ''' <summary>
-        ''' Calculate the center location of the target sized region
-        ''' </summary>
-        ''' <param name="size"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function GetCenter(size As Size) As Point
-            Return New Point(size.Width / 2, size.Height / 2)
         End Function
 
         ''' <summary>
@@ -301,7 +245,7 @@ Namespace Imaging
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("To.Icon")>
         <Extension> Public Function GetIcon(res As Bitmap) As Icon
-            Return Drawing.Icon.FromHandle(res.GetHicon)
+            Return Icon.FromHandle(res.GetHicon)
         End Function
 
         ''' <summary>
@@ -318,17 +262,16 @@ Namespace Imaging
                 Dim img As Image = base64String.GetImage
                 Return img
             Else
-                Dim stream As Byte() = FileIO.FileSystem.ReadAllBytes(path)
-                Dim res = Image.FromStream(stream:=New IO.MemoryStream(stream))
-                Return res
+                Return FileIO.FileSystem _
+                    .ReadAllBytes(path) _
+                    .LoadImage
             End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("LoadImage")>
         <Extension> Public Function LoadImage(rawStream As Byte()) As Image
-            Dim res = Image.FromStream(stream:=New IO.MemoryStream(rawStream))
-            Return res
+            Return Image.FromStream(stream:=New MemoryStream(rawStream))
         End Function
 
         ''' <summary>
@@ -489,57 +432,6 @@ Namespace Imaging
             Else
                 Return ctrl.Size.CreateGDIDevice(ctrl.BackColor)
             End If
-        End Function
-
-        ''' <summary>
-        ''' 返回位移的新的点位置值
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="x"></param>
-        ''' <param name="y"></param>
-        ''' <returns></returns>
-        <ExportAPI("Offset")>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(p As Point, x As Integer, y As Integer) As Point
-            Return New Point(x + p.X, y + p.Y)
-        End Function
-
-        ''' <summary>
-        ''' 返回位置的新的点位置值
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="offset"></param>
-        ''' <returns></returns>
-        <ExportAPI("Offset")>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(p As Point, offset As Point) As Point
-            Return p.OffSet2D(offset.PointF)
-        End Function
-
-        ''' <summary>
-        ''' 返回位置的新的点位置值
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="offset"></param>
-        ''' <returns></returns>
-        <ExportAPI("Offset")>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(p As Point, offset As PointF) As Point
-            Return New Point(offset.X + p.X, offset.Y + p.Y)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(pt As PointF, offset As PointF) As PointF
-            With pt
-                Return New PointF(offset.X + .X, offset.Y + .Y)
-            End With
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(pt As PointF, x!, y!) As PointF
-            With pt
-                Return New PointF(x + .X, y + .Y)
-            End With
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
