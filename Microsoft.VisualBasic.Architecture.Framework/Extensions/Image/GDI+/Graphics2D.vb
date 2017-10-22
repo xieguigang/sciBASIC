@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::63acc344c1f1297527526cb4eb3707f3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Graphics2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace Imaging
@@ -49,7 +50,15 @@ Namespace Imaging
         ''' GDI+ device handle.(GDI+绘图设备句柄)
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property Graphics As Graphics
+        Public Property Graphics As Graphics
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return g
+            End Get
+            Set(value As Graphics)
+                g = value
+            End Set
+        End Property
 
         ''' <summary>
         ''' GDI+ device handle memory.(GDI+设备之中的图像数据)
@@ -72,6 +81,7 @@ Namespace Imaging
         End Property
 
         Dim __innerImage As Image
+        Protected g As Graphics
 
         Protected Sub New()
         End Sub
@@ -210,7 +220,7 @@ Namespace Imaging
         Friend Shared Function CreateObject(g As Graphics, res As Image) As Graphics2D
             With New Graphics2D With {
                 .ImageResource = res,
-                ._Graphics = g,
+                .g = g,
                 .Font = New Font(FontFace.MicrosoftYaHei, 12),
                 .Stroke = Pens.Black,
                 .InterpolationMode = InterpolationMode.HighQualityBicubic,
