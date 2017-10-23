@@ -226,7 +226,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\mime\text%25yaml\text.yaml.vbproj">
       <Project>{fb637de6-6beb-4722-968a-f76deb851dfc}</Project>
-      <Name>yaml</Name>
+      <Name>text.yaml</Name>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
       <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
