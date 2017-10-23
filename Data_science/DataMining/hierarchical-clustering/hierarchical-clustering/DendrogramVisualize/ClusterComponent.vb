@@ -140,20 +140,30 @@ Namespace DendrogramVisualize
 
             With args
 
-                x1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .xDisplayOffset))
-                y1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
-                x2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
-                y2 = y1
+                If .layout = Layouts.Vertical Then
+                    x1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .xDisplayOffset))
+                    y1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
+                    x2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
+                    y2 = y1  ' 只变化X，Y不变，表示树枝在竖直布局下的水平延伸
+                Else
+                    y1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .xDisplayOffset))
+                    x1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
+                    y2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
+                    x2 = x1  ' 只变化Y，X不变，表示树枝在水平布局下的竖直延伸
+                End If
 
                 If .LinkDotRadius > 0 Then
                     Dim dotRadius = .LinkDotRadius
                     Dim d% = dotRadius * 2
+
                     g.FillEllipse(Brushes.Black, x1 - dotRadius, y1 - dotRadius, d, d)
                 End If
 
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
                 If Cluster.Leaf Then
+
+                    ' 如果目标是叶节点才会进行标签字符串的绘制操作
                     Dim nx! = x1 + NamePadding
                     Dim ny! = y1
                     Dim location As New PointF With {
@@ -172,6 +182,7 @@ Namespace DendrogramVisualize
                     }
 
                     If Not .classTable Is Nothing Then
+
                         ' 如果还存在分类信息的话，会绘制分类的颜色条
                         Dim color As Brush = .classTable(Cluster.Name).GetBrush
                         Dim topleft As New PointF(nx + .classLegendPadding, y1 - .classLegendSize.Height / 2)
@@ -196,11 +207,21 @@ Namespace DendrogramVisualize
                     g.DrawString(s, fontMetrics, Brushes.Black, location)
                 End If
 
+                ' 进行递归绘制
                 x1 = x2
                 y1 = y2
-                y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
+
+                If .layout = Layouts.Vertical Then
+                    ' 变y，表示树枝在递归绘图的时候在竖直方向上延伸
+                    y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
+                Else
+                    ' 变X，表示树枝在递归绘图的时候在水平方向上延伸
+                    x2 = CInt(Fix(LinkPoint.X * .yDisplayFactor + .yDisplayOffset))
+                End If
+
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
+                ' 进行递归绘制
                 For Each child As ClusterComponent In Children
                     child.Paint(g, args, labels)
                 Next
