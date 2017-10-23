@@ -77,6 +77,7 @@ Namespace DendrogramVisualize
         Public Property ScaleValueDecimals As Integer
         Public Property LineColor As Color = Color.Black
         Public Property LinkDotRadius% = 5
+        Public Property Debug As Boolean = False
 
         Public Property Model As Cluster
             Get
@@ -128,7 +129,11 @@ Namespace DendrogramVisualize
                     Dim childLeafCount As Integer = child.CountLeafs()
                     Dim childHeight As Double = childLeafCount * leafHeight
                     Dim childDistance As Double = child.DistanceValue
-                    Dim childInitCoord As New PointF(pt0.X + (distance - childDistance), yChild + childHeight / 2.0)
+                    Dim childInitCoord As New PointF With {
+                        .X = pt0.X + (distance - childDistance),
+                        .Y = yChild + childHeight / 2.0
+                    }
+
                     yChild += childHeight
 
                     ' Traverse cluster node tree 
@@ -154,7 +159,7 @@ Namespace DendrogramVisualize
         ''' Draw dendrogram tree visualize and returns the label orders
         ''' </summary>
         ''' <param name="g2"></param>
-        ''' <param name="region"></param>
+        ''' <param name="region">如果这个参数为空，则会使用整个图片画布的空间</param>
         ''' <param name="axisStrokeCSS$"></param>
         ''' <param name="branchStrokeCSS$"></param>
         ''' <param name="classLegendWidth%"></param>
@@ -168,6 +173,10 @@ Namespace DendrogramVisualize
 
             If region.IsEmpty Then
                 region = g2.ImageResource.EntireImage
+            End If
+
+            If Debug Then
+                Call g2.DrawRectangle(Pens.Red, region)
             End If
 
             Dim size As Size = region.Size

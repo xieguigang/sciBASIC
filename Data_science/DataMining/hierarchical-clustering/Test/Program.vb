@@ -64,8 +64,9 @@ Module Program
 
             dp.ShowScale = False
             dp.ShowDistanceValues = False
+            dp.Debug = True
 
-            Call dp.Paint(g, New Rectangle(100, 100, 600, 600), layout:=Layouts.Horizon).GetJson(True).__DEBUG_ECHO
+            Call dp.Paint(g, New Rectangle(100, 100, 800, 600), layout:=Layouts.Horizon).GetJson(True).__DEBUG_ECHO
             Call g.Save("../../../dendrogram-visualize-horizon.png", ImageFormats.Png)
         End Using
 

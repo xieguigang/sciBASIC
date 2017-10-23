@@ -146,9 +146,9 @@ Namespace DendrogramVisualize
                     x2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
                     y2 = y1  ' 只变化X，Y不变，表示树枝在竖直布局下的水平延伸
                 Else
-                    y1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .xDisplayOffset))
-                    x1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
-                    y2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
+                    y1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .yDisplayOffset))
+                    x1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .xDisplayOffset))
+                    y2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .yDisplayOffset))
                     x2 = x1  ' 只变化Y，X不变，表示树枝在水平布局下的竖直延伸
                 End If
 
@@ -232,7 +232,7 @@ Namespace DendrogramVisualize
                     y2 = CInt(Fix(LinkPoint.Y * .yDisplayFactor + .yDisplayOffset))
                 Else
                     ' 变X，表示树枝在递归绘图的时候在水平方向上延伸
-                    x2 = CInt(Fix(LinkPoint.X * .yDisplayFactor + .yDisplayOffset))
+                    x2 = CInt(Fix(LinkPoint.Y * .xDisplayFactor + .yDisplayOffset))
                 End If
 
                 g.DrawLine(.stroke, x1, y1, x2, y2)
