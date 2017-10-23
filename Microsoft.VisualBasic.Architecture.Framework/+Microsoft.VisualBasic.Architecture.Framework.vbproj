@@ -673,9 +673,11 @@
     <Compile Include="Extensions\Collection\Which.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
+    <Compile Include="Extensions\Image\Bitmap\Effects.vb" />
     <Compile Include="Extensions\Image\Bitmap\Utils.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
+    <Compile Include="Extensions\Image\GDI+\GDICanvas.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\DblRect.vb" />
     <Compile Include="Extensions\Image\Math\GeometryMath.vb" />
@@ -692,7 +694,7 @@
     <Compile Include="Extensions\Reflection\Methods.vb" />
     <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
     <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
-    <Compile Include="Extensions\StringHelpers\IEqualityComparer.vb" />
+    <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Extensions\WebServices\GZStream.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
@@ -786,7 +788,7 @@
     <Compile Include="Extensions\Reflection\Delegate\DelegateFactory.vb" />
     <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />
     <Compile Include="Extensions\ValueTypes\DateTimeHelper.vb" />
-    <Compile Include="Extensions\StringHelpers\Wildcards.vb" />
+    <Compile Include="Text\StringSimilarity\Wildcards.vb" />
     <Compile Include="Extensions\WebServices\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
     <Compile Include="Language\lang\C\RandomNumbers.vb" />
@@ -918,7 +920,7 @@
     <Compile Include="Extensions\Image\Colors\ColorCube.vb" />
     <Compile Include="Extensions\Image\Colors\ColorMap.vb" />
     <Compile Include="Extensions\Image\GDI+\Graphics2D.vb" />
-    <Compile Include="Extensions\Image\GDI+\GeomTransform.vb" />
+    <Compile Include="Extensions\Image\Math\GeomTransform.vb" />
     <Compile Include="Extensions\Image\Wmf.vb" />
     <Compile Include="Extensions\Image\TiffWriter.vb" />
     <Compile Include="Extensions\Image\ImageFormat.vb" />

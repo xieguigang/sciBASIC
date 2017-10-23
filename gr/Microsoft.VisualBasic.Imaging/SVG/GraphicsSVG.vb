@@ -59,7 +59,7 @@ Namespace SVG
         End Sub
 
         Public Sub New(width%, height%)
-            Me.New(New Drawing.Size(width, height))
+            Me.New(New Size(width, height))
         End Sub
 
         Public Overrides Property Clip As Region
