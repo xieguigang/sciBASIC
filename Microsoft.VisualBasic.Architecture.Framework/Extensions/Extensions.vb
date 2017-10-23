@@ -2052,7 +2052,7 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dotNETlist"></param>
     ''' <returns></returns>
-    <Extension> Public Function RemoveLast(Of T)(ByRef dotNETlist As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
+    <Extension> Public Function RemoveLast(Of T)(ByRef dotNETlist As Generic.List(Of T)) As Generic.List(Of T)
         If dotNETlist.IsNullOrEmpty OrElse dotNETlist.Count = 1 Then
             dotNETlist = New List(Of T)
         Else

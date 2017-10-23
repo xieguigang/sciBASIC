@@ -68,6 +68,7 @@ Namespace BarPlot
                              Optional percentStacked! = no,
                              Optional YaxisTitle$ = "Value",
                              Optional interval! = 5,
+                             Optional boxSeperator! = 5,
                              Optional columnCount% = 8,
                              Optional legendLabelFontCSS$ = CSSFont.Win7LittleLarge,
                              Optional tickFontCSS$ = CSSFont.Win7LittleLarge,
@@ -97,7 +98,7 @@ Namespace BarPlot
                     Dim wb = BarWidth(barRegionWidth, n, interval)
                     Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelFontCSS)
                     Dim boxWidth% = legendFont.Height * 1.1
-                    Dim bottomPart = groupLabelFont.Height + 30 + (boxWidth + interval * 2) * columnCount
+                    Dim bottomPart = groupLabelFont.Height + 30 + (boxWidth + boxSeperator * 2) * columnCount
                     Dim barRegionHeight = height - bottomPart   ' 条形图区域的总高度
                     Dim x0! = rect.Padding.Left + leftPart
 
@@ -150,7 +151,9 @@ Namespace BarPlot
 
                     For Each block In serialBrushes.Split(columnCount)
 
-                        Dim maxWidth%
+                        ' 似乎在for循环之中申明的变量必须要初始化，否则下一个循环使用的是上一个循环的结果值？？？
+                        ' 这是一个bug？
+                        Dim maxWidth% = 0
 
                         For Each legend As NamedValue(Of SolidBrush) In block
                             Dim box As New Rectangle(x0, ly, boxWidth, boxWidth)
@@ -160,11 +163,12 @@ Namespace BarPlot
                             g.DrawString(legend.Name, legendFont, Brushes.Black, New PointF(x0 + boxWidth + 5, ly))
 
                             maxWidth = Math.Max(maxWidth, g.MeasureString(legend.Name, legendFont).Width)
-                            ly += interval + boxWidth
+                            ly += boxSeperator + boxWidth
                         Next
 
                         ly = bottomY
-                        x0 += interval * 2 + boxWidth + maxWidth
+                        x0 += boxSeperator * 2 + boxWidth + maxWidth
+                        maxWidth = 0
                     Next
                 End Sub
 

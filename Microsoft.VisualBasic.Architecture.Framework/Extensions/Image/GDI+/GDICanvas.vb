@@ -1,60 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::d97bba05fc0646920abfaa973a9212f6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Interface.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-#End Region
-
-#Region "Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Drawing.dll
-#End Region
-
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
-    ''' <summary>
-    ''' Encapsulates a GDI+(bitmap, wmf)/SVG etc drawing surface. This class must be inherited.
-    ''' </summary>
-    Public MustInherit Class IGraphics
+    Public MustInherit Class GDICanvas : Inherits IGraphics
         Implements IDisposable
 
-        Public MustOverride ReadOnly Property Size As Size
+        Protected g As Graphics
 
-        '
-        ' Summary:
-        '     Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     A System.Drawing.Region that limits the portion of this System.Drawing.Graphics
-        '     that is currently available for drawing.
-        Public MustOverride Property Clip As Region
+        ''' <summary>
+        ''' GDI+ device handle.(GDI+绘图设备句柄)
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public Property Graphics As Graphics
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return g
+            End Get
+            Set(value As Graphics)
+                g = value
+            End Set
+        End Property
+
+#Region "Default canvas style values"
+        ''' <summary>
+        ''' Default pen for drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Stroke As Pen
+        ''' <summary>
+        ''' Default font value for text drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Font As Font
+#End Region
+
+#Region "Implements Class Graphics"
+
+        Public Overloads Sub DrawLine(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
+            Call Graphics.DrawLine(Stroke, x1, y1, x2, y2)
+        End Sub
+
+        ''' <summary>
+        ''' Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>A System.Drawing.Region that limits the portion of this System.Drawing.Graphics
+        ''' that is currently available for drawing.</returns>
+        Public Overrides Property Clip As Region
+            Get
+                Return Graphics.Clip
+            End Get
+            Set(value As Region)
+                Graphics.Clip = value
+            End Set
+        End Property
         '
         ' Summary:
         '     Gets a System.Drawing.RectangleF structure that bounds the clipping region of
@@ -63,45 +67,82 @@ Namespace Imaging
         ' Returns:
         '     A System.Drawing.RectangleF structure that represents a bounding rectangle for
         '     the clipping region of this System.Drawing.Graphics.
-        Public MustOverride ReadOnly Property ClipBounds As RectangleF
-        '
-        ' Summary:
-        '     Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a member of the System.Drawing.Drawing2D.CompositingMode
-        '     enumeration. The default is System.Drawing.Drawing2D.CompositingMode.SourceOver.
-        Public MustOverride Property CompositingMode As CompositingMode
-        '
-        ' Summary:
-        '     Gets or sets the rendering quality of composited images drawn to this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a member of the System.Drawing.Drawing2D.CompositingQuality
-        '     enumeration. The default is System.Drawing.Drawing2D.CompositingQuality.Default.
-        Public MustOverride Property CompositingQuality As CompositingQuality
-        '
-        ' Summary:
-        '     Gets the horizontal resolution of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     The value, in dots per inch, for the horizontal resolution supported by this
-        '     System.Drawing.Graphics.
-        Public MustOverride ReadOnly Property DpiX As Single
-        '
-        ' Summary:
-        '     Gets the vertical resolution of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.
-        Public MustOverride ReadOnly Property DpiY As Single
-        '
-        ' Summary:
-        '     Gets or sets the interpolation mode associated with this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Drawing2D.InterpolationMode values.
-        Public MustOverride Property InterpolationMode As InterpolationMode
+        Public Overrides ReadOnly Property ClipBounds As RectangleF
+            Get
+                Return Graphics.ClipBounds
+            End Get
+        End Property
+
+        Public Overloads Sub DrawString(str As String, x As Integer, y As Integer)
+            Call Graphics.DrawString(str, Font, Brushes.Black, New Point(x, y))
+        End Sub
+
+        ''' <summary>
+        ''' Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>
+        ''' This property specifies a member of the System.Drawing.Drawing2D.CompositingMode enumeration. 
+        ''' The default is System.Drawing.Drawing2D.CompositingMode.SourceOver.
+        ''' </returns>
+        Public Overrides Property CompositingMode As CompositingMode
+            Get
+                Return Graphics.CompositingMode
+            End Get
+            Set(value As CompositingMode)
+                Graphics.CompositingMode = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Gets or sets the rendering quality of composited images drawn to this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>
+        ''' This property specifies a member of the System.Drawing.Drawing2D.CompositingQuality enumeration. 
+        ''' The default is System.Drawing.Drawing2D.CompositingQuality.Default.
+        ''' </returns>
+        Public Overrides Property CompositingQuality As CompositingQuality
+            Get
+                Return Graphics.CompositingQuality
+            End Get
+            Set(value As CompositingQuality)
+                Graphics.CompositingQuality = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Gets the horizontal resolution of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>
+        ''' The value, in dots per inch, for the horizontal resolution supported by this System.Drawing.Graphics.
+        ''' </returns>
+        Public Overrides ReadOnly Property DpiX As Single
+            Get
+                Return Graphics.DpiX
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets the vertical resolution of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.</returns>
+        Public Overrides ReadOnly Property DpiY As Single
+            Get
+                Return Graphics.DpiY
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets or sets the interpolation mode associated with this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>One of the System.Drawing.Drawing2D.InterpolationMode values.</returns>
+        Public Overrides Property InterpolationMode As InterpolationMode
+            Get
+                Return Graphics.InterpolationMode
+            End Get
+            Set(value As InterpolationMode)
+                Graphics.InterpolationMode = value
+            End Set
+        End Property
         '
         ' Summary:
         '     Gets a value indicating whether the clipping region of this System.Drawing.Graphics
@@ -110,7 +151,11 @@ Namespace Imaging
         ' Returns:
         '     true if the clipping region of this System.Drawing.Graphics is empty; otherwise,
         '     false.
-        Public MustOverride ReadOnly Property IsClipEmpty As Boolean
+        Public Overrides ReadOnly Property IsClipEmpty As Boolean
+            Get
+                Return Graphics.IsClipEmpty
+            End Get
+        End Property
         '
         ' Summary:
         '     Gets a value indicating whether the visible clipping region of this System.Drawing.Graphics
@@ -119,15 +164,25 @@ Namespace Imaging
         ' Returns:
         '     true if the visible portion of the clipping region of this System.Drawing.Graphics
         '     is empty; otherwise, false.
-        Public MustOverride ReadOnly Property IsVisibleClipEmpty As Boolean
-        '
-        ' Summary:
-        '     Gets or sets the scaling between world units and page units for this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a value for the scaling between world units and page
-        '     units for this System.Drawing.Graphics.
-        Public MustOverride Property PageScale As Single
+        Public Overrides ReadOnly Property IsVisibleClipEmpty As Boolean
+            Get
+                Return Graphics.IsVisibleClipEmpty
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets or sets the scaling between world units and page units for this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>This property specifies a value for the scaling between world units and page
+        ''' units for this System.Drawing.Graphics.</returns>
+        Public Overrides Property PageScale As Single
+            Get
+                Return Graphics.PageScale
+            End Get
+            Set(value As Single)
+                Graphics.PageScale = value
+            End Set
+        End Property
         '
         ' Summary:
         '     Gets or sets the unit of measure used for page coordinates in this System.Drawing.Graphics.
@@ -139,16 +194,29 @@ Namespace Imaging
         '   T:System.ComponentModel.InvalidEnumArgumentException:
         '     System.Drawing.Graphics.PageUnit is set to System.Drawing.GraphicsUnit.World,
         '     which is not a physical unit.
-        Public MustOverride Property PageUnit As GraphicsUnit
-        '
-        ' Summary:
-        '     Gets or set a value specifying how pixels are offset during rendering of this
-        '     System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a member of the System.Drawing.Drawing2D.PixelOffsetMode
-        '     enumeration
-        Public MustOverride Property PixelOffsetMode As PixelOffsetMode
+        Public Overrides Property PageUnit As GraphicsUnit
+            Get
+                Return Graphics.PageUnit
+            End Get
+            Set(value As GraphicsUnit)
+                Graphics.PageUnit = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Gets or set a value specifying how pixels are offset during rendering of this
+        ''' System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>This property specifies a member of the System.Drawing.Drawing2D.PixelOffsetMode
+        ''' enumeration</returns>
+        Public Overrides Property PixelOffsetMode As PixelOffsetMode
+            Get
+                Return Graphics.PixelOffsetMode
+            End Get
+            Set(value As PixelOffsetMode)
+                Graphics.PixelOffsetMode = value
+            End Set
+        End Property
         '
         ' Summary:
         '     Gets or sets the rendering origin of this System.Drawing.Graphics for dithering
@@ -158,28 +226,54 @@ Namespace Imaging
         '     A System.Drawing.Point structure that represents the dither origin for 8-bits-per-pixel
         '     and 16-bits-per-pixel dithering and is also used to set the origin for hatch
         '     brushes.
-        Public MustOverride Property RenderingOrigin As Point
-        '
-        ' Summary:
-        '     Gets or sets the rendering quality for this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Drawing2D.SmoothingMode values.
-        Public MustOverride Property SmoothingMode As SmoothingMode
+        Public Overrides Property RenderingOrigin As Point
+            Get
+                Return Graphics.RenderingOrigin
+            End Get
+            Set(value As Point)
+                Graphics.RenderingOrigin = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Gets or sets the rendering quality for this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>One of the System.Drawing.Drawing2D.SmoothingMode values.</returns>
+        Public Overrides Property SmoothingMode As SmoothingMode
+            Get
+                Return Graphics.SmoothingMode
+            End Get
+            Set(value As SmoothingMode)
+                Graphics.SmoothingMode = value
+            End Set
+        End Property
         '
         ' Summary:
         '     Gets or sets the gamma correction value for rendering text.
         '
         ' Returns:
         '     The gamma correction value used for rendering antialiased and ClearType text.
-        Public MustOverride Property TextContrast As Integer
-        '
-        ' Summary:
-        '     Gets or sets the rendering mode for text associated with this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Text.TextRenderingHint values.
-        Public MustOverride Property TextRenderingHint As TextRenderingHint
+        Public Overrides Property TextContrast As Integer
+            Get
+                Return Graphics.TextContrast
+            End Get
+            Set(value As Integer)
+                Graphics.TextContrast = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Gets or sets the rendering mode for text associated with this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>One of the System.Drawing.Text.TextRenderingHint values.</returns>
+        Public Overrides Property TextRenderingHint As TextRenderingHint
+            Get
+                Return Graphics.TextRenderingHint
+            End Get
+            Set(value As TextRenderingHint)
+                Graphics.TextRenderingHint = value
+            End Set
+        End Property
         '
         ' Summary:
         '     Gets or sets a copy of the geometric world transformation for this System.Drawing.Graphics.
@@ -187,7 +281,14 @@ Namespace Imaging
         ' Returns:
         '     A copy of the System.Drawing.Drawing2D.Matrix that represents the geometric world
         '     transformation for this System.Drawing.Graphics.
-        Public MustOverride Property Transform As Matrix
+        Public Overrides Property Transform As Drawing2D.Matrix
+            Get
+                Return Graphics.Transform
+            End Get
+            Set(value As Drawing2D.Matrix)
+                Graphics.Transform = value
+            End Set
+        End Property
         '
         ' Summary:
         '     Gets the bounding rectangle of the visible clipping region of this System.Drawing.Graphics.
@@ -195,7 +296,11 @@ Namespace Imaging
         ' Returns:
         '     A System.Drawing.RectangleF structure that represents a bounding rectangle for
         '     the visible clipping region of this System.Drawing.Graphics.
-        Public MustOverride ReadOnly Property VisibleClipBounds As RectangleF
+        Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
+            Get
+                Return Graphics.VisibleClipBounds
+            End Get
+        End Property
 
         '
         ' Summary:
@@ -204,17 +309,19 @@ Namespace Imaging
         ' Parameters:
         '   data:
         '     Array of bytes that contains the comment.
-        Public MustOverride Sub AddMetafileComment(data() As Byte)
-        '
-        ' Summary:
-        '     Clears the entire drawing surface and fills it with the specified background
-        '     color.
-        '
-        ' Parameters:
-        '   color:
-        '     System.Drawing.Color structure that represents the background color of the drawing
-        '     surface.
-        Public MustOverride Sub Clear(color As Color)
+        Public Overrides Sub AddMetafileComment(data() As Byte)
+            Call Graphics.AddMetafileComment(data)
+        End Sub
+
+        ''' <summary>
+        ''' Clears the entire drawing surface and fills it with the specified background
+        ''' color.
+        ''' </summary>
+        ''' <param name="color">System.Drawing.Color structure that represents the background color of the drawing
+        ''' surface.</param>
+        Public Overrides Sub Clear(color As Color)
+            Call Graphics.Clear(color)
+        End Sub
         '
         ' Summary:
         '     Performs a bit-block transfer of color data, corresponding to a rectangle of
@@ -233,7 +340,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
-        Public MustOverride Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
+        Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
+            Call Graphics.CopyFromScreen(upperLeftSource, upperLeftDestination, blockRegionSize)
+        End Sub
         '
         ' Summary:
         '     Performs a bit-block transfer of color data, corresponding to a rectangle of
@@ -258,7 +367,9 @@ Namespace Imaging
         '
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
-        Public MustOverride Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
+        Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
+            Call Graphics.CopyFromScreen(upperLeftSource, upperLeftDestination, blockRegionSize, copyPixelOperation)
+        End Sub
         '
         ' Summary:
         '     Performs a bit-block transfer of the color data, corresponding to a rectangle
@@ -283,7 +394,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
-        Public MustOverride Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size)
+        Public Overrides Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size)
+            Call Graphics.CopyFromScreen(sourceX, sourceY, destinationX, destinationY, blockRegionSize)
+        End Sub
         '
         ' Summary:
         '     Performs a bit-block transfer of the color data, corresponding to a rectangle
@@ -314,35 +427,10 @@ Namespace Imaging
         '
         '   T:System.ComponentModel.Win32Exception:
         '     The operation failed.
-        Public MustOverride Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
-        '
-        ' Summary:
-        '     Releases all resources used by this System.Drawing.Graphics.
-        Public MustOverride Sub Dispose() Implements IDisposable.Dispose
-        '
-        ' Summary:
-        '     Draws an arc representing a portion of an ellipse specified by a System.Drawing.RectangleF
-        '     structure.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the arc.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that defines the boundaries of the ellipse.
-        '
-        '   startAngle:
-        '     Angle in degrees measured clockwise from the x-axis to the starting point of
-        '     the arc.
-        '
-        '   sweepAngle:
-        '     Angle in degrees measured clockwise from the startAngle parameter to ending point
-        '     of the arc.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null
-        Public MustOverride Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
+            Call Graphics.CopyFromScreen(sourceX, sourceY, destinationX, destinationY, blockRegionSize, copyPixelOperation)
+        End Sub
+
         '
         ' Summary:
         '     Draws an arc representing a portion of an ellipse specified by a System.Drawing.Rectangle
@@ -366,7 +454,35 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+
+        End Sub
+        '
+        ' Summary:
+        '     Draws an arc representing a portion of an ellipse specified by a System.Drawing.RectangleF
+        '     structure.
+        '
+        ' Parameters:
+        '   pen:
+        '     System.Drawing.Pen that determines the color, width, and style of the arc.
+        '
+        '   rect:
+        '     System.Drawing.RectangleF structure that defines the boundaries of the ellipse.
+        '
+        '   startAngle:
+        '     Angle in degrees measured clockwise from the x-axis to the starting point of
+        '     the arc.
+        '
+        '   sweepAngle:
+        '     Angle in degrees measured clockwise from the startAngle parameter to ending point
+        '     of the arc.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     pen is null
+        Public Overrides Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
+
+        End Sub
         '
         ' Summary:
         '     Draws an arc representing a portion of an ellipse specified by a pair of coordinates,
@@ -402,7 +518,9 @@ Namespace Imaging
         '
         '   T:System.ArgumentNullException:
         '     rects is a zero-length array.
-        Public MustOverride Sub DrawArc(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+        Public Overrides Sub DrawArc(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+
+        End Sub
         '
         ' Summary:
         '     Draws an arc representing a portion of an ellipse specified by a pair of coordinates,
@@ -435,35 +553,25 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawArc(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-        '
-        ' Summary:
-        '     Draws a Bézier spline defined by four System.Drawing.Point structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen structure that determines the color, width, and style of the
-        '     curve.
-        '
-        '   pt1:
-        '     System.Drawing.Point structure that represents the starting point of the curve.
-        '
-        '   pt2:
-        '     System.Drawing.Point structure that represents the first control point for the
-        '     curve.
-        '
-        '   pt3:
-        '     System.Drawing.Point structure that represents the second control point for the
-        '     curve.
-        '
-        '   pt4:
-        '     System.Drawing.Point structure that represents the ending point of the curve.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
-        Public MustOverride Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
-        '
+        Public Overrides Sub DrawArc(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+
+        End Sub
+
+        ''' <summary>
+        ''' Draws a Bézier spline defined by four System.Drawing.Point structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen structure that determines the color, width, and style of the
+        ''' curve.</param>
+        ''' <param name="pt1">System.Drawing.Point structure that represents the starting point of the curve.</param>
+        ''' <param name="pt2">System.Drawing.Point structure that represents the first control point for the
+        ''' curve.</param>
+        ''' <param name="pt3">System.Drawing.Point structure that represents the second control point for the
+        ''' curve.</param>
+        ''' <param name="pt4">System.Drawing.Point structure that represents the ending point of the curve.</param>
+        Public Sub DrawBézier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
+            Call Graphics.DrawBezier(pen, pt1, pt2, pt3, pt4)
+        End Sub
+
         ' Summary:
         '     Draws a Bézier spline defined by four System.Drawing.PointF structures.
         '
@@ -488,7 +596,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawBezier(pen As Pen, pt1 As PointF, pt2 As PointF, pt3 As PointF, pt4 As PointF)
+        Public Overrides Sub DrawBezier(pen As Pen, pt1 As PointF, pt2 As PointF, pt3 As PointF, pt4 As PointF)
+
+        End Sub
         '
         ' Summary:
         '     Draws a Bézier spline defined by four ordered pairs of coordinates that represent
@@ -525,24 +635,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawBezier(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single, x3 As Single, y3 As Single, x4 As Single, y4 As Single)
-        '
-        ' Summary:
-        '     Draws a series of Bézier splines from an array of System.Drawing.PointF structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the curve.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that represent the points that determine
-        '     the curve. The number of points in the array should be a multiple of 3 plus 1,
-        '     such as 4, 7, or 10.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawBeziers(pen As Pen, points() As PointF)
+        Public Overrides Sub DrawBezier(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single, x3 As Single, y3 As Single, x4 As Single, y4 As Single)
+
+        End Sub
         '
         ' Summary:
         '     Draws a series of Bézier splines from an array of System.Drawing.Point structures.
@@ -559,7 +654,28 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawBeziers(pen As Pen, points() As Point)
+        Public Overrides Sub DrawBeziers(pen As Pen, points() As Point)
+
+        End Sub
+        '
+        ' Summary:
+        '     Draws a series of Bézier splines from an array of System.Drawing.PointF structures.
+        '
+        ' Parameters:
+        '   pen:
+        '     System.Drawing.Pen that determines the color, width, and style of the curve.
+        '
+        '   points:
+        '     Array of System.Drawing.PointF structures that represent the points that determine
+        '     the curve. The number of points in the array should be a multiple of 3 plus 1,
+        '     such as 4, 7, or 10.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     pen is null.-or-points is null.
+        Public Overrides Sub DrawBeziers(pen As Pen, points() As PointF)
+
+        End Sub
         '
         ' Summary:
         '     Draws a closed cardinal spline defined by an array of System.Drawing.Point structures.
@@ -574,7 +690,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawClosedCurve(pen As Pen, points() As Point)
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point)
+
+        End Sub
         '
         ' Summary:
         '     Draws a closed cardinal spline defined by an array of System.Drawing.PointF structures.
@@ -589,7 +707,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawClosedCurve(pen As Pen, points() As PointF)
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF)
+
+        End Sub
         '
         ' Summary:
         '     Draws a closed cardinal spline defined by an array of System.Drawing.Point structures
@@ -612,7 +732,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
+
+        End Sub
         '
         ' Summary:
         '     Draws a closed cardinal spline defined by an array of System.Drawing.PointF structures
@@ -635,7 +757,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
+        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
+
+        End Sub
         '
         ' Summary:
         '     Draws a cardinal spline through a specified array of System.Drawing.Point structures.
@@ -650,7 +774,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawCurve(pen As Pen, points() As Point)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As Point)
+
+        End Sub
         '
         ' Summary:
         '     Draws a cardinal spline through a specified array of System.Drawing.PointF structures.
@@ -665,7 +791,32 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawCurve(pen As Pen, points() As PointF)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF)
+
+        End Sub
+
+        '
+        ' Summary:
+        '     Draws a cardinal spline through a specified array of System.Drawing.Point structures
+        '     using a specified tension.
+        '
+        ' Parameters:
+        '   pen:
+        '     System.Drawing.Pen that determines the color, width, and style of the curve.
+        '
+        '   points:
+        '     Array of System.Drawing.Point structures that define the spline.
+        '
+        '   tension:
+        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     pen is null.-or-points is null.
+        Public Overrides Sub DrawCurve(pen As Pen, points() As Point, tension As Single)
+
+        End Sub
+
         '
         ' Summary:
         '     Draws a cardinal spline through a specified array of System.Drawing.PointF structures
@@ -685,26 +836,10 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawCurve(pen As Pen, points() As PointF, tension As Single)
-        '
-        ' Summary:
-        '     Draws a cardinal spline through a specified array of System.Drawing.Point structures
-        '     using a specified tension.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the curve.
-        '
-        '   points:
-        '     Array of System.Drawing.Point structures that define the spline.
-        '
-        '   tension:
-        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawCurve(pen As Pen, points() As Point, tension As Single)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, tension As Single)
+
+        End Sub
+
         '
         ' Summary:
         '     Draws a cardinal spline through a specified array of System.Drawing.PointF structures.
@@ -727,7 +862,40 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer)
+
+        End Sub
+
+        '
+        ' Summary:
+        '     Draws a cardinal spline through a specified array of System.Drawing.Point structures
+        '     using a specified tension.
+        '
+        ' Parameters:
+        '   pen:
+        '     System.Drawing.Pen that determines the color, width, and style of the curve.
+        '
+        '   points:
+        '     Array of System.Drawing.Point structures that define the spline.
+        '
+        '   offset:
+        '     Offset from the first element in the array of the points parameter to the starting
+        '     point in the curve.
+        '
+        '   numberOfSegments:
+        '     Number of segments after the starting point to include in the curve.
+        '
+        '   tension:
+        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     pen is null.-or-points is null.
+        Public Overrides Sub DrawCurve(pen As Pen, points() As Point, offset As Integer, numberOfSegments As Integer, tension As Single)
+
+        End Sub
+
+
         '
         ' Summary:
         '     Draws a cardinal spline through a specified array of System.Drawing.PointF structures
@@ -754,33 +922,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer, tension As Single)
-        '
-        ' Summary:
-        '     Draws a cardinal spline through a specified array of System.Drawing.Point structures
-        '     using a specified tension.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the curve.
-        '
-        '   points:
-        '     Array of System.Drawing.Point structures that define the spline.
-        '
-        '   offset:
-        '     Offset from the first element in the array of the points parameter to the starting
-        '     point in the curve.
-        '
-        '   numberOfSegments:
-        '     Number of segments after the starting point to include in the curve.
-        '
-        '   tension:
-        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawCurve(pen As Pen, points() As Point, offset As Integer, numberOfSegments As Integer, tension As Single)
+        Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, offset As Integer, numberOfSegments As Integer, tension As Single)
+
+        End Sub
         '
         ' Summary:
         '     Draws an ellipse specified by a bounding System.Drawing.Rectangle structure.
@@ -795,7 +939,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawEllipse(pen As Pen, rect As Rectangle)
+        Public Overrides Sub DrawEllipse(pen As Pen, rect As Rectangle)
+            Call Graphics.DrawEllipse(pen, rect)
+        End Sub
         '
         ' Summary:
         '     Draws an ellipse defined by a bounding System.Drawing.RectangleF.
@@ -810,34 +956,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawEllipse(pen As Pen, rect As RectangleF)
-        '
-        ' Summary:
-        '     Draws an ellipse defined by a bounding rectangle specified by a pair of coordinates,
-        '     a height, and a width.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the ellipse.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   width:
-        '     Width of the bounding rectangle that defines the ellipse.
-        '
-        '   height:
-        '     Height of the bounding rectangle that defines the ellipse.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
-        Public MustOverride Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub DrawEllipse(pen As Pen, rect As RectangleF)
+            Call Graphics.DrawEllipse(pen, rect)
+        End Sub
         '
         ' Summary:
         '     Draws an ellipse defined by a bounding rectangle specified by coordinates for
@@ -864,7 +985,38 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
+            Call Graphics.DrawEllipse(pen, x, y, width, height)
+        End Sub
+        '
+        ' Summary:
+        '     Draws an ellipse defined by a bounding rectangle specified by a pair of coordinates,
+        '     a height, and a width.
+        '
+        ' Parameters:
+        '   pen:
+        '     System.Drawing.Pen that determines the color, width, and style of the ellipse.
+        '
+        '   x:
+        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
+        '     the ellipse.
+        '
+        '   y:
+        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
+        '     the ellipse.
+        '
+        '   width:
+        '     Width of the bounding rectangle that defines the ellipse.
+        '
+        '   height:
+        '     Height of the bounding rectangle that defines the ellipse.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     pen is null.
+        Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+            Call Graphics.DrawEllipse(pen, x, y, width, height)
+        End Sub
         '
         ' Summary:
         '     Draws the image represented by the specified System.Drawing.Icon within the area
@@ -882,7 +1034,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     icon is null.
-        Public MustOverride Sub DrawIcon(icon As Icon, targetRect As Rectangle)
+        Public Overrides Sub DrawIcon(icon As Icon, targetRect As Rectangle)
+            Call Graphics.DrawIcon(icon, targetRect)
+        End Sub
         '
         ' Summary:
         '     Draws the image represented by the specified System.Drawing.Icon at the specified
@@ -901,7 +1055,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     icon is null.
-        Public MustOverride Sub DrawIcon(icon As Icon, x As Integer, y As Integer)
+        Public Overrides Sub DrawIcon(icon As Icon, x As Integer, y As Integer)
+            Call Graphics.DrawIcon(icon, x, y)
+        End Sub
         '
         ' Summary:
         '     Draws the image represented by the specified System.Drawing.Icon without scaling
@@ -920,90 +1076,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     icon is null.
-        Public MustOverride Sub DrawIconUnstretched(icon As Icon, targetRect As Rectangle)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image, using its original physical size, at
-        '     the specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   point:
-        '     System.Drawing.Point structure that represents the location of the upper-left
-        '     corner of the drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, point As Point)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified shape and size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   destPoints:
-        '     Array of three System.Drawing.Point structures that define a parallelogram.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As Point)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified shape and size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   destPoints:
-        '     Array of three System.Drawing.PointF structures that define a parallelogram.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As PointF)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   rect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, rect As Rectangle)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image, using its original physical size, at
-        '     the specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   point:
-        '     System.Drawing.PointF structure that represents the upper-left corner of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, point As PointF)
+        Public Overrides Sub DrawIconUnstretched(icon As Icon, targetRect As Rectangle)
+            Call Graphics.DrawIconUnstretched(icon, targetRect)
+        End Sub
         '
         ' Summary:
         '     Draws the specified System.Drawing.Image at the specified location and with the
@@ -1020,7 +1095,94 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, rect As RectangleF)
+        Public Overrides Sub DrawImage(image As Image, rect As RectangleF)
+            Call Graphics.DrawImage(image, rect)
+        End Sub
+        '
+        ' Summary:
+        '     Draws the specified System.Drawing.Image at the specified location and with the
+        '     specified size.
+        '
+        ' Parameters:
+        '   image:
+        '     System.Drawing.Image to draw.
+        '
+        '   rect:
+        '     System.Drawing.Rectangle structure that specifies the location and size of the
+        '     drawn image.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     image is null.
+        Public Overrides Sub DrawImage(image As Image, rect As Rectangle)
+            Call Graphics.DrawImage(image, rect)
+        End Sub
+        '
+        ' Summary:
+        '     Draws the specified System.Drawing.Image at the specified location and with the
+        '     specified shape and size.
+        '
+        ' Parameters:
+        '   image:
+        '     System.Drawing.Image to draw.
+        '
+        '   destPoints:
+        '     Array of three System.Drawing.Point structures that define a parallelogram.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     image is null.
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point)
+            Call Graphics.DrawImage(image, destPoints)
+        End Sub
+        '
+        ' Summary:
+        '     Draws the specified System.Drawing.Image at the specified location and with the
+        '     specified shape and size.
+        '
+        ' Parameters:
+        '   image:
+        '     System.Drawing.Image to draw.
+        '
+        '   destPoints:
+        '     Array of three System.Drawing.PointF structures that define a parallelogram.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     image is null.
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF)
+            Call Graphics.DrawImage(image, destPoints)
+        End Sub
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image, using its original physical size, at
+        ''' the specified location.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="point">System.Drawing.Point structure that represents the location of the upper-left
+        ''' corner of the drawn image.</param>
+        Public Overrides Sub DrawImage(image As Image, point As Point)
+            Call Graphics.DrawImage(image, point)
+        End Sub
+        '
+        ' Summary:
+        '     Draws the specified System.Drawing.Image, using its original physical size, at
+        '     the specified location.
+        '
+        ' Parameters:
+        '   image:
+        '     System.Drawing.Image to draw.
+        '
+        '   point:
+        '     System.Drawing.PointF structure that represents the upper-left corner of the
+        '     drawn image.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     image is null.
+        Public Overrides Sub DrawImage(image As Image, point As PointF)
+            Call Graphics.DrawImage(image, point)
+        End Sub
         '
         ' Summary:
         '     Draws the specified image, using its original physical size, at the location
@@ -1039,7 +1201,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, x As Integer, y As Integer)
+        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer)
+            Call Graphics.DrawImage(image, x, y)
+        End Sub
         '
         ' Summary:
         '     Draws the specified System.Drawing.Image, using its original physical size, at
@@ -1058,7 +1222,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, x As Single, y As Single)
+        Public Overrides Sub DrawImage(image As Image, x As Single, y As Single)
+            Call Graphics.DrawImage(image, x, y)
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1068,12 +1234,11 @@ Namespace Imaging
         '   image:
         '     System.Drawing.Image to draw.
         '
-        '   destRect:
-        '     System.Drawing.RectangleF structure that specifies the location and size of the
-        '     drawn image. The image is scaled to fit the rectangle.
+        '   destPoints:
+        '     Array of three System.Drawing.Point structures that define a parallelogram.
         '
         '   srcRect:
-        '     System.Drawing.RectangleF structure that specifies the portion of the image object
+        '     System.Drawing.Rectangle structure that specifies the portion of the image object
         '     to draw.
         '
         '   srcUnit:
@@ -1083,7 +1248,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1108,59 +1275,41 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
+
+        End Sub
+
+        ''' <summary>
+        ''' Draws the specified portion of the specified System.Drawing.Image at the specified
+        ''' location and with the specified size.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="destPoints">Array of three System.Drawing.PointF structures that define a parallelogram.</param>
+        ''' <param name="srcRect">System.Drawing.RectangleF structure that specifies the portion of the image object
+        ''' to draw.</param>
+        ''' <param name="srcUnit">Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
+        ''' of measure used by the srcRect parameter.</param>
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
+            Call Graphics.DrawImage(image, destPoints, srcRect, srcUnit)
+        End Sub
+
+        ''' <summary>
+        ''' Draws the specified portion of the specified System.Drawing.Image at the specified
+        ''' location and with the specified size.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="destRect">System.Drawing.RectangleF structure that specifies the location and size of the
+        ''' drawn image. The image is scaled to fit the rectangle.</param>
+        ''' <param name="srcRect">System.Drawing.RectangleF structure that specifies the portion of the image object
+        ''' to draw.</param>
+        ''' <param name="srcUnit">Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
+        ''' of measure used by the srcRect parameter.</param>
+        Public Overrides Sub DrawImage(image As Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
+            Call Graphics.DrawImage(image, destRect, srcRect, srcUnit)
+        End Sub
         '
         ' Summary:
-        '     Draws the specified portion of the specified System.Drawing.Image at the specified
-        '     location and with the specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   destPoints:
-        '     Array of three System.Drawing.PointF structures that define a parallelogram.
-        '
-        '   srcRect:
-        '     System.Drawing.RectangleF structure that specifies the portion of the image object
-        '     to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
-        '     of measure used by the srcRect parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
-        '
-        ' Summary:
-        '     Draws the specified portion of the specified System.Drawing.Image at the specified
-        '     location and with the specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   destPoints:
-        '     Array of three System.Drawing.Point structures that define a parallelogram.
-        '
-        '   srcRect:
-        '     System.Drawing.Rectangle structure that specifies the portion of the image object
-        '     to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
-        '     of measure used by the srcRect parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
+        '     Draws a portion of an image at a specified location.
         '
         ' Parameters:
         '   image:
@@ -1172,16 +1321,20 @@ Namespace Imaging
         '   y:
         '     The y-coordinate of the upper-left corner of the drawn image.
         '
-        '   width:
-        '     Width of the drawn image.
+        '   srcRect:
+        '     System.Drawing.RectangleF structure that specifies the portion of the System.Drawing.Image
+        '     to draw.
         '
-        '   height:
-        '     Height of the drawn image.
+        '   srcUnit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
+        '     of measure used by the srcRect parameter.
         '
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1209,58 +1362,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn image.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn image.
-        '
-        '   width:
-        '     Width of the drawn image.
-        '
-        '   height:
-        '     Height of the drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
-        '
-        ' Summary:
-        '     Draws a portion of an image at a specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn image.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn image.
-        '
-        '   srcRect:
-        '     System.Drawing.RectangleF structure that specifies the portion of the System.Drawing.Image
-        '     to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
-        '     of measure used by the srcRect parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1288,7 +1392,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+
+        End Sub
         '
         ' Summary:
         '     Draws a portion of an image at a specified location.
@@ -1314,7 +1420,49 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
+            Call Graphics.DrawImage(image, x, y, srcRect, srcUnit)
+        End Sub
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image at the specified location and with the
+        ''' specified size.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the drawn image.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the drawn image.</param>
+        ''' <param name="width">Width of the drawn image.</param>
+        ''' <param name="height">Height of the drawn image.</param>
+        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
+            Call Graphics.DrawImage(image, x, y, width, height)
+        End Sub
+        '
+        ' Summary:
+        '     Draws the specified System.Drawing.Image at the specified location and with the
+        '     specified size.
+        '
+        ' Parameters:
+        '   image:
+        '     System.Drawing.Image to draw.
+        '
+        '   x:
+        '     The x-coordinate of the upper-left corner of the drawn image.
+        '
+        '   y:
+        '     The y-coordinate of the upper-left corner of the drawn image.
+        '
+        '   width:
+        '     Width of the drawn image.
+        '
+        '   height:
+        '     Height of the drawn image.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     image is null.
+        Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, width As Single, height As Single)
+            Call Graphics.DrawImage(image, x, y, width, height)
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1348,7 +1496,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1382,7 +1532,46 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+
+        End Sub
+        '
+        ' Summary:
+        '     Draws the specified portion of the specified System.Drawing.Image at the specified
+        '     location and with the specified size.
+        '
+        ' Parameters:
+        '   image:
+        '     System.Drawing.Image to draw.
+        '
+        '   destRect:
+        '     System.Drawing.Rectangle structure that specifies the location and size of the
+        '     drawn image. The image is scaled to fit the rectangle.
+        '
+        '   srcX:
+        '     The x-coordinate of the upper-left corner of the portion of the source image
+        '     to draw.
+        '
+        '   srcY:
+        '     The y-coordinate of the upper-left corner of the portion of the source image
+        '     to draw.
+        '
+        '   srcWidth:
+        '     Width of the portion of the source image to draw.
+        '
+        '   srcHeight:
+        '     Height of the portion of the source image to draw.
+        '
+        '   srcUnit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
+        '     of measure used to determine the source rectangle.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     image is null.
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1417,7 +1606,9 @@ Namespace Imaging
         '     Value specifying additional data for the System.Drawing.Graphics.DrawImageAbort
         '     delegate to use when checking whether to stop execution of the System.Drawing.Graphics.DrawImage(System.Drawing.Image,System.Drawing.Point[],System.Drawing.Rectangle,System.Drawing.GraphicsUnit,System.Drawing.Imaging.ImageAttributes,System.Drawing.Graphics.DrawImageAbort,System.Int32)
         '     method.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1452,42 +1643,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit)
-        '
-        ' Summary:
-        '     Draws the specified portion of the specified System.Drawing.Image at the specified
-        '     location and with the specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   destRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn image. The image is scaled to fit the rectangle.
-        '
-        '   srcX:
-        '     The x-coordinate of the upper-left corner of the portion of the source image
-        '     to draw.
-        '
-        '   srcY:
-        '     The y-coordinate of the upper-left corner of the portion of the source image
-        '     to draw.
-        '
-        '   srcWidth:
-        '     Width of the portion of the source image to draw.
-        '
-        '   srcHeight:
-        '     Height of the portion of the source image to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
-        '     of measure used to determine the source rectangle.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1526,46 +1684,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
-        '
-        ' Summary:
-        '     Draws the specified portion of the specified System.Drawing.Image at the specified
-        '     location and with the specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   destRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn image. The image is scaled to fit the rectangle.
-        '
-        '   srcX:
-        '     The x-coordinate of the upper-left corner of the portion of the source image
-        '     to draw.
-        '
-        '   srcY:
-        '     The y-coordinate of the upper-left corner of the portion of the source image
-        '     to draw.
-        '
-        '   srcWidth:
-        '     Width of the portion of the source image to draw.
-        '
-        '   srcHeight:
-        '     Height of the portion of the source image to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
-        '     of measure used to determine the source rectangle.
-        '
-        '   imageAttrs:
-        '     System.Drawing.Imaging.ImageAttributes that specifies recoloring and gamma information
-        '     for the image object.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1604,7 +1725,50 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+
+        End Sub
+        '
+        ' Summary:
+        '     Draws the specified portion of the specified System.Drawing.Image at the specified
+        '     location and with the specified size.
+        '
+        ' Parameters:
+        '   image:
+        '     System.Drawing.Image to draw.
+        '
+        '   destRect:
+        '     System.Drawing.Rectangle structure that specifies the location and size of the
+        '     drawn image. The image is scaled to fit the rectangle.
+        '
+        '   srcX:
+        '     The x-coordinate of the upper-left corner of the portion of the source image
+        '     to draw.
+        '
+        '   srcY:
+        '     The y-coordinate of the upper-left corner of the portion of the source image
+        '     to draw.
+        '
+        '   srcWidth:
+        '     Width of the portion of the source image to draw.
+        '
+        '   srcHeight:
+        '     Height of the portion of the source image to draw.
+        '
+        '   srcUnit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
+        '     of measure used to determine the source rectangle.
+        '
+        '   imageAttrs:
+        '     System.Drawing.Imaging.ImageAttributes that specifies recoloring and gamma information
+        '     for the image object.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     image is null.
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1649,7 +1813,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1694,56 +1860,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort)
-        '
-        ' Summary:
-        '     Draws the specified portion of the specified System.Drawing.Image at the specified
-        '     location and with the specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   destRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn image. The image is scaled to fit the rectangle.
-        '
-        '   srcX:
-        '     The x-coordinate of the upper-left corner of the portion of the source image
-        '     to draw.
-        '
-        '   srcY:
-        '     The y-coordinate of the upper-left corner of the portion of the source image
-        '     to draw.
-        '
-        '   srcWidth:
-        '     Width of the portion of the source image to draw.
-        '
-        '   srcHeight:
-        '     Height of the portion of the source image to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
-        '     of measure used to determine the source rectangle.
-        '
-        '   imageAttrs:
-        '     System.Drawing.Imaging.ImageAttributes that specifies recoloring and gamma information
-        '     for the image object.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.DrawImageAbort delegate that specifies a method to call
-        '     during the drawing of the image. This method is called frequently to check whether
-        '     to stop execution of the System.Drawing.Graphics.DrawImage(System.Drawing.Image,System.Drawing.Rectangle,System.Single,System.Single,System.Single,System.Single,System.Drawing.GraphicsUnit,System.Drawing.Imaging.ImageAttributes,System.Drawing.Graphics.DrawImageAbort,System.IntPtr)
-        '     method according to application-determined criteria.
-        '
-        '   callbackData:
-        '     Value specifying additional data for the System.Drawing.Graphics.DrawImageAbort
-        '     delegate to use when checking whether to stop execution of the DrawImage method.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort, callbackData As IntPtr)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort)
+
+        End Sub
         '
         ' Summary:
         '     Draws the specified portion of the specified System.Drawing.Image at the specified
@@ -1792,7 +1911,60 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort, callbackData As IntPtr)
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort, callbackData As IntPtr)
+
+        End Sub
+        '
+        ' Summary:
+        '     Draws the specified portion of the specified System.Drawing.Image at the specified
+        '     location and with the specified size.
+        '
+        ' Parameters:
+        '   image:
+        '     System.Drawing.Image to draw.
+        '
+        '   destRect:
+        '     System.Drawing.Rectangle structure that specifies the location and size of the
+        '     drawn image. The image is scaled to fit the rectangle.
+        '
+        '   srcX:
+        '     The x-coordinate of the upper-left corner of the portion of the source image
+        '     to draw.
+        '
+        '   srcY:
+        '     The y-coordinate of the upper-left corner of the portion of the source image
+        '     to draw.
+        '
+        '   srcWidth:
+        '     Width of the portion of the source image to draw.
+        '
+        '   srcHeight:
+        '     Height of the portion of the source image to draw.
+        '
+        '   srcUnit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the units
+        '     of measure used to determine the source rectangle.
+        '
+        '   imageAttrs:
+        '     System.Drawing.Imaging.ImageAttributes that specifies recoloring and gamma information
+        '     for the image object.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.DrawImageAbort delegate that specifies a method to call
+        '     during the drawing of the image. This method is called frequently to check whether
+        '     to stop execution of the System.Drawing.Graphics.DrawImage(System.Drawing.Image,System.Drawing.Rectangle,System.Single,System.Single,System.Single,System.Single,System.Drawing.GraphicsUnit,System.Drawing.Imaging.ImageAttributes,System.Drawing.Graphics.DrawImageAbort,System.IntPtr)
+        '     method according to application-determined criteria.
+        '
+        '   callbackData:
+        '     Value specifying additional data for the System.Drawing.Graphics.DrawImageAbort
+        '     delegate to use when checking whether to stop execution of the DrawImage method.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     image is null.
+        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As DrawImageAbort, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Draws a specified image using its original physical size at a specified location.
@@ -1809,7 +1981,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImageUnscaled(image As Image, rect As Rectangle)
+        Public Overrides Sub DrawImageUnscaled(image As Image, rect As Rectangle)
+            Call Graphics.DrawImageUnscaled(image, rect)
+        End Sub
         '
         ' Summary:
         '     Draws a specified image using its original physical size at a specified location.
@@ -1825,7 +1999,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImageUnscaled(image As Image, point As Point)
+        Public Overrides Sub DrawImageUnscaled(image As Image, point As Point)
+            Call Graphics.DrawImageUnscaled(image, point)
+        End Sub
         '
         ' Summary:
         '     Draws the specified image using its original physical size at the location specified
@@ -1844,7 +2020,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
+        Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
+            Call Graphics.DrawImageUnscaled(image, x, y)
+        End Sub
         '
         ' Summary:
         '     Draws a specified image using its original physical size at a specified location.
@@ -1868,7 +2046,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
+            Call Graphics.DrawImageUnscaled(image, x, y, width, height)
+        End Sub
         '
         ' Summary:
         '     Draws the specified image without scaling and clips it, if necessary, to fit
@@ -1884,15 +2064,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        Public MustOverride Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
-
-        ''' <summary>
-        ''' Draws a line connecting two System.Drawing.PointF structures.
-        ''' </summary>
-        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
-        ''' <param name="pt1">System.Drawing.PointF structure that represents the first point to connect.</param>
-        ''' <param name="pt2">System.Drawing.PointF structure that represents the second point to connect.</param>
-        Public MustOverride Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
+        Public Overrides Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
+            Call Graphics.DrawImageUnscaledAndClipped(image, rect)
+        End Sub
 
         ''' <summary>
         ''' Draws a line connecting two System.Drawing.Point structures.
@@ -1900,7 +2074,29 @@ Namespace Imaging
         ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
         ''' <param name="pt1">System.Drawing.Point structure that represents the first point to connect.</param>
         ''' <param name="pt2">System.Drawing.Point structure that represents the second point to connect.</param>
-        Public MustOverride Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
+        Public Overrides Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
+            Call Graphics.DrawLine(pen, pt1, pt2)
+        End Sub
+        '
+        ' Summary:
+        '     Draws a line connecting two System.Drawing.PointF structures.
+        '
+        ' Parameters:
+        '   pen:
+        '     System.Drawing.Pen that determines the color, width, and style of the line.
+        '
+        '   pt1:
+        '     System.Drawing.PointF structure that represents the first point to connect.
+        '
+        '   pt2:
+        '     System.Drawing.PointF structure that represents the second point to connect.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     pen is null.
+        Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
+            Call Graphics.DrawLine(pen, pt1, pt2)
+        End Sub
         '
         ' Summary:
         '     Draws a line connecting the two points specified by the coordinate pairs.
@@ -1924,7 +2120,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
+        Public Overrides Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
+            Call Graphics.DrawLine(pen, x1, y1, x2, y2)
+        End Sub
         '
         ' Summary:
         '     Draws a line connecting the two points specified by the coordinate pairs.
@@ -1948,23 +2146,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
-        '
-        ' Summary:
-        '     Draws a series of line segments that connect an array of System.Drawing.PointF
-        '     structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line segments.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that represent the points to connect.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawLines(pen As Pen, points() As PointF)
+        Public Overrides Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
+            Call Graphics.DrawLine(pen, x1, y1, x2, y2)
+        End Sub
         '
         ' Summary:
         '     Draws a series of line segments that connect an array of System.Drawing.Point
@@ -1980,7 +2164,27 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawLines(pen As Pen, points() As Point)
+        Public Overrides Sub DrawLines(pen As Pen, points() As Point)
+            Call Graphics.DrawLines(pen, points)
+        End Sub
+        '
+        ' Summary:
+        '     Draws a series of line segments that connect an array of System.Drawing.PointF
+        '     structures.
+        '
+        ' Parameters:
+        '   pen:
+        '     System.Drawing.Pen that determines the color, width, and style of the line segments.
+        '
+        '   points:
+        '     Array of System.Drawing.PointF structures that represent the points to connect.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     pen is null.-or-points is null.
+        Public Overrides Sub DrawLines(pen As Pen, points() As PointF)
+            Call Graphics.DrawLines(pen, points)
+        End Sub
         '
         ' Summary:
         '     Draws a System.Drawing.Drawing2D.GraphicsPath.
@@ -1995,7 +2199,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-path is null.
-        Public MustOverride Sub DrawPath(pen As Pen, path As GraphicsPath)
+        Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)
+            Call Graphics.DrawPath(pen, path)
+        End Sub
         '
         ' Summary:
         '     Draws a pie shape defined by an ellipse specified by a System.Drawing.Rectangle
@@ -2020,7 +2226,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+            Call Graphics.DrawPie(pen, rect, startAngle, sweepAngle)
+        End Sub
         '
         ' Summary:
         '     Draws a pie shape defined by an ellipse specified by a System.Drawing.RectangleF
@@ -2045,7 +2253,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawPie(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub DrawPie(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
+            Call Graphics.DrawPie(pen, rect, startAngle, sweepAngle)
+        End Sub
         '
         ' Summary:
         '     Draws a pie shape defined by an ellipse specified by a coordinate pair, a width,
@@ -2082,7 +2292,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawPie(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+        Public Overrides Sub DrawPie(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+
+        End Sub
         '
         ' Summary:
         '     Draws a pie shape defined by an ellipse specified by a coordinate pair, a width,
@@ -2119,7 +2331,28 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+
+        Public Overrides Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+
+        End Sub
+
+        '
+        ' Summary:
+        '     Draws a polygon defined by an array of System.Drawing.Point structures.
+        '
+        ' Parameters:
+        '   pen:
+        '     System.Drawing.Pen that determines the color, width, and style of the polygon.
+        '
+        '   points:
+        '     Array of System.Drawing.Point structures that represent the vertices of the polygon.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     pen is null.
+        Public Overrides Sub DrawPolygon(pen As Pen, points() As Point)
+            Call Graphics.DrawPolygon(pen, points)
+        End Sub
         '
         ' Summary:
         '     Draws a polygon defined by an array of System.Drawing.PointF structures.
@@ -2135,22 +2368,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawPolygon(pen As Pen, points() As PointF)
-        '
-        ' Summary:
-        '     Draws a polygon defined by an array of System.Drawing.Point structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the polygon.
-        '
-        '   points:
-        '     Array of System.Drawing.Point structures that represent the vertices of the polygon.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
-        Public MustOverride Sub DrawPolygon(pen As Pen, points() As Point)
+        Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
+            Call Graphics.DrawPolygon(pen, points)
+        End Sub
         '
         ' Summary:
         '     Draws a rectangle specified by a System.Drawing.Rectangle structure.
@@ -2165,32 +2385,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawRectangle(pen As Pen, rect As Rectangle)
-        Public MustOverride Sub DrawRectangle(pen As Pen, rect As RectangleF)
-        '
-        ' Summary:
-        '     Draws a rectangle specified by a coordinate pair, a width, and a height.
-        '
-        ' Parameters:
-        '   pen:
-        '     A System.Drawing.Pen that determines the color, width, and style of the rectangle.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   width:
-        '     The width of the rectangle to draw.
-        '
-        '   height:
-        '     The height of the rectangle to draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
-        Public MustOverride Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
+            Call Graphics.DrawRectangle(pen, rect)
+        End Sub
         '
         ' Summary:
         '     Draws a rectangle specified by a coordinate pair, a width, and a height.
@@ -2214,27 +2411,35 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     pen is null.
-        Public MustOverride Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
+            Call Graphics.DrawRectangle(pen, x, y, width, height)
+        End Sub
         '
         ' Summary:
-        '     Draws a series of rectangles specified by System.Drawing.RectangleF structures.
+        '     Draws a rectangle specified by a coordinate pair, a width, and a height.
         '
         ' Parameters:
         '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the outlines
-        '     of the rectangles.
+        '     A System.Drawing.Pen that determines the color, width, and style of the rectangle.
         '
-        '   rects:
-        '     Array of System.Drawing.RectangleF structures that represent the rectangles to
-        '     draw.
+        '   x:
+        '     The x-coordinate of the upper-left corner of the rectangle to draw.
+        '
+        '   y:
+        '     The y-coordinate of the upper-left corner of the rectangle to draw.
+        '
+        '   width:
+        '     The width of the rectangle to draw.
+        '
+        '   height:
+        '     The height of the rectangle to draw.
         '
         ' Exceptions:
         '   T:System.ArgumentNullException:
-        '     pen is null.-or-rects is null.
-        '
-        '   T:System.ArgumentException:
-        '     rects is a zero-length array.
-        Public MustOverride Sub DrawRectangles(pen As Pen, rects() As RectangleF)
+        '     pen is null.
+        Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+            Call Graphics.DrawRectangle(pen, x, y, width, height)
+        End Sub
         '
         ' Summary:
         '     Draws a series of rectangles specified by System.Drawing.Rectangle structures.
@@ -2254,69 +2459,57 @@ Namespace Imaging
         '
         '   T:System.ArgumentException:
         '     rects is a zero-length array.
-        Public MustOverride Sub DrawRectangles(pen As Pen, rects() As Rectangle)
+        Public Overrides Sub DrawRectangles(pen As Pen, rects() As Rectangle)
+
+        End Sub
+        '
+        ' Summary:
+        '     Draws a series of rectangles specified by System.Drawing.RectangleF structures.
+        '
+        ' Parameters:
+        '   pen:
+        '     System.Drawing.Pen that determines the color, width, and style of the outlines
+        '     of the rectangles.
+        '
+        '   rects:
+        '     Array of System.Drawing.RectangleF structures that represent the rectangles to
+        '     draw.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     pen is null.-or-rects is null.
+        '
+        '   T:System.ArgumentException:
+        '     rects is a zero-length array.
+        Public Overrides Sub DrawRectangles(pen As Pen, rects() As RectangleF)
+
+        End Sub
+
+        ''' <summary>
+        ''' Draws the specified text string in the specified rectangle with the specified
+        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' </summary>
+        ''' <param name="s">String to draw.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
+        ''' <param name="layoutRectangle">System.Drawing.RectangleF structure that specifies the location of the drawn
+        ''' text.</param>
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
+            Call Graphics.DrawString(s, font, brush, layoutRectangle)
+        End Sub
 
         ''' <summary>
         ''' Draws the specified text string at the specified location with the specified
-        ''' <see cref="Brush"/> and <see cref="Font"/> objects.
+        ''' <see cref="System.Drawing.Brush"/> and <see cref="System.Drawing.Font"/> objects.
         ''' </summary>
         ''' <param name="s">String to draw.</param>
         ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
         ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
         ''' <param name="point">System.Drawing.PointF structure that specifies the upper-left corner of the drawn
         ''' text.</param>
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
-        '
-        ' Summary:
-        '     Draws the specified text string in the specified rectangle with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   layoutRectangle:
-        '     System.Drawing.RectangleF structure that specifies the location of the drawn
-        '     text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
-        '
-        ' Summary:
-        '     Draws the specified text string in the specified rectangle with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects using the formatting attributes
-        '     of the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   layoutRectangle:
-        '     System.Drawing.RectangleF structure that specifies the location of the drawn
-        '     text.
-        '
-        '   format:
-        '     System.Drawing.StringFormat that specifies formatting attributes, such as line
-        '     spacing and alignment, that are applied to the drawn text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+            Call Graphics.DrawString(s, font, brush, point)
+        End Sub
         '
         ' Summary:
         '     Draws the specified text string at the specified location with the specified
@@ -2344,7 +2537,39 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
+            Call Graphics.DrawString(s, font, brush, point, format)
+        End Sub
+        '
+        ' Summary:
+        '     Draws the specified text string in the specified rectangle with the specified
+        '     System.Drawing.Brush and System.Drawing.Font objects using the formatting attributes
+        '     of the specified System.Drawing.StringFormat.
+        '
+        ' Parameters:
+        '   s:
+        '     String to draw.
+        '
+        '   font:
+        '     System.Drawing.Font that defines the text format of the string.
+        '
+        '   brush:
+        '     System.Drawing.Brush that determines the color and texture of the drawn text.
+        '
+        '   layoutRectangle:
+        '     System.Drawing.RectangleF structure that specifies the location of the drawn
+        '     text.
+        '
+        '   format:
+        '     System.Drawing.StringFormat that specifies formatting attributes, such as line
+        '     spacing and alignment, that are applied to the drawn text.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     brush is null.-or-s is null.
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
+            Call Graphics.DrawString(s, font, brush, layoutRectangle, format)
+        End Sub
         '
         ' Summary:
         '     Draws the specified text string at the specified location with the specified
@@ -2369,7 +2594,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
+            Call Graphics.DrawString(s, font, brush, x, y)
+        End Sub
         '
         ' Summary:
         '     Draws the specified text string at the specified location with the specified
@@ -2399,7 +2626,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
+            Call Graphics.DrawString(s, font, brush, x, y, format)
+        End Sub
         '
         ' Summary:
         '     Closes the current graphics container and restores the state of this System.Drawing.Graphics
@@ -2409,7 +2638,9 @@ Namespace Imaging
         '   container:
         '     System.Drawing.Drawing2D.GraphicsContainer that represents the container this
         '     method restores.
-        Public MustOverride Sub EndContainer(container As GraphicsContainer)
+        Public Overrides Sub EndContainer(container As GraphicsContainer)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
@@ -2426,41 +2657,28 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
-        '     time, to a callback method for display in a specified parallelogram.
+        '     time, to a callback method for display at a specified point.
         '
         ' Parameters:
         '   metafile:
         '     System.Drawing.Imaging.Metafile to enumerate.
         '
-        '   destPoints:
-        '     Array of three System.Drawing.PointF structures that define a parallelogram that
-        '     determines the size and location of the drawn metafile.
+        '   destPoint:
+        '     System.Drawing.Point structure that specifies the location of the upper-left
+        '     corner of the drawn metafile.
         '
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc)
-        '
-        ' Summary:
-        '     Sends the records of the specified System.Drawing.Imaging.Metafile, one at a
-        '     time, to a callback method for display in a specified rectangle.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn metafile.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records of the specified System.Drawing.Imaging.Metafile, one at a
@@ -2477,62 +2695,28 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc)
+
+        End Sub
         '
         ' Summary:
-        '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
-        '     time, to a callback method for display at a specified point.
+        '     Sends the records of the specified System.Drawing.Imaging.Metafile, one at a
+        '     time, to a callback method for display in a specified rectangle.
         '
         ' Parameters:
         '   metafile:
         '     System.Drawing.Imaging.Metafile to enumerate.
         '
-        '   destPoint:
-        '     System.Drawing.Point structure that specifies the location of the upper-left
-        '     corner of the drawn metafile.
+        '   destRect:
+        '     System.Drawing.Rectangle structure that specifies the location and size of the
+        '     drawn metafile.
         '
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc)
-        '
-        ' Summary:
-        '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
-        '     time, to a callback method for display at a specified point.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destPoint:
-        '     System.Drawing.PointF structure that specifies the location of the upper-left
-        '     corner of the drawn metafile.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc)
-        '
-        ' Summary:
-        '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
-        '     time, to a callback method for display in a specified parallelogram.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destPoints:
-        '     Array of three System.Drawing.Point structures that define a parallelogram that
-        '     determines the size and location of the drawn metafile.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        '
-        '   callbackData:
-        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
-        '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
@@ -2549,11 +2733,28 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc)
+
+        End Sub
         '
-        '   callbackData:
-        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
-        '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        ' Summary:
+        '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
+        '     time, to a callback method for display at a specified point.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destPoint:
+        '     System.Drawing.PointF structure that specifies the location of the upper-left
+        '     corner of the drawn metafile.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records of the specified System.Drawing.Imaging.Metafile, one at a
@@ -2574,19 +2775,21 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
-        '     time, to a callback method for display at a specified point.
+        '     time, to a callback method for display in a specified parallelogram.
         '
         ' Parameters:
         '   metafile:
         '     System.Drawing.Imaging.Metafile to enumerate.
         '
-        '   destPoint:
-        '     System.Drawing.Point structure that specifies the location of the upper-left
-        '     corner of the drawn metafile.
+        '   destPoints:
+        '     Array of three System.Drawing.PointF structures that define a parallelogram that
+        '     determines the size and location of the drawn metafile.
         '
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
@@ -2595,19 +2798,21 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
-        '     time, to a callback method for display at a specified point.
+        '     time, to a callback method for display in a specified parallelogram.
         '
         ' Parameters:
         '   metafile:
         '     System.Drawing.Imaging.Metafile to enumerate.
         '
-        '   destPoint:
-        '     System.Drawing.PointF structure that specifies the location of the upper-left
-        '     corner of the drawn metafile.
+        '   destPoints:
+        '     Array of three System.Drawing.Point structures that define a parallelogram that
+        '     determines the size and location of the drawn metafile.
         '
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
@@ -2616,7 +2821,9 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records of the specified System.Drawing.Imaging.Metafile, one at a
@@ -2637,38 +2844,36 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
-        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display in a specified rectangle.
+        '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
+        '     time, to a callback method for display at a specified point.
         '
         ' Parameters:
         '   metafile:
         '     System.Drawing.Imaging.Metafile to enumerate.
         '
-        '   destRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn metafile.
-        '
-        '   srcRect:
-        '     System.Drawing.Rectangle structure that specifies the portion of the metafile,
-        '     relative to its upper-left corner, to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure used to determine the portion of the metafile that the rectangle specified
-        '     by the srcRect parameter contains.
+        '   destPoint:
+        '     System.Drawing.Point structure that specifies the location of the upper-left
+        '     corner of the drawn metafile.
         '
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        '
+        '   callbackData:
+        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
+        '     for this parameter.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
-        '     time, to a callback method for display at a specified point using specified image
-        '     attributes.
+        '     time, to a callback method for display at a specified point.
         '
         ' Parameters:
         '   metafile:
@@ -2685,37 +2890,9 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        '
-        '   imageAttr:
-        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
-        '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        '
-        ' Summary:
-        '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
-        '     time, to a callback method for display in a specified parallelogram using specified
-        '     image attributes.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destPoints:
-        '     Array of three System.Drawing.Point structures that define a parallelogram that
-        '     determines the size and location of the drawn metafile.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        '
-        '   callbackData:
-        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
-        '     for this parameter.
-        '
-        '   imageAttr:
-        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
-        '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
@@ -2741,7 +2918,37 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
+        '     time, to a callback method for display in a specified parallelogram using specified
+        '     image attributes.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destPoints:
+        '     Array of three System.Drawing.Point structures that define a parallelogram that
+        '     determines the size and location of the drawn metafile.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
+        '
+        '   callbackData:
+        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
+        '     for this parameter.
+        '
+        '   imageAttr:
+        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
+        '     for the drawn image.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
@@ -2767,7 +2974,9 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records of the specified System.Drawing.Imaging.Metafile, one at a
@@ -2779,7 +2988,7 @@ Namespace Imaging
         '     System.Drawing.Imaging.Metafile to enumerate.
         '
         '   destRect:
-        '     System.Drawing.RectangleF structure that specifies the location and size of the
+        '     System.Drawing.Rectangle structure that specifies the location and size of the
         '     drawn metafile.
         '
         '   callback:
@@ -2793,7 +3002,9 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
@@ -2819,7 +3030,9 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
@@ -2845,7 +3058,37 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
+        '     one at a time, to a callback method for display in a specified rectangle.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destRect:
+        '     System.Drawing.Rectangle structure that specifies the location and size of the
+        '     drawn metafile.
+        '
+        '   srcRect:
+        '     System.Drawing.Rectangle structure that specifies the portion of the metafile,
+        '     relative to its upper-left corner, to draw.
+        '
+        '   srcUnit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
+        '     of measure used to determine the portion of the metafile that the rectangle specified
+        '     by the srcRect parameter contains.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
@@ -2871,7 +3114,9 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records of the specified System.Drawing.Imaging.Metafile, one at a
@@ -2883,7 +3128,7 @@ Namespace Imaging
         '     System.Drawing.Imaging.Metafile to enumerate.
         '
         '   destRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
+        '     System.Drawing.RectangleF structure that specifies the location and size of the
         '     drawn metafile.
         '
         '   callback:
@@ -2897,33 +3142,9 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        '
-        ' Summary:
-        '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display in a specified parallelogram.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destPoints:
-        '     Array of three System.Drawing.Point structures that define a parallelogram that
-        '     determines the size and location of the drawn metafile.
-        '
-        '   srcRect:
-        '     System.Drawing.Rectangle structure that specifies the portion of the metafile,
-        '     relative to its upper-left corner, to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure used to determine the portion of the metafile that the rectangle specified
-        '     by the srcRect parameter contains.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
@@ -2949,67 +3170,9 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        '
-        ' Summary:
-        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display in a specified rectangle.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn metafile.
-        '
-        '   srcRect:
-        '     System.Drawing.Rectangle structure that specifies the portion of the metafile,
-        '     relative to its upper-left corner, to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure used to determine the portion of the metafile that the rectangle specified
-        '     by the srcRect parameter contains.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        '
-        '   callbackData:
-        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
-        '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
-        '
-        ' Summary:
-        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display in a specified rectangle.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destRect:
-        '     System.Drawing.RectangleF structure that specifies the location and size of the
-        '     drawn metafile.
-        '
-        '   srcRect:
-        '     System.Drawing.RectangleF structure that specifies the portion of the metafile,
-        '     relative to its upper-left corner, to draw.
-        '
-        '   srcUnit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure used to determine the portion of the metafile that the rectangle specified
-        '     by the srcRect parameter contains.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        '
-        '   callbackData:
-        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
-        '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
@@ -3035,11 +3198,37 @@ Namespace Imaging
         '   callback:
         '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
         '     to which the metafile records are sent.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sends the records in the specified System.Drawing.Imaging.Metafile, one at a
+        '     time, to a callback method for display at a specified point using specified image
+        '     attributes.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destPoint:
+        '     System.Drawing.PointF structure that specifies the location of the upper-left
+        '     corner of the drawn metafile.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
         '
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        '
+        '   imageAttr:
+        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
+        '     for the drawn image.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
@@ -3069,22 +3258,24 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
-        '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display at a specified point.
+        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
+        '     one at a time, to a callback method for display in a specified rectangle.
         '
         ' Parameters:
         '   metafile:
         '     System.Drawing.Imaging.Metafile to enumerate.
         '
-        '   destPoint:
-        '     System.Drawing.PointF structure that specifies the location of the upper-left
-        '     corner of the drawn metafile.
+        '   destRect:
+        '     System.Drawing.Rectangle structure that specifies the location and size of the
+        '     drawn metafile.
         '
         '   srcRect:
-        '     System.Drawing.RectangleF structure that specifies the portion of the metafile,
+        '     System.Drawing.Rectangle structure that specifies the portion of the metafile,
         '     relative to its upper-left corner, to draw.
         '
         '   srcUnit:
@@ -3099,7 +3290,9 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
@@ -3129,117 +3322,13 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
-        '
-        ' Summary:
-        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display in a specified rectangle using
-        '     specified image attributes.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn metafile.
-        '
-        '   srcRect:
-        '     System.Drawing.Rectangle structure that specifies the portion of the metafile,
-        '     relative to its upper-left corner, to draw.
-        '
-        '   unit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure used to determine the portion of the metafile that the rectangle specified
-        '     by the srcRect parameter contains.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        '
-        '   callbackData:
-        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
-        '     for this parameter.
-        '
-        '   imageAttr:
-        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
-        '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display in a specified parallelogram
-        '     using specified image attributes.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destPoints:
-        '     Array of three System.Drawing.PointF structures that define a parallelogram that
-        '     determines the size and location of the drawn metafile.
-        '
-        '   srcRect:
-        '     System.Drawing.RectangleF structure that specifies the portion of the metafile,
-        '     relative to its upper-left corner, to draw.
-        '
-        '   unit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure used to determine the portion of the metafile that the rectangle specified
-        '     by the srcRect parameter contains.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        '
-        '   callbackData:
-        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
-        '     for this parameter.
-        '
-        '   imageAttr:
-        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
-        '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        '
-        ' Summary:
-        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display in a specified rectangle using
-        '     specified image attributes.
-        '
-        ' Parameters:
-        '   metafile:
-        '     System.Drawing.Imaging.Metafile to enumerate.
-        '
-        '   destRect:
-        '     System.Drawing.RectangleF structure that specifies the location and size of the
-        '     drawn metafile.
-        '
-        '   srcRect:
-        '     System.Drawing.RectangleF structure that specifies the portion of the metafile,
-        '     relative to its upper-left corner, to draw.
-        '
-        '   unit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure used to determine the portion of the metafile that the rectangle specified
-        '     by the srcRect parameter contains.
-        '
-        '   callback:
-        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
-        '     to which the metafile records are sent.
-        '
-        '   callbackData:
-        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
-        '     for this parameter.
-        '
-        '   imageAttr:
-        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
-        '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        '
-        ' Summary:
-        '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display in a specified parallelogram
-        '     using specified image attributes.
+        '     one at a time, to a callback method for display in a specified parallelogram.
         '
         ' Parameters:
         '   metafile:
@@ -3253,7 +3342,7 @@ Namespace Imaging
         '     System.Drawing.Rectangle structure that specifies the portion of the metafile,
         '     relative to its upper-left corner, to draw.
         '
-        '   unit:
+        '   srcUnit:
         '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
         '     of measure used to determine the portion of the metafile that the rectangle specified
         '     by the srcRect parameter contains.
@@ -3265,16 +3354,45 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
-        '   imageAttr:
-        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
-        '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        ' Summary:
+        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
+        '     one at a time, to a callback method for display in a specified rectangle.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destRect:
+        '     System.Drawing.RectangleF structure that specifies the location and size of the
+        '     drawn metafile.
+        '
+        '   srcRect:
+        '     System.Drawing.RectangleF structure that specifies the portion of the metafile,
+        '     relative to its upper-left corner, to draw.
+        '
+        '   srcUnit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
+        '     of measure used to determine the portion of the metafile that the rectangle specified
+        '     by the srcRect parameter contains.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
+        '
+        '   callbackData:
+        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
+        '     for this parameter.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
-        '     one at a time, to a callback method for display at a specified point using specified
-        '     image attributes.
+        '     one at a time, to a callback method for display at a specified point.
         '
         ' Parameters:
         '   metafile:
@@ -3288,7 +3406,7 @@ Namespace Imaging
         '     System.Drawing.RectangleF structure that specifies the portion of the metafile,
         '     relative to its upper-left corner, to draw.
         '
-        '   unit:
+        '   srcUnit:
         '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
         '     of measure used to determine the portion of the metafile that the rectangle specified
         '     by the srcRect parameter contains.
@@ -3300,11 +3418,9 @@ Namespace Imaging
         '   callbackData:
         '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
         '     for this parameter.
-        '
-        '   imageAttr:
-        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
-        '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
@@ -3339,7 +3455,205 @@ Namespace Imaging
         '   imageAttr:
         '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
         '     for the drawn image.
-        Public MustOverride Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
+        '     one at a time, to a callback method for display in a specified parallelogram
+        '     using specified image attributes.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destPoints:
+        '     Array of three System.Drawing.PointF structures that define a parallelogram that
+        '     determines the size and location of the drawn metafile.
+        '
+        '   srcRect:
+        '     System.Drawing.RectangleF structure that specifies the portion of the metafile,
+        '     relative to its upper-left corner, to draw.
+        '
+        '   unit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
+        '     of measure used to determine the portion of the metafile that the rectangle specified
+        '     by the srcRect parameter contains.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
+        '
+        '   callbackData:
+        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
+        '     for this parameter.
+        '
+        '   imageAttr:
+        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
+        '     for the drawn image.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
+        '     one at a time, to a callback method for display in a specified rectangle using
+        '     specified image attributes.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destRect:
+        '     System.Drawing.Rectangle structure that specifies the location and size of the
+        '     drawn metafile.
+        '
+        '   srcRect:
+        '     System.Drawing.Rectangle structure that specifies the portion of the metafile,
+        '     relative to its upper-left corner, to draw.
+        '
+        '   unit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
+        '     of measure used to determine the portion of the metafile that the rectangle specified
+        '     by the srcRect parameter contains.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
+        '
+        '   callbackData:
+        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
+        '     for this parameter.
+        '
+        '   imageAttr:
+        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
+        '     for the drawn image.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sends the records of a selected rectangle from a System.Drawing.Imaging.Metafile,
+        '     one at a time, to a callback method for display in a specified rectangle using
+        '     specified image attributes.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destRect:
+        '     System.Drawing.RectangleF structure that specifies the location and size of the
+        '     drawn metafile.
+        '
+        '   srcRect:
+        '     System.Drawing.RectangleF structure that specifies the portion of the metafile,
+        '     relative to its upper-left corner, to draw.
+        '
+        '   unit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
+        '     of measure used to determine the portion of the metafile that the rectangle specified
+        '     by the srcRect parameter contains.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
+        '
+        '   callbackData:
+        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
+        '     for this parameter.
+        '
+        '   imageAttr:
+        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
+        '     for the drawn image.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
+        '     one at a time, to a callback method for display in a specified parallelogram
+        '     using specified image attributes.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destPoints:
+        '     Array of three System.Drawing.Point structures that define a parallelogram that
+        '     determines the size and location of the drawn metafile.
+        '
+        '   srcRect:
+        '     System.Drawing.Rectangle structure that specifies the portion of the metafile,
+        '     relative to its upper-left corner, to draw.
+        '
+        '   unit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
+        '     of measure used to determine the portion of the metafile that the rectangle specified
+        '     by the srcRect parameter contains.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
+        '
+        '   callbackData:
+        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
+        '     for this parameter.
+        '
+        '   imageAttr:
+        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
+        '     for the drawn image.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sends the records in a selected rectangle from a System.Drawing.Imaging.Metafile,
+        '     one at a time, to a callback method for display at a specified point using specified
+        '     image attributes.
+        '
+        ' Parameters:
+        '   metafile:
+        '     System.Drawing.Imaging.Metafile to enumerate.
+        '
+        '   destPoint:
+        '     System.Drawing.PointF structure that specifies the location of the upper-left
+        '     corner of the drawn metafile.
+        '
+        '   srcRect:
+        '     System.Drawing.RectangleF structure that specifies the portion of the metafile,
+        '     relative to its upper-left corner, to draw.
+        '
+        '   unit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
+        '     of measure used to determine the portion of the metafile that the rectangle specified
+        '     by the srcRect parameter contains.
+        '
+        '   callback:
+        '     System.Drawing.Graphics.EnumerateMetafileProc delegate that specifies the method
+        '     to which the metafile records are sent.
+        '
+        '   callbackData:
+        '     Internal pointer that is required, but ignored. You can pass System.IntPtr.Zero
+        '     for this parameter.
+        '
+        '   imageAttr:
+        '     System.Drawing.Imaging.ImageAttributes that specifies image attribute information
+        '     for the drawn image.
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+
+        End Sub
+        '
+        ' Summary:
+        '     Updates the clip region of this System.Drawing.Graphics to exclude the area specified
+        '     by a System.Drawing.Region.
+        '
+        ' Parameters:
+        '   region:
+        '     System.Drawing.Region that specifies the region to exclude from the clip region.
+        Public Overrides Sub ExcludeClip(region As Region)
+
+        End Sub
         '
         ' Summary:
         '     Updates the clip region of this System.Drawing.Graphics to exclude the area specified
@@ -3349,32 +3663,9 @@ Namespace Imaging
         '   rect:
         '     System.Drawing.Rectangle structure that specifies the rectangle to exclude from
         '     the clip region.
-        Public MustOverride Sub ExcludeClip(rect As Rectangle)
-        '
-        ' Summary:
-        '     Updates the clip region of this System.Drawing.Graphics to exclude the area specified
-        '     by a System.Drawing.Region.
-        '
-        ' Parameters:
-        '   region:
-        '     System.Drawing.Region that specifies the region to exclude from the clip region.
-        Public MustOverride Sub ExcludeClip(region As Region)
-        '
-        ' Summary:
-        '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.PointF
-        '     structures.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that define the spline.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As PointF)
+        Public Overrides Sub ExcludeClip(rect As Rectangle)
+
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.Point
@@ -3390,7 +3681,27 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As Point)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point)
+
+        End Sub
+        '
+        ' Summary:
+        '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.PointF
+        '     structures.
+        '
+        ' Parameters:
+        '   brush:
+        '     System.Drawing.Brush that determines the characteristics of the fill.
+        '
+        '   points:
+        '     Array of System.Drawing.PointF structures that define the spline.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     brush is null.-or-points is null.
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF)
+
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.Point
@@ -3410,7 +3721,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
+
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.PointF
@@ -3430,7 +3743,34 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode)
+
+        End Sub
+        '
+        ' Summary:
+        '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.Point
+        '     structures using the specified fill mode and tension.
+        '
+        ' Parameters:
+        '   brush:
+        '     System.Drawing.Brush that determines the characteristics of the fill.
+        '
+        '   points:
+        '     Array of System.Drawing.Point structures that define the spline.
+        '
+        '   fillmode:
+        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines how
+        '     the curve is filled.
+        '
+        '   tension:
+        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     brush is null.-or-points is null.
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode, tension As Single)
+
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.PointF
@@ -3453,30 +3793,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode, tension As Single)
-        '
-        ' Summary:
-        '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.Point
-        '     structures using the specified fill mode and tension.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.Point structures that define the spline.
-        '
-        '   fillmode:
-        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines how
-        '     the curve is filled.
-        '
-        '   tension:
-        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode, tension As Single)
+        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode, tension As Single)
+
+        End Sub
         '
         ' Summary:
         '     Fills the interior of an ellipse defined by a bounding rectangle specified by
@@ -3493,16 +3812,28 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public MustOverride Sub FillEllipse(brush As Brush, rect As Rectangle)
-
-        ''' <summary>
-        ''' Fills the interior of an ellipse defined by a bounding rectangle specified by
-        ''' a System.Drawing.RectangleF structure.
-        ''' </summary>
-        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
-        ''' <param name="rect">System.Drawing.RectangleF structure that represents the bounding rectangle that
-        ''' defines the ellipse.</param>
-        Public MustOverride Sub FillEllipse(brush As Brush, rect As RectangleF)
+        Public Overrides Sub FillEllipse(brush As Brush, rect As Rectangle)
+            Call Graphics.FillEllipse(brush, rect)
+        End Sub
+        '
+        ' Summary:
+        '     Fills the interior of an ellipse defined by a bounding rectangle specified by
+        '     a System.Drawing.RectangleF structure.
+        '
+        ' Parameters:
+        '   brush:
+        '     System.Drawing.Brush that determines the characteristics of the fill.
+        '
+        '   rect:
+        '     System.Drawing.RectangleF structure that represents the bounding rectangle that
+        '     defines the ellipse.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     brush is null.
+        Public Overrides Sub FillEllipse(brush As Brush, rect As RectangleF)
+            Call Graphics.FillEllipse(brush, rect)
+        End Sub
         '
         ' Summary:
         '     Fills the interior of an ellipse defined by a bounding rectangle specified by
@@ -3529,7 +3860,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public MustOverride Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
+            Call Graphics.FillEllipse(brush, x, y, width, height)
+        End Sub
         '
         ' Summary:
         '     Fills the interior of an ellipse defined by a bounding rectangle specified by
@@ -3556,7 +3889,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public MustOverride Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
+            Call Graphics.FillEllipse(brush, x, y, width, height)
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a System.Drawing.Drawing2D.GraphicsPath.
@@ -3571,7 +3906,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-path is null.
-        Public MustOverride Sub FillPath(brush As Brush, path As GraphicsPath)
+        Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
+            Call Graphics.FillPath(brush, path)
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a pie section defined by an ellipse specified by a System.Drawing.RectangleF
@@ -3596,25 +3933,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public MustOverride Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-
-        ''' <summary>
-        ''' Fills the interior of a pie section defined by an ellipse specified by a System.Drawing.RectangleF
-        ''' structure and two radial lines.
-        ''' </summary>
-        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
-        ''' <param name="rect"><see cref="RectangleF"/> structure that represents the bounding rectangle that
-        ''' defines the ellipse from which the pie section comes.</param>
-        ''' <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the first side of the
-        ''' pie section.</param>
-        ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second
-        ''' side of the pie section.</param>
-        Public Sub FillPie(brush As Brush, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-            With rect
-                Call FillPie(brush, New Rectangle(.Location.ToPoint, .Size.ToSize), startAngle, sweepAngle)
-            End With
+        Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
+            Call Graphics.FillPie(brush, rect, startAngle, sweepAngle)
         End Sub
-
         '
         ' Summary:
         '     Fills the interior of a pie section defined by an ellipse specified by a pair
@@ -3651,7 +3972,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public MustOverride Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+        Public Overrides Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
+            Call Graphics.FillPie(brush, x, y, width, height, startAngle, sweepAngle)
+        End Sub
 
         ''' <summary>
         ''' Fills the interior of a pie section defined by an ellipse specified by a pair
@@ -3670,7 +3993,9 @@ Namespace Imaging
         ''' pie section.</param>
         ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second
         ''' side of the pie section.</param>
-        Public MustOverride Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+        Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+            Call Graphics.FillPie(brush, x, y, width, height, startAngle, sweepAngle)
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a polygon defined by an array of points specified by System.Drawing.Point
@@ -3687,7 +4012,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public MustOverride Sub FillPolygon(brush As Brush, points() As Point)
+        Public Overrides Sub FillPolygon(brush As Brush, points() As Point)
+            Call Graphics.FillPolygon(brush, points)
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a polygon defined by an array of points specified by System.Drawing.PointF
@@ -3704,7 +4031,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF)
+        Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
+            Call Graphics.FillPolygon(brush, points)
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a polygon defined by an array of points specified by System.Drawing.Point
@@ -3725,7 +4054,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public MustOverride Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
+        Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
+            Call Graphics.FillPolygon(brush, points, fillMode)
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a polygon defined by an array of points specified by System.Drawing.PointF
@@ -3746,21 +4077,62 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
-        Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
+        Public Overrides Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
+            Call Graphics.FillPolygon(brush, points, fillMode)
+        End Sub
 
         ''' <summary>
         ''' Fills the interior of a rectangle specified by a System.Drawing.Rectangle structure.
         ''' </summary>
         ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
         ''' <param name="rect">System.Drawing.Rectangle structure that represents the rectangle to fill.</param>
-        Public MustOverride Sub FillRectangle(brush As Brush, rect As Rectangle)
+        Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
+            Call Graphics.FillRectangle(brush, rect)
+        End Sub
+        '
+        ' Summary:
+        '     Fills the interior of a rectangle specified by a System.Drawing.RectangleF structure.
+        '
+        ' Parameters:
+        '   brush:
+        '     System.Drawing.Brush that determines the characteristics of the fill.
+        '
+        '   rect:
+        '     System.Drawing.RectangleF structure that represents the rectangle to fill.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     brush is null.
+        Public Overrides Sub FillRectangle(brush As Brush, rect As RectangleF)
+            Call Graphics.FillRectangle(brush, rect)
+        End Sub
+        '
+        ' Summary:
+        '     Fills the interior of a rectangle specified by a pair of coordinates, a width,
+        '     and a height.
+        '
+        ' Parameters:
+        '   brush:
+        '     System.Drawing.Brush that determines the characteristics of the fill.
+        '
+        '   x:
+        '     The x-coordinate of the upper-left corner of the rectangle to fill.
+        '
+        '   y:
+        '     The y-coordinate of the upper-left corner of the rectangle to fill.
+        '
+        '   width:
+        '     Width of the rectangle to fill.
+        '
+        '   height:
+        '     Height of the rectangle to fill.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     brush is null.
+        Public Overrides Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
 
-        ''' <summary>
-        ''' Fills the interior of a rectangle specified by a System.Drawing.RectangleF structure.
-        ''' </summary>
-        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
-        ''' <param name="rect">System.Drawing.RectangleF structure that represents the rectangle to fill.</param>
-        Public MustOverride Sub FillRectangle(brush As Brush, rect As RectangleF)
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a rectangle specified by a pair of coordinates, a width,
@@ -3785,52 +4157,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.
-        Public MustOverride Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
-        '
-        ' Summary:
-        '     Fills the interior of a rectangle specified by a pair of coordinates, a width,
-        '     and a height.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to fill.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to fill.
-        '
-        '   width:
-        '     Width of the rectangle to fill.
-        '
-        '   height:
-        '     Height of the rectangle to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
-        Public MustOverride Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
-        '
-        ' Summary:
-        '     Fills the interiors of a series of rectangles specified by System.Drawing.RectangleF
-        '     structures.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   rects:
-        '     Array of System.Drawing.RectangleF structures that represent the rectangles to
-        '     fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-rects is null.
-        '
-        '   T:System.ArgumentException:
-        '     Rects is a zero-length array.
-        Public MustOverride Sub FillRectangles(brush As Brush, rects() As RectangleF)
+        Public Overrides Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
+
+        End Sub
         '
         ' Summary:
         '     Fills the interiors of a series of rectangles specified by System.Drawing.Rectangle
@@ -3850,7 +4179,31 @@ Namespace Imaging
         '
         '   T:System.ArgumentException:
         '     rects is a zero-length array.
-        Public MustOverride Sub FillRectangles(brush As Brush, rects() As Rectangle)
+        Public Overrides Sub FillRectangles(brush As Brush, rects() As Rectangle)
+
+        End Sub
+        '
+        ' Summary:
+        '     Fills the interiors of a series of rectangles specified by System.Drawing.RectangleF
+        '     structures.
+        '
+        ' Parameters:
+        '   brush:
+        '     System.Drawing.Brush that determines the characteristics of the fill.
+        '
+        '   rects:
+        '     Array of System.Drawing.RectangleF structures that represent the rectangles to
+        '     fill.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentNullException:
+        '     brush is null.-or-rects is null.
+        '
+        '   T:System.ArgumentException:
+        '     Rects is a zero-length array.
+        Public Overrides Sub FillRectangles(brush As Brush, rects() As RectangleF)
+
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a System.Drawing.Region.
@@ -3865,12 +4218,16 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     brush is null.-or-region is null.
-        Public MustOverride Sub FillRegion(brush As Brush, region As Region)
+        Public Overrides Sub FillRegion(brush As Brush, region As Region)
+
+        End Sub
         '
         ' Summary:
         '     Forces execution of all pending graphics operations and returns immediately without
         '     waiting for the operations to finish.
-        Public MustOverride Sub Flush()
+        Public Overrides Sub Flush()
+
+        End Sub
         '
         ' Summary:
         '     Forces execution of all pending graphics operations with the method waiting or
@@ -3881,16 +4238,9 @@ Namespace Imaging
         '     Member of the System.Drawing.Drawing2D.FlushIntention enumeration that specifies
         '     whether the method returns immediately or waits for any existing operations to
         '     finish.
-        Public MustOverride Sub Flush(intention As FlushIntention)
-        '
-        ' Summary:
-        '     Updates the clip region of this System.Drawing.Graphics to the intersection of
-        '     the current clip region and the specified System.Drawing.Region.
-        '
-        ' Parameters:
-        '   region:
-        '     System.Drawing.Region to intersect with the current region.
-        Public MustOverride Sub IntersectClip(region As Region)
+        Public Overrides Sub Flush(intention As FlushIntention)
+
+        End Sub
         '
         ' Summary:
         '     Updates the clip region of this System.Drawing.Graphics to the intersection of
@@ -3899,7 +4249,20 @@ Namespace Imaging
         ' Parameters:
         '   rect:
         '     System.Drawing.RectangleF structure to intersect with the current clip region.
-        Public MustOverride Sub IntersectClip(rect As RectangleF)
+        Public Overrides Sub IntersectClip(rect As RectangleF)
+
+        End Sub
+        '
+        ' Summary:
+        '     Updates the clip region of this System.Drawing.Graphics to the intersection of
+        '     the current clip region and the specified System.Drawing.Region.
+        '
+        ' Parameters:
+        '   region:
+        '     System.Drawing.Region to intersect with the current region.
+        Public Overrides Sub IntersectClip(region As Region)
+
+        End Sub
         '
         ' Summary:
         '     Updates the clip region of this System.Drawing.Graphics to the intersection of
@@ -3908,7 +4271,9 @@ Namespace Imaging
         ' Parameters:
         '   rect:
         '     System.Drawing.Rectangle structure to intersect with the current clip region.
-        Public MustOverride Sub IntersectClip(rect As Rectangle)
+        Public Overrides Sub IntersectClip(rect As Rectangle)
+
+        End Sub
         '
         ' Summary:
         '     Multiplies the world transformation of this System.Drawing.Graphics and specified
@@ -3917,7 +4282,9 @@ Namespace Imaging
         ' Parameters:
         '   matrix:
         '     4x4 System.Drawing.Drawing2D.Matrix that multiplies the world transformation.
-        Public MustOverride Sub MultiplyTransform(matrix As Matrix)
+        Public Overrides Sub MultiplyTransform(matrix As Drawing2D.Matrix)
+
+        End Sub
         '
         ' Summary:
         '     Multiplies the world transformation of this System.Drawing.Graphics and specified
@@ -3930,7 +4297,9 @@ Namespace Imaging
         '   order:
         '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that determines
         '     the order of the multiplication.
-        Public MustOverride Sub MultiplyTransform(matrix As Matrix, order As MatrixOrder)
+        Public Overrides Sub MultiplyTransform(matrix As Drawing2D.Matrix, order As MatrixOrder)
+
+        End Sub
 
         '
         ' Summary:
@@ -3942,7 +4311,9 @@ Namespace Imaging
         '     Handle to a device context obtained by a previous call to the System.Drawing.Graphics.GetHdc
         '     method of this System.Drawing.Graphics.
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Public MustOverride Sub ReleaseHdc(hdc As IntPtr)
+        Public Overrides Sub ReleaseHdc(hdc As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Releases a handle to a device context.
@@ -3951,16 +4322,22 @@ Namespace Imaging
         '   hdc:
         '     Handle to a device context.
         <EditorBrowsable(EditorBrowsableState.Never)>
-        Public MustOverride Sub ReleaseHdcInternal(hdc As IntPtr)
+        Public Overrides Sub ReleaseHdcInternal(hdc As IntPtr)
+
+        End Sub
         '
         ' Summary:
         '     Resets the clip region of this System.Drawing.Graphics to an infinite region.
-        Public MustOverride Sub ResetClip()
+        Public Overrides Sub ResetClip()
+
+        End Sub
         '
         ' Summary:
         '     Resets the world transformation matrix of this System.Drawing.Graphics to the
         '     identity matrix.
-        Public MustOverride Sub ResetTransform()
+        Public Overrides Sub ResetTransform()
+            Call Graphics.ResetTransform()
+        End Sub
         '
         ' Summary:
         '     Restores the state of this System.Drawing.Graphics to the state represented by
@@ -3970,7 +4347,9 @@ Namespace Imaging
         '   gstate:
         '     System.Drawing.Drawing2D.GraphicsState that represents the state to which to
         '     restore this System.Drawing.Graphics.
-        Public MustOverride Sub Restore(gstate As GraphicsState)
+        Public Overrides Sub Restore(gstate As GraphicsState)
+
+        End Sub
         '
         ' Summary:
         '     Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics.
@@ -3978,7 +4357,9 @@ Namespace Imaging
         ' Parameters:
         '   angle:
         '     Angle of rotation in degrees.
-        Public MustOverride Sub RotateTransform(angle As Single)
+        Public Overrides Sub RotateTransform(angle As Single)
+            Call Graphics.RotateTransform(angle)
+        End Sub
         '
         ' Summary:
         '     Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics
@@ -3991,7 +4372,9 @@ Namespace Imaging
         '   order:
         '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
         '     whether the rotation is appended or prepended to the matrix transformation.
-        Public MustOverride Sub RotateTransform(angle As Single, order As MatrixOrder)
+        Public Overrides Sub RotateTransform(angle As Single, order As MatrixOrder)
+
+        End Sub
         '
         ' Summary:
         '     Applies the specified scaling operation to the transformation matrix of this
@@ -4003,7 +4386,9 @@ Namespace Imaging
         '
         '   sy:
         '     Scale factor in the y direction.
-        Public MustOverride Sub ScaleTransform(sx As Single, sy As Single)
+        Public Overrides Sub ScaleTransform(sx As Single, sy As Single)
+
+        End Sub
         '
         ' Summary:
         '     Applies the specified scaling operation to the transformation matrix of this
@@ -4020,24 +4405,9 @@ Namespace Imaging
         '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
         '     whether the scaling operation is prepended or appended to the transformation
         '     matrix.
-        Public MustOverride Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the rectangle specified
-        '     by a System.Drawing.RectangleF structure.
-        '
-        ' Parameters:
-        '   rect:
-        '     System.Drawing.RectangleF structure that represents the new clip region.
-        Public MustOverride Sub SetClip(rect As RectangleF)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the specified System.Drawing.Drawing2D.GraphicsPath.
-        '
-        ' Parameters:
-        '   path:
-        '     System.Drawing.Drawing2D.GraphicsPath that represents the new clip region.
-        Public MustOverride Sub SetClip(path As GraphicsPath)
+        Public Overrides Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
+
+        End Sub
         '
         ' Summary:
         '     Sets the clipping region of this System.Drawing.Graphics to the rectangle specified
@@ -4046,7 +4416,30 @@ Namespace Imaging
         ' Parameters:
         '   rect:
         '     System.Drawing.Rectangle structure that represents the new clip region.
-        Public MustOverride Sub SetClip(rect As Rectangle)
+        Public Overrides Sub SetClip(rect As Rectangle)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sets the clipping region of this System.Drawing.Graphics to the rectangle specified
+        '     by a System.Drawing.RectangleF structure.
+        '
+        ' Parameters:
+        '   rect:
+        '     System.Drawing.RectangleF structure that represents the new clip region.
+        Public Overrides Sub SetClip(rect As RectangleF)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sets the clipping region of this System.Drawing.Graphics to the specified System.Drawing.Drawing2D.GraphicsPath.
+        '
+        ' Parameters:
+        '   path:
+        '     System.Drawing.Drawing2D.GraphicsPath that represents the new clip region.
+        Public Overrides Sub SetClip(path As GraphicsPath)
+
+        End Sub
         '
         ' Summary:
         '     Sets the clipping region of this System.Drawing.Graphics to the Clip property
@@ -4055,21 +4448,9 @@ Namespace Imaging
         ' Parameters:
         '   g:
         '     System.Drawing.Graphics from which to take the new clip region.
-        Public MustOverride Sub SetClip(g As Graphics)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the result of the
-        '     specified operation combining the current clip region and the rectangle specified
-        '     by a System.Drawing.Rectangle structure.
-        '
-        ' Parameters:
-        '   rect:
-        '     System.Drawing.Rectangle structure to combine.
-        '
-        '   combineMode:
-        '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
-        '     the combining operation to use.
-        Public MustOverride Sub SetClip(rect As Rectangle, combineMode As CombineMode)
+        Public Overrides Sub SetClip(g As Graphics)
+
+        End Sub
         '
         ' Summary:
         '     Sets the clipping region of this System.Drawing.Graphics to the result of the
@@ -4082,20 +4463,9 @@ Namespace Imaging
         '   combineMode:
         '     Member from the System.Drawing.Drawing2D.CombineMode enumeration that specifies
         '     the combining operation to use.
-        Public MustOverride Sub SetClip(region As Region, combineMode As CombineMode)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the result of the
-        '     specified operation combining the current clip region and the specified System.Drawing.Drawing2D.GraphicsPath.
-        '
-        ' Parameters:
-        '   path:
-        '     System.Drawing.Drawing2D.GraphicsPath to combine.
-        '
-        '   combineMode:
-        '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
-        '     the combining operation to use.
-        Public MustOverride Sub SetClip(path As GraphicsPath, combineMode As CombineMode)
+        Public Overrides Sub SetClip(region As Region, combineMode As CombineMode)
+
+        End Sub
         '
         ' Summary:
         '     Sets the clipping region of this System.Drawing.Graphics to the result of the
@@ -4109,7 +4479,40 @@ Namespace Imaging
         '   combineMode:
         '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
         '     the combining operation to use.
-        Public MustOverride Sub SetClip(rect As RectangleF, combineMode As CombineMode)
+        Public Overrides Sub SetClip(rect As RectangleF, combineMode As CombineMode)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sets the clipping region of this System.Drawing.Graphics to the result of the
+        '     specified operation combining the current clip region and the rectangle specified
+        '     by a System.Drawing.Rectangle structure.
+        '
+        ' Parameters:
+        '   rect:
+        '     System.Drawing.Rectangle structure to combine.
+        '
+        '   combineMode:
+        '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
+        '     the combining operation to use.
+        Public Overrides Sub SetClip(rect As Rectangle, combineMode As CombineMode)
+
+        End Sub
+        '
+        ' Summary:
+        '     Sets the clipping region of this System.Drawing.Graphics to the result of the
+        '     specified operation combining the current clip region and the specified System.Drawing.Drawing2D.GraphicsPath.
+        '
+        ' Parameters:
+        '   path:
+        '     System.Drawing.Drawing2D.GraphicsPath to combine.
+        '
+        '   combineMode:
+        '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
+        '     the combining operation to use.
+        Public Overrides Sub SetClip(path As GraphicsPath, combineMode As CombineMode)
+
+        End Sub
         '
         ' Summary:
         '     Sets the clipping region of this System.Drawing.Graphics to the result of the
@@ -4123,7 +4526,9 @@ Namespace Imaging
         '   combineMode:
         '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
         '     the combining operation to use.
-        Public MustOverride Sub SetClip(g As Graphics, combineMode As CombineMode)
+        Public Overrides Sub SetClip(g As Graphics, combineMode As CombineMode)
+
+        End Sub
         '
         ' Summary:
         '     Transforms an array of points from one coordinate space to another using the
@@ -4140,7 +4545,9 @@ Namespace Imaging
         '
         '   pts:
         '     Array of System.Drawing.Point structures that represents the points to transformation.
-        Public MustOverride Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As Point)
+        Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As Point)
+
+        End Sub
         '
         ' Summary:
         '     Transforms an array of points from one coordinate space to another using the
@@ -4157,7 +4564,9 @@ Namespace Imaging
         '
         '   pts:
         '     Array of System.Drawing.PointF structures that represent the points to transform.
-        Public MustOverride Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As PointF)
+        Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As PointF)
+
+        End Sub
         '
         ' Summary:
         '     Translates the clipping region of this System.Drawing.Graphics by specified amounts
@@ -4169,7 +4578,9 @@ Namespace Imaging
         '
         '   dy:
         '     The y-coordinate of the translation.
-        Public MustOverride Sub TranslateClip(dx As Single, dy As Single)
+        Public Overrides Sub TranslateClip(dx As Integer, dy As Integer)
+
+        End Sub
         '
         ' Summary:
         '     Translates the clipping region of this System.Drawing.Graphics by specified amounts
@@ -4181,7 +4592,9 @@ Namespace Imaging
         '
         '   dy:
         '     The y-coordinate of the translation.
-        Public MustOverride Sub TranslateClip(dx As Integer, dy As Integer)
+        Public Overrides Sub TranslateClip(dx As Single, dy As Single)
+
+        End Sub
         '
         ' Summary:
         '     Changes the origin of the coordinate system by prepending the specified translation
@@ -4193,7 +4606,9 @@ Namespace Imaging
         '
         '   dy:
         '     The y-coordinate of the translation.
-        Public MustOverride Sub TranslateTransform(dx As Single, dy As Single)
+        Public Overrides Sub TranslateTransform(dx As Single, dy As Single)
+            Call Graphics.TranslateTransform(dx, dy)
+        End Sub
         '
         ' Summary:
         '     Changes the origin of the coordinate system by applying the specified translation
@@ -4210,10 +4625,12 @@ Namespace Imaging
         '   order:
         '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
         '     whether the translation is prepended or appended to the transformation matrix.
-        Public MustOverride Sub TranslateTransform(dx As Single, dy As Single, order As MatrixOrder)
+        Public Overrides Sub TranslateTransform(dx As Single, dy As Single, order As MatrixOrder)
+            Call Graphics.TranslateTransform(dx, dy, order)
+        End Sub
 
         Protected Overrides Sub Finalize()
-            Call MyBase.Finalize()
+            Call Graphics.Dispose()
         End Sub
 
         '
@@ -4224,29 +4641,9 @@ Namespace Imaging
         ' Returns:
         '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
         '     the state of this System.Drawing.Graphics at the time of the method call.
-        Public MustOverride Function BeginContainer() As GraphicsContainer
-        '
-        ' Summary:
-        '     Saves a graphics container with the current state of this System.Drawing.Graphics
-        '     and opens and uses a new graphics container with the specified scale transformation.
-        '
-        ' Parameters:
-        '   dstrect:
-        '     System.Drawing.RectangleF structure that, together with the srcrect parameter,
-        '     specifies a scale transformation for the new graphics container.
-        '
-        '   srcrect:
-        '     System.Drawing.RectangleF structure that, together with the dstrect parameter,
-        '     specifies a scale transformation for the new graphics container.
-        '
-        '   unit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure for the container.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
-        '     the state of this System.Drawing.Graphics at the time of the method call.
-        Public MustOverride Function BeginContainer(dstrect As RectangleF, srcrect As RectangleF, unit As GraphicsUnit) As GraphicsContainer
+        Public Overrides Function BeginContainer() As GraphicsContainer
+            Return Graphics.BeginContainer
+        End Function
         '
         ' Summary:
         '     Saves a graphics container with the current state of this System.Drawing.Graphics
@@ -4268,7 +4665,33 @@ Namespace Imaging
         ' Returns:
         '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
         '     the state of this System.Drawing.Graphics at the time of the method call.
-        Public MustOverride Function BeginContainer(dstrect As Rectangle, srcrect As Rectangle, unit As GraphicsUnit) As GraphicsContainer
+        Public Overrides Function BeginContainer(dstrect As Rectangle, srcrect As Rectangle, unit As GraphicsUnit) As GraphicsContainer
+            Return Graphics.BeginContainer(dstrect, srcrect, unit)
+        End Function
+        '
+        ' Summary:
+        '     Saves a graphics container with the current state of this System.Drawing.Graphics
+        '     and opens and uses a new graphics container with the specified scale transformation.
+        '
+        ' Parameters:
+        '   dstrect:
+        '     System.Drawing.RectangleF structure that, together with the srcrect parameter,
+        '     specifies a scale transformation for the new graphics container.
+        '
+        '   srcrect:
+        '     System.Drawing.RectangleF structure that, together with the dstrect parameter,
+        '     specifies a scale transformation for the new graphics container.
+        '
+        '   unit:
+        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
+        '     of measure for the container.
+        '
+        ' Returns:
+        '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
+        '     the state of this System.Drawing.Graphics at the time of the method call.
+        Public Overrides Function BeginContainer(dstrect As RectangleF, srcrect As RectangleF, unit As GraphicsUnit) As GraphicsContainer
+            Return Graphics.BeginContainer(dstrect, srcrect, unit)
+        End Function
         '
         ' Summary:
         '     Gets the cumulative graphics context.
@@ -4276,7 +4699,9 @@ Namespace Imaging
         ' Returns:
         '     An System.Object representing the cumulative graphics context.
         <EditorBrowsable(EditorBrowsableState.Never)>
-        Public MustOverride Function GetContextInfo() As Object
+        Public Overrides Function GetContextInfo() As Object
+            Return Graphics.GetContextInfo
+        End Function
 
         '
         ' Summary:
@@ -4289,7 +4714,9 @@ Namespace Imaging
         ' Returns:
         '     A System.Drawing.Color structure that represents the nearest color to the one
         '     specified with the color parameter.
-        Public MustOverride Function GetNearestColor(color As Color) As Color
+        Public Overrides Function GetNearestColor(color As Color) As Color
+            Return Graphics.GetNearestColor(color)
+        End Function
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a System.Drawing.Rectangle structure
@@ -4302,20 +4729,9 @@ Namespace Imaging
         ' Returns:
         '     true if the rectangle specified by the rect parameter is contained within the
         '     visible clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(rect As Rectangle) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the specified System.Drawing.PointF structure is contained
-        '     within the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   point:
-        '     System.Drawing.PointF structure to test for visibility.
-        '
-        ' Returns:
-        '     true if the point specified by the point parameter is contained within the visible
-        '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(point As PointF) As Boolean
+        Public Overrides Function IsVisible(rect As Rectangle) As Boolean
+            Return Graphics.IsVisible(rect)
+        End Function
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a System.Drawing.RectangleF structure
@@ -4328,7 +4744,24 @@ Namespace Imaging
         ' Returns:
         '     true if the rectangle specified by the rect parameter is contained within the
         '     visible clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(rect As RectangleF) As Boolean
+        Public Overrides Function IsVisible(rect As RectangleF) As Boolean
+            Return Graphics.IsVisible(rect)
+        End Function
+        '
+        ' Summary:
+        '     Indicates whether the specified System.Drawing.PointF structure is contained
+        '     within the visible clip region of this System.Drawing.Graphics.
+        '
+        ' Parameters:
+        '   point:
+        '     System.Drawing.PointF structure to test for visibility.
+        '
+        ' Returns:
+        '     true if the point specified by the point parameter is contained within the visible
+        '     clip region of this System.Drawing.Graphics; otherwise, false.
+        Public Overrides Function IsVisible(point As PointF) As Boolean
+            Return Graphics.IsVisible(point)
+        End Function
         '
         ' Summary:
         '     Indicates whether the specified System.Drawing.Point structure is contained within
@@ -4341,7 +4774,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point specified by the point parameter is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(point As Point) As Boolean
+        Public Overrides Function IsVisible(point As Point) As Boolean
+            Return Graphics.IsVisible(point)
+        End Function
         '
         ' Summary:
         '     Indicates whether the point specified by a pair of coordinates is contained within
@@ -4357,7 +4792,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point defined by the x and y parameters is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(x As Single, y As Single) As Boolean
+        Public Overrides Function IsVisible(x As Single, y As Single) As Boolean
+            Return Graphics.IsVisible(x, y)
+        End Function
         '
         ' Summary:
         '     Indicates whether the point specified by a pair of coordinates is contained within
@@ -4373,7 +4810,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point defined by the x and y parameters is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(x As Integer, y As Integer) As Boolean
+        Public Overrides Function IsVisible(x As Integer, y As Integer) As Boolean
+            Return Graphics.IsVisible(x, y)
+        End Function
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a pair of coordinates, a width,
@@ -4395,7 +4834,9 @@ Namespace Imaging
         ' Returns:
         '     true if the rectangle defined by the x, y, width, and height parameters is contained
         '     within the visible clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(x As Integer, y As Integer, width As Integer, height As Integer) As Boolean
+        Public Overrides Function IsVisible(x As Single, y As Single, width As Single, height As Single) As Boolean
+            Return Graphics.IsVisible(x, y, width, height)
+        End Function
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a pair of coordinates, a width,
@@ -4417,7 +4858,9 @@ Namespace Imaging
         ' Returns:
         '     true if the rectangle defined by the x, y, width, and height parameters is contained
         '     within the visible clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(x As Single, y As Single, width As Single, height As Single) As Boolean
+        Public Overrides Function IsVisible(x As Integer, y As Integer, width As Integer, height As Integer) As Boolean
+            Return Graphics.IsVisible(x, y, width, height)
+        End Function
         '
         ' Summary:
         '     Gets an array of System.Drawing.Region objects, each of which bounds a range
@@ -4441,29 +4884,55 @@ Namespace Imaging
         ' Returns:
         '     This method returns an array of System.Drawing.Region objects, each of which
         '     bounds a range of character positions within the specified string.
-        Public MustOverride Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
+        Public Overrides Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
+            Return Graphics.MeasureCharacterRanges(text, font, layoutRect, stringFormat)
+        End Function
 
         ''' <summary>
-        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' Measures the specified string when drawn with the specified <see cref="Font"/>.
         ''' </summary>
         ''' <param name="text">String to measure.</param>
-        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
-        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        ''' string specified by the text parameter as drawn with the font parameter.
-        ''' </returns>
-        Public MustOverride Function MeasureString(text As String, font As Font) As SizeF
+        ''' in the units specified by the <see cref="PageUnit"/> property, of the
+        ''' string specified by the text parameter as drawn with the font parameter.</returns>
+        Public Overrides Function MeasureString(text$, font As Font) As SizeF
+            Return Graphics.MeasureString(text, font)
+        End Function
 
         ''' <summary>
-        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' Using <see cref="Font"/>
         ''' </summary>
-        ''' <param name="text">String to measure.</param>
-        ''' <param name="font">System.Drawing.Font that defines the format of the string.</param>
-        ''' <param name="width">Maximum width of the string in pixels.</param>
-        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
-        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        ''' string specified in the text parameter as drawn with the font parameter.</returns>
-        Public MustOverride Function MeasureString(text As String, font As Font, width As Integer) As SizeF
+        ''' <param name="text"></param>
+        ''' <returns></returns>
+        Public Overloads Function MeasureString(text As String) As SizeF
+            Return Graphics.MeasureString(text, Font)
+        End Function
+
+        ' Summary:
+        '     Measures the specified string when drawn with the specified System.Drawing.Font.
+        '
+        ' Parameters:
+        '   text:
+        '     String to measure.
+        '
+        '   font:
+        '     System.Drawing.Font that defines the format of the string.
+        '
+        '   width:
+        '     Maximum width of the string in pixels.
+        '
+        ' Returns:
+        '     This method returns a System.Drawing.SizeF structure that represents the size,
+        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        '     string specified in the text parameter as drawn with the font parameter.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentException:
+        '     font is null.
+        Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
+            Return Graphics.MeasureString(text, font, width)
+        End Function
         '
         ' Summary:
         '     Measures the specified string when drawn with the specified System.Drawing.Font
@@ -4488,7 +4957,41 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
+            Return Graphics.MeasureString(text, font, layoutArea)
+        End Function
+        '
+        ' Summary:
+        '     Measures the specified string when drawn with the specified System.Drawing.Font
+        '     and formatted with the specified System.Drawing.StringFormat.
+        '
+        ' Parameters:
+        '   text:
+        '     String to measure.
+        '
+        '   font:
+        '     System.Drawing.Font defines the text format of the string.
+        '
+        '   layoutArea:
+        '     System.Drawing.SizeF structure that specifies the maximum layout area for the
+        '     text.
+        '
+        '   stringFormat:
+        '     System.Drawing.StringFormat that represents formatting information, such as line
+        '     spacing, for the string.
+        '
+        ' Returns:
+        '     This method returns a System.Drawing.SizeF structure that represents the size,
+        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        '     string specified in the text parameter as drawn with the font parameter and the
+        '     stringFormat parameter.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentException:
+        '     font is null.
+        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
+            Return Graphics.MeasureString(text, font, layoutArea, stringFormat)
+        End Function
         '
         ' Summary:
         '     Measures the specified string when drawn with the specified System.Drawing.Font
@@ -4517,7 +5020,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
+            Return Graphics.MeasureString(text, font, width, format)
+        End Function
         '
         ' Summary:
         '     Measures the specified string when drawn with the specified System.Drawing.Font
@@ -4547,37 +5052,9 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font
-        '     and formatted with the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font defines the text format of the string.
-        '
-        '   layoutArea:
-        '     System.Drawing.SizeF structure that specifies the maximum layout area for the
-        '     text.
-        '
-        '   stringFormat:
-        '     System.Drawing.StringFormat that represents formatting information, such as line
-        '     spacing, for the string.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified in the text parameter as drawn with the font parameter and the
-        '     stringFormat parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
+            Return Graphics.MeasureString(text, font, origin, stringFormat)
+        End Function
         '
         ' Summary:
         '     Measures the specified string when drawn with the specified System.Drawing.Font
@@ -4613,7 +5090,24 @@ Namespace Imaging
         ' Exceptions:
         '   T:System.ArgumentException:
         '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
+        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
+            Return Graphics.MeasureString(text, font, layoutArea, stringFormat, charactersFitted, linesFilled)
+        End Function
 
+        Public Overrides Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
+            Call Graphics.DrawBezier(pen, pt1, pt2, pt3, pt4)
+        End Sub
+
+        Public Overrides Sub DrawRectangle(pen As Pen, rect As RectangleF)
+            Call Graphics.DrawRectangles(pen, {rect})
+        End Sub
+#End Region
+
+        ''' <summary>
+        ''' Releases all resources used by this <see cref="System.Drawing.Graphics"/>.
+        ''' </summary>
+        Public Overrides Sub Dispose() Implements IDisposable.Dispose
+            Call Graphics.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
+        End Sub
     End Class
 End Namespace

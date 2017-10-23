@@ -219,7 +219,42 @@ Public Module ListExtensions
     End Function
 
     ''' <summary>
-    ''' Initializes a new instance of the <see cref="List"/>`1 class that
+    ''' Function name alias of the function <see cref="Hashtable.ContainsKey(Object)"/>
+    ''' </summary>
+    ''' <param name="hashtable"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function HasKey(hashtable As Hashtable, key As Object) As Boolean
+        Return hashtable.ContainsKey(key)
+    End Function
+
+    ''' <summary>
+    ''' Just using for the element index in a large collection
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="collection">
+    ''' If the element in this collection have some duplicated member, then only the first element will be keeped.
+    ''' </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function AsHashSet(Of T)(collection As IEnumerable(Of T)) As Hashtable
+        Dim table As New Hashtable
+
+        For Each x As SeqValue(Of T) In collection.SeqIterator
+            With x
+                If Not table.ContainsKey(.value) Then
+                    Call table.Add(.value, .i)
+                End If
+            End With
+        Next
+
+        Return table
+    End Function
+
+    ''' <summary>
+    ''' Initializes a new instance of the <see cref="List"/> class that
     ''' contains elements copied from the specified collection and has sufficient capacity
     ''' to accommodate the number of elements copied.
     ''' </summary>

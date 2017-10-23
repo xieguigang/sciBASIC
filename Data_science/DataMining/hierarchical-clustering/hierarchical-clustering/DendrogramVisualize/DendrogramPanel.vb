@@ -77,6 +77,7 @@ Namespace DendrogramVisualize
         Public Property ScaleValueDecimals As Integer
         Public Property LineColor As Color = Color.Black
         Public Property LinkDotRadius% = 5
+        Public Property Debug As Boolean = False
 
         Public Property Model As Cluster
             Get
@@ -128,7 +129,11 @@ Namespace DendrogramVisualize
                     Dim childLeafCount As Integer = child.CountLeafs()
                     Dim childHeight As Double = childLeafCount * leafHeight
                     Dim childDistance As Double = child.DistanceValue
-                    Dim childInitCoord As New PointF(pt0.X + (distance - childDistance), yChild + childHeight / 2.0)
+                    Dim childInitCoord As New PointF With {
+                        .X = pt0.X + (distance - childDistance),
+                        .Y = yChild + childHeight / 2.0
+                    }
+
                     yChild += childHeight
 
                     ' Traverse cluster node tree 
@@ -154,7 +159,7 @@ Namespace DendrogramVisualize
         ''' Draw dendrogram tree visualize and returns the label orders
         ''' </summary>
         ''' <param name="g2"></param>
-        ''' <param name="region"></param>
+        ''' <param name="region">如果这个参数为空，则会使用整个图片画布的空间</param>
         ''' <param name="axisStrokeCSS$"></param>
         ''' <param name="branchStrokeCSS$"></param>
         ''' <param name="classLegendWidth%"></param>
@@ -163,10 +168,15 @@ Namespace DendrogramVisualize
                               Optional region As Rectangle = Nothing,
                               Optional axisStrokeCSS$ = Stroke.AxisStroke,
                               Optional branchStrokeCSS$ = Stroke.AxisStroke,
-                              Optional classLegendWidth% = 50) As NamedValue(Of PointF)()
+                              Optional classLegendWidth% = 50,
+                              Optional layout As Layouts = Layouts.Vertical) As NamedValue(Of PointF)()
 
             If region.IsEmpty Then
                 region = g2.ImageResource.EntireImage
+            End If
+
+            If Debug Then
+                Call g2.DrawRectangle(Pens.Red, region)
             End If
 
             Dim size As Size = region.Size
@@ -182,9 +192,10 @@ Namespace DendrogramVisualize
             ' 如果cluster的结果不为空
             If component IsNot Nothing Then
                 Return __draw(g2,
-                    wDisplay, hDisplay, xDisplayOrigin, yDisplayOrigin,
-                    stroke:=Stroke.TryParse(branchStrokeCSS),
-                    classLegendWidth:=classLegendWidth)
+                              wDisplay, hDisplay, xDisplayOrigin, yDisplayOrigin,
+                              stroke:=Stroke.TryParse(branchStrokeCSS),
+                              classLegendWidth:=classLegendWidth,
+                              layout:=layout)
             Else
                 ' No data available 
                 Dim str As String = "No data"
@@ -198,7 +209,12 @@ Namespace DendrogramVisualize
             End If
         End Function
 
-        Private Function __draw(g2 As Graphics2D, wDisplay%, hDisplay%, xDisplayOrigin%, yDisplayOrigin%, stroke As Stroke, classLegendWidth%) As NamedValue(Of PointF)()
+        Private Function __draw(g2 As Graphics2D,
+                                wDisplay%, hDisplay%,
+                                xDisplayOrigin%, yDisplayOrigin%,
+                                stroke As Stroke,
+                                classLegendWidth%,
+                                layout As Layouts) As NamedValue(Of PointF)()
 
             If ShowLeafLabel Then
                 Dim nameGutterWidth% = component.GetMaxNameWidth(g2, False) + component.NamePadding
@@ -222,7 +238,20 @@ Namespace DendrogramVisualize
                 ClassTable.IsNullOrEmpty,
                 -1,
                 g2.MeasureString(ClassTable.Keys.MaxLengthString).Width + 10)
-            Dim legendHeight% = hDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1) ' 绘图区域的高度除以个数
+
+            Dim labels As New List(Of NamedValue(Of PointF))
+            Dim colorLegendSize As Size
+
+            If layout = Layouts.Vertical Then
+                Dim legendHeight% = hDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1) ' 绘图区域的高度除以个数
+                colorLegendSize = New Size(classLegendWidth, legendHeight)
+            Else
+                Dim legendWidth% = wDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1) ' 绘图区域的高度除以个数
+                Dim lheight = classLegendWidth
+
+                colorLegendSize = New Size(legendWidth, lheight)
+            End If
+
             Dim args As New PainterArguments With {
                 .xDisplayOffset = xOffset,
                 .yDisplayOffset = yOffset,
@@ -232,15 +261,15 @@ Namespace DendrogramVisualize
                 .classHeight = classHeight,
                 .classTable = ClassTable,
                 .stroke = stroke,
-                .classLegendSize = New Size(classLegendWidth, legendHeight),
+                .classLegendSize = colorLegendSize,
                 .classLegendPadding = padding,
                 .ShowLabelName = ShowLeafLabel,
-                .LinkDotRadius = LinkDotRadius
+                .LinkDotRadius = LinkDotRadius,
+                .layout = layout
             }
-            Dim labels As New List(Of NamedValue(Of PointF))
 
             ' 从这里开始进行递归的绘制出整个进化树
-            Call component.paint(g2, args, labels)
+            Call component.Paint(g2, args, labels)
 
             ' 在这里进行标尺的绘制
             If ShowScale Then

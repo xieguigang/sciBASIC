@@ -677,6 +677,7 @@
     <Compile Include="Extensions\Image\Bitmap\Utils.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
+    <Compile Include="Extensions\Image\GDI+\GDICanvas.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\DblRect.vb" />
     <Compile Include="Extensions\Image\Math\GeometryMath.vb" />
@@ -693,6 +694,7 @@
     <Compile Include="Extensions\Reflection\Methods.vb" />
     <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
     <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
+    <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Extensions\WebServices\GZStream.vb" />
