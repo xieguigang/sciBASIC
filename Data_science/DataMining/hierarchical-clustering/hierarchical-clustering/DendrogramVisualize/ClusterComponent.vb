@@ -164,11 +164,20 @@ Namespace DendrogramVisualize
                 If Cluster.Leaf Then
 
                     ' 如果目标是叶节点才会进行标签字符串的绘制操作
-                    Dim nx! = x1 + NamePadding
-                    Dim ny! = y1
+                    Dim nx!
+                    Dim ny!
+
+                    If .layout = Layouts.Vertical Then
+                        nx = x1 + NamePadding
+                        ny = y1 - (fontMetrics.Height / 2) - 2
+                    Else
+                        nx = x1 - g.MeasureString(Cluster.Name, g.Font).Width / 2
+                        ny = y1 + 5
+                    End If
+
                     Dim location As New PointF With {
                         .X = nx,
-                        .Y = y1 - (fontMetrics.Height / 2) - 2
+                        .Y = ny
                     }
 
                     ' 绘制叶节点
