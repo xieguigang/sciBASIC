@@ -244,3 +244,8 @@ pip-log.txt
 /vs_solutions/installer/output
 /vs_solutions/installer/bootstrap/Resources/Resources.zip
 /Microsoft.VisualBasic.Architecture.Framework/.vs
+/Data_science/Mathematica/Plot/.vs/PlotTools/v15/Server/sqlite3/db.lock
+
+db.lock
+storage.ide-shm
+storage.ide-wal

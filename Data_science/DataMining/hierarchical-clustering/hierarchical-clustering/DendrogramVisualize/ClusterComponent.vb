@@ -69,16 +69,16 @@ Namespace DendrogramVisualize
             Me.InitPoint = initPoint
             Me.LinkPoint = initPoint
         End Sub
-		
+
         ''' <summary>
         ''' 绘制具体的聚类结果
         ''' </summary>
         ''' <param name="g"></param>
-		
-		''' 在进行绘制的时候，默认的布局样式是竖直样式的
-		''' 对于绘制水平方向的层次聚类树，则只需要将竖直布局样式的的点的x, y交换一下即可
-		''' 对于弧形布局的层次聚类树的绘制，则是将竖直样式的点的y映射为圆弧的度，x映射为圆弧的半径即可
-		
+        ''' <remarks>
+        ''' 在进行绘制的时候，默认的布局样式是竖直样式的
+        ''' 对于绘制水平方向的层次聚类树，则只需要将竖直布局样式的的点的x, y交换一下即可
+        ''' 对于弧形布局的层次聚类树的绘制，则是将竖直样式的点的y映射为圆弧的度，x映射为圆弧的半径即可
+        ''' </remarks>
         Public Sub paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF))) Implements IPaintable.paint
             Dim x1, y1, x2, y2 As Integer
             Dim fontMetrics As FontMetrics = g.FontMetrics
