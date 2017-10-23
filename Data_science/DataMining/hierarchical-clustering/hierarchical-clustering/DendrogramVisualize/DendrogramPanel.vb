@@ -240,7 +240,7 @@ Namespace DendrogramVisualize
             Dim labels As New List(Of NamedValue(Of PointF))
 
             ' 从这里开始进行递归的绘制出整个进化树
-            Call component.paint(g2, args, labels)
+            Call component.Paint(g2, args, labels)
 
             ' 在这里进行标尺的绘制
             If ShowScale Then

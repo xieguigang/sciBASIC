@@ -63,6 +63,61 @@ Namespace DendrogramVisualize
         Public Property Cluster As Cluster
         Public Property PrintName As Boolean
 
+#Region "layout property"
+
+        Public ReadOnly Property RectMinX As Double
+            Get
+
+                ' TODO Better use closure / callback here
+                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = sys.Min(InitPoint.X, LinkPoint.X)
+                For Each child As ClusterComponent In Children
+                    val = sys.Min(val, child.RectMinX)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public ReadOnly Property RectMinY As Double
+            Get
+
+                ' TODO Better use closure here
+                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = sys.Min(InitPoint.Y, LinkPoint.Y)
+                For Each child As ClusterComponent In Children
+                    val = sys.Min(val, child.RectMinY)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public ReadOnly Property RectMaxX As Double
+            Get
+
+                ' TODO Better use closure here
+                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = Math.Max(InitPoint.X, LinkPoint.X)
+                For Each child As ClusterComponent In Children
+                    val = Math.Max(val, child.RectMaxX)
+                Next
+                Return val
+            End Get
+        End Property
+
+        Public ReadOnly Property RectMaxY As Double
+            Get
+
+                ' TODO Better use closure here
+                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
+                Dim val As Double = Math.Max(InitPoint.Y, LinkPoint.Y)
+                For Each child As ClusterComponent In Children
+                    val = Math.Max(val, child.RectMaxY)
+                Next
+                Return val
+            End Get
+        End Property
+#End Region
+
         Public Sub New(cluster As Cluster, printName As Boolean, initPoint As PointF)
             Me.PrintName = printName
             Me.Cluster = cluster
@@ -79,7 +134,7 @@ Namespace DendrogramVisualize
         ''' 对于绘制水平方向的层次聚类树，则只需要将竖直布局样式的的点的x, y交换一下即可
         ''' 对于弧形布局的层次聚类树的绘制，则是将竖直样式的点的y映射为圆弧的度，x映射为圆弧的半径即可
         ''' </remarks>
-        Public Sub paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF))) Implements IPaintable.paint
+        Public Sub Paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF))) Implements IPaintable.Paint
             Dim x1, y1, x2, y2 As Integer
             Dim fontMetrics As FontMetrics = g.FontMetrics
 
@@ -147,64 +202,12 @@ Namespace DendrogramVisualize
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
                 For Each child As ClusterComponent In Children
-                    child.paint(g, args, labels)
+                    child.Paint(g, args, labels)
                 Next
             End With
         End Sub
 
-        Public ReadOnly Property RectMinX As Double
-            Get
-
-                ' TODO Better use closure / callback here
-                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = sys.Min(InitPoint.X, LinkPoint.X)
-                For Each child As ClusterComponent In Children
-                    val = sys.Min(val, child.RectMinX)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public ReadOnly Property RectMinY As Double
-            Get
-
-                ' TODO Better use closure here
-                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = sys.Min(InitPoint.Y, LinkPoint.Y)
-                For Each child As ClusterComponent In Children
-                    val = sys.Min(val, child.RectMinY)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public ReadOnly Property RectMaxX As Double
-            Get
-
-                ' TODO Better use closure here
-                ' Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = Math.Max(InitPoint.X, LinkPoint.X)
-                For Each child As ClusterComponent In Children
-                    val = Math.Max(val, child.RectMaxX)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public ReadOnly Property RectMaxY As Double
-            Get
-
-                ' TODO Better use closure here
-                '  Debug.Assert(InitPoint IsNot Nothing AndAlso LinkPoint IsNot Nothing)
-                Dim val As Double = Math.Max(InitPoint.Y, LinkPoint.Y)
-                For Each child As ClusterComponent In Children
-                    val = Math.Max(val, child.RectMaxY)
-                Next
-                Return val
-            End Get
-        End Property
-
-        Public Function getNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
+        Private Function getNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = 0
             If includeNonLeafs OrElse Cluster.Leaf Then
                 Dim rect As RectangleF = g.FontMetrics.GetStringBounds(Cluster.Name, g.Graphics)
@@ -215,12 +218,16 @@ Namespace DendrogramVisualize
 
         Public Function GetMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = getNameWidth(g, includeNonLeafs)
+
             For Each comp As ClusterComponent In Children
                 Dim childWidth As Integer = comp.GetMaxNameWidth(g, includeNonLeafs)
-                If childWidth > width Then width = childWidth
-            Next comp
+
+                If childWidth > width Then
+                    width = childWidth
+                End If
+            Next
+
             Return width
         End Function
     End Class
-
 End Namespace

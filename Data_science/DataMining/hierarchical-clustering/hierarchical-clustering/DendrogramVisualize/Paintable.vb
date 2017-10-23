@@ -57,7 +57,7 @@ Namespace DendrogramVisualize
     ''' 
     ''' </summary>
     Public Interface IPaintable
-        Sub paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF)))
+        Sub Paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF)))
     End Interface
 
     Public Structure PainterArguments

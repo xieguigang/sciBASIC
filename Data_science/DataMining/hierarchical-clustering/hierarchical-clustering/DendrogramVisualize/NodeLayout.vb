@@ -40,6 +40,15 @@ Namespace DendrogramVisualize
         Dim name$
         Dim distance As Distance
         Dim layout As Coordinate
-        
+
     End Structure
+
+    ''' <summary>
+    ''' 层次聚类树的绘制布局枚举
+    ''' </summary>
+    Public Enum Layouts As Byte
+        Vertical
+        Horizon
+        Circular
+    End Enum
 End Namespace
