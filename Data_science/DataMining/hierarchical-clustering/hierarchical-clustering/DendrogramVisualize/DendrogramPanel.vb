@@ -229,8 +229,20 @@ Namespace DendrogramVisualize
                 ClassTable.IsNullOrEmpty,
                 -1,
                 g2.MeasureString(ClassTable.Keys.MaxLengthString).Width + 10)
-            Dim legendHeight% = hDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1) ' 绘图区域的高度除以个数
+
             Dim labels As New List(Of NamedValue(Of PointF))
+            Dim colorLegendSize As Size
+
+            If layout = Layouts.Vertical Then
+                Dim legendHeight% = hDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1) ' 绘图区域的高度除以个数
+                colorLegendSize = New Size(classLegendWidth, legendHeight)
+            Else
+                Dim legendWidth% = wDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1) ' 绘图区域的高度除以个数
+                Dim lheight = classLegendWidth
+
+                colorLegendSize = New Size(legendWidth, lheight)
+            End If
+
             Dim args As New PainterArguments With {
                 .xDisplayOffset = xOffset,
                 .yDisplayOffset = yOffset,
@@ -240,7 +252,7 @@ Namespace DendrogramVisualize
                 .classHeight = classHeight,
                 .classTable = ClassTable,
                 .stroke = stroke,
-                .classLegendSize = New Size(classLegendWidth, legendHeight),
+                .classLegendSize = colorLegendSize,
                 .classLegendPadding = padding,
                 .ShowLabelName = ShowLeafLabel,
                 .LinkDotRadius = LinkDotRadius,

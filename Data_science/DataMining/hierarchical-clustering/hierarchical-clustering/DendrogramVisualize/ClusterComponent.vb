@@ -194,7 +194,14 @@ Namespace DendrogramVisualize
 
                         ' 如果还存在分类信息的话，会绘制分类的颜色条
                         Dim color As Brush = .classTable(Cluster.Name).GetBrush
-                        Dim topleft As New PointF(nx + .classLegendPadding, y1 - .classLegendSize.Height / 2)
+                        Dim topleft As PointF
+
+                        If .layout = Layouts.Vertical Then
+                            topleft = New PointF(nx + .classLegendPadding, y1 - .classLegendSize.Height / 2)
+                        Else
+                            topleft = New PointF(x1 - .classLegendSize.Width / 2, y1 + .classLegendPadding)
+                        End If
+
                         Dim rect As New RectangleF(topleft, .classLegendSize)
 
                         g.FillRectangle(color, rect)
