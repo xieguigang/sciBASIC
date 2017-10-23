@@ -56,8 +56,11 @@ Module Program
         }
 
         Using g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
-            Call dp.Paint(g, New Rectangle(300, 100, 500, 500)).GetJson(True).__DEBUG_ECHO
-            Call g.Save("../../../test.png", ImageFormats.Png)
+            Call dp.Paint(g, New Rectangle(300, 100, 500, 500), layout:=Layouts.Vertical).GetJson(True).__DEBUG_ECHO
+            Call g.Save("../../../dendrogram-visualize-vertical.png", ImageFormats.Png)
+
+            Call dp.Paint(g, New Rectangle(100, 100, 600, 600), layout:=Layouts.Horizon).GetJson(True).__DEBUG_ECHO
+            Call g.Save("../../../dendrogram-visualize-horizon.png", ImageFormats.Png)
         End Using
 
         Pause()
