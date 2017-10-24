@@ -92,7 +92,8 @@ Namespace BarPlot
                                       Optional X_CSS$ = CSSFont.Win10Normal,
                                       Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
                                       Optional labelPlotStrength# = 0.25,
-                                      Optional htmlLabel As Boolean = False) As GraphicsData
+                                      Optional htmlLabel As Boolean = False,
+                                      Optional idTag$ = Nothing) As GraphicsData
 
             Dim q As New Signal With {
                 .Name = queryName,
@@ -112,7 +113,8 @@ Namespace BarPlot
                                        legendFontCSS, bw, format, displayX, X_CSS,
                                        yAxislabelPosition,
                                        labelPlotStrength,
-                                       htmlLabel:=htmlLabel)
+                                       htmlLabel:=htmlLabel,
+                                       idTag:=idTag)
         End Function
 
         Public Structure Signal
@@ -179,7 +181,8 @@ Namespace BarPlot
                                             Optional xError# = 0.5,
                                             Optional highlight$ = Stroke.StrongHighlightStroke,
                                             Optional highlightMargin! = 2,
-                                            Optional htmlLabel As Boolean = False) As GraphicsData
+                                            Optional htmlLabel As Boolean = False,
+                                            Optional idTag$ = Nothing) As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
                     .Select(Function(x) x.signals.Keys) _
@@ -401,11 +404,23 @@ Namespace BarPlot
                             .TryParse(titleCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
                             .GDIObject
                         Dim titleSize As SizeF = g.MeasureString(title, titleFont)
-                        Dim tl As New Point(
-                            rect.Left + (rect.Width - titleSize.Width) / 2,
-                            (region.Padding.Top - titleSize.Height) / 2)
+                        Dim tl As New Point With {
+                            .X = rect.Left + (rect.Width - titleSize.Width) / 2,
+                            .Y = (region.Padding.Top - titleSize.Height) / 2
+                        }
 
                         Call g.DrawString(title, titleFont, Brushes.Black, tl)
+
+                        If Not idTag Is Nothing Then
+                            ' 绘制右下角的编号标签
+                            titleSize = g.MeasureString(idTag, titleFont)
+                            tl = New Point With {
+                                .X = rect.Right - titleSize.Width - 20,
+                                .Y = rect.Bottom - titleSize.Height - 20
+                            }
+
+                            Call g.DrawString(idTag, titleFont, Brushes.Gray, tl)
+                        End If
                     End With
                 End Sub
 
