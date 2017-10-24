@@ -85,7 +85,7 @@ Namespace ComponentModel.Algorithm.base
                    Order By array.Length Descending
         End Function
 
-        Public Function GetObjectPair() As Tuple(Of T, T)
+        Public Function GetObjectPair() As (T, T)
             If source.Count = 1 Then
                 Return Nothing
             End If
@@ -94,11 +94,11 @@ Namespace ComponentModel.Algorithm.base
                 Dim o As T = source(p)
                 _NewLine = False
                 p += 1
-                Return New Tuple(Of T, T)(source(0), o)
+                Return (source(0), o)
             Else
                 source.RemoveAt(0)
                 p = 1
-                Dim pair As Tuple(Of T, T) = GetObjectPair()
+                Dim pair As (T, T) = GetObjectPair()
                 _NewLine = True
 
                 Return pair
