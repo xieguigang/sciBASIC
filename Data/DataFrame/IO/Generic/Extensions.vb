@@ -99,9 +99,16 @@ Namespace IO
                         End Function)
         End Function
 
+        ''' <summary>
+        ''' Grouping of the property value by property names
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="groupKeys"></param>
+        ''' <param name="aggregate$"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function Group(data As IEnumerable(Of DataSet), groupKeys As Dictionary(Of String, String()), Optional aggregate$ = "average") As IEnumerable(Of DataSet)
-            With aggregate.GetFunction
+        Public Function GroupBy(data As IEnumerable(Of DataSet), groupKeys As Dictionary(Of String, String()), Optional aggregate$ = "average") As IEnumerable(Of DataSet)
+            With aggregate.GetAggregateFunction
                 Return data _
                     .Select(Function(x)
                                 Dim values = groupKeys.ToDictionary(

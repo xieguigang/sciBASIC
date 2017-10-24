@@ -249,3 +249,4 @@ pip-log.txt
 db.lock
 storage.ide-shm
 storage.ide-wal
+/vs_solutions/installer/utils

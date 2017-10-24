@@ -5,7 +5,7 @@ Namespace Scripting.Expressions
     Public Module Aggregate
 
         ''' <summary>
-        ''' 
+        ''' Get ``Aggregate`` function by term.
         ''' </summary>
         ''' <param name="name$">
         ''' + max
@@ -14,7 +14,7 @@ Namespace Scripting.Expressions
         ''' </param>
         ''' <returns></returns>
         ''' 
-        <Extension> Public Function GetFunction(name$) As Func(Of IEnumerable(Of Double), Double)
+        <Extension> Public Function GetAggregateFunction(name$) As Func(Of IEnumerable(Of Double), Double)
             Select Case LCase(name)
                 Case "max"
                     Return Function(x) x.Max
