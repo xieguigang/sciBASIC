@@ -150,16 +150,25 @@ Namespace Analysis
 
             With net.edges.ComputeDegreeData
                 For Each node In net.nodes
-                    d = connectNodes(node.ID)
-                    node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
 
-                    If .in.ContainsKey(node.ID) Then
-                        d = .in(node.ID)
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
-                    End If
-                    If .out.ContainsKey(node.ID) Then
-                        d = .out(node.ID)
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
+                    If Not connectNodes.ContainsKey(node.ID) Then
+                        ' 这个节点是孤立的节点，度为零
+                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, 0)
+                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, 0)
+                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, 0)
+
+                    Else
+                        d = connectNodes(node.ID)
+                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
+
+                        If .in.ContainsKey(node.ID) Then
+                            d = .in(node.ID)
+                            node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
+                        End If
+                        If .out.ContainsKey(node.ID) Then
+                            d = .out(node.ID)
+                            node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
+                        End If
                     End If
                 Next
             End With
