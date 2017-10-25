@@ -142,6 +142,8 @@ Public Module NetworkVisualizer
                               Optional labelColorAsNodeColor As Boolean = False,
                               Optional nodeStroke$ = WhiteStroke,
                               Optional scale# = 1.2,
+                              Optional radiusScale# = 1.25,
+                              Optional minRadius# = 5,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
                               Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing,
                               Optional fontSizeFactor# = 1.5,
@@ -262,7 +264,13 @@ Public Module NetworkVisualizer
                         r = If(r = 0, 9, r)
                     End If
 
-                    br = If(n.Data.Color Is Nothing, New SolidBrush(defaultColor), n.Data.Color)
+                    r *= radiusScale
+
+                    If r < minRadius Then
+                        r = minRadius
+                    End If
+
+                    br = n.Data.Color Or New SolidBrush(defaultColor).AsDefault(Function() n.Data.Color Is Nothing)
                     pt = scalePos(n)
                     With pt
                         pt = New Point(.X - r / 2, .Y - r / 2)
