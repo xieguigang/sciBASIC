@@ -72,7 +72,7 @@ Namespace WebAPI
             Dim url$ = "https://github.com/" & usrName
             Dim html$ = url.GET
             Dim avatar$ = r.Match(html, "<img [^<]+ class=""avatar width-full rounded-2"" .*? />", RegexICSng).Value
-            avatar = avatar.ImageSource
+            avatar = avatar.img.src
 
             Dim vcardNames = r.Match(html, "<h1 class=""vcard-names"">.+?</h1>", RegexICSng).Value
             Dim names = Regex.Matches(vcardNames, "<span .+?>.+?</span>", RegexICSng).ToArray(Function(s) s.GetValue)
@@ -116,7 +116,7 @@ Namespace WebAPI
                     .Value _
                     .href _
                     .Replace("/", "")
-                Dim avatar As String = Regex.Match(u, "<img .+? />").Value.ImageSource
+                Dim avatar As String = Regex.Match(u, "<img .+? />").Value.img.src
                 Dim display As String = Regex.Match(u, "<span class=""f4 link-gray-dark"">.*?</span>").Value.GetValue
                 Dim bio As String = Regex.Match(u, "<p class="".*?text-gray text-small"">.*?</p>").Value.GetValue
                 Dim location = TryInvoke(Function() u.Match(locationPattern, RegexICSng).GetBetween("</svg>", "</p>").lTokens.FirstOrDefault?.Trim)
