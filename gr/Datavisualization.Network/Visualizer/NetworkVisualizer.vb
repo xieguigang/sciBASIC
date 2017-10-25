@@ -224,7 +224,7 @@ Public Module NetworkVisualizer
                     Dim lineColor As New Pen(cl, w)
 
                     With edge.Data!interaction_type
-                        If edgeDashTypes.ContainsKey(.ref) Then
+                        If Not .IsNothing AndAlso edgeDashTypes.ContainsKey(.ref) Then
                             lineColor.DashStyle = edgeDashTypes(.ref)
                         End If
                     End With
