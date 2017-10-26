@@ -10,6 +10,11 @@ Module Program
 
     <ExportAPI("/compress")>
     <Usage("/compress [/directory] /out <out.zip> <directory/filelist>")>
+    <Argument("/directory", True, CLITypes.Boolean,
+              Description:="Zip compress target is a directory?")>
+    <Argument("/out", False, CLITypes.File, PipelineTypes.std_out,
+              Extensions:="*.zip",
+              Description:="The output file path of the zip package file.")>
     Public Function Compress(args As CommandLine) As Integer
         Dim isDirectory As Boolean = args.IsTrue("/directory")
         Dim out$ = args <= "/out"
