@@ -220,6 +220,8 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <param name="n"></param>
         ''' <returns>An array consist of source with n elements.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Repeats(Of T)(source As T, n%) As T()
             Return n.ToArray(Function(x) source)
         End Function
@@ -231,6 +233,7 @@ Namespace Linq
         ''' <param name="n"></param>
         ''' <param name="source">The object factory</param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CopyVector(Of T)(n As Integer, source As Func(Of T)) As T()
             Return n.ToArray(Function(x) source())
@@ -361,6 +364,7 @@ Namespace Linq
         ''' <param name="len"></param>
         ''' <param name="elementAt"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToArray(Of T)(len As Integer, elementAt As Func(Of Integer, T)) As T()
             Return len.Sequence.ToArray(elementAt)
         End Function
@@ -383,9 +387,11 @@ Namespace Linq
             End If
 
             If parallel Then
-                Return LinqAPI.Exec(Of TOut) <= From obj As T
-                                                In source.AsParallel
-                                                Select [ctype](obj)
+                Return LinqAPI.Exec(Of TOut) _
+ _
+                    () <= From obj As T
+                          In source.AsParallel
+                          Select [ctype](obj)
             Else
                 Return source.Select([ctype]).ToArray
             End If
@@ -450,16 +456,17 @@ Namespace Linq
                 source.SeqIterator.AsParallel,
                 source.SeqIterator)
 
-            Dim LQuery As TOut() = LinqAPI.Exec(Of TOut) <=
+            Dim LQuery As TOut() = LinqAPI.Exec(Of TOut) _
  _
-                From i As SeqValue(Of T)
-                In seqs
-                Let obj As T = i.value
-                Select __ctype(obj, i.i)
+                () <= From i As SeqValue(Of T)
+                      In seqs
+                      Let obj As T = i.value
+                      Select __ctype(obj, i.i)
 
             Return LQuery
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToArray(Of T)(len&, elementAt As Func(Of Long, T)) As T()
             Return len.Sequence.ToArray(elementAt)
         End Function
@@ -505,10 +512,10 @@ Namespace Linq
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToVector(source As IEnumerable) As Object()
-            Dim LQuery As Object() = (From x As Object In source Select x).ToArray
-            Return LQuery
+            Return (From x As Object In source Select x).ToArray
         End Function
 
         ''' <summary>
