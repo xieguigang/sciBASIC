@@ -256,8 +256,8 @@ Public Module ListExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AsHashList(Of T As IAddressOf)(source As IEnumerable(Of T)) As HandledList(Of T)
-        Return New HandledList(Of T)(source)
+    Public Function AsHashList(Of T As IAddressOf)(source As IEnumerable(Of T)) As HashList(Of T)
+        Return New HashList(Of T)(source)
     End Function
 
     ''' <summary>

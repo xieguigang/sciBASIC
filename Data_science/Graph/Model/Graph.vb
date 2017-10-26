@@ -41,7 +41,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
 #Region "Let G=(V, E) be a simple graph"
     Dim edges As New Dictionary(Of Edge)
     Dim vertices As New Dictionary(Of Vertex)
-    Dim buffer As New HandledList(Of Vertex)
+    Dim buffer As New HashList(Of Vertex)
 #End Region
 
     Public ReadOnly Property Size As (Vertex%, Edges%)
