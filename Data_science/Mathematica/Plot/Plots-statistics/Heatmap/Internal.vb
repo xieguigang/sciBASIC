@@ -302,7 +302,8 @@ Namespace Heatmap
                                        Optional legendHasUnmapped As Boolean = True,
                                        Optional legendSize As Size = Nothing,
                                        Optional rowXOffset% = 0,
-                                       Optional tick# = -1) As GraphicsData
+                                       Optional tick# = -1,
+                                       Optional legendLayout As Layouts = Layouts.Horizon) As GraphicsData
 
             Dim keys$() = array.PropertyNames
             Dim angle! = -45
@@ -360,8 +361,17 @@ Namespace Heatmap
                         .Size = legendSize
                     }
 
-                    ' legend位于整个图片的左上角
-                    Call Legends.ColorLegendHorizontal(colors, ticks, g, llayout, scientificNotation:=True)
+                    If legendLayout = Layouts.Horizon Then
+                        ' legend位于整个图片的左上角
+                        Call Legends.ColorLegendHorizontal(colors, ticks, g, llayout, scientificNotation:=True)
+                    Else
+                        ' legend位于整个图片的右上角
+                        Call Legends.ColorMapLegend(g, llayout, colors, ticks,
+                                                    CSSFont.TryParse(CSSFont.Win7LargerNormal),
+                                                    legendTitle,
+                                                    CSSFont.TryParse(CSSFont.Win7Normal),
+                                                    Stroke.TryParse(Stroke.StrongHighlightStroke))
+                    End If
 
                     ' 宽度与最大行标签宽度相减得到矩阵的绘制宽度
                     Dim dw = rect.PlotRegion.Width - maxRowLabelSize.Width

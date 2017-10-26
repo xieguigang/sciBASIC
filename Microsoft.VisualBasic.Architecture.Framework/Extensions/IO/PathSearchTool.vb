@@ -737,7 +737,7 @@ Public Module ProgramPathSearchTool
                      In files
                      Select FileIO.FileSystem.GetParentPath(strPath)
         Return LQuery _
-            .CountTokens(IgnoreCase:=True) _
+            .TokenCount(ignoreCase:=True) _
             .OrderByDescending(Function(x) x.Value) _
             .First.Key
     End Function
