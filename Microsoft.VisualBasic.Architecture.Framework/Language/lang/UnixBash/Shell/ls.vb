@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -44,6 +45,7 @@ Namespace Language.UnixBash
             Return __opts.GetJson
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Clone() As Object Implements ICloneable.Clone
             Return New Search With {
                 .__opts = New Dictionary(Of SearchOpt.Options, SearchOpt)(__opts)
@@ -72,6 +74,8 @@ Namespace Language.UnixBash
         ''' <param name="ls"></param>
         ''' <param name="wildcards$"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(ls As Search, wildcards$()) As Search
             Return ls - ShellSyntax.wildcards(wildcards$)
         End Operator
@@ -82,6 +86,7 @@ Namespace Language.UnixBash
         ''' <param name="ls"></param>
         ''' <param name="wildcards$"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(ls As Search, wildcards$) As Search
             Return ls - wildcards.Split(","c)
         End Operator

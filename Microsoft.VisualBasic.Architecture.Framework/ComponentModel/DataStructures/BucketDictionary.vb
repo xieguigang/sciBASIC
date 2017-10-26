@@ -34,11 +34,11 @@ Namespace ComponentModel.Collection
 
     ''' <summary>
     ''' An ultralarge size dictionary object.
+    ''' (当你发现一个数据集合非常的大的时候，一个字典会出现溢出，则这个时候就需要这个超大容量的Bucket字典容器了)
     ''' </summary>
     ''' <typeparam name="K"></typeparam>
     ''' <typeparam name="V"></typeparam>
-    Public Class BucketDictionary(Of K, V)
-        Implements IReadOnlyDictionary(Of K, V)
+    Public Class BucketDictionary(Of K, V) : Implements IReadOnlyDictionary(Of K, V)
 
         Friend ReadOnly __buckets As New List(Of Dictionary(Of K, V))
         ''' <summary>
@@ -50,7 +50,12 @@ Namespace ComponentModel.Collection
             Me.bucketSize = bucketSize
         End Sub
 
+        ''' <summary>
+        ''' 获取这个超大的字典集合之中的对象的数量总数
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of KeyValuePair(Of K, V)).Count
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __buckets.Sum(Function(x) x.Count)
             End Get
@@ -77,11 +82,12 @@ Namespace ComponentModel.Collection
                         End If
                     Next
 
-                    Dim min = LinqAPI.DefaultFirst(Of Dictionary(Of K, V)) <=
-                        From x As Dictionary(Of K, V)
-                        In __buckets
-                        Select x
-                        Order By x.Count Ascending
+                    Dim min = LinqAPI.DefaultFirst(Of Dictionary(Of K, V)) _
+ _
+                        () <= From x As Dictionary(Of K, V)
+                              In __buckets
+                              Select x
+                              Order By x.Count Ascending
 
                     min(key) = value
 
@@ -93,12 +99,14 @@ Namespace ComponentModel.Collection
         End Property
 
         Public ReadOnly Property Keys As IEnumerable(Of K) Implements IReadOnlyDictionary(Of K, V).Keys
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __buckets.Select(Function(x) x.Keys).IteratesALL
             End Get
         End Property
 
         Public ReadOnly Property Values As IEnumerable(Of V) Implements IReadOnlyDictionary(Of K, V).Values
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __buckets.Select(Function(x) x.Values).IteratesALL
             End Get
@@ -141,23 +149,25 @@ Namespace ComponentModel.Collection
     Public Module BucketDictionaryExtensions
 
         <Extension>
-        Public Function CreateBuckets(Of T, K, V)(source As IEnumerable(Of T), getKey As Func(Of T, K), getValue As Func(Of T, V), Optional size As Integer = Short.MaxValue * 10) As BucketDictionary(Of K, V)
-            Dim hash As New BucketDictionary(Of K, V)(size)
+        Public Function CreateBuckets(Of T, K, V)(source As IEnumerable(Of T), getKey As Func(Of T, K), getValue As Func(Of T, V), Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, V)
+            Dim table As New BucketDictionary(Of K, V)(size)
             Dim bucket As New Dictionary(Of K, V)
 
-            For Each x In source
+            For Each x As T In source
                 Dim key As K = getKey(x)
                 Dim value As V = getValue(x)
+
                 Call bucket.Add(key, value)
+
                 If bucket.Count >= size Then
-                    hash.__buckets.Add(bucket)
+                    table.__buckets.Add(bucket)
                     bucket = New Dictionary(Of K, V)
                 End If
             Next
 
-            hash.__buckets.Add(bucket)
+            table.__buckets.Add(bucket)
 
-            Return hash
+            Return table
         End Function
     End Module
 End Namespace

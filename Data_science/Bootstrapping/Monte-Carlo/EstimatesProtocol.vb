@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::35189b90bf84a2e65dcdace21be537d9, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
@@ -183,7 +184,7 @@ Namespace MonteCarlo
 
             Return New VectorTagged(Of Dictionary(Of String, Double)) With {
                 .Tag = vector.ToArray,   ' 所提取采样出来的特征向量
-                .value = x.params,       ' 生成原始数据的参数列表
+                .Value = x.params,       ' 生成原始数据的参数列表
                 .TagStr = tag
             }
         End Function
@@ -252,7 +253,7 @@ Namespace MonteCarlo
                         If Not String.IsNullOrEmpty(x.Name) Then
                             required = New VectorTagged(Of NamedValue(Of Dictionary(Of String, Double)())()) With {
                                 .Tag = cluster.Key,
-                                .value = cluster.Value
+                                .Value = cluster.Value
                             }
                             Exit For
                         End If
@@ -263,16 +264,16 @@ Namespace MonteCarlo
                     End If
                 Next
 
-                If required.value.Length = 1 Then
+                If required.Value.Length = 1 Then
                     ' 只有一个元素的时候，就只是实验观察数据本身，则不修改范围，直接下一次迭代
                     Call "Current iteration is not valid: Required output just one element(observation itself)!".Warning
                     Continue Do
                 End If
 
                 Dim total As Integer = GetEntityNumbers(kmeansResult.Values.ToArray)
-                Dim requires As Integer = GetEntityNumbers(required.value)
+                Dim requires As Integer = GetEntityNumbers(required.Value)
                 Dim out As Dictionary(Of String, Double)() =  ' 请注意，由于在这里是进行实验数据的计算模型的参数拟合，所以观测数据的参数是不需要的，要从output里面去除掉
-                    required.value _
+                    required.Value _
                     .Where(Function(x) Not x.Name = EstimatesProtocol.Observation) _
                     .Select(Function(x) x.Value) _
                     .ToVector
@@ -317,7 +318,7 @@ Namespace MonteCarlo
                         Function(x) x.Key,
                         Function(x) New DoubleTagged(Of Double()) With {
                             .Tag = x.Value.Average,
-                            .value = x.Value
+                            .Value = x.Value
                         }).GetJson _
                           .SaveTo(work & $"/{FormatZero(++i, "00000")}.json")
                 End If

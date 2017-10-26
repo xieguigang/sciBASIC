@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::481d86dc9358bad0eeb08b9252d0081d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\Enumerable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.KeyValuePair
 Imports Microsoft.VisualBasic.Language
@@ -36,24 +37,27 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 <Extension>
 Public Module IEnumerations
 
-    <Extension> Public Function Differ(Of T As INamedValue,
-                                          T2)(
-                                     source As IEnumerable(Of T),
-                                     ToDiffer As IEnumerable(Of T2),
-                                     getId As Func(Of T2, String)) As String()
+    <Extension> Public Function Differ(Of T As INamedValue, T2)(source As IEnumerable(Of T),
+                                                                ToDiffer As IEnumerable(Of T2),
+                                                                getId As Func(Of T2, String)) As String()
 
-        Dim TargetIndex As String() = (From item As T In source Select item.Key).ToArray
-        Dim LQuery = (From item As T2 In ToDiffer
-                      Let strId As String = getId(item)
-                      Where Array.IndexOf(TargetIndex, strId) = -1
-                      Select strId).ToArray
+        Dim targetIndex As String() = (From item As T In source Select item.Key).ToArray
+        Dim LQuery$() = LinqAPI.Exec(Of String) _
+ _
+            () <= From item As T2
+                  In ToDiffer
+                  Let strId As String = getId(item)
+                  Where Array.IndexOf(targetIndex, strId) = -1
+                  Select strId
+
         Return LQuery
     End Function
 
     <Extension> Public Function Differ(Of T As INamedValue, T2 As INamedValue)(source As IEnumerable(Of T), ToDiffer As IEnumerable(Of T2)) As String()
-        Dim TargetIndex As String() = (From item In source Select item.Key).ToArray
-        Dim LQuery = (From item As T2 In ToDiffer
-                      Where Array.IndexOf(TargetIndex, item.Key) = -1
+        Dim targetIndex As String() = (From item In source Select item.Key).ToArray
+        Dim LQuery = (From item As T2
+                      In ToDiffer
+                      Where Array.IndexOf(targetIndex, item.Key) = -1
                       Select item.Key).ToArray
         Return LQuery
     End Function
@@ -76,7 +80,8 @@ Public Module IEnumerations
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function CreateDictionary(Of T As INamedValue)(Collection As IEnumerable(Of T)) As Dictionary(Of String, T)
-        Dim Dictionary As Dictionary(Of String, T) = New Dictionary(Of String, T)
+        Dim Dictionary As New Dictionary(Of String, T)
+
         For Each obj In Collection
             Call Dictionary.Add(obj.Key, obj)
         Next
@@ -85,13 +90,13 @@ Public Module IEnumerations
     End Function
 
     <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional Explicit As Boolean = True) As ComponentModel.KeyValuePair()
-        Dim Method = If(Explicit, System.StringComparison.Ordinal, System.StringComparison.OrdinalIgnoreCase)
+        Dim Method = If(Explicit, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
         Dim LQuery = (From item In source Where String.Equals(item.Key, Key, Method) Select item).ToArray
         Return LQuery
     End Function
 
     <Extension> Public Function FindByItemKey(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Key As String, Optional Explicit As Boolean = True) As PairItemType()
-        Dim Method = If(Explicit, System.StringComparison.Ordinal, System.StringComparison.OrdinalIgnoreCase)
+        Dim Method = If(Explicit, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
         Dim LQuery = (From item In source Where String.Equals(item.Key, Key, Method) Select item).ToArray
         Return LQuery
     End Function
@@ -106,14 +111,14 @@ Public Module IEnumerations
     ''' use the overload method <see cref="IPairItem(Of TItem1, TItem2).Equals"></see> of the type
     ''' <see cref="IPairItem(Of TItem1, TItem2)"></see>
     ''' </summary>
-    ''' <typeparam name="TItem1"></typeparam>
-    ''' <typeparam name="TItem2"></typeparam>
+    ''' <typeparam name="T1"></typeparam>
+    ''' <typeparam name="T2"></typeparam>
     ''' <typeparam name="pairItem"></typeparam>
     ''' <param name="entry"></param>
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function GetItem(Of TItem1, TItem2, pairItem As IPairItem(Of TItem1, TItem2))(entry As pairItem, source As IEnumerable(Of pairItem)) As pairItem()
+    Public Function GetItem(Of T1, T2, pairItem As IPairItem(Of T1, T2))(entry As pairItem, source As IEnumerable(Of pairItem)) As pairItem()
         Dim LQuery As pairItem() = (From obj As pairItem In source Where entry.Equals(obj) Select obj).ToArray
         Return LQuery
     End Function
@@ -136,16 +141,19 @@ Public Module IEnumerations
                 .GroupBy(Function(o) o.Key) _
                 .ToDictionary(Function(k) k.Key,
                               Function(g) g.ToArray)
+
             If table.ContainsKey(uniqueId) Then
                 Return table(uniqueId)
             Else
                 Return {}
             End If
         Else
-            Return LinqAPI.Exec(Of T) <= From x As T
-                                         In source
-                                         Where String.Equals(x.Key, uniqueId, StringComparison.OrdinalIgnoreCase)
-                                         Select x
+            Return LinqAPI.Exec(Of T) _
+ _
+                () <= From x As T
+                      In source
+                      Where String.Equals(x.Key, uniqueId, StringComparison.OrdinalIgnoreCase)
+                      Select x
         End If
     End Function
 
@@ -159,12 +167,12 @@ Public Module IEnumerations
     ''' <remarks></remarks>
     <Extension> Public Function Takes(Of T As INamedValue)(list As IEnumerable(Of String), source As IEnumerable(Of T)) As T()
         Dim table As Dictionary(Of T) = source.ToDictionary
-        Dim LQuery As T() = LinqAPI.Exec(Of T) <=
+        Dim LQuery As T() = LinqAPI.Exec(Of T) _
  _
-            From sId As String
-            In list
-            Where table.ContainsKey(sId)
-            Select table(sId)
+            () <= From sId As String
+                  In list
+                  Where table.ContainsKey(sId)
+                  Select table(sId)
 
         Return LQuery
     End Function
@@ -180,11 +188,12 @@ Public Module IEnumerations
     ''' <returns></returns>
     <Extension> Public Function Take(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String, Optional strict As Boolean = True) As T
         Dim level As StringComparison = If(strict, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim LQuery As T = LinqAPI.DefaultFirst(Of T) <=
-            From o As T
-            In source
-            Where String.Equals(uniqueId, o.Key, comparisonType:=level)
-            Select o
+        Dim LQuery As T = LinqAPI.DefaultFirst(Of T) _
+ _
+            () <= From o As T
+                  In source
+                  Where String.Equals(uniqueId, o.Key, comparisonType:=level)
+                  Select o
 
         Return LQuery
     End Function
@@ -195,10 +204,13 @@ Public Module IEnumerations
 
     <Extension> Public Function GetItem(Of T As IReadOnlyId)(source As IEnumerable(Of T), uniqueId As String, Optional caseSensitive As Boolean = True) As T
         Dim method As StringComparison = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From itemObj As T
-                      In source
-                      Where String.Equals(itemObj.Identity, uniqueId, method)
-                      Select itemObj).FirstOrDefault
+        Dim LQuery = LinqAPI.DefaultFirst(Of T) _
+ _
+            () <= From itemObj As T
+                  In source
+                  Where String.Equals(itemObj.Identity, uniqueId, method)
+                  Select itemObj
+
         Return LQuery
     End Function
 

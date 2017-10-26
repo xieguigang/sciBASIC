@@ -642,7 +642,7 @@
     <Compile Include="ComponentModel\DataStructures\Tree\ITreeNode.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\TreeNodeBase.vb" />
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
-    <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
+    <Compile Include="ComponentModel\DataStructures\HashList\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Algorithm\DataSample.vb" />
@@ -729,7 +729,7 @@
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
-    <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
+    <Compile Include="Extensions\Collection\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb" />
     <Compile Include="ComponentModel\File\FileSaveHandle.vb" />
@@ -1128,8 +1128,8 @@
     <Compile Include="ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
     <Compile Include="Language\lang\C\CFormatProvider.vb" />
     <Compile Include="ApplicationServices\Terminal\STDIO__\STDIO.vb" />
-    <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
-    <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
+    <Compile Include="ComponentModel\DataStructures\HashList\HashModel.vb" />
+    <Compile Include="ComponentModel\DataStructures\HashList\HashList.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
