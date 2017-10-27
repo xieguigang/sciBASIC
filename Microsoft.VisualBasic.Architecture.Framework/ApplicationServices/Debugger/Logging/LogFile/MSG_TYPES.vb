@@ -28,7 +28,7 @@
 
 Imports System.ComponentModel
 
-Namespace Logging
+Namespace ApplicationServices.Debugging.Logging
 
     ''' <summary>
     ''' The types enumeration of the log file message.
