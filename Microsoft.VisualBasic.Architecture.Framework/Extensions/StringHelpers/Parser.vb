@@ -58,6 +58,8 @@ Public Module PrimitiveParser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseInteger(s As String) As Integer
         Return CInt(Val(Trim(s)))
@@ -68,6 +70,8 @@ Public Module PrimitiveParser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseLong(s As String) As Long
         Return CLng(Val(Trim(s)))
@@ -78,6 +82,8 @@ Public Module PrimitiveParser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDouble(s As String) As Double
         Return ParseNumeric(s)
@@ -88,6 +94,8 @@ Public Module PrimitiveParser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseSingle(s As String) As Single
         Return CSng(Val(Trim(s)))
@@ -98,6 +106,8 @@ Public Module PrimitiveParser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDate(s As String) As Date
         Return Date.Parse(Trim(s))
