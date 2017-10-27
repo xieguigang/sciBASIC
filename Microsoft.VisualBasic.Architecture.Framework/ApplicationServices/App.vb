@@ -34,6 +34,7 @@ Imports System.Security
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Windows.Forms.VistaSecurity
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -801,7 +802,7 @@ Public Module App
         Call exMsg.AppendLine("TIME:  " & Now.ToString)
         Call exMsg.AppendLine("TRACE: " & Trace)
         Call exMsg.AppendLine(New String("=", 120))
-        Call exMsg.Append(Logging.LogFile.SystemInfo)
+        Call exMsg.Append(LogFile.SystemInfo)
         Call exMsg.AppendLine(New String("=", 120))
         Call exMsg.AppendLine($"Environment Variables from {GetType(App).FullName}:")
         Call exMsg.AppendLine()
