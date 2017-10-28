@@ -1003,7 +1003,6 @@
     <Compile Include="Text\StringSimilarity\Similarity.vb" />
     <Compile Include="Text\SearchEngine\TextIndexing\TextIndexing.vb" />
     <Compile Include="Text\IO\GB2312.vb" />
-    <Compile Include="ApplicationServices\Debugger\Logging\LogFile\ISupportLoggingClient.vb" />
     <Compile Include="ApplicationServices\Debugger\Logging\LogFile\LogReader.vb" />
     <Compile Include="ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb" />
     <Compile Include="ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb" />
