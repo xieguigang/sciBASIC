@@ -1,9 +1,12 @@
-﻿Module subnetworkTest
+﻿Imports Microsoft.VisualBasic.Data.visualize.Network.FindPath
+
+
+Module subnetworkTest
 
     Sub Main()
         Dim g = ExampleNetwork()
 
-        Dim subNetworks = g.iteratessubnetworks.toarray
+        Dim subNetworks = g.IteratesSubNetworks.ToArray
 
         Pause()
     End Sub

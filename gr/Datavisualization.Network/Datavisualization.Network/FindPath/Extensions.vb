@@ -65,18 +65,24 @@ Namespace FindPath
                 Dim list As New List(Of Graph.Node)
 
                 Call network.edges.RemoveAt(Scan0)
+                Call list.Add(edge.Source)
+                Call list.Add(edge.Target)
 
                 Do While list > 0
                     subnetwork.AddNode(edge.Source)
                     subnetwork.AddNode(edge.Target)
                     subnetwork.AddEdge(edge)
 
-                    Call list.Add(edge.Source)
-                    Call list.Add(edge.Target)
+                    If -1 = list.IndexOf(edge.Source) Then
+                        Call list.Add(edge.Source)
+                    End If
+                    If -1 = list.IndexOf(edge.Target) Then
+                        Call list.Add(edge.Target)
+                    End If
 
                     edge = Nothing
 
-                    Do While edge Is Nothing
+                    Do While edge Is Nothing AndAlso list > 0
                         edge = popEdge(list.First)
 
                         If edge Is Nothing Then

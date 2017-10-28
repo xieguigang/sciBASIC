@@ -29,6 +29,7 @@
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Linq
 
 Module Module1
 
@@ -49,7 +50,7 @@ Module Module1
 
     Function ExampleNetwork() As NetworkGraph
         Dim graph As New NetworkGraph
-        Dim nodes = 20.SeqRandom.Select(Function(x) New Graph.Node With {.ID = "#" & x}).ToArray
+        Dim nodes = 20&.Sequence.Select(Function(x) New Graph.Node With {.ID = "#" & x}).ToArray
 
         nodes.DoEach(Function(node) graph.AddNode(node))
 
