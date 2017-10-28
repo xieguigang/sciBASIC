@@ -207,6 +207,11 @@ Public Module VBDebugger
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub AttachLoggingDriver(driver As LoggingDriver)
+        logs += driver
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Private Function getColor(level As Integer) As ConsoleColor
         Return If(DebuggerTagColors.ContainsKey(level), DebuggerTagColors(level), CType(level, ConsoleColor))
