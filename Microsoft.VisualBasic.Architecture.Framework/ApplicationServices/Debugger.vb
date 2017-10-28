@@ -70,7 +70,11 @@ Public Module VBDebugger
     End Function
 
     Dim __mute As Boolean = False
+    Dim logs As New List(Of LoggingDriver)
+
     Friend __level As DebuggerLevels = DebuggerLevels.On  ' 默认是输出所有的信息
+
+    Public Delegate Sub LoggingDriver(header$, message$, level As MSG_TYPES)
 
     ''' <summary>
     ''' Disable the debugger information outputs on the console if this <see cref="Mute"/> property is set to True, 
@@ -196,6 +200,10 @@ Public Module VBDebugger
                 Call WriteLine(str, msgColor)
             End If
         End If
+
+        For Each driver As LoggingDriver In VBDebugger.logs
+            Call driver(head, str, level)
+        Next
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
