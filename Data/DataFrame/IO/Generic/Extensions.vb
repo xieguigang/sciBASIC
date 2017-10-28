@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace IO
 
@@ -96,6 +97,30 @@ Namespace IO
                                     Function(k) x.ItemValue(k))
                             }
                         End Function)
+        End Function
+
+        ''' <summary>
+        ''' Grouping of the property value by property names
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="groupKeys"></param>
+        ''' <param name="aggregate$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GroupBy(data As IEnumerable(Of DataSet), groupKeys As Dictionary(Of String, String()), Optional aggregate$ = "average") As IEnumerable(Of DataSet)
+            With aggregate.GetAggregateFunction
+                Return data _
+                    .Select(Function(x)
+                                Dim values = groupKeys.ToDictionary(
+                                    Function(k) k.Key,
+                                    Function(k) .ref(x(k.Value)))
+
+                                Return New DataSet With {
+                                    .ID = x.ID,
+                                    .Properties = values
+                                }
+                            End Function)
+            End With
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

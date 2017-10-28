@@ -642,7 +642,7 @@
     <Compile Include="ComponentModel\DataStructures\Tree\ITreeNode.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\TreeNodeBase.vb" />
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
-    <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
+    <Compile Include="ComponentModel\DataStructures\HashList\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Algorithm\DataSample.vb" />
@@ -677,6 +677,7 @@
     <Compile Include="Extensions\Image\Bitmap\Utils.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
+    <Compile Include="Extensions\Image\GDI+\GDICanvas.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\DblRect.vb" />
     <Compile Include="Extensions\Image\Math\GeometryMath.vb" />
@@ -693,6 +694,7 @@
     <Compile Include="Extensions\Reflection\Methods.vb" />
     <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
     <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
+    <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Extensions\WebServices\GZStream.vb" />
@@ -727,7 +729,7 @@
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
-    <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
+    <Compile Include="Extensions\Collection\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb" />
     <Compile Include="ComponentModel\File\FileSaveHandle.vb" />
@@ -1001,15 +1003,15 @@
     <Compile Include="Text\StringSimilarity\Similarity.vb" />
     <Compile Include="Text\SearchEngine\TextIndexing\TextIndexing.vb" />
     <Compile Include="Text\IO\GB2312.vb" />
-    <Compile Include="ApplicationServices\Tools\Logging\LogFile\ISupportLoggingClient.vb" />
-    <Compile Include="ApplicationServices\Tools\Logging\LogFile\LogReader.vb" />
-    <Compile Include="ApplicationServices\Tools\Logging\LogFile\LogEntry.vb" />
-    <Compile Include="ApplicationServices\Tools\Logging\LogFile\MSG_TYPES.vb" />
+    <Compile Include="ApplicationServices\Debugger\Logging\LogFile\ISupportLoggingClient.vb" />
+    <Compile Include="ApplicationServices\Debugger\Logging\LogFile\LogReader.vb" />
+    <Compile Include="ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb" />
+    <Compile Include="ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb" />
     <Compile Include="CommandLine\CliResCommon.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\Task.vb" />
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
-    <Compile Include="ApplicationServices\Tools\Logging\EventLog.vb" />
+    <Compile Include="ApplicationServices\Debugger\Logging\EventLog.vb" />
     <Compile Include="ApplicationServices\Debugger\NETDebugger.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Mailto\MailConfigure.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Mailto\MailContents.vb" />
@@ -1118,7 +1120,7 @@
     <Compile Include="CommandLine\CLI\IORedirect.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\LanguageAttribute.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\LanguageHelper.vb" />
-    <Compile Include="ApplicationServices\Tools\Logging\LogFile\LogFile.vb" />
+    <Compile Include="ApplicationServices\Debugger\Logging\LogFile\LogFile.vb" />
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="ApplicationServices\Tools\MMFProtocol\MMFSocket.vb" />
     <Compile Include="ApplicationServices\Tools\MMFProtocol\ProcessLock.vb" />
@@ -1126,8 +1128,8 @@
     <Compile Include="ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
     <Compile Include="Language\lang\C\CFormatProvider.vb" />
     <Compile Include="ApplicationServices\Terminal\STDIO__\STDIO.vb" />
-    <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
-    <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
+    <Compile Include="ComponentModel\DataStructures\HashList\HashModel.vb" />
+    <Compile Include="ComponentModel\DataStructures\HashList\HashList.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

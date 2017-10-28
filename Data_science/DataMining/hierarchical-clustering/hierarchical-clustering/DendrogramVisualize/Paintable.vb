@@ -57,14 +57,18 @@ Namespace DendrogramVisualize
     ''' 
     ''' </summary>
     Public Interface IPaintable
-        Sub paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF)))
+        Sub Paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF)))
     End Interface
 
+    ''' <summary>
+    ''' 对于绘制水平和竖直布局的层次聚类树而言，只需要在计算布局的时候将xy交换一下即可
+    ''' </summary>
     Public Structure PainterArguments
 
         Dim xDisplayOffset%, yDisplayOffset%, xDisplayFactor#, yDisplayFactor#
         Dim decorated As Boolean
         Dim classHeight!
+        Dim layout As Layouts
         ''' <summary>
         ''' ``<see cref="Cluster.Name"/> --> Color``
         ''' </summary>

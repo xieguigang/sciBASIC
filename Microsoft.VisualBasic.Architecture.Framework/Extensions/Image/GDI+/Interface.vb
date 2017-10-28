@@ -40,7 +40,7 @@ Imports System.Drawing.Text
 Namespace Imaging
 
     ''' <summary>
-    ''' Encapsulates a GDI+/SVG etc drawing surface. This class must be inherited.
+    ''' Encapsulates a GDI+(bitmap, wmf)/SVG etc drawing surface. This class must be inherited.
     ''' </summary>
     Public MustInherit Class IGraphics
         Implements IDisposable

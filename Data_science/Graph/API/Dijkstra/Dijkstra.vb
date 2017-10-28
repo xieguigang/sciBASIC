@@ -75,7 +75,7 @@ Namespace Dijkstra
             ' Initialise a new empty route list
             Dim shortestPaths As New Dictionary(Of Vertex, Route)()
             ' Initialise a new empty handled locations list
-            Dim handledLocations As New HandledList(Of Vertex)(Points.Length)
+            Dim handledLocations As New HashList(Of Vertex)(Points.Length)
 
             ' Initialise the new routes. the constructor will set the route weight to in.max
             For Each location As Vertex In _Points

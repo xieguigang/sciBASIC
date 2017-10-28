@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports sys = System.Math
 
 Namespace d3js.Layout
 
@@ -47,6 +48,19 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <returns></returns>
         Public Property r As Double
+
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' 目标节点的绘图模型
+        ''' </summary>
+        ''' <param name="circle">假设anchor是一个圆，画圆的时候是依据矩形框来建模的</param>
+        Sub New(circle As Rectangle)
+            r = sys.Min(circle.Width, circle.Height) / 2
+            x = circle.Left + r
+            y = circle.Top + r
+        End Sub
 
         Public Shared Widening Operator CType(anchor As Anchor) As Point
             With anchor

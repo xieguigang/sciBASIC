@@ -41,7 +41,7 @@ Namespace ComponentModel
     ''' (能够被系统所自动销毁的对象类型，并且该类型的对象必须含有一个Handle属性来指明其在本列表中的位置)
     ''' </typeparam>
     ''' <remarks></remarks>
-    Public Class HandledList(Of T As IAddressOf) : Implements IEnumerable(Of T)
+    Public Class HashList(Of T As IAddressOf) : Implements IEnumerable(Of T)
 
         ''' <summary>
         ''' Object instances data physical storage position, element may be null after 
@@ -166,7 +166,7 @@ Namespace ComponentModel
             list(x.Address) = x
         End Sub
 
-        Public Shared Narrowing Operator CType(src As HandledList(Of T)) As T()
+        Public Shared Narrowing Operator CType(src As HashList(Of T)) As T()
             Return src.ToArray
         End Operator
 

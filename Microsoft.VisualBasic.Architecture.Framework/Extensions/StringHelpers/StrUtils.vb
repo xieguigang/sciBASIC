@@ -109,6 +109,12 @@ Public Module StrUtils
         Return s.SafeQuery.Select(AddressOf AscW).ToArray
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function CharCode(c As Char) As Integer
+        Return AscW(c)
+    End Function
+
     ''' <summary>
     ''' 32-126
     ''' </summary>

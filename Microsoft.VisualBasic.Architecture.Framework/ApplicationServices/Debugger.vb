@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::5b28fcf66ff517c689541f5570598d60, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,11 +31,11 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Logging
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Terminal.Utility
@@ -315,17 +315,17 @@ Public Module VBDebugger
     ''' <param name="level"></param>
     ''' <param name="calls"></param>
     <Extension>
-    Public Sub Assertion(test As Boolean, fails As String, level As Logging.MSG_TYPES, <CallerMemberName> Optional calls As String = "")
+    Public Sub Assertion(test As Boolean, fails As String, level As MSG_TYPES, <CallerMemberName> Optional calls As String = "")
         If Not test = True Then
-            If level = Logging.MSG_TYPES.DEBUG Then
+            If level = MSG_TYPES.DEBUG Then
                 If __level < DebuggerLevels.Warning Then
                     Call fails.__DEBUG_ECHO(memberName:=calls)
                 End If
-            ElseIf level = Logging.MSG_TYPES.ERR Then
+            ElseIf level = MSG_TYPES.ERR Then
                 If __level <> DebuggerLevels.Off Then
                     Call WriteLine(fails, ConsoleColor.Red)
                 End If
-            ElseIf level = Logging.MSG_TYPES.WRN Then
+            ElseIf level = MSG_TYPES.WRN Then
                 If __level <> DebuggerLevels.Error Then
                     Call Warning(fails, calls)
                 End If
@@ -344,7 +344,7 @@ Public Module VBDebugger
     ''' <param name="level"></param>
     ''' <param name="calls"></param>
     <Extension>
-    Public Sub Assertion(test As String, level As Logging.MSG_TYPES, <CallerMemberName> Optional calls As String = "")
+    Public Sub Assertion(test As String, level As MSG_TYPES, <CallerMemberName> Optional calls As String = "")
         Call VBDebugger.Assertion((String.IsNullOrEmpty(test) OrElse String.IsNullOrWhiteSpace(test)), test, level, calls)
     End Sub
 
@@ -370,11 +370,11 @@ Public Module VBDebugger
             Return True
         Else
             Select Case failedLevel
-                Case Logging.MSG_TYPES.DEBUG
+                Case MSG_TYPES.DEBUG
                     Call failed.__DEBUG_ECHO
-                Case Logging.MSG_TYPES.ERR
+                Case MSG_TYPES.ERR
                     Call failed.PrintException(calls)
-                Case Logging.MSG_TYPES.WRN
+                Case MSG_TYPES.WRN
                     Call failed.Warning(calls)
                 Case Else
                     Call failed.Echo(calls)

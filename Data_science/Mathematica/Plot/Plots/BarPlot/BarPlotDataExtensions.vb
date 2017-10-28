@@ -120,7 +120,7 @@ Namespace BarPlot
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function Strip(data As BarDataGroup, n%,
+        Public Function Takes(data As BarDataGroup, n%,
                               Optional schema$ = "scibasic.category31()",
                               Optional otherColor$ = "gray") As BarDataGroup
 

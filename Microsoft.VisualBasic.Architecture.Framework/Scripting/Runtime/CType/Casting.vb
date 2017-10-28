@@ -31,6 +31,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
@@ -309,8 +310,8 @@ Namespace Scripting.Runtime
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CastLogFile(path As String) As Logging.LogFile
-            Return New Logging.LogFile(path)
+        Public Function CastLogFile(path As String) As LogFile
+            Return New LogFile(path)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

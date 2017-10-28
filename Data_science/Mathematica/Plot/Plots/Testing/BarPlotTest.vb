@@ -76,7 +76,7 @@ Module BarPlotTest
                 .LoadDataSet(path) _
                 .Normalize _
                 .Reorder("Unclassified") _
-                .Strip(30)
+                .Takes(30)
 
             Call StackedBarPlot.Plot(
                 data,
