@@ -11,7 +11,7 @@ Module LogFileTest
 
     Sub WriteTes()
         Using log As New LogFile(path)
-
+            Call log.writeline("123", "test")
         End Using
     End Sub
 
