@@ -335,7 +335,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DATA\DataFrame.vb" />
-    <Compile Include="DATA\SQL.vb" />
+    <Compile Include="DATA\MySQL.vb" />
     <Compile Include="IO\BackendWriter.vb" />
     <Compile Include="IO\Generic\Extensions.vb" />
     <Compile Include="IO\Generic\DataSet.vb" />

@@ -42,7 +42,7 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' <summary>
 ''' MySQL data extensions
 ''' </summary>
-Public Module SQL
+Public Module MySQL
 
     ''' <summary>
     ''' 提供了一个与SQL DUMP功能类似的拓展方法，这个函数会自动的将目标集合写入所指定的文件夹之中的某一个csv文件。
@@ -122,6 +122,23 @@ Public Module SQL
     Const blockMark$ = "[\d']\),\([\d']"
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sql$">
+    ''' The file path of the MySQL dump *.sql file. This sql file should only contains the ``INSERT INTO`` sql statement.
+    ''' </param>
+    ''' <returns></returns>
+    Public Iterator Function ImportsMySQLDump(sql$) As IEnumerable(Of NamedValue(Of RowObject))
+        For Each line As String In sql.IterateAllLines
+            If InStr(line, "INSERT INTO") = 1 Then
+                For Each row In line.INSERT_LineParser
+                    Yield row
+                Next
+            End If
+        Next
+    End Function
+
+    ''' <summary>
     ''' Handle the MySQL dump
     ''' </summary>
     ''' <param name="insert$">
@@ -131,7 +148,7 @@ Public Module SQL
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function INSERT_LineParser(insert$) As IEnumerable(Of NamedValue(Of String()))
+    Public Iterator Function INSERT_LineParser(insert$) As IEnumerable(Of NamedValue(Of RowObject))
         Dim skip%
         Dim quotEscaping As Boolean
         Dim name As String = ""
@@ -154,19 +171,18 @@ Public Module SQL
             skip += 1
         Next
 
-        Dim buffer As New List(Of Char)
-        Dim data = Mid(insert, Start:=skip)
+        Dim data$ = Mid(insert, Start:=skip + 1S).Trim(";"c).Trim("("c, ")"c)
         Dim blocks = r.Split(data, blockMark)
-        Dim values$()
+        Dim values As IEnumerable(Of String)
 
         For Each block As String In blocks
             values = IO _
                 .CharsParser(block,, ASCII.Mark) _
                 .ToArray
 
-            Yield New NamedValue(Of String()) With {
+            Yield New NamedValue(Of RowObject) With {
                 .Name = name,
-                .Value = values
+                .Value = New RowObject(values)
             }
         Next
     End Function
