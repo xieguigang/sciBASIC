@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' MySQL data extensions
@@ -118,6 +119,8 @@ Public Module SQL
         Next
     End Function
 
+    Const blockMark$ = "[\d']\),\([\d']"
+
     ''' <summary>
     ''' Handle the MySQL dump
     ''' </summary>
@@ -152,9 +155,19 @@ Public Module SQL
         Next
 
         Dim buffer As New List(Of Char)
+        Dim data = Mid(insert, Start:=skip)
+        Dim blocks = r.Split(data, blockMark)
+        Dim values$()
 
-        For Each c As Char In insert.Skip(skip)
+        For Each block As String In blocks
+            values = IO _
+                .CharsParser(block,, ASCII.Mark) _
+                .ToArray
 
+            Yield New NamedValue(Of String()) With {
+                .Name = name,
+                .Value = values
+            }
         Next
     End Function
 
