@@ -41,7 +41,7 @@ Namespace Dijkstra
         Public ReadOnly Property Identity As String Implements IReadOnlyId.Identity
 
         ReadOnly route As List(Of Connection)
-        ReadOnly vertex As New HandledList(Of Vertex)
+        ReadOnly vertex As New HashList(Of Vertex)
 
         Public Sub New(name$)
             _Cost = Integer.MaxValue

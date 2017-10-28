@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Terminal.STDIO__
 
-Namespace Logging
+Namespace ApplicationServices.Debugging.Logging
 
     ''' <summary>
     ''' 日志文件记录模块.

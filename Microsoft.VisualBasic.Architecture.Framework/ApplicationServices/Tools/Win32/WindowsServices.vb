@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::909b28dc1706c0c9059341eff05a83e7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Win32\WindowsServices.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports Microsoft.Win32
+Imports Logs = Microsoft.VisualBasic.ApplicationServices.Debugging.Logging.EventLog
 
 Namespace Win32
 
@@ -42,7 +43,7 @@ Namespace Win32
         ''' Explorer >> Manage >> Event Viewer >> Applications and Services Logs >> &lt;Your_Product>
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ServicesLogs As Logging.EventLog
+        Public ReadOnly Property ServicesLogs As Logs
 
         ''' <summary>
         ''' Does component <see cref="ServicesLogs"/> have been initialized?
@@ -59,7 +60,7 @@ Namespace Win32
         ''' </summary>
         ''' <returns></returns>
         Public Function Initialize() As Boolean
-            Return Initialize(GetType(Logging.EventLog).FullName, App.AssemblyName)
+            Return Initialize(GetType(Logs).FullName, App.AssemblyName)
         End Function
 
         ''' <summary>
@@ -78,7 +79,7 @@ Namespace Win32
         ''' <param name="Product">This value is usually the property value of <see cref="App.AssemblyName"/></param>
         ''' <returns></returns>
         Public Function Initialize(ServicesName As String, Product As String) As Boolean
-            WindowsServices._ServicesLogs = New Logging.EventLog(ServicesName, Product)
+            WindowsServices._ServicesLogs = New Logs(ServicesName, Product)
             If Not WindowsServices.ServicesLogs.Initialized Then
                 Call $"Exception during register node: {WindowsServices.ServicesLogs.ToString}.".__DEBUG_ECHO
                 Call $"You should execute the log category entry creates job under the administrators privileges!".__DEBUG_ECHO

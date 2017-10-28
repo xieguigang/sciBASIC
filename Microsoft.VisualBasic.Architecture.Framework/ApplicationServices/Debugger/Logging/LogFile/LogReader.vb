@@ -28,7 +28,7 @@
 
 Imports System.Text
 
-Namespace Logging
+Namespace ApplicationServices.Debugging.Logging
 
     ''' <summary>
     ''' 分析服务器的问题原因所需要的日志分析工具

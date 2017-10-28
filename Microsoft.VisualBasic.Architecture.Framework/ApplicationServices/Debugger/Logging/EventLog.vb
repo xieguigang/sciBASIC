@@ -29,10 +29,9 @@
 Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace Logging
+Namespace ApplicationServices.Debugging.Logging
 
     ''' <summary>
     ''' Provides interaction with Windows event logs.(这个日志入口点对象的创建应该调用于安装程序的模块之中，并且以管理员权限执行)

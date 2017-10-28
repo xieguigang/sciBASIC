@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::3b6d3eed0a29c959c1c16842a72d2b27, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -501,7 +501,9 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 这个函数是返回文件夹的路径而非名称，这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错
+    ''' Returns the directory path value of the parent directory.
+    ''' (这个函数是返回文件夹的路径而非名称，这个函数不依赖于系统的底层API，
+    ''' 因为系统的底层API对于过长的文件名会出错)
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
@@ -561,7 +563,7 @@ Public Module ProgramPathSearchTool
         Dim Files As IEnumerable(Of String) = ls - l - wildcards(ext) <= DIR
         Dim matches = (From Path As String
                        In Files.AsParallel
-                       Let NameID = basename(Path)
+                       Let NameID = BaseName(Path)
                        Where InStr(NameID, keyword, CompareMethod.Text) > 0
                        Let ExtValue = Path.Split("."c).Last
                        Select Path,
@@ -628,19 +630,29 @@ Public Module ProgramPathSearchTool
                                          In ext
                                          Select value.Split(CChar(".")).Last.ToLower
 
-        Dim res As Dictionary(Of String, String) =
-            LQuery.ToDictionary(Function(x) x.ID,
-                                Function(x) LinqAPI.DefaultFirst(Of String) <= From path
-                                                                               In x.Group
-                                                                               Let extValue As String = path.path.Split("."c).Last.ToLower
-                                                                               Where Array.IndexOf(ext, extValue) > -1
-                                                                               Select path.path)
-        res = (From entry
-               In res
-               Where Not String.IsNullOrEmpty(entry.Value)
-               Select entry) _
-                    .ToDictionary(Function(x) x.Key,
-                                  Function(x) x.Value)
+        Dim res As Dictionary(Of String, String) = LQuery _
+            .ToDictionary(Function(x) x.ID,
+                          Function(x)
+
+                              Return LinqAPI.DefaultFirst(Of String) _
+ _
+                                () <= From path
+                                      In x.Group
+                                      Let pathValue = path.path
+                                      Let extValue As String = pathValue.Split("."c).Last.ToLower
+                                      Where Array.IndexOf(ext, extValue) > -1
+                                      Select pathValue
+
+                          End Function)
+
+        With From entry
+             In res
+             Where Not String.IsNullOrEmpty(entry.Value)
+             Select entry
+
+            res = .ToDictionary(Function(x) x.Key,
+                                Function(x) x.Value)
+        End With
 
         Call $"{NameOf(ProgramPathSearchTool)} load {res.Count} source entry...".__DEBUG_ECHO
 
@@ -655,14 +667,14 @@ Public Module ProgramPathSearchTool
     ''' <param name="ext">文件类型的拓展名称</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadSourceEntryList(source As String, ParamArray ext As String()) As Dictionary(Of String, String)
+    <Extension> Public Function LoadSourceEntryList(source$, ParamArray ext$()) As Dictionary(Of String, String)
         If Not FileIO.FileSystem.DirectoryExists(source) Then
             Return New Dictionary(Of String, String)
         End If
 
         Dim LQuery = From path As String
                      In FileIO.FileSystem.GetFiles(source, FileIO.SearchOption.SearchAllSubDirectories, ext)
-                     Select ID = basename(path),
+                     Select ID = BaseName(path),
                           path
                      Group By ID Into Group
         Dim dict As Dictionary(Of String, String) =
@@ -680,12 +692,16 @@ Public Module ProgramPathSearchTool
     ''' <remarks></remarks>
     '''
     <ExportAPI("Load.ResourceEntry")>
-    <Extension> Public Function LoadEntryList(<Parameter("Dir.Source")> DIR As String, ParamArray exts As String()) As NamedValue(Of String)()
-        Dim LQuery As NamedValue(Of String)() =
-            LinqAPI.Exec(Of NamedValue(Of String)) <= From path As String
-                                                      In ls - l - ShellSyntax.r - wildcards(exts) <= DIR
-                                                      Select New NamedValue(Of String)(path.BaseName, path)
-        Return LQuery
+    <Extension> Public Function LoadEntryList(<Parameter("Dir.Source")> DIR$, ParamArray exts$()) As NamedValue(Of String)()
+        Return LinqAPI.Exec(Of NamedValue(Of String)) _
+ _
+            () <= From path As String
+                  In ls - l - ShellSyntax.r - wildcards(exts) <= DIR
+                  Select New NamedValue(Of String) With {
+                      .Name = path.BaseName,
+                      .Value = path
+                  }
+
     End Function
 
     <ExportAPI("Load.ResourceEntry", Info:="Load the file from a specific directory from the source parameter as the resource entry list.")>
@@ -693,7 +709,7 @@ Public Module ProgramPathSearchTool
     Public Function LoadSourceEntryList(source As IEnumerable(Of String)) As Dictionary(Of String, String)
         Dim LQuery = From path As String
                      In source
-                     Select ID = basename(path),
+                     Select ID = BaseName(path),
                          path
                      Group By ID Into Group
         Dim res As Dictionary(Of String, String) =
@@ -737,9 +753,10 @@ Public Module ProgramPathSearchTool
                      In files
                      Select FileIO.FileSystem.GetParentPath(strPath)
         Return LQuery _
-            .CountTokens(IgnoreCase:=True) _
+            .TokenCount(ignoreCase:=True) _
             .OrderByDescending(Function(x) x.Value) _
-            .First.Key
+            .First _
+            .Key
     End Function
 
     ''' <summary>
@@ -803,11 +820,13 @@ Public Module ProgramPathSearchTool
         Call fileList.AddRange(Files)
 
         If String.IsNullOrEmpty(withExtension) Then
-            Return LinqAPI.Exec(Of String) <= From strPath As String
-                                              In fileList
-                                              Let ext As String = FileIO.FileSystem.GetFileInfo(strPath).Extension
-                                              Where String.IsNullOrEmpty(ext)
-                                              Select strPath
+            Return LinqAPI.Exec(Of String) _
+ _
+                () <= From strPath As String
+                      In fileList
+                      Let ext As String = FileIO.FileSystem.GetFileInfo(strPath).Extension
+                      Where String.IsNullOrEmpty(ext)
+                      Select strPath
         Else
             Return fileList.ToArray
         End If
@@ -904,7 +923,7 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI(NameOf(RelativePath),
                Info:="Get the specific file system object its relative path to the application base directory.")>
     Public Function RelativePath(path As String) As String
@@ -993,7 +1012,7 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
-    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("File.FullPath", Info:="Gets the full path of the file.")>
     <Extension> Public Function GetFullPath(file As String) As String
         Return FileIO.FileSystem.GetFileInfo(file).FullName.Replace("\", "/")
@@ -1050,6 +1069,7 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="DIR"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function TrimDIR(DIR As String) As String
         Return DIR.TrimEnd("/"c, "\"c)
@@ -1060,6 +1080,8 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("File.Name")>
     <Extension>
     Public Function FileName(path As String) As String
