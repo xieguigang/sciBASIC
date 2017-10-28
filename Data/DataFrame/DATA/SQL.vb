@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f78690c1950e54c6e2fdfbc2eaf9b6c3, ..\sciBASIC#\Data\DataFrame\DATA\SQL.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Option Explicit On
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -118,6 +119,46 @@ Public Module SQL
     End Function
 
     ''' <summary>
+    ''' Handle the MySQL dump
+    ''' </summary>
+    ''' <param name="insert$">
+    ''' ```SQL
+    ''' INSERT INTO `term_synonym` VALUES (0,1,'mitochondrial inheritance','EXACT',''),(1,3,'reproductive physiological process','EXACT',''),...
+    ''' ```
+    ''' </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function INSERT_LineParser(insert$) As IEnumerable(Of NamedValue(Of String()))
+        Dim skip%
+        Dim quotEscaping As Boolean
+        Dim name As String = ""
+
+        For Each c As Char In insert
+            If c = "`"c Then
+                If quotEscaping Then
+                    quotEscaping = False
+                Else
+                    quotEscaping = True
+                End If
+            ElseIf quotEscaping Then
+                name &= c
+            ElseIf c = "("c Then
+                If Not quotEscaping Then
+                    Exit For
+                End If
+            End If
+
+            skip += 1
+        Next
+
+        Dim buffer As New List(Of Char)
+
+        For Each c As Char In insert.Skip(skip)
+
+        Next
+    End Function
+
+    ''' <summary>
     ''' Parse the ``VALUES`` data from the INSERT INTo SQL statement.
     ''' </summary>
     ''' <param name="insertSQL$"></param>
@@ -125,7 +166,7 @@ Public Module SQL
     <Extension>
     Public Function SQLValues(insertSQL$) As String()
         Dim values$ = Regex.Split(insertSQL, "\)\s*VALUES\s*\(", RegexICSng).Last
-        Dim t$() = IO.CharsParser(values) _
+        Dim t$() = IO.CharsParser(values, quot:=ASCII.Mark) _
             .Select(Function(s) s.GetStackValue("'", "'")) _
             .ToArray
         Return t
