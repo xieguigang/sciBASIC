@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Language
 
 Namespace FindPath
 
@@ -51,7 +52,42 @@ Namespace FindPath
         ''' <returns></returns>
         <Extension>
         Public Iterator Function IteratesSubNetworks(network As NetworkGraph) As IEnumerable(Of NetworkGraph)
+            Dim popEdge = Function(node As Graph.Node) As Edge
+                              Return network _
+                                  .edges _
+                                  .Where(Function(e) e.Source Is node OrElse e.Target Is Nothing) _
+                                  .FirstOrDefault
+                          End Function
 
+            Do While network.edges > 0
+                Dim subnetwork As New NetworkGraph
+                Dim edge As Edge = network.edges.First
+                Dim list As New List(Of Graph.Node)
+
+                Call network.edges.RemoveAt(Scan0)
+
+                Do While list > 0
+                    subnetwork.AddNode(edge.Source)
+                    subnetwork.AddNode(edge.Target)
+                    subnetwork.AddEdge(edge)
+
+                    Call list.Add(edge.Source)
+                    Call list.Add(edge.Target)
+
+                    edge = Nothing
+
+                    Do While edge Is Nothing
+                        edge = popEdge(list.First)
+
+                        If edge Is Nothing Then
+                            ' 当前的这个节点已经没有相连的边了，移除这个节点
+                            Call list.RemoveAt(Scan0)
+                        End If
+                    Loop
+                Loop
+
+                Yield subnetwork
+            Loop
         End Function
     End Module
 End Namespace
