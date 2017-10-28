@@ -45,7 +45,7 @@ Namespace ApplicationServices.Debugging.Logging
         ''' The program error information message.[RED]
         ''' </summary>
         ''' <remarks></remarks>
-        <Description("ERROR")> ERR
+        <Description("ERROR")> ERR = consolecolor.red
         ''' <summary>
         ''' Warnning message from the program.[YELLOW]
         ''' </summary>
