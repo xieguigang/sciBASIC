@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 
@@ -41,8 +40,23 @@ Namespace FindPath
         ''' <param name="network"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function EndPoints(network As NetworkTables) As (input As FileStream.Node(), output As FileStream.Node())
+        Public Function EndPoints(network As NetworkGraph) As (input As Node(), output As Node())
+            Dim inputs As New List(Of Node)(network.nodes)
+            Dim output As New List(Of Node)(network.nodes)
+            Dim removes = Sub(ByRef list As List(Of Node), getNode As Func(Of Edge, Node))
+                              For Each edge As Edge In network.edges
+                                  Dim node = getNode(edge)
 
+                                  If list.IndexOf(node) > -1 Then
+                                      Call list.Remove(node)
+                                  End If
+                              Next
+                          End Sub
+
+            Call removes(inputs, Function(edge) edge.Target)  ' 如果是target(output)就removes掉
+            Call removes(output, Function(edge) edge.Source)  ' 如果是source(inputs)就removes掉
+
+            Return (inputs, output)
         End Function
 
         ''' <summary>
@@ -52,7 +66,7 @@ Namespace FindPath
         ''' <returns></returns>
         <Extension>
         Public Iterator Function IteratesSubNetworks(network As NetworkGraph) As IEnumerable(Of NetworkGraph)
-            Dim popEdge = Function(node As Graph.Node) As Edge
+            Dim popEdge = Function(node As Node) As Edge
                               Return network _
                                   .edges _
                                   .Where(Function(e) e.Source Is node OrElse e.Target Is node) _
@@ -62,7 +76,7 @@ Namespace FindPath
             Do While network.edges > 0
                 Dim subnetwork As New NetworkGraph
                 Dim edge As Edge = network.edges.First
-                Dim list As New List(Of Graph.Node)
+                Dim list As New List(Of Node)
 
                 Call list.Add(edge.Source)
                 Call list.Add(edge.Target)
