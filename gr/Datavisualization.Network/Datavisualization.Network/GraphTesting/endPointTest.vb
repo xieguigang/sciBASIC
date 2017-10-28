@@ -4,7 +4,15 @@ Module endPointTest
 
     Sub Main()
         Dim g = ExampleNetwork()
-        Dim endPoints = g.EndPoints
+
+
+        For Each subNet In g.IteratesSubNetworks
+
+            Dim endPoints = subNet.EndPoints
+
+            Pause()
+
+        Next
 
         Pause()
     End Sub
