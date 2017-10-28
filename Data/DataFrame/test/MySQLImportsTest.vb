@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.DATA
 
 Module MySQLImportsTest
     Sub Main()
