@@ -55,7 +55,7 @@ Namespace FindPath
             Dim popEdge = Function(node As Graph.Node) As Edge
                               Return network _
                                   .edges _
-                                  .Where(Function(e) e.Source Is node OrElse e.Target Is Nothing) _
+                                  .Where(Function(e) e.Source Is node OrElse e.Target Is node) _
                                   .FirstOrDefault
                           End Function
 
@@ -64,7 +64,6 @@ Namespace FindPath
                 Dim edge As Edge = network.edges.First
                 Dim list As New List(Of Graph.Node)
 
-                Call network.edges.RemoveAt(Scan0)
                 Call list.Add(edge.Source)
                 Call list.Add(edge.Target)
 
@@ -72,6 +71,7 @@ Namespace FindPath
                     subnetwork.AddNode(edge.Source)
                     subnetwork.AddNode(edge.Target)
                     subnetwork.AddEdge(edge)
+                    network.edges.Remove(edge)
 
                     If -1 = list.IndexOf(edge.Source) Then
                         Call list.Add(edge.Source)
