@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Windows.Forms
 
 Namespace Windows.Forms
 
@@ -38,7 +37,10 @@ Namespace Windows.Forms
         ''' </summary>
         Protected Overrides Sub OnRenderMenuItemBackground(e As ToolStripItemRenderEventArgs)
             Dim g As Graphics = e.Graphics
-            Dim rect As Rectangle = New Rectangle(New Point, e.Item.Size)
+            Dim rect As New Rectangle With {
+                .Location = New Point,
+                .Size = e.Item.Size
+            }
 
             If e.Item.Selected Then
                 g.FillRectangle(__chromeMenuSelected, rect)
@@ -52,9 +54,21 @@ Namespace Windows.Forms
 
         Protected Overrides Sub OnRenderSeparator(e As ToolStripSeparatorRenderEventArgs)
             Dim h As Integer = e.Item.Height / 2
+            Dim layout As New Rectangle With {
+                .Location = New Point,
+                .Size = New Size With {
+                    .Width = e.ToolStrip.Width,
+                    .Height = e.Item.Height
+                }
+            }
+            Dim pa As New Point(0, h)
+            Dim pb As New Point With {
+                .X = e.ToolStrip.Width,
+                .Y = h
+            }
 
-            e.Graphics.FillRectangle(Brushes.White, New Rectangle(New Point, New Size(e.ToolStrip.Width, e.Item.Height)))
-            e.Graphics.DrawLine(__chromeSeperator, New Point(0, h), New Point(e.ToolStrip.Width, h))
+            e.Graphics.FillRectangle(Brushes.White, layout)
+            e.Graphics.DrawLine(__chromeSeperator, pa, pb)
         End Sub
     End Class
 End Namespace

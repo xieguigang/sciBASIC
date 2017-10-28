@@ -442,6 +442,14 @@ Public Module StringHelpers
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Count(source As IEnumerable(Of String), target$, Optional method As StringComparison = StringComparison.Ordinal) As Integer
+        Return source _
+            .Where(Function(s) String.Equals(s, target, method)) _
+            .Count
+    End Function
+
     ''' <summary>
     ''' 获取""或者其他字符所包围的字符串的值，请注意，假若只有一个<paramref name="wrapper"/>的话，字符串将不会进行任何处理
     ''' </summary>
@@ -650,49 +658,57 @@ Public Module StringHelpers
     ''' <summary>
     ''' Count the string value numbers.(请注意，这个函数是倒序排序的)
     ''' </summary>
-    ''' <param name="source"></param>
+    ''' <param name="tokens"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
     <ExportAPI("Tokens.Count", Info:="Count the string value numbers.")>
-    <Extension> Public Function CountTokens(source As IEnumerable(Of String), Optional IgnoreCase As Boolean = False) As Dictionary(Of String, Integer)
-        If Not IgnoreCase Then ' 大小写敏感
-            Return (From s As String
-                    In source
-                    Select s
-                    Group s By s Into Count) _
-                         .ToDictionary(Function(x) x.s,
-                                       Function(x) x.Count)
-        End If
+    <Extension> Public Function TokenCount(tokens As IEnumerable(Of String), Optional ignoreCase As Boolean = False) As Dictionary(Of String, Integer)
+        If Not ignoreCase Then ' 大小写敏感
+            With From s As String
+                 In tokens
+                 Select s
+                 Group s By s Into Count
 
-        Dim Uniques = (From s As String
-                       In source.Distinct
-                       Let data As String = s
-                       Select UNIQUE_KEY = s.ToLower, data
-                       Group By UNIQUE_KEY Into Group).ToArray
-        Dim LQuery = (From ustr
-                      In Uniques
-                      Let s As String = ustr.UNIQUE_KEY
-                      Let Count As Integer = (From str As String In source Where String.Equals(str, s, StringComparison.OrdinalIgnoreCase) Select 1).Count
-                      Let original As String() = (From nn In ustr.Group Select nn.data).ToArray
-                      Let key As String = original((ustr.Group.Count - 1) * Rnd())
-                      Select key,
-                          Count
-                      Order By Count Descending) _
-                              .ToDictionary(Function(x) x.key,
-                                            Function(x) x.Count)
-        Return LQuery
+                Return .ToDictionary(Function(x) x.s,
+                                     Function(x) x.Count)
+            End With
+        Else
+            Return tokens.TokenCountIgnoreCase
+        End If
+    End Function
+
+    <Extension>
+    Public Function TokenCountIgnoreCase(tokens As IEnumerable(Of String)) As Dictionary(Of String, Integer)
+        With tokens.ToArray
+            Dim uniques = From s As String
+                          In .Distinct
+                          Let data As String = s
+                          Select UNIQUE_KEY = s.ToLower, data
+                          Group By UNIQUE_KEY Into Group
+
+            Dim LQuery = From ustr
+                         In uniques
+                         Let s As String = ustr.UNIQUE_KEY
+                         Let count As Integer = .Count(s, StringComparison.OrdinalIgnoreCase)
+                         Select key = ustr.Group.First.data, count
+                         Order By count Descending
+
+            Dim result = LQuery.ToDictionary(
+                Function(x) x.key,
+                Function(x) x.count)
+
+            Return result
+        End With
     End Function
 
     ''' <summary>
-    ''' This method is used to replace most calls to the Java String.split method.
+    ''' This method is used to replace most calls to the Java <see cref="[String].Split"/> method.
     ''' </summary>
     ''' <param name="source"></param>
     ''' <param name="pattern"><see cref="Regex"/> patterns</param>
     ''' <param name="trimTrailingEmptyStrings"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
     <ExportAPI("StringsSplit", Info:="This method is used to replace most calls to the Java String.split method.")>
     <Extension> Public Function StringSplit(source$, pattern$,
                                             Optional TrimTrailingEmptyStrings As Boolean = False,
@@ -701,24 +717,17 @@ Public Module StringHelpers
             Return {}
         End If
 
-        Dim splitArray As String() = Regex.Split(
-            source, pattern, options:=opt)
+        Dim splitArray$() = Regex.Split(source, pattern, options:=opt)
 
         If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
             Return splitArray
+        Else
+            Return splitArray _
+                .Where(Function(s)
+                           Return Not String.IsNullOrEmpty(s)
+                       End Function) _
+                .ToArray
         End If
-
-        For i As Integer = splitArray.Length To 1 Step -1
-            If splitArray(i - 1).Length > 0 Then
-                If i < splitArray.Length Then
-                    Call Array.Resize(splitArray, i)
-                End If
-
-                Exit For
-            End If
-        Next
-
-        Return splitArray
     End Function
 
     ''' <summary>

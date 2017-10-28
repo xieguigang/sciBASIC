@@ -121,7 +121,7 @@ Public Module ZScoresPlot
                     labelPosition = New PointF(left - labelSize.Width, labelY)
                     g.DrawString(serial.ID, serialLabelFont, Brushes.Black, labelPosition)
 
-                    For Each group In groups
+                    For Each group As KeyValuePair(Of String, String()) In groups
                         Dim color As New SolidBrush(colors(group.Key))
 
                         For Each Z As Double In serial(group.Value) _

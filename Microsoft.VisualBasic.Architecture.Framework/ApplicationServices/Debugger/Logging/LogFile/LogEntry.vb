@@ -28,7 +28,7 @@
 
 Imports System.Text
 
-Namespace Logging
+Namespace ApplicationServices.Debugging.Logging
 
     Public Structure LogEntry
 

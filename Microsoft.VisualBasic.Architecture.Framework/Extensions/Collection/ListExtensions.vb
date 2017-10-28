@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::22182bd87b500f403be1af2d4eaa3d7e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\ListExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -163,6 +164,7 @@ Public Module ListExtensions
         Return out
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Indexing(Of T)(source As IEnumerable(Of T)) As Index(Of T)
         Return New Index(Of T)(source)
@@ -219,7 +221,48 @@ Public Module ListExtensions
     End Function
 
     ''' <summary>
-    ''' Initializes a new instance of the <see cref="List"/>`1 class that
+    ''' Function name alias of the function <see cref="Hashtable.ContainsKey(Object)"/>
+    ''' </summary>
+    ''' <param name="hashtable"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function HasKey(hashtable As Hashtable, key As Object) As Boolean
+        Return hashtable.ContainsKey(key)
+    End Function
+
+    ''' <summary>
+    ''' Just using for the element index in a large collection
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="collection">
+    ''' If the element in this collection have some duplicated member, then only the first element will be keeped.
+    ''' </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function AsHashSet(Of T)(collection As IEnumerable(Of T)) As Hashtable
+        Dim table As New Hashtable
+
+        For Each x As SeqValue(Of T) In collection.SeqIterator
+            With x
+                If Not table.ContainsKey(.value) Then
+                    Call table.Add(.value, .i)
+                End If
+            End With
+        Next
+
+        Return table
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsHashList(Of T As IAddressOf)(source As IEnumerable(Of T)) As HashList(Of T)
+        Return New HashList(Of T)(source)
+    End Function
+
+    ''' <summary>
+    ''' Initializes a new instance of the <see cref="List"/> class that
     ''' contains elements copied from the specified collection and has sufficient capacity
     ''' to accommodate the number of elements copied.
     ''' </summary>

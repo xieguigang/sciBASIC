@@ -79,12 +79,12 @@ Namespace Language
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
-        ''' <param name="isNothing"></param>
+        ''' <param name="[If]"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function AsDefault(Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As DefaultValue(Of T)
-            Return [Default](x, isNothing)
+        Public Function AsDefault(Of T)(x As T, Optional [If] As Assert(Of Object) = Nothing) As DefaultValue(Of T)
+            Return [Default](x, [If])
         End Function
 
         ''' <summary>

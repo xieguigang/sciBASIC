@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e10991c87a7e63f5fdf5297023e0f973, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\YamlStream.vb"
+﻿#Region "Microsoft.VisualBasic::7a20566e73748360dced94e40916c499, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Logging\LogFile\ISupportLoggingClient.vb"
 
 ' Author:
 ' 
@@ -26,23 +26,25 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+Namespace ApplicationServices.Debugging.Logging
 
-Namespace Syntax
+    Public Interface ISupportLoggingClient
+        Inherits System.IDisposable
 
-    Public Class YamlStream
+#Region "Public Property"
 
-        Public Property Documents As New List(Of YamlDocument)()
+        ReadOnly Property Logging As Logging.LogFile
 
-        Public Iterator Function Enumerative() As IEnumerable(Of Dictionary(Of MappingEntry))
-            For Each doc As YamlDocument In Documents
-                Yield __maps(doc)
-            Next
-        End Function
+#End Region
 
-        Private Function __maps(doc As YamlDocument) As Dictionary(Of MappingEntry)
-            Dim root As Mapping = DirectCast(doc.Root, Mapping)
-            Return root.GetMaps
-        End Function
-    End Class
+#Region "Public Methods"
+
+        ''' <summary>
+        ''' Save the log file into the filesystem.(保存日志数据到文件系统之中)
+        ''' </summary>
+        ''' <returns></returns>
+        Function WriteLog() As Boolean
+#End Region
+
+    End Interface
 End Namespace
