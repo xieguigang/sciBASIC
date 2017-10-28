@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c033878092b1fa5f494766ada7d336e, ..\sciBASIC#\Data_science\Mathematica\Quick_correlation_matrix_heatmap\Heatmap\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c575a0b735567067462271099507a5ea, ..\sciBASIC#\Data_science\Mathematica\Quick_correlation_matrix_heatmap\Heatmap\Program.vb"
 
     ' Author:
     ' 
@@ -27,19 +27,18 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics.Heatmap
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Math.Correlations
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Module Program
 
     Sub Main()
         '  Call rotateImageTest()
-        Call heatmap1()
-        Pause()
+        ' Call heatmap1()
+        ' Pause()
         Call heatmap2()
     End Sub
 
@@ -51,22 +50,20 @@ Module Program
 
     Public Sub heatmap2()
         Dim data = DataSet.LoadDataSet("../../../../\Quick_correlation_matrix_heatmap\mtcars.csv")
-        Dim spcc = data.Vectors.CorrelationMatrix(AddressOf Spearman)
+        Dim spcc = data.Vectors.CorrelationMatrix(AddressOf Spearman).AsDataSet
 
-        spcc = spcc.KmeansReorder
-
-        Call HeatmapTable.Plot(spcc, legendTitle:="", mainTitle:="", drawGrid:=True) _
-            .Save("X:\Sample.SPCC.png")
+        Call CorrelationHeatmap.Plot(spcc, legendTitle:="", mainTitle:="", drawGrid:=True, range:="-1,1") _
+            .SaveAs("D:\Sample.SPCC.png")
     End Sub
 
-    Public Sub heatmap1()
-        Dim datahm = Heatmap.LoadDataSet("../../../../../Quick_correlation_matrix_heatmap\mtcars.csv", normalization:=True)
-        Call Heatmap.Plot(datahm, mapName:=ColorMap.PatternJet,
-                          kmeans:=AddressOf KmeansReorder,
-                          mapLevels:=20,
-                          size:=New Size(2000, 2000),
-                          padding:="padding: 300",
-                          legendTitle:="Spearman correlations",
-                          fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("X:\spcc.png")
-    End Sub
+    'Public Sub heatmap1()
+    '    Dim datahm = Heatmap.LoadDataSet("../../../../../Quick_correlation_matrix_heatmap\mtcars.csv", normalization:=True)
+    '    Call Heatmap.Plot(datahm, mapName:=ColorMap.PatternJet,
+    '                      kmeans:=AddressOf KmeansReorder,
+    '                      mapLevels:=20,
+    '                      size:=New Size(2000, 2000),
+    '                      padding:="padding: 300",
+    '                      legendTitle:="Spearman correlations",
+    '                      fontStyle:=CSSFont.GetFontStyle(FontFace.BookmanOldStyle, FontStyle.Bold, 24)).Save("X:\spcc.png")
+    'End Sub
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15210eda25b0513954d0b12b548d2533, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::99e12c59f36bda6b6bcb4e0a5380b2c6, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
 
     ' Author:
     ' 
@@ -464,7 +464,8 @@ Namespace IO
 
         Public Function GetDataTypeName(i As Integer) As String Implements IDataRecord.GetDataTypeName
             Dim value As String = GetValue(i)
-            If IsNumeric(value) Then
+
+            If value.IsNumeric Then
                 Return "System.Double"
             ElseIf InStr(value, ", ") > 0 OrElse InStr(value, "; ") > 0 Then
                 Return "System.String()"

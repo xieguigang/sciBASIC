@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ebd6342175cffcb183bde39225f0822, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Terminal\STDIO__\I_ConsoleDeviceHandle.vb"
+﻿#Region "Microsoft.VisualBasic::2ebd6342175cffcb183bde39225f0822, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb"
 
     ' Author:
     ' 

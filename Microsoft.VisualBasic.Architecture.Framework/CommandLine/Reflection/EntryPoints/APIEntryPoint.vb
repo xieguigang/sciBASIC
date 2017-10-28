@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0df7253b70880edf0973f52af6642c32, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::25c43e790063e17237e62059dcff2991, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -28,8 +28,8 @@
 
 Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace CommandLine.Reflection.EntryPoints

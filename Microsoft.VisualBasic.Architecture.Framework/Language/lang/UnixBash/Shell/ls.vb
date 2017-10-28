@@ -1,35 +1,36 @@
-﻿#Region "Microsoft.VisualBasic::fd17b835dc6de51b3216291c40e1f4b3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\Shell\ls.vb"
+﻿#Region "Microsoft.VisualBasic::d8aa00372a977fc6e97fdc75628b7ac4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\Shell\ls.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Similarity
 
 Namespace Language.UnixBash
 
@@ -44,6 +45,7 @@ Namespace Language.UnixBash
             Return __opts.GetJson
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Clone() As Object Implements ICloneable.Clone
             Return New Search With {
                 .__opts = New Dictionary(Of SearchOpt.Options, SearchOpt)(__opts)
@@ -66,10 +68,25 @@ Namespace Language.UnixBash
             End If
         End Operator
 
+        ''' <summary>
+        ''' Add a set of wildcards patterns for path match
+        ''' </summary>
+        ''' <param name="ls"></param>
+        ''' <param name="wildcards$"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(ls As Search, wildcards$()) As Search
             Return ls - ShellSyntax.wildcards(wildcards$)
         End Operator
 
+        ''' <summary>
+        ''' Add wildcard pattern for path match
+        ''' </summary>
+        ''' <param name="ls"></param>
+        ''' <param name="wildcards$"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(ls As Search, wildcards$) As Search
             Return ls - wildcards.Split(","c)
         End Operator

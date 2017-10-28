@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Parser
 
-    Public Class JsonArray : Inherits JsonElement
+    Public Class JsonArray : Inherits JsonModel
         Implements IEnumerable(Of JsonElement)
 
         Dim list As New List(Of JsonElement)

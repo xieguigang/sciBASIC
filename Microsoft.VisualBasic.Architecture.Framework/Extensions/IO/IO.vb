@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::765c5b4dec8eda5ede9f35b9122f21a6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::4da401930a031aeca50376bd64d78335, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\IO.vb"
 
     ' Author:
     ' 
@@ -44,8 +44,8 @@ Public Module IOExtensions
     ''' <summary>
     ''' 将指定的字符串的数据值写入到目标可写的输出流之中
     ''' </summary>
-    ''' <param name="data$"></param>
-    ''' <param name="out"></param>
+    ''' <param name="data$">所需要写入的字符串数据</param>
+    ''' <param name="out">输出流</param>
     <Extension>
     Public Sub FlushTo(data$, out As StreamWriter)
         Call out.WriteLine(data)

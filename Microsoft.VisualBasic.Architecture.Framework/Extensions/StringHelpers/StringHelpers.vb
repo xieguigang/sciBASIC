@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb46b04fb0bc92400b19c97e2d1b8252, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::833e8777434184329ef8dcf6681db1d6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
 ' Author:
 ' 
@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Similarity
 Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
@@ -46,6 +47,41 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
+
+    ''' <summary>
+    ''' Replace the <see cref="vbCrLf"/> with the specific string.
+    ''' </summary>
+    ''' <param name="src"></param>
+    ''' <param name="VbCRLF_Replace"></param>
+    ''' <returns></returns>
+#If FRAMEWORD_CORE Then
+    <ExportAPI("Trim")>
+    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace$ = " ") As String
+#Else
+    <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
+#End If
+        If src Is Nothing Then
+            Return ""
+        End If
+
+        src = src.Replace(vbCrLf, VbCRLF_Replace) _
+                 .Replace(vbCr, VbCRLF_Replace) _
+                 .Replace(vbLf, VbCRLF_Replace) _
+                 .Replace("  ", " ")
+
+        Return Strings.Trim(src)
+    End Function
+
+    <Extension>
+    Public Function ReplaceChars(src$, chars As IEnumerable(Of Char), replaceAs As Char) As String
+        Dim s As New StringBuilder(src)
+
+        For Each c As Char In chars
+            Call s.Replace(c, replaceAs)
+        Next
+
+        Return s.ToString
+    End Function
 
     ''' <summary>
     ''' 判断这个字符串数组之中的所有的元素都是空字符串？
@@ -406,6 +442,14 @@ Public Module StringHelpers
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Count(source As IEnumerable(Of String), target$, Optional method As StringComparison = StringComparison.Ordinal) As Integer
+        Return source _
+            .Where(Function(s) String.Equals(s, target, method)) _
+            .Count
+    End Function
+
     ''' <summary>
     ''' 获取""或者其他字符所包围的字符串的值，请注意，假若只有一个<paramref name="wrapper"/>的话，字符串将不会进行任何处理
     ''' </summary>
@@ -426,6 +470,14 @@ Public Module StringHelpers
         End If
     End Function
 
+    ''' <summary>
+    ''' Get sub string value from the region that between the <paramref name="left"/> and <paramref name="right"/>.
+    ''' (这个函数是直接分别查找左右两边的定位字符串来进行切割的) 
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="left$"></param>
+    ''' <param name="right$"></param>
+    ''' <returns></returns>
     <ExportAPI("Get.Stackvalue")>
     <Extension>
     Public Function GetStackValue(str$, left$, right$) As String
@@ -443,6 +495,30 @@ Public Module StringHelpers
         Else
             str = Mid(str, p, q - p)
             Return str
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 和<see cref="GetStackValue(String, String, String)"/>相似，这个函数也是查找起始和终止字符串之间的字符串，
+    ''' 但是这个函数是查找相邻的两个标记，而非像<see cref="GetStackValue(String, String, String)"/>函数一样
+    ''' 直接查找字符串的两端的定位结果
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="strStart$"></param>
+    ''' <param name="strEnd$"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function GetBetween(str$, strStart$, strEnd$) As String
+        Dim start%, end%
+
+        If str.Contains(strStart) AndAlso str.Contains(strEnd) Then
+            start = str.IndexOf(strStart, 0) + strStart.Length
+            [end] = str.IndexOf(strEnd, start)
+
+            Return str.Substring(start, [end] - start)
+        Else
+            Return Nothing
         End If
     End Function
 
@@ -582,49 +658,57 @@ Public Module StringHelpers
     ''' <summary>
     ''' Count the string value numbers.(请注意，这个函数是倒序排序的)
     ''' </summary>
-    ''' <param name="source"></param>
+    ''' <param name="tokens"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
     <ExportAPI("Tokens.Count", Info:="Count the string value numbers.")>
-    <Extension> Public Function CountTokens(source As IEnumerable(Of String), Optional IgnoreCase As Boolean = False) As Dictionary(Of String, Integer)
-        If Not IgnoreCase Then ' 大小写敏感
-            Return (From s As String
-                    In source
-                    Select s
-                    Group s By s Into Count) _
-                         .ToDictionary(Function(x) x.s,
-                                       Function(x) x.Count)
-        End If
+    <Extension> Public Function TokenCount(tokens As IEnumerable(Of String), Optional ignoreCase As Boolean = False) As Dictionary(Of String, Integer)
+        If Not ignoreCase Then ' 大小写敏感
+            With From s As String
+                 In tokens
+                 Select s
+                 Group s By s Into Count
 
-        Dim Uniques = (From s As String
-                       In source.Distinct
-                       Let data As String = s
-                       Select UNIQUE_KEY = s.ToLower, data
-                       Group By UNIQUE_KEY Into Group).ToArray
-        Dim LQuery = (From ustr
-                      In Uniques
-                      Let s As String = ustr.UNIQUE_KEY
-                      Let Count As Integer = (From str As String In source Where String.Equals(str, s, StringComparison.OrdinalIgnoreCase) Select 1).Count
-                      Let original As String() = (From nn In ustr.Group Select nn.data).ToArray
-                      Let key As String = original((ustr.Group.Count - 1) * Rnd())
-                      Select key,
-                          Count
-                      Order By Count Descending) _
-                              .ToDictionary(Function(x) x.key,
-                                            Function(x) x.Count)
-        Return LQuery
+                Return .ToDictionary(Function(x) x.s,
+                                     Function(x) x.Count)
+            End With
+        Else
+            Return tokens.TokenCountIgnoreCase
+        End If
+    End Function
+
+    <Extension>
+    Public Function TokenCountIgnoreCase(tokens As IEnumerable(Of String)) As Dictionary(Of String, Integer)
+        With tokens.ToArray
+            Dim uniques = From s As String
+                          In .Distinct
+                          Let data As String = s
+                          Select UNIQUE_KEY = s.ToLower, data
+                          Group By UNIQUE_KEY Into Group
+
+            Dim LQuery = From ustr
+                         In uniques
+                         Let s As String = ustr.UNIQUE_KEY
+                         Let count As Integer = .Count(s, StringComparison.OrdinalIgnoreCase)
+                         Select key = ustr.Group.First.data, count
+                         Order By count Descending
+
+            Dim result = LQuery.ToDictionary(
+                Function(x) x.key,
+                Function(x) x.count)
+
+            Return result
+        End With
     End Function
 
     ''' <summary>
-    ''' This method is used to replace most calls to the Java String.split method.
+    ''' This method is used to replace most calls to the Java <see cref="[String].Split"/> method.
     ''' </summary>
     ''' <param name="source"></param>
     ''' <param name="pattern"><see cref="Regex"/> patterns</param>
     ''' <param name="trimTrailingEmptyStrings"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
     <ExportAPI("StringsSplit", Info:="This method is used to replace most calls to the Java String.split method.")>
     <Extension> Public Function StringSplit(source$, pattern$,
                                             Optional TrimTrailingEmptyStrings As Boolean = False,
@@ -633,24 +717,17 @@ Public Module StringHelpers
             Return {}
         End If
 
-        Dim splitArray As String() = Regex.Split(
-            source, pattern, options:=opt)
+        Dim splitArray$() = Regex.Split(source, pattern, options:=opt)
 
         If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
             Return splitArray
+        Else
+            Return splitArray _
+                .Where(Function(s)
+                           Return Not String.IsNullOrEmpty(s)
+                       End Function) _
+                .ToArray
         End If
-
-        For i As Integer = splitArray.Length To 1 Step -1
-            If splitArray(i - 1).Length > 0 Then
-                If i < splitArray.Length Then
-                    Call Array.Resize(splitArray, i)
-                End If
-
-                Exit For
-            End If
-        Next
-
-        Return splitArray
     End Function
 
     ''' <summary>

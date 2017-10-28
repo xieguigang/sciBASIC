@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b231178bbd6e4b807712dccd01e3c25c, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\ModelExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -143,11 +144,11 @@ Namespace FileStream
             Dim orderProvider As Func(Of IGrouping(Of String, Graph.Node), Double) = Nothing
 
             Select Case method
-                Case NameOf(Average)
+                Case NameOf(Enumerable.Average)
                     orderProvider = Function(g)
                                         Return Aggregate x In g Into Average(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
                                     End Function
-                Case NameOf(Sum)
+                Case NameOf(Enumerable.Sum)
                     orderProvider = Function(g)
                                         Return Aggregate x In g Into Sum(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
                                     End Function
@@ -288,6 +289,19 @@ Namespace FileStream
                 .edges = gEdges,
                 .nodes = gNodes
             }
+        End Function
+
+        <Extension>
+        Public Function UsingDegreeAsRadius(g As NetworkGraph, Optional computeDegree As Boolean = False) As NetworkGraph
+            If computeDegree Then
+                Call g.ComputeNodeDegrees
+            End If
+
+            For Each node In g.nodes
+                node.Data.radius = Val(node.Data!degree)
+            Next
+
+            Return g
         End Function
 
         ''' <summary>

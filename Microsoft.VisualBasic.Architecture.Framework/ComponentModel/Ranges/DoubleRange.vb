@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea846910538ca5fcfb5f4839210fadb2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::5bb62772e2a83eeac0f3e1df9462cf00, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -32,9 +32,9 @@
 ' andrew.kirillov@gmail.com
 '
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
 
@@ -61,7 +61,9 @@ Namespace ComponentModel.Ranges
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
         ''' </summary>
+        ''' 
         Public ReadOnly Property Length() As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Max - Min
             End Get
@@ -159,16 +161,24 @@ Namespace ComponentModel.Ranges
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(exp$) As DoubleRange
             Dim r As New DoubleRange
             Call exp.Parser(r.Min, r.Max)
             Return r
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data#()) As DoubleRange
             With data
                 Return New DoubleRange(min:= .Min, max:= .Max)
             End With
+        End Operator
+
+        Public Shared Widening Operator CType(data As VectorShadows(Of Single)) As DoubleRange
+            Return data _
+                .Select(Function(s) CDbl(s)) _
+                .ToArray
         End Operator
 
         ''' <summary>
@@ -177,10 +187,17 @@ Namespace ComponentModel.Ranges
         ''' <param name="range"></param>
         ''' <param name="factor#"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(range As DoubleRange, factor#) As DoubleRange
             With range
                 Dim delta = (.Length * factor - .Length) / 2
-                Return New DoubleRange(.Min - delta, .Max + delta)
+                Dim ar As Double() = {
+                    .Min - delta,
+                    .Max + delta
+                }
+
+                Return New DoubleRange(ar)
             End With
         End Operator
 

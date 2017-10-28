@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd6856736cbbfec2d9081caf859d4c1c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
+﻿#Region "Microsoft.VisualBasic::6b514818c70c45d2f9478a3fe1d0d32c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
 
     ' Author:
     ' 
@@ -39,6 +39,7 @@ Namespace Drawing3D
     ''' </summary>
     Public Module PainterAlgorithm
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CreateCanvas2D(camera As Camera, Optional bg$ = "white") As Graphics2D
             Return camera.screen.CreateGDIDevice(filled:=bg.TranslateColor)

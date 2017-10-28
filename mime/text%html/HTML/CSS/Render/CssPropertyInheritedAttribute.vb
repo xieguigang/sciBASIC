@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bab0a4df5d914e0f68700d9a7fca988b, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssPropertyInheritedAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::7899edcaf559192549534b85ddfd869c, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssPropertyInheritedAttribute.vb"
 
     ' Author:
     ' 
@@ -26,13 +26,9 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
-
 Namespace HTML.CSS.Render
 
-    Public Class CssPropertyInheritedAttribute
-        Inherits Attribute
+    Public Class CssPropertyInheritedAttribute : Inherits Attribute
 
         Public Sub New()
         End Sub

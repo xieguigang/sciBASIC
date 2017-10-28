@@ -11,8 +11,9 @@
     <AssemblyName>Heatmap</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -150,19 +151,19 @@
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
       <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Math\math-core.vbproj">
+    <ProjectReference Include="..\..\Math\Math\Math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>Microsoft.VisualBasic.Mathematical</Name>
+      <Name>Math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ODE\ODEsSolver.vbproj">
+    <ProjectReference Include="..\..\Math\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
       <Name>ODEsSolver</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Plots\Plots.Extensions\Plots.Extensions.vbproj">
-      <Project>{a7819bb0-ea16-4526-a7d8-e6533f30e914}</Project>
-      <Name>Plots.Extensions</Name>
+    <ProjectReference Include="..\..\Plot\Plots-statistics\Plots.Statistics.vbproj">
+      <Project>{368EE92F-7AA0-47DF-BE48-2AE150369A4C}</Project>
+      <Name>Plots.Statistics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Plots\Plots.vbproj">
+    <ProjectReference Include="..\..\Plot\Plots\Plots.vbproj">
       <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>
       <Name>Plots</Name>
     </ProjectReference>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b688cbc13ba05f4d737dd8cd3f8855e9, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBoxWord.vb"
+﻿#Region "Microsoft.VisualBasic::a7083eff414e3a5f924a1e2a5caa5aaf, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBoxWord.vb"
 
     ' Author:
     ' 
@@ -26,10 +26,7 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Text
-Imports Image = System.Drawing.Image
 
 Namespace HTML.CSS.Render
 
@@ -43,8 +40,8 @@ Namespace HTML.CSS.Render
     ''' 
     ''' It may change for future versions of the library
     ''' </remarks>
-    Friend Class CssBoxWord
-        Inherits CssRectangle
+    Friend Class CssBoxWord : Inherits CssRectangle
+
 #Region "Fields"
 
 

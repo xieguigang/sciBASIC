@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc2ee0cdb81b98f44c5041ab17cf6534, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\OpenXml\Content_Types.vb"
+﻿#Region "Microsoft.VisualBasic::7cd16e63540b8754b215831f05c7c152, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\OpenXml\Content_Types.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Text.Xml.OpenXml
@@ -36,10 +37,18 @@ Namespace Text.Xml.OpenXml
     ''' </summary>
     ''' 
     <XmlRoot("Types", Namespace:="http://schemas.openxmlformats.org/package/2006/content-types")>
-    Public Class Content_Types
+    Public Class ContentTypes
+
         <XmlElement> Public Property [Default] As Type()
         <XmlElement("Override")>
-        Public Property [Overrides] As Type()
+        Public Property [Overrides] As List(Of Type)
+
+        Public Overrides Function ToString() As String
+            Return [Overrides] _
+                .Select(Function(t) t.PartName) _
+                .ToArray _
+                .GetJson
+        End Function
     End Class
 
     Public Structure Type
@@ -49,7 +58,11 @@ Namespace Text.Xml.OpenXml
         <XmlAttribute> Public Property PartName As String
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            If PartName.StringEmpty Then
+                Return ContentType
+            Else
+                Return $"({PartName}) {ContentType}"
+            End If
         End Function
     End Structure
 End Namespace

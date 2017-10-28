@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb393956bf10a929294835dbdb0c0c11, ..\sciBASIC#\Data_science\SVM\SVM\model\NormalVector.vb"
+﻿#Region "Microsoft.VisualBasic::3bca64521003c4200447118718f15177, ..\sciBASIC#\Data_science\SVM\SVM\model\NormalVector.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Model

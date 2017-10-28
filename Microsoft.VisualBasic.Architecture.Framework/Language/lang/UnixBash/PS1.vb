@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80412fa7e76926120d28c68e20891085, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\PS1.vb"
+﻿#Region "Microsoft.VisualBasic::634dbe616b698b47e77bc25d42608aa9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\PS1.vb"
 
     ' Author:
     ' 
@@ -28,14 +28,14 @@
 
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.SoftwareToolkits
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace Language.UnixBash
 
     ''' <summary>
     ''' PS (Prompt Sign)
     ''' </summary>
-    Public Class PS1 : Inherits ClassObject
+    Public Class PS1 : Inherits BaseClass
 
         ''' <summary>
         ''' ``\H`` 完整的主机名称

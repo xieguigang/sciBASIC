@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3dce60964b73d3a9442e7563b8d818f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::ae07593e67e23352c312e4bb1e94c803, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -29,15 +29,14 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.Settings
-Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 
 #Const NET_45 = 0
@@ -87,6 +86,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToDictionary() As Dictionary(Of String, APIEntryPoint)
             Return __API_table
         End Function
@@ -258,6 +259,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SDKdocs() As String
             Return Me.MarkdownDoc
         End Function
@@ -367,6 +370,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property ListCommandInfo As EntryPoints.APIEntryPoint()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __API_table.Values.ToArray
             End Get
@@ -489,6 +493,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateEmptyCLIObject() As Interpreter
             Return New Interpreter(GetType(Interpreter))
         End Function
@@ -500,10 +506,10 @@ Namespace CommandLine
         ''' <param name="Type"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("CreateObject")>
-        Public Shared Function CreateInstance(Type As System.Type) As Interpreter
-            Return New Interpreter(Type)
+        Public Shared Function CreateInstance(type As Type) As Interpreter
+            Return New Interpreter(type)
         End Function
 
         ''' <summary>
@@ -513,6 +519,7 @@ Namespace CommandLine
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateInstance(Of T As Class)() As Interpreter
             Return New Interpreter(type:=GetType(Type))
         End Function
@@ -531,12 +538,15 @@ Namespace CommandLine
         Public Shared Function CreateInstance(assmPath As String) As Interpreter
             Dim assembly As Assembly = Assembly.LoadFrom(assmPath)
             Dim dllMain As Type = GetType(RunDllEntryPoint)
-            Dim main As Type = LinqAPI.DefaultFirst(Of Type) <= From [mod] As Type
-                                                                In assembly.DefinedTypes
-                                                                Let attributes As Object() = [mod].GetCustomAttributes(dllMain, inherit:=False)
-                                                                Where Not attributes Is Nothing AndAlso
-                                                                    attributes.Length = 1
-                                                                Select [mod]
+            Dim main As Type = LinqAPI.DefaultFirst(Of Type) _
+ _
+                () <= From [mod] As Type
+                      In assembly.DefinedTypes
+                      Let attributes As Object() = [mod].GetCustomAttributes(dllMain, inherit:=False)
+                      Where Not attributes Is Nothing AndAlso
+                          attributes.Length = 1
+                      Select [mod]
+
             If main Is Nothing Then
                 Return Nothing  ' 没有找到执行入口点
             Else

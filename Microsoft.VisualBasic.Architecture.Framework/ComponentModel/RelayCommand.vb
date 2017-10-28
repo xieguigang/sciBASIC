@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2485e3fb110a3936768303352b3d4ca9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\RelayCommand.vb"
+﻿#Region "Microsoft.VisualBasic::4b561929ac8aa841e80923efc6860ee8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\RelayCommand.vb"
 
     ' Author:
     ' 
@@ -26,8 +26,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Windows.Input
-Imports System.Diagnostics
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace ComponentModel
@@ -38,6 +38,7 @@ Namespace ComponentModel
         Protected ReadOnly _execute As Action
 
         Public ReadOnly Property CallbackInvoke As Action Implements ICallbackTask.CallbackInvoke
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _execute
             End Get

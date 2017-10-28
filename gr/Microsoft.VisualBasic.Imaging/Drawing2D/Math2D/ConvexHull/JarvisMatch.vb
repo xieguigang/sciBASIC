@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09f01c570b19bc67238aa1e6124b87b6, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\JarvisMatch.vb"
+﻿#Region "Microsoft.VisualBasic::51dba4d29dfb299b41fcbe4af9308717, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\JarvisMatch.vb"
 
     ' Author:
     ' 
@@ -89,4 +89,3 @@ Namespace Drawing2D.Math2D.ConvexHull
         End Function
     End Module
 End Namespace
-

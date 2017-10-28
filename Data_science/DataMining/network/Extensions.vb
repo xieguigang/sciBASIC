@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62d0c77104a2a83afc4655a3a520e376, ..\sciBASIC#\Data_science\DataMining\network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0e67ef0a18841d469ee0ffaf4f7c6b32, ..\sciBASIC#\Data_science\DataMining\network\Extensions.vb"
 
     ' Author:
     ' 
@@ -43,12 +43,12 @@ Public Module Extensions
         Using reader As StreamReader = path.OpenReader
             Dim header As New RowObject(reader.ReadLine)
             Dim cluster% = header.IndexOf(NameOf(EntityLDM.Cluster))
-            Dim name% = header.IndexOf(NameOf(EntityLDM.Name))
+            Dim name% = header.IndexOf(NameOf(EntityLDM.ID))
             Dim row As New Value(Of RowObject)
 
             Do While Not reader.EndOfStream
                 Yield New EntityLDM With {
-                    .Name = (row = New RowObject(reader.ReadLine))(name),
+                    .ID = (row = New RowObject(reader.ReadLine))(name),
                     .Cluster = (+row)(cluster)
                 }
             Loop

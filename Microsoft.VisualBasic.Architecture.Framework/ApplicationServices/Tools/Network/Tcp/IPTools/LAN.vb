@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6154efddb4011b6f310ca07b3e5806ca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\Tcp\IPTools\LAN.vb"
+﻿#Region "Microsoft.VisualBasic::6154efddb4011b6f310ca07b3e5806ca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Tcp\IPTools\LAN.vb"
 
     ' Author:
     ' 

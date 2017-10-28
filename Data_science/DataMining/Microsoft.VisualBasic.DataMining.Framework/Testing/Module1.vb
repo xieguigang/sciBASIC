@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f6fb1e9256954b0f56a0e0dccb18b5a, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::e56a4b86da2050e98d588211af1f7447, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\Module1.vb"
 
     ' Author:
     ' 
@@ -26,21 +26,19 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.DataMining.KMeans.NodeTrees
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
     Sub Main()
-        Dim tree = Network.Load("G:\Xanthomonas_campestris_8004_uid15\genome\palindrome-motifs\palindrome_promoter=-250bp-cut=0.65,minw=6\binary-net").BuildTree
-        Dim parts = tree.CutTrees(0.99).ToArray
-        Dim json = parts.PartionTable
+        'Dim tree = Network.Load("G:\Xanthomonas_campestris_8004_uid15\genome\palindrome-motifs\palindrome_promoter=-250bp-cut=0.65,minw=6\binary-net").BuildTree
+        'Dim parts = tree.CutTrees(0.99).ToArray
+        'Dim json = parts.PartionTable
 
-        Call json.GetJson(True).SaveTo("x:/parts.json")
+        'Call json.GetJson(True).SaveTo("x:/parts.json")
 
-        Call json.Values.IteratesALL.Count.__DEBUG_ECHO
+        'Call json.Values.IteratesALL.Count.__DEBUG_ECHO
 
-        Pause()
+        'Pause()
     End Sub
 End Module

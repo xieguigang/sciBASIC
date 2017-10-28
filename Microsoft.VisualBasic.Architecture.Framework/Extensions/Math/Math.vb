@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1868f9b8353e26d25ec1c3a3c2b03ad9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::2d7f10528e47fd3ed6d8422def08c43f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -65,6 +65,7 @@ Namespace Math
         ''' <param name="val2">The second of two 8-bit unsigned integers to compare.</param>
         ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As Byte, val2 As Byte) As Byte
             If val1 < val2 Then
                 Return val1
@@ -80,6 +81,7 @@ Namespace Math
         ''' <param name="val2">The second of two 8-bit signed integers to compare.</param>
         ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As SByte, val2 As SByte) As SByte
             If val1 < val2 Then
                 Return val1
@@ -95,6 +97,7 @@ Namespace Math
         ''' <param name="val2">The second of two decimal numbers to compare.</param>
         ''' <returns>Parameter val1 or val2, whichever is larger.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As Decimal, val2 As Decimal) As Decimal
             If val1 > val2 Then
                 Return val1
@@ -111,6 +114,7 @@ Namespace Math
         ''' <returns>Parameter val1 or val2, whichever is larger. If val1, val2, or both val1 and
         ''' val2 are equal to System.Double.NaN, System.Double.NaN is returned.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As Double, val2 As Double) As Double
             If val1 > val2 Then
                 Return val1
@@ -127,6 +131,7 @@ Namespace Math
         ''' <returns>Parameter val1 or val2, whichever is larger. If val1, or val2, or both val1 and
         ''' val2 are equal to System.Single.NaN, System.Single.NaN is returned.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As Single, val2 As Single) As Single
             If val1 > val2 Then
                 Return val1
@@ -148,6 +153,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is larger.
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As ULong, val2 As ULong) As ULong
             If val1 > val2 Then
                 Return val1
@@ -169,6 +175,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is larger.
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As Long, val2 As Long) As Long
             If val1 > val2 Then
                 Return val1
@@ -190,6 +197,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is larger.
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As UInteger, val2 As UInteger) As UInteger
             If val1 > val2 Then
                 Return val1
@@ -211,6 +219,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is larger.
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As Integer, val2 As Integer) As Integer
             If val1 > val2 Then
                 Return val1
@@ -232,6 +241,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is larger.
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As UShort, val2 As UShort) As UShort
             If val1 > val2 Then
                 Return val1
@@ -253,6 +263,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is larger.
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As Short, val2 As Short) As Short
             If val1 > val2 Then
                 Return val1
@@ -274,6 +285,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is larger.
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As Byte, val2 As Byte) As Byte
             If val1 > val2 Then
                 Return val1
@@ -295,6 +307,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is larger.
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As SByte, val2 As SByte) As SByte
             If val1 > val2 Then
                 Return val1
@@ -313,6 +326,7 @@ Namespace Math
         '
         ' Returns:
         '     A decimal number, x, such that 0 ≤ x ≤System.Decimal.MaxValue.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Decimal) As Decimal
             If value < 0 Then
                 Return -value
@@ -334,6 +348,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is smaller.
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As Short, val2 As Short) As Short
             If val1 < val2 Then
                 Return val1
@@ -355,6 +370,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is smaller.
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As UShort, val2 As UShort) As UShort
             If val1 < val2 Then
                 Return val1
@@ -376,6 +392,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is smaller.
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As Integer, val2 As Integer) As Integer
             If val1 < val2 Then
                 Return val1
@@ -397,6 +414,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is smaller.
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As UInteger, val2 As UInteger) As UInteger
             If val1 < val2 Then
                 Return val1
@@ -417,6 +435,7 @@ Namespace Math
         '
         ' Returns:
         '     The number containing the product of the specified numbers.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function BigMul(a As Integer, b As Integer) As Long
             Return sys.BigMul(a, b)
         End Function
@@ -432,6 +451,7 @@ Namespace Math
         '     A number that indicates the sign of value, as shown in the following table.Return
         '     value Meaning -1 value is less than zero. 0 value is equal to zero. 1 value is
         '     greater than zero.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sign(value As Decimal) As Integer
             If value > 0 Then
                 Return 1
@@ -458,6 +478,7 @@ Namespace Math
         ' Exceptions:
         '   T:System.ArithmeticException:
         '     value is equal to System.Double.NaN.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sign(value As Double) As Integer
             If value > 0 Then
                 Return 1
@@ -484,6 +505,7 @@ Namespace Math
         ' Exceptions:
         '   T:System.ArithmeticException:
         '     value is equal to System.Single.NaN.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sign(value As Single) As Integer
             If value > 0 Then
                 Return 1
@@ -505,6 +527,7 @@ Namespace Math
         '     A number that indicates the sign of value, as shown in the following table.Return
         '     value Meaning -1 value is less than zero. 0 value is equal to zero. 1 value is
         '     greater than zero.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sign(value As Long) As Integer
             If value > 0 Then
                 Return 1
@@ -526,6 +549,7 @@ Namespace Math
         '     A number that indicates the sign of value, as shown in the following table.Return
         '     value Meaning -1 value is less than zero. 0 value is equal to zero. 1 value is
         '     greater than zero.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sign(value As Integer) As Integer
             If value > 0 Then
                 Return 1
@@ -535,18 +559,15 @@ Namespace Math
                 Return 0
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the absolute value of a double-precision floating-point number.
-        '
-        ' Parameters:
-        '   value:
-        '     A number that is greater than or equal to System.Double.MinValue, but less than
-        '     or equal to System.Double.MaxValue.
-        '
-        ' Returns:
-        '     A double-precision floating-point number, x, such that 0 ≤ x ≤System.Double.MaxValue.
+
+        ''' <summary>
+        ''' Returns the absolute value of a double-precision floating-point number.
+        ''' </summary>
+        ''' <param name="value">A number that is greater than or equal to System.Double.MinValue, but less than
+        ''' or equal to System.Double.MaxValue.</param>
+        ''' <returns>A double-precision floating-point number, x, such that 0 ≤ x ≤System.Double.MaxValue.</returns>
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Double) As Double
             If value < 0 Then
                 Return -value
@@ -566,6 +587,7 @@ Namespace Math
         '     A number that indicates the sign of value, as shown in the following table.Return
         '     value Meaning -1 value is less than zero. 0 value is equal to zero. 1 value is
         '     greater than zero.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sign(value As Short) As Integer
             If value < 0 Then
                 Return -value
@@ -592,6 +614,7 @@ Namespace Math
         '     value)NaN(any value)newBase = NaNNaN(any value)newBase = 1NaNa = 00 <newBase<
         '     1 +Infinitya = 0newBase> 1-Infinitya = +Infinity0 <newBase< 1-Infinitya = +InfinitynewBase>
         '     1+Infinitya = 1newBase = 00a = 1newBase = +Infinity0
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Log(a As Double, newBase As Double) As Double
             Return sys.Log(a, newBase)
         End Function
@@ -603,6 +626,7 @@ Namespace Math
         ''' <param name="val2">The second of two decimal numbers to compare.</param>
         ''' <returns>Parameter val1 or val2, whichever is smaller.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As Decimal, val2 As Decimal) As Decimal
             If val1 < val2 Then
                 Return val1
@@ -625,6 +649,7 @@ Namespace Math
         '     Parameter val1 or val2, whichever is smaller. If val1, val2, or both val1 and
         '     val2 are equal to System.Double.NaN, System.Double.NaN is returned.
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As Double, val2 As Double) As Double
             If val1 < val2 Then
                 Return val1
@@ -648,6 +673,7 @@ Namespace Math
         '     Parameter val1 or val2, whichever is smaller. If val1, val2, or both val1 and
         '     val2 are equal to System.Single.NaN, System.Single.NaN is returned.
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As Single, val2 As Single) As Single
             If val1 < val2 Then
                 Return val1
@@ -669,6 +695,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is smaller.
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As ULong, val2 As ULong) As ULong
             If val1 < val2 Then
                 Return val1
@@ -690,6 +717,7 @@ Namespace Math
         ' Returns:
         '     Parameter val1 or val2, whichever is smaller.
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Min(val1 As Long, val2 As Long) As Long
             If val1 < val2 Then
                 Return val1
@@ -710,6 +738,7 @@ Namespace Math
         '     value Meaning -1 value is less than zero. 0 value is equal to zero. 1 value is
         '     greater than zero.
         <CLSCompliant(False)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sign(value As SByte) As Integer
             If value > 0 Then
                 Return 1
@@ -731,6 +760,7 @@ Namespace Math
         ' Returns:
         '     A single-precision floating-point number, x, such that 0 ≤ x ≤System.Single.MaxValue.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Single) As Single
             If value < 0 Then
                 Return -value
@@ -753,6 +783,7 @@ Namespace Math
         ' Exceptions:
         '   T:System.OverflowException:
         '     value equals System.Int64.MinValue.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Long) As Long
             If value < 0 Then
                 Return -value
@@ -775,6 +806,7 @@ Namespace Math
         ' Exceptions:
         '   T:System.OverflowException:
         '     value equals System.Int32.MinValue.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Integer) As Integer
             If value < 0 Then
                 Return -value
@@ -796,6 +828,7 @@ Namespace Math
         '     this method returns 1. If value is equal to System.Double.NaN, this method returns
         '     System.Double.NaN.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Tanh(value As Double) As Double
             Return sys.Tanh(value)
         End Function
@@ -812,6 +845,7 @@ Namespace Math
         '     System.Double.PositiveInfinity, or System.Double.NaN, this method returns a System.Double
         '     equal to value.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sinh(value As Double) As Double
             Return sys.Sinh(value)
         End Function
@@ -827,6 +861,7 @@ Namespace Math
         '     The tangent of a. If a is equal to System.Double.NaN, System.Double.NegativeInfinity,
         '     or System.Double.PositiveInfinity, this method returns System.Double.NaN.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Tan(a As Double) As Double
             Return sys.Tan(a)
         End Function
@@ -842,6 +877,7 @@ Namespace Math
         '     The sine of a. If a is equal to System.Double.NaN, System.Double.NegativeInfinity,
         '     or System.Double.PositiveInfinity, this method returns System.Double.NaN.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sin(a As Double) As Double
             Return sys.Sin(a)
         End Function
@@ -859,6 +895,7 @@ Namespace Math
         '     System.Double.NegativeInfinity, or System.Double.PositiveInfinity, that value
         '     is returned.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Floor(d As Double) As Double
             Return sys.Floor(d)
         End Function
@@ -875,6 +912,7 @@ Namespace Math
         ' Returns:
         '     The largest integer less than or equal to d. Note that the method returns an
         '     integral value of type System.Math.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Floor(d As Decimal) As Decimal
             Return sys.Floor(d)
         End Function
@@ -892,6 +930,7 @@ Namespace Math
         '     integers, one of which is even and the other odd, then the even number is returned.
         '     Note that this method returns a System.Double instead of an integral type.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(a As Double) As Double
             Return sys.Round(a)
         End Function
@@ -908,6 +947,7 @@ Namespace Math
         '     or System.Double.PositiveInfinity, System.Double.PositiveInfinity is returned.
         '     If value is equal to System.Double.NaN, System.Double.NaN is returned.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Cosh(value As Double) As Double
             Return sys.Cosh(value)
         End Function
@@ -926,6 +966,7 @@ Namespace Math
         '     that value is returned. Note that this method returns a System.Double instead
         '     of an integral type.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Ceiling(a As Double) As Double
             Return sys.Ceiling(a)
         End Function
@@ -941,6 +982,7 @@ Namespace Math
         ' Returns:
         '     The smallest integral value that is greater than or equal to d. Note that this
         '     method returns a System.Decimal instead of an integral type.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Ceiling(d As Decimal) As Decimal
             Return sys.Ceiling(d)
         End Function
@@ -966,6 +1008,7 @@ Namespace Math
         '     System.Double.NaN, or if x and y are either System.Double.PositiveInfinity or
         '     System.Double.NegativeInfinity, the method returns System.Double.NaN.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Atan2(y As Double, x As Double) As Double
             Return sys.Atan2(y, x)
         End Function
@@ -983,6 +1026,7 @@ Namespace Math
         '     if d equals System.Double.NegativeInfinity, or π/2 rounded to double precision
         '     (1.5707963267949) if d equals System.Double.PositiveInfinity.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Atan(d As Double) As Double
             Return sys.Atan(d)
         End Function
@@ -999,6 +1043,7 @@ Namespace Math
         '     An angle, θ, measured in radians, such that -π/2 ≤θ≤π/2 -or- System.Double.NaN
         '     if d < -1 or d > 1 or d equals System.Double.NaN.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Asin(d As Double) As Double
             Return sys.Asin(d)
         End Function
@@ -1015,6 +1060,7 @@ Namespace Math
         '     An angle, θ, measured in radians, such that 0 ≤θ≤π-or- System.Double.NaN if d
         '     < -1 or d > 1 or d equals System.Double.NaN.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Acos(d As Double) As Double
             Return sys.Acos(d)
         End Function
@@ -1030,6 +1076,7 @@ Namespace Math
         '     The cosine of d. If d is equal to System.Double.NaN, System.Double.NegativeInfinity,
         '     or System.Double.PositiveInfinity, this method returns System.Double.NaN.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Cos(d As Double) As Double
             Return sys.Cos(d)
         End Function
@@ -1054,6 +1101,7 @@ Namespace Math
         ' Exceptions:
         '   T:System.DivideByZeroException:
         '     b is zero.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function DivRem(a As Integer, b As Integer, ByRef result As Integer) As Integer
             Return sys.DivRem(a, b, result)
         End Function
@@ -1066,6 +1114,8 @@ Namespace Math
         ''' <param name="digits">The number of fractional digits in the return value.</param>
         ''' <returns>The number nearest to value that contains a number of fractional digits equal
         ''' to digits.</returns>
+        '''   
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(value As Double, digits As Integer) As Double
             Return sys.Round(value, digits)
         End Function
@@ -1095,6 +1145,7 @@ Namespace Math
         '
         '   T:System.ArgumentException:
         '     mode is not a valid value of System.MidpointRounding.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(value As Double, digits As Integer, mode As MidpointRounding) As Double
             Return sys.Round(value, digits, mode)
         End Function
@@ -1113,6 +1164,7 @@ Namespace Math
         ' Exceptions:
         '   T:System.OverflowException:
         '     value equals System.Int16.MinValue.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Short) As Short
             If value < 0 Then
                 Return -value
@@ -1136,6 +1188,7 @@ Namespace Math
         '   T:System.OverflowException:
         '     value equals System.SByte.MinValue.
         <CLSCompliant(False)>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As SByte) As SByte
             If value < 0 Then
                 Return -value
@@ -1160,6 +1213,7 @@ Namespace Math
         '     nearest integer (if x / y falls halfway between two integers, the even integer
         '     is returned).If x - (y Q) is zero, the value +0 is returned if x is positive,
         '     or -0 if x is negative.If y = 0, System.Double.NaN is returned.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IEEERemainder(x As Double, y As Double) As Double
             Return sys.IEEERemainder(x, y)
         End Function
@@ -1177,6 +1231,7 @@ Namespace Math
         ' Returns:
         '     The number x raised to the power y.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Pow(x As Double, y As Double) As Double
             Return x ^ y
         End Function
@@ -1192,6 +1247,7 @@ Namespace Math
         '     The number e raised to the power d. If d equals System.Double.NaN or System.Double.PositiveInfinity,
         '     that value is returned. If d equals System.Double.NegativeInfinity, 0 is returned.
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Exp(d As Double) As Double
             Return sys.Exp(d)
         End Function
@@ -1208,6 +1264,7 @@ Namespace Math
         '     base 10 log of d; that is, log 10d. Zero System.Double.NegativeInfinityNegative
         '     System.Double.NaNEqual to System.Double.NaNSystem.Double.NaNEqual to System.Double.PositiveInfinitySystem.Double.PositiveInfinity
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Log10(d As Double) As Double
             Return sys.Log10(d)
         End Function
@@ -1230,6 +1287,7 @@ Namespace Math
         ' Exceptions:
         '   T:System.ArgumentException:
         '     mode is not a valid value of System.MidpointRounding.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(value As Double, mode As MidpointRounding) As Double
             Return sys.Round(value, mode)
         End Function
@@ -1246,6 +1304,7 @@ Namespace Math
         '     natural logarithm of d; that is, ln d, or log edZero System.Double.NegativeInfinityNegative
         '     System.Double.NaNEqual to System.Double.NaNSystem.Double.NaNEqual to System.Double.PositiveInfinitySystem.Double.PositiveInfinity
         <SecuritySafeCritical>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Log(d As Double) As Double
             Return sys.Log(d)
         End Function
@@ -1262,6 +1321,7 @@ Namespace Math
         ''' |System.Double.NegativeInfinity|System.Double.NegativeInfinity|
         ''' |System.Double.PositiveInfinity|System.Double.PositiveInfinity|
         ''' </returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Truncate(d As Double) As Double
             Return sys.Truncate(d)
         End Function
@@ -1276,6 +1336,7 @@ Namespace Math
         ' Returns:
         '     The integral part of d; that is, the number that remains after any fractional
         '     digits have been discarded.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Truncate(d As Decimal) As Decimal
             Return sys.Truncate(d)
         End Function
@@ -1307,6 +1368,7 @@ Namespace Math
         '
         '   T:System.OverflowException:
         '     The result is outside the range of a System.Decimal.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(d As Decimal, decimals As Integer, mode As MidpointRounding) As Decimal
             Return sys.Round(d, decimals, mode)
         End Function
@@ -1332,6 +1394,7 @@ Namespace Math
         '
         '   T:System.OverflowException:
         '     The result is outside the range of a System.Decimal.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(d As Decimal, mode As MidpointRounding) As Decimal
             Return sys.Round(d, mode)
         End Function
@@ -1356,6 +1419,7 @@ Namespace Math
         '
         '   T:System.OverflowException:
         '     The result is outside the range of a System.Decimal.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(d As Decimal, decimals As Integer) As Decimal
             Return sys.Round(d, decimals)
         End Function
@@ -1376,21 +1440,19 @@ Namespace Math
         ' Exceptions:
         '   T:System.OverflowException:
         '     The result is outside the range of a System.Decimal.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(d As Decimal) As Decimal
             Return sys.Round(d)
         End Function
-        '
-        ' Summary:
-        '     Returns the square root of a specified number.
-        '
-        ' Parameters:
-        '   d:
-        '     The number whose square root is to be found.
-        '
-        ' Returns:
-        '     One of the values in the following table. d parameter Return value Zero or positive
-        '     The positive square root of d. Negative System.Double.NaNEquals System.Double.NaNSystem.Double.NaNEquals
-        '     System.Double.PositiveInfinitySystem.Double.PositiveInfinity
+
+        ''' <summary>
+        ''' Returns the square root of a specified number.
+        ''' </summary>
+        ''' <param name="d">The number whose square root is to be found.</param>
+        ''' <returns>One of the values in the following table. d parameter Return value Zero or positive
+        ''' The positive square root of d. Negative System.Double.NaNEquals System.Double.NaNSystem.Double.NaNEquals
+        ''' System.Double.PositiveInfinitySystem.Double.PositiveInfinity</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)> <SecuritySafeCritical>
         Public Function Sqrt(d As Double) As Double
             Return sys.Sqrt(d)
@@ -1416,6 +1478,7 @@ Namespace Math
         ' Exceptions:
         '   T:System.DivideByZeroException:
         '     b is zero.
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function DivRem(a As Long, b As Long, ByRef result As Long) As Long
             Return sys.DivRem(a, b, result)
         End Function
@@ -1477,7 +1540,7 @@ Namespace Math
         Public Iterator Function seq([from] As Value(Of Double), [to] As Double, Optional by As Double = 0.1) As IEnumerable(Of Double)
             Yield from
 
-            Do While (from = from.value + by) <= [to]
+            Do While (from = from.Value + by) <= [to]
                 Yield from
             Loop
         End Function
@@ -1760,13 +1823,14 @@ Namespace Math
         ''' <param name="vector"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
             ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
             Return sys.Sqrt((From n In vector Select n ^ 2).Sum)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
             Return sys.Sqrt((From n In Vector Select n ^ 2).Sum)
@@ -1781,6 +1845,7 @@ Namespace Math
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(a As IEnumerable(Of Double), b As IEnumerable(Of Double)) As Double
             Return EuclideanDistance(a.ToArray, b.ToArray)
@@ -1816,16 +1881,19 @@ Namespace Math
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Double, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Integer, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Long, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
@@ -1838,8 +1906,19 @@ Namespace Math
         ''' 
         <ExportAPI("RMS", Info:="Root mean square")>
         <Extension> Public Function RMS(data As IEnumerable(Of Double)) As Double
-            Dim LQuery = (From n In data.AsParallel Select n ^ 2).ToArray
-            Return sys.Sqrt(LQuery.Sum / LQuery.Length)
+            With (From n In data Select n ^ 2).ToArray
+                Return sys.Sqrt(.Sum / .Length)
+            End With
+        End Function
+
+        ''' <summary>
+        ''' ``相对标准偏差（RSD）= 标准偏差（SD）/ 计算结果的算术平均值（X）* 100%``
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RSD(data As IEnumerable(Of Double)) As Double
+            Return data.SD / data.Average
         End Function
 
         ''' <summary>
@@ -1850,16 +1929,19 @@ Namespace Math
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
             Dim result As Double = sys.Exp(-lambda)
             Dim k As Integer = x
+
             While k >= 1
                 result *= lambda / k
                 k -= 1
             End While
+
             Return result
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
-            Return v.ToArray(Function(x) x.FormatNumeric(digitals))
+            Return v.ToArray(Function(x) x.ToString("F" & digitals))
         End Function
     End Module
 End Namespace

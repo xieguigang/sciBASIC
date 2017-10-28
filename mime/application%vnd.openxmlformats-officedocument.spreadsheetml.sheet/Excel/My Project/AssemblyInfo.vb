@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Excel")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("Excel I/O corelib writen in VisualBasic language")>
+<Assembly: AssemblyDescription("Excel I/O corelib writen in VisualBasic language")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("Excel")>
-<Assembly: AssemblyCopyright("Copyright ©  2017")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2017")>
+<Assembly: AssemblyTrademark("sciBASIC#")>
 
 <Assembly: ComVisible(False)>
 

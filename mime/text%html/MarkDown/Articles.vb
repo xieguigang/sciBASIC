@@ -52,7 +52,7 @@ Namespace MarkDown
                 \.wikipedia\.org\/wiki\/
                 ([^\^\s\(\)\[\]\<\>]+)"
 
-        ReadOnly _wikiArticles As Regex = RegexWikiArticles.RawRegexp
+        ReadOnly _wikiArticles As Regex = RegexWikiArticles.PythonRawRegexp
 
         ''' <summary>
         ''' <see cref="ExtensionTransform"/>

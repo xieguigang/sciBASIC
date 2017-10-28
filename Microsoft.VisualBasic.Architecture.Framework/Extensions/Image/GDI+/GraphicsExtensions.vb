@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::9dfcdfdc234432a79bb84c33f4d863a0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::10595c661382adb9e1db3db8f170cadb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -39,7 +39,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports sys = System.Math
 
 Namespace Imaging
 
@@ -52,6 +51,27 @@ Namespace Imaging
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
     Public Module GraphicsExtensions
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function PointF(polygon As IEnumerable(Of Point)) As IEnumerable(Of PointF)
+            Return polygon.Select(Function(pt) New PointF(pt.X, pt.Y))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SizeF(size As Size) As SizeF
+            Return New SizeF(size.Width, size.Height)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function ToPoint(pf As PointF) As Point
+            Return New Point(pf.X, pf.Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
+            Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
+        End Function
 
         <Extension> Public Function SaveIcon(ico As Icon, path$) As Boolean
             Call path.ParentPath.MkDIR
@@ -70,6 +90,16 @@ Namespace Imaging
             Return False
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ToFloat(rect As Rectangle) As RectangleF
+            Return New RectangleF With {
+                .Location = rect.Location.PointF,
+                .Size = rect.Size.SizeF
+            }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function PointF(pf As Point) As PointF
             Return New PointF(pf.X, pf.Y)
@@ -103,7 +133,7 @@ Namespace Imaging
         ''' <param name="res$"></param>
         ''' <returns></returns>
         <Extension> Public Function GetBrush(res$) As Brush
-            Dim bgColor As Color = res.ToColor(onFailure:=Nothing)
+            Dim bgColor As Color = res.TranslateColor
 
             If Not bgColor.IsEmpty Then
                 Return New SolidBrush(bgColor)
@@ -125,6 +155,8 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="colors"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetBrushes(colors As IEnumerable(Of Color)) As SolidBrush()
             Return colors _
@@ -165,6 +197,8 @@ Namespace Imaging
         ''' <param name="y!"></param>
         ''' <param name="r!"></param>
         ''' <param name="fill"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub DrawCircle(ByRef g As Graphics, color As Pen, x!, y!, r!, Optional fill As Boolean = True)
             Call g.DrawCircle(New PointF(x, y), r, color, fill)
@@ -201,16 +235,6 @@ Namespace Imaging
         End Sub
 
         ''' <summary>
-        ''' 这个方形区域的面积
-        ''' </summary>
-        ''' <param name="rect"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function Area(rect As Rectangle) As Double
-            Return rect.Width * rect.Height
-        End Function
-
-        ''' <summary>
         ''' 返回整个图像的区域
         ''' </summary>
         ''' <param name="img"></param>
@@ -222,48 +246,12 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' Is target point in the target region?
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <param name="rect"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function InRegion(x As Point, rect As Rectangle) As Boolean
-            Return New PointF(x.X, x.Y).InRegion(rect)
-        End Function
-
-        ''' <summary>
-        ''' Is target point in the target region?
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <param name="rect"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function InRegion(x As PointF, rect As Rectangle) As Boolean
-            If x.X < rect.Left OrElse x.X > rect.Right Then
-                Return False
-            End If
-            If x.Y < rect.Top OrElse x.Y > rect.Bottom Then
-                Return False
-            End If
-
-            Return True
-        End Function
-
-        ''' <summary>
-        ''' Calculate the center location of the target sized region
-        ''' </summary>
-        ''' <param name="size"></param>
-        ''' <returns></returns>
-        <Extension> Public Function GetCenter(size As Size) As Point
-            Return New Point(size.Width / 2, size.Height / 2)
-        End Function
-
-        ''' <summary>
         ''' Convert image to icon
         ''' </summary>
         ''' <param name="res"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("To.Icon")>
         <Extension> Public Function GetIcon(res As Image) As Icon
             Return Drawing.Icon.FromHandle(New Bitmap(res).GetHicon)
@@ -274,9 +262,11 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="res"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("To.Icon")>
         <Extension> Public Function GetIcon(res As Bitmap) As Icon
-            Return Drawing.Icon.FromHandle(res.GetHicon)
+            Return Icon.FromHandle(res.GetHicon)
         End Function
 
         ''' <summary>
@@ -293,16 +283,16 @@ Namespace Imaging
                 Dim img As Image = base64String.GetImage
                 Return img
             Else
-                Dim stream As Byte() = FileIO.FileSystem.ReadAllBytes(path)
-                Dim res = Image.FromStream(stream:=New IO.MemoryStream(stream))
-                Return res
+                Return FileIO.FileSystem _
+                    .ReadAllBytes(path) _
+                    .LoadImage
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("LoadImage")>
         <Extension> Public Function LoadImage(rawStream As Byte()) As Image
-            Dim res = Image.FromStream(stream:=New IO.MemoryStream(rawStream))
-            Return res
+            Return Image.FromStream(stream:=New MemoryStream(rawStream))
         End Function
 
         ''' <summary>
@@ -388,7 +378,7 @@ Namespace Imaging
         ''' <param name="filled">默认的背景填充颜色为白色</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GDI+.Create")>
         <Extension> Public Function CreateGDIDevice(r As SizeF, Optional filled As Color = Nothing) As Graphics2D
             Return (New Size(CInt(r.Width), CInt(r.Height))).CreateGDIDevice(filled)
@@ -465,41 +455,7 @@ Namespace Imaging
             End If
         End Function
 
-        ''' <summary>
-        ''' 返回位移的新的点位置值
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="x"></param>
-        ''' <param name="y"></param>
-        ''' <returns></returns>
-        <ExportAPI("Offset")>
-        <Extension> Public Function OffSet2D(p As Point, x As Integer, y As Integer) As Point
-            Return New Point(x + p.X, y + p.Y)
-        End Function
-
-        ''' <summary>
-        ''' 返回位置的新的点位置值
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="offset"></param>
-        ''' <returns></returns>
-        <ExportAPI("Offset")>
-        <Extension> Public Function OffSet2D(p As Point, offset As Point) As Point
-            Return New Point(offset.X + p.X, offset.Y + p.Y)
-        End Function
-
-        <Extension> Public Function OffSet2D(pt As PointF, offset As PointF) As PointF
-            With pt
-                Return New PointF(offset.X + .X, offset.Y + .Y)
-            End With
-        End Function
-
-        <Extension> Public Function OffSet2D(pt As PointF, x!, y!) As PointF
-            With pt
-                Return New PointF(x + .X, y + .Y)
-            End With
-        End Function
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function IsValidGDIParameter(size As Size) As Boolean
             Return size.Width > 0 AndAlso size.Height > 0
         End Function
@@ -548,71 +504,6 @@ Namespace Imaging
             Return Graphics2D.CreateObject(gdi, Bitmap)
         End Function
 
-        ''' <summary>
-        ''' 图片剪裁小方块区域
-        ''' </summary>
-        ''' <param name="pos">左上角的坐标位置</param>
-        ''' <param name="size">剪裁的区域的大小</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        '''
-        <ExportAPI("Image.Corp")>
-        <Extension> Public Function ImageCrop(source As Image, pos As Point, size As Size) As Image
-            SyncLock source
-                Dim CloneRect As New Rectangle(pos, size)
-                Dim CloneBitmap As Bitmap = CType(source.Clone, Bitmap)
-                Dim crop As Bitmap = CloneBitmap.Clone(CloneRect, source.PixelFormat)
-                Return crop
-            End SyncLock
-        End Function
-
-        <ExportAPI("Image.Resize")>
-        Public Function Resize(Image As Image, newSize As Size) As Image
-            SyncLock Image
-                Using g As Graphics2D = newSize.CreateGDIDevice
-                    With g
-                        Call .DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
-                        Return .ImageResource
-                    End With
-                End Using
-            End SyncLock
-        End Function
-
-        ''' <summary>
-        ''' 图片剪裁为圆形的头像
-        ''' </summary>
-        ''' <param name="resAvatar">要求为正方形或者近似正方形</param>
-        ''' <param name="OutSize"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <Extension> Public Function TrimRoundAvatar(resAvatar As Image, OutSize As Integer) As Image
-            If resAvatar Is Nothing Then
-                Return Nothing
-            End If
-
-            SyncLock resAvatar
-                Dim Bitmap As New Bitmap(OutSize, OutSize)
-
-                resAvatar = DirectCast(resAvatar.Clone, Image)
-                resAvatar = Resize(resAvatar, Bitmap.Size)
-
-                Using g = Graphics.FromImage(Bitmap)
-                    Dim image As Brush = New TextureBrush(resAvatar)
-
-                    With g
-                        .CompositingQuality = CompositingQuality.HighQuality
-                        .InterpolationMode = InterpolationMode.HighQualityBicubic
-                        .SmoothingMode = SmoothingMode.HighQuality
-                        .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
-
-                        Call .FillPie(image, Bitmap.EntireImage, 0, 360)
-                    End With
-
-                    Return Bitmap
-                End Using
-            End SyncLock
-        End Function
-
         <Extension> Public Function Clone(res As Bitmap) As Bitmap
             If res Is Nothing Then Return Nothing
             Return DirectCast(res.Clone, Bitmap)
@@ -621,172 +512,6 @@ Namespace Imaging
         <Extension> Public Function Clone(res As Image) As Image
             If res Is Nothing Then Return Nothing
             Return DirectCast(res.Clone, Image)
-        End Function
-
-        ''' <summary>
-        ''' 羽化
-        ''' </summary>
-        ''' <param name="Image"></param>
-        ''' <param name="y1"></param>
-        ''' <param name="y2"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <Extension> Public Function Vignette(image As Image, y1%, y2%, Optional renderColor As Color = Nothing) As Image
-            Using g As Graphics2D = image.CreateCanvas2D
-                With g
-                    Dim alpha As Integer = 0
-                    Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
-                    Dim offset As Double = 0
-
-                    If renderColor = Nothing OrElse renderColor.IsEmpty Then
-                        renderColor = Color.White
-                    End If
-
-                    For y As Integer = y1 To y2
-                        Dim pen As New Pen(Color.FromArgb(alpha, renderColor.R, renderColor.G, renderColor.B))
-
-                        .DrawLine(pen, New Point(0, y), New Point(.Width, y))
-                        alpha = CInt(255 * sys.Sin(offset) ^ 2)
-                        offset += delta
-                    Next
-
-                    Dim rect As New Rectangle With {
-                        .Location = New Point(0, y2),
-                        .Size = New Size(.Width, .Height - y2)
-                    }
-                    Call .FillRectangle(New SolidBrush(renderColor), rect)
-
-                    Return .ImageResource
-                End With
-            End Using
-        End Function
-
-        ''' <summary>
-        ''' 将图像的多余的空白处给剪裁掉，确定边界，然后进行剪裁，使用这个函数需要注意下设置空白色，默认使用的空白色为<see cref="Color.White"/>
-        ''' </summary>
-        ''' <param name="res"></param>
-        ''' <param name="margin"></param>
-        ''' <param name="blankColor">默认白色为空白色</param>
-        ''' <returns></returns>
-        <ExportAPI("Image.CorpBlank")>
-        <Extension> Public Function CorpBlank(res As Image, Optional margin As Integer = 0, Optional blankColor As Color = Nothing) As Image
-            If blankColor.IsNullOrEmpty Then
-                blankColor = Color.White
-            ElseIf blankColor.Name = NameOf(Color.Transparent) Then
-                ' 系统的transparent颜色为 0,255,255,255
-                ' 但是bitmap之中的transparent为 0,0,0,0
-                ' 在这里要变换一下
-                blankColor = New Color
-            End If
-
-            Dim top As Integer
-            Dim left As Integer
-            Dim bmp As New Bitmap(res)
-
-            ' top
-
-            For top = 0 To res.Height - 1
-                Dim find As Boolean = False
-
-                For left = 0 To res.Width - 1
-                    Dim p = bmp.GetPixel(left, top)
-                    If Not GDIColors.Equals(p, blankColor) Then
-                        ' 在这里确定了左右
-                        find = True
-                        Exit For
-                    End If
-                Next
-
-                If find Then
-                    Exit For
-                End If
-            Next
-
-            Dim region As New Rectangle(0, top, res.Width, res.Height - top)
-            res = res.ImageCrop(region.Location, region.Size)
-            bmp = New Bitmap(res)
-
-            ' left
-
-            For left = 0 To res.Width - 1
-                Dim find As Boolean = False
-
-                For top = 0 To res.Height - 1
-                    Dim p = bmp.GetPixel(left, top)
-                    If Not GDIColors.Equals(p, blankColor) Then
-                        ' 在这里确定了左右
-                        find = True
-                        Exit For
-                    End If
-                Next
-
-                If find Then
-                    Exit For
-                End If
-            Next
-
-            region = New Rectangle(left, 0, res.Width - left, res.Height)
-            res = res.ImageCrop(region.Location, region.Size)
-            bmp = New Bitmap(res)
-
-            Dim right As Integer
-            Dim bottom As Integer
-
-            ' bottom
-
-            For bottom = res.Height - 1 To 0 Step -1
-                Dim find As Boolean = False
-
-                For right = res.Width - 1 To 0 Step -1
-                    Dim p = bmp.GetPixel(right, bottom)
-                    If Not GDIColors.Equals(p, blankColor) Then
-                        ' 在这里确定了左右
-                        find = True
-                        Exit For
-                    End If
-                Next
-
-                If find Then
-                    Exit For
-                End If
-            Next
-
-            region = New Rectangle(0, 0, res.Width, bottom)
-            res = res.ImageCrop(region.Location, region.Size)
-            bmp = New Bitmap(res)
-
-            ' right
-
-            For right = res.Width - 1 To 0 Step -1
-                Dim find As Boolean = False
-
-                For bottom = res.Height - 1 To 0 Step -1
-                    Dim p = bmp.GetPixel(right, bottom)
-                    If Not GDIColors.Equals(p, blankColor) Then
-                        ' 在这里确定了左右
-                        find = True
-                        Exit For
-                    End If
-                Next
-
-                If find Then
-                    Exit For
-                End If
-            Next
-
-            region = New Rectangle(0, 0, right, res.Height)
-            res = res.ImageCrop(region.Location, region.Size)
-
-            If margin > 0 Then
-                With New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
-                    Call .Clear(blankColor)
-                    Call .DrawImage(res, New Point(margin, margin))
-
-                    Return .ImageResource
-                End With
-            Else
-                Return res
-            End If
         End Function
     End Module
 End Namespace

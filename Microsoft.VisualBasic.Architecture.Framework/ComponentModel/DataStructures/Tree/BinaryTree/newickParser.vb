@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13af97ed546a6ac140b05f1134662067, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Tree\BinaryTree\newickParser.vb"
+﻿#Region "Microsoft.VisualBasic::46ed19bf5f7a774ffae581ed6050f2c6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Tree\BinaryTree\NewickParser.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Text
-Imports System.Text.RegularExpressions
 
 Namespace ComponentModel.DataStructures.BinaryTree
 

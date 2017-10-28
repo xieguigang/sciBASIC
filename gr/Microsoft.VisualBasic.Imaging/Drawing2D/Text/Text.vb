@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e19f24d5ccf367cb8996a7ad5b1d65b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::d2f20568e51bc93a216cdb1f5ac4f6fe, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
 
     ' Author:
     ' 
@@ -28,8 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
@@ -83,15 +82,16 @@ Namespace Drawing2D.Text
         ''' <param name="cssFont$">For html ``&lt;p>...&lt;/p>`` css style</param>
         ''' <param name="maxSize$"></param>
         ''' <returns></returns>
-        Public Function DrawHtmlText(label$, cssFont$, Optional maxSize$ = "1600,600") As Drawing.Image
-            Dim g As Graphics2D = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
-            Dim out As Drawing.Image
+        Public Function DrawHtmlText(label$, cssFont$, Optional maxSize$ = "1600,600") As Image
+            Using g As Graphics2D = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
+                Dim out As Image
 
-            TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
-            out = g.ImageResource
-            out = out.CorpBlank(blankColor:=Color.Transparent)
+                TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
+                out = g.ImageResource
+                out = out.CorpBlank(blankColor:=Color.Transparent)
 
-            Return out
+                Return out
+            End Using
         End Function
     End Module
 End Namespace

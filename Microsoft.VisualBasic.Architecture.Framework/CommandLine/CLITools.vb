@@ -1,34 +1,36 @@
-﻿#Region "Microsoft.VisualBasic::9e50b1a4d8f91494f84c18bc3f762715, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::311027726400e182e36070db01a089bf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -47,6 +49,26 @@ Namespace CommandLine
                         Description:="",
                         Revision:=52)>
     Public Module CLITools
+
+        <Extension>
+        Public Function Print(args As CommandLine, Optional sep As Char = " "c, Optional leftMargin% = 0) As String
+            Dim sb As New StringBuilder("ArgumentsOf: `" & args.Name & "`")
+            Dim device As New StringWriter(sb)
+
+            Call device.WriteLine()
+            Call device.WriteLine(New String("-"c, args.Name.Length * 4))
+            Call device.WriteLine()
+
+            Call args _
+                .ToArgumentVector _
+                .Print(
+                    device,
+                    sep,
+                    trilinearTable:=True,
+                    leftMargin:=leftMargin)
+
+            Return sb.ToString
+        End Function
 
         ''' <summary>
         ''' Parsing parameters from a specific tokens.
@@ -178,7 +200,7 @@ Namespace CommandLine
                 ._CLICommandArgvs = Join(tokens)
             }
 
-            CLI.SingleValue = SingleValue
+            CLI.SingleValue = singleValue
             If CLI.Parameters.Length = 1 AndAlso
                 String.IsNullOrEmpty(CLI.SingleValue) Then
                 CLI.SingleValue = CLI.Parameters(0)
@@ -271,18 +293,6 @@ Namespace CommandLine
 
             Return obj.StartsWith("-") OrElse
                 obj.StartsWith("/")
-        End Function
-
-        ''' <summary>
-        ''' Is this token value string is a number?
-        ''' </summary>
-        ''' <param name="str"></param>
-        ''' <returns></returns>
-        <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
-        Public Function IsNumeric(str As String) As Boolean
-            str = str.GetString("""")
-            Dim s As String = Regex.Match(str, "[-]?\d*(\.\d+)?([eE][-]?\d*)?").Value
-            Return String.Equals(str, s)
         End Function
 
         ''' <summary>

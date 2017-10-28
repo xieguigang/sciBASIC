@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::7d3db090cb0d8a40b5ad3751dcf30348, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\Json\json.vb"
+﻿#Region "Microsoft.VisualBasic::74f4cf58c885fcfdef95af796520d1d1, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\Json\json.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76d74f889d4a6ed540d61c925de0e56a, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\ExpressionParser.vb"
+﻿#Region "Microsoft.VisualBasic::52ce1156778eb0ba10d4facc02bada7d, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\ExpressionParser.vb"
 
     ' Author:
     ' 
@@ -174,7 +174,7 @@ Namespace Scripting
 
                             If Not sep.IsNullOrEmpty Then
                                 If tokens.Current.Type = ExpressionTokens.Number Then
-                                    meta = New Types.MetaExpression(-1 * Val((+tokens).Text))
+                                    meta = New Types.MetaExpression(-1 * Val((++tokens).Text))
                                 Else
                                     Throw New SyntaxErrorException
                                 End If
@@ -192,7 +192,7 @@ Namespace Scripting
                     meta.Operator = "+"c
                     Call sep.Add(meta)
                 Else
-                    o = (+tokens).Text.First  ' tokens++ 移动指针到下一个元素
+                    o = (++tokens).Text.First  ' tokens++ 移动指针到下一个元素
 
                     If o = "!"c Then
                         Dim stackMeta = New Types.MetaExpression(Function() Factorial(meta.LEFT, 0))
@@ -201,7 +201,7 @@ Namespace Scripting
                             Call sep.Add(stackMeta)
                             Exit Do
                         Else
-                            o = (+tokens).Text.First
+                            o = (++tokens).Text.First
                             If o = ")"c Then
                                 ' 2017-1-26
                                 ' 在这里是因为需要结束括号，进行退栈，所以指针会往回移动

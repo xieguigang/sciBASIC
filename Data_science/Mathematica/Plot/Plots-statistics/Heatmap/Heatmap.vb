@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e9eddf5dbaf07f708b12a876ac34839, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Heatmaps\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::a285e3a931681c3516e468b4db258596, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Heatmap.vb"
 
 ' Author:
 ' 
@@ -28,14 +28,15 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -116,7 +117,9 @@ Namespace Heatmap
                              Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
                              Optional legendWidth! = -1,
                              Optional legendHasUnmapped As Boolean = True,
-                             Optional legendSize$ = "600,100") As GraphicsData
+                             Optional legendSize$ = "600,100",
+                             Optional tick# = -1,
+                             Optional legendLayout As Layouts = Layouts.Horizon) As GraphicsData
 
             Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
             Dim array As DataSet() = data.ToArray
@@ -204,7 +207,9 @@ Namespace Heatmap
                 legendTitle, legendFont, Nothing,
                 min, max,
                 mainTitle, titleFont,
-                legendWidth, legendHasUnmapped, legendSize.SizeParser)
+                legendWidth, legendHasUnmapped, legendSize.SizeParser,
+                tick:=tick,
+                legendLayout:=legendLayout)
         End Function
     End Module
 End Namespace

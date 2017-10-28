@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.NETProtocol", "Microsoft.VisualBasic.NETProtocol.vbproj", "{A60240D1-E78B-4B96-85E3-45256571C2CB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.NETProtocol", "Microsoft.VisualBasic.NETwork.vbproj", "{A60240D1-E78B-4B96-85E3-45256571C2CB}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Test", "Test\Test.vbproj", "{D70C09D4-B37D-4B4F-BD83-FD99EBC72866}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Markups", "..\..\mime\markups\Markups.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Markups", "..\..\mime\text%html\mime-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{13AA8AE9-DDF5-4F81-9801-A507B0C97579}"
 EndProject

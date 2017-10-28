@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d78d41d9a37cd62839047771ec6f147, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::e11896bc222b9bf6045983c6f1674067, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\ImageData.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
 

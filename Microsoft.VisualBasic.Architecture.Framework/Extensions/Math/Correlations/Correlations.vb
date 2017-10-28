@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9b4fbd80b02c94e96229c31bab9676d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::5e61d1980d689d6e153587cd9a8796da, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
@@ -28,12 +28,13 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports DataSet = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of System.Collections.Generic.Dictionary(Of String, Double))
 Imports sys = System.Math
+Imports Vector = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of Double())
 
 Namespace Math.Correlations
 
@@ -85,10 +86,10 @@ Namespace Math.Correlations
         ''' <returns></returns>
         <ExportAPI("SW", Info:="Sandelin-Wasserman similarity function")>
         Public Function SW(x As Double(), y As Double()) As Double
-            Dim p As IEnumerable(Of Double) = From i As Integer
-                                              In x.Sequence
-                                              Select x(i) - y(i)
-            Dim s As Double = (From n As Double In p Select n * n).Sum
+            Dim p = From i As Integer
+                    In x.Sequence
+                    Select x(i) - y(i)
+            Dim s# = Aggregate n As Double In p Into Sum(n ^ 2)
             s = 2 - s
             Return s
         End Function
@@ -298,6 +299,9 @@ Namespace Math.Correlations
             Return pcc
         End Function
 
+        Public ReadOnly Property Pearson As DefaultValue(Of ICorrelation) =
+            New ICorrelation(AddressOf GetPearson).AsDefault
+
         ''' <summary>
         ''' Pearson correlations
         ''' </summary>
@@ -445,31 +449,33 @@ Namespace Math.Correlations
         ''' 输入的数据为一个对象属性的集合，默认的<paramref name="compute"/>计算方法为<see cref="GetPearson"/>
         ''' </summary>
         ''' <param name="data">``[ID, properties]``</param>
-        ''' <param name="compute">默认的计算形式为<see cref="GetPearson"/></param>
+        ''' <param name="compute">
+        ''' Using pearson method as default if this parameter is nothing.
+        ''' (默认的计算形式为<see cref="GetPearson"/>)
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function CorrelationMatrix(data As IEnumerable(Of NamedValue(Of Double())), Optional compute As ICorrelation = Nothing) As NamedValue(Of Dictionary(Of String, Double))()
-            Dim array As NamedValue(Of Double())() = data.ToArray
-            Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
+        Public Function CorrelationMatrix(data As IEnumerable(Of Vector), Optional compute As ICorrelation = Nothing) As DataSet()
+            Dim array As Vector() = data.ToArray
+            Dim outMatrix As New List(Of DataSet)
 
-            If compute Is Nothing Then
-                compute = AddressOf GetPearson
-            End If
+            compute = compute Or Pearson
 
-            For Each a In array
+            For Each a As Vector In array
                 Dim ca As New Dictionary(Of String, Double)
+                Dim v#() = a.Value
 
                 For Each b In array
-                    ca(b.Name) = compute(a.Value, b.Value)
+                    ca(b.Name) = compute(v, b.Value)
                 Next
 
-                out += New NamedValue(Of Dictionary(Of String, Double)) With {
+                outMatrix += New DataSet With {
                     .Name = a.Name,
                     .Value = ca
                 }
             Next
 
-            Return out
+            Return outMatrix
         End Function
     End Module
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c75bcd044f78268febcc01498591477, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::b1d0b2aa3d53617b2f7b97cd09b2c61e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -259,6 +259,14 @@ Namespace Text
         ''' 单引号
         ''' </summary>
         Public Const Mark As Char = "'"c
+
+        Public Shared Function TrimNonPrintings(s$) As String
+            For Each c As Char In Nonprintings
+                Call s.Trim(c, "")
+            Next
+
+            Return s
+        End Function
 
         ''' <summary>
         ''' 分别替换英文双引号，中文双引号为指定的字符串

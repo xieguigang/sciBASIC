@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{066C1C60-28CF-4A04-94B0-0CDD161482AB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>TestProject.PriorityQueueTest</StartupObject>
+    <StartupObject>TestProject.LogFileTest</StartupObject>
     <RootNamespace>TestProject</RootNamespace>
     <AssemblyName>TestProject</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -69,6 +69,30 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sciBASIC.NET-test-release|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\sciBASIC.NET-test-release\</OutputPath>
+    <DocumentationFile>TestProject.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sciBASIC.NET-test-release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\sciBASIC.NET-test-release\</OutputPath>
+    <DocumentationFile>TestProject.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -96,6 +120,8 @@
     <Compile Include="Module1.vb" />
     <Compile Include="DefaultValueTest.vb" />
     <Compile Include="CLI.vb" />
+    <Compile Include="LogFileTest.vb" />
+    <Compile Include="wmfImage.vb" />
     <Compile Include="PriorityQueueTest.vb" />
     <Compile Include="VectorTest.vb" />
     <Compile Include="ParallelTemplate.vb" />

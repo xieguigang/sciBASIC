@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c76cfbb8b4e52680e26c6b0f6b195e3, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBlock.vb"
+﻿#Region "Microsoft.VisualBasic::dcd0c3bb5ec8e0b987ecdb3a834a74bd, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBlock.vb"
 
     ' Author:
     ' 
@@ -26,11 +26,9 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
-Imports System.Text.RegularExpressions
 Imports System.Reflection
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
+Imports System.Text.RegularExpressions
+Imports HTMLParser = Microsoft.VisualBasic.MIME.Markup.HTML.Render.Parser
 
 Namespace HTML.CSS.Render
 
@@ -62,7 +60,7 @@ Namespace HTML.CSS.Render
             _BlockSource = blockSource
 
             'Extract property assignments
-            Dim matches As MatchCollection = Parser.Match(Parser.CssProperties, blockSource)
+            Dim matches As MatchCollection = HTMLParser.Match(HTMLParser.CssProperties, blockSource)
 
             'Scan matches
             For Each match As Match In matches

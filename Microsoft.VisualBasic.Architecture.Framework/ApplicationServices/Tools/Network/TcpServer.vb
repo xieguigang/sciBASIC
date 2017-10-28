@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0584f8ecab066252fddf83e4bcdaf65, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\TcpServer.vb"
+﻿#Region "Microsoft.VisualBasic::b0584f8ecab066252fddf83e4bcdaf65, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\TcpServer.vb"
 
     ' Author:
     ' 

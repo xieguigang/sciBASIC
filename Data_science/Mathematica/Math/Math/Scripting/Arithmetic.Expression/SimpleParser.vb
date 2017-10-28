@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e87d4f45a0741617a1faa916f8c54c80, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\SimpleParser.vb"
+﻿#Region "Microsoft.VisualBasic::552d7760a1aa275d4afd993550e1f5b0, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\SimpleParser.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace Scripting
                 If tokens.EndRead Then
                     Call sep.Add(Val(s.Text), "+c")
                 Else
-                    o = (+tokens).Text.First
+                    o = (++tokens).Text.First
                     n = Val(s.Text)
 
                     If o = "!"c Then
@@ -78,7 +78,7 @@ Namespace Scripting
                             Call sep.Add(n, "+"c)
                             Exit Do
                         Else
-                            o = (+tokens).Text.First
+                            o = (++tokens).Text.First
                         End If
                     End If
 

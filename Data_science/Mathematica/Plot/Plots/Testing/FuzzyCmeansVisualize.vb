@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e207c72f798d06958e312d46f305aec, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\FuzzyCMeansVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::17aa71e2ad9f6536fdd58cb0ff74ba57, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Testing\FuzzyCmeansVisualize.vb"
 
     ' Author:
     ' 
@@ -58,6 +58,7 @@ Module FuzzyCMeansVisualize
         Next
     End Sub
 
+	' 进行cmeans聚类
     Private Function CMeans() As (raw As Entity(), n%, trace As Dictionary(Of Integer, List(Of Entity)))
         Dim raw As New List(Of Entity)
         Dim rnd As New Random(Now.Millisecond)
@@ -148,7 +149,7 @@ Module FuzzyCMeansVisualize
                 style:=LegendStyles.Triangle)
         Next
 
-        Call Scatter.Plot(plotData, New Size(5000, 3000), fillPie:=True, showLegend:=False) _
+        Call Scatter.Plot(plotData, "5000,3000", fillPie:=True, showLegend:=False) _
             .Save("./CMeans.png")
     End Sub
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cc0c92324c34f9129c01d91b4b16a65, ..\sciBASIC#\mime\text%html\HTML\CSS\Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::b9d336bce48bcfd88b3e93896cc3006b, ..\sciBASIC#\mime\text%html\HTML\CSS\Stroke.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 
 Namespace HTML.CSS
@@ -49,6 +50,7 @@ Namespace HTML.CSS
         Public Property dash As DashStyle
 
         Public ReadOnly Property GDIObject As Pen
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Pen(fill.GetBrush, width) With {
                     .DashStyle = dash
@@ -57,6 +59,7 @@ Namespace HTML.CSS
         End Property
 
         Public Overrides ReadOnly Property CSSValue As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return ToString()
             End Get
@@ -81,6 +84,8 @@ Namespace HTML.CSS
         ''' 生成CSS字符串值
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"stroke: {fill}; stroke-width: {width}px; stroke-dash: {dash};"
         End Function
@@ -124,10 +129,12 @@ Namespace HTML.CSS
             Return st
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(stroke As Stroke) As Pen
             Return stroke.GDIObject
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(css$) As Stroke
             Return TryParse(css)
         End Operator

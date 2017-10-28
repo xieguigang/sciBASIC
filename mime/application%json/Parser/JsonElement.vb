@@ -28,8 +28,9 @@
 
 Namespace Parser
 
-    Public Class JsonElement
+    Public MustInherit Class JsonModel : Inherits JsonElement
 
+#Region "Json property and value"
         Default Public Property Item(str As String) As JsonElement
             Get
                 Return CType(Me, JsonObject)(str)
@@ -47,18 +48,16 @@ Namespace Parser
                 CType(Me, JsonArray)(index) = value
             End Set
         End Property
+#End Region
 
-        Public Property Value() As Object
-            Get
-                Return CType(Me, JsonValue).Value
-            End Get
-            Set(value As Object)
-                CType(Me, JsonValue).Value = value
-            End Set
-        End Property
+    End Class
 
-        Public Overridable Function BuildJsonString() As String
-            Return ""
+    Public MustInherit Class JsonElement
+
+        Public MustOverride Function BuildJsonString() As String
+
+        Public Overrides Function ToString() As String
+            Return "base::json"
         End Function
     End Class
 End Namespace

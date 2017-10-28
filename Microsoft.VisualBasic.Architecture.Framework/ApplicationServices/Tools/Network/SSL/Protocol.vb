@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9d3b4643cdebfd30e5c7ed4825f5ef4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\SSL\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::a9d3b4643cdebfd30e5c7ed4825f5ef4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\SSL\Protocol.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fd4ce98b5ab95e16530aa8724a1ab9d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::2fd4ce98b5ab95e16530aa8724a1ab9d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
     ' Author:
     ' 

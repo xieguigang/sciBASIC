@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8eddf514f8235b6a864c8354b6ed4116, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\BitmapScale.vb"
+﻿#Region "Microsoft.VisualBasic::89f80ace7350925fde660f9a77bb171c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\BitmapScale.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit
 Imports sys = System.Math
 
-Namespace Imaging
+Namespace Imaging.BitmapImage
 
     ''' <summary>
     ''' Grayscale and binarization extensions
@@ -137,6 +137,7 @@ Namespace Imaging
                 If newValue > 255 Then
                     newValue = 255
                 End If
+
                 contrastLookup(i) = CByte(Truncate(newValue))
             Next
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c11d79534caa663d531d0ab88a66ece5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ArgumentCollection.vb"
+﻿#Region "Microsoft.VisualBasic::14e8ab7aecc38938a464dedd78d060c3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\ArgumentCollection.vb"
 
     ' Author:
     ' 
@@ -27,8 +27,10 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine.Reflection
 
@@ -60,6 +62,7 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         ''' <remarks></remarks>
         Default Public ReadOnly Property Parameter(Name As String) As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _params(Name).ToString
             End Get
@@ -151,14 +154,14 @@ Namespace CommandLine.Reflection
         ReadOnly __flag As Type = GetType(Argument)
 
         Sub New(methodInfo As MethodInfo)
-            Dim attrs As Object() = methodInfo.GetCustomAttributes(__flag, inherit:=False)
-            Dim LQuery As IEnumerable(Of Argument) =
-                From attr As Object
-                In attrs
-                Let parameter As Argument =
-                    TryCast(attr, Argument)
-                Select parameter
-                Order By parameter.Optional Ascending ' 必须参数都在前面，可选参数都在后面
+            Dim attrs() = methodInfo.GetCustomAttributes(__flag, inherit:=False)
+            Dim LQuery = LinqAPI.Exec(Of Argument) _
+ _
+                () <= From attr As Object
+                      In attrs
+                      Let parameter As Argument = TryCast(attr, Argument)
+                      Select parameter
+                      Order By parameter.Optional, parameter.TokenType Ascending ' 必须参数都在前面，可选参数都在后面
 
             For Each param As Argument In LQuery
                 Call _params.Add(param.Name, param)

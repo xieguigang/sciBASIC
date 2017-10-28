@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3271b4d37799898840805606a25c50bb, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::742272efca11ec37983f3099174e17fa, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 Imports Microsoft.VisualBasic.Linq
@@ -100,6 +101,7 @@ Namespace Drawing3D
             Yield GetEnumerator()
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Copy(data As IEnumerable(Of Point3D)) As I3DModel Implements I3DModel.Copy
             Dim model As New Surface With {
                 .brush = brush,

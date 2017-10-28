@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c89c0a379daee133293e5e24ffce0ce, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\GraphicsData.vb"
+﻿#Region "Microsoft.VisualBasic::9621793a01dd7c6acd1a581f5ddb1ff4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\GraphicsData.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
@@ -69,6 +70,7 @@ Namespace Driver
         ''' </summary>
         ''' <param name="img">其实这个参数在基类<see cref="GraphicsData"/>之中是无用的，只是为了统一接口而设置的</param>
         ''' <param name="size"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(img As Object, size As Size)
             Me.Size = size
         End Sub
@@ -141,6 +143,14 @@ Namespace Driver
             End If
         End Sub
 
+        Sub New(image As System.Drawing.Image)
+            Call Me.New(image, image.Size)
+        End Sub
+
+        Sub New(bitmap As Bitmap)
+            Call Me.New(bitmap, bitmap.Size)
+        End Sub
+
         ''' <summary>
         ''' Default image save format for <see cref="Bitmap"/>
         ''' </summary>
@@ -153,6 +163,8 @@ Namespace Driver
             End Get
         End Property
 
+        Const InvalidSuffix$ = "The gdi+ image file save path: {0} ending with *.svg file extension suffix!"
+
         ''' <summary>
         ''' Save the image as png
         ''' </summary>
@@ -160,7 +172,7 @@ Namespace Driver
         ''' <returns></returns>
         Public Overrides Function Save(path As String) As Boolean
             If path.ExtensionSuffix.TextEquals("svg") Then
-                Call $"The gdi+ image file save path: {path.ToFileURL} ending with *.svg file extension suffix!".Warning
+                Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
             Return Image.SaveAs(path, ImageData.DefaultFormat)
         End Function
@@ -199,9 +211,19 @@ Namespace Driver
 
         Dim engine As GraphicsSVG
 
+        ''' <summary>
+        ''' <paramref name="img"/> parameter is <see cref="GraphicsSVG"/>
+        ''' </summary>
+        ''' <param name="img"></param>
+        ''' <param name="size"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(img As Object, size As Size)
             MyBase.New(img, size)
-            Me.engine = img
+            Me.engine = DirectCast(img, GraphicsSVG)
+        End Sub
+
+        Sub New(canvas As GraphicsSVG)
+            Call Me.New(canvas, canvas.Size)
         End Sub
 
         Public Overrides ReadOnly Property Driver As Drivers
@@ -210,6 +232,8 @@ Namespace Driver
             End Get
         End Property
 
+        Const InvalidSuffix$ = "The SVG image file save path: {0} not ending with *.svg file extension suffix!"
+
         ''' <summary>
         ''' Save the image as svg file.
         ''' </summary>
@@ -217,7 +241,7 @@ Namespace Driver
         ''' <returns></returns>
         Public Overrides Function Save(path As String) As Boolean
             If Not path.ExtensionSuffix.TextEquals("svg") Then
-                Call $"The SVG image file save path: {path.ToFileURL} not ending with *.svg file extension suffix!".Warning
+                Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
 
             With Size

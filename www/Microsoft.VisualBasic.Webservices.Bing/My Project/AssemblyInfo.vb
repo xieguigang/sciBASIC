@@ -12,8 +12,8 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Microsoft Webservices Bing Search Provider for VisualBasic")> 
 <Assembly: AssemblyCompany("Microsoft")> 
 <Assembly: AssemblyProduct("cn.bing.com")> 
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2014")> 
-<Assembly: AssemblyTrademark("Microsoft Bing")> 
+<Assembly: AssemblyCopyright("Copyright © Microsoft 2014")>
+<Assembly: AssemblyTrademark("Microsoft VisualBasic")>
 
 <Assembly: ComVisible(False)>
 
