@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Data_science",
+    "\\Data_science\\DataMining",
+    "\\Data_science\\DataMining\\hierarchical-clustering"
   ],
+  "SelectedNode": "\\docs",
   "PreviewInSolutionExplorer": false
 }
