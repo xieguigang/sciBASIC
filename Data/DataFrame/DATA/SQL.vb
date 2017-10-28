@@ -125,7 +125,7 @@ Public Module SQL
     <Extension>
     Public Function SQLValues(insertSQL$) As String()
         Dim values$ = Regex.Split(insertSQL, "\)\s*VALUES\s*\(", RegexICSng).Last
-        Dim t$() = IO.CharsParser(values) _
+        Dim t$() = IO.CharsParser(values, quot:=ASCII.Mark) _
             .Select(Function(s) s.GetStackValue("'", "'")) _
             .ToArray
         Return t
