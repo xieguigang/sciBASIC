@@ -28,7 +28,6 @@
 
 Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Terminal.STDIO__
@@ -38,7 +37,9 @@ Namespace ApplicationServices.Debugging.Logging
     ''' <summary>
     ''' 日志文件记录模块.
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' 这个类模块将输入的信息格式化保存到文本文件之中，记录的信息包括信息头，消息文本，以及消息等级
+    ''' </remarks>
     Public Class LogFile : Inherits ITextFile
 
         Implements ISaveHandle
