@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be5e53ebcab3af9f75476e4ed121ec1c, ..\sciBASIC#\gr\physics\MassPoint.vb"
+﻿#Region "Microsoft.VisualBasic::d8844823e12ebbedfa04069dc7fd91ec, ..\sciBASIC#\gr\physics\MassPoint.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Public Class MassPoint : Implements INamedValue
         Return m
     End Operator
 End Class
-

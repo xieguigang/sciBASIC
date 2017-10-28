@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdb3ac43d52deafd223b3151b65268ad, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\CodeThread.vb"
+﻿#Region "Microsoft.VisualBasic::2f6a55582777489b9e5e92d7452ff362, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\CodeThread.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Parallel.Threads
 
-    Public MustInherit Class CodeThread : Inherits ClassObject
+    Public MustInherit Class CodeThread : Inherits BaseClass
 
         Protected ReadOnly __thread As Thread
 

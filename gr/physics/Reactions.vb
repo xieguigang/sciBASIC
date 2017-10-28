@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec2b43f7747b43bd368a75e0411cdfeb, ..\sciBASIC#\gr\physics\Reactions.vb"
+﻿#Region "Microsoft.VisualBasic::cbed10f9625ec05514e93c4e96fd3fc5, ..\sciBASIC#\gr\physics\Reactions.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Public Module Reactions
         End With
     End Function
 End Module
-

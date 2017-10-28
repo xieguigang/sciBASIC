@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3382fd92903306f8b009a57d8dc5002, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::1f0448aaa4250e781b625c3fb7a5fcc0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -63,8 +63,15 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 
 Public Module StrUtils
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetString(bytes As IEnumerable(Of Byte), Optional encoding As Encodings = Encodings.UTF8) As String
+        Return encoding.CodePage.GetString(bytes.ToArray)
+    End Function
 
     ''' <summary>
     ''' 从第一个字符开始，比较出最长的label串，注意，这个不是LCS问题
@@ -97,8 +104,15 @@ Public Module StrUtils
     ''' <param name="s"></param>
     ''' <returns></returns>
     <Extension>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CharCodes(s As IEnumerable(Of Char)) As Integer()
         Return s.SafeQuery.Select(AddressOf AscW).ToArray
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function CharCode(c As Char) As Integer
+        Return AscW(c)
     End Function
 
     ''' <summary>
@@ -126,6 +140,7 @@ Public Module StrUtils
     ''' <returns></returns>
     Public ReadOnly Property InvariantCulture As CultureInfo = CultureInfo.InvariantCulture
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function StartsWith(str1 As String, str2 As String) As Boolean
         Return StartsWith(str1, str2, False)
     End Function
@@ -144,6 +159,7 @@ Public Module StrUtils
         Return (0 = String.Compare(str1, 0, str2, 0, l2, ignore_case, StrUtils.InvariantCulture))
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function EndsWith(str1 As String, str2 As String) As Boolean
         Return EndsWith(str1, str2, False)
     End Function
@@ -185,6 +201,7 @@ Public Module StrUtils
         Return attributeValue
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SplitRemoveEmptyEntries(value As String, separator As Char()) As String()
         Return value.Split(separator, StringSplitOptions.RemoveEmptyEntries)
     End Function
@@ -496,6 +513,8 @@ Public Module StrUtils
     ''' </summary>
     ''' <param name="name">The name.</param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function StartWithUpperCase(name As String) As Boolean
         Return name.Length >= 1 AndAlso Char.IsUpper(name(0))
     End Function
@@ -505,12 +524,14 @@ Public Module StrUtils
     ''' </summary>
     ''' <param name="name">The name.</param>
     ''' <returns></returns>
+    <Extension>
     Public Function UpperCaseFirstChar(name As String) As String
         If name.Length >= 1 AndAlso Char.IsLower(name(0)) Then
             Dim chars As Char() = name.ToCharArray()
             chars(0) = [Char].ToUpper(chars(0))
             Return New String(chars)
         End If
+
         Return name
     End Function
 

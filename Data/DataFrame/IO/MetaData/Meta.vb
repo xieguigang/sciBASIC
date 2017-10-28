@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a869eed7989ca070b248c19da7fa08d4, ..\sciBASIC#\Data\DataFrame\IO\MetaData\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::31985d9ddfcbaf16b15d46198913056c, ..\sciBASIC#\Data\DataFrame\IO\MetaData\Meta.vb"
 
     ' Author:
     ' 
@@ -77,6 +77,7 @@ Namespace IO
             Return out
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function DataFrameWithMeta(Of T)(x As T) As File
             Return New File(x.ToCsvMeta)
@@ -91,6 +92,7 @@ Namespace IO
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToCsvMeta(Of T)(x As T) As RowObject()
             Return ToCsvMeta(x, GetType(T))

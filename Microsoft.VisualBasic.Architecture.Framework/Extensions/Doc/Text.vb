@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16319b5533c3a6f92dc89991a5a33435, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::4af840aead1ea65451401e1bbdc46399, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -88,9 +88,9 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function ForEachChar(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of Char)
+    Public Iterator Function ForEachChar(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of Char)
         Using file As New FileStream(path, FileMode.Open)
-            Using reader As New IO.BinaryReader(file, encoding.CodePage)
+            Using reader As New BinaryReader(file, encoding.CodePage)
                 Dim bs As Stream = reader.BaseStream
                 Dim l As Long = bs.Length
 
@@ -107,6 +107,7 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function OpenWriter(path$,
                                Optional encoding As Encodings = Encodings.UTF8,
@@ -122,7 +123,7 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function IterateAllLines(path As String, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
+    Public Iterator Function IterateAllLines(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
         Using fs As New FileStream(path, FileMode.Open, access:=FileAccess.Read, share:=FileShare.Read)
             Using reader As New StreamReader(fs, encoding.CodePage)
 
@@ -179,6 +180,7 @@ Public Module TextDoc
             Return FileIO.FileSystem.ReadAllText(path, encoding:=encoding Or UTF8)
         Catch ex As Exception
             ex = New Exception(path.ToFileURL, ex)
+
             If throwEx Then
                 Throw ex
             Else
@@ -201,12 +203,12 @@ Public Module TextDoc
     ''' <param name="Encoding">Default value is UTF8</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Read.Lines")>
     <Extension>
-    Public Function ReadAllLines(path As String, Optional Encoding As Encoding = Nothing) As String()
+    Public Function ReadAllLines(path$, Optional Encoding As Encoding = Nothing) As String()
         If path.FileExists Then
-            Return IO.File.ReadAllLines(path, encoding:=Encoding Or DefaultEncoding)
+            Return File.ReadAllLines(path, encoding:=Encoding Or DefaultEncoding)
         Else
             Return New String() {}
         End If
@@ -219,6 +221,7 @@ Public Module TextDoc
     ''' <param name="path$"></param>
     ''' <returns></returns>
     <Extension>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SaveWithHTMLEncoding(html$, path$) As Boolean
         Return html.SaveTo(path, Encoding.UTF8)
     End Function
@@ -265,7 +268,7 @@ Public Module TextDoc
 
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
-            Call FileIO.FileSystem.WriteAllText(path, text, append:=append, encoding:=encoding Or DefaultEncoding)
+            Call File.WriteAllText(path, text, encoding Or DefaultEncoding)
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)
@@ -289,7 +292,8 @@ Public Module TextDoc
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(value As XElement, path As String, Optional encoding As System.Text.Encoding = Nothing) As Boolean
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function SaveTo(value As XElement, path$, Optional encoding As Encoding = Nothing) As Boolean
         Return value.Value.SaveTo(path, encoding)
     End Function
 
@@ -297,24 +301,25 @@ Public Module TextDoc
     ''' Determined that the target file is a text file or binary file?
     ''' (判断是否是文本文件)
     ''' </summary>
-    ''' <param name="FilePath">文件全路径名称</param>
+    ''' <param name="path">文件全路径名称</param>
     ''' <returns>是返回True，不是返回False</returns>
     ''' <param name="chunkSize">文件检查的长度，假若在这个长度内都没有超过null的阈值数，则认为该文件为文本文件，默认区域长度为4KB</param>
     ''' <remarks>2012年12月5日</remarks>
     '''
     <ExportAPI("IsTextFile")>
-    <Extension> Public Function IsTextFile(FilePath As String, Optional chunkSize As Integer = 4 * 1024) As Boolean
-        Dim file As IO.FileStream = New FileStream(FilePath, IO.FileMode.Open, IO.FileAccess.Read)
-        Dim byteData(1) As Byte
-        Dim i As Integer
-        Dim p As Integer
+    <Extension> Public Function IsTextFile(path$, Optional chunkSize% = 4 * 1024) As Boolean
+        Using file As New FileStream(path, FileMode.Open, FileAccess.Read)
+            Dim byteData(1) As Byte
+            Dim i As Integer
+            Dim p As Integer
 
-        While file.Read(byteData, 0, byteData.Length) > 0
-            If byteData(0) = 0 Then i += 1
-            If p <= chunkSize Then p += 1 Else Exit While
-        End While
+            While file.Read(byteData, 0, byteData.Length) > 0
+                If byteData(0) = 0 Then i += 1
+                If p <= chunkSize Then p += 1 Else Exit While
+            End While
 
-        Return i <= 0.1 * p
+            Return i <= 0.1 * p
+        End Using
     End Function
 
     ''' <summary>
@@ -346,12 +351,13 @@ Public Module TextDoc
     ''' <summary>
     ''' Save the text content in the <see cref="StringBuilder"/> object into a text file.
     ''' </summary>
-    ''' <param name="sBuilder"></param>
+    ''' <param name="sb"></param>
     ''' <param name="path"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(sBuilder As StringBuilder, path As String, Optional encoding As Encoding = Nothing) As Boolean
-        Return sBuilder.ToString.SaveTo(path, encoding)
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function SaveTo(sb As StringBuilder, path$, Optional encoding As Encoding = Nothing) As Boolean
+        Return sb.ToString.SaveTo(path, encoding)
     End Function
 End Module

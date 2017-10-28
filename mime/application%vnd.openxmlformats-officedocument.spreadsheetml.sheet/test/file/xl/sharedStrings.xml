@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="8" uniqueCount="8">
+  <si>
+    <t>name</t>
+  </si>
+  <si>
+    <t>mz</t>
+  </si>
+  <si>
+    <t>rt</t>
+  </si>
+  <si>
+    <t>rtmin</t>
+  </si>
+  <si>
+    <t>A-log2(FC)</t>
+    <phoneticPr fontId="18" type="noConversion"/>
+  </si>
+  <si>
+    <t>B-log2(FC)</t>
+    <phoneticPr fontId="18" type="noConversion"/>
+  </si>
+  <si>
+    <t>C-log2(FC)</t>
+    <phoneticPr fontId="18" type="noConversion"/>
+  </si>
+  <si>
+    <t>this is a test</t>
+    <phoneticPr fontId="18" type="noConversion"/>
+  </si>
+</sst>

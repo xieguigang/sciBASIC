@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5c2e29cf872044c2ce5472bfe8a8047, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::165d52a012dd3cc880d57f0a23bfdcf6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -28,19 +28,38 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' Simple type parser extension function for <see cref="String"/>
 ''' </summary>
 Public Module PrimitiveParser
 
+    Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
+
+    ''' <summary>
+    ''' Is this token value string is a number?
+    ''' </summary>
+    ''' <param name="str"></param>
+    ''' <returns></returns>
+    <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
+    <Extension> Public Function IsNumeric(str$) As Boolean
+        With str.GetString(ASCII.Quot)
+            Dim s$ = r.Match(.ref, NumericPattern).Value
+            Return .ref = s
+        End With
+    End Function
+
     ''' <summary>
     ''' <see cref="Integer"/> text parser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseInteger(s As String) As Integer
         Return CInt(Val(Trim(s)))
@@ -51,6 +70,8 @@ Public Module PrimitiveParser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseLong(s As String) As Long
         Return CLng(Val(Trim(s)))
@@ -61,6 +82,8 @@ Public Module PrimitiveParser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDouble(s As String) As Double
         Return ParseNumeric(s)
@@ -71,6 +94,8 @@ Public Module PrimitiveParser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseSingle(s As String) As Single
         Return CSng(Val(Trim(s)))
@@ -81,6 +106,8 @@ Public Module PrimitiveParser
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDate(s As String) As Date
         Return Date.Parse(Trim(s))

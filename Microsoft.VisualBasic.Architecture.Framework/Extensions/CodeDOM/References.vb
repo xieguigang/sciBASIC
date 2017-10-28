@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d4d6443718948153244b29e5c47afc7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\References.vb"
+﻿#Region "Microsoft.VisualBasic::17fb9b3d17c8919d3b11a0521564013d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\References.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,6 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace Emit.CodeDOM_VBC

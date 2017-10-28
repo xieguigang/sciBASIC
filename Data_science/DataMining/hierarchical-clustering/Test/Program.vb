@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::4f6bf4bc5149bcff36c704a7dc4a3009, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::5686938f98d8c02238881b29655822b8, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\Test\Program.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -56,8 +56,18 @@ Module Program
         }
 
         Using g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
-            Call dp.Paint(g, New Rectangle(300, 100, 500, 500)).GetJson(True).__DEBUG_ECHO
-            Call g.Save("../../../test.png", ImageFormats.Png)
+            Call dp.Paint(g, New Rectangle(300, 100, 500, 500), layout:=Layouts.Vertical).GetJson(True).__DEBUG_ECHO
+            Call g.Save("../../../dendrogram-visualize-vertical.png", ImageFormats.Png)
+        End Using
+
+        Using g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
+
+            dp.ShowScale = False
+            dp.ShowDistanceValues = False
+            dp.Debug = True
+
+            Call dp.Paint(g, New Rectangle(100, 100, 800, 600), layout:=Layouts.Horizon).GetJson(True).__DEBUG_ECHO
+            Call g.Save("../../../dendrogram-visualize-horizon.png", ImageFormats.Png)
         End Using
 
         Pause()

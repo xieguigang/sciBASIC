@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c180701bb9ed839dcb76b7469d759ed, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Data.vb"
+﻿#Region "Microsoft.VisualBasic::bf448c7e8deda2741c642f4ecdca6f19, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Data.vb"
 
     ' Author:
     ' 
@@ -52,6 +52,7 @@ Public Class SerialData : Implements INamedValue
     Public PointSize As Single = 1
     Public color As Color = Color.Black
     Public width As Single = 1
+    Public Shape As LegendStyles = LegendStyles.Circle
 
     ''' <summary>
     ''' 对一系列特定的数据点的注释数据

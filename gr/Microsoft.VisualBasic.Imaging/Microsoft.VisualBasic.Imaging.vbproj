@@ -225,10 +225,45 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\installer_x64\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\.vs\installer\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\installer_x64\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -249,6 +284,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="d3js\labeler\Anchor.vb" />
+    <Compile Include="d3js\labeler\Label.vb" />
+    <Compile Include="d3js\labeler\Labeler.vb" />
+    <Compile Include="d3js\ModuleAPI.vb" />
     <Compile Include="d3js\ScaleChromatic.vb" />
     <Compile Include="d3js\CSSModel.vb" />
     <Compile Include="d3js\scale\IScale.vb" />
@@ -261,6 +300,7 @@
     <Compile Include="Drawing2D\Colors\ColorPalette.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Drawing2D\Colors\Expression.vb" />
     <Compile Include="Drawing2D\Math2D\Math2DHelper.vb" />
     <Compile Include="Drawing2D\Math2D\ConcaveHull\BallConcave.vb" />
     <Compile Include="Drawing2D\Math2D\ConcaveHull\DelaunayMesh2d.vb" />
@@ -269,6 +309,7 @@
     <Compile Include="Drawing2D\Math2D\ConvexHull\ConvexHull.vb" />
     <Compile Include="Drawing2D\Math2D\ConvexHull\GrahamScan.vb" />
     <Compile Include="Drawing2D\Math2D\ConvexHull\JarvisMatch.vb" />
+    <Compile Include="Drawing2D\Math2D\Spline.vb" />
     <Compile Include="Drawing2D\Path2D.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
@@ -328,6 +369,8 @@
     <Compile Include="Drawing3D\Math3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
+    <Compile Include="Drivers\CSS\Driver.vb" />
+    <Compile Include="Drivers\CSS\RuntimeInvoker.vb" />
     <Compile Include="Drivers\GraphicsData.vb" />
     <Compile Include="Drivers\Drivers.vb" />
     <Compile Include="Drivers\ImageSynthesis.vb" />
@@ -369,9 +412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -404,10 +447,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\designer.colors.js" />
+    <None Include="Resources\designer.colors.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\colorbrewer.js" />
+    <None Include="Resources\colorbrewer.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\OfficeThemes\Default_Office.xml" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eff419ab5fb0ba76646a5164cd912894, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
+﻿#Region "Microsoft.VisualBasic::9faabc7b147a74460a2deb2f0898c462, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cee66f39b50b9ebbddfaa7ecda3c0f4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
+﻿#Region "Microsoft.VisualBasic::5cee66f39b50b9ebbddfaa7ecda3c0f4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
 
     ' Author:
     ' 

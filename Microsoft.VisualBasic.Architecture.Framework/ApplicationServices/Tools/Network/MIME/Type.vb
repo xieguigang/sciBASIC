@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31d6a32a4191fa8a41e297130fcc1a55, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Tools\Network\MIME\Type.vb"
+﻿#Region "Microsoft.VisualBasic::b7d8ce221c223de31aa246e98dbff302, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\MIME\Type.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@
 '        End Class
 '    End Class
 'End Namespace
-

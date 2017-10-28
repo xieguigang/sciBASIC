@@ -1,4 +1,32 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::c0f04ba4a368e85f6d19aa3268681428, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Utils.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
@@ -46,20 +74,20 @@ Namespace ApplicationServices
         ''' Function pointer of the task work that needs to be tested.(需要测试性能的工作对象)
         ''' </param>
         ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
-        Public Function Time(work As Action, Optional echo As Boolean = True) As Long
+        Public Function Time(work As Action) As Long
             Dim startTick As Long = App.NanoTime
+
+            ' -------- start worker ---------
             Call work()
+            ' --------- end worker ---------
+
             Dim endTick As Long = App.NanoTime
             Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
-            If echo Then
-                Call $"[{work.Method.Name}] takes {t}ms...".__DEBUG_ECHO
-            End If
             Return t
         End Function
 
-        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0, Optional tick As Boolean = True) As T
-            Dim startTick As Long = App.NanoTime
-            Dim tickTask
+        Public Function Time(Of T)(work As Func(Of T), Optional ByRef ms& = 0, Optional tick As Boolean = True, Optional trace$ = Nothing) As T
+            Dim tickTask As AsyncHandle(Of Exception)
 
             If tick Then
                 tickTask = Utils.TaskRun(
@@ -71,14 +99,33 @@ Namespace ApplicationServices
                     End Sub)
             End If
 
-            Dim value As T = work()
-            Dim endTick As Long = App.NanoTime
+            Dim value As T
+            Dim task As Action = Sub() value = work()
 
-            ms& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
-            tick = False
+            task.BENCHMARK(trace)
+            tick = False  ' 需要使用这个变量的变化来控制 tickTask 里面的过程
 
-            Call $"Work takes {ms}ms...".__DEBUG_ECHO
             Return value
+        End Function
+
+        ''' <summary>
+        ''' Format ``ms`` for content print.
+        ''' </summary>
+        ''' <param name="ms"></param>
+        ''' <returns></returns>
+        <Extension> Public Function FormatTicks(ms&) As String
+            If ms > 1000 Then
+                Dim s = ms / 1000
+
+                If s < 1000 Then
+                    Return s & "s"
+                Else
+                    Dim min = s \ 60
+                    Return $"{min}min{s Mod 60}s"
+                End If
+            Else
+                Return ms & "ms"
+            End If
         End Function
 
         Public Delegate Function WaitHandle() As Boolean
@@ -93,7 +140,7 @@ Namespace ApplicationServices
             End If
 
             Do While handle() = False
-                Call Threading.Thread.Sleep(10)
+                Call Thread.Sleep(10)
                 Call Application.DoEvents()
             Loop
         End Sub
@@ -108,7 +155,7 @@ Namespace ApplicationServices
             End If
 
             Do While handle() = False
-                Call Threading.Thread.Sleep(10)
+                Call Thread.Sleep(10)
                 Call Application.DoEvents()
             Loop
         End Sub

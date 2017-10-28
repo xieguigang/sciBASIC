@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::036725cfd3942d802d21446fc050eb84, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7a82924dc552c44fa10e85050c723fb7, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@ Namespace Drawing3D.Models
 
     Public Module Extensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Model3D(path As Path3D, color As Color) As Surface
             Return New Surface With {
                 .brush = New SolidBrush(color),
@@ -41,6 +42,7 @@ Namespace Drawing3D.Models
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Model3D(shape As Shape3D, color As Color) As Surface()
             Return shape _
                 .paths _

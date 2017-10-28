@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91ed5264ef3b2303f310ce0cf7da44a5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\MarshalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::284a8de5bb951a6d773d2fc3c977860b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\MarshalExtensions.vb"
 
     ' Author:
     ' 
@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices.Marshal
 Imports Microsoft.VisualBasic.Emit.Marshal
 
 ''' <summary>

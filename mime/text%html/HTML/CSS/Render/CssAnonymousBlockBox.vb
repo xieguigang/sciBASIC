@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bca1d6ad170dbfaaadaa41ee5ebaabef, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssAnonymousBlockBox.vb"
+﻿#Region "Microsoft.VisualBasic::a7d0d795cb792ab19646af4d2ce7b523, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssAnonymousBlockBox.vb"
 
     ' Author:
     ' 
@@ -26,9 +26,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
-
 Namespace HTML.CSS.Render
 
     ''' <summary>
@@ -38,8 +35,8 @@ Namespace HTML.CSS.Render
     ''' To learn more about anonymous block boxes visit CSS spec:
     ''' http://www.w3.org/TR/CSS21/visuren.html#anonymous-block-level
     ''' </remarks>
-    Public Class CssAnonymousBlockBox
-        Inherits CssBox
+    Public Class CssAnonymousBlockBox : Inherits CssBox
+
         Public Sub New(parent As CssBox)
             MyBase.New(parent)
             Display = CssConstants.Block
@@ -60,8 +57,8 @@ Namespace HTML.CSS.Render
     ''' <summary>
     ''' Represents an AnonymousBlockBox which contains only blank spaces
     ''' </summary>
-    Public Class CssAnonymousSpaceBlockBox
-        Inherits CssAnonymousBlockBox
+    Public Class CssAnonymousSpaceBlockBox : Inherits CssAnonymousBlockBox
+
         Public Sub New(parent As CssBox)
             MyBase.New(parent)
             Display = CssConstants.None

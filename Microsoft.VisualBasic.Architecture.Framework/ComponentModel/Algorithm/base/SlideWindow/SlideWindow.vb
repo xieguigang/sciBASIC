@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b26972a86d0148e0169a6fb14a74a950, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
+﻿#Region "Microsoft.VisualBasic::f6c67edd3e6f8c6472e35541958039ee, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -54,9 +55,16 @@ Namespace ComponentModel.Algorithm.base
         ''' The elements in this slide window.(这个划窗之中的元素的列表)
         ''' </summary>
         ''' <returns></returns>
-        Public Property Items As T() Implements Value(Of T()).IValueOf.value
+        Public Property Items As T() Implements Value(Of T()).IValueOf.Value
 
 #Region "Index Range"
+
+        Default Public ReadOnly Property Item(index As Integer) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _Items(index)
+            End Get
+        End Property
 
         ''' <summary>
         ''' The left start position of the current slide Windows segment on the original sequence.
@@ -68,6 +76,7 @@ Namespace ComponentModel.Algorithm.base
         Public Property Left As Integer Implements IRange(Of Integer).Min
 
         Public ReadOnly Property Right As Integer Implements IRange(Of Integer).Max
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Left + Length
             End Get

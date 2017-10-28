@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e672e659cc109f45305474c913006670, ..\sciBASIC#\mime\text%html\HTML\Render\HtmlRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::c2ed88fd29811bebbc0919c5417f3922, ..\sciBASIC#\mime\text%html\HTML\Render\HtmlRenderer.vb"
 
     ' Author:
     ' 
@@ -26,11 +26,9 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
-Imports System.Reflection
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 
 Namespace HTML.Render

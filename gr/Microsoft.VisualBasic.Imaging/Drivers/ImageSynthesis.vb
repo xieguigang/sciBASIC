@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d857e4d24e3deff0b80bb0fe2cba4ec, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\ImageSynthesis.vb"
+﻿#Region "Microsoft.VisualBasic::fcba3bdbf6346ab504abcb105e600c39, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\ImageSynthesis.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,6 @@ Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.SVG
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Driver
 

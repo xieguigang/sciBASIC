@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e9ef6ef1feb0967efdbb11fd21ff8b8, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Academic.vb"
+﻿#Region "Microsoft.VisualBasic::927dce863d63dc8e9805a8a350b00061, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Academic.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 ''' <summary>
 ''' Bing Academic web API for VisualBasic
 ''' </summary>
-<PackageNamespace("Bing.Academic",
+<Package("Bing.Academic",
                   Url:="http://cn.bing.com/academic/?FORM=Z9LH2",
                   Description:="",
                   Category:=APICategories.UtilityTools,

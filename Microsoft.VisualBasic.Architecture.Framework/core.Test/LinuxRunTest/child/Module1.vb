@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfa5e9bdb2a53100de723fd333a6c2c0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\TestProject\LinuxRunTest\child\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::bfa5e9bdb2a53100de723fd333a6c2c0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\LinuxRunTest\child\Module1.vb"
 
     ' Author:
     ' 

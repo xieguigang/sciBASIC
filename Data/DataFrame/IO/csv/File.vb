@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9ce834ea8980578c0ed414c771e5877, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::645ee7db5b74dd1407f2a3b0fba2f414, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -61,12 +62,14 @@ B21,B22,B23,...
         ''' </summary>
         ''' <returns></returns>
         Public Overridable ReadOnly Property Headers As RowObject
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _innerTable?.FirstOrDefault
             End Get
         End Property
 
         Public ReadOnly Property Rows As RowObject()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _innerTable.ToArray
             End Get
@@ -88,6 +91,8 @@ B21,B22,B23,...
         ''' Creates csv file object from the rows data.
         ''' </summary>
         ''' <param name="data"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(data As IEnumerable(Of RowObject))
             _innerTable = data.AsList
         End Sub
@@ -127,12 +132,29 @@ B21,B22,B23,...
         End Property
 
         ''' <summary>
+        ''' Get column values by column name.
+        ''' </summary>
+        ''' <param name="name$"></param>
+        ''' <returns></returns>
+        Default Public Overloads ReadOnly Property Item(name$) As String()
+            Get
+                Dim match$ = Headers _
+                    .Where(Function(c) c.TextEquals(name)) _
+                    .DefaultFirst(Nothing)
+                Dim index% = Headers.IndexOf(match)
+
+                Return Column(index).ToArray
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Get the max width number of the rows in the table.(返回表中的元素最多的一列的列数目)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property Width As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _innerTable _
                     .Select(Function(row) row.NumbersOfColumn) _
@@ -153,6 +175,7 @@ B21,B22,B23,...
                     Yield row.Column(Index)
                 Next
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As IEnumerable(Of String))
                 Call __setColumn(value.ToArray, Index)
             End Set
@@ -219,18 +242,22 @@ B21,B22,B23,...
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine(Row As RowObject)
             Call _innerTable.Add(Row)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine(row As IEnumerable(Of String))
             Call _innerTable.Add(New RowObject(row))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine()
             Call _innerTable.Add(New String() {" "})
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Append(dataframe As File)
             Call _innerTable.AddRange(dataframe._innerTable)
         End Sub
@@ -302,18 +329,22 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Cell(X As Integer, Y As Integer) As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _innerTable(X).Column(Y)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As String)
                 _innerTable(X).Column(Y) = value
             End Set
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return FilePath.ToFileURL
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToArray() As RowObject()
             Return _innerTable.ToArray
         End Function

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::44d816e28f48c429f0594ba3a6337544, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\App.vb"
+﻿#Region "Microsoft.VisualBasic::caecb503cb16b0566e31184493ce0801, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,12 +33,15 @@ Imports System.Runtime.InteropServices
 Imports System.Security
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.ApplicationServices.Windows.Forms.VistaSecurity
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Settings
-Imports Microsoft.VisualBasic.Debugging
 Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
@@ -48,10 +51,8 @@ Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.SoftwareToolkits
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.Windows.Forms.VistaSecurity
 
 '                   _ooOoo_
 '                  o8888888o
@@ -740,6 +741,7 @@ Public Module App
     ''' </summary>
     Dim _tmpHash As New Uid(Not IsMicrosoftPlatform)
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __getTEMPhash() As String
         SyncLock _tmpHash
             Return FormatZero(+_tmpHash, "00000")
@@ -750,6 +752,7 @@ Public Module App
     ''' 由于可能会运行多个使用本模块的进程，单独考哈希来作为表示会产生冲突，所以这里使用应用程序的启动时间戳以及当前的哈希值来生成唯一标示
     ''' </summary>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __getTEMP() As String
         Return $"tmp{App.__getTEMPhash}"
     End Function
@@ -759,6 +762,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property NextTempName As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return __getTEMP()
         End Get
@@ -798,7 +802,7 @@ Public Module App
         Call exMsg.AppendLine("TIME:  " & Now.ToString)
         Call exMsg.AppendLine("TRACE: " & Trace)
         Call exMsg.AppendLine(New String("=", 120))
-        Call exMsg.Append(Logging.LogFile.SystemInfo)
+        Call exMsg.Append(LogFile.SystemInfo)
         Call exMsg.AppendLine(New String("=", 120))
         Call exMsg.AppendLine($"Environment Variables from {GetType(App).FullName}:")
         Call exMsg.AppendLine()
@@ -816,6 +820,7 @@ Public Module App
     ''' <param name="Trace"></param>
     ''' <returns></returns>
     <ExportAPI("Exception.Log")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LogException(exMsg$, <CallerMemberName> Optional Trace$ = "") As Object
         Return App.LogException(New Exception(exMsg), Trace)
     End Function
@@ -825,6 +830,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ExceptionLogFile As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return App.LocalData & "/error.log"
         End Get
@@ -1072,6 +1078,7 @@ Public Module App
     ''' <param name="b"></param>
     ''' <param name="Failed"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function CLICode(b As Boolean, Optional Failed As Integer = -100) As Integer
         Return If(b, 0, Failed)
     End Function
@@ -1152,7 +1159,7 @@ Public Module App
     ''' </summary>
     ''' <param name="CLI"></param>
     ''' <returns></returns>
-    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Folk.Self")>
     Public Function SelfFolk(CLI As String) As IIORedirectAbstract
         Return Shell(App.ExecutablePath, CLI, CLR:=True)
@@ -1331,6 +1338,7 @@ Public Module App
     ''' <summary>
     ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
     ''' </summary>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub RunAsAdmin(Optional args$ = "")
         Call RestartElevated(args)
     End Sub

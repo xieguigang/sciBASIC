@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57ce885f7684227d2833057bbb016e57, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\NodeTrees.vb"
+﻿#Region "Microsoft.VisualBasic::d0f42f71c1a91b7ed5b6ce662ec24492, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\NodeTrees.vb"
 
     ' Author:
     ' 
@@ -140,7 +140,7 @@ Namespace KMeans
                                 .uids = allChilds.ToArray(Function(x) x.EntityID),
                                 .members = allChilds.ToArray(
                                     Function(x) New EntityLDM With {
-                                        .Name = x.EntityID,
+                                        .ID = x.EntityID,
                                         .Cluster = x.FullyQualifiedName
                                     })
                            }

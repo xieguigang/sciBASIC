@@ -29,7 +29,7 @@
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Module Program
 
@@ -128,7 +128,7 @@ Public Class WeightString
     Public Shared Function Rand() As WeightString
         Return New WeightString With {
             .str = RandomASCIIString(20),
-            .weight = Math.GetRandomValue(New DoubleRange(1, 100))
+            .weight = Microsoft.VisualBasic.Math.GetRandomValue(New DoubleRange(1, 100))
         }
     End Function
 

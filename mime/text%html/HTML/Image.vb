@@ -66,7 +66,7 @@ Namespace HTML
         ''' <param name="img">&lt;img> html标签</param>
         ''' <returns></returns>
         Public Shared Function ResParser(img As String) As Image
-            Dim src As String = img.ImageSource
+            Dim src As String = img.src
 
             Return New Image With {
                 ._Text = img,
@@ -75,7 +75,7 @@ Namespace HTML
         End Function
 
         Public Shared Function GetImages(html As String) As Image()
-            Dim data As String() = Regex.Matches(html, HtmlStrips.IMAGE_SOURCE, RegexICSng).ToArray
+            Dim data As String() = Regex.Matches(html, HtmlStrips.imgHtmlTagPattern, RegexICSng).ToArray
             Dim res As Image() = data.ToArray(Function(tag) Image.ResParser(tag))
             Return res
         End Function

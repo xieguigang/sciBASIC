@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4af52c025303783ea6cd80e92c2ec0e7, ..\sciBASIC#\mime\text%html\HTML\TextString.vb"
+﻿#Region "Microsoft.VisualBasic::b397591434b501f55e8102574a7adf94, ..\sciBASIC#\mime\text%html\HTML\TextString.vb"
 
     ' Author:
     ' 
@@ -212,7 +212,7 @@ Namespace HTML
                 Do While Not str.EndRead AndAlso str.Current <> "="c
                     If str.Current = " "c Then
                         If chars.Count > 0 Then
-                            Do While Not str.EndRead AndAlso +str <> "="c
+                            Do While Not str.EndRead AndAlso ++str <> "="c
                             Loop
                             Exit Do   ' 在这里进行解析的是属性的名称，不允许有空格
                         Else

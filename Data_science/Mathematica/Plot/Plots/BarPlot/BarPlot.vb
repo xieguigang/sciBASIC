@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1893d70389286b8be4b84e411a431faa, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\BarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::67941f858f582a481061b38f51ef96c7, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\BarPlot.vb"
 
     ' Author:
     ' 
@@ -124,7 +124,7 @@ Namespace BarPlot
             Dim angle! = -45
             Dim leftMargins As New List(Of Single)
 
-            Call g.DrawAxis(grect.Size, grect.Padding, mapper, showGrid)
+            ' Call g.DrawAxis(grect.Size, grect.Padding, mapper, showGrid)
 
             For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
                 Dim x = left + interval

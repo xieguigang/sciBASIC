@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4565cc5984461eb3f502b68af5485968, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\Attributes\Flags.vb"
+﻿#Region "Microsoft.VisualBasic::e6ec7bef4c88e217265d0a358da1fd20, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\Attributes\Flags.vb"
 
     ' Author:
     ' 

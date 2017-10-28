@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a531a037648a15021792f7acbe0d071, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::cf8156b0a36089b4df4de648f8b909e0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -26,13 +26,13 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Who = Microsoft.VisualBasic.Linq.Which
 
 Namespace Language
 
@@ -112,6 +112,7 @@ Namespace Language
         ''' <param name="address"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(address As IAddress(Of Integer)) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Item(address.Address)
             End Get
@@ -170,6 +171,7 @@ Namespace Language
         End Property
 
         Default Public Overloads Property Item(range As IntRange) As List(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
             End Get
@@ -183,6 +185,7 @@ Namespace Language
         End Property
 
         Default Public Overloads Property Item(indices As IEnumerable(Of Integer)) As List(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New List(Of T)(indices.Select(Function(i) Item(index:=i)))
             End Get
@@ -199,12 +202,14 @@ Namespace Language
         ''' <param name="[where]"></param>
         ''' <returns></returns>
         Default Public Overloads ReadOnly Property Item([where] As Predicate(Of T)) As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return MyBase.Where(Function(o) where(o)).ToArray
             End Get
         End Property
 
         Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me(Which.IsTrue(booleans))
             End Get
@@ -421,10 +426,22 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' 从输入的向量数组之中移除掉列表之中的指定元素，然后返回<paramref name="vector"/>的剩余元素
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(vector As T(), list As List(Of T)) As List(Of T)
+            Return vector.AsList - DirectCast(list, IEnumerable(Of T))
+        End Operator
+
+        ''' <summary>
         ''' 将这个列表对象隐式转换为向量数组
         ''' </summary>
         ''' <param name="list"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(list As List(Of T)) As T()
             If list Is Nothing Then
                 Return {}
@@ -474,6 +491,7 @@ Namespace Language
         ''' <param name="list"></param>
         ''' <param name="count%"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(list As List(Of T), count%) As Boolean
             Return Not (list <> count)
         End Operator
@@ -484,10 +502,12 @@ Namespace Language
         ''' <param name="list"></param>
         ''' <param name="collection"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(list As List(Of T), collection As IEnumerable(Of T)) As Boolean
             Return list.SequenceEqual(collection)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(list As List(Of T), collection As IEnumerable(Of T)) As Boolean
             Return Not list.SequenceEqual(collection)
         End Operator
@@ -498,10 +518,28 @@ Namespace Language
         ''' <param name="source"></param>
         ''' <param name="path"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >(source As List(Of T), path As String) As Boolean
             Return CollectionIO.DefaultHandle()(source, path, System.Text.Encoding.UTF8)
         End Operator
 
+        ''' <summary>
+        ''' <see cref="Count"/> of <paramref name="list"/> &gt; <paramref name="n"/>
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="n%"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator >(list As List(Of T), n%) As Boolean
+            Return list.Count > n
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator <(list As List(Of T), n%) As Boolean
+            Return Not list > n
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >>(source As List(Of T), path As Integer) As Boolean
             Dim file As FileHandle = __getHandle(path)
             Return source > file.FileName
@@ -519,7 +557,7 @@ Namespace Language
             Dim o As New Value(Of T)
 
             For Each x As T In Me
-                o.value = x
+                o.Value = x
                 Yield o
             Next
         End Function

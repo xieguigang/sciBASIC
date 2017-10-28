@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AD4BCB63-E1C7-4243-A032-78A4FA0DBEBF}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.ZScorePlotTest</StartupObject>
+    <StartupObject>Testing.CSSTest</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -123,6 +123,10 @@
     <Compile Include="Module2.vb" />
     <Compile Include="ColorLegendTest.vb" />
     <Compile Include="Module3.vb" />
+    <Compile Include="DensityPlotTest.vb" />
+    <Compile Include="CSSTest.vb" />
+    <Compile Include="PieChartTest.vb" />
+    <Compile Include="ScatterTest.vb" />
     <Compile Include="ZScorePlotTest.vb" />
     <Compile Include="PCAPlotTest.vb" />
     <Compile Include="ImageDataPlots.vb" />
@@ -180,6 +184,10 @@
     <ProjectReference Include="..\..\..\..\..\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>Markups</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj">
+      <Project>{6CA54AF6-CADC-457E-94B9-384F2990F07E}</Project>
+      <Name>hierarchical-clustering</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\DataMining\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>

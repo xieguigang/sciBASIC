@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88f5e903b81987a7dfedf5163765ddc1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::20a8f2224196f1feafbc2ab63c2df3ee, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@ Imports System.Text.RegularExpressions
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
@@ -64,6 +65,7 @@ Public Module XmlExtensions
     ''' <param name="preprocess">
     ''' The preprocessing on the xml document text, you can doing the text replacement or some trim operation from here.(Xml文件的预处理操作)
     ''' </param>
+    ''' <param name="encoding">Default is <see cref="UTF8"/> text encoding.</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function LoadXml(Of T)(XmlFile As String,
@@ -93,7 +95,7 @@ Public Module XmlExtensions
     ''' <param name="preprocess">Xml文件的预处理操作</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
+    ''' <param name="encoding">Default is <see cref="UTF8"/> text encoding.</param>
     <ExportAPI("LoadXml")>
     <Extension> Public Function LoadXml(XmlFile As String, type As Type,
                                         Optional encoding As Encoding = Nothing,
@@ -101,21 +103,21 @@ Public Module XmlExtensions
                                         Optional preprocess As Func(Of String, String) = Nothing,
                                         Optional stripInvalidsCharacter As Boolean = False) As Object
 
-        If encoding Is Nothing Then encoding = Encoding.Default
-
         If Not XmlFile.FileExists(ZERO_Nonexists:=True) Then
-            Dim exMsg As String =
-                $"{XmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
-            Dim ex As New Exception(exMsg)
-            Call App.LogException(ex)
-            If ThrowEx Then
-                Throw ex
-            Else
-                Return Nothing
-            End If
+            Dim exMsg$ = $"{XmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
+
+            With New Exception(exMsg)
+                Call App.LogException(.ref)
+
+                If ThrowEx Then
+                    Throw .ref
+                Else
+                    Return Nothing
+                End If
+            End With
         End If
 
-        Dim XmlDoc As String = IO.File.ReadAllText(XmlFile, encoding)
+        Dim XmlDoc$ = File.ReadAllText(XmlFile, encoding Or UTF8)
 
         If Not preprocess Is Nothing Then
             XmlDoc = preprocess(XmlDoc)
@@ -124,9 +126,9 @@ Public Module XmlExtensions
             XmlDoc = XmlDoc.StripInvalidCharacters
         End If
 
-        Using Stream As New StringReader(s:=XmlDoc)
+        Using stream As New StringReader(s:=XmlDoc)
             Try
-                Dim obj = New XmlSerializer(type).Deserialize(Stream)
+                Dim obj = New XmlSerializer(type).Deserialize(stream)
                 Return obj
             Catch ex As Exception
                 ex = New Exception(type.FullName, ex)

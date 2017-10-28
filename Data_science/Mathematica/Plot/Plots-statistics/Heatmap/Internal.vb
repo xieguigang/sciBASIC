@@ -1,4 +1,32 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::64e5b6c5bd2a2eab78f9fad1b45d4bba, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Internal.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
@@ -14,6 +42,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -271,7 +300,10 @@ Namespace Heatmap
                                        Optional titleFont As Font = Nothing,
                                        Optional legendWidth! = -1,
                                        Optional legendHasUnmapped As Boolean = True,
-                                       Optional legendSize As Size = Nothing) As GraphicsData
+                                       Optional legendSize As Size = Nothing,
+                                       Optional rowXOffset% = 0,
+                                       Optional tick# = -1,
+                                       Optional legendLayout As Layouts = Layouts.Horizon) As GraphicsData
 
             Dim keys$() = array.PropertyNames
             Dim angle! = -45
@@ -306,7 +338,13 @@ Namespace Heatmap
                 .Join(min, max) _
                 .Distinct _
                 .ToArray
-            Dim ticks = DATArange.CreateAxisTicks(ticks:=5)
+            Dim ticks#()
+
+            If tick > 0 Then
+                ticks = AxisScalling.GetAxisByTick(DATArange, tick)
+            Else
+                ticks = DATArange.CreateAxisTicks(ticks:=5)
+            End If
 
             Call $"{DATArange.ToString} -> {ticks.GetJson}".__INFO_ECHO
 
@@ -314,14 +352,26 @@ Namespace Heatmap
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
                     ' 根据布局计算出矩阵的大小和位置
-                    Dim left! = padding.Left, top! = padding.Top    ' 绘图区域的左上角位置
+                    Dim left! = padding.Left + rowXOffset, top! = padding.Top    ' 绘图区域的左上角位置
                     ' 计算出右边的行标签的最大的占用宽度
                     Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, rowLabelfont)
                     Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, colLabelFont)
-                    Dim llayout As New Rectangle(New Point(left, top), legendSize)
+                    Dim llayout As New Rectangle With {
+                        .Location = New Point(left, top),
+                        .Size = legendSize
+                    }
 
-                    ' legend位于整个图片的左上角
-                    Call Legends.ColorLegendHorizontal(colors, ticks, g, llayout, scientificNotation:=True)
+                    If legendLayout = Layouts.Horizon Then
+                        ' legend位于整个图片的左上角
+                        Call Legends.ColorLegendHorizontal(colors, ticks, g, llayout, scientificNotation:=True)
+                    Else
+                        ' legend位于整个图片的右上角
+                        Call Legends.ColorMapLegend(g, llayout, colors, ticks,
+                                                    CSSFont.TryParse(CSSFont.Win7LargerNormal),
+                                                    legendTitle,
+                                                    CSSFont.TryParse(CSSFont.Win7Normal),
+                                                    Stroke.TryParse(Stroke.StrongHighlightStroke))
+                    End If
 
                     ' 宽度与最大行标签宽度相减得到矩阵的绘制宽度
                     Dim dw = rect.PlotRegion.Width - maxRowLabelSize.Width
@@ -384,25 +434,25 @@ Namespace Heatmap
                     ' 2. 然后才能够进行绘图
                     If drawDendrograms.HasFlag(DrawElements.Rows) Then
 
-                        Try
-                            ' 绘制出聚类树
-                            Dim cluster As Cluster = Time(AddressOf array.RunCluster)
-                            Dim topleft As New Point With {
+                        ' Try
+                        ' 绘制出聚类树
+                        Dim cluster As Cluster = Time(AddressOf array.RunCluster)
+                        Dim topleft As New Point With {
                                 .X = rect.Padding.Left,
                                 .Y = top
                             }
-                            Dim dsize As New Size With {
+                        Dim dsize As New Size With {
                                 .Width = dendrogramLayout.A,
                                 .Height = matrixPlotRegion.Height
                             }
-                            rowKeys = configDendrogramCanvas(cluster, drawClass.rowClass) _
+                        rowKeys = configDendrogramCanvas(cluster, drawClass.rowClass) _
                                 .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
                                 .OrderBy(Function(x) x.Value.Y) _
                                 .Keys
-                        Catch ex As Exception
-                            ex.PrintException
-                            rowKeys = array.Keys
-                        End Try
+                        'Catch ex As Exception
+                        '    ex.PrintException
+                        '    rowKeys = array.Keys
+                        'End Try
 
                     Else
                         rowKeys = array.Keys

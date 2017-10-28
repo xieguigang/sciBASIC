@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::190f31987a01264fb5c97c91419c0830, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::78c33e597196fb087e8f570af4cab44b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Extensions.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
 Namespace FileIO
@@ -88,7 +89,8 @@ Namespace FileIO
                                    Optional append As Boolean = False) As StreamWriter
             Dim file As FileStream
             Dim writeNew = Function()
-                               Call "".SaveTo(path)
+                               ' 使用最基础的ASCII编码，可能会解决一些莫名其妙的文件头出现的bug
+                               Call "".SaveTo(path, Encoding.ASCII)
                                Return New FileStream(path, FileMode.OpenOrCreate)
                            End Function
 
@@ -109,10 +111,7 @@ Namespace FileIO
             End If
 
             Dim writer As New StreamWriter(file, encoding Or UTF8) With {
-                .NewLine =
-                If(newLine Is Nothing OrElse newLine.Length = 0,
-                vbLf,
-                newLine)
+                .NewLine = newLine Or vbLf.AsDefault
             }
 
             Return writer

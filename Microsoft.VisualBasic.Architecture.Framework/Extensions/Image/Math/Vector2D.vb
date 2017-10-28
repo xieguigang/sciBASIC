@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a2e4cf3630ac6b2149653aca323d72f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\Vector2D.vb"
+﻿#Region "Microsoft.VisualBasic::026e0eff6657a8eefe721030aa005e7b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\Vector2D.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace Imaging.Math2D
 
@@ -90,4 +89,3 @@ Namespace Imaging.Math2D
         End Operator
     End Class
 End Namespace
-

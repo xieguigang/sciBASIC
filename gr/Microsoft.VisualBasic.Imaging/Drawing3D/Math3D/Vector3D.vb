@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c6aa2188da87e2ccf42bd13b75ee7f3, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
+﻿#Region "Microsoft.VisualBasic::633806baf58d377dd4b1586d3ab95a08, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Language
 Imports sys = System.Math
+Imports System.Runtime.CompilerServices
 
 Namespace Drawing3D.Math3D
 
@@ -87,6 +88,7 @@ Namespace Drawing3D.Math3D
             Return out
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(x As Vector, y As Vector, z As Vector)
             With Me
                 .X = x
@@ -154,6 +156,7 @@ Namespace Drawing3D.Math3D
             Return New Vector3D(Xn, Yn, New Vector(Me.Z))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(p3D As Vector3D, offset As Point3D) As Vector3D
             Return New Vector3D With {
                 .X = p3D.X - offset.X,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d1950167114048f1f6dff519acbd2cd, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
+﻿#Region "Microsoft.VisualBasic::14984a9973aeb13ab395745ee8e7660f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\Program.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,8 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text.ASCIIArt
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.ASCIIArt
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -118,7 +119,7 @@ log<sub>2</sub> ratio
             Call g.Render(html, New PointF(10, 10), 500)
 
 
-            Call Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text.TextRender.RenderHTML(g, "<span style=""color:lime"">Green Color Text</span>", CSSFont.PlotTitle, New PointF(0, 200))
+            Call Microsoft.VisualBasic.Imaging.Drawing2D.Text.TextRender.RenderHTML(g, "<span style=""color:lime"">Green Color Text</span>", CSSFont.PlotTitle, New PointF(0, 200))
 
 
         End Using

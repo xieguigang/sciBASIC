@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("sciBASIC# runtime core for VisualBasic 2017")>
-<Assembly: AssemblyDescription("sciBASIC# runtime core for VisualBasic 2017")>
+<Assembly: AssemblyTitle("[sciBASIC# Framework] Core runtime for Microsoft VisualBasic 2017")>
+<Assembly: AssemblyDescription("[sciBASIC# Framework] Core runtime for Microsoft VisualBasic 2017")>
 <Assembly: AssemblyCompany("xie.guigang@live.com")>
 <Assembly: AssemblyProduct("Microsoft.VisualBasic")>
 <Assembly: AssemblyCopyright("Copyright © GPL3 Licensed 2016")>

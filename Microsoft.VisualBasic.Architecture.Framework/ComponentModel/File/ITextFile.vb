@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66ef0b05716687ddf6e656b6e2c4a9d2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\ITextFile.vb"
+﻿#Region "Microsoft.VisualBasic::08cf2015a5d2b7fa539a8838aafa3586, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\ITextFile.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@ Namespace ComponentModel
     ''' Object model of the text file doucment.(文本文件的对象模型，这个文本文件对象在Disposed的时候会自动保存其中的数据)
     ''' </summary>
     ''' <remarks></remarks>
-    Public MustInherit Class ITextFile : Inherits ClassObject
+    Public MustInherit Class ITextFile : Inherits BaseClass
         Implements IDisposable
         Implements ISaveHandle
         Implements IFileReference

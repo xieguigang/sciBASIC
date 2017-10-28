@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f749c9e3a0e076ede220e3233eb22f82, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\TimeSpan.vb"
+﻿#Region "Microsoft.VisualBasic::cdf4edfa1d484a1bfe9c77f0aab04e58, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\TimeSpan.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 
 
@@ -49,6 +50,7 @@ Namespace ComponentModel
         End Sub
 
         Public ReadOnly Property TimeSpan As TimeSpan
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New TimeSpan(Days, Hours, Minutes, Seconds, Miliseconds)
             End Get
@@ -64,6 +66,7 @@ Namespace ComponentModel
         End Function
 
         Public ReadOnly Property Ticks As Long
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return TimeSpan.Ticks
             End Get

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3df97888cca10b2dc956bf822912556, ..\sciBASIC#\Data_science\algorithms\PCA\PCA\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::50f2e605b892092a30e287fa91ffc6b3, ..\sciBASIC#\Data_science\algorithms\PCA\PCA\Matrix.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
 
@@ -94,4 +94,3 @@ Module Matrix
     '    Pause()
     'End Sub
 End Module
-

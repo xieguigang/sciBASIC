@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::1f082df64991cc765497d359d85cef43, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::3217fc4eafcc16dd357fdd7c8d2a4e38, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\CType\Casting.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
@@ -42,6 +43,12 @@ Namespace Scripting.Runtime
     ''' Methods for convert the <see cref="System.String"/> to some .NET data types.
     ''' </summary>
     Public Module Casting
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ScriptValue(size As Size) As String
+            Return $"{size.Width},{size.Height}"
+        End Function
 
         <Extension>
         Public Iterator Function [As](Of T)(source As IEnumerable) As IEnumerable(Of T)
@@ -77,6 +84,13 @@ Namespace Scripting.Runtime
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [As](Of T As {IComparable(Of T), Structure})(x As Double) As T
+            Return CType(CObj(x), T)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Expression(size As Size) As String
             With size
@@ -84,6 +98,7 @@ Namespace Scripting.Runtime
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Expression(size As SizeF) As String
             With size
@@ -103,17 +118,20 @@ Namespace Scripting.Runtime
             Return New PointF(x, y)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function SizeParser(pt$) As Size
-            Dim x, y As Double
-            Call Ranges.Parser(pt, x, y)
-            Return New Size(x, y)
+            Return pt.FloatSizeParser.ToSize
         End Function
 
         <Extension>
         Public Function FloatSizeParser(pt$) As SizeF
-            Dim x, y As Double
-            Call Ranges.Parser(pt, x, y)
-            Return New SizeF(x, y)
+            If pt.StringEmpty Then
+                Return Nothing
+            Else
+                Dim x, y As Double
+                Call Ranges.Parser(pt, x, y)
+                Return New SizeF(x, y)
+            End If
         End Function
 
         ' 因为和向量的As类型转换有冲突，所以在这里移除下面的这个As拓展
@@ -162,7 +180,7 @@ Namespace Scripting.Runtime
         ''' <param name="s"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Double.Match")>
         <Extension> Public Function RegexParseDouble(s As String) As Double
             Return Val(s.Match(RegexpFloat))
@@ -212,6 +230,8 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastChar(obj As String) As Char
             Return If(String.IsNullOrEmpty(obj), ASCII.NUL, obj.First)
         End Function
@@ -221,22 +241,28 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastInteger(obj As String) As Integer
             Return CInt(ParseNumeric(obj))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastLong(obj As String) As Long
             Return CLng(ParseNumeric(obj))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastCharArray(obj As String) As Char()
             Return obj.ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastDate(obj As String) As DateTime
             Return DateTime.Parse(obj)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastStringBuilder(obj As String) As StringBuilder
             Return New StringBuilder(obj)
         End Function
@@ -246,6 +272,8 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastCommandLine(obj As String) As CommandLine.CommandLine
             Return CommandLine.TryParse(obj)
         End Function
@@ -255,34 +283,43 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastImage(path As String) As Image
             Return LoadImage(path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastFileInfo(path As String) As FileInfo
             Return FileIO.FileSystem.GetFileInfo(path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastGDIPlusDeviceHandle(path As String) As Graphics2D
             Return GDIPlusDeviceHandleFromImageFile(path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastFont(face As String) As Font
             Return New Font(face, 10)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastIPEndPoint(addr As String) As System.Net.IPEndPoint
             Return New Net.IPEndPoint(addr).GetIPEndPoint
         End Function
 
-        Public Function CastLogFile(path As String) As Logging.LogFile
-            Return New Logging.LogFile(path)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CastLogFile(path As String) As LogFile
+            Return New LogFile(path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastProcess(exe As String) As Process
             Return Process.Start(exe)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastSingle(n As String) As Single
             Return CSng(ParseNumeric(n))
         End Function

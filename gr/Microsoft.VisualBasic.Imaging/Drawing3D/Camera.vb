@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::511f75e7ca33d4efed8d233ac35c0a43, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::8856043bb5d3bae551ba0264e784eb23, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
+Imports System.Runtime.CompilerServices
 
 Namespace Drawing3D
 
@@ -67,22 +68,27 @@ Namespace Drawing3D
 
 #Region "Rotation"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Rotate(v As Vector3D) As Vector3D
             Return v.RotateX(angleX).RotateY(angleY).RotateZ(angleZ)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Rotate(pt As Point3D) As Point3D
             Return pt.RotateX(angleX).RotateY(angleY).RotateZ(angleZ)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RotateX(pt As Point3D) As Point3D
             Return pt.RotateX(angleX)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RotateY(pt As Point3D) As Point3D
             Return pt.RotateY(angleY)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RotateZ(pt As Point3D) As Point3D
             Return pt.RotateZ(angleZ)
         End Function
@@ -117,6 +123,7 @@ Namespace Drawing3D
 
 #Region "3D -> 2D Project"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Project(pt As Point3D) As Point3D
             Return pt.Project(screen.Width, screen.Height, fov, ViewDistance, offset)
         End Function

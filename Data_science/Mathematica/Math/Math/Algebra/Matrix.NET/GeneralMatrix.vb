@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::240b3af4c3c20e7d62de8c1a81e93920, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::fa82f7ee748ce61cf5a2de65cfb32320, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -32,7 +32,8 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Matrix
 
-    ''' <summary>.NET GeneralMatrix class.
+    ''' <summary>
+    ''' ### .NET GeneralMatrix class.
     ''' 
     ''' The .NET GeneralMatrix Class provides the fundamental operations of numerical
     ''' linear algebra.  Various constructors create Matrices from two dimensional
@@ -73,10 +74,11 @@ Namespace Matrix
     ''' </summary>
     ''' <author>  
     ''' The MathWorks, Inc. and the National Institute of Standards and Technology.
+    ''' 
+    ''' http://www.codeproject.com/Articles/5835/DotNetMatrix-Simple-Matrix-Library-for-NET
     ''' </author>
     ''' <version>  5 August 1998
     ''' </version>
-
     <Serializable>
     Public Class GeneralMatrix : Inherits Vector(Of Double())
         Implements ICloneable

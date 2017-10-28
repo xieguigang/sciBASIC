@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dab020f0837416c570d186aff586dbd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::24d95d8dbba360f227ff2469920f9106, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\Serialization.vb"
 
     ' Author:
     ' 
@@ -116,6 +116,8 @@ Namespace ComponentModel.Settings.Inf
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function WriteProfile(Of T As Class)(x As T) As Boolean
             Return x.WriteProfile(__getPath(Of T))

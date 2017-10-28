@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81d2849986e047e897f7b55fd5f7e07a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::f45f96dc9be1b86fccbc6c5a36fb32aa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    Public Class CommandLine : Inherits ClassObject
+    Public Class CommandLine : Inherits BaseClass
         Implements ICollection(Of NamedValue(Of String))
         Implements INamedValue
 
@@ -344,11 +344,15 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <returns></returns>
-        Public Function GetDictionary(name$) As Dictionary(Of String, String)
+        Public Function GetDictionary(name$, Optional default$ = Nothing) As Dictionary(Of String, String)
             Dim s$ = Me(name$)
 
             If String.IsNullOrEmpty(s$) Then
-                Return Nothing
+                If [default].StringEmpty Then
+                    Return Nothing
+                Else
+                    Return DictionaryParser.TryParse([default])
+                End If
             Else
                 Return DictionaryParser.TryParse(s$)
             End If
@@ -787,7 +791,7 @@ Namespace CommandLine
             list += From bs As String
                     In BoolFlags.SafeQuery
                     Select New NamedValue(Of String) With {
-                        .Name = bs.TrimParamPrefix(bs),
+                        .Name = bs,
                         .Value = "True"
                     }
 
@@ -800,7 +804,7 @@ Namespace CommandLine
         ''' <param name="args"></param>
         ''' <param name="fs"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator +(args As CommandLine, fs As String) As Integer
+        Public Overloads Shared Operator +(args As CommandLine, fs$) As Integer
             Dim path As String = args(fs)
             Return FileHandles.OpenHandle(path)
         End Operator
@@ -811,7 +815,7 @@ Namespace CommandLine
         ''' <param name="args"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator <=(args As CommandLine, name As String) As String
+        Public Overloads Shared Operator <=(args As CommandLine, name$) As String
             If args Is Nothing Then
                 Return Nothing
             Else

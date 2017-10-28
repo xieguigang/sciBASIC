@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::b4f776f881dc1264eaabe4d92b1feee4, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8acdeb90a2d235e8e88470234baef917, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -214,8 +215,15 @@ Public Module Extensions
             End Function)
     End Function
 
+    ''' <summary>
+    ''' 这个函数不会被申明为拓展函数了，因为这个object序列类型的函数如果为拓展函数的话，会与T泛型函数产生冲突
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of Object), path$, Optional encoding As Encoding = Nothing) As Boolean
+    Public Function SaveTable(data As IEnumerable(Of Object), path$, Optional encoding As Encoding = Nothing) As Boolean
         ' 假若序列之中的第一个元素为Nothing的话，则尝试使用第二个元素来获取type信息
         Dim type As Type = (data.First Or [Default](data.SecondOrNull)).GetType
 
@@ -393,11 +401,12 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                              Optional nonParallel As Boolean = False,
                                              Optional maps As Dictionary(Of String, String) = Nothing,
                                              Optional reorderKeys As Integer = 0,
-                                             Optional layout As Dictionary(Of String, Integer) = Nothing) As Boolean
+                                             Optional layout As Dictionary(Of String, Integer) = Nothing,
+                                             Optional tsv As Boolean = False) As Boolean
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
-            Throw New Exception(path, ex)
+            Throw New Exception("Probably invalid path value: " & path, ex)
         End Try
 
         Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
@@ -412,10 +421,10 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             Not nonParallel,
             metaBlank, reorderKeys, layout)
 
-        Dim success As Boolean = StreamIO.SaveDataFrame(
-            csv,
+        Dim success = csv.SaveDataFrame(
             path:=path,
-            encoding:=encoding)
+            encoding:=encoding,
+            tsv:=tsv)
 
         If success Then
             Call "CSV saved!".EchoLine

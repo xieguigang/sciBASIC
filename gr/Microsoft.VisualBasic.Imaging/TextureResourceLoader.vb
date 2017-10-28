@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2808edcdccc5230a06f5f0051a3bb88, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\TextureResourceLoader.vb"
+﻿#Region "Microsoft.VisualBasic::ff8dff6c1b5f71a08c5175a9488467be, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\TextureResourceLoader.vb"
 
     ' Author:
     ' 
@@ -28,10 +28,9 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic
-Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("Texture.Resource.Loader", Publisher:="xie.guigang@gmail.com")>
 Public Module TextureResourceLoader

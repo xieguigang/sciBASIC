@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54eb1f00c8c5e191a2726e9f25cab3c6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::eaecbc3263e7a07c61b6eb2c6b80cf06, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\InputHandler.vb"
 
 ' Author:
 ' 
@@ -33,6 +33,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -69,7 +70,7 @@ Namespace Scripting
             {GetType(Color), AddressOf TranslateColor},
             {GetType(Font), AddressOf Casting.CastFont},
             {GetType(System.Net.IPEndPoint), AddressOf Casting.CastIPEndPoint},
-            {GetType(Logging.LogFile), AddressOf Casting.CastLogFile},
+            {GetType(LogFile), AddressOf Casting.CastLogFile},
             {GetType(Process), AddressOf Casting.CastProcess},
             {GetType(RegexOptions), AddressOf Casting.CastRegexOptions},
             {GetType(Single), AddressOf Casting.CastSingle},
@@ -173,7 +174,7 @@ Namespace Scripting
                 {"double", GetType(Double)},
                 {"byte", GetType(Byte)},
                 {"date", GetType(Date)},
-                {"logfile", GetType(Logging.LogFile)},
+                {"logfile", GetType(LogFile)},
                 {"color", GetType(Color)},
                 {"process", GetType(Process)},
                 {"font", GetType(Font)},

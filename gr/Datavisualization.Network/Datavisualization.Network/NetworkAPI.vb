@@ -48,25 +48,9 @@ Public Module NetworkAPI
         Return file.LoadCsv(Of FileStream.NetworkEdge)(False).ToArray
     End Function
 
-    <ExportAPI("Find.NewSession")>
-    Public Function CreatePathwayFinder(Network As IEnumerable(Of FileStream.NetworkEdge)) As PathFinder(Of FileStream.NetworkEdge)
-        Return New PathFinder(Of FileStream.NetworkEdge)(Network.ToArray)
-    End Function
-
-    <ExportAPI("Find.Path.Shortest")>
-    Public Function FindShortestPath(finder As PathFinder(Of FileStream.NetworkEdge), start As String, ends As String) As FileStream.NetworkEdge()
-        Dim result = finder.FindShortestPath(start, ends)
-        Dim List As List(Of FileStream.NetworkEdge) = New List(Of FileStream.NetworkEdge)
-        For Each Line In result
-            Call List.AddRange(Line.Value)
-        Next
-        Return List.ToArray
-    End Function
-
     <ExportAPI("Find.Path.Shortest")>
     <Extension> Public Function FindShortestPath(net As IEnumerable(Of FileStream.NetworkEdge), start As String, ends As String) As FileStream.NetworkEdge()
-        Dim finder As New PathFinder(Of FileStream.NetworkEdge)(net.ToArray)
-        Return FindShortestPath(finder, start, ends)
+
     End Function
 
     <ExportAPI("Get.NetworkEdges")>

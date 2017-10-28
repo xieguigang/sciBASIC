@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b44ef374288e436d10476fd891aa110e, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssDefaults.vb"
+﻿#Region "Microsoft.VisualBasic::1501b52cd1086593e9ee1cb3ecdd5f26, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssDefaults.vb"
 
     ' Author:
     ' 
@@ -26,13 +26,12 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Text
 
 Namespace HTML.CSS.Render
 
     Public Class CssDefaults
+
         ''' <summary>
         ''' CSS Specification's Default Style Sheet for HTML 4
         ''' </summary>

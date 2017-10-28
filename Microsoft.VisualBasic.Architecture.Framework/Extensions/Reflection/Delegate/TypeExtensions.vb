@@ -49,7 +49,7 @@ Namespace Emit.Delegates
             End If
 
             If destination.IsInterface Then
-                Return source.ImplementsInterface(destination)
+                Return source.ImplementInterface(destination)
             End If
 
             If Not destination.IsGenericParameter Then
@@ -66,10 +66,10 @@ Namespace Emit.Delegates
         ''' <param name="source"></param>
         ''' <param name="interfaceType">接口类型信息</param>
         ''' <returns></returns>
-        <Extension> Public Function ImplementsInterface(source As Type, interfaceType As Type) As Boolean
+        <Extension> Public Function ImplementInterface(source As Type, interfaceType As Type) As Boolean
             While source IsNot Nothing
                 Dim interfaces = source.GetInterfaces()
-                If interfaces.Any(Function(i) i Is interfaceType OrElse i.ImplementsInterface(interfaceType)) Then
+                If interfaces.Any(Function(i) i Is interfaceType OrElse i.ImplementInterface(interfaceType)) Then
                     Return True
                 End If
 

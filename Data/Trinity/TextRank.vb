@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::351f615e923045bad61c0f32f9cae0b6, ..\sciBASIC#\Data\Trinity\TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::7d917a9aae1f227954924417a5286616, ..\sciBASIC#\Data\Trinity\TextRank.vb"
 
     ' Author:
     ' 
@@ -28,8 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
-Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.PageRank
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
@@ -65,7 +64,7 @@ Public Module TextRank
 
     <Extension>
     Public Function TextGraph(sentences As IEnumerable(Of String)) As GraphMatrix
-        Dim net As New NetworkTables
+        Dim g As New Graph.Graph
         Dim source As String() = sentences _
             .Select(AddressOf Trim) _
             .Where(Function(s) Not String.IsNullOrEmpty(s)) _
@@ -80,10 +79,17 @@ Public Module TextRank
                 .SlideWindows(2).ToArray
 
             For Each t In words
-                Call net.AddEdges(t.First, {t.Last})
+
+                For Each s In t
+                    If Not g.ExistVertex(s) Then
+                        Call g.AddVertex(s)
+                    End If
+                Next
+
+                Call g.AddEdge(t.First, t.Last)
             Next
         Next
 
-        Return New GraphMatrix(net, skipCount:=False)
+        Return New GraphMatrix(g, skipCount:=False)
     End Function
 End Module

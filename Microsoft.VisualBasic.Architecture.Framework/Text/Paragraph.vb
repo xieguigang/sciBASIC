@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a6f5c2346625d0ad50059dbcd45724d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::ee6dcca9edc039e35650b251a504eca1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Paragraph.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -52,7 +53,7 @@ Namespace Text
                 Dim left% = Scan0 + 1
 
                 Do While (s = Mid$(line$, left, len)).Length = len
-                    If s.value.Length = 0 Then
+                    If s.Value.Length = 0 Then
                         Exit Do ' 已经结束了
                     Else
                         left += len
@@ -68,14 +69,14 @@ Namespace Text
                     End If
 
                     If Not String.IsNullOrEmpty(part.Name) Then ' 有空格
-                        s.value = Trim((+s) & part.Name)
+                        s.Value = Trim((+s) & part.Name)
                         left += part.Name.Length + 1
                     ElseIf nextLine.First = " "c Then ' 第一个字符是空格，则忽略掉
                         left += 1
                     Else
-                        s.value &= nextLine  ' 是剩余的结束部分
+                        s.Value &= nextLine  ' 是剩余的结束部分
                         Yield Trim(+s)
-                        s.value = Nothing ' 必须要value值删除字符串，否则会重复出现最后一行
+                        s.Value = Nothing ' 必须要value值删除字符串，否则会重复出现最后一行
                         Exit Do
                     End If
 
@@ -92,6 +93,7 @@ Namespace Text
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function Trim(s$) As String
             If s Is Nothing Then
                 Return ""

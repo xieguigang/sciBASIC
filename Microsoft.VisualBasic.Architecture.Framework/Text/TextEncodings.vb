@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c77ca54a61bf1bce761b56a3bced7a1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::2215449a240230faaece81355bc10e38, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -194,8 +194,9 @@ Namespace Text
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CodePage(value As Encodings) As Encoding
-            If TextEncodings.ContainsKey(value) Then
+            If _TextEncodings.ContainsKey(value) Then
                 Return _TextEncodings(value)
             Else
                 Return Encoding.UTF8
@@ -248,8 +249,14 @@ Namespace Text
                 Call "".SaveTo(path, encoding.CodePage)
             End If
 
-            Dim tmp As String = If(from Is Nothing, IO.File.ReadAllText(path), IO.File.ReadAllText(path, from))
+            Dim tmp$ = If(from Is Nothing, IO.File.ReadAllText(path), IO.File.ReadAllText(path, from))
             Return tmp.SaveTo(path, encoding.CodePage)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CodeArray(chars As IEnumerable(Of Char)) As Integer()
+            Return chars.Select(AddressOf AscW).ToArray
         End Function
     End Module
 End Namespace

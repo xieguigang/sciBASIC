@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3e21d1cde8c6203a0aa3a213f38acd1, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::25e801f6bd80f52ad92879456bda921f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -50,6 +51,7 @@ Namespace Drawing3D
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Depth As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 ' z is weighted slightly to accommodate |_ arrangements 
                 Return Me.X + Me.Y - 2 * Me.Z
@@ -151,6 +153,7 @@ Namespace Drawing3D
             y = y * factor + viewHeight / 2
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(p3D As Point3D, offset As Point3D) As Point3D
             Return New Point3D(
                 p3D.X - offset.X,
@@ -164,16 +167,19 @@ Namespace Drawing3D
         ''' <param name="p"></param>
         ''' <param name="n!"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(p As Point3D, n!) As Boolean
             With p
                 Return .X = n AndAlso .Y = n AndAlso .Z = n
             End With
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(p As Point3D, n!) As Boolean
             Return Not p = n
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(pt As Point) As Point3D
             Return New Point3D(pt)
         End Operator

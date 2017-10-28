@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbacdf56daec54de52a4606c9e764fea, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\BarPlot2.vb"
+﻿#Region "Microsoft.VisualBasic::20c59d82008ed9de254b15056a074202, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\BarPlot2.vb"
 
     ' Author:
     ' 
@@ -80,7 +80,7 @@ Namespace BarPlot
                     Dim interval As Double = margin.Vertical / n
                     Dim sx As Func(Of Single, Single) = mapper.XScaler(size, margin)
 
-                    Call g.DrawAxis(size, margin, mapper, showGrid)
+                    ' Call g.DrawAxis(size, margin, mapper, showGrid)
 
                     For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
                         Dim y = top + interval
