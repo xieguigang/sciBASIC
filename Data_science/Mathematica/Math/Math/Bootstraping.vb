@@ -42,7 +42,7 @@ Public Module Bootstraping
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Shadow(Of T)(source As IEnumerable(Of T)) As VectorModel(Of T)
+    Public Function [Shadows](Of T)(source As IEnumerable(Of T)) As VectorModel(Of T)
         Return New VectorModel(Of T)(source)
     End Function
 
