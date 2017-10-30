@@ -150,7 +150,8 @@ Namespace Graph
         End Sub
 
         ''' <summary>
-        ''' The graph object display label
+        ''' The graph object display label.
+        ''' (这个属性为显示的标题，与ID不一样，这个属性可能会出现重复值，所以不可以用这个标签来作为字典主键)
         ''' </summary>
         ''' <returns></returns>
         Public Property label() As String

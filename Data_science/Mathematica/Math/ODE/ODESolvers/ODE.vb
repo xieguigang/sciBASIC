@@ -33,8 +33,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <summary>
 ''' Ordinary differential equation(ODE).(常微分方程的模型)
 ''' </summary>
-Public Class ODE
-    Implements INamedValue
+Public Class ODE : Implements INamedValue
 
 #Region "Output results"
 

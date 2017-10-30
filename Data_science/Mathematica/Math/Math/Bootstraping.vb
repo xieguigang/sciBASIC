@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::28946517507847c2a66e384d5a459013, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Bootstraping.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
 Imports sys = System.Math
 
@@ -38,6 +39,12 @@ Imports sys = System.Math
 ''' Data sampling bootstrapping extensions
 ''' </summary>
 Public Module Bootstraping
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function [Shadows](Of T)(source As IEnumerable(Of T)) As VectorModel(Of T)
+        Return New VectorModel(Of T)(source)
+    End Function
 
     Public Function Sample(x%) As Vector
         Dim xvec As Integer() =
@@ -75,7 +82,7 @@ Public Module Bootstraping
 
             Yield New IntegerTagged(Of T()) With {
                 .Tag = i,
-                .value = ls.ToArray
+                .Value = ls.ToArray
             }
         Next
     End Function
@@ -85,7 +92,7 @@ Public Module Bootstraping
         For Each x In Samples(source, N, B)
             Yield New IntegerTagged(Of Vector) With {
                 .Tag = x.Tag,
-                .value = New Vector(x.value)
+                .Value = New Vector(x.Value)
             }
         Next
     End Function
@@ -283,7 +290,7 @@ Public Module Bootstraping
         Dim array As DoubleTagged(Of Double)() = data.ToArray(
             Function(x) New DoubleTagged(Of Double) With {
                 .Tag = sys.Log(x, base),
-                .value = x
+                .Value = x
             })
         Dim min As Integer = CInt(array.Min(Function(x) x.Tag)) - 1
         Dim max As Integer = CInt(array.Max(Function(x) x.Tag)) + 1
@@ -301,16 +308,16 @@ Public Module Bootstraping
                 Select x
 
             out(l) = New DoubleTagged(Of Integer) With {
-                .Tag = If(LQuery.Length = 0, 0, LQuery.Average(Function(x) x.value)),
-                .value = LQuery.Length
+                .Tag = If(LQuery.Length = 0, 0, LQuery.Average(Function(x) x.Value)),
+                .Value = LQuery.Length
             }
             low = l
         Loop
 
-        If out(min + 1).value = 0 Then
+        If out(min + 1).Value = 0 Then
             Call out.Remove(min)
         End If
-        If out(max - 1).value = 0 Then
+        If out(max - 1).Value = 0 Then
             Call out.Remove(max)
         End If
 
@@ -344,17 +351,17 @@ Public Module Bootstraping
             ' 因为数据已经是经过排序了的，所以在这里可以直接进行区间计数
             Do While i < len AndAlso (x = data(++i)) >= min AndAlso x < upbound
                 n += 1
-                list += x.value
+                list += x.Value
             Loop
 
             Call out.Add(
                 min, New IntegerTagged(Of Double) With {
                     .Tag = n,
-                    .value = If(list.Count = 0, 0R, list.Average),
+                    .Value = If(list.Count = 0, 0R, list.Average),
                     .TagStr = $"[{min}, {upbound}]"
                 })
 
-            If i.value = len Then
+            If i.Value = len Then
                 Exit For
             End If
         Next

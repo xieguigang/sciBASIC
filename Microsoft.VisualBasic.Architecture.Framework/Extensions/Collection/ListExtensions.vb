@@ -164,6 +164,7 @@ Public Module ListExtensions
         Return out
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Indexing(Of T)(source As IEnumerable(Of T)) As Index(Of T)
         Return New Index(Of T)(source)

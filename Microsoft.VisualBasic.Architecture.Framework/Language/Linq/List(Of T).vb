@@ -523,6 +523,22 @@ Namespace Language
             Return CollectionIO.DefaultHandle()(source, path, System.Text.Encoding.UTF8)
         End Operator
 
+        ''' <summary>
+        ''' <see cref="Count"/> of <paramref name="list"/> &gt; <paramref name="n"/>
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="n%"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator >(list As List(Of T), n%) As Boolean
+            Return list.Count > n
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator <(list As List(Of T), n%) As Boolean
+            Return Not list > n
+        End Operator
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >>(source As List(Of T), path As Integer) As Boolean
             Dim file As FileHandle = __getHandle(path)

@@ -105,7 +105,11 @@ Namespace Graph
         End Function
 
         Public Overrides Function ToString() As String
-            Return ID
+            If Not Data Is Nothing AndAlso Not Data.label.StringEmpty Then
+                Return $"{ID} ({Data.label})"
+            Else
+                Return ID
+            End If
         End Function
 
         Public Overrides Function Equals(obj As System.Object) As Boolean
