@@ -11,7 +11,7 @@
 
 <hr>
 
-+ ![Microsoft VisualBasic logo](./logo.jpg)
++ ![sciBASIC# logo](./vs_solutions/logo.svg)
 + ![](./etc/README/nodes.gif)
 
 ## Scientific Computing runtime for VisualBasic.NET
