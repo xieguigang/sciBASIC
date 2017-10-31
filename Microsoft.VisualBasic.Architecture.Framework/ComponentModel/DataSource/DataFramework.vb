@@ -35,37 +35,40 @@ Imports Microsoft.VisualBasic.Scripting.Runtime.NumberConversionRoutines
 
 Namespace ComponentModel.DataSourceModel
 
+    Public Enum PropertyAccess As Byte
+        NotSure = 0
+        Readable = 2
+        Writeable = 4
+        ReadWrite = Readable And Writeable
+    End Enum
+
+    ''' <summary>
+    ''' 在数据框数据映射操作之中是否忽略掉这个属性或者方法？
+    ''' </summary>
+    <AttributeUsage(AttributeTargets.Property Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
+    Public Class DataIgnoredAttribute : Inherits Attribute
+    End Class
+
     ''' <summary>
     ''' 在目标对象中必须要具有一个属性有自定义属性<see cref="DataFrameColumnAttribute"></see>
     ''' </summary>
     ''' <remarks></remarks>
     Public Module DataFramework
 
-        Public Enum PropertyAccess As Byte
-            NotSure = 0
-            Readable = 2
-            Writeable = 4
-            ReadWrite = Readable And Writeable
-        End Enum
-
-        ''' <summary>
-        ''' 在数据框数据映射操作之中是否忽略掉这个属性或者方法？
-        ''' </summary>
-        <AttributeUsage(AttributeTargets.Property Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
-        Public Class DataIgnoredAttribute : Inherits Attribute
-        End Class
-
         ''' <summary>
         ''' Controls for <see cref="PropertyAccess"/> on <see cref="PropertyInfo"/>
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Flags As IReadOnlyDictionary(Of PropertyAccess, Func(Of PropertyInfo, Boolean)) =
-            New Dictionary(Of PropertyAccess, Func(Of PropertyInfo, Boolean)) From {
+        Public ReadOnly Property Flags As IReadOnlyDictionary(Of PropertyAccess, Assert(Of PropertyInfo))
+
+        Sub New()
+            Flags = New Dictionary(Of PropertyAccess, Assert(Of PropertyInfo)) From {
  _
                 {PropertyAccess.Readable, Function(p) p.CanRead},
                 {PropertyAccess.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
                 {PropertyAccess.Writeable, Function(p) p.CanWrite}
-        }
+            }
+        End Sub
 
         ''' <summary>
         ''' 获取类型之中的属性列表
@@ -122,7 +125,7 @@ Namespace ComponentModel.DataSourceModel
                 .GetProperties(binds) _
                 .ToArray
 
-            props = props.Where(Flags(flag)) _
+            props = props.Where(Flags(flag).AsLambda) _
                 .ToArray
 
             If nonIndex Then

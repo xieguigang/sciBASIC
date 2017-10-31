@@ -46,6 +46,12 @@ Imports Microsoft.VisualBasic.Serialization.JSON
                   Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsLambda(Of T)(assert As Assert(Of T)) As Func(Of T, Boolean)
+        Return assert.Method.CreateDelegate(GetType(Func(Of T, Boolean)))
+    End Function
+
     <Extension>
     Public Function Source(m As MemberInfo) As String
         Return m.DeclaringType.FullName & "::" & m.Name
