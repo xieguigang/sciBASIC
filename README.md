@@ -11,8 +11,8 @@
 
 <hr>
 
-+ ![Microsoft VisualBasic logo](./logo.jpg)
-+ ![](./etc/README/nodes.gif)
+![sciBASIC# logo](./logo.png)
+
 
 ## Scientific Computing runtime for VisualBasic.NET
 
@@ -24,6 +24,7 @@
 > Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
 > + https://github.com/xieguigang/sciBASIC/tree/master/docs/guides
 
+![](./etc/README/nodes.gif)
 <hr/>
 
 ### Runtime Installation

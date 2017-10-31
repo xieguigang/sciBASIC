@@ -667,10 +667,10 @@
     <Compile Include="ApplicationServices\Utils.vb" />
     <Compile Include="Extensions\CodeDOM\CodeHelper.vb" />
     <Compile Include="Extensions\CodeDOM\References.vb" />
-    <Compile Include="Extensions\Collection\VectorAssertExtensions.vb" />
+    <Compile Include="Extensions\Collection\Linq\VectorAssertExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
-    <Compile Include="Extensions\Collection\NumericSequence.vb" />
-    <Compile Include="Extensions\Collection\Which.vb" />
+    <Compile Include="Extensions\Collection\Linq\NumericSequence.vb" />
+    <Compile Include="Extensions\Collection\Linq\Which.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
     <Compile Include="Extensions\Image\Bitmap\Effects.vb" />
