@@ -629,8 +629,8 @@
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty%28Of T%29.vb" />
-    <Compile Include="ComponentModel\DataSource\IMatched.vb" />
-    <Compile Include="ComponentModel\DataSource\Repository.vb" />
+    <Compile Include="ComponentModel\DataSource\Repository\IMatched.vb" />
+    <Compile Include="ComponentModel\DataSource\Repository\Repository.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\SQL.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Mappings.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Schema.vb" />
@@ -728,7 +728,7 @@
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode%28Of T%29.vb" />
-    <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
+    <Compile Include="ComponentModel\DataSource\Repository\ILocalSearchHandle.vb" />
     <Compile Include="Extensions\Collection\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb" />
