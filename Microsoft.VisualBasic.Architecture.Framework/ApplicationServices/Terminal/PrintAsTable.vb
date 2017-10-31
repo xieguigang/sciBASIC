@@ -43,13 +43,13 @@ Namespace ApplicationServices.Terminal
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="addFrame"></param>
+        ''' <param name="addBorder"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Print(Of T)(source As IEnumerable(Of T), Optional addFrame As Boolean = True) As String
+        Public Function Print(Of T)(source As IEnumerable(Of T), Optional addBorder As Boolean = True) As String
             Dim out As New StringBuilder
             Dim dev As New StringWriter(out)
-            Call source.Print(dev, addFrame)
+            Call source.Print(dev, addBorder)
             Return out.ToString
         End Function
 
@@ -59,9 +59,9 @@ Namespace ApplicationServices.Terminal
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <param name="dev"></param>
-        ''' <param name="addFrame"></param>
+        ''' <param name="addBorder"></param>
         <Extension>
-        Public Sub Print(Of T)(source As IEnumerable(Of T), dev As TextWriter, Optional addFrame As Boolean = True)
+        Public Sub Print(Of T)(source As IEnumerable(Of T), dev As TextWriter, Optional addBorder As Boolean = True)
             Dim schema = LinqAPI.Exec(Of BindProperty(Of DataFrameColumnAttribute)) _
  _
                 () <= From x As BindProperty(Of DataFrameColumnAttribute)
@@ -82,16 +82,18 @@ Namespace ApplicationServices.Terminal
                                   s = p.GetValue(x)) _
                           .ToDictionary(Function(o) o.p.Identity,
                                         Function(o) Scripting.ToString(o.s))
-            Dim table$()() = contents _
+
+            Dim table As List(Of String()) =
+                contents _
                 .Select(Function(line)
                             Return titles.Select(Function(name) line(name)).ToArray
                         End Function) _
-                .ToArray
+                .AsList
 
-            If addFrame Then
-                Call table.PrintTable(dev, sep:=" "c)
+            If addBorder Then
+                Call (titles + table).PrintTable(dev, sep:=" "c)
             Else
-                Call table.Print(dev, sep:=" "c)
+                Call (titles + table).Print(dev, sep:=" "c)
             End If
         End Sub
 
