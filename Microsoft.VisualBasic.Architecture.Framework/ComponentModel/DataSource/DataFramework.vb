@@ -115,8 +115,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="nonIndex"><see cref="PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Schema(type As Type,
-                               flag As PropertyAccess,
+        Public Function Schema(type As Type, flag As PropertyAccess,
                                Optional binds As BindingFlags = PublicProperty,
                                Optional nonIndex As Boolean = False) As Dictionary(Of String, PropertyInfo)
 
@@ -125,7 +124,8 @@ Namespace ComponentModel.DataSourceModel
                 .GetProperties(binds) _
                 .ToArray
 
-            props = props.Where(Flags(flag).AsLambda) _
+            props = props _
+                .Where(Flags(flag).AsLambda) _
                 .ToArray
 
             If nonIndex Then
@@ -142,7 +142,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Converts the .NET primitive types from string.(将字符串数据类型转换为其他的数据类型)
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property PrimitiveFromString As New Dictionary(Of Type, IStringParser) From {
+        Public ReadOnly Property StringParsers As New Dictionary(Of Type, IStringParser) From {
  _
                 {GetType(String), Function(strValue As String) strValue},
                 {GetType(Boolean), AddressOf ParseBoolean},
@@ -158,7 +158,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Object <see cref="Object.ToString"/> methods.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ToStrings As New Dictionary(Of Type, IStringBuilder) From {
+        Public ReadOnly Property StringBuilders As New Dictionary(Of Type, IStringBuilder) From {
  _
                 {GetType(String), Function(s) If(s Is Nothing, "", CStr(s))},
                 {GetType(Boolean), AddressOf DataFramework.valueToString},
@@ -179,10 +179,10 @@ Namespace ComponentModel.DataSourceModel
         Public Delegate Function CTypeDynamics(obj As Object, ConvertType As Type) As Object
 
         ''' <summary>
-        ''' 这个函数是为了提供转换的方法给字典对象<see cref="ToStrings"/>
+        ''' 这个函数是为了提供转换的方法给字典对象<see cref="StringBuilders"/>
         ''' </summary>
         ''' <param name="o">
-        ''' 因为<see cref="ToStrings"/>要求的是<see cref="IStringBuilder"/>，
+        ''' 因为<see cref="StringBuilders"/>要求的是<see cref="IStringBuilder"/>，
         ''' 即<see cref="Object"/>类型转换为字符串，所以在这里就不适用T泛型了，而是直接
         ''' 使用<see cref="Object"/>类型
         ''' </param>
@@ -193,13 +193,13 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' Is one of the primitive type in the hash <see cref="ToStrings"/>?
+        ''' Is one of the primitive type in the hash <see cref="StringBuilders"/>?
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsPrimitive(type As Type) As Boolean
-            Return ToStrings.ContainsKey(type)
+            Return StringBuilders.ContainsKey(type)
         End Function
 
         ''' <summary>

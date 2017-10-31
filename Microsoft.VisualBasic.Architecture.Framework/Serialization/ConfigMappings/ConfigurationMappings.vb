@@ -109,7 +109,7 @@ Namespace Serialization
                 From p As PropertyInfo
                 In GetType(TMaps).GetProperties(BindingFlags.Instance Or BindingFlags.Public)
                 Where Not __knowsIsIgnored(p) AndAlso
-                    DataFramework.PrimitiveFromString.ContainsKey(p.PropertyType)
+                    DataFramework.StringParsers.ContainsKey(p.PropertyType)
                 Select p '获取所有的数据源之中的映射
             Dim T_EntityType As Type = GetType(T)
             Dim CustomMappings As MethodInfo() = LinqAPI.Exec(Of MethodInfo) <=
@@ -151,8 +151,8 @@ Namespace Serialization
         End Function
 
         Private Function __getWrite_MappingHandle(source As PropertyInfo, Model As PropertyInfo, Methods As MethodInfo()) As IStringBuilder
-            If DataFramework.ToStrings.ContainsKey(Model.PropertyType) Then
-                Return DataFramework.ToStrings(Model.PropertyType)
+            If DataFramework.StringBuilders.ContainsKey(Model.PropertyType) Then
+                Return DataFramework.StringBuilders(Model.PropertyType)
             Else
                 Dim Method As MethodInfo = __getCustomMapping(
                     p_Type:=Model.PropertyType,
@@ -163,8 +163,8 @@ Namespace Serialization
         End Function
 
         Private Function __getReads_MappingHandle(source As PropertyInfo, Model As PropertyInfo, Methods As MethodInfo(), obj_source As Object) As IStringParser
-            If DataFramework.PrimitiveFromString.ContainsKey(Model.PropertyType) Then
-                Return DataFramework.PrimitiveFromString(Model.PropertyType)
+            If DataFramework.StringParsers.ContainsKey(Model.PropertyType) Then
+                Return DataFramework.StringParsers(Model.PropertyType)
             Else
                 Dim method As MethodInfo = __getCustomMapping(
                     p_Type:=source.PropertyType,

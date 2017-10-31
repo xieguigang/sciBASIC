@@ -223,9 +223,16 @@ Public Module Extensions
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <ExportAPI("Write.Csv")>
-    Public Function SaveTable(data As IEnumerable(Of Object), path$, Optional encoding As Encoding = Nothing) As Boolean
-        ' 假若序列之中的第一个元素为Nothing的话，则尝试使用第二个元素来获取type信息
-        Dim type As Type = (data.First Or [Default](data.SecondOrNull)).GetType
+    <Extension>
+    Public Function SaveTable(data As IEnumerable, path$, Optional encoding As Encoding = Nothing, Optional type As Type = Nothing) As Boolean
+        If type Is Nothing Then
+            For Each x As Object In data
+                If Not x Is Nothing Then
+                    type = x.GetType
+                    Exit For
+                End If
+            Next
+        End If
 
         Return Reflector _
             .__save(___source:=data,
@@ -236,31 +243,26 @@ Public Module Extensions
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), path As String, Optional encoding As Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), path$, Optional encoding As Encoding = Nothing) As Boolean
         Dim headers As Dictionary(Of String, Integer) = data.First.Schema
-        Dim LQuery = LinqAPI.Exec(Of RowObject) <=
+        Dim LQuery = LinqAPI.Exec(Of RowObject) _
  _
-            From x As DynamicObjectLoader
-            In data
-            Select New RowObject(From p In headers Select x.GetValue(p.Value))
+            () <= From x As DynamicObjectLoader
+                  In data
+                  Let content = (From p In headers Select x.GetValue(p.Value)) '
+                  Select New RowObject(content)
 
-        Dim csv As New IO.File
+        With New IO.File
+            Call .AppendLine(From p In headers Select p.Key)
+            Call .AppendRange(LQuery)
 
-        Call csv.AppendLine((From p In headers Select p.Key).AsList)
-        Call csv.AppendRange(LQuery)
-
-        Return csv.Save(path, encoding)
+            Return .Save(path, encoding)
+        End With
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(dat As IEnumerable(Of RowObject), Path As String, Optional encoding As Encoding = Nothing) As Boolean
-        Dim Csv As IO.File = CType(dat, IO.File)
-        Return Csv.Save(Path, Encoding:=encoding)
-    End Function
-
-    <ExportAPI("Row.Parsing")>
-    <Extension> Public Function ToCsvRow(data As IEnumerable(Of String)) As RowObject
-        Return CType(data.AsList, RowObject)
+    <Extension> Public Function SaveTo(dat As IEnumerable(Of RowObject), path$, Optional encoding As Encoding = Nothing) As Boolean
+        Return CType(dat, IO.File).Save(path, Encoding:=encoding)
     End Function
 
     ''' <summary>

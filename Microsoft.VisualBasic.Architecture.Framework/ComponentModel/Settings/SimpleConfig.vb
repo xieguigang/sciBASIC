@@ -82,7 +82,7 @@ Namespace ComponentModel.Settings
                           attributeType:=configType,
                           inherit:=True)
                       Let info As Type = [property].PropertyType
-                      Where Not attrs.IsNullOrEmpty AndAlso PrimitiveFromString.ContainsKey(info)
+                      Where Not attrs.IsNullOrEmpty AndAlso StringParsers.ContainsKey(info)
                       Let attr = DirectCast(attrs.First, TConfig)
                       Select New BindProperty(Of TConfig)(attr, [property])
 

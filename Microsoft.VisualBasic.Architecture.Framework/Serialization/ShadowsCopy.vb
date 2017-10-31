@@ -93,7 +93,7 @@ Namespace Serialization
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Function __shadowsCopy(typeinfo As Type, obj As Object) As Object
-            If ComponentModel.DataSourceModel.DataFramework.PrimitiveFromString.ContainsKey(typeinfo) Then
+            If ComponentModel.DataSourceModel.DataFramework.StringParsers.ContainsKey(typeinfo) Then
                 Return obj    '首先查看是否为基本类型，是的话则直接返回值，否在使用反射进行递归复制
             End If
 
