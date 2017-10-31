@@ -31,6 +31,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
+Imports typeSchema = System.Reflection.TypeInfo
 
 Namespace ComponentModel.Settings
 
@@ -71,17 +72,23 @@ Namespace ComponentModel.Settings
                                            canRead As Boolean,
                                            canWrite As Boolean) As BindProperty(Of TConfig)()
 
-            Dim type As TypeInfo = GetType(T), configType As Type = GetType(TConfig)
-            Dim Properties = type.GetProperties(BindingFlags.Instance Or BindingFlags.Public)
-            Dim LQuery As BindProperty(Of TConfig)() =
-                LinqAPI.Exec(Of BindProperty(Of TConfig)) <= From [property] As PropertyInfo
-                                                             In Properties
-                                                             Let attrs As Object() =
-                                                                 [property].GetCustomAttributes(attributeType:=configType, inherit:=True)
-                                                             Where Not attrs.IsNullOrEmpty AndAlso
-                                                                 PrimitiveFromString.ContainsKey([property].PropertyType)
-                                                             Select New BindProperty(Of TConfig)(DirectCast(attrs.First, TConfig), [property])
-            If LQuery.IsNullOrEmpty Then Return Nothing
+            Dim type As typeSchema = GetType(T), configType As Type = GetType(TConfig)
+            Dim properties = type.GetProperties(BindingFlags.Instance Or BindingFlags.Public)
+            Dim LQuery = LinqAPI.Exec(Of BindProperty(Of TConfig)) _
+ _
+                () <= From [property] As PropertyInfo
+                      In properties
+                      Let attrs As Object() = [property].GetCustomAttributes(
+                          attributeType:=configType,
+                          inherit:=True)
+                      Let info As Type = [property].PropertyType
+                      Where Not attrs.IsNullOrEmpty AndAlso PrimitiveFromString.ContainsKey(info)
+                      Let attr = DirectCast(attrs.First, TConfig)
+                      Select New BindProperty(Of TConfig)(attr, [property])
+
+            If LQuery.IsNullOrEmpty Then
+                Return Nothing
+            End If
 
             Dim Schema As New List(Of BindProperty(Of TConfig))
 
