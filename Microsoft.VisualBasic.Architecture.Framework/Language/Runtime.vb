@@ -67,7 +67,7 @@ Namespace Language
         End Operator
     End Class
 
-    Public Class TypeInfo
+    Public Class TypeSchema
 
         Public ReadOnly Property Type As Type
 
@@ -80,7 +80,7 @@ Namespace Language
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator And(info As TypeInfo, types As Type()) As Boolean
+        Public Overloads Shared Operator And(info As TypeSchema, types As Type()) As Boolean
             Return types.All(Function(t) Equals(info.Type, base:=t))
         End Operator
 
@@ -97,7 +97,7 @@ Namespace Language
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator Or(info As TypeInfo, types As Type()) As Boolean
+        Public Overloads Shared Operator Or(info As TypeSchema, types As Type()) As Boolean
             Return types.Any(Function(t) Equals(info.Type, base:=t))
         End Operator
     End Class

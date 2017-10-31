@@ -48,20 +48,20 @@ Namespace Language
         }
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function TypeDef(Of T)() As TypeInfo
-            Return New TypeInfo(GetType(T))
+        Public Function TypeDef(Of T)() As TypeSchema
+            Return New TypeSchema(GetType(T))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function TypeInfo(Of T)(x As T) As TypeInfo
+        Public Function TypeInfo(Of T)(x As T) As TypeSchema
             Return TypeDef(Of T)()
         End Function
 
-        Private Sub test()
-            If TypeDef(Of Integer)() Or {GetType(Integer), GetType(Double)} Then
-            End If
-        End Sub
+        'Private Sub test()
+        '    If TypeDef(Of Integer)() Or {GetType(Integer), GetType(Double)} Then
+        '    End If
+        'End Sub
 
         ''' <summary>
         ''' simulate the ``%||%`` operator in R language.
