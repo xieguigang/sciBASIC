@@ -142,8 +142,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Converts the .NET primitive types from string.(将字符串数据类型转换为其他的数据类型)
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property PrimitiveFromString As Dictionary(Of Type, __StringTypeCaster) =
-            New Dictionary(Of Type, __StringTypeCaster) From {
+        Public ReadOnly Property PrimitiveFromString As New Dictionary(Of Type, IStringParser) From {
  _
                 {GetType(String), Function(strValue As String) strValue},
                 {GetType(Boolean), AddressOf ParseBoolean},
@@ -159,7 +158,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Object <see cref="Object.ToString"/> methods.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ToStrings As New Dictionary(Of Type, StringTypeCastHandler) From {
+        Public ReadOnly Property ToStrings As New Dictionary(Of Type, IStringBuilder) From {
  _
                 {GetType(String), Function(s) If(s Is Nothing, "", CStr(s))},
                 {GetType(Boolean), AddressOf DataFramework.valueToString},
@@ -183,7 +182,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 这个函数是为了提供转换的方法给字典对象<see cref="ToStrings"/>
         ''' </summary>
         ''' <param name="o">
-        ''' 因为<see cref="ToStrings"/>要求的是<see cref="StringTypeCastHandler"/>，
+        ''' 因为<see cref="ToStrings"/>要求的是<see cref="IStringBuilder"/>，
         ''' 即<see cref="Object"/>类型转换为字符串，所以在这里就不适用T泛型了，而是直接
         ''' 使用<see cref="Object"/>类型
         ''' </param>
@@ -201,6 +200,21 @@ Namespace ComponentModel.DataSourceModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsPrimitive(type As Type) As Boolean
             Return ToStrings.ContainsKey(type)
+        End Function
+
+        ''' <summary>
+        ''' 如果目标类型的属性之中值包含有基础类型，则是一个非复杂类型，反之包含任意一个非基础类型，则是一个复杂类型
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IscomplexType(type As Type) As Boolean
+            Return Not type _
+                .Schema(PropertyAccess.NotSure, PublicProperty, True) _
+                .Values _
+                .Where(Function(t) Not IsPrimitive(t.PropertyType)) _
+                .FirstOrDefault Is Nothing
         End Function
 #End If
 

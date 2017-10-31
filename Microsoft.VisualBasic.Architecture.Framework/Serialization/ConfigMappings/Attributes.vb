@@ -62,12 +62,12 @@ Namespace Serialization
         ''' 从源映射到数据模型的类型转换
         ''' </summary>
         ''' <remarks></remarks>
-        Dim SourceToMappingCasting As __StringTypeCaster
+        Dim SourceToMappingCasting As IStringParser
         ''' <summary>
         ''' 从数据模型映射到源的类型转换
         ''' </summary>
         ''' <remarks></remarks>
-        Dim MappingToSourceCasting As StringTypeCastHandler
+        Dim MappingToSourceCasting As IStringBuilder
 
         Public Overrides Function ToString() As String
             Return Source.Name & "   --->  " & Mapping.PropertyType.FullName
