@@ -38,6 +38,13 @@ Namespace ApplicationServices.Terminal
 
     Public Module PrintAsTable
 
+        ''' <summary>
+        ''' Returns a text string 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="addFrame"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Print(Of T)(source As IEnumerable(Of T), Optional addFrame As Boolean = True) As String
             Dim out As New StringBuilder
@@ -46,8 +53,15 @@ Namespace ApplicationServices.Terminal
             Return out.ToString
         End Function
 
+        ''' <summary>
+        ''' Print the object collection as table on the console 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="dev"></param>
+        ''' <param name="addFrame"></param>
         <Extension>
-        Public Sub Print(Of T)(source As IEnumerable(Of T), Optional dev As TextWriter = Nothing, Optional addFrame As Boolean = True)
+        Public Sub Print(Of T)(source As IEnumerable(Of T), dev As TextWriter, Optional addFrame As Boolean = True)
             Dim schema = LinqAPI.Exec(Of BindProperty(Of DataFrameColumnAttribute)) _
  _
                 () <= From x As BindProperty(Of DataFrameColumnAttribute)
