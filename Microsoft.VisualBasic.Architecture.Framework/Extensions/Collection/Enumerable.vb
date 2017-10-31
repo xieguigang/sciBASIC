@@ -108,22 +108,6 @@ Public Module IEnumerations
     End Function
 
     ''' <summary>
-    ''' use the overload method <see cref="IPairItem(Of TItem1, TItem2).Equals"></see> of the type
-    ''' <see cref="IPairItem(Of TItem1, TItem2)"></see>
-    ''' </summary>
-    ''' <typeparam name="T1"></typeparam>
-    ''' <typeparam name="T2"></typeparam>
-    ''' <typeparam name="pairItem"></typeparam>
-    ''' <param name="entry"></param>
-    ''' <param name="source"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Function GetItem(Of T1, T2, pairItem As IPairItem(Of T1, T2))(entry As pairItem, source As IEnumerable(Of pairItem)) As pairItem()
-        Dim LQuery As pairItem() = (From obj As pairItem In source Where entry.Equals(obj) Select obj).ToArray
-        Return LQuery
-    End Function
-
-    ''' <summary>
     ''' 这个函数假设参数<paramref name="source"/>之中是有重复的对象，则可以使用uniqueID数据提取出一个集合
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
