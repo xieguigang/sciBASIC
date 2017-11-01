@@ -76,7 +76,7 @@ Namespace HTML
 
         Public Shared Function GetImages(html As String) As Image()
             Dim data As String() = Regex.Matches(html, HtmlStrips.imgHtmlTagPattern, RegexICSng).ToArray
-            Dim res As Image() = data.ToArray(Function(tag) Image.ResParser(tag))
+            Dim res As Image() = data.Select(Function(tag) Image.ResParser(tag)).ToArray
             Return res
         End Function
     End Class

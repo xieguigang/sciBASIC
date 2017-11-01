@@ -108,7 +108,7 @@ Namespace HTML.DDM
 
         <XmlText> Public Overrides Property InnerText As String
             Get
-                Dim values As String() = _cssElements.ToArray(Function(css) css.ToString)
+                Dim values As String() = _cssElements.Select(Function(css) css.ToString).ToArray
                 Return String.Join(vbCrLf, values)
             End Get
             Set(value As String)
@@ -123,7 +123,7 @@ Namespace HTML.DDM
         Public Property Name As String
 
         Public Overrides Function ToString() As String
-            Dim pValues As String() = Properties.ToArray(Function(prop) $"{prop.Key}: {prop.Value}")
+            Dim pValues As String() = Properties.Select(Function(prop) $"{prop.Key}: {prop.Value}").ToArray
             Return $"{Name} {"{"} {String.Join("; ", pValues)} {"}"}"
         End Function
     End Class

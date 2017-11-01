@@ -64,7 +64,7 @@ Namespace HTML.XmlMeta
         End Function
 
         Public Shared Function Generator(classId As IEnumerable(Of String), attrs As Dictionary(Of String, String)) As String
-            Dim sb As New StringBuilder(String.Join(", ", classId.ToArray(Function(s) "." & s)))
+            Dim sb As New StringBuilder(String.Join(", ", classId.Select(Function(s) "." & s).ToArray))
 
             Call sb.AppendLine("{")
             For Each attr In attrs
