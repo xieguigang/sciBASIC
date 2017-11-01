@@ -134,12 +134,13 @@ Public Module KeyValuePairExtensions
     Public Function GroupByKey(Of T As INamedValue)(source As IEnumerable(Of T)) As NamedCollection(Of T)()
         Return source _
             .GroupBy(Function(o) o.Key) _
-            .ToArray(Function(g)
-                         Return New NamedCollection(Of T) With {
+            .Select(Function(g)
+                        Return New NamedCollection(Of T) With {
                              .Name = g.Key,
                              .Value = g.ToArray
                          }
-                     End Function)
+                    End Function) _
+            .ToArray
     End Function
 
     ''' <summary>
@@ -271,7 +272,7 @@ Public Module KeyValuePairExtensions
     ''' <param name="usingDescription"></param>
     ''' <returns></returns>
     Public Function EnumParser(Of T As Structure)(Optional lcaseKey As Boolean = True, Optional usingDescription As Boolean = False) As Dictionary(Of String, T)
-        Dim values As [Enum]() = Enums(Of T)().ToArray(Function(e) DirectCast(CType(e, Object), [Enum]))
+        Dim values As [Enum]() = Enums(Of T)().Select(Function(e) DirectCast(CType(e, Object), [Enum])).ToArray
         Dim [case] = If(lcaseKey, Function(key$) LCase(key), Function(key$) key)
 
         If usingDescription Then
@@ -530,5 +531,11 @@ Public Module KeyValuePairExtensions
         Else
             Return keys.Select(Function(k) d(k)).ToArray
         End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function [Select](Of K, V, T)(source As IEnumerable(Of KeyValuePair(Of K, V)), project As Func(Of K, V, T)) As IEnumerable(Of T)
+        Return source.Select(Function(value) project(value.Key, value.Value))
     End Function
 End Module

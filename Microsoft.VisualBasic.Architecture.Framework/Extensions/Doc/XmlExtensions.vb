@@ -211,7 +211,7 @@ Public Module XmlExtensions
             Case XmlEncodings.GB2312
                 Return Encodings.GB2312.CodePage
             Case XmlEncodings.UTF8
-                Return Encoding.UTF8
+                Return UTF8WithoutBOM
             Case Else
                 Return Encodings.UTF16.CodePage
         End Select

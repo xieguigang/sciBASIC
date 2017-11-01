@@ -80,11 +80,11 @@ Namespace Darwinism.GAF
                 Dim b#() = out.y(y$).Value
 
                 If log10Fitness Then
-                    a = a.ToArray(Function(x) log10(x))
-                    b = b.ToArray(Function(x) log10(x))
+                    a = a.Select(Function(x) log10(x))
+                    b = b.Select(Function(x) log10(x))
                     'Else
-                    '    a = sample1.ToArray(Function(x) x.Max)
-                    '    b = sample2.ToArray(Function(x) x.Max)
+                    '    a = sample1.Select(Function(x) x.Max)
+                    '    b = sample2.Select(Function(x) x.Max)
                 End If
 
                 NaN += b.Where(AddressOf IsNaNImaginary).Count
@@ -94,7 +94,7 @@ Namespace Darwinism.GAF
             Dim fitness As Double = If(
                 weights Is Nothing,
                 fit.Average,
-                fit.WeighedAverage(ynames.ToArray(Function(var) weights(var))))
+                fit.WeighedAverage(ynames.Select(Function(var) weights(var)).ToArray))
 
             If fitness.IsNaNImaginary Then
                 fitness = Integer.MaxValue * 100.0R

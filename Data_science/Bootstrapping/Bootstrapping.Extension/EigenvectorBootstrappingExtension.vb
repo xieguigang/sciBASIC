@@ -57,14 +57,14 @@ Public Module EigenvectorBootstrappingExtension
         Call "Load data complete!".__DEBUG_ECHO
 
         Dim uid As New Uid
-        Dim datasets As EntityLDM() = strTags.ToArray(
+        Dim datasets As EntityLDM() = strTags.Select(
             Function(x) New EntityLDM With {
                 .ID = "boot" & uid.Plus,
                 .Properties = x.Value.Tag _
                     .SeqIterator _
                     .ToDictionary(Function(o) CStr(o.i),
                                   Function(o) o.value)   ' 在这里使用特征向量作为属性来进行聚类操作
-        })
+        }).ToArray
 
         Call "Creates dataset complete!".__DEBUG_ECHO
 
@@ -87,7 +87,7 @@ Public Module EigenvectorBootstrappingExtension
 
             For Each x As EntityLDM In cluster.members
                 Dim rawKey As String = x.Properties.Values.ToArray.GetJson
-                Dim rawParams = raw(rawKey).ToArray(Function(o) o.Value.value)
+                Dim rawParams = raw(rawKey).Select(Function(o) o.Value.value)
 
                 tmp += rawParams
             Next

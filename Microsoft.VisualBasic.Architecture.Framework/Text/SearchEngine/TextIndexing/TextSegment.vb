@@ -47,7 +47,7 @@ Namespace Text.Search
                 Return _text
             End Get
             Set(value As String)
-                Dim ascii As Integer() = value.ToArray(Function(c) AscW(c))
+                Dim ascii As Integer() = value.Select(AddressOf AscW).ToArray
                 _Array = ascii
                 _text = value
             End Set

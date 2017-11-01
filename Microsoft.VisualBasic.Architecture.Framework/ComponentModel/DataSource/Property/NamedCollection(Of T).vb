@@ -155,12 +155,15 @@ Namespace ComponentModel.DataSourceModel
             Dim name$ = Me.Name
             Dim describ$ = Description
 
-            Return Value.ToArray(
-                Function(v) New NamedValue(Of T) With {
-                    .Name = name,
-                    .Description = describ,
-                    .Value = v
-                })
+            Return Value _
+                .Select(Function(v)
+                            Return New NamedValue(Of T) With {
+                                .Name = name,
+                                .Description = describ,
+                                .Value = v
+                            }
+                        End Function) _
+                .ToArray
         End Function
 
         Public Overrides Function ToString() As String

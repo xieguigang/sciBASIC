@@ -104,8 +104,8 @@ Partial Module Scatter
                                labelX$, labelY$, legendTitle$,
                                ptSize%)
 
-        Dim points As (pt As PointF, value#)() = data.ToArray(
-            Function(o) (New PointF(o(fieldX), o(fieldY)), o(fieldValue)))
+        Dim points As (pt As PointF, value#)() = data.Select(
+            Function(o) (New PointF(o(fieldX), o(fieldY)), o(fieldValue))).ToArray
         Dim levels%() = points.Select(Function(pt) pt.value) _
             .GenerateMapping(Level:=colors.Length)
         Dim valueGroups = points _

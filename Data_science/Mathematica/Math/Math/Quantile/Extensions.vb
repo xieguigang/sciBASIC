@@ -180,7 +180,7 @@ Namespace Quantile
                          In data
                          Select x,
                              v = getValue(x)).ToArray
-            Dim vals As Long() = cache.ToArray(Function(x) x.v)
+            Dim vals As Long() = cache.Select(Function(x) x.v).ToArray
             Dim estimator As QuantileEstimationGK = vals.GKQuantile(epsilon, compact_size)
 
             For Each q As Double In quantiles

@@ -190,7 +190,7 @@ Namespace Net.Persistent.Application
 
 #If DEBUG Then
             Call $"Unable to found user '{USER_ID}' on server...".__DEBUG_ECHO
-            Call $"Current users: {String.Join("; ", _socketList.Keys.ToArray(Function(id) CStr(id)))}".__DEBUG_ECHO
+            Call $"Current users: {String.Join("; ", _socketList.Keys.Select(Function(id) CStr(id)).ToArray)}".__DEBUG_ECHO
 #End If
             Call Me._offlineMessageSendHandler(From, USER_ID, Message)
             Return NetResponse.RFC_TEMP_REDIRECT

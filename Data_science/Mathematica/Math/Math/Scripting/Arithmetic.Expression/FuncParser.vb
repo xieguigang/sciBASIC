@@ -50,11 +50,15 @@ Namespace Scripting
         <Extension> Private Function __defineParser(define As String, expr As String) As Func
             Dim name As String = Mid(define, 1, InStr(define, "(") - 1)
             Dim args As String = Mid(define, name.Length + 1).GetStackValue("(", ")")
+
             Return New Func With {
-            .Args = args.Split(","c).ToArray(Function(s) s.Trim),
-            .Expression = expr,
-            .Name = name
-        }
+                .Args = args _
+                    .Split(","c) _
+                    .Select(Function(s) s.Trim) _
+                    .ToArray,
+                .Expression = expr,
+                .Name = name
+            }
         End Function
     End Module
 End Namespace

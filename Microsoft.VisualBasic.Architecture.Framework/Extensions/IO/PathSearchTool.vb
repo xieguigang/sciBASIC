@@ -875,7 +875,7 @@ Public Module ProgramPathSearchTool
             Call files.AddRange(BranchRule(ProgramFilesX86, keyword))
         End If
         Call files.AddRange(DriveRoot)
-        Call files.AddRange(DriveRoot.ToArray(Function(rootDir) BranchRule(rootDir, keyword)).Unlist)
+        Call files.AddRange(DriveRoot.Select(Function(rootDir) BranchRule(rootDir, keyword)).Unlist)
 
         Return files.ToArray
     End Function

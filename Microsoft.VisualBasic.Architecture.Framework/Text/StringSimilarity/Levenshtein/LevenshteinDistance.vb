@@ -172,8 +172,8 @@ Vladimir I",
                 CreateTable(reference, hypotheses, Levenshtein.Cost(Of T).DefaultCost(cost), equals)
             Dim i As Integer = reference.Length,
                 j As Integer = hypotheses.Length
-            Dim sHyp As String = New String(hypotheses.ToArray(Function(x) asChar(x)))
-            Dim sRef As String = New String(reference.ToArray(Function(x) asChar(x)))
+            Dim sHyp As String = New String(hypotheses.Select(Function(x) asChar(x)).ToArray)
+            Dim sRef As String = New String(reference.Select(Function(x) asChar(x)).ToArray)
             Dim result As New DistResult With {
                 .Hypotheses = sHyp,
                 .Reference = sRef
@@ -206,7 +206,7 @@ Vladimir I",
             If reference Is Nothing Then reference = New Integer() {}
 
             Dim distTable#(,) = __createTable(reference,
-                                              hypotheses.ToArray(Function(ch) Asc(ch)),
+                                              hypotheses.Select(Function(ch) Asc(ch)).ToArray,
                                               cost)
             Dim i As Integer = reference.Length,
                 j As Integer = hypotheses.Length
@@ -227,15 +227,16 @@ Vladimir I",
             Dim distinct As T() =
                 (New [Set](query) + New [Set](subject)) _
                 .ToArray _
-                .ToArray(Function(x) DirectCast(x, T))
+                .Select(Function(x) DirectCast(x, T)) _
+                .ToArray
             Dim dict = (From index As Integer
                         In distinct.Sequence(offSet:=a)
                         Select ch = ChrW(index),
                             obj = distinct(index - a)) _
                             .ToDictionary(Function(x) x.obj,
                                           Function(x) x.ch)
-            Dim ref As String = New String(query.ToArray(Function(x) dict(x)))
-            Dim sbj As String = New String(subject.ToArray(Function(x) dict(x)))
+            Dim ref As String = New String(query.Select(Function(x) dict(x)).ToArray)
+            Dim sbj As String = New String(subject.Select(Function(x) dict(x)).ToArray)
 
             If String.IsNullOrEmpty(ref) OrElse String.IsNullOrEmpty(sbj) Then
                 Return 0
@@ -278,9 +279,10 @@ Vladimir I",
 
                     result.DistTable = distTable _
                         .ToVectorList _
-                        .ToArray(Function(vec) New Streams.Array.Double With {
+                        .Select(Function(vec) New Streams.Array.Double With {
                             .Values = vec
-                        })
+                        }) _
+                        .ToArray
                     result.DistEdits = New String(evolveRoute)
                     result.Path = css.ToArray
                     result.Matches = New String(edits.ToArray.Reverse.ToArray)
@@ -355,8 +357,8 @@ Vladimir I",
             If reference Is Nothing Then reference = ""
 
             Dim distTable As Double(,) = __createTable(
-                reference.ToArray(Function(ch) AscW(ch)),
-                hypotheses.ToArray(Function(ch) AscW(ch)),
+                reference.Select(Function(ch) AscW(ch)).ToArray,
+                hypotheses.Select(Function(ch) AscW(ch)).ToArray,
                 cost)
             Dim i As Integer = reference.Length,
                 j As Integer = hypotheses.Length

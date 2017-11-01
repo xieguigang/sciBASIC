@@ -354,10 +354,10 @@ Namespace IO
         ''' <param name="columns"></param>
         ''' <returns></returns>
         ''' <remarks>由于存在一一对应关系，这里不会再使用并行拓展</remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinalSchema(columns As String()) As Integer()
-            Return columns.ToArray(
-                [ctype]:=AddressOf __columnList.IndexOf,
-                parallel:=False)
+            Return columns.Select(Function(c) __columnList.IndexOf(c)).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

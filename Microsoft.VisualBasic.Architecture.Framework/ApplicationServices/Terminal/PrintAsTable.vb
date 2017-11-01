@@ -71,7 +71,7 @@ Namespace ApplicationServices.Terminal
                       Where x.IsPrimitive
                       Select x
 
-            Dim titles As String() = schema.ToArray(Function(x) x.Identity)
+            Dim titles As String() = schema.Select(Function(x) x.Identity).ToArray
             Dim contents = LinqAPI.Exec(Of Dictionary(Of String, String)) _
  _
                 () <= From x As T

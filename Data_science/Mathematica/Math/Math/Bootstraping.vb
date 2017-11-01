@@ -287,11 +287,14 @@ Public Module Bootstraping
     ''' <returns></returns>
     <Extension>
     Public Function Distributes(data As IEnumerable(Of Double), Optional base! = 10.0F) As Dictionary(Of Integer, DoubleTagged(Of Integer))
-        Dim array As DoubleTagged(Of Double)() = data.ToArray(
-            Function(x) New DoubleTagged(Of Double) With {
-                .Tag = sys.Log(x, base),
-                .Value = x
-            })
+        Dim array As DoubleTagged(Of Double)() = data _
+            .Select(Function(x)
+                        Return New DoubleTagged(Of Double) With {
+                            .Tag = sys.Log(x, base),
+                            .Value = x
+                        }
+                    End Function) _
+            .ToArray
         Dim min As Integer = CInt(array.Min(Function(x) x.Tag)) - 1
         Dim max As Integer = CInt(array.Max(Function(x) x.Tag)) + 1
         Dim l As int = min, low As Integer = min

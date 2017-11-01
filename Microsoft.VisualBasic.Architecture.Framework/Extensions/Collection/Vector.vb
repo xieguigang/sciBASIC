@@ -297,7 +297,7 @@ Public Module VectorExtensions
     ''' <returns></returns>
     <Extension> Public Function LoadAsNumericVector(path As String) As Double()
         Dim array As String() = IO.File.ReadAllLines(path)
-        Dim n As Double() = array.ToArray(AddressOf Val)
+        Dim n As Double() = array.Select(AddressOf Val).ToArray
         Return n
     End Function
 

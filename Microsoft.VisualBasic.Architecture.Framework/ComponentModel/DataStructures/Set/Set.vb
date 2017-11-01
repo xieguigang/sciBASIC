@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::bda981b53fb8ffd698d3b8d793937025, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\Set.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Collections
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.DataStructures
 
@@ -222,8 +223,11 @@ Namespace ComponentModel.DataStructures
         End Property
 #End Region
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToArray(Of T)([ctype] As Func(Of Object, T)) As T()
-            Return Me.ToArray.ToArray([ctype])
+            Return Me.ToArray _
+                .Select([ctype]) _
+                .ToArray
         End Function
 
         ''' <summary>
@@ -231,8 +235,12 @@ Namespace ComponentModel.DataStructures
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToArray(Of T)() As T()
-            Return Me.ToArray.ToArray(Function(x) DirectCast(x, T))
+            Return Me.ToArray _
+                .Select(Function(x) DirectCast(x, T)) _
+                .ToArray
         End Function
 
 #Region "Overloaded Operators"

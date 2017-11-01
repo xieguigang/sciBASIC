@@ -181,7 +181,7 @@ Namespace Language
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return New String(
-                chars.ToArray(Function(x) __chars(x)))
+                chars.Select(Function(x) __chars(x)).ToArray)
         End Function
 
         Public Shared Operator &(i As Uid, s$) As String

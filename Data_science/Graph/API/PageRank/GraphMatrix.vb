@@ -127,7 +127,7 @@ Namespace Analysis.PageRank
         End Function
 
         Public Shared Narrowing Operator CType(gm As GraphMatrix) As List(Of Integer)()
-            Return gm.nodes.ToArray(Function(k) gm.indices(k.ID))
+            Return gm.nodes.Select(Function(k) gm.indices(k.ID)).ToArray
         End Operator
     End Class
 End Namespace

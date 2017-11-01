@@ -106,7 +106,7 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="idx"></param>
         ''' <returns></returns>
         Public Function Read(idx As IEnumerable(Of Integer)) As String()
-            Return idx.ToArray(Function(x) RowData.Column(x))
+            Return idx.Select(Function(x) RowData.Column(x)).ToArray
         End Function
 
         ''' <summary>
@@ -147,7 +147,7 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="Column"></param>
         ''' <returns></returns>
         Public Function GetOrdinal(Column As IEnumerable(Of String)) As Integer()
-            Return Column.ToArray(Function(x) GetOrdinal(x))
+            Return Column.Select(Function(x) GetOrdinal(x)).ToArray
         End Function
 
         ''' <summary>
@@ -165,7 +165,7 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="ords"></param>
         ''' <returns></returns>
         Public Function GetValues(ords As Integer()) As String()
-            Return ords.ToArray(Function(n) RowData.Column(n))
+            Return ords.Select(Function(n) RowData.Column(n)).ToArray
         End Function
 
         ''' <summary>

@@ -102,12 +102,12 @@ Public Module Normalization
             data.ToArray
         Return New ODEsOut With {
             .x = array(Scan0).Value _
-                .ToArray(Function(x) x.Time),
+                .Select(Function(x) x.Time).ToArray,
             .y = array _
                 .Select(Function(x) New NamedCollection(Of Double) With {
                     .Name = x.Name,
                     .Value = x.Value _
-                        .ToArray(Function(o) o.Y)
+                        .Select(Function(o) o.Y).ToArray
                 }).ToDictionary
         }
     End Function

@@ -208,7 +208,9 @@ Namespace CommandLine.Reflection.EntryPoints
             Try
                 rtvl = EntryPoint.Invoke(target, callParameters)
             Catch ex As Exception
-                Dim args As String() = callParameters.ToArray(AddressOf Scripting.ToString)
+                Dim args As String() = callParameters _
+                    .Select(AddressOf Scripting.ToString) _
+                    .ToArray
                 Dim paramTrace As String = String.Join(vbCrLf, args)
                 Dim source As Exception = ex
 

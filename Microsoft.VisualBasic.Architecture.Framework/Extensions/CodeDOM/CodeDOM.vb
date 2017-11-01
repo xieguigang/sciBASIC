@@ -68,7 +68,7 @@ Namespace Emit.CodeDOM_VBC
                 New CodeDom.CodeNamespaceImport("System.Xml.Linq"),
                 New CodeDom.CodeNamespaceImport("System.Text.RegularExpressions")
             }
-            Call nsArray.Add(refList.ToArray(Function(ns) New CodeNamespaceImport(ns)))
+            Call nsArray.Add(refList.Select(Function(ns) New CodeNamespaceImport(ns)).ToArray)
             Return nsArray.ToArray
         End Function
 

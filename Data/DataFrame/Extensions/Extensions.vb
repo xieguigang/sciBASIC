@@ -156,9 +156,9 @@ Public Module Extensions
 
     <Extension>
     Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo As String, Optional noTitle As Boolean = False, Optional encoding As Encodings = Encodings.UTF8) As Boolean
-        Dim doc As IO.File = StorageProvider.Reflection.Reflector.Save(source, False)
+        Dim doc As File = Reflector.Save(source, False)
         Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
-        Dim slines As String() = lines.ToArray(Function(x) x.AsLine(vbTab))
+        Dim slines As String() = lines.Select(Function(x) x.AsLine(vbTab)).ToArray
         Dim sdoc As String = String.Join(vbCrLf, slines)
         Return sdoc.SaveTo(saveTo, encoding.CodePage)
     End Function
@@ -204,23 +204,33 @@ Public Module Extensions
         Return DataFrame.CreateObject(csv)
     End Function
 
+    ''' <summary>
+    ''' Convert the dictionary table collection as the <see cref="EntityObject"/> collection.
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function DataFrame(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))) As EntityObject()
-        Return source.ToArray(
-            Function(o)
-                Return New EntityObject With {
-                    .ID = o.Name,
-                    .Properties = o.Value
-                }
-            End Function)
+        Return source _
+            .Select(Function(o)
+                        Return New EntityObject With {
+                            .ID = o.Name,
+                            .Properties = o.Value
+                        }
+                    End Function) _
+            .ToArray
     End Function
 
     ''' <summary>
-    ''' 这个函数不会被申明为拓展函数了，因为这个object序列类型的函数如果为拓展函数的话，会与T泛型函数产生冲突
+    ''' This extension is using for .NET scripting API.
+    ''' (这个函数不会被申明为拓展函数了，因为这个object序列类型的函数如果为拓展函数的话，会与T泛型函数产生冲突)
     ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="path$"></param>
-    ''' <param name="encoding"></param>
+    ''' <param name="data">A generic .NET collection, using for scripting API.</param>
+    ''' <param name="path$">The file path of the csv file for saved.</param>
+    ''' <param name="encoding">Default is utf-8 without BOM</param>
+    ''' <param name="type">
+    ''' If this <see cref="Type"/> information provider is nothing, then the function will peeks of the first sevral element for the type information.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Write.Csv")>
     <Extension>
@@ -530,7 +540,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     <Extension> Public Function LoadDblVector(path As String) As Double()
         Dim buf As IO.File = IO.File.Load(path)
         Dim FirstRow As RowObject = buf.First
-        Dim data As Double() = FirstRow.ToArray(AddressOf Val)
+        Dim data As Double() = FirstRow.Select(AddressOf Val).ToArray
         Return data
     End Function
 

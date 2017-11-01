@@ -81,7 +81,7 @@ Namespace Drawing3D.Models
         Sub New(vertices As Point3D(), colors As Color())
             Me.New(
                 vertices,
-                colors.ToArray(Function(c) New SolidBrush(c)))
+                colors.Select(Function(c) New SolidBrush(c)).ToArray)
         End Sub
 
         Sub New(vertices As Point3D(), brushes As Brush())
@@ -118,7 +118,7 @@ Namespace Drawing3D.Models
         End Sub
 
         Public Function Copy(data As IEnumerable(Of Point3D)) As I3DModel Implements I3DModel.Copy
-            Return New Cube(data.ToArray, faces.ToArray(Function(s) s.brush))
+            Return New Cube(data.ToArray, faces.Select(Function(s) s.brush).ToArray)
         End Function
 
         ''' <summary>

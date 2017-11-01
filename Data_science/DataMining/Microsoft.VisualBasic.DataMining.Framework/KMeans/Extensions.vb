@@ -43,13 +43,16 @@ Namespace KMeans
         ''' <param name="nd"></param>
         ''' <returns></returns>
         <Extension> Public Function ValueGroups(array As IEnumerable(Of Double), nd As Integer) As List(Of EntityLDM)
-            Dim entities As EntityLDM() = array.ToArray(
-                Function(x, i) New EntityLDM With {
-                    .ID = i & ":" & x,
-                    .Properties = New Dictionary(Of String, Double) From {
-                        {"val", x}
-                    }
-                })
+            Dim entities As EntityLDM() = array _
+                .Select(Function(x, i)
+                            Return New EntityLDM With {
+                                .ID = i & ":" & x,
+                                .Properties = New Dictionary(Of String, Double) From {
+                                    {"val", x}
+                                }
+                            }
+                        End Function) _
+                .ToArray
             Return entities.Kmeans(nd)
         End Function
 
@@ -71,14 +74,15 @@ Namespace KMeans
                 .ToArray
             Dim clusters As ClusterCollection(Of Entity) =
                 ClusterDataSet(clusterCount:=expected,
-                               source:=source.ToArray(Function(x) x.ToModel),
+                               Source:=source.Select(Function(x) x.ToModel).ToArray,
                                debug:=debug,
                                parallel:=parallel)
             Dim result As New List(Of EntityLDM)
 
             For Each cluster As SeqValue(Of KMeansCluster(Of Entity)) In clusters.SeqIterator(offset:=1)
                 Dim values As EntityLDM() = (+cluster) _
-                    .ToArray(Function(x) x.ToLDM(maps))
+                    .Select(Function(x) x.ToLDM(maps)) _
+                    .ToArray
 
                 For Each x As EntityLDM In values
                     x.Cluster = cluster.i

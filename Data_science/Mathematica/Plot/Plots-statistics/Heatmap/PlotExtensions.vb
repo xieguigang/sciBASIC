@@ -73,12 +73,12 @@ Public Module PlotExtensions
 
         For Each x As DataSet In dataset
             Dim out As New Dictionary(Of String, Double)
-            Dim array As Double() = keys.ToArray(Function(o$) x(o))
+            Dim array As Double() = keys.Select(Function(o$) x(o))
 
             For Each y As DataSet In dataset
                 out(y.ID) = correlation(
                     array,
-                    keys.ToArray(Function(o) y(o)))
+                    keys.Select(Function(o) y(o)))
             Next
 
             Yield New NamedValue(Of Dictionary(Of String, Double)) With {
@@ -130,7 +130,7 @@ Public Module PlotExtensions
             In data
             Select New Entity With {
                 .uid = x.Name,
-                .Properties = keys.ToArray(Function(k) x.Value(k))
+                .Properties = keys.Select(Function(k) x.Value(k))
             }
         Dim clusters As ClusterCollection(Of Entity)
 
@@ -152,11 +152,11 @@ Public Module PlotExtensions
         Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
 
         ' 通过kmeans计算出keys的顺序
-        Dim keysEntity = keys.ToArray(
+        Dim keysEntity = keys.Select(
             Function(k) New Entity With {
                 .uid = k,
-                .Properties = data.ToArray(Function(x) x.Value(k))
-            })
+                .Properties = data.Select(Function(x) x.Value(k))
+            }).ToArray
         Dim keysOrder As New List(Of String)
 
         For Each cluster In keysEntity.ClusterDataSet(CInt(keys.Length / 5))
@@ -191,7 +191,7 @@ Public Module PlotExtensions
         Dim clData As Color() = If(
             colors.IsNullOrEmpty,
             ChartColors.Shuffles,
-            colors.ToArray(AddressOf ToColor))
+            colors.Select(AddressOf ToColor))
         Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
  _
             From x As SeqValue(Of ODE)
@@ -310,7 +310,7 @@ Public Module PlotExtensions
         Dim c As Color() = If(
             colors.IsNullOrEmpty,
             ChartColors.Shuffles,
-            colors.ToArray(AddressOf ToColor))
+            colors.Select(AddressOf ToColor))
 
         Return LinqAPI.Exec(Of SerialData) <=
  _
@@ -318,7 +318,7 @@ Public Module PlotExtensions
             In odes.y.Values.SeqIterator
             Let pts As PointData() = odes.x _
                 .SeqIterator _
-                .ToArray(Function(x) New PointData(CSng(+x), CSng(y.value.Value(x))))
+                .Select(Function(x) New PointData(CSng(+x), CSng(y.value.Value(x))))
             Select New SerialData With {
                 .color = c(y.i),
                 .lineType = DashStyle.Solid,

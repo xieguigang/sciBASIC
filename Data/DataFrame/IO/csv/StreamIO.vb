@@ -52,7 +52,7 @@ Namespace IO
             Dim scores As New Dictionary(Of Type, Integer)
 
             For Each schema In types.Select(AddressOf SchemaProvider.CreateObject)
-                Dim allNames As String() = schema.Properties.ToArray(Function(x) x.Name)
+                Dim allNames As String() = schema.Properties.Select(Function(x) x.Name).ToArray
                 Dim matches = (From p As String
                                In allNames
                                Where System.Array.IndexOf(head, p) > -1

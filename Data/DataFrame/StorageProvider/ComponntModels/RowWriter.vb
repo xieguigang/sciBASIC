@@ -88,17 +88,17 @@ Namespace StorageProvider.ComponentModels
                                 Return DirectCast(field, StorageProvider)
                             End Function) +
                 SchemaProvider.EnumColumns _
-                    .ToArray(Function(field)
-                                 Return DirectCast(field, StorageProvider)
-                             End Function) +
+                    .Select(Function(field)
+                                Return DirectCast(field, StorageProvider)
+                            End Function) +
                 SchemaProvider.KeyValuePairColumns _
-                    .ToArray(Function(field)
-                                 Return DirectCast(field, StorageProvider)
-                             End Function) +
+                    .Select(Function(field)
+                                Return DirectCast(field, StorageProvider)
+                            End Function) +
                 SchemaProvider.CollectionColumns _
-                    .ToArray(Function(field)
-                                 Return DirectCast(field, StorageProvider)
-                             End Function)
+                    .Select(Function(field)
+                                Return DirectCast(field, StorageProvider)
+                            End Function).ToArray
             Me.Columns = LinqAPI.Exec(Of StorageProvider) _
  _
                 () <= From field As StorageProvider

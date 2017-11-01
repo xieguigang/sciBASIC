@@ -55,7 +55,7 @@ Namespace Vendor_3mf.XML
                 .basematerials _
                 .basematerials _
                 .Select(Function(b) b.displaycolor.TranslateColor) _
-                .ToArray(Function(c) New SolidBrush(c))
+                .Select(Function(c) New SolidBrush(c))
 
             On Error Resume Next
 

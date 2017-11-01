@@ -76,7 +76,7 @@ Namespace StorageProvider.ComponentModels
                     Return Nothing
                 End If
                 Dim tokens As String() = Strings.Split(cellData, Delimiter)
-                Dim array As Object() = tokens.ToArray(Cast)
+                Dim array As Object() = tokens.Select(Cast).ToArray
                 Return Scripting.InputHandler.DirectCast(array, Element)
             End Function
 
@@ -92,7 +92,7 @@ Namespace StorageProvider.ComponentModels
 
             Dim array$() = Scripting _
                 .CastArray(Of Object)([object]) _
-                .ToArray(AddressOf Scripting.ToString)
+                .Select(AddressOf Scripting.ToString).ToArray
             Return String.Join(ArrayDefine.Delimiter, array)
         End Function
     End Class

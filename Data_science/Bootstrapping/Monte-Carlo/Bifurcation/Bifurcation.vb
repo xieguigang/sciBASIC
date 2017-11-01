@@ -148,8 +148,8 @@ Namespace MonteCarlo
                     .IteratesALL _
                     .GroupBy(Function(x) x.Key) _
                     .ToDictionary(Function(k) k.Key,
-                                  Function(o) o.ToArray(
-                                  Function(v) v.Value))
+                                  Function(o) o.Select(
+                                  Function(v) v.Value).ToArray)
 
                 Dim avgs As Dictionary(Of String, Double) =
                     datas.ToDictionary(
@@ -164,7 +164,7 @@ Namespace MonteCarlo
                 'Dim inits As EntityLDM() =
                 '    (+cluster) _
                 '    .Select(Function(x) x.uid) _
-                '    .ToArray(Function(data) New EntityLDM With {
+                '    .Select(Function(data) New EntityLDM With {
                 '        .Name = data,
                 '        .Properties = data.LoadObject(Of Dictionary(Of String, Double))
                 '    })
@@ -189,7 +189,7 @@ Namespace MonteCarlo
                 '    subclusters = inits _
                 '        .Kmeans(parts) _
                 '        .GroupBy(Function(x) x.Cluster) _
-                '        .ToArray(Function(g) g.ToArray)
+                '        .Select(Function(g) g.ToArray)
                 'End If
 
                 'For Each subc As EntityLDM() In subclusters
@@ -206,7 +206,7 @@ Namespace MonteCarlo
                 '    Yield New NamedValue(Of ValueRange()) With {
                 '        .Name = cluster.i & "::" & means.GetJson,
                 '        .Value = status _
-                '            .ToArray(Function(s) New ValueRange With {
+                '            .Select(Function(s) New ValueRange With {
                 '                .Name = s.Key,
                 '                .Min = s.Value.Min,
                 '                .Max = s.Value.Max

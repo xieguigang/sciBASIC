@@ -28,8 +28,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -223,7 +221,7 @@ Namespace Linq
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Repeats(Of T)(source As T, n%) As T()
-            Return n.ToArray(Function(x) source)
+            Return n.Sequence.Select(Function(x) source)
         End Function
 
         ''' <summary>
@@ -236,7 +234,7 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CopyVector(Of T)(n As Integer, source As Func(Of T)) As T()
-            Return n.ToArray(Function(x) source())
+            Return n.Sequence.Select(Function(x) source())
         End Function
 
         <Extension> Public Function Read(Of T)(array As T(), ByRef i As Integer, ByRef out As T) As T
@@ -366,109 +364,18 @@ Namespace Linq
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToArray(Of T)(len As Integer, elementAt As Func(Of Integer, T)) As T()
-            Return len.Sequence.ToArray(elementAt)
-        End Function
-
-        ''' <summary>
-        ''' Creates an array from a <see cref="IEnumerable(Of T)"/>.
-        ''' (默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
-        ''' </summary>
-        ''' <typeparam name="T">The type of the elements of source.</typeparam>
-        ''' <typeparam name="TOut"></typeparam>
-        ''' <param name="source">An System.Collections.Generic.IEnumerable`1 to create an array from.</param>
-        ''' <returns>An array that contains the elements from the input sequence.</returns>
-        <Extension> Public Function ToArray(Of T, TOut)(
-                                      source As IEnumerable(Of T),
-                                     [ctype] As Func(Of T, TOut),
-                           Optional parallel As Boolean = False) As TOut()
-
-            If source Is Nothing Then  ' 假若这里使用IsNullOrEmpty的话，会导致Linq查询会被执行两次，所以在这里直接判断是否为空值就行了
-                Return New TOut() {}
-            End If
-
-            If parallel Then
-                Return LinqAPI.Exec(Of TOut) _
- _
-                    () <= From obj As T
-                          In source.AsParallel
-                          Select [ctype](obj)
-            Else
-                Return source.Select([ctype]).ToArray
-            End If
-        End Function
-
-        ''' <summary>
-        ''' Creates an array from a <see cref="IEnumerable(Of T)"/>.
-        ''' (默认非并行化的，这个函数是安全的，假若参数为空值则会返回一个空的数组)
-        ''' </summary>
-        ''' <typeparam name="T">The type of the elements of source.</typeparam>
-        ''' <typeparam name="TOut"></typeparam>
-        ''' <param name="source">An System.Collections.Generic.IEnumerable`1 to create an array from.</param>
-        ''' <returns>
-        ''' An array that contains the elements from the input sequence.
-        ''' </returns>
-        <Extension> Public Function ToArray(Of T, TOut)(
-                                      source As IEnumerable(Of T),
-                                     [CType] As Func(Of T, TOut),
-                                     [where] As Func(Of T, Boolean),
-                           Optional Parallel As Boolean = False) As TOut()
-
-            If source.IsNullOrEmpty Then
-                Return New TOut() {}
-            End If
-
-            Dim LQuery As TOut()
-
-            If Parallel Then
-                LQuery = (From obj As T
-                          In source.AsParallel
-                          Where where(obj)
-                          Select [CType](obj)).ToArray
-            Else
-                LQuery = (From obj As T In source
-                          Where where(obj)
-                          Select [CType](obj)).ToArray
-            End If
-
-            Return LQuery
-        End Function
-
-        ''' <summary>
-        '''
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <typeparam name="TOut"></typeparam>
-        ''' <param name="source"></param>
-        ''' <param name="__ctype">第二个参数是index</param>
-        ''' <param name="Parallel"></param>
-        ''' <returns></returns>
-        <Extension> Public Function ToArray(Of T, TOut)(
-                                      source As IEnumerable(Of T),
-                                     __ctype As Func(Of T, Integer, TOut),
-                           Optional Parallel As Boolean = False) As TOut()
-
-            If source Is Nothing Then
-                Return New TOut() {}
-            End If
-
-            Dim seqs As IEnumerable(Of SeqValue(Of T)) = If(
-                Parallel,
-                source.SeqIterator.AsParallel,
-                source.SeqIterator)
-
-            Dim LQuery As TOut() = LinqAPI.Exec(Of TOut) _
- _
-                () <= From i As SeqValue(Of T)
-                      In seqs
-                      Let obj As T = i.value
-                      Select __ctype(obj, i.i)
-
-            Return LQuery
+            Return len _
+                .Sequence _
+                .Select(elementAt) _
+                .ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToArray(Of T)(len&, elementAt As Func(Of Long, T)) As T()
-            Return len.Sequence.ToArray(elementAt)
+            Return len _
+                .Sequence _
+                .Select(elementAt) _
+                .ToArray
         End Function
 
         ''' <summary>
@@ -526,73 +433,9 @@ Namespace Linq
         ''' <returns></returns>
         <Extension>
         Public Function ToArray(Of T)(source As IEnumerable) As T()
-            Return ToVector(source).ToArray(
-                Function(x) If(x Is Nothing, Nothing, DirectCast(x, T)))
-        End Function
-
-        <Extension>
-        Public Function ToArray(Of T, TKey, TValue)(
-                          source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
-                         [CType] As Func(Of TKey, TValue, T),
-               Optional Parallel As Boolean = False,
-               Optional [Where] As Func(Of TKey, TValue, Boolean) = Nothing) As T()
-
-            If Where Is Nothing Then
-                Return source.__toArrayNoWhere([CType], Parallel)
-            Else
-                Return source.ToArray(Of T)(
-                    Function(x) [CType](x.Key, x.Value),
-                    Function(x) Where(x.Key, x.Value))
-            End If
-        End Function
-
-        <Extension>
-        Private Function __toArrayNoWhere(Of T, TKey, TValue)(source As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
-                                                          [CType] As Func(Of TKey, TValue, T),
-                                                          Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.Key, x.Value))
-        End Function
-
-        <Extension>
-        Public Function ToArray(Of T, TKey, TValue)(source As IEnumerable(Of IKeyValuePairObject(Of TKey, TValue)),
-                                                [CType] As Func(Of TKey, TValue, T),
-                                                Optional Parallel As Boolean = False,
-                                                Optional [Where] As Func(Of TKey, TValue, Boolean) = Nothing) As T()
-
-            If Where Is Nothing Then
-                Return source.__toArrayNoWhere([CType], Parallel)
-            Else
-                Return source.ToArray(Of T)(
-                    Function(x As IKeyValuePairObject(Of TKey, TValue)) [CType](x.Key, x.Value),
-                    where:=Function(x) Where(x.Key, x.Value),
-                    Parallel:=Parallel)
-            End If
-        End Function
-
-        <Extension>
-        Private Function __toArrayNoWhere(Of T, TKey, TValue)(source As IEnumerable(Of IKeyValuePairObject(Of TKey, TValue)),
-                                                         [CType] As Func(Of TKey, TValue, T),
-                                                         Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.Key, x.Value), parallel:=Parallel)
-        End Function
-
-        <Extension>
-        Public Function ToArray(Of T, T1, T2, T3)(source As IEnumerable(Of ITripleKeyValuesPair(Of T1, T2, T3)),
-                                              [CType] As Func(Of T1, T2, T3, T),
-                                              Optional Parallel As Boolean = False,
-                                              Optional [Where] As Func(Of T1, T2, T3, Boolean) = Nothing) As T()
-            If Where Is Nothing Then
-                Return source.__toArrayNoWhere([CType], Parallel)
-            Else
-                Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value2, x.Address), where:=Function(x) Where(x.Identifier, x.Value2, x.Address))
-            End If
-        End Function
-
-        <Extension>
-        Private Function __toArrayNoWhere(Of T, T1, T2, T3)(source As IEnumerable(Of ITripleKeyValuesPair(Of T1, T2, T3)),
-                                                        [CType] As Func(Of T1, T2, T3, T),
-                                                        Parallel As Boolean) As T()
-            Return source.ToArray(Of T)(Function(x) [CType](x.Identifier, x.Value2, x.Address))
+            Return ToVector(source) _
+                .Select(Function(x) If(x Is Nothing, Nothing, DirectCast(x, T))) _
+                .ToArray
         End Function
     End Module
 End Namespace

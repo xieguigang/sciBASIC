@@ -100,7 +100,9 @@ Namespace Net.Protocols.Streams.Array
             Call Me.New
 
             If Not rawStream.IsNullOrEmpty Then
-                Me.Values = rawStream.ToArray(Function(byt) __toBoolean(byt))
+                Me.Values = rawStream _
+                    .Select(AddressOf __toBoolean) _
+                    .ToArray
             Else
                 Me.Values = New Boolean() {}
             End If

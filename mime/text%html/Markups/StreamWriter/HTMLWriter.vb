@@ -75,7 +75,7 @@ Namespace StreamWriter
             Dim attrs As String =
                 If(nodeElement.Attributes.IsNullOrEmpty,
                 "",
-                " " & String.Join(" ", nodeElement.Attributes.ToArray(Function(attr) $"{attr.Name}=""{attr.Value}""")))
+                " " & String.Join(" ", nodeElement.Attributes.Select(Function(attr) $"{attr.Name}=""{attr.Value}""").ToArray))
 
             If nodeElement.HtmlElements.IsNullOrEmpty Then
                 Call sbr.Append($"<{nodeElement.Name}{attrs}></{nodeElement.Name}>")

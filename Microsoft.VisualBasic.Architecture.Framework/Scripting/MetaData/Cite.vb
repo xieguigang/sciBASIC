@@ -99,7 +99,7 @@ Namespace Scripting.MetaData
                                                            Select flag, value
                                                            Group By flag Into Group) _
                                                                 .ToDictionary(Function(x) x.flag,
-                                                                              Function(x) x.Group.ToArray(Function(xx) xx.value))
+                                                                              Function(x) x.Group.Select(Function(xx) xx.value).ToArray)
             Authors = dict.TryGetValue("%A").JoinBy("; ")
             Title = dict.TryGetValue("%T", [default]:=New String() {}).FirstOrDefault
             DOI = dict.TryGetValue("%R", [default]:=New String() {}).FirstOrDefault

@@ -138,7 +138,8 @@ Namespace Text.Levenshtein
                                   Function(row)
                                       Return row _
                                         .Group _
-                                        .ToArray(Function(cell) cell.Y)
+                                        .Select(Function(cell) cell.Y) _
+                                        .ToArray
                                   End Function)
             End If
 

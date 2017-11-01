@@ -78,7 +78,7 @@ Namespace Net.Protocols.Streams.Array
             If Values.IsNullOrEmpty Then
                 Return GetType(T).FullName
             Else
-                Return $"{GetType(T).FullName}  {"{"}{String.Join("," & vbTab, Values.ToArray(Of String)(Function(val) Scripting.ToString(val)))}{"}"}"
+                Return $"{GetType(T).FullName}  {"{"}{String.Join("," & vbTab, Values.Select(Function(val) Scripting.ToString(val)).ToArray)}{"}"}"
             End If
         End Function
     End Class

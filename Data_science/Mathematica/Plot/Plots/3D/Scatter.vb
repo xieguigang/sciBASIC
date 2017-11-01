@@ -189,7 +189,7 @@ Namespace Plot3D
             Dim data As Point3D() = func _
                 .Evaluate(x, y, xsteps, ysteps) _
                 .IteratesALL _
-                .ToArray(Function(o) New Point3D(o.X, o.y, o.z))
+                .Select(Function(o) New Point3D(o.X, o.y, o.z))
             Dim rect As Rectangle
             Dim previous As Point
             Dim cur As Point

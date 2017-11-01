@@ -106,14 +106,14 @@ Public Module StreamExtension
         Dim yData = LinqAPI.Exec(Of NamedCollection(Of Double)) <= From s As String()
                                                                    In y
                                                                    Let name As String = s(Scan0)
-                                                                   Let values As Double() = s.Skip(1).ToArray(AddressOf Val)
+                                                                   Let values As Double() = s.Skip(1).Select(AddressOf Val).ToArray
                                                                    Select New NamedCollection(Of Double) With {
                                                                        .Name = name,
                                                                        .Value = values
                                                                    }
         Return New ODEsOut With {
             .params = args,
-            .x = X.Skip(1).ToArray(AddressOf Val),
+            .x = X.Skip(1).Select(AddressOf Val).ToArray,
             .y = yData.ToDictionary
         }
     End Function

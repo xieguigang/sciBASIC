@@ -52,11 +52,11 @@ Public Class Schema : Inherits BaseClass
     ''' <returns></returns>
     Public Property Members As NamedValue(Of String)()
         Get
-            Return Tables.ToArray(
+            Return Tables.Select(
                 Function(x) New NamedValue(Of String) With {
                     .Name = x.Key,
                     .Value = x.Value
-                })
+                }).ToArray
         End Get
         Set(value As NamedValue(Of String)())
             _Tables = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)

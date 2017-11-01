@@ -68,7 +68,7 @@ Namespace Net.Http
             Next
 
             Dim param As String = args _
-                .ToArray(Function(o) $"{o.Name}={o.Value.UrlEncode}") _
+                .Select(Function(o) $"{o.Name}={o.Value.UrlEncode}") _
                 .JoinBy("&")
             Return param
         End Function

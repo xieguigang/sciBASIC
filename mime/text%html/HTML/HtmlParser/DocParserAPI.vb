@@ -204,8 +204,9 @@ Namespace HTML
                 Mid(tokens.Last, 1, Len(tokens.Last) - 1)
             End If
             Return tokens _
-            .TakeWhile(AddressOf __takesWhile) _
-            .ToArray(Function(attr) New ValueAttribute(attr))
+                .TakeWhile(AddressOf __takesWhile) _
+                .Select(Function(attr) New ValueAttribute(attr)) _
+                .ToArray
         End Function
 
         Private Function __takesWhile(attr As String) As Boolean
