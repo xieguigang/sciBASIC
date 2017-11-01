@@ -53,11 +53,15 @@ Namespace KMeans
         ''' <returns></returns>
         Public Shared Function Load(path As String, Optional map As String = "Name") As Entity()
             Dim data As EntityLDM() = EntityLDM.Load(path, map)
-            Dim source As Entity() = data.ToArray(
-                Function(x) New Entity With {
-                    .uid = x.ID,
-                    .Properties = x.Properties.Values.ToArray
-                })
+            Dim source As Entity() = data _
+                .Select(Function(x)
+                            Return New Entity With {
+                                .uid = x.ID,
+                                .Properties = x.Properties.Values.ToArray
+                            }
+                        End Function) _
+                .ToArray
+
             Return source
         End Function
 

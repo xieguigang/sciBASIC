@@ -73,7 +73,7 @@ Namespace KMeans.Parallel
 
             Dim props As Double() =
                 buffer.Skip(nameLen.Length + name.Length).Split(RawStream.DblFloat) _
-                      .ToArray(Function(buf) BitConverter.ToDouble(buf, Scan0))
+                      .Select(Function(buf) BitConverter.ToDouble(buf, Scan0)).ToArray
 
             Return New Entity With {
                 .Properties = props,

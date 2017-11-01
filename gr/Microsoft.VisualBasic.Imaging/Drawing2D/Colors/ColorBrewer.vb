@@ -94,27 +94,27 @@ Namespace Drawing2D.Colors
         Public Function GetColors(name$) As Color()
             Select Case LCase(name)
                 Case NameOf(c3)
-                    Return c3.ToArray(AddressOf ToColor)
+                    Return c3.Select(AddressOf ToColor).ToArray
                 Case NameOf(c4)
-                    Return c4.ToArray(AddressOf ToColor)
+                    Return c4.Select(AddressOf ToColor).ToArray
                 Case NameOf(c5)
-                    Return c5.ToArray(AddressOf ToColor)
+                    Return c5.Select(AddressOf ToColor).ToArray
                 Case NameOf(c6)
-                    Return c6.ToArray(AddressOf ToColor)
+                    Return c6.Select(AddressOf ToColor).ToArray
                 Case NameOf(c7)
-                    Return c7.ToArray(AddressOf ToColor)
+                    Return c7.Select(AddressOf ToColor).ToArray
                 Case NameOf(c8)
-                    Return c8.ToArray(AddressOf ToColor)
+                    Return c8.Select(AddressOf ToColor).ToArray
                 Case NameOf(c9)
-                    Return c9.ToArray(AddressOf ToColor)
+                    Return c9.Select(AddressOf ToColor).ToArray
                 Case NameOf(c10)
-                    Return c10.ToArray(AddressOf ToColor)
+                    Return c10.Select(AddressOf ToColor).ToArray
                 Case NameOf(c11)
-                    Return c11.ToArray(AddressOf ToColor)
+                    Return c11.Select(AddressOf ToColor).ToArray
                 Case NameOf(c12)
-                    Return c12.ToArray(AddressOf ToColor)
+                    Return c12.Select(AddressOf ToColor).ToArray
                 Case Else
-                    Return c3.ToArray(AddressOf ToColor)
+                    Return c3.Select(AddressOf ToColor).ToArray
             End Select
         End Function
 
