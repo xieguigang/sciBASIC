@@ -49,7 +49,7 @@ Namespace Interpolation
         ''' 
         <Extension>
         Public Function BSpline(ctrlPts As IEnumerable(Of Point), Optional degree% = 5, Optional RESOLUTION% = 10) As List(Of PointF)
-            Return ctrlPts.ToArray(
+            Return ctrlPts.Select(
                 Function(pt) New PointF With {
                     .X = pt.X,
                     .Y = pt.Y
@@ -59,14 +59,15 @@ Namespace Interpolation
         ''' <summary>
         ''' B-spline curve interpolation
         ''' </summary>
-        ''' <param name="ctrlPts">Control points</param>
+        ''' <param name="controlPoints">Control points</param>
         ''' <param name="degree%"></param>
         ''' <param name="RESOLUTION%"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function Compute(ctrlPts As PointF(), Optional degree% = 5, Optional RESOLUTION% = 10) As List(Of PointF)
+        Public Function Compute(controlPoints As IEnumerable(Of PointF), Optional degree% = 5, Optional RESOLUTION% = 10) As List(Of PointF)
             Dim out As New List(Of PointF)
+            Dim ctrlPts = controlPoints.ToArray
 
             If ctrlPts.Length > 1 Then
                 Dim ustep As Double = 1.0 / (RESOLUTION * (ctrlPts.Length - 1))

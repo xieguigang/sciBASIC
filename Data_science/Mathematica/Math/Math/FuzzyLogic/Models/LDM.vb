@@ -77,7 +77,7 @@ Namespace Logical.FuzzyLogic.Models
 
         Sub New(x As LinguisticVariable)
             Identifier = x.Name
-            Terms = x.MembershipFunctionCollection.ToArray(Function(m) New Term(m))
+            Terms = x.MembershipFunctionCollection.Select(Function(m) New Term(m)).ToArray
         End Sub
     End Class
 
@@ -127,7 +127,7 @@ Namespace Logical.FuzzyLogic.Models
         Sub New(rules As IEnumerable(Of FuzzyRule))
             Me.[AND] = "MIN"
             Me.[OR] = "MAX"
-            Me.Rules = rules.ToArray(Function(x, i) New Rule(i, x))
+            Me.Rules = rules.Select(Function(x, i) New Rule(i, x)).ToArray
         End Sub
     End Class
 End Namespace
