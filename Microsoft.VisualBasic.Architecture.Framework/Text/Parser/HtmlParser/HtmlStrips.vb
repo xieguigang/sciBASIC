@@ -49,7 +49,7 @@ Namespace Text.HtmlParser
             Else
                 Dim links$() = Regex _
                     .Matches(html, HtmlLink, RegexICSng) _
-                    .ToArray(AddressOf HtmlStrips.GetValue)
+                    .Select(AddressOf HtmlStrips.GetValue)
                 Return links
             End If
         End Function

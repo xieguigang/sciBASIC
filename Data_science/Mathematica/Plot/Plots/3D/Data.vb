@@ -89,11 +89,11 @@ Namespace Plot3D
                         pY0, previousX(i), xline(i), pY1
                     }
                     Dim v As Point3D() = data _
-                        .ToArray(Function(d) d.pt)
+                        .Select(Function(d) d.pt)
                     Dim sf As New Surface With {    ' 使用一个矩形来生成一个3维表面
                         .vertices = v
                     }
-                    Dim zc#() = data.ToArray(Function(d) d.C)
+                    Dim zc#() = data.Select(Function(d) d.C)
 
                     Yield (sf, zc)
 

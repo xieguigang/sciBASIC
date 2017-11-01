@@ -291,8 +291,8 @@ Namespace MonteCarlo
                         .GroupBy(Function(x) x.Key) _
                         .ToDictionary(
                             Function(x) x.Key,
-                            Function(x) x.ToArray(
-                            Function(o) o.Value))
+                            Function(x) x.Select(
+                            Function(o) o.Value).ToArray)
 
                     ' 调整y0和参数列表
                     For Each y In y0.Keys.ToArray

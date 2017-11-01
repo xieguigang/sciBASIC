@@ -92,7 +92,7 @@ Namespace KMeans
                 list -= LQuery
                 partitions += New Partition With {
                     .Tag = tag,
-                    .uids = LQuery.ToArray(Function(x) x.ID),
+                    .uids = LQuery.Select(Function(x) x.ID),
                     .members = LQuery
                 }
             Next
@@ -100,7 +100,7 @@ Namespace KMeans
             If Not list.IsNullOrEmpty Then
                 partitions += New Partition With {
                     .Tag = "Unclass",
-                    .uids = list.ToArray(Function(x) x.ID),
+                    .uids = list.Select(Function(x) x.ID),
                     .members = list.ToArray
                 }
             End If
@@ -194,12 +194,12 @@ Namespace KMeans
             If depth = array(Scan0).path.Length AndAlso
                 array(Scan0).path.Last = "X"c Then
 
-                Return array.ToArray(
+                Return array.Select(
                     Function(x) New NetworkEdge With {
                         .FromNode = parent.ID,
                         .ToNode = x.node.ID,
                         .Interaction = "Leaf-X"
-                    })
+                    }).ToArray
             End If
 
             Dim edges As New List(Of NetworkEdge)
@@ -210,7 +210,7 @@ Namespace KMeans
                           Group By cur Into Group).ToArray
 
             For Each part In groups
-                Dim parts = part.Group.ToArray(Function(x) x.x)
+                Dim parts = part.Group.Select(Function(x) x.x).ToArray
 
                 If parts.Length = 1 Then ' 叶节点
                     Dim leaf As __edgePath = parts.First

@@ -95,7 +95,7 @@ Namespace MarkDown
             headers += MarkdownHTML._headerSetext.Matches(md).ToArray
             headers += MarkdownHTML._headerAtx _
                 .Matches(md) _
-                .ToArray(Function(s) s.TrimNewLine.Trim)
+                .Select(Function(s) s.TrimNewLine.Trim)
 
             Dim orders As New List(Of SeqValue(Of String))
             Dim pos%

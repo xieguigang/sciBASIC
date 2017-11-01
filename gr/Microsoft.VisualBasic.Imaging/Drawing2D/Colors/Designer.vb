@@ -214,7 +214,7 @@ Namespace Drawing2D.Colors
 
                 Dim colorBrewerJSON$ = My.Resources.colorbrewer.GetString(Encodings.UTF8)
                 Dim ns = Regex.Matches(colorBrewerJSON, """\d+""") _
-                    .ToArray(Function(m) m.Trim(""""c))
+                    .Select(Function(m) m.Trim(""""c))
                 Dim sb As New StringBuilder(colorBrewerJSON)
 
                 For Each n In ns.Distinct

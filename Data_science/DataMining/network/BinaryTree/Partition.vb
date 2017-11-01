@@ -63,7 +63,7 @@ Namespace KMeans
                     Next
                 Next
 
-                Return pVector.Keys.ToArray(Function(k) pVector(k).Average)
+                Return pVector.Keys.Select(Function(k) pVector(k).Average)
             End Get
         End Property
 

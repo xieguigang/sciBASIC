@@ -107,7 +107,7 @@ Namespace csv
                 .OrderBy(Function(x) x.X) _
                 .ToArray
             Dim pts As List(Of PointF) = B_Spline.Compute(
-                rawData.ToArray(Function(x) New PointF(x.X, x.Y)),
+                rawData.Select(Function(x) New PointF(x.X, x.Y)),
                 degree,
                 resolution)
             Dim result As New List(Of SerialData)

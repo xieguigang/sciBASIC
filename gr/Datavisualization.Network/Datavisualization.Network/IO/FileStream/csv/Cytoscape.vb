@@ -57,7 +57,7 @@ Namespace FileStream.Cytoscape
         Public Function GetConnectNodes() As String()
             Dim tokens$() = Strings _
                 .Split(name, $"({interaction})") _
-                .ToArray(Function(s) s.Trim)
+                .Select(Function(s) s.Trim)
             Return tokens
         End Function
 

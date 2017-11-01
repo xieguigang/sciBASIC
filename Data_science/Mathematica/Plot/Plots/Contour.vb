@@ -346,7 +346,7 @@ Public Module Contour
                 .domain(yTicks) _
                 .range(integers:={region.PlotRegion.Top, region.PlotRegion.Bottom})
             Dim colorDatas As SolidBrush() = Nothing
-            Dim getColors = GetColor(data.ToArray(Function(o) o.z), colorDatas)
+            Dim getColors = GetColor(data.Select(Function(o) o.z), colorDatas)
             Dim size As Size = region.Size
             Dim margin = region.Padding
             Dim plotWidth! = region.PlotRegion.Width

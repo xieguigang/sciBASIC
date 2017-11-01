@@ -46,13 +46,13 @@ Namespace NeuralNetwork.Models
                 .ToDictionary(Function(x) x.value,
                               Function(x) x.i)
 
-            network += net.HiddenLayer.ToArray(Function(x) x.__node(NameOf(net.HiddenLayer), hash))
-            network += net.InputLayer.ToArray(Function(x) x.__node(NameOf(net.InputLayer), hash))
-            network += net.OutputLayer.ToArray(Function(x) x.__node(NameOf(net.OutputLayer), hash))
+            network += net.HiddenLayer.Select(Function(x) x.__node(NameOf(net.HiddenLayer), hash))
+            network += net.InputLayer.Select(Function(x) x.__node(NameOf(net.InputLayer), hash))
+            network += net.OutputLayer.Select(Function(x) x.__node(NameOf(net.OutputLayer), hash))
 
-            network += net.HiddenLayer.ToArray(Function(x) x.__edges(NameOf(net.HiddenLayer), hash)).IteratesALL
-            network += net.InputLayer.ToArray(Function(x) x.__edges(NameOf(net.InputLayer), hash)).IteratesALL
-            network += net.OutputLayer.ToArray(Function(x) x.__edges(NameOf(net.OutputLayer), hash)).IteratesALL
+            network += net.HiddenLayer.Select(Function(x) x.__edges(NameOf(net.HiddenLayer), hash)).IteratesALL
+            network += net.InputLayer.Select(Function(x) x.__edges(NameOf(net.InputLayer), hash)).IteratesALL
+            network += net.OutputLayer.Select(Function(x) x.__edges(NameOf(net.OutputLayer), hash)).IteratesALL
 
             Return network
         End Function

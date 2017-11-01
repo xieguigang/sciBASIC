@@ -97,7 +97,7 @@ Namespace Text.Xml
 
             Dim nsList As String() =
                 Regex.Matches(root, xmlnsRegex, RegexICSng) _
-                .ToArray(AddressOf Trim)
+                .Select(AddressOf Trim)
 
             For Each ns As String In nsList
                 [namespace] += ns.GetTagValue("=") _

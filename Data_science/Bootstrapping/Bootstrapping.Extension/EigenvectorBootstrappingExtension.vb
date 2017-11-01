@@ -87,7 +87,7 @@ Public Module EigenvectorBootstrappingExtension
 
             For Each x As EntityLDM In cluster.members
                 Dim rawKey As String = x.Properties.Values.ToArray.GetJson
-                Dim rawParams = raw(rawKey).ToArray(Function(o) o.Value.value)
+                Dim rawParams = raw(rawKey).Select(Function(o) o.Value.value)
 
                 tmp += rawParams
             Next

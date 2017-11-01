@@ -71,7 +71,7 @@
 '        Dim datasets As Entity() = codes.ToArray(
 '            Function(x) New Entity With {
 '                .uid = x.Name,
-'                .Properties = x.Name.Split(","c).ToArray(AddressOf Val)
+'                .Properties = x.Name.Split(","c).Select(AddressOf Val)
 '        })
 '        Dim clusters = ClusterDataSet(clustersExpected, datasets)
 '        Dim out As New Dictionary(Of String, Dictionary(Of String, DoubleRange))
@@ -92,7 +92,7 @@
 
 '            For Each p In pg
 '                Dim array = p.ToArray
-'                Dim vals = array.ToArray(Function(x) x.Value)
+'                Dim vals = array.Select(Function(x) x.Value)
 '                value(p.Key) = New DoubleRange(vals.Min, vals.Max)
 '            Next
 

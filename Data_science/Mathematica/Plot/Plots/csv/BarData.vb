@@ -78,7 +78,7 @@ Namespace csv
 
         <Extension>
         Public Function LoadBarData(csv$, colors$()) As BarDataGroup
-            Return csv.LoadBarData(colors.ToArray(AddressOf ToColor))
+            Return csv.LoadBarData(colors.Select(AddressOf ToColor).ToArray)
         End Function
 
         <Extension>
@@ -100,16 +100,16 @@ Namespace csv
             Return New BarDataGroup With {
                 .Serials = names _
                     .SeqIterator _
-                    .ToArray(Function(x) New NamedValue(Of Color) With {
+                    .Select(Function(x) New NamedValue(Of Color) With {
                         .Name = x.value,
                         .Value = clData(x.i)
                     }),
                 .Samples = csv.Rows _
-                    .ToArray(Function(x) New BarDataSample With {
+                    .Select(Function(x) New BarDataSample With {
                         .Tag = x.First,
                         .data = x _
                             .Skip(1) _
-                            .ToArray(AddressOf Val)
+                            .Select(AddressOf Val)
                     })
             }
         End Function
