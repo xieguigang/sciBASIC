@@ -59,7 +59,7 @@ Namespace Scripting
         ''' <param name="engine"></param>
         ''' <returns></returns>
         Public Function GetExpression(engine As Expression) As Func(Of Double(), Double)
-            Dim helper As New __callerHelper(Args.ToArray(Function(x) x.ToLower)) With {
+            Dim helper As New __callerHelper(Args.Select(Function(x) x.ToLower).ToArray) With {
                 .__engine = engine
             }
             Dim expr As SimpleExpression =
