@@ -188,7 +188,7 @@ Namespace Net
 #End If
             Dim data = WebServiceUtils.RequestParser(args, False)
 #If DEBUG Then
-            Call data.AllKeys.ToArray(Function(k) data(k)).GetJson.__DEBUG_ECHO
+            Call data.AllKeys.Select(Function(k) data(k)).ToArray.GetJson.__DEBUG_ECHO
 #End If
             Dim privateKey As String = data(hash)
             Dim uid As Long = Scripting.CTypeDynamic(Of Long)(data(TCPExtensions.uid))
