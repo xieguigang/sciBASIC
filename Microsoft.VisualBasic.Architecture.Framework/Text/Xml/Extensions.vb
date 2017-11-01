@@ -55,15 +55,16 @@ Namespace Text.Xml
             Dim doc As New XmlDocument
             Dim ms As New MemoryStream
 
-            Using writer As New StreamWriter(ms, Encoding.UTF8)
+            Using writer As New StreamWriter(ms, UTF8WithoutBOM)
                 Call doc.LoadXml(xml)
                 Call doc.Save(writer)
                 Call writer.Flush()
             End Using
 
-            Dim out$ = Encoding.UTF8 _
+            Dim out$ = UTF8WithoutBOM _
                 .GetString(ms.ToArray) _
                 .Trim("?"c)  ' 很奇怪，生成的字符串的开始的位置有一个问号
+
             Return out
         End Function
     End Module

@@ -127,7 +127,7 @@ Namespace ComponentModel
         Protected Overridable Overloads Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
-                    Call Save(encoding:=Encoding.UTF8)
+                    Call Save(encoding:=UTF8WithoutBOM)
                     ' TODO:  释放托管状态(托管对象)。
                 End If
 

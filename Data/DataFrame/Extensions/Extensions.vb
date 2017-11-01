@@ -220,7 +220,7 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="path$"></param>
-    ''' <param name="encoding"></param>
+    ''' <param name="encoding">Default is utf-8 without BOM</param>
     ''' <returns></returns>
     <ExportAPI("Write.Csv")>
     <Extension>
