@@ -69,7 +69,7 @@ Namespace Data
 
         Public Function CreateObject() As Drawing3D.Surface
             Return New Drawing3D.Surface With {
-                .vertices = vertices.Select(Function(pt) pt.PointData),
+                .vertices = vertices.Select(Function(pt) pt.PointData).ToArray,
                 .brush = Brush
             }
         End Function
