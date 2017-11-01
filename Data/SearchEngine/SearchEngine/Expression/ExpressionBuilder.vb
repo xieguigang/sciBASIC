@@ -41,7 +41,7 @@ Public Module ExpressionBuilder
 
     <Extension>
     Public Function Debug(expression As IEnumerable(Of MetaExpression)) As String
-        Return String.Join(" ", expression.ToArray(Function(x) $"<{x.Operator}>"))
+        Return String.Join(" ", expression.Select(Function(x) $"<{x.Operator}>").ToArray)
     End Function
 
     ''' <summary>

@@ -309,7 +309,7 @@ Namespace CommandLine
             If tokens.IsNullOrEmpty Then
                 Return ""
             Else
-                Return String.Join(" ", tokens.ToArray(AddressOf __innerWrapper))
+                Return String.Join(" ", tokens.Select(AddressOf __innerWrapper).ToArray)
             End If
         End Function
 

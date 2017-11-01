@@ -80,7 +80,7 @@ Public Module IOExtensions
     ''' <returns></returns>
     <Extension>
     Public Function ReadVector(path As String) As Double()
-        Return IO.File.ReadAllLines(path).ToArray(Function(x) CDbl(x))
+        Return IO.File.ReadAllLines(path).Select(Function(x) CDbl(x)).ToArray
     End Function
 
     ''' <summary>

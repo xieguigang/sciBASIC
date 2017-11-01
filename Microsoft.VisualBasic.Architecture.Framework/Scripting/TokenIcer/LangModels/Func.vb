@@ -78,10 +78,10 @@ Namespace Scripting.TokenIcer
 
         Public Overrides Function ToString() As String
             If Args.IsNullOrEmpty Then
-                Return String.Join(" ", Caller.ToArray(Function(x) x.ToString))
+                Return String.Join(" ", Caller.Select(Function(x) x.ToString).ToArray)
             Else
-                Dim caller As String = String.Join(" ", Me.Caller.ToArray(Function(x) x.ToString))
-                Dim params As String() = Me.Args.ToArray(Function(x) x.ToString)
+                Dim caller As String = String.Join(" ", Me.Caller.Select(Function(x) x.ToString).ToArray)
+                Dim params As String() = Me.Args.Select(Function(x) x.ToString).ToArray
                 Dim args As String = String.Join(", ", params)
                 Return $"{caller}({args})"
             End If
@@ -111,7 +111,7 @@ Namespace Scripting.TokenIcer
             If InnerStack.IsNullOrEmpty Then
                 Return obj.Value
             Else
-                Dim inner As String() = InnerStack.ToArray(Function(x) x.ToString)
+                Dim inner As String() = InnerStack.Select(Function(x) x.ToString).ToArray
                 Dim s As String = String.Join(" ", inner)
                 Return $"({s})"
             End If

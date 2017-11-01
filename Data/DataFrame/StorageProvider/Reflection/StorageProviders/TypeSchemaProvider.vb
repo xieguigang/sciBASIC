@@ -1,34 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::c2a054588e8852deeba4c364336bc8fa, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
 Namespace StorageProvider.Reflection
@@ -47,7 +47,7 @@ Namespace StorageProvider.Reflection
         <Extension>
         Public Function IsDataIgnored([property] As PropertyInfo) As Boolean
             Return Not [property].GetCustomAttributes(attributeType:=ignored, inherit:=True).IsNullOrEmpty OrElse
-                   Not [property].GetCustomAttributes(attributeType:=dataIgnores, inherit:=True).IsNullOrEmpty  
+                   Not [property].GetCustomAttributes(attributeType:=dataIgnores, inherit:=True).IsNullOrEmpty
         End Function
 
         ''' <summary>
@@ -166,13 +166,13 @@ Namespace StorageProvider.Reflection
             If Not (valueType = GetMetaAttribute([Property].PropertyType)) Is Nothing Then
 
                 Return New ComponentModels.MetaAttribute(              ' 是字典类型
-                    New MetaAttribute(valueType.value), [Property])
+                    New MetaAttribute(valueType.Value), [Property])
 
             ElseIf Not (elType = (GetThisElement([Property].PropertyType, forcePrimitive)) Is Nothing OrElse
-                        elType.value.Equals(GetType(Void))) Then
+                        elType.Value.Equals(GetType(Void))) Then
 
                 Return ComponentModels.CollectionColumn.CreateObject(    ' 是集合类型
-                    New CollectionAttribute(_getName), [Property], elType.value)
+                    New CollectionAttribute(_getName), [Property], elType.Value)
 
             ElseIf IsKeyValuePair([Property]) Then   ' 是键值对
 

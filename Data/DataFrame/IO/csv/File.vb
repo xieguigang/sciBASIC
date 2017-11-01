@@ -350,7 +350,7 @@ B21,B22,B23,...
         End Function
 
         Public Function ToArray(Of T)([ctype] As Func(Of RowObject, T)) As T()
-            Dim array As T() = _innerTable.ToArray([ctype])
+            Dim array As T() = _innerTable.Select([ctype]).ToArray
             Return array
         End Function
 
@@ -864,7 +864,7 @@ B21,B22,B23,...
         End Sub
 
         Public Sub Add(ParamArray row As Object())
-            Call Add(row.ToArray(Function(c) Scripting.ToString(c)))
+            Call Add(row.Select(Function(c) Scripting.ToString(c)))
         End Sub
 
         Public Sub Add(ParamArray row As String())

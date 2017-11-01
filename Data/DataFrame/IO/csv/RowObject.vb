@@ -55,7 +55,7 @@ Namespace IO
         ''' </summary>
         ''' <param name="objs">using <see cref="Scripting.Tostring"/> to converts the objects into a string array.</param>
         Sub New(objs As IEnumerable(Of Object))
-            Call Me.New(objs.ToArray(Function(x) Scripting.ToString(x)))
+            Call Me.New(objs.Select(Function(x) Scripting.ToString(x)))
         End Sub
 
         ''' <summary>
@@ -298,7 +298,7 @@ Namespace IO
         ''' <remarks></remarks>
         Public ReadOnly Property AsLine(Optional delimiter$ = ",") As String
             Get
-                Dim array$() = buffer.ToArray(AddressOf __mask)
+                Dim array$() = buffer.Select(AddressOf __mask).ToArray
                 Dim line As String = String.Join(delimiter, array)
                 Return line
             End Get

@@ -84,7 +84,8 @@ Namespace Parallel.Threads
             Dim taskHelper As New __threadHelper(Of TIn, T) With {
                 .__invoke = getTask
             }
-            Return source.ToArray(AddressOf taskHelper.__task) _
+            Return source.Select(AddressOf taskHelper.__task) _
+                .ToArray _
                 .BatchTask(numThreads, TimeInterval)
         End Function
 

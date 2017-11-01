@@ -35,37 +35,40 @@ Imports Microsoft.VisualBasic.Scripting.Runtime.NumberConversionRoutines
 
 Namespace ComponentModel.DataSourceModel
 
+    Public Enum PropertyAccess As Byte
+        NotSure = 0
+        Readable = 2
+        Writeable = 4
+        ReadWrite = Readable And Writeable
+    End Enum
+
+    ''' <summary>
+    ''' 在数据框数据映射操作之中是否忽略掉这个属性或者方法？
+    ''' </summary>
+    <AttributeUsage(AttributeTargets.Property Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
+    Public Class DataIgnoredAttribute : Inherits Attribute
+    End Class
+
     ''' <summary>
     ''' 在目标对象中必须要具有一个属性有自定义属性<see cref="DataFrameColumnAttribute"></see>
     ''' </summary>
     ''' <remarks></remarks>
     Public Module DataFramework
 
-        Public Enum PropertyAccess As Byte
-            NotSure = 0
-            Readable = 2
-            Writeable = 4
-            ReadWrite = Readable And Writeable
-        End Enum
-
-        ''' <summary>
-        ''' 在数据框数据映射操作之中是否忽略掉这个属性或者方法？
-        ''' </summary>
-        <AttributeUsage(AttributeTargets.Property Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
-        Public Class DataIgnoredAttribute : Inherits Attribute
-        End Class
-
         ''' <summary>
         ''' Controls for <see cref="PropertyAccess"/> on <see cref="PropertyInfo"/>
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Flags As IReadOnlyDictionary(Of PropertyAccess, Func(Of PropertyInfo, Boolean)) =
-            New Dictionary(Of PropertyAccess, Func(Of PropertyInfo, Boolean)) From {
+        Public ReadOnly Property Flags As IReadOnlyDictionary(Of PropertyAccess, Assert(Of PropertyInfo))
+
+        Sub New()
+            Flags = New Dictionary(Of PropertyAccess, Assert(Of PropertyInfo)) From {
  _
                 {PropertyAccess.Readable, Function(p) p.CanRead},
                 {PropertyAccess.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
                 {PropertyAccess.Writeable, Function(p) p.CanWrite}
-        }
+            }
+        End Sub
 
         ''' <summary>
         ''' 获取类型之中的属性列表
@@ -112,8 +115,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="nonIndex"><see cref="PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Schema(type As Type,
-                               flag As PropertyAccess,
+        Public Function Schema(type As Type, flag As PropertyAccess,
                                Optional binds As BindingFlags = PublicProperty,
                                Optional nonIndex As Boolean = False) As Dictionary(Of String, PropertyInfo)
 
@@ -122,7 +124,8 @@ Namespace ComponentModel.DataSourceModel
                 .GetProperties(binds) _
                 .ToArray
 
-            props = props.Where(Flags(flag)) _
+            props = props _
+                .Where(Flags(flag).AsLambda) _
                 .ToArray
 
             If nonIndex Then
@@ -139,8 +142,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Converts the .NET primitive types from string.(将字符串数据类型转换为其他的数据类型)
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property PrimitiveFromString As Dictionary(Of Type, __StringTypeCaster) =
-            New Dictionary(Of Type, __StringTypeCaster) From {
+        Public ReadOnly Property StringParsers As New Dictionary(Of Type, IStringParser) From {
  _
                 {GetType(String), Function(strValue As String) strValue},
                 {GetType(Boolean), AddressOf ParseBoolean},
@@ -156,7 +158,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Object <see cref="Object.ToString"/> methods.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ToStrings As New Dictionary(Of Type, StringTypeCastHandler) From {
+        Public ReadOnly Property StringBuilders As New Dictionary(Of Type, IStringBuilder) From {
  _
                 {GetType(String), Function(s) If(s Is Nothing, "", CStr(s))},
                 {GetType(Boolean), AddressOf DataFramework.valueToString},
@@ -177,10 +179,10 @@ Namespace ComponentModel.DataSourceModel
         Public Delegate Function CTypeDynamics(obj As Object, ConvertType As Type) As Object
 
         ''' <summary>
-        ''' 这个函数是为了提供转换的方法给字典对象<see cref="ToStrings"/>
+        ''' 这个函数是为了提供转换的方法给字典对象<see cref="StringBuilders"/>
         ''' </summary>
         ''' <param name="o">
-        ''' 因为<see cref="ToStrings"/>要求的是<see cref="StringTypeCastHandler"/>，
+        ''' 因为<see cref="StringBuilders"/>要求的是<see cref="IStringBuilder"/>，
         ''' 即<see cref="Object"/>类型转换为字符串，所以在这里就不适用T泛型了，而是直接
         ''' 使用<see cref="Object"/>类型
         ''' </param>
@@ -191,13 +193,28 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' Is one of the primitive type in the hash <see cref="ToStrings"/>?
+        ''' Is one of the primitive type in the hash <see cref="StringBuilders"/>?
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsPrimitive(type As Type) As Boolean
-            Return ToStrings.ContainsKey(type)
+            Return StringBuilders.ContainsKey(type)
+        End Function
+
+        ''' <summary>
+        ''' 如果目标类型的属性之中值包含有基础类型，则是一个非复杂类型，反之包含任意一个非基础类型，则是一个复杂类型
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IscomplexType(type As Type) As Boolean
+            Return Not type _
+                .Schema(PropertyAccess.NotSure, PublicProperty, True) _
+                .Values _
+                .Where(Function(t) Not IsPrimitive(t.PropertyType)) _
+                .FirstOrDefault Is Nothing
         End Function
 #End If
 

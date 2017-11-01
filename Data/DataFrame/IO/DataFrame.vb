@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::99e12c59f36bda6b6bcb4e0a5380b2c6, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
@@ -209,12 +210,14 @@ Namespace IO
         End Property
 
         Private ReadOnly Property IDataRecord_Item(i As Integer) As Object Implements IDataRecord.Item
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return IDataRecord_GetValue(i)
             End Get
         End Property
 
         Public Overloads ReadOnly Property Item(name As String) As Object Implements IDataRecord.Item
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return IDataRecord_GetValue(GetOrdinal(name))
             End Get
@@ -226,7 +229,7 @@ Namespace IO
         ''' <returns></returns>
         Public Function csv() As File
             Dim File As New File
-            File += __columnList.ToCsvRow
+            File += New RowObject(__columnList)
             File += DirectCast(_innerTable, IEnumerable(Of RowObject))
             Return File
         End Function
@@ -247,9 +250,13 @@ Namespace IO
         End Function
 
         Private Shared Function __getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
-            Return LinqAPI.MakeList(Of String) <= From strValue As String
-                                                  In table.First
-                                                  Select __reviewColumnHeader(strValue)
+            Return LinqAPI.MakeList(Of String) _
+ _
+                () <= From strValue As String
+                      In table.First
+                      Let s = __reviewColumnHeader(strValue)
+                      Select s
+
         End Function
 
         ''' <summary>
@@ -318,9 +325,8 @@ Namespace IO
         End Function
 
         Public Overrides Function Generate() As String
-            Dim sb As StringBuilder = New StringBuilder(1024)
-            Dim head As String =
-                New RowObject(__columnList).AsLine
+            Dim sb As New StringBuilder(1024)
+            Dim head As String = New RowObject(__columnList).AsLine
 
             Call sb.AppendLine(head)
 
@@ -348,12 +354,13 @@ Namespace IO
         ''' <param name="columns"></param>
         ''' <returns></returns>
         ''' <remarks>由于存在一一对应关系，这里不会再使用并行拓展</remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinalSchema(columns As String()) As Integer()
-            Return columns.ToArray(
-                [ctype]:=AddressOf __columnList.IndexOf,
-                parallel:=False)
+            Return columns.Select(Function(c) __columnList.IndexOf(c)).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetValue(ordinal As Integer) As String
 #If DEBUG Then
             If ordinal > Me.__currentLine.Count - 1 Then
@@ -384,6 +391,8 @@ Namespace IO
         ''' Reset the reading position in the data frame object.
         ''' </summary>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Reset()
             __current = -1
         End Sub
@@ -399,6 +408,7 @@ Namespace IO
             __columnList = source._innerTable.First.AsList
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return FilePath.ToFileURL & "  // " & _innerTable(__current).ToString
         End Function

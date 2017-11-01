@@ -68,16 +68,18 @@ Namespace Text
     ''' </summary>
     Public Module TextEncodings
 
+        Public ReadOnly Property UTF8WithoutBOM As New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False)
+
         ''' <summary>
         ''' 获取操作系统的当前 ANSI 代码页的编码。
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property DefaultEncoding As defaultEncoding = Encoding.Default
         ''' <summary>
-        ''' 获取 UTF-8 格式的编码。
+        ''' UTF-8 without BOM.(获取 UTF-8 格式的编码。<see cref="Encoding.UTF8"/>默认是带有BOM标记的，这里使用无BOM标记的UTF8编码)
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property UTF8 As defaultEncoding = Encoding.UTF8
+        Public ReadOnly Property UTF8 As defaultEncoding = UTF8WithoutBOM
 
         ''' <summary>
         ''' 编码由枚举类型<see cref="Encodings"/>到<see cref="Encoding"/>之间的映射
@@ -100,7 +102,7 @@ Namespace Text
             {Encodings.Unicode, Encoding.Unicode},
             {Encodings.UTF7, Encoding.UTF7},
             {Encodings.UTF32, Encoding.UTF32},
-            {Encodings.UTF8, Encoding.UTF8},
+            {Encodings.UTF8, UTF8WithoutBOM},
             {Encodings.Default, Encoding.Default},
             {Encodings.UTF16, Encoding.Unicode}
         }

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::04211be7d8266c45845c927b9567fa14, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Reflection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -45,6 +46,14 @@ Imports Microsoft.VisualBasic.Serialization.JSON
                   Category:=APICategories.SoftwareTools,
                   Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsLambda(Of T)(assert As Assert(Of T)) As Func(Of T, Boolean)
+        ' System.ArgumentException: '无法绑定到目标方法，因其签名或安全透明度与委托类型的签名或安全透明度不兼容。
+        ' assert.Method.CreateDelegate(GetType(Func(Of T, Boolean)))
+        Return Function(x) assert(x)
+    End Function
 
     <Extension>
     Public Function Source(m As MemberInfo) As String
@@ -193,6 +202,10 @@ NULL:       If Not strict Then
         If type.IsInheritsFrom(GetType(Dictionary(Of ,))) Then
             Dim keyValue As Type() = type.GetGenericArguments
             Return GetType(KeyValuePair(Of ,)).MakeGenericType(keyValue)
+        End If
+        If type.ImplementInterface(GetType(IEnumerable)) Then
+            type = type.GetInterfaces.Where(Function(i) InStr(i.Name, "IEnumerable") = 1).First
+            Return type.GenericTypeArguments.First
         End If
 
         If strict Then
@@ -491,10 +504,13 @@ NULL:       If Not strict Then
         Dim EnumValues As Object() =
             Scripting _
             .CastArray(Of System.Enum)(EnumType.GetEnumValues) _
-            .ToArray(Of Object)(Function(ar)
-                                    Return DirectCast(ar, Object)
-                                End Function)
-        Dim values As T() = EnumValues.ToArray(Of T)(Function([enum]) DirectCast([enum], T))
+            .Select(Of Object)(Function(ar)
+                                   Return DirectCast(ar, Object)
+                               End Function) _
+            .ToArray
+        Dim values As T() = EnumValues _
+            .Select(Of T)(Function([enum]) DirectCast([enum], T)) _
+            .ToArray
         Return values
     End Function
 
@@ -758,7 +774,9 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
                 Activator.CreateInstance(GetType(T), args)
             Return DirectCast(obj, T)
         Catch ex As Exception
-            Dim params As String() = args.ToArray(Function(x) x.GetType.FullName & " ==> " & GetObjectJson(x, x.GetType))
+            Dim params As String() = args _
+                .Select(Function(x) x.GetType.FullName & " ==> " & GetObjectJson(x, x.GetType)) _
+                .ToArray
             ex = New Exception(String.Join(vbCrLf, params), ex)
             ex = New Exception("@" & caller, ex)
 

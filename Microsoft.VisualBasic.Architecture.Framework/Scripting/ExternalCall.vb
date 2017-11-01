@@ -78,7 +78,7 @@ Namespace Scripting
             Dim param As String =
                 If(args Is Nothing,
                    "",
-                   String.Join(" ", args.AllKeys.ToArray(Function(s) $"{s} {args.Get(s).CLIToken}")))
+                   String.Join(" ", args.AllKeys.Select(Function(s) $"{s} {args.Get(s).CLIToken}").ToArray))
             Dim IO As New IORedirect(__host, path & " " & param)
             Dim code As Integer = IO.Start(WaitForExit:=True)
             Return New ShellValue(IO, code)

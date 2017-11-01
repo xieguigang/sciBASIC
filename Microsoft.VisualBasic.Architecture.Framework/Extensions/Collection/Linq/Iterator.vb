@@ -103,16 +103,20 @@ Namespace Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ValueArray(Of T)(source As IEnumerable(Of Value(Of T).IValueOf)) As T()
             Return source.Select(Function(o) o.value).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Indices(Of T)(source As IEnumerable(Of SeqValue(Of T))) As Integer()
             Return source.Select(Function(o) o.i).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Indices(Of T)(source As IEnumerable(Of T), assert As Func(Of T, Boolean)) As Integer()
             Return source _

@@ -326,8 +326,8 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of PointF), frameSize As SizeF) As PointF
-            Dim xOffset!() = pts.ToArray(Function(x) x.X)
-            Dim yOffset!() = pts.ToArray(Function(x) x.Y)
+            Dim xOffset!() = pts.Select(Function(x) x.X).ToArray
+            Dim yOffset!() = pts.Select(Function(x) x.Y).ToArray
             Dim xo, yo As Single
 
             If xOffset.Length > 0 Then

@@ -72,10 +72,13 @@ Namespace ApplicationServices.Globalization
 
         Private Shared Function __getLanguageResources(member As MemberInfo) As LanguageAttribute()
             Dim attrs As Object() = member.GetCustomAttributes(attributeType:=GetType(LanguageAttribute), inherit:=True)
+
             If attrs.IsNullOrEmpty Then
                 Return Nothing
             Else
-                Return attrs.ToArray(Function(attr) DirectCast(attr, LanguageAttribute))
+                Return attrs _
+                    .Select(Function(attr) DirectCast(attr, LanguageAttribute)) _
+                    .ToArray
             End If
         End Function
     End Class

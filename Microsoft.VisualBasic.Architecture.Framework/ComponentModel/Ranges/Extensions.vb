@@ -76,7 +76,7 @@ Namespace ComponentModel.Ranges
                 End If
             End If
 
-            t = t.ToArray(AddressOf Trim)
+            t = t.Select(AddressOf Trim).ToArray
 
             min = Casting.ParseNumeric(t(Scan0))
             max = Casting.ParseNumeric(t(1))

@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Text
 
 Namespace MMFProtocol.Pipeline
 
@@ -50,7 +51,7 @@ Namespace MMFProtocol.Pipeline
         End Sub
 
         Public Overrides Function Serialize() As Byte()
-            Dim nameBuf As Byte() = System.Text.Encoding.UTF8.GetBytes(Name)
+            Dim nameBuf As Byte() = UTF8withoutbom.GetBytes(Name)
             Dim buffer As Byte() = New Byte(INT32 + nameBuf.Length + byteData.Length - 1) {}
             Dim nameLen As Byte() = BitConverter.GetBytes(nameBuf.Length)
             Dim p As Long = Scan0

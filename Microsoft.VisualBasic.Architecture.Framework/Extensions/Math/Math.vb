@@ -1941,7 +1941,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
-            Return v.ToArray(Function(x) x.ToString("F" & digitals))
+            Return v.Select(Function(x) x.ToString("F" & digitals)).ToArray
         End Function
     End Module
 End Namespace

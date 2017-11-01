@@ -77,7 +77,7 @@ Namespace IO.Linq
             Dim first As String = file.ReadFirstLine
 
             _title = RowObject.TryParse(first)
-            _schema = _title.ToArray(
+            _schema = _title.Select(
                 Function(colName, idx) New With {
                     .colName = colName,
                     .ordinal = idx}) _

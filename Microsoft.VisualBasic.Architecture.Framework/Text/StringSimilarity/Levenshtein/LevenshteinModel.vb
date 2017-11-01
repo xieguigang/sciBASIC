@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::a76c6abc88f7bd6f3776ea6077716656, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Levenshtein\LevenshteinModel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -142,16 +142,19 @@ Namespace Text.Levenshtein
         End Function
 
         Public Function TrimMatrix(l As Integer) As Streams.Array.Double()
-            Me.DistTable = Me.
-                DistTable _
-                .ToArray(Function(row)
-                             Dim values#() = row _
-                                 .Values _
-                                 .ToArray(Function(n) sys.Round(n, l))
-                             Return New Streams.Array.Double With {
-                                 .Values = values
-                             }
-                         End Function)
+            Me.DistTable = Me.DistTable _
+                .Select(Function(row)
+                            Dim values#() = row _
+                                .Values _
+                                .Select(Function(n) sys.Round(n, l)) _
+                                .ToArray
+
+                            Return New Streams.Array.Double With {
+                                .Values = values
+                            }
+                        End Function) _
+                .ToArray
+
             Return Me.DistTable
         End Function
 

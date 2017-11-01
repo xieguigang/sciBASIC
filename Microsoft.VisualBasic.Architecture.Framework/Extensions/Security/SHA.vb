@@ -68,7 +68,7 @@ Namespace SecurityString
         End Sub
 
         Public Overrides Function ToString() As String
-            Return MyBase.ToString() & $"//  {NameOf(saltValueBytes)}:={String.Join(", ", saltValueBytes.ToArray(Of String)(Function(b) CStr(b)))}"
+            Return MyBase.ToString() & $"//  {NameOf(saltValueBytes)}:={String.Join(", ", saltValueBytes.Select(Of String)(Function(b) CStr(b)).ToArray)}"
         End Function
 
         Public ReadOnly Property Passphrase As String

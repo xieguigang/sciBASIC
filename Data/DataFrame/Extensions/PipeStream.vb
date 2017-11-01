@@ -89,7 +89,7 @@ Public Module PipeStream
 
         Return source _
             .Select(Function(row)
-                        Return row.ToArray(AddressOf Val)
+                        Return row.Select(AddressOf Val).ToArray
                     End Function) _
             .ToArray
     End Function

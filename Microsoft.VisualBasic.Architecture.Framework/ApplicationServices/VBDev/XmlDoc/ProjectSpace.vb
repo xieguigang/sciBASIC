@@ -180,7 +180,8 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Dim ext As String = If([lib] = Libraries.Hexo, ".html", ".md")
             Dim links As String() = allns _
                 .OrderBy(Function(ns) ns) _
-                .ToArray(Function(ns) __getIndexLink(ns, ext, [lib]))
+                .Select(Function(ns) __getIndexLink(ns, ext, [lib])) _
+                .ToArray
             Dim sb As String = "Browser by namespace:" & vbCrLf &
                 vbCrLf &
                 links.JoinBy(vbCrLf)

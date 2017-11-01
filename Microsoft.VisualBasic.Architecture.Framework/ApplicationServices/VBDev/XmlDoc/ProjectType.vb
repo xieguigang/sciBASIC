@@ -33,6 +33,7 @@
 Imports System.Text
 Imports System.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
+Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
@@ -239,7 +240,7 @@ title: {Me.Name}
                 End If
             End If
 
-            Call text.SaveTo(path, Encoding.UTF8)
+            Call text.SaveTo(path, UTF8withoutbom)
         End Sub
 
         Public Sub LoadFromNode(xn As XmlNode)

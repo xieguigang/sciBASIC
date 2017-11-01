@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::06ed68e59f97a3b80206e48aab8e6704, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScaleMaps.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports sys = System.Math
@@ -77,10 +78,16 @@ Namespace Math
                                                getSample As Func(Of T, Double),
                                           Optional Level As Integer = 10) As Dictionary(Of String, Integer)
 
-            Dim samples As Double() = data.ToArray(Function(x) getSample(x))
+            Dim samples As Double() = data.Select(getSample).ToArray
             Dim levels As Integer() = samples.GenerateMapping(Level)
-            Dim hash = data.ToArray(Function(x, i) New KeyValuePair(Of String, Integer)(x.Key, levels(i)))
-            Return hash.ToDictionary
+            Dim hash = data _
+                .SeqIterator _
+                .Select(Function(x) (x.value.Key, levels(x.i))) _
+                .ToArray
+
+            Return hash.ToDictionary(
+                Function(tp) tp.Item1,
+                Function(tp) tp.Item2)
         End Function
 
         ''' <summary>
@@ -127,13 +134,13 @@ Namespace Math
 
         <Extension>
         Public Function LogLevels(data As IEnumerable(Of Double), base%, Optional level As Integer = 100) As Integer()
-            Dim logvalues = data.ToArray(Function(x) sys.Log(x, base))
+            Dim logvalues = data.Select(Function(x) sys.Log(x, base)).ToArray
             Return logvalues.GenerateMapping(level)
         End Function
 
         <ExportAPI("Ranks.Log2")>
         <Extension> Public Function Log2Ranks(data As IEnumerable(Of Double), Optional Level As Integer = 100) As Integer()
-            Dim log2Value = data.ToArray(Function(x) sys.Log(x, 2))
+            Dim log2Value = data.Select(Function(x) sys.Log(x, 2)).ToArray
             Return log2Value.GenerateMapping(Level)
         End Function
 

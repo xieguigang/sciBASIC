@@ -302,7 +302,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds an object to the end of the <see cref="List(Of T)"/>.
+        ''' Adds an object to the begin of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
         ''' <param name="x">The object to be added to the end of the <see cref="List(Of T)"/>. The

@@ -190,7 +190,7 @@ Public Module WebServiceUtils
         If params.IsNullOrEmpty Then
             Return ""
         Else
-            Dim values = params.ToArray(Function(arg) $"{arg(Scan0)}={arg(1)}")
+            Dim values = params.Select(Function(arg) $"{arg(Scan0)}={arg(1)}").ToArray
             Return String.Join("&", values)
         End If
     End Function
@@ -404,7 +404,7 @@ Public Module WebServiceUtils
         If params Is Nothing Then
             post = Nothing
         Else
-            post = params.ToArray(Function(value) New KeyValuePair(Of String, String)(value(0), value(1)))
+            post = params.Select(Function(value) New KeyValuePair(Of String, String)(value(0), value(1))).ToArray
         End If
         Return PostRequest(url, post)
     End Function
