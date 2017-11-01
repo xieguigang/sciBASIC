@@ -152,11 +152,11 @@ Public Module PlotExtensions
         Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
 
         ' 通过kmeans计算出keys的顺序
-        Dim keysEntity = keys.ToArray(
+        Dim keysEntity = keys.Select(
             Function(k) New Entity With {
                 .uid = k,
                 .Properties = data.Select(Function(x) x.Value(k))
-            })
+            }).ToArray
         Dim keysOrder As New List(Of String)
 
         For Each cluster In keysEntity.ClusterDataSet(CInt(keys.Length / 5))
