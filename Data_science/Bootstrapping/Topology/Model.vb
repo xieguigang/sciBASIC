@@ -67,7 +67,7 @@ Namespace Topology
                     .Index = v.i,
                     .Name = v.value.Name,
                     .value = v.value.Value
-            }))
+            }).ToArray)
 
             Dim name As New Value(Of String)
 

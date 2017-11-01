@@ -139,7 +139,7 @@ Namespace Plot3D
                              Optional showLegend As Boolean = True) As DrawGraphics
 
             Dim averages As Double() = data _
-                .Select(Function(c) c.c.Average)
+                .Select(Function(c) c.c.Average).ToArray
             Dim levels As Integer() = averages _
                 .GenerateMapping(mapLevels) _
                 .ToArray

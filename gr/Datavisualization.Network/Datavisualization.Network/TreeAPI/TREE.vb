@@ -56,7 +56,7 @@ Namespace TreeAPI
         End Sub
 
         Public Overrides Function GetEntities() As String()
-            Return LeafX.Select(Function(x) x.ToNode)
+            Return LeafX.Select(Function(x) x.ToNode).ToArray
         End Function
     End Class
 
