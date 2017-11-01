@@ -204,6 +204,11 @@ Public Module Extensions
         Return DataFrame.CreateObject(csv)
     End Function
 
+    ''' <summary>
+    ''' Convert the dictionary table collection as the <see cref="EntityObject"/> collection.
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function DataFrame(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))) As EntityObject()
         Return source.ToArray(
@@ -216,11 +221,15 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 这个函数不会被申明为拓展函数了，因为这个object序列类型的函数如果为拓展函数的话，会与T泛型函数产生冲突
+    ''' This extension is using for .NET scripting API.
+    ''' (这个函数不会被申明为拓展函数了，因为这个object序列类型的函数如果为拓展函数的话，会与T泛型函数产生冲突)
     ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="path$"></param>
+    ''' <param name="data">A generic .NET collection, using for scripting API.</param>
+    ''' <param name="path$">The file path of the csv file for saved.</param>
     ''' <param name="encoding">Default is utf-8 without BOM</param>
+    ''' <param name="type">
+    ''' If this <see cref="Type"/> information provider is nothing, then the function will peeks of the first sevral element for the type information.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Write.Csv")>
     <Extension>
