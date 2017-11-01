@@ -57,12 +57,12 @@ Namespace IO.NetStream
                     End Function
 
                 Me.Encoding = encoding
-                Me.Values = source.ToArray([ctype]:=[ctype], parallel:=False)
+                Me.Values = source.Select([ctype]).ToArray
             End With
         End Sub
 
         Public Function CreateObject() As IO.File
-            Return New IO.File(Values.ToArray(Function(x) New IO.RowObject(x.Values)))
+            Return New IO.File(Values.Select(Function(x) New IO.RowObject(x.Values)))
         End Function
     End Class
 End Namespace

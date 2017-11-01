@@ -149,9 +149,9 @@ Namespace IO
             Dim doc As New StringBuilder
             Dim rowText$ = row _
                 .Where(Function(t) removes(t) = -1) _
-                .ToArray(Function(x)
-                             Return $"<td id=""{x}""><strong>{If(theadSpace, x & "&nbsp;&nbsp;&nbsp;", x)}</strong></td>"
-                         End Function) _
+                .Select(Function(x)
+                            Return $"<td id=""{x}""><strong>{If(theadSpace, x & "&nbsp;&nbsp;&nbsp;", x)}</strong></td>"
+                        End Function) _
                 .JoinBy("")
 
             Call doc.AppendLine("<thead>")

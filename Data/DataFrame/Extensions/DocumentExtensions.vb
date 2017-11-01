@@ -187,16 +187,19 @@ Public Module DocumentExtensions
             source = data.Columns
         End If
 
-        Dim out = LinqAPI.Exec(Of NamedValue(Of Double())) <=
+        Dim out = LinqAPI.Exec(Of NamedValue(Of Double())) _
  _
-            From column As String()
-            In source
-            Let name As String = column(Scan0)
-            Let values As Double() = column.Skip(1).ToArray(AddressOf Val)
-            Select New NamedValue(Of Double()) With {
-                .Name = name,
-                .Value = values
-            }
+            () <= From column As String()
+                  In source
+                  Let name As String = column(Scan0)
+                  Let values As Double() = column _
+                      .Skip(1) _
+                      .Select(AddressOf Val) _
+                      .ToArray
+                  Select New NamedValue(Of Double()) With {
+                      .Name = name,
+                      .Value = values
+                  }
 
         Return out
     End Function

@@ -269,7 +269,7 @@ Namespace IO.Linq
 #End Region
 
         Public Overrides Function ToString() As String
-            Return Tokens.ToArray(Function(x) x.ToString).JoinBy(" ")
+            Return Tokens.Select(Function(x) x.ToString).JoinBy(" ")
         End Function
 
         ''' <summary>
@@ -279,7 +279,7 @@ Namespace IO.Linq
         ''' <returns></returns>
         Public Shared Function TryParse(expr As String) As LinqWhere(Of T)
             Dim tokens = CommandLine.GetTokens(expr)
-            Dim lstCond = tokens.ToArray(Function(s) __tokenParser(s))
+            Dim lstCond = tokens.Select(Function(s) __tokenParser(s)).ToArray
             Return New LinqWhere(Of T) With {
             ._Tokens = lstCond
         }.Compile

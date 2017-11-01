@@ -62,13 +62,13 @@ Namespace StorageProvider.ComponentModels
         Sub New(SchemaProvider As SchemaProvider)
             Dim M = {
                 SchemaProvider.Columns _
-                    .ToArray(Function(field) DirectCast(field, StorageProvider)),
+                    .Select(Function(field) DirectCast(field, StorageProvider)).ToArray,
                 SchemaProvider.EnumColumns _
-                    .ToArray(Function(field) DirectCast(field, StorageProvider)),
+                    .Select(Function(field) DirectCast(field, StorageProvider)).ToArray,
                 SchemaProvider.KeyValuePairColumns _
-                    .ToArray(Function(field) DirectCast(field, StorageProvider)),
+                    .Select(Function(field) DirectCast(field, StorageProvider)).ToArray,
                 SchemaProvider.CollectionColumns _
-                    .ToArray(Function(field) DirectCast(field, StorageProvider))
+                    .Select(Function(field) DirectCast(field, StorageProvider)).ToArray
             }
 
             Me.SchemaProvider = SchemaProvider
@@ -98,8 +98,14 @@ Namespace StorageProvider.ComponentModels
                                                     Let ordinal As Integer =
                                                         schema.GetOrdinal(field.Name)
                                                     Select setValue(field, ordinal)
-            _IndexedFields = LQuery.Where(Function(field) field.Ordinal > -1).ToArray
-            Dim Indexed As String() = IndexedFields.ToArray(Function(field) field.Name.ToLower)
+            _IndexedFields = LQuery _
+                .Where(Function(field) field.Ordinal > -1) _
+                .ToArray
+
+            Dim Indexed As String() = IndexedFields _
+                .Select(Function(field) field.Name.ToLower) _
+                .ToArray
+
             '没有被建立索引的都可能会当作为字典数据
             _NonIndexed = (From colum As KeyValuePair(Of String, Integer)
                            In schema.SchemaOridinal
