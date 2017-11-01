@@ -407,11 +407,11 @@ Namespace Math.Correlations
                     Call rankList.Add(item(Scan0))
                 Else
                     Dim rank As Double = item.Select(Function(x) x.rank).Average
-                    Dim array As spcc() = item.ToArray(
+                    Dim array As spcc() = item.Select(
                         Function(x) New spcc With {
                             .rank = rank,
                             .data = x.data
-                        })
+                        }).ToArray
                     Call rankList.AddRange(array)
                 End If
             Next

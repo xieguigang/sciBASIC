@@ -101,8 +101,9 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Keys As String()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __arguments.ToArray(Function(v) v.Name)
+                Return __arguments.Select(Function(v) v.Name).ToArray
             End Get
         End Property
 

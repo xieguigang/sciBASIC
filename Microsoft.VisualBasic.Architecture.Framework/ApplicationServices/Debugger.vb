@@ -424,7 +424,7 @@ Public Module VBDebugger
     End Function
 
     <Extension> Public Sub Echo(Of T)(array As IEnumerable(Of T), <CallerMemberName> Optional memberName As String = "")
-        Call String.Join(", ", array.ToArray(Function(obj) Scripting.ToString(obj))).__DEBUG_ECHO
+        Call String.Join(", ", array.Select(Function(obj) Scripting.ToString(obj)).ToArray).__DEBUG_ECHO
     End Sub
 
     <Extension> Public Sub Echo(lines As IEnumerable(Of String))

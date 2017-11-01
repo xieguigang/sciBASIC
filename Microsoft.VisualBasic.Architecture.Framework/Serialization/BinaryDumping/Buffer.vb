@@ -68,7 +68,7 @@ Namespace Serialization.BinaryDumping
     Public Module BufferAPI
 
         Public Function CreateBuffer(Of T)(source As IEnumerable(Of T), getBuf As IGetBuffer(Of T)) As Byte()
-            Dim array As Buffer() = source.ToArray(Function(x) New Buffer(getBuf(x)))
+            Dim array As Buffer() = source.Select(Function(x) New Buffer(getBuf(x))).ToArray
             Dim buffer As Byte() = New Byte(array.Sum(Function(x) x.TotalBytes) - 1L) {}
             Dim i As Integer
 

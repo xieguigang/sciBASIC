@@ -87,7 +87,7 @@ Namespace ComponentModel.Collection
                                                             Select New __groupHelper(Of T) With {
                                                                 .cut = cut,
                                                                 .key = s_key,
-                                                                .keyASC = s_key.ToArray(AddressOf Asc),
+                                                                .keyASC = s_key.Select(AddressOf Asc).ToArray,
                                                                 .x = x
                                                             }
             Dim out As GroupResult(Of T, String)
@@ -124,7 +124,7 @@ Namespace ComponentModel.Collection
                 Call Console.Write("*")
 
                 out = New GroupResult(Of T, String) With {
-                    .Group = tmp.ToArray(Function(x) x.x),
+                    .Group = tmp.Select(Function(x) x.x).ToArray,
                     .Tag = ref.key
                 }
                 Yield out

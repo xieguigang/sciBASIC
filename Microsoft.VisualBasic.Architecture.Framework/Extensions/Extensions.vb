@@ -283,7 +283,7 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     <Extension> Public Function Keys(Of T1, T2)(source As IEnumerable(Of KeyValuePair(Of T1, T2))) As T1()
-        Return source.ToArray(Function(x) x.Key)
+        Return source.Select(Function(x) x.Key).ToArray
     End Function
 
     <Extension>
@@ -759,7 +759,7 @@ Public Module Extensions
         If values Is Nothing Then
             Return ""
         End If
-        Return String.Join(delimiter, values.ToArray(Function(n) CStr(n)))
+        Return String.Join(delimiter, values.Select(Function(n) CStr(n)).ToArray)
     End Function
 
     <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), data As T) As List(Of T)

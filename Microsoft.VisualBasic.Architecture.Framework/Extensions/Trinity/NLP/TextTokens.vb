@@ -60,7 +60,8 @@ Namespace Data.Trinity.NLP
             Else
                 ignores = ignores _
                     .Where(Function(s) Not s.StringEmpty) _
-                    .ToArray(AddressOf LCase)
+                    .Select(AddressOf LCase) _
+                    .ToArray
             End If
 
             For Each x As T In data
@@ -96,7 +97,8 @@ Namespace Data.Trinity.NLP
             Else
                 ignores = ignores _
                     .Where(Function(s) Not s.StringEmpty) _
-                    .ToArray(Function(s) s.ToLower)
+                    .Select(Function(s) s.ToLower) _
+                    .ToArray
             End If
 
             For Each x As T In data

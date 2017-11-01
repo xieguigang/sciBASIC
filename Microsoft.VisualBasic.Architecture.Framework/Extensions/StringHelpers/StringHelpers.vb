@@ -228,7 +228,7 @@ Public Module StringHelpers
 
     <Extension>
     Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter As String) As String
-        Return String.Join(delimiter, data.ToArray(AddressOf Scripting.ToString))
+        Return String.Join(delimiter, data.Select(AddressOf Scripting.ToString).ToArray)
     End Function
 
     ''' <summary>
@@ -645,7 +645,7 @@ Public Module StringHelpers
     <ExportAPI("Write.Dictionary")>
     Public Function SaveTo(dict As IDictionary(Of String, String), path As String) As Boolean
         ' 在这里不能够将接口类型进行json序列化，所以进行字符串的序列化然后拼接出json数据
-        Dim lines As String() = dict.ToArray(AddressOf __json)
+        Dim lines As String() = dict.Select(AddressOf __json).ToArray
         Return "{" &
             vbTab & String.Join("," & vbCrLf & vbTab, lines) &
         "}"

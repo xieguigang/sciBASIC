@@ -504,10 +504,13 @@ NULL:       If Not strict Then
         Dim EnumValues As Object() =
             Scripting _
             .CastArray(Of System.Enum)(EnumType.GetEnumValues) _
-            .ToArray(Of Object)(Function(ar)
-                                    Return DirectCast(ar, Object)
-                                End Function)
-        Dim values As T() = EnumValues.ToArray(Of T)(Function([enum]) DirectCast([enum], T))
+            .Select(Of Object)(Function(ar)
+                                   Return DirectCast(ar, Object)
+                               End Function) _
+            .ToArray
+        Dim values As T() = EnumValues _
+            .Select(Of T)(Function([enum]) DirectCast([enum], T)) _
+            .ToArray
         Return values
     End Function
 
@@ -771,7 +774,9 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
                 Activator.CreateInstance(GetType(T), args)
             Return DirectCast(obj, T)
         Catch ex As Exception
-            Dim params As String() = args.ToArray(Function(x) x.GetType.FullName & " ==> " & GetObjectJson(x, x.GetType))
+            Dim params As String() = args _
+                .Select(Function(x) x.GetType.FullName & " ==> " & GetObjectJson(x, x.GetType)) _
+                .ToArray
             ex = New Exception(String.Join(vbCrLf, params), ex)
             ex = New Exception("@" & caller, ex)
 

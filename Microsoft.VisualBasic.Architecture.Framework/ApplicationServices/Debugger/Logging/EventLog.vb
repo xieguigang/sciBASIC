@@ -114,7 +114,7 @@ Namespace ApplicationServices.Debugging.Logging
                 Call s.__DEBUG_ECHO
 #End If
                 Using evLog As New Diagnostics.EventLog(Services, ".", Product)
-                    Dim data As Object() = Message.ToArray(Function(str) DirectCast(str, Object))
+                    Dim data As Object() = Message.Select(Function(str) DirectCast(str, Object)).ToArray
                     Call evLog.WriteEvent(New EventInstance(10001 + category * 55, category, EventType), data)
                 End Using
             Catch ex As Exception

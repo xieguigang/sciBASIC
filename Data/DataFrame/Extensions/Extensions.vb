@@ -156,9 +156,9 @@ Public Module Extensions
 
     <Extension>
     Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo As String, Optional noTitle As Boolean = False, Optional encoding As Encodings = Encodings.UTF8) As Boolean
-        Dim doc As IO.File = StorageProvider.Reflection.Reflector.Save(source, False)
+        Dim doc As File = Reflector.Save(source, False)
         Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
-        Dim slines As String() = lines.ToArray(Function(x) x.AsLine(vbTab))
+        Dim slines As String() = lines.Select(Function(x) x.AsLine(vbTab)).ToArray
         Dim sdoc As String = String.Join(vbCrLf, slines)
         Return sdoc.SaveTo(saveTo, encoding.CodePage)
     End Function
@@ -211,13 +211,14 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Function DataFrame(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))) As EntityObject()
-        Return source.ToArray(
-            Function(o)
-                Return New EntityObject With {
-                    .ID = o.Name,
-                    .Properties = o.Value
-                }
-            End Function)
+        Return source _
+            .Select(Function(o)
+                        Return New EntityObject With {
+                            .ID = o.Name,
+                            .Properties = o.Value
+                        }
+                    End Function) _
+            .ToArray
     End Function
 
     ''' <summary>
@@ -539,7 +540,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     <Extension> Public Function LoadDblVector(path As String) As Double()
         Dim buf As IO.File = IO.File.Load(path)
         Dim FirstRow As RowObject = buf.First
-        Dim data As Double() = FirstRow.ToArray(AddressOf Val)
+        Dim data As Double() = FirstRow.Select(AddressOf Val).ToArray
         Return data
     End Function
 

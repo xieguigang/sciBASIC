@@ -239,7 +239,7 @@ Namespace ComponentModel.Settings
 
         <ExportAPI("Prints")>
         Public Shared Function Prints(data As IEnumerable(Of NamedValue(Of String))) As String
-            Dim keys As String() = data.ToArray(Function(x) x.Name)
+            Dim keys As String() = data.Select(Function(x) x.Name).ToArray
             Dim maxLen As Integer = keys.Select(AddressOf Len).Max
             Dim sb As New StringBuilder(New String("-"c, 120))
 
