@@ -1,36 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::42bcbf47e5542586ab32549823ae7247, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Terminal
+
+    Public Structure Theme
+
+        Dim BackgroundColor As ConsoleColor
+        Dim ProgressBarColor As ConsoleColor
+        Dim ProgressMsgColor As ConsoleColor
+        Dim MessageDetailColor As ConsoleColor
+
+        Public ReadOnly Property IsEmpty As Boolean
+            Get
+                Return BackgroundColor = 0 AndAlso
+                    ProgressBarColor = 0 AndAlso
+                    ProgressMsgColor = 0 AndAlso
+                    MessageDetailColor = 0
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property DefaultTheme As New DefaultValue(Of Theme) With {
+            .LazyValue = Function() [Default](),
+            .assert = Function(t)
+                          Return DirectCast(t, Theme).IsEmpty
+                      End Function
+        }
+
+        Public Shared Function [Default]() As Theme
+            Return New Theme With {
+                .BackgroundColor = ConsoleColor.Cyan,
+                .MessageDetailColor = ConsoleColor.White,
+                .ProgressBarColor = ConsoleColor.Yellow,
+                .ProgressMsgColor = ConsoleColor.Green
+            }
+        End Function
+    End Structure
 
     ''' <summary>
     ''' 
@@ -46,21 +79,24 @@ Namespace Terminal
 
         Dim current%
         Dim y%
+        Dim theme As Theme
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="title"></param>
-        ''' <param name="Y"></param>
+        ''' <param name="Y">The row position number of the progress bar.</param>
         ''' <param name="CLS">Clear the console screen?</param>
-        Sub New(title$, Optional Y As Integer = 1, Optional CLS As Boolean = False)
+        Sub New(title$, Y%, Optional CLS As Boolean = False, Optional theme As Theme = Nothing)
             If CLS AndAlso App.IsConsoleApp Then
                 Call Console.Clear()
             End If
 
             Call Console.WriteLine(title)
 
+            Me.theme = theme Or Theme.DefaultTheme
             Me.y = Y
+
             AddHandler TerminalEvents.Resize, AddressOf __resize
 
             Try
@@ -68,6 +104,14 @@ Namespace Terminal
             Catch ex As Exception
 
             End Try
+        End Sub
+
+        ''' <summary>
+        ''' 在当前位置之后设置进度条，这个构造函数不会清除整个终端屏幕
+        ''' </summary>
+        ''' <param name="title$"></param>
+        Sub New(title$)
+            Call Me.New(title, Y:=Console.CursorTop, CLS:=False)
         End Sub
 
         Private Sub __resize(size As Size, old As Size)
@@ -85,6 +129,15 @@ Namespace Terminal
             Call SetToEchoLine()
         End Sub
 
+        ' title
+        ' progress bar
+        ' details
+        '
+        ' echo
+
+        ''' <summary>
+        ''' 将终端的输出位置放置到详细信息的下一行
+        ''' </summary>
         Public Sub SetToEchoLine()
             Console.SetCursorPosition(0, y + 3)
         End Sub
@@ -108,7 +161,12 @@ Namespace Terminal
             End Get
         End Property
 
-        Private Sub __tick(p As Integer, details As String)
+        ''' <summary>
+        ''' 更新进度条的当前状态信息
+        ''' </summary>
+        ''' <param name="p%"></param>
+        ''' <param name="details$"></param>
+        Private Sub __tick(p%, details$)
             Console.BackgroundColor = ConsoleColor.Yellow
             ' /运算返回完整的商，包括余数，SetCursorPosition会自动四舍五入
             Dim cx As Integer = p * (Console.WindowWidth - 2) / 100
