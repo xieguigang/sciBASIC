@@ -221,7 +221,7 @@ Namespace Linq
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Repeats(Of T)(source As T, n%) As T()
-            Return n.ToArray(Function(x) source)
+            Return n.Sequence.Select(Function(x) source)
         End Function
 
         ''' <summary>
@@ -234,7 +234,7 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CopyVector(Of T)(n As Integer, source As Func(Of T)) As T()
-            Return n.ToArray(Function(x) source())
+            Return n.Sequence.Select(Function(x) source())
         End Function
 
         <Extension> Public Function Read(Of T)(array As T(), ByRef i As Integer, ByRef out As T) As T

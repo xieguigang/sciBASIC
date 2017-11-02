@@ -207,7 +207,7 @@ Namespace Drawing2D.Colors
 
                 For Each x In colors
                     valids(ColorTranslator.FromHtml(x.Key)) =
-                        x.Value.ToArray(AddressOf ColorTranslator.FromHtml)
+                        x.Value.Select(AddressOf ColorTranslator.FromHtml).ToArray
                 Next
 
                 AvailableInterpolates = valids
@@ -245,7 +245,8 @@ Namespace Drawing2D.Colors
             ColorMap.PatternSpring,
             ColorMap.PatternSummer,
             ColorMap.PatternWinter
-        }.ToArray(AddressOf LCase)
+        }.Select(AddressOf LCase) _
+         .ToArray
 
         ''' <summary>
         ''' Google material design colors
@@ -363,7 +364,7 @@ Namespace Drawing2D.Colors
         ''' <param name="alpha%"></param>
         ''' <returns></returns>
         Public Function GetBrushes(term$, Optional n% = 256, Optional alpha% = 255) As SolidBrush()
-            Return GetColors(term, n, alpha).ToArray(Function(c) New SolidBrush(c))
+            Return GetColors(term, n, alpha).Select(Function(c) New SolidBrush(c)).ToArray
         End Function
 
         ''' <summary>

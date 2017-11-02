@@ -92,7 +92,7 @@ Namespace Darwinism
                 Function(seed)
                     Dim out As New ParameterVector(randomGenerator) With {
                         .vars = vars _
-                        .ToArray(Function(v) New var(v))
+                        .Select(Function(v) New var(v))
                     }
 
                     If seed Is Nothing Then

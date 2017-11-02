@@ -74,9 +74,13 @@ Namespace Language.Java
         ''' MersenneTwisterFast class for access to a single instance of the class,
         ''' that has synchronization.
         ''' </summary>
-        Private ReadOnly random As MersenneTwisterFast = MersenneTwisterFast.DEFAULT_INSTANCE
+        ReadOnly random As MersenneTwisterFast = MersenneTwisterFast.DEFAULT_INSTANCE
 
-        ' Chooses one category if a cumulative probability distribution is given
+        ''' <summary>
+        ''' Chooses one category if a cumulative probability distribution is given 
+        ''' </summary>
+        ''' <param name="cf"></param>
+        ''' <returns></returns>
         Public Function randomChoice(cf As Double()) As Integer
 
             Dim U As Double = random.nextDouble()
@@ -165,7 +169,6 @@ Namespace Language.Java
                 End SyncLock
             End Set
         End Property
-
 
         ''' <summary>
         ''' Access a default instance of this class, access is synchronized

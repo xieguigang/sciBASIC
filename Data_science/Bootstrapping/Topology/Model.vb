@@ -63,11 +63,11 @@ Namespace Topology
             Call MyBase.New(
                 vars _
                 .SeqIterator _
-                .ToArray(Function(v) New var With {
+                .Select(Function(v) New var With {
                     .Index = v.i,
                     .Name = v.value.Name,
                     .value = v.value.Value
-            }))
+            }).ToArray)
 
             Dim name As New Value(Of String)
 

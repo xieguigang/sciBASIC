@@ -46,8 +46,8 @@ Namespace csv
                 Dim Y = columns(index.y)
                 Dim pts As PointF() = X _
                     .SeqIterator _
-                    .ToArray(Function(xi) New PointF(xi.value, Y(xi)))
-                Dim points As PointData() = pts.ToArray(Function(pt) New PointData(pt))
+                    .Select(Function(xi) New PointF(xi.value, Y(xi))).ToArray
+                Dim points As PointData() = pts.Select(Function(pt) New PointData(pt)).ToArray
 
                 Return New ChartPlots.SerialData With {
                     .color = color.TranslateColor,

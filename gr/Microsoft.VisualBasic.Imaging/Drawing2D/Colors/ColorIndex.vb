@@ -50,10 +50,10 @@ Namespace Drawing2D.Colors
 
         Sub New(maps As Dictionary(Of String, String), levels%)
             Dim path$() = maps.Keys.ToArray
-            Dim colors As Color() = path.ToArray(AddressOf TranslateColor)
+            Dim colors As Color() = path.Select(AddressOf TranslateColor).ToArray
             Dim parts = path.SlideWindows(2).ToArray
             Dim levelMappings As New List(Of ColorRange)
-            Dim tags$() = path.ToArray(Function(c) maps(c))
+            Dim tags$() = path.Select(Function(c) maps(c)).ToArray
 
             With Me
                 .colors = colors.CubicSpline(levels)

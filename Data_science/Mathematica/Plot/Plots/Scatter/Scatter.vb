@@ -479,10 +479,10 @@ Public Module Scatter
             .lineType = lineType,
             .PointSize = ptSize,
             .width = lineWidth,
-            .pts = points.ToArray(
+            .pts = points.Select(
                 Function(pt) New PointData With {
                     .pt = pt
-            }),
+            }).ToArray,
             .title = title
         }
     End Function

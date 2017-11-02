@@ -85,7 +85,7 @@ Namespace BarPlot.Histogram
         Sub New(data As IEnumerable(Of HistProfile))
             Samples = data
             Serials = data _
-                .ToArray(Function(x) New NamedValue(Of Color) With {
+                .Select(Function(x) New NamedValue(Of Color) With {
                     .Name = x.legend.title,
                     .Value = x.legend.color.ToColor
                 })
@@ -118,7 +118,7 @@ Namespace BarPlot.Histogram
                 .width = width,
                 .lineType = type,
                 .PointSize = ptSize,
-                .pts = data.ToArray(Function(x) x.LinePoint)
+                .pts = data.Select(Function(x) x.LinePoint)
             }
         End Function
 
@@ -161,13 +161,13 @@ Namespace BarPlot.Histogram
         ''' </summary>
         ''' <param name="hist"></param>
         Sub New(hist As Dictionary(Of Double, IntegerTagged(Of Double)), step!)
-            data = hist.ToArray(
+            data = hist.Select(
                 Function(range) New HistogramData With {
                     .x1 = range.Key,
                     .x2 = .x1 + step!,
                     .y = range.Value.Tag,
-                    .pointY = range.Value.value
-                })
+                    .pointY = range.Value.Value
+                }).ToArray
         End Sub
     End Structure
 End Namespace

@@ -58,7 +58,7 @@ Namespace Drawing3D.Math3D
                     .brush = surface.brush,
                     .vertices = surface _
                         .vertices _
-                        .ToArray(Function(p3D) p3D - offset)
+                        .Select(Function(p3D) p3D - offset).ToArray
                 }
             Next
 

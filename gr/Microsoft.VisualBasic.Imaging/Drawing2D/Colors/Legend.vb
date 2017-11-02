@@ -60,7 +60,7 @@ Namespace Drawing2D.Colors
                                        Optional labelFont As Font = Nothing,
                                        Optional legendWidth! = -1) As GraphicsData
             Dim br As SolidBrush() =
-                designer.ToArray(Function(c) New SolidBrush(c))
+                designer.Select(Function(c) New SolidBrush(c)).ToArray
             Return br.ColorMapLegend(
                 title,
                 min, max,
