@@ -231,7 +231,7 @@ Namespace ComponentModel.Ranges
             Return value
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of Double) Implements IEnumerable(Of Double).GetEnumerator
+        Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of Double) Implements IEnumerable(Of Double).GetEnumerator
             For Each x In Me.Enumerate(100)
                 Yield x
             Next

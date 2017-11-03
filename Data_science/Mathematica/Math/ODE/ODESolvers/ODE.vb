@@ -42,6 +42,12 @@ Public Class ODE : Implements INamedValue
 #End Region
 
     ''' <summary>
+    ''' The tag value
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ID As String Implements INamedValue.Key
+
+    ''' <summary>
     ''' Public Delegate Function df(x As Double, y As Double) As Double
     ''' (从这里传递自定义的函数指针)
     ''' </summary>
@@ -71,9 +77,12 @@ Public Class ODE : Implements INamedValue
         End Get
     End Property
 
-    Public Property Id As String Implements INamedValue.Key
-
     Public Overrides Function ToString() As String
         Return x.GetJson & " --> " & y.GetJson
     End Function
+End Class
+
+Public Class ODEOutput
+
+
 End Class
