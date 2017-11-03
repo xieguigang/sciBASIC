@@ -100,6 +100,14 @@ Namespace ComponentModel.Ranges
             Call Me.New(range.Min, range.Max)
         End Sub
 
+        ''' <summary>
+        ''' Value copy
+        ''' </summary>
+        ''' <param name="range"></param>
+        Sub New(range As DoubleRange)
+            Call Me.New(range.Min, range.Max)
+        End Sub
+
         Sub New()
         End Sub
 

@@ -4,6 +4,7 @@ Imports System.Xml.Serialization
 
 Namespace ComponentModel.Ranges
 
+    <XmlType("numeric-sequence")>
     Public Class Sequence : Implements IRanges(Of Double)
 
         <XmlElement("range")>
