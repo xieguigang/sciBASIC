@@ -231,26 +231,25 @@ Public Module Extensions
 
     ''' <summary>
     ''' Returns the second element in the source collection, if the collection 
-    ''' is nothing or elements count not enough, then will returns nothing.
+    ''' is nothing or elements count not enough, then will returns nothing if 
+    ''' the <paramref name="suppressError"/> option was opend, otherwise this 
+    ''' function will throw exception.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
-    <Extension>
-    Public Function SecondOrNull(Of T)(source As IEnumerable(Of T)) As T
-        Dim i As Integer = 0
-
-        If source Is Nothing Then
-            Return Nothing
-        End If
-
-        For Each x As T In source
-            If i = 1 Then
-                Return x
+    <Extension> Public Function Second(Of T)(source As IEnumerable(Of T), Optional suppressError As Boolean = False, Optional [default] As T = Nothing) As T
+        For Each x As SeqValue(Of T) In source.SeqIterator
+            If x.i = 1 Then
+                Return x.value
             End If
         Next
 
-        Return Nothing
+        If Not suppressError Then
+            Throw New IndexOutOfRangeException
+        Else
+            Return [default]
+        End If
     End Function
 
     <Extension> Public Function Add(Of T As INamedValue)(ByRef hash As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
