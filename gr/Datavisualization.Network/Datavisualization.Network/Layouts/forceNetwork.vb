@@ -90,7 +90,7 @@ Namespace Layouts
                     .Stiffness = Stiffness
                 }.GetJson
 
-                progress = New ProgressBar("Do Force Directed Layout...", CLS:=showProgress)
+                progress = New ProgressBar("Do Force Directed Layout...", 1, CLS:=showProgress)
                 tick = Sub(i%)
                            ETA = "ETA=" & ticking _
                                .ETA(progress.ElapsedMilliseconds) _

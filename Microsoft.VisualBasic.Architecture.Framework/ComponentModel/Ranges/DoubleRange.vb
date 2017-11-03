@@ -100,6 +100,14 @@ Namespace ComponentModel.Ranges
             Call Me.New(range.Min, range.Max)
         End Sub
 
+        ''' <summary>
+        ''' Value copy
+        ''' </summary>
+        ''' <param name="range"></param>
+        Sub New(range As DoubleRange)
+            Call Me.New(range.Min, range.Max)
+        End Sub
+
         Sub New()
         End Sub
 
@@ -231,7 +239,7 @@ Namespace ComponentModel.Ranges
             Return value
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of Double) Implements IEnumerable(Of Double).GetEnumerator
+        Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of Double) Implements IEnumerable(Of Double).GetEnumerator
             For Each x In Me.Enumerate(100)
                 Yield x
             Next

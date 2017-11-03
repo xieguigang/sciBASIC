@@ -136,6 +136,25 @@ Namespace ComponentModel.DataSourceModel
             Return props.ToDictionary(Function(x) x.Name)
         End Function
 
+        <Extension>
+        Public Function DictionaryTable(Of T)(x As T, Optional where As Assert(Of Object) = Nothing) As Dictionary(Of String, String)
+            Dim schema = GetType(T).Schema(PropertyAccess.Readable, PublicProperty, nonIndex:=True)
+            Dim table As New Dictionary(Of String, String)
+            Dim obj
+
+            where = where Or New Assert(Of Object)(Function() True).AsDefault
+
+            For Each key As String In schema.Keys
+                obj = schema(key).GetValue(x)
+
+                If where(obj) Then
+                    table(key) = Scripting.ToString(obj)
+                End If
+            Next
+
+            Return table
+        End Function
+
 #If NET_40 = 0 Then
 
         ''' <summary>
