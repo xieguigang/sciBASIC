@@ -168,7 +168,7 @@ Namespace Plot3D
             If App.IsConsoleApp Then
                 Dim tick As New ProgressProvider(total)
                 Dim msg$ = $"Populates data points...(Estimates size: {tick.Target * (yLen / ysteps)}...)"
-                Dim prog As New ProgressBar(msg, CLS:=True)
+                Dim prog As New ProgressBar(msg, 1, CLS:=True)
 
                 Call tick.StepProgress()
 
