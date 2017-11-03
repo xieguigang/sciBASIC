@@ -286,7 +286,7 @@ Namespace d3js.Layout
                 Dim tickProvider As New ProgressProvider(nsweeps)
                 Dim p#
 
-                progress = New ProgressBar("Labels layouting...", CLS:=True)
+                progress = New ProgressBar("Labels layouting...", 1, CLS:=True)
                 tick = Sub(currT#)
                            p = tickProvider.StepProgress
                            progress.SetProgress(p, currT.ToString("F2"))
