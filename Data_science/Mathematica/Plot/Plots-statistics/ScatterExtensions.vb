@@ -1,0 +1,176 @@
+﻿Imports System.Drawing
+Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Histogram
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Calculus
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+
+Public Module ScatterExtensions
+
+    ''' <summary>
+    ''' 从一系列的ODE计算结果之中构建出直方图的绘图数据模型
+    ''' </summary>
+    ''' <param name="odes"></param>
+    ''' <param name="colors$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function FromODEList(odes As IEnumerable(Of ODEOutput), Optional colors$() = Nothing) As HistogramGroup
+        Dim clData As Color() = If(
+            colors.IsNullOrEmpty,
+            ChartColors.Shuffles,
+            colors.Select(AddressOf ToColor))
+        Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
+ _
+            From x As SeqValue(Of ODEOutput)
+            In odes.SeqIterator
+            Select New NamedValue(Of Color) With {
+                .Name = x.value.ID,
+                .Value = clData(x.i)
+            }
+
+        Dim range As DoubleRange = odes.First.xrange
+        Dim delta# = range.Length / odes.First.Y.Length
+        Dim samples = LinqAPI.Exec(Of HistProfile) <=
+ _
+            From out As SeqValue(Of ODEOutput)
+            In odes.SeqIterator
+            Let left = New Value(Of Double)(range.Min)
+            Select New HistProfile With {
+                .legend = New Legend With {
+                    .color = serials(out.i).Value.RGBExpression,
+                    .fontstyle = CSSFont.Win10Normal,
+                    .style = LegendStyles.Rectangle,
+                    .title = serials(out.i).Name
+                },
+                .data = LinqAPI.Exec(Of HistogramData) <=
+ _
+                    From i As SeqValue(Of Double)
+                    In out.value.Y.Vector.SeqIterator
+                    Let x1 As Double = left
+                    Let x2 As Double = (left = left.Value + delta)
+                    Where Not i.value.IsNaNImaginary
+                    Select New HistogramData With {
+                        .x1 = x1,
+                        .x2 = x2,
+                        .y = i.value
+                    }
+            }
+
+        Return New HistogramGroup With {
+            .Samples = samples,
+            .Serials = serials
+        }
+    End Function
+
+    ''' <summary>
+    ''' Scatter plot
+    ''' </summary>
+    ''' <param name="ode"></param>
+    ''' <param name="color$"></param>
+    ''' <param name="dash"></param>
+    ''' <param name="ptSize"></param>
+    ''' <param name="width"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function FromODE(ode As ODEOutput, color$,
+                            Optional dash As DashStyle = DashStyle.Dash,
+                            Optional ptSize As Integer = 30,
+                            Optional width As Single = 5) As SerialData
+
+        Return New SerialData With {
+            .title = ode.ID,
+            .color = color.ToColor,
+            .lineType = dash,
+            .PointSize = ptSize,
+            .width = width,
+            .pts = LinqAPI.Exec(Of PointData) <=
+                From x As SeqValue(Of Double)
+                In ode.X.ToArray.SeqIterator
+                Select New PointData(CSng(x.value), CSng(ode.Y.Vector(x.i)))
+        }
+    End Function
+
+    ''' <summary>
+    ''' 绘制积分计算的结果
+    ''' </summary>
+    ''' <param name="ode"></param>
+    ''' <param name="size"></param>
+    ''' <param name="bg"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Plot(ode As ODEOutput, Optional size$ = "1600,1200", Optional padding$ = g.DefaultPadding, Optional bg$ = "white") As GraphicsData
+        Return Scatter.Plot({ode.FromODE("cyan")}, size, padding, bg)
+    End Function
+
+    ''' <summary>
+    ''' 绘制常微分方程组的计算结果
+    ''' </summary>
+    ''' <param name="ode"></param>
+    ''' <param name="size"></param>
+    ''' <param name="bg"></param>
+    ''' <param name="ptSize"></param>
+    ''' <param name="width"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Plot(ode As ODEsOut,
+                         Optional size$ = "1600,1200",
+                         Optional padding$ = g.DefaultPadding,
+                         Optional bg As String = "white",
+                         Optional ptSize As Single = 30,
+                         Optional width As Single = 5) As GraphicsData
+        Return Scatter.Plot(ode.FromODEs(, ptSize, width), size, padding, bg)
+    End Function
+
+    ReadOnly defaultColorSequence As DefaultValue(Of Color()) = ChartColors
+
+    ''' <summary>
+    ''' Convert ODEs result as scatter plot serial model.
+    ''' </summary>
+    ''' <param name="odes"></param>
+    ''' <param name="colors"></param>
+    ''' <param name="ptSize!"></param>
+    ''' <param name="width"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function FromODEs(odes As ODEsOut,
+                             Optional colors As IEnumerable(Of String) = Nothing,
+                             Optional ptSize! = 30,
+                             Optional width As Single = 5) As SerialData()
+
+        Dim c As Color() = colors _
+            .SafeQuery _
+            .Select(AddressOf ToColor) Or [defaultColorSequence]
+
+        Return LinqAPI.Exec(Of SerialData) _
+ _
+            () <= From y As SeqValue(Of NamedCollection(Of Double))
+                  In odes.y.Values.SeqIterator
+                  Let pts As PointData() = odes.x _
+                       .SeqIterator _
+                       .Select(Function(i)
+                                   Dim x! = CSng(i.value)
+                                   Dim yx! = CSng(y.value.Value(i))
+                                   Return New PointData(x!, yx!)
+                               End Function)
+                  Let color As Color = c(y.i)
+                  Select New SerialData With {
+                       .color = color,
+                       .lineType = DashStyle.Solid,
+                       .PointSize = ptSize,
+                       .title = y.value.Name,
+                       .width = width,
+                       .pts = pts
+                   }
+    End Function
+End Module
