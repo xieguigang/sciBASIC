@@ -37,6 +37,10 @@ Namespace ComponentModel.Ranges
             Me.n = n
         End Sub
 
+        Sub New()
+
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsInside(x As Double) As Boolean Implements IRanges(Of Double).IsInside
             Return Range.IsInside(x)
