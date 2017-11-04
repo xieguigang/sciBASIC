@@ -71,29 +71,34 @@ The R functions write.xlsx() and write.xlsx2() can be used to export data from R
 
 The simplified formats of these two functions are:
 
+```R
 write.xlsx(x, file, sheetName="Sheet1", 
   col.names=TRUE, row.names=TRUE, append=FALSE)
 write.xlsx2(x, file, sheetName="Sheet1",
   col.names=TRUE, row.names=TRUE, append=FALSE)
+```
 
-x : a data.frame to be written into the workbook
-file : the path to the output file
-sheetName : a character string to use for the sheet name.
-col.names, row.names : a logical value specifying whether the column names/row names of x are to be written to the file
-append : a logical value indicating if x should be appended to an existing file.
-
++ x : a data.frame to be written into the workbook
++ file : the path to the output file
++ sheetName : a character string to use for the sheet name.
++ col.names, row.names : a logical value specifying whether the column names/row names of x are to be written to the file
++ append : a logical value indicating if x should be appended to an existing file.
 
 Examples :
 
+```R
 library(xlsx)
 write.xlsx(USArrests, file="myworkbook.xlsx", 
            sheetName="USA Arrests")
+```
+
 Note that, the above code saves the Excel file in your current working directory.
 
 Read and write excel file using R and xlsx package
 
 To add multiple data sets in the same Excel workbook, you have to use the argument append = TRUE. This is illustrated in the following R code :
 
+```R
 # Write the first data set in a new workbook
 write.xlsx(USArrests, file="myworkbook.xlsx",
       sheetName="USA-ARRESTS", append=FALSE)
@@ -103,6 +108,8 @@ write.xlsx(mtcars, file="myworkbook.xlsx", sheetName="MTCARS",
 # Add a third data set
 write.xlsx(Titanic, file="myworkbook.xlsx", sheetName="TITANIC", 
            append=TRUE)
+```
+
 Read and write excel file using R and xlsx package
 
 As you can see from the image above, it’s possible to add multiple data sets in the same Excel file. However, the method is very repetitive. You will find in the next section a simple function to add different types of data in a single call.
@@ -112,6 +119,7 @@ This section provides an R function to easily export multiple R objects to an Ex
 
 The R code of the function is :
 
+```R
 #+++++++++++++++++++++++++++
 # xlsx.writeMultipleData
 #+++++++++++++++++++++++++++++
@@ -131,6 +139,8 @@ xlsx.writeMultipleData <- function (file, ...)
             append = TRUE)
     }
   }
+```
+
 This function is inspired from the one published on statmethods website
 
 The function xlsx.writeMultipleData works for data frames, matrices, time series, and tables.
@@ -139,8 +149,11 @@ Example of usage :
 
 Use the R code below to save mtcars (a data frame), Titanic (a table), AirPassengers (a time series) and state.x77 (a matrix) :
 
+```R
 xlsx.writeMultipleData("myworkbook.xlsx",
         mtcars, Titanic, AirPassengers, state.x77)
+```
+
 Read and write excel file using R, multiple objects in the same Excel workbook
 
 Create and format a nice Excel workbook
@@ -161,9 +174,12 @@ In the next sections, I will show you step by step how to change the appearance 
 Step 1/5. Create a new Excel workbook
 The function createWorkbook() can be used. It works for both .xls and .xlsx file formats.
 
+```R
 # create a new workbook for outputs
 # possible values for type are : "xls" and "xlsx"
 wb<-createWorkbook(type="xlsx")
+```
+
 Step 2/5. Define some cell styles for formating the workbook
 We’ll define some cell styles to change :
 
@@ -173,16 +189,18 @@ the text alignment for the table column names
 the cell borders around the column names
 The R function CellStyle() can be used to create cell styles. A simplified format of the function is :
 
+```R
 CellStyle(wb, dataFormat=NULL, alignment=NULL,
           border=NULL, fill=NULL, font=NULL)
+```
 
-wb : a workbook object as returned by createWorkbook or loadWorkbook.
-dataFormat : a DataFormat object
-alignment : a Alignment object
-border : a Border object
-font : a Font object
++ wb : a workbook object as returned by createWorkbook or loadWorkbook.
++ dataFormat : a DataFormat object
++ alignment : a Alignment object
++ border : a Border object
++ font : a Font object
 
-
+```R
 # Define some cell styles
 #++++++++++++++++++++
 # Title and sub title styles
@@ -197,6 +215,7 @@ TABLE_COLNAMES_STYLE <- CellStyle(wb) + Font(wb, isBold=TRUE) +
     Alignment(wrapText=TRUE, horizontal="ALIGN_CENTER") +
     Border(color="black", position=c("TOP", "BOTTOM"), 
            pen=c("BORDER_THIN", "BORDER_THICK")) 
+```
 
 wb : a workbook object as returned by createWorkbook or loadWorkbook.
 The main arguments for Font() function :
@@ -220,8 +239,11 @@ Step 3/5. Write data and plots into the workbook
 Create a new sheet in the workbook
 To add data, the first step is to create a sheet in the workbook to contain the data. This can be done using the function creatSheet() :
 
+```R
 # Create a new sheet in the workbook
 sheet <- createSheet(wb, sheetName = "US State Facts")
+```
+
 Add a title into a worksheet
 To add a title, the procedure is :
 
@@ -230,6 +252,7 @@ create a cell in this row to contain the title.
 set the cell value.
 To simplify the R code, I wrote a helper function for adding a title :
 
+```R
 #++++++++++++++++++++++++
 # Helper function to add titles
 #++++++++++++++++++++++++
@@ -244,8 +267,11 @@ xlsx.addTitle<-function(sheet, rowIndex, title, titleStyle){
   setCellValue(sheetTitle[[1,1]], title)
   setCellStyle(sheetTitle[[1,1]], titleStyle)
 }
+```
+
 Copy and paste the code of the function xlsx.addTitle into your R console before continuing.
 
+```R
 # Add title
 xlsx.addTitle(sheet, rowIndex=1, title="US State Facts",
       titleStyle = TITLE_STYLE)
@@ -253,25 +279,30 @@ xlsx.addTitle(sheet, rowIndex=1, title="US State Facts",
 xlsx.addTitle(sheet, rowIndex=2, 
       title="Data sets related to the 50 states of USA.",
       titleStyle = SUB_TITLE_STYLE)
+```
+
 Add a table into a worksheet
 The function addDataframe() can be used to add the table in the new sheet.
 
 state.x77 data table is used in the following example :
 
+```R
 head(state.x77)
-           Population Income Illiteracy Life Exp Murder HS Grad Frost   Area
-Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708
-Alaska            365   6315        1.5    69.31   11.3    66.7   152 566432
-Arizona          2212   4530        1.8    70.55    7.8    58.1    15 113417
-Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945
-California      21198   5114        1.1    71.71   10.3    62.6    20 156361
-Colorado         2541   4884        0.7    72.06    6.8    63.9   166 103766
+#            Population Income Illiteracy Life Exp Murder HS Grad Frost   Area
+# Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708
+# Alaska            365   6315        1.5    69.31   11.3    66.7   152 566432
+# Arizona          2212   4530        1.8    70.55    7.8    58.1    15 113417
+# Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945
+# California      21198   5114        1.1    71.71   10.3    62.6    20 156361
+# Colorado         2541   4884        0.7    72.06    6.8    63.9   166 103766
+
 # Add a table
 addDataFrame(state.x77, sheet, startRow=3, startColumn=1, 
              colnamesStyle = TABLE_COLNAMES_STYLE,
              rownamesStyle = TABLE_ROWNAMES_STYLE)
 # Change column width
 setColumnWidth(sheet, colIndex=c(1:ncol(state.x77)), colWidth=11)
+```
 
 Arguments for addDataFrame() function :
 startRow, startColumn : a numeric value indicating the starting row and column
@@ -280,6 +311,8 @@ Arguments for setColumnWidth() function :
 colIndex : a numeric vector indicating the columns you want to change the size.
 colWidth : the width of the column
 Add a plot into an Excel worksheet
+
+```R
 # create a png plot
 png("boxplot.png", height=800, width=800, res=250, pointsize=8)
 boxplot(count ~ spray, data = InsectSprays,
@@ -296,9 +329,15 @@ addPicture("boxplot.png", sheet, scale = 1, startRow = 4,
           startColumn = 1)
 # Remove the plot from the disk
 res<-file.remove("boxplot.png")
+```
+
 Step 4/5. Save the Excel workbook to the disk
+
+```R
 # Save the workbook to a file
 saveWorkbook(wb, "r-xlsx-report-example.xlsx")
+```
+
 Step 5/5. Open and view the resulting Excel workbook
 Go to your current working directory and open the created workbook.
 
@@ -309,6 +348,7 @@ As mentioned above, formatting Excel worksheets can be done easily and quickly u
 The complete R script to create a nice Excel report
 The complete R script to create the workbook above is :
 
+```R
 library(xlsx)
 # create a new workbook for outputs
 #++++++++++++++++++++++++++++++++++++
@@ -381,6 +421,9 @@ res<-file.remove("boxplot.png")
 # Save the workbook to a file...
 #++++++++++++++++++++++++++++++++++++
 saveWorkbook(wb, "r-xlsx-report-example.xlsx")
-Infos
+```
+
+## Infos
+
 This analysis has been performed using R (ver. 3.1.0).
 
