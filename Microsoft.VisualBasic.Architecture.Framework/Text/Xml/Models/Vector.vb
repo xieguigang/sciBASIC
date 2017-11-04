@@ -4,11 +4,18 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Text.Xml.Models
 
+    ''' <summary>
+    ''' A <see cref="Double"/> type numeric sequence container
+    ''' </summary>
     Public Class NumericVector
 
-        <XmlAttribute>
-        Public Property Vector As Double()
+        <XmlAttribute> Public Property Vector As Double()
 
+        ''' <summary>
+        ''' Get/Set Element ``Xi``
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         Default Public Property Xi(i As Integer) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -24,6 +31,7 @@ Namespace Text.Xml.Models
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Length As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Vector?.Length
             End Get
