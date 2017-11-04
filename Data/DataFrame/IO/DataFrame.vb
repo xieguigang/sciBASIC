@@ -29,9 +29,8 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -47,8 +46,8 @@ Namespace IO
     ''' <remarks></remarks>
     Public Class DataFrame : Inherits File
         Implements ISchema
-        Implements System.Data.IDataReader
-        Implements System.IDisposable
+        Implements IDataReader
+        Implements IDisposable
         Implements IEnumerable(Of DynamicObjectLoader)
 
         ''' <summary>
@@ -65,19 +64,30 @@ Namespace IO
         Protected __columnList As List(Of String)
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
 
+        Const FieldExists$ = "Required change column name mapping from `{0}` to `{1}`, but the column ``{1}`` is already exists in your file data!"
+
         ''' <summary>
         ''' ``Csv.Field -> <see cref="PropertyInfo.Name"/>``
         ''' </summary>
-        ''' <param name="MappingData">{oldFieldName, newFieldName}</param>
+        ''' <param name="MappingData">``{oldFieldName, newFieldName}``</param>
         ''' <remarks></remarks>
         Public Sub ChangeMapping(MappingData As Dictionary(Of String, String))
-            For Each ColumnName As KeyValuePair(Of String, String) In MappingData
-                Dim p As Integer = __columnList.IndexOf(ColumnName.Key)
+            For Each map As NamedValue(Of String) In MappingData.IterateNameValues
+                Dim p% = __columnList.IndexOf(map.Name)
 
-                If Not p = -1 Then ' 由于只是改变映射的名称，并不要添加新的列，所以在这里忽略掉不存在的列
-                    __columnList(p) = ColumnName.Value
-                    _SchemaOridinal.Remove(ColumnName.Key)
-                    _SchemaOridinal.Add(ColumnName.Value, p)
+                ' 由于只是改变映射的名称，并不要添加新的列，所以在这里忽略掉不存在的列
+                If Not p = -1 Then
+                    __columnList(p) = map.Value
+
+                    ' 2017-11-4 假设在原来的文件之中存在一个名字叫做ID的列
+                    ' 但是在这里进行名称映射的变化的结果也是ID名字的话，
+                    ' 则在这里会出现重复键名称的错误
+                    If SchemaOridinal.ContainsKey(map.Value) Then
+                        Throw New Exception(String.Format(FieldExists, map.Name, map.Value))
+                    End If
+
+                    _SchemaOridinal.Remove(map.Name)
+                    _SchemaOridinal.Add(map.Value, p)
                 End If
             Next
         End Sub

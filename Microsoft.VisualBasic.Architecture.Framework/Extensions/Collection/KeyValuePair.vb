@@ -294,11 +294,13 @@ Public Module KeyValuePairExtensions
     End Function
 
     ''' <summary>
-    ''' 将目标字典之中的键值对转换为被命名为的变量值
+    ''' Convert the dictionary table as the <see cref="NamedValue(Of T)"/> collection.
+    ''' (将目标字典之中的键值对转换为被命名为的变量值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="table"></param>
     ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function NamedValues(Of T)(table As Dictionary(Of String, T)) As NamedValue(Of T)()
         Return table _
@@ -309,6 +311,23 @@ Public Module KeyValuePairExtensions
                         }
                     End Function) _
             .ToArray
+    End Function
+
+    <Extension>
+    Public Iterator Function IterateNameValues(Of T)(table As Dictionary(Of String, T)) As IEnumerable(Of NamedValue(Of T))
+        For Each map As KeyValuePair(Of String, T) In table
+            Yield New NamedValue(Of T) With {
+                .Name = map.Key,
+                .Value = map.Value
+            }
+        Next
+    End Function
+
+    <Extension>
+    Public Iterator Function IterateNameCollections(Of T)(table As Dictionary(Of String, T())) As IEnumerable(Of NamedCollection(Of T))
+        For Each map As KeyValuePair(Of String, T()) In table
+            Yield New NamedCollection(Of T)(map.Key, map.Value)
+        Next
     End Function
 
     <Extension>
