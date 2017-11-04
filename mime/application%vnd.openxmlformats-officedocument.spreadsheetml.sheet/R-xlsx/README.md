@@ -2,7 +2,7 @@
 
 > http://www.sthda.com/english/wiki/r-xlsx-package-a-quick-start-guide-to-manipulate-excel-files-in-r
 
-![]()
+![](./r-xlsx-package.png)
 > Read and write excel file using R, xlsx package
 
 There are many solutions to import and export Excel files using R software. The different ways to connect R and Excel has been already discussed in our previous article [R Excel essentials: Read, write and format Excel files using R].
@@ -34,8 +34,9 @@ The R functions read.xlsx() and read.xlsx2() can be used to read the contents of
 
 The difference between these two functions is that :
 
-read.xlsx preserves the data type. It tries to guess the class type of the variable corresponding to each column in the worksheet. Note that, read.xlsx function is slow for large data sets (worksheet with more than 100 000 cells).
-read.xlsx2 is faster on big files compared to read.xlsx function.
++ read.xlsx preserves the data type. It tries to guess the class type of the variable corresponding to each column in the worksheet. Note that, read.xlsx function is slow for large data sets (worksheet with more than 100 000 cells).
++ read.xlsx2 is faster on big files compared to read.xlsx function.
+
 The simplified formats of these two functions are:
 
 ```R
@@ -66,7 +67,8 @@ head(res[, 1:6])
 
 > Note that read.xlsx and read.xlsx2 functions can be used to read both .xls and .xlsx file formats.
 
-Write data to an Excel file
+## Write data to an Excel file
+
 The R functions write.xlsx() and write.xlsx2() can be used to export data from R to an Excel workbook. Note that write.xlsx2 achieves better performance compared to write.xlsx for very large data.frame (with more than 100 000 cells).
 
 The simplified formats of these two functions are:
@@ -94,7 +96,8 @@ write.xlsx(USArrests, file="myworkbook.xlsx",
 
 Note that, the above code saves the Excel file in your current working directory.
 
-Read and write excel file using R and xlsx package
+![](./r-xlsx-write-excel-files.png)
+> Read and write excel file using R and xlsx package
 
 To add multiple data sets in the same Excel workbook, you have to use the argument append = TRUE. This is illustrated in the following R code :
 
@@ -110,11 +113,13 @@ write.xlsx(Titanic, file="myworkbook.xlsx", sheetName="TITANIC",
            append=TRUE)
 ```
 
-Read and write excel file using R and xlsx package
+![](./r-xlsx-write-multiple-data-same-excel-files.png)
+> Read and write excel file using R and xlsx package
 
 As you can see from the image above, it’s possible to add multiple data sets in the same Excel file. However, the method is very repetitive. You will find in the next section a simple function to add different types of data in a single call.
 
-Simple R function to export quickly multiple data sets to the same Excel workbook
+## Simple R function to export quickly multiple data sets to the same Excel workbook
+
 This section provides an R function to easily export multiple R objects to an Excel Workbook in a single call. The different objects (data) are written in different worksheets from the same Excel workbook. The object names are used for naming the different sheets.
 
 The R code of the function is :
@@ -154,24 +159,25 @@ xlsx.writeMultipleData("myworkbook.xlsx",
         mtcars, Titanic, AirPassengers, state.x77)
 ```
 
-Read and write excel file using R, multiple objects in the same Excel workbook
+![](./r-excel-multiple-object-workbook.png)
+> Read and write excel file using R, multiple objects in the same Excel workbook
 
-Create and format a nice Excel workbook
+## Create and format a nice Excel workbook
+
 The function write.xlsx() is useful when you want just to write a data.frame to an xlsx file. The goal of this section is to show you how to create a nice Excel report containing a formatted data table and plots.
 
 The following steps are required :
 
+1. Create a workbook
+2. Define some cell styles : Font color and size, text alignment, border and data format, …
+3. Write a table into an Excel spreadsheet using the defined styles in step 2.
+4. Save the workbook to a file
+5. Open and view the resulting workbook
 
-Create a workbook
-Define some cell styles : Font color and size, text alignment, border and data format, …
-Write a table into an Excel spreadsheet using the defined styles in step 2.
-Save the workbook to a file
-Open and view the resulting workbook
+> In the next sections, I will show you step by step how to change the appearance of Excel worksheet in R. Note that, formatting Excel worksheets using xlsx R package requires some hard coding. This is why, I recently implemented the r2excel package which depends on xlsx package and it provides an easy to use functions to quickly import data from Excel files and to create a nice Excel report. r2excel package is described in my previous post : R Excel essentials : Read, write and format Excel files using R
 
+### Step 1/5. Create a new Excel workbook
 
-In the next sections, I will show you step by step how to change the appearance of Excel worksheet in R. Note that, formatting Excel worksheets using xlsx R package requires some hard coding. This is why, I recently implemented the r2excel package which depends on xlsx package and it provides an easy to use functions to quickly import data from Excel files and to create a nice Excel report. r2excel package is described in my previous post : R Excel essentials : Read, write and format Excel files using R
-
-Step 1/5. Create a new Excel workbook
 The function createWorkbook() can be used. It works for both .xls and .xlsx file formats.
 
 ```R
@@ -180,13 +186,15 @@ The function createWorkbook() can be used. It works for both .xls and .xlsx file
 wb<-createWorkbook(type="xlsx")
 ```
 
-Step 2/5. Define some cell styles for formating the workbook
+### Step 2/5. Define some cell styles for formating the workbook
+
 We’ll define some cell styles to change :
 
-the appearance of the sheet title
-the appearance of the row and column names of the data table
-the text alignment for the table column names
-the cell borders around the column names
++ the appearance of the sheet title
++ the appearance of the row and column names of the data table
++ the text alignment for the table column names
++ the cell borders around the column names
+
 The R function CellStyle() can be used to create cell styles. A simplified format of the function is :
 
 ```R
@@ -217,26 +225,27 @@ TABLE_COLNAMES_STYLE <- CellStyle(wb) + Font(wb, isBold=TRUE) +
            pen=c("BORDER_THIN", "BORDER_THICK")) 
 ```
 
-wb : a workbook object as returned by createWorkbook or loadWorkbook.
-The main arguments for Font() function :
-color : font color
-heightInPoints : font size. Usual values are 10, 12, 14, etc
-isBold, isItalic : a logical indicating whether the font should be bold or italic
-underline : an integer specifying the thickness of the underline. Possible values are 0, 1, 2.
-name : the font to use; e.g: “Courier New”.
-The main arguments for Alignment() function :
-wrapText : a logical indicating whether the text should be wrapped.
-horizontal : the horizontal alignment. Possible values are : “ALIGN_CENTER”, “ALIGN_JUSTIFY”, “ALIGN_LEFT”, “ALIGN_RIGHT”.
-vertical : the vertical alignment. Possible values are : “VERTICAL_BOTTOM”, “VERTICAL_CENTER”, “VERTICAL_JUSTIFY”, “VERTICAL_TOP”
-rotation : a numerical value specifying the degrees you want to rotate the text in the cell. Default value is 0.
-The main arguments for Border() function :
-color : the border color; e.g : color=“red” or color =“#FF0000”
-position : the border position. Allowed values are : “BOTTOM”, “LEFT”, “TOP”, “RIGHT”
-pen : the pen style. Allowed values are : “BORDER_DASH_DOT”, “BORDER_DASH_DOT_DOT”, “BORDER_DASHED”, “BORDER_DOTTED”, “BORDER_DOUBLE”, “BORDER_HAIR”, “BORDER_MEDIUM”, “BORDER_MEDIUM_DASH_DOT”, “BORDER_MEDIUM_DASH_DOT_DOT”, “BORDER_MEDIUM_DASHED”, “BORDER_NONE”, “BORDER_SLANTED_DASH_DOT”, “BORDER_THICK”, “BORDER_THIN”.
+1. wb : a workbook object as returned by createWorkbook or loadWorkbook.
+2. The main arguments for Font() function :
+   + color : font color
+   + heightInPoints : font size. Usual values are 10, 12, 14, etc
+   + isBold, isItalic : a logical indicating whether the font should be bold or italic
+   + underline : an integer specifying the thickness of the underline. Possible values are 0, 1, 2.
+   + name : the font to use; e.g: “Courier New”.
+3. The main arguments for Alignment() function :
+   + wrapText : a logical indicating whether the text should be wrapped.
+   + horizontal : the horizontal alignment. Possible values are : “ALIGN_CENTER”, “ALIGN_JUSTIFY”, “ALIGN_LEFT”, “ALIGN_RIGHT”.
+   + vertical : the vertical alignment. Possible values are : “VERTICAL_BOTTOM”, “VERTICAL_CENTER”, “VERTICAL_JUSTIFY”, “VERTICAL_TOP”
+   + rotation : a numerical value specifying the degrees you want to rotate the text in the cell. Default value is 0.
+4. The main arguments for Border() function :
+   + color : the border color; e.g : color=“red” or color =“#FF0000”
+   + position : the border position. Allowed values are : “BOTTOM”, “LEFT”, “TOP”, “RIGHT”
+   + pen : the pen style. Allowed values are : “BORDER_DASH_DOT”, “BORDER_DASH_DOT_DOT”, “BORDER_DASHED”, “BORDER_DOTTED”, “BORDER_DOUBLE”, “BORDER_HAIR”, “BORDER_MEDIUM”, “BORDER_MEDIUM_DASH_DOT”, “BORDER_MEDIUM_DASH_DOT_DOT”, “BORDER_MEDIUM_DASHED”, “BORDER_NONE”, “BORDER_SLANTED_DASH_DOT”, “BORDER_THICK”, “BORDER_THIN”.
 
+### Step 3/5. Write data and plots into the workbook
 
-Step 3/5. Write data and plots into the workbook
-Create a new sheet in the workbook
+#### Create a new sheet in the workbook
+
 To add data, the first step is to create a sheet in the workbook to contain the data. This can be done using the function creatSheet() :
 
 ```R
@@ -244,12 +253,14 @@ To add data, the first step is to create a sheet in the workbook to contain the 
 sheet <- createSheet(wb, sheetName = "US State Facts")
 ```
 
-Add a title into a worksheet
+#### Add a title into a worksheet
+
 To add a title, the procedure is :
 
-create a new row
-create a cell in this row to contain the title.
-set the cell value.
+1. create a new row
+2. create a cell in this row to contain the title.
+3. set the cell value.
+
 To simplify the R code, I wrote a helper function for adding a title :
 
 ```R
@@ -269,7 +280,7 @@ xlsx.addTitle<-function(sheet, rowIndex, title, titleStyle){
 }
 ```
 
-Copy and paste the code of the function xlsx.addTitle into your R console before continuing.
+> Copy and paste the code of the function xlsx.addTitle into your R console before continuing.
 
 ```R
 # Add title
@@ -281,7 +292,8 @@ xlsx.addTitle(sheet, rowIndex=2,
       titleStyle = SUB_TITLE_STYLE)
 ```
 
-Add a table into a worksheet
+#### Add a table into a worksheet
+
 The function addDataframe() can be used to add the table in the new sheet.
 
 state.x77 data table is used in the following example :
@@ -295,7 +307,9 @@ head(state.x77)
 # Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945
 # California      21198   5114        1.1    71.71   10.3    62.6    20 156361
 # Colorado         2541   4884        0.7    72.06    6.8    63.9   166 103766
+```
 
+```R
 # Add a table
 addDataFrame(state.x77, sheet, startRow=3, startColumn=1, 
              colnamesStyle = TABLE_COLNAMES_STYLE,
@@ -304,13 +318,14 @@ addDataFrame(state.x77, sheet, startRow=3, startColumn=1,
 setColumnWidth(sheet, colIndex=c(1:ncol(state.x77)), colWidth=11)
 ```
 
-Arguments for addDataFrame() function :
-startRow, startColumn : a numeric value indicating the starting row and column
-colnameStyle, rownameStyle : A CellStyle object to customize the table header and row names
-Arguments for setColumnWidth() function :
-colIndex : a numeric vector indicating the columns you want to change the size.
-colWidth : the width of the column
-Add a plot into an Excel worksheet
++ Arguments for addDataFrame() function :
+   + startRow, startColumn : a numeric value indicating the starting row and column
+   + colnameStyle, rownameStyle : A CellStyle object to customize the table header and row names
++ Arguments for setColumnWidth() function :
+   + colIndex : a numeric vector indicating the columns you want to change the size.
+   + colWidth : the width of the column
+
+#### Add a plot into an Excel worksheet
 
 ```R
 # create a png plot
@@ -331,21 +346,25 @@ addPicture("boxplot.png", sheet, scale = 1, startRow = 4,
 res<-file.remove("boxplot.png")
 ```
 
-Step 4/5. Save the Excel workbook to the disk
+### Step 4/5. Save the Excel workbook to the disk
 
 ```R
 # Save the workbook to a file
 saveWorkbook(wb, "r-xlsx-report-example.xlsx")
 ```
 
-Step 5/5. Open and view the resulting Excel workbook
+### Step 5/5. Open and view the resulting Excel workbook
+
 Go to your current working directory and open the created workbook.
 
-Read and write excel file using R and xlsx package Read and write excel file using R and xlsx package
+![](./r-excel-xlsx-report-example1.png)
+![](./r-excel-xlsx-report-example2.png)
+> Read and write excel file using R and xlsx package Read and write excel file using R and xlsx package
 
 As mentioned above, formatting Excel worksheets can be done easily and quickly using r2excel package. r2excel package is described in my previous post : R Excel essentials : Read, write and format Excel files using R
 
-The complete R script to create a nice Excel report
+## The complete R script to create a nice Excel report
+
 The complete R script to create the workbook above is :
 
 ```R
