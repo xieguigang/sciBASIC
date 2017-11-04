@@ -646,6 +646,7 @@
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Algorithm\DataSample.vb" />
+    <Compile Include="ComponentModel\Ranges\Sequence.vb" />
     <Compile Include="ComponentModel\Ranges\IndexSelector.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
@@ -850,6 +851,7 @@
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\ResultVisualize.vb" />
     <Compile Include="Text\Xml\Linq\Entity.vb" />
+    <Compile Include="Text\Xml\Models\Vector.vb" />
     <Compile Include="Text\Xml\OpenXml\Content_Types.vb" />
     <Compile Include="Text\Xml\XmlBuilder.vb" />
     <Compile Include="Text\Xml\Linq\Linq.vb" />
