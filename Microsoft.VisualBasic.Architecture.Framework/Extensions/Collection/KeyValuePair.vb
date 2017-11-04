@@ -324,6 +324,13 @@ Public Module KeyValuePairExtensions
     End Function
 
     <Extension>
+    Public Iterator Function IterateNameCollections(Of T)(table As Dictionary(Of String, T())) As IEnumerable(Of NamedCollection(Of T))
+        For Each map As KeyValuePair(Of String, T()) In table
+            Yield New NamedCollection(Of T)(map.Key, map.Value)
+        Next
+    End Function
+
+    <Extension>
     Public Function NameValueCollection(maps As IEnumerable(Of IDMap)) As NameValueCollection
         Dim nc As New NameValueCollection
 
