@@ -45,6 +45,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
@@ -101,6 +102,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property NanoTime As Long
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Now.Ticks
         End Get
@@ -167,6 +169,8 @@ Public Module App
     ''' </summary>
     ''' <param name="name$"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Argument(name$) As String
         Return CommandLine(name)
     End Function
@@ -178,12 +182,16 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Private Function __CLI() As CommandLine.CommandLine
-        Dim tokens As String() = ' 第一个参数为应用程序的文件路径，不需要
-            Environment.GetCommandLineArgs.Skip(1).ToArray
-        Dim CLI As String = String _
-            .Join(" ", tokens.Select(Function(s) s.CLIToken).ToArray) _
+        Dim tokens$() = ' 第一个参数为应用程序的文件路径，不需要
+            Environment.GetCommandLineArgs _
+            .Skip(1) _
+            .ToArray
+        Dim CLI$ = tokens _
+            .Select(Function(s) s.CLIToken) _
+            .JoinBy(" ") _
             .Replace(gitBash, "")
-        Return Microsoft.VisualBasic.CommandLine.TryParse(CLI)
+
+        Return CLITools.TryParse(CLI)
     End Function
 
     Public ReadOnly Property Github As String = "https://github.com/xieguigang/sciBASIC"
@@ -195,8 +203,7 @@ Public Module App
     ''' see <see cref="ConsoleApplicationBase.CommandLineArgs"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
-    Public ReadOnly Property Command As String =
-        Microsoft.VisualBasic.CommandLine.Join(App.CommandLine.Tokens)
+    Public ReadOnly Property Command As String = CLITools.Join(App.CommandLine.Tokens)
 
     ''' <summary>
     ''' The file path of the current running program executable file.(本应用程序的可执行文件的文件路径)
@@ -228,6 +235,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public Property InputFile As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return App.CommandLine("/in")
         End Get
@@ -243,6 +251,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public Property OutFile As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             If _out.StringEmpty Then
                 _out = App.CommandLine("/out")
@@ -306,14 +315,16 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public Property CurrentDirectory As String
-        Get  ' 由于会因为切换目录而发生变化，所以这里不适用简写形式了
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            ' 由于会因为切换目录而发生变化，所以这里不适用简写形式了
             Return FileIO.FileSystem.CurrentDirectory
         End Get
         Set(value As String)
             If String.Equals(value, "-") Then  ' 切换到前一个工作目录
-                value = _preDIR
+                value = PreviousDirectory
             Else
-                _preDIR = FileIO.FileSystem.CurrentDirectory
+                _PreviousDirectory = FileIO.FileSystem.CurrentDirectory
             End If
 
             FileIO.FileSystem.CreateDirectory(value)
@@ -332,19 +343,14 @@ Public Module App
     ''' cd -
     ''' ```
     ''' </remarks>
-    Dim _preDIR As String
-
     Public ReadOnly Property PreviousDirectory As String
-        Get
-            Return _preDIR
-        End Get
-    End Property
 
     ''' <summary>
     ''' Gets the path for the executable file that started the application, not including the executable name.
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property StartupDirectory As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Application.StartupPath
         End Get
@@ -369,7 +375,7 @@ Public Module App
         Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
         Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
 
-        _preDIR = App.StartupDirectory
+        PreviousDirectory = App.StartupDirectory
 
 #Region "公共模块内的所有的文件路径初始化"
         ' 因为vb的基础运行时环境在Linux平台上面对文件系统的支持还不是太完善，所以不能够放在属性的位置直接赋值，否则比较难处理异常
@@ -480,16 +486,22 @@ Public Module App
         Dim type As Type = GetType(App)
         Dim pros = type.Schema(PropertyAccess.Readable, BindingFlags.Public Or BindingFlags.Static)
         Dim out As New List(Of NamedValue(Of String))(__joinedVariables.Values)
+        Dim value$
+        Dim o
 
         For Each prop As PropertyInfo
-            In pros.Values.Where(
-                Function(p) _
-                    p.PropertyType.Equals(GetType(String)) AndAlso
-                    p.GetIndexParameters.IsNullOrEmpty)
+            In pros.Values _
+                .Where(Function(p)
+                           Return p.PropertyType.Equals(GetType(String)) AndAlso
+                                  p.GetIndexParameters _
+                                   .IsNullOrEmpty
+                       End Function)
 
+            o = prop.GetValue(Nothing, Nothing)
+            value = Scripting.ToString(o)
             out += New NamedValue(Of String) With {
                 .Name = prop.Name,
-                .Value = prop.GetValue(Nothing, Nothing)
+                .Value = value
             }
         Next
 
@@ -530,6 +542,7 @@ Public Module App
             End Sub)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub println()
         Call InnerQueue.AddToQueue(AddressOf Console.WriteLine)
     End Sub
@@ -598,9 +611,11 @@ Public Module App
     Public Function GetProductSharedDIR(type As Type) As String
         Dim assm As Assembly = type.Assembly
         Dim productName As String = ApplicationDetails.GetProductName(assm)
+
         If String.IsNullOrEmpty(productName) Then
             productName = BaseName(assm.Location)
         End If
+
         Return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{productName}"
     End Function
 
@@ -634,6 +649,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property LocalDataTemp As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return App.LocalData & "/Temp/"
         End Get
@@ -672,6 +688,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property AppSystemTemp As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return SysTemp & "/" & App.AssemblyName
         End Get
@@ -682,6 +699,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property Version As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Trim(Application.ProductVersion)
         End Get
@@ -856,7 +874,7 @@ Public Module App
     <SecuritySafeCritical> Public Function Exit%(Optional state% = 0)
         App._Running = False
 
-        Call Terminal.InnerQueue.WaitQueue()
+        Call InnerQueue.WaitQueue()
         Call App.StopGC()
         Call __GCThread.Dispose()
         Call Environment.Exit(state)
@@ -1258,8 +1276,14 @@ Public Module App
     ''' 这里添加在应用程序退出执行的时候所需要完成的任务
     ''' </summary>
     ''' <param name="hook"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AddExitCleanHook(hook As Action)
-        Call __exitHooks.Add(hook)
+        SyncLock __exitHooks
+            With __exitHooks
+                Call .Add(hook)
+            End With
+        End SyncLock
     End Sub
 
     ''' <summary>
@@ -1315,21 +1339,28 @@ Public Module App
         Call FlushMemory()
     End Sub
 
-    Private Function __listFiles(DIR As String) As String()
+    <Extension>
+    Private Function __listFiles(DIR As String) As IEnumerable(Of String)
         Try
-            Return FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchAllSubDirectories, "*.tmp").ToArray
+            Return ls - l - r - {"*.tmp", "*.temp"} <= DIR
         Catch ex As Exception
-            Return New String() {}
+            Call App.LogException(ex)
+            Return {}
         End Try
     End Function
 
+    ''' <summary>
+    ''' The Windows file system have a limit of the numbers in a folder, so the long time running application 
+    ''' required a thread to make the temp directory cleanup, or the application will no able to create temp 
+    ''' file when the temp folder reach its file number upbound(This may caused the application crashed).
+    ''' </summary>
+    ''' <param name="TEMP"></param>
     Private Sub __removesTEMP(TEMP As String)
-        Dim listFiles As String() = __listFiles(DIR:=TEMP)
-
-        For Each file As String In listFiles
+        For Each file As String In TEMP.__listFiles
             Try
                 Call FileIO.FileSystem.DeleteFile(file)
             Finally
+                ' DO Nothing
             End Try
         Next
     End Sub
