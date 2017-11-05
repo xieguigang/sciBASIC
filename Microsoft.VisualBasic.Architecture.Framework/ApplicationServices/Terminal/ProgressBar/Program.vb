@@ -29,7 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 
-Namespace Terminal
+Namespace Terminal.ProgressBar
 
     Public Module Program
 

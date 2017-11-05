@@ -26,7 +26,7 @@
 
 #End Region
 
-Namespace Terminal
+Namespace Terminal.ProgressBar
 
     Public Class AnimatedBar
         Inherits AbstractBar

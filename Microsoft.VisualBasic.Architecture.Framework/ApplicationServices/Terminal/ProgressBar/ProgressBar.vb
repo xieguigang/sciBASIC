@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Terminal
+Namespace Terminal.ProgressBar
 
     ''' <summary>
     ''' The <see cref="ConsoleColor"/> theme for the <see cref="ProgressBar"/>
