@@ -147,15 +147,15 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|AnyCPU' ">
     <OutputPath>bin\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64' ">
     <OutputPath>bin\x64\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86' ">
     <OutputPath>bin\x86\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
   </PropertyGroup>

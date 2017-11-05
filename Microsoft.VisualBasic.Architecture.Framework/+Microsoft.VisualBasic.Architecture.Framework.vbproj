@@ -242,14 +242,14 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|AnyCPU' ">
     <OutputPath>bin\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64' ">
     <OutputPath>bin\x64\Release2\</OutputPath>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
@@ -258,7 +258,7 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86' ">
     <OutputPath>bin\x86\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
