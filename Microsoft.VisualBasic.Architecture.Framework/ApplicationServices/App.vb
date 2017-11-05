@@ -406,7 +406,7 @@ Public Module App
     End Function
 
     Public Function GetAppLocalData(exe$) As String
-        Dim app As New ApplicationDetails(Assembly.LoadFile(path:=exe))
+        Dim app As New ApplicationDetails(Assembly.LoadFile(path:=IO.Path.GetFullPath(exe)))
         Return GetAppLocalData(app:=app.ProductName, assemblyName:=exe.BaseName)
     End Function
 
