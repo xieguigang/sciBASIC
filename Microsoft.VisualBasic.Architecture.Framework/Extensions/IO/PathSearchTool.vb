@@ -1022,8 +1022,8 @@ Public Module ProgramPathSearchTool
     ''' Gets the full path of the specific directory.
     ''' </summary>
     ''' <param name="dir"></param>
+    ''' <param name="stack">当程序出错误的时候记录进入日志的一个追踪目标参数，调试用</param>
     ''' <returns></returns>
-    '''
     <ExportAPI("Dir.FullPath", Info:="Gets the full path of the directory.")>
     <Extension> Public Function GetDirectoryFullPath(dir$, <CallerMemberName> Optional stack$ = Nothing) As String
         Try

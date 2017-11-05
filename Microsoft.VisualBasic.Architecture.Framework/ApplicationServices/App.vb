@@ -385,15 +385,12 @@ Public Module App
             App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
             App.Info = ApplicationDetails.CurrentExe()
             App.AssemblyName = BaseName(App.ExecutablePath)
-            App.ProductName = If(
-                String.IsNullOrEmpty(Application.ProductName.Trim),
-                AssemblyName,
-                Application.ProductName.Trim)
+            App.ProductName = Application.ProductName Or AssemblyName.AsDefault(Function(s) String.IsNullOrEmpty(s))
             App.HOME = FileIO.FileSystem.GetParentPath(App.ExecutablePath)
             App.UserHOME = PathMapper.HOME.GetDirectoryFullPath("App.New(.cctor)")
             App.ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath("App.New(.cctor)")
             App.ProductSharedDIR = $"{ProductProgramData}/.shared".GetDirectoryFullPath
-            App.LocalData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}/{AssemblyName}".GetDirectoryFullPath("App.New(.cctor)")
+            App.LocalData = App.GetAppLocalData(ProductName, AssemblyName, "App.New(.cctor)")
             App.CurrentProcessTemp = GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath("App.New(.cctor)")
             App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
             App.LogErrDIR = App.LocalData & $"/.logs/err/"
@@ -402,6 +399,16 @@ Public Module App
         End Try
 #End Region
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetAppLocalData(app$, assemblyName$, <CallerMemberName> Optional track$ = Nothing) As String
+        Return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{app}/{assemblyName}".GetDirectoryFullPath(track)
+    End Function
+
+    Public Function GetAppLocalData(exe$) As String
+        Dim app As New ApplicationDetails(Assembly.LoadFile(path:=exe))
+        Return GetAppLocalData(app:=app.ProductName, assemblyName:=exe.BaseName)
+    End Function
 
 #Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
 
