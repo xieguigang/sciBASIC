@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f97d1d4435e1d41501aa07d381c3828a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLIToken.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace CommandLine.Reflection
 
@@ -60,10 +61,11 @@ Namespace CommandLine.Reflection
 
         Public Shared Function GetDllMethod(assembly As Assembly, entryPoint$) As MethodInfo
             Dim entry As NamedValue(Of String) = GetPoint(entryPoint)
+            Dim types As Type() = GetTypes(assm:=assembly)
             Dim dll As Type = LinqAPI.DefaultFirst(Of Type) _
  _
                 () <= From type As Type
-                      In assembly.GetTypes
+                      In types
                       Let load = type.GetCustomAttribute(Of RunDllEntryPoint)
                       Let name = load?.Namespace
                       Where Not load Is Nothing AndAlso name.TextEquals(entry.Name)
@@ -72,12 +74,36 @@ Namespace CommandLine.Reflection
             If dll Is Nothing Then
                 Return Nothing
             Else
+                Dim matchName = Function(m As MethodInfo)
+                                    Return m.Name.TextEquals(entry.Value)
+                                End Function
                 Dim method As MethodInfo = dll _
                     .GetMethods(PublicShared) _
-                    .Where(Function(m) m.Name.TextEquals(entry.Value)) _
+                    .Where(predicate:=matchName) _
                     .FirstOrDefault
+
                 Return method
             End If
+        End Function
+
+        Private Shared Function GetTypes(assm As Assembly) As Type()
+            Try
+                Return assm.GetTypes
+
+            Catch ex As Exception When TypeOf ex Is ReflectionTypeLoadException
+                Dim details = DirectCast(ex, ReflectionTypeLoadException)
+                Dim msg$ = details.LoaderExceptions _
+                    .Select(Function(e) e.Message) _
+                    .ToArray _
+                    .GetJson
+
+                Throw New Exception(msg, ex)
+
+            Catch ex As Exception
+
+                Throw
+
+            End Try
         End Function
     End Class
 
