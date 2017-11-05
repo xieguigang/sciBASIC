@@ -172,7 +172,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Surveillance-of-infectious-diseases\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Surveillance-of-infectious-diseases\App\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
