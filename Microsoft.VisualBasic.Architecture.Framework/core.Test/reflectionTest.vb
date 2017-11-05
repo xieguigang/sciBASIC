@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module reflectionTest
 
@@ -14,11 +15,25 @@ Public Module reflectionTest
 
         Dim entry = RunDllEntryPoint.GetDllMethod(Assembly.LoadFile(dll), "test")
     End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="theme">Default value is <see cref="ColorTheme.DefaultTheme"/> if this optional parameter is omit</param>
+    Public Sub testDefault(Optional theme As ColorTheme = Nothing)
+
+        ' value is theme or default theme if it is omit
+        Dim value As ColorTheme = theme Or ColorTheme.DefaultTheme
+
+        Call value.GetJson.__DEBUG_ECHO
+
+
+    End Sub
 End Module
 
 Public Structure AAAA
 
-    Public Property BugType  As ConsoleColor 
+    Public Property BugType As ConsoleColor
 
 End Structure
 
