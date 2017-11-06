@@ -58,11 +58,11 @@ Public Module TemplateHelper
                     Dim fileName$ = .template.AliasName Or .type.Name.AsDefault
                     Dim key$ = $"{ .template.Category}/{fileName}"
                     Dim path$ = $"{save}/{key}.csv"
-                    Dim template As IEnumerable(Of Object) = {
+                    Dim template As IEnumerable = {
                         Activity.ActiveObject(.type)
                     }
 
-                    Call template.SaveTo(path)
+                    Call template.SaveTable(path, type:= .type)
                     Call typeTable.Add(key, .type)
                 End With
             Next
