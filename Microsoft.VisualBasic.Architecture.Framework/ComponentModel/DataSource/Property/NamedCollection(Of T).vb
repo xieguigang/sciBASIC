@@ -146,9 +146,13 @@ Namespace ComponentModel.DataSourceModel
         End Sub
 
         Sub New(name$, data As IEnumerable(Of T), Optional description$ = Nothing)
+            Call Me.New(name, data.SafeQuery.ToArray, description)
+        End Sub
+
+        Sub New(name$, value As T(), Optional description$ = Nothing)
             Me.Name = name
             Me.Description = description
-            Me.Value = data.ToArray
+            Me.Value = value
         End Sub
 
         Public Function GetValues() As NamedValue(Of T)()
@@ -179,5 +183,9 @@ Namespace ComponentModel.DataSourceModel
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        Public Shared Widening Operator CType(tuple As (name$, value As T())) As NamedCollection(Of T)
+            Return New NamedCollection(Of T)(tuple.name, tuple.value)
+        End Operator
     End Structure
 End Namespace
