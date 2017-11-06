@@ -80,6 +80,7 @@ Namespace Heatmap
                              <CSSSelector(Types.Font)> Optional labelFontCSS$ = CSSFont.Win10Normal,
                              Optional htmlLabel As Boolean = True,
                              Optional xMax# = Double.NaN,
+                             Optional xMin# = Double.NaN,
                              Optional yMin# = Double.NaN) As GraphicsData
 
             Dim pointVector As VectorModel(Of PointF) = points _
@@ -100,6 +101,9 @@ Namespace Heatmap
 
             If Not xMax.IsNaNImaginary Then
                 xrange = {xrange.Min, xMax}
+            End If
+            If Not xMin.IsNaNImaginary Then
+                xrange = {xMin, xrange.Max}
             End If
             If Not yMin.IsNaNImaginary Then
                 yrange = {yMin, yrange.Max}

@@ -141,8 +141,10 @@ Public Module Scatter
                 Dim X, Y As d3js.scale.LinearScale
 
                 If Not xaxis.StringEmpty AndAlso Not yaxis.StringEmpty Then
-                    X = AxisProvider.TryParse(xaxis).AxisTicks.LinearScale.range(integers:={region.Left, region.Right})
-                    Y = AxisProvider.TryParse(yaxis).AxisTicks.LinearScale.range(integers:={0, region.Bottom - region.Top})
+                    XTicks = AxisProvider.TryParse(xaxis).AxisTicks
+                    YTicks = AxisProvider.TryParse(yaxis).AxisTicks
+                    X = XTicks.LinearScale.range(integers:={region.Left, region.Right})
+                    Y = YTicks.LinearScale.range(integers:={0, region.Bottom - region.Top})
                 Else
                     X = d3js.scale.linear.domain(XTicks).range(integers:={region.Left, region.Right})
                     Y = d3js.scale.linear.domain(YTicks).range(integers:={0, region.Bottom - region.Top}) ' Y 为什么是从零开始的？
