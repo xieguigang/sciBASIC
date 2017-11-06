@@ -85,16 +85,19 @@ Namespace Terminal.ProgressBar
         ''' <returns></returns>
         ''' <remarks>
         ''' ###### 2017-11-5
-        ''' 
         ''' This property will cause bug in reflection.
+        ''' 
+        ''' ###### 2017-11-6
+        ''' Change from property to function to avoid bug caused application crashed
         ''' </remarks>
-        Public Shared ReadOnly Property DefaultTheme As New DefaultValue(Of ColorTheme) With {
-            .LazyValue = Function() [Default](),
-            .assert = Function(t)
-                          Return DirectCast(t, ColorTheme).IsEmpty
-                      End Function
-        }
-
+        Public Shared Function DefaultTheme() As DefaultValue(Of ColorTheme)
+            Return New DefaultValue(Of ColorTheme) With {
+                .Value = [Default](),
+                .assert = Function(t)
+                              Return DirectCast(t, ColorTheme).IsEmpty
+                          End Function
+            }
+        End Function
         ''' <summary>
         ''' The default color theme values
         ''' </summary>
