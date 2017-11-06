@@ -112,6 +112,8 @@ Namespace Heatmap
                     schema:=colors,
                     r:=ptSize)
             Dim scatterPadding As Padding = padding
+            Dim xAxis = xrange.CreateAxisTicks.AxisExpression
+            Dim yAxis = yrange.CreateAxisTicks.AxisExpression
 
             scatterPadding.Right += legendWidth
 
@@ -124,6 +126,8 @@ Namespace Heatmap
                 ablines:=ablines,
                 Xlabel:=labX,
                 Ylabel:=labY,
+                xaxis:=xAxis,
+                yaxis:=yAxis,
                 htmlLabel:=htmlLabel).CreateGraphics
 
                 ' 在这里还需要绘制颜色谱的legend

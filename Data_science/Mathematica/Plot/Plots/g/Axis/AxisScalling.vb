@@ -52,6 +52,17 @@ Namespace Graphic.Axis
         End Function
 
         ''' <summary>
+        ''' <see cref="AxisProvider"/>
+        ''' </summary>
+        ''' <param name="ticks#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AxisExpression(ticks#()) As String
+            Return $"({ticks.Min},{ticks.Max}),n={ticks.Length}"
+        End Function
+
+        ''' <summary>
         ''' ### An Algorithm for Creating and Selecting Graph Axes
         ''' > http://austinclemens.com/blog/2016/01/09/an-algorithm-for-creating-a-graphs-axes/
         ''' </summary>
