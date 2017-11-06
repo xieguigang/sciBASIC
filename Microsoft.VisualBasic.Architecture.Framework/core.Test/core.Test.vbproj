@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{066C1C60-28CF-4A04-94B0-0CDD161482AB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>TestProject.LogFileTest</StartupObject>
+    <StartupObject>TestProject.reflectionTest</StartupObject>
     <RootNamespace>TestProject</RootNamespace>
     <AssemblyName>TestProject</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -23,6 +23,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>TestProject.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -117,6 +118,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="reflectionTest.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="DefaultValueTest.vb" />
     <Compile Include="CLI.vb" />

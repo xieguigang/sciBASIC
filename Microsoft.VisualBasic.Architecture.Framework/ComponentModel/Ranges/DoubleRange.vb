@@ -215,14 +215,18 @@ Namespace ComponentModel.Ranges
         ''' <param name="n%">所返回来的数组的元素的个数</param>
         ''' <returns></returns>
         Public Function Enumerate(n%) As Double()
-            Dim delta# = Length / n
-            Dim out As New List(Of Double)
+            If Length = 0 Then
+                Return {}
+            Else
+                Dim delta# = Length / n
+                Dim out As New List(Of Double)
 
-            For x As Double = Min To Max Step delta
-                out += x
-            Next
+                For x As Double = Min To Max Step delta
+                    out += x
+                Next
 
-            Return out
+                Return out
+            End If
         End Function
 
         ''' <summary>

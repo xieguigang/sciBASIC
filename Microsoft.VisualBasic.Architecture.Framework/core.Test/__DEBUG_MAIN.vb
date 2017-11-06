@@ -27,11 +27,7 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Runtime.Serialization
-Imports System.Text
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ApplicationServices.Development
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
@@ -48,6 +44,7 @@ Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 'Imports Microsoft.VisualBasic.Webservices

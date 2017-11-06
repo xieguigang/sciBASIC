@@ -1217,35 +1217,25 @@ Namespace Math
         Public Function IEEERemainder(x As Double, y As Double) As Double
             Return sys.IEEERemainder(x, y)
         End Function
-        '
-        ' Summary:
-        '     Returns a specified number raised to the specified power.
-        '
-        ' Parameters:
-        '   x:
-        '     A double-precision floating-point number to be raised to a power.
-        '
-        '   y:
-        '     A double-precision floating-point number that specifies a power.
-        '
-        ' Returns:
-        '     The number x raised to the power y.
+
+        ''' <summary>
+        ''' Returns a specified number raised to the specified power.
+        ''' </summary>
+        ''' <param name="x">A double-precision floating-point number to be raised to a power.</param>
+        ''' <param name="y">A double-precision floating-point number that specifies a power.</param>
+        ''' <returns>The number x raised to the power y.</returns>
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Pow(x As Double, y As Double) As Double
             Return x ^ y
         End Function
-        '
-        ' Summary:
-        '     Returns e raised to the specified power.
-        '
-        ' Parameters:
-        '   d:
-        '     A number specifying a power.
-        '
-        ' Returns:
-        '     The number e raised to the power d. If d equals System.Double.NaN or System.Double.PositiveInfinity,
-        '     that value is returned. If d equals System.Double.NegativeInfinity, 0 is returned.
+
+        ''' <summary>
+        ''' Returns e raised to the specified power.
+        ''' </summary>
+        ''' <param name="d">A number specifying a power.</param>
+        ''' <returns>The number e raised to the power d. If d equals System.Double.NaN or System.Double.PositiveInfinity,
+        ''' that value is returned. If d equals System.Double.NegativeInfinity, 0 is returned.</returns>
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Exp(d As Double) As Double
