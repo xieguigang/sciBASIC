@@ -42,6 +42,25 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    ''' <summary>
+    ''' 函数会根据<see cref="keys"/>参数来做排序
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="keys$"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Subset(Of T)(table As Dictionary(Of String, T), keys$()) As Dictionary(Of String, T)
+        Return keys _
+            .Select(Function(key)
+                        Return (key:=key, Value:=table(key))
+                    End Function) _
+            .ToDictionary(Function(o) o.key,
+                          Function(o) o.Value)
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional nonExitsNULL As Boolean = True) As T()

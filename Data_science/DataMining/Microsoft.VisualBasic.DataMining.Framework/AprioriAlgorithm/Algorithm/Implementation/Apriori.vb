@@ -285,7 +285,7 @@ Namespace AprioriAlgorithm
             Dim subsetsList As IEnumerable(Of String) = GenerateSubsets(Token.Key)
             Dim List As New List(Of Rule)
 
-            For Each subset In subsetsList
+            For Each subset As String In subsetsList
                 Dim remaining As String = GetRemaining(subset, Token.Key)
                 Dim rule As New Rule(subset, remaining, 0)
                 Call List.Add(rule)
