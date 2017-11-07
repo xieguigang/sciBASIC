@@ -181,7 +181,9 @@ Namespace Heatmap
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) range.ScaleMapping(x(key), levelRange))
+                                                  Function(key)
+                                                      Return range.ScaleMapping(x(key), levelRange)
+                                                  End Function)
                            }
                         End Function)
         End Function

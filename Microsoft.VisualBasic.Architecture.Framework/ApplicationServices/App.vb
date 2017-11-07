@@ -913,9 +913,9 @@ Public Module App
     '''
     <ExportAPI("RunCLI",
              Info:="Running the string as cli command line and the specific type define as a interpreter.")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, <CallerMemberName> Optional caller As String = Nothing) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, <CallerMemberName> Optional caller$ = Nothing) As Integer
 #If DEBUG Then
-        Call args.CLICommandArgvs.__DEBUG_ECHO
+        ' Call args.CLICommandArgvs.__DEBUG_ECHO
 #End If
         Call args.InitDebuggerEnvir(caller)
 
