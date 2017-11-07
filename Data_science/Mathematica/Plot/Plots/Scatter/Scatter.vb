@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::cb34a9a4c29e1926d3e3f003e96470f9, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -137,8 +138,18 @@ Public Module Scatter
             Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
                 Dim region As Rectangle = rect.PlotRegion
-                Dim X = d3js.scale.linear.domain(XTicks).range(integers:={region.Left, region.Right})
-                Dim Y = d3js.scale.linear.domain(YTicks).range(integers:={0, region.Bottom - region.Top}) ' Y 为什么是从零开始的？
+                Dim X, Y As d3js.scale.LinearScale
+
+                If Not xaxis.StringEmpty AndAlso Not yaxis.StringEmpty Then
+                    XTicks = AxisProvider.TryParse(xaxis).AxisTicks
+                    YTicks = AxisProvider.TryParse(yaxis).AxisTicks
+                    X = XTicks.LinearScale.range(integers:={region.Left, region.Right})
+                    Y = YTicks.LinearScale.range(integers:={0, region.Bottom - region.Top})
+                Else
+                    X = d3js.scale.linear.domain(XTicks).range(integers:={region.Left, region.Right})
+                    Y = d3js.scale.linear.domain(YTicks).range(integers:={0, region.Bottom - region.Top}) ' Y 为什么是从零开始的？
+                End If
+
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::93c3181651e594900028ae77f8a22218, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\DensityPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,8 +37,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Driver.CSS
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -77,9 +78,12 @@ Namespace Heatmap
                              Optional labX$ = "X",
                              Optional labY$ = "Y",
                              <CSSSelector(Types.Font)> Optional labelFontCSS$ = CSSFont.Win10Normal,
-                             Optional htmlLabel As Boolean = True) As GraphicsData
+                             Optional htmlLabel As Boolean = True,
+                             Optional xMax# = Double.NaN,
+                             Optional xMin# = Double.NaN,
+                             Optional yMin# = Double.NaN) As GraphicsData
 
-            Dim data = points _
+            Dim pointVector As VectorModel(Of PointF) = points _
                 .Where(Function(pt)
                            Return Not New Double() {
                                pt.X, pt.Y
@@ -87,21 +91,33 @@ Namespace Heatmap
                                      Return x.IsNaNImaginary
                                  End Function)
                        End Function) _
-                .VectorShadows
-            Dim xrange As DoubleRange = DirectCast(data.X, VectorShadows(Of Single)) ' As IEnumerable(Of Single)
-            Dim yrange As DoubleRange = DirectCast(data.Y, VectorShadows(Of Single)) ' As IEnumerable(Of Single)
-            Dim pointData = DirectCast(data, VectorShadows(Of PointF))
+                .Shadows
+            Dim xrange As DoubleRange = pointVector!X
+            Dim yrange As DoubleRange = pointVector!Y
             Dim colors$() = Designer _
                 .GetColors(schema, levels) _
                 .Select(Function(c) c.ToHtmlColor) _
                 .ToArray
+
+            If Not xMax.IsNaNImaginary Then
+                xrange = {xrange.Min, xMax}
+            End If
+            If Not xMin.IsNaNImaginary Then
+                xrange = {xMin, xrange.Max}
+            End If
+            If Not yMin.IsNaNImaginary Then
+                yrange = {yMin, yrange.Max}
+            End If
+
             Dim density = (xrange, yrange) _
                 .Grid(steps.FloatSizeParser) _
                 .DensityMatrix(
-                    pointData,
+                    pointVector,
                     schema:=colors,
                     r:=ptSize)
             Dim scatterPadding As Padding = padding
+            Dim xAxis = xrange.CreateAxisTicks.AxisExpression
+            Dim yAxis = yrange.CreateAxisTicks.AxisExpression
 
             scatterPadding.Right += legendWidth
 
@@ -114,6 +130,8 @@ Namespace Heatmap
                 ablines:=ablines,
                 Xlabel:=labX,
                 Ylabel:=labY,
+                xaxis:=xAxis,
+                yaxis:=yAxis,
                 htmlLabel:=htmlLabel).CreateGraphics
 
                 ' 在这里还需要绘制颜色谱的legend

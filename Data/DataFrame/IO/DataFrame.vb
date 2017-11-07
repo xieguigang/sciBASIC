@@ -82,8 +82,10 @@ Namespace IO
                     ' 2017-11-4 假设在原来的文件之中存在一个名字叫做ID的列
                     ' 但是在这里进行名称映射的变化的结果也是ID名字的话，
                     ' 则在这里会出现重复键名称的错误
-                    If SchemaOridinal.ContainsKey(map.Value) Then
-                        Throw New Exception(String.Format(FieldExists, map.Name, map.Value))
+                    If SchemaOridinal.ContainsKey(map.Value) AndAlso map.Name <> map.Value Then
+                        Dim ex As New Exception(String.Format(FieldExists, map.Name, map.Value))
+                        ex = New Exception(Me.FilePath, ex)
+                        Throw ex
                     End If
 
                     _SchemaOridinal.Remove(map.Name)

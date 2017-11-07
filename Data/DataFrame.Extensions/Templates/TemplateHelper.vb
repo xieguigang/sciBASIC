@@ -41,27 +41,51 @@ Public Module TemplateHelper
     ''' <param name="DIR$"></param>
     ''' <param name="save$"></param>
     ''' <returns></returns>
-    Public Function ScanTemplates(DIR$, save$) As Dictionary(Of String, Type)
+    Public Function ScanTemplates(DIR$, save$, Optional throwEx As Boolean = True) As Dictionary(Of String, Type)
         Dim typeTable As New Dictionary(Of String, Type)
 
         For Each dll$ In ls - l - r - {"*.dll", "*.exe"} <= DIR
             Dim assm As Assembly = Assembly.LoadFile(dll)
-            Dim types = assm.GetTypes _
-                .Select(Function(t) (t.GetCustomAttribute(Of TemplateAttribute), t)) _
-                .Where(Function(t) Not t.Item1 Is Nothing)
+            Dim types = GetTypesHelperInternal(assm, throwEx) _
+                .Select(Function(t)
+                            Return (t.GetCustomAttribute(Of TemplateAttribute), t)
+                        End Function) _
+                .Where(Function(t) Not t.Item1 Is Nothing) _
+                .ToArray
 
-            For Each t In types
-                Dim fileName$ = t.Item1.AliasName Or t.Item2.Name.AsDefault
-                Dim path$ = $"{save}/{t.Item1.Category}/{fileName}.csv"
-                Dim template As IEnumerable(Of Object) = {
-                    Activity.ActiveObject(t.Item2)
-                }
+            For Each t As (template As TemplateAttribute, type As Type) In types
+                With t
+                    Dim fileName$ = .template.AliasName Or .type.Name.AsDefault
+                    Dim key$ = $"{ .template.Category}/{fileName}"
+                    Dim path$ = $"{save}/{key}.csv"
+                    Dim template As IEnumerable = {
+                        Activity.ActiveObject(.type)
+                    }
 
-                Call template.SaveTo(path)
-                Call typeTable.Add(t.Item1.Category & "/" & fileName, t.Item2)
+                    Call template.SaveTable(path, type:= .type)
+                    Call typeTable.Add(key, .type)
+                End With
             Next
         Next
 
         Return typeTable
+    End Function
+
+    Private Function GetTypesHelperInternal(assembly As Assembly, throwEx As Boolean) As Type()
+        Try
+            Return EmitReflection.GetTypesHelper(assembly)
+        Catch ex As Exception
+
+            ex = New Exception(assembly.ToString, ex)
+
+            If throwEx Then
+                Throw
+            Else
+                Call ex.PrintException
+                Call App.LogException(ex)
+
+                Return {}
+            End If
+        End Try
     End Function
 End Module

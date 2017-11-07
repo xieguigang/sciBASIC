@@ -61,7 +61,7 @@ Namespace CommandLine.Reflection
 
         Public Shared Function GetDllMethod(assembly As Assembly, entryPoint$) As MethodInfo
             Dim entry As NamedValue(Of String) = GetPoint(entryPoint)
-            Dim types As Type() = GetTypes(assm:=assembly)
+            Dim types As Type() = GetTypesHelper(assm:=assembly)
             Dim dll As Type = LinqAPI.DefaultFirst(Of Type) _
  _
                 () <= From type As Type
@@ -84,26 +84,6 @@ Namespace CommandLine.Reflection
 
                 Return method
             End If
-        End Function
-
-        Private Shared Function GetTypes(assm As Assembly) As Type()
-            Try
-                Return assm.GetTypes
-
-            Catch ex As Exception When TypeOf ex Is ReflectionTypeLoadException
-                Dim details = DirectCast(ex, ReflectionTypeLoadException)
-                Dim msg$ = details.LoaderExceptions _
-                    .Select(Function(e) e.Message) _
-                    .ToArray _
-                    .GetJson
-
-                Throw New Exception(msg, ex)
-
-            Catch ex As Exception
-
-                Throw
-
-            End Try
         End Function
     End Class
 

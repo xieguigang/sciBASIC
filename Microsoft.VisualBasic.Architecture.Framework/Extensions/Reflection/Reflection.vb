@@ -47,6 +47,26 @@ Imports Microsoft.VisualBasic.Serialization.JSON
                   Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
+    Public Function GetTypesHelper(assm As Assembly) As Type()
+        Try
+            Return assm.GetTypes
+
+        Catch ex As Exception When TypeOf ex Is ReflectionTypeLoadException
+            Dim details = DirectCast(ex, ReflectionTypeLoadException)
+            Dim msg$ = details.LoaderExceptions _
+                    .Select(Function(e) e.Message) _
+                    .ToArray _
+                    .GetJson
+
+            Throw New Exception(msg, ex)
+
+        Catch ex As Exception
+
+            Throw
+
+        End Try
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsLambda(Of T)(assert As Assert(Of T)) As Func(Of T, Boolean)
