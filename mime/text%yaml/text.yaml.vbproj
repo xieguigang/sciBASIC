@@ -216,7 +216,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="YAML.PEG.txt" />
   </ItemGroup>
   <ItemGroup>
