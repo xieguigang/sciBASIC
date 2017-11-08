@@ -254,7 +254,7 @@ Namespace Imaging
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("To.Icon")>
         <Extension> Public Function GetIcon(res As Image) As Icon
-            Return Drawing.Icon.FromHandle(New Bitmap(res).GetHicon)
+            Return Icon.FromHandle(New Bitmap(res).GetHicon)
         End Function
 
         ''' <summary>
@@ -303,9 +303,10 @@ Namespace Imaging
         '''
         <ExportAPI("Get.RawStream")>
         <Extension> Public Function GetRawStream(image As Image) As Byte()
-            Dim stream As New IO.MemoryStream
-            Call image.Save(stream, ImageFormat.Png)
-            Return stream.ToArray
+            Using stream As New MemoryStream
+                Call image.Save(stream, ImageFormat.Png)
+                Return stream.ToArray
+            End Using
         End Function
 
         Private ReadOnly gdiShared As Graphics = Graphics.FromImage(New Bitmap(64, 64))
@@ -321,13 +322,12 @@ Namespace Imaging
         ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
         ''' string specified by the text parameter as drawn with the font parameter.
         ''' </returns>
-        <Extension> Public Function MeasureString(s As String, Font As Font,
-                                                  Optional XScaleSize As Single = 1,
-                                                  Optional YScaleSize As Single = 1) As Size
+        <Extension> Public Function MeasureString(s$, Font As Font, Optional xScaleSize! = 1, Optional yScaleSize! = 1) As SizeF
             SyncLock gdiShared
-                Call gdiShared.ScaleTransform(XScaleSize, YScaleSize)
-                Dim sz As SizeF = gdiShared.MeasureString(s, Font)
-                Return New Size(sz.Width, sz.Height)
+                With gdiShared
+                    Call .ScaleTransform(xScaleSize, yScaleSize)
+                    Return .MeasureString(s, Font)
+                End With
             End SyncLock
         End Function
 
@@ -344,31 +344,33 @@ Namespace Imaging
         ''' <summary>
         ''' Adding a frame box to the target image source.(为图像添加边框)
         ''' </summary>
-        ''' <param name="Handle"></param>
+        ''' <param name="canvas"></param>
         ''' <param name="pen">Default pen width is 1px and with color <see cref="Color.Black"/>.(默认的绘图笔为黑色的1个像素的边框)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function ImageAddFrame(handle As Graphics2D,
-                                                  Optional pen As Pen = Nothing,
-                                                  Optional offset As Integer = 0) As Graphics2D
-
+        <Extension> Public Function ImageAddFrame(canvas As Graphics2D, Optional pen As Pen = Nothing, Optional offset% = 0) As Graphics2D
             Dim TopLeft As New Point(offset, offset)
-            Dim TopRight As New Point(handle.Width - offset, 1 + offset)
-            Dim BottomLeft As New Point(offset + 1, handle.Height - offset)
-            Dim BottomRight As New Point(handle.Width - offset, handle.Height - offset)
+            Dim TopRight As New Point(canvas.Width - offset, 1 + offset)
+            Dim BtmLeft As New Point(offset + 1, canvas.Height - offset)
+            Dim BtmRight As New Point(canvas.Width - offset, canvas.Height - offset)
 
             If pen Is Nothing Then
                 pen = Pens.Black
             End If
 
-            Call handle.Graphics.DrawLine(pen, TopLeft, TopRight)
-            Call handle.Graphics.DrawLine(pen, TopRight, BottomRight)
-            Call handle.Graphics.DrawLine(pen, BottomRight, BottomLeft)
-            Call handle.Graphics.DrawLine(pen, BottomLeft, TopLeft)
+            Call canvas.DrawLine(pen, TopLeft, TopRight)
+            Call canvas.DrawLine(pen, TopRight, BtmRight)
+            Call canvas.DrawLine(pen, BtmRight, BtmLeft)
+            Call canvas.DrawLine(pen, BtmLeft, TopLeft)
 
-            Call handle.Graphics.FillRectangle(New SolidBrush(pen.Color), New Rectangle(New Point, New Size(1, 1)))
+            Dim color As New SolidBrush(pen.Color)
+            Dim region As New Rectangle With {
+                .Size = New Size(1, 1)
+            }
 
-            Return handle
+            Call canvas.FillRectangle(color, region)
+
+            Return canvas
         End Function
 
         ''' <summary>
@@ -385,21 +387,14 @@ Namespace Imaging
         End Function
 
         <Extension> Public Function OpenDevice(ctrl As Control) As Graphics2D
-            Dim ImageRes As Image
-
-            'If ctrl.BackgroundImage Is Nothing Then
-            ImageRes = New Bitmap(ctrl.Width, ctrl.Height)
-            'Else
-            'ImageRes = ctrl.BackgroundImage
-            'End If
-
-            Dim Device = ImageRes.CreateCanvas2D
+            Dim img As Image = New Bitmap(ctrl.Width, ctrl.Height)
+            Dim canvas = img.CreateCanvas2D
 
             If ctrl.BackgroundImage Is Nothing Then
-                Call Device.Graphics.FillRectangle(Brushes.White, New Rectangle(New Point, ImageRes.Size))
+                Call canvas.FillRectangle(Brushes.White, New Rectangle(New Point, img.Size))
             End If
 
-            Return Device
+            Return canvas
         End Function
 
         ''' <summary>
@@ -430,8 +425,8 @@ Namespace Imaging
         <ExportAPI("GDI+.Create")>
         <Extension> Public Function CreateCanvas2D(res As Image,
                                                    Optional directAccess As Boolean = False,
-                                                   <CallerMemberName>
-                                                   Optional caller$ = "") As Graphics2D
+                                <CallerMemberName> Optional caller$ = "") As Graphics2D
+
             If directAccess Then
                 Return Graphics2D.CreateObject(Graphics.FromImage(res), res)
             Else
@@ -487,21 +482,21 @@ Namespace Imaging
                 Throw ex
             End Try
 
-            Dim gdi As Graphics = Graphics.FromImage(Bitmap)
+            Dim g As Graphics = Graphics.FromImage(Bitmap)
             Dim rect As New Rectangle(New Point, Bitmap.Size)
 
             If filled.IsNullOrEmpty Then
                 filled = Color.White
             End If
 
-            Call gdi.Clear(filled)
+            Call g.Clear(filled)
 
-            gdi.InterpolationMode = InterpolationMode.HighQualityBicubic
-            gdi.PixelOffsetMode = PixelOffsetMode.HighQuality
-            gdi.CompositingQuality = CompositingQuality.HighQuality
-            gdi.SmoothingMode = SmoothingMode.HighQuality
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality
+            g.CompositingQuality = CompositingQuality.HighQuality
+            g.SmoothingMode = SmoothingMode.HighQuality
 
-            Return Graphics2D.CreateObject(gdi, Bitmap)
+            Return Graphics2D.CreateObject(g, Bitmap)
         End Function
 
         <Extension> Public Function Clone(res As Bitmap) As Bitmap

@@ -2023,57 +2023,36 @@ Namespace Imaging
         Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
             Call Graphics.DrawImageUnscaled(image, x, y)
         End Sub
-        '
-        ' Summary:
-        '     Draws a specified image using its original physical size at a specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn image.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn image.
-        '
-        '   width:
-        '     Not used.
-        '
-        '   height:
-        '     Not used.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws a specified image using its original physical size at a specified location.
+        ''' </summary>
+        ''' <param name="image"><see cref="Image"/> to draw.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the drawn image.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the drawn image.</param>
+        ''' <param name="width"></param>
+        ''' <param name="height"></param>
         Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
             Call Graphics.DrawImageUnscaled(image, x, y, width, height)
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified image without scaling and clips it, if necessary, to fit
-        '     in the specified rectangle.
-        '
-        ' Parameters:
-        '   image:
-        '     The System.Drawing.Image to draw.
-        '
-        '   rect:
-        '     The System.Drawing.Rectangle in which to draw the image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws the specified image without scaling and clips it, if necessary, to fit
+        ''' in the specified rectangle.
+        ''' </summary>
+        ''' <param name="image">The <see cref="Image"/> to draw.</param>
+        ''' <param name="rect">The <see cref="Rectangle"/> in which to draw the image.</param>
         Public Overrides Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
             Call Graphics.DrawImageUnscaledAndClipped(image, rect)
         End Sub
 
         ''' <summary>
-        ''' Draws a line connecting two System.Drawing.Point structures.
+        ''' Draws a line connecting two <see cref="Point"/> structures.
         ''' </summary>
-        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
-        ''' <param name="pt1">System.Drawing.Point structure that represents the first point to connect.</param>
-        ''' <param name="pt2">System.Drawing.Point structure that represents the second point to connect.</param>
+        ''' <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the line.</param>
+        ''' <param name="pt1"><see cref="Point"/> structure that represents the first point to connect.</param>
+        ''' <param name="pt2"><see cref="Point"/> structure that represents the second point to connect.</param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
             Call Graphics.DrawLine(pen, pt1, pt2)
         End Sub
