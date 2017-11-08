@@ -116,13 +116,17 @@ Namespace Heatmap
         <Extension>
         Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))(), Optional n% = 5) As NamedValue(Of Dictionary(Of String, Double))()
             Dim keys$() = data(Scan0%).Value.Keys.ToArray
-            Dim entityList As Entity() = LinqAPI.Exec(Of Entity) <=
-            From x As NamedValue(Of Dictionary(Of String, Double))
-            In data
-            Select New Entity With {
-                .uid = x.Name,
-                .Properties = keys.Select(Function(k) x.Value(k))
-            }
+            Dim entityList As Entity() = LinqAPI.Exec(Of Entity) _
+ _
+                () <= From x As NamedValue(Of Dictionary(Of String, Double))
+                      In data
+                      Select New Entity With {
+                          .uid = x.Name,
+                          .Properties = keys _
+                              .Select(Function(k) x.Value(k)) _
+                              .ToArray
+                      }
+
             Dim clusters As ClusterCollection(Of Entity)
 
             n = entityList.Length / n
@@ -143,11 +147,17 @@ Namespace Heatmap
             Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
 
             ' 通过kmeans计算出keys的顺序
-            Dim keysEntity = keys.Select(
-            Function(k) New Entity With {
-                .uid = k,
-                .Properties = data.Select(Function(x) x.Value(k))
-            }).ToArray
+            Dim keysEntity = keys _
+                .Select(Function(k)
+                            Return New Entity With {
+                                .uid = k,
+                                .Properties = data _
+                                    .Select(Function(x) x.Value(k)) _
+                                    .ToArray
+                            }
+                        End Function) _
+                .ToArray
+
             Dim keysOrder As New List(Of String)
 
             For Each cluster In keysEntity.ClusterDataSet(CInt(keys.Length / 5))

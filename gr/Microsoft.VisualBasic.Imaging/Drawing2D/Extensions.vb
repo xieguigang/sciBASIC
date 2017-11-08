@@ -142,12 +142,15 @@ Namespace Drawing2D
                     End With
             End Select
 
-            Dim out = polygon _
+            Dim out As PointF() = polygon _
                 .Select(Function(point)
-                            Return New PointF(point.X - offset.X,
-                                              point.Y - offset.Y)
+                            Return New PointF With {
+                                .X = point.X - offset.X,
+                                .Y = point.Y - offset.Y
+                            }
                         End Function) _
                 .ToArray
+
             Return out
         End Function
 
