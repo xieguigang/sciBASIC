@@ -41,10 +41,10 @@ Namespace ComponentModel.DataStructures
     ''' </summary>
     ''' 
     <Package("Set",
-                      Category:=APICategories.UtilityTools,
-                      Description:="Represents an unordered grouping of unique hetrogenous members.",
-                      Url:="http://www.codeproject.com/Articles/10806/A-Generic-Set-Data-Structure",
-                      Publisher:="Sean Michael Murphy")>
+             Category:=APICategories.UtilityTools,
+             Description:="Represents an unordered grouping of unique hetrogenous members.",
+             Url:="http://www.codeproject.com/Articles/10806/A-Generic-Set-Data-Structure",
+             Publisher:="Sean Michael Murphy")>
     Public Class [Set]
         Implements IEnumerable
         Implements IDisposable
@@ -197,51 +197,22 @@ Namespace ComponentModel.DataStructures
         ''' Public accessor for the members of the <see cref="[Set]">Set</see>.
         ''' </summary>
         Default Public ReadOnly Property Item(index As Int32) As Object
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _members(index)
             End Get
         End Property
 #End Region
 
-#Region "Public Properties"
         ''' <summary>
         ''' The number of members of the set.
         ''' </summary>
         Public ReadOnly Property Length() As Int32
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _members.Count
             End Get
         End Property
-
-        Private Property DuplicateDataResponse() As BadBehaviourResponses
-            Get
-                Return _behaviour
-            End Get
-            Set
-                _behaviour = Value
-            End Set
-        End Property
-#End Region
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function ToArray(Of T)([ctype] As Func(Of Object, T)) As T()
-            Return Me.ToArray _
-                .Select([ctype]) _
-                .ToArray
-        End Function
-
-        ''' <summary>
-        ''' DirectCast
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function ToArray(Of T)() As T()
-            Return Me.ToArray _
-                .Select(Function(x) DirectCast(x, T)) _
-                .ToArray
-        End Function
 
 #Region "Overloaded Operators"
         ''' <summary>
@@ -268,7 +239,9 @@ Namespace ComponentModel.DataStructures
         End Operator
 
         ''' <summary>
-        ''' Performs a union of two sets.(求并集)
+        ''' Performs a union of two sets. The elements can exists 
+        ''' in <paramref name="s1"/> or <paramref name="s2"/>.
+        ''' (求并集)
         ''' </summary>
         ''' <param name="s1">Any set.</param>
         ''' <param name="s2">Any set.</param>
@@ -279,7 +252,9 @@ Namespace ComponentModel.DataStructures
         End Operator
 
         ''' <summary>
-        ''' Performs an intersection of two sets.(求交集)
+        ''' Performs an intersection of two sets, the elements should exists 
+        ''' in <paramref name="s1"/> and <paramref name="s2"/>.
+        ''' (求交集)
         ''' </summary>
         ''' <param name="s1">Any set.</param>
         ''' <param name="s2">Any set.</param>
@@ -288,7 +263,7 @@ Namespace ComponentModel.DataStructures
         Public Shared Operator And(s1 As [Set], s2 As [Set]) As [Set]
             Dim result As New [Set]()
 
-            result.DuplicateDataResponse = BadBehaviourResponses.BeCool
+            result._behaviour = BadBehaviourResponses.BeCool
 
             If s1.Length > s2.Length Then
                 For Each o As Object In s1
@@ -304,7 +279,7 @@ Namespace ComponentModel.DataStructures
                 Next
             End If
 
-            result.DuplicateDataResponse = BadBehaviourResponses.BeAggressive
+            result._behaviour = BadBehaviourResponses.BeAggressive
 
             Return result
         End Operator
@@ -368,35 +343,6 @@ Namespace ComponentModel.DataStructures
         End Operator
 #End Region
 
-#Region "API"
-
-        <ExportAPI("Except")>
-        Public Shared Function Except(s1 As [Set], s2 As [Set]) As [Set]
-            Return s1 - s2
-        End Function
-
-        <ExportAPI("Union", Info:="Performs a union of two sets.")>
-        Public Shared Function Union(s1 As [Set], s2 As [Set]) As [Set]
-            Return s1 Or s2
-        End Function
-
-        <ExportAPI("Intersection", Info:="Performs an intersection of two sets.")>
-        Public Shared Function Intersection(s1 As [Set], s2 As [Set]) As [Set]
-            Return s1 And s2
-        End Function
-
-        <ExportAPI("As.Set")>
-        Public Shared Function AsSet(source As IEnumerable) As [Set]
-            Return New [Set](source)
-        End Function
-
-        <ExportAPI("As.Array")>
-        Public Shared Function ToArray([set] As [Set]) As Object()
-            Return [set].ToArray
-        End Function
-
-#End Region
-
 #Region "Overridden Members"
         ''' <summary>
         ''' Determines whether two <see cref="[Set]">Set</see> instances are equal.
@@ -419,6 +365,7 @@ Namespace ComponentModel.DataStructures
         ''' algorithms and data structures like a hash table.
         ''' </summary>
         ''' <returns>A hash code for the current <see cref="[Set]">Set</see>.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetHashCode() As Integer
             Return MyBase.GetHashCode()
         End Function
@@ -430,23 +377,12 @@ Namespace ComponentModel.DataStructures
         ''' <returns>A <see cref="String">String</see> that represents the current
         ''' <see cref="[Set]">Set</see>.</returns>
         Public Overrides Function ToString() As String
-            Dim result As New StringBuilder("{")
-
-            For Each o As Object In _members
-                result.Append(o.ToString() + ", ")
-            Next
-
-            If result.Length > 1 Then
-                result.Remove(result.Length - 2, 2)
-            End If
-
-            result.Append("}")
-
-            Return result.ToString()
+            Dim contents$ =
+                (From o As Object In _members Select Scripting.ToString(o)) _
+                .JoinBy(", ")
+            Return $"{{ {contents} }}"
         End Function
 #End Region
-
-#Region "IEnumerator Members"
 
         ''' <summary>
         ''' Returns an enumerator that can iterate through a collection.
@@ -458,15 +394,12 @@ Namespace ComponentModel.DataStructures
                 Yield x
             Next
         End Function
-#End Region
 
-#Region "IDisposable Members"
         ''' <summary>
         ''' Performs cleanup tasks on the <see cref="[Set]">Set</see> object.
         ''' </summary>
-        Public Sub Dispose() Implements IDisposable.Dispose
+        <MethodImpl(MethodImplOptions.AggressiveInlining)> Public Sub Dispose() Implements IDisposable.Dispose
             _members.Clear()
         End Sub
-#End Region
     End Class
 End Namespace
