@@ -49,6 +49,11 @@ Imports r = System.Text.RegularExpressions.Regex
 Public Module StringHelpers
 
     ''' <summary>
+    ''' Using <see cref="[String].Empty"/> as default value
+    ''' </summary>
+    Public ReadOnly EmptyString As DefaultValue(Of String) = String.Empty
+
+    ''' <summary>
     ''' Replace the <see cref="vbCrLf"/> with the specific string.
     ''' </summary>
     ''' <param name="src"></param>
@@ -766,8 +771,11 @@ Public Module StringHelpers
         Dim delimiterTest As Assert(Of String)
 
         If regex Then
-            Dim regexp As New Regex(delimiter, opt)
-            delimiterTest = Function(line) regexp.Match(line).Value = line
+            With New Regex(delimiter, opt)
+                delimiterTest = Function(line)
+                                    Return .Match(line).Value = line
+                                End Function
+            End With
         Else
             delimiterTest = Function(line)
                                 Return String.Equals(delimiter, line, StringComparison.Ordinal)
@@ -908,8 +916,9 @@ Public Module StringHelpers
     ''' <returns></returns>
     <Extension>
     <ExportAPI("Equals.Any")>
-    Public Function EqualsAny(source As String, ParamArray compareTo As String()) As String
+    Public Function EqualsAny(source$, ParamArray compareTo As String()) As String
         Dim index As Integer = compareTo.Located(source, False)
+
         If index = -1 Then
             Return ""
         Else
