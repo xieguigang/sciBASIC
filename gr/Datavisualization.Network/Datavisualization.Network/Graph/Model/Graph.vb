@@ -76,6 +76,7 @@ Namespace Graph
     ''' </summary>
     Public Class NetworkGraph : Inherits BaseClass
         Implements IGraph
+        Implements ICloneable
 
 #Region "Network data source"
 
@@ -378,6 +379,18 @@ Namespace Graph
 
         Public Overrides Function ToString() As String
             Return $"Network graph have {nodes.Count} nodes and {edges.Count} edges."
+        End Function
+
+        Private Function Clone() As Object Implements ICloneable.Clone
+            Dim copy As New NetworkGraph With {
+                .edges = New List(Of Edge)(edges),
+                .nodes = New List(Of Node)(nodes)
+            }
+            Return copy
+        End Function
+
+        Public Function Copy() As NetworkGraph
+            Return DirectCast(Clone(), NetworkGraph)
         End Function
     End Class
 End Namespace

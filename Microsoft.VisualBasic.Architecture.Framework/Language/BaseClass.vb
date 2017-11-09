@@ -123,10 +123,6 @@ Namespace Language
             Return s & x.__toString
         End Operator
 
-        Protected Sub Copy(ByRef x As BaseClass)
-            x = Me
-        End Sub
-
         Public Shared Operator IsTrue(x As BaseClass) As Boolean
             Return Not x Is Nothing
         End Operator
