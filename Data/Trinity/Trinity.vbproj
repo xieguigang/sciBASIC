@@ -178,10 +178,6 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\gr\Datavisualization.Network\Datavisualization.Network\Network.GraphTheory.vbproj">
-      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
-      <Name>Datavisualization.Network</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>

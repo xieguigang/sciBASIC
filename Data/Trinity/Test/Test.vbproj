@@ -11,7 +11,7 @@
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -107,13 +107,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data_science\Graph\Graph.vbproj">
+      <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
+      <Name>Graph</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\gr\Datavisualization.Network\Datavisualization.Network\Network.GraphTheory.vbproj">
-      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
-      <Name>Datavisualization.Network</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
