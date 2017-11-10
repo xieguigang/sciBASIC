@@ -128,6 +128,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StopWords.vb" />
     <Compile Include="Html\Article.vb" />
     <Compile Include="Html\Html2Article.vb" />
     <Compile Include="Html\UrlUtility.vb" />
