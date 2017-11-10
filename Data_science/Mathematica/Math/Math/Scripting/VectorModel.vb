@@ -1,11 +1,12 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Scripting
 
     Public Class VectorModel(Of T) : Inherits VectorShadows(Of T)
 
-        Default Public Shadows ReadOnly Property Vector(name$) As Vector
+        Default Public Overloads ReadOnly Property Item(name$) As Vector
             Get
                 Dim v As Object = Nothing
 
@@ -37,6 +38,7 @@ Namespace Scripting
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(source As IEnumerable(Of T))
             Call MyBase.New(source)
         End Sub
