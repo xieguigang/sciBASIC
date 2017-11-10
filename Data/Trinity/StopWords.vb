@@ -1,4 +1,6 @@
-﻿Public Class StopWords : Implements IEnumerable(Of String)
+﻿Imports System.Runtime.CompilerServices
+
+Public Class StopWords : Implements IEnumerable(Of String)
     Implements IReadOnlyCollection(Of String)
     Implements IReadOnlyList(Of String)
 
@@ -543,6 +545,7 @@
     Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of String).Count
 
     Default Public ReadOnly Property Item(index As Integer) As String Implements IReadOnlyList(Of String).Item
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return stopwords(index)
         End Get
