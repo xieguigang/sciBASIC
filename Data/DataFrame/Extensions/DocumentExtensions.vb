@@ -306,4 +306,10 @@ Public Module DocumentExtensions
             Return IO.File.LoadTsv(path, encoding)
         End If
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ParseDoc(csv$, Optional removesBlank As Boolean = False) As IO.File
+        Return IO.File.Load(csv.lTokens, trimBlanks:=removesBlank)
+    End Function
 End Module

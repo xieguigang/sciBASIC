@@ -46,8 +46,7 @@ Namespace IO
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <ActiveViews(File.ActiveViews)>
-    Public Class File : Inherits ITextFile
+    <ActiveViews(File.ActiveViews)> Public Class File : Inherits ITextFile
         Implements IEnumerable(Of RowObject)
         Implements IList(Of RowObject)
 
