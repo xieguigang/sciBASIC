@@ -56,12 +56,12 @@ Public Module NLPExtensions
             .Select(AddressOf LCase) _
             .Indexing
 
-        For Each sentence In originalText.Sentences
+        originalText = originalText.StripMessy
+
+        For Each sentence In originalText.Sentences.Select(AddressOf LCase)
             Dim one As New List(Of String)
 
-            For Each word In sentence _
-                .Words _
-                .Select(AddressOf LCase)
+            For Each word As String In sentence.Words
 
                 If word.IsOneOfA(keywords) Then
                     one += word
@@ -81,11 +81,9 @@ Public Module NLPExtensions
             End If
         Next
 
-        originalText = originalText.StripMessy.ToLower
-
         Return From phrase As String
                In result
-               Let count = originalText.Count(phrase)
+               Let count = originalText.Count(phrase, CompareMethod.Text)
                Where count >= minOccurNum
                Order By count Descending
                Select phrase
