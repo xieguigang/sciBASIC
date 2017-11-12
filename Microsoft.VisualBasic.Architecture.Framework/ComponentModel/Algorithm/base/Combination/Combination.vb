@@ -94,5 +94,11 @@ Namespace ComponentModel.Algorithm.base
             Yield comb.Item1
             Yield comb.Item2
         End Function
+
+        <Extension>
+        Public Iterator Function Iterates(Of T)(comb As Tuple(Of T, T)) As IEnumerable(Of T)
+            Yield comb.Item1
+            Yield comb.Item2
+        End Function
     End Module
 End Namespace
