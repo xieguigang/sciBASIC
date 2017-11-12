@@ -123,6 +123,6 @@ Public Module TextRank
             Next
         Next
 
-        Return New GraphMatrix(g, skipCount:=False)
+        Return New GraphMatrix(g)
     End Function
 End Module
