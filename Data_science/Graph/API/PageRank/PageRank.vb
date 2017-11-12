@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Namespace Analysis.PageRank
 
     ''' <summary>
-    ''' https://github.com/jeffersonhwang/pagerank
+    ''' 无权重的``pagerank``计算模块.(https://github.com/jeffersonhwang/pagerank)
     ''' </summary>
     Public Class PageRank
 
