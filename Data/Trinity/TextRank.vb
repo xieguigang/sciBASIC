@@ -109,15 +109,15 @@ Public Module TextRank
                 .SlideWindows(win_size) _
                 .ToArray
 
-            For Each t In blocks
+            For Each textBlock As SlideWindow(Of String) In blocks
 
-                For Each s In t
-                    If Not g.ExistVertex(s) Then
-                        Call g.AddVertex(s)
+                For Each word As String In textBlock
+                    If Not g.ExistVertex(word) Then
+                        Call g.AddVertex(word)
                     End If
                 Next
 
-                For Each combine In t.Items.FullCombination
+                For Each combine As (a$, b$) In textBlock.FullCombination
                     Call g.AddEdge(combine.a, combine.b)
                 Next
             Next
