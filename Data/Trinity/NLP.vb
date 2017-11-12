@@ -27,7 +27,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' 从现有的理论和技术现状看，通用的、高质量的自然语言处理系统，仍然是较长期的努力目标，
@@ -42,8 +44,60 @@ Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
 ''' </summary>
 Public Module NLPExtensions
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="keywordsSet"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Iterator Function KeyPhrases(text As GraphMatrix) As IEnumerable(Of String)
+    Public Function KeyPhrases(originalText$, keywordsSet As IEnumerable(Of String), Optional minOccurNum% = 2) As IEnumerable(Of String)
+        Dim result As New List(Of String)
+        Dim keywords As Index(Of String) = keywordsSet _
+            .Select(AddressOf LCase) _
+            .Indexing
+
+        For Each sentence In originalText.Sentences
+            Dim one As New List(Of String)
+
+            For Each word In sentence _
+                .Words _
+                .Select(AddressOf LCase)
+
+                If word.IsOneOfA(keywords) Then
+                    one += word
+                Else
+                    If one.Count > 1 Then
+                        result += one.JoinBy(" ")
+                    ElseIf one = 0 Then
+                        Continue For
+                    Else
+                        one *= 0
+                    End If
+                End If
+            Next
+
+            If one.Count > 1 Then
+                result += one.JoinBy(" ")
+            End If
+        Next
+
+        originalText = originalText.StripMessy.ToLower
+
+        Return From phrase As String
+               In result
+               Let count = originalText.Count(phrase)
+               Where count >= minOccurNum
+               Order By count Descending
+               Select phrase
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function KeyWords(text As GraphMatrix) As Dictionary(Of String, Double)
+        Dim result = text.TranslateVector(New PageRank(text).ComputePageRank, True)
+        Return result
+    End Function
+
+    <Extension> Public Function Abstract(text As GraphMatrix) As String
 
     End Function
 End Module

@@ -77,6 +77,7 @@ Namespace Analysis.PageRank
         Public Function ComputePageRank() As Vector
             Dim final As Vector = Nothing
 
+            ' Run the page rank iteration
             For Each generator As Vector In PageRankGenerator(
                 _incomingLinks,
                 _numLinks,
@@ -171,6 +172,7 @@ Namespace Analysis.PageRank
                     ' an element of the A x I vector.
                     ' all elements are identical.
                     Dim oneAv As Double = 0.0
+
                     If M > 0 Then
                         oneAv = alpha * iOld.Take(leafNodes).Sum / N
                     End If

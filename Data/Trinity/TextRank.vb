@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
 Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' This module implements TextRank, an unsupervised keyword
@@ -58,6 +59,12 @@ Public Module TextRank
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Sentences(text$) As String()
         Return text.Split(TextRank.sdeli)
+    End Function
+
+    <Extension> Public Function StripMessy(text$) As String
+        text = r.Replace(text, "\s+", " ")
+
+        Return text
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

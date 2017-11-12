@@ -456,6 +456,26 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
+    ''' Count the phrase in <paramref name="text"/>
+    ''' </summary>
+    ''' <param name="text$"></param>
+    ''' <param name="phrase$"></param>
+    ''' <param name="method"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Count(text$, phrase$, Optional method As CompareMethod = CompareMethod.Binary) As Integer
+        Dim n%
+        Dim pos% = InStr(text, phrase, method)
+
+        Do While pos > 0
+            n += 1
+            pos = InStr(pos, text, phrase, method)
+        Loop
+
+        Return n
+    End Function
+
+    ''' <summary>
     ''' 获取""或者其他字符所包围的字符串的值，请注意，假若只有一个<paramref name="wrapper"/>的话，字符串将不会进行任何处理
     ''' </summary>
     ''' <param name="s"></param>

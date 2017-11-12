@@ -497,6 +497,11 @@ Namespace LinearAlgebra
             Return (x1 + x2).Mod
         End Function
 
+        ''' <summary>
+        ''' Returns a numeric vector with all elements is value ``1``
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         Public Shared Function Ones(n As Integer) As Vector
             Dim result As New Vector(n)
 
