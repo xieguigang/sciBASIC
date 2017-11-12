@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Public Class StopWords : Implements IEnumerable(Of String)
@@ -367,6 +368,12 @@ Public Class StopWords : Implements IEnumerable(Of String)
     }.Indexing
 
     Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of String).Count
+
+    ''' <summary>
+    ''' Using list of stop words from https://www.ranks.nl/stopwords/ as default.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Shared ReadOnly Property DefaultStopWords As New DefaultValue(Of StopWords)
 
     Default Public ReadOnly Property Item(index As Integer) As String Implements IReadOnlyList(Of String).Item
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

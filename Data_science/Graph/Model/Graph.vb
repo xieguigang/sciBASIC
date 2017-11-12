@@ -46,17 +46,20 @@ Public Class Graph : Implements IEnumerable(Of Edge)
 #End Region
 
     Public ReadOnly Property Size As (Vertex%, Edges%)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return (vertices.Count, edges.Count)
         End Get
     End Property
 
     Public ReadOnly Property Vertex As Vertex()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return buffer
         End Get
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetConnectedVertex() As Vertex()
         Return edges.Values _
             .Select(Function(e) {e.U, e.V}) _
@@ -76,6 +79,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         Return Me
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ExistVertex(name$) As Boolean
         Return vertices.ContainsKey(name)
     End Function
@@ -108,6 +112,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         Return Me
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function AddEdge(i%, j%, Optional weight# = 0) As Graph
         edges += New Edge With {
             .U = buffer(i),
@@ -118,6 +123,13 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         Return Me
     End Function
 
+    ''' <summary>
+    ''' <paramref name="u"/> and <paramref name="v"/> is the property ``<see cref="Data.Graph.Vertex.label"/>``
+    ''' </summary>
+    ''' <param name="u$"></param>
+    ''' <param name="v$"></param>
+    ''' <param name="weight#"></param>
+    ''' <returns></returns>
     Public Function AddEdge(u$, v$, Optional weight# = 0) As Graph
         edges += New Edge With {
             .U = vertices(u),
@@ -134,10 +146,13 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     ''' <param name="U"></param>
     ''' <param name="V"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Delete(U As Vertex, V As Vertex) As Graph
         Return Delete(U.ID, V.ID)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Delete(u$, v$) As Graph
         Return Delete(vertices(u).ID, vertices(v).ID)
     End Function

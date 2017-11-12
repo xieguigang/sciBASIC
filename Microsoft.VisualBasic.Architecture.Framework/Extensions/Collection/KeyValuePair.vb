@@ -42,6 +42,13 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    ''' <summary>
+    ''' Target <paramref name="item"/> contains in <paramref name="define"/> list.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="item"></param>
+    ''' <param name="define"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IsOneOfA(Of T)(item As T, define As Index(Of T)) As Boolean

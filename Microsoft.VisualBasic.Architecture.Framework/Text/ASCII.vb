@@ -286,7 +286,7 @@ Namespace Text
         End Function
 
         ''' <summary>
-        ''' 可以印刷的ASCII符号列表
+        ''' Symbols without white space.(可以印刷的ASCII符号列表)
         ''' </summary>
         ''' <returns></returns>
         Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().Select(AddressOf Chr).ToArray

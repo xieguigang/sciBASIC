@@ -46,20 +46,32 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 Public Module TextRank
 
+    ''' <summary>
+    ''' Delimiter that using for split the large text block into seperated sentenses.
+    ''' </summary>
     ReadOnly sdeli As Char() = {"."c, "?"c, "!"c, ";"c}
-    ReadOnly allSymbols As Char() = ASCII.Symbols.Join({" "c, ASCII.TAB})
+    ''' <summary>
+    ''' Split text as words
+    ''' </summary>
+    ReadOnly allSymbols As Char() = ASCII.Symbols.AsList + {" "c, ASCII.TAB}
 
-    <Extension>
-    Public Function Sentences(text$) As String()
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function Sentences(text$) As String()
         Return text.Split(TextRank.sdeli)
     End Function
 
-    <Extension>
-    Public Function Words(text$) As String()
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function Words(text$) As String()
         Return text _
             .Split(allSymbols) _
             .Where(Function(s) Not String.IsNullOrEmpty(s)) _
             .ToArray
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Removes(words As IEnumerable(Of String), stopwords As StopWords) As IEnumerable(Of String)
+        Return stopwords.Removes(words)
     End Function
 
     ''' <summary>
@@ -78,22 +90,26 @@ Public Module TextRank
     ''' <param name="sentences"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function TextGraph(sentences As IEnumerable(Of String)) As GraphMatrix
+    Public Function TextGraph(sentences As IEnumerable(Of String), Optional win_size% = 2, Optional stopwords As StopWords = Nothing) As GraphMatrix
         Dim g As New Graph.Graph
         Dim source As String() = sentences _
             .Select(AddressOf Trim) _
             .Where(Function(s) Not String.IsNullOrEmpty(s)) _
             .ToArray
 
+        stopwords = stopwords Or StopWords.DefaultStopWords
+
         For Each text As String In source
 
             ' 假设每一句话之中的单词之间的顺序就是网络连接的方向
-            Dim words = text _
+            Dim blocks = text _
                 .ToLower _
                 .Words _
-                .SlideWindows(2).ToArray
+                .Removes(stopwords) _
+                .SlideWindows(win_size) _
+                .ToArray
 
-            For Each t In words
+            For Each t In blocks
 
                 For Each s In t
                     If Not g.ExistVertex(s) Then
@@ -101,7 +117,9 @@ Public Module TextRank
                     End If
                 Next
 
-                Call g.AddEdge(t.First, t.Last)
+                For Each combine In t.Items.FullCombination
+                    Call g.AddEdge(combine.a, combine.b)
+                Next
             Next
         Next
 

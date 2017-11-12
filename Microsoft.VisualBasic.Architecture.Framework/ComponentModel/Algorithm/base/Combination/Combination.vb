@@ -47,14 +47,22 @@ Namespace ComponentModel.Algorithm.base
         ''' <param name="seq_2"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function CreateCombos(Of TA, TB)(seq_1 As IEnumerable(Of TA), seq_2 As IEnumerable(Of TB)) As IEnumerable(Of Tuple(Of TA, TB))
+        Public Iterator Function CreateCombos(Of TA, TB)(seq_1 As IEnumerable(Of TA), seq_2 As IEnumerable(Of TB)) As IEnumerable(Of (a As TA, b As TB))
             Dim b As TB() = seq_2.ToArray
 
             For Each i As TA In seq_1
                 For Each j As TB In b
-                    Yield New Tuple(Of TA, TB)(i, j)
+                    Yield (i, j)
                 Next
             Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FullCombination(Of T)(seq As IEnumerable(Of T)) As IEnumerable(Of (a As T, b As T))
+            With seq.ToArray
+                Return .CreateCombos(.ref)
+            End With
         End Function
 
         <Extension> Public Iterator Function Iteration(Of T)(source As T()()) As IEnumerable(Of T())
@@ -82,7 +90,7 @@ Namespace ComponentModel.Algorithm.base
         End Function
 
         <Extension>
-        Public Iterator Function Iterates(Of T)(comb As Tuple(Of T, T)) As IEnumerable(Of T)
+        Public Iterator Function Iterates(Of T)(comb As (T, T)) As IEnumerable(Of T)
             Yield comb.Item1
             Yield comb.Item2
         End Function
