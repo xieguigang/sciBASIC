@@ -76,6 +76,15 @@ Public Module KeyValuePairExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
+    Public Function Subset(Of K, V)(table As Dictionary(Of K, V), assert As Func(Of K, V, Boolean)) As Dictionary(Of K, V)
+        Return table _
+            .Where(Function(map) assert(map.Key, map.Value)) _
+            .ToDictionary(Function(map) map.Key,
+                          Function(map) map.Value)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional nonExitsNULL As Boolean = True) As T()
         If nonExitsNULL Then
             Return keys _

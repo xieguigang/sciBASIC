@@ -95,7 +95,18 @@ Public Module NLPExtensions
         Return result
     End Function
 
-    <Extension> Public Function Abstract(text As GraphMatrix) As String
+    ''' <summary>
+    ''' 获取最重要的num个长度大于等于sentence_min_len的句子用来生成摘要。
+    ''' </summary>
+    ''' <param name="text"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Abstract(text As GraphMatrix, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
+        Dim result = text.TranslateVector(New PageRank(text).ComputePageRank, True)
 
+        Return result _
+            .Subset(Function(sentence, w)
+                        Return sentence.Words.Length >= minWords AndAlso w >= minWords
+                    End Function) _
+            .ToDictionary
     End Function
 End Module

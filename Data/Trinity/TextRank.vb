@@ -98,7 +98,7 @@ Public Module TextRank
     ''' <param name="sentences"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function TextGraph(sentences As IEnumerable(Of String), Optional win_size% = 2, Optional stopwords As StopWords = Nothing) As GraphMatrix
+    Public Function TextRankGraph(sentences As IEnumerable(Of String), Optional win_size% = 2, Optional stopwords As StopWords = Nothing) As GraphMatrix
         Dim g As New Graph.Graph
         Dim source As String() = sentences _
             .Select(AddressOf Trim) _
@@ -134,6 +134,33 @@ Public Module TextRank
         Return New GraphMatrix(g)
     End Function
 
+    <Extension> Public Function TextGraph(text$, Optional similarityCut# = 0.05) As GraphMatrix
+        Dim list$() = text.StripMessy.Sentences.Where(Function(s) Not s.StringEmpty).ToArray
+        Dim words$()() = list _
+            .Select(AddressOf LCase) _
+            .Select(AddressOf TextRank.Words) _
+            .ToArray
+        Dim similarity#
+        Dim g As New Graph.Graph
+
+        For Each sentence As String In list
+            Call g.AddVertex(sentence)
+        Next
+
+        For x As Integer = 0 To words.Length - 1
+            For y As Integer = x To words.Length - 1
+                similarity = TextRank.Similarity(words(x), words(y))
+
+                If similarity >= similarityCut Then
+                    Call g.AddEdge(list(x), list(y), weight:=similarity)
+                    Call g.AddEdge(list(y), list(x), weight:=similarity)
+                End If
+            Next
+        Next
+
+        Return New GraphMatrix(g)
+    End Function
+
     ''' <summary>
     ''' 默认的用于计算两个句子相似度的函数。
     ''' </summary>
@@ -155,7 +182,9 @@ Public Module TextRank
             Return 0
         End If
 
-        Dim denominator = Math.Log(wordList1.Count) + Math.Log(wordList2.Count)
+        Dim denominator =
+            Math.Log(wordList1.Count) +
+            Math.Log(wordList2.Count)
 
         If Math.Abs(denominator) = 0R Then
             Return 0

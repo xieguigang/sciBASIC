@@ -47,7 +47,7 @@ available here"
         s$ = "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
 
         Dim ps = TextRank.Sentences(s.TrimNewLine)
-        Dim g As GraphMatrix = ps.TextGraph
+        Dim g As GraphMatrix = ps.TextRankGraph
         Dim pr As New PageRank(g)
         Dim result = g.TranslateVector(pr.ComputePageRank, True)
 
