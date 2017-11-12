@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -131,5 +132,35 @@ Public Module TextRank
         Next
 
         Return New GraphMatrix(g)
+    End Function
+
+    ''' <summary>
+    ''' 默认的用于计算两个句子相似度的函数。
+    ''' </summary>
+    ''' <param name="wordList1">分别代表两个句子，都是由单词组成的列表</param>
+    ''' <param name="wordList2">分别代表两个句子，都是由单词组成的列表</param>
+    ''' <returns></returns>
+    Public Function Similarity(wordList1$(), wordList2$()) As Double
+        Dim words$() = (wordList1.AsList + wordList2) _
+            .Distinct _
+            .ToArray
+        Dim vector1 As New Vector(From word As String In words Select wordList1.Count(word))
+        Dim vector2 As New Vector(From word As String In words Select wordList2.Count(word))
+
+        ' 使用乘法计算出共同出现的单词的数量
+        Dim vector3 = vector1 * vector2
+        Dim coOccurNum = vector3.Where(Function(n) n > 0).Count
+
+        If coOccurNum <= 0 Then
+            Return 0
+        End If
+
+        Dim denominator = Math.Log(wordList1.Count) + Math.Log(wordList2.Count)
+
+        If Math.Abs(denominator) = 0R Then
+            Return 0
+        End If
+
+        Return coOccurNum / denominator
     End Function
 End Module
