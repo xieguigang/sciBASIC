@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 
 Public Class StopWords : Implements IEnumerable(Of String)
     Implements IReadOnlyCollection(Of String)
@@ -7,7 +9,7 @@ Public Class StopWords : Implements IEnumerable(Of String)
     ''' <summary>
     ''' https://www.ranks.nl/stopwords/
     ''' </summary>
-    ReadOnly stopwords$() = {
+    ReadOnly stopwords As Index(Of String) = {
  _
         "a", "able", "about", "above", "abst", "accordance", "according", "accordingly", "across", "act", "actually", "added", "adj",
         "affected", "affecting", "affects", "after", "afterwards", "again", "against", "ah", "all", "almost", "alone", "along", "already",
@@ -362,7 +364,7 @@ Public Class StopWords : Implements IEnumerable(Of String)
         "y", "yes", "yet", "you", "youd", "you'll", "your", "youre", "yours", "yourself", "yourselves", "you've",
  _
         "z", "zero"
-    }
+    }.Indexing
 
     Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of String).Count
 
@@ -374,11 +376,24 @@ Public Class StopWords : Implements IEnumerable(Of String)
     End Property
 
     Sub New()
-        Count = stopwords.Length
+        Count = stopwords.Count
     End Sub
 
+    ''' <summary>
+    ''' Removes all of the stop words from the <paramref name="tokens"/> list.
+    ''' </summary>
+    ''' <param name="tokens"></param>
+    ''' <returns></returns>
+    Public Iterator Function Removes(tokens As IEnumerable(Of String)) As IEnumerable(Of String)
+        For Each word As String In tokens.SafeQuery
+            If Not word.ToLower.IsOneOfA(stopwords) Then
+                Yield word
+            End If
+        Next
+    End Function
+
     Public Iterator Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator
-        For Each word$ In stopwords
+        For Each word$ In stopwords.Objects
             Yield word
         Next
     End Function

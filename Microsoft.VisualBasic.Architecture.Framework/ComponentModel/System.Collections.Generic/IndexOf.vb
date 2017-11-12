@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b3096d44d16ecc12ddbecfa4f4020f2f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -39,7 +39,7 @@ Namespace ComponentModel.Collection
     Public Class Index(Of T) : Implements IEnumerable(Of SeqValue(Of T))
 
         Dim maps As New Dictionary(Of T, Integer)
-        Dim index As List(Of SeqValue(Of T))
+        Dim index As HashList(Of SeqValue(Of T))
 
         ''' <summary>
         ''' 获取包含在<see cref="System.Collections.Generic.Dictionary"/>中的键/值对的数目。
@@ -82,7 +82,7 @@ Namespace ComponentModel.Collection
                 Function(s) New SeqValue(Of T) With {
                     .i = s.Value,
                     .value = s.Key
-                }).AsList
+                }).AsHashList
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -102,6 +102,13 @@ Namespace ComponentModel.Collection
                 Else
                     Return -1
                 End If
+            End Get
+        End Property
+
+        Default Public ReadOnly Property IndexOf(index%) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me.index(index).value
             End Get
         End Property
 

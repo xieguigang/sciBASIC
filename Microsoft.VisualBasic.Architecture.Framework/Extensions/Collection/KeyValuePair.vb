@@ -42,6 +42,12 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function IsOneOfA(Of T)(item As T, define As Index(Of T)) As Boolean
+        Return define.IndexOf(item) > -1
+    End Function
+
     ''' <summary>
     ''' 函数会根据<see cref="keys"/>参数来做排序
     ''' </summary>

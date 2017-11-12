@@ -145,6 +145,7 @@ Namespace ComponentModel
             list(x.Address) = Nothing
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Remove(index%)
             list(index) = Nothing
         End Sub
