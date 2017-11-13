@@ -1,0 +1,1 @@
+"../../githubAPI/github-vcard/bin/x64/Release/github-vcard.exe" /relationships /user xieguigang /out ./github-relationships
