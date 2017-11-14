@@ -60,8 +60,9 @@ Public Module MethodsExtension
         Return New Lazy(Of T)(factory)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsLazy(Of T)(lambda As LambdaExpression) As Lazy(Of T)
-
+        Return DirectCast(lambda.Compile, Func(Of T)).AsLazy
     End Function
 End Module
