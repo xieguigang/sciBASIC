@@ -61,6 +61,6 @@ available here"
 
         'Call net.Save("G:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\")
 
-        'Pause()
+        Pause()
     End Sub
 End Module
