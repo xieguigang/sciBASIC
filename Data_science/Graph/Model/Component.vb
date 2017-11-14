@@ -31,6 +31,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports V = Microsoft.VisualBasic.Data.Graph.Vertex
 
 ''' <summary>
 ''' 图之中的节点
@@ -54,11 +55,14 @@ Public Class Vertex : Implements INamedValue
     End Function
 End Class
 
+Public Class Edge : Inherits Edge(Of V)
+End Class
+
 ''' <summary>
 ''' Direction: ``<see cref="U"/> -> <see cref="V"/>``.
 ''' (节点之间的边)
 ''' </summary>
-Public Class Edge : Implements INamedValue
+Public Class Edge(Of Vertex As V) : Implements INamedValue
 
     ''' <summary>
     ''' The source node

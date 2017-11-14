@@ -102,8 +102,8 @@ Public Module SVGExtensions
         Dim links As line() =
             LinqAPI.Exec(Of line) <= From edge As Edge
                                      In graph.edges
-                                     Let source As Graph.Node = edge.Source
-                                     Let target As Graph.Node = edge.Target
+                                     Let source As Graph.Node = edge.U
+                                     Let target As Graph.Node = edge.V
                                      Let pts As Point = getPoint(source, rect, viewDistance)
                                      Let ptt As Point = getPoint(target, rect, viewDistance)
                                      Let rs As Single = source.__getRadius / 2,

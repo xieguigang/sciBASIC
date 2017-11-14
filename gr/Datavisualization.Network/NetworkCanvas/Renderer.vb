@@ -96,9 +96,9 @@ Public Class Renderer : Inherits AbstractRenderer
 
     Protected Sub __invokeEdgeDraw(edge As Edge, spring As Spring)
         If ZeroFilter Then
-            If (edge.Source.Data.radius < 0.6 OrElse edge.Target.Data.radius < 0.6) Then
+            If (edge.U.Data.radius < 0.6 OrElse edge.V.Data.radius < 0.6) Then
                 Return
-            ElseIf edge.Source.Data.radius > 500 OrElse edge.Target.Data.radius > 500 Then
+            ElseIf edge.u.Data.radius > 500 OrElse edge.v.Data.radius > 500 Then
                 Return
             End If
         End If
