@@ -381,7 +381,7 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
-            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
+            If Not (m_nodePoints.ContainsKey(iNode.Label)) Then
                 Dim iniPosition As FDGVector3 = TryCast(iNode.Data.initialPostion, FDGVector3)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)

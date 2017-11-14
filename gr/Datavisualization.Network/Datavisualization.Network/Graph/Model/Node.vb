@@ -98,7 +98,7 @@ Namespace Graph
         Public Property Pinned As Boolean
 
         Public Overrides Function GetHashCode() As Integer
-            Return ID.GetHashCode()
+            Return Label.GetHashCode()
         End Function
 
         Public Overrides Function ToString() As String

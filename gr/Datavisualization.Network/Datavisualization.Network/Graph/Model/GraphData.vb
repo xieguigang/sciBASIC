@@ -108,7 +108,7 @@ Namespace Graph
         <DumpNode> Public Property Weights As Double()
 
         ''' <summary>
-        ''' 与本节点相连接的其他节点的<see cref="Node.Id">编号</see>
+        ''' 与本节点相连接的其他节点的<see cref="Node.Label">编号</see>
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
