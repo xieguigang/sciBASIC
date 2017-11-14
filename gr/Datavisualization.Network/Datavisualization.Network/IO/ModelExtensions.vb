@@ -88,7 +88,7 @@ Namespace FileStream
                 ' data("z") = n.Data.initialPostion.z
 
                 nodes += New Node With {
-                    .ID = n.ID,
+                    .ID = n.Label,
                     .NodeType = n.Data(names.REFLECTION_ID_MAPPING_NODETYPE),
                     .Properties = data
                 }
@@ -96,8 +96,8 @@ Namespace FileStream
 
             For Each l As Edge In g.edges
                 edges += New NetworkEdge With {
-                    .FromNode = l.Source.ID,
-                    .ToNode = l.Target.ID,
+                    .FromNode = l.U.Label,
+                    .ToNode = l.V.Label,
                     .Interaction = l.Data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
                 }
             Next

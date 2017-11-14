@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::c78409e20a75733985d1fc69466e6268, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Model\Node.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -64,14 +64,16 @@
 '
 '
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Graph
 
     ''' <summary>
-    ''' <see cref="Node.ID"/> -> <see cref="INamedValue.Key"/>
+    ''' <see cref="Node.Label"/> -> <see cref="INamedValue.Key"/>
     ''' </summary>
-    Public Class Node : Implements INamedValue
+    Public Class Node : Inherits Data.Graph.Vertex
+        Implements INamedValue
         Implements IGraphValueContainer(Of NodeData)
 
         ''' <summary>
@@ -84,7 +86,7 @@ Namespace Graph
                 Data = iData.Clone
             End If
 
-            ID = iId
+            Label = iId
             Pinned = False
         End Sub
 
@@ -92,23 +94,18 @@ Namespace Graph
             Call Me.New(Nothing, Nothing)
         End Sub
 
-        ''' <summary>
-        ''' The unique id of this node
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property ID As String Implements INamedValue.Key
         Public Property Data As NodeData Implements IGraphValueContainer(Of NodeData).Data
         Public Property Pinned As Boolean
 
         Public Overrides Function GetHashCode() As Integer
-            Return ID.GetHashCode()
+            Return Label.GetHashCode()
         End Function
 
         Public Overrides Function ToString() As String
             If Not Data Is Nothing AndAlso Not Data.label.StringEmpty Then
-                Return $"{ID} ({Data.label})"
+                Return $"{Label} ({Data.label})"
             Else
-                Return ID
+                Return Label
             End If
         End Function
 
@@ -116,26 +113,21 @@ Namespace Graph
             ' If parameter is null return false.
             If obj Is Nothing Then
                 Return False
+            Else
+                ' If parameter cannot be cast to Point return false.
+                Return Equals(p:=TryCast(obj, Node))
             End If
-
-            ' If parameter cannot be cast to Point return false.
-            Dim p As Node = TryCast(obj, Node)
-            If DirectCast(p, System.Object) Is Nothing Then
-                Return False
-            End If
-
-            ' Return true if the fields match:
-            Return (ID = p.ID)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Equals(p As Node) As Boolean
             ' If parameter is null return false:
             If p Is Nothing Then
                 Return False
+            Else
+                ' Return true if the fields match:
+                Return (Label = p.Label)
             End If
-
-            ' Return true if the fields match:
-            Return (ID = p.ID)
         End Function
 
         Public Shared Operator =(a As Node, b As Node) As Boolean
@@ -147,12 +139,12 @@ Namespace Graph
             ' If both are null, or both are same instance, return true.
             If Object.ReferenceEquals(a, b) Then
                 Return True
+            Else
+                Return a.Equals(p:=b)
             End If
-
-            ' Return true if the fields match:
-            Return a.ID = b.ID
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(a As Node, b As Node) As Boolean
             Return Not (a = b)
         End Operator

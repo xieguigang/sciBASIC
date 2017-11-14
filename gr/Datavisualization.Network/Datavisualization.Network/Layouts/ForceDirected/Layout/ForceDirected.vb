@@ -137,7 +137,7 @@ Namespace Layouts
                 Dim length As Single = iEdge.Data.length
                 Dim existingSpring As Spring = Nothing
 
-                Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.Source, iEdge.Target)
+                Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.U, iEdge.V)
                 If fromEdges IsNot Nothing Then
                     For Each e As Edge In fromEdges
                         If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
@@ -151,7 +151,7 @@ Namespace Layouts
                     Return New Spring(existingSpring.point1, existingSpring.point2, 0F, 0F)
                 End If
 
-                Dim toEdges As List(Of Edge) = graph.GetEdges(iEdge.Target, iEdge.Source)
+                Dim toEdges As List(Of Edge) = graph.GetEdges(iEdge.V, iEdge.U)
                 If toEdges IsNot Nothing Then
                     For Each e As Edge In toEdges
                         If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
@@ -165,7 +165,7 @@ Namespace Layouts
                     Return New Spring(existingSpring.point2, existingSpring.point1, 0F, 0F)
                 End If
 
-                m_edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.Source), GetPoint(iEdge.Target), length, Stiffness)
+                m_edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.U), GetPoint(iEdge.V), length, Stiffness)
             End If
             Return m_edgeSprings(iEdge.ID)
         End Function
@@ -335,14 +335,14 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
-            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
+            If Not (m_nodePoints.ContainsKey(iNode.Label)) Then
                 Dim iniPosition As FDGVector2 = TryCast(iNode.Data.initialPostion, FDGVector2)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
-                m_nodePoints(iNode.ID) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
+                m_nodePoints(iNode.Label) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
             End If
-            Return m_nodePoints(iNode.ID)
+            Return m_nodePoints(iNode.Label)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox
@@ -381,14 +381,14 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
-            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
+            If Not (m_nodePoints.ContainsKey(iNode.Label)) Then
                 Dim iniPosition As FDGVector3 = TryCast(iNode.Data.initialPostion, FDGVector3)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
                 End If
-                m_nodePoints(iNode.ID) = New LayoutPoint(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
+                m_nodePoints(iNode.Label) = New LayoutPoint(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
             End If
-            Return m_nodePoints(iNode.ID)
+            Return m_nodePoints(iNode.Label)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox

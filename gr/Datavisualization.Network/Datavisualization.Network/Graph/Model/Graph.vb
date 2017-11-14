@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f517ae051d74b3609937d63d6768ad02, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Model\Graph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -97,7 +97,7 @@ Namespace Graph
         Public ReadOnly Property connectedNodes() As Node()
             Get
                 Return edges _
-                    .Select(Function(d) {d.Source, d.Target}) _
+                    .Select(Function(d) d.Iterate2Nodes) _
                     .IteratesALL _
                     .Distinct _
                     .ToArray
@@ -105,7 +105,7 @@ Namespace Graph
         End Property
 
         ''' <summary>
-        ''' <see cref="Node.ID"/>为键名
+        ''' <see cref="Node.Label"/>为键名
         ''' </summary>
         Private _nodeSet As Dictionary(Of String, Node)
         Private _adjacencySet As Dictionary(Of String, Dictionary(Of String, List(Of Edge)))
@@ -129,11 +129,11 @@ Namespace Graph
         End Sub
 
         Public Function AddNode(iNode As Node) As Node Implements IGraph.AddNode
-            If Not _nodeSet.ContainsKey(iNode.ID) Then
+            If Not _nodeSet.ContainsKey(iNode.Label) Then
                 nodes.Add(iNode)
             End If
 
-            _nodeSet(iNode.ID) = iNode
+            _nodeSet(iNode.Label) = iNode
             notify()
             Return iNode
         End Function
@@ -144,16 +144,16 @@ Namespace Graph
             End If
 
 
-            If Not (_adjacencySet.ContainsKey(iEdge.Source.ID)) Then
-                _adjacencySet(iEdge.Source.ID) = New Dictionary(Of String, List(Of Edge))()
+            If Not (_adjacencySet.ContainsKey(iEdge.U.Label)) Then
+                _adjacencySet(iEdge.U.Label) = New Dictionary(Of String, List(Of Edge))()
             End If
-            If Not (_adjacencySet(iEdge.Source.ID).ContainsKey(iEdge.Target.ID)) Then
-                _adjacencySet(iEdge.Source.ID)(iEdge.Target.ID) = New List(Of Edge)()
+            If Not (_adjacencySet(iEdge.U.Label).ContainsKey(iEdge.V.Label)) Then
+                _adjacencySet(iEdge.U.Label)(iEdge.V.Label) = New List(Of Edge)()
             End If
 
 
-            If Not _adjacencySet(iEdge.Source.ID)(iEdge.Target.ID).Contains(iEdge) Then
-                _adjacencySet(iEdge.Source.ID)(iEdge.Target.ID).Add(iEdge)
+            If Not _adjacencySet(iEdge.U.Label)(iEdge.V.Label).Contains(iEdge) Then
+                _adjacencySet(iEdge.U.Label)(iEdge.V.Label).Add(iEdge)
             End If
 
             notify()
@@ -241,16 +241,16 @@ Namespace Graph
 
 
         Public Function GetEdges(iNode1 As Node, iNode2 As Node) As List(Of Edge) Implements IGraph.GetEdges
-            If _adjacencySet.ContainsKey(iNode1.ID) AndAlso _adjacencySet(iNode1.ID).ContainsKey(iNode2.ID) Then
-                Return _adjacencySet(iNode1.ID)(iNode2.ID)
+            If _adjacencySet.ContainsKey(iNode1.Label) AndAlso _adjacencySet(iNode1.Label).ContainsKey(iNode2.Label) Then
+                Return _adjacencySet(iNode1.Label)(iNode2.Label)
             End If
             Return Nothing
         End Function
 
         Public Function GetEdges(iNode As Node) As List(Of Edge)
             Dim retEdgeList As New List(Of Edge)()
-            If _adjacencySet.ContainsKey(iNode.ID) Then
-                For Each keyPair As KeyValuePair(Of String, List(Of Edge)) In _adjacencySet(iNode.ID)
+            If _adjacencySet.ContainsKey(iNode.Label) Then
+                For Each keyPair As KeyValuePair(Of String, List(Of Edge)) In _adjacencySet(iNode.Label)
                     For Each e As Edge In keyPair.Value
                         retEdgeList.Add(e)
                     Next
@@ -258,7 +258,7 @@ Namespace Graph
             End If
 
             For Each keyValuePair As KeyValuePair(Of String, Dictionary(Of String, List(Of Edge))) In _adjacencySet
-                If keyValuePair.Key <> iNode.ID Then
+                If keyValuePair.Key <> iNode.Label Then
                     For Each keyPair As KeyValuePair(Of String, List(Of Edge)) In _adjacencySet(keyValuePair.Key)
                         For Each e As Edge In keyPair.Value
                             retEdgeList.Add(e)
@@ -271,8 +271,8 @@ Namespace Graph
         End Function
 
         Public Sub RemoveNode(iNode As Node) Implements IGraph.RemoveNode
-            If _nodeSet.ContainsKey(iNode.ID) Then
-                _nodeSet.Remove(iNode.ID)
+            If _nodeSet.ContainsKey(iNode.Label) Then
+                _nodeSet.Remove(iNode.Label)
             End If
             nodes.Remove(iNode)
             DetachNode(iNode)
@@ -280,7 +280,7 @@ Namespace Graph
 
         Public Sub DetachNode(iNode As Node) Implements IGraph.DetachNode
             edges.ForEach(Sub(e As Edge)
-                              If e.Source.ID = iNode.ID OrElse e.Target.ID = iNode.ID Then
+                              If e.U.Label = iNode.Label OrElse e.V.Label = iNode.Label Then
                                   Call RemoveEdge(e)
                               End If
                           End Sub)
@@ -339,12 +339,12 @@ Namespace Graph
                 Dim mergeNode As New Node(_nextNodeId.ToString(), n.Data)
                 AddNode(mergeNode)
                 _nextNodeId += 1
-                mergeNode.Data.origID = n.ID
+                mergeNode.Data.origID = n.Label
             Next
 
             For Each e As Edge In iMergeGraph.edges
-                Dim fromNode As Node = nodes.Find(Function(n) e.Source.ID = n.Data.origID)
-                Dim toNode As Node = nodes.Find(Function(n) e.Target.ID = n.Data.origID)
+                Dim fromNode As Node = nodes.Find(Function(n) e.U.Label = n.Data.origID)
+                Dim toNode As Node = nodes.Find(Function(n) e.V.Label = n.Data.origID)
 
                 Dim tNewEdge As Edge = AddEdge(New Edge(_nextEdgeId.ToString(), fromNode, toNode, e.Data))
                 _nextEdgeId += 1

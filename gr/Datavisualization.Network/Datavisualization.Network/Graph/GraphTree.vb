@@ -127,15 +127,15 @@ Namespace Graph
                 Dim [next] As GraphTreeNode = Nothing
 
                 With current
-                    If edge.Source = .Node Then
+                    If edge.U = .Node Then
                         [next] = New GraphTreeNode With {
-                            .Node = edge.Target
+                            .Node = edge.V
                         }
                         [next].Parents.Add(current)
                         .Childs.Add([next])
-                    ElseIf edge.Target = .Node Then
+                    ElseIf edge.v = .Node Then
                         [next] = New GraphTreeNode With {
-                            .Node = edge.Source
+                            .Node = edge.U
                         }
                         [next].Childs.Add(current)
                         .Parents.Add([next])

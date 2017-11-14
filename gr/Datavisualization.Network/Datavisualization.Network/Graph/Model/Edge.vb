@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b8ee6bb568fde771fd4162efbee6ae5c, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Model\Edge.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -64,39 +64,41 @@
 '
 '
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
-Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Edge : Implements IInteraction
+    Public Class Edge : Inherits Data.Graph.Edge
+        Implements IInteraction
         Implements IGraphValueContainer(Of EdgeData)
 
         Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
             ID = iId
-            Source = iSource
-            Target = iTarget
+            U = iSource
+            V = iTarget
             Data = If((iData IsNot Nothing), iData, New EdgeData())
             Directed = False
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New()
             Call Me.New(Nothing, Nothing, Nothing, Nothing)
         End Sub
 
         Public Property ID() As String
         Public Property Data() As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).Data
-        Public Property Source() As Node
-        Public Property Target() As Node
         Public Property Directed() As Boolean
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return ID
         End Function
 
         Private Property __source As String Implements IInteraction.source
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Source.ID
+                Return U.Label
             End Get
             Set(value As String)
                 Throw New NotImplementedException()
@@ -104,14 +106,16 @@ Namespace Graph
         End Property
 
         Private Property __target As String Implements IInteraction.target
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Target.ID
+                Return V.Label
             End Get
             Set(value As String)
                 Throw New NotImplementedException()
             End Set
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetHashCode() As Integer
             Return ID.GetHashCode()
         End Function
@@ -120,31 +124,25 @@ Namespace Graph
             ' If parameter is null return false.
             If obj Is Nothing Then
                 Return False
+            Else
+                Return Equals(p:=TryCast(obj, Edge))
             End If
-
-            ' If parameter cannot be cast to Point return false.
-            Dim p As Edge = TryCast(obj, Edge)
-            If DirectCast(p, System.Object) Is Nothing Then
-                Return False
-            End If
-
-            ' Return true if the fields match:
-            Return (ID = p.ID)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Equals(p As Edge) As Boolean
             ' If parameter is null return false:
-            If DirectCast(p, Object) Is Nothing Then
+            If p Is Nothing Then
                 Return False
+            Else
+                ' Return true if the fields match:
+                Return (ID = p.ID)
             End If
-
-            ' Return true if the fields match:
-            Return (ID = p.ID)
         End Function
 
         Public Shared Operator =(a As Edge, b As Edge) As Boolean
             ' If both are null, or both are same instance, return true.
-            If System.[Object].ReferenceEquals(a, b) Then
+            If Object.ReferenceEquals(a, b) Then
                 Return True
             End If
 
@@ -157,8 +155,14 @@ Namespace Graph
             Return a.ID = b.ID
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(a As Edge, b As Edge) As Boolean
             Return Not (a = b)
         End Operator
+
+        Public Iterator Function Iterate2Nodes() As IEnumerable(Of Node)
+            Yield U
+            Yield V
+        End Function
     End Class
 End Namespace
