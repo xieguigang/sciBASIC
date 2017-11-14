@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports TV = Microsoft.VisualBasic.Data.Graph.Vertex
 
 ''' <summary>
 ''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
@@ -69,7 +70,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     End Function
 
     ''' <summary>
-    ''' <see cref="Data.Graph.Vertex.ID"/> should contains its index value before this method was called.
+    ''' <see cref="TV.Label"/> should contains its index value before this method was called.
     ''' </summary>
     ''' <param name="u"></param>
     ''' <returns></returns>
