@@ -137,7 +137,7 @@ Namespace Layouts
                 Dim length As Single = iEdge.Data.length
                 Dim existingSpring As Spring = Nothing
 
-                Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.Source, iEdge.Target)
+                Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.U, iEdge.V)
                 If fromEdges IsNot Nothing Then
                     For Each e As Edge In fromEdges
                         If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
@@ -151,7 +151,7 @@ Namespace Layouts
                     Return New Spring(existingSpring.point1, existingSpring.point2, 0F, 0F)
                 End If
 
-                Dim toEdges As List(Of Edge) = graph.GetEdges(iEdge.Target, iEdge.Source)
+                Dim toEdges As List(Of Edge) = graph.GetEdges(iEdge.V, iEdge.U)
                 If toEdges IsNot Nothing Then
                     For Each e As Edge In toEdges
                         If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
@@ -165,7 +165,7 @@ Namespace Layouts
                     Return New Spring(existingSpring.point2, existingSpring.point1, 0F, 0F)
                 End If
 
-                m_edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.Source), GetPoint(iEdge.Target), length, Stiffness)
+                m_edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.U), GetPoint(iEdge.V), length, Stiffness)
             End If
             Return m_edgeSprings(iEdge.ID)
         End Function

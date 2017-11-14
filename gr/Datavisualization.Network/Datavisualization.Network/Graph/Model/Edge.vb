@@ -159,5 +159,10 @@ Namespace Graph
         Public Shared Operator <>(a As Edge, b As Edge) As Boolean
             Return Not (a = b)
         End Operator
+
+        Public Iterator Function Iterate2Nodes() As IEnumerable(Of Node)
+            Yield U
+            Yield V
+        End Function
     End Class
 End Namespace

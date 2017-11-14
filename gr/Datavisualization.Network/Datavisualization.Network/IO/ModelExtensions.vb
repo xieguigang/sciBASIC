@@ -96,8 +96,8 @@ Namespace FileStream
 
             For Each l As Edge In g.edges
                 edges += New NetworkEdge With {
-                    .FromNode = l.Source.ID,
-                    .ToNode = l.Target.ID,
+                    .FromNode = l.U.ID,
+                    .ToNode = l.V.ID,
                     .Interaction = l.Data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
                 }
             Next

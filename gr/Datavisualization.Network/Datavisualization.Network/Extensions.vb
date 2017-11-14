@@ -53,8 +53,8 @@ Namespace FindPath
                               Next
                           End Sub
 
-            Call removes(inputs, Function(edge) edge.Target)  ' 如果是target(output)就removes掉
-            Call removes(output, Function(edge) edge.Source)  ' 如果是source(inputs)就removes掉
+            Call removes(inputs, Function(edge) edge.V)  ' 如果是target(output)就removes掉
+            Call removes(output, Function(edge) edge.U)  ' 如果是source(inputs)就removes掉
 
             Return (inputs, output)
         End Function
@@ -69,7 +69,7 @@ Namespace FindPath
             Dim popEdge = Function(node As Node) As Edge
                               Return network _
                                   .edges _
-                                  .Where(Function(e) e.Source Is node OrElse e.Target Is node) _
+                                  .Where(Function(e) e.U Is node OrElse e.V Is node) _
                                   .FirstOrDefault
                           End Function
 
@@ -78,20 +78,20 @@ Namespace FindPath
                 Dim edge As Edge = network.edges.First
                 Dim list As New List(Of Node)
 
-                Call list.Add(edge.Source)
-                Call list.Add(edge.Target)
+                Call list.Add(edge.U)
+                Call list.Add(edge.V)
 
                 Do While list > 0
-                    subnetwork.AddNode(edge.Source)
-                    subnetwork.AddNode(edge.Target)
+                    subnetwork.AddNode(edge.U)
+                    subnetwork.AddNode(edge.V)
                     subnetwork.AddEdge(edge)
                     network.edges.Remove(edge)
 
-                    If -1 = list.IndexOf(edge.Source) Then
-                        Call list.Add(edge.Source)
+                    If -1 = list.IndexOf(edge.U) Then
+                        Call list.Add(edge.U)
                     End If
-                    If -1 = list.IndexOf(edge.Target) Then
-                        Call list.Add(edge.Target)
+                    If -1 = list.IndexOf(edge.V) Then
+                        Call list.Add(edge.V)
                     End If
 
                     edge = Nothing

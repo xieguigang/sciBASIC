@@ -141,7 +141,7 @@ Namespace Analysis
         Public Function ComputeNodeDegrees(ByRef net As NetworkGraph) As Dictionary(Of String, Integer)
             Dim connectNodes = net _
                 .edges _
-                .Select(Function(link) {link.Source.ID, link.Target.ID}) _
+                .Select(Function(link) {link.U.Label, link.V.Label}) _
                 .IteratesALL _
                 .GroupBy(Function(id) id) _
                 .ToDictionary(Function(ID) ID.Key,

@@ -97,7 +97,7 @@ Namespace Graph
         Public ReadOnly Property connectedNodes() As Node()
             Get
                 Return edges _
-                    .Select(Function(d) {d.Source, d.Target}) _
+                    .Select(Function(d) d.Iterate2Nodes) _
                     .IteratesALL _
                     .Distinct _
                     .ToArray
@@ -144,16 +144,16 @@ Namespace Graph
             End If
 
 
-            If Not (_adjacencySet.ContainsKey(iEdge.Source.ID)) Then
-                _adjacencySet(iEdge.Source.ID) = New Dictionary(Of String, List(Of Edge))()
+            If Not (_adjacencySet.ContainsKey(iEdge.U.ID)) Then
+                _adjacencySet(iEdge.U.ID) = New Dictionary(Of String, List(Of Edge))()
             End If
-            If Not (_adjacencySet(iEdge.Source.ID).ContainsKey(iEdge.Target.ID)) Then
-                _adjacencySet(iEdge.Source.ID)(iEdge.Target.ID) = New List(Of Edge)()
+            If Not (_adjacencySet(iEdge.U.ID).ContainsKey(iEdge.V.ID)) Then
+                _adjacencySet(iEdge.U.ID)(iEdge.V.ID) = New List(Of Edge)()
             End If
 
 
-            If Not _adjacencySet(iEdge.Source.ID)(iEdge.Target.ID).Contains(iEdge) Then
-                _adjacencySet(iEdge.Source.ID)(iEdge.Target.ID).Add(iEdge)
+            If Not _adjacencySet(iEdge.U.ID)(iEdge.V.ID).Contains(iEdge) Then
+                _adjacencySet(iEdge.U.ID)(iEdge.V.ID).Add(iEdge)
             End If
 
             notify()
@@ -280,7 +280,7 @@ Namespace Graph
 
         Public Sub DetachNode(iNode As Node) Implements IGraph.DetachNode
             edges.ForEach(Sub(e As Edge)
-                              If e.Source.ID = iNode.ID OrElse e.Target.ID = iNode.ID Then
+                              If e.U.ID = iNode.ID OrElse e.V.ID = iNode.ID Then
                                   Call RemoveEdge(e)
                               End If
                           End Sub)
@@ -343,8 +343,8 @@ Namespace Graph
             Next
 
             For Each e As Edge In iMergeGraph.edges
-                Dim fromNode As Node = nodes.Find(Function(n) e.Source.ID = n.Data.origID)
-                Dim toNode As Node = nodes.Find(Function(n) e.Target.ID = n.Data.origID)
+                Dim fromNode As Node = nodes.Find(Function(n) e.U.ID = n.Data.origID)
+                Dim toNode As Node = nodes.Find(Function(n) e.V.ID = n.Data.origID)
 
                 Dim tNewEdge As Edge = AddEdge(New Edge(_nextEdgeId.ToString(), fromNode, toNode, e.Data))
                 _nextEdgeId += 1

@@ -55,7 +55,7 @@ Module Module1
         nodes.DoEach(Function(node) graph.AddNode(node))
 
         Dim add = Sub(i%, j%)
-                      graph.AddEdge(New Edge With {.Source = nodes(i), .Target = nodes(j), .ID = $"{i} --> {j}"})
+                      graph.AddEdge(New Edge With {.U = nodes(i), .V = nodes(j), .ID = $"{i} --> {j}"})
                   End Sub
 
         ' sub 1
