@@ -164,7 +164,7 @@ Namespace IO
         <Extension> Private Sub __contentRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), alt$)
             Dim rowText$ = row.ToArray _
                 .SeqIterator _
-                .Where(Function(i) removes(i.i) = -1) _
+                .Where(Function(i) removes(x:=i.i) = -1) _
                 .Select(Function(x) $"<td>{+x}</td>") _
                 .JoinBy("")
 

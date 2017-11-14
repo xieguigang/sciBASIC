@@ -127,13 +127,17 @@ Public Module ListExtensions
         End If
 
         Dim result As T() = New T(index.Length - 1) {}
-        Dim indices As New Index(Of Integer)(
-            index.Select(Function(oi) oi + offSet))
+        Dim indices As Index(Of Integer) = index _
+            .Select(Function(oi) oi + offSet) _
+            .Indexing
 
         For Each x As SeqValue(Of T) In source.SeqIterator
-            Dim i As Integer = indices(x.i)  ' 在这里得到的是x的index在indexs参数之中的索引位置
+            ' 在这里得到的是x的index在indexs参数之中的索引位置
+            Dim i% = indices.IndexOf(x:=x.i)
 
-            If i > -1 Then  ' 当前的原始的下表位于indexs参数值中，则第i个indexs元素所指向的source的元素就是x，将其放入对应的结果列表之中
+            ' 当前的原始的下表位于indexs参数值中，则第i个indexs元素所指向的source的元素
+            ' 就是x， 将其放入对应的结果列表之中
+            If i > -1 Then
                 result(i) = x.value
             End If
         Next
@@ -156,7 +160,7 @@ Public Module ListExtensions
         Dim out As New List(Of T)
 
         For Each x As SeqValue(Of T) In collection.SeqIterator
-            If indices.IndexOf(x.i) = -1 Then  ' 不存在于顶点的列表之中，即符合反选的条件，则添加进入结果之中
+            If indices.IndexOf(x:=x.i) = -1 Then  ' 不存在于顶点的列表之中，即符合反选的条件，则添加进入结果之中
                 out += x.value
             End If
         Next
