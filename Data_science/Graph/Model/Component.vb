@@ -38,7 +38,15 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Public Class Vertex : Implements INamedValue
     Implements IAddressOf
 
+    ''' <summary>
+    ''' The unique id of this node
+    ''' </summary>
+    ''' <returns></returns>
     <XmlAttribute> Public Property Label As String Implements IKeyedEntity(Of String).Key
+    ''' <summary>
+    ''' Array index
+    ''' </summary>
+    ''' <returns></returns>
     <XmlAttribute> Public Property ID As Integer Implements IAddress(Of Integer).Address
 
     Public Overrides Function ToString() As String

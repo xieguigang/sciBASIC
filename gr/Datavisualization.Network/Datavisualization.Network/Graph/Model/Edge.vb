@@ -65,11 +65,11 @@
 '
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
-Imports Microsoft.VisualBasic.Language
 
 Namespace Graph
 
-    Public Class Edge : Implements IInteraction
+    Public Class Edge : Inherits Data.Graph.Edge
+        Implements IInteraction
         Implements IGraphValueContainer(Of EdgeData)
 
         Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
