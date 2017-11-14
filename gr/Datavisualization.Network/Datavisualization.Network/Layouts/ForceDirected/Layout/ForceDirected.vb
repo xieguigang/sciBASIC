@@ -335,14 +335,14 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
-            If Not (m_nodePoints.ContainsKey(iNode.ID)) Then
+            If Not (m_nodePoints.ContainsKey(iNode.Label)) Then
                 Dim iniPosition As FDGVector2 = TryCast(iNode.Data.initialPostion, FDGVector2)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
-                m_nodePoints(iNode.ID) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
+                m_nodePoints(iNode.Label) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
             End If
-            Return m_nodePoints(iNode.ID)
+            Return m_nodePoints(iNode.Label)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox
@@ -386,9 +386,9 @@ Namespace Layouts
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
                 End If
-                m_nodePoints(iNode.ID) = New LayoutPoint(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
+                m_nodePoints(iNode.Label) = New LayoutPoint(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
             End If
-            Return m_nodePoints(iNode.ID)
+            Return m_nodePoints(iNode.Label)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox

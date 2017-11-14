@@ -98,7 +98,7 @@ Namespace Graph
         Private Property __source As String Implements IInteraction.source
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return U.ID
+                Return U.Label
             End Get
             Set(value As String)
                 Throw New NotImplementedException()
@@ -108,7 +108,7 @@ Namespace Graph
         Private Property __target As String Implements IInteraction.target
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return V.ID
+                Return V.Label
             End Get
             Set(value As String)
                 Throw New NotImplementedException()

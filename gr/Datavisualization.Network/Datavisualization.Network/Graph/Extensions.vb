@@ -55,7 +55,7 @@ Namespace Graph
         Public Sub ApplyAnalysis(ByRef net As NetworkGraph)
 
             For Each node In net.nodes
-                node.Data.Neighbours = net.GetNeighbours(node.ID).ToArray
+                node.Data.Neighbours = net.GetNeighbours(node.Label).ToArray
             Next
         End Sub
 
