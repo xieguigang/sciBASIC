@@ -60,7 +60,15 @@ End Class
 ''' </summary>
 Public Class Edge : Implements INamedValue
 
+    ''' <summary>
+    ''' The source node
+    ''' </summary>
+    ''' <returns></returns>
     Public Property U As Vertex
+    ''' <summary>
+    ''' The target node
+    ''' </summary>
+    ''' <returns></returns>
     Public Property V As Vertex
     Public Property Weight As Double
 
@@ -79,10 +87,12 @@ Public Class Edge : Implements INamedValue
         End Set
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function GetHashCode() As Integer
         Return Key.GetHashCode
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"({GetHashCode()}) {U} => {V}"
     End Function
