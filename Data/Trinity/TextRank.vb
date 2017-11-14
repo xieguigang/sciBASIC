@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text
@@ -129,7 +130,11 @@ Public Module TextRank
                 Next
 
                 For Each combine As (a$, b$) In textBlock.FullCombination
-                    Call g.AddEdge(combine.a, combine.b)
+                    Dim edge As Edge = g.CreateEdge(combine.a, combine.b)
+
+                    If Not g.ExistEdge(edge) Then
+                        Call g.AddEdge(combine.a, combine.b)
+                    End If
                 Next
             Next
         Next

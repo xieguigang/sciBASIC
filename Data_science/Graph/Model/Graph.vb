@@ -84,6 +84,11 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         Return vertices.ContainsKey(name)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function ExistEdge(edge As Edge) As Boolean
+        Return edges.ContainsKey(edge.Key)
+    End Function
+
     Public Function AddVertex(label$) As Vertex
         With New Vertex With {
             .ID = buffer.GetAvailablePos,
@@ -131,13 +136,24 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     ''' <param name="weight#"></param>
     ''' <returns></returns>
     Public Function AddEdge(u$, v$, Optional weight# = 0) As Graph
-        edges += New Edge With {
+        edges += CreateEdge(u, v, weight)
+        Return Me
+    End Function
+
+    ''' <summary>
+    ''' 这个函数仅仅是使用图对象中的node数据来创建edge对象，并不会添加edge到图中的edge列表中
+    ''' </summary>
+    ''' <param name="u$"></param>
+    ''' <param name="v$"></param>
+    ''' <param name="weight#"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function CreateEdge(u$, v$, Optional weight# = 0) As Edge
+        Return New Edge With {
             .U = vertices(u),
             .V = vertices(v),
             .Weight = weight
         }
-
-        Return Me
     End Function
 
     ''' <summary>
