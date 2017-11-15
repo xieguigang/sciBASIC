@@ -373,7 +373,7 @@ Public Class StopWords : Implements IEnumerable(Of String)
     ''' Using list of stop words from https://www.ranks.nl/stopwords/ as default.
     ''' </summary>
     ''' <returns></returns>
-    Public Shared ReadOnly Property DefaultStopWords As New DefaultValue(Of StopWords)
+    Public Shared ReadOnly Property DefaultStopWords As New DefaultValue(Of StopWords)(New StopWords)
 
     Default Public ReadOnly Property Item(index As Integer) As String Implements IReadOnlyList(Of String).Item
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

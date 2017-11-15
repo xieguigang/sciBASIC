@@ -79,7 +79,7 @@ Namespace Dijkstra
 
             ' Initialise the new routes. the constructor will set the route weight to in.max
             For Each location As Vertex In _Points
-                shortestPaths.Add(location, New Route(location.ID))
+                shortestPaths.Add(location, New Route(location.Label))
             Next
 
             ' The startPosition has a weight 0. 

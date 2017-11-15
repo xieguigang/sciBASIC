@@ -118,7 +118,12 @@ Namespace Analysis.PageRank
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(gm As GraphMatrix) As List(Of Integer)()
-            Return gm.nodes.Select(Function(k) gm.indices(k.ID)).ToArray
+            Return gm _
+                .nodes _
+                .Select(Function(k)
+                            Return gm.indices(k.Label)
+                        End Function) _
+                .ToArray
         End Operator
     End Class
 End Namespace

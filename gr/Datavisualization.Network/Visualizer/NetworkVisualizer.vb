@@ -218,8 +218,8 @@ Public Module NetworkVisualizer
 
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
                 For Each edge As Edge In net.edges
-                    Dim n As Node = edge.Source
-                    Dim otherNode As Node = edge.Target
+                    Dim n As Node = edge.U
+                    Dim otherNode As Node = edge.V
 
                     cl = DefaultEdgeColor
 

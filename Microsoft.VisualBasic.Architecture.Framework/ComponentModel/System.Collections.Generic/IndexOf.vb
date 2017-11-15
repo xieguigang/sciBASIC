@@ -105,6 +105,13 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        ''' <summary>
+        ''' 直接通过索引获取目标对象的值，请注意，如果<typeparamref name="T"/>泛型类型是<see cref="Integer"/>，
+        ''' 则如果需要查找index的话，则必须要显式的指定参数名为``x:=``，否则调用的是当前的这个索引方法，
+        ''' 得到错误的结果
+        ''' </summary>
+        ''' <param name="index%"></param>
+        ''' <returns></returns>
         Default Public ReadOnly Property IndexOf(index%) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

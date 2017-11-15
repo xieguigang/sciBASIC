@@ -44,7 +44,7 @@ The original research paper proposing this algorithm Is
 available here"
 
 
-        s$ = "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
+        '        s$ = "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
 
         Dim ps = TextRank.Sentences(s.TrimNewLine)
         Dim g As GraphMatrix = ps.TextRankGraph
@@ -61,6 +61,6 @@ available here"
 
         'Call net.Save("G:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\")
 
-        'Pause()
+        Pause()
     End Sub
 End Module

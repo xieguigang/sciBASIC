@@ -101,7 +101,7 @@ Namespace IO
 
         Public Shared Function LoadDataSet(Of T As DataSet)(path$, Optional uidMap$ = Nothing) As IEnumerable(Of T)
             Dim mapFrom$ = uidMap Or New DefaultValue(Of String) With {
-                .LazyValue = Function() __getID(path)
+                .LazyValue = New Func(Of String)(Function() __getID(path)).AsLazy
             }
             Dim map As New Dictionary(Of String, String) From {
                 {mapFrom, NameOf(DataSet.ID)}

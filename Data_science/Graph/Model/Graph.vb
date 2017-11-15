@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports TV = Microsoft.VisualBasic.Data.Graph.Vertex
 
 ''' <summary>
 ''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
@@ -69,7 +70,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     End Function
 
     ''' <summary>
-    ''' <see cref="Data.Graph.Vertex.ID"/> should contains its index value before this method was called.
+    ''' <see cref="TV.Label"/> should contains its index value before this method was called.
     ''' </summary>
     ''' <param name="u"></param>
     ''' <returns></returns>
@@ -82,6 +83,11 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ExistVertex(name$) As Boolean
         Return vertices.ContainsKey(name)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function ExistEdge(edge As Edge) As Boolean
+        Return edges.ContainsKey(edge.Key)
     End Function
 
     Public Function AddVertex(label$) As Vertex
@@ -131,13 +137,24 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     ''' <param name="weight#"></param>
     ''' <returns></returns>
     Public Function AddEdge(u$, v$, Optional weight# = 0) As Graph
-        edges += New Edge With {
+        edges += CreateEdge(u, v, weight)
+        Return Me
+    End Function
+
+    ''' <summary>
+    ''' 这个函数仅仅是使用图对象中的node数据来创建edge对象，并不会添加edge到图中的edge列表中
+    ''' </summary>
+    ''' <param name="u$"></param>
+    ''' <param name="v$"></param>
+    ''' <param name="weight#"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function CreateEdge(u$, v$, Optional weight# = 0) As Edge
+        Return New Edge With {
             .U = vertices(u),
             .V = vertices(v),
             .Weight = weight
         }
-
-        Return Me
     End Function
 
     ''' <summary>
