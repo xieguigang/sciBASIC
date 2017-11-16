@@ -539,6 +539,11 @@ Namespace LinearAlgebra
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator ^(n As Double, v As Vector) As Vector
+            Return New Vector(From p As Double In v Select n ^ p)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator >(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d > n)
         End Operator
