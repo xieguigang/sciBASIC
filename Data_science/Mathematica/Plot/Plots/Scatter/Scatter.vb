@@ -64,6 +64,46 @@ Public Module Scatter
         Call canvas.DrawLine(New Pen(color), CSng(p0.X - width), p0.Y, CSng(p0.X + width), p0.Y)
     End Sub
 
+    <Extension>
+    Public Function CreateAxisTicks(array As SerialData(), Optional preferPositive As Boolean = False, Optional scale# = 1.2) As (x As Double(), y As Double())
+        Dim ptX#() = array _
+            .Select(Function(s)
+                        Return s.pts.Select(Function(pt) CDbl(pt.pt.X))
+                    End Function) _
+           .IteratesALL _
+           .ToArray
+        Dim XTicks = ptX _
+           .Range(scale) _
+           .CreateAxisTicks
+        Dim YTicks = array _
+            .Select(Function(s)
+                        Return s.pts _
+                            .Select(Function(pt)
+                                        Return {
+                                            pt.pt.Y - pt.errMinus,
+                                            pt.pt.Y + pt.errPlus
+                                        }
+                                    End Function)
+                    End Function) _
+            .IteratesALL _
+            .IteratesALL _
+            .Range _
+            .CreateAxisTicks
+
+        If preferPositive AndAlso Not ptX.Any(Function(n) n < 0) Then
+            ' 全部都是正实数，则将可能的负实数去掉
+            '
+            ' 因为在下面的Range函数里面，是根据scale来将最大值加上一个delta值，最小值减去一个delta值来得到scale之后的结果，
+            ' 所以假若X有比较接近于零的值得花， scale之后会出现负数
+            ' 这个负数很明显是不合理的，所以在这里将负数删除掉
+            With ptX.Range(scale)
+                XTicks = New DoubleRange(0, .Max).CreateAxisTicks
+            End With
+        End If
+
+        Return (XTicks, YTicks)
+    End Function
+
     ''' <summary>
     ''' Scatter plot function.(绘图函数，默认的输出大小为``4300px,2000px``)
     ''' </summary>
@@ -78,6 +118,7 @@ Public Module Scatter
     ''' 参数<paramref name="xaxis"/>和<paramref name="yaxis"/>必须要同时不为空才会起作用
     ''' </param>
     ''' <param name="legendSize">默认为(120,40)</param>
+    ''' <param name="preferPositive"><see cref="CreateAxisTicks"/></param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
@@ -104,31 +145,17 @@ Public Module Scatter
                          Optional xaxis$ = Nothing,
                          Optional ablines As Line() = Nothing,
                          Optional htmlLabel As Boolean = True,
-                         Optional ticksY# = -1) As GraphicsData
+                         Optional ticksY# = -1,
+                         Optional preferPositive As Boolean = False) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
-        Dim XTicks = array _
-            .Select(Function(s)
-                        Return s.pts.Select(Function(pt) CDbl(pt.pt.X))
-                    End Function) _
-            .IteratesALL _
-            .Range(1.2) _
-            .CreateAxisTicks
-        Dim YTicks = array _
-            .Select(Function(s)
-                        Return s.pts _
-                            .Select(Function(pt)
-                                        Return {
-                                            pt.pt.Y - pt.errMinus,
-                                            pt.pt.Y + pt.errPlus
-                                        }
-                                    End Function)
-                    End Function) _
-            .IteratesALL _
-            .IteratesALL _
-            .Range _
-            .CreateAxisTicks
+        Dim XTicks#(), YTicks#()
+
+        With array.CreateAxisTicks(preferPositive)
+            XTicks = .x
+            YTicks = .y
+        End With
 
         If ticksY > 0 Then
             YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)

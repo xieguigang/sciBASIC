@@ -32,13 +32,45 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 Module ScatterTest
 
+    Sub StyleTest()
+
+        Dim s As New List(Of PointF)
+
+        With New Random
+            For i As Integer = 0 To 10
+                s += New PointF(.Next(0, 1000) * 1.0!, .Next(0, 500) * 1.0!)
+            Next
+        End With
+
+        Dim points = s.OrderBy(Function(p) p.X).Select(Function(i) New PointData With {.pt = i}).ToArray
+        Dim ser As New SerialData With {
+            .color = Color.DarkCyan,
+            .lineType = DashStyle.Dash,
+            .width = 5,
+            .title = "Random",
+            .PointSize = 15,
+            .pts = points
+        }
+
+        Call Scatter.Plot({ser},
+                            size:="1440,1000",
+                            showLegend:=True,
+                            padding:=g.DefaultPadding,
+                            fillPie:=True).Save($"./line.png")
+    End Sub
+
     Sub Main()
+
+        StyleTest()
+
+        Pause()
 
         'For Each file As String In (ls - l - r - "*.csv" <= "D:\OneDrive\2017-9-25\TCL")
         '    Dim csv As csv = csv.Load(file)

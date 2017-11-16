@@ -319,7 +319,7 @@ Namespace LinearAlgebra
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
-                v2(j) = v1(j) - a
+                v2(j) = a - v1(j)
             Next
             Return v2
         End Operator
