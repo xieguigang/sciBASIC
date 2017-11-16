@@ -63,7 +63,8 @@ Module ScatterTest
                             size:="1440,1000",
                             showLegend:=True,
                             padding:=g.DefaultPadding,
-                            fillPie:=True).Save($"./line.png")
+                            fillPie:=True,
+                          fill:=True).Save($"./line.png")
     End Sub
 
     Sub Main()

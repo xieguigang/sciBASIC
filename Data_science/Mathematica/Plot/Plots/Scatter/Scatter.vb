@@ -105,14 +105,38 @@ Public Module Scatter
     End Function
 
     ''' <summary>
+    ''' 线条插值类型
+    ''' </summary>
+    Public Enum Splines As Byte
+        ''' <summary>
+        ''' 无插值操作
+        ''' </summary>
+        None = 0
+        ''' <summary>
+        ''' 二次插值
+        ''' </summary>
+        B_Spline
+        ''' <summary>
+        ''' 贝塞尔曲线插值
+        ''' </summary>
+        Bezier
+        CatmullRomSpline
+        CentripetalCatmullRomSpline
+        ''' <summary>
+        ''' 三次插值处理
+        ''' </summary>
+        CubicSpline
+    End Enum
+
+    ''' <summary>
     ''' Scatter plot function.(绘图函数，默认的输出大小为``4300px,2000px``)
     ''' </summary>
     ''' <param name="c"></param>
     ''' <param name="size"></param>
     ''' <param name="bg"></param>
-    ''' <param name="fill">是否进行填充？当这个参数为真的时候就相当于绘制histogram图形了</param>
+    ''' <param name="fill">是否对曲线下的区域进行填充？这个参数只有在<paramref name="drawLine"/>开启的情况下才会发生作用</param>
     ''' <param name="drawLine">
-    ''' 是否绘制两个点之间的连接线段，当这个参数为假的时候，将不会绘制连线，就相当于绘制散点图了，而非折线图
+    ''' 是否绘制两个点之间的连接线段，当这个参数为False的时候，将不会绘制连线，就相当于绘制散点图了，而非折线图
     ''' </param>
     ''' <param name="xaxis">
     ''' 参数<paramref name="xaxis"/>和<paramref name="yaxis"/>必须要同时不为空才会起作用
@@ -146,7 +170,8 @@ Public Module Scatter
                          Optional ablines As Line() = Nothing,
                          Optional htmlLabel As Boolean = True,
                          Optional ticksY# = -1,
-                         Optional preferPositive As Boolean = False) As GraphicsData
+                         Optional preferPositive As Boolean = False,
+                         Optional interplot As Splines = Splines.None) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -208,6 +233,7 @@ Public Module Scatter
                         .DashStyle = line.lineType
                     }
                     Dim br As New SolidBrush(line.color)
+                    Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
                     Dim d = line.PointSize
                     Dim r As Single = line.PointSize / 2
                     Dim bottom! = gSize.Height - margin.Bottom
@@ -230,18 +256,26 @@ Public Module Scatter
                         If drawLine Then
                             Call g.DrawLine(pen, pt1, pt2)
                         End If
+
                         If fill Then
                             Dim path As New GraphicsPath
-                            Dim ptbr As New PointF(pt1.X, bottom)
-                            Dim ptbl As New PointF(pt2.X, bottom)
+                            Dim ptc As New PointF(pt2.X, bottom) ' c
+                            Dim ptd As New PointF(pt1.X, bottom) ' d
+
+
+                            '   /-b
+                            ' a-  |
+                            ' |   |
+                            ' |   |
+                            ' d---c
 
                             path.AddLine(pt1, pt2)
-                            path.AddLine(pt2, ptbr)
-                            path.AddLine(ptbr, ptbl)
-                            path.AddLine(ptbl, pt1)
+                            path.AddLine(pt2, ptc)
+                            path.AddLine(ptc, ptd)
+                            path.AddLine(ptd, pt1)
                             path.CloseFigure()
 
-                            Call g.FillPath(br, path)
+                            Call g.FillPath(fillBrush, path)
                         End If
 
                         If fillPie Then
