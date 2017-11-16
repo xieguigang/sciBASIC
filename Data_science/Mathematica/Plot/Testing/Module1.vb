@@ -172,7 +172,7 @@ Module Module1
         'Pause()
         Dim example = csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics\example.csv", {Color.Red}, 5).First
 
-        Call ManhattanStatics.Plot(example).Save("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics/demo.png")
+        '    Call ManhattanStatics.Plot(example).Save("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics/demo.png")
 
         Pause()
     End Sub

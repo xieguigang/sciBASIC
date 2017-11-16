@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::4e6236372ad91d87f5f9901ec50c2ff5, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\AxisScalling.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Axis
@@ -175,28 +176,23 @@ Namespace Graphic.Axis
             Next
 
             ' 通过分别计算ticks的数量差值，是否容纳了输入的[min,max]范围来判断是否合适
-            With candidateArray _
-                .Select(Function(ar)
-                            If ar.Range.IsInside(inputRange) Then
-                                ' +1 是为了防止乘以0，导致整个结果都为零，出现min的index被误判的情况出现
-                                Return {
-                                    Abs(ar.Length - ticks) + 1,
-                                    Abs(ar.Min - inputRange.Min) + 1,
-                                    Abs(ar.Max - inputRange.Max) + 1
-                                }.ProductALL
-                            Else
-                                Return Integer.MaxValue
-                            End If
-                        End Function)
+            Dim maxSteps = candidateArray.Max(Function(candidate) candidate.Length)
+            Dim dSteps = maxSteps - candidateArray.Select(Function(candidate) Abs(candidate.Length - ticks)).AsVector
+            Dim dMin = inputRange.Length - candidateArray.Select(Function(candidate) Abs(candidate.Min - inputRange.Min)).AsVector
+            Dim dMax = inputRange.Length - candidateArray.Select(Function(candidate) Abs(candidate.Max - inputRange.Max)).AsVector
 
-                Dim tickArray#() = candidateArray(Which.Min(.ref))
+            dSteps = dSteps / dSteps.Max
+            dMin = dMin / dMin.Max
+            dMax = dMax / dMax.Max
 
-                For i As Integer = 0 To tickArray.Length - 1
-                    tickArray(i) = Math.Round(tickArray(i), decimalDigits)
-                Next
+            Dim scores As Vector = dSteps * 0.5 + dMin * 0.25 + dMax * 0.25
+            Dim tickArray#() = candidateArray(Which.Max(scores))
 
-                Return tickArray
-            End With
+            For i As Integer = 0 To tickArray.Length - 1
+                tickArray(i) = Math.Round(tickArray(i), decimalDigits)
+            Next
+
+            Return tickArray
         End Function
 
         ''' <summary>

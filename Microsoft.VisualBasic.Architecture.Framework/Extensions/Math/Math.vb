@@ -748,17 +748,15 @@ Namespace Math
                 Return 0
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the absolute value of a single-precision floating-point number.
-        '
-        ' Parameters:
-        '   value:
-        '     A number that is greater than or equal to System.Single.MinValue, but less than
-        '     or equal to System.Single.MaxValue.
-        '
-        ' Returns:
-        '     A single-precision floating-point number, x, such that 0 ≤ x ≤System.Single.MaxValue.
+
+        ''' <summary>
+        ''' Returns the absolute value of a single-precision floating-point number.
+        ''' </summary>
+        ''' <param name="value">A number that is greater than or equal to System.Single.MinValue, but less than
+        ''' or equal to System.Single.MaxValue.</param>
+        ''' <returns>
+        ''' A single-precision floating-point number, x, such that 0 ≤ x ≤System.Single.MaxValue.
+        ''' </returns>
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Single) As Single
@@ -768,21 +766,14 @@ Namespace Math
                 Return value
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the absolute value of a 64-bit signed integer.
-        '
-        ' Parameters:
-        '   value:
-        '     A number that is greater than System.Int64.MinValue, but less than or equal to
-        '     System.Int64.MaxValue.
-        '
-        ' Returns:
-        '     A 64-bit signed integer, x, such that 0 ≤ x ≤System.Int64.MaxValue.
-        '
-        ' Exceptions:
-        '   T:System.OverflowException:
-        '     value equals System.Int64.MinValue.
+
+        ''' <summary>
+        ''' Returns the absolute value of a 64-bit signed integer.
+        ''' </summary>
+        ''' <param name="value">
+        ''' A number that is greater than System.Int64.MinValue, but less than or equal to
+        ''' System.Int64.MaxValue.</param>
+        ''' <returns>A 64-bit signed integer, x, such that 0 ≤ x ≤System.Int64.MaxValue.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Long) As Long
             If value < 0 Then
@@ -791,21 +782,15 @@ Namespace Math
                 Return value
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the absolute value of a 32-bit signed integer.
-        '
-        ' Parameters:
-        '   value:
-        '     A number that is greater than System.Int32.MinValue, but less than or equal to
-        '     System.Int32.MaxValue.
-        '
-        ' Returns:
-        '     A 32-bit signed integer, x, such that 0 ≤ x ≤System.Int32.MaxValue.
-        '
-        ' Exceptions:
-        '   T:System.OverflowException:
-        '     value equals System.Int32.MinValue.
+
+        ''' <summary>
+        ''' Returns the absolute value of a 32-bit signed integer.
+        ''' </summary>
+        ''' <param name="value">
+        ''' A number that is greater than System.Int32.MinValue, but less than or equal to
+        ''' System.Int32.MaxValue.
+        ''' </param>
+        ''' <returns>A 32-bit signed integer, x, such that 0 ≤ x ≤System.Int32.MaxValue.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Abs(value As Integer) As Integer
             If value < 0 Then
