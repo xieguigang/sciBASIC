@@ -252,17 +252,17 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension> Public Function Add(Of T As INamedValue)(ByRef hash As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
-        If hash Is Nothing Then
-            hash = New Dictionary(Of String, T)
+    <Extension> Public Function Add(Of T As INamedValue)(ByRef table As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
+        If table Is Nothing Then
+            table = New Dictionary(Of String, T)
         End If
-        If hash.ContainsKey(obj.Key) Then
+        If table.ContainsKey(obj.Key) Then
             Throw New Exception($"[{obj.Key}] was duplicated in the dictionary!")
         Else
-            Call hash.Add(obj.Key, obj)
+            Call table.Add(obj.Key, obj)
         End If
 
-        Return hash
+        Return table
     End Function
 
     <Extension>
@@ -283,11 +283,6 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension> Public Function Keys(Of T1, T2)(source As IEnumerable(Of KeyValuePair(Of T1, T2))) As T1()
         Return source.Select(Function(x) x.Key).ToArray
-    End Function
-
-    <Extension>
-    Public Function Switch(Of T)(b As Boolean, [true] As T, [false] As T) As T
-        Return If(b, [true], [false])
     End Function
 
     ''' <summary>
@@ -516,49 +511,27 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    '''
-    ''' </summary>
-    ''' <typeparam name="TKey"></typeparam>
-    ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="source">仅仅是起到类型复制的作用</param>
-    ''' <returns></returns>
-    <Extension> Public Function CopyTypeDef(Of TKey, TValue)(source As Dictionary(Of TKey, TValue)) As Dictionary(Of TKey, TValue)
-        Dim hash As New Dictionary(Of TKey, TValue)
-        Return hash
-    End Function
-
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="IList">仅仅是起到类型复制的作用</param>
-    ''' <returns></returns>
-    <Extension> Public Function CopyTypeDef(Of T)(IList As List(Of T)) As List(Of T)
-        Return New List(Of T)
-    End Function
-
-    ''' <summary>
     ''' 假若不存在目标键名，则返回空值，默认值为空值
     ''' </summary>
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="hash"></param>
+    ''' <param name="table"></param>
     ''' <param name="index"></param>
     ''' <param name="[default]"></param>
     ''' <returns></returns>
-    <Extension> Public Function TryGetValue(Of TKey, TValue)(hash As Dictionary(Of TKey, TValue),
+    <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
                                                              index As TKey,
                                                              Optional [default] As TValue = Nothing,
                                                              <CallerMemberName> Optional trace$ = Nothing) As TValue
-        If hash Is Nothing Then
+        If table Is Nothing Then
 #If DEBUG Then
             Call PrintException("hash table is nothing!")
 #End If
             Return [default]
         End If
 
-        If hash.ContainsKey(index) Then
-            Return hash(index)
+        If table.ContainsKey(index) Then
+            Return table(index)
         Else
 #If DEBUG Then
             Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
@@ -587,15 +560,15 @@ Public Module Extensions
         Return DirectCast(value, TProp)
     End Function
 
-    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef hash As Dictionary(Of TKey, TValue), data As IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
+    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef table As Dictionary(Of TKey, TValue), data As IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
         If data.IsNullOrEmpty Then
-            Return hash
+            Return table
         End If
 
         For Each obj In data
-            Call hash.Add(obj.Key, obj.Value)
+            Call table.Add(obj.Key, obj.Value)
         Next
-        Return hash
+        Return table
     End Function
 
     ''' <summary>
@@ -616,23 +589,6 @@ Public Module Extensions
 
         Return sBuilder.ToString
     End Function
-
-#Disable Warning
-
-    ''' <summary>
-    ''' You can using this method to create a empty list for the specific type of anonymous type object.
-    ''' (使用这个方法获取得到匿名类型的列表数据集合对象)
-    ''' </summary>
-    ''' <typeparam name="TAnonymousType"></typeparam>
-    ''' <param name="typedef">The temp object which was created anonymous.
-    ''' (匿名对象的集合，这个是用来复制匿名类型的，虽然没有引用这个参数，但是却可以直接通过拓展来得到匿名类型生成列表对象)
-    ''' </param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function GetAnonymousTypeList(Of TAnonymousType As Class)(typedef As IEnumerable(Of TAnonymousType)) As List(Of TAnonymousType)
-        Return New List(Of TAnonymousType)
-    End Function
-#Enable Warning
 
     ''' <summary>
     ''' Format the datetime value in the format of yy/mm/dd hh:min
@@ -672,7 +628,7 @@ Public Module Extensions
     ''' <param name="parTokens">每一个子集合之中的元素的数目</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), parTokens As Integer, Optional echo As Boolean = True) As T()()
         Return source.SplitIterator(parTokens, echo).ToArray
     End Function
@@ -730,6 +686,7 @@ Public Module Extensions
         Return srcList
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), ParamArray data As T()) As List(Of T)
         Return source.Join(target:=data)
     End Function

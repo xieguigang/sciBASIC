@@ -676,6 +676,7 @@
     <Compile Include="Extensions\Collection\Linq\Which.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
+    <Compile Include="Extensions\Collection\AnonymousTypeHelper.vb" />
     <Compile Include="Extensions\Image\Bitmap\Effects.vb" />
     <Compile Include="Extensions\Image\Bitmap\Utils.vb" />
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
