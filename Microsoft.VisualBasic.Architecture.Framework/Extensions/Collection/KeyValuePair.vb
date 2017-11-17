@@ -526,6 +526,13 @@ Public Module KeyValuePairExtensions
         End Try
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function FlatTable(Of T)(table As Dictionary(Of NamedValue(Of T))) As Dictionary(Of String, T)
+        Return table.ToDictionary(Function(item) item.Key,
+                                  Function(item) item.Value.Value)
+    End Function
+
     <Extension> Public Function Add(Of TKey, TValue)(ByRef list As List(Of KeyValuePair(Of TKey, TValue)), key As TKey, value As TValue) As List(Of KeyValuePair(Of TKey, TValue))
         If list Is Nothing Then
             list = New List(Of KeyValuePair(Of TKey, TValue))
