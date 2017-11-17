@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace ComponentModel.Algorithm
+Namespace Math.Statistics
 
     ''' <summary>
     ''' Numeric value statics property.
