@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb4def7aad7506c2907176300d6a595e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsPearson.vb"
+﻿#Region "Microsoft.VisualBasic::ba53c6b6a87e86171dd97998ac1dfda0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsRange.vb"
 
     ' Author:
     ' 
@@ -26,23 +26,21 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 
-Namespace Math.StatisticsMathExtensions
+Namespace Math.Statistics
 
-    Public Module EnumerableStatsPearson
+    Public Module EnumerableStatsRange
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Decimal values.
+        '     Computes the Range of a sequence of nullable System.Decimal values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Decimal values to calculate the Pearson of.
+        '     A sequence of nullable System.Decimal values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -52,24 +50,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Decimal?), other As IEnumerable(Of Decimal?)) As Decimal
+        Public Function Range(source As IEnumerable(Of Decimal?)) As Decimal
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
             If values.Any() Then
-                Return values.Pearson(other.Coalesce())
+                Return values.Range()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Decimal values.
+        '     Computes the Range of a sequence of System.Decimal values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Decimal values to calculate the Pearson of.
+        '     A sequence of System.Decimal values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -81,43 +79,43 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Decimal), other As IEnumerable(Of Decimal)) As Decimal
-            Return CDec(source.[Select](Function(x) CDbl(x)).Pearson(other.[Select](Function(x) CDbl(x))))
+        Public Function Range(source As IEnumerable(Of Decimal)) As Decimal
+            Return source.Max() - source.Min()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Double values.
+        '     Computes the Range of a sequence of nullable System.Double values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Double values to calculate the Pearson of.
+        '     A sequence of nullable System.Double values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Double?), other As IEnumerable(Of Double?)) As Double
+        Public Function Range(source As IEnumerable(Of Double?)) As Double
             Dim values As IEnumerable(Of Double) = source.Coalesce()
             If values.Any() Then
-                Return values.Pearson(other.Coalesce())
+                Return values.Range()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Double values.
+        '     Computes the Range of a sequence of System.Double values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Double values to calculate the Pearson of.
+        '     A sequence of System.Double values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -126,47 +124,43 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Double), other As IEnumerable(Of Double)) As Double
-            If source.Count() <> other.Count() Then
-                Throw New ArgumentException("Collections are not of the same length", "other")
-            End If
-
-            Return source.Covariance(other) / (source.StandardDeviationP() * other.StandardDeviationP())
+        Public Function Range(source As IEnumerable(Of Double)) As Double
+            Return source.Max() - source.Min()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Single values.
+        '     Computes the Range of a sequence of nullable System.Single values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Single values to calculate the Pearson of.
+        '     A sequence of nullable System.Single values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Single?), other As IEnumerable(Of Single?)) As Single
+        Public Function Range(source As IEnumerable(Of Single?)) As Single
             Dim values As IEnumerable(Of Single) = source.Coalesce()
             If values.Any() Then
-                Return values.Pearson(other.Coalesce())
+                Return values.Range()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Single values.
+        '     Computes the Range of a sequence of System.Single values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Single values to calculate the Pearson of.
+        '     A sequence of System.Single values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -175,19 +169,19 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Single), other As IEnumerable(Of Single)) As Single
-            Return CSng(source.[Select](Function(x) CDbl(x)).Pearson(other.[Select](Function(x) CDbl(x))))
+        Public Function Range(source As IEnumerable(Of Single)) As Single
+            Return source.Max() - source.Min()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Int32 values.
+        '     Computes the Range of a sequence of nullable System.Int32 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Int32values to calculate the Pearson of.
+        '     A sequence of nullable System.Int32values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -197,24 +191,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Integer?), other As IEnumerable(Of Integer?)) As Double
+        Public Function Range(source As IEnumerable(Of Integer?)) As Integer
             Dim values As IEnumerable(Of Integer) = source.Coalesce()
             If values.Any() Then
-                Return values.Pearson(other.Coalesce())
+                Return values.Range()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Int32 values.
+        '     Computes the Range of a sequence of System.Int32 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Int32 values to calculate the Pearson of.
+        '     A sequence of System.Int32 values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -226,19 +220,19 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Integer), other As IEnumerable(Of Integer)) As Double
-            Return source.[Select](Function(x) CDbl(x)).Pearson(other.[Select](Function(x) CDbl(x)))
+        Public Function Range(source As IEnumerable(Of Integer)) As Integer
+            Return source.Max() - source.Min()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Int64 values.
+        '     Computes the Range of a sequence of nullable System.Int64 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Int64 values to calculate the Pearson of.
+        '     A sequence of nullable System.Int64 values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -248,24 +242,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Long?), other As IEnumerable(Of Long?)) As Double
+        Public Function Range(source As IEnumerable(Of Long?)) As Long
             Dim values As IEnumerable(Of Long) = source.Coalesce()
             If values.Any() Then
-                Return values.Pearson(other.Coalesce())
+                Return values.Range()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Int64 values.
+        '     Computes the Range of a sequence of System.Int64 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Int64 values to calculate the Pearson of.
+        '     A sequence of System.Int64 values to calculate the Range of.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -277,18 +271,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(source As IEnumerable(Of Long), other As IEnumerable(Of Long)) As Double
-            Return source.[Select](Function(x) CDbl(x)).Pearson(other.[Select](Function(x) CDbl(x)))
+        Public Function Range(source As IEnumerable(Of Long)) As Long
+            Return source.Max() - source.Min()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Decimal values that
+        '     Computes the Range of a sequence of nullable System.Decimal values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Pearson of.
+        '     A sequence of values to calculate the Range of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -298,7 +292,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -308,17 +302,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
+            Return source.[Select](selector).Range()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Decimal values that are obtained
+        '     Computes the Range of a sequence of System.Decimal values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values that are used to calculate an Pearson.
+        '     A sequence of values that are used to calculate an Range.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -328,7 +322,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -340,18 +334,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal)) As Decimal
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal)) As Decimal
+            Return source.[Select](selector).Range()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Double values that
+        '     Computes the Range of a sequence of nullable System.Double values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Pearson of.
+        '     A sequence of values to calculate the Range of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -361,24 +355,24 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
+            Return source.[Select](selector).Range()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Double values that are obtained
+        '     Computes the Range of a sequence of System.Double values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Pearson of.
+        '     A sequence of values to calculate the Range of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -388,7 +382,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -397,18 +391,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Double)) As Double
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double)) As Double
+            Return source.[Select](selector).Range()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Single values that
+        '     Computes the Range of a sequence of nullable System.Single values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Pearson of.
+        '     A sequence of values to calculate the Range of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -418,24 +412,24 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
+            Return source.[Select](selector).Range()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Single values that are obtained
+        '     Computes the Range of a sequence of System.Single values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Pearson of.
+        '     A sequence of values to calculate the Range of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -445,7 +439,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -454,17 +448,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Single)) As Single
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single)) As Single
+            Return source.[Select](selector).Range()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Int32 values that are
+        '     Computes the Range of a sequence of nullable System.Int32 values that are
         '     obtained by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Pearson of.
+        '     A sequence of values to calculate the Range of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -474,7 +468,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -484,17 +478,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
+            Return source.[Select](selector).Range()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Int32 values that are obtained
+        '     Computes the Range of a sequence of System.Int32 values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Pearson of.
+        '     A sequence of values to calculate the Range of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -504,7 +498,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -516,17 +510,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Integer)) As Double
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer)) As Double
+            Return source.[Select](selector).Range()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Int64 values that are
+        '     Computes the Range of a sequence of nullable System.Int64 values that are
         '     obtained by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Pearson of.
+        '     A sequence of values to calculate the Range of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -536,20 +530,20 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
+        '     The Range of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
+            Return source.[Select](selector).Range()
         End Function
         '
         ' Summary:
-        '     Computes the Pearson of a sequence of System.Int64 values that are obtained
+        '     Computes the Range of a sequence of System.Int64 values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Pearson of.
+        '     A sequence of values to calculate the Range of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -559,7 +553,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Pearson of the sequence of values.
+        '     The Range of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -571,8 +565,8 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Pearson(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Long)) As Double
-            Return source.[Select](selector).Pearson(other.[Select](selector))
+        Public Function Range(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long)) As Double
+            Return source.[Select](selector).Range()
         End Function
     End Module
 End Namespace

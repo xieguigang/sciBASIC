@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Math.StatisticsMathExtensions
+Namespace Math.Statistics
 
     Public Module EnumerableStatsCovariance
 

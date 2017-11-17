@@ -111,8 +111,8 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Math.Statistics\Math.Statistics.vbproj">
-      <Project>{fe321be1-a0e5-4bab-8b37-4f54a8e2187e}</Project>
+    <ProjectReference Include="..\..\..\Math\Math.Statistics\Math.Statistics.vbproj">
+      <Project>{3e195df1-9feb-44d5-904b-15626bbe74d7}</Project>
       <Name>Math.Statistics</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Math\Math\Math-core.vbproj">

@@ -29,7 +29,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
+Imports Microsoft.VisualBasic.Math.Statistics
 Imports Microsoft.VisualBasic.Text
 
 Namespace Matrix
