@@ -69,6 +69,8 @@ Namespace Math
         ''' </summary>
         ''' <param name="p"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Angle(p As PointF) As Double
             Dim a As Double = sys.Atan2(p.Y, p.X)

@@ -1,56 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::73ac2f55ea505025f07f7b604a4fcd16, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Namespace Math.StatisticsMathExtensions
 
     Public Module EnumerableStatsCovariance
-        '
-        ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Decimal values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of nullable System.Decimal values to calculate the Covariance of.
-        '
-        ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
-        '     empty or contains only values that are null.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.OverflowException:
-        '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+
+        ''' <summary>
+        ''' Computes the Covariance of a sequence of nullable System.Decimal values.
+        ''' </summary>
+        ''' <param name="source">A sequence of nullable System.Decimal values to calculate the Covariance of.</param>
+        ''' <param name="other"></param>
+        ''' <returns>The Covariance of the sequence of values, or null if the source sequence is
+        ''' empty or contains only values that are null.</returns>
         <Extension>
         Public Function Covariance(source As IEnumerable(Of Decimal?), other As IEnumerable(Of Decimal?)) As Decimal
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
