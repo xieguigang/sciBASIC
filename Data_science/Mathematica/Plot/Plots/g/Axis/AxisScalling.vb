@@ -186,12 +186,11 @@ Namespace Graphic.Axis
             dMax = dMax / dMax.Max
 
             Dim scores As Vector = dSteps * 0.8 + dMin * 0.1 + dMax * 0.1
-            Dim tickArray#() = candidateArray _
-                .Item(Which.Max(scores)) _
-                .Select(Function(t)
-                            Return Math.Round(t, decimalDigits)
-                        End Function) _
-                .ToArray
+            Dim tickArray#() = candidateArray(Which.Max(scores))
+
+            For i As Integer = 0 To tickArray.Length - 1
+                tickArray(i) = Math.Round(tickArray(i), decimalDigits)
+            Next
 
             Return tickArray
         End Function

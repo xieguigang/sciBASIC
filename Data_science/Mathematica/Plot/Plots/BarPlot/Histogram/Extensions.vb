@@ -29,7 +29,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace BarPlot.Histogram
 
@@ -42,6 +41,7 @@ Namespace BarPlot.Histogram
         ''' <param name="step!"></param>
         ''' <param name="legend"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function NewModel(hist As Dictionary(Of Double, IntegerTagged(Of Double)), step!, legend As Legend) As HistProfile
             Return New HistProfile(hist, [step]) With {

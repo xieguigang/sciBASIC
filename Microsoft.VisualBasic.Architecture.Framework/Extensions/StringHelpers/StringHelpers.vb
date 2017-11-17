@@ -276,7 +276,10 @@ Public Module StringHelpers
             Dim value$ = Mid(s, p + delimiter.Length)
 
             If Not trim.StringEmpty(whitespaceAsEmpty:=False) Then
-                value = value.Trim(trim.ToArray)
+                With trim.ToArray
+                    value = value.Trim(.ref)
+                    key = key.Trim(.ref)
+                End With
             End If
 
             Return New NamedValue(Of String)(key, value, s)
