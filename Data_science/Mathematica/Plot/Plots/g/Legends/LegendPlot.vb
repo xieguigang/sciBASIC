@@ -138,10 +138,10 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Rectangle
 
-                    Dim dw As Integer = gSize.Width * 0.1
+                    Dim dw As Integer = gSize.Width * 0.4
                     Dim dh As Integer = gSize.Height * 0.2
                     Dim size As New Size With {
-                        .Width = gSize.Width - dw * 2,
+                        .Width = dw,
                         .Height = gSize.Height - dh * 2
                     }
 
@@ -229,7 +229,7 @@ Namespace Graphic.Legend
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
             Dim labelPosition As New Point With {
-                .X = pos.X + canvas.Height * 1.5,
+                .X = pos.X + canvas.Width / 2,
                 .Y = pos.Y + (canvas.Height - fSize.Height) / 2
             }
             Dim color As Brush = l.color.GetBrush

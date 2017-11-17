@@ -112,7 +112,10 @@ Namespace IO
             End If
         End Function
 
-        Public Shared Function LoadDataSet(Of T As EntityObject)(path As String, Optional uidMap As String = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of T)
+        Public Shared Function LoadDataSet(Of T As EntityObject)(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of T)
+            If Not path.FileExists Then
+                Return {}
+            End If
             If uidMap.StringEmpty Then
                 If Not tsv Then
                     Dim first As New RowObject(path.ReadFirstLine)

@@ -38,12 +38,13 @@ Imports TV = Microsoft.VisualBasic.Data.Graph.Vertex
 ''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
 ''' that Is, it has no multiple edges And no self-loops.
 ''' </summary>
-Public Class Graph : Implements IEnumerable(Of Edge)
+Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of Vertex)}, G As Graph(Of V, Edge, G))
+    Implements IEnumerable(Of Edge)
 
 #Region "Let G=(V, E) be a simple graph"
     Dim edges As New Dictionary(Of Edge)
-    Dim vertices As New Dictionary(Of Vertex)
-    Dim buffer As New HashList(Of Vertex)
+    Dim vertices As New Dictionary(Of V)
+    Dim buffer As New HashList(Of V)
 #End Region
 
     Public ReadOnly Property Size As (Vertex%, Edges%)
@@ -53,7 +54,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         End Get
     End Property
 
-    Public ReadOnly Property Vertex As Vertex()
+    Public ReadOnly Property Vertex As V()
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return buffer
@@ -61,7 +62,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     End Property
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetConnectedVertex() As Vertex()
+    Public Function GetConnectedVertex() As V()
         Return edges.Values _
             .Select(Function(e) {e.U, e.V}) _
             .IteratesALL _
@@ -74,7 +75,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     ''' </summary>
     ''' <param name="u"></param>
     ''' <returns></returns>
-    Public Function AddVertex(u As Vertex) As Graph
+    Public Function AddVertex(u As V) As G
         vertices += u
         buffer.Add(u)
         Return Me
@@ -90,7 +91,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         Return edges.ContainsKey(edge.Key)
     End Function
 
-    Public Function AddVertex(label$) As Vertex
+    Public Function AddVertex(label$) As V
         With New Vertex With {
             .ID = buffer.GetAvailablePos,
             .Label = label
@@ -100,7 +101,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
         End With
     End Function
 
-    Public Function AddEdge(u As Vertex, v As Vertex, Optional weight# = 0) As Graph
+    Public Function AddEdge(u As V, v As V, Optional weight# = 0) As G
         edges += New Edge With {
             .U = u,
             .V = v,
@@ -119,7 +120,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function AddEdge(i%, j%, Optional weight# = 0) As Graph
+    Public Function AddEdge(i%, j%, Optional weight# = 0) As G
         edges += New Edge With {
             .U = buffer(i),
             .V = buffer(j),
@@ -136,7 +137,7 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     ''' <param name="v$"></param>
     ''' <param name="weight#"></param>
     ''' <returns></returns>
-    Public Function AddEdge(u$, v$, Optional weight# = 0) As Graph
+    Public Function AddEdge(u$, v$, Optional weight# = 0) As G
         edges += CreateEdge(u, v, weight)
         Return Me
     End Function
@@ -165,17 +166,17 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Delete(U As Vertex, V As Vertex) As Graph
+    Public Function Delete(U As V, V As V) As G
         Return Delete(U.ID, V.ID)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Delete(u$, v$) As Graph
+    Public Function Delete(u$, v$) As G
         Return Delete(vertices(u).ID, vertices(v).ID)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Delete(u%, v%) As Graph
+    Public Function Delete(u%, v%) As G
         Dim key$ = $"{u}-{v}"
 
         If edges.ContainsKey(key) Then
@@ -194,4 +195,13 @@ Public Class Graph : Implements IEnumerable(Of Edge)
     Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
         Yield GetEnumerator()
     End Function
+End Class
+
+''' <summary>
+''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
+''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
+''' that Is, it has no multiple edges And no self-loops.
+''' </summary>
+Public Class Graph : Inherits Graph(Of TV, Edge, Graph)
+
 End Class

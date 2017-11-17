@@ -185,7 +185,7 @@ Namespace Graphic.Axis
             dMin = dMin / dMin.Max
             dMax = dMax / dMax.Max
 
-            Dim scores As Vector = dSteps * 0.5 + dMin * 0.25 + dMax * 0.25
+            Dim scores As Vector = dSteps * 0.8 + dMin * 0.1 + dMax * 0.1
             Dim tickArray#() = candidateArray(Which.Max(scores))
 
             For i As Integer = 0 To tickArray.Length - 1

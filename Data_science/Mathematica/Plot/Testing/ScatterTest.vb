@@ -41,29 +41,42 @@ Module ScatterTest
 
     Sub StyleTest()
 
-        Dim s As New List(Of PointF)
+        Dim s As New List(Of PointData)
+        Dim s2 As New List(Of PointData)
 
         With New Random
             For i As Integer = 0 To 10
-                s += New PointF(.Next(0, 1000) * 1.0!, .Next(0, 500) * 1.0!)
+                s += New PointData(New PointF(.Next(0, 1000) * 1.0!, .Next(0, 500) * 1.0!))
+                s2 += New PointData(New PointF(.Next(0, 1000) * 1.0!, .Next(0, 500) * 1.0!))
             Next
         End With
 
-        Dim points = s.OrderBy(Function(p) p.X).Select(Function(i) New PointData With {.pt = i}).ToArray
         Dim ser As New SerialData With {
             .color = Color.DarkCyan,
             .lineType = DashStyle.Dash,
             .width = 5,
             .title = "Random",
             .PointSize = 15,
-            .pts = points
+            .pts = s.OrderBy(Function(p) p.pt.X).ToArray
         }
 
-        Call Scatter.Plot({ser},
+        Dim s22 As New SerialData With {
+            .color = Color.DarkRed,
+            .lineType = DashStyle.Dash,
+            .width = 5,
+            .title = "Random2222",
+            .PointSize = 15,
+            .pts = s2.OrderBy(Function(p) p.pt.X).ToArray
+        }
+
+
+        Call Scatter.Plot({ser, s22},
                             size:="1440,1000",
                             showLegend:=True,
                             padding:=g.DefaultPadding,
-                            fillPie:=True).Save($"./line.png")
+                            fillPie:=True,
+                          fill:=True,
+                          preferPositive:=True).Save($"./line.png")
     End Sub
 
     Sub Main()
