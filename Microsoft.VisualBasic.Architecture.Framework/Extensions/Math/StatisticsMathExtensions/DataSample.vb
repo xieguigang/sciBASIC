@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -37,7 +36,8 @@ Namespace Math.Statistics
     ''' Numeric value statics property.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure DataSample(Of T As IComparable)
+    Public Class DataSample(Of T As {IComparable, Structure})
+        Implements IEnumerable(Of T)
 
         Public ReadOnly Property Min As T
             Get
@@ -51,61 +51,75 @@ Namespace Math.Statistics
             End Get
         End Property
 
-        Public Average As Double
-        Public data As T()
-        Public Ranges As IRanges(Of T)
+        ''' <summary>
+        ''' The sample average
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Mean As Double
 
+        Protected Friend ranges As IRanges(Of T)
+        Protected Friend buffer As List(Of T)
+
+        ''' <summary>
+        ''' The sample size
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return data.Length
+                Return buffer.Count
             End Get
         End Property
 
-        Public ReadOnly Property First As T
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return data(Scan0)
-            End Get
-        End Property
+        Sub New()
+        End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function SlideWindows(winSize As Integer,
-                                     Optional offset As Integer = 1,
-                                     Optional extendTails As Boolean = False) As SlideWindow(Of T)()
-            Return data.CreateSlideWindows(winSize, offset, extendTails)
-        End Function
+        Sub New(sample As IEnumerable(Of T))
+            buffer = New List(Of T)(sample)
+        End Sub
+
+        Friend Sub New(sample As IEnumerable(Of T), mean#)
+            Me.New(sample)
+            Me.Mean = mean
+        End Sub
 
         Public Iterator Function Split(partSize As Integer) As IEnumerable(Of T())
-            For Each chunk As T() In data.SplitIterator(partSize)
+            For Each chunk As T() In buffer.SplitIterator(partSize)
                 Yield chunk
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return buffer.ToArray.GetJson
         End Function
-    End Structure
 
-    Public Module DataSampleAPI
+        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each x As T In buffer
+                Yield x
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
+    End Class
+
+    Public Module DataSampleExtensions
 
         <Extension>
         Public Function IntegerSample(data As IEnumerable(Of Integer)) As DataSample(Of Integer)
             Dim buf As Integer() = data.ToArray
-            Return New DataSample(Of Integer) With {
-                .Average = buf.Average,
-                .Ranges = New IntRange(buf.Min, buf.Max),
-                .data = buf
+            Return New DataSample(Of Integer)(buf, buf.Average) With {
+                .ranges = New IntRange(buf.Min, buf.Max)
             }
         End Function
 
         <Extension>
         Public Function DoubleSample(data As IEnumerable(Of Double)) As DataSample(Of Double)
             Dim buf As Double() = data.ToArray
-            Return New DataSample(Of Double) With {
-                .Average = buf.Average,
-                .Ranges = New DoubleRange(buf.Min, buf.Max),
-                .data = buf
+            Return New DataSample(Of Double)(buf, buf.Average) With {
+                .ranges = New DoubleRange(buf.Min, buf.Max)
             }
         End Function
     End Module
