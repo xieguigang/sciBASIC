@@ -11,7 +11,7 @@
     <AssemblyName>t.test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -115,7 +115,7 @@
       <Project>{fe321be1-a0e5-4bab-8b37-4f54a8e2187e}</Project>
       <Name>Math.Statistics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Math\Microsoft.VisualBasic.Mathematical.vbproj">
+    <ProjectReference Include="..\..\..\Math\Math\Math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>Microsoft.VisualBasic.Mathematical</Name>
     </ProjectReference>
