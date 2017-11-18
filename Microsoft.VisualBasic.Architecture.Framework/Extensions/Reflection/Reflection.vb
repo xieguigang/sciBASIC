@@ -47,6 +47,13 @@ Imports Microsoft.VisualBasic.Serialization.JSON
                   Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
+    ''' <summary>
+    ''' Try to handle for the bugs in VisualBasic language: 
+    ''' 
+    ''' https://github.com/dotnet/roslyn/issues/23050
+    ''' </summary>
+    ''' <param name="assm"></param>
+    ''' <returns></returns>
     Public Function GetTypesHelper(assm As Assembly) As Type()
         Try
             Return assm.GetTypes
