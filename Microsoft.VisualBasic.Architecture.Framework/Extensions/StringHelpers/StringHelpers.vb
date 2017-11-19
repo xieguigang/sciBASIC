@@ -519,7 +519,7 @@ Public Module StringHelpers
             Return ""
         End If
 
-        Dim p As Integer = InStr(str, left) + 1
+        Dim p As Integer = InStr(str, left) + left.Length
         Dim q As Integer = InStrRev(str, right)
 
         If p = 0 Or q = 0 Then

@@ -623,6 +623,7 @@
     <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
     <Compile Include="ComponentModel\Algorithm\base\DynamicProgramming.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
+    <Compile Include="ComponentModel\DataStructures\Enumerable\NamedValueList.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetsExtension.vb" />
     <Compile Include="ComponentModel\DriverModel.vb" />
     <Compile Include="ComponentModel\DataSource\Tsv.vb" />
