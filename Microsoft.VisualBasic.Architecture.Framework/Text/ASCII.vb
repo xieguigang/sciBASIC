@@ -290,6 +290,25 @@ Namespace Text
         ''' </summary>
         ''' <returns></returns>
         Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().Select(AddressOf Chr).ToArray
+        Public Shared ReadOnly Property AlphaNumericTable As New Dictionary(Of Char, Integer)() From {
+            {"0"c, 0}, {"1"c, 1}, {"2"c, 2}, {"3"c, 3}, {"4"c, 4},
+            {"5"c, 5}, {"6"c, 6}, {"7"c, 7}, {"8"c, 8}, {"9"c, 9},
+            {"A"c, 10}, {"B"c, 11}, {"C"c, 12}, {"D"c, 13}, {"E"c, 14}, {"F"c, 15}, {"G"c, 16},
+            {"H"c, 17}, {"I"c, 18}, {"J"c, 19}, {"K"c, 20}, {"L"c, 21}, {"M"c, 22}, {"N"c, 23},
+            {"O"c, 24}, {"P"c, 25}, {"Q"c, 26},
+            {"R"c, 27}, {"S"c, 28}, {"T"c, 29},
+            {"U"c, 30}, {"V"c, 31}, {"W"c, 32},
+            {"X"c, 33}, {"Y"c, 34}, {"Z"c, 35},
+            {" "c, 36},
+            {"$"c, 37},
+            {"%"c, 38},
+            {"*"c, 39},
+            {"+"c, 40},
+            {"-"c, 41},
+            {"."c, 42},
+            {"/"c, 43},
+            {":"c, 44}
+        }
 
         Public Class [Byte]
 
