@@ -700,11 +700,12 @@
     <Compile Include="Extensions\Reflection\Methods.vb" />
     <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
     <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
+    <Compile Include="Extensions\WebServices\HttpGet.vb" />
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Serialization\Abstract.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
-    <Compile Include="Extensions\WebServices\GZStream.vb" />
+    <Compile Include="Extensions\WebServices\Http\GZStream.vb" />
     <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\lang\C\Vector.vb" />
@@ -974,7 +975,7 @@
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
     <Compile Include="Text\TextEncodings.vb" />
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
-    <Compile Include="Extensions\WebServices\Base64Codec.vb" />
+    <Compile Include="Extensions\WebServices\Http\Base64Codec.vb" />
     <Compile Include="Extensions\WebServices\NetResponse.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
