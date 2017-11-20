@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cc2a73a5ff4c547c9c551c40895a4de, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsVarianceP.vb"
+﻿#Region "Microsoft.VisualBasic::b70ba4b0c1c2711a2dc49d56e809e47c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsStandardDeviationP.vb"
 
     ' Author:
     ' 
@@ -29,19 +29,19 @@
 Imports System.Runtime.CompilerServices
 Imports sys = System.Math
 
-Namespace Math.StatisticsMathExtensions
+Namespace Math.Statistics.Linq
 
-    Public Module EnumerableStatsVarianceP
+    Public Module EnumerableStatsStandardDeviationP
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Decimal values.
+        '     Computes the StandardDeviationP of a sequence of nullable System.Decimal values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Decimal values to calculate the VarianceP of.
+        '     A sequence of nullable System.Decimal values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -51,24 +51,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Decimal?)) As Decimal
+        Public Function StandardDeviationP(source As IEnumerable(Of Decimal?)) As Decimal
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
             If values.Any() Then
-                Return values.VarianceP()
+                Return values.StandardDeviationP()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Decimal values.
+        '     Computes the StandardDeviationP of a sequence of System.Decimal values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Decimal values to calculate the VarianceP of.
+        '     A sequence of System.Decimal values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -80,43 +80,43 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Decimal)) As Decimal
-            Return CDec(source.[Select](Function(x) CDbl(x)).VarianceP())
+        Public Function StandardDeviationP(source As IEnumerable(Of Decimal)) As Decimal
+            Return CDec(source.[Select](Function(x) CDbl(x)).StandardDeviationP())
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Double values.
+        '     Computes the StandardDeviationP of a sequence of nullable System.Double values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Double values to calculate the VarianceP of.
+        '     A sequence of nullable System.Double values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Double?)) As Double
+        Public Function StandardDeviationP(source As IEnumerable(Of Double?)) As Double
             Dim values As IEnumerable(Of Double) = source.Coalesce()
             If values.Any() Then
-                Return values.VarianceP()
+                Return values.StandardDeviationP()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Double values.
+        '     Computes the StandardDeviationP of a sequence of System.Double values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Double values to calculate the VarianceP of.
+        '     A sequence of System.Double values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -125,48 +125,43 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Double)) As Double
-            Dim avg As Double = source.Average()
-            Dim d As Double = source.Aggregate(0.0, func:=Function(total, [next]) As Double
-                                                              total += sys.Pow([next] - avg, 2)
-                                                              Return total
-                                                          End Function)
-            Return d / source.Count()
+        Public Function StandardDeviationP(source As IEnumerable(Of Double)) As Double
+            Return sys.Sqrt(source.VarianceP())
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Single values.
+        '     Computes the StandardDeviationP of a sequence of nullable System.Single values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Single values to calculate the VarianceP of.
+        '     A sequence of nullable System.Single values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Single?)) As Single
+        Public Function StandardDeviationP(source As IEnumerable(Of Single?)) As Single
             Dim values As IEnumerable(Of Single) = source.Coalesce()
             If values.Any() Then
-                Return values.VarianceP()
+                Return values.StandardDeviationP()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Single values.
+        '     Computes the StandardDeviationP of a sequence of System.Single values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Single values to calculate the VarianceP of.
+        '     A sequence of System.Single values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -175,19 +170,19 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Single)) As Single
-            Return CSng(source.[Select](Function(x) CDbl(x)).VarianceP())
+        Public Function StandardDeviationP(source As IEnumerable(Of Single)) As Single
+            Return CSng(source.[Select](Function(x) CDbl(x)).StandardDeviationP())
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Int32 values.
+        '     Computes the StandardDeviationP of a sequence of nullable System.Int32 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Int32values to calculate the VarianceP of.
+        '     A sequence of nullable System.Int32values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -197,24 +192,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Integer?)) As Double
+        Public Function StandardDeviationP(source As IEnumerable(Of Integer?)) As Double
             Dim values As IEnumerable(Of Integer) = source.Coalesce()
             If values.Any() Then
-                Return values.VarianceP()
+                Return values.StandardDeviationP()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Int32 values.
+        '     Computes the StandardDeviationP of a sequence of System.Int32 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Int32 values to calculate the VarianceP of.
+        '     A sequence of System.Int32 values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -226,19 +221,19 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Integer)) As Double
-            Return source.[Select](Function(x) CDbl(x)).VarianceP()
+        Public Function StandardDeviationP(source As IEnumerable(Of Integer)) As Double
+            Return source.[Select](Function(x) CDbl(x)).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Int64 values.
+        '     Computes the StandardDeviationP of a sequence of nullable System.Int64 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Int64 values to calculate the VarianceP of.
+        '     A sequence of nullable System.Int64 values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -248,24 +243,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Long?)) As Double
+        Public Function StandardDeviationP(source As IEnumerable(Of Long?)) As Double
             Dim values As IEnumerable(Of Long) = source.Coalesce()
             If values.Any() Then
-                Return values.VarianceP()
+                Return values.StandardDeviationP()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Int64 values.
+        '     Computes the StandardDeviationP of a sequence of System.Int64 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Int64 values to calculate the VarianceP of.
+        '     A sequence of System.Int64 values to calculate the StandardDeviationP of.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -277,18 +272,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(source As IEnumerable(Of Long)) As Double
-            Return source.[Select](Function(x) CDbl(x)).VarianceP()
+        Public Function StandardDeviationP(source As IEnumerable(Of Long)) As Double
+            Return source.[Select](Function(x) CDbl(x)).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Decimal values that
+        '     Computes the StandardDeviationP of a sequence of nullable System.Decimal values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the VarianceP of.
+        '     A sequence of values to calculate the StandardDeviationP of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -298,7 +293,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -308,17 +303,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
+            Return source.[Select](selector).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Decimal values that are obtained
+        '     Computes the StandardDeviationP of a sequence of System.Decimal values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values that are used to calculate an VarianceP.
+        '     A sequence of values that are used to calculate an StandardDeviationP.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -328,7 +323,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -340,18 +335,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal)) As Decimal
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal)) As Decimal
+            Return source.[Select](selector).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Double values that
+        '     Computes the StandardDeviationP of a sequence of nullable System.Double values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the VarianceP of.
+        '     A sequence of values to calculate the StandardDeviationP of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -361,24 +356,24 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
+            Return source.[Select](selector).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Double values that are obtained
+        '     Computes the StandardDeviationP of a sequence of System.Double values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the VarianceP of.
+        '     A sequence of values to calculate the StandardDeviationP of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -388,7 +383,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -397,18 +392,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double)) As Double
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double)) As Double
+            Return source.[Select](selector).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Single values that
+        '     Computes the StandardDeviationP of a sequence of nullable System.Single values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the VarianceP of.
+        '     A sequence of values to calculate the StandardDeviationP of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -418,24 +413,24 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
+            Return source.[Select](selector).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Single values that are obtained
+        '     Computes the StandardDeviationP of a sequence of System.Single values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the VarianceP of.
+        '     A sequence of values to calculate the StandardDeviationP of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -445,7 +440,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -454,17 +449,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single)) As Single
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single)) As Single
+            Return source.[Select](selector).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Int32 values that are
+        '     Computes the StandardDeviationP of a sequence of nullable System.Int32 values that are
         '     obtained by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the VarianceP of.
+        '     A sequence of values to calculate the StandardDeviationP of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -474,7 +469,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -484,17 +479,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
+            Return source.[Select](selector).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Int32 values that are obtained
+        '     Computes the StandardDeviationP of a sequence of System.Int32 values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the VarianceP of.
+        '     A sequence of values to calculate the StandardDeviationP of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -504,7 +499,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -516,17 +511,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer)) As Double
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer)) As Double
+            Return source.[Select](selector).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of nullable System.Int64 values that are
+        '     Computes the StandardDeviationP of a sequence of nullable System.Int64 values that are
         '     obtained by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the VarianceP of.
+        '     A sequence of values to calculate the StandardDeviationP of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -536,20 +531,20 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values, or null if the source sequence is
+        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
+            Return source.[Select](selector).StandardDeviationP()
         End Function
         '
         ' Summary:
-        '     Computes the VarianceP of a sequence of System.Int64 values that are obtained
+        '     Computes the StandardDeviationP of a sequence of System.Int64 values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the VarianceP of.
+        '     A sequence of values to calculate the StandardDeviationP of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -559,7 +554,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The VarianceP of the sequence of values.
+        '     The StandardDeviationP of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -571,8 +566,8 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function VarianceP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long)) As Double
-            Return source.[Select](selector).VarianceP()
+        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long)) As Double
+            Return source.[Select](selector).StandardDeviationP()
         End Function
     End Module
 End Namespace

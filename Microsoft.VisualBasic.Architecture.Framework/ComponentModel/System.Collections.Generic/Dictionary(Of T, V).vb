@@ -199,23 +199,23 @@ Namespace ComponentModel.Collection
         ''' <summary>
         ''' Adds an element with the specified key and value into the System.Collections.Generic.SortedDictionary`2.
         ''' </summary>
-        ''' <param name="hash"></param>
+        ''' <param name="list"></param>
         ''' <param name="item"></param>
         ''' <returns></returns>
-        Public Shared Operator +(hash As Dictionary(Of V), item As V) As Dictionary(Of V)
-            Call hash.Add(item)
-            Return hash
+        Public Shared Operator +(list As Dictionary(Of V), item As V) As Dictionary(Of V)
+            Call list.Add(item)
+            Return list
         End Operator
 
         ''' <summary>
         ''' Find a variable in the hash table
         ''' </summary>
-        ''' <param name="hash"></param>
+        ''' <param name="table"></param>
         ''' <param name="uid"></param>
         ''' <returns></returns>
-        Public Shared Operator ^(hash As Dictionary(Of V), uid As String) As V
-            If hash.ContainsKey(uid) Then
-                Return hash(uid)
+        Public Shared Operator ^(table As Dictionary(Of V), uid As String) As V
+            If table.ContainsKey(uid) Then
+                Return table(uid)
             Else
                 Return Nothing
             End If

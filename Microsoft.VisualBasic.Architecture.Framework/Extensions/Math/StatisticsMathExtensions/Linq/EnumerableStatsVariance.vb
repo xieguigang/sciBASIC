@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73ac2f55ea505025f07f7b604a4fcd16, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb"
+﻿#Region "Microsoft.VisualBasic::747007b502dc507a3e3732fd1a98a32b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsVariance.vb"
 
     ' Author:
     ' 
@@ -26,23 +26,23 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.CompilerServices
+Imports sys = System.Math
 
-Namespace Math.StatisticsMathExtensions
+Namespace Math.Statistics.Linq
 
-    Public Module EnumerableStatsCovariance
+    Public Module EnumerableStatsVariance
+
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Decimal values.
+        '     Computes the Variance of a sequence of nullable System.Decimal values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Decimal values to calculate the Covariance of.
+        '     A sequence of nullable System.Decimal values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -52,24 +52,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Decimal?), other As IEnumerable(Of Decimal?)) As Decimal
+        Public Function Variance(source As IEnumerable(Of Decimal?)) As Decimal
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
             If values.Any() Then
-                Return values.Covariance(other.Coalesce())
+                Return values.Variance()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Decimal values.
+        '     Computes the Variance of a sequence of System.Decimal values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Decimal values to calculate the Covariance of.
+        '     A sequence of System.Decimal values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -81,43 +81,43 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Decimal), other As IEnumerable(Of Decimal)) As Decimal
-            Return CDec(source.[Select](Function(x) CDbl(x)).Covariance(other.[Select](Function(x) CDbl(x))))
+        Public Function Variance(source As IEnumerable(Of Decimal)) As Decimal
+            Return CDec(source.[Select](Function(x) CDbl(x)).Variance())
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Double values.
+        '     Computes the Variance of a sequence of nullable System.Double values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Double values to calculate the Covariance of.
+        '     A sequence of nullable System.Double values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Double?), other As IEnumerable(Of Double?)) As Double
+        Public Function Variance(source As IEnumerable(Of Double?)) As Double
             Dim values As IEnumerable(Of Double) = source.Coalesce()
             If values.Any() Then
-                Return values.Covariance(other.Coalesce())
+                Return values.Variance()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Double values.
+        '     Computes the Variance of a sequence of System.Double values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Double values to calculate the Covariance of.
+        '     A sequence of System.Double values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -126,43 +126,48 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Double), other As IEnumerable(Of Double)) As Double
-            Return Math.Covariance(source.ToArray, other.ToArray)
+        Public Function Variance(source As IEnumerable(Of Double)) As Double
+            Dim avg As Double = source.Average()
+            Dim d As Double = source.Aggregate(0.0, Function(total, [next]) As Double
+                                                        total += sys.Pow([next] - avg, 2)
+                                                        Return total
+                                                    End Function)
+            Return d / (source.Count() - 1)
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Single values.
+        '     Computes the Variance of a sequence of nullable System.Single values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Single values to calculate the Covariance of.
+        '     A sequence of nullable System.Single values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Single?), other As IEnumerable(Of Single?)) As Single
+        Public Function Variance(source As IEnumerable(Of Single?)) As Single
             Dim values As IEnumerable(Of Single) = source.Coalesce()
             If values.Any() Then
-                Return values.Covariance(other.Coalesce())
+                Return values.Variance()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Single values.
+        '     Computes the Variance of a sequence of System.Single values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Single values to calculate the Covariance of.
+        '     A sequence of System.Single values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -171,19 +176,19 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Single), other As IEnumerable(Of Single)) As Single
-            Return CSng(source.[Select](Function(x) CDbl(x)).Covariance(other.[Select](Function(x) CDbl(x))))
+        Public Function Variance(source As IEnumerable(Of Single)) As Single
+            Return CSng(source.[Select](Function(x) CDbl(x)).Variance())
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Int32 values.
+        '     Computes the Variance of a sequence of nullable System.Int32 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Int32values to calculate the Covariance of.
+        '     A sequence of nullable System.Int32values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -193,24 +198,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Integer?), other As IEnumerable(Of Integer?)) As Double
+        Public Function Variance(source As IEnumerable(Of Integer?)) As Double
             Dim values As IEnumerable(Of Integer) = source.Coalesce()
             If values.Any() Then
-                Return values.Covariance(other.Coalesce())
+                Return values.Variance()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Int32 values.
+        '     Computes the Variance of a sequence of System.Int32 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Int32 values to calculate the Covariance of.
+        '     A sequence of System.Int32 values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -222,19 +227,19 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Integer), other As IEnumerable(Of Integer)) As Double
-            Return source.[Select](Function(x) CDbl(x)).Covariance(other.[Select](Function(x) CDbl(x)))
+        Public Function Variance(source As IEnumerable(Of Integer)) As Double
+            Return source.[Select](Function(x) CDbl(x)).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Int64 values.
+        '     Computes the Variance of a sequence of nullable System.Int64 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Int64 values to calculate the Covariance of.
+        '     A sequence of nullable System.Int64 values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -244,24 +249,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Long?), other As IEnumerable(Of Long?)) As Double
+        Public Function Variance(source As IEnumerable(Of Long?)) As Double
             Dim values As IEnumerable(Of Long) = source.Coalesce()
             If values.Any() Then
-                Return values.Covariance(other.Coalesce())
+                Return values.Variance()
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Int64 values.
+        '     Computes the Variance of a sequence of System.Int64 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Int64 values to calculate the Covariance of.
+        '     A sequence of System.Int64 values to calculate the Variance of.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -273,18 +278,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Covariance(source As IEnumerable(Of Long), other As IEnumerable(Of Long)) As Double
-            Return source.[Select](Function(x) CDbl(x)).Covariance(other.[Select](Function(x) CDbl(x)))
+        Public Function Variance(source As IEnumerable(Of Long)) As Double
+            Return source.[Select](Function(x) CDbl(x)).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Decimal values that
+        '     Computes the Variance of a sequence of nullable System.Decimal values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Covariance of.
+        '     A sequence of values to calculate the Variance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -294,7 +299,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -304,17 +309,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
+            Return source.[Select](selector).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Decimal values that are obtained
+        '     Computes the Variance of a sequence of System.Decimal values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values that are used to calculate an Covariance.
+        '     A sequence of values that are used to calculate an Variance.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -324,7 +329,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -336,18 +341,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal)) As Decimal
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal)) As Decimal
+            Return source.[Select](selector).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Double values that
+        '     Computes the Variance of a sequence of nullable System.Double values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Covariance of.
+        '     A sequence of values to calculate the Variance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -357,24 +362,24 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
+            Return source.[Select](selector).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Double values that are obtained
+        '     Computes the Variance of a sequence of System.Double values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Covariance of.
+        '     A sequence of values to calculate the Variance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -384,7 +389,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -393,18 +398,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Double)) As Double
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double)) As Double
+            Return source.[Select](selector).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Single values that
+        '     Computes the Variance of a sequence of nullable System.Single values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Covariance of.
+        '     A sequence of values to calculate the Variance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -414,24 +419,24 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
+            Return source.[Select](selector).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Single values that are obtained
+        '     Computes the Variance of a sequence of System.Single values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Covariance of.
+        '     A sequence of values to calculate the Variance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -441,7 +446,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -450,17 +455,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Single)) As Single
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single)) As Single
+            Return source.[Select](selector).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Int32 values that are
+        '     Computes the Variance of a sequence of nullable System.Int32 values that are
         '     obtained by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Covariance of.
+        '     A sequence of values to calculate the Variance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -470,7 +475,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -480,17 +485,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
+            Return source.[Select](selector).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Int32 values that are obtained
+        '     Computes the Variance of a sequence of System.Int32 values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Covariance of.
+        '     A sequence of values to calculate the Variance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -500,7 +505,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -512,17 +517,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Integer)) As Double
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer)) As Double
+            Return source.[Select](selector).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of nullable System.Int64 values that are
+        '     Computes the Variance of a sequence of nullable System.Int64 values that are
         '     obtained by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Covariance of.
+        '     A sequence of values to calculate the Variance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -532,20 +537,20 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values, or null if the source sequence is
+        '     The Variance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
+            Return source.[Select](selector).Variance()
         End Function
         '
         ' Summary:
-        '     Computes the Covariance of a sequence of System.Int64 values that are obtained
+        '     Computes the Variance of a sequence of System.Int64 values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the Covariance of.
+        '     A sequence of values to calculate the Variance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -555,7 +560,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The Covariance of the sequence of values.
+        '     The Variance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -567,8 +572,8 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Long)) As Double
-            Return source.[Select](selector).Covariance(other.[Select](selector))
+        Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long)) As Double
+            Return source.[Select](selector).Variance()
         End Function
     End Module
 End Namespace

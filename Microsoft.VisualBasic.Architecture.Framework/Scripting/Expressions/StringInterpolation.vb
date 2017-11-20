@@ -41,6 +41,18 @@ Namespace Scripting.Expressions
 
         Const VB_str$ = "&VB_str"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetValue(resource As Dictionary(Of String, String)) As Func(Of String, String)
+            Return Function(name$)
+                       If resource.ContainsKey(name) Then
+                           Return resource(name$)
+                       Else
+                           Return Nothing
+                       End If
+                   End Function
+        End Function
+
         ''' <summary>
         ''' 对于<paramref name="getValue"/>方法而言，是不需要``$``前缀了的
         ''' </summary>
@@ -56,9 +68,11 @@ Namespace Scripting.Expressions
         Public Function Interpolate(expr$, getValue As Func(Of String, String),
                                     Optional nullAsEmpty As Boolean = False,
                                     Optional escape As Boolean = True) As String
-            Dim sb As New StringBuilder(expr)
-            Call sb.Interpolate(getValue, nullAsEmpty, escape)
-            Return sb.ToString
+
+            With New StringBuilder(expr)
+                Call .Interpolate(getValue, nullAsEmpty, escape)
+                Return .ToString
+            End With
         End Function
 
         <Extension>
@@ -99,16 +113,10 @@ Namespace Scripting.Expressions
             End With
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Interpolate(expr$, table As Dictionary(Of String, String), Optional nullAsEmpty As Boolean = False) As String
-            Dim getValue = Function(name$)
-                               If table.ContainsKey(name) Then
-                                   Return table(name$)
-                               Else
-                                   Return Nothing
-                               End If
-                           End Function
-            Return expr.Interpolate(getValue, nullAsEmpty)
+            Return expr.Interpolate(table.GetValue, nullAsEmpty)
         End Function
     End Module
 End Namespace

@@ -139,19 +139,13 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the larger of two 64-bit unsigned integers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two 64-bit unsigned integers to compare.
-        '
-        '   val2:
-        '     The second of two 64-bit unsigned integers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is larger.
+
+        ''' <summary>
+        ''' Returns the larger of two 64-bit unsigned integers.
+        ''' </summary>
+        ''' <param name="val1">The first of two 64-bit unsigned integers to compare.</param>
+        ''' <param name="val2">The second of two 64-bit unsigned integers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is larger.</returns>
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As ULong, val2 As ULong) As ULong
@@ -161,19 +155,13 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the larger of two 64-bit signed integers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two 64-bit signed integers to compare.
-        '
-        '   val2:
-        '     The second of two 64-bit signed integers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is larger.
+
+        ''' <summary>
+        ''' Returns the larger of two 64-bit signed integers.
+        ''' </summary>
+        ''' <param name="val1">The first of two 64-bit signed integers to compare.</param>
+        ''' <param name="val2">The second of two 64-bit signed integers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is larger.</returns>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As Long, val2 As Long) As Long
@@ -183,19 +171,13 @@ Namespace Math
                 Return val2
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the larger of two 32-bit unsigned integers.
-        '
-        ' Parameters:
-        '   val1:
-        '     The first of two 32-bit unsigned integers to compare.
-        '
-        '   val2:
-        '     The second of two 32-bit unsigned integers to compare.
-        '
-        ' Returns:
-        '     Parameter val1 or val2, whichever is larger.
+
+        ''' <summary>
+        ''' Returns the larger of two 32-bit unsigned integers.
+        ''' </summary>
+        ''' <param name="val1">The first of two 32-bit unsigned integers to compare.</param>
+        ''' <param name="val2">The second of two 32-bit unsigned integers to compare.</param>
+        ''' <returns>Parameter val1 or val2, whichever is larger.</returns>
         <CLSCompliant(False)> <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(val1 As UInteger, val2 As UInteger) As UInteger

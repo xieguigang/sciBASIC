@@ -1,74 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::b70ba4b0c1c2711a2dc49d56e809e47c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsStandardDeviationP.vb"
+﻿#Region "Microsoft.VisualBasic::73ac2f55ea505025f07f7b604a4fcd16, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
 
-Namespace Math.StatisticsMathExtensions
+Namespace Math.Statistics.Linq
 
-    Public Module EnumerableStatsStandardDeviationP
-        '
-        ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Decimal values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of nullable System.Decimal values to calculate the StandardDeviationP of.
-        '
-        ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
-        '     empty or contains only values that are null.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.OverflowException:
-        '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+    Public Module EnumerableStatsCovariance
+
+        ''' <summary>
+        ''' Computes the Covariance of a sequence of nullable System.Decimal values.
+        ''' </summary>
+        ''' <param name="source">A sequence of nullable System.Decimal values to calculate the Covariance of.</param>
+        ''' <param name="other"></param>
+        ''' <returns>The Covariance of the sequence of values, or null if the source sequence is
+        ''' empty or contains only values that are null.</returns>
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Decimal?)) As Decimal
+        Public Function Covariance(source As IEnumerable(Of Decimal?), other As IEnumerable(Of Decimal?)) As Decimal
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
             If values.Any() Then
-                Return values.StandardDeviationP()
+                Return values.Covariance(other.Coalesce())
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Decimal values.
+        '     Computes the Covariance of a sequence of System.Decimal values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Decimal values to calculate the StandardDeviationP of.
+        '     A sequence of System.Decimal values to calculate the Covariance of.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -80,43 +69,43 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Decimal)) As Decimal
-            Return CDec(source.[Select](Function(x) CDbl(x)).StandardDeviationP())
+        Public Function Covariance(source As IEnumerable(Of Decimal), other As IEnumerable(Of Decimal)) As Decimal
+            Return CDec(source.[Select](Function(x) CDbl(x)).Covariance(other.[Select](Function(x) CDbl(x))))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Double values.
+        '     Computes the Covariance of a sequence of nullable System.Double values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Double values to calculate the StandardDeviationP of.
+        '     A sequence of nullable System.Double values to calculate the Covariance of.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
+        '     The Covariance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Double?)) As Double
+        Public Function Covariance(source As IEnumerable(Of Double?), other As IEnumerable(Of Double?)) As Double
             Dim values As IEnumerable(Of Double) = source.Coalesce()
             If values.Any() Then
-                Return values.StandardDeviationP()
+                Return values.Covariance(other.Coalesce())
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Double values.
+        '     Computes the Covariance of a sequence of System.Double values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Double values to calculate the StandardDeviationP of.
+        '     A sequence of System.Double values to calculate the Covariance of.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -125,43 +114,43 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Double)) As Double
-            Return sys.Sqrt(source.VarianceP())
+        Public Function Covariance(source As IEnumerable(Of Double), other As IEnumerable(Of Double)) As Double
+            Return Math.Covariance(source.ToArray, other.ToArray)
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Single values.
+        '     Computes the Covariance of a sequence of nullable System.Single values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Single values to calculate the StandardDeviationP of.
+        '     A sequence of nullable System.Single values to calculate the Covariance of.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
+        '     The Covariance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source is null.
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Single?)) As Single
+        Public Function Covariance(source As IEnumerable(Of Single?), other As IEnumerable(Of Single?)) As Single
             Dim values As IEnumerable(Of Single) = source.Coalesce()
             If values.Any() Then
-                Return values.StandardDeviationP()
+                Return values.Covariance(other.Coalesce())
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Single values.
+        '     Computes the Covariance of a sequence of System.Single values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Single values to calculate the StandardDeviationP of.
+        '     A sequence of System.Single values to calculate the Covariance of.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -170,19 +159,19 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Single)) As Single
-            Return CSng(source.[Select](Function(x) CDbl(x)).StandardDeviationP())
+        Public Function Covariance(source As IEnumerable(Of Single), other As IEnumerable(Of Single)) As Single
+            Return CSng(source.[Select](Function(x) CDbl(x)).Covariance(other.[Select](Function(x) CDbl(x))))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Int32 values.
+        '     Computes the Covariance of a sequence of nullable System.Int32 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Int32values to calculate the StandardDeviationP of.
+        '     A sequence of nullable System.Int32values to calculate the Covariance of.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
+        '     The Covariance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -192,24 +181,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Integer?)) As Double
+        Public Function Covariance(source As IEnumerable(Of Integer?), other As IEnumerable(Of Integer?)) As Double
             Dim values As IEnumerable(Of Integer) = source.Coalesce()
             If values.Any() Then
-                Return values.StandardDeviationP()
+                Return values.Covariance(other.Coalesce())
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Int32 values.
+        '     Computes the Covariance of a sequence of System.Int32 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Int32 values to calculate the StandardDeviationP of.
+        '     A sequence of System.Int32 values to calculate the Covariance of.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -221,19 +210,19 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Integer)) As Double
-            Return source.[Select](Function(x) CDbl(x)).StandardDeviationP()
+        Public Function Covariance(source As IEnumerable(Of Integer), other As IEnumerable(Of Integer)) As Double
+            Return source.[Select](Function(x) CDbl(x)).Covariance(other.[Select](Function(x) CDbl(x)))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Int64 values.
+        '     Computes the Covariance of a sequence of nullable System.Int64 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of nullable System.Int64 values to calculate the StandardDeviationP of.
+        '     A sequence of nullable System.Int64 values to calculate the Covariance of.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
+        '     The Covariance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -243,24 +232,24 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Long?)) As Double
+        Public Function Covariance(source As IEnumerable(Of Long?), other As IEnumerable(Of Long?)) As Double
             Dim values As IEnumerable(Of Long) = source.Coalesce()
             If values.Any() Then
-                Return values.StandardDeviationP()
+                Return values.Covariance(other.Coalesce())
             End If
 
             Return Nothing
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Int64 values.
+        '     Computes the Covariance of a sequence of System.Int64 values.
         '
         ' Parameters:
         '   source:
-        '     A sequence of System.Int64 values to calculate the StandardDeviationP of.
+        '     A sequence of System.Int64 values to calculate the Covariance of.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -272,18 +261,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(source As IEnumerable(Of Long)) As Double
-            Return source.[Select](Function(x) CDbl(x)).StandardDeviationP()
+        Public Function Covariance(source As IEnumerable(Of Long), other As IEnumerable(Of Long)) As Double
+            Return source.[Select](Function(x) CDbl(x)).Covariance(other.[Select](Function(x) CDbl(x)))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Decimal values that
+        '     Computes the Covariance of a sequence of nullable System.Decimal values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the StandardDeviationP of.
+        '     A sequence of values to calculate the Covariance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -293,7 +282,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
+        '     The Covariance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -303,17 +292,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal?)) As Decimal
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Decimal values that are obtained
+        '     Computes the Covariance of a sequence of System.Decimal values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values that are used to calculate an StandardDeviationP.
+        '     A sequence of values that are used to calculate an Covariance.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -323,7 +312,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -335,18 +324,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal)) As Decimal
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Decimal)) As Decimal
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Double values that
+        '     Computes the Covariance of a sequence of nullable System.Double values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the StandardDeviationP of.
+        '     A sequence of values to calculate the Covariance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -356,24 +345,24 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
+        '     The Covariance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Double?)) As Double
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Double values that are obtained
+        '     Computes the Covariance of a sequence of System.Double values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the StandardDeviationP of.
+        '     A sequence of values to calculate the Covariance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -383,7 +372,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -392,18 +381,18 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Double)) As Double
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Double)) As Double
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Single values that
+        '     Computes the Covariance of a sequence of nullable System.Single values that
         '     are obtained by invoking a transform function on each element of the input
         '     sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the StandardDeviationP of.
+        '     A sequence of values to calculate the Covariance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -413,24 +402,24 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
+        '     The Covariance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
         '     source or selector is null.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Single?)) As Single
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Single values that are obtained
+        '     Computes the Covariance of a sequence of System.Single values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the StandardDeviationP of.
+        '     A sequence of values to calculate the Covariance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -440,7 +429,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -449,17 +438,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.InvalidOperationException:
         '     source contains no elements.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Single)) As Single
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Single)) As Single
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Int32 values that are
+        '     Computes the Covariance of a sequence of nullable System.Int32 values that are
         '     obtained by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the StandardDeviationP of.
+        '     A sequence of values to calculate the Covariance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -469,7 +458,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
+        '     The Covariance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         '
         ' Exceptions:
@@ -479,17 +468,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Integer?)) As Double
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Int32 values that are obtained
+        '     Computes the Covariance of a sequence of System.Int32 values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the StandardDeviationP of.
+        '     A sequence of values to calculate the Covariance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -499,7 +488,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -511,17 +500,17 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Integer)) As Double
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Integer)) As Double
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of nullable System.Int64 values that are
+        '     Computes the Covariance of a sequence of nullable System.Int64 values that are
         '     obtained by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the StandardDeviationP of.
+        '     A sequence of values to calculate the Covariance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -531,20 +520,20 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values, or null if the source sequence is
+        '     The Covariance of the sequence of values, or null if the source sequence is
         '     empty or contains only values that are null.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Long?)) As Double
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
         '
         ' Summary:
-        '     Computes the StandardDeviationP of a sequence of System.Int64 values that are obtained
+        '     Computes the Covariance of a sequence of System.Int64 values that are obtained
         '     by invoking a transform function on each element of the input sequence.
         '
         ' Parameters:
         '   source:
-        '     A sequence of values to calculate the StandardDeviationP of.
+        '     A sequence of values to calculate the Covariance of.
         '
         '   selector:
         '     A transform function to apply to each element.
@@ -554,7 +543,7 @@ Namespace Math.StatisticsMathExtensions
         '     The type of the elements of source.
         '
         ' Returns:
-        '     The StandardDeviationP of the sequence of values.
+        '     The Covariance of the sequence of values.
         '
         ' Exceptions:
         '   System.ArgumentNullException:
@@ -566,8 +555,8 @@ Namespace Math.StatisticsMathExtensions
         '   System.OverflowException:
         '     The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         <Extension>
-        Public Function StandardDeviationP(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long)) As Double
-            Return source.[Select](selector).StandardDeviationP()
+        Public Function Covariance(Of TSource)(source As IEnumerable(Of TSource), other As IEnumerable(Of TSource), selector As Func(Of TSource, Long)) As Double
+            Return source.[Select](selector).Covariance(other.[Select](selector))
         End Function
     End Module
 End Namespace

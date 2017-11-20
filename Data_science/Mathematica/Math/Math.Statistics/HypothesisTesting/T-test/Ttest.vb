@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
-Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Namespace Hypothesis
 

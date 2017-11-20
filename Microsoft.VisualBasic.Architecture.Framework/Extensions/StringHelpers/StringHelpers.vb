@@ -48,6 +48,12 @@ Imports r = System.Text.RegularExpressions.Regex
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function CreateBuilder(s As String) As StringBuilder
+        Return New StringBuilder(s)
+    End Function
+
     ''' <summary>
     ''' Using <see cref="[String].Empty"/> as default value
     ''' </summary>
@@ -513,7 +519,7 @@ Public Module StringHelpers
             Return ""
         End If
 
-        Dim p As Integer = InStr(str, left) + 1
+        Dim p As Integer = InStr(str, left) + left.Length
         Dim q As Integer = InStrRev(str, right)
 
         If p = 0 Or q = 0 Then
