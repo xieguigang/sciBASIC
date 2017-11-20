@@ -557,13 +557,7 @@ Public Module WebServiceUtils
     Public Property Proxy As String
 
     <Extension>
-    Private Function __httpRequest(url$,
-                                   retries%,
-                                   headers As Dictionary(Of String, String),
-                                   proxy As String,
-                                   DoNotRetry404 As Boolean,
-                                   UA$) As String
-
+    Private Function __httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$) As String
         Dim retryTime As Integer = 0
 
         If String.IsNullOrEmpty(proxy) Then
@@ -572,24 +566,21 @@ Public Module WebServiceUtils
 
         Try
 RETRY:      Return __get(url, headers, proxy, UA)
-        Catch ex As Exception
-            Dim is404 As Boolean =
-                InStr(ex.Message, "(404) Not Found") > 0
+        Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso DoNotRetry404
+            Return LogException(url, New Exception(url, ex))
 
+        Catch ex As Exception When retryTime < retries
+
+            retryTime += 1
+
+            Call "Data download error, retry connect to the server!".PrintException
+            GoTo RETRY
+
+        Catch ex As Exception
             ex = New Exception(url, ex)
             ex.PrintException
 
-            If retryTime < retries Then
-                If is404 AndAlso DoNotRetry404 Then
-                    Return LogException(url, ex)
-                End If
-
-                retryTime += 1
-                Call "Data download error, retry connect to the server!".PrintException
-                GoTo RETRY
-            Else
-                Return LogException(url, ex)
-            End If
+            Return LogException(url, ex)
         End Try
     End Function
 
