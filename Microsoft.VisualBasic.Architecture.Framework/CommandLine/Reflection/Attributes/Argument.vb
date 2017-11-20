@@ -163,7 +163,7 @@ Namespace CommandLine.Reflection
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder(1024)
             Dim example$ = ExampleValue
-            Dim descripts$() = Paragraph.Split(Description, 80).ToArray
+            Dim descripts$() = Paragraph.SplitParagraph(Description, 80).ToArray
 
             If [Optional] Then
                 sb.AppendLine(String.Format("    [{0}]", Name))

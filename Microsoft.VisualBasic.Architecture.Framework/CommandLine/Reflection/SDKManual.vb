@@ -194,7 +194,7 @@ Namespace CommandLine.Reflection
                 Call sb.AppendLine(New String("="c, descr.Length))
                 Call sb.AppendLine()
 
-                For Each line$ In Paragraph.Split(App.Info.Description, 110)
+                For Each line$ In Paragraph.SplitParagraph(App.Info.Description, 110)
                     Call sb.AppendLine(line$)
                 Next
 
@@ -216,7 +216,7 @@ Namespace CommandLine.Reflection
                                     Dim indent% = 3 + nameMaxLen - Len(API.Name)
                                     Dim blank$ = New String(c:=" "c, count:=indent)
                                     Dim lines As String() = Paragraph _
-                                        .Split(API.Info, 90 - nameMaxLen) _
+                                        .SplitParagraph(API.Info, 90 - nameMaxLen) _
                                         .ToArray
                                     Dim line$ = $"{left}{API.Name}:  {blank}{lines.FirstOrDefault}"
 
@@ -273,7 +273,7 @@ Namespace CommandLine.Reflection
                     If markdown Then
                         Call sb.AppendLine(describ)
                     Else
-                        For Each line$ In Paragraph.Split(describ, 110)
+                        For Each line$ In Paragraph.SplitParagraph(describ, 110)
                             Call sb.AppendLine(indent & line)
                         Next
                     End If
