@@ -161,7 +161,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Academic.vb" />
+    <Compile Include="Academic\Academic.vb" />
+    <Compile Include="Academic\ArticleInfo.vb" />
     <Compile Include="BingImage.vb" />
     <Compile Include="WebResult.vb" />
     <Compile Include="SearchEngine.vb" />
