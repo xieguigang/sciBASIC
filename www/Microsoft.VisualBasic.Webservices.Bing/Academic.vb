@@ -89,11 +89,11 @@ Public Module Academic
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function GetDetails(info As NamedValue(Of String))
+    Public Function GetDetails(info As NamedValue(Of String)) As ArticleInfo
         Return GetDetails(info.Value)
     End Function
 
-    Public Function GetDetails(url As String)
+    Public Function GetDetails(url As String) As ArticleInfo
 
     End Function
 End Module
@@ -122,6 +122,10 @@ Public Structure ArticleInfo
     ''' 有效的原文来源地址url
     ''' </summary>
     Dim source As String()
+    ''' <summary>
+    ''' 文献引文的bing学术搜索的url列表
+    ''' </summary>
+    Dim References As String()
 
     Public Overrides Function ToString() As String
         Return Title
