@@ -330,9 +330,49 @@ Namespace Text.HtmlParser
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function RemovesScriptBlock(html$) As String
+        Public Function RemovesJavaScript(html As String) As String
             ' <script>
             Return html.RemoveTags("script")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesCSSstyles(html As String) As String
+            ' <style>
+            Return html.RemoveTags("style")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesImageLinks(html As String) As String
+            ' <img>
+            Return html.RemoveTags("img")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesHtmlHead(html As String) As String
+            ' <head>
+            Return html.RemoveTags("head")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesFooter(html As String) As String
+            ' <footer>
+            Return html.RemoveTags("footer")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesHtmlStrong(html As String) As String
+            Dim buffer As New StringBuilder(html)
+
+            For Each m As Match In r.Matches(html, "(<[/]?strong>)|(<[/]?b>)", RegexICSng)
+                buffer.Replace(m.Value, "")
+            Next
+
+            Return buffer.ToString
         End Function
 
         <Extension>
