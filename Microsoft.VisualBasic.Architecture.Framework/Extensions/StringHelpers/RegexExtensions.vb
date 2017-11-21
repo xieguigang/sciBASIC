@@ -41,6 +41,28 @@ Public Module RegexExtensions
         RegexOptions.IgnorePatternWhitespace Or
         RegexOptions.Compiled
 
+    Const TimeoutConfig$ = "REGEX_DEFAULT_MATCH_TIMEOUT"
+
+    Public Property RegexpTimeout As Integer
+        Get
+            Dim domain As AppDomain = AppDomain.CurrentDomain
+            Dim timeout = domain.GetData(TimeoutConfig)
+
+            Return timeout
+        End Get
+        Set(value As Integer)
+            Dim domain As AppDomain = AppDomain.CurrentDomain
+            Dim timeout = TimeSpan.FromSeconds(value)
+
+            ' Set a timeout interval of 2 seconds.
+            Call domain.SetData(TimeoutConfig, timeout)
+        End Set
+    End Property
+
+    Sub New()
+        RegexpTimeout = 5
+    End Sub
+
     ''' <summary>
     ''' Name of <see cref="RegexOptions"/>
     ''' </summary>
