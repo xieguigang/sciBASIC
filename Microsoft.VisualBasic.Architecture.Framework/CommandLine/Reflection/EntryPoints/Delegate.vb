@@ -115,7 +115,7 @@ Namespace CommandLine.Reflection.EntryPoints
                     Call sb.AppendLine("```")
                 End If
             Else
-                Dim infoLines$() = Paragraph.Split(Info, 90).ToArray
+                Dim infoLines$() = Paragraph.SplitParagraph(Info, 90).ToArray
 
                 sb.AppendLine(String.Format("  Information:  {0}", infoLines.FirstOrDefault))
 

@@ -89,8 +89,12 @@ Public Module SearchEngineProvider
         Dim count As String = Regex.Match(web, TotalCount).Value
         Dim itms As String() = Strings.Split(
             web.Replace(TranslateThisPage, ""), "<h2>", -1, CompareMethod.Text)
-        Dim result As WebResult() = itms.Skip(1).ToArray(AddressOf WebResult.TryParse)
-        Dim [next] As String = __getNextPageLink(web)
+        Dim result As WebResult() = itms _
+            .Skip(1) _
+            .Select(AddressOf WebResult.TryParse) _
+            .ToArray
+
+        Dim next$ = __getNextPageLink(web)
 
         count = Regex.Match(count, "\d+").Value
 

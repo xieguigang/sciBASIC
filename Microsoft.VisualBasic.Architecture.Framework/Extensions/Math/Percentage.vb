@@ -56,20 +56,25 @@ Namespace Math
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Value As Double
+        <SoapIgnore> Public ReadOnly Property Value As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Numerator / Denominator
             End Get
         End Property
 
-        Public ReadOnly Property FractionExpr As String
+        <SoapIgnore> Public ReadOnly Property FractionExpr As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return $"{Numerator}/{Denominator}"
             End Get
         End Property
 
+        ''' <summary>
+        ''' <paramref name="n"/> / <paramref name="d"/>
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="d"></param>
         Sub New(n As Double, d As Double)
             Numerator = n
             Denominator = d
@@ -98,7 +103,7 @@ Namespace Math
             }
         End Function
 
-        Public Shared ReadOnly Property ZERO As Percentage = New Percentage(0, 1)
+        Public Shared ReadOnly Property ZERO As New Percentage(0, 1)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(value As Percentage) As Double

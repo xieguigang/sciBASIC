@@ -32,6 +32,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.HtmlParser
@@ -330,15 +331,69 @@ Namespace Text.HtmlParser
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function RemovesScriptBlock(html$) As String
+        Public Function RemovesJavaScript(html As String) As String
             ' <script>
             Return html.RemoveTags("script")
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesCSSstyles(html As String) As String
+            ' <style>
+            Return html.RemoveTags("style")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesImageLinks(html As String) As String
+            ' <img>
+            Return html.RemoveTags("img")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesHtmlHead(html As String) As String
+            ' <head>
+            Return html.RemoveTags("head")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesFooter(html As String) As String
+            ' <footer>
+            Return html.RemoveTags("footer")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemovesHtmlStrong(html As String) As String
+            Dim buffer As New StringBuilder(html)
+
+            For Each m As Match In r.Matches(html, "(<[/]?strong>)|(<[/]?b>)", RegexICSng)
+                buffer.Replace(m.Value, "")
+            Next
+
+            Return buffer.ToString
+        End Function
+
+        Sub New()
+            RegexpTimeout = 5
+        End Sub
+
         <Extension>
         Public Function RemoveTags(html$, ParamArray tags$()) As String
             For Each tag As String In tags
-                html = r.Replace(html, $"<{tag}.*?>.*?</{tag}>", "", RegexICSng)
+
+                ' img 标签可能会在这里超时，如果没有<img></img>的话
+                ' 则直接忽略掉这个错误
+                Try
+                    html = r.Replace(html, $"<{tag}.*?>.*?</{tag}>", "", RegexICSng)
+                Catch ex As Exception When TypeOf ex Is TimeoutException
+                    Call App.LogException(ex, tags.GetJson)
+                Catch ex As Exception
+                    Throw ex
+                End Try
+
                 html = r.Replace(html, $"<{tag}.*?>", "", RegexICSng)
             Next
 
