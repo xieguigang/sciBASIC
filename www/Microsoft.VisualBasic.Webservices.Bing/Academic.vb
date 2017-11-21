@@ -68,11 +68,16 @@ Public Module Academic
     Private Function StripListItem(text As String) As NamedValue(Of String)
         Dim title = text.GetBetween("<h2", "</h2>")
         Dim ResultUrl = title.href
-        Dim description = text.GetBetween("<div class=""caption_abstract"">", "</div>")
+        Dim description = text _
+            .GetBetween("<div class=""caption_abstract"">", "</div>") _
+            .GetBetween("<p>", "</p>") _
+            .StripHTMLTags
 
+        ResultUrl = "https://cn.bing.com/" & ResultUrl.Trim("/"c).Replace("&amp;", "&")
         title = title _
             .RemovesHtmlStrong _
-            .GetValue
+            .GetValue _
+            .StripHTMLTags
 
         Return New NamedValue(Of String) With {
             .Name = title,

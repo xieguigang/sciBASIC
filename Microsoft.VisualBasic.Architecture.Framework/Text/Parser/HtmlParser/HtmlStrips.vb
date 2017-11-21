@@ -32,6 +32,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.HtmlParser
@@ -375,10 +376,24 @@ Namespace Text.HtmlParser
             Return buffer.ToString
         End Function
 
+        Sub New()
+            RegexpTimeout = 5
+        End Sub
+
         <Extension>
         Public Function RemoveTags(html$, ParamArray tags$()) As String
             For Each tag As String In tags
-                html = r.Replace(html, $"<{tag}.*?>.*?</{tag}>", "", RegexICSng)
+
+                ' img 标签可能会在这里超时，如果没有<img></img>的话
+                ' 则直接忽略掉这个错误
+                Try
+                    html = r.Replace(html, $"<{tag}.*?>.*?</{tag}>", "", RegexICSng)
+                Catch ex As Exception When TypeOf ex Is TimeoutException
+                    Call App.LogException(ex, tags.GetJson)
+                Catch ex As Exception
+                    Throw ex
+                End Try
+
                 html = r.Replace(html, $"<{tag}.*?>", "", RegexICSng)
             Next
 
