@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.HtmlParser
@@ -35,10 +36,10 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' Bing Academic web API for VisualBasic
 ''' </summary>
 <Package("Bing.Academic",
-                  Url:="http://cn.bing.com/academic/?FORM=Z9LH2",
-                  Description:="",
-                  Category:=APICategories.UtilityTools,
-                  Publisher:="")>
+         Url:="http://cn.bing.com/academic/?FORM=Z9LH2",
+         Description:="",
+         Category:=APICategories.UtilityTools,
+         Publisher:="")>
 Public Module Academic
 
     ' https://cn.bing.com/academic/search?q=Danio+rerio&go=%E6%90%9C%E7%B4%A2&qs=ds&form=QBRE
@@ -85,4 +86,19 @@ Public Module Academic
             .Description = description
         }
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetDetails(info As NamedValue(Of String))
+        Return GetDetails(info.Value)
+    End Function
+
+    Public Function GetDetails(url As String)
+
+    End Function
 End Module
+
+Public Structure ArticleInfo
+    Dim Title As String
+    ' Dim 
+End Structure
