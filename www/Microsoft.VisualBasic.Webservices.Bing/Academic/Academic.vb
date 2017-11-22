@@ -89,16 +89,12 @@ Public Module Academic
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function GetDetails(info As NamedValue(Of String))
+    Public Function GetDetails(info As NamedValue(Of String)) As ArticleInfo
         Return GetDetails(info.Value)
     End Function
 
-    Public Function GetDetails(url As String)
+    Public Function GetDetails(url As String) As ArticleInfo
 
     End Function
 End Module
 
-Public Structure ArticleInfo
-    Dim Title As String
-    ' Dim 
-End Structure
