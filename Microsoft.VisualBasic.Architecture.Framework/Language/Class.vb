@@ -27,10 +27,10 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 
 Namespace Language
@@ -79,7 +79,7 @@ Namespace Language
         End Function
 
         Public Shared Operator <=(cls As [Class](Of T), path As String) As List(Of T)
-            Dim source As IEnumerable = CollectionIO.DefaultLoadHandle(cls.Type, path, Encoding.Default)
+            Dim source As IEnumerable = IOHandler.DefaultLoadHandle(cls.Type, path, Encoding.Default)
             Return (From x In source Select DirectCast(x, T)).AsList
         End Operator
 

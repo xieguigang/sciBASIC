@@ -30,12 +30,12 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace FileIO
+Namespace ApplicationServices
 
     ''' <summary>
     ''' Collection IO extensions
     ''' </summary>
-    Public Module CollectionIO
+    Public Module IOHandler
 
         Public Delegate Function ISave(obj As IEnumerable, path As String, encoding As Encoding) As Boolean
         Public Delegate Function IRead(type As Type, path As String, encoding As Encoding) As IEnumerable
