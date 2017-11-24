@@ -316,10 +316,8 @@
     <Compile Include="FuzzyCMeans\AlgorithmsUtils.vb" />
     <Compile Include="FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb" />
     <Compile Include="FuzzyCMeans\Algorithm\Utils.vb" />
-    <Compile Include="DFT.vb" />
     <Compile Include="Clustering.vb" />
     <Compile Include="DynamicProgramming\LCS_Length.vb" />
-    <Compile Include="FourierTransform.vb" />
     <Compile Include="FuzzyCMeans\Entity.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
@@ -354,8 +352,6 @@
     <Compile Include="NeuralNetwork\Synapse.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Statistics.vb" />
-    <Compile Include="SVD.vb" />
-    <Compile Include="WaveletTransform.vb" />
     <Compile Include="ShellScriptAPI.vb" />
     <Compile Include="PeriodAnalysis\PeriodAnalysis.vb" />
     <Compile Include="ValueMapping.vb" />

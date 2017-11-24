@@ -312,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
+    <Compile Include="Algebra\SVD.vb" />
     <Compile Include="Scripting\VectorModel.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
     <Compile Include="Scripting\Factors\FactorVector.vb" />
@@ -320,6 +321,9 @@
     <Compile Include="Quantile\Selector.vb" />
     <Compile Include="Quantile\Quartile.vb" />
     <Compile Include="Scripting\Factors\Extensions.vb" />
+    <Compile Include="Signals\DFT.vb" />
+    <Compile Include="Signals\FourierTransform.vb" />
+    <Compile Include="Signals\WaveletTransform.vb" />
     <Compile Include="UncheckInteger.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />

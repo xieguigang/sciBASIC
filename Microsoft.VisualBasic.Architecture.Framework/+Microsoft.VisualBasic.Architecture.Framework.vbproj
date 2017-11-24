@@ -748,7 +748,7 @@
     <Compile Include="ComponentModel\Settings\DataModels\ModelBase.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
-    <Compile Include="Extensions\IO\CollectionIO.vb" />
+    <Compile Include="ApplicationServices\IOHandler.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\Binding.vb" />

@@ -381,10 +381,14 @@ Public Module ProgramPathSearchTool
     ''' <remarks></remarks>
 #If FRAMEWORD_CORE Then
     <ExportAPI("File.Exists", Info:="Check if the target file object is exists on your file system or not.")>
-    <Extension> Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean
+    <Extension> Public Function FileExists(path$, Optional ZERO_Nonexists As Boolean = False) As Boolean
 #Else
     <Extension> Public Function FileExists(path As String) As Boolean
 #End If
+
+        If path.StringEmpty Then
+            Return False
+        End If
         If path.IndexOf(ASCII.CR) > -1 OrElse path.IndexOf(ASCII.LF) > -1 Then
             Return False ' 包含有回车符或者换行符，则肯定不是文件路径了
         End If

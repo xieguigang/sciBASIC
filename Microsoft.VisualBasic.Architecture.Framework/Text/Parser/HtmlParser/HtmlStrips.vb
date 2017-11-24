@@ -39,6 +39,12 @@ Namespace Text.HtmlParser
 
     Public Module HtmlStrips
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetHtmlComments(html As String) As String()
+            Return r.Matches(html, "<![-]{2}.+?[-]{2}>", RegexICSng).ToArray
+        End Function
+
         ''' <summary>
         ''' 从html文本之中解析出所有的链接
         ''' </summary>

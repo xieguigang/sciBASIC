@@ -27,9 +27,9 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports Microsoft.VisualBasic.FileIO
 
 Module StreamIOHandler
 
@@ -37,7 +37,7 @@ Module StreamIOHandler
     ''' 初始化函数指针，为``>>``语法提供csv流的支持
     ''' </summary>
     Public Sub __initStreamIO_pointer()
-        Call CollectionIO.SetHandle(AddressOf ISaveCsv)
+        Call IOHandler.SetHandle(AddressOf ISaveCsv)
         Call $"Default IO handle has been changes to {DefaultSaveDescription}...".__INFO_ECHO
     End Sub
 

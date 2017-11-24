@@ -27,9 +27,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -520,7 +520,7 @@ Namespace Language
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >(source As List(Of T), path As String) As Boolean
-            Return CollectionIO.DefaultHandle()(source, path, System.Text.Encoding.UTF8)
+            Return IOHandler.DefaultHandle()(source, path, System.Text.Encoding.UTF8)
         End Operator
 
         ''' <summary>
