@@ -93,7 +93,8 @@ Namespace Graphic.Legend
                                    style As LegendStyles,
                                    color As Brush,
                                    Optional border As Stroke = Nothing,
-                                   Optional radius% = 5)
+                                   Optional radius% = 5,
+                                   Optional ByRef labelPos As PointF = Nothing)
             Select Case style
 
                 Case LegendStyles.Circle
@@ -101,6 +102,11 @@ Namespace Graphic.Legend
                     Dim c As New Point With {
                         .X = pos.X + gSize.Height,
                         .Y = pos.Y + gSize.Height / 2
+                    }
+
+                    labelPos = New PointF With {
+                        .X = Math.Max(c.X + r, labelPos.X),
+                        .Y = labelPos.Y
                     }
 
                     Call Circle.Draw(g, c, r, color, border)
@@ -228,13 +234,13 @@ Namespace Graphic.Legend
 
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
-            Dim labelPosition As New Point With {
+            Dim labelPosition As New PointF With {
                 .X = pos.X + canvas.Width / 2,
                 .Y = pos.Y + (canvas.Height - fSize.Height) / 2
             }
             Dim color As Brush = l.color.GetBrush
 
-            Call g.DrawLegendShape(pos, canvas, l.style, color, border, radius)
+            Call g.DrawLegendShape(pos, canvas, l.style, color, border, radius, labelPosition)
             Call g.DrawString(l.title, font, Brushes.Black, labelPosition)
 
             If fSize.Height > canvas.Height Then
