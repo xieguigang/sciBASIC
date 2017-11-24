@@ -208,7 +208,7 @@ Module TestingMain
 
         Call datad.SaveTo("./Bezier.csv")
 
-        Dim DFT = New Microsoft.VisualBasic.DataMining.TFftAlgorithm(datad)
+        Dim DFT = New Microsoft.VisualBasic.Math.TFftAlgorithm(datad)
         '   Call MAT(1).SerialsData.SaveTo("./vec.csv")
 
         Call DFT.FourierTransformation()
@@ -221,7 +221,7 @@ Module TestingMain
         Call DFT.y.SaveTo("./dft.y.csv")
 
 
-        Call Microsoft.VisualBasic.DataMining.WaveletTransform.FWT(datad)
+        Call Microsoft.VisualBasic.Math.WaveletTransform.FWT(datad)
         Call datad.SaveTo("./wat.csv")
 
         Dim Factors = New List(Of Microsoft.VisualBasic.DataMining.DFL_Driver.I_FactorElement)
