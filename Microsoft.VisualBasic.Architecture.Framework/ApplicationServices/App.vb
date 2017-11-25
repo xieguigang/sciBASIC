@@ -514,7 +514,15 @@ Public Module App
     ''' 其他的模块可能也会依赖于这个初始化参数
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property BufferSize As Integer = 4 * 1024
+    Public ReadOnly Property BufferSize As Integer = 4 * 1024 * 1024
+
+    ''' <summary>
+    ''' Set value of <see cref="BufferSize"/>
+    ''' </summary>
+    ''' <param name="size"></param>
+    Public Sub SetBufferSize(size As Integer)
+        _BufferSize = size
+    End Sub
 
     ''' <summary>
     ''' 假若有些时候函数的参数要求有一个输出流，但是并不想输出任何数据的话，则可以使用这个进行输出
