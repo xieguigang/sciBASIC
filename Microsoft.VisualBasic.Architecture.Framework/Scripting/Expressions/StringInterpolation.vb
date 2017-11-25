@@ -40,6 +40,7 @@ Namespace Scripting.Expressions
         ' "abcdefg$h$i is $k \$a"
 
         Const VB_str$ = "&VB_str"
+        Const VariablePattern$ = "[$][a-z][a-z0-9]*(\.[a-z][a-z0-9]*)*"
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -83,7 +84,7 @@ Namespace Scripting.Expressions
             Call sb.Replace("\$", VB_str)
 
             For Each v$ In Regex _
-                .Matches(sb.ToString, "[$][a-z][a-z0-9]*", RegexICSng) _
+                .Matches(sb.ToString, VariablePattern, RegexICSng) _
                 .ToArray _
                 .OrderByDescending(Function(s) s.Length) _
                 .ToArray
