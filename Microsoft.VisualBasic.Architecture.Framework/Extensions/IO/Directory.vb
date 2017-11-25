@@ -40,7 +40,7 @@ Namespace FileIO
         ''' </summary>
         ''' <param name="DIR">Target directory path</param>
         Sub New(DIR As String)
-            Me.DIR = FileIO.FileSystem.GetDirectoryInfo(DIR).FullName
+            Me.DIR = FileSystem.GetDirectoryInfo(DIR).FullName
         End Sub
 
         ''' <summary>
@@ -55,7 +55,7 @@ Namespace FileIO
                 file = $"{DIR}/{file}"
             End If
 
-            file = FileIO.FileSystem.GetFileInfo(file).FullName
+            file = FileSystem.GetFileInfo(file).FullName
             Return file
         End Function
 
@@ -68,12 +68,32 @@ Namespace FileIO
             If InStr(file, ":\") > 0 OrElse InStr(file, ":/") > 0 Then
                 Return True
             ElseIf file.First = "/" AndAlso
-            (Environment.OSVersion.Platform = PlatformID.Unix OrElse
-            Environment.OSVersion.Platform = PlatformID.MacOSX) Then
+                (Environment.OSVersion.Platform = PlatformID.Unix OrElse
+                Environment.OSVersion.Platform = PlatformID.MacOSX) Then
                 Return True
             Else
                 Return False
             End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="target">The directory path of target folder.</param>
+        ''' <returns></returns>
+        Public Function CopyTo(target$, Optional progress As Progress(Of String) = Nothing) As IEnumerable(Of String)
+            Dim list As New List(Of String)
+            Dim action = Sub(path$)
+                             If Not progress Is Nothing Then
+                                 Call DirectCast(progress, IProgress(Of String)).Report(path)
+                             End If
+
+                             Call list.Add(path)
+                         End Sub
+
+            Call New CopyDirectoryAction(New Progress(Of String)(action)).Copy(Me.DIR, target)
+
+            Return list
         End Function
 
         Public Overrides Function ToString() As String
@@ -110,7 +130,7 @@ Namespace FileIO
         '''     The user does not have permission to create the directory.
         ''' </remarks>
         Public Shared Sub CreateDirectory(junctionPoint As String)
-            Call FileIO.FileSystem.CreateDirectory(junctionPoint)
+            Call FileSystem.CreateDirectory(junctionPoint)
         End Sub
 
         Public Shared Sub Delete(DIR As String)
