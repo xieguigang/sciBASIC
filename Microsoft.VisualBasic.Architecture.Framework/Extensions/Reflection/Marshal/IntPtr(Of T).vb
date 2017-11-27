@@ -48,7 +48,7 @@ Namespace Emit.Marshal
     Public Delegate Sub UnsafeWrite(Of T)(destination As T(), startIndex As Integer, source As System.IntPtr, length As Integer)
 
     ''' <summary>
-    ''' 内存指针
+    ''' Generic type memory pointer.(内存指针)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <remarks>只不过这个对象是封装了写内存操作的</remarks>
@@ -105,6 +105,12 @@ Namespace Emit.Marshal
             Call __unsafeWrite(Scan0)
         End Sub
 
+        ''' <summary>
+        ''' Please be carefull by using this method, if the memory region size of <see cref="Scan0"/> 
+        ''' in this memory pointer is larger than <paramref name="des"/>, this method will caused 
+        ''' exception.
+        ''' </summary>
+        ''' <param name="des"></param>
         Public Sub Write(des As System.IntPtr)
             Call __unsafeWrite(des)
         End Sub

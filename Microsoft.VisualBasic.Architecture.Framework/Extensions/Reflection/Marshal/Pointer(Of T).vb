@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Linq
 Namespace Emit.Marshal
 
     ''' <summary>
-    ''' 在数组的索引基础上封装了数组本身
+    ''' <see cref="Array"/> index helper.(在数组的索引基础上封装了数组本身)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Class Pointer(Of T) : Inherits DataStructures.Pointer(Of T)
