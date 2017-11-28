@@ -200,6 +200,7 @@
   <ItemGroup>
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
+    <Compile Include="HistStackedBarplot.vb" />
     <Compile Include="Heatmap\Heatmap.vb" />
     <Compile Include="Heatmap\CorrelationHeatmap.vb" />
     <Compile Include="Heatmap\Internal.vb" />

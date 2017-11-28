@@ -309,7 +309,7 @@ Namespace Imaging
             End Using
         End Function
 
-        Private ReadOnly gdiShared As Graphics = Graphics.FromImage(New Bitmap(64, 64))
+        ReadOnly gdiShared As Graphics = Graphics.FromImage(New Bitmap(64, 64))
 
         ''' <summary>
         ''' Measures the specified string when drawn with the specified System.Drawing.Font.
