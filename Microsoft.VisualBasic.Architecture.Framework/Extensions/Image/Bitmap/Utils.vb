@@ -263,5 +263,44 @@ Namespace Imaging.BitmapImage
                 Return res
             End If
         End Function
+
+        ''' <summary>
+        ''' A, R, G, B
+        ''' </summary>
+        Const PixelSize% = 4
+        Const RGBSize% = 3
+
+        <Extension>
+        Public Function ColorReplace(image As Bitmap, subject As Color, replaceAs As Color) As Bitmap
+            Using buffer = BitmapBuffer.FromBitmap(image)
+                Dim intptr = buffer
+                Dim sR = subject.R, sG = subject.G, sB = subject.B
+                Dim wR = replaceAs.R, wG = replaceAs.G, wB = replaceAs.B
+
+                ' using memory pointer for access and write memory in fast speed.
+
+                Do While Not intptr.NullEnd(offset:=RGBSize)
+                    ' Get the red channel
+                    Dim iR = intptr(2)
+                    ' Get the green channel
+                    Dim iG = intptr(1)
+                    ' Get the blue channel
+                    Dim iB = intptr(0)
+
+                    If iR = sR AndAlso sG = iG AndAlso sB = iB Then
+                        ' found subject
+                        ' execute color replace
+                        intptr(2) = wR
+                        intptr(1) = wG
+                        intptr(0) = wB
+                    End If
+
+                    ' offset a pixel
+                    intptr += PixelSize
+                Loop
+
+                Return buffer.GetImage
+            End Using
+        End Function
     End Module
 End Namespace
