@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d97bba05fc0646920abfaa973a9212f6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Interface.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,6 +36,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
@@ -3749,11 +3750,23 @@ Namespace Imaging
         Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
 
         ''' <summary>
-        ''' Fills the interior of a rectangle specified by a System.Drawing.Rectangle structure.
+        ''' Fills the interior of a rectangle specified by a <see cref="Rectangle"/> structure.
         ''' </summary>
         ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
         ''' <param name="rect">System.Drawing.Rectangle structure that represents the rectangle to fill.</param>
         Public MustOverride Sub FillRectangle(brush As Brush, rect As Rectangle)
+
+        ''' <summary>
+        ''' <see cref="FillRectangle(Brush, RectangleF)"/> extensions
+        ''' </summary>
+        ''' <param name="brush"></param>
+        ''' <param name="x!"></param>
+        ''' <param name="y!"></param>
+        ''' <param name="size"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub FillRectangle(brush As Brush, x!, y!, size As SizeF)
+            Call FillRectangle(brush, New RectangleF() With {.X = x, .Y = y, .Size = size})
+        End Sub
 
         ''' <summary>
         ''' Fills the interior of a rectangle specified by a System.Drawing.RectangleF structure.

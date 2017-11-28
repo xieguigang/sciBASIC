@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::54bdbd569a60f9d8bb71aa99e58089db, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\Pointer(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 
@@ -44,9 +45,11 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <returns></returns>
         Public Property Current As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Value(Scan0)  ' 当前的位置是指相对于当前的位置offset为0的位置就是当前的位置
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Protected Friend Set(value As T)
                 Me.Value(Scan0) = value
             End Set
@@ -57,6 +60,7 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Length As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer.Length
             End Get
@@ -69,6 +73,7 @@ Namespace Emit.Marshal
         ''' <see cref="Integer"/>。 指定维度的下标可以包含的最大值。 如果 Array 只有一个元素， UBound ，则返回 0。 如果 Array 不包含任何元素，例如，如果它是零长度字符串，
         ''' UBound 返回-1。</returns>
         Public ReadOnly Property UBound As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Information.UBound(buffer)
             End Get
@@ -105,12 +110,14 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property RawBuffer As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer
             End Get
         End Property
 
         Public ReadOnly Property NullEnd(Optional offset As Integer = 0) As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __index >= (buffer.Length - 1 - offset)
             End Get
@@ -121,6 +128,7 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property EndRead As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __index >= buffer.Length
             End Get
@@ -131,15 +139,18 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Position As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __index
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ByRef array As T())
             buffer = array
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(array As List(Of T))
             buffer = array.ToArray
         End Sub
@@ -179,6 +190,7 @@ Namespace Emit.Marshal
         '    Return p(offset)
         'End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(p As Pointer(Of T)) As T
             Return p.Current
         End Operator
@@ -189,6 +201,7 @@ Namespace Emit.Marshal
         ''' <param name="p"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <<(p As Pointer(Of T), offset As Integer) As T
             Return p(-offset)
         End Operator
@@ -237,6 +250,8 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="ptr"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator +(ptr As Pointer(Of T)) As SeqValue(Of T)
             Dim i% = ptr.__index
             ptr.__index += 1
@@ -262,6 +277,7 @@ Namespace Emit.Marshal
             }
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <=(a As Pointer(Of T), b As Pointer(Of T)) As SwapHelper(Of T)
             Return New SwapHelper(Of T) With {.a = a, .b = b}
         End Operator
@@ -270,6 +286,7 @@ Namespace Emit.Marshal
             Throw New NotSupportedException
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <=(a As Pointer(Of T), b As Integer) As SwapHelper(Of T)
             Return New SwapHelper(Of T) With {.a = a, .i = b}
         End Operator

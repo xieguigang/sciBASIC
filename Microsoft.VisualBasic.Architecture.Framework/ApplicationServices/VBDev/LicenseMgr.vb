@@ -46,6 +46,7 @@ Namespace ApplicationServices.Development
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Template As LicenseInfo
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New LicenseInfo With {
                     .Authors = {
@@ -77,12 +78,17 @@ THE SOFTWARE.",
             }
             End Get
         End Property
+
         Sub New()
             Call Template.GetXml.SaveTo(App.HOME & "/License.Template.Xml")
         End Sub
 
         ''' <summary>
+        ''' Enumerates all of the VisualStudio IDE auto generated source file.
+        ''' 
+        ''' ```json
         ''' {".+\.Designer\.vb", "AssemblyInfo\.vb"}
+        ''' ```
         ''' </summary>
         ''' <returns></returns>
         Public Property Ignores As String() = {".+\.Designer\.vb", "AssemblyInfo\.vb"}
@@ -169,9 +175,10 @@ THE SOFTWARE.",
         Public Function Inserts(info As LicenseInfo) As String()
             Dim fails As New List(Of String)
 
-            For Each vb As String In ls - l - r - wildcards("*.vb") <= info.RootDIR
+            For Each vb As String In ls - l - r - "*.vb" <= info.RootDIR
                 Dim skip As Boolean = False
 
+                ' ignores all of the IDE auto generated source file.
                 For Each ig As String In LicenseMgr.Ignores
                     If Regex.Match(vb, ig, RegexICSng).Success Then
                         skip = True
@@ -227,14 +234,20 @@ THE SOFTWARE.",
 #End Region
 
     Public Class LicenseInfo : Inherits BaseClass
+
         Public Property Authors As NamedValue(Of String)()
         Public Property Title As String
         Public Property Copyright As String
         Public Property Brief As String
         Public Property RootDIR As String
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRelativePath(src As String) As String
             Return ProgramPathSearchTool.RelativePath(RootDIR, src)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return Brief
         End Function
     End Class
 End Namespace

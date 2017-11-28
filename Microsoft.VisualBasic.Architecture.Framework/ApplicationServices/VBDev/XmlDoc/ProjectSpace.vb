@@ -110,7 +110,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                 Using xr As XmlReader = XmlReader.Create(s)
                     Dim xd As New XmlDocument()
 
-                    xd.Load(xr)
+                    Call xd.Load(xr)
 
                     Dim nameNode As XmlNode = xd.DocumentElement.SelectSingleNode("assembly/name")
 

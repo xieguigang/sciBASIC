@@ -412,6 +412,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="DIR"></param>
     ''' <returns></returns>
     <ExportAPI("DIR.Exists", Info:="Determine that the target directory is exists on the file system or not?")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DirectoryExists(DIR As String) As Boolean
         Return Not String.IsNullOrEmpty(DIR) AndAlso
@@ -423,6 +424,8 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="dir$"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function DirectoryName(dir$) As String
         Return dir.TrimDIR _
             .Split("\"c).Last _
@@ -434,6 +437,8 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="FileName">目标文件</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("File.IsOpened", Info:="Detect while the target file is opened by someone process.")>
     <Extension> Public Function FileOpened(FileName As String) As Boolean
         Try
@@ -488,6 +493,8 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function GetBaseName(path As String) As String
         Return BaseName(path)
     End Function
@@ -694,7 +701,7 @@ Public Module ProgramPathSearchTool
     ''' <param name="exts"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Load.ResourceEntry")>
     <Extension> Public Function LoadEntryList(<Parameter("Dir.Source")> DIR$, ParamArray exts$()) As NamedValue(Of String)()
         Return LinqAPI.Exec(Of NamedValue(Of String)) _

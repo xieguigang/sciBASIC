@@ -156,6 +156,8 @@ Public Module XmlExtensions
     ''' <param name="obj"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function GetXml(Of T)(
                                     obj As T,
                        Optional ThrowEx As Boolean = True,
@@ -183,8 +185,8 @@ Public Module XmlExtensions
                 Dim result As String = Encoding.UTF8.GetString(stream.ToArray())
                 Return result
             Else
-                Dim sBuilder As StringBuilder = New StringBuilder(1024)
-                Using StreamWriter As StringWriter = New StringWriter(sb:=sBuilder)
+                Dim sBuilder As New StringBuilder(1024)
+                Using StreamWriter As New StringWriter(sb:=sBuilder)
                     Call (New XmlSerializer(type)).Serialize(StreamWriter, obj)
                     Return sBuilder.ToString
                 End Using
@@ -206,6 +208,7 @@ Public Module XmlExtensions
         End Try
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function CodePage(XmlEncoding As XmlEncodings) As Encoding
         Select Case XmlEncoding
             Case XmlEncodings.GB2312
@@ -259,6 +262,7 @@ Public Module XmlExtensions
             Return True
         Catch ex As Exception
             ex = New Exception(caller, ex)
+
             If throwEx Then
                 Throw ex
             Else
@@ -270,15 +274,20 @@ Public Module XmlExtensions
     End Function
 
     <ExportAPI("Xml.GetAttribute")>
-    <Extension> Public Function GetXmlAttrValue(strData As String, Name As String) As String
-        Dim m As Match = Regex.Match(strData, Name & "=(("".+?"")|[^ ]*)")
-        If Not m.Success Then Return ""
+    <Extension> Public Function GetXmlAttrValue(str As String, Name As String) As String
+        Dim m As Match = Regex.Match(str, Name & "=(("".+?"")|[^ ]*)")
 
-        strData = m.Value.Replace(Name & "=", "")
-        If strData.First = """"c AndAlso strData.Last = """"c Then
-            strData = Mid(strData, 2, Len(strData) - 2)
+        If Not m.Success Then
+            Return ""
+        Else
+            str = m.Value.Replace(Name & "=", "")
         End If
-        Return strData
+
+        If str.First = """"c AndAlso str.Last = """"c Then
+            str = Mid(str, 2, Len(str) - 2)
+        End If
+
+        Return str
     End Function
 
     ''' <summary>
@@ -341,6 +350,8 @@ Public Module XmlExtensions
     ''' <param name="xml">是Xml文件的文件内容而非文件路径</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function CreateObjectFromXmlFragment(Of T)(xml As String) As T
         Using s As New StringReader(s:="<?xml version=""1.0""?>" & ASCII.LF & xml)
             Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
