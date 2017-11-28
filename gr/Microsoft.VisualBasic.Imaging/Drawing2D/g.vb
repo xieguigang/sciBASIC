@@ -159,7 +159,7 @@ Namespace Drawing2D
 
                     With g.Graphics
 
-                        Call .FillBg(bg$, rect)
+                        Call .FillBackground(bg$, rect)
 
                         .CompositingQuality = CompositingQuality.HighQuality
                         .CompositingMode = CompositingMode.SourceOver
@@ -192,7 +192,7 @@ Namespace Drawing2D
         ''' 3. 可能为base64图片字符串
         ''' </param>
         <Extension>
-        Public Sub FillBg(ByRef g As Graphics, bg$, rect As Rectangle)
+        Public Sub FillBackground(ByRef g As Graphics, bg$, rect As Rectangle)
             Dim bgColor As Color = bg.ToColor(onFailure:=Nothing)
 
             If Not bgColor.IsEmpty Then
@@ -203,6 +203,19 @@ Namespace Drawing2D
                 Call g.DrawImage(res, rect)
             End If
         End Sub
+
+        ''' <summary>
+        ''' <see cref="Graphics.MeasureString(String, Font)"/> extensions
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <param name="g"></param>
+        ''' <param name="font"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MeasureSize(text$, g As IGraphics, font As Font) As SizeF
+            Return g.MeasureString(text, font)
+        End Function
 
         ''' <summary>
         ''' Data plots graphics engine.

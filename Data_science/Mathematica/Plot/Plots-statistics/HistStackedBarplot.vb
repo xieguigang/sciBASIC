@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
@@ -8,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module HistStackedBarplot
@@ -28,7 +30,8 @@ Public Module HistStackedBarplot
                          Optional margin$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional treeWidth# = 0.2,
-                         Optional sampleGroup As Dictionary(Of String, String) = Nothing) As GraphicsData
+                         Optional sampleGroup As Dictionary(Of String, String) = Nothing,
+                         Optional legendTitleFontCSS$ = CSSFont.Win7LargerBold) As GraphicsData
 
         Dim array As DataSet() = data.Samples _
             .Select(Function(sample)
@@ -75,13 +78,47 @@ Public Module HistStackedBarplot
 
                 Dim left! = treeRegion.Right
                 Dim top! = treeRegion.Top
+                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject
+                Dim maxLabelSize As SizeF = data _
+                    .Serials _
+                    .Keys _
+                    .MaxLengthString _
+                    .MeasureSize(g, legendTitleFont)
+                Dim boxSize As New SizeF(maxLabelSize.Height, maxLabelSize.Height)
 
                 plotRegion = New Rectangle With {
                     .X = left,
                     .Y = top,
-                    .Width = plotRegion.Width - treeRegion.Width,
+                    .Width = plotRegion.Width - treeRegion.Width - boxSize.Width - maxLabelSize.Width,  ' barplot绘制的宽度为总宽度减去层次聚类树宽度减去legend标签宽度减去legend颜色标签宽度
                     .Height = plotRegion.Height
                 }
+
+                Dim barplotHeight! = plotRegion.Height / data.Samples.Length
+
+                ' 在这里的barplot是横向的位于层次聚类树的右侧
+                For Each group As BarDataSample In data.Samples
+                    ' 绘制一个样品分类中的数据
+                    Dim sum# = group.StackedSum
+                    Dim x! = left
+                    Dim y! = top
+
+                    For Each serial As SeqValue(Of NamedValue(Of Color)) In data.Serials.SeqIterator
+                        Dim percent# = group.data(serial) / sum
+                        Dim width! = plotRegion.Width * percent
+                        Dim rect As New Rectangle With {
+                            .X = x,
+                            .Y = y,
+                            .Width = width,
+                            .Height = barplotHeight
+                        }
+                        Dim color As New SolidBrush((+serial).Value)
+
+                        g.FillRectangle(color, rect)
+                        x += width
+                    Next
+
+                    top += barplotHeight
+                Next
             End Sub
 
         Return g.GraphicsPlots(

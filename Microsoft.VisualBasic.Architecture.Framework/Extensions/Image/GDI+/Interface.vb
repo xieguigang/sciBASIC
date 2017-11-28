@@ -3749,7 +3749,7 @@ Namespace Imaging
         Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
 
         ''' <summary>
-        ''' Fills the interior of a rectangle specified by a System.Drawing.Rectangle structure.
+        ''' Fills the interior of a rectangle specified by a <see cref="Rectangle"/> structure.
         ''' </summary>
         ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
         ''' <param name="rect">System.Drawing.Rectangle structure that represents the rectangle to fill.</param>
