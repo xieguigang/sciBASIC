@@ -81,6 +81,7 @@ Namespace Scripting
             {GetType(SizeF), AddressOf FloatSizeParser}
         }
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function StringParser(type As Type) As DefaultValue(Of Func(Of String, Object))
             Return New Func(Of String, Object)(Function(s$) s.CTypeDynamic(type))
         End Function
@@ -132,6 +133,8 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="targetType"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsPrimitive(targetType As Type) As Boolean
             Return CasterString.ContainsKey(targetType)
         End Function
@@ -144,7 +147,7 @@ Namespace Scripting
         ''' <param name="briefName"></param>
         ''' <param name="stringConvertType"></param>
         ''' <param name="cast"></param>
-        Public Sub CapabilityPromise(briefName As String, stringConvertType As Type, cast As LoadObject)
+        Public Sub CapabilityPromise(briefName$, stringConvertType As Type, cast As LoadObject)
             With _CasterString
                 If .ContainsKey(stringConvertType) Then
                     Call .Remove(stringConvertType)
@@ -240,6 +243,8 @@ Namespace Scripting
         ''' <param name="inputType"></param>
         ''' <param name="DefType"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Convertible(inputType As Type, DefType As Type) As Boolean
             Return inputType.Equals([String]) AndAlso CasterString.ContainsKey(DefType)
         End Function
@@ -249,7 +254,9 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Public Function ToString(obj As Object, Optional null As String = "") As String
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ToString(obj As Object, Optional null$ = "") As String
             Return CStrSafe(obj, null)
         End Function
 

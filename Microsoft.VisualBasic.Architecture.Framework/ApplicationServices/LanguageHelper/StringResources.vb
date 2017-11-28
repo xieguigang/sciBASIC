@@ -41,11 +41,11 @@ Namespace ApplicationServices.Globalization
         ''' <returns></returns>
         Public ReadOnly Property [Default] As String
 
-        Sub New(Name As String, resources As LanguageAttribute())
-            Me.Name = Name
-            Me.Resources = resources.ToDictionary(Of TLanguage, LanguageAttribute)(
-                Function(lang) CTypeDynamic(Of TLanguage)(lang.Language),
-                Function(lang) lang)
+        Sub New(name$, resources As LanguageAttribute())
+            Me.Name = name
+            Me.Resources = resources _
+                .ToDictionary(Function(lang) CTypeDynamic(Of TLanguage)(lang.Language),
+                              Function(lang) lang)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -54,6 +54,7 @@ Namespace ApplicationServices.Globalization
 
         Public Shared Function SafelyGenerates(member As MemberInfo) As StringResources(Of TLanguage)
             Dim langResources = __getLanguageResources(member)
+
             If langResources.IsNullOrEmpty Then
                 Return Nothing
             Else
@@ -64,9 +65,14 @@ Namespace ApplicationServices.Globalization
         End Function
 
         Private Shared Function __getValue(member As MemberInfo) As String
-            Dim value As Object = If(member.MemberType = MemberTypes.Property,
-                DirectCast(member, PropertyInfo).GetValue(Nothing, Nothing),
-                DirectCast(member, FieldInfo).GetValue(Nothing))
+            Dim value As Object
+
+            If (member.MemberType = MemberTypes.Property) Then
+                value = DirectCast(member, PropertyInfo).GetValue(Nothing, Nothing)
+            Else
+                value = DirectCast(member, FieldInfo).GetValue(Nothing)
+            End If
+
             Return Scripting.ToString(value)
         End Function
 
