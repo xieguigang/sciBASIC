@@ -132,6 +132,17 @@ Namespace Text.HtmlParser
 
         Public Const imgHtmlTagPattern As String = "<img.+?src=.+?>"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetImageLinks(html As String) As String()
+            Dim list$() = r _
+                .Matches(html, imgHtmlTagPattern, RegexICSng) _
+                .EachValue(Function(img) img.src) _
+                .ToArray
+
+            Return list
+        End Function
+
         ''' <summary>
         ''' Parsing image source url from the img html tag.
         ''' </summary>

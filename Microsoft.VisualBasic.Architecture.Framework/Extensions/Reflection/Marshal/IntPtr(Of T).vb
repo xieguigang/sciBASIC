@@ -1,30 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::2af4ce74cd2d6751a646637eefc72c12, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace Emit.Marshal
 
@@ -48,7 +50,7 @@ Namespace Emit.Marshal
     Public Delegate Sub UnsafeWrite(Of T)(destination As T(), startIndex As Integer, source As System.IntPtr, length As Integer)
 
     ''' <summary>
-    ''' 内存指针
+    ''' Unmanaged Memory pointer in VisualBasic language.(内存指针)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <remarks>只不过这个对象是封装了写内存操作的</remarks>
@@ -56,10 +58,17 @@ Namespace Emit.Marshal
         Implements IDisposable
 
         ''' <summary>
-        ''' 第一个位置
+        ''' The position in the memory region of the first byte for read.(第一个位置)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Scan0 As System.IntPtr
+
+        ''' <summary>
+        ''' ```vbnet
+        ''' Public Delegate Sub UnsafeWrite(Of T)(destination As T(), startIndex As Integer, source As System.IntPtr, length As Integer)
+        ''' ```
+        ''' </summary>
+        ReadOnly __writeMemory As UnsafeWrite(Of T)
 
         ''' <summary>
         ''' 
@@ -67,10 +76,14 @@ Namespace Emit.Marshal
         ''' <param name="p"></param>
         ''' <param name="chunkSize"></param>
         ''' <param name="unsafeCopys">
+        ''' ```vbnet
         ''' Public Sub UnsafeCopys(Of <typeparamref name="T"/>)(source As <see cref="System.IntPtr"/>, destination As <typeparamref name="T"/>(), startIndex As <see cref="Integer"/>, length As <see cref="Integer"/>)
+        ''' ```
         ''' </param>
         ''' <param name="unsafeWrite">
+        ''' ```vbnet
         ''' Public Sub UnsafeWrite(Of <typeparamref name="T"/>)(destination As <typeparamref name="T"/>(), startIndex As <see cref="Integer"/>, source As <see cref="System.IntPtr"/>, length As <see cref="Integer"/>)
+        ''' ```
         ''' </param>
         Sub New(p As System.IntPtr, chunkSize As Integer, unsafeCopys As UnsafeCopys(Of T), unsafeWrite As UnsafeWrite(Of T))
             __writeMemory = unsafeWrite
@@ -89,11 +102,7 @@ Namespace Emit.Marshal
             Scan0 = p
         End Sub
 
-        ''' <summary>
-        ''' Public Delegate Sub UnsafeWrite(Of T)(destination As T(), startIndex As Integer, source As System.IntPtr, length As Integer)
-        ''' </summary>
-        Dim __writeMemory As UnsafeWrite(Of T)
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub __unsafeWrite(p As System.IntPtr)
             Call __writeMemory(buffer, 0, p, buffer.Length)
         End Sub
@@ -101,10 +110,13 @@ Namespace Emit.Marshal
         ''' <summary>
         ''' Unsafe write memory
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Write()
             Call __unsafeWrite(Scan0)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Write(des As System.IntPtr)
             Call __unsafeWrite(des)
         End Sub
@@ -113,11 +125,23 @@ Namespace Emit.Marshal
             Return $"* {GetType(T).Name} + {__index} --> {Current}  // {Scan0.ToString}"
         End Function
 
+        ''' <summary>
+        ''' Move forward the current position of this memory pointer <paramref name="ptr"/> by a specific step <paramref name="d"/>
+        ''' </summary>
+        ''' <param name="ptr"></param>
+        ''' <param name="d"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator +(ptr As IntPtr(Of T), d As Integer) As IntPtr(Of T)
             ptr.__index += d
             Return ptr
         End Operator
 
+        ''' <summary>
+        ''' Move backward the current position of this memory pointer <paramref name="ptr"/> by a specific step <paramref name="d"/>
+        ''' </summary>
+        ''' <param name="ptr"></param>
+        ''' <param name="d"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator -(ptr As IntPtr(Of T), d As Integer) As IntPtr(Of T)
             ptr.__index -= d
             Return ptr

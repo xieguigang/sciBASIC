@@ -110,7 +110,7 @@ Namespace FileIO
                 file = writeNew()
             End If
 
-            Dim writer As New StreamWriter(file, encoding Or UTF8) With {
+            Dim writer As New StreamWriter(file, encoding Or UTF8, bufferSize:=App.BufferSize) With {
                 .NewLine = newLine Or vbLf.AsDefault
             }
 

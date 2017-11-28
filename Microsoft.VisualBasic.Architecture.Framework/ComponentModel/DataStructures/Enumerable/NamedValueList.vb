@@ -14,7 +14,15 @@ Namespace ComponentModel.Collection.Generic
             Return MyBase.Keys.GetJson
         End Function
 
+        ''' <summary>
+        ''' This operator will makes a copy of <paramref name="table"/>
+        ''' </summary>
+        ''' <param name="table"></param>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator +(table As Dictionary(Of String, T), list As NamedValueList(Of T)) As Dictionary(Of String, T)
+            table = New Dictionary(Of String, T)(table)
+
             For Each item As NamedValue(Of T) In list
                 Call table.Add(item.Name, item.Value)
             Next

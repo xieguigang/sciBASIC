@@ -26,23 +26,28 @@
 
 #End Region
 
-Imports System.IO
 Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
 
 Namespace Grammar
 
     Partial Public Class YamlParser
 
-        Public Shared Function Load(file__1 As String) As YamlStream
-            Dim text As String = File.ReadAllText(file__1)
+        ''' <summary>
+        ''' 从源文本或者文本文件中解析出YAML数据
+        ''' </summary>
+        ''' <param name="content">Text content data or source link.</param>
+        ''' <returns></returns>
+        Public Shared Function Load(content As String) As YamlStream
+            Dim text As String = content.SolveStream
             Dim input As New TextInput(text)
             Dim parser As New YamlParser()
             Dim success As Boolean
             Dim stream As YamlStream = parser.ParseYamlStream(input, success)
+
             If success Then
                 Return stream
             Else
-                Dim message As String = parser.GetEorrorMessages()
+                Dim message$ = parser.GetEorrorMessages()
                 Throw New Exception(message)
             End If
         End Function
