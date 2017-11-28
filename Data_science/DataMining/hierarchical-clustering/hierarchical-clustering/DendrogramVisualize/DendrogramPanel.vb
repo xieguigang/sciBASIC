@@ -91,7 +91,7 @@ Namespace DendrogramVisualize
         End Property
 
         ''' <summary>
-        ''' ``<see cref="Cluster.Name"/> --> Class Color``
+        ''' ``<see cref="Cluster.Name"/> --> class color expression``
         ''' </summary>
         ''' <returns></returns>
         Public Property ClassTable As Dictionary(Of String, String)
