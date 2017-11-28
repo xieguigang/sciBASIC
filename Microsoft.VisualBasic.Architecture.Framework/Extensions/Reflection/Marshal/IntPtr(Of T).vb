@@ -116,6 +116,12 @@ Namespace Emit.Marshal
             Call __unsafeWrite(Scan0)
         End Sub
 
+        ''' <summary>
+        ''' Please be carefull by using this method, if the memory region size of <see cref="Scan0"/> 
+        ''' in this memory pointer is larger than <paramref name="des"/>, this method will caused 
+        ''' exception.
+        ''' </summary>
+        ''' <param name="des"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Write(des As System.IntPtr)
             Call __unsafeWrite(des)

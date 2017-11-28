@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::8ba11ffb33b3c9ffced99f937bdc883a, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\DendrogramPanel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
@@ -80,6 +81,7 @@ Namespace DendrogramVisualize
         Public Property Debug As Boolean = False
 
         Public Property Model As Cluster
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _model
             End Get
@@ -185,6 +187,12 @@ Namespace DendrogramVisualize
             Dim hDisplay As Integer = size.Height
             Dim xDisplayOrigin As Integer = region.Location.X
             Dim yDisplayOrigin As Integer = region.Location.Y
+            Dim padding% = -1
+
+            If Not ClassTable.IsNullOrEmpty Then
+                padding = g2.MeasureString(ClassTable.Keys.MaxLengthString).Width + 10
+                wDisplay -= classLegendWidth - classLegendWidth
+            End If
 
             ' 设置默认的笔对象
             g2.Stroke = Stroke.TryParse(axisStrokeCSS)
@@ -195,7 +203,8 @@ Namespace DendrogramVisualize
                               wDisplay, hDisplay, xDisplayOrigin, yDisplayOrigin,
                               stroke:=Stroke.TryParse(branchStrokeCSS),
                               classLegendWidth:=classLegendWidth,
-                              layout:=layout)
+                              layout:=layout,
+                              padding:=padding)
             Else
                 ' No data available 
                 Dim str As String = "No data"
@@ -214,7 +223,8 @@ Namespace DendrogramVisualize
                                 xDisplayOrigin%, yDisplayOrigin%,
                                 stroke As Stroke,
                                 classLegendWidth%,
-                                layout As Layouts) As NamedValue(Of PointF)()
+                                layout As Layouts,
+                                padding!) As NamedValue(Of PointF)()
 
             If ShowLeafLabel Then
                 Dim nameGutterWidth% = component.GetMaxNameWidth(g2, False) + component.NamePadding
@@ -234,11 +244,6 @@ Namespace DendrogramVisualize
             Dim xOffset As Integer = CInt(Fix(xDisplayOrigin - xModelOrigin * xFactor))
             Dim yOffset As Integer = CInt(Fix(yDisplayOrigin - yModelOrigin * yFactor))
             Dim classHeight! = (1 / component.Cluster.CountLeafs) * yFactor
-            Dim padding% = If(
-                ClassTable.IsNullOrEmpty,
-                -1,
-                g2.MeasureString(ClassTable.Keys.MaxLengthString).Width + 10)
-
             Dim labels As New List(Of NamedValue(Of PointF))
             Dim colorLegendSize As Size
 
