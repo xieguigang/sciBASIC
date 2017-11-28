@@ -119,6 +119,19 @@ Public Module HistStackedBarplot
 
                     top += barplotHeight
                 Next
+
+                ' 现在开始绘制legend
+                top = plotRegion.Top
+                left += plotRegion.Width
+
+                For Each label As NamedValue(Of Color) In data.Serials
+                    Dim color As New SolidBrush(label.Value)
+
+                    Call g.FillRectangle(color, left, top, boxSize)
+                    Call g.DrawString(label.Name, legendTitleFont, Brushes.Black, left + boxSize.Width, top)
+
+                    top += boxSize.Width
+                Next
             End Sub
 
         Return g.GraphicsPlots(
