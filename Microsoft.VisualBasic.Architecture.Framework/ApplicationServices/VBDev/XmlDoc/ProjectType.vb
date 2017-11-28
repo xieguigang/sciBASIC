@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::5eb9f206aa21804cfd732be85b447d37, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@
 '    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0. 
 
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
@@ -48,6 +49,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Dim methods As Dictionary(Of String, ProjectMember)
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me.projectNamespace
             End Get
@@ -240,7 +242,7 @@ title: {Me.Name}
                 End If
             End If
 
-            Call text.SaveTo(path, UTF8withoutbom)
+            Call text.SaveTo(path, UTF8WithoutBOM)
         End Sub
 
         Public Sub LoadFromNode(xn As XmlNode)
@@ -255,7 +257,6 @@ title: {Me.Name}
                 Remarks = summaryNode.InnerText
             End If
         End Sub
-
 
         Private Function CleanText(incomingText As String) As String
             If incomingText Is Nothing Then
