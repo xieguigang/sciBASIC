@@ -309,31 +309,9 @@ Namespace Imaging
             End Using
         End Function
 
-        ReadOnly gdiShared As Graphics = Graphics.FromImage(New Bitmap(64, 64))
-
-        ''' <summary>
-        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
-        ''' </summary>
-        ''' <param name="s">String to measure.</param>
-        ''' <param name="Font">System.Drawing.Font that defines the text format of the string.</param>
-        ''' <param name="XScaleSize"></param>
-        ''' <param name="YScaleSize"></param>
-        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
-        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        ''' string specified by the text parameter as drawn with the font parameter.
-        ''' </returns>
-        <Extension> Public Function MeasureString(s$, Font As Font, Optional xScaleSize! = 1, Optional yScaleSize! = 1) As SizeF
-            SyncLock gdiShared
-                With gdiShared
-                    Call .ScaleTransform(xScaleSize, yScaleSize)
-                    Return .MeasureString(s, Font)
-                End With
-            End SyncLock
-        End Function
-
         <ExportAPI("GrayBitmap", Info:="Create the gray color of the target image.")>
         <Extension> Public Function CreateGrayBitmap(res As Image) As Image
-            Using g = DirectCast(res.Clone, Image).CreateCanvas2D
+            Using g As Graphics2D = DirectCast(res.Clone, Image).CreateCanvas2D
                 With g
                     Call ControlPaint.DrawImageDisabled(.Graphics, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
                     Return .ImageResource

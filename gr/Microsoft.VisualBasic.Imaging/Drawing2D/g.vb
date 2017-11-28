@@ -218,6 +218,25 @@ Namespace Drawing2D
         End Function
 
         ''' <summary>
+        ''' <see cref="Graphics.MeasureString(String, Font)"/> extensions
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <param name="g"></param>
+        ''' <param name="font"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MeasureSize(text$, g As IGraphics, font As Font, scale As (x#, y#)) As SizeF
+            Dim size As SizeF
+
+            g.ScaleTransform(scale.x, scale.y)
+            size = g.MeasureString(text, font)
+            g.ScaleTransform(1, 1)
+
+            Return size
+        End Function
+
+        ''' <summary>
         ''' Data plots graphics engine.
         ''' </summary>
         ''' <param name="size"></param>

@@ -198,7 +198,7 @@ Namespace Heatmap
                 .Left = array _
                     .Keys _
                     .MaxLengthString _
-                    .MeasureString(rowLabelFont) _
+                    .MeasureSize(New Size(1, 1).CreateGDIDevice, rowLabelFont) _
                     .Width * 1.5
                 .Bottom = 50
             End With
