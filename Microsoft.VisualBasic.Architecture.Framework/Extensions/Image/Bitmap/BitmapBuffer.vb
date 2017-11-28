@@ -83,8 +83,8 @@ Namespace Imaging.BitmapImage
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIndex(x As Integer, y As Integer) As Integer
-            y = y * (Width * 4)
-            x = x * 4
+            y = (y - 1) * (Width * 4)
+            x = (x - 1) * 4
             Return x + y
         End Function
 

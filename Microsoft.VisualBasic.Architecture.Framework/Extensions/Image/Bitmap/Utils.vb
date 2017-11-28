@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b72eb059e708db7e240d55ae500adabe, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Imaging.BitmapImage
@@ -270,37 +271,16 @@ Namespace Imaging.BitmapImage
         Const PixelSize% = 4
         Const RGBSize% = 3
 
-        <Extension>
-        Public Function ColorReplace(image As Bitmap, subject As Color, replaceAs As Color) As Bitmap
-            Using buffer = BitmapBuffer.FromBitmap(image)
-                Dim intptr = buffer
-                Dim sR = subject.R, sG = subject.G, sB = subject.B
-                Dim wR = replaceAs.R, wG = replaceAs.G, wB = replaceAs.B
-
-                ' using memory pointer for access and write memory in fast speed.
-
-                Do While Not intptr.NullEnd(offset:=RGBSize)
-                    ' Get the red channel
-                    Dim iR = intptr(2)
-                    ' Get the green channel
-                    Dim iG = intptr(1)
-                    ' Get the blue channel
-                    Dim iB = intptr(0)
-
-                    If iR = sR AndAlso sG = iG AndAlso sB = iB Then
-                        ' found subject
-                        ' execute color replace
-                        intptr(2) = wR
-                        intptr(1) = wG
-                        intptr(0) = wB
+        <Extension> Public Function ColorReplace(image As Bitmap, subject As Color, replaceAs As Color) As Bitmap
+            For x As Integer = 0 To image.Width - 1
+                For y As Integer = 0 To image.Height - 1
+                    If GDIColors.Equals(image.GetPixel(x, y), subject) Then
+                        Call image.SetPixel(x, y, replaceAs)
                     End If
+                Next
+            Next
 
-                    ' offset a pixel
-                    intptr += PixelSize
-                Loop
-
-                Return buffer.GetImage
-            End Using
+            Return image
         End Function
     End Module
 End Namespace
