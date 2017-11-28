@@ -4,7 +4,13 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Module wmfImage
 
+    Public Function cccc() As Color
+
+    End Function
+
     Sub Main()
+
+
 
         Call replaceColorsTest()
 
