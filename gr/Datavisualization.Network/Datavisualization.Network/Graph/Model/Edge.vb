@@ -78,7 +78,7 @@ Namespace Graph
             ID = iId
             U = iSource
             V = iTarget
-            Data = If((iData IsNot Nothing), iData, New EdgeData())
+            Data = If(iData, New EdgeData())
             Directed = False
         End Sub
 
