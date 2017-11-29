@@ -1,39 +1,40 @@
 ﻿#Region "Microsoft.VisualBasic::62ba9f1ffe6427d282057986549aa160, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\BitmapBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports System.Runtime.CompilerServices
 Imports sys = System.Math
 
 Namespace Imaging.BitmapImage
 
     ''' <summary>
-    ''' 线程不安全的图片数据对象
+    ''' Unsafe memory pointer of the <see cref="Bitmap"/> data buffer.(线程不安全的图片数据对象)
     ''' </summary>
     Public Class BitmapBuffer : Inherits Emit.Marshal.Byte
         Implements IDisposable
@@ -67,6 +68,8 @@ Namespace Imaging.BitmapImage
         ''' Gets a copy of the original raw image value that which constructed this bitmap object class
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetImage() As Bitmap
             Return DirectCast(__source.Clone, Bitmap)
         End Function
@@ -87,12 +90,15 @@ Namespace Imaging.BitmapImage
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns>B, G, R</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIndex(x As Integer, y As Integer) As Integer
-            y = y * (Width * 4)
-            x = x * 4
+            y = (y - 1) * (Width * 4)
+            x = (x - 1) * 4
             Return x + y
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OutOfRange(x%, y%) As Boolean
             Return x < 0 OrElse x >= Width OrElse y < 0 OrElse y >= Height
         End Function
@@ -105,6 +111,8 @@ Namespace Imaging.BitmapImage
         ''' <returns>
         ''' A <see cref="Color"/> structure that represents the color of the specified pixel.
         ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPixel(x As Integer, y As Integer) As Color
             Dim i As Integer = GetIndex(x, y)
             Dim iR As Byte = buffer(i + 2)
@@ -122,6 +130,8 @@ Namespace Imaging.BitmapImage
         ''' <param name="color">
         ''' A System.Drawing.Color structure that represents the color to assign to the specified
         ''' pixel.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
 
@@ -135,6 +145,8 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ''' <param name="res"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromImage(res As Image) As BitmapBuffer
             Return BitmapBuffer.FromBitmap(New Bitmap(res))
         End Function
@@ -176,6 +188,8 @@ Namespace Imaging.BitmapImage
         ''' <param name="bmp"></param>
         ''' <param name="offset%"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator +(bmp As BitmapBuffer, offset%) As BitmapBuffer
             bmp.__index += offset
             Return bmp
