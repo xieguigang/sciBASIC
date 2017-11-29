@@ -72,6 +72,12 @@ Namespace Imaging
             Return out
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Alpha(c As Color, alphaValue%) As Color
+            Return Color.FromArgb(alphaValue, c.R, c.G, c.B)
+        End Function
+
         <Extension>
         Public Function Average(colors As IEnumerable(Of Color)) As Color
             Dim data As Color() = colors.ToArray

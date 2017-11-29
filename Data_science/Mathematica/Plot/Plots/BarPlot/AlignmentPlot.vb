@@ -93,7 +93,8 @@ Namespace BarPlot
                                       Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
                                       Optional labelPlotStrength# = 0.25,
                                       Optional htmlLabel As Boolean = False,
-                                      Optional idTag$ = Nothing) As GraphicsData
+                                      Optional idTag$ = Nothing,
+                                      Optional rectangleStyle As RectangleStyling = Nothing) As GraphicsData
 
             Dim q As New Signal With {
                 .Name = queryName,
@@ -106,15 +107,19 @@ Namespace BarPlot
                 .signals = subject
             }
 
-            Return PlotAlignmentGroups({q}, {s}, xrange, yrange,
-                                       size, padding,
-                                       xlab, ylab, labelCSS, queryName, subjectName,
-                                       title, tickCSS, titleCSS,
-                                       legendFontCSS, bw, format, displayX, X_CSS,
-                                       yAxislabelPosition,
-                                       labelPlotStrength,
-                                       htmlLabel:=htmlLabel,
-                                       idTag:=idTag)
+            Return PlotAlignmentGroups(
+                {q}, {s},
+                xrange, yrange,
+                size, padding,
+                xlab, ylab, labelCSS, queryName, subjectName,
+                title, tickCSS, titleCSS,
+                legendFontCSS, bw, format, displayX, X_CSS,
+                yAxislabelPosition,
+                labelPlotStrength,
+                htmlLabel:=htmlLabel,
+                idTag:=idTag,
+                rectangleStyle:=rectangleStyle
+            )
         End Function
 
         Public Structure Signal
@@ -182,7 +187,8 @@ Namespace BarPlot
                                             Optional highlight$ = Stroke.StrongHighlightStroke,
                                             Optional highlightMargin! = 2,
                                             Optional htmlLabel As Boolean = False,
-                                            Optional idTag$ = Nothing) As GraphicsData
+                                            Optional idTag$ = Nothing,
+                                            Optional rectangleStyle As RectangleStyling = Nothing) As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
                     .Select(Function(x) x.signals.Keys) _
@@ -197,6 +203,8 @@ Namespace BarPlot
                     .ToArray
                 yrange = New DoubleRange(ALL)
             End If
+
+            rectangleStyle = rectangleStyle Or RectangleStyles.DefaultStyle
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -221,10 +229,10 @@ Namespace BarPlot
                         Dim axisPen As New Pen(Color.Black, 2)
                         Dim dy = yrange.Length / 5
                         Dim y!
-                        Dim gridPen As New Pen(Color.Gray, 1) With {
-                            .DashStyle = DashStyle.Dot,
-                            .DashPattern = {10.0!, 10.0!}
-                        }
+                        Dim gridPen As New Pen(Color.FromArgb(230, 230, 230), 2) 'With {
+                        '.DashStyle = DashStyle.Solid,
+                        '    .DashPattern = {15.0!, 4.0!}
+                        '}
                         Dim dt! = 15
                         Dim tickPen As New Pen(Color.Black, 1)
                         Dim tickFont As Font = CSSFont.TryParse(tickCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!)).GDIObject
@@ -269,9 +277,10 @@ Namespace BarPlot
                                 labPos = New Point(.Left + 3, .Top)
                                 Call g.DrawString(ylab, labelFont, Brushes.Black, labPos)
                             Case YlabelPosition.LeftCenter
-                                labPos = New PointF(
-                                    (.Left - labSize.Height) / 4,
-                                    .Top * 2.5 + (.Height - labSize.Width) / 2)
+                                Dim lx = (.Left - labSize.Height) / 4
+                                Dim ly = .Top * 2.5 + (.Height - labSize.Width) / 2
+
+                                labPos = New PointF(lx, ly)
 
                                 With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                                     Call .DrawString(ylab, labelFont, Brushes.Black, labPos, -90)
@@ -282,39 +291,57 @@ Namespace BarPlot
 
                         ' X 坐标轴
                         Dim fWidth! = g.MeasureString(xlab, labelFont).Width
+
                         Call g.DrawLine(axisPen, New Point(.Left, ymid), New Point(.Right, ymid))
                         Call g.DrawString(xlab, labelFont, Brushes.Black, New Point(.Right - fWidth, ymid + 2))
 
                         Dim left!
-                        'Dim ba As New SolidBrush(cla.TranslateColor)
-                        'Dim bb As New SolidBrush(clb.TranslateColor)
                         Dim xCSSFont As Font = CSSFont.TryParse(X_CSS).GDIObject
                         Dim xsz As SizeF
                         Dim xpos As PointF
                         Dim xlabel$
                         Dim highlightPen As Pen = Stroke.TryParse(highlight).GDIObject
+                        Dim position As Point
+                        Dim sz As Size
 #Region "绘制柱状图"
-                        For Each part In query
+                        For Each part As Signal In query
                             Dim ba As New SolidBrush(part.Color.TranslateColor)
 
-                            For Each o As (x#, value#) In part.signals
+                            For Each o As (x#, value#) In part.signals _
+                                .Where(Function(f)
+                                           Return f.Item2 <> 0R
+                                       End Function)
+
+                                left = region.Padding.Left + xscale(o.x)
                                 y = o.value
                                 y = ymid - yscale(y)
-                                left = region.Padding.Left + xscale(o.x)
-                                rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
-                                g.FillRectangle(ba, rect)
+                                position = New Point(left, y)
+                                sz = New Size(bw, yscale(o.value))
+                                rect = New Rectangle With {
+                                    .Location = position,
+                                    .Size = sz
+                                }
+
+                                ' Call g.FillRectangle(ba, rect)
+                                Call rectangleStyle(g, ba, rect, RectangleSides.Bottom)
                             Next
                         Next
 
-                        For Each part In subject
+                        For Each part As Signal In subject
                             Dim bb As New SolidBrush(part.Color.TranslateColor)
 
-                            For Each o As (x#, value#) In part.signals
+                            For Each o As (x#, value#) In part.signals _
+                                .Where(Function(f)
+                                           Return f.Item2 <> 0R
+                                       End Function)
+
                                 y = o.value
                                 y = ymid + yscale(y)
                                 left = region.Padding.Left + xscale(o.x)
                                 rect = Rectangle(ymid, left, left + bw, y)
-                                g.FillRectangle(bb, rect)
+
+                                ' g.FillRectangle(bb, rect)
+                                Call rectangleStyle(g, bb, rect, RectangleSides.Top)
                             Next
                         Next
 
@@ -329,9 +356,13 @@ Namespace BarPlot
                             y = ymid - yscale(block.query)
                             blockHeight = yscale(block.query) + yscale(block.subject)
 
-                            rect = New Rectangle(
-                                New Point(left - highlightMargin, y - highlightMargin),
-                                New Size(right - left + 2 * highlightMargin, blockHeight + 2 * highlightMargin))
+                            rect = New Rectangle With {
+                                .Location = New Point(left - highlightMargin, y - highlightMargin),
+                                .Size = New Size With {
+                                    .Width = right - left + 2 * highlightMargin,
+                                    .Height = blockHeight + 2 * highlightMargin
+                                }
+                            }
 
                             g.DrawRectangle(highlightPen, rect)
                         Next
@@ -405,7 +436,7 @@ Namespace BarPlot
                             .GDIObject
                         Dim titleSize As SizeF = g.MeasureString(title, titleFont)
                         Dim tl As New Point With {
-                            .X = rect.Left + (rect.Width - titleSize.Width) / 2,
+                            .X = (region.Width - titleSize.Width) / 2,
                             .Y = (region.Padding.Top - titleSize.Height) / 2
                         }
 

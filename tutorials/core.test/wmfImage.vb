@@ -4,13 +4,34 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Module wmfImage
 
-    Public Function cccc() As Color
+    Public Function colorsTest() As Color
+        Dim bitmap As New Bitmap("D:\GCModeller\src\runtime\sciBASIC#\tutorials\contents\BitmapBufferTest.png")
+        Dim colors As New List(Of Color)
 
+        For x As Integer = 0 To bitmap.Width - 1
+            For y As Integer = 0 To bitmap.Height - 1
+                colors.Add(bitmap.GetPixel(x, y))
+            Next
+        Next
+
+        Dim buffer = BitmapBuffer.FromBitmap(bitmap)
+        Dim colors2 As New List(Of Color)
+
+        For x As Integer = 0 To buffer.Width - 1
+            For y As Integer = 0 To buffer.Height - 1
+                colors2.Add(buffer.GetPixel(x, y))
+            Next
+        Next
+
+        Console.WriteLine(colors.SequenceEqual(colors2))
+
+
+        Pause()
     End Function
 
     Sub Main()
 
-
+        Call colorsTest()
 
         Call replaceColorsTest()
 

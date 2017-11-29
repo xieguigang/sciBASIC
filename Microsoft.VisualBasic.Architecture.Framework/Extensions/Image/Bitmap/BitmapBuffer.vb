@@ -74,17 +74,30 @@ Namespace Imaging.BitmapImage
             Return DirectCast(__source.Clone, Bitmap)
         End Function
 
+        ' pixel:  (1,1)(2,1)(3,1)(4,1)(1,2)(2,2)(3,2)(4,2)
+        ' buffer: BGRA|BGRA|BGRA|BGRA|BGRA|BGRA|BGRA|BGRA|
+        ' bitmap pixels:
+        ' 
+        '    (1,1)(2,1)(3,1)(4,1)
+        '    (1,2)(2,2)(3,2)(4,2)
+        '
+        ' width  = 4 pixel
+        ' height = 2 pixel
+
         ''' <summary>
         ''' 返回第一个元素的位置
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns>B, G, R</returns>
-        ''' 
+        ''' <remarks>
+        ''' ###### 2017-11-29 
+        ''' 经过测试，对第一行的数据的计算没有问题
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIndex(x As Integer, y As Integer) As Integer
-            y = (y - 1) * (Width * 4)
-            x = (x - 1) * 4
+            y = y * (Width * 4)
+            x = x * 4
             Return x + y
         End Function
 
@@ -95,6 +108,7 @@ Namespace Imaging.BitmapImage
 
         ''' <summary>
         ''' Gets the color of the specified pixel in this <see cref="Bitmap"/>.
+        ''' (<paramref name="x"/>和<paramref name="y"/>都是以零为底的)
         ''' </summary>
         ''' <param name="x">The x-coordinate of the pixel to retrieve.</param>
         ''' <param name="y">The y-coordinate of the pixel to retrieve.</param>

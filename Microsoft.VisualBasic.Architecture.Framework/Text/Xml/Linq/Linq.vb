@@ -50,11 +50,13 @@ Namespace Text.Xml.Linq
         <Extension>
         Public Function LoadXmlDocument(pathOrDoc$) As XmlDocument
             Dim XmlDoc As New XmlDocument()
+
             If pathOrDoc.FileExists Then
                 Call XmlDoc.Load(pathOrDoc)
             Else
                 Call XmlDoc.LoadXml(pathOrDoc)
             End If
+
             Return XmlDoc
         End Function
 

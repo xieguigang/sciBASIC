@@ -60,15 +60,30 @@ Namespace Imaging.BitmapImage
         End Function
 
         <ExportAPI("Image.Resize")>
+        <Extension>
         Public Function Resize(Image As Image, newSize As Size) As Image
             SyncLock Image
-                Using g As Graphics2D = newSize.CreateGDIDevice
+                ' 在这里不适用默认的白色做填充，而是使用透明色来进行填充
+                ' 因为图片可能会是透明的，使用默认的白色填充会导致结果图片失去了透明
+                Using g As Graphics2D = newSize.CreateGDIDevice(Color.Transparent)
                     With g
                         Call .DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
                         Return .ImageResource
                     End With
                 End Using
             End SyncLock
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ResizeUnscaled(image As Image, width%) As Image
+            Return image.Resize(New Size(width, image.Height * (width / image.Width)))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ResizeUnscaledByHeight(image As Image, height%) As Image
+            Return image.Resize(New Size(image.Width * (height / image.Height), height))
         End Function
 
         ''' <summary>
@@ -292,6 +307,12 @@ Namespace Imaging.BitmapImage
             End Using
 
             Return image
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ColorReplace(image As Image, subject As Color, replaceAs As Color) As Bitmap
+            Return New Bitmap(image).ColorReplace(subject, replaceAs)
         End Function
     End Module
 End Namespace

@@ -49,7 +49,7 @@ Namespace Text.Xml.Models
     ''' <summary>
     ''' 键值对集合的键值<see cref="text"/>可能是一大段文本
     ''' </summary>
-    Public Structure NamedValue
+    <XmlType("data")> Public Structure NamedValue
         Implements INamedValue
         Implements Value(Of String).IValueOf
 
