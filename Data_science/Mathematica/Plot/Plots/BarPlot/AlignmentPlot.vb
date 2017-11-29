@@ -182,7 +182,8 @@ Namespace BarPlot
                                             Optional highlight$ = Stroke.StrongHighlightStroke,
                                             Optional highlightMargin! = 2,
                                             Optional htmlLabel As Boolean = False,
-                                            Optional idTag$ = Nothing) As GraphicsData
+                                            Optional idTag$ = Nothing,
+                                            Optional rectangleStyle As RectangleStyling = Nothing) As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
                     .Select(Function(x) x.signals.Keys) _
@@ -197,6 +198,8 @@ Namespace BarPlot
                     .ToArray
                 yrange = New DoubleRange(ALL)
             End If
+
+            rectangleStyle = rectangleStyle Or RectangleStyles.DefaultStyle
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -269,9 +272,10 @@ Namespace BarPlot
                                 labPos = New Point(.Left + 3, .Top)
                                 Call g.DrawString(ylab, labelFont, Brushes.Black, labPos)
                             Case YlabelPosition.LeftCenter
-                                labPos = New PointF(
-                                    (.Left - labSize.Height) / 4,
-                                    .Top * 2.5 + (.Height - labSize.Width) / 2)
+                                Dim lx = (.Left - labSize.Height) / 4
+                                Dim ly = .Top * 2.5 + (.Height - labSize.Width) / 2
+
+                                labPos = New PointF(lx, ly)
 
                                 With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                                     Call .DrawString(ylab, labelFont, Brushes.Black, labPos, -90)
@@ -282,12 +286,11 @@ Namespace BarPlot
 
                         ' X 坐标轴
                         Dim fWidth! = g.MeasureString(xlab, labelFont).Width
+
                         Call g.DrawLine(axisPen, New Point(.Left, ymid), New Point(.Right, ymid))
                         Call g.DrawString(xlab, labelFont, Brushes.Black, New Point(.Right - fWidth, ymid + 2))
 
                         Dim left!
-                        'Dim ba As New SolidBrush(cla.TranslateColor)
-                        'Dim bb As New SolidBrush(clb.TranslateColor)
                         Dim xCSSFont As Font = CSSFont.TryParse(X_CSS).GDIObject
                         Dim xsz As SizeF
                         Dim xpos As PointF
