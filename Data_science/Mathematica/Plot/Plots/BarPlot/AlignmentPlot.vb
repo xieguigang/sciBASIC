@@ -307,7 +307,11 @@ Namespace BarPlot
                         For Each part As Signal In query
                             Dim ba As New SolidBrush(part.Color.TranslateColor)
 
-                            For Each o As (x#, value#) In part.signals
+                            For Each o As (x#, value#) In part.signals _
+                                .Where(Function(f)
+                                           Return f.Item2 <> 0R
+                                       End Function)
+
                                 left = region.Padding.Left + xscale(o.x)
                                 y = o.value
                                 y = ymid - yscale(y)
@@ -326,7 +330,11 @@ Namespace BarPlot
                         For Each part As Signal In subject
                             Dim bb As New SolidBrush(part.Color.TranslateColor)
 
-                            For Each o As (x#, value#) In part.signals
+                            For Each o As (x#, value#) In part.signals _
+                                .Where(Function(f)
+                                           Return f.Item2 <> 0R
+                                       End Function)
+
                                 y = o.value
                                 y = ymid + yscale(y)
                                 left = region.Padding.Left + xscale(o.x)
