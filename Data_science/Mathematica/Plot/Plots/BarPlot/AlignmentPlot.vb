@@ -93,7 +93,8 @@ Namespace BarPlot
                                       Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
                                       Optional labelPlotStrength# = 0.25,
                                       Optional htmlLabel As Boolean = False,
-                                      Optional idTag$ = Nothing) As GraphicsData
+                                      Optional idTag$ = Nothing,
+                                      Optional rectangleStyle As RectangleStyling = Nothing) As GraphicsData
 
             Dim q As New Signal With {
                 .Name = queryName,
@@ -106,15 +107,18 @@ Namespace BarPlot
                 .signals = subject
             }
 
-            Return PlotAlignmentGroups({q}, {s}, xrange, yrange,
-                                       size, padding,
-                                       xlab, ylab, labelCSS, queryName, subjectName,
-                                       title, tickCSS, titleCSS,
-                                       legendFontCSS, bw, format, displayX, X_CSS,
-                                       yAxislabelPosition,
-                                       labelPlotStrength,
-                                       htmlLabel:=htmlLabel,
-                                       idTag:=idTag)
+            Return PlotAlignmentGroups(
+                {q}, {s},
+                xrange, yrange,
+                size, padding,
+                xlab, ylab, labelCSS, queryName, subjectName,
+                title, tickCSS, titleCSS,
+                legendFontCSS, bw, format, displayX, X_CSS,
+                yAxislabelPosition,
+                labelPlotStrength,
+                htmlLabel:=htmlLabel,
+                idTag:=idTag,
+                rectangleStyle:=rectangleStyle)
         End Function
 
         Public Structure Signal

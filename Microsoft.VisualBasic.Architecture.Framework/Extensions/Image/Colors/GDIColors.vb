@@ -75,7 +75,7 @@ Namespace Imaging
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Alpha(c As Color, alphaValue%) As Color
-            Return Color.FromArgb(alphaValue, baseColor:=c)
+            Return Color.FromArgb(alphaValue, c.R, c.G, c.B)
         End Function
 
         <Extension>

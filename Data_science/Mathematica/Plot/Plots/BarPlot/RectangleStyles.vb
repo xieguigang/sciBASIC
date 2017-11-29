@@ -30,7 +30,7 @@ Namespace BarPlot
         Public Function ModernStyle() As defaultStyle
             Dim del As RectangleStyling =
                 Sub(g, color, layout)
-                    Dim fillColor As New SolidBrush(color.Color.Alpha(245))
+                    Dim fillColor As New SolidBrush(color.Color.Alpha(180))
 
                     Call g.FillRectangle(fillColor, layout)
                     Call g.DrawRectangle(New Pen(color, 2), layout)

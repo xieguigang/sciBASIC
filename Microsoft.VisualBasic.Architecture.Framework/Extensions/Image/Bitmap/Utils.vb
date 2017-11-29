@@ -282,5 +282,11 @@ Namespace Imaging.BitmapImage
 
             Return image
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ColorReplace(image As Image, subject As Color, replaceAs As Color) As Bitmap
+            Return New Bitmap(image).ColorReplace(subject, replaceAs)
+        End Function
     End Module
 End Namespace
