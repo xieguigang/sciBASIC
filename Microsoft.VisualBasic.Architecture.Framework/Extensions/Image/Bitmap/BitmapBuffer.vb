@@ -71,6 +71,16 @@ Namespace Imaging.BitmapImage
             Return DirectCast(__source.Clone, Bitmap)
         End Function
 
+        ' pixel:  (1,1)(2,1)(3,1)(4,1)(1,2)(2,2)(3,2)(4,2)
+        ' buffer: BGRA|BGRA|BGRA|BGRA|BGRA|BGRA|BGRA|BGRA|
+        ' bitmap pixels:
+        ' 
+        '    (1,1)(2,1)(3,1)(4,1)
+        '    (1,2)(2,2)(3,2)(4,2)
+        '
+        ' width  = 4 pixel
+        ' height = 2 pixel
+
         ''' <summary>
         ''' 返回第一个元素的位置
         ''' </summary>
