@@ -80,6 +80,12 @@ Namespace Imaging.BitmapImage
             Return image.Resize(New Size(width, image.Height * (width / image.Width)))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ResizeUnscaledByHeight(image As Image, height%) As Image
+            Return image.Resize(New Size(image.Width * (height / image.Height), height))
+        End Function
+
         ''' <summary>
         ''' 图片剪裁为圆形的头像
         ''' </summary>
