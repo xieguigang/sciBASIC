@@ -459,6 +459,9 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <param name="blank$"></param>
     ''' <param name="reorderKeys"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 对于<see cref="DataSet"/>类型的数据集，可以先使用拓展函数转化为<see cref="EntityObject"/>之后再调用本函数进行保存操作
+    ''' </remarks>
     <Extension>
     Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T),
                                                       path$,

@@ -173,6 +173,11 @@ Namespace ComponentModel.Collection
             Return New Dictionary(Of T, Integer)(index.maps)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(objs As T()) As Index(Of T)
+            Return New Index(Of T)(source:=objs)
+        End Operator
+
         Public Iterator Function GetEnumerator() As IEnumerator(Of SeqValue(Of T)) Implements IEnumerable(Of SeqValue(Of T)).GetEnumerator
             For Each o As SeqValue(Of T) In index
                 Yield o

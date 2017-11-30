@@ -286,14 +286,25 @@ Namespace Imaging.BitmapImage
         Const PixelSize% = 4
         Const RGBSize% = 3
 
+        ''' <summary>
+        ''' Color replace using memory pointer
+        ''' </summary>
+        ''' <param name="image"></param>
+        ''' <param name="subject"></param>
+        ''' <param name="replaceAs"></param>
+        ''' <returns></returns>
         <Extension> Public Function ColorReplace(image As Bitmap, subject As Color, replaceAs As Color) As Bitmap
-            For x As Integer = 0 To image.Width - 1
-                For y As Integer = 0 To image.Height - 1
-                    If GDIColors.Equals(image.GetPixel(x, y), subject) Then
-                        Call image.SetPixel(x, y, replaceAs)
-                    End If
+            Using bitmap As BitmapBuffer = BitmapBuffer.FromBitmap(image)
+                Dim byts As BitmapBuffer = bitmap
+
+                For x As Integer = 0 To byts.Width - 1
+                    For y As Integer = 0 To byts.Height - 1
+                        If GDIColors.Equals(byts.GetPixel(x, y), subject) Then
+                            Call byts.SetPixel(x, y, replaceAs)
+                        End If
+                    Next
                 Next
-            Next
+            End Using
 
             Return image
         End Function

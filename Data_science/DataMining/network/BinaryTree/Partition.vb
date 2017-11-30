@@ -47,7 +47,7 @@ Namespace KMeans
         End Property
 
         Public Property uids As String()
-        Public Property members As EntityLDM()
+        Public Property members As EntityClusterModel()
 
         Public ReadOnly Property PropertyMeans As Double()
             Get
@@ -57,7 +57,7 @@ Namespace KMeans
                     pVector(key) = New List(Of Double)
                 Next
 
-                For Each member As EntityLDM In members
+                For Each member As EntityClusterModel In members
                     For Each key As String In pVector.Keys.ToArray
                         pVector(key) += member.Properties(key)
                     Next

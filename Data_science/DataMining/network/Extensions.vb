@@ -39,15 +39,15 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="path$"></param>
     ''' <returns></returns>
-    Public Iterator Function ClusterResultFastLoad(path$) As IEnumerable(Of EntityLDM)
+    Public Iterator Function ClusterResultFastLoad(path$) As IEnumerable(Of EntityClusterModel)
         Using reader As StreamReader = path.OpenReader
             Dim header As New RowObject(reader.ReadLine)
-            Dim cluster% = header.IndexOf(NameOf(EntityLDM.Cluster))
-            Dim name% = header.IndexOf(NameOf(EntityLDM.ID))
+            Dim cluster% = header.IndexOf(NameOf(EntityClusterModel.Cluster))
+            Dim name% = header.IndexOf(NameOf(EntityClusterModel.ID))
             Dim row As New Value(Of RowObject)
 
             Do While Not reader.EndOfStream
-                Yield New EntityLDM With {
+                Yield New EntityClusterModel With {
                     .ID = (row = New RowObject(reader.ReadLine))(name),
                     .Cluster = (+row)(cluster)
                 }

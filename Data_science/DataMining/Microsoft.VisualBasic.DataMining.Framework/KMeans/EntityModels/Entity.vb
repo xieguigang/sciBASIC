@@ -52,7 +52,7 @@ Namespace KMeans
         ''' <param name="path">Csv文件之中除了第一列是名称标识符，其他的都必须是该实体对象的属性</param>
         ''' <returns></returns>
         Public Shared Function Load(path As String, Optional map As String = "Name") As Entity()
-            Dim data As EntityLDM() = EntityLDM.Load(path, map)
+            Dim data As EntityClusterModel() = EntityClusterModel.Load(path, map)
             Dim source As Entity() = data _
                 .Select(Function(x)
                             Return New Entity With {
@@ -65,8 +65,8 @@ Namespace KMeans
             Return source
         End Function
 
-        Public Function ToLDM() As EntityLDM
-            Return New EntityLDM With {
+        Public Function ToLDM() As EntityClusterModel
+            Return New EntityClusterModel With {
                 .ID = uid,
                 .Properties = Properties _
                     .SeqIterator _
@@ -75,8 +75,8 @@ Namespace KMeans
             }
         End Function
 
-        Public Function ToLDM(maps As String()) As EntityLDM
-            Return New EntityLDM With {
+        Public Function ToLDM(maps As String()) As EntityClusterModel
+            Return New EntityClusterModel With {
                 .ID = uid,
                 .Properties = Properties _
                     .SeqIterator _
