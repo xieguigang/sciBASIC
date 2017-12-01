@@ -11,8 +11,9 @@ Namespace Academic
         Public Property Authors As NamedValue(Of String)()
         Public Property Abstract As String
         Public Property PubDate As Date
-        Public Property Journal As String
+        Public Property Journal As NamedValue(Of String)
         Public Property DOI As String
+        Public Property Areas As NamedValue(Of String)()
         ''' <summary>
         ''' 按照年计数的被引用量
         ''' </summary>
@@ -29,7 +30,7 @@ Namespace Academic
         ''' <summary>
         ''' 有效的原文来源地址url
         ''' </summary>
-        Public Property source As String()
+        Public Property source As NamedValue(Of String)()
         ''' <summary>
         ''' 文献引文的bing学术搜索的url列表
         ''' </summary>
