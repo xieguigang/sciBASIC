@@ -2,6 +2,7 @@
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports sys = System.Math
 
 Namespace Imaging.BitmapImage
@@ -17,18 +18,21 @@ Namespace Imaging.BitmapImage
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension> Public Function Vignette(image As Image, y1%, y2%, Optional renderColor As Color = Nothing) As Image
+            Dim alpha As Integer = 0
+            Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
+            Dim offset As Double = 0
+
+            renderColor = renderColor Or Color.White.AsDefaultColor
+
             Using g As Graphics2D = image.CreateCanvas2D
                 With g
-                    Dim alpha As Integer = 0
-                    Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
-                    Dim offset As Double = 0
-
-                    If renderColor = Nothing OrElse renderColor.IsEmpty Then
-                        renderColor = Color.White
-                    End If
+                    Dim rect As New Rectangle With {
+                        .Location = New Point(0, y2),
+                        .Size = New Size(.Width, .Height - y2)
+                    }
 
                     For y As Integer = y1 To y2
-                        Dim color As Color = color.FromArgb(alpha, renderColor.R, renderColor.G, renderColor.B)
+                        Dim color As Color = Color.FromArgb(alpha, renderColor.R, renderColor.G, renderColor.B)
                         Dim pen As New Pen(color)
 
                         .DrawLine(pen, New Point(0, y), New Point(.Width, y))
@@ -36,10 +40,6 @@ Namespace Imaging.BitmapImage
                         offset += delta
                     Next
 
-                    Dim rect As New Rectangle With {
-                        .Location = New Point(0, y2),
-                        .Size = New Size(.Width, .Height - y2)
-                    }
                     Call .FillRectangle(New SolidBrush(renderColor), rect)
 
                     Return .ImageResource

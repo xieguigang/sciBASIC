@@ -296,8 +296,16 @@ Namespace Imaging
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function IsNullOrEmpty(Color As Color) As Boolean
             Return Color = Nothing OrElse Color.IsEmpty
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsDefaultColor(color As Color) As DefaultValue(Of Color)
+            Return color.AsDefault(Function(c) DirectCast(c, Color).IsNullOrEmpty)
         End Function
 
         ' 透明色
