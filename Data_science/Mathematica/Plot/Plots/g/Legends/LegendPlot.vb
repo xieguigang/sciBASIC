@@ -202,6 +202,11 @@ Namespace Graphic.Legend
                         .Y = pos.Y + (gSize.Height - d) / 2
                     }
 
+                    labelPos = New PointF With {
+                        .X = topLeft.X + d + 5,
+                        .Y = labelPos.Y
+                    }
+
                     Call Triangle.Draw(g, topLeft, New Size(d, d), color, border)
 
                 Case LegendStyles.Pentacle
