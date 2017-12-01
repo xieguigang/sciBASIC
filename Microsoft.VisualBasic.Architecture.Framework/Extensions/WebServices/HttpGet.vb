@@ -13,13 +13,13 @@ Public Module HttpGet
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Get the html page content from a website request or a html file on the local filesystem.(同时支持http位置或者本地文件，失败或者错误会返回空字符串)
+    ''' Get the html page content from a website request or a html file on the local filesystem.
+    ''' (同时支持http位置或者本地文件，失败或者错误会返回空字符串)
     ''' </summary>
     ''' <param name="url">web http request url or a file path handle</param>
     ''' <param name="retry">发生错误的时候的重试的次数</param>
     ''' <returns>失败或者错误会返回空字符串</returns>
-    ''' <remarks></remarks>
-    '''
+    ''' <remarks>这个工具只适合于文本数据的传输操作</remarks>
     <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request Or a html file on the local filesystem.")>
     <Extension> Public Function [GET](url As String,
                                       <Parameter("Request.TimeOut")>

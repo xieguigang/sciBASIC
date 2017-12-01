@@ -42,6 +42,36 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 Public Module DocumentExtensions
 
+    <Extension>
+    Public Iterator Function InvalidsAsRLangNA(source As IEnumerable(Of DataSet), Optional replaceAs$ = "NA") As IEnumerable(Of EntityObject)
+        Dim NaN As Index(Of String) = {
+            "正无穷大", "负无穷大", "非数字",
+            "Infinity", "-Infinity",
+            "NaN",
+            "∞", "-∞"
+        }
+
+        For Each data As DataSet In source
+            Dim values = data _
+                .Properties _
+                .ToDictionary(Function(map) map.Key,
+                              Function(map)
+                                  Dim s = map.Value.ToString
+
+                                  If NaN.IndexOf(s) > -1 Then
+                                      Return replaceAs
+                                  Else
+                                      Return s
+                                  End If
+                              End Function)
+
+            Yield New EntityObject With {
+                .ID = data.ID,
+                .Properties = values
+            }
+        Next
+    End Function
+
     ''' <summary>
     ''' 对于一些数学计算的数值结果，无穷大，无穷小或者非实数会被转换为中文，导致R程序无法识别
     ''' 则需要使用这个函数来将这些数值替换为目标字符串<paramref name="replaceAs"/>

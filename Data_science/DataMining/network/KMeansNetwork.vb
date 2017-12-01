@@ -44,12 +44,12 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="kmeans"></param>
         ''' <returns></returns>
-        <Extension> Public Function ToNetwork(kmeans As IEnumerable(Of EntityLDM),
+        <Extension> Public Function ToNetwork(kmeans As IEnumerable(Of EntityClusterModel),
                                               Optional colors As Dictionary(Of String, Color) = Nothing,
                                               Optional defaultColor$ = "lightgray",
                                               Optional cut As Func(Of Double, Boolean) = Nothing) As NetworkTables
 
-            Dim data As EntityLDM() = kmeans.ToArray
+            Dim data As EntityClusterModel() = kmeans.ToArray
             Dim edges As New List(Of NetworkEdge)
             Dim clusterColors As New Dictionary(Of NamedValue(Of String))
             Dim [default] As New NamedValue(Of String) With {
@@ -84,7 +84,7 @@ Namespace KMeans
                 cut = Function(score) score > Double.MinValue
             End If
 
-            For Each vector As EntityLDM In data
+            For Each vector As EntityClusterModel In data
                 Dim from$ = vector.ID
                 Dim color$
 

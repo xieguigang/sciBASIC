@@ -206,9 +206,10 @@ Namespace ComponentModel
             Return Key
         End Function
 
-        Public Shared Function ToDictionary(ListData As Generic.IEnumerable(Of Key_strArrayValuePair)) As Dictionary(Of String, String())
-            Dim Dictionary As Dictionary(Of String, String()) = New Dictionary(Of String, String())
-            For Each item In ListData
+        Public Shared Function ToDictionary(ListData As IEnumerable(Of Key_strArrayValuePair)) As Dictionary(Of String, String())
+            Dim Dictionary As New Dictionary(Of String, String())
+
+            For Each item As Key_strArrayValuePair In ListData
                 Call Dictionary.Add(item.Key, item.Value)
             Next
 

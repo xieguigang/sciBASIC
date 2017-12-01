@@ -43,12 +43,14 @@ Namespace Text
         [Default] = 0
         ASCII = 10
         ''' <summary>
-        ''' utf-16编码的别名？所以使用这个编码的效果是和<see cref="UTF16"/>的效果是一样的
+        ''' Alias of the value <see cref="UTF16"/>.
+        ''' (utf-16编码的别名？所以使用这个编码的效果是和<see cref="UTF16"/>的效果是一样的)
         ''' </summary>
         Unicode
         UTF7
         ''' <summary>
-        ''' HTML的默认的编码格式，假若所保存的html文本出现乱码，请考虑是不是应该要选择这个编码才行？
+        ''' <see cref="TextEncodings.UTF8WithoutBOM"/>. 
+        ''' (HTML的默认的编码格式，假若所保存的html文本出现乱码，请考虑是不是应该要选择这个编码才行？)
         ''' </summary>
         UTF8
         ''' <summary>

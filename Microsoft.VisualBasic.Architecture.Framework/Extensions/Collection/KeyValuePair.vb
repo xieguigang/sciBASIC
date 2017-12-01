@@ -42,6 +42,14 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Item(Of T As INamedValue)(source As IEnumerable(Of T), key$) As T
+        Return source _
+            .Where(Function(i) i.Key = key) _
+            .FirstOrDefault
+    End Function
+
     ''' <summary>
     ''' Target <paramref name="item"/> contains in <paramref name="define"/> list.
     ''' </summary>

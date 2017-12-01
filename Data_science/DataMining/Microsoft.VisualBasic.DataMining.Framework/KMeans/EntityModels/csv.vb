@@ -36,7 +36,7 @@ Namespace KMeans
     ''' <summary>
     ''' 存储在Csv文件里面的数据模型，近似等价于<see cref="DataSet"/>，只不过多带了一个用来描述cluster的<see cref="Cluster"/>属性标签
     ''' </summary>
-    Public Class EntityLDM : Inherits DataSet
+    Public Class EntityClusterModel : Inherits DataSet
         Implements INamedValue
 
         ''' <summary>
@@ -64,16 +64,16 @@ Namespace KMeans
             }
         End Function
 
-        Public Shared Function Load(path As String, map As String) As EntityLDM()
+        Public Shared Function Load(path As String, map As String) As EntityClusterModel()
             Dim maps As New Dictionary(Of String, String) From {
-                {map, NameOf(EntityLDM.ID)}
+                {map, NameOf(EntityClusterModel.ID)}
             }
-            Return path.LoadCsv(Of EntityLDM)(maps:=maps).ToArray
+            Return path.LoadCsv(Of EntityClusterModel)(maps:=maps).ToArray
         End Function
 
-        Public Shared Iterator Function FromModel(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of EntityLDM)
+        Public Shared Iterator Function FromModel(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of EntityClusterModel)
             For Each x As NamedValue(Of Dictionary(Of String, Double)) In data
-                Yield New EntityLDM With {
+                Yield New EntityClusterModel With {
                     .ID = x.Name,
                     .Properties = x.Value
                 }

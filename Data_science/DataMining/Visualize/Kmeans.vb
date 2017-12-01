@@ -49,7 +49,7 @@ Public Module Kmeans
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ClusterGroups(clusters As IEnumerable(Of EntityLDM)) As Dictionary(Of String, EntityLDM())
+    Public Function ClusterGroups(clusters As IEnumerable(Of EntityClusterModel)) As Dictionary(Of String, EntityClusterModel())
         Return clusters _
             .GroupBy(Function(c) c.Cluster) _
             .ToDictionary(Function(cluster) cluster.Key,
@@ -66,7 +66,7 @@ Public Module Kmeans
     ''' <param name="bg$"></param>
     ''' <returns></returns>
     <Driver("kmeans.scatter.2D")>
-    Public Function Scatter2D(clusterData As IEnumerable(Of EntityLDM),
+    Public Function Scatter2D(clusterData As IEnumerable(Of EntityClusterModel),
                               catagory As (X As NamedCollection(Of String), Y As NamedCollection(Of String)),
                               Optional size$ = "1600,1600",
                               Optional padding$ = g.DefaultPadding,
@@ -83,7 +83,7 @@ Public Module Kmeans
             Dim color As Color = clusterColors(cluster)
             Dim points As New List(Of PointData)
 
-            For Each member As EntityLDM In (+cluster).Value
+            For Each member As EntityClusterModel In (+cluster).Value
                 points += New PointData With {
                     .pt = New PointF With {
                         .X = member(catagory.X.Value).Average,
@@ -136,7 +136,7 @@ Public Module Kmeans
                               Optional axisStroke$ = Stroke.AxisStroke,
                               Optional DIR$ = "./") As GraphicsData
 
-        Dim clusters As EntityLDM() = data _
+        Dim clusters As EntityClusterModel() = data _
             .ToKMeansModels _
             .Kmeans(expected:=clusterN)
 
@@ -144,7 +144,7 @@ Public Module Kmeans
             Call clusters.SaveTo($"{DIR}/{catagory.Keys.JoinBy(",").NormalizePathString}-Kmeans.csv")
         End If
 
-        For Each member As EntityLDM In clusters
+        For Each member As EntityClusterModel In clusters
             member.Cluster = "Cluster:  #" & member.Cluster
         Next
 
@@ -177,7 +177,7 @@ Public Module Kmeans
     ''' </remarks>
     <Extension>
     <Driver("kmeans.scatter.3D")>
-    Public Function Scatter3D(clusterData As IEnumerable(Of EntityLDM),
+    Public Function Scatter3D(clusterData As IEnumerable(Of EntityClusterModel),
                               catagory As Dictionary(Of NamedCollection(Of String)),
                               camera As Camera,
                               Optional size$ = "1200,1000",
@@ -203,7 +203,7 @@ Public Module Kmeans
             Dim color As Color = clusterColors(cluster)
             Dim point3D As New List(Of Point3D)
 
-            For Each member As EntityLDM In (+cluster).Value
+            For Each member As EntityClusterModel In (+cluster).Value
                 With keys _
                     .Select(Function(cat)
                                 Return member(catagory(cat).Value).Average

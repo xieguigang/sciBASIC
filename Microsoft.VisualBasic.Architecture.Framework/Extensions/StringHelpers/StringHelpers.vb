@@ -669,6 +669,12 @@ Public Module StringHelpers
         Return Regex.Match(input.Value, pattern, options).Value
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Matches(input As String, pattern$, Optional options As RegexOptions = RegexICSng) As String()
+        Return r.Matches(input, pattern, options).ToArray
+    End Function
+
     ''' <summary>
     ''' Save this string dictionary object as json file.
     ''' </summary>

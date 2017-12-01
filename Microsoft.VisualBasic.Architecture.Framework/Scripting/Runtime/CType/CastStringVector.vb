@@ -34,6 +34,22 @@ Namespace Scripting.Runtime
 
     Public Module CastStringVector
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsCharacter(values As Dictionary(Of String, Double)) As Dictionary(Of String, String)
+            Return values.ToDictionary(
+                Function(x) x.Key,
+                Function(x) CStr(x.Value))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsNumeric(values As Dictionary(Of String, String)) As Dictionary(Of String, Double)
+            Return values.ToDictionary(
+                Function(x) x.Key,
+                Function(x) x.Value.ParseNumeric)
+        End Function
+
         <Extension> Public Function AsType(Of T)(source As IEnumerable(Of String)) As IEnumerable(Of T)
             Dim type As Type = GetType(T)
             Dim [ctype] = InputHandler.CasterString(type)

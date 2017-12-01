@@ -43,6 +43,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' The shortcuts operation for the common csv document operations.
@@ -295,7 +296,7 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As IO.File,
+    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
                                                             Optional explicit As Boolean = False,
                                                             Optional maps As Dictionary(Of String, String) = Nothing) As T()
         Dim df As DataFrame = IO.DataFrame.CreateObject(dataSet)
@@ -459,10 +460,13 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <param name="blank$"></param>
     ''' <param name="reorderKeys"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 对于<see cref="DataSet"/>类型的数据集，可以先使用拓展函数转化为<see cref="EntityObject"/>之后再调用本函数进行保存操作
+    ''' </remarks>
     <Extension>
     Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T),
                                                       path$,
-                                                      Optional encoding As Encodings = Encodings.ASCII,
+                                                      Optional encoding As Encodings = Encodings.UTF8,
                                                       Optional KeyMap$ = Nothing,
                                                       Optional blank$ = "",
                                                       Optional reorderKeys As Integer = 0) As Boolean
@@ -504,12 +508,13 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                                Optional explicit As Boolean = False,
                                                Optional maps As Dictionary(Of String, String) = Nothing,
                                                Optional metaBlank$ = "",
-                                               Optional reorderKeys% = 0) As IO.File
+                                               Optional reorderKeys% = 0) As File
         Return Reflector.Save(
             source, explicit,
             maps:=maps,
             metaBlank:=metaBlank,
-            reorderKeys:=reorderKeys)
+            reorderKeys:=reorderKeys
+        )
     End Function
 
     ''' <summary>

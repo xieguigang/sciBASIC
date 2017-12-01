@@ -32,69 +32,77 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.HtmlParser
 Imports r = System.Text.RegularExpressions.Regex
 
-''' <summary>
-''' Bing Academic web API for VisualBasic
-''' </summary>
-<Package("Bing.Academic",
+Namespace Academic
+
+    ''' <summary>
+    ''' Bing Academic web API for VisualBasic
+    ''' </summary>
+    <Package("Bing.Academic",
          Url:="http://cn.bing.com/academic/?FORM=Z9LH2",
          Description:="",
          Category:=APICategories.UtilityTools,
          Publisher:="")>
-Public Module Academic
+    Public Module AcademicSearch
 
-    ' https://cn.bing.com/academic/search?q=Danio+rerio&go=%E6%90%9C%E7%B4%A2&qs=ds&form=QBRE
+        ' https://cn.bing.com/academic/search?q=Danio+rerio&go=%E6%90%9C%E7%B4%A2&qs=ds&form=QBRE
 
-    Const refer$ = "https://cn.bing.com/academic/?FORM=Z9LH2"
+        Const refer$ = "https://cn.bing.com/academic/?FORM=Z9LH2"
 
-    Public Function Search(term As String) As NamedValue(Of String)()
-        Dim url$ = $"https://cn.bing.com/academic/search?q={term.UrlEncode}&go=Search&qs=ds&form=QBRE"
-        Dim html$ = url.GET(headers:=New Dictionary(Of String, String) From {{NameOf(refer), refer}})
+        ''' <summary>
+        ''' Run academic search from portal: https://cn.bing.com/academic/?FORM=HDRSC4
+        ''' </summary>
+        ''' <param name="term"></param>
+        ''' <returns></returns>
+        Public Function Search(term As String) As NamedValue(Of String)()
+            Dim url$ = $"https://cn.bing.com/academic/search?q={term.UrlEncode}&go=Search&qs=ds&form=QBRE"
+            Dim html$ = url.GET(headers:=New Dictionary(Of String, String) From {{NameOf(refer), refer}})
 
-        html = html _
-            .RemovesJavaScript _
-            .RemovesCSSstyles _
-            .RemovesImageLinks _
-            .RemovesHtmlHead _
-            .RemovesFooter
-        html = Strings.Split(html, "<ol id=""b_results""").Last
+            html = html _
+                .RemovesJavaScript _
+                .RemovesCSSstyles _
+                .RemovesImageLinks _
+                .RemovesHtmlHead _
+                .RemovesFooter
+            html = Strings.Split(html, "<ol id=""b_results""").Last
 
-        Dim list As NamedValue(Of String)() = r _
-            .Matches(html, "<li class[=]""aca_algo"">.+?</li>", RegexICSng) _
-            .EachValue(AddressOf StripListItem) _
-            .ToArray
+            Dim list As NamedValue(Of String)() = r _
+                .Matches(html, "<li class[=]""aca_algo"">.+?</li>", RegexICSng) _
+                .EachValue(AddressOf StripListItem) _
+                .ToArray
 
-        Return list
-    End Function
+            Return list
+        End Function
 
-    Private Function StripListItem(text As String) As NamedValue(Of String)
-        Dim title = text.GetBetween("<h2", "</h2>")
-        Dim ResultUrl = title.href
-        Dim description = text _
-            .GetBetween("<div class=""caption_abstract"">", "</div>") _
-            .GetBetween("<p>", "</p>") _
-            .StripHTMLTags
+        Private Function StripListItem(text As String) As NamedValue(Of String)
+            Dim title = text.GetBetween("<h2", "</h2>")
+            Dim ResultUrl = title.href
+            Dim description = text _
+                .GetBetween("<div class=""caption_abstract"">", "</div>") _
+                .GetBetween("<p>", "</p>") _
+                .StripHTMLTags
 
-        ResultUrl = "https://cn.bing.com/" & ResultUrl.Trim("/"c).Replace("&amp;", "&")
-        title = title _
-            .RemovesHtmlStrong _
-            .GetValue _
-            .StripHTMLTags
+            ResultUrl = "https://cn.bing.com/" & ResultUrl.Trim("/"c).Replace("&amp;", "&")
+            title = title _
+                .RemovesHtmlStrong _
+                .GetValue _
+                .StripHTMLTags
 
-        Return New NamedValue(Of String) With {
-            .Name = title,
-            .Value = ResultUrl,
-            .Description = description
-        }
-    End Function
+            Return New NamedValue(Of String) With {
+                .Name = title,
+                .Value = ResultUrl,
+                .Description = description
+            }
+        End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function GetDetails(info As NamedValue(Of String)) As ArticleInfo
-        Return GetDetails(info.Value)
-    End Function
-
-    Public Function GetDetails(url As String) As ArticleInfo
-
-    End Function
-End Module
-
+        ''' <summary>
+        ''' Aquire details information about an article result.
+        ''' </summary>
+        ''' <param name="info"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetDetails(info As NamedValue(Of String)) As ArticleProfile
+            Return ProfileResult.GetProfile(info.Value)
+        End Function
+    End Module
+End Namespace

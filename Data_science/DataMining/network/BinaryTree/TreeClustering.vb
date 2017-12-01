@@ -44,12 +44,12 @@ Namespace KMeans
         ''' <returns></returns>
         ''' <param name="parallelDepth">-1表示不会限制并行的深度</param>
         <ExportAPI("Cluster.Trees")>
-        <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityLDM),
+        <Extension> Public Function TreeCluster(resultSet As IEnumerable(Of EntityClusterModel),
                                             Optional parallel As Boolean = False,
                                             Optional [stop] As Integer = -1,
-                                            Optional parallelDepth% = 3) As EntityLDM()
+                                            Optional parallelDepth% = 3) As EntityClusterModel()
 
-            Dim source As EntityLDM() = resultSet.ToArray
+            Dim source As EntityClusterModel() = resultSet.ToArray
             Dim mapNames As String() = source(Scan0).Properties.Keys.ToArray   ' 得到所有属性的名称
             Dim ds As Entity() = source.Select(
                 Function(x) New KMeans.Entity With {
@@ -57,10 +57,10 @@ Namespace KMeans
                     .Properties = mapNames.Select(Function(s) x.Properties(s))
                 }).ToArray  ' 在这里生成计算模型
             Dim tree As KMeans.Entity() = TreeCluster(ds, parallel, [stop], parallelDepth)   ' 二叉树聚类操作
-            Dim saveResult As EntityLDM() = tree.Select(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
+            Dim saveResult As EntityClusterModel() = tree.Select(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
 
             For Each name As String In source.Select(Function(x) x.ID)
-                For Each x As EntityLDM In saveResult
+                For Each x As EntityClusterModel In saveResult
                     If InStr(x.ID, name) > 0 Then
                         x.Cluster = x.ID.Replace(name & ".", "")
                         x.ID = name

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::89f80ace7350925fde660f9a77bb171c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\BitmapScale.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -55,6 +55,41 @@ Namespace Imaging.BitmapImage
         ''' <summary>
         ''' 
         ''' </summary>
+        ''' <param name="byts">Unmanaged memory pointer that point to the bitmap data buffer.</param>
+        Public Delegate Sub PixelScanPointer(byts As Marshal.Byte)
+
+        ''' <summary>
+        ''' A generic bitmap pixel scan framework that using memory pointer
+        ''' </summary>
+        ''' <param name="curBitmap"></param>
+        ''' <param name="scan"></param>
+        <Extension>
+        Public Sub BitmapPixelScans(ByRef curBitmap As Bitmap, scan As PixelScanPointer)
+            ' Lock the bitmap's bits.  
+            Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
+            Dim bmpData As BitmapData = curBitmap.LockBits(
+                rect,
+                ImageLockMode.ReadWrite,
+                curBitmap.PixelFormat
+            )
+            ' Get the address of the first line.
+            Dim ptr As IntPtr = bmpData.Scan0
+            ' Declare an array to hold the bytes of the bitmap.
+            Dim bytes As Integer = sys.Abs(bmpData.Stride) * curBitmap.Height
+
+            Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
+                ' Calls unmanaged memory write when this 
+                ' memory pointer was disposed
+                Call scan(rgbValues)
+            End Using
+
+            ' Unlock the bits.
+            Call curBitmap.UnlockBits(bmpData)
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
         ''' <param name="curBitmap"></param>
         ''' <remarks>
         ''' http://www.codeproject.com/Articles/1094534/Image-Binarization-Using-Program-Languages
@@ -69,46 +104,38 @@ Namespace Imaging.BitmapImage
             Dim iR As Integer = 0 ' Red
             Dim iG As Integer = 0 ' Green
             Dim iB As Integer = 0 ' Blue
+            Dim scanInternal As PixelScanPointer =
+ _
+                Sub(byts As Marshal.Byte)
 
-            ' Lock the bitmap's bits.  
-            Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
-            Dim bmpData As BitmapData =
-            curBitmap.LockBits(rect, ImageLockMode.ReadWrite, curBitmap.PixelFormat)
-            ' Get the address of the first line.
-            Dim ptr As IntPtr = bmpData.Scan0
-            ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = sys.Abs(bmpData.Stride) * curBitmap.Height
+                    ' Set every third value to 255. A 24bpp bitmap will binarization.  
+                    Do While Not byts.NullEnd(3)
+                        ' Get the red channel
+                        iR = byts(2)
+                        ' Get the green channel
+                        iG = byts(1)
+                        ' Get the blue channel
+                        iB = byts(0)
 
-            Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
-                Dim byts As Marshal.Byte = rgbValues
+                        ' If the gray value more than threshold and then set a white pixel.
+                        If (iR + iG + iB) / 3 > 100 Then
+                            ' White pixel
+                            byts(2) = 255
+                            byts(1) = 255
+                            byts(0) = 255
+                        Else
+                            ' Black pixel
+                            byts(2) = 0
+                            byts(1) = 0
+                            byts(0) = 0
+                        End If
 
-                ' Set every third value to 255. A 24bpp bitmap will binarization.  
-                Do While Not rgbValues.NullEnd(3)
-                    ' Get the red channel
-                    iR = rgbValues(2)
-                    ' Get the green channel
-                    iG = rgbValues(1)
-                    ' Get the blue channel
-                    iB = rgbValues(0)
-                    ' If the gray value more than threshold and then set a white pixel.
-                    If (iR + iG + iB) / 3 > 100 Then
-                        ' White pixel
-                        byts(2) = 255
-                        byts(1) = 255
-                        byts(0) = 255
-                    Else
-                        ' Black pixel
-                        byts(2) = 0
-                        byts(1) = 0
-                        byts(0) = 0
-                    End If
+                        ' move forward this memory pointer by a specific offset.
+                        byts += style
+                    Loop
+                End Sub
 
-                    byts += style
-                Loop
-            End Using
-
-            ' Unlock the bits.
-            Call curBitmap.UnlockBits(bmpData)
+            Call curBitmap.BitmapPixelScans(scanInternal)
         End Sub
 
         ''' <summary>
@@ -143,7 +170,6 @@ Namespace Imaging.BitmapImage
 
             Using bitmapdata As BitmapBuffer = BitmapBuffer.FromBitmap(bmp)
                 Dim destPixels As BitmapBuffer = bitmapdata
-                Dim PixelSize% = 4
 
                 For y As Integer = 0 To bitmapdata.Height - 1
                     destPixels += bitmapdata.Stride
@@ -164,45 +190,38 @@ Namespace Imaging.BitmapImage
         ''' <returns></returns>
         <Extension> Public Function Grayscale(source As Image) As Bitmap
             Dim curBitmap As New Bitmap(source)
-
             Dim iR As Integer = 0 ' Red
             Dim iG As Integer = 0 ' Green
             Dim iB As Integer = 0 ' Blue
+            Dim scanInternal As PixelScanPointer =
+ _
+                Sub(byts As Marshal.Byte)
+                    ' Set every third value to 255. A 24bpp bitmap will binarization.  
+                    Do While Not byts.NullEnd(3)
+                        ' Get the red channel
+                        iR = byts(2)
+                        ' Get the green channel
+                        iG = byts(1)
+                        ' Get the blue channel
+                        iB = byts(0)
 
-            ' Lock the bitmap's bits.  
-            Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
-            Dim bmpData As BitmapData = curBitmap.LockBits(
-                rect, ImageLockMode.ReadWrite, curBitmap.PixelFormat)
-            ' Get the address of the first line.
-            Dim ptr As IntPtr = bmpData.Scan0
-            ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = sys.Abs(bmpData.Stride) * curBitmap.Height
+                        Dim luma% = GrayScale(iR, iG, iB)
+                        ' gray pixel
+                        byts(2) = luma
+                        byts(1) = luma
+                        byts(0) = luma
 
-            Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
-                Dim byts As Marshal.Byte = rgbValues
+                        byts += BinarizationStyles.Binary
+                    Loop
+                End Sub
 
-                ' Set every third value to 255. A 24bpp bitmap will binarization.  
-                Do While Not rgbValues.NullEnd(3)
-                    ' Get the red channel
-                    iR = rgbValues(2)
-                    ' Get the green channel
-                    iG = rgbValues(1)
-                    ' Get the blue channel
-                    iB = rgbValues(0)
-
-                    Dim luma = CInt(Truncate(iR * 0.3 + iG * 0.59 + iB * 0.11))
-                    ' gray pixel
-                    byts(2) = luma
-                    byts(1) = luma
-                    byts(0) = luma
-                    byts += BinarizationStyles.Binary
-                Loop
-            End Using
-
-            ' Unlock the bits.
-            Call curBitmap.UnlockBits(bmpData)
-
+            Call curBitmap.BitmapPixelScans(scanInternal)
             Return curBitmap
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GrayScale(R%, G%, B%) As Integer
+            Return CInt(Truncate(R * 0.3 + G * 0.59 + B * 0.11))
         End Function
 
         ''' <summary>
@@ -210,25 +229,37 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ''' <param name="c"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GrayScale(c As Color) As Integer
-            Dim luma% = CInt(Truncate(c.R * 0.3 + c.G * 0.59 + c.B * 0.11))
-            Return luma
+            Return GrayScale(c.R, c.G, c.B)
         End Function
 
+        ''' <summary>
+        ''' How many bytes does this bitmap contains?
+        ''' </summary>
+        ''' <param name="rect">The bitmap size or a specific region on the bitmap.</param>
+        ''' <returns></returns>
         <Extension>
         Public Function ByteLength(rect As Rectangle) As Integer
-            Dim width As Integer = rect.Width * 4  ' ARGB -> 4
+            Dim width As Integer = rect.Width * PixelSize  ' ARGB -> 4
             Return width * rect.Height
         End Function
 
+        ''' <summary>
+        ''' Convert the bitmap memory bytes into pixels
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function Colors(buffer As Byte()) As IEnumerable(Of Color)
             Dim iR As Byte
             Dim iG As Byte
             Dim iB As Byte
 
-            For i As Integer = 0 To buffer.Length - 1 Step 4
+            ' offset ARGB 4 bytes
+            For i As Integer = 0 To buffer.Length - 1 Step PixelSize
                 iR = buffer(i + 2)
                 iG = buffer(i + 1)
                 iB = buffer(i + 0)

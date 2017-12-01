@@ -51,11 +51,11 @@ Namespace KMeans
         ''' <param name="depth">将会以最短的聚类作为数据分区的深度</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Partitioning(cluster As IEnumerable(Of EntityLDM), Optional depth As Integer = -1, Optional trim As Boolean = True) As List(Of Partition)
-            Dim list As New List(Of EntityLDM)(cluster)
+        Public Function Partitioning(cluster As IEnumerable(Of EntityClusterModel), Optional depth As Integer = -1, Optional trim As Boolean = True) As List(Of Partition)
+            Dim list As New List(Of EntityClusterModel)(cluster)
 
             If depth <= 0 Then
-                depth = (From x As EntityLDM
+                depth = (From x As EntityClusterModel
                          In list
                          Select l = x.Cluster
                          Order By l.Length Ascending).First.Split("."c).Length
@@ -81,10 +81,10 @@ Namespace KMeans
             Dim partitions As New List(Of Partition)
 
             For Each tag As String In clusters
-                Dim LQuery As EntityLDM() =
-                    LinqAPI.Exec(Of EntityLDM) <=
+                Dim LQuery As EntityClusterModel() =
+                    LinqAPI.Exec(Of EntityClusterModel) <=
  _
-                    From x As EntityLDM
+                    From x As EntityClusterModel
                     In list.AsParallel
                     Where InStr(x.Cluster, tag, CompareMethod.Binary) = 1
                     Select x
@@ -115,7 +115,7 @@ Namespace KMeans
 
         Private Structure __edgePath
             Public path As String()
-            Public node As EntityLDM
+            Public node As EntityClusterModel
 
             Public Overrides Function ToString() As String
                 Return $"[{node.Cluster}] --> {node.ID}"
@@ -132,8 +132,8 @@ Namespace KMeans
         ''' <returns></returns>
         <ExportAPI("Cluster.Trees.Network",
                    Info:="Create network model for visualize the binary tree clustering result.")>
-        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityLDM), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
-            Dim array = (From x As EntityLDM
+        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityClusterModel), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
+            Dim array = (From x As EntityClusterModel
                          In source
                          Let path As String() = x.Cluster.Split("."c)
                          Select New __edgePath With {
