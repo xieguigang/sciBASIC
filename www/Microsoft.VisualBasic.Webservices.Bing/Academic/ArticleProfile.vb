@@ -8,7 +8,7 @@ Namespace Academic
     Public Class ArticleProfile
 
         Public Property Title As String
-        Public Property Authors As String()
+        Public Property Authors As NamedValue(Of String)()
         Public Property Abstract As String
         Public Property PubDate As Date
         Public Property Journal As String

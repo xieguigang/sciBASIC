@@ -295,7 +295,7 @@ Namespace Text.HtmlParser
 
         ' <area shape=rect	coords=40,45,168,70	href="/dbget-bin/www_bget?hsa05034"	title="hsa05034: Alcoholism" onmouseover="popupTimer(&quot;hsa05034&quot;, &quot;hsa05034: Alcoholism&quot;, &quot;#ffffff&quot;)" onmouseout="hideMapTn()" />
 
-        Const attributeParse$ = "\S+?=.+?"
+        Const attributeParse$ = "\S+?\s*[=]\s*"".+?"""
 
         <Extension>
         Private Function stripTag(ByRef tag$) As String
@@ -315,30 +315,13 @@ Namespace Text.HtmlParser
         ''' </summary>
         ''' <param name="tag$"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Iterator Function TagAttributes(tag$) As IEnumerable(Of NamedValue(Of String))
-            Dim list = Regex.Matches(tag.stripTag, attributeParse, RegexICSng).ToArray
-            Dim p%
-            Dim s$
-            Dim name$
-
-            For i As Integer = 0 To list.Length - 1
-                name = list(i)
-                p = InStr(tag, name)
-                s = Mid(tag, p)
-                s = Regex.Split(s, "\S+=").ElementAtOrDefault(1) ' value
-
-                name = name.Split("="c).First
-
-                If Not s Is Nothing Then
-                    s = s.Trim(" "c, ASCII.TAB, ASCII.Quot)
-                End If
-
-                Yield New NamedValue(Of String) With {
-                    .Name = name,
-                    .Value = s
-                }
-            Next
+        Public Function TagAttributes(tag As String) As IEnumerable(Of NamedValue(Of String))
+            Return Regex _
+                .Matches(tag.GetBetween("<", ">"), attributeParse, RegexICSng) _
+                .EachValue _
+                .Select(Function(t) t.GetTagValue("=", trim:=""""""))
         End Function
 
         ''' <summary>
