@@ -537,12 +537,15 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("wget", Info:="Download data from the specific URL location.")>
-    <Extension> Public Function DownloadFile(<Parameter("url")> strUrl As String,
+    <Extension> Public Function DownloadFile(<Parameter("url")> strUrl$,
                                              <Parameter("Path.Save", "The saved location of the downloaded file data.")>
-                                             save As String,
-                                             Optional proxy As String = Nothing,
-                                             Optional ua As String = UserAgent.FireFox,
-                                             Optional retry As Integer = 0) As Boolean
+                                             save$,
+                                             Optional proxy$ = Nothing,
+                                             Optional ua$ = UserAgent.FireFox,
+                                             Optional retry% = 0,
+                                             Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
+                                             <CallerMemberName>
+                                             Optional trace$ = Nothing) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -555,23 +558,24 @@ Public Module WebServiceUtils
 #End If
 RE0:
         Try
-            Using dwl As New WebClient()
+            Using browser As New WebClient()
                 If Not String.IsNullOrEmpty(proxy) Then
-                    Call dwl.SetProxy(proxy)
+                    Call browser.SetProxy(proxy)
                 End If
 
-                Call dwl.Headers.Add(UserAgent.UAheader, ua)
+                If Not progressHandle Is Nothing Then
+                    AddHandler browser.DownloadProgressChanged, progressHandle
+                End If
+
+                Call browser.Headers.Add(UserAgent.UAheader, ua)
                 Call save.ParentPath.MkDIR
                 Call $"{strUrl} --> {save}".__DEBUG_ECHO
-                Call dwl.DownloadFile(strUrl, save)
+                Call browser.DownloadFile(strUrl, save)
             End Using
+
             Return True
         Catch ex As Exception
-            Dim trace As String = MethodBase.GetCurrentMethod.GetFullName
-
-            Call App.LogException(
-                New Exception(strUrl, ex),
-                trace)
+            Call App.LogException(New Exception(strUrl, ex), trace)
             Call ex.PrintException
 
             If retry > 0 Then

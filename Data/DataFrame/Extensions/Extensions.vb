@@ -43,6 +43,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' The shortcuts operation for the common csv document operations.
@@ -295,7 +296,7 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As IO.File,
+    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
                                                             Optional explicit As Boolean = False,
                                                             Optional maps As Dictionary(Of String, String) = Nothing) As T()
         Dim df As DataFrame = IO.DataFrame.CreateObject(dataSet)
