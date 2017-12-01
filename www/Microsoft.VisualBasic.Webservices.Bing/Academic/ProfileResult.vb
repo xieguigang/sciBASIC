@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.HtmlParser
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -55,17 +55,42 @@ Namespace Academic
                                   Return key.GetBetween("<span class=""aca_label"">", "</span>")
                               End Function)
 
-            Dim time = contents("发表日期").GetBetween("<div>", "</div>")
-            Dim journal = contents("期　　刊").GetBetween("<div>", "</div>").GetTarget
-            Dim volumn = contents("卷　　号").GetBetween("<div>", "</div>")
-            Dim issue = contents("期　　号").GetBetween("<div>", "</div>")
-            Dim pageSpan = contents("页码范围").GetBetween("<div>", "</div>")
-            Dim citeCount = contents("被 引 量").GetBetween("<div>", "</div>")
-            Dim doi = contents("DOI").GetBetween("<div>", "</div>")
-            Dim areas = contents("研究领域") _
-                .Matches("<a .+?</a>") _
-                .Select(AddressOf GetTarget) _
-                .ToArray
+            Dim time$
+            Dim journal As NamedValue(Of String)
+            Dim volumn$
+            Dim issue$
+            Dim pageSpan$
+            Dim citeCount$
+            Dim doi$
+            Dim areas As NamedValue(Of String)()
+
+            If contents.Keys.Any(Function(fieldName) Not ASCII.IsASCIIString(fieldName)) Then
+                ' 中文的
+                time = contents("发表日期").GetBetween("<div>", "</div>")
+                journal = contents("期　　刊").GetBetween("<div>", "</div>").GetTarget
+                volumn = contents("卷　　号").GetBetween("<div>", "</div>")
+                issue = contents("期　　号").GetBetween("<div>", "</div>")
+                pageSpan = contents("页码范围").GetBetween("<div>", "</div>")
+                citeCount = contents("被 引 量").GetBetween("<div>", "</div>")
+                doi = contents("DOI").GetBetween("<div>", "</div>")
+                areas = contents("研究领域") _
+                    .Matches("<a .+?</a>") _
+                    .Select(AddressOf GetTarget) _
+                    .ToArray
+            Else
+                ' English
+                time = contents("Year").GetBetween("<div>", "</div>")
+                journal = contents("Journal").GetBetween("<div>", "</div>").GetTarget
+                volumn = contents("Volume").GetBetween("<div>", "</div>")
+                issue = contents("Issue").GetBetween("<div>", "</div>")
+                pageSpan = contents("Pages").GetBetween("<div>", "</div>")
+                citeCount = contents("Cited by").GetBetween("<div>", "</div>")
+                doi = contents("DOI").GetBetween("<div>", "</div>")
+                areas = contents("Keywords") _
+                    .Matches("<a .+?</a>") _
+                    .Select(AddressOf GetTarget) _
+                    .ToArray
+            End If
 
             Dim source = Strings _
                 .Split(html, "<div class=""aca_source"">") _

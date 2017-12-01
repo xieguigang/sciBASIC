@@ -285,6 +285,10 @@ Namespace Text
             Return sb.ToString
         End Function
 
+        Public Shared Function IsASCIIString(str As String) As Boolean
+            Return Not str.Any(Function(c) Asc(c) > 128)
+        End Function
+
         ''' <summary>
         ''' Symbols without white space.(可以印刷的ASCII符号列表)
         ''' </summary>
