@@ -465,7 +465,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     <Extension>
     Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T),
                                                       path$,
-                                                      Optional encoding As Encodings = Encodings.ASCII,
+                                                      Optional encoding As Encodings = Encodings.UTF8,
                                                       Optional KeyMap$ = Nothing,
                                                       Optional blank$ = "",
                                                       Optional reorderKeys As Integer = 0) As Boolean
@@ -507,12 +507,13 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                                Optional explicit As Boolean = False,
                                                Optional maps As Dictionary(Of String, String) = Nothing,
                                                Optional metaBlank$ = "",
-                                               Optional reorderKeys% = 0) As IO.File
+                                               Optional reorderKeys% = 0) As File
         Return Reflector.Save(
             source, explicit,
             maps:=maps,
             metaBlank:=metaBlank,
-            reorderKeys:=reorderKeys)
+            reorderKeys:=reorderKeys
+        )
     End Function
 
     ''' <summary>
