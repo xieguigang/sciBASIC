@@ -162,7 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Academic\Academic.vb" />
-    <Compile Include="Academic\ArticleInfo.vb" />
+    <Compile Include="Academic\ArticleProfile.vb" />
+    <Compile Include="Academic\ProfileResult.vb" />
     <Compile Include="BingImage.vb" />
     <Compile Include="WebResult.vb" />
     <Compile Include="SearchEngine.vb" />
