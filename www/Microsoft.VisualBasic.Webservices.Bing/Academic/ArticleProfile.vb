@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports System.Xml.Serialization
 
 Namespace Academic
 
@@ -7,37 +7,59 @@ Namespace Academic
     ''' </summary>
     Public Class ArticleProfile
 
-        Public Property Title As String
-        Public Property Authors As NamedValue(Of String)()
-        Public Property Abstract As String
+        Public Property title As String
+        Public Property URL As String
+        Public Property authors As Link()
+        Public Property abstract As String
+        <XmlElement("pub-date")>
         Public Property PubDate As Date
-        Public Property Journal As NamedValue(Of String)
+        Public Property journal As Link
         Public Property DOI As String
-        Public Property Areas As NamedValue(Of String)()
+        Public Property keywords As Link()
         ''' <summary>
         ''' 按照年计数的被引用量
         ''' </summary>
-        Public Property CitesCount As NamedValue(Of Integer)()
-        Public Property Pages As String
+        Public Property cites As cites()
+        Public Property pages As String
         ''' <summary>
         ''' 卷号
         ''' </summary>
-        Public Property Volume As String
+        Public Property volume As String
         ''' <summary>
         ''' 期号
         ''' </summary>
-        Public Property Issue As String
+        Public Property issue As String
         ''' <summary>
         ''' 有效的原文来源地址url
         ''' </summary>
-        Public Property source As NamedValue(Of String)()
-        ''' <summary>
-        ''' 文献引文的bing学术搜索的url列表
-        ''' </summary>
-        Public Property References As String()
+        Public Property source As Link()
 
         Public Overrides Function ToString() As String
-            Return Title
+            Return $"[{GetProfileID}] {title}"
         End Function
     End Class
+
+    <XmlType("link")>
+    Public Structure Link
+        <XmlAttribute> Public Property title As String
+        <XmlAttribute> Public Property attr As String
+        <XmlText>
+        Public Property href As String
+
+        Public Overrides Function ToString() As String
+            Return $"{title} ({href})"
+        End Function
+    End Structure
+
+    Public Structure cites
+
+        <XmlAttribute("date")>
+        Public Property [Date] As String
+        <XmlAttribute("volumn")>
+        Public Property Volume As Integer
+
+        Public Overrides Function ToString() As String
+            Return $"{Me.Date} := {Volume}"
+        End Function
+    End Structure
 End Namespace

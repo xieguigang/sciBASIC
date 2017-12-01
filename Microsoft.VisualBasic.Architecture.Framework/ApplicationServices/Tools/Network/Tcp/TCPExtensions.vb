@@ -186,7 +186,7 @@ Namespace Net
 #If DEBUG Then
             Call $"{MethodBase.GetCurrentMethod.GetFullName} ==> {args}".__DEBUG_ECHO
 #End If
-            Dim data = WebServiceUtils.RequestParser(args, False)
+            Dim data = WebServiceUtils.QueryStringParameters(args, False)
 #If DEBUG Then
             Call data.AllKeys.Select(Function(k) data(k)).ToArray.GetJson.__DEBUG_ECHO
 #End If

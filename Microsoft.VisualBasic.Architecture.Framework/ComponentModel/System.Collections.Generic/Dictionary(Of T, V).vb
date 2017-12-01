@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::fd7a08a46454d5221e358b5b8c20c1fb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -41,11 +42,27 @@ Namespace ComponentModel.Collection
         ' Implements IEnumerable(Of V)
 
         Default Public Overloads Property Item(o As V) As V
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return MyBase.Item(o.Key)
             End Get
             Set(value As V)
                 MyBase.Item(o.Key) = value
+            End Set
+        End Property
+
+        Default Public Overloads Property Item(key As String) As V
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                If ContainsKey(key) Then
+                    Return MyBase.Item(key)
+                Else
+                    Return Nothing
+                End If
+            End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Set(value As V)
+                MyBase.Item(key) = value
             End Set
         End Property
 
@@ -55,10 +72,11 @@ Namespace ComponentModel.Collection
         ''' <param name="keys"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(keys As IEnumerable(Of String)) As V()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return keys _
-                .Select(Function(key) MyBase.Item(key)) _
-                .ToArray
+                    .Select(Function(key) MyBase.Item(key)) _
+                    .ToArray
             End Get
             Set(value As V())
                 For Each key As SeqValue(Of String) In keys.SeqIterator
@@ -148,8 +166,8 @@ Namespace ComponentModel.Collection
         ''' <param name="success">可能value本身就是空值，所以在这里使用这个参数来判断是否存在</param>
         ''' <returns></returns>
         Public Function SafeGetValue(name As String,
-                                 Optional ByRef [default] As V = Nothing,
-                                 Optional ByRef success As Boolean = False) As V
+                                     Optional ByRef [default] As V = Nothing,
+                                     Optional ByRef success As Boolean = False) As V
             Dim x As V = Nothing
 
             success = MyBase.TryGetValue(name, x)

@@ -160,12 +160,21 @@ Public Module WebServiceUtils
     ''' <summary>
     ''' 不像<see cref="PostUrlDataParser(String, Boolean)"/>函数，这个函数不会替换掉转义字符，并且所有的Key都已经被默认转换为小写形式的了
     ''' </summary>
-    ''' <param name="argsData">URL parameters</param>
+    ''' <param name="url">URL parameters</param>
     ''' <returns></returns>
     <ExportAPI("Request.Parser")>
-    <Extension> Public Function RequestParser(argsData As String, Optional TransLower As Boolean = True) As NameValueCollection
-        Dim Tokens As String() = argsData.Split("&"c)
-        Return GenerateDictionary(Tokens, TransLower)
+    <Extension> Public Function QueryStringParameters(url$, Optional transLower As Boolean = True) As NameValueCollection
+        Dim tokens$()
+
+        With InStr(url, "://")
+            If .ref < 10 AndAlso .ref > 0 Then
+                url = url.GetTagValue("?").Value
+            End If
+
+            tokens = url.Split("&"c)
+        End With
+
+        Return GenerateDictionary(tokens, transLower)
     End Function
 
     ''' <summary>
