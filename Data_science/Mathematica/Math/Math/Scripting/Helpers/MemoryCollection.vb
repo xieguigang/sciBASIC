@@ -84,7 +84,7 @@ Namespace Scripting
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, T)) Implements IEnumerable(Of KeyValuePair(Of String, T)).GetEnumerator
-            For Each item In _objHash
+            For Each item As KeyValuePair(Of String, T) In _objHash
                 Yield item
             Next
         End Function

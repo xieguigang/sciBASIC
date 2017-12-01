@@ -87,7 +87,7 @@ Namespace DocumentStream
         Private Shared Function GetTokens(Path As String) As String()
             Dim Tokens As List(Of String) = New List(Of String)
             Dim TempChunk As String() = Path.Split(CChar("\"))
-            For Each item In TempChunk
+            For Each item As String In TempChunk
                 Call Tokens.AddRange(item.Split(CChar("/")))
             Next
 

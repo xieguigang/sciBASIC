@@ -138,16 +138,16 @@ Namespace Clustering
                           Select kernel = kk,
                               MergedInto = merged_into).ToArray
 
-            For Each item In Offset
-                If item.MergedInto Is Nothing Then '核分裂
-                    Call LQuery.Remove(item.kernel)
-                    Call LQuery.AddRange(item.kernel.Split)
+            For Each ker In Offset
+                If ker.MergedInto Is Nothing Then '核分裂
+                    Call LQuery.Remove(ker.kernel)
+                    Call LQuery.AddRange(ker.kernel.Split)
 
                     Continue For
                 End If
 
-                Call item.MergedInto.Merge(item.kernel)
-                Call LQuery.Remove(item.kernel) '移除被合并的核
+                Call ker.MergedInto.Merge(ker.kernel)
+                Call LQuery.Remove(ker.kernel) '移除被合并的核
             Next
 
             '递归聚类

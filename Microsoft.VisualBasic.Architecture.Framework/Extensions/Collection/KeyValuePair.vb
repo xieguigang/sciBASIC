@@ -44,7 +44,7 @@ Public Module KeyValuePairExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Item(Of T As INamedValue)(source As IEnumerable(Of T), key$) As T
+    Public Function KeyItem(Of T As INamedValue)(source As IEnumerable(Of T), key$) As T
         Return source _
             .Where(Function(i) i.Key = key) _
             .FirstOrDefault

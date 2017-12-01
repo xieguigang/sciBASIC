@@ -86,7 +86,7 @@ Namespace Scripting.Helpers
         Sub New(engine As Expression)
             Call MyBase.New(engine)
 
-            For Each item In SystemPrefixFunctions
+            For Each item As KeyValuePair(Of String, Func(Of Double(), Double)) In SystemPrefixFunctions
                 Call MyBase.Add(item.Key, item.Value, False, False)
             Next
             Call __buildCache()   ' A string list of available function name in visualbasic, it was sort by the length of the each function name.
