@@ -54,14 +54,14 @@ Namespace Text.HtmlParser
             If String.IsNullOrEmpty(html) Then
                 Return New String() {}
             Else
-                Dim links$() = Regex _
+                Dim links$() = r _
                     .Matches(html, HtmlLink, RegexICSng) _
                     .ToArray(AddressOf HtmlStrips.GetValue)
                 Return links
             End If
         End Function
 
-        Public Const HtmlLink As String = "<a href="".+?"">.+?</a>"
+        Public Const HtmlLink As String = "<a\s.+?</a>"
         Public Const HtmlPageTitle As String = "<title>.+</title>"
 
         ''' <summary>
@@ -70,11 +70,10 @@ Namespace Text.HtmlParser
         ''' <param name="html"></param>
         ''' <returns></returns>
         <Extension> Public Function HTMLTitle(html As String) As String
-            Dim title As String =
-                Regex.Match(html, HtmlPageTitle, RegexOptions.IgnoreCase).Value
+            Dim title$ = r.Match(html, HtmlPageTitle, RegexICSng).Value
 
             If String.IsNullOrEmpty(title) Then
-                title = "NULL_TITLE"
+                title = "null"
             Else
                 title = title.GetValue
             End If

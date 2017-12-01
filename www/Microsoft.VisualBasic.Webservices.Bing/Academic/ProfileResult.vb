@@ -9,7 +9,7 @@ Namespace Academic
     ''' <summary>
     ''' Example as:
     ''' 
-    ''' https://cn.bing.com/academic/profile?id=24ca0003c2b5935f1335003ca712b889&encoded=0&v=paper_preview&mkt=zh-cn
+    ''' https://cn.bing.com/academic/profile?id=24ca0003c2b5935f1335003ca712b889&amp;encoded=0&amp;v=paper_preview&amp;mkt=zh-cn
     ''' </summary>
     Public Module ProfileResult
 
@@ -22,8 +22,8 @@ Namespace Academic
 
             Return New NamedValue(Of String) With {
                 .Name = name,
-                .Value = attrs.Item("href").Value,
-                .Description = attrs.Item("h").Value
+                .Value = attrs.KeyItem("href").Value,
+                .Description = attrs.KeyItem("h").Value
             }
         End Function
 
@@ -40,7 +40,7 @@ Namespace Academic
                 .GetBetween(">", "<")
             Dim authors = r.Match(html, "<div class=""aca_desc b_snippet"">.+?</div>", RegexICSng) _
                 .Value _
-                .Matches("<a\s.+?</a>") _
+                .Matches(HtmlLink) _
                 .Select(AddressOf GetTarget) _
                 .ToArray
             Dim abstract$ = r.Match(html, "<span title="".+?"">", RegexICSng) _
@@ -78,24 +78,26 @@ Namespace Academic
                     .Select(AddressOf GetTarget) _
                     .ToArray
             Else
-                ' English
-                time = contents("Year").GetBetween("<div>", "</div>")
-                journal = contents("Journal").GetBetween("<div>", "</div>").GetTarget
-                volumn = contents("Volume").GetBetween("<div>", "</div>")
-                issue = contents("Issue").GetBetween("<div>", "</div>")
-                pageSpan = contents("Pages").GetBetween("<div>", "</div>")
-                citeCount = contents("Cited by").GetBetween("<div>", "</div>")
-                doi = contents("DOI").GetBetween("<div>", "</div>")
-                areas = contents("Keywords") _
-                    .Matches("<a .+?</a>") _
-                    .Select(AddressOf GetTarget) _
-                    .ToArray
+                With contents
+                    ' English
+                    time = !Year.GetBetween("<div>", "</div>")
+                    journal = !Journal.GetBetween("<div>", "</div>").GetTarget
+                    volumn = !Volume.GetBetween("<div>", "</div>")
+                    issue = !Issue.GetBetween("<div>", "</div>")
+                    pageSpan = !Pages.GetBetween("<div>", "</div>")
+                    citeCount = contents("Cited by").GetBetween("<div>", "</div>")
+                    doi = !DOI.GetBetween("<div>", "</div>")
+                    areas = !Keywords _
+                        .Matches(HtmlLink) _
+                        .Select(AddressOf GetTarget) _
+                        .ToArray
+                End With
             End If
 
             Dim source = Strings _
                 .Split(html, "<div class=""aca_source"">") _
                 .Last _
-                .Matches("<a .+?</a>", RegexICSng) _
+                .Matches(HtmlLink, RegexICSng) _
                 .Where(Function(a)
                            Return InStr(a, "</span>", CompareMethod.Text) > 0
                        End Function) _

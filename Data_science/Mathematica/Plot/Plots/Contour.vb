@@ -61,14 +61,14 @@ Public Module Contour
     Public Function Compile(exp$) As Func(Of Double, Double, Double)
         With New Expression
 
-            Call .SetVariable("x", 0)
-            Call .SetVariable("y", 0)
+            !x = 0
+            !y = 0
 
             Dim func As SimpleExpression = .Compile(exp)
 
             Return Function(x, y)
-                       Call .SetVariable("x", x)
-                       Call .SetVariable("y", y)
+                       !x = x
+                       !y = y
                        Return func.Evaluate
                    End Function
         End With

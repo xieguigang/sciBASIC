@@ -1,36 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::63832e06d0af777d217c9994a4d9f1ce, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\Expression.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Text
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.Scripting.Helpers
 Imports Microsoft.VisualBasic.Math.Scripting.Types
-Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Scripting
 
@@ -50,9 +48,11 @@ Namespace Scripting
         ''' <param name="var"></param>
         ''' <returns></returns>
         Default Public Property value(var As String) As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetValue(var)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As Double)
                 Call Variables.Set(var, value)
             End Set
@@ -78,6 +78,8 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="expr"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Evaluate(expr As String) As Double
             Return DefaultEngine.Evaluation(expr)
         End Function
@@ -92,6 +94,8 @@ Namespace Scripting
         ''' <param name="expr"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Evaluation(expr As String) As Double
             Dim sep As SimpleExpression = ExpressionParser.TryParse(expr, Me)
             Return sep.Evaluate
@@ -104,6 +108,8 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="expr$"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Compile(expr$) As SimpleExpression
             Return ExpressionParser.TryParse(expr, Me)
         End Function
@@ -124,14 +130,17 @@ Namespace Scripting
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetVariable(Name As String, expr As String)
             Call Variables.Set(Name, expr)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetVariable(name$, value#)
             Call Variables.Set(name, value)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AddConstant(Name As String, expr As String)
             Dim val As Double = Me.Evaluation(expr)
             Call Constant.Add(Name, val)
