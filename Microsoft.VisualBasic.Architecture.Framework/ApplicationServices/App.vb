@@ -155,7 +155,7 @@ Public Module App
     ''' <param name="name$"></param>
     ''' <returns></returns>
     Public Function Argument(Of T)(name$) As T
-        With CommandLine(name)
+        With CommandLine(name).DefaultValue
             If .StringEmpty Then
                 Return Nothing
             Else

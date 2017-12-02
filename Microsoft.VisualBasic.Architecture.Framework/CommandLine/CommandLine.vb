@@ -146,7 +146,7 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Default Public ReadOnly Property Item(paramName As String) As String
+        Default Public ReadOnly Property Item(paramName As String) As DefaultValue(Of String)
             Get
                 Dim LQuery As NamedValue(Of String) =
                     __arguments _
@@ -167,9 +167,14 @@ Namespace CommandLine
                     value = value.Interpolate(__envir, escape:=False)
                 End If
 
-                Return value
+                Return value.AsDefault(AddressOf assertIsNothing)
             End Get
         End Property
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function assertIsNothing(o As Object) As Boolean
+            Return o Is Nothing OrElse String.IsNullOrEmpty(DirectCast(o, String))
+        End Function
 
         ReadOnly __envir As Func(Of String, String) = AddressOf App.GetVariable
 
@@ -363,7 +368,7 @@ Namespace CommandLine
             If Me.HavebFlag(parameter) Then
                 Return True
             End If
-            Return Me(parameter).ParseBoolean
+            Return Me(parameter).DefaultValue.ParseBoolean
         End Function
 
 #Region "Pipeline"
@@ -458,7 +463,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function GetBytes(parameter As String) As Byte()
-            Dim tokens As String() = Me(parameter).Split(","c)
+            Dim tokens As String() = Me(parameter).DefaultValue.Split(","c)
             Return (From s As String In tokens Select CByte(Val(s))).ToArray
         End Function
 
@@ -489,7 +494,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function GetDateTime(parameter As String) As DateTime
-            Return Me(parameter).ParseDateTime
+            Return Me(parameter).DefaultValue.ParseDateTime
         End Function
 
         ''' <summary>

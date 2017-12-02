@@ -86,6 +86,8 @@ Namespace Language
         ''' <param name="[default]"></param>
         ''' <param name="assert"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +([default] As DefaultValue(Of T), assert As Assert(Of Object)) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .assert = assert,
@@ -118,6 +120,12 @@ Namespace Language
             End With
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Or([default] As DefaultValue(Of T), obj As T) As T
+            Return obj Or [default]
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(obj As T) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .Value = obj,
@@ -125,6 +133,12 @@ Namespace Language
             }
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType([default] As DefaultValue(Of T)) As T
+            Return [default].DefaultValue
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(lazy As Func(Of T)) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .LazyValue = lazy.AsLazy,

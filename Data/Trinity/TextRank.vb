@@ -143,7 +143,7 @@ Public Module TextRank
     End Function
 
     ''' <summary>
-    ''' Using for generate article's <see cref="NLPExtensions.Abstract(GraphMatrix, Integer, Double)"/>
+    ''' Using for generate article's <see cref="NLPExtensions.Abstract(WeightedPRGraph, Integer, Double)"/>
     ''' </summary>
     ''' <param name="text$"></param>
     ''' <param name="similarityCut#"></param>
