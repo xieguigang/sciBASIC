@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
+﻿Imports Microsoft.VisualBasic.Data.Graph
+Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module test
@@ -11,7 +12,7 @@ Module test
     End Sub
 
     Sub TestPageRank()
-        Dim g As New NetworkTables
+        Dim g As New Graph
 
         Call g.AddEdges("B", {"C"})
         Call g.AddEdges("C", {"B"})

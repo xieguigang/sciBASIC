@@ -43,6 +43,13 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
 
 #Region "Let G=(V, E) be a simple graph"
     Protected Friend edges As New Dictionary(Of Edge)
+
+    ''' <summary>
+    ''' <see cref="vertices"/>和<see cref="buffer"/>哈希表分别使用了两种属性来对节点进行索引的建立：
+    ''' 
+    ''' + <see cref="vertices"/>使用<see cref="TV.Label"/>来建立字符串索引
+    ''' + <see cref="buffer"/>使用<see cref="TV.ID"/>来建立指针的索引
+    ''' </summary>
     Protected vertices As New Dictionary(Of V)
     Protected Friend buffer As New HashList(Of V)
 #End Region
@@ -115,6 +122,22 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
             vertices += v
             buffer.Add(v)
         End If
+
+        Return Me
+    End Function
+
+    ''' <summary>
+    ''' 这个函数使用起来比较方便，但是要求节点都必须要存在于列表之中
+    ''' </summary>
+    ''' <param name="src$"></param>
+    ''' <param name="targets$"></param>
+    ''' <returns></returns>
+    Public Function AddEdges(src$, targets$()) As G
+        Dim U As V = vertices(src)
+
+        For Each V As String In targets
+            Call AddEdge(U, vertices(V))
+        Next
 
         Return Me
     End Function
