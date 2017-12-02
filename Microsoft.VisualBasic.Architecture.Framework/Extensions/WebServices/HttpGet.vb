@@ -29,7 +29,8 @@ Public Module HttpGet
                                       Optional headers As Dictionary(Of String, String) = Nothing,
                                       Optional proxy As String = Nothing,
                                       Optional doNotRetry404 As Boolean = True,
-                                      Optional UA$ = UserAgent.GoogleChrome) As String
+                                      Optional UA$ = UserAgent.GoogleChrome,
+                                      Optional refer$ = Nothing) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -52,6 +53,14 @@ Public Module HttpGet
                 Call $"URL {url.ToFileURL} can not solved on your filesystem!".Warning
                 Return ""
             End If
+        End If
+
+        If Not refer.StringEmpty Then
+            If headers Is Nothing Then
+                headers = New Dictionary(Of String, String)
+            End If
+
+            headers(NameOf(refer)) = refer
         End If
 
         Return url.__httpRequest(retry, headers, proxy, doNotRetry404, UA)

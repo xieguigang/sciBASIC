@@ -33,8 +33,8 @@ Namespace Academic
             Return article.URL.QueryStringParameters!id
         End Function
 
-        Public Function GetProfile(url As String) As ArticleProfile
-            Dim html$ = url.GET _
+        Public Function GetProfile(url As String, Optional refer$ = Nothing) As ArticleProfile
+            Dim html$ = url.GET(refer:=refer) _
                 .RemovesCSSstyles _
                 .RemovesImageLinks _
                 .RemovesHtmlHead _

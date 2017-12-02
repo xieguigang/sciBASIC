@@ -54,7 +54,10 @@ Namespace Academic
         ''' <param name="term"></param>
         ''' <returns></returns>
         Public Function Search(term As String) As NamedValue(Of String)()
-            Dim url$ = $"https://cn.bing.com/academic/search?q={term.UrlEncode}&go=Search&qs=ds&form=QBRE"
+            Return getInternal($"https://cn.bing.com/academic/search?q={term.UrlEncode}&go=Search&qs=ds&form=QBRE")
+        End Function
+
+        Private Function getInternal(url As String) As NamedValue(Of String)()
             Dim html$ = url.GET(headers:=New Dictionary(Of String, String) From {{NameOf(refer), refer}})
 
             html = html _
@@ -71,6 +74,25 @@ Namespace Academic
                 .ToArray
 
             Return list
+        End Function
+
+        Public Iterator Function Query(term$, Optional pages% = 10) As IEnumerable(Of (refer$, list As NamedValue(Of String)()))
+            Dim result As NamedValue(Of String)()
+
+            For i As Integer = 0 To pages
+                Dim page$ = i * 10 + 1
+                Dim url$ = $"https://cn.bing.com/academic/search?q={term.UrlEncode}&first={page}&go=Search&qs=ds&form=QBRE"
+
+                Try
+                    result = getInternal(url)
+                Catch ex As Exception
+                    result = {}
+                    ex = New Exception(url, ex)
+                    App.LogException(ex)
+                End Try
+
+                Yield (url, result)
+            Next
         End Function
 
         Private Function StripListItem(text As String) As NamedValue(Of String)
@@ -101,8 +123,8 @@ Namespace Academic
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function GetDetails(info As NamedValue(Of String)) As ArticleProfile
-            Return ProfileResult.GetProfile(info.Value)
+        Public Function GetDetails(info As NamedValue(Of String), Optional refer$ = Nothing) As ArticleProfile
+            Return ProfileResult.GetProfile(info.Value, refer)
         End Function
     End Module
 End Namespace
