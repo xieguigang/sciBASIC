@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace Analysis.PageRank
 
@@ -43,7 +42,7 @@ Namespace Analysis.PageRank
                 Call AddVertex(id:=j)
             End If
 
-            Return AddEdge(buffer(i).Label, buffer(j).Label)
+            Return AddEdge(buffer(i).Label, buffer(j).Label, weight)
         End Function
 
         Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As WeightedPRGraph
