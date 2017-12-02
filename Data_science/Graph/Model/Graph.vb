@@ -38,13 +38,13 @@ Imports TV = Microsoft.VisualBasic.Data.Graph.Vertex
 ''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
 ''' that Is, it has no multiple edges And no self-loops.
 ''' </summary>
-Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of Vertex)}, G As Graph(Of V, Edge, G))
+Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G As Graph(Of V, Edge, G))
     Implements IEnumerable(Of Edge)
 
 #Region "Let G=(V, E) be a simple graph"
-    Dim edges As New Dictionary(Of Edge)
-    Dim vertices As New Dictionary(Of V)
-    Dim buffer As New HashList(Of V)
+    Protected Friend edges As New Dictionary(Of Edge)
+    Protected vertices As New Dictionary(Of V)
+    Protected Friend buffer As New HashList(Of V)
 #End Region
 
     Public ReadOnly Property Size As (Vertex%, Edges%)
@@ -92,7 +92,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of Vertex)}
     End Function
 
     Public Function AddVertex(label$) As V
-        With New Vertex With {
+        With New V With {
             .ID = buffer.GetAvailablePos,
             .Label = label
         }
@@ -120,7 +120,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of Vertex)}
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function AddEdge(i%, j%, Optional weight# = 0) As G
+    Public Overridable Function AddEdge(i%, j%, Optional weight# = 0) As G
         edges += New Edge With {
             .U = buffer(i),
             .V = buffer(j),

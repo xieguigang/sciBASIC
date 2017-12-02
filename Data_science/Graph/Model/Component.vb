@@ -56,6 +56,11 @@ Public Class Vertex : Implements INamedValue
 End Class
 
 Public Class Edge : Inherits Edge(Of V)
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function EdgeKey(U%, V%) As String
+        Return $"{U}-{V}"
+    End Function
 End Class
 
 ''' <summary>
@@ -84,7 +89,7 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
     Friend Property Key As String Implements IKeyedEntity(Of String).Key
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return $"{U.ID}-{V.ID}"
+            Return Edge.EdgeKey(U.ID, V.ID)
         End Get
         Set(value As String)
             ' DO Nothing
