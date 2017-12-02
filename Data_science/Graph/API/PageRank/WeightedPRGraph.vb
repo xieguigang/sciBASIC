@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports WeightTable = System.Collections.Generic.Dictionary(Of Integer, Double)
 
 Namespace Analysis.PageRank
 
@@ -9,7 +10,7 @@ Namespace Analysis.PageRank
 
         Public Property Weight As Double
         Public Property Outbound As Double
-        Public Property ConnectedTargets As Dictionary(Of Integer, Double)
+        Public Property ConnectedTargets As WeightTable
 
     End Class
 
@@ -20,7 +21,7 @@ Namespace Analysis.PageRank
             Dim v As New WeightedPRNode With {
                 .ID = id,
                 .Label = id,
-                .ConnectedTargets = New Dictionary(Of Integer, Double)
+                .ConnectedTargets = New WeightTable
             }
             Call AddVertex(v)
         End Sub
@@ -45,9 +46,16 @@ Namespace Analysis.PageRank
             Return AddEdge(buffer(i).Label, buffer(j).Label, weight)
         End Function
 
+        ''' <summary>
+        ''' <paramref name="u"/>和<paramref name="v"/>都是<see cref="WeightedPRNode.Label"/>
+        ''' </summary>
+        ''' <param name="u"></param>
+        ''' <param name="v"></param>
+        ''' <param name="weight"></param>
+        ''' <returns></returns>
         Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As WeightedPRGraph
-            Dim edgeKey$ = Edge.EdgeKey(u, v)
             Dim j% = vertices(v).ID
+            Dim edgeKey$ = Edge.EdgeKey(vertices(u).ID, j)
 
             vertices(u).Outbound += weight
 
@@ -57,6 +65,10 @@ Namespace Analysis.PageRank
 
             With edges(edgeKey)
                 .Weight += weight
+
+                If .U.ConnectedTargets Is Nothing Then
+                    .U.ConnectedTargets = New WeightTable
+                End If
 
                 If Not .U.ConnectedTargets.ContainsKey(j) Then
                     .U.ConnectedTargets.Add(j, 0)
@@ -91,7 +103,11 @@ Namespace Analysis.PageRank
 
             For Each vertex As WeightedPRNode In g _
                 .Vertex _
-                .Where(Function(v) v.ConnectedTargets.Count > 0) _
+                .Where(Function(v)
+                           Return Not v _
+                               .ConnectedTargets _
+                               .IsNullOrEmpty
+                       End Function) _
                 .ToArray
 
                 If vertex.Outbound > 0 Then
@@ -103,11 +119,15 @@ Namespace Analysis.PageRank
 
             For Each vertex As WeightedPRNode In g.Vertex
                 vertex.Weight = inverse
+
+                If vertex.ConnectedTargets Is Nothing Then
+                    vertex.ConnectedTargets = New WeightTable
+                End If
             Next
 
             Do While d >= e
 
-                Dim nodes As New Dictionary(Of Integer, Double)
+                Dim nodes As New WeightTable
                 Dim leak# = 0
 
                 For Each v As WeightedPRNode In g.Vertex
@@ -139,6 +159,8 @@ Namespace Analysis.PageRank
                 Next
             Loop
 
+            ' 在这里不可以按照weight从大到小排序，因为这会打乱原文的顺序，
+            ' 可能会造成NLP模块所产生的摘要文本语句之间的逻辑不顺
             Return g _
                 .Vertex _
                 .ToDictionary(Function(v) v.Label,

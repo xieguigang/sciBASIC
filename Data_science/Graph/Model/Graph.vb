@@ -99,14 +99,24 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         Return edges.ContainsKey(edge.Key)
     End Function
 
-    Public Function AddVertex(label$) As V
-        With New V With {
-            .ID = buffer.GetAvailablePos,
-            .Label = label
-        }
-            Call AddVertex(.ref)
-            Return .ref
-        End With
+    ''' <summary>
+    ''' 假若目标<paramref name="label"/>已经存在于顶点列表<see cref="vertices"/>之中，
+    ''' 那么将不会添加新的节点而是直接返回原来已经存在的节点
+    ''' </summary>
+    ''' <param name="label$"></param>
+    ''' <returns></returns>
+    Public Function AddVertex(label As String) As V
+        If vertices.ContainsKey(label) Then
+            Return vertices(label)
+        Else
+            With New V With {
+                .ID = buffer.GetAvailablePos,
+                .Label = label
+            }
+                Call AddVertex(.ref)
+                Return .ref
+            End With
+        End If
     End Function
 
     Public Function AddEdge(u As V, v As V, Optional weight# = 0) As G

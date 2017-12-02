@@ -85,7 +85,9 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
     ''' ReadOnly unique-ID
     ''' </summary>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' 唯一标识符使用的是<see cref="V"/>的ID属性，而不是使用Label生成的
+    ''' </remarks> 
     Friend Property Key As String Implements IKeyedEntity(Of String).Key
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get

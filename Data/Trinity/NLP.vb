@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 从现有的理论和技术现状看，通用的、高质量的自然语言处理系统，仍然是较长期的努力目标，
@@ -102,6 +103,14 @@ Public Module NLPExtensions
     ''' <returns></returns>
     <Extension> Public Function Abstract(text As WeightedPRGraph, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
         Dim result As Dictionary(Of String, Double) = text.Rank
+
+#If DEBUG Then
+        Call result _
+            .OrderByDescending(Function(v) v.Value) _
+            .ToDictionary _
+            .GetJson(indent:=True) _
+            .__DEBUG_ECHO
+#End If
 
         Return result _
             .Subset(Function(sentence, w)
