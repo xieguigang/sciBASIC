@@ -296,20 +296,28 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
+    ''' + C:\
+    ''' + AB:\
+    ''' + AB2:\
+    ''' + etc...
+    ''' </summary>
+    Const DriveLabel$ = "[a-zA-Z]([a-zA-Z0-9])*"
+
+    ''' <summary>
     ''' File path illegal?
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
     <ExportAPI("Path.Illegal?")>
     <Extension> Public Function PathIllegal(path As String) As Boolean
-        Dim tokens As String() = Strings.Split(path.Replace("\", "/"), ":/")
+        Dim tokens$() = Strings.Split(path.Replace("\", "/"), ":/")
 
         If tokens.Length > 2 Then  ' 有多余一个的驱动器符，则肯定是非法的路径格式
             Return False
         ElseIf tokens.Length = 2 Then
             ' 完整路径
             ' 当有很多个驱动器的时候，这里会不止一个字母
-            If Regex.Match(tokens(0), "[a-Z0-9]+", RegexICSng).Value <> tokens(0) Then
+            If Not tokens(0).IsPattern(DriveLabel, RegexICSng) Then
                 ' 开头的驱动器的符号不正确
                 Return False
             Else
