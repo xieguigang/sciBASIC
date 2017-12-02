@@ -53,4 +53,31 @@ Dim result = matrix.TranslateVector(pr.ComputePageRank)
 }
 ```
 
+### Weighted PageRank
+
+```vbnet
+Dim graph As New WeightedPRGraph
+
+graph.AddEdge(1, 2, 1.0)
+graph.AddEdge(1, 3, 2.0)
+graph.AddEdge(2, 3, 3.0)
+graph.AddEdge(2, 4, 4.0)
+graph.AddEdge(3, 1, 5.0)
+
+Dim ranks = graph.Rank(0.85, 0.000001)
+
+Call ranks.GetJson(True).EchoLine
+```
+
+###### Output
+
+```json
+{
+    "1": 0.34983779905464363,
+    "2": 0.1688733284604475,
+    "3": 0.32951218494838491,
+    "4": 0.15177668753652385
+}
+```
+
 ![](./pagerank-result.png)
