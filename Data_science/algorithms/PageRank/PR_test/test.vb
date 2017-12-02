@@ -5,7 +5,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module test
 
     Sub Main()
+
+        Call "PageRank:".__DEBUG_ECHO
         Call TestPageRank()
+        Call "Weighted PageRank:".__DEBUG_ECHO
         Call Test_weightedPR()
 
         Pause()
@@ -13,6 +16,10 @@ Module test
 
     Sub TestPageRank()
         Dim g As New Graph
+
+        For Each label In "ABCDEFGHIJK"
+            Call g.AddVertex(CStr(label))
+        Next
 
         Call g.AddEdges("B", {"C"})
         Call g.AddEdges("C", {"B"})

@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports TV = Microsoft.VisualBasic.Data.Graph.Vertex
 
 ''' <summary>
@@ -134,6 +135,12 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' <returns></returns>
     Public Function AddEdges(src$, targets$()) As G
         Dim U As V = vertices(src)
+
+        If U Is Nothing Then
+            Throw New EntryPointNotFoundException($"Source vertex {src} is not found!")
+        ElseIf targets.Any(Function(v) Not vertices.ContainsKey(v)) Then
+            Throw New EntryPointNotFoundException($"At least one of the target vertex in {targets.GetJson} is not found!")
+        End If
 
         For Each V As String In targets
             Call AddEdge(U, vertices(V))
