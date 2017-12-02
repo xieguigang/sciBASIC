@@ -167,7 +167,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' <param name="v$"></param>
     ''' <param name="weight#"></param>
     ''' <returns></returns>
-    Public Function AddEdge(u$, v$, Optional weight# = 0) As G
+    Public Overridable Function AddEdge(u$, v$, Optional weight# = 0) As G
         edges += CreateEdge(u, v, weight)
         Return Me
     End Function

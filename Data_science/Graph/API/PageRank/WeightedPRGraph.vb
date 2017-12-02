@@ -39,16 +39,21 @@ Namespace Analysis.PageRank
                 Call AddVertex(id:=i)
             End If
 
-            buffer(i).Outbound += weight
-
             If Not buffer.Contains(j) Then
                 Call AddVertex(id:=j)
             End If
 
-            Dim edgeKey$ = Edge.EdgeKey(i, j)
+            Return AddEdge(buffer(i).Label, buffer(j).Label)
+        End Function
+
+        Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As WeightedPRGraph
+            Dim edgeKey$ = Edge.EdgeKey(u, v)
+            Dim j% = vertices(v).ID
+
+            vertices(u).Outbound += weight
 
             If Not edges.ContainsKey(edgeKey) Then
-                Call AddEdge(buffer(i), buffer(j))
+                Call AddEdge(vertices(u), vertices(v))
             End If
 
             With edges(edgeKey)
