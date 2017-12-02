@@ -12,11 +12,12 @@ Namespace Academic
                     Try
                         With url.GetDetails(refer:=entry.refer)
                             Dim path$
+                            Dim id$ = .GetProfileID
 
                             If flat Then
-                                path = $"{out}/{ .GetProfileID}.xml"
+                                path = $"{out}/{id}.xml"
                             Else
-                                path = $"{out}/{Mid(.GetProfileID, 3)}/{ .GetProfileID}.xml"
+                                path = $"{out}/{Mid(id, 1, 3)}/{id}.xml"
                             End If
 
                             Call .GetXml _

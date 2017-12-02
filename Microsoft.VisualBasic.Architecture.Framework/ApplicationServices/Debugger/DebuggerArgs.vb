@@ -232,6 +232,9 @@ Namespace ApplicationServices.Debugging
                     App.CurrentDirectory = vars("setwd")
                     Call $"[Config] current_work_directory={App.CurrentDirectory}".__INFO_ECHO
                 End If
+                If vars.ContainsKey("buffer_size") Then
+                    Call App.SetBufferSize(vars!buffer_size)
+                End If
             End If
 
             ' /@var=name "value"
