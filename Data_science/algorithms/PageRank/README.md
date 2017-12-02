@@ -19,7 +19,7 @@ It is not the only algorithm used by Google to order search engine results, but 
 Dim g As New Graph
 
 For Each label In "ABCDEFGHIJK"
-	Call g.AddVertex(CStr(label))
+    Call g.AddVertex(CStr(label))
 Next
 
 Call g.AddEdges("B", {"C"})
