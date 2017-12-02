@@ -47,7 +47,7 @@ Public Module NLPExtensions
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="keywordsSet"></param>
+    ''' <param name="keywordsSet">Selects from the output result of <see cref="NLPExtensions.KeyWords(GraphMatrix)"/></param>
     ''' <returns></returns>
     <Extension>
     Public Function KeyPhrases(originalText$, keywordsSet As IEnumerable(Of String), Optional minOccurNum% = 2) As IEnumerable(Of String)
@@ -100,13 +100,12 @@ Public Module NLPExtensions
     ''' </summary>
     ''' <param name="text"></param>
     ''' <returns></returns>
-    <Extension> Public Function Abstract(text As GraphMatrix, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
-        Dim result = text.TranslateVector(New PageRank(text).ComputePageRank, True)
+    <Extension> Public Function Abstract(text As WeightedPRGraph, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
+        Dim result As Dictionary(Of String, Double) = text.Rank
 
         Return result _
             .Subset(Function(sentence, w)
-                        Return sentence.Words.Length >= minWords AndAlso w >= minWords
-                    End Function) _
-            .ToDictionary
+                        Return sentence.Words.Length >= minWords AndAlso w >= minWeight
+                    End Function)
     End Function
 End Module
