@@ -78,6 +78,8 @@ Namespace Analysis.PageRank
         ''' <param name="a#">(alpha) Is the damping factor, usually set to 0.85.</param>
         ''' <param name="e#">(epsilon) Is the convergence criteria, usually set to a tiny value.</param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function Rank(g As WeightedPRGraph, Optional a# = 0.85, Optional e# = 0.000001) As Dictionary(Of String, Double)
             Dim d# = 1
             Dim inverse# = 1 / g.Vertex.Length

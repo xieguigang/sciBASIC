@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{06DD75F9-A007-4D93-AB20-86554B4E2973}</ProjectGuid>
+    <ProjectGuid>{1171C397-3AF1-4DBD-8E8C-E93E3A96FA89}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.DijkstraTest</StartupObject>
-    <RootNamespace>Testing</RootNamespace>
-    <AssemblyName>Testing</AssemblyName>
+    <StartupObject>Sub Main</StartupObject>
+    <RootNamespace>PR_test</RootNamespace>
+    <AssemblyName>PR_test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Testing.xml</DocumentationFile>
+    <DocumentationFile>PR_test.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Testing.xml</DocumentationFile>
+    <DocumentationFile>PR_test.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -69,8 +69,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DijkstraTest.vb" />
-    <Compile Include="TreeTest.vb" />
+    <Compile Include="test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -108,17 +107,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Graph.vbproj">
+    <ProjectReference Include="..\..\..\Graph\Graph.vbproj">
       <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
       <Name>Graph</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
+      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
+      <Name>math-core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
