@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace Analysis.PageRank
 
@@ -29,9 +30,9 @@ Namespace Analysis.PageRank
         ''' Link creates a weighted edge between a source-target node pair.
         ''' If the edge already exists, the weight is incremented.
         ''' </summary>
-        ''' <param name="i%"></param>
-        ''' <param name="j%"></param>
-        ''' <param name="weight#"></param>
+        ''' <param name="i%">The source</param>
+        ''' <param name="j%">The target</param>
+        ''' <param name="weight#">Weight value of this edge, default is no weight.</param>
         ''' <returns></returns>
         Public Overrides Function AddEdge(i%, j%, Optional weight# = 0) As WeightedPRGraph
             If Not buffer.Contains(i) Then
@@ -84,10 +85,14 @@ Namespace Analysis.PageRank
             Dim d# = 1
             Dim inverse# = 1 / g.Vertex.Length
 
-            For Each edge As Edge(Of WeightedPRNode) In g.edges.Values.ToArray
-                If edge.U.Outbound > 0 Then
-                    For Each target In edge.U.ConnectedTargets.Keys.ToArray
-                        edge.U.ConnectedTargets(target) /= edge.U.Outbound
+            For Each vertex As WeightedPRNode In g _
+                .Vertex _
+                .Where(Function(v) v.ConnectedTargets.Count > 0) _
+                .ToArray
+
+                If vertex.Outbound > 0 Then
+                    For Each target In vertex.ConnectedTargets.Keys.ToArray
+                        vertex.ConnectedTargets(target) /= vertex.Outbound
                     Next
                 End If
             Next
@@ -113,10 +118,10 @@ Namespace Analysis.PageRank
 
                 leak *= a
 
-                For Each edge In g.edges.Values.ToArray
-                    Dim source As Integer = edge.U.ID
+                For Each edge As WeightedPRNode In g.Vertex
+                    Dim source As Integer = edge.ID
 
-                    For Each map In edge.U.ConnectedTargets
+                    For Each map In edge.ConnectedTargets
                         g.buffer(map.Key).Weight += a * nodes(source) * map.Value ' weight 
                     Next
 
