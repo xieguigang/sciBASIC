@@ -16,7 +16,11 @@ It is not the only algorithm used by Google to order search engine results, but 
 ##### Code Usage
 
 ```vbnet
-Dim g As New Network
+Dim g As New Graph
+
+For Each label In "ABCDEFGHIJK"
+	Call g.AddVertex(CStr(label))
+Next
 
 Call g.AddEdges("B", {"C"})
 Call g.AddEdges("C", {"B"})
