@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 
 Module Extensions
 

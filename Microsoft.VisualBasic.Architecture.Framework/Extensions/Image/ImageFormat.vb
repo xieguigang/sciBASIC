@@ -31,7 +31,7 @@ Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
-Imports defaultFormat = Microsoft.VisualBasic.Language.DefaultValue(Of System.Drawing.Imaging.ImageFormat)
+Imports defaultFormat = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Drawing.Imaging.ImageFormat)
 
 Namespace Imaging
 

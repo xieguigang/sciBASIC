@@ -27,6 +27,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Language.Perl

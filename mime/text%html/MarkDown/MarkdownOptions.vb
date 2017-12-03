@@ -26,8 +26,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MarkDown

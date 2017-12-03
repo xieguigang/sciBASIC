@@ -30,8 +30,9 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting.Runtime.NumberConversionRoutines
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel
 

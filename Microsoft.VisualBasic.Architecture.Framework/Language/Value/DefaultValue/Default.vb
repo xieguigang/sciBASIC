@@ -28,18 +28,23 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Perl
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Language
+Namespace Language.Default
 
     Public Delegate Function Assert(Of T)(obj As T) As Boolean
+
+    Public Interface IDefaultValue(Of T)
+        ReadOnly Property DefaultValue As T
+    End Interface
 
     ''' <summary>
     ''' The default value
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure DefaultValue(Of T)
+    Public Structure DefaultValue(Of T) : Implements IDefaultValue(Of T)
 
-        Public ReadOnly Property DefaultValue As T
+        Public ReadOnly Property DefaultValue As T Implements IDefaultValue(Of T).DefaultValue
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If LazyValue Is Nothing Then

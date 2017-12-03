@@ -41,6 +41,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
@@ -56,6 +57,8 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' ```
 ''' </summary>
 Public Module BoxPlot
+
+    ReadOnly Zero As DefaultValue(Of Double()) = LanguageAPI.[Default]({0R}, Function(x) TryCast(x, Double()).IsNullOrEmpty)
 
     <Extension> Public Function Plot(data As BoxData,
                                      Optional size$ = "3000,2700",
@@ -88,7 +91,7 @@ Public Module BoxPlot
             .IteratesALL _
             .Range _
             .CreateAxisTicks
-        Dim ranges As DoubleRange = ticks Or [Default]({0R}, Function(x) TryCast(x, Double()).IsNullOrEmpty)
+        Dim ranges As DoubleRange = ticks Or Zero
 
         ranges *= rangeScale
 

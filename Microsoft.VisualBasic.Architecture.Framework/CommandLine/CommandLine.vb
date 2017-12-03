@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f45f96dc9be1b86fccbc6c5a36fb32aa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
@@ -134,6 +135,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property CLICommandArgvs As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _CLICommandArgvs
             End Get
@@ -146,7 +148,7 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Default Public ReadOnly Property Item(paramName As String) As DefaultValue(Of String)
+        Default Public ReadOnly Property Item(paramName As String) As DefaultString
             Get
                 Dim LQuery As NamedValue(Of String) =
                     __arguments _
@@ -167,14 +169,9 @@ Namespace CommandLine
                     value = value.Interpolate(__envir, escape:=False)
                 End If
 
-                Return value.AsDefault(AddressOf assertIsNothing)
+                Return New DefaultString(value)
             End Get
         End Property
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function assertIsNothing(o As Object) As Boolean
-            Return o Is Nothing OrElse String.IsNullOrEmpty(DirectCast(o, String))
-        End Function
 
         ReadOnly __envir As Func(Of String, String) = AddressOf App.GetVariable
 
@@ -617,7 +614,7 @@ Namespace CommandLine
                 Return [default]
             End If
 
-            Dim str As String = Me(name)
+            Dim str As String = Me(name).DefaultValue
 
             If __ctype Is Nothing Then
                 Dim value As Object = InputHandler.CTypeDynamic(str, GetType(T))

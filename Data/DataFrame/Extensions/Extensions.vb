@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -58,6 +59,18 @@ Public Module Extensions
     Sub New()
         Call __initStreamIO_pointer()
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function LoadCsv(Of T As Class)(path As DefaultString) As List(Of T)
+        Return path.DefaultValue.LoadCsv(Of T)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function LoadTsv(Of T As Class)(path As DefaultString) As T()
+        Return path.DefaultValue.LoadTsv(Of T)
+    End Function
 
     ''' <summary>
     ''' Anonymous type data reader helper.(System.MissingMethodException occurred

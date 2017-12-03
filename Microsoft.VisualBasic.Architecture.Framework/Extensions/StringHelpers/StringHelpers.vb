@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -52,6 +53,11 @@ Public Module StringHelpers
     <Extension>
     Public Function CreateBuilder(s As String) As StringBuilder
         Return New StringBuilder(s)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function IgnoreCase(flag As Boolean) As CompareMethod
+        Return If(flag, CompareMethod.Text, CompareMethod.Binary)
     End Function
 
     ''' <summary>

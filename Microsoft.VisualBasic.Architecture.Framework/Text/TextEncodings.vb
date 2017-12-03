@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports defaultEncoding = Microsoft.VisualBasic.Language.DefaultValue(Of System.Text.Encoding)
+Imports defaultEncoding = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Text.Encoding)
 
 Namespace Text
 

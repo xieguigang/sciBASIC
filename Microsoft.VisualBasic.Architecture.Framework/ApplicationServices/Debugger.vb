@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime

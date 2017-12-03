@@ -36,6 +36,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 

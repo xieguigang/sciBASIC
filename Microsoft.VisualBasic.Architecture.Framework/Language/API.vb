@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
