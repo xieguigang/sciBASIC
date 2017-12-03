@@ -270,7 +270,10 @@ Public Module NetworkVisualizer
                         r = minRadius
                     End If
 
-                    br = n.Data.Color Or New SolidBrush(defaultColor).AsDefault(Function() n.Data.Color Is Nothing)
+                    With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
+                        br = n.Data.Color Or .ref
+                    End With
+
                     pt = scalePos(n)
                     With pt
                         pt = New Point(.X - r / 2, .Y - r / 2)
