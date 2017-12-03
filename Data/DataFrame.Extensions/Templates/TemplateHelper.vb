@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be8539d53d21392cc1ad57e163220850, ..\sciBASIC#\Data\DataFrame.Extensions\Templates\TemplateHelper.vb"
+﻿#Region "Microsoft.VisualBasic::3d81155e61152ed021bd0ef6a9827699, ..\sciBASIC#\Data\DataFrame.Extensions\Templates\TemplateHelper.vb"
 
     ' Author:
     ' 

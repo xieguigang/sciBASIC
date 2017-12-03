@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cd4bef24619c7702a054b8a553055e4, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\PrimaryTagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::6cd4bef24619c7702a054b8a553055e4, ..\sciBASIC#\mime\text%yaml\Syntax\PrimaryTagHandle.vb"
 
     ' Author:
     ' 

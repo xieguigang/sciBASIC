@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cb0d79fc161698b79a4724e1d832d40, ..\sciBASIC#\gr\Datavisualization.Network\Test\Test.vb"
+﻿#Region "Microsoft.VisualBasic::0378bf7dd09f266d4aeeff48a9d6652f, ..\sciBASIC#\gr\Datavisualization.Network\Test\Test.vb"
 
     ' Author:
     ' 

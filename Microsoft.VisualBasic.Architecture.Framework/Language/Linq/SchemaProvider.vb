@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de66595ff2db0650f0056e0557a864f2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::50eb4e68e7bee4a4903075f200fa275f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\SchemaProvider.vb"
 
     ' Author:
     ' 

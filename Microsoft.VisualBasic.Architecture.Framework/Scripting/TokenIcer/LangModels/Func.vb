@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7a6d7b9dcce1a2f44751f2582af6443, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LangModels\Func.vb"
+﻿#Region "Microsoft.VisualBasic::d5519a2c49b159bbff5ad5c5d19d303a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LangModels\Func.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1bb4c916d2b2d3ed75212bd230df7bb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::98d9e84c6c3a0521a7e60fd33f51e964, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Extensions.vb"
 
     ' Author:
     ' 

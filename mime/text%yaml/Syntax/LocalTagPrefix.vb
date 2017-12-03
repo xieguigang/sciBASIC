@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b28d34c90d5ed48480add1d7e04eaba, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\LocalTagPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::1b28d34c90d5ed48480add1d7e04eaba, ..\sciBASIC#\mime\text%yaml\Syntax\LocalTagPrefix.vb"
 
     ' Author:
     ' 

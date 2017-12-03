@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::311027726400e182e36070db01a089bf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::3ea81781f3ad09f04e2f124c5f42d473, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
     ' Author:
     ' 

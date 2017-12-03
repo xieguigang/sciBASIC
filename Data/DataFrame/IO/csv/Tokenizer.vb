@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99c2f295c4b72016dfcbfc00297eaafa, ..\sciBASIC#\Data\DataFrame\IO\csv\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::a75ec8e59518544fa95d4c840d5bb2a2, ..\sciBASIC#\Data\DataFrame\IO\csv\Tokenizer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05c84cf95e8d52642ea7710326335b83, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ZScores.vb"
+﻿#Region "Microsoft.VisualBasic::61bd59fbc281eebc3e0f1ee396135ec0, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ZScores.vb"
 
     ' Author:
     ' 

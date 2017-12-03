@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f0448aaa4250e781b625c3fb7a5fcc0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::6535c58bcf692eae23d442d3659175c8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 

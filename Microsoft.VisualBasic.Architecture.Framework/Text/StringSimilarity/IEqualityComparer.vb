@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::293384dd5db8c84cfb33172e73903674, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\IEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::274f12e6ed9f6f3adf2e862cd15cd5df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\IEqualityComparer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2737da606b1694e22ab666d48243974, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\LanguageHelper\StringResources.vb"
+﻿#Region "Microsoft.VisualBasic::ba85f5e7914cccfad1a4a2adcb3d9fac, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\LanguageHelper\StringResources.vb"
 
     ' Author:
     ' 

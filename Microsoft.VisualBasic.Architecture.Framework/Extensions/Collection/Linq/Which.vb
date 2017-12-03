@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::345f4e30f824de65a69591cdb80d8b23, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Which.vb"
+﻿#Region "Microsoft.VisualBasic::2b3827446fc900809b2eb22ff43ea695, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Which.vb"
 
     ' Author:
     ' 

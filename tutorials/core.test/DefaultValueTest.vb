@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b40107c81ddc775e65ec933db6eaa70a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\DefaultValueTest.vb"
+﻿#Region "Microsoft.VisualBasic::b40107c81ddc775e65ec933db6eaa70a, ..\sciBASIC#\tutorials\core.test\DefaultValueTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b23e537755fd42b894c1f2692db6397b, ..\sciBASIC#\Data_science\Bootstrapping\Sampling.vb"
+﻿#Region "Microsoft.VisualBasic::d5a1978ae8c3416b151020efab6b413d, ..\sciBASIC#\Data_science\Bootstrapping\Sampling.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Public Module Sampling
         End With
     End Function
 End Module
-

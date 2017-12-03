@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4815e79491b4be5e69b9fdccb4a137cd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Uid.vb"
+﻿#Region "Microsoft.VisualBasic::34278e2f17d90c572007b17f53677f36, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Uid.vb"
 
     ' Author:
     ' 
