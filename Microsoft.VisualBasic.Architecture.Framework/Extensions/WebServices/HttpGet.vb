@@ -1,4 +1,32 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::4930905cdefb8671bb769c5a9e229783, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\HttpGet.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.IO
 Imports System.Net
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -29,7 +57,8 @@ Public Module HttpGet
                                       Optional headers As Dictionary(Of String, String) = Nothing,
                                       Optional proxy As String = Nothing,
                                       Optional doNotRetry404 As Boolean = True,
-                                      Optional UA$ = UserAgent.GoogleChrome) As String
+                                      Optional UA$ = UserAgent.GoogleChrome,
+                                      Optional refer$ = Nothing) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -52,6 +81,14 @@ Public Module HttpGet
                 Call $"URL {url.ToFileURL} can not solved on your filesystem!".Warning
                 Return ""
             End If
+        End If
+
+        If Not refer.StringEmpty Then
+            If headers Is Nothing Then
+                headers = New Dictionary(Of String, String)
+            End If
+
+            headers(NameOf(refer)) = refer
         End If
 
         Return url.__httpRequest(retry, headers, proxy, doNotRetry404, UA)
@@ -129,3 +166,4 @@ RETRY:      Return __get(url, headers, proxy, UA)
         End Using
     End Function
 End Module
+

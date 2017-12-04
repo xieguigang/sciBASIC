@@ -1,45 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::df81643b03c44a190d7685bb4893e39b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Default.vb"
+﻿#Region "Microsoft.VisualBasic::ccd512b813fadddfb3e2b4436a5b98c9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\DefaultValue\Default.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Perl
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Language
+Namespace Language.Default
 
     Public Delegate Function Assert(Of T)(obj As T) As Boolean
+
+    Public Interface IDefaultValue(Of T)
+        ReadOnly Property DefaultValue As T
+    End Interface
 
     ''' <summary>
     ''' The default value
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure DefaultValue(Of T)
+    Public Structure DefaultValue(Of T) : Implements IDefaultValue(Of T)
 
-        Public ReadOnly Property DefaultValue As T
+        Public ReadOnly Property DefaultValue As T Implements IDefaultValue(Of T).DefaultValue
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If LazyValue Is Nothing Then
@@ -86,6 +91,8 @@ Namespace Language
         ''' <param name="[default]"></param>
         ''' <param name="assert"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +([default] As DefaultValue(Of T), assert As Assert(Of Object)) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .assert = assert,
@@ -118,6 +125,12 @@ Namespace Language
             End With
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Or([default] As DefaultValue(Of T), obj As T) As T
+            Return obj Or [default]
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(obj As T) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .Value = obj,
@@ -125,6 +138,12 @@ Namespace Language
             }
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType([default] As DefaultValue(Of T)) As T
+            Return [default].DefaultValue
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(lazy As Func(Of T)) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .LazyValue = lazy.AsLazy,

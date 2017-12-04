@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::833e8777434184329ef8dcf6681db1d6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::3db7eb045625aaa05856e5bf57081070, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\StringHelpers.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -52,6 +53,11 @@ Public Module StringHelpers
     <Extension>
     Public Function CreateBuilder(s As String) As StringBuilder
         Return New StringBuilder(s)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function IgnoreCase(flag As Boolean) As CompareMethod
+        Return If(flag, CompareMethod.Text, CompareMethod.Binary)
     End Function
 
     ''' <summary>
@@ -307,6 +313,8 @@ Public Module StringHelpers
     ''' <param name="s1"></param>
     ''' <param name="s2"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function TextEquals(s1$, s2$) As Boolean
         'If {s1, s2}.All(Function(s) s Is Nothing) Then
@@ -546,6 +554,10 @@ Public Module StringHelpers
     Public Function GetBetween(str$, strStart$, strEnd$) As String
         Dim start%, end%
 
+        If str.StringEmpty Then
+            Return Nothing
+        End If
+
         If str.Contains(strStart) AndAlso str.Contains(strEnd) Then
             start = str.IndexOf(strStart, 0) + strStart.Length
             [end] = str.IndexOf(strEnd, start)
@@ -638,6 +650,8 @@ Public Module StringHelpers
     ''' <param name="str"></param>
     ''' <param name="regex"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Matched?")>
     <Extension> Public Function MatchPattern(str$, regex$, Optional opt As RegexOptions = RegexICSng) As Boolean
         Return r.Match(str, regex).Success
@@ -654,7 +668,11 @@ Public Module StringHelpers
     <Extension> Public Function Match(<Parameter("input", "The string to search for a match.")> input$,
                                       <Parameter("Pattern", "The regular expression pattern to match.")> pattern$,
                                       Optional options As RegexOptions = RegexOptions.Multiline) As String
-        Return Regex.Match(input, pattern, options).Value
+        If input.StringEmpty Then
+            Return ""
+        Else
+            Return r.Match(input, pattern, options).Value
+        End If
     End Function
 
     ''' <summary>
@@ -671,8 +689,12 @@ Public Module StringHelpers
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Matches(input As String, pattern$, Optional options As RegexOptions = RegexICSng) As String()
-        Return r.Matches(input, pattern, options).ToArray
+    Public Function Matches(input As String, pattern$, Optional options As RegexOptions = RegexICSng) As IEnumerable(Of String)
+        If input Is Nothing OrElse input.Length = 0 Then
+            Return {}
+        Else
+            Return r.Matches(input, pattern, options).EachValue
+        End If
     End Function
 
     ''' <summary>
@@ -768,6 +790,12 @@ Public Module StringHelpers
                        End Function) _
                 .ToArray
         End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SplitBy(str$, deli$) As String()
+        Return Strings.Split(str, deli)
     End Function
 
     ''' <summary>

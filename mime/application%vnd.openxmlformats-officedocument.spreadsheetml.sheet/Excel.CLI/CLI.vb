@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cb6ca66283671e62502b813d2454fff, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::3c10b680c6fa1b0ad7034791dffcbb69, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Text
 Imports Contract = Microsoft.VisualBasic.Data.csv.DATA.DataFrame

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba53c6b6a87e86171dd97998ac1dfda0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\EnumerableStatsRange.vb"
+﻿#Region "Microsoft.VisualBasic::3cbbbd091c6e8bf2f0bc42c9da7fd035, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsRange.vb"
 
     ' Author:
     ' 

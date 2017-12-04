@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f30f22cc3f906bf12a6c69125a644801, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::70712e72b8e31fce06c0f061b18fe079, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Text
-Imports DefaultFont = Microsoft.VisualBasic.Language.DefaultValue(Of System.Drawing.Font)
+Imports DefaultFont = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Drawing.Font)
 
 Namespace Imaging
 

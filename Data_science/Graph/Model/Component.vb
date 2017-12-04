@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5026b11a2b5a4d9058615aede2733ab3, ..\sciBASIC#\Data_science\Graph\Model\Component.vb"
+﻿#Region "Microsoft.VisualBasic::51bb879b85dce82c948277ce58041b4a, ..\sciBASIC#\Data_science\Graph\Model\Component.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,11 @@ Public Class Vertex : Implements INamedValue
 End Class
 
 Public Class Edge : Inherits Edge(Of V)
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function EdgeKey(U%, V%) As String
+        Return $"{U}-{V}"
+    End Function
 End Class
 
 ''' <summary>
@@ -80,11 +85,13 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
     ''' ReadOnly unique-ID
     ''' </summary>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' 唯一标识符使用的是<see cref="V"/>的ID属性，而不是使用Label生成的
+    ''' </remarks> 
     Friend Property Key As String Implements IKeyedEntity(Of String).Key
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return $"{U.ID}-{V.ID}"
+            Return Edge.EdgeKey(U.ID, V.ID)
         End Get
         Set(value As String)
             ' DO Nothing

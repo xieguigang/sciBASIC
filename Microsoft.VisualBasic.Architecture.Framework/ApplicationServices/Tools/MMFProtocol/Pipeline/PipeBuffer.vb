@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbdc89c4067197a967d0fe00ec3d3ebc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\MMFProtocol\Pipeline\PipeBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::d939b36786ab4ee432cef9f9d321e1f9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\MMFProtocol\Pipeline\PipeBuffer.vb"
 
     ' Author:
     ' 

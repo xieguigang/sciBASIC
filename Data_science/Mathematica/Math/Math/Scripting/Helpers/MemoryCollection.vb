@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4686ee0b1b1117f4c12c2e1f8035d23, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Helpers\MemoryCollection.vb"
+﻿#Region "Microsoft.VisualBasic::2d47d172003559fd0fd17a3d09cd00be, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Helpers\MemoryCollection.vb"
 
     ' Author:
     ' 
@@ -84,7 +84,7 @@ Namespace Scripting
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, T)) Implements IEnumerable(Of KeyValuePair(Of String, T)).GetEnumerator
-            For Each item In _objHash
+            For Each item As KeyValuePair(Of String, T) In _objHash
                 Yield item
             Next
         End Function

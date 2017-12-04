@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::749a20fd8b873b7dc890f8d5719ffd9a, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\HTTP\iana.org\MediaTypes.vb"
+﻿#Region "Microsoft.VisualBasic::2547dc08db30de3978e4d1e053278609, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\HTTP\iana.org\MediaTypes.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,6 @@
 
 #End Region
 
-
 ''' <summary>
 ''' Csv file reader for the csv file list on https://www.iana.org/assignments/media-types/media-types.xhtml
 ''' 
@@ -50,4 +49,3 @@ Public Class MediaTypes
         Return Name
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::849b650cd0766ed5ef3b622a99bffb50, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Wildcards.vb"
+﻿#Region "Microsoft.VisualBasic::687ac41e4911b380ab277a65643ddc65, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Wildcards.vb"
 
     ' Author:
     ' 

@@ -702,6 +702,8 @@
     <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
     <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
     <Compile Include="Extensions\WebServices\HttpGet.vb" />
+    <Compile Include="Language\Value\DefaultValue\DefaultString.vb" />
+    <Compile Include="Language\Value\DefaultValue\DefaultExtensions.vb" />
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Serialization\Abstract.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
@@ -720,7 +722,7 @@
     <Compile Include="Language\Linq\List%28Of T%29.vb" />
     <Compile Include="Language\lang\Perl\die.vb" />
     <Compile Include="Language\API.vb" />
-    <Compile Include="Language\Value\Default.vb" />
+    <Compile Include="Language\Value\DefaultValue\Default.vb" />
     <Compile Include="Scripting\Abstract.vb" />
     <Compile Include="Scripting\Expressions\Selector.vb" />
     <Compile Include="Scripting\Runtime\BinaryOperator.vb" />
@@ -758,7 +760,6 @@
     <Compile Include="Language\lang\UnixBash\ShellSyntax.vb" />
     <Compile Include="Language\lang\UnixBash\Shell\tree.vb" />
     <Compile Include="Language\lang\UnixBash\Shell\rm.vb" />
-    <Compile Include="Language\Value\IfValue.vb" />
     <Compile Include="Language\Value\Numeric\int.vb" />
     <Compile Include="Language\Value\Numeric\float.vb" />
     <Compile Include="Language\Value\var.vb" />

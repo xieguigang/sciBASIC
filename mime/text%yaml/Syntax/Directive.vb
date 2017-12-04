@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4bc04903046fd7df414565e748f7257, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\Directive.vb"
+﻿#Region "Microsoft.VisualBasic::e4bc04903046fd7df414565e748f7257, ..\sciBASIC#\mime\text%yaml\Syntax\Directive.vb"
 
     ' Author:
     ' 

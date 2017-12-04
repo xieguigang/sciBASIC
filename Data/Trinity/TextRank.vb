@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::7d917a9aae1f227954924417a5286616, ..\sciBASIC#\Data\Trinity\TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::f910cf2c25167a0b71a61fd09d59ae50, ..\sciBASIC#\Data\Trinity\TextRank.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,7 +30,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -142,31 +144,57 @@ Public Module TextRank
         Return New GraphMatrix(g)
     End Function
 
-    <Extension> Public Function TextGraph(text$, Optional similarityCut# = 0.05) As GraphMatrix
+    ''' <summary>
+    ''' Using for generate article's <see cref="NLPExtensions.Abstract(WeightedPRGraph, Integer, Double)"/>
+    ''' </summary>
+    ''' <param name="text$"></param>
+    ''' <param name="similarityCut#"></param>
+    ''' <returns></returns>
+    <Extension> Public Function TextGraph(text$, Optional similarityCut# = 0.05) As WeightedPRGraph
         Dim list$() = text.StripMessy.Sentences.ToArray
         Dim words$()() = list _
             .Select(AddressOf LCase) _
             .Select(AddressOf TextRank.Words) _
             .ToArray
-        Dim similarity#
-        Dim g As New Graph.Graph
+        Dim g As New WeightedPRGraph
 
         For Each sentence As String In list
             Call g.AddVertex(sentence)
         Next
 
-        For x As Integer = 0 To words.Length - 1
-            For y As Integer = x To words.Length - 1
-                similarity = TextRank.Similarity(words(x), words(y))
+        Using progress As New ProgressBar("Build Text Graph...", 1, CLS:=True)
+            Dim tick As New ProgressProvider(words.Length)
+            Dim ETA$, msg$
 
-                If similarity >= similarityCut Then
-                    Call g.AddEdge(list(x), list(y), weight:=similarity)
-                    Call g.AddEdge(list(y), list(x), weight:=similarity)
-                End If
+            For x As Integer = 0 To words.Length - 1
+                Dim refIndex = x
+                Dim vector = seq(x, words.Length - 1, by:=1) _
+                    .Select(Function(y)
+                                Dim i% = CInt(y)
+                                Dim similarity# = TextRank.Similarity(words(refIndex), words(i))
+                                Return (y:=i, similarity:=similarity)
+                            End Function) _
+                    .AsParallel _
+                    .ToArray
+
+                For Each sentence As (i%, similarity#) In vector
+                    Dim similarity = sentence.similarity
+                    Dim i% = sentence.i
+
+                    If similarity >= similarityCut Then
+                        Call g.AddEdge(list(x), list(i), weight:=similarity)
+                        Call g.AddEdge(list(i), list(x), weight:=similarity)
+                    End If
+                Next
+
+                ETA = tick.ETA(progress.ElapsedMilliseconds).FormatTime
+                msg = list(x) & " " & ETA
+
+                Call progress.SetProgress(tick.StepProgress, details:=msg)
             Next
-        Next
+        End Using
 
-        Return New GraphMatrix(g)
+        Return g
     End Function
 
     ''' <summary>

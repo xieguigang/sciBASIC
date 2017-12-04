@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3238464dc5dab339028cbb8985ab9c46, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::3238464dc5dab339028cbb8985ab9c46, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Signals\FourierTransform.vb"
 
     ' Author:
     ' 

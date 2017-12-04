@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e61d1980d689d6e153587cd9a8796da, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::805ad47cb8a4f981fdbd0f2f7e7c5e9a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports DataSet = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of System.Collections.Generic.Dictionary(Of String, Double))

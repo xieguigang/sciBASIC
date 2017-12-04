@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25ddfc5c10ac6cc7816bad0ecd360b1, ..\sciBASIC#\Data_science\Bootstrapping\Obsolete\Analysis.vb"
+﻿#Region "Microsoft.VisualBasic::878226dba155e65735e2547348735533, ..\sciBASIC#\Data_science\Bootstrapping\Obsolete\Analysis.vb"
 
     ' Author:
     ' 

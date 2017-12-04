@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ea309cbad5340b76cfc4d8bcce6d33d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::78b1a36710f4105ebca433be13be4abd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions

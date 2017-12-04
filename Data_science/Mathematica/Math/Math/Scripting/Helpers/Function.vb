@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7bfcecffa4638892641fb124cf11062, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Helpers\Function.vb"
+﻿#Region "Microsoft.VisualBasic::2e2a62c3f46f0b83dc35be76b47cf84c, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Helpers\Function.vb"
 
     ' Author:
     ' 
@@ -86,7 +86,7 @@ Namespace Scripting.Helpers
         Sub New(engine As Expression)
             Call MyBase.New(engine)
 
-            For Each item In SystemPrefixFunctions
+            For Each item As KeyValuePair(Of String, Func(Of Double(), Double)) In SystemPrefixFunctions
                 Call MyBase.Add(item.Key, item.Value, False, False)
             Next
             Call __buildCache()   ' A string list of available function name in visualbasic, it was sort by the length of the each function name.

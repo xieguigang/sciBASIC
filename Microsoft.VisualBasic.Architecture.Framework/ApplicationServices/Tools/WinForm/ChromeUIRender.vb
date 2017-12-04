@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f884d4f1a561c41b04e0a950897904e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\WinForm\ChromeUIRender.vb"
+﻿#Region "Microsoft.VisualBasic::a52f224044e46fb7dcafc4ecf1739dbf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\WinForm\ChromeUIRender.vb"
 
     ' Author:
     ' 

@@ -16,7 +16,11 @@ It is not the only algorithm used by Google to order search engine results, but 
 ##### Code Usage
 
 ```vbnet
-Dim g As New Network
+Dim g As New Graph
+
+For Each label In "ABCDEFGHIJK"
+    Call g.AddVertex(CStr(label))
+Next
 
 Call g.AddEdges("B", {"C"})
 Call g.AddEdges("C", {"B"})
@@ -50,6 +54,33 @@ Dim result = matrix.TranslateVector(pr.ComputePageRank)
     "I": 0.016169479016858928,
     "J": 0.016169479016858928,
     "K": 0.016169479016858928
+}
+```
+
+### Weighted PageRank
+
+```vbnet
+Dim graph As New WeightedPRGraph
+
+graph.AddEdge(1, 2, 1.0)
+graph.AddEdge(1, 3, 2.0)
+graph.AddEdge(2, 3, 3.0)
+graph.AddEdge(2, 4, 4.0)
+graph.AddEdge(3, 1, 5.0)
+
+Dim ranks = graph.Rank(0.85, 0.000001)
+
+Call ranks.GetJson(True).EchoLine
+```
+
+###### Output
+
+```json
+{
+    "1": 0.34983779905464363,
+    "2": 0.1688733284604475,
+    "3": 0.32951218494838491,
+    "4": 0.15177668753652385
 }
 ```
 

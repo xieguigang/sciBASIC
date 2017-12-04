@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::185f33a1536cad30682e37ecfca60024, ..\sciBASIC#\Data_science\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::f228902ddec368c435aaff19552be836, ..\sciBASIC#\Data_science\Graph\Model\Graph.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports TV = Microsoft.VisualBasic.Data.Graph.Vertex
 
 ''' <summary>
@@ -38,13 +39,20 @@ Imports TV = Microsoft.VisualBasic.Data.Graph.Vertex
 ''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
 ''' that Is, it has no multiple edges And no self-loops.
 ''' </summary>
-Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of Vertex)}, G As Graph(Of V, Edge, G))
+Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G As Graph(Of V, Edge, G))
     Implements IEnumerable(Of Edge)
 
 #Region "Let G=(V, E) be a simple graph"
-    Dim edges As New Dictionary(Of Edge)
-    Dim vertices As New Dictionary(Of V)
-    Dim buffer As New HashList(Of V)
+    Protected Friend edges As New Dictionary(Of Edge)
+
+    ''' <summary>
+    ''' <see cref="vertices"/>和<see cref="buffer"/>哈希表分别使用了两种属性来对节点进行索引的建立：
+    ''' 
+    ''' + <see cref="vertices"/>使用<see cref="TV.Label"/>来建立字符串索引
+    ''' + <see cref="buffer"/>使用<see cref="TV.ID"/>来建立指针的索引
+    ''' </summary>
+    Protected vertices As New Dictionary(Of V)
+    Protected Friend buffer As New HashList(Of V)
 #End Region
 
     Public ReadOnly Property Size As (Vertex%, Edges%)
@@ -91,14 +99,24 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of Vertex)}
         Return edges.ContainsKey(edge.Key)
     End Function
 
-    Public Function AddVertex(label$) As V
-        With New Vertex With {
-            .ID = buffer.GetAvailablePos,
-            .Label = label
-        }
-            Call AddVertex(.ref)
-            Return .ref
-        End With
+    ''' <summary>
+    ''' 假若目标<paramref name="label"/>已经存在于顶点列表<see cref="vertices"/>之中，
+    ''' 那么将不会添加新的节点而是直接返回原来已经存在的节点
+    ''' </summary>
+    ''' <param name="label$"></param>
+    ''' <returns></returns>
+    Public Function AddVertex(label As String) As V
+        If vertices.ContainsKey(label) Then
+            Return vertices(label)
+        Else
+            With New V With {
+                .ID = buffer.GetAvailablePos,
+                .Label = label
+            }
+                Call AddVertex(.ref)
+                Return .ref
+            End With
+        End If
     End Function
 
     Public Function AddEdge(u As V, v As V, Optional weight# = 0) As G
@@ -119,8 +137,30 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of Vertex)}
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 这个函数使用起来比较方便，但是要求节点都必须要存在于列表之中
+    ''' </summary>
+    ''' <param name="src$"></param>
+    ''' <param name="targets$"></param>
+    ''' <returns></returns>
+    Public Function AddEdges(src$, targets$()) As G
+        Dim U As V = vertices(src)
+
+        If U Is Nothing Then
+            Throw New EntryPointNotFoundException($"Source vertex {src} is not found!")
+        ElseIf targets.Any(Function(v) Not vertices.ContainsKey(v)) Then
+            Throw New EntryPointNotFoundException($"At least one of the target vertex in {targets.GetJson} is not found!")
+        End If
+
+        For Each V As String In targets
+            Call AddEdge(U, vertices(V))
+        Next
+
+        Return Me
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function AddEdge(i%, j%, Optional weight# = 0) As G
+    Public Overridable Function AddEdge(i%, j%, Optional weight# = 0) As G
         edges += New Edge With {
             .U = buffer(i),
             .V = buffer(j),
@@ -137,7 +177,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of Vertex)}
     ''' <param name="v$"></param>
     ''' <param name="weight#"></param>
     ''' <returns></returns>
-    Public Function AddEdge(u$, v$, Optional weight# = 0) As G
+    Public Overridable Function AddEdge(u$, v$, Optional weight# = 0) As G
         edges += CreateEdge(u, v, weight)
         Return Me
     End Function

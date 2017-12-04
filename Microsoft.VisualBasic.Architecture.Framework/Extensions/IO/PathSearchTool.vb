@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::3b6d3eed0a29c959c1c16842a72d2b27, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::67096afad3b49cf3219b263f69c5caf1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -296,20 +296,28 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
+    ''' + C:\
+    ''' + AB:\
+    ''' + AB2:\
+    ''' + etc...
+    ''' </summary>
+    Const DriveLabel$ = "[a-zA-Z]([a-zA-Z0-9])*"
+
+    ''' <summary>
     ''' File path illegal?
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
     <ExportAPI("Path.Illegal?")>
     <Extension> Public Function PathIllegal(path As String) As Boolean
-        Dim tokens As String() = Strings.Split(path.Replace("\", "/"), ":/")
+        Dim tokens$() = Strings.Split(path.Replace("\", "/"), ":/")
 
         If tokens.Length > 2 Then  ' 有多余一个的驱动器符，则肯定是非法的路径格式
             Return False
         ElseIf tokens.Length = 2 Then
             ' 完整路径
             ' 当有很多个驱动器的时候，这里会不止一个字母
-            If Regex.Match(tokens(0), "[a-Z0-9]+", RegexICSng).Value <> tokens(0) Then
+            If Not tokens(0).IsPattern(DriveLabel, RegexICSng) Then
                 ' 开头的驱动器的符号不正确
                 Return False
             Else

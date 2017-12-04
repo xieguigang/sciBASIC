@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::ef5a70a0f48e9f66f50eba737b81422a, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\BoxPlot.vb"
+﻿#Region "Microsoft.VisualBasic::074638d1b51fc87d0bea51afdf544526, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\BoxPlot.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -41,6 +41,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
@@ -56,6 +57,8 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' ```
 ''' </summary>
 Public Module BoxPlot
+
+    ReadOnly Zero As DefaultValue(Of Double()) = LanguageAPI.[Default]({0R}, Function(x) TryCast(x, Double()).IsNullOrEmpty)
 
     <Extension> Public Function Plot(data As BoxData,
                                      Optional size$ = "3000,2700",
@@ -88,7 +91,7 @@ Public Module BoxPlot
             .IteratesALL _
             .Range _
             .CreateAxisTicks
-        Dim ranges As DoubleRange = ticks Or [Default]({0R}, Function(x) TryCast(x, Double()).IsNullOrEmpty)
+        Dim ranges As DoubleRange = ticks Or Zero
 
         ranges *= rangeScale
 

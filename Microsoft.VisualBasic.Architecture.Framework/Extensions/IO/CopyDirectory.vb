@@ -1,3 +1,31 @@
+ï»¿#Region "Microsoft.VisualBasic::8b851693286f3bddf9b61e9c46d051e6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\CopyDirectory.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
 Imports System.IO
 Imports Microsoft.VisualBasic.Language.UnixBash
 
@@ -12,7 +40,7 @@ Namespace FileIO
         End Sub
 
         ''' <summary>
-        ''' ½«Ô´ÎÄ¼þ¼ÐÖÐµÄËùÓÐÄÚÈÝ¶¼¸´ÖÆµ½Ä¿±êÎÄ¼þ¼ÐÖ®ÖÐ
+        ''' ï¿½ï¿½Ô´ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½ï¿½Æµï¿½Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ö®ï¿½ï¿½
         ''' </summary>
         ''' <param name="src$"></param>
         ''' <param name="destination$"></param>

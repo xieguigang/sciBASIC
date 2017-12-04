@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1622510ea8bd6fb9b8abf9d6893d8bc, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a07867e88b814c49c0c30f739aed0adc, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 

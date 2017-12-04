@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fe7c2a20aafab62b26c3d01caba3e14, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\SHA.vb"
+﻿#Region "Microsoft.VisualBasic::f887b638631f17de22f85057bc471761, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\SHA.vb"
 
     ' Author:
     ' 

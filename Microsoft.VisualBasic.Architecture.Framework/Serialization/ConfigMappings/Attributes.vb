@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67ee4739e6cacf49df11c85c7663c75a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\Attributes.vb"
+﻿#Region "Microsoft.VisualBasic::eefc2f44fbac7a267e0e359d83213b50, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\Attributes.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e279f2b040c3de11c0fb937ba055867, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\CollectionIO.vb"
+﻿#Region "Microsoft.VisualBasic::0a462bff1bf49a4d4e6d3cd3fb13203f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\IOHandler.vb"
 
     ' Author:
     ' 

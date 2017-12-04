@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df5acd57da01f9dfc0f1fefdfc405ef0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::8b0393f4e1d057eef65953bb7218da1b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 

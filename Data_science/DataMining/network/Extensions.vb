@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e67ef0a18841d469ee0ffaf4f7c6b32, ..\sciBASIC#\Data_science\DataMining\network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b257baa49e54304446185e51cbd94bc7, ..\sciBASIC#\Data_science\DataMining\network\Extensions.vb"
 
     ' Author:
     ' 

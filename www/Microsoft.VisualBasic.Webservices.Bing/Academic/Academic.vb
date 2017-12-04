@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::927dce863d63dc8e9805a8a350b00061, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Academic.vb"
+﻿#Region "Microsoft.VisualBasic::e46775da26c0be1f4b8730b25447dfa2, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Academic\Academic.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -54,7 +54,10 @@ Namespace Academic
         ''' <param name="term"></param>
         ''' <returns></returns>
         Public Function Search(term As String) As NamedValue(Of String)()
-            Dim url$ = $"https://cn.bing.com/academic/search?q={term.UrlEncode}&go=Search&qs=ds&form=QBRE"
+            Return getInternal($"https://cn.bing.com/academic/search?q={term.UrlEncode}&go=Search&qs=ds&form=QBRE")
+        End Function
+
+        Private Function getInternal(url As String) As NamedValue(Of String)()
             Dim html$ = url.GET(headers:=New Dictionary(Of String, String) From {{NameOf(refer), refer}})
 
             html = html _
@@ -71,6 +74,25 @@ Namespace Academic
                 .ToArray
 
             Return list
+        End Function
+
+        Public Iterator Function Query(term$, Optional pages% = 10) As IEnumerable(Of (refer$, list As NamedValue(Of String)()))
+            Dim result As NamedValue(Of String)()
+
+            For i As Integer = 0 To pages
+                Dim page$ = i * 10 + 1
+                Dim url$ = $"https://cn.bing.com/academic/search?q={term.UrlEncode}&first={page}&go=Search&qs=ds&form=QBRE"
+
+                Try
+                    result = getInternal(url)
+                Catch ex As Exception
+                    result = {}
+                    ex = New Exception(url, ex)
+                    App.LogException(ex)
+                End Try
+
+                Yield (url, result)
+            Next
         End Function
 
         Private Function StripListItem(text As String) As NamedValue(Of String)
@@ -101,8 +123,8 @@ Namespace Academic
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function GetDetails(info As NamedValue(Of String)) As ArticleProfile
-            Return ProfileResult.GetProfile(info.Value)
+        Public Function GetDetails(info As NamedValue(Of String), Optional refer$ = Nothing) As ArticleProfile
+            Return ProfileResult.GetProfile(info.Value, refer)
         End Function
     End Module
 End Namespace

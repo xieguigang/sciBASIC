@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c269de697bbbcaef25c36e274751a3c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HandleList\HandledList.vb"
+﻿#Region "Microsoft.VisualBasic::e6e35f4af9789681b00f54761d3f0602, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HashList\HashList.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel
@@ -133,8 +134,14 @@ Namespace ComponentModel
             Call Add(source)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Contains(x As T) As Boolean
             Return Not Me(x.Address) Is Nothing
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Contains(index As Integer) As Boolean
+            Return Not Me(index) Is Nothing
         End Function
 
         Public Sub Clear()
@@ -167,8 +174,14 @@ Namespace ComponentModel
             list(x.Address) = x
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(src As HashList(Of T)) As T()
             Return src.ToArray
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(array As T()) As HashList(Of T)
+            Return New HashList(Of T)(array)
         End Operator
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator

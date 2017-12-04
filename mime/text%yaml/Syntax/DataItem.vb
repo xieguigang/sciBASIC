@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b02248f9275ea6ecde794e3ee43a6b1d, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\DataItem.vb"
+﻿#Region "Microsoft.VisualBasic::b02248f9275ea6ecde794e3ee43a6b1d, ..\sciBASIC#\mime\text%yaml\Syntax\DataItem.vb"
 
     ' Author:
     ' 

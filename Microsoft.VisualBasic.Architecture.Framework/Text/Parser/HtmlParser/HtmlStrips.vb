@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::fe6afd5e90d8935728de35e2b4bd8f21, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::2ee5916040324c90c3bc0ed9cc94f71c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\HtmlParser\HtmlStrips.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -54,14 +54,14 @@ Namespace Text.HtmlParser
             If String.IsNullOrEmpty(html) Then
                 Return New String() {}
             Else
-                Dim links$() = Regex _
+                Dim links$() = r _
                     .Matches(html, HtmlLink, RegexICSng) _
                     .ToArray(AddressOf HtmlStrips.GetValue)
                 Return links
             End If
         End Function
 
-        Public Const HtmlLink As String = "<a href="".+?"">.+?</a>"
+        Public Const HtmlLink As String = "<a\s.+?</a>"
         Public Const HtmlPageTitle As String = "<title>.+</title>"
 
         ''' <summary>
@@ -70,11 +70,10 @@ Namespace Text.HtmlParser
         ''' <param name="html"></param>
         ''' <returns></returns>
         <Extension> Public Function HTMLTitle(html As String) As String
-            Dim title As String =
-                Regex.Match(html, HtmlPageTitle, RegexOptions.IgnoreCase).Value
+            Dim title$ = r.Match(html, HtmlPageTitle, RegexICSng).Value
 
             If String.IsNullOrEmpty(title) Then
-                title = "NULL_TITLE"
+                title = "null"
             Else
                 title = title.GetValue
             End If

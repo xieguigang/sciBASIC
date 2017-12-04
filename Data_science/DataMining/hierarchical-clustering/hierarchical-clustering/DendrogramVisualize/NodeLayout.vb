@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cafc104ae849505cc95046b1c6c635b, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\NodeLayout.vb"
+﻿#Region "Microsoft.VisualBasic::7b907cebd9dc84aa41100aa5994ed710, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\NodeLayout.vb"
 
     ' Author:
     ' 

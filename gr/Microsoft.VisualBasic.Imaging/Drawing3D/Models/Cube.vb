@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9529894848f32bf3fa4ca90eb90b1c5, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Cube.vb"
+﻿#Region "Microsoft.VisualBasic::c877ea83c35c967b2d330d545cb4f2ef, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Cube.vb"
 
     ' Author:
     ' 

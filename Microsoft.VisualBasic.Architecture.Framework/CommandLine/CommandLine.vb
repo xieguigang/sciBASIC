@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f45f96dc9be1b86fccbc6c5a36fb32aa, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::bf6533f09d566f5e38135af6ed0ab994, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
@@ -134,6 +135,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property CLICommandArgvs As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _CLICommandArgvs
             End Get
@@ -146,7 +148,7 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Default Public ReadOnly Property Item(paramName As String) As String
+        Default Public ReadOnly Property Item(paramName As String) As DefaultString
             Get
                 Dim LQuery As NamedValue(Of String) =
                     __arguments _
@@ -167,7 +169,7 @@ Namespace CommandLine
                     value = value.Interpolate(__envir, escape:=False)
                 End If
 
-                Return value
+                Return New DefaultString(value)
             End Get
         End Property
 
@@ -363,7 +365,7 @@ Namespace CommandLine
             If Me.HavebFlag(parameter) Then
                 Return True
             End If
-            Return Me(parameter).ParseBoolean
+            Return Me(parameter).DefaultValue.ParseBoolean
         End Function
 
 #Region "Pipeline"
@@ -458,7 +460,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function GetBytes(parameter As String) As Byte()
-            Dim tokens As String() = Me(parameter).Split(","c)
+            Dim tokens As String() = Me(parameter).DefaultValue.Split(","c)
             Return (From s As String In tokens Select CByte(Val(s))).ToArray
         End Function
 
@@ -489,7 +491,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function GetDateTime(parameter As String) As DateTime
-            Return Me(parameter).ParseDateTime
+            Return Me(parameter).DefaultValue.ParseDateTime
         End Function
 
         ''' <summary>
@@ -612,7 +614,7 @@ Namespace CommandLine
                 Return [default]
             End If
 
-            Dim str As String = Me(name)
+            Dim str As String = Me(name).DefaultValue
 
             If __ctype Is Nothing Then
                 Dim value As Object = InputHandler.CTypeDynamic(str, GetType(T))

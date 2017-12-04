@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::584fb44f7765ee40e2ad0e17f1eb82ae, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Tcp\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::7df5133cf193440cc424d4910049216c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 
@@ -186,7 +186,7 @@ Namespace Net
 #If DEBUG Then
             Call $"{MethodBase.GetCurrentMethod.GetFullName} ==> {args}".__DEBUG_ECHO
 #End If
-            Dim data = WebServiceUtils.RequestParser(args, False)
+            Dim data = WebServiceUtils.QueryStringParameters(args, False)
 #If DEBUG Then
             Call data.AllKeys.Select(Function(k) data(k)).ToArray.GetJson.__DEBUG_ECHO
 #End If

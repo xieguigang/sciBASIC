@@ -197,6 +197,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.vb" />
     <Compile Include="Styling\StyleJSON.vb" />
     <Compile Include="Styling\EdgeStyles.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

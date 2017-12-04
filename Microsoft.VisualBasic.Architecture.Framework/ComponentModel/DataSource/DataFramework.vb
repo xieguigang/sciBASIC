@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0a2d016d17e6709619ddd79f83ebbe, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::5307b989e1f30daca2bd360652c2e213, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\DataFramework.vb"
 
     ' Author:
     ' 
@@ -30,8 +30,9 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting.Runtime.NumberConversionRoutines
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel
 

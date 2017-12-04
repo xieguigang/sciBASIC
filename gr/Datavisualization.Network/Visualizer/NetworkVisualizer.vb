@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::c47845253e008ea4f6f1a7b9c9e6cff7, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::38fa31e2be92078592fc4d0cda4d447a, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\NetworkVisualizer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -270,7 +270,10 @@ Public Module NetworkVisualizer
                         r = minRadius
                     End If
 
-                    br = n.Data.Color Or New SolidBrush(defaultColor).AsDefault(Function() n.Data.Color Is Nothing)
+                    With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
+                        br = n.Data.Color Or .ref
+                    End With
+
                     pt = scalePos(n)
                     With pt
                         pt = New Point(.X - r / 2, .Y - r / 2)

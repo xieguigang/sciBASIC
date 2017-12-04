@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12b87139cec3a6fada99e7fcd6855f3d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::12b87139cec3a6fada99e7fcd6855f3d, ..\sciBASIC#\tutorials\core.test\Module1.vb"
 
     ' Author:
     ' 

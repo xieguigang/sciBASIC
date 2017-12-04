@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f1dc2fcde41554eed79153f3ec1b473, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\core.Test\PriorityQueueTest.vb"
+﻿#Region "Microsoft.VisualBasic::5f1dc2fcde41554eed79153f3ec1b473, ..\sciBASIC#\tutorials\core.test\PriorityQueueTest.vb"
 
     ' Author:
     ' 

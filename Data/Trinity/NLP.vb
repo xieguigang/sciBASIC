@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::95c76db2cefe341ba66b482aae48607c, ..\sciBASIC#\Data\Trinity\NLP.vb"
+﻿#Region "Microsoft.VisualBasic::24df1ca90c54fce696264cf265788766, ..\sciBASIC#\Data\Trinity\NLP.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2016 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 从现有的理论和技术现状看，通用的、高质量的自然语言处理系统，仍然是较长期的努力目标，
@@ -47,7 +48,7 @@ Public Module NLPExtensions
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="keywordsSet"></param>
+    ''' <param name="keywordsSet">Selects from the output result of <see cref="NLPExtensions.KeyWords(GraphMatrix)"/></param>
     ''' <returns></returns>
     <Extension>
     Public Function KeyPhrases(originalText$, keywordsSet As IEnumerable(Of String), Optional minOccurNum% = 2) As IEnumerable(Of String)
@@ -100,13 +101,20 @@ Public Module NLPExtensions
     ''' </summary>
     ''' <param name="text"></param>
     ''' <returns></returns>
-    <Extension> Public Function Abstract(text As GraphMatrix, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
-        Dim result = text.TranslateVector(New PageRank(text).ComputePageRank, True)
+    <Extension> Public Function Abstract(text As WeightedPRGraph, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
+        Dim result As Dictionary(Of String, Double) = text.Rank
+
+#If DEBUG Then
+        Call result _
+            .OrderByDescending(Function(v) v.Value) _
+            .ToDictionary _
+            .GetJson(indent:=True) _
+            .__DEBUG_ECHO
+#End If
 
         Return result _
             .Subset(Function(sentence, w)
-                        Return sentence.Words.Length >= minWords AndAlso w >= minWords
-                    End Function) _
-            .ToDictionary
+                        Return sentence.Words.Length >= minWords AndAlso w >= minWeight
+                    End Function)
     End Function
 End Module

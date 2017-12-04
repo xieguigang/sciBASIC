@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8db5a1f510673334840ee7f7a649ff74, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::efaeb36f85324db2edf7d4c993c0f32f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 
@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace d3js.scale
 
