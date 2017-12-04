@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::3ea81781f3ad09f04e2f124c5f42d473, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports StringList = System.Collections.Generic.IEnumerable(Of String)
+Imports ValueTuple = System.Collections.Generic.KeyValuePair(Of String, String)
 
 Namespace CommandLine
 
@@ -78,10 +79,7 @@ Namespace CommandLine
         ''' <param name="IncludeLogicSW">返回来的列表之中是否包含有逻辑开关</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function CreateParameterValues(tokens$(),
-                                                          IncludeLogicSW As Boolean,
-                                                          Optional note$ = Nothing) As List(Of NamedValue(Of String))
-
+        <Extension> Public Function CreateParameterValues(tokens$(), IncludeLogicSW As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
             Dim list As New List(Of NamedValue(Of String))
 
             If tokens.IsNullOrEmpty Then
@@ -91,7 +89,11 @@ Namespace CommandLine
                 If IsPossibleLogicFlag(tokens(Scan0)) AndAlso
                     IncludeLogicSW Then
 
-                    list += New NamedValue(Of String)(tokens(Scan0), CStr(True), note)
+                    list += New NamedValue(Of String) With {
+                        .Name = tokens(Scan0),
+                        .Value = CStr(True),
+                        .Description = note
+                    }
                 Else
                     Return list
                 End If
@@ -100,10 +102,9 @@ Namespace CommandLine
             '下面都是多余或者等于两个元素的情况
 
             For i As Integer = 0 To tokens.Length - 1 '数目多于一个的
+                Dim [next] As Integer = i + 1
 
-                Dim [Next] As Integer = i + 1
-
-                If [Next] = tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
+                If [next] = tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
                     If IsPossibleLogicFlag(tokens(i)) AndAlso IncludeLogicSW Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
@@ -111,14 +112,16 @@ Namespace CommandLine
                     Exit For
                 End If
 
-                Dim s As String = tokens([Next])
+                Dim s As String = tokens([next])
 
                 If IsPossibleLogicFlag(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
                     If IncludeLogicSW Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
+
                     Continue For
-                Else  '下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
+                Else
+                    ' 下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
                     Dim key As String = tokens(i).ToLower
                     list += New NamedValue(Of String)(key, s, note)
 
@@ -130,15 +133,19 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Get all of the logical parameters from the input tokens
+        ''' Get all of the logical parameters from the input tokens.
+        ''' (这个函数所生成的逻辑参数的名称全部都是小写形式的)
         ''' </summary>
-        ''' <param name="tokens">要求第一个对象不能够是命令的名称</param>
+        ''' <param name="args">要求第一个对象不能够是命令的名称</param>
         ''' <returns></returns>
-        <Extension> Public Function GetLogicalArguments(tokens$(), ByRef SingleValue$) As String()
+        <Extension> Public Function GetLogicalArguments(args As IEnumerable(Of String), ByRef SingleValue$) As String()
+            Dim tokens$() = args.SafeQuery.ToArray
+
             If tokens.IsNullOrEmpty Then
                 Return New String() {}
-            ElseIf tokens.Length = 1 Then  '只有一个元素，则肯定为开关
-                Return {tokens(0)}
+            ElseIf tokens.Length = 1 Then
+                ' 只有一个元素，则肯定为开关
+                Return {tokens(0).ToLower}
             End If
 
             Dim tkList As New List(Of String)
@@ -180,12 +187,12 @@ Namespace CommandLine
         ''' Try parsing the cli command string from the string value.(尝试着从文本行之中解析出命令行参数信息)
         ''' </summary>
         ''' <param name="args">The commandline arguments which is user inputs from the terminal.</param>
-        ''' <param name="DuplicatedAllowed">Allow the duplicated command parameter argument name in the input, 
+        ''' <param name="duplicatedAllows">Allow the duplicated command parameter argument name in the input, 
         ''' default is not allowed the duplication.(是否允许有重复名称的参数名出现，默认是不允许的)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
-        Public Function TryParse(args As StringList, Optional DuplicatedAllowed As Boolean = False) As CommandLine
+        Public Function TryParse(args As StringList, Optional duplicatedAllows As Boolean = False) As CommandLine
             Dim tokens$() = args.SafeQuery.ToArray
             Dim singleValue As String = ""
 
@@ -193,16 +200,21 @@ Namespace CommandLine
                 Return New CommandLine
             End If
 
+            Dim bools$() = tokens _
+                .Skip(1) _
+                .GetLogicalArguments(singleValue)
             Dim CLI As New CommandLine With {
                 .Name = tokens(Scan0).ToLower,
                 .Tokens = tokens,
-                .BoolFlags = tokens.Skip(1).ToArray.GetLogicalArguments(singleValue),
+                .BoolFlags = bools,
                 ._CLICommandArgvs = Join(tokens)
             }
 
             CLI.SingleValue = singleValue
+
             If CLI.Parameters.Length = 1 AndAlso
                 String.IsNullOrEmpty(CLI.SingleValue) Then
+
                 CLI.SingleValue = CLI.Parameters(0)
             End If
 
@@ -211,9 +223,9 @@ Namespace CommandLine
 
                 Dim Dk As String() = __checkKeyDuplicated(CLI.__arguments)
 
-                If Not DuplicatedAllowed AndAlso Not Dk.IsNullOrEmpty Then
-                    Dim Key As String = String.Join(", ", Dk)
-                    Dim msg As String = String.Format(EX_KEY_DUPLICATED, Key, String.Join(" ", tokens.Skip(1).ToArray))
+                If Not duplicatedAllows AndAlso Not Dk.IsNullOrEmpty Then
+                    Dim Key$ = String.Join(", ", Dk)
+                    Dim msg$ = String.Format(KeyDuplicated, Key, String.Join(" ", tokens.Skip(1).ToArray))
 
                     Throw New Exception(msg)
                 End If
@@ -222,7 +234,7 @@ Namespace CommandLine
             Return CLI
         End Function
 
-        Const EX_KEY_DUPLICATED As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
+        Const KeyDuplicated As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
 
         Private Function __checkKeyDuplicated(source As IEnumerable(Of NamedValue(Of String))) As String()
             Dim LQuery = (From param As NamedValue(Of String)
@@ -230,10 +242,12 @@ Namespace CommandLine
                           Select param.Name.ToLower
                           Group By ToLower Into Group).ToArray
 
-            Return LinqAPI.Exec(Of String) <= From group
-                                              In LQuery
-                                              Where group.Group.Count > 1
-                                              Select group.ToLower
+            Return LinqAPI.Exec(Of String) _
+ _
+                () <= From group
+                      In LQuery
+                      Where group.Group.Count > 1
+                      Select group.ToLower
         End Function
 
         ''' <summary>
@@ -262,13 +276,14 @@ Namespace CommandLine
             If String.IsNullOrEmpty(CLI) Then
                 Return New CommandLine
             Else
+#Const DEBUG = False
 #If DEBUG Then
                 Call CLI.__DEBUG_ECHO
 #End If
             End If
 
-            Dim Tokens As String() = CLITools.GetTokens(CLI)
-            Dim args As CommandLine = TryParse(Tokens, duplicateAllowed)
+            Dim tokens As String() = CLITools.GetTokens(CLI)
+            Dim args As CommandLine = TryParse(tokens, duplicateAllowed)
             args._CLICommandArgvs = CLI
 
             Return args
@@ -417,21 +432,22 @@ Namespace CommandLine
         ''' <param name="bFlags"></param>
         ''' <returns></returns>
         <ExportAPI("CreateObject")>
-        Public Function CreateObject(name$, args As IEnumerable(Of KeyValuePair(Of String, String)), Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
+        Public Function CreateObject(name$, args As IEnumerable(Of ValueTuple), Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
             Dim parameters As New List(Of NamedValue(Of String))
-            Dim Tokens As New List(Of String) From {name}
+            Dim tokens As New List(Of String) From {name}
 
-            For Each Item As KeyValuePair(Of String, String) In args
-                Dim key As String = Item.Key.ToLower
-                Dim param As New NamedValue(Of String)(key, Item.Value)
+            For Each tuple As ValueTuple In args
+                Dim key As String = tuple.Key.ToLower
+                Dim param As New NamedValue(Of String)(key, tuple.Value)
+
                 Call parameters.Add(param)
-                Call Tokens.AddRange(New String() {key, Item.Value})
+                Call tokens.AddRange(New String() {key, tuple.Value})
             Next
 
             Return New CommandLine With {
                 .Name = name,
                 .__arguments = parameters,
-                .Tokens = Tokens.Join(bFlags).ToArray,
+                .Tokens = tokens.Join(bFlags).ToArray,
                 .BoolFlags = If(bFlags.IsNullOrEmpty, New String() {}, bFlags.ToArray)
             }
         End Function

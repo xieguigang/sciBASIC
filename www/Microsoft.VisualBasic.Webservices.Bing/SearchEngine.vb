@@ -84,6 +84,11 @@ Public Module SearchEngineProvider
         Loop
     End Function
 
+    ''' <summary>
+    ''' Request a bing search and get the search result.
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <returns></returns>
     Public Function DownloadResult(url As String) As SearchResult
         Dim web As String = Regex.Replace(url.GET, "<strong>|</strong>", "", RegexICSng)
         Dim count As String = Regex.Match(web, TotalCount).Value

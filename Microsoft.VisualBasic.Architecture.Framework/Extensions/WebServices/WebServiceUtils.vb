@@ -230,6 +230,8 @@ Public Module WebServiceUtils
     ''' <param name="s"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("URL.Encode")>
     <Extension>
     Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing) As String
@@ -248,11 +250,10 @@ Public Module WebServiceUtils
     End Sub
 
     ''' <summary>
-    ''' 编码整个URL
+    ''' 编码整个URL，这个函数会自动截取出query string parameter部分，然后对截取出来的query string parameter进行编码
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
-    '''
     <ExportAPI("URL.PathEncode")>
     <Extension>
     Public Function UrlPathEncode(s As String) As String
@@ -262,6 +263,7 @@ Public Module WebServiceUtils
 
         Dim idx As Integer = s.IndexOf("?"c)
         Dim s2 As String = Nothing
+
         If idx <> -1 Then
             s2 = s.Substring(0, idx)
             s2 = HttpUtility.UrlEncode(s2) & s.Substring(idx)
