@@ -79,10 +79,7 @@ Namespace CommandLine
         ''' <param name="IncludeLogicSW">返回来的列表之中是否包含有逻辑开关</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function CreateParameterValues(tokens$(),
-                                                          IncludeLogicSW As Boolean,
-                                                          Optional note$ = Nothing) As List(Of NamedValue(Of String))
-
+        <Extension> Public Function CreateParameterValues(tokens$(), IncludeLogicSW As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
             Dim list As New List(Of NamedValue(Of String))
 
             If tokens.IsNullOrEmpty Then
@@ -92,7 +89,11 @@ Namespace CommandLine
                 If IsPossibleLogicFlag(tokens(Scan0)) AndAlso
                     IncludeLogicSW Then
 
-                    list += New NamedValue(Of String)(tokens(Scan0), CStr(True), note)
+                    list += New NamedValue(Of String) With {
+                        .Name = tokens(Scan0),
+                        .Value = CStr(True),
+                        .Description = note
+                    }
                 Else
                     Return list
                 End If
@@ -101,10 +102,9 @@ Namespace CommandLine
             '下面都是多余或者等于两个元素的情况
 
             For i As Integer = 0 To tokens.Length - 1 '数目多于一个的
+                Dim [next] As Integer = i + 1
 
-                Dim [Next] As Integer = i + 1
-
-                If [Next] = tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
+                If [next] = tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
                     If IsPossibleLogicFlag(tokens(i)) AndAlso IncludeLogicSW Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
@@ -112,14 +112,16 @@ Namespace CommandLine
                     Exit For
                 End If
 
-                Dim s As String = tokens([Next])
+                Dim s As String = tokens([next])
 
                 If IsPossibleLogicFlag(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
                     If IncludeLogicSW Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
+
                     Continue For
-                Else  '下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
+                Else
+                    ' 下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
                     Dim key As String = tokens(i).ToLower
                     list += New NamedValue(Of String)(key, s, note)
 
