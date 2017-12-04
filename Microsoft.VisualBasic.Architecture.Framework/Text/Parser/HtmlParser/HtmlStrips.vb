@@ -89,13 +89,26 @@ Namespace Text.HtmlParser
         <ExportAPI("Html.Tag.Trim"), Extension> Public Function StripHTMLTags(s$, Optional stripBlank As Boolean = False) As String
             If String.IsNullOrEmpty(s) Then
                 Return ""
+            Else
+                ' 在这里将<br/><br>标签替换为换行符
+                ' 否则文本的排版可能会乱掉的
+                s = r.Replace(s, "[<][/]?br[>]", vbLf, RegexICSng)
+                s = r.Replace(s, "[<]h\d", vbLf & "<null", RegexICSng)
             End If
 
-            s = Regex.Replace(s, "<[^>]+>", "")
-            s = Regex.Replace(s, "</[^>]+>", "")
+            ' 因为js和css都是夹在两个标签之间的，所以会被误认为是文本
+            ' 在这里需要使用专门的函数来删除掉
+            s = s.RemovesCSSstyles _
+                 .RemovesJavaScript _
+                 .RemovesFooter _
+                 .RemovesHtmlHead
+
+            s = r.Replace(s, "<[^>]+>", "")
+            s = r.Replace(s, "</[^>]+>", "")
 
             If stripBlank Then
                 s = s.StripBlank
+                s = r.Replace(s, "(\n){3,}", vbLf & vbLf, RegexICSng)
             End If
 
             Return s
