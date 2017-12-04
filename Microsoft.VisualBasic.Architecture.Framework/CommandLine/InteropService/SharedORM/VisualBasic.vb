@@ -253,7 +253,8 @@ Namespace CommandLine.InteropService.SharedORM
             If s.First >= "0"c AndAlso s.First <= "9"c Then
                 Return "_" & New String(s)
             Else
-                Return New String(s)
+                ' 可能会存在in, byref, class这类的名字，需要在这里转义一下
+                Return VBLanguage.AutoEscapeVBKeyword(New String(s))
             End If
         End Function
     End Class
