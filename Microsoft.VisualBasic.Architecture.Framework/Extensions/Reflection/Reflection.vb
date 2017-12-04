@@ -48,6 +48,12 @@ Imports Microsoft.VisualBasic.Serialization.JSON
                   Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ResourcesSatellite(assembly As Assembly) As ResourcesSatellite
+        Return New ResourcesSatellite(assembly)
+    End Function
+
     ''' <summary>
     ''' Try to handle for the bugs in VisualBasic language: 
     ''' 

@@ -187,6 +187,7 @@ Namespace CommandLine
             If Me.BoolFlags.IsNullOrEmpty Then
                 Return False
             Else
+                ' boolflags 已经全部都被转换为小写形式了
                 Return Array.IndexOf(BoolFlags, name.ToLower) > -1
             End If
         End Function

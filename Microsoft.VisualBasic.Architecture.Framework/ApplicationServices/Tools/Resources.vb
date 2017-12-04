@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d0032d40131871a4cf8d0de661a3db1f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Resources.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,8 @@ Imports System.ComponentModel.Composition
 Imports System.Globalization
 Imports System.IO
 Imports System.Reflection
+Imports System.Resources
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
@@ -41,9 +43,9 @@ Namespace ApplicationServices
     ''' resources at run time.Security Note: Calling methods in this class with untrusted
     ''' data is a security risk. Call the methods in the class only with trusted data.
     ''' For more information, see Untrusted Data Security Risks.
+    ''' (资源卫星程序集)
     ''' </summary>
-    <Export(GetType(Global.System.Resources.ResourceManager))>
-    Public Class Resources
+    <Export(GetType(ResourceManager))> Public Class ResourcesSatellite
 
         ''' <summary>
         ''' The file path of the resources satellite assembly.
@@ -54,7 +56,7 @@ Namespace ApplicationServices
         ''' <see cref="System.Resources.ResourceManager"/> object in the satellite assembly.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Resources As Global.System.Resources.ResourceManager
+        Public ReadOnly Property Resources As ResourceManager
 
         ' Exceptions:
         '   T:System.ArgumentNullException:
@@ -79,6 +81,8 @@ Namespace ApplicationServices
         ''' <returns>The value of the resource localized for the caller's current culture settings.
         ''' If an appropriate resource set exists but name cannot be found, the method returns
         ''' null.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function GetObject(name As String) As Object
             Return Resources.GetObject(name)
         End Function
@@ -110,6 +114,8 @@ Namespace ApplicationServices
         ''' obtained by using the System.Globalization.CultureInfo.CurrentUICulture property.</param>
         ''' <returns>The value of the resource, localized for the specified culture. If an appropriate
         ''' resource set exists but name cannot be found, the method returns null.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function GetObject(name As String, culture As CultureInfo) As Object
             Return Resources.GetObject(name, culture)
         End Function
@@ -138,12 +144,13 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="name">The name of a resource.</param>
         ''' <returns>An unmanaged memory stream object that represents a resource .</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ComVisible(False)>
         Public Function GetStream(name As String) As UnmanagedMemoryStream
             Return Resources.GetStream(name)
         End Function
 
-        '
         ' Exceptions:
         '   T:System.InvalidOperationException:
         '     The value of the specified resource is not a System.IO.MemoryStream object.
@@ -171,11 +178,14 @@ Namespace ApplicationServices
         ''' <param name="culture">An object that specifies the culture to use for the resource lookup. If culture
         ''' is null, the culture for the current thread is used.</param>
         ''' <returns>An unmanaged memory stream object that represents a resource.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ComVisible(False)>
         Public Function GetStream(name As String, culture As CultureInfo) As UnmanagedMemoryStream
             Return Resources.GetStream(name, culture)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(name As String, encoding As Encodings) As String
             Dim stream As New StreamReader(GetStream(name), encoding.CodePage)
             Return stream.ReadToEnd
@@ -206,6 +216,8 @@ Namespace ApplicationServices
         ''' <param name="name">The name of the resource to retrieve.</param>
         ''' <returns>The value of the resource localized for the caller's current UI culture, or null
         ''' if name cannot be found in a resource set.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function GetString(name As String) As String
             Return Resources.GetString(name)
         End Function
@@ -236,6 +248,8 @@ Namespace ApplicationServices
         ''' <param name="culture">An object that represents the culture for which the resource is localized.</param>
         ''' <returns>The value of the resource localized for the specified culture, or null if name
         ''' cannot be found in a resource set.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function GetString(name As String, culture As CultureInfo) As String
             Return Resources.GetString(name, culture)
         End Function
@@ -257,8 +271,7 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="assm"></param>
         Sub New(assm As Assembly)
-            FileName = assm.Location.ParentPath & "/Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name
-            Call __resParser()
+            Call Me.New(dll:=assm.Location.ParentPath & "/Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name)
         End Sub
 
         Sub New(dll As String)
@@ -272,28 +285,30 @@ Namespace ApplicationServices
 
         Private Sub __load(assm As Assembly)
 #If NET_40 = 0 Then
-            Dim __resEXPORT As Type = GetType(ExportAttribute)
-            Dim typeDef As Type =
-                LinqAPI.DefaultFirst(Of Type) <= From type As Type
-                                                 In assm.GetTypes
-                                                 Let exp As ExportAttribute = type.GetCustomAttribute(__resEXPORT)
-                                                 Where Not exp Is Nothing AndAlso
-                                                     exp.ContractType.Equals(GetType(Global.System.Resources.ResourceManager))
-                                                 Select type
-            If Not typeDef Is Nothing Then
-                Dim myRes As PropertyInfo =
-                    LinqAPI.DefaultFirst(Of PropertyInfo) <=
-                    From prop As PropertyInfo
-                    In typeDef.GetProperties(BindingFlags.Public Or BindingFlags.Static)
-                    Let exp As ExportAttribute = prop.GetCustomAttribute(__resEXPORT)
-                    Where prop.CanRead AndAlso
-                        Not exp Is Nothing AndAlso
-                        exp.ContractType.Equals(GetType(Global.System.Resources.ResourceManager))
-                    Select prop
+            Dim resource As Type = GetType(ExportAttribute)
+            Dim resourceMgr As Type = LinqAPI.DefaultFirst(Of Type) _
+ _
+                () <= From type As Type
+                      In assm.GetTypes
+                      Let exp As ExportAttribute = type.GetCustomAttribute(resource)
+                      Where Not exp Is Nothing AndAlso
+                          exp.ContractType.Equals(GetType(ResourceManager))
+                      Select type
 
-                If Not myRes Is Nothing Then
-                    Dim value As Object = myRes.GetValue(Nothing, Nothing)
-                    _Resources = DirectCast(value, Global.System.Resources.ResourceManager)
+            If Not resourceMgr Is Nothing Then
+                Dim container = LinqAPI.DefaultFirst(Of PropertyInfo) _
+ _
+                    () <= From prop As PropertyInfo
+                          In resourceMgr.GetProperties(BindingFlags.Public Or BindingFlags.Static)
+                          Let exp As ExportAttribute = prop.GetCustomAttribute(resource)
+                          Where prop.CanRead AndAlso
+                              Not exp Is Nothing AndAlso
+                              exp.ContractType.Equals(GetType(ResourceManager))
+                          Select prop
+
+                If Not container Is Nothing Then
+                    Dim mgr = container.GetValue(Nothing, Nothing)
+                    _Resources = DirectCast(mgr, ResourceManager)
                 End If
             End If
 #End If
@@ -312,12 +327,12 @@ Namespace ApplicationServices
         ''' 从自身的程序集之中加载数据
         ''' </summary>
         ''' <returns></returns>
-        Public Shared Function LoadMy() As Resources
-            Return New Resources(Nothing, Assembly.GetExecutingAssembly)
+        Public Shared Function LoadMy() As ResourcesSatellite
+            Return New ResourcesSatellite(Nothing, Assembly.GetExecutingAssembly)
         End Function
 
-        Public Shared Function DirectLoadFrom(assm As Assembly) As Resources
-            Return New Resources(Nothing, assm)
+        Public Shared Function DirectLoadFrom(assm As Assembly) As ResourcesSatellite
+            Return New ResourcesSatellite(Nothing, assm)
         End Function
 
         ''' <summary>
@@ -325,8 +340,8 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <returns></returns>
         ''' 
-        <Export(GetType(Global.System.Resources.ResourceManager))>
-        Public Shared ReadOnly Property MyResource As Global.System.Resources.ResourceManager
+        <Export(GetType(ResourceManager))>
+        Public Shared ReadOnly Property MyResource As ResourceManager
             Get
                 Return My.Resources.ResourceManager
             End Get

@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports StringList = System.Collections.Generic.IEnumerable(Of String)
+Imports ValueTuple = System.Collections.Generic.KeyValuePair(Of String, String)
 
 Namespace CommandLine
 
@@ -130,40 +131,43 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Get all of the logical parameters from the input tokens
+        ''' Get all of the logical parameters from the input tokens.
+        ''' (这个函数所生成的逻辑参数的名称全部都是小写形式的)
         ''' </summary>
-        ''' <param name="tokens">要求第一个对象不能够是命令的名称</param>
+        ''' <param name="args">要求第一个对象不能够是命令的名称</param>
         ''' <returns></returns>
-        <Extension> Public Function GetLogicalArguments(tokens$(), ByRef SingleValue$) As String()
-            If tokens.IsNullOrEmpty Then
+        <Extension> Public Function GetLogicalArguments(args As IEnumerable(Of String), ByRef SingleValue$) As String()
+            Dim tokens$() = args.SafeQuery.ToArray
+
+            If Tokens.IsNullOrEmpty Then
                 Return New String() {}
-            ElseIf tokens.Length = 1 Then  '只有一个元素，则肯定为开关
-                Return {tokens(0)}
+            ElseIf Tokens.Length = 1 Then  '只有一个元素，则肯定为开关
+                Return {Tokens(0)}
             End If
 
             Dim tkList As New List(Of String)
 
-            For i As Integer = 0 To tokens.Length - 1 '数目多于一个的
+            For i As Integer = 0 To Tokens.Length - 1 '数目多于一个的
 
                 Dim [Next] As Integer = i + 1
 
-                If [Next] = tokens.Length Then
-                    If IsPossibleLogicFlag(obj:=tokens(i)) Then
-                        tkList += tokens(i)  '
+                If [Next] = Tokens.Length Then
+                    If IsPossibleLogicFlag(obj:=Tokens(i)) Then
+                        tkList += Tokens(i)  '
                     End If
 
                     Exit For
                 End If
 
-                Dim s As String = tokens([Next])
+                Dim s As String = Tokens([Next])
 
                 If IsPossibleLogicFlag(obj:=s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
-                    If IsPossibleLogicFlag(obj:=tokens(i)) Then
-                        tkList += tokens(i)
+                    If IsPossibleLogicFlag(obj:=Tokens(i)) Then
+                        tkList += Tokens(i)
                     Else
 
                         If i = 0 Then
-                            SingleValue = tokens(i)
+                            SingleValue = Tokens(i)
                         End If
 
                     End If
@@ -180,12 +184,12 @@ Namespace CommandLine
         ''' Try parsing the cli command string from the string value.(尝试着从文本行之中解析出命令行参数信息)
         ''' </summary>
         ''' <param name="args">The commandline arguments which is user inputs from the terminal.</param>
-        ''' <param name="DuplicatedAllowed">Allow the duplicated command parameter argument name in the input, 
+        ''' <param name="duplicatedAllows">Allow the duplicated command parameter argument name in the input, 
         ''' default is not allowed the duplication.(是否允许有重复名称的参数名出现，默认是不允许的)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
-        Public Function TryParse(args As StringList, Optional DuplicatedAllowed As Boolean = False) As CommandLine
+        Public Function TryParse(args As StringList, Optional duplicatedAllows As Boolean = False) As CommandLine
             Dim tokens$() = args.SafeQuery.ToArray
             Dim singleValue As String = ""
 
@@ -193,16 +197,21 @@ Namespace CommandLine
                 Return New CommandLine
             End If
 
+            Dim bools$() = tokens _
+                .Skip(1) _
+                .GetLogicalArguments(singleValue)
             Dim CLI As New CommandLine With {
                 .Name = tokens(Scan0).ToLower,
                 .Tokens = tokens,
-                .BoolFlags = tokens.Skip(1).ToArray.GetLogicalArguments(singleValue),
+                .BoolFlags = bools,
                 ._CLICommandArgvs = Join(tokens)
             }
 
             CLI.SingleValue = singleValue
+
             If CLI.Parameters.Length = 1 AndAlso
                 String.IsNullOrEmpty(CLI.SingleValue) Then
+
                 CLI.SingleValue = CLI.Parameters(0)
             End If
 
@@ -211,9 +220,9 @@ Namespace CommandLine
 
                 Dim Dk As String() = __checkKeyDuplicated(CLI.__arguments)
 
-                If Not DuplicatedAllowed AndAlso Not Dk.IsNullOrEmpty Then
-                    Dim Key As String = String.Join(", ", Dk)
-                    Dim msg As String = String.Format(EX_KEY_DUPLICATED, Key, String.Join(" ", tokens.Skip(1).ToArray))
+                If Not duplicatedAllows AndAlso Not Dk.IsNullOrEmpty Then
+                    Dim Key$ = String.Join(", ", Dk)
+                    Dim msg$ = String.Format(KeyDuplicated, Key, String.Join(" ", tokens.Skip(1).ToArray))
 
                     Throw New Exception(msg)
                 End If
@@ -222,7 +231,7 @@ Namespace CommandLine
             Return CLI
         End Function
 
-        Const EX_KEY_DUPLICATED As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
+        Const KeyDuplicated As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
 
         Private Function __checkKeyDuplicated(source As IEnumerable(Of NamedValue(Of String))) As String()
             Dim LQuery = (From param As NamedValue(Of String)
@@ -230,10 +239,12 @@ Namespace CommandLine
                           Select param.Name.ToLower
                           Group By ToLower Into Group).ToArray
 
-            Return LinqAPI.Exec(Of String) <= From group
-                                              In LQuery
-                                              Where group.Group.Count > 1
-                                              Select group.ToLower
+            Return LinqAPI.Exec(Of String) _
+ _
+                () <= From group
+                      In LQuery
+                      Where group.Group.Count > 1
+                      Select group.ToLower
         End Function
 
         ''' <summary>
@@ -417,21 +428,22 @@ Namespace CommandLine
         ''' <param name="bFlags"></param>
         ''' <returns></returns>
         <ExportAPI("CreateObject")>
-        Public Function CreateObject(name$, args As IEnumerable(Of KeyValuePair(Of String, String)), Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
+        Public Function CreateObject(name$, args As IEnumerable(Of ValueTuple), Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
             Dim parameters As New List(Of NamedValue(Of String))
-            Dim Tokens As New List(Of String) From {name}
+            Dim tokens As New List(Of String) From {name}
 
-            For Each Item As KeyValuePair(Of String, String) In args
-                Dim key As String = Item.Key.ToLower
-                Dim param As New NamedValue(Of String)(key, Item.Value)
+            For Each tuple As ValueTuple In args
+                Dim key As String = tuple.Key.ToLower
+                Dim param As New NamedValue(Of String)(key, tuple.Value)
+
                 Call parameters.Add(param)
-                Call Tokens.AddRange(New String() {key, Item.Value})
+                Call tokens.AddRange(New String() {key, tuple.Value})
             Next
 
             Return New CommandLine With {
                 .Name = name,
                 .__arguments = parameters,
-                .Tokens = Tokens.Join(bFlags).ToArray,
+                .Tokens = tokens.Join(bFlags).ToArray,
                 .BoolFlags = If(bFlags.IsNullOrEmpty, New String() {}, bFlags.ToArray)
             }
         End Function

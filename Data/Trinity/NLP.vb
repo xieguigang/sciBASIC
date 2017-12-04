@@ -101,18 +101,24 @@ Public Module NLPExtensions
     ''' </summary>
     ''' <param name="text"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Abstract(text As WeightedPRGraph, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
-        Dim result As Dictionary(Of String, Double) = text.Rank
+        Return text.Rank.AbstractFilter(minWords, minWeight)
+    End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AbstractFilter(textRank As Dictionary(Of String, Double), Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
 #If DEBUG Then
-        Call result _
+        Call textRank _
             .OrderByDescending(Function(v) v.Value) _
             .ToDictionary _
             .GetJson(indent:=True) _
             .__DEBUG_ECHO
 #End If
 
-        Return result _
+        Return textRank _
             .Subset(Function(sentence, w)
                         Return sentence.Words.Length >= minWords AndAlso w >= minWeight
                     End Function)
