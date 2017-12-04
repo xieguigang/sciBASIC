@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::3ea81781f3ad09f04e2f124c5f42d473, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLITools.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -139,35 +139,36 @@ Namespace CommandLine
         <Extension> Public Function GetLogicalArguments(args As IEnumerable(Of String), ByRef SingleValue$) As String()
             Dim tokens$() = args.SafeQuery.ToArray
 
-            If Tokens.IsNullOrEmpty Then
+            If tokens.IsNullOrEmpty Then
                 Return New String() {}
-            ElseIf Tokens.Length = 1 Then  '只有一个元素，则肯定为开关
-                Return {Tokens(0)}
+            ElseIf tokens.Length = 1 Then
+                ' 只有一个元素，则肯定为开关
+                Return {tokens(0).ToLower}
             End If
 
             Dim tkList As New List(Of String)
 
-            For i As Integer = 0 To Tokens.Length - 1 '数目多于一个的
+            For i As Integer = 0 To tokens.Length - 1 '数目多于一个的
 
                 Dim [Next] As Integer = i + 1
 
-                If [Next] = Tokens.Length Then
-                    If IsPossibleLogicFlag(obj:=Tokens(i)) Then
-                        tkList += Tokens(i)  '
+                If [Next] = tokens.Length Then
+                    If IsPossibleLogicFlag(obj:=tokens(i)) Then
+                        tkList += tokens(i)  '
                     End If
 
                     Exit For
                 End If
 
-                Dim s As String = Tokens([Next])
+                Dim s As String = tokens([Next])
 
                 If IsPossibleLogicFlag(obj:=s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
-                    If IsPossibleLogicFlag(obj:=Tokens(i)) Then
-                        tkList += Tokens(i)
+                    If IsPossibleLogicFlag(obj:=tokens(i)) Then
+                        tkList += tokens(i)
                     Else
 
                         If i = 0 Then
-                            SingleValue = Tokens(i)
+                            SingleValue = tokens(i)
                         End If
 
                     End If
@@ -273,13 +274,14 @@ Namespace CommandLine
             If String.IsNullOrEmpty(CLI) Then
                 Return New CommandLine
             Else
+#Const DEBUG = False
 #If DEBUG Then
                 Call CLI.__DEBUG_ECHO
 #End If
             End If
 
-            Dim Tokens As String() = CLITools.GetTokens(CLI)
-            Dim args As CommandLine = TryParse(Tokens, duplicateAllowed)
+            Dim tokens As String() = CLITools.GetTokens(CLI)
+            Dim args As CommandLine = TryParse(tokens, duplicateAllowed)
             args._CLICommandArgvs = CLI
 
             Return args
