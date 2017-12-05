@@ -89,8 +89,11 @@ Namespace ComponentModel.DataSourceModel
         ''' <typeparam name="T"></typeparam>
         ''' <param name="path$"></param>
         ''' <param name="encoding"></param>
+        ''' <param name="base">
+        ''' By default the array index is ZERO based, or you can specific this array index base from 1, or any other integer values
+        ''' </param>
         ''' <returns></returns>
-        Public Iterator Function LoadByIndex(Of T As Class)(path$, Optional encoding As Encodings = Encodings.UTF8) As IEnumerable(Of T)
+        Public Iterator Function LoadByIndex(Of T As Class)(path$, Optional encoding As Encodings = Encodings.UTF8, Optional base% = 0) As IEnumerable(Of T)
             Dim data As IEnumerable(Of RowTokens) = TsvFileIO.LoadFile(path, encoding.CodePage, skipFirstLine:=False)
             Dim type As Type = GetType(T)
             Dim index = DataFrameColumnAttribute _
@@ -104,7 +107,7 @@ Namespace ComponentModel.DataSourceModel
             Dim fields As PropertyInfo() = data _
                 .First _
                 .Count _
-                .SeqIterator _
+                .SeqIterator(offset:=base) _
                 .Select(Function(i)
                             ' The tsv file have 10 columns, but only have 7 columns was indexed in target class schema type
                             ' Set all of the no-indexed column in tsv file its reader property to nothing.
