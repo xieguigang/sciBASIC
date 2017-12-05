@@ -141,7 +141,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <summary>
         ''' Returns the source string without any processing
         ''' </summary>
-ReadOnly withoutProcess As New DefaultValue(Of Func(Of String, String))(Function(str) str)
+        ReadOnly withoutProcess As New DefaultValue(Of Func(Of String, String))(Function(str) str)
 
         ''' <summary>
         ''' 
