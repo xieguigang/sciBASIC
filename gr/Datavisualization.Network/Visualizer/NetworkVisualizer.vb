@@ -65,7 +65,7 @@ Public Module NetworkVisualizer
     <Extension>
     Public Function GetDisplayText(n As Node) As String
         If n.Data Is Nothing OrElse (n.Data.origID.StringEmpty AndAlso n.Data.label.StringEmpty) Then
-            Return n.ID
+            Return n.Label
         ElseIf n.Data.label.StringEmpty Then
             Return n.Data.origID
         Else
@@ -278,6 +278,7 @@ Public Module NetworkVisualizer
                     With pt
                         pt = New Point(.X - r / 2, .Y - r / 2)
                     End With
+
                     rect = New Rectangle(pt, New Size(r, r))
 
                     Call g.FillPie(br, rect, 0, 360)

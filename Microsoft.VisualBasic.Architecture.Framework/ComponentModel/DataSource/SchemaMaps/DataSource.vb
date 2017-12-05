@@ -30,6 +30,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports FieldTuple = System.Collections.Generic.KeyValuePair(Of Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps.DataFrameColumnAttribute, System.Reflection.PropertyInfo)
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
@@ -80,7 +81,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <param name="FieldName">The name.</param>
         Public Sub New(FieldName As String)
             If String.IsNullOrEmpty(FieldName) Then
-                Throw New ArgumentNullException("name")
+                Throw New ArgumentNullException(NameOf(FieldName))
             End If
             Me._Name = FieldName
             Me._Index = -1
@@ -92,7 +93,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <param name="index">The index.</param>
         Public Sub New(index As Integer)
             If index < 0 Then
-                Throw New ArgumentOutOfRangeException("index")
+                Throw New ArgumentOutOfRangeException(NameOf(index))
             End If
             Me._Name = Nothing
             Me._Index = index
@@ -168,30 +169,38 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                       Optional mapsAll As Boolean = False) _
                                        As Dictionary(Of BindProperty(Of DataFrameColumnAttribute))
 
-            Dim source As IEnumerable(Of KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)) =
-                __source(typeInfo, If(ignores Is Nothing, {}, ignores), mapsAll)
-            Dim LQuery As BindProperty(Of DataFrameColumnAttribute)() =
-                LinqAPI.Exec(Of BindProperty(Of DataFrameColumnAttribute)) <=
-                    From pInfo As KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)
-                    In source
-                    Let Mapping As DataFrameColumnAttribute =
-                        If(String.IsNullOrEmpty(pInfo.Key.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
-                        pInfo.Key.SetNameValue(pInfo.Value.Name),
-                        pInfo.Key)
-                    Select New BindProperty(Of DataFrameColumnAttribute)(
-                        Mapping,
-                        pInfo.Value) ' 补全名称属性
+            Dim ignoreList$() = If(ignores Is Nothing, {}, ignores)
+            Dim source As IEnumerable(Of FieldTuple) = __source(typeInfo, ignoreList, mapsAll)
+            Dim LQuery = LinqAPI.Exec(Of BindProperty(Of DataFrameColumnAttribute)) _
+ _
+                () <= From pInfo As FieldTuple
+                      In source
+                      Let Mapping As DataFrameColumnAttribute =
+                          If(String.IsNullOrEmpty(pInfo.Key.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
+                            pInfo.Key.SetNameValue(pInfo.Value.Name),
+                            pInfo.Key)
+                      Select New BindProperty(Of DataFrameColumnAttribute)(
+                          Mapping,
+                          pInfo.Value) ' 补全名称属性
+
             Dim out As New Dictionary(Of BindProperty(Of DataFrameColumnAttribute))(LQuery)
             Return out
         End Function
 
-        Private Shared Iterator Function __source(
-                                         type As Type,
-                                         ignores As String(),
-                                         mapsAll As Boolean) _
-                                                 As IEnumerable(Of KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo))
-
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="ignores$"></param>
+        ''' <param name="mapsAll">
+        ''' Some property probably didn't have masked by <see cref="DataFrameColumnAttribute"/>, 
+        ''' so if this option is set to TRUE, then means indexing these property that without <see cref="DataFrameColumnAttribute"/> masked as well. 
+        ''' otherwise only indexing the property that have <see cref="DataFrameColumnAttribute"/> masked on it.
+        ''' </param>
+        ''' <returns></returns>
+        Private Shared Iterator Function __source(type As Type, ignores$(), mapsAll As Boolean) As IEnumerable(Of FieldTuple)
             Dim props As IEnumerable(Of PropertyInfo) =
+ _
                 From p As PropertyInfo
                 In type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
                 Where Array.IndexOf(ignores, p.Name) = -1
@@ -203,33 +212,35 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                               Let attrs As Object() = __attrs(pInfo)
                               Where Not attrs.IsNullOrEmpty
                               Let attr = DirectCast(attrs.First, DataFrameColumnAttribute)
-                              Select New KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)(attr, pInfo)
+                              Select New FieldTuple(attr, pInfo)
                     Yield x
                 Next
             Else
                 For Each x In From pInfo As PropertyInfo
                               In props
                               Let attr = __attrsAll(pInfo)
-                              Select New KeyValuePair(Of DataFrameColumnAttribute, PropertyInfo)(attr, pInfo)
+                              Select New FieldTuple(attr, pInfo)
                     Yield x
                 Next
             End If
         End Function
 
         Private Shared Function __attrsAll(pp As PropertyInfo) As DataFrameColumnAttribute
-            Dim attrs As Object() = __attrs(pp)
+            Dim attrs() = __attrs(pp)
+
             If attrs.IsNullOrEmpty Then
                 Return New DataFrameColumnAttribute
             Else
-                Return DirectCast(attrs(Scan0), DataFrameColumnAttribute)
+                Return attrs(Scan0)
             End If
         End Function
 
-        Private Shared Function __attrs(pp As PropertyInfo) As Object()
-            Dim df As New List(Of DataFrameColumnAttribute)(
-                pp.GetCustomAttributes(GetType(DataFrameColumnAttribute), True))
-            Return df ' + pp.GetCustomAttributes(GetType(Field), True) _
-            ' .Select(Function(x) DirectCast(x, DataFrameColumnAttribute))
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function __attrs(pp As PropertyInfo) As DataFrameColumnAttribute()
+            Return pp _
+                .GetCustomAttributes(GetType(DataFrameColumnAttribute), True) _
+                .Select(Function(o) DirectCast(o, DataFrameColumnAttribute)) _
+                .ToArray
         End Function
     End Class
 
