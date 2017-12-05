@@ -223,9 +223,16 @@ Namespace CommandLine.InteropService.SharedORM
 
         Const SyntaxError$ = "'<' or '>' is using for the IO redirect in your terminal, unavailable for your commandline argument name!"
 
+        ''' <summary>
+        ''' 将命令行参数的名称转义为VB之中有效的对象标识符
+        ''' </summary>
+        ''' <param name="arg$"></param>
+        ''' <returns></returns>
         Private Shared Function __normalizedAsIdentifier(arg$) As String
-            Dim s As Char() = arg.ToArray
-            Dim upper As Char() = arg.ToUpper.ToArray
+            ' 在命令行的参数名称前面一般都会有/-之类的控制符前缀，在这里去掉
+            Dim name$ = arg.Trim("/"c, "\"c, "-"c)
+            Dim s As Char() = name.ToArray
+            Dim upper As Char() = name.ToUpper.ToArray
             Dim c As Char
 
             If s.First = "<"c OrElse s.Last = ">"c Then
@@ -246,7 +253,8 @@ Namespace CommandLine.InteropService.SharedORM
             If s.First >= "0"c AndAlso s.First <= "9"c Then
                 Return "_" & New String(s)
             Else
-                Return New String(s)
+                ' 可能会存在in, byref, class这类的名字，需要在这里转义一下
+                Return VBLanguage.AutoEscapeVBKeyword(New String(s))
             End If
         End Function
     End Class
