@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -95,15 +96,38 @@ Namespace ComponentModel.DataSourceModel
             Dim index = DataFrameColumnAttribute _
                 .LoadMapping(type, mapsAll:=False) _
                 .Values _
-                .OrderBy(Function(field) field.Field.Index) _
+                .OrderBy(Function(field)
+                             Return field.Field.Index
+                         End Function) _
+                .ToDictionary(Function(i) i.Field.Index)
+            Dim str$
+            Dim fields As PropertyInfo() = data _
+                .First _
+                .Count _
+                .SeqIterator _
+                .Select(Function(i)
+                            ' The tsv file have 10 columns, but only have 7 columns was indexed in target class schema type
+                            ' Set all of the no-indexed column in tsv file its reader property to nothing.
+                            If index.ContainsKey(i) Then
+                                Return DirectCast(index(i).member, PropertyInfo)
+                            Else
+                                Return Nothing
+                            End If
+                        End Function) _
                 .ToArray
 
             For Each line As RowTokens In data
                 Dim o = Activator.CreateInstance(type)
 
                 For Each col As SeqValue(Of String) In line.SeqIterator
-                    With index(col)
-                        Call .SetValue(o, Scripting.CTypeDynamic(col.value, .Type))
+                    str = col.value
+
+                    With fields(col)
+                        If Not .IsNothing Then
+                            Call .SetValue(
+                                obj:=o,
+                                value:=Scripting.CTypeDynamic(str, .PropertyType))
+                        End If
                     End With
                 Next
 
