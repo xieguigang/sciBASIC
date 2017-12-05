@@ -71,27 +71,34 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                                  Type As Type,
                                  getFieldName As Func(Of T, String),
                                  Optional explict As Boolean = False) As BindProperty(Of T)()
+
             Dim out As New List(Of BindProperty(Of T))
 
             For Each field As FieldInfo In Type.GetFields
                 Dim attr As T = field.GetCustomAttribute(Of T)
+
                 If attr Is Nothing Then
                     If explict Then
                         out += New BindProperty(Of T)(field)
                     End If
                 Else
-                    out += New BindProperty(Of T)(attr, field)
+                    out += New BindProperty(Of T)(attr, field) With {
+                        .Identity = getFieldName(attr)
+                    }
                 End If
             Next
 
             For Each [property] As PropertyInfo In Type.GetProperties
                 Dim attr As T = [property].GetCustomAttribute(Of T)
+
                 If attr Is Nothing Then
                     If explict Then
                         out += New BindProperty(Of T)([property])
                     End If
                 Else
-                    out += New BindProperty(Of T)(attr, [property])
+                    out += New BindProperty(Of T)(attr, [property]) With {
+                        .Identity = getFieldName(attr)
+                    }
                 End If
             Next
 
@@ -127,12 +134,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Function
 
         <Extension>
-        Public Function GetSchema(Of TField As Attribute,
-                                 TTable As Attribute)(
-                                 type As Type,
-                                 getTableName As Func(Of TTable, String),
-                                 getField As Func(Of TField, String),
-                                 Optional explict As Boolean = False) As Schema(Of TField)
+        Public Function GetSchema(Of TField As Attribute, TTable As Attribute)(
+                                     type As Type,
+                                     getTableName As Func(Of TTable, String),
+                                     getField As Func(Of TField, String),
+                                     Optional explict As Boolean = False) As Schema(Of TField)
 
             Return New Schema(Of TField) With {
                 .SchemaName = type.GetSchemaName(Of TTable)(getTableName, explict),

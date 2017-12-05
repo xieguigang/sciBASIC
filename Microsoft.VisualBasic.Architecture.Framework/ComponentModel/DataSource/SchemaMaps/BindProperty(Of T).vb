@@ -51,6 +51,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' The flag for this field binding.
         ''' </summary>
         Dim Field As T
+        Dim name As String
 
         ReadOnly __setValue As Action(Of Object, Object)
         ReadOnly __getValue As Func(Of Object, Object)
@@ -70,10 +71,14 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public Property Identity As String Implements IReadOnlyId.Identity, INamedValue.Key
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return member.Name
+                If name.StringEmpty Then
+                    name = member.Name
+                End If
+
+                Return name
             End Get
-            Private Set(value As String)
-                ' DO NOTHING
+            Friend Set(value As String)
+                name = value
             End Set
         End Property
 
