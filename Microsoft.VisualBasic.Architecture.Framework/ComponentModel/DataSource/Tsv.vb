@@ -141,7 +141,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <summary>
         ''' Returns the source string without any processing
         ''' </summary>
-        ReadOnly noProcess As New DefaultValue(Of Func(Of String, String))(Function(str) str)
+ReadOnly withoutProcess As New DefaultValue(Of Func(Of String, String))(Function(str) str)
 
         ''' <summary>
         ''' 
@@ -161,7 +161,7 @@ Namespace ComponentModel.DataSourceModel
             Dim line$ = stream.ReadLine
             Dim headers$() = line _
                 .Split(ASCII.TAB) _
-                .Select(selector:=process Or noProcess) _
+    .Select(selector:=process Or withoutProcess) _
                 .ToArray
 
             If lower Then
