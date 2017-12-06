@@ -28,7 +28,9 @@ Public Module SCS
                     End If
 
                     seqAdded = True
-                    For Each i In (seq.Length + 1).SeqIterator
+                    ' mid function required start from 1
+                    ' set offset as 1
+                    For Each i In (seq.Length + 1).SeqIterator(offset:=1)
                         If candidate.EndsWith(Mid(seq, 1, i)) Then
                             Dim newCandidate = candidate + Mid(seq, i)
                             paths(newCandidate.Length).Add(newCandidate)
