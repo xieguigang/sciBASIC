@@ -12,6 +12,8 @@ Public Module SCS
 
     <Extension>
     Public Sub TableView(fragments As IEnumerable(Of String), SCS$, ByRef print As TextWriter, Optional empty As Char = "."c)
+        Dim lines As New List(Of String)
+
         Call print.WriteLine(SCS)
 
         For Each str As String In fragments
@@ -20,9 +22,11 @@ Public Module SCS
             Dim lefts = SCS.Length - ends
             Dim view$ = New String(empty, start) & str & New String(empty, lefts)
 
-            Call print.WriteLine(view)
+            lines += view
         Next
 
+        Call print.WriteLine($"#Coverage={Coverage(lines, blank:=empty)}")
+        Call print.WriteLine(lines.JoinBy(print.NewLine))
         Call print.Flush()
     End Sub
 
