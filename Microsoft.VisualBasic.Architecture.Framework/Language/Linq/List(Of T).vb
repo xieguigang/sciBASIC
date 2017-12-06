@@ -561,5 +561,11 @@ Namespace Language
                 Yield o
             Next
         End Function
+
+        Public Function Pop() As T
+            Dim out = Last
+            Call Me.RemoveLast
+            Return out
+        End Function
     End Class
 End Namespace
