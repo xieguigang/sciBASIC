@@ -161,7 +161,7 @@ Namespace ComponentModel.DataSourceModel
             Dim line$ = stream.ReadLine
             Dim headers$() = line _
                 .Split(ASCII.TAB) _
-                .Select(selector:=process Or withoutProcess) _
+    .Select(selector:=process Or withoutProcess) _
                 .ToArray
 
             If lower Then
