@@ -38,8 +38,8 @@ Module SCStest
             Call lines.TableView(SCS, txt)
         End Using
 
-        Dim assembly = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\SCS\SAM_output.txt".ReadAllLines
-        Dim coverageValue = Coverage(assembly)
+        'Dim assembly = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\SCS\SAM_output.txt".ReadAllLines
+        'Dim coverageValue = Coverage(assembly)
 
 
         Pause()
