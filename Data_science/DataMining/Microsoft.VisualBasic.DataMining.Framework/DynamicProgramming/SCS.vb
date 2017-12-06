@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Language
 ''' <summary>
 ''' shortest_common_superstring
 ''' </summary>
+''' <remarks>
+''' https://github.com/aakash01/codebase/blob/60394bf92eb09410c07eec1c4d3c81cf0fc72a70/src/com/aakash/practice/interviewbit_may2017/dynamic_programming/ShortestCommonSuperString.java
+''' </remarks>
 Public Module SCS
 
     <Extension>
@@ -28,7 +31,7 @@ Public Module SCS
     ''' and continue it.
     ''' </summary>
     ''' <remarks>
-    ''' https://github.com/aakash01/codebase/blob/60394bf92eb09410c07eec1c4d3c81cf0fc72a70/src/com/aakash/practice/interviewbit_may2017/dynamic_programming/ShortestCommonSuperString.java
+    ''' 当这个函数遇到完全没有重叠的序列片段的时候，是会直接将这个不重叠的片段接到SCS的最末尾的
     ''' </remarks>
     Public Function ShortestCommonSuperString(Seqs As List(Of String)) As String
         Dim l As Integer = Seqs.Count

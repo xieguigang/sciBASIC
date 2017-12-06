@@ -11,6 +11,13 @@ Module SCStest
             Call path.ReadAllLines.TableView(SCS, txt)
         End Using
 
+        path$ = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\SCS\input2.txt"
+        SCS = ShortestCommonSuperString(path.ReadAllLines.AsList)
+
+        Using txt As StreamWriter = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\SCS\output2.txt".OpenWriter
+            Call path.ReadAllLines.TableView(SCS, txt)
+        End Using
+
         Pause()
     End Sub
 End Module
