@@ -27,12 +27,38 @@ Public Module SCS
     End Sub
 
     ''' <summary>
+    ''' 使用重叠程度最高的片段作为统计的标准
+    ''' </summary>
+    ''' <param name="table"></param>
+    ''' <returns></returns>
+    Public Function Coverage(table As IEnumerable(Of String), Optional blank As Char = "."c) As Integer
+        ' 重叠程度最高，意味着blank是最少的
+        Dim lines As Char()() = table.Select(Function(s) s.ToArray).ToArray
+        ' 因为都是等长的，所以直接使用第一条作为标准了
+        Dim length% = lines(Scan0).Length
+        Dim coverages As New List(Of Integer)
+        Dim index%
+
+        For i As Integer = 0 To length - 1
+            index = i
+            coverages += lines _
+                .Where(Function(seq)
+                           Return seq(index) <> blank
+                       End Function) _
+                .Count
+        Next
+
+        Return coverages.Max
+    End Function
+
+    ''' <summary>
     ''' Solve using Greedy. Forf all string find the max common prefix/suffix. Merge those two strings
     ''' and continue it.
     ''' </summary>
     ''' <remarks>
     ''' 当这个函数遇到完全没有重叠的序列片段的时候，是会直接将这个不重叠的片段接到SCS的最末尾的
     ''' </remarks>
+    <Extension>
     Public Function ShortestCommonSuperString(Seqs As List(Of String)) As String
         Dim l As Integer = Seqs.Count
 
