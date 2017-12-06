@@ -6,6 +6,11 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Module SCS
 
+    ''' <summary>
+    ''' https://github.com/feliperfmarques/challenge1_gnmk/blob/master/shortest_common_superstring.py
+    ''' </summary>
+    ''' <param name="originalSeqs$"></param>
+    ''' <returns></returns>
     Public Function shortest_common_superstring(originalSeqs$()) As String
         Dim paths As New Dictionary(Of Integer, List(Of String))
         paths(0) = New List(Of String) From {""}
