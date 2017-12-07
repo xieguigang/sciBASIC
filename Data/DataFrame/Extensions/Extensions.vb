@@ -297,7 +297,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI(NameOf(DataFrame), Info:="Create a dynamics data frame object from a csv document object.")>
-    <Extension> Public Function DataFrame(data As IO.File) As DataFrame
+    <Extension> Public Function DataFrame(data As File) As DataFrame
         Return DataFrame.CreateObject(data)
     End Function
 
@@ -360,8 +360,8 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(strDataLines As IEnumerable(Of String), Optional Delimiter As String = ",", Optional explicit As Boolean = True) As T()
-        Dim Expression As String = String.Format(DataImports.SplitRegxExpression, Delimiter)
+    <Extension> Public Function AsDataSource(Of T As Class)(strDataLines As IEnumerable(Of String), Optional delimiter$ = ",", Optional explicit As Boolean = True) As T()
+        Dim Expression As String = String.Format(DataImports.SplitRegxExpression, delimiter)
         Dim LQuery = (From line As String In strDataLines Select RowParsing(line, Expression)).ToArray
         Return CType(LQuery, csv.IO.File).AsDataSource(Of T)(explicit)
     End Function
