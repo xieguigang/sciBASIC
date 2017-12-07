@@ -311,7 +311,6 @@
     <Compile Include="DBSCAN\DatasetItemBase.vb" />
     <Compile Include="DBSCAN\DbscanAlgorithm.vb" />
     <Compile Include="DBSCAN\DbscanPoint.vb" />
-    <Compile Include="DynamicProgramming\SCS.vb" />
     <Compile Include="PCA\PCA.vb" />
     <Compile Include="PCA\Method.vb" />
     <Compile Include="FuzzyCMeans\AlgorithmsUtils.vb" />
