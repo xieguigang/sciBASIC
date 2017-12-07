@@ -170,7 +170,7 @@ Namespace ComponentModel.Ranges
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(exp$) As DoubleRange
+        Public Shared Widening Operator CType(exp As String) As DoubleRange
             Dim r As New DoubleRange
             Call exp.Parser(r.Min, r.Max)
             Return r

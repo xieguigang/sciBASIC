@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::a1d630ebc36065be0d4cd70b8cdf131c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ComponentModel.Ranges
 
@@ -49,8 +50,11 @@ Namespace ComponentModel.Ranges
             End If
         End Function
 
+        Const RegexpFloatRange$ = RegexpFloat & "\s*,\s*" & RegexpFloat
+
         ''' <summary>
         ''' + ``min -> max``
+        ''' + ``min—max``
         ''' + ``[min,max]``
         ''' + ``{min,max}``
         ''' + ``(min,max)``
@@ -65,8 +69,13 @@ Namespace ComponentModel.Ranges
 
             If InStr(exp, "->") > 0 Then
                 t = Strings.Split(exp, "->")
+            ElseIf InStr(exp, "—") > 0 Then
+                ' 使用的是中文的分隔符
+                t = Strings.Split(exp, "—")
             Else
-                exp = Regex.Match(exp, RegexpFloat & "\s*,\s*" & RegexpFloat).Value
+                exp = r _
+                    .Match(exp, RegexpFloatRange, RegexOptions.Singleline) _
+                    .Value
 
                 If String.IsNullOrEmpty(exp) Then
                     exp = $"'{raw}' is not a valid expression format!"
@@ -76,7 +85,9 @@ Namespace ComponentModel.Ranges
                 End If
             End If
 
-            t = t.Select(AddressOf Trim).ToArray
+            t = t _
+                .Select(AddressOf Trim) _
+                .ToArray
 
             min = Casting.ParseNumeric(t(Scan0))
             max = Casting.ParseNumeric(t(1))

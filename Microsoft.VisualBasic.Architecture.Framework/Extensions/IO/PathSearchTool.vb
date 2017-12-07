@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::67096afad3b49cf3219b263f69c5caf1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -228,21 +228,20 @@ Public Module ProgramPathSearchTool
     Public Const ILLEGAL_FILENAME_CHARACTERS As String = "\/" & ILLEGAL_PATH_CHARACTERS_ENUMERATION
 
     ''' <summary>
-    ''' 将目标字符串之中的非法的字符替换为"_"符号以成为正确的文件名字符串
+    ''' 将目标字符串之中的非法的字符替换为"_"符号以成为正确的文件名字符串。当参数<paramref name="OnlyASCII"/>为真的时候，意味着所有的非字母或者数字的字符都会被替换为下划线，默认为真
     ''' </summary>
     ''' <param name="str"></param>
     ''' <param name="OnlyASCII">当本参数为真的时候，仅26个字母，0-9数字和下划线_以及小数点可以被保留下来</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    '''
     <ExportAPI("NormalizePathString")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function NormalizePathString(str As String, Optional OnlyASCII As Boolean = True) As String
+    <Extension> Public Function NormalizePathString(str$, Optional OnlyASCII As Boolean = True) As String
         Return NormalizePathString(str, "_", OnlyASCII)
     End Function
 
     <ExportAPI("NormalizePathString")>
-    <Extension> Public Function NormalizePathString(str As String, normAs As String, Optional onlyASCII As Boolean = True) As String
+    <Extension> Public Function NormalizePathString(str$, normAs As String, Optional onlyASCII As Boolean = True) As String
         Dim sb As New StringBuilder(str)
         For Each ch As Char In ILLEGAL_FILENAME_CHARACTERS
             Call sb.Replace(ch, normAs)
@@ -450,10 +449,12 @@ Public Module ProgramPathSearchTool
     <ExportAPI("File.IsOpened", Info:="Detect while the target file is opened by someone process.")>
     <Extension> Public Function FileOpened(FileName As String) As Boolean
         Try
-            Using FileOpenDetect As New FileStream(FileName,
-                                                   IO.FileMode.Open,
-                                                   IO.FileAccess.Read,
-                                                   IO.FileShare.None)
+            Using FileOpenDetect As New FileStream(
+                path:=FileName,
+                mode:=FileMode.Open,
+                access:=FileAccess.Read,
+                share:=FileShare.None
+            )
                 ' Just detects this file is occupied, no more things needs to do....
             End Using
             Return True
