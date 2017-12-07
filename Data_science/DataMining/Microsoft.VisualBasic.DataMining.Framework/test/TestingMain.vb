@@ -142,18 +142,18 @@ Module TestingMain
         v += New Value(Of String)("369")
         v -= v(0)
 
-        Dim nnnnet =
-            "F:\1.13.RegPrecise_network\MEME_OUT\Regulons.MEME\250.MEME_SW-TOM.OUT\SW-TOM.Hits.VirtualFootprints.Trim.PhenotypeRegulates.TreeNET\Edges.csv".LoadCsv(Of NetworkEdge)
+        'Dim nnnnet =
+        '    "F:\1.13.RegPrecise_network\MEME_OUT\Regulons.MEME\250.MEME_SW-TOM.OUT\SW-TOM.Hits.VirtualFootprints.Trim.PhenotypeRegulates.TreeNET\Edges.csv".LoadCsv(Of NetworkEdge)
         '  Dim finderdfff = Dijkstra.DijkstraAPI.CreatePathwayFinder(Dijkstra.DijkstraAPI.ImportsNetwork(nnnnet, 1), True)
         '  Dim pathssss = Dijkstra.DijkstraAPI.FindAllPath(finderdfff, "xcb_M00552", "xcb_M00024")
 
-        Dim parts = TreeAPI.ClusterParts(nnnnet)
+        'Dim parts = TreeAPI.ClusterParts(nnnnet)
 
-        Dim ssssst = (From x In parts Select x.Value).IteratesALL.Distinct.ToArray.Length
-        Call ssssst.__DEBUG_ECHO
+        'Dim ssssst = (From x In parts Select x.Value).IteratesALL.Distinct.ToArray.Length
+        'Call ssssst.__DEBUG_ECHO
 
 
-        Dim source = "F:\1.13.RegPrecise_network\MEME_OUT\Modules\100.MEME.ClusterMatrix\ClusterMatrix.Csv".LoadCsv(Of EntityLDM)
+        '    Dim source = "F:\1.13.RegPrecise_network\MEME_OUT\Modules\100.MEME.ClusterMatrix\ClusterMatrix.Csv".LoadCsv(Of EntityLDM)
         '    Dim net = source.TreeNET
 
         '     Call net.Save("./test_tree/", Encodings.ASCII)
