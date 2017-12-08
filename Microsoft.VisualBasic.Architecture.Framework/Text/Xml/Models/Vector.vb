@@ -61,7 +61,7 @@ Namespace Text.Xml.Models
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Vector?.Length
+                Return CInt(Vector?.Length)
             End Get
         End Property
 

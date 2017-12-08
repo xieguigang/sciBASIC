@@ -59,8 +59,7 @@ Namespace Linq
     ''' <summary>
     ''' Set value linq expression helper
     ''' </summary>
-    Public Class SetValue(Of T)
-        Implements IEnumerable(Of PropertyInfo)
+    Public Class SetValue(Of T) : Implements IEnumerable(Of PropertyInfo)
 
         ReadOnly __type As Type = GetType(T)
         ReadOnly __props As SortedDictionary(Of String, PropertyInfo)

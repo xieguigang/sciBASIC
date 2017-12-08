@@ -313,7 +313,7 @@ Namespace Net.Persistent.Socket
                 bytesRead = client.EndReceive(ar)
             Catch ex As Exception
                 Call _ExceptionHandler(ex)
-                Call _EndReceive.InvokeSet(True)
+                Call _EndReceive.SetValue(True)
                 Return Nothing
             Finally
                 _EndReceive = True

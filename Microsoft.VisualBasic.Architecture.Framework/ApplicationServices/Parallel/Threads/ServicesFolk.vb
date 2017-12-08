@@ -27,13 +27,10 @@
 #End Region
 
 Imports System.Reflection
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Parallel.Linq
-Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Win32
+Imports SetValueAction = Microsoft.VisualBasic.Linq.SetValue(Of Microsoft.VisualBasic.Net.TcpSynchronizationServicesSocket)
 
 Namespace Parallel
 
@@ -60,8 +57,7 @@ Namespace Parallel
 
                 Dim __getChildPortal As New __getChildPortal
 
-                Call SetValue(Of Net.TcpSynchronizationServicesSocket) _
-                    .InvokeSet(Of Net.Abstract.DataRequestHandler)(
+                Call SetValueAction.InvokeSet(Of Net.Abstract.DataRequestHandler)(
                      TempListen,
                      NameOf(TempListen.Responsehandler),
                      AddressOf __getChildPortal.HandleRequest)

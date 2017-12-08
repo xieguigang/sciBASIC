@@ -55,6 +55,14 @@ Namespace CommandLine.InteropService
             Return App.Shell(_executableAssembly, args, CLR:=True)
         End Function
 
+        ''' <summary>
+        ''' 请注意，这个函数只是生成了具体的进程调用对象，还需要手动调用
+        ''' <see cref="IIORedirectAbstract.Run()"/>或者
+        ''' <see cref="IIORedirectAbstract.Start(Boolean)"/>
+        ''' 方法才会启动目标进程
+        ''' </summary>
+        ''' <param name="args$"></param>
+        ''' <returns></returns>
         Public Function RunProgram(args$) As IIORedirectAbstract
             Return App.Shell(_executableAssembly, args, CLR:=False)
         End Function
