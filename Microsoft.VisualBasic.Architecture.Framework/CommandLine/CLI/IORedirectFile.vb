@@ -137,6 +137,7 @@ Namespace CommandLine
                 .Replace("\", "") _
                 .Replace("/", "")
 
+            Call BAT.AppendLine("@echo off")
             Call BAT.AppendLine(Drive)
             Call BAT.AppendLine("CD " & App.CurrentDirectory.CLIPath)
 
@@ -156,7 +157,10 @@ Namespace CommandLine
             If FolkNew Then
                 Call BAT.AppendLine($"start {file} {argv}")   '在新的窗口打开
             Else
+                ' https://stackoverflow.com/questions/3680977/can-a-batch-file-capture-the-exit-codes-of-the-commands-it-is-invoking
+                Call BAT.AppendLine("set errorlevel=")
                 Call BAT.AppendLine($"{file} {argv}")  '生成IO重定向的命令行
+                Call BAT.AppendLine("exit /b %errorlevel%")
             End If
 
             ProcessBAT = BAT.ToString
