@@ -45,6 +45,9 @@ Namespace CommandLine.InteropService.SharedORM
 
         Public Overrides Function GetSourceCode() As String
             Dim vb As New StringBuilder
+            Dim className$ = MyBase.exe _
+                .NormalizePathString(OnlyASCII:=True) _
+                .Replace(" ", "_")
 
             Call vb.AppendLine("Imports " & GetType(StringBuilder).Namespace)
             Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
@@ -57,13 +60,13 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("Namespace " & [namespace])
             Call vb.AppendLine()
             Call vb.AppendLine(__xmlComments(App.Type.NamespaceEntry.Description))
-            Call vb.AppendLine($"Public Class {MyBase.exe} : Inherits {GetType(InteropService).Name}")
+            Call vb.AppendLine($"Public Class {VBLanguage.AutoEscapeVBKeyword(className)} : Inherits {GetType(InteropService).Name}")
             Call vb.AppendLine()
-            Call vb.AppendLine($"Public Const App$ = ""{exe}.exe""")
+            Call vb.AppendLine($"    Public Const App$ = ""{exe}.exe""")
             Call vb.AppendLine()
-            Call vb.AppendLine("Sub New(App$)")
-            Call vb.AppendLine($"MyBase.{NameOf(InteropService._executableAssembly)} = App$")
-            Call vb.AppendLine("End Sub")
+            Call vb.AppendLine("    Sub New(App$)")
+            Call vb.AppendLine($"        MyBase.{NameOf(InteropService._executableAssembly)} = App$")
+            Call vb.AppendLine("    End Sub")
 
             For Each API In Me.EnumeratesAPI
                 Call __calls(vb, API)
@@ -125,12 +128,12 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine(xmlComments)
 
             Call vb.AppendLine($"Public Function {func}({params.JoinBy(", ")}) As Integer")
-            Call vb.AppendLine($"Dim CLI As New StringBuilder(""{API.Value.Name}"")")
-            Call vb.AppendLine("Call CLI.Append("" "")") ' 插入命令名称和参数值之间的一个必须的空格
+            Call vb.AppendLine($"    Dim CLI As New StringBuilder(""{API.Value.Name}"")")
+            Call vb.AppendLine("    Call CLI.Append("" "")") ' 插入命令名称和参数值之间的一个必须的空格
             Call vb.AppendLine(__CLI(+API))
             Call vb.AppendLine()
-            Call vb.AppendLine($"Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI.ToString())")
-            Call vb.AppendLine($"Return proc.{NameOf(IIORedirectAbstract.Run)}()")
+            Call vb.AppendLine($"    Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI.ToString())")
+            Call vb.AppendLine($"    Return proc.{NameOf(IIORedirectAbstract.Run)}()")
             Call vb.AppendLine("End Function")
         End Sub
 
@@ -197,25 +200,25 @@ Namespace CommandLine.InteropService.SharedORM
                 Dim var$ = __normalizedAsIdentifier(param.Name)
 
                 ' 注意：在这句代码的最后有一个空格，是间隔参数所必需的，不可以删除
-                vbcode = $"Call CLI.Append(""{param.Name} "" & """""""" & {var} & """""" "")"
+                vbcode = $"    Call CLI.Append(""{param.Name} "" & """""""" & {var} & """""" "")"
 
                 If param.Description.StringEmpty Then
                     ' 必须参数不需要进一步判断，直接添加                    
                     Call CLI.AppendLine(vbcode)
                 Else
                     ' 可选参数还需要IF判断是否存在                  
-                    Call CLI.AppendLine($"If Not {var}.{NameOf(StringEmpty)} Then")
-                    Call CLI.AppendLine(vbcode)
-                    Call CLI.AppendLine("End If")
+                    Call CLI.AppendLine($"    If Not {var}.{NameOf(StringEmpty)} Then")
+                    Call CLI.AppendLine("        " & vbcode)
+                    Call CLI.AppendLine("    End If")
                 End If
             Next
 
             For Each b In API.BoolFlags
                 Dim var$ = __normalizedAsIdentifier(b)
 
-                Call CLI.AppendLine($"If {var} Then")
-                Call CLI.AppendLine($"Call CLI.Append(""{b} "")") ' 逻辑参数后面有一个空格，是正确的生成CLI所必需的
-                Call CLI.AppendLine("End If")
+                Call CLI.AppendLine($"    If {var} Then")
+                Call CLI.AppendLine($"        Call CLI.Append(""{b} "")") ' 逻辑参数后面有一个空格，是正确的生成CLI所必需的
+                Call CLI.AppendLine("    End If")
             Next
 
             Return CLI.ToString
