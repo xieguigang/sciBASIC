@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::891441f6fccf3d1a2f15fd0a82be9357, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Model\Graph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -64,6 +64,7 @@
 '
 '
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Language
@@ -207,15 +208,26 @@ Namespace Graph
             Return tNewNode
         End Function
 
+        ''' <summary>
+        ''' 使用节点的标签创建一个新的节点对象，将这个节点对象添加进入网络模型之后将新创建的节点对象返回给用户
+        ''' </summary>
+        ''' <param name="label"></param>
+        ''' <returns></returns>
         Public Function CreateNode(label As String) As Node Implements IGraph.CreateNode
-            Dim data As New NodeData()
-            data.label = label
+            Dim data As New NodeData With {.label = label}
             Dim tNewNode As New Node(_nextNodeId.ToString(), data)
             _nextNodeId += 1
             AddNode(tNewNode)
             Return tNewNode
         End Function
 
+        ''' <summary>
+        ''' 使用两个节点对象创建一条边连接之后，将所创建的边连接对象添加进入当前的图模型之中，最后将边对象返回给用户
+        ''' </summary>
+        ''' <param name="iSource"></param>
+        ''' <param name="iTarget"></param>
+        ''' <param name="iData"></param>
+        ''' <returns></returns>
         Public Function CreateEdge(iSource As Node, iTarget As Node, Optional iData As EdgeData = Nothing) As Edge Implements IGraph.CreateEdge
             If iSource Is Nothing OrElse iTarget Is Nothing Then
                 Return Nothing
@@ -238,7 +250,6 @@ Namespace Graph
             Dim node2 As Node = _nodeSet(iTarget)
             Return CreateEdge(node1, node2, iData)
         End Function
-
 
         Public Function GetEdges(iNode1 As Node, iNode2 As Node) As List(Of Edge) Implements IGraph.GetEdges
             If _adjacencySet.ContainsKey(iNode1.Label) AndAlso _adjacencySet(iNode1.Label).ContainsKey(iNode2.Label) Then
@@ -313,14 +324,11 @@ Namespace Graph
         ''' </summary>
         ''' <param name="label"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetNode(label As String) As Node
-            Dim retNode As Node = Nothing
-            nodes.ForEach(Sub(n As Node)
-                              If n.Data.label = label Then
-                                  retNode = n
-                              End If
-                          End Sub)
-            Return retNode
+            Return nodes _
+                .Where(Function(n) n.Data.label = label) _
+                .FirstOrDefault
         End Function
 
         Public Function GetEdge(label As String) As Edge
