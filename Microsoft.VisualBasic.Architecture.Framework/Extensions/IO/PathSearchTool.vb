@@ -35,6 +35,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -49,6 +50,31 @@ Imports Microsoft.VisualBasic.Text
 <Package("Program.Path.Search",
                     Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
+
+    ''' <summary>
+    ''' Execute file delete
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="throwEx"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Delete(path$, Optional throwEx As Boolean = False) As Boolean
+        Try
+            Call FileIO.FileSystem.DeleteFile(
+                path, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently
+            )
+        Catch ex As Exception
+            If throwEx Then
+                Throw New Exception(path, ex)
+            Else
+                Call App.LogException(ex, path)
+            End If
+
+            Return False
+        Finally
+        End Try
+
+        Return True
+    End Function
 
     ''' <summary>
     ''' 函数返回文件的拓展名后缀，请注意，这里的返回值是不会带有小数点的

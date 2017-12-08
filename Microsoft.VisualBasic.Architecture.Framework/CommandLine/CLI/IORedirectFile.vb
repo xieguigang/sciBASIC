@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::d86c3b8226066e52265905fc287b7d85, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\IORedirectFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,6 +31,8 @@ Imports System.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.FileIO
 
 Namespace CommandLine
 
@@ -179,19 +181,22 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function Run() As Integer Implements IIORedirectAbstract.Run
-            Dim tmpBAT As String = App.GetAppSysTempFile(".bat", App.Process.Id)
-            Call ProcessBAT.SaveTo(tmpBAT)
-            Dim ExitCode As Integer = Interaction.Shell(tmpBAT, AppWinStyle.Hide, Wait:=True)
+            Dim path As New Value(Of String)
+            Dim exitCode As Integer = Interaction.Shell(
+                path = writeScript(),
+                Style:=AppWinStyle.Hide,
+                Wait:=True
+            )
 
-            Call Console.WriteLine(StandardOutput)
-            Call $"Process exit with code {ExitCode}....".__DEBUG_ECHO
+            Call path.Value.Delete
 
-            Try
-                Call FileIO.FileSystem.DeleteFile(tmpBAT, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently)
-            Finally
-            End Try
+            Return exitCode
+        End Function
 
-            Return ExitCode
+        Private Function writeScript() As String
+            Dim path$ = App.GetAppSysTempFile(".bat", App.PID)
+            Call ProcessBAT.SaveTo(path)
+            Return path
         End Function
 
         Dim currentLength As Long
