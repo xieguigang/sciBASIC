@@ -69,4 +69,14 @@ Namespace Text.Xml.Models
             Return Me.GetJson
         End Function
     End Class
+
+    Public Class TermsVector
+
+        <XmlAttribute>
+        Public Property Terms As String()
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 End Namespace

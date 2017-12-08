@@ -621,7 +621,7 @@
     <Compile Include="CommandLine\Reflection\Attributes\ExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
     <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
-    <Compile Include="ComponentModel\Algorithm\base\DynamicProgramming.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
     <Compile Include="ComponentModel\Algorithm\SCS.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\NamedValueList.vb" />
@@ -858,7 +858,7 @@
     <Compile Include="Text\Parser\HtmlParser\HtmlStrips.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
-    <Compile Include="Text\StringSimilarity\Levenshtein\ResultVisualize.vb" />
+    <Compile Include="ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb" />
     <Compile Include="Text\Xml\Linq\Entity.vb" />
     <Compile Include="Text\Xml\Models\Vector.vb" />
     <Compile Include="Text\Xml\OpenXml\Content_Types.vb" />
@@ -973,7 +973,7 @@
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
     <Compile Include="Extensions\Reflection\Marshal\MarshalExtensions.vb" />
     <Compile Include="Extensions\Reflection\Reflection.vb" />
-    <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinModel.vb" />
+    <Compile Include="ComponentModel\Algorithm\Levenshtein\LevenshteinModel.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\Extensions.vb" />
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
     <Compile Include="Text\TextEncodings.vb" />
@@ -983,7 +983,7 @@
     <Compile Include="ApplicationServices\Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
-    <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinDistance.vb" />
+    <Compile Include="ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb" />
     <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\API.vb" />
     <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\PipeBuffer.vb" />
     <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\PipeStream.vb" />
