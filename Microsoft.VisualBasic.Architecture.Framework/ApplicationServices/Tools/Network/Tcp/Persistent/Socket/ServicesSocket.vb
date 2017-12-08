@@ -167,11 +167,12 @@ Namespace Net.Persistent.Socket
             _socketListener = New Sockets.Socket(
                 AddressFamily.InterNetwork,
                 SocketType.Stream,
-                ProtocolType.Tcp)
+                ProtocolType.Tcp
+            )
 
             Call _socketListener.Bind(localEndPoint)
-            Call _socketListener.ReceiveBufferSize.InvokeSet(4096)
-            Call _socketListener.SendBufferSize.InvokeSet(4096)
+            Call _socketListener.ReceiveBufferSize.SetValue(4096)
+            Call _socketListener.SendBufferSize.SetValue(4096)
             Call _socketListener.Listen(backlog:=100)
         End Sub
 

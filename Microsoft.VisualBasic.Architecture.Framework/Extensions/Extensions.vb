@@ -884,6 +884,8 @@ Public Module Extensions
     ''' <param name="value"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function SetValue(Of T)(ByRef var As T, value As T) As T
         var = value
         Return value

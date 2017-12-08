@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Linq
 
 #If NET_40 = 0 Then
 
@@ -71,10 +70,11 @@ Namespace ComponentModel.Settings
                 Return __createSave(XmlFile, CreateSave)
             Else
                 Dim File As T = XmlFile.LoadXml(Of T)(ThrowEx:=False)
+
                 If File Is Nothing Then
                     Return __createSave(XmlFile, CreateSave)
                 Else
-                    Return Load(SetValue(Of T).InvokeSet(File, NameOf(File.FilePath), XmlFile))
+                    Return Load(Linq.SetValue(Of T).InvokeSet(File, NameOf(File.FilePath), XmlFile))
                 End If
             End If
         End Function
