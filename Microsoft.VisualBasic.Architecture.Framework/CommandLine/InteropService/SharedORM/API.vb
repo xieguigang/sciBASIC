@@ -53,7 +53,7 @@ Namespace CommandLine.InteropService.SharedORM
         ''' + 对于可选参数的默认值，默认值的解析形式为``default=...``，如果没有这个表达式，则默认为Nothing空值为默认值
         ''' </param>
         ''' <returns></returns>
-        <Extension> Public Function CommandLineModel(usage$) As CommandLine
+        <Extension> Public Function CommandLineModel(usage As String) As CommandLine
             Dim name$ = Nothing
             Dim arguments$() = Nothing
             Dim optionals$() = Nothing
@@ -91,7 +91,8 @@ Namespace CommandLine.InteropService.SharedORM
                                 .Name = a(0),
                                 .Value = a(1)
                             }
-                        End Function).AsList
+                        End Function) _
+                .AsList
 
             booleans = GetLogicalArguments(optionals, Nothing)
             out += optionals _
@@ -109,13 +110,14 @@ Namespace CommandLine.InteropService.SharedORM
                 usage = usage.Replace(opts, "")
                 opts = opts.GetStackValue("[", "]")
             End If
-            name = usage.Split.First ' 命令的名称肯定是没有空格的，所以在里直接split取第一个元素
+
+            ' 命令的名称肯定是没有空格的，所以在里直接split取第一个元素
+            name = usage.Split.First
             usage = Mid(usage, name.Length + 1).Trim
 
             ' 在下面将arguments和optionals参数进行分词就行了
             ' 因为在usage之中并不会使用双引号来分割value值，而是使用尖括号
             ' 所以在这里需要额外注意下
-
             arguments = usage.Tokenize
             optionals = opts.Tokenize
         End Sub
@@ -129,7 +131,7 @@ Namespace CommandLine.InteropService.SharedORM
         ''' </summary>
         ''' <param name="s$"></param>
         ''' <returns></returns>
-        <Extension> Public Function Tokenize(s$) As String()
+        <Extension> Public Function Tokenize(s As String) As String()
             Dim t As New Pointer(Of Char)(s)
             Dim c As Char
             Dim valueEscape As Boolean = False
@@ -140,11 +142,11 @@ Namespace CommandLine.InteropService.SharedORM
                 Function()
                     Dim last As Char = tmp.LastOrDefault
                     Return (escapeType = "<"c AndAlso last = ">"c) OrElse
-                    (escapeType = ASCII.Quot AndAlso last = ASCII.Quot)
+                           (escapeType = ASCII.Quot AndAlso last = ASCII.Quot)
                 End Function
 
             Do While Not t.EndRead
-                c = +t
+                c = ++t
 
                 If c = " "c Then
                     If Not valueEscape Then
@@ -167,7 +169,7 @@ Namespace CommandLine.InteropService.SharedORM
                     End If
                 Else
                     ' 检查是否是value的开始符号: <或者双引号
-                    If (c = "<"c OrElse c = ASCII.Quot) AndAlso tmp.Count = 0 Then
+                    If (c = "<"c OrElse c = ASCII.Quot) AndAlso tmp = 0 Then
                         valueEscape = True
                         escapeType = c
                     End If

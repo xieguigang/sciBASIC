@@ -47,13 +47,17 @@ Namespace CommandLine.InteropService.SharedORM
         Public MustOverride Function GetSourceCode() As String
 
         Public Iterator Function EnumeratesAPI() As IEnumerable(Of NamedValue(Of CommandLine))
+            Dim help$
+
             For Each api As APIEntryPoint In App.APIList
                 Try
+                    help =
+$"```
+{api.Usage.Replace("<", "&lt;")}
+```" & vbCrLf & api.Info
                     Yield New NamedValue(Of CommandLine) With {
                         .Name = api.EntryPoint.Name,
-                        .Description = $"```
-                        {api.Usage.Replace("<", "&lt;")}
-                        ```" & vbCrLf & api.Info,
+                        .Description = help,
                         .Value = api.Usage.CommandLineModel
                     }
                 Catch ex As Exception
