@@ -44,8 +44,25 @@ Namespace CommandLine
             Return bat.ToString
         End Function
 
-        Public Function Bash() As String
+        Public Function Bash(program$, argv$, environment As IEnumerable(Of ValueTuple), folkNew As Boolean) As String
+            Dim shell As New StringBuilder("#!/bin/bash")
 
+            Call shell.AppendLine()
+            Call shell.AppendLine()
+
+            If Not environment.IsNullOrEmpty Then
+                For Each param As ValueTuple In environment
+                    ' To set it for current shell And all processes started from current shell
+                    ' shorter, less portable version
+                    ' export VARNAME="my value"      
+                    Call shell.AppendLine($"export {param.Key}=""{param.Value}""")
+                Next
+            End If
+
+            Call shell.AppendLine($"cd {App.CurrentDirectory.CLIPath}")
+            Call shell.AppendLine($"""{program}"" {argv}")
+
+            Return shell.ToString
         End Function
     End Module
 End Namespace

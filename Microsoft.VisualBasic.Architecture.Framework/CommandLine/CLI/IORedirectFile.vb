@@ -134,7 +134,7 @@ Namespace CommandLine
             If App.IsMicrosoftPlatform Then
                 shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew)
             Else
-                shellScript = ScriptingExtensions.Bash
+                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew)
             End If
 
             Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
