@@ -29,16 +29,24 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Proc = System.Diagnostics.Process
 
 Namespace CommandLine
 
     ''' <summary>
     ''' How to found the process by CLI
     ''' </summary>
-    Public Module ProcExtensions
+    Public Module ProcessExtensions
 
+        ''' <summary>
+        ''' <see cref="Process.GetProcessById"/>
+        ''' </summary>
+        ''' <param name="pid"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetProc(pid As Integer) As Process
-            Return System.Diagnostics.Process.GetProcessById(pid)
+            Return Process.GetProcessById(pid)
         End Function
 
         ''' <summary>
@@ -48,14 +56,16 @@ Namespace CommandLine
         ''' <returns></returns>
         <Extension> Public Function GetProc(CLI As String) As Process
             Dim CLICompared As CommandLine = CLI
-            Dim lstProc As Process() = System.Diagnostics.Process.GetProcesses
-            Dim LQuery As Process =
-                LinqAPI.DefaultFirst(Of Process) <= From proc As Process
-                                                    In lstProc
-                                                    Let args = TryParse(proc.StartInfo.Arguments)
-                                                    Where CLITools.Equals(CLICompared, args)  ' 由于参数的顺序可能会有些不一样，所以不可以直接按照字符串比较来获取
-                                                    Select proc
-            Return LQuery
+            Dim listProc As Process() = Proc.GetProcesses
+            Dim process = LinqAPI.DefaultFirst(Of Process) _
+ _
+                () <= From proc As Process
+                      In listProc
+                      Let args = TryParse(proc.StartInfo.Arguments)
+                      Where CLITools.Equals(CLICompared, args)  ' 由于参数的顺序可能会有些不一样，所以不可以直接按照字符串比较来获取
+                      Select proc
+
+            Return process
         End Function
 
         ''' <summary>
@@ -65,7 +75,8 @@ Namespace CommandLine
         ''' <param name="IO"></param>
         ''' <returns></returns>
         Public Function FindProc(IO As IIORedirectAbstract) As Process
-            Dim proc As System.Diagnostics.Process = IO.CLIArguments.GetProc
+            Dim proc As Process = IO.CLIArguments.GetProc
+
             If proc Is Nothing Then '空值说明进程还没有启动或者已经终止了，所以查找将不会查找到进程的信息
                 Dim msg As String = String.Format(NoProcessFound, IO.ToString)
                 Call VBDebugger.Warning(msg)

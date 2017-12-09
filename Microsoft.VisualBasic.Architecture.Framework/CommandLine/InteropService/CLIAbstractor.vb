@@ -102,7 +102,8 @@ Namespace CommandLine.InteropService
                 Else
                     paramValues += Scripting.CTypeDynamic(
                         args(names(name)),
-                        param.ParameterType)
+                        param.ParameterType
+                    )
                 End If
             Next
 
