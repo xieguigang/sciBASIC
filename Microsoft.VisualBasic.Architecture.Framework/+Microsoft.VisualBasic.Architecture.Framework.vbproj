@@ -1096,7 +1096,7 @@
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsVariance.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsVarianceP.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb" />
-    <Compile Include="CommandLine\Interpreters\ActivityInst.vb" />
+    <Compile Include="CommandLine\Interpreters\InteractiveConsole.vb" />
     <Compile Include="Serialization\ConfigMappings\DynamicsConfiguration.vb" />
     <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />

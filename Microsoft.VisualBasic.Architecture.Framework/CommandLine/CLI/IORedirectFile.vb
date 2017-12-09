@@ -89,6 +89,7 @@ Namespace CommandLine
             If CopyToPath.FileExists Then
                 Call FileIO.FileSystem.DeleteFile(CopyToPath)
             End If
+
             Try
                 Call FileIO.FileSystem.CopyFile(_TempRedirect, CopyToPath)
             Catch ex As Exception
