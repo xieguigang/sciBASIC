@@ -26,13 +26,11 @@
 
 #End Region
 
-Imports System.Reflection
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 
 Namespace CommandLine
 
@@ -78,6 +76,10 @@ Namespace CommandLine
             Return 0
         End Function
 
+        ''' <summary>
+        ''' Contains sevral build in command about file system operation and the program CLI interpreter commands
+        ''' </summary>
+        ''' <param name="cmd"></param>
         Private Sub RunAppInternal(cmd As CommandLine)
             Select Case cmd.Name.ToLower
 
