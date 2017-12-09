@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
 Namespace ComponentModel
@@ -21,6 +22,13 @@ Namespace ComponentModel
             Me.New(item1, item2)
             Me.Name = name
         End Sub
+
+        Public Function AsTuple() As NamedValue(Of (T, T))
+            Return New NamedValue(Of (T, T)) With {
+                .Name = Name,
+                .Value = (Item1, Item2)
+            }
+        End Function
 
         Public Overrides Function ToString() As String
             Return Name
