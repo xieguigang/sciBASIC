@@ -50,7 +50,7 @@ Namespace CommandLine
         ''' 重定向的临时文件
         ''' </summary>
         ''' <remarks>当使用.tmp拓展名的时候会由于APP框架里面的GC线程里面的自动临时文件清理而产生冲突，所以这里需要其他的文件拓展名来避免这个冲突</remarks>
-        Protected ReadOnly _TempRedirect As String = App.GetAppSysTempFile(".proc_IO_STDOUT", App.PID)
+        Protected ReadOnly _TempRedirect As String = App.GetAppSysTempFile(".proc_IO_std.out", App.PID)
 
         ''' <summary>
         ''' shell文件接口
@@ -130,7 +130,9 @@ Namespace CommandLine
 
             ' 系统可能不会自动创建文件夹，则需要在这里使用这个方法来手工创建，
             ' 避免出现无法找到文件的问题
-            _TempRedirect.ParentPath.MkDIR
+            Call _TempRedirect.ParentPath.MkDIR
+            ' 在Unix平台上面这个文件不会被自动创建？？？
+            Call "".SaveTo(_TempRedirect)
 
             If App.IsMicrosoftPlatform Then
                 shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew)
@@ -150,20 +152,49 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function Run() As Integer Implements IIORedirectAbstract.Run
-            Dim path As New Value(Of String)
-            Dim exitCode As Integer = Interaction.Shell(
-                path = writeScript(),
+            Dim path$ = writeScript()
+            Dim exitCode As Integer
+
+#If UNIX Then
+            With New Process() With {
+                .StartInfo = New ProcessStartInfo(path)
+            }
+                Call .Start()
+                Call .WaitForExit()
+
+                exitCode = .ExitCode
+            End With
+#Else
+            ' [ERROR 12/10/2017 4:57:27 AM] <Print>::System.Exception: Print ---> System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.DllNotFoundException: kernel32
+            '   at (wrapper managed-to-native) Microsoft.VisualBasic.CompilerServices.NativeMethods:GetStartupInfo (Microsoft.VisualBasic.CompilerServices.NativeTypes/STARTUPINFO)
+            '   at Microsoft.VisualBasic.Interaction.Shell (System.String PathName, Microsoft.VisualBasic.AppWinStyle Style, System.Boolean Wait, System.Int32 Timeout) [0x00077] in <828807dda9f14f24a7db780c6c644162>:0
+            '   at Microsoft.VisualBasic.CommandLine.IORedirectFile.Run () [0x00011] in <d9cf6734998c48a092e8a1528ac0142f>:0
+            '   at SMRUCC.genomics.Analysis.Metagenome.Mothur.RunMothur (System.String args) [0x00014] in <d8095d5f77564ae4af334ce9b17144fb>:0
+            '   at SMRUCC.genomics.Analysis.Metagenome.Mothur.Make_contigs (System.String file, System.Int32 processors) [0x00013] in <d8095d5f77564ae4af334ce9b17144fb>:0
+            '   at SMRUCC.genomics.Analysis.Metagenome.MothurContigsOTU.ClusterOTUByMothur (System.String left, System.String right, System.String silva, System.String workspace, System.Int32 processor) [0x00060] in <d8095d5f77564ae4af334ce9b17144fb>:0
+            '   at meta_community.CLI.ClusterOTU (Microsoft.VisualBasic.CommandLine.CommandLine args) [0x0004b] in <58a80ce28e644b22a21c332e0f3bd1f5>:0
+            '   at (wrapper managed-to-native) System.Reflection.MonoMethod:InternalInvoke (System.Reflection.MonoMethod,object,object[],System.Exception&)
+            '   at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00032] in <902ab9e386384bec9c07fa19aa938869>:0
+            '    --- End of inner exception stack trace ---
+            '   at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00048] in <902ab9e386384bec9c07fa19aa938869>:0
+            '   at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] in <902ab9e386384bec9c07fa19aa938869>:0
+            '   at Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints.APIEntryPoint.__directInvoke (System.Object[] callParameters, System.Object target, System.Boolean Throw) [0x0000c] in <d9cf6734998c48a092e8a1528ac0142f>:0
+            '    --- End of inner exception stack trace ---
+
+            exitCode = Interaction.Shell(
+                path,
                 Style:=AppWinStyle.Hide,
                 Wait:=True
             )
-
-            Call path.Value.Delete
+#End If
+            Call path.Delete
 
             Return exitCode
         End Function
 
         Private Function writeScript() As String
-            Dim path$ = App.GetAppSysTempFile(".bat", App.PID)
+            Dim ext$ = If(App.IsMicrosoftPlatform, ".bat", ".sh")
+            Dim path$ = App.GetAppSysTempFile(ext, App.PID)
             Call shellScript.SaveTo(path)
             Return path
         End Function
