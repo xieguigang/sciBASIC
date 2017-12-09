@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace CommandLine
 
@@ -48,8 +49,6 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     Public NotInheritable Class InteractiveConsole : Inherits Interpreter
-
-        ReadOnly variables As New Dictionary(Of String, String)
 
         Sub New(App As Type)
             Call MyBase.New(App)
@@ -115,6 +114,22 @@ Namespace CommandLine
                 Case "help" ' view commandline help 
 
                     Call MyBase.Execute(args:=New CommandLine With {.Name = "?"})
+
+                Case "/@set"
+
+                    ' /@set var value
+                    Dim var$ = cmd.Tokens.ElementAtOrDefault(1)
+                    Dim value$ = cmd _
+                        .Tokens _
+                        .ElementAtOrDefault(2) _
+                        .Interpolate(AddressOf App.GetVariable, escape:=False)
+
+                    Call App.JoinVariable(var, value)
+
+                Case "/@get"
+
+                    ' /@get var
+                    Call Console.WriteLine(App.GetVariable(cmd.Tokens.ElementAtOrDefault(1)))
 
                 Case Else
 
