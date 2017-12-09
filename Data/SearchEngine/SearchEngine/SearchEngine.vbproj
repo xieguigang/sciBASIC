@@ -132,15 +132,15 @@
     <DefineConstants>NET_40=1</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == GCModeller%28UNIX-Release_X64%29AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <OutputPath>bin\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.IO.SearchEngine.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == GCModeller%28UNIX-Release_X64%29x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <OutputPath>bin\x64\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.IO.SearchEngine.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == GCModeller%28UNIX-Release_X64%29x86'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <OutputPath>bin\x86\Release2\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.IO.SearchEngine.xml</DocumentationFile>
   </PropertyGroup>
