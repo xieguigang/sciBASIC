@@ -31,6 +31,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 
 Namespace CommandLine
 
@@ -57,7 +59,6 @@ Namespace CommandLine
 
         Public Function RunApp() As Integer
             Dim input As Value(Of String) = ""
-            Dim cmd As CommandLine
             Dim ps1 As PS1 = PS1.Fedora12
 
             Call Console.Write(ps1.ToString)
@@ -66,23 +67,7 @@ Namespace CommandLine
             Do While Not (input = Console.ReadLine).TextEquals("quit()")
                 With input.Value
                     If Not .StringEmpty Then
-                        cmd = CLITools.TryParse(.ref, False)
-
-                        Select Case cmd.Name.ToLower
-
-                            Case "ls"
-                                ' list directory
-                            Case "cd"
-                                ' change directory
-                            Case "cat"
-                                ' display text file content
-                            Case "help"
-                                ' view commandline help 
-                            Case Else
-
-                                Call MyBase.Execute(args:=cmd)
-
-                        End Select
+                        Call RunAppInternal(CLITools.TryParse(.ref))
                     End If
                 End With
 
@@ -92,5 +77,48 @@ Namespace CommandLine
 
             Return 0
         End Function
+
+        Private Sub RunAppInternal(cmd As CommandLine)
+            Select Case cmd.Name.ToLower
+
+                Case "ls"   ' list directory
+
+                    Dim directory$ = If(cmd.Tokens.ElementAtOrDefault(1), App.CurrentDirectory)
+                    Dim directories = FileIO.FileSystem.GetDirectories(directory)
+                    Dim files = FileIO.FileSystem.GetFiles(directory)
+
+                    For Each dir As String In directories
+                        Call Console.WriteLine("<directory> " & dir.Replace("\"c, "/"c).Split("/"c).Last)
+                    Next
+
+                    Dim table = files _
+                        .Select(Function(path)
+                                    Return {
+                                        path.Replace("\"c, "/"c).Split("/"c).Last,
+                                        New FileInfo(path).Length & " Bytes"
+                                    }
+                                End Function) _
+                        .ToArray
+
+                    Call PrintAsTable.Print(table, New StreamWriter(Console.OpenStandardOutput))
+
+                Case "cd"   ' change directory
+
+                    App.CurrentDirectory = cmd.Tokens.ElementAtOrDefault(1)
+
+                Case "cat"  ' display text file content
+
+                    Call Console.WriteLine(cmd.Tokens.ElementAtOrDefault(1).ReadAllText)
+
+                Case "help" ' view commandline help 
+
+                    Call MyBase.Execute(args:=New CommandLine With {.Name = "?"})
+
+                Case Else
+
+                    Call MyBase.Execute(args:=cmd)
+
+            End Select
+        End Sub
     End Class
 End Namespace
