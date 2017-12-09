@@ -240,16 +240,13 @@ Public Module TextDoc
     <ExportAPI("Write.Text")>
     <Extension> Public Function SaveTo(<Parameter("Text")> text As String,
                                        <Parameter("Path")> path As String,
-                                       <Parameter("Text.Encoding")> Optional encoding As Encoding = Nothing,
+                                       <Parameter("Text.Encoding")>
+                                       Optional encoding As Encoding = Nothing,
                                        Optional append As Boolean = False,
                                        Optional throwEx As Boolean = True) As Boolean
 
         If String.IsNullOrEmpty(path) Then
             Return False
-        End If
-
-        If text Is Nothing Then
-            text = ""
         End If
 
         Dim DIR As String
@@ -264,11 +261,12 @@ Public Module TextDoc
 
         If String.IsNullOrEmpty(DIR) Then
             DIR = FileIO.FileSystem.CurrentDirectory
+        Else
+            DIR.MkDIR(throwEx:=False)
         End If
 
         Try
-            Call FileIO.FileSystem.CreateDirectory(DIR)
-            Call File.WriteAllText(path, text, encoding Or DefaultEncoding)
+            Call FileIO.FileSystem.WriteAllText(path, text Or EmptyString, append, encoding Or DefaultEncoding)
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)
