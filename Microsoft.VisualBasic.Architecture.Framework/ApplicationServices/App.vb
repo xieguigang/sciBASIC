@@ -1330,7 +1330,12 @@ Public Module App
     ''' (这条线程只会自动清理*.tmp临时文件，因为假若不清理临时文件的话，有时候临时文件比较多的时候，会严重影响性能，甚至无法运行应用程序框架里面的IO重定向操作)
     ''' </summary>
     Public Sub StartGC(autoClose As Boolean)
+        ' 因为有一部分程序假若在执行一个很长的任务的话，是会将一些中间文件存放在临时文件夹的
+        ' 使用这个自动清理功能的函数，可能会将这些有用的中间文件给删除掉
+        ' 所以在这里给出一条警告信息，方便在调试的时候了解这个自动垃圾回收线程是否被启动了
         Call App.__GCThread.Start()
+        Call "Garbage auto collection thread started!".Warning
+
         App._CLIAutoClean = autoClose
     End Sub
 
