@@ -145,7 +145,8 @@ Namespace Text
                     "You can just ignore this warning, or fix this warning by enable the gb2312 encoding on your server.",
                     "For enable the gb2312 encoding, you can run commands:",
                     "",
-                    "   yum install -y mono-locale-extras"
+                    "   yum install -y mono-locale-extras",
+                    ""
                 }.JoinBy(ASCII.LF) _
                  .Warning
             End If
