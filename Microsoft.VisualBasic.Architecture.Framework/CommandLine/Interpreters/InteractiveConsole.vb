@@ -55,7 +55,7 @@ Namespace CommandLine
             Call MyBase.New(App)
         End Sub
 
-        Public Sub RunApp()
+        Public Function RunApp() As Integer
             Dim input As Value(Of String) = ""
             Dim cmd As CommandLine
             Dim ps1 As PS1 = PS1.Fedora12
@@ -89,6 +89,8 @@ Namespace CommandLine
                 Call Console.Write(ps1.ToString)
                 Call Console.Write(" ")
             Loop
-        End Sub
+
+            Return 0
+        End Function
     End Class
 End Namespace
