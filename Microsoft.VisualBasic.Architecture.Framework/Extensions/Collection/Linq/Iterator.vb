@@ -202,6 +202,14 @@ Namespace Linq
             Return i.i Mod n
         End Operator
 
+        Public Shared Operator <>(v As SeqValue(Of T), i%) As Boolean
+            Return v.i <> i
+        End Operator
+
+        Public Shared Operator =(v As SeqValue(Of T), i%) As Boolean
+            Return v.i = i
+        End Operator
+
         ''' <summary>
         ''' Get value from <see cref="value"/> property.
         ''' </summary>

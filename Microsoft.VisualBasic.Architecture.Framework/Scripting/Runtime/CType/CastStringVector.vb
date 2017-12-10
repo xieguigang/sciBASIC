@@ -34,6 +34,11 @@ Namespace Scripting.Runtime
 
     Public Module CastStringVector
 
+        ''' <summary>
+        ''' Convert the numeric <see cref="Double"/> type as the <see cref="String"/> text type.
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsCharacter(values As Dictionary(Of String, Double)) As Dictionary(Of String, String)
@@ -42,6 +47,11 @@ Namespace Scripting.Runtime
                 Function(x) CStr(x.Value))
         End Function
 
+        ''' <summary>
+        ''' Convert the <see cref="String"/> value as <see cref="Double"/> numeric type.
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsNumeric(values As Dictionary(Of String, String)) As Dictionary(Of String, Double)
