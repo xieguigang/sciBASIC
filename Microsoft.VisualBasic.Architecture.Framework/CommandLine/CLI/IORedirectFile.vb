@@ -156,6 +156,7 @@ Namespace CommandLine
             Dim exitCode As Integer
 
 #If UNIX Then
+            ' xdg-open: file '/tmp/gut_16s/15201/tmp00003.sh' does not exist
             With New Process() With {
                 .StartInfo = New ProcessStartInfo(path)
             }

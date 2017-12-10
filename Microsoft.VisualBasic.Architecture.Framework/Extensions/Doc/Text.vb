@@ -251,6 +251,9 @@ Public Module TextDoc
 
         Dim DIR As String
 
+#If UNIX Then
+        DIR = System.IO.Directory.GetParent(path).FullName
+#Else
         Try
             path = ProgramPathSearchTool.Long2Short(path)
             DIR = FileIO.FileSystem.GetParentPath(path)
@@ -258,15 +261,16 @@ Public Module TextDoc
             Dim msg As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260"
             Throw New Exception(msg, ex)
         End Try
+#End If
 
         If String.IsNullOrEmpty(DIR) Then
-            DIR = FileIO.FileSystem.CurrentDirectory
+            DIR = App.CurrentDirectory
         Else
             DIR.MkDIR(throwEx:=False)
         End If
 
         Try
-            Call FileIO.FileSystem.WriteAllText(path, text Or EmptyString, append, encoding Or DefaultEncoding)
+            Call FileIO.FileSystem.WriteAllText(path, text Or EmptyString, append, encoding Or UTF8)
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)
