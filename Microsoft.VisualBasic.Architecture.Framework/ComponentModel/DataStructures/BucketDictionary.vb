@@ -50,6 +50,10 @@ Namespace ComponentModel.Collection
             Me.bucketSize = bucketSize
         End Sub
 
+        Sub New()
+            Call Me.New(Short.MaxValue * 10)
+        End Sub
+
         ''' <summary>
         ''' 获取这个超大的字典集合之中的对象的数量总数
         ''' </summary>
@@ -61,6 +65,11 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        ''' <summary>
+        ''' 注意，不要直接使用这个方法来添加新的数据，使用<see cref="BucketDictionaryExtensions"/>的方法会更加高效
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         Default Public Property Item(key As K) As V Implements IReadOnlyDictionary(Of K, V).Item
             Get
                 For Each hash In __buckets
@@ -111,6 +120,10 @@ Namespace ComponentModel.Collection
                 Return __buckets.Select(Function(x) x.Values).IteratesALL
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"Tuple of [{GetType(K).Name}, {GetType(V).Name}] with {__buckets.Count} buckets."
+        End Function
 
         Public Function ContainsKey(key As K) As Boolean Implements IReadOnlyDictionary(Of K, V).ContainsKey
             For Each hash In __buckets
@@ -168,6 +181,12 @@ Namespace ComponentModel.Collection
             table.__buckets.Add(bucket)
 
             Return table
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CreateBuckets(Of K, V)(source As IEnumerable(Of (K, V)), Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, V)
+            Return source.CreateBuckets(Function(t) t.Item1, Function(t) t.Item2, size:=size)
         End Function
     End Module
 End Namespace
