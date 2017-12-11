@@ -113,13 +113,15 @@ Public Module IsometricContributions
         Dim statNumberPen As Brush = statNumberColor.GetBrush
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                ' 30,30,120
+                ' 30,60,-56.25
                 Dim camera As New Camera With {
                     .screen = region.Size,
                     .fov = 10000,
                     .ViewDistance = -85,
                     .angleX = 30,
                     .angleY = 30,
-                    .angleZ = 120
+                    .angleZ = 125
                 }
                 model = model _
                     .Centra _
@@ -200,7 +202,7 @@ Public Module IsometricContributions
 
                         With user
                             fsize = g.MeasureString(.bio, labelItemFont)
-                            statNumberFont = New Font(labelItemFont.Name, labelItemFont.Size * 2.5)
+                            statNumberFont = New Font(labelItemFont.Name, emSize:=labelItemFont.Size * 2.5)
 
                             Dim y1 = y + statNumberFont.Height + 25
                             Dim y2 = y1 + fsize.Height + 5

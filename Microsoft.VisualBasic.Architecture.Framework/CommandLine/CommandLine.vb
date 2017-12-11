@@ -142,7 +142,8 @@ Namespace CommandLine
         End Property
 
         ''' <summary>
-        ''' The parameter name is not case sensitive.(开关的名称是不区分大小写的)
+        ''' The parameter name is not case sensitive.
+        ''' (开关的名称是不区分大小写的，进行字符串插值脚本化处理的时候，是使用的<see cref="App.GetVariable"/>函数来获取环境变量值)
         ''' </summary>
         ''' <param name="paramName">The argument name in the commandline.</param>
         ''' <value></value>

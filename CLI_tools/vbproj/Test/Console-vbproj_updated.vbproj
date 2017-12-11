@@ -36,7 +36,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>X:\</OutputPath>
+    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
     <DefineConstants>A=3,BB=2333</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>vbproj.xml</DocumentationFile>
@@ -48,7 +48,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
     <DocumentationFile>vbproj.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>

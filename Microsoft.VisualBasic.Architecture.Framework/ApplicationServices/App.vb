@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::725cf3eb95b0e1cb4833f76547c0fd87, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
+Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
 '                   _ooOoo_
 '                  o8888888o
@@ -760,13 +761,24 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Private Function __isMicrosoftPlatform() As Boolean
+#If UNIX Then
+        Return False
+#Else
         Dim pt As PlatformID = Platform
+
+        ' 枚举值在.NET和Mono之间可能会不一样??
+        If pt.ToString = NameOf(PlatformID.Unix) Then
+            Return False
+        ElseIf pt.ToString = NameOf(PlatformID.MacOSX) Then
+            Return False
+        End If
 
         Return pt = PlatformID.Win32NT OrElse
             pt = PlatformID.Win32S OrElse
             pt = PlatformID.Win32Windows OrElse
             pt = PlatformID.WinCE OrElse
             pt = PlatformID.Xbox
+#End If
     End Function
 
     ''' <summary>
@@ -902,14 +914,8 @@ Public Module App
     '''
     <ExportAPI("RunCLI", Info:="Running the string as cli command line and the specific type define as a interpreter.")>
     <Extension>
-    Public Function RunCLI(Interpreter As Type, args As String, <CallerMemberName> Optional caller As String = Nothing) As Integer
-#If DEBUG Then
-        Call args.__DEBUG_ECHO
-#End If
-        Dim CLI As CommandLine.CommandLine = TryParse(args)
-        Call CLI.InitDebuggerEnvir(caller)
-
-        Return App.__completeCLI(New Interpreter(Interpreter).Execute(args))
+    Public Function RunCLI(Interpreter As Type, args$, <CallerMemberName> Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, Nothing, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -921,13 +927,8 @@ Public Module App
     '''
     <ExportAPI("RunCLI",
              Info:="Running the string as cli command line and the specific type define as a interpreter.")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLine.CommandLine, <CallerMemberName> Optional caller$ = Nothing) As Integer
-#If DEBUG Then
-        ' Call args.CLICommandArgvs.__DEBUG_ECHO
-#End If
-        Call args.InitDebuggerEnvir(caller)
-
-        Return App.__completeCLI(New Interpreter(Interpreter).Execute(args))
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, <CallerMemberName> Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -939,18 +940,10 @@ Public Module App
     '''
     <ExportAPI("RunCLI",
              Info:="Running the string as cli command line and the specific type define as a interpreter.")>
-    <Extension> Public Function RunCLI(Interpreter As Type,
-                                       args As CommandLine.CommandLine,
-                                       executeEmpty As __ExecuteEmptyCLI,
-                                       <CallerMemberName> Optional caller As String = Nothing) As Integer
-#If DEBUG Then
-        Call args.CLICommandArgvs.__DEBUG_ECHO
-#End If
-        Call args.InitDebuggerEnvir(caller)
-
-        Return App.__completeCLI(New Interpreter(Interpreter) With {
-            .ExecuteEmptyCli = executeEmpty
-        }.Execute(args))
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As __ExecuteEmptyCLI,
+                                       <CallerMemberName>
+                                       Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -961,16 +954,10 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As String, executeEmpty As __ExecuteEmptyCLI, <CallerMemberName> Optional caller As String = Nothing) As Integer
-#If DEBUG Then
-        Call args.__DEBUG_ECHO
-#End If
-        Dim CLI As CommandLine.CommandLine = TryParse(args)
-        Call CLI.InitDebuggerEnvir(caller)
-
-        Return App.__completeCLI(New Interpreter(Interpreter) With {
-            .ExecuteEmptyCli = executeEmpty
-        }.Execute(args))
+    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As __ExecuteEmptyCLI,
+                                       <CallerMemberName>
+                                       Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, executeEmpty, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -981,20 +968,10 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As String,
-                                       executeEmpty As __ExecuteEmptyCLI,
-                                       executeNotFound As __ExecuteNotFound,
-                                       <CallerMemberName> Optional caller As String = Nothing) As Integer
-#If DEBUG Then
-        Call args.__DEBUG_ECHO
-#End If
-        Dim CLI As CommandLine.CommandLine = TryParse(args)
-        Call CLI.InitDebuggerEnvir(caller)
-
-        Return App.__completeCLI(New Interpreter(Interpreter) With {
-            .ExecuteEmptyCli = executeEmpty,
-            .ExecuteNotFound = executeNotFound
-        }.Execute(args))
+    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As __ExecuteEmptyCLI, executeNotFound As __ExecuteNotFound,
+                                       <CallerMemberName>
+                                       Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, executeEmpty, executeNotFound, Nothing)
     End Function
 
     ''' <summary>
@@ -1005,19 +982,35 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type,
-                                       args As CommandLine.CommandLine,
-                                       executeEmpty As __ExecuteEmptyCLI,
-                                       executeNotFound As __ExecuteNotFound, <CallerMemberName> Optional caller As String = Nothing) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As __ExecuteEmptyCLI, executeNotFound As __ExecuteNotFound,
+                                       <CallerMemberName>
+                                       Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, Nothing)
+    End Function
+
+    <Extension>
+    Private Function RunCLIInternal(App As Type, args As CLI, caller$,
+                                    executeEmpty As __ExecuteEmptyCLI,
+                                    executeNotFound As __ExecuteNotFound,
+                                    executeFile As __ExecuteFile) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
         Call args.InitDebuggerEnvir(caller)
 
-        Return App.__completeCLI(New Interpreter(Interpreter) With {
-            .ExecuteEmptyCli = executeEmpty,
-            .ExecuteNotFound = executeNotFound
-        }.Execute(args))
+        If args.Name.TextEquals("/i") Then
+            ' 交互式终端模式
+            Dim console As New InteractiveConsole(App)
+            Return __completeCLI(console.RunApp)
+        Else
+            Dim program As New Interpreter(App, caller:=caller) With {
+                .ExecuteEmptyCli = executeEmpty,
+                .ExecuteNotFound = executeNotFound,
+                .ExecuteFile = executeFile
+            }
+
+            Return __completeCLI(program.Execute(args))
+        End If
     End Function
 
     ''' <summary>
@@ -1028,16 +1021,8 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As String, executeFile As __ExecuteFile, <CallerMemberName> Optional caller As String = Nothing) As Integer
-#If DEBUG Then
-        Call args.__DEBUG_ECHO
-#End If
-        Dim CLI As CommandLine.CommandLine = TryParse(args)
-        Call CLI.InitDebuggerEnvir(caller)
-
-        Return App.__completeCLI(New Interpreter(Interpreter) With {
-            .ExecuteFile = executeFile
-        }.Execute(args))
+    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeFile As __ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, Nothing, Nothing, executeFile)
     End Function
 
     ''' <summary>
@@ -1053,18 +1038,8 @@ Public Module App
     ''' ```
     ''' </param>
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type,
-                                       args As CommandLine.CommandLine,
-                                       executeFile As __ExecuteFile,
-                                       <CallerMemberName> Optional caller As String = Nothing) As Integer
-#If DEBUG Then
-        Call args.__DEBUG_ECHO
-#End If
-        Call args.InitDebuggerEnvir(caller)
-
-        Return App.__completeCLI(New Interpreter(Interpreter) With {
-            .ExecuteFile = executeFile
-        }.Execute(args))
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeFile As __ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, executeFile)
     End Function
 
     ''' <summary>
@@ -1075,9 +1050,9 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As String,
-                                       executeFile As __ExecuteFile,
-                                       executeEmpty As __ExecuteEmptyCLI, <CallerMemberName> Optional caller As String = Nothing) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeFile As __ExecuteFile, executeEmpty As __ExecuteEmptyCLI,
+                                       <CallerMemberName>
+                                       Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLI(TryParse(args), executeFile, executeEmpty, caller)
     End Function
 
@@ -1089,19 +1064,10 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type,
-                                       args As CommandLine.CommandLine,
-                                       executeFile As __ExecuteFile,
-                                       executeEmpty As __ExecuteEmptyCLI, <CallerMemberName> Optional caller As String = Nothing) As Integer
-#If DEBUG Then
-        Call args.__DEBUG_ECHO
-#End If
-        Call args.InitDebuggerEnvir(caller)
-
-        Return App.__completeCLI(New Interpreter(Interpreter) With {
-            .ExecuteFile = executeFile,
-            .ExecuteEmptyCli = executeEmpty
-        }.Execute(args))
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeFile As __ExecuteFile, executeEmpty As __ExecuteEmptyCLI,
+                                       <CallerMemberName>
+                                       Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, executeFile)
     End Function
 #End If
 
@@ -1210,14 +1176,17 @@ Public Module App
     ''' <returns></returns>
     ''' <remarks><see cref="IORedirectFile"/>这个建议在进行外部调用的时候才使用</remarks>
     Public Function Shell(app$, CLI$, Optional CLR As Boolean = False) As IIORedirectAbstract
-        If Platform = PlatformID.MacOSX OrElse
-            Platform = PlatformID.Unix Then
-
-            Dim process As New ProcessEx With {
-                .Bin = "mono",
-                .CLIArguments = app.CLIPath & " " & CLI
-            }
-            Return process
+        If Not IsMicrosoftPlatform Then
+            If CLR Then
+                Dim process As New ProcessEx With {
+                    .Bin = "mono",
+                    .CLIArguments = app.CLIPath & " " & CLI
+                }
+                Return process
+            Else
+                Dim process As New IORedirectFile(app, CLI)
+                Return process
+            End If
         Else
             If CLR Then
                 Return New IORedirect(app, CLI) ' 由于是重新调用自己，所以这个重定向是没有多大问题的
@@ -1330,7 +1299,12 @@ Public Module App
     ''' (这条线程只会自动清理*.tmp临时文件，因为假若不清理临时文件的话，有时候临时文件比较多的时候，会严重影响性能，甚至无法运行应用程序框架里面的IO重定向操作)
     ''' </summary>
     Public Sub StartGC(autoClose As Boolean)
+        ' 因为有一部分程序假若在执行一个很长的任务的话，是会将一些中间文件存放在临时文件夹的
+        ' 使用这个自动清理功能的函数，可能会将这些有用的中间文件给删除掉
+        ' 所以在这里给出一条警告信息，方便在调试的时候了解这个自动垃圾回收线程是否被启动了
         Call App.__GCThread.Start()
+        Call "Garbage auto collection thread started!".Warning
+
         App._CLIAutoClean = autoClose
     End Sub
 

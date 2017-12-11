@@ -36,8 +36,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Text.Xml.Models
 
-    Public Class StringValue
-        Implements Value(Of String).IValueOf
+    Public Class StringValue : Implements Value(Of String).IValueOf
 
         <XmlAttribute> Public Property value As String Implements Value(Of String).IValueOf.Value
 
@@ -73,11 +72,19 @@ Namespace Text.Xml.Models
     ''' </summary>
     Public Structure [Property]
 
-        <XmlAttribute> Public Property PropertyName As String
-        <XmlAttribute> Public Property PropertyValue As String
+        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property value As String
+        <XmlText>
+        Public Property Comment As String
+
+        Sub New(name$, value$, comment$)
+            Me.name = name
+            Me.value = value
+            Me.Comment = comment
+        End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{PropertyName} = ""{PropertyValue}"""
+            Return $"{name} = ""{value}"""
         End Function
     End Structure
 

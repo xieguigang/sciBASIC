@@ -26,13 +26,11 @@
 
 #End Region
 
-Imports System.Text.RegularExpressions
-Imports System.Text
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Parallel
+Imports ValueTuple = System.Collections.Generic.KeyValuePair(Of String, String)
 
 Namespace CommandLine
 
@@ -52,12 +50,12 @@ Namespace CommandLine
         ''' 重定向的临时文件
         ''' </summary>
         ''' <remarks>当使用.tmp拓展名的时候会由于APP框架里面的GC线程里面的自动临时文件清理而产生冲突，所以这里需要其他的文件拓展名来避免这个冲突</remarks>
-        Protected ReadOnly _TempRedirect As String = App.GetAppSysTempFile(".proc_IO_STDOUT", App.Process.Id)
+        Protected ReadOnly _TempRedirect As String = App.GetAppSysTempFile(".proc_IO_std.out", App.PID)
 
         ''' <summary>
         ''' shell文件接口
         ''' </summary>
-        Dim ProcessBAT As String
+        Dim shellScript As String
 #End Region
 
         ''' <summary>
@@ -73,6 +71,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property StandardOutput As String Implements IIORedirectAbstract.StandardOutput
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New IO.StreamReader(_TempRedirect).ReadToEnd
             End Get
@@ -90,6 +89,7 @@ Namespace CommandLine
             If CopyToPath.FileExists Then
                 Call FileIO.FileSystem.DeleteFile(CopyToPath)
             End If
+
             Try
                 Call FileIO.FileSystem.CopyFile(_TempRedirect, CopyToPath)
             Catch ex As Exception
@@ -107,10 +107,11 @@ Namespace CommandLine
         ''' <param name="environment">Temporary environment variable</param>
         ''' <param name="FolkNew">Folk the process on a new console window if this parameter value is TRUE</param>
         ''' <param name="stdRedirect">If not want to redirect the std out to your file, just leave this value blank.</param>
-        Sub New(file As String, Optional argv As String = "",
-                Optional environment As KeyValuePair(Of String, String)() = Nothing,
+        Sub New(file$,
+                Optional argv$ = "",
+                Optional environment As IEnumerable(Of ValueTuple) = Nothing,
                 Optional FolkNew As Boolean = False,
-                Optional stdRedirect As String = "")
+                Optional stdRedirect$ = "")
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
                 _TempRedirect = stdRedirect.CLIPath
@@ -123,51 +124,21 @@ Namespace CommandLine
                 Throw ex
             End Try
 
-            argv = $"{argv} > {_TempRedirect}"
-
-            If file.Contains(" "c) Then
-                file = $"""{file}"""
-            End If
-
-            Dim BAT As New StringBuilder(1024)
-
-            '切换工作目录至当前的进程所处的文件夹
-            Dim Drive As String = FileIO.FileSystem _
-                .GetDirectoryInfo(App.CurrentDirectory) _
-                .Root _
-                .Name _
-                .Replace("\", "") _
-                .Replace("/", "")
-
-            Call BAT.AppendLine("@echo off")
-            Call BAT.AppendLine(Drive)
-            Call BAT.AppendLine("CD " & App.CurrentDirectory.CLIPath)
-
-            If Not environment.IsNullOrEmpty Then '写入临时的环境变量
-                For Each para As KeyValuePair(Of String, String) In environment
-                    Call BAT.AppendLine($"set {para.Key}={para.Value }")
-                Next
-            End If
-
-            Call "".SaveTo(_TempRedirect)  ' 系统可能不会自动创建文件夹，则使用这个方法来创建，避免出现无法找到文件的问题
-
-            'Process = New Process
-            'Process.EnableRaisingEvents = True
-            'Process.StartInfo = pInfo
-            Call BAT.AppendLine()
-
-            If FolkNew Then
-                Call BAT.AppendLine($"start {file} {argv}")   '在新的窗口打开
-            Else
-                ' https://stackoverflow.com/questions/3680977/can-a-batch-file-capture-the-exit-codes-of-the-commands-it-is-invoking
-                Call BAT.AppendLine("set errorlevel=")
-                Call BAT.AppendLine($"{file} {argv}")  '生成IO重定向的命令行
-                Call BAT.AppendLine("exit /b %errorlevel%")
-            End If
-
-            ProcessBAT = BAT.ToString
             Bin = file
+            argv = $"{argv} > {_TempRedirect}"
             CLIArguments = argv
+
+            ' 系统可能不会自动创建文件夹，则需要在这里使用这个方法来手工创建，
+            ' 避免出现无法找到文件的问题
+            Call _TempRedirect.ParentPath.MkDIR
+            ' 在Unix平台上面这个文件不会被自动创建？？？
+            Call "".SaveTo(_TempRedirect)
+
+            If App.IsMicrosoftPlatform Then
+                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew)
+            Else
+                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew)
+            End If
 
             Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
         End Sub
@@ -181,51 +152,55 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function Run() As Integer Implements IIORedirectAbstract.Run
-            Dim path As New Value(Of String)
-            Dim exitCode As Integer = Interaction.Shell(
-                path = writeScript(),
+            Dim path$ = writeScript()
+            Dim exitCode As Integer
+
+#If UNIX Then
+            ' xdg-open: file '/tmp/gut_16s/15201/tmp00003.sh' does not exist
+            With New Process() With {
+                .StartInfo = New ProcessStartInfo(path)
+            }
+                Call .Start()
+                Call .WaitForExit()
+
+                exitCode = .ExitCode
+            End With
+#Else
+            ' [ERROR 12/10/2017 4:57:27 AM] <Print>::System.Exception: Print ---> System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.DllNotFoundException: kernel32
+            '   at (wrapper managed-to-native) Microsoft.VisualBasic.CompilerServices.NativeMethods:GetStartupInfo (Microsoft.VisualBasic.CompilerServices.NativeTypes/STARTUPINFO)
+            '   at Microsoft.VisualBasic.Interaction.Shell (System.String PathName, Microsoft.VisualBasic.AppWinStyle Style, System.Boolean Wait, System.Int32 Timeout) [0x00077] in <828807dda9f14f24a7db780c6c644162>:0
+            '   at Microsoft.VisualBasic.CommandLine.IORedirectFile.Run () [0x00011] in <d9cf6734998c48a092e8a1528ac0142f>:0
+            '   at SMRUCC.genomics.Analysis.Metagenome.Mothur.RunMothur (System.String args) [0x00014] in <d8095d5f77564ae4af334ce9b17144fb>:0
+            '   at SMRUCC.genomics.Analysis.Metagenome.Mothur.Make_contigs (System.String file, System.Int32 processors) [0x00013] in <d8095d5f77564ae4af334ce9b17144fb>:0
+            '   at SMRUCC.genomics.Analysis.Metagenome.MothurContigsOTU.ClusterOTUByMothur (System.String left, System.String right, System.String silva, System.String workspace, System.Int32 processor) [0x00060] in <d8095d5f77564ae4af334ce9b17144fb>:0
+            '   at meta_community.CLI.ClusterOTU (Microsoft.VisualBasic.CommandLine.CommandLine args) [0x0004b] in <58a80ce28e644b22a21c332e0f3bd1f5>:0
+            '   at (wrapper managed-to-native) System.Reflection.MonoMethod:InternalInvoke (System.Reflection.MonoMethod,object,object[],System.Exception&)
+            '   at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00032] in <902ab9e386384bec9c07fa19aa938869>:0
+            '    --- End of inner exception stack trace ---
+            '   at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00048] in <902ab9e386384bec9c07fa19aa938869>:0
+            '   at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] in <902ab9e386384bec9c07fa19aa938869>:0
+            '   at Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints.APIEntryPoint.__directInvoke (System.Object[] callParameters, System.Object target, System.Boolean Throw) [0x0000c] in <d9cf6734998c48a092e8a1528ac0142f>:0
+            '    --- End of inner exception stack trace ---
+
+            exitCode = Interaction.Shell(
+                path,
                 Style:=AppWinStyle.Hide,
                 Wait:=True
             )
-
-            Call path.Value.Delete
+#End If
+            Call path.Delete
 
             Return exitCode
         End Function
 
         Private Function writeScript() As String
-            Dim path$ = App.GetAppSysTempFile(".bat", App.PID)
-            Call ProcessBAT.SaveTo(path)
+            Dim ext$ = If(App.IsMicrosoftPlatform, ".bat", ".sh")
+            Dim path$ = App.GetAppSysTempFile(ext, App.PID)
+            Call shellScript.SaveTo(path)
             Return path
         End Function
 
-        Dim currentLength As Long
-
-        Private Sub __readSTDOUT()
-            Call Threading.Thread.Sleep(5000)
-
-            Do While Not Me.disposedValue
-
-                Call Threading.Thread.Sleep(1000)
-                Call __readSTDOUTInvoke()
-
-            Loop
-        End Sub
-
-        Private Sub __readSTDOUTInvoke()
-            Using fs = New IO.FileStream(Me._TempRedirect, IO.FileMode.Open, access:=IO.FileAccess.Read)
-
-                If fs.Length <= currentLength Then Return
-
-                Dim d As Long = fs.Length - currentLength
-                Dim buf As Byte() = New Byte(d - 1) {}
-                Call fs.Read(buf, currentLength, buf.Length)
-                Call Console.WriteLine(Encoding.Default.GetString(buf))
-
-                currentLength = fs.Length
-            End Using
-        End Sub
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Start(WaitForExit As Boolean, PushingData As String(), _DISP_DEBUG_INFO As Boolean) As Integer
             Return Start(WaitForExit)
         End Function
@@ -244,20 +219,24 @@ Namespace CommandLine
         ''' 启动子进程，但是不等待执行完毕，当目标子进程退出的时候，回调<paramref name="procExitCallback"/>函数句柄
         ''' </summary>
         ''' <param name="procExitCallback"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Start(Optional procExitCallback As Action = Nothing)
             Call New Tasks.Task(Of Action)(procExitCallback, AddressOf __processExitHandle).Start()
         End Sub
 
         Private Sub __processExitHandle(ProcessExitCallback As Action)
             Dim ExitCode = Run()
+
             RaiseEvent ProcessExit(ExitCode, Now.ToString)
+
             If Not ProcessExitCallback Is Nothing Then
                 Call ProcessExitCallback()
             End If
         End Sub
 
         Public Overrides Function ToString() As String
-            Return ProcessBAT
+            Return shellScript
         End Function
 
 #Region "IDisposable Support"
@@ -295,6 +274,5 @@ Namespace CommandLine
             ' GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
     End Class
 End Namespace

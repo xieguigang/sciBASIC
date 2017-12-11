@@ -118,12 +118,17 @@ Public Module ProgramPathSearchTool
     ''' Make directory
     ''' </summary>
     ''' <param name="DIR"></param>
-    <Extension> Public Sub MkDIR(DIR$)
+    <Extension> Public Sub MkDIR(DIR$, Optional throwEx As Boolean = True)
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
         Catch ex As Exception
             ex = New Exception("DIR value is: " & DIR, ex)
-            Throw ex
+
+            If throwEx Then
+                Throw ex
+            Else
+                Call App.LogException(ex)
+            End If
         End Try
     End Sub
 

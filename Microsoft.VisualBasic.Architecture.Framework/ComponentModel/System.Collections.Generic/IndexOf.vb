@@ -36,6 +36,11 @@ Namespace ComponentModel.Collection
     ''' Mappings of ``key As String -> index As Integer``
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
+    ''' <remarks>
+    ''' ###### 2017-12-10
+    ''' 
+    ''' 经过测试，字典对象是完全可以容纳UniProt数据库之中的物种的数量上限的
+    ''' </remarks>
     Public Class Index(Of T) : Implements IEnumerable(Of SeqValue(Of T))
 
         Dim maps As New Dictionary(Of T, Integer)
