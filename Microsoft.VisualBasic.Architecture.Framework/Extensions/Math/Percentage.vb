@@ -37,7 +37,7 @@ Namespace Math
     ''' 分数，百分比
     ''' </summary>
     ''' <remarks></remarks>
-    Public Structure Percentage
+    Public Structure Percentage : Implements IComparable, IFormattable, IConvertible, IComparable(Of [Double]), IEquatable(Of [Double])
 
         ''' <summary>
         ''' 分子
@@ -59,7 +59,11 @@ Namespace Math
         <SoapIgnore> Public ReadOnly Property Value As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Numerator / Denominator
+                If Numerator = 0R Then
+                    Return 0
+                Else
+                    Return Numerator / Denominator
+                End If
             End Get
         End Property
 
@@ -104,6 +108,7 @@ Namespace Math
         End Function
 
         Public Shared ReadOnly Property ZERO As New Percentage(0, 1)
+        Public Shared ReadOnly Property One As New Percentage(1, 1)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(value As Percentage) As Double
@@ -119,5 +124,107 @@ Namespace Math
         Public Shared Operator <(value As Percentage, n As Double) As Boolean
             Return value.Value < n
         End Operator
+
+#Region "Public Interface"
+        Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+            If obj Is Nothing Then
+                Return 1
+            End If
+            If obj.GetType Is GetType(Double) Then
+                Return Value.CompareTo(DirectCast(obj, Double))
+            ElseIf obj.GetType Is GetType(Percentage) Then
+                Return Value.CompareTo(DirectCast(obj, Percentage).Value)
+            Else
+                Return 1
+            End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function ToString(format As String, formatProvider As IFormatProvider) As String Implements IFormattable.ToString
+            Return Value.ToString(format, formatProvider)
+        End Function
+
+#Region "Implements IConvertible"
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetTypeCode() As TypeCode Implements IConvertible.GetTypeCode
+            Return TypeCode.Double
+        End Function
+
+        Private Function ToBoolean(provider As IFormatProvider) As Boolean Implements IConvertible.ToBoolean
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToChar(provider As IFormatProvider) As Char Implements IConvertible.ToChar
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToSByte(provider As IFormatProvider) As SByte Implements IConvertible.ToSByte
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToByte(provider As IFormatProvider) As Byte Implements IConvertible.ToByte
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToInt16(provider As IFormatProvider) As Short Implements IConvertible.ToInt16
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToUInt16(provider As IFormatProvider) As UShort Implements IConvertible.ToUInt16
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToInt32(provider As IFormatProvider) As Integer Implements IConvertible.ToInt32
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToUInt32(provider As IFormatProvider) As UInteger Implements IConvertible.ToUInt32
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToInt64(provider As IFormatProvider) As Long Implements IConvertible.ToInt64
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToUInt64(provider As IFormatProvider) As ULong Implements IConvertible.ToUInt64
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToSingle(provider As IFormatProvider) As Single Implements IConvertible.ToSingle
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToDouble(provider As IFormatProvider) As Double Implements IConvertible.ToDouble
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToDecimal(provider As IFormatProvider) As Decimal Implements IConvertible.ToDecimal
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function ToDateTime(provider As IFormatProvider) As Date Implements IConvertible.ToDateTime
+            Throw New NotImplementedException()
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function ToString(provider As IFormatProvider) As String Implements IConvertible.ToString
+            Return Value.ToString(provider)
+        End Function
+
+        Private Function ToType(conversionType As Type, provider As IFormatProvider) As Object Implements IConvertible.ToType
+            Throw New NotImplementedException()
+        End Function
+#End Region
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CompareTo(other As Double) As Integer Implements IComparable(Of Double).CompareTo
+            Return Value.CompareTo(other)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function Equals(other As Double) As Boolean Implements IEquatable(Of Double).Equals
+            Return Value.Equals(other)
+        End Function
+#End Region
     End Structure
 End Namespace
