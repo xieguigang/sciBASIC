@@ -59,7 +59,11 @@ Namespace Math
         <SoapIgnore> Public ReadOnly Property Value As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Numerator / Denominator
+                If Numerator = 0R Then
+                    Return 0
+                Else
+                    Return Numerator / Denominator
+                End If
             End Get
         End Property
 
