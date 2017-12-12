@@ -41,7 +41,7 @@ Namespace Drawing2D.Math2D
         ''' <returns></returns>
         <Extension>
         Public Function Rotate(polygon As IEnumerable(Of PointF), angle#) As PointF()
-
+            Throw New NotImplementedException
         End Function
     End Module
 End Namespace

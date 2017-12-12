@@ -82,6 +82,8 @@ Namespace MarkDown
                 level = $"<h{level.Length}>"
 
             Next
+
+            Throw New NotImplementedException
         End Function
 
         ''' <summary>
