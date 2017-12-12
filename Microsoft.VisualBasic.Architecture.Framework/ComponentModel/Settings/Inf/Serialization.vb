@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::24d95d8dbba360f227ff2469920f9106, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\Serialization.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -85,6 +85,12 @@ Namespace ComponentModel.Settings.Inf
     ''' </summary>
     Public Module IOProvider
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function EmptySection(x As Type, section As PropertyInfo) As String
+            Return $"Property [{x.Name}\({section.PropertyType.Name}){section.Name}] for ini section is null."
+        End Function
+
         ''' <summary>
         ''' 将目标对象写为``*.ini``文件
         ''' </summary>
@@ -93,19 +99,30 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="path"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function WriteProfile(Of T As Class)(x As T, path As String) As Boolean
+        Public Function WriteProfile(Of T As Class)(x As T, path$) As Boolean
             Dim ini As New IniFile(path)
+            Dim msg$
 
             For Each section As PropertyInfo In __getSections(Of T)()
                 Dim obj As Object = section.GetValue(x, Nothing)
-                If Not obj Is Nothing Then
-                    Call ClassMapper.ClassDumper(obj, section.PropertyType, ini)
-                Else
-                    Dim msg As String = $"Property {section.ToString} for ini section is null."
+                Dim schema As Type = section.PropertyType
+
+                If obj Is Nothing Then
+                    msg = GetType(T).EmptySection(section)
+                    obj = Activator.CreateInstance(schema)
+
                     Call msg.Warning
                     Call App.LogException(msg)
                 End If
+
+                Call ClassMapper.ClassDumper(
+                    x:=obj,
+                    type:=schema,
+                    ini:=ini
+                )
             Next
+
+            Call $"Ini profile data was saved at location: {path.GetFullPath}".__INFO_ECHO
 
             Return True
         End Function
@@ -127,14 +144,18 @@ Namespace ComponentModel.Settings.Inf
             Dim properties As PropertyInfo() =
                 GetType(T).GetProperties(bindingAttr:=
                 BindingFlags.Instance Or
-                BindingFlags.Public)
-            properties =
-                LinqAPI.Exec(Of PropertyInfo) <= From p As PropertyInfo
-                                                 In properties
-                                                 Let type As Type = p.PropertyType
-                                                 Let attr As ClassName = type.GetAttribute(Of ClassName)
-                                                 Where Not attr Is Nothing
-                                                 Select p
+                BindingFlags.Public
+            )
+
+            properties = LinqAPI.Exec(Of PropertyInfo) _
+ _
+                () <= From p As PropertyInfo
+                      In properties
+                      Let type As Type = p.PropertyType
+                      Let attr As ClassName = type.GetAttribute(Of ClassName)
+                      Where Not attr Is Nothing
+                      Select p
+
             Return properties
         End Function
 
@@ -159,6 +180,7 @@ Namespace ComponentModel.Settings.Inf
 
         Private Function __getPath(Of T As Class)() As String
             Dim path As IniMapIO = GetType(T).GetAttribute(Of IniMapIO)
+
             If path Is Nothing Then
                 Throw New Exception("Could not found path mapping! @" & GetType(T).FullName)
             Else
@@ -166,17 +188,15 @@ Namespace ComponentModel.Settings.Inf
             End If
         End Function
 
-        Public Function LoadProfile(Of T As Class)(Optional ByRef fileExists As Boolean = False) As T
-            Dim path As String = __getPath(Of T)()
+        Public Function LoadProfile(Of T As Class)(Optional ByRef fileExists As Boolean = False, Optional ByRef path$ = Nothing) As T
+            path = __getPath(Of T)()
+            fileExists = path.FileExists
 
-            If Not path.FileExists Then  ' 文件不存在，则直接写文件了
+            If Not fileExists Then  ' 文件不存在，则直接写文件了
                 Dim obj As T = Activator.CreateInstance(Of T)
-
-                fileExists = False
                 Call obj.WriteProfile
                 Return obj
             Else
-                fileExists = True
                 Return path.LoadProfile(Of T)
             End If
         End Function
