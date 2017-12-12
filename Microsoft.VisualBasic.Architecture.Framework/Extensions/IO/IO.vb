@@ -91,9 +91,18 @@ Public Module IOExtensions
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
-    Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate) As FileStream
-        Call path.ParentPath.MkDIR
-        Return IO.File.Open(path, mode)
+    Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate, Optional doClear As Boolean = True) As FileStream
+        With path.ParentPath
+            If Not .DirectoryExists Then
+                Call .MkDIR()
+            End If
+        End With
+
+        If doClear Then
+            Call New Byte() {}.FlushStream(path)
+        End If
+
+        Return File.Open(path, mode)
     End Function
 
     ''' <summary>
