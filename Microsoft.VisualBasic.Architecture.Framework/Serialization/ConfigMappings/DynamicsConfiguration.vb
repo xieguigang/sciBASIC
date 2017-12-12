@@ -71,6 +71,7 @@ Namespace Serialization
 
             Return Function(o)
                        Dim out As New Dictionary(Of String, String)
+
                        For Each p As PropertyInfo In ps.Values
                            Dim pType As Type = p.PropertyType
                            Dim value As Object = p.GetValue(o, Nothing)
@@ -79,10 +80,11 @@ Namespace Serialization
                                out(p.Name) = Scripting.ToString(value)
                            Else
                                If Not onlyPrimitive Then
-                                   out(p.Name) = GetObjectJson(value, type:=pType)
+                                   out(p.Name) = pType.GetObjectJson(value)
                                End If
                            End If
                        Next
+
                        Return out
                    End Function
         End Function

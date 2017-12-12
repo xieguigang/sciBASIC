@@ -250,7 +250,7 @@ Namespace Text.HtmlParser
         End Function
 
         Public Function GetSelectOptions(html) As NamedCollection(Of String)
-
+            Throw New NotImplementedException
         End Function
 
         Const selected$ = " " & NameOf(selected)
