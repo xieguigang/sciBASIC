@@ -128,7 +128,9 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         ''' <summary>
-        ''' 属性的类型需要定义<see cref="ClassName"/>，Section类型里面的属性还需要定义<see cref="DataFrameColumnAttribute"/>
+        ''' 属性的类型需要定义<see cref="ClassName"/>，Section类型里面的属性还需要
+        ''' 定义<see cref="DataFrameColumnAttribute"/>，否则将不会将对应的属性的值
+        ''' 写入到ini文件之中。
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>

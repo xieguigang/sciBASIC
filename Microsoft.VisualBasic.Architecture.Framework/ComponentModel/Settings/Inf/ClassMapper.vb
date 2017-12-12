@@ -103,9 +103,8 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         Public Function ClassWriter(ini As IniFile, type As Type) As Object
-            Dim maps As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) =
-                MapParser(type)
             Dim obj As Object = Activator.CreateInstance(type)
+            Dim maps = MapParser(type)
 
             For Each map In maps.Value
                 Dim key As String = map.Field.Name
@@ -124,8 +123,7 @@ Namespace ComponentModel.Settings.Inf
         End Sub
 
         Public Sub ClassDumper(x As Object, type As Type, ini As IniFile)
-            Dim maps As NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) =
-                MapParser(type)
+            Dim maps = MapParser(type)
 
             For Each map In maps.Value
                 Dim key As String = map.Field.Name
