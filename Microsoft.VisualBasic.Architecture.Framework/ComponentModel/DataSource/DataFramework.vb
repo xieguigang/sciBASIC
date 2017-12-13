@@ -36,20 +36,6 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel
 
-    Public Enum PropertyAccess As Byte
-        NotSure = 0
-        Readable = 2
-        Writeable = 4
-        ReadWrite = Readable And Writeable
-    End Enum
-
-    ''' <summary>
-    ''' 在数据框数据映射操作之中是否忽略掉这个属性或者方法？
-    ''' </summary>
-    <AttributeUsage(AttributeTargets.Property Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
-    Public Class DataIgnoredAttribute : Inherits Attribute
-    End Class
-
     ''' <summary>
     ''' 在目标对象中必须要具有一个属性有自定义属性<see cref="DataFrameColumnAttribute"></see>
     ''' </summary>
