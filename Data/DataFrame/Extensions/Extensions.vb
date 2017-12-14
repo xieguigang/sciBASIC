@@ -235,6 +235,19 @@ Public Module Extensions
             .ToArray
     End Function
 
+    <Extension>
+    Public Function SaveTable(table As IEnumerable(Of KeyValuePair(Of String, Double)), path$, Optional encoding As Encoding = Nothing) As Boolean
+        Dim csv As New File_csv
+
+        csv += {"ID", "value"}
+        csv += table _
+            .Select(Function(map)
+                        Return New RowObject(New String() {map.Key, map.Value})
+                    End Function)
+
+        Return csv.Save(path, encoding)
+    End Function
+
     ''' <summary>
     ''' This extension is using for .NET scripting API.
     ''' (这个函数不会被申明为拓展函数了，因为这个object序列类型的函数如果为拓展函数的话，会与T泛型函数产生冲突)
