@@ -149,13 +149,18 @@ Namespace Language
             Return x.Value / b
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator /(x As Integer, b As int) As Double
+            Return x / b.Value
+        End Operator
+
         ''' <summary>
         ''' 必须要overloads这个方法，否则会出现无法将Value(Of Integer)转换为int的错误
         ''' </summary>
         ''' <param name="n"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(n%) As int
+        Public Overloads Shared Widening Operator CType(n As Integer) As int
             Return New int(n)
         End Operator
 
