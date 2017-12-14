@@ -35,6 +35,8 @@ Namespace Serialization
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Delegate Function IStringParser(data As String) As Object
+    Public Delegate Function IStringParser(Of T)(data As String) As T
+
     ''' <summary>
     ''' 将目标对象序列化为文本字符串的字符串构造方法
     ''' </summary>
