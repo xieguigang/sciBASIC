@@ -60,6 +60,14 @@ Namespace Scripting.Runtime
                 Function(x) x.Value.ParseNumeric)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsGeneric(Of T)(values As Dictionary(Of String, T)) As Dictionary(Of String, Object)
+            Return values.ToDictionary(
+                Function(x) x.Key,
+                Function(x) CObj(x.Value))
+        End Function
+
         <Extension> Public Function AsType(Of T)(source As IEnumerable(Of String)) As IEnumerable(Of T)
             Dim type As Type = GetType(T)
             Dim [ctype] = InputHandler.CasterString(type)
