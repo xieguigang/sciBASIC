@@ -328,6 +328,22 @@ Public Module DocumentExtensions
         End With
     End Function
 
+    <Extension>
+    Public Function CreateTable(Of T)(csv As IO.File, Optional parser As IStringParser(Of T) = Nothing) As Dictionary(Of String, T)
+        With parser Or Scripting.DefaultTextParser(Of T)
+            Dim table As New Dictionary(Of String, T)
+
+            For Each line As RowObject In csv.Skip(1)
+                Dim key$ = line.First
+                Dim value = line.Second
+
+                table(key) = .ref(value)
+            Next
+
+            Return table
+        End With
+    End Function
+
     ''' <summary>
     ''' 这个函数会自动判断对象的格式为tsv还是csv文件格式
     ''' </summary>
