@@ -133,6 +133,21 @@ Public Class File : Implements IFileReference
         End If
     End Function
 
+    ''' <summary>
+    ''' <paramref name="index"/>是以零为底的下标编号
+    ''' </summary>
+    ''' <param name="index"></param>
+    ''' <returns></returns>
+    Public Function GetTable(index As Integer) As csv
+        Dim worksheet As worksheet = xl.GetWorksheetByIndex(index)
+
+        If worksheet Is Nothing Then
+            Return Nothing
+        Else
+            Return xl.GetTableData(worksheet)
+        End If
+    End Function
+
     Public Function LoadDataSet(Of T As Class)(sheetName$) As T()
         Return GetTable(sheetName).AsDataSource(Of T)
     End Function

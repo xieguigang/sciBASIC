@@ -91,15 +91,25 @@ Namespace ApplicationServices
         ''' </param>
         ''' 
         <ExportAPI("ExtractToDir", Info:="Unzips the specified file to the given folder in a safe manner. This plans for missing paths and existing files and handles them gracefully.")>
-        Public Sub ImprovedExtractToDirectory(<Parameter("Zip", "The name of the zip file to be extracted")> sourceArchiveFileName As String,
-                                          <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName As String,
-                                          <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>
-                                          Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
-            'Opens the zip file up to be read
+        Public Sub ImprovedExtractToDirectory(<Parameter("Zip", "The name of the zip file to be extracted")> sourceArchiveFileName$,
+                                              <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName$,
+                                              <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>
+                                              Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
+            ' Opens the zip file up to be read
             Using archive As ZipArchive = ZipFile.OpenRead(sourceArchiveFileName)
-                'Loops through each file in the zip file
+                ' Loops through each file in the zip file
                 For Each file As ZipArchiveEntry In archive.Entries
-                    ImprovedExtractToFile(file, destinationDirectoryName, overwriteMethod)
+                    If file.IsADirectoryEntry Then
+                        Call Path _
+                            .Combine(destinationDirectoryName, file.FullName) _
+                            .MkDIR
+                    Else
+                        Call ImprovedExtractToFile(
+                            file:=file,
+                            destinationPath:=destinationDirectoryName,
+                            overwriteMethod:=overwriteMethod
+                        )
+                    End If
                 Next
             End Using
         End Sub
@@ -113,10 +123,16 @@ Namespace ApplicationServices
             Return Dir
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IsADirectoryEntry(file As ZipArchiveEntry) As Boolean
+            Return file.FullName.Last = "/"c OrElse file.FullName.Last = "\"c
+        End Function
+
         ''' <summary>
         ''' Safely extracts a single file from a zip file
         ''' </summary>
-        ''' <param name="file__1">
+        ''' <param name="file">
         ''' The zip entry we are pulling the file from
         ''' </param>
         ''' <param name="destinationPath">
@@ -128,42 +144,44 @@ Namespace ApplicationServices
         ''' </param>
         ''' 
         <ExportAPI("Extract", Info:="Safely extracts a single file from a zip file.")>
-        <Extension> Public Sub ImprovedExtractToFile(<Parameter("Zip.Entry", "The zip entry we are pulling the file from")> file__1 As ZipArchiveEntry,
-                                                 destinationPath As String,
-                                                 Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
+        <Extension> Public Sub ImprovedExtractToFile(<Parameter("Zip.Entry", "The zip entry we are pulling the file from")>
+                                                     file As ZipArchiveEntry,
+                                                     destinationPath As String,
+                                                     Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
 
             'Gets the complete path for the destination file, including any
             'relative paths that were in the zip file
-            Dim destinationFileName As String = IO.Path.Combine(destinationPath, file__1.FullName)
+            Dim destinationFileName As String = Path.Combine(destinationPath, file.FullName)
 
             'Gets just the new path, minus the file name so we can create the
             'directory if it does not exist
-            Dim destinationFilePath As String = IO.Path.GetDirectoryName(destinationFileName)
+            Dim destinationFilePath As String = Path.GetDirectoryName(destinationFileName)
 
             'Creates the directory (if it doesn't exist) for the new path
-            IO.Directory.CreateDirectory(destinationFilePath)
+            Call Directory.CreateDirectory(destinationFilePath)
 
             'Determines what to do with the file based upon the
             'method of overwriting chosen
             Select Case overwriteMethod
                 Case Overwrite.Always
-                    'Just put the file in and overwrite anything that is found
-                    file__1.ExtractToFile(destinationFileName, True)
+
+                    ' Just put the file in and overwrite anything that is found
+                    file.ExtractToFile(destinationFileName, True)
 
                 Case Overwrite.IfNewer
                     'Checks to see if the file exists, and if so, if it should
                     'be overwritten
-                    If Not IO.File.Exists(destinationFileName) OrElse IO.File.GetLastWriteTime(destinationFileName) < file__1.LastWriteTime Then
+                    If Not IO.File.Exists(destinationFileName) OrElse IO.File.GetLastWriteTime(destinationFileName) < file.LastWriteTime Then
                         'Either the file didn't exist or this file is newer, so
                         'we will extract it and overwrite any existing file
-                        file__1.ExtractToFile(destinationFileName, True)
+                        file.ExtractToFile(destinationFileName, True)
                     End If
 
                 Case Overwrite.Never
                     'Put the file in if it is new but ignores the 
                     'file if it already exists
                     If Not IO.File.Exists(destinationFileName) Then
-                        file__1.ExtractToFile(destinationFileName)
+                        file.ExtractToFile(destinationFileName)
                     End If
 
                 Case Else

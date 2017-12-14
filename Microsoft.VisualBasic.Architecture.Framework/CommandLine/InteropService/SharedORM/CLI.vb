@@ -36,12 +36,12 @@ Namespace CommandLine.InteropService.SharedORM
 
         Public Shared Function ParseAssembly(dll$) As Type
             Dim assembly As Assembly = Assembly.LoadFile(dll)
-            Dim type As Type = LinqAPI.DefaultFirst(Of Type) <=
+            Dim type As Type = LinqAPI.DefaultFirst(Of Type) _
  _
-                From t As Type
-                In assembly.GetTypes
-                Where Not t.GetCustomAttribute(Of CLIAttribute) Is Nothing
-                Select t ' 
+                () <= From t As Type
+                      In EmitReflection.GetTypesHelper(assembly)
+                      Where Not t.GetCustomAttribute(Of CLIAttribute) Is Nothing
+                      Select t ' 
 
             Return type
         End Function

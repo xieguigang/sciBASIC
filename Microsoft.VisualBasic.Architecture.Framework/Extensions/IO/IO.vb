@@ -99,11 +99,20 @@ Public Module IOExtensions
         End With
 
         If doClear Then
-            Call New Byte() {}.FlushStream(path)
+            ' 在这里调用FlushStream函数的话会导致一个循环引用的问题
+            Call ClearFileBytes(path)
         End If
 
         Return File.Open(path, mode)
     End Function
+
+    ''' <summary>
+    ''' 将文件之中的所有数据都清空
+    ''' </summary>
+    ''' <param name="path"></param>
+    Public Sub ClearFileBytes(path As String)
+        Call IO.File.WriteAllBytes(path, New Byte() {})
+    End Sub
 
     ''' <summary>
     ''' Open a text file and returns its file handle.

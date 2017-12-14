@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
 Namespace Scripting
@@ -129,6 +130,11 @@ Namespace Scripting
             Else
                 Return DirectCast(value, T)
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function DefaultTextParser(Of T)() As DefaultValue(Of IStringParser(Of T))
+            Return New IStringParser(Of T)(AddressOf CTypeDynamic(Of T)).AsDefault
         End Function
 
         ''' <summary>

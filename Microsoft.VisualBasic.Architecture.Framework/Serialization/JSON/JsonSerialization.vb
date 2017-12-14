@@ -111,6 +111,17 @@ Namespace Serialization.JSON
         End Function
 
         ''' <summary>
+        ''' 有些javascript程序(例如highcharts.js)要求json里面不可以出现null的属性，可以使用这个方法进行移除
+        ''' </summary>
+        ''' <param name="json"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemoveJsonNullItems(json As String) As String
+            Return r.Replace(json, """[^""]+""[:]\s*null\s*,?", "", RegexICSng)
+        End Function
+
+        ''' <summary>
         ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
         ''' can be used for block the property which is will not serialize to the text.
         ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
