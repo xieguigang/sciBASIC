@@ -147,8 +147,14 @@ Namespace ApplicationServices
             'method of overwriting chosen
             Select Case overwriteMethod
                 Case Overwrite.Always
-                    'Just put the file in and overwrite anything that is found
-                    file__1.ExtractToFile(destinationFileName, True)
+
+                    If file__1.FullName.Last = "/"c OrElse file__1.FullName.Last = "\"c Then
+                        ' 是一个文件夹
+                        Call destinationFileName.MkDIR
+                    Else
+                        ' Just put the file in and overwrite anything that is found
+                        file__1.ExtractToFile(destinationFileName, True)
+                    End If
 
                 Case Overwrite.IfNewer
                     'Checks to see if the file exists, and if so, if it should
