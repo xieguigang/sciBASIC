@@ -55,7 +55,7 @@ Public Module NetworkVisualizer
     ''' </summary>
     ''' <returns></returns>
     Public Property BackgroundColor As Color = Color.FromArgb(219, 243, 255)
-    Public Property DefaultEdgeColor As Color = Color.FromArgb(131, 131, 131)
+    Public Property DefaultEdgeColor As Color = Color.LightGray
 
     ''' <summary>
     ''' 优先显示： <see cref="NodeData.label"/> -> <see cref="NodeData.origID"/> -> <see cref="Node.ID"/>
@@ -224,13 +224,13 @@ Public Module NetworkVisualizer
                     cl = DefaultEdgeColor
 
                     If edge.Data.weight < 0.5 Then
-                        cl = Color.Gray
+                        cl = Color.LightGray
                     ElseIf edge.Data.weight < 0.75 Then
                         cl = Color.Blue
                     End If
 
-                    Dim w As Integer = 5 * edge.Data.weight
-                    w = If(w < 1.5, 1.5, w)
+                    Dim w As Integer = 5 * edge.Data.weight * scale
+                    w = If(w < scale, scale, w)
                     Dim lineColor As New Pen(cl, w)
 
                     With edge.Data!interaction_type
