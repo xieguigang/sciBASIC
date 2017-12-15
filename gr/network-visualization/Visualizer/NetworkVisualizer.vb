@@ -308,7 +308,7 @@ Public Module NetworkVisualizer
                         .Anchors(labels.Select(Function(x) x.anchor)) _
                         .Labels(labels.Select(Function(x) x.label)) _
                         .Size(frameSize) _
-                        .Start(nsweeps:=500, showProgress:=False)
+                        .Start(nsweeps:=2000, showProgress:=False)
 
                     For Each label In labels
                         With label
