@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Imaging.Physics
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
-Public Module Module1
+Public Module layoutTest
 
     <Extension>
     Public Function Vector2D(v As Vector) As PointF

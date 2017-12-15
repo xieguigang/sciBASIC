@@ -133,6 +133,8 @@
     <Compile Include="FormCanvas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="drawTest.vb" />
+    <Compile Include="layoutTest.vb" />
     <Compile Include="Test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -195,6 +197,10 @@
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
       <Project>{85E71B4B-9276-4EC8-AADC-C849205F1EA8}</Project>
       <Name>Microsoft.VisualBasic.Imaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\physics\physics.vbproj">
+      <Project>{3291389c-ea87-4b33-a9a5-65a2d60ba3e2}</Project>
+      <Name>physics</Name>
     </ProjectReference>
     <ProjectReference Include="..\Datavisualization.Network\Network.GraphTheory.vbproj">
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
