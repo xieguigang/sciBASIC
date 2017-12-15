@@ -87,11 +87,9 @@ Namespace Interpolation
                                          <Parameter("Is.Polygon")>
                                          Optional isPolygon As Boolean = False) As List(Of Point)
 
-            Dim data As IEnumerable(Of PointF) =
-                raw.Select(Function(pt) New PointF(pt.X, pt.Y))
+            Dim data As IEnumerable(Of PointF) = raw.Select(Function(pt) New PointF(pt.X, pt.Y))
             Dim spline = data.CatmullRomSpline(interpolationStep, isPolygon)
-            Dim result As New List(Of Point)(
-                spline.Select(Function(pt) New Point(pt.X, pt.Y)))
+            Dim result As New List(Of Point)(spline.Select(Function(pt) New Point(pt.X, pt.Y)))
 
             Return result
         End Function

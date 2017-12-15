@@ -453,6 +453,7 @@ Namespace Imaging
 
             Try
                 Bitmap = New Bitmap(r.Width, r.Height)
+                Bitmap.SetResolution(600, 600)
             Catch ex As Exception
                 ex = New Exception(r.ToString, ex)
                 ex = New Exception(trace, ex)

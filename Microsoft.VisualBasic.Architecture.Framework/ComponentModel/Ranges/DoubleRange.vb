@@ -234,7 +234,7 @@ Namespace ComponentModel.Ranges
         ''' target numeric range: ``<paramref name="valueRange"/>``.
         ''' (将当前的范围内的一个实数映射到另外的一个范围内的实数区间之中)
         ''' </summary>
-        ''' <param name="x#"></param>
+        ''' <param name="x#">A numeric value in this <see cref="DoubleRange"/></param>
         ''' <param name="valueRange"></param>
         ''' <returns></returns>
         Public Function ScaleMapping(x#, valueRange As DoubleRange) As Double
