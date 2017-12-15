@@ -129,6 +129,11 @@ Namespace Graph
             _adjacencySet.Clear()
         End Sub
 
+        ''' <summary>
+        ''' 添加节点然后返回这个新添加的节点
+        ''' </summary>
+        ''' <param name="iNode"></param>
+        ''' <returns></returns>
         Public Function AddNode(iNode As Node) As Node Implements IGraph.AddNode
             If Not _nodeSet.ContainsKey(iNode.Label) Then
                 nodes.Add(iNode)
@@ -139,11 +144,19 @@ Namespace Graph
             Return iNode
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AddEdge(i%, j%) As Edge
+            Return CreateEdge(GetElementByID(i), GetElementByID(j))
+        End Function
+
+        Public Function GetElementByID(id As Integer) As Node
+            Return nodes.Where(Function(n) n.ID = id).FirstOrDefault
+        End Function
+
         Public Function AddEdge(iEdge As Edge) As Edge Implements IGraph.AddEdge
             If Not edges.Contains(iEdge) Then
                 edges.Add(iEdge)
             End If
-
 
             If Not (_adjacencySet.ContainsKey(iEdge.U.Label)) Then
                 _adjacencySet(iEdge.U.Label) = New Dictionary(Of String, List(Of Edge))()
@@ -151,7 +164,6 @@ Namespace Graph
             If Not (_adjacencySet(iEdge.U.Label).ContainsKey(iEdge.V.Label)) Then
                 _adjacencySet(iEdge.U.Label)(iEdge.V.Label) = New List(Of Edge)()
             End If
-
 
             If Not _adjacencySet(iEdge.U.Label)(iEdge.V.Label).Contains(iEdge) Then
                 _adjacencySet(iEdge.U.Label)(iEdge.V.Label).Add(iEdge)
