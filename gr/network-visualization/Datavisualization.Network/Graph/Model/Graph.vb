@@ -227,7 +227,9 @@ Namespace Graph
         ''' <returns></returns>
         Public Function CreateNode(label As String) As Node Implements IGraph.CreateNode
             Dim data As New NodeData With {.label = label}
-            Dim tNewNode As New Node(_nextNodeId.ToString(), data)
+            Dim tNewNode As New Node(_nextNodeId.ToString(), data) With {
+                .ID = _nextNodeId
+            }
             _nextNodeId += 1
             AddNode(tNewNode)
             Return tNewNode
