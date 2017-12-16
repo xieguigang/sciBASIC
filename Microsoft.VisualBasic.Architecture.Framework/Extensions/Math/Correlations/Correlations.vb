@@ -277,7 +277,7 @@ Namespace Math.Correlations
         ''' <param name="y"></param>
         ''' <param name="prob"></param>
         ''' <param name="prob2"></param>
-        ''' <param name="z"></param>
+        ''' <param name="z">fisher's z trasnformation</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' checked by Excel
@@ -288,20 +288,21 @@ Namespace Math.Correlations
             Dim pcc As Double = GetPearson(x, y)
             Dim n As Integer = x.Length
 
+            ' fisher's z trasnformation
             z = 0.5 * sys.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
-            'fisher's z trasnformation
+
+            ' student's t probability
             df = n - 2
             t = pcc * sys.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
-            'student's t probability
+
             prob = Beta.betai(0.5 * df, 0.5, df / (df + t * t))
+            ' for a large n
             prob2 = Beta.erfcc(Abs(z * sys.Sqrt(n - 1.0)) / 1.4142136)
-            'for a large n
 
             Return pcc
         End Function
 
-        Public ReadOnly Property Pearson As DefaultValue(Of ICorrelation) =
-            New ICorrelation(AddressOf GetPearson).AsDefault
+        Public ReadOnly Property Pearson As DefaultValue(Of ICorrelation) = New ICorrelation(AddressOf GetPearson).AsDefault
 
         ''' <summary>
         ''' Pearson correlations
@@ -313,14 +314,18 @@ Namespace Math.Correlations
         Public Function GetPearson(x#(), y#()) As Double
             Dim j As Integer, n As Integer = x.Length
             Dim yt As Double, xt As Double
-            Dim syy As Double = 0.0, sxy As Double = 0.0, sxx As Double = 0.0, ay As Double = 0.0, ax As Double = 0.0
+            Dim syy As Double = 0.0, sxy As Double = 0.0, sxx As Double = 0.0
+            Dim ay As Double = 0.0, ax As Double = 0.0
+
             For j = 0 To n - 1
-                'finds the mean
+                ' finds the mean
                 ax += x(j)
                 ay += y(j)
             Next
+
             ax /= n
             ay /= n
+
             For j = 0 To n - 1
                 ' compute correlation coefficient
                 xt = x(j) - ax
@@ -340,6 +345,14 @@ Namespace Math.Correlations
         ''' <param name="Y"></param>
         ''' <returns></returns>
         Public Delegate Function ICorrelation(X#(), Y#()) As Double
+
+        Const VectorSizeMustAgree$ = "[X:={0}, Y:={1}] The vector length betwen the two samples is not agreed!!!"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub throwNotAgree(x#(), y#())
+            Dim message$ = String.Format(VectorSizeMustAgree, x.Length, y.Length)
+            Throw New DataException(message)
+        End Sub
 
         ''' <summary>
         ''' This method should not be used in cases where the data set is truncated; that is,
@@ -363,21 +376,21 @@ Namespace Math.Correlations
                Pearson correlation coefficient formula given above.")>
         Public Function Spearman#(X#(), Y#())
             If X.Length <> Y.Length Then
-                Dim msg As String =
-                    $"[X:={X.Length}, Y:={Y.Length}] The vector length betwen the two samples is not agreed!!!"
-                Throw New DataException(msg)
+                Call throwNotAgree(X, Y)
             ElseIf X.Length = 1 Then
                 Throw New DataException(UnableMeasures)
             End If
 
-            Dim n As Integer = X.Length  ' size n
+            ' size n
+            Dim n As Integer = X.Length
             Dim Xx As spcc() = __getOrder(X)
             Dim Yy As spcc() = __getOrder(Y)
 
-            Dim spcc As Double =
-                1 - 6 * (From i As Integer
-                         In n.Sequence
-                         Select (Xx(i).rank - Yy(i).rank) ^ 2).Sum / (n ^ 3 - n)
+            Dim deltaSum# = Aggregate i As Integer
+                            In n.Sequence
+                            Into Sum((Xx(i).rank - Yy(i).rank) ^ 2)
+            Dim spcc = 1 - 6 * deltaSum / (n ^ 3 - n)
+
             Return spcc
         End Function
 
