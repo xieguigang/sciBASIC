@@ -302,7 +302,26 @@ Namespace Math.Correlations
             Return pcc
         End Function
 
-        Public ReadOnly Property Pearson As DefaultValue(Of ICorrelation) = New ICorrelation(AddressOf GetPearson).AsDefault
+        Public Structure Pearson
+            Dim pearson#
+            Dim pvalue#
+            Dim pvalue2#
+            Dim Z#
+
+            Public Shared Function Measure(x As IEnumerable(Of Double), y As IEnumerable(Of Double)) As Pearson
+                Dim pvalue1, pvalue2, z As Double
+                Dim pearson# = GetPearson(x.ToArray, y.ToArray, pvalue1, pvalue2, z)
+
+                Return New Pearson With {
+                    .pearson = pearson,
+                    .pvalue = pvalue1,
+                    .pvalue2 = pvalue2,
+                    .Z = z
+                }
+            End Function
+        End Structure
+
+        Public ReadOnly Property PearsonDefault As DefaultValue(Of ICorrelation) = New ICorrelation(AddressOf GetPearson).AsDefault
 
         ''' <summary>
         ''' Pearson correlations
@@ -310,8 +329,7 @@ Namespace Math.Correlations
         ''' <param name="x#"></param>
         ''' <param name="y#"></param>
         ''' <returns></returns>
-        <ExportAPI("Pearson")>
-        Public Function GetPearson(x#(), y#()) As Double
+        <ExportAPI("Pearson")> Public Function GetPearson(x#(), y#()) As Double
             Dim j As Integer, n As Integer = x.Length
             Dim yt As Double, xt As Double
             Dim syy As Double = 0.0, sxy As Double = 0.0, sxx As Double = 0.0
@@ -473,7 +491,7 @@ Namespace Math.Correlations
             Dim array As Vector() = data.ToArray
             Dim outMatrix As New List(Of DataSet)
 
-            compute = compute Or Pearson
+            compute = compute Or PearsonDefault
 
             For Each a As Vector In array
                 Dim ca As New Dictionary(Of String, Double)

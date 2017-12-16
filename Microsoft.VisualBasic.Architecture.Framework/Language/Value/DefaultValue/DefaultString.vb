@@ -67,6 +67,12 @@ Namespace Language.Default
             Return s Is Nothing OrElse String.IsNullOrEmpty(s)
         End Function
 
+        ''' <summary>
+        ''' If <paramref name="value"/> is empty then returns <paramref name="default"/>, else returns <paramref name="value"/> itself.
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <param name="default$"></param>
+        ''' <returns></returns>
         Public Shared Operator Or(value As DefaultString, default$) As String
             If assertIsNothing(value.DefaultValue) Then
                 Return [default]
