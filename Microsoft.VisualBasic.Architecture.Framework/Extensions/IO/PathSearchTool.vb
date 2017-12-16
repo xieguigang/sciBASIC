@@ -388,10 +388,14 @@ Public Module ProgramPathSearchTool
     ''' Safe file copy operation
     ''' </summary>
     ''' <param name="source$"></param>
-    ''' <param name="copyTo$"></param>
+    ''' <param name="copyTo$">Can be file name or directory name</param>
     ''' <returns></returns>
     <Extension> Public Function FileCopy(source$, copyTo$) As Boolean
         Try
+            If copyTo.Last = "/"c OrElse copyTo.Last = "\"c Then
+                copyTo = copyTo & source.FileName
+            End If
+
             If copyTo.FileExists Then
                 Call FileIO.FileSystem.DeleteFile(copyTo)
             Else
