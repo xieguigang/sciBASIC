@@ -352,6 +352,8 @@ Namespace Drawing2D.Colors
         ''' <param name="n%"></param>
         ''' <param name="alpha%"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetColors(term$, Optional n% = 256, Optional alpha% = 255) As Color()
             Return CubicSpline(GetColors(term), n, alpha)
         End Function
@@ -363,6 +365,8 @@ Namespace Drawing2D.Colors
         ''' <param name="n%"></param>
         ''' <param name="alpha%"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetBrushes(term$, Optional n% = 256, Optional alpha% = 255) As SolidBrush()
             Return GetColors(term, n, alpha).Select(Function(c) New SolidBrush(c)).ToArray
         End Function
@@ -373,6 +377,8 @@ Namespace Drawing2D.Colors
         ''' <param name="colors$"></param>
         ''' <param name="n%"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function FromNames(colors$(), n%) As Color()
             Return colors.Select(AddressOf ToColor).__internalFills(n)
         End Function
