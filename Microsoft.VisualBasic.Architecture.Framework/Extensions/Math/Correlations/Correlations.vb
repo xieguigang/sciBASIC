@@ -308,6 +308,10 @@ Namespace Math.Correlations
             Dim pvalue2#
             Dim Z#
 
+            Public Overrides Function ToString() As String
+                Return $"{pearson} @ {pvalue}"
+            End Function
+
             Public Shared Function Measure(x As IEnumerable(Of Double), y As IEnumerable(Of Double)) As Pearson
                 Dim pvalue1, pvalue2, z As Double
                 Dim pearson# = GetPearson(x.ToArray, y.ToArray, pvalue1, pvalue2, z)
@@ -318,6 +322,13 @@ Namespace Math.Correlations
                     .pvalue2 = pvalue2,
                     .Z = z
                 }
+            End Function
+
+            Public Shared Function RankPearson(x As IEnumerable(Of Double), y As IEnumerable(Of Double)) As Pearson
+                Dim r1 = x.Ranking(Strategies.FractionalRanking)
+                Dim r2 = y.Ranking(Strategies.FractionalRanking)
+
+                Return Measure(r1, r2)
             End Function
         End Structure
 
