@@ -1,0 +1,1 @@
+"../../githubAPI/github-vcard/bin/Release/github-vcard.exe" /write /user xieguigang
