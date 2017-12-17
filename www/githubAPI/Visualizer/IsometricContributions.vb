@@ -118,7 +118,7 @@ Public Module IsometricContributions
                 Dim camera As New Camera With {
                     .screen = region.Size,
                     .fov = 10000,
-                    .ViewDistance = -85,
+                    .ViewDistance = -75,
                     .angleX = 30,
                     .angleY = 30,
                     .angleZ = 125
@@ -131,7 +131,7 @@ Public Module IsometricContributions
 
                 Call DirectCast(g, Graphics2D) _
                     .Graphics _
-                    .SurfacePainter(camera, model, illumination:=False, offset:=New PointF(-20, 100))
+                    .SurfacePainter(camera, model, illumination:=False, offset:=New PointF(-100, 100))
 
                 Dim fsize As SizeF = g.MeasureString(oneYear, labelItemFont)
 
