@@ -308,6 +308,13 @@ Namespace Math.Correlations
             Dim pvalue2#
             Dim Z#
 
+            Public ReadOnly Property P As Double
+                <MethodImpl(MethodImplOptions.AggressiveInlining)>
+                Get
+                    Return -Math.Log10(pvalue)
+                End Get
+            End Property
+
             Public Overrides Function ToString() As String
                 Return $"{pearson} @ {pvalue}"
             End Function
