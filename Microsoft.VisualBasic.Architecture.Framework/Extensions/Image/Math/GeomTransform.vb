@@ -146,6 +146,12 @@ Namespace Imaging.Math2D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        Public Function Offsets(points As IEnumerable(Of Point), offset As PointF) As Point()
+            Return points.Select(Function(pt) pt.OffSet2D(offset)).ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
         Public Function MirrorX(pt As PointF, rect As RectangleF) As PointF
             Return New PointF With {
                 .X = rect.Right - (pt.X - rect.Left),
