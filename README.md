@@ -369,4 +369,4 @@ BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
 ![](./www/data/github/xieguigang_github-vcard.png)
 
-> Copyleft ! 2017, [I@xieguigang.me](mailto://I@xieguigang.me) (http://scibasic.cool/)
+> Copyleft ! 2018, [I@xieguigang.me](mailto://I@xieguigang.me) (http://sciBASIC.NET/)
