@@ -82,7 +82,7 @@ Namespace XML.xl
                 .SafeQuery _
                 .Where(Function(s) s.name.TextEquals(name)) _
                 .FirstOrDefault _
-                .sheetId
+                .rid
         End Function
 
         Public Function Add(sheetName$) As String

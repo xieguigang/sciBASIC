@@ -40,6 +40,7 @@ Namespace XML.xl.worksheets
         Public Property sheetData As sheetData
         Public Property phoneticPr As phoneticPr
         Public Property pageMargins As pageMargins
+        Public Property pageSetup As pageSetup
         Public Property sheetViews As sheetView()
 
         <XmlAttribute("uid", [Namespace]:=xr)>
@@ -171,5 +172,12 @@ Namespace XML.xl.worksheets
         <XmlAttribute> Public Property bottom As Double
         <XmlAttribute> Public Property header As Double
         <XmlAttribute> Public Property footer As Double
+    End Class
+
+    Public Class pageSetup
+        <XmlAttribute> Public Property paperSize As String
+        <XmlAttribute> Public Property orientation As String
+        <XmlAttribute("id", [Namespace]:=Xmlns.r)>
+        Public Property id As String
     End Class
 End Namespace
