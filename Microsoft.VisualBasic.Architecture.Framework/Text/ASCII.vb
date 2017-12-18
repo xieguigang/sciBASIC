@@ -285,6 +285,7 @@ Namespace Text
             Return sb.ToString
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsASCIIString(str As String) As Boolean
             Return Not str.Any(Function(c) Asc(c) > 128)
         End Function

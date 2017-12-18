@@ -33,7 +33,7 @@ Public Module Extensions
     ''' </summary>
     ''' <returns></returns>
     Public Function CreateNew() As File
-
+        Throw New NotImplementedException
     End Function
 End Module
 

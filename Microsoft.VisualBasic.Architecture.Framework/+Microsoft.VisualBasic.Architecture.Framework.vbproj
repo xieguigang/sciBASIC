@@ -679,6 +679,7 @@
     <Compile Include="CommandLine\InteropService\Abstract.vb" />
     <Compile Include="CommandLine\InteropService\CLIAbstractor.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\API.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\Perl.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\CLI.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\CodeGenerator.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\R.vb" />

@@ -53,7 +53,7 @@ Namespace Drawing2D.Colors
             If exp.IsPattern(FunctionPattern) Then
                 With exp.GetTagValue("(", trim:=True)
                     Dim api$ = .Name
-                    Dim arg$
+                    Dim arg$ = Nothing
 
                     With .Value _
                         .Trim(")"c) _

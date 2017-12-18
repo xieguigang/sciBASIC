@@ -150,15 +150,22 @@ Public Class worksheets : Inherits Directory
         Call MyBase.New(ROOT)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function HaveWorksheet(sheetID$) As Boolean
-        Return worksheets.ContainsKey("sheet" & sheetID)
+        Return worksheets.ContainsKey(sheetID) OrElse
+               worksheets.ContainsKey("sheet" & sheetID)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Add(sheetID As String, worksheet As worksheet)
         Call worksheets.Add(sheetID, worksheet)
     End Sub
 
     Public Function GetWorksheet(sheetID$) As worksheet
+        If worksheets.ContainsKey(sheetID) Then
+            Return worksheets(sheetID)
+        End If
+
         With "sheet" & sheetID
             If worksheets.ContainsKey(.ref) Then
                 Return worksheets(.ref)
@@ -169,10 +176,24 @@ Public Class worksheets : Inherits Directory
     End Function
 
     Protected Overrides Sub _loadContents()
+        ' 2017-12-18 发现有时候会出现sheetID不一致的情况，这种情况可能会出现于用户手动的从Excel电子表格文件之中删除了前面的几个表
+        ' 所以在这里不可以直接使用文件名来作为sheet的编号名称
+        ' r:id是一致的
         worksheets = (ls - l - "*.xml" <= Folder) _
-            .ToDictionary(Function(name) name.BaseName,
-                          Function(path) path.LoadXml(Of worksheet))
+            .Select(Function(path) (path, path.LoadXml(Of worksheet))) _
+            .ToDictionary(Function(page) getID(page),
+                          Function(page) page.Item2)
     End Sub
+
+    Private Shared Function getID(page As (path$, page As worksheet)) As String
+        Dim sheet = page.page
+
+        If Not sheet.pageSetup Is Nothing Then
+            Return sheet.pageSetup.id
+        Else
+            Return page.path.BaseName
+        End If
+    End Function
 
     Public Sub Save()
         Dim path$
