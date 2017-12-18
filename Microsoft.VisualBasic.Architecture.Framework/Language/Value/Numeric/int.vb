@@ -172,6 +172,11 @@ Namespace Language
             Return CDbl(n.Value)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(n As int) As Integer
+            Return n.Value
+        End Operator
+
         ''' <summary>
         ''' Auto increment value with step 1 and then returns the previous value.
         ''' (自增1然后返回之前的值)
