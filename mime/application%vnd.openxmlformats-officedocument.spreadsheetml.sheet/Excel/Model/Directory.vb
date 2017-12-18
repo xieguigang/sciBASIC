@@ -180,11 +180,20 @@ Public Class worksheets : Inherits Directory
         ' 所以在这里不可以直接使用文件名来作为sheet的编号名称
         ' r:id是一致的
         worksheets = (ls - l - "*.xml" <= Folder) _
-            .Select(Function(path) path.LoadXml(Of worksheet)) _
-            .ToDictionary(Function(page)
-                              Return page.pageSetup.id
-                          End Function)
+            .Select(Function(path) (path, path.LoadXml(Of worksheet))) _
+            .ToDictionary(Function(page) getID(page),
+                          Function(page) page.Item2)
     End Sub
+
+    Private Shared Function getID(page As (path$, page As worksheet)) As String
+        Dim sheet = page.page
+
+        If Not sheet.pageSetup Is Nothing Then
+            Return sheet.pageSetup.id
+        Else
+            Return page.path.BaseName
+        End If
+    End Function
 
     Public Sub Save()
         Dim path$
