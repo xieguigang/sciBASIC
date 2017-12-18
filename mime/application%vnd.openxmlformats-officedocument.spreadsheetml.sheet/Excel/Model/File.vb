@@ -131,6 +131,8 @@ Public Class File : Implements IFileReference
     ''' </summary>
     ''' <param name="path$"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function WriteXlsx(Optional path$ = Nothing) As Boolean
         ' Save to the user specific path or original source _filePath 
         ' If the path Is Not specific by user
@@ -168,6 +170,7 @@ Public Class File : Implements IFileReference
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LoadDataSet(Of T As Class)(sheetName$) As T()
         Return GetTable(sheetName).AsDataSource(Of T)
     End Function
@@ -192,6 +195,8 @@ Public Class File : Implements IFileReference
     ''' </summary>
     ''' <param name="path$">``*.xlsx``</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Open(path$) As File
         Return IO.CreateReader(xlsx:=path)
     End Function

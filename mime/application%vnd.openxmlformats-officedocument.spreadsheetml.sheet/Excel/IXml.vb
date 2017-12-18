@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text
 
 Public MustInherit Class IXml
@@ -33,6 +34,7 @@ Public MustInherit Class IXml
     Protected MustOverride Function filePath() As String
     Protected MustOverride Function toXml() As String
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return filePath()
     End Function
