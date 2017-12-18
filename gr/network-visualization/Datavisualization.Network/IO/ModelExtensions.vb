@@ -76,16 +76,25 @@ Namespace FileStream
         ''' </summary>
         ''' <param name="g"></param>
         ''' <returns></returns>
-        <Extension> Public Function Tabular(g As NetworkGraph) As NetworkTables
+        <Extension> Public Function Tabular(g As NetworkGraph, Optional properties$() = Nothing) As NetworkTables
             Dim nodes As New List(Of Node)
             Dim edges As New List(Of NetworkEdge)
 
             For Each n In g.nodes
                 Dim data As New Dictionary(Of String, String)
 
-                data("x") = n.Data.initialPostion.x
-                data("y") = n.Data.initialPostion.y
-                ' data("z") = n.Data.initialPostion.z
+                If Not n.Data.initialPostion Is Nothing Then
+                    ' skip coordination information when no layout data.
+                    data("x") = n.Data.initialPostion.x
+                    data("y") = n.Data.initialPostion.y
+                    ' data("z") = n.Data.initialPostion.z
+                End If
+
+                If Not properties Is Nothing Then
+                    For Each key As String In properties
+                        data(key) = n.Data(key)
+                    Next
+                End If
 
                 nodes += New Node With {
                     .ID = n.Label,
@@ -98,7 +107,11 @@ Namespace FileStream
                 edges += New NetworkEdge With {
                     .FromNode = l.U.Label,
                     .ToNode = l.V.Label,
-                    .Interaction = l.Data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
+                    .Interaction = l.Data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
+                    .value = l.Weight,
+                    .Properties = New Dictionary(Of String, String) From {
+                        {NameOf(EdgeData.label), l.Data.label}
+                    }
                 }
             Next
 

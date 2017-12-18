@@ -47,7 +47,7 @@ Public Module Extensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SSM(q As Vector, s As Vector) As Double
-        Return Sum(q * s) / Sqrt(Sum(q ^ 2) * Sum(s ^ 2))
+        Return (q * s).Sum / Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
     End Function
 
     ''' <summary>

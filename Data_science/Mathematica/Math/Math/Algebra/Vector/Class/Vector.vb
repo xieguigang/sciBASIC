@@ -66,9 +66,10 @@ Namespace LinearAlgebra
         ''' Only one number in the vector and its value is ZERO
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property Zero As Vector
+        Public Shared ReadOnly Property Zero(Optional [Dim] As Integer = 1) As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Vector({0#})
+                Return New Vector(Linq.Extensions.Repeats(0R, [Dim]))
             End Get
         End Property
 
@@ -517,14 +518,38 @@ Namespace LinearAlgebra
             Return Extensions.rand(size)
         End Function
 
+        ''' <summary>
+        ''' <paramref name="x"/>向量之中的每一个元素是否都等于<paramref name="n"/>?
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(x As Vector, n As Integer) As BooleanVector
-            Return New BooleanVector(From d As Double In x Select d = n)
+            Return x = CDbl(n)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <>(x As Vector, n As Integer) As BooleanVector
-            Return New BooleanVector(From d As Double In x Select d <> n)
+            Return Not x = CDbl(n)
+        End Operator
+
+        ''' <summary>
+        ''' <paramref name="x"/>向量之中的每一个元素是否都等于<paramref name="n"/>?
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator =(x As Vector, n As Double) As BooleanVector
+            ' 不可以缺少这一对括号，否则会被当作为属性d，而非值比较
+            Dim asserts = From d As Double In x Select (d = n)
+            Return New BooleanVector(asserts)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator <>(x As Vector, n As Double) As BooleanVector
+            Return Not x = n
         End Operator
 
         ''' <summary>
@@ -622,7 +647,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <param name="vector$"></param>
         ''' <returns></returns>
-        Public Shared Widening Operator CType(vector$) As Vector
+        Public Shared Widening Operator CType(vector As String) As Vector
             Dim exp As String = Trim(vector)
 
             If exp.StringEmpty Then
@@ -652,6 +677,11 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(vector As VectorShadows(Of Double)) As Vector
             Return vector.As(Of Double).AsVector
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(list As List(Of Double)) As Vector
+            Return New Vector(list)
         End Operator
     End Class
 End Namespace

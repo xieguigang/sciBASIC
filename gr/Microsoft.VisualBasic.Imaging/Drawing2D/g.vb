@@ -136,7 +136,13 @@ Namespace Drawing2D
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot, Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Public Function GraphicsPlots(ByRef size As Size,
+                                      ByRef padding As Padding,
+                                      bg$,
+                                      plotAPI As IPlot,
+                                      Optional driver As Drivers = Drivers.Default,
+                                      Optional dpi$ = "100,100") As GraphicsData
+
             Dim image As GraphicsData
 
             size = size Or defaultSize
@@ -155,7 +161,7 @@ Namespace Drawing2D
             Else
                 ' using gdi+ graphics driver
                 ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
-                Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent)
+                Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent, dpi:=dpi)
                     Dim rect As New Rectangle(New Point, size)
 
                     With g.Graphics

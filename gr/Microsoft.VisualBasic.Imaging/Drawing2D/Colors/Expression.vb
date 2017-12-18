@@ -53,14 +53,20 @@ Namespace Drawing2D.Colors
             If exp.IsPattern(FunctionPattern) Then
                 With exp.GetTagValue("(", trim:=True)
                     Dim api$ = .Name
-                    Dim arg$
+                    Dim arg$ = Nothing
 
                     With .Value _
                         .Trim(")"c) _
                         .GetTagValue(",", trim:=True)
 
                         Term = .Name.Trim
-                        arg = .Value
+
+                        If Term.StringEmpty Then
+                            ' 只有一个参数
+                            Term = .Value
+                        Else
+                            arg = .Value
+                        End If
                     End With
 
                     Me.API = New NamedValue(Of String) With {

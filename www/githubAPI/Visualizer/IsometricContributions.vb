@@ -118,7 +118,7 @@ Public Module IsometricContributions
                 Dim camera As New Camera With {
                     .screen = region.Size,
                     .fov = 10000,
-                    .ViewDistance = -85,
+                    .ViewDistance = -75,
                     .angleX = 30,
                     .angleY = 30,
                     .angleZ = 125
@@ -131,7 +131,7 @@ Public Module IsometricContributions
 
                 Call DirectCast(g, Graphics2D) _
                     .Graphics _
-                    .SurfacePainter(camera, model)
+                    .SurfacePainter(camera, model, illumination:=False, offset:=New PointF(-100, 100))
 
                 Dim fsize As SizeF = g.MeasureString(oneYear, labelItemFont)
 
@@ -201,6 +201,7 @@ Public Module IsometricContributions
                         y = .Top - 10
 
                         With user
+
                             fsize = g.MeasureString(.bio, labelItemFont)
                             statNumberFont = New Font(labelItemFont.Name, emSize:=labelItemFont.Size * 2.5)
 
@@ -212,7 +213,14 @@ Public Module IsometricContributions
                                 s = Mid(.bio, 1, 56) & "..."
                             End If
 
-                            Call g.DrawString($"{ .login} ({ .name})", statNumberFont, Brushes.Black, New Point(x, y))
+                            Dim label$ = $"{ .login} ({ .name})"
+                            fsize = g.MeasureString(label, statNumberFont)
+
+                            If fsize.Width > g.Size.Width * 0.55 Then
+                                label = Mid(label, 1, 18) & "..."
+                            End If
+
+                            Call g.DrawString(label, statNumberFont, Brushes.Black, New Point(x, y))
                             Call g.DrawString(s, labelItemFont, Brushes.Gray, New Point(x, y1))
                             Call g.DrawString(.url, labelItemFont, Brushes.Black, New Point(x, y2))
                         End With

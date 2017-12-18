@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::da6557127f133674abc02bba95ed0c13, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -39,6 +39,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Imaging
 
@@ -444,16 +445,19 @@ Namespace Imaging
         ''' <remarks></remarks>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As Size, Optional filled As Color = Nothing, <CallerMemberName> Optional trace$ = "") As Graphics2D
-            Dim Bitmap As Bitmap
+        <Extension> Public Function CreateGDIDevice(r As Size, Optional filled As Color = Nothing, <CallerMemberName> Optional trace$ = "", Optional dpi$ = "100,100") As Graphics2D
+            Dim bitmap As Bitmap
 
             If r.Width = 0 OrElse r.Height = 0 Then
                 Throw New Exception(InvalidSize)
             End If
 
             Try
-                Bitmap = New Bitmap(r.Width, r.Height)
-                Bitmap.SetResolution(600, 600)
+                bitmap = New Bitmap(r.Width, r.Height)
+
+                With dpi.SizeParser
+                    Call bitmap.SetResolution(.Width, .Height)
+                End With
             Catch ex As Exception
                 ex = New Exception(r.ToString, ex)
                 ex = New Exception(trace, ex)
@@ -461,8 +465,8 @@ Namespace Imaging
                 Throw ex
             End Try
 
-            Dim g As Graphics = Graphics.FromImage(Bitmap)
-            Dim rect As New Rectangle(New Point, Bitmap.Size)
+            Dim g As Graphics = Graphics.FromImage(bitmap)
+            Dim rect As New Rectangle(New Point, bitmap.Size)
 
             If filled.IsNullOrEmpty Then
                 filled = Color.White
@@ -475,7 +479,7 @@ Namespace Imaging
             g.CompositingQuality = CompositingQuality.HighQuality
             g.SmoothingMode = SmoothingMode.HighQuality
 
-            Return Graphics2D.CreateObject(g, Bitmap)
+            Return Graphics2D.CreateObject(g, bitmap)
         End Function
 
         <Extension> Public Function Clone(res As Bitmap) As Bitmap

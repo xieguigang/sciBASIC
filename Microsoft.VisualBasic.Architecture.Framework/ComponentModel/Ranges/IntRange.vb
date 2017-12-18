@@ -95,14 +95,11 @@ Namespace ComponentModel.Ranges
         End Function
 
         ''' <summary>
-        ''' Check if the specified value is inside this range
+        ''' Check if the specified value ``<paramref name="x"/>`` is inside this range
         ''' </summary>
-        '''
         ''' <param name="x">Value to check</param>
-        '''
         ''' <returns><b>True</b> if the specified value is inside this range or
         ''' <b>false</b> otherwise.</returns>
-        '''
         Public Function IsInside(x As Integer) As Boolean Implements IRanges(Of Integer).IsInside
             Return ((x >= Min) AndAlso (x <= Max))
         End Function
