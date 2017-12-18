@@ -44,6 +44,19 @@ Imports r = System.Text.RegularExpressions.Regex
 Public Module KeyValuePairExtensions
 
     ''' <summary>
+    ''' tuple set to dictionary table
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="tuples"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsTable(Of K, V)(tuples As IEnumerable(Of (K, V))) As Dictionary(Of K, V)
+        Return tuples.ToDictionary(Function(t) t.Item1, Function(t) t.Item2)
+    End Function
+
+    ''' <summary>
     ''' Item selector by directly text equals match.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
