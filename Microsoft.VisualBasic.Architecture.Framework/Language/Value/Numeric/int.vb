@@ -37,6 +37,9 @@ Namespace Language
     ''' </summary>
     Public Class int : Inherits Value(Of Integer)
         Implements IComparable
+        Implements IComparable(Of Integer)
+        Implements IEquatable(Of Integer)
+        Implements IFormattable
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(Optional x% = Scan0)
@@ -164,6 +167,16 @@ Namespace Language
             Return New int(n)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(n As int) As Double
+            Return CDbl(n.Value)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(n As int) As Integer
+            Return n.Value
+        End Operator
+
         ''' <summary>
         ''' Auto increment value with step 1 and then returns the previous value.
         ''' (自增1然后返回之前的值)
@@ -219,5 +232,20 @@ Namespace Language
             p.Value += x
             Return i
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CompareTo(other As Integer) As Integer Implements IComparable(Of Integer).CompareTo
+            Return Value.CompareTo(other)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Equals(other As Integer) As Boolean Implements IEquatable(Of Integer).Equals
+            Return Value.Equals(other)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function ToString(format As String, formatProvider As IFormatProvider) As String Implements IFormattable.ToString
+            Return Value.ToString(format, formatProvider)
+        End Function
     End Class
 End Namespace

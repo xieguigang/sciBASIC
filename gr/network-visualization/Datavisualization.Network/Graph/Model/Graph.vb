@@ -225,9 +225,12 @@ Namespace Graph
         ''' </summary>
         ''' <param name="label"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 使用这个函数所构建的节点对象的<see cref="Node.ID"/>是自增的，<paramref name="label"/>则会赋值给<see cref="Node.Label"/>属性
+        ''' </remarks>
         Public Function CreateNode(label As String) As Node Implements IGraph.CreateNode
             Dim data As New NodeData With {.label = label}
-            Dim tNewNode As New Node(_nextNodeId.ToString(), data) With {
+            Dim tNewNode As New Node(label, data) With {
                 .ID = _nextNodeId
             }
             _nextNodeId += 1
