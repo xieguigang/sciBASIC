@@ -57,6 +57,8 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("' Microsoft VisualBasic CommandLine Code AutoGenerator")
             Call vb.AppendLine("' assembly: " & App.Type.Assembly.Location.GetFullPath)
             Call vb.AppendLine()
+            Call vb.AppendLine(GetManualPage.lTokens.Select(Function(l) "' " & l).JoinBy(vbCrLf))
+            Call vb.AppendLine()
             Call vb.AppendLine("Namespace " & [namespace])
             Call vb.AppendLine()
             Call vb.AppendLine(__xmlComments(App.Type.NamespaceEntry.Description))
