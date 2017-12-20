@@ -169,7 +169,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\..\..\..\..\..\..\plot\</OutputPath>
     <DefineConstants>TRACE=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.HierarchicalClustering.xml</DocumentationFile>
     <Optimize>true</Optimize>
