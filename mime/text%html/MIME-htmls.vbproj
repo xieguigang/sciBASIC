@@ -67,7 +67,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\.vs\installer\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -228,7 +228,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\..\..\..\..\plot\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -253,7 +253,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
     <Optimize>true</Optimize>
