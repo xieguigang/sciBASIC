@@ -124,6 +124,14 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        Public Iterator Function Intersect(compares As IEnumerable(Of T)) As IEnumerable(Of T)
+            For Each x As T In compares
+                If IndexOf(x) > -1 Then
+                    Yield x
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' For Linq ``where``
         ''' </summary>

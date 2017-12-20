@@ -51,12 +51,13 @@ PM> Install-Package sciBASIC -Pre
 ###### 1. source projects
 
 + **[/CLI_tools](./CLI_tools/)** : Some small utilities and example tools
-+ **[/Data](./Data/)** : *sciBASIC#* data framework system for data science, includes data frame, data I/O and data object search framework.
++ **[/Data](./Data/)** : *sciBASIC#* data framework system for data science, includes data frame, data I/O, natural language text processing and data object search framework.
 + **[/Data_science](./Data_science/)** : *sciBASIC#* Mathmatica system, data graphics plot system & Data Mining library
-+ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic General App Runtime core
-+ **[/mime](./mime/)** : various mime-type doc parsers in VisualBasic
-+ **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET data graphics system
++ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : **Microsoft VisualBasic General App core runtime**
++ **[/mime](./mime/)** : Various mime-type text or Xml doc parsers in VisualBasic.
++ **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET imaging graphics system
 + **[/www](./www/)** : Web related utilities code
++ **[/vs_solutions](./vs_solutions/)** : sciBASIC framework Windows installer project. 
 
 ###### 2. docs for User
 

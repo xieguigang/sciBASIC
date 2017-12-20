@@ -239,7 +239,7 @@ Namespace Language
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Equals(other As Integer) As Boolean Implements IEquatable(Of Integer).Equals
+        Public Overloads Function Equals(other As Integer) As Boolean Implements IEquatable(Of Integer).Equals
             Return Value.Equals(other)
         End Function
 

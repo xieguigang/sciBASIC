@@ -25,8 +25,13 @@ Namespace ComponentModel
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(c As Counter) As Integer
+        Public Overloads Shared Narrowing Operator CType(c As Counter) As Integer
             Return c.Value
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(c As Counter) As Double
+            Return CDbl(c.Value)
         End Operator
     End Class
 
