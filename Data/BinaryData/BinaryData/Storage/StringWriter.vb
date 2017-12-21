@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.Generic
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -17,12 +18,23 @@ Public Class StringWriter
         Me.codepage = encoding.CodePage
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Append(text As String)
-
+        Dim buffer = SectionHeader.CreateBuffer(text, codepage)
+        Call Write(buffer.head, buffer.bytes)
     End Sub
 
-    Public Sub Append(array As IEquatable(Of String))
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Sub Write(header As SectionHeader, bytes As Byte())
+        ' 5 = 4 + 1
+        Call stream.Write(header.ToArray, Scan0, 5)
+        Call stream.Write(bytes, Scan0, bytes.Length)
+    End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub Append(array As IEnumerable(Of String))
+        Dim buffer = SectionHeader.CreateBuffer(array, codepage)
+        Call Write(buffer.head, buffer.bytes)
     End Sub
 
     Public Overrides Function ToString() As String
