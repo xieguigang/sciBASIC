@@ -44,6 +44,10 @@ Public Class ValueVector : Inherits int
         End Set
     End Property
 
+    Sub New()
+        Call MyBase.New(0)
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"[{Value}] " & Y.Keys.ToArray.GetJson
     End Function
