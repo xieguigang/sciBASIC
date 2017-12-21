@@ -46,6 +46,10 @@ Namespace Language
             Value = x
         End Sub
 
+        Sub New()
+            Call Me.New(0)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return Value

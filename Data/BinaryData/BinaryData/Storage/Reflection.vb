@@ -25,6 +25,12 @@ Public Module Reflection
                End Function
     End Function
 
+    ''' <summary>
+    ''' suitable for array reader
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="reader"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreateReader(Of T As {New, Class})(reader As StringReader) As Func(Of Long, T)
         Dim schema As SchemaTree = SchemaTree.BuildTree(GetType(T))
@@ -137,7 +143,7 @@ Public Class SchemaTree
 
     Public Shared Function BuildTree(type As Type) As SchemaTree
         Dim readers = type _
-            .Schema(PropertyAccess.Readable, PublicProperty, nonIndex:=True) _
+            .Schema(PropertyAccess.ReadWrite, PublicProperty, nonIndex:=True) _
             .OrderBy(Function(name) name.Key) _
             .Values
         Dim tree As New Array
