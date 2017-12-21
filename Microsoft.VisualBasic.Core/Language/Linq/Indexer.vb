@@ -34,6 +34,12 @@ Namespace Language
     Public Module Indexer
 
 #Region "Default Public Overloads Property Item(args As Object) As T()"
+
+        ''' <summary>
+        ''' Generates the vector elements index collection.
+        ''' </summary>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
         Public Function Indexing(args As Object) As IEnumerable(Of Integer)
             Dim type As Type = args.GetType
 
