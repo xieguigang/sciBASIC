@@ -88,15 +88,15 @@ Public Class BinaryDataReader
     ''' character encoding, and optionally leaves the stream open.
     ''' </summary>
     ''' <param name="input">The input stream.</param>
-    ''' <param name="encoding__1">The character encoding to use.</param>
+    ''' <param name="encoding">The character encoding to use.</param>
     ''' <param name="leaveOpen"><c>true</c> to leave the stream open after the <see cref="BinaryDataReader"/> object
     ''' is disposed; otherwise <c>false</c>.</param>
     ''' <exception cref="ArgumentException">The stream does not support reading, is null, or is already closed.
     ''' </exception>
     ''' <exception cref="ArgumentNullException">encoding is null.</exception>
-    Public Sub New(input As Stream, encoding__1 As Encoding, leaveOpen As Boolean)
-        MyBase.New(input, encoding__1, leaveOpen)
-        Encoding = encoding__1
+    Public Sub New(input As Stream, encoding As Encoding, leaveOpen As Boolean)
+        MyBase.New(input, encoding, leaveOpen)
+        Me.Encoding = encoding
         ByteOrder = ByteOrderHelper.SystemByteOrder
     End Sub
 
@@ -576,10 +576,10 @@ Public Class BinaryDataReader
         Dim bytes As New List(Of Byte)()
         If charSize = 1 Then
             ' Read single bytes.
-            Dim readByte__1 As Byte = ReadByte()
-            While readByte__1 <> 0
-                bytes.Add(readByte__1)
-                readByte__1 = ReadByte()
+            Dim readByte As Byte = MyBase.ReadByte()
+            While readByte <> 0
+                bytes.Add(readByte)
+                readByte = MyBase.ReadByte()
             End While
         ElseIf charSize = Marshal.SizeOf(GetType(UShort)) Then
             ' Read ushort values with 2 bytes width.

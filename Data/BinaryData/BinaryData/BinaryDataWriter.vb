@@ -85,14 +85,14 @@ Public Class BinaryDataWriter
     ''' character encoding, and optionally leaves the stream open.
     ''' </summary>
     ''' <param name="output">The output stream.</param>
-    ''' <param name="encoding__1">The character encoding to use.</param>
+    ''' <param name="encoding">The character encoding to use.</param>
     ''' <param name="leaveOpen"><c>true</c> to leave the stream open after the <see cref="BinaryDataWriter"/> object
     ''' is disposed; otherwise <c>false</c>.</param>
     ''' <exception cref="ArgumentException">The stream does not support writing or is already closed.</exception>
     ''' <exception cref="ArgumentNullException">output or encoding is null.</exception>
-    Public Sub New(output As Stream, encoding__1 As Encoding, leaveOpen As Boolean)
-        MyBase.New(output, encoding__1, leaveOpen)
-        Encoding = encoding__1
+    Public Sub New(output As Stream, encoding As Encoding, leaveOpen As Boolean)
+        MyBase.New(output, encoding, leaveOpen)
+        Me.Encoding = encoding
         ByteOrder = ByteOrderHelper.SystemByteOrder
     End Sub
 
