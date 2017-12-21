@@ -160,11 +160,15 @@
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
+    <Import Include="System.Data.Linq" />
+    <Import Include="System.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Storage\StringWriter.vb" />
     <Compile Include="Stream\BinaryDataFormats.vb" />
     <Compile Include="Stream\BinaryDataReader.vb" />
     <Compile Include="Stream\BinaryDataWriter.vb" />
@@ -181,8 +185,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Storage\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
