@@ -160,7 +160,9 @@
     <Compile Include="API\Organizations.vb" />
     <Compile Include="API\Users.vb" />
     <Compile Include="Class\Repositories.vb" />
+    <Compile Include="DependencyGraph\package.json.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="DependencyGraph\DependencyGraph.vb" />
     <Compile Include="QueryBuilder.vb" />
     <Compile Include="API\Search.vb" />
     <Compile Include="Class\Organization.vb" />
