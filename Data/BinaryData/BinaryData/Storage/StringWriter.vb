@@ -10,10 +10,15 @@ Public Class StringWriter
 
     Dim encoding As Encodings
     Dim codepage As Encoding
-    Dim stream As FileStream
+    Dim stream As BinaryWriter
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(path$, Optional encoding As Encodings = Encodings.ASCII)
-        Me.stream = path.Open
+        Call Me.New(path.Open, encoding)
+    End Sub
+
+    Sub New(out As Stream, Optional encoding As Encodings = Encodings.ASCII)
+        Me.stream = New BinaryWriter(out)
         Me.encoding = encoding
         Me.codepage = encoding.CodePage
     End Sub
@@ -38,12 +43,15 @@ Public Class StringWriter
     End Sub
 
     Public Overrides Function ToString() As String
-        Return stream.Name
+        Return stream.ToString
     End Function
 
     Public Sub Close()
         Call stream.Flush()
+        Call stream.BaseStream.Flush()
+        Call stream.BaseStream.Close()
         Call stream.Close()
+        Call stream.Dispose()
     End Sub
 
 #Region "IDisposable Support"
@@ -55,6 +63,68 @@ Public Class StringWriter
             If disposing Then
                 ' TODO: 释放托管状态(托管对象)。
                 Call Close()
+            End If
+
+            ' TODO: 释放未托管资源(未托管对象)并在以下内容中替代 Finalize()。
+            ' TODO: 将大型字段设置为 null。
+        End If
+        disposedValue = True
+    End Sub
+
+    ' TODO: 仅当以上 Dispose(disposing As Boolean)拥有用于释放未托管资源的代码时才替代 Finalize()。
+    'Protected Overrides Sub Finalize()
+    '    ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+    '    Dispose(False)
+    '    MyBase.Finalize()
+    'End Sub
+
+    ' Visual Basic 添加此代码以正确实现可释放模式。
+    Public Sub Dispose() Implements IDisposable.Dispose
+        ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+        Dispose(True)
+        ' TODO: 如果在以上内容中替代了 Finalize()，则取消注释以下行。
+        ' GC.SuppressFinalize(Me)
+    End Sub
+#End Region
+End Class
+
+Public Class StringReader : Implements IDisposable
+
+    Dim encoding As Encodings
+    Dim codepage As Encoding
+    Dim stream As BinaryReader
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Sub New(path$, Optional encoding As Encodings = Encodings.ASCII)
+        Call Me.New(path.Open(FileMode.Open, doClear:=False), encoding)
+    End Sub
+
+    Sub New(out As Stream, Optional encoding As Encodings = Encodings.ASCII)
+        Me.stream = New BinaryReader(out)
+        Me.encoding = encoding
+        Me.codepage = encoding.CodePage
+    End Sub
+
+    Public Function ReadString() As String
+        Dim header As New SectionHeader(stream.ReadBytes(5))
+        Dim bytes = stream.ReadBytes(header.bytes)
+        Dim text = codepage.GetString(bytes, Scan0, bytes.Length)
+        Return text
+    End Function
+
+    Public Function ReadStringArray() As String()
+        Return ReadString.LoadObject(Of String())
+    End Function
+
+#Region "IDisposable Support"
+    Private disposedValue As Boolean ' 要检测冗余调用
+
+    ' IDisposable
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not disposedValue Then
+            If disposing Then
+                ' TODO: 释放托管状态(托管对象)。
+                Call stream.Close()
             End If
 
             ' TODO: 释放未托管资源(未托管对象)并在以下内容中替代 Finalize()。
