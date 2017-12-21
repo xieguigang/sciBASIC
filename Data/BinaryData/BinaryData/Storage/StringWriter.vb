@@ -24,23 +24,25 @@ Public Class StringWriter
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub Append(text As String)
+    Public Function Append(text As String) As Integer
         Dim buffer = SectionHeader.CreateBuffer(text, codepage)
-        Call Write(buffer.head, buffer.bytes)
-    End Sub
+        Return Write(buffer.head, buffer.bytes)
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Sub Write(header As SectionHeader, bytes As Byte())
+    Private Function Write(header As SectionHeader, bytes As Byte()) As Integer
         ' 5 = 4 + 1
         Call stream.Write(header.ToArray, Scan0, 5)
         Call stream.Write(bytes, Scan0, bytes.Length)
-    End Sub
+
+        Return 5 + bytes.Length
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub Append(array As IEnumerable(Of String))
+    Public Function Append(array As IEnumerable(Of String)) As Integer
         Dim buffer = SectionHeader.CreateBuffer(array, codepage)
-        Call Write(buffer.head, buffer.bytes)
-    End Sub
+        Return Write(buffer.head, buffer.bytes)
+    End Function
 
     Public Overrides Function ToString() As String
         Return stream.ToString
@@ -103,6 +105,11 @@ Public Class StringReader : Implements IDisposable
         Me.stream = New BinaryReader(out)
         Me.encoding = encoding
         Me.codepage = encoding.CodePage
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub Seek(offset As Long)
+        Call stream.BaseStream.Seek(offset, SeekOrigin.Begin)
     End Sub
 
     Public Function ReadString() As String

@@ -168,6 +168,7 @@
     <Reference Include="System.Data.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Storage\Reflection.vb" />
     <Compile Include="Storage\StringWriter.vb" />
     <Compile Include="Stream\BinaryDataFormats.vb" />
     <Compile Include="Stream\BinaryDataReader.vb" />
