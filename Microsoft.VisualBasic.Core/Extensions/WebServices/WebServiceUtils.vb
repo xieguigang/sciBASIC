@@ -555,6 +555,7 @@ Public Module WebServiceUtils
                                              Optional ua$ = UserAgent.FireFox,
                                              Optional retry% = 0,
                                              Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
+                                             Optional refer$ = Nothing,
                                              <CallerMemberName>
                                              Optional trace$ = Nothing) As Boolean
 #Else
@@ -573,7 +574,9 @@ RE0:
                 If Not String.IsNullOrEmpty(proxy) Then
                     Call browser.SetProxy(proxy)
                 End If
-
+                If Not refer.StringEmpty Then
+                    browser.Headers.Add(NameOf(refer), refer)
+                End If
                 If Not progressHandle Is Nothing Then
                     AddHandler browser.DownloadProgressChanged, progressHandle
                 End If

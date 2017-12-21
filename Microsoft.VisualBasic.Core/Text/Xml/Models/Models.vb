@@ -32,13 +32,17 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Text.Xml.Models
 
     Public Class StringValue : Implements Value(Of String).IValueOf
 
-        <XmlAttribute> Public Property value As String Implements Value(Of String).IValueOf.Value
+        ''' <summary>
+        ''' A short text value without new line symbols
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute>
+        Public Property value As String Implements Value(Of String).IValueOf.Value
 
         Public Overrides Function ToString() As String
             Return value
@@ -52,8 +56,18 @@ Namespace Text.Xml.Models
         Implements INamedValue
         Implements Value(Of String).IValueOf
 
-        <XmlAttribute> Public Property name As String Implements INamedValue.Key
-        <XmlText> Public Property text As String Implements Value(Of String).IValueOf.Value
+        ''' <summary>
+        ''' The term category/key
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute>
+        Public Property name As String Implements INamedValue.Key
+        ''' <summary>
+        ''' The term value
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlText>
+        Public Property text As String Implements Value(Of String).IValueOf.Value
 
         Sub New(name$, value$)
             Me.name = name
@@ -62,7 +76,7 @@ Namespace Text.Xml.Models
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"{name}: {text}"
         End Function
     End Structure
 
@@ -113,6 +127,10 @@ Namespace Text.Xml.Models
         <XmlAttribute>
         Public Property name As String Implements IKeyedEntity(Of String).Key
         Public Property vector As T()
+        ''' <summary>
+        ''' 在这里不使用字典是因为Xml序列化无法序列化字典对象
+        ''' </summary>
+        ''' <returns></returns>
         Public Property attributes As NamedValue()
 
         Sub New(namedCollection As NamedCollection(Of T))
