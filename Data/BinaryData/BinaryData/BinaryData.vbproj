@@ -165,21 +165,24 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryDataFormats.vb" />
-    <Compile Include="BinaryDataReader.vb" />
-    <Compile Include="BinaryDataWriter.vb" />
-    <Compile Include="ByteOrder.vb" />
+    <Compile Include="Stream\BinaryDataFormats.vb" />
+    <Compile Include="Stream\BinaryDataReader.vb" />
+    <Compile Include="Stream\BinaryDataWriter.vb" />
+    <Compile Include="Stream\ByteOrder.vb" />
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="Extensions\ReaderProvider.vb" />
-    <Compile Include="Offset.vb" />
+    <Compile Include="Stream\Offset.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
-    <Compile Include="SeekTask.vb" />
+    <Compile Include="Stream\SeekTask.vb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Storage\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
