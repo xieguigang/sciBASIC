@@ -36,13 +36,13 @@ Public Class Offset
     ''' Initializes a new instance of the <see cref="Offset"/> class reserving an offset with the specified
     ''' <see cref="BinaryDataWriter"/> at the current position.
     ''' </summary>
-    ''' <param name="writer__1">The <see cref="BinaryDataWriter"/> holding the stream in which the offset will be
+    ''' <param name="writer">The <see cref="BinaryDataWriter"/> holding the stream in which the offset will be
     ''' reserved.</param>
-    Public Sub New(writer__1 As BinaryDataWriter)
-		Writer = writer__1
-		Position = CUInt(Writer.Position)
-		Writer.Position += 4
-	End Sub
+    Public Sub New(writer As BinaryDataWriter)
+        Me.Writer = writer
+        Position = CUInt(Me.Writer.Position)
+        Me.Writer.Position += 4
+    End Sub
 
     ''' <summary>
     ''' Gets the <see cref="BinaryDataWriter"/> in which underlying stream the allocation is made.

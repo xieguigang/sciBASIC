@@ -3,6 +3,10 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataSourceModel.Repository
 
+    ''' <summary>
+    ''' 这个库检索模型仅建议在目标数据量非常巨大的时候使用，如果数据量比较小，可以直接保存在一个文件之中，然后一次性加载在内存之中来进行查找
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public MustInherit Class QueryCacheFactory(Of T As IKeyedEntity(Of String))
         Implements IRepositoryRead(Of String, T)
 
@@ -24,11 +28,11 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </summary>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Clear()
+        Public Overridable Sub Clear()
             Call cache.Clear()
         End Sub
 
-        Public Function Exists(key As String) As Boolean Implements IRepositoryRead(Of String, T).Exists
+        Public Overridable Function Exists(key As String) As Boolean Implements IRepositoryRead(Of String, T).Exists
             If cache.ContainsKey(key) Then
                 Return True
             Else
@@ -37,12 +41,13 @@ Namespace ComponentModel.DataSourceModel.Repository
         End Function
 
         ''' <summary>
-        ''' Load or read from cache
+        ''' Load by <see cref="factory"/> or read from <see cref="cache"/>.
         ''' </summary>
         ''' <param name="key"></param>
         ''' <returns></returns>
-        Public Function GetByKey(key As String) As T Implements IRepositoryRead(Of String, T).GetByKey
+        Public Overridable Function GetByKey(key As String) As T Implements IRepositoryRead(Of String, T).GetByKey
             If cache.ContainsKey(key) Then
+                ' hit in cache
                 Return cache(key)
             Else
                 Dim entity As T = factory(key)
@@ -62,7 +67,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </summary>
         ''' <param name="clause"></param>
         ''' <returns></returns>
-        Public Function GetWhere(clause As Func(Of T, Boolean)) As IReadOnlyDictionary(Of String, T) Implements IRepositoryRead(Of String, T).GetWhere
+        Public Overridable Function GetWhere(clause As Func(Of T, Boolean)) As IReadOnlyDictionary(Of String, T) Implements IRepositoryRead(Of String, T).GetWhere
             Return cache.Values.Where(clause).ToDictionary(Function(t) t.Key)
         End Function
 
@@ -70,7 +75,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' Only works on cache
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetAll() As IReadOnlyDictionary(Of String, T) Implements IRepositoryRead(Of String, T).GetAll
+        Public Overridable Function GetAll() As IReadOnlyDictionary(Of String, T) Implements IRepositoryRead(Of String, T).GetAll
             Return New Dictionary(Of String, T)(cache)
         End Function
     End Class

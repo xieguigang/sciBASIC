@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::5d0c0672a957b4ee37c37778571a3a28, ..\sciBASIC#\Data\BinaryData\BinaryData\BinaryDataWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Text
@@ -47,6 +48,7 @@ Public Class BinaryDataWriter
     ''' <param name="output">The output stream.</param>
     ''' <exception cref="ArgumentException">The stream does not support writing or is already closed.</exception>
     ''' <exception cref="ArgumentNullException">output is null.</exception>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub New(output As Stream)
         Me.New(output, New UTF8Encoding(), False)
     End Sub
@@ -60,6 +62,7 @@ Public Class BinaryDataWriter
     ''' is disposed; otherwise <c>false</c>.</param>
     ''' <exception cref="ArgumentException">The stream does not support writing or is already closed.</exception>
     ''' <exception cref="ArgumentNullException">output is null.</exception>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub New(output As Stream, leaveOpen As Boolean)
         Me.New(output, New UTF8Encoding(), leaveOpen)
     End Sub
@@ -72,10 +75,12 @@ Public Class BinaryDataWriter
     ''' <param name="encoding">The character encoding to use.</param>
     ''' <exception cref="ArgumentException">The stream does not support writing or is already closed.</exception>
     ''' <exception cref="ArgumentNullException">output or encoding is null.</exception>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub New(output As Stream, encoding As Encoding)
         Me.New(output, encoding, False)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub New(output As Stream, Optional encoding As Encodings = Encodings.UTF8)
         Me.New(output, encoding.CodePage)
     End Sub
@@ -85,14 +90,14 @@ Public Class BinaryDataWriter
     ''' character encoding, and optionally leaves the stream open.
     ''' </summary>
     ''' <param name="output">The output stream.</param>
-    ''' <param name="encoding__1">The character encoding to use.</param>
+    ''' <param name="encoding">The character encoding to use.</param>
     ''' <param name="leaveOpen"><c>true</c> to leave the stream open after the <see cref="BinaryDataWriter"/> object
     ''' is disposed; otherwise <c>false</c>.</param>
     ''' <exception cref="ArgumentException">The stream does not support writing or is already closed.</exception>
     ''' <exception cref="ArgumentNullException">output or encoding is null.</exception>
-    Public Sub New(output As Stream, encoding__1 As Encoding, leaveOpen As Boolean)
-        MyBase.New(output, encoding__1, leaveOpen)
-        Encoding = encoding__1
+    Public Sub New(output As Stream, encoding As Encoding, leaveOpen As Boolean)
+        MyBase.New(output, encoding, leaveOpen)
+        Me.Encoding = encoding
         ByteOrder = ByteOrderHelper.SystemByteOrder
     End Sub
 
@@ -100,6 +105,7 @@ Public Class BinaryDataWriter
     ''' Gets or sets the byte order used to parse binary data with.
     ''' </summary>
     Public Property ByteOrder() As ByteOrder
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return _byteOrder
         End Get
@@ -114,14 +120,17 @@ Public Class BinaryDataWriter
     ''' way the underlying <see cref="BinaryWriter"/> is instantiated, it can only be specified at creation time.
     ''' </summary>
     Public Property Encoding() As Encoding
+
     ''' <summary>
     ''' Gets or sets the position within the current stream. This is a shortcut to the base stream Position
     ''' property.
     ''' </summary>
     Public Property Position() As Long
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return BaseStream.Position
         End Get
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Set
             BaseStream.Position = Value
         End Set
@@ -131,6 +140,8 @@ Public Class BinaryDataWriter
     ''' Allocates space for an <see cref="Offset"/> which can be satisfied later on.
     ''' </summary>
     ''' <returns>An <see cref="Offset"/> to satisfy later on.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ReserveOffset() As Offset
         Return New Offset(Me)
     End Function
@@ -139,6 +150,8 @@ Public Class BinaryDataWriter
     ''' Aligns the reader to the next given byte multiple..
     ''' </summary>
     ''' <param name="alignment">The byte multiple.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Align(alignment As Integer)
         Seek((-Position Mod alignment + alignment) Mod alignment)
     End Sub
@@ -148,6 +161,8 @@ Public Class BinaryDataWriter
     ''' </summary>
     ''' <param name="offset">A byte offset relative to the current position in the stream.</param>
     ''' <returns>The new position within the current stream.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Function Seek(offset As Long) As Long
         Return Seek(offset, SeekOrigin.Current)
     End Function
@@ -159,6 +174,8 @@ Public Class BinaryDataWriter
     ''' <param name="origin">A value of type <see cref="SeekOrigin"/> indicating the reference point used to obtain
     ''' the new position.</param>
     ''' <returns>The new position within the current stream.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Function Seek(offset As Long, origin As SeekOrigin) As Long
         Return BaseStream.Seek(offset, origin)
     End Function
@@ -169,6 +186,8 @@ Public Class BinaryDataWriter
     ''' </summary>
     ''' <param name="offset">A byte offset relative to the current position in the stream.</param>
     ''' <returns>A <see cref="SeekTask"/> to be disposed to undo the seek.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function TemporarySeek(offset As Long) As SeekTask
         Return TemporarySeek(offset, SeekOrigin.Current)
     End Function
@@ -181,6 +200,8 @@ Public Class BinaryDataWriter
     ''' <param name="origin">A value of type <see cref="SeekOrigin"/> indicating the reference point used to obtain
     ''' the new position.</param>
     ''' <returns>A <see cref="SeekTask"/> to be disposed to undo the seek.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function TemporarySeek(offset As Long, origin As SeekOrigin) As SeekTask
         Return New SeekTask(BaseStream, offset, origin)
     End Function
@@ -223,6 +244,8 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="Decimal"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="Decimal"/> values to write.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(values As Decimal())
         WriteMultiple(values, AddressOf Write)
     End Sub
@@ -246,6 +269,8 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="Double"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="Double"/> values to write.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(values As Double())
         WriteMultiple(values, AddressOf Write)
     End Sub
@@ -268,6 +293,8 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="Int16"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="Int16"/> values to write.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(values As Int16())
         WriteMultiple(values, AddressOf Write)
     End Sub
@@ -291,6 +318,8 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="Int32"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="Int32"/> values to write.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(values As Int32())
         WriteMultiple(values, AddressOf Write)
     End Sub
@@ -314,6 +343,8 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="Int64"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="Int64"/> values to write.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(values As Int64())
         WriteMultiple(values, AddressOf Write)
     End Sub
@@ -337,6 +368,8 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="Single"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="Single"/> values to write.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(values As Single())
         WriteMultiple(values, AddressOf Write)
     End Sub
@@ -348,6 +381,8 @@ Public Class BinaryDataWriter
     ''' </summary>
     ''' <param name="value">The value to write.</param>
     ''' <param name="format">The binary format in which the string will be written.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(value As String, format As BinaryStringFormat)
         Write(value, format, Encoding)
     End Sub
@@ -401,6 +436,8 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="UInt16"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="UInt16"/> values to write.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(values As UInt16())
         WriteMultiple(values, AddressOf Write)
     End Sub
@@ -424,6 +461,8 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="UInt32"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="UInt32"/> values to write.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(values As UInt32())
         WriteMultiple(values, AddressOf Write)
     End Sub
@@ -447,6 +486,8 @@ Public Class BinaryDataWriter
     ''' position by that number of <see cref="UInt64"/> values multiplied with the size of a single value.
     ''' </summary>
     ''' <param name="values">The <see cref="UInt64"/> values to write.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub Write(values As UInt64())
         WriteMultiple(values, AddressOf Write)
     End Sub
@@ -482,6 +523,7 @@ Public Class BinaryDataWriter
         Write(CByte(0))
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub WriteNoPrefixOrTerminationString(value As String, encoding As Encoding)
         Write(encoding.GetBytes(value))
     End Sub

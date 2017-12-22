@@ -81,7 +81,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>scibasic.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -1289,7 +1290,6 @@
     <None Include="Resources\CPOL.htm" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="scibasic.pfx" />
     <None Include="Serialization\JSON\Formatter\readme.md" />
     <None Include="ApplicationServices\Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
