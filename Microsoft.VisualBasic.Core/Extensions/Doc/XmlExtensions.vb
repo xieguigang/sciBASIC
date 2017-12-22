@@ -347,15 +347,28 @@ Public Module XmlExtensions
     ''' 使用一个XML文本内容的一个片段创建一个XML映射对象
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="xml">是Xml文件的文件内容而非文件路径</param>
+    ''' <param name="Xml">是Xml文件的文件内容而非文件路径</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(xml As String) As T
-        Using s As New StringReader(s:="<?xml version=""1.0""?>" & ASCII.LF & xml)
-            Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
-        End Using
+    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(Xml As String) As T
+        Dim docText$ =
+            "<?xml version=""1.0"" encoding=""UTF-8""?>" &
+            ASCII.LF &
+            Xml
+        Try
+            Using s As New StringReader(s:=docText)
+                Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
+            End Using
+        Catch ex As Exception
+            Dim root$ = Xml.GetBetween("<", ">").Split.First
+            Dim file$ = App.LogErrDIR & "/" & $"{root}-{Path.GetTempFileName.BaseName}.Xml"
+
+            Call docText.SaveTo(file)
+
+            Throw New Exception("Details at file dump: " & file, ex)
+        End Try
     End Function
 
     <Extension>
