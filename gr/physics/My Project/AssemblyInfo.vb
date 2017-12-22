@@ -10,10 +10,10 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Physics engine for 2D/3D graphics drawing")>
 <Assembly: AssemblyDescription("Physics engine for 2D/3D graphics drawing")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyCompany("GPL3")>
 <Assembly: AssemblyProduct("physics")>
 <Assembly: AssemblyCopyright("Copyright © sciBASIC 2017")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTrademark("sciBASIC")>
 
 <Assembly: ComVisible(False)>
 

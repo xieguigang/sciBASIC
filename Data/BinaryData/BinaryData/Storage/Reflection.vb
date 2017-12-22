@@ -90,10 +90,7 @@ Public Module Reflection
         For Each read As SchemaTree In schema.Tree
             value = read.Schema.GetValue(obj)
 
-            If Not read.Tree Is Nothing Then
-                ' is complexe type 
-                n += writer.WriteObject(read, value)
-            ElseIf Not read.BaseType Is Nothing Then
+            If Not read.BaseType Is Nothing Then
                 Dim array() = DirectCast(value, IEnumerable).ToVector
 
                 n += writer.Append(array.Length)
@@ -107,6 +104,9 @@ Public Module Reflection
                         n += writer.WriteObject(read, item)
                     Next
                 End If
+            ElseIf Not read.Tree Is Nothing Then
+                ' is complexe type 
+                n += writer.WriteObject(read, value)
             Else
                 ' is primitive type
                 s = Scripting.ToString(value)
@@ -150,10 +150,12 @@ Public Class SchemaTree
         Dim arrayType As Type
 
         For Each read As PropertyInfo In readers
-            If DataFramework.IsPrimitive(read.PropertyType) Then
+            Dim target As Type = read.PropertyType
+
+            If DataFramework.IsPrimitive(target) Then
                 tree += New SchemaTree With {.Schema = read}
-            ElseIf read.PropertyType.IsInheritsFrom(GetType(System.Array)) Then
-                arrayType = read.PropertyType.GetElementType
+            ElseIf target.IsInheritsFrom(GetType(System.Array)) Then
+                arrayType = target.GetElementType
 
                 If DataFramework.IsPrimitive(arrayType) Then
                     tree += New SchemaTree With {
@@ -171,7 +173,7 @@ Public Class SchemaTree
             Else
                 tree += New SchemaTree With {
                     .Schema = read,
-                    .Tree = BuildTree(type).Tree
+                    .Tree = BuildTree(target).Tree
                 }
             End If
         Next

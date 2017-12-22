@@ -9,11 +9,11 @@ Imports System.Runtime.InteropServices
 ' 查看程序集特性的值
 
 <Assembly: AssemblyTitle("This module provides some important network operation algorithms")> 
-<Assembly: AssemblyDescription("This module provides some important network operation algorithms")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Datavisualization.Network")> 
-<Assembly: AssemblyCopyright("Copyright ©  LANS 2014")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyDescription("This module provides some important network operation algorithms")>
+<Assembly: AssemblyCompany("GPL3")>
+<Assembly: AssemblyProduct("network-visualization")>
+<Assembly: AssemblyCopyright("Copyright © xieguigang 2014")>
+<Assembly: AssemblyTrademark("sciBASIC")>
 
 <Assembly: ComVisible(False)>
 

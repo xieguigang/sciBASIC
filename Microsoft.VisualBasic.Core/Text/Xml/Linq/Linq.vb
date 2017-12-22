@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::3d7524599142a77af9fd93668a679fbc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Linq\Linq.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Xml.Linq
@@ -77,6 +78,36 @@ Namespace Text.Xml.Linq
             End If
         End Function
 
+        ''' <summary>
+        ''' 分别解析<see cref="XmlTypeAttribute"/>，<see cref="XmlRootAttribute"/>，如果这两个定义都不存在的话就返回<see cref="Type.Name"/>
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetNodeNameDefine(type As Type) As String
+            With type.GetCustomAttributes(GetType(XmlTypeAttribute), inherit:=True)
+                If Not .IsNullOrEmpty Then
+                    With DirectCast(.First, XmlTypeAttribute).TypeName
+                        If Not .StringEmpty Then
+                            Return .ref
+                        End If
+                    End With
+                End If
+            End With
+
+            With type.GetCustomAttributes(GetType(XmlRootAttribute), inherit:=True)
+                If Not .IsNullOrEmpty Then
+                    With DirectCast(.First, XmlRootAttribute).ElementName
+                        If Not .StringEmpty Then
+                            Return .ref
+                        End If
+                    End With
+                End If
+            End With
+
+            Return type.Name
+        End Function
+
         Private Iterator Function InternalIterates(XML$, nodeName$) As IEnumerable(Of String)
             Dim XmlNodeList As XmlNodeList = XML _
                 .LoadXmlDocument _
@@ -116,11 +147,11 @@ Namespace Text.Xml.Linq
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
+        Public Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing, Optional forceLargeMode As Boolean = False) As IEnumerable(Of T)
             Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
             Dim source As IEnumerable(Of String)
 
-            If XML.FileLength > 1024 * 1024 * 128 Then
+            If forceLargeMode OrElse XML.FileLength > 1024 * 1024 * 128 Then
                 ' 这是一个超大的XML文档
                 source = NodeIterator.IterateArrayNodes(XML, nodeName)
                 xmlns = Nothing
@@ -128,19 +159,55 @@ Namespace Text.Xml.Linq
                 source = InternalIterates(XML, nodeName)
             End If
 
-            Return source.NodeInstanceBuilder(Of T)(xmlns)
+            Return source.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=nodeName)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="nodes"></param>
+        ''' <param name="replaceXmlns$"></param>
+        ''' <param name="xmlNode$">文件之中的节点名称</param>
+        ''' <returns></returns>
         <Extension>
-        Private Iterator Function NodeInstanceBuilder(Of T As Class)(nodes As IEnumerable(Of String), replaceXmlns$) As IEnumerable(Of T)
+        Private Iterator Function NodeInstanceBuilder(Of T As Class)(nodes As IEnumerable(Of String), replaceXmlns$, xmlNode$) As IEnumerable(Of T)
             Dim o As T
             Dim sb As New StringBuilder
+            Dim TnodeName$ = GetType(T).GetNodeNameDefine
+            Dim process As Func(Of String, String)
+
+            ' 2017-12-22
+            ' 假若对象是存储在一个数组之中的，那么，可能会出现的一种情况就是
+            ' 在类型的定义之中，使用了xmlelement重新定义了节点的名字
+            ' 例如 <XmlElement("A")>
+            ' 那么在生成的XML文件之中的节点名称就是A
+            ' 但是元素A的类型定义却是 Public Class B ... End Class
+            ' 因为A不等于B，所以将无法正确的加载XML节点数据
+            ' 在这里进行名称的替换来消除这种错误
+            If TnodeName = xmlNode Then
+                ' 不需要进行替换
+                process = Function(s) s
+            Else
+                Dim leftTag% = 1 + xmlNode.Length
+                Dim rightTag% = 3 + xmlNode.Length
+
+                ' 在这里不尝试做直接替换，可能会误杀其他的节点
+                process = Function(block)
+                              block = block.Trim(ASCII.CR, ASCII.LF, " "c, ASCII.TAB)
+                              block = block.Substring(leftTag, block.Length - leftTag)
+                              block = block.Substring(0, block.Length - rightTag)
+                              block = "<" & TnodeName & block & "</" & TnodeName & ">"
+
+                              Return block
+                          End Function
+            End If
 
             For Each xml As String In nodes
 
                 Call sb.Clear()
                 Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
-                Call sb.AppendLine(xml)
+                Call sb.AppendLine(process(xml))
 
                 If Not replaceXmlns.StringEmpty Then
                     Call sb.Replace($"xmlns=""{replaceXmlns}""", "")
@@ -163,10 +230,10 @@ Namespace Text.Xml.Linq
         ''' <returns></returns>
         <Extension>
         Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
-            Return GetType(T) _
-                .GetTypeName([default]:=typeName) _
+            Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
+            Return nodeName _
                 .UltraLargeXmlNodesIterator(path) _
-                .NodeInstanceBuilder(Of T)(xmlns)
+                .NodeInstanceBuilder(Of T)(xmlns, xmlNode:=nodeName)
         End Function
 
         <Extension>
