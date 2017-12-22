@@ -194,6 +194,7 @@ Namespace Text.Xml.Linq
 
                 ' 在这里不尝试做直接替换，可能会误杀其他的节点
                 process = Function(block)
+                              block = block.Trim(ASCII.CR, ASCII.LF, " "c, ASCII.TAB)
                               block = block.Substring(leftTag, block.Length - leftTag)
                               block = block.Substring(0, block.Length - rightTag)
                               block = "<" & TnodeName & block & "</" & TnodeName & ">"

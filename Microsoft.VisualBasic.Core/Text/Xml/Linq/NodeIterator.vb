@@ -64,7 +64,7 @@ Namespace Text.Xml.Linq
                             buffer += ends
                             tagOpen = False
 
-                            Yield buffer.JoinBy("")
+                            Yield buffer.JoinBy(vbLf)
 
                             buffer *= 0
                             buffer += lefts
