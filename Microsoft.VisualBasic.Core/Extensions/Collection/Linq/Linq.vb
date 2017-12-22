@@ -422,7 +422,11 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToVector(source As IEnumerable) As Object()
-            Return (From x As Object In source Select x).ToArray
+            If source Is Nothing Then
+                Return {}
+            Else
+                Return (From x As Object In source Select x).ToArray
+            End If
         End Function
 
         ''' <summary>
