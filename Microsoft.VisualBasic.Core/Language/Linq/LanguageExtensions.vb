@@ -79,5 +79,15 @@ Namespace Language
                 .text = value
             }
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Add(list As List(Of [Property]), name$, value$, Optional comment$ = Nothing)
+            list += New [Property] With {
+                .name = name,
+                .value = value,
+                .Comment = comment
+            }
+        End Sub
     End Module
 End Namespace

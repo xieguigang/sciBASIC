@@ -90,10 +90,7 @@ Public Module Reflection
         For Each read As SchemaTree In schema.Tree
             value = read.Schema.GetValue(obj)
 
-            If Not read.Tree Is Nothing Then
-                ' is complexe type 
-                n += writer.WriteObject(read, value)
-            ElseIf Not read.BaseType Is Nothing Then
+            If Not read.BaseType Is Nothing Then
                 Dim array() = DirectCast(value, IEnumerable).ToVector
 
                 n += writer.Append(array.Length)
@@ -107,6 +104,9 @@ Public Module Reflection
                         n += writer.WriteObject(read, item)
                     Next
                 End If
+            ElseIf Not read.Tree Is Nothing Then
+                ' is complexe type 
+                n += writer.WriteObject(read, value)
             Else
                 ' is primitive type
                 s = Scripting.ToString(value)
