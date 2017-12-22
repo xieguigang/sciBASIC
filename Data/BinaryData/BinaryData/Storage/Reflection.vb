@@ -150,10 +150,12 @@ Public Class SchemaTree
         Dim arrayType As Type
 
         For Each read As PropertyInfo In readers
-            If DataFramework.IsPrimitive(read.PropertyType) Then
+            Dim target As Type = read.PropertyType
+
+            If DataFramework.IsPrimitive(target) Then
                 tree += New SchemaTree With {.Schema = read}
-            ElseIf read.PropertyType.IsInheritsFrom(GetType(System.Array)) Then
-                arrayType = read.PropertyType.GetElementType
+            ElseIf target.IsInheritsFrom(GetType(System.Array)) Then
+                arrayType = target.GetElementType
 
                 If DataFramework.IsPrimitive(arrayType) Then
                     tree += New SchemaTree With {
@@ -171,7 +173,7 @@ Public Class SchemaTree
             Else
                 tree += New SchemaTree With {
                     .Schema = read,
-                    .Tree = BuildTree(type).Tree
+                    .Tree = BuildTree(target).Tree
                 }
             End If
         Next
