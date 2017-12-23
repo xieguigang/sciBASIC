@@ -119,11 +119,12 @@ Namespace Imaging.BitmapImage
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPixel(x As Integer, y As Integer) As Color
             Dim i As Integer = GetIndex(x, y)
+            Dim iA As Byte = buffer(i + 3)
             Dim iR As Byte = buffer(i + 2)
             Dim iG As Byte = buffer(i + 1)
             Dim iB As Byte = buffer(i + 0)
 
-            Return Color.FromArgb(CInt(iR), CInt(iG), CInt(iB))
+            Return Color.FromArgb(CInt(iA), CInt(iR), CInt(iG), CInt(iB))
         End Function
 
         ''' <summary>
@@ -139,6 +140,7 @@ Namespace Imaging.BitmapImage
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
 
+            buffer(i + 3) = color.A
             buffer(i + 2) = color.R
             buffer(i + 1) = color.G
             buffer(i + 0) = color.B
