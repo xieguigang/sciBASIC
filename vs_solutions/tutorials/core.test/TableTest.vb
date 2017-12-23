@@ -1,9 +1,11 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Module TableTest
 
     Sub main()
 
+        Call assertTest()
         Call test_dictionary()
 
         ' Dim dictionary As New Dictionary(Of Integer, Integer)
@@ -15,6 +17,10 @@ Module TableTest
         Console.WriteLine(dictionary.Count)
 
         Pause()
+    End Sub
+
+    Sub assertTest()
+        Call Microsoft.VisualBasic.Language.Perl.ExceptionHandler.Default(New NamedValue(Of String))
     End Sub
 
     Private Sub test_dictionary()

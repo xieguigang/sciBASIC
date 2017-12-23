@@ -14,18 +14,18 @@ Namespace ComponentModel.DataSourceModel.Repository
 
         Dim cache As New Dictionary(Of String, T)
         Dim factory As Func(Of String, T)
-        Dim assert As Assert(Of Object)
+        Dim assertIsNothing As Assert(Of Object)
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="factory"></param>
         ''' <param name="cache"></param>
-        ''' <param name="assert">如果这个函数返回的结果是False，说明目标为空值，这个主要是针对于structure类型而言的</param>
-        Sub New(factory As Func(Of String, T), Optional cache As IReadOnlyDictionary(Of String, T) = Nothing, Optional assert As Assert(Of Object) = Nothing)
+        ''' <param name="assertIsNothing">如果这个函数返回的结果是True，说明目标为空值，这个主要是针对于structure类型而言的</param>
+        Sub New(factory As Func(Of String, T), Optional cache As IReadOnlyDictionary(Of String, T) = Nothing, Optional assertIsNothing As Assert(Of Object) = Nothing)
             Me.factory = factory
             Me.cache = cache.SafeQuery.ToDictionary
-            Me.assert = assert Or defaultAssert
+            Me.assertIsNothing = assertIsNothing Or defaultAssert
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -46,7 +46,7 @@ Namespace ComponentModel.DataSourceModel.Repository
             If cache.ContainsKey(key) Then
                 Return True
             Else
-                Return assert(GetByKey(key))
+                Return Not assertIsNothing(GetByKey(key))
             End If
         End Function
 
@@ -62,7 +62,7 @@ Namespace ComponentModel.DataSourceModel.Repository
             Else
                 Dim entity As T = factory(key)
 
-                If assert(entity) = False Then
+                If assertIsNothing(entity) = True Then
                     Return Nothing
                 Else
                     cache.Add(entity.Key, entity)
