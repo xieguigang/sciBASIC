@@ -30,7 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Language.Perl.ExceptionHandler
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataSourceModel

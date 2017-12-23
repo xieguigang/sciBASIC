@@ -27,16 +27,17 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language.Default
 
     Public Structure DefaultString : Implements IDefaultValue(Of String)
+        Implements IsEmpty
 
         Public ReadOnly Property DefaultValue As String Implements IDefaultValue(Of String).DefaultValue
 
-        Public ReadOnly Property IsEmpty As Boolean
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return DefaultValue.StringEmpty
             End Get
@@ -46,10 +47,12 @@ Namespace Language.Default
             DefaultValue = [string]
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadXml(Of T)() As T
             Return DefaultValue.LoadXml(Of T)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadJson(Of T)() As T
             If DefaultValue.FileExists Then
                 Return DefaultValue.ReadAllText.LoadObject(Of T)

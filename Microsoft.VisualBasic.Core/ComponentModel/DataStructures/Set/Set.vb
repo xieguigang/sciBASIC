@@ -1,37 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::58b38fdf2f46c9213133d31e8dd00bbe, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\Set.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Text
-Imports System.Collections
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace ComponentModel.DataStructures
 
@@ -48,6 +45,7 @@ Namespace ComponentModel.DataStructures
     Public Class [Set]
         Implements IEnumerable
         Implements IDisposable
+        Implements IsEmpty
 
         ''' <summary>
         ''' Enum of values to determine the aggressiveness of the response of the
@@ -124,9 +122,12 @@ Namespace ComponentModel.DataStructures
         ''' A method to determine whether the <see cref="[Set]">Set</see> has members.
         ''' </summary>
         ''' <returns>True is there are members, false if there are 0 members.</returns>
-        Public Function IsEmpty() As Boolean
-            Return _members.Count = 0
-        End Function
+        Public ReadOnly Property IsEmpty() As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _members.Count = 0
+            End Get
+        End Property
 
         ''' <summary>
         ''' Remove a member from the <see cref="[Set]">Set</see>.

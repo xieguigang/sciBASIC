@@ -1,30 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::db6af0fd295df87d465dddf59e6b4d78, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\Binding.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace ComponentModel
 
@@ -36,6 +39,7 @@ Namespace ComponentModel
     ''' <typeparam name="T"></typeparam>
     ''' <typeparam name="K"></typeparam>
     Public Structure Binding(Of T, K)
+        Implements IsEmpty
 
         Dim Bind As T
         Dim Target As K
@@ -45,7 +49,8 @@ Namespace ComponentModel
         ''' (当<see cref="Bind"/>以及<see cref="Target"/>都同时为空值的时候这个参数才会为真)
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property IsEmpty As Boolean
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Bind Is Nothing AndAlso Target Is Nothing
             End Get
@@ -68,8 +73,14 @@ Namespace ComponentModel
         ''' Convert this binding to tuple
         ''' </summary>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Tuple() As Tuple(Of T, K)
             Return Me
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ValueTuple() As (bind As T, target As K)
+            Return (Bind, Target)
         End Function
 
         ''' <summary>
@@ -77,6 +88,8 @@ Namespace ComponentModel
         ''' </summary>
         ''' <param name="b"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(b As Binding(Of T, K)) As Tuple(Of T, K)
             Return New Tuple(Of T, K)(b.Bind, b.Target)
         End Operator

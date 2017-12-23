@@ -36,7 +36,7 @@ Namespace Terminal.ProgressBar
     ''' <summary>
     ''' The <see cref="ConsoleColor"/> theme for the <see cref="ProgressBar"/>
     ''' </summary>
-    Public Structure ColorTheme
+    Public Structure ColorTheme : Implements IsEmpty
 
         ' [ERROR 2017/11/5 下午 0704:37] <Print>:System.Exception: Print 
         '  ---> System.Reflection.TargetInvocationException: 调用的目标发生了异常。 
@@ -70,7 +70,8 @@ Namespace Terminal.ProgressBar
         ''' Test if all of the property value is equals to ZERO(<see cref="ConsoleColor.Black"/>).
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property IsEmpty As Boolean
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return BackgroundColor = 0 AndAlso
                     ProgressBarColor = 0 AndAlso

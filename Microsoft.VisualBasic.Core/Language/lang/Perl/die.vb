@@ -34,10 +34,6 @@ Namespace Language.Perl
 
     Public Structure ExceptionHandler
 
-        Public Interface IsEmpty
-            ReadOnly Property IsEmpty As Boolean
-        End Interface
-
         Dim Message$
         Dim failure As Assert(Of Object)
 

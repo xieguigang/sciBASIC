@@ -28,7 +28,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Perl
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language.Default
 
@@ -36,6 +35,10 @@ Namespace Language.Default
 
     Public Interface IDefaultValue(Of T)
         ReadOnly Property DefaultValue As T
+    End Interface
+
+    Public Interface IsEmpty
+        ReadOnly Property IsEmpty As Boolean
     End Interface
 
     ''' <summary>
