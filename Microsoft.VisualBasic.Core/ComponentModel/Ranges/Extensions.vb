@@ -72,6 +72,15 @@ Namespace ComponentModel.Ranges
             ElseIf InStr(exp, "—") > 0 Then
                 ' 使用的是中文的分隔符
                 t = Strings.Split(exp, "—")
+            ElseIf exp.IsPattern(RegexpDouble & "\s*[-]\s*" & RegexpDouble) Then
+                ' 使用的是英文的分隔符
+                ' 因为可能会和负号弄混，所以在这里需要使用正则表达式来匹配出这个分隔符
+                ' 因为是这种格式的range： dd-dd
+                ' 故而分隔符的pattern肯定是数字加连接符本身，将这个pattern匹配出来，然后利用这个pattern进行分割即可
+                Dim del$ = r.Match(exp, "\d\s*[-]").Value
+                t = Strings.Split(exp, del)
+                ' 需要将存在于del的pattern之中的前面的数字的最后一个数值补回来
+                t(0) = t(0) & del.Trim("-"c)
             Else
                 exp = r _
                     .Match(exp, RegexpFloatRange, RegexOptions.Singleline) _
