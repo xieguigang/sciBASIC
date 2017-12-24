@@ -119,6 +119,15 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="DIR"></param>
     <Extension> Public Sub MkDIR(DIR$, Optional throwEx As Boolean = True)
+        If DIR.StringEmpty OrElse DIR = "./" OrElse DIR = ".\" Then
+            ' 2017-12-25
+            ' 当前文件夹
+            ' 因为假若能够切换到当前文件夹的话，说明当前的文件夹已经存在了
+            ' 则在这里是否应该跳过这个创建过程
+            ' 还是不跳过吧
+            DIR = App.CurrentDirectory
+        End If
+
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
         Catch ex As Exception
